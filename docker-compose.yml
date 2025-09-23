@@ -1,0 +1,46 @@
+networks:
+  extranet:
+    name: "${CONTAINER:-docker}-extranet"
+  intranet:
+    name: "${CONTAINER:-docker}-intranet"
+    internal: true
+
+volumes:
+  conda: {name: "${CONTAINER:-docker}-conda"}
+
+services:
+  container:
+    container_name: ${CONTAINER:-docker}-container
+    platform: ${PLATFORM:-linux/amd64}
+    networks:
+      - extranet
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+      - .dockerenv
+    volumes:
+      - $HOME/.ssh:/root/.ssh:ro
+      - $HOME/.ssh/known_hosts:/root/.ssh/known_hosts:rw
+      - $HOME/.gitconfig:/root/.gitconfig:ro
+      - conda:/opt/conda/envs
+
+      - ./var/container:/root:rw
+      - ./.bashrc:/root/.bashrc:ro
+      - ./.condarc:/root/.condarc:ro
+      - ./.env:/root/.env:ro
+
+      - ./:/mnt/local:ro
+      - ./.git:/mnt/local/.git:rw
+      - ./.virtualenv:/mnt/local/.virtualenv:rw
+      - ./build:/mnt/local/build:rw
+      - ./public:/mnt/local/public:rw
+      - ./pyproject.toml:/mnt/local/pyproject.toml:rw
+      - ./tests:/mnt/local/tests:rw
+      - ./tools:/mnt/local/tools:rw
+      - ./examples:/mnt/local/examples:rw
+      - ./vendor:/mnt/local/vendor:rw
+      - ./var:/mnt/local/var:rw
+
+    entrypoint: /mnt/local/entrypoint.sh

@@ -1,0 +1,24 @@
+
+channels:
+  - conda-forge
+  - pytorch
+  - nvidia
+  - defaults
+
+# RECOMMENDED: pin python version for faster dependency resolution
+dependencies:
+  - python=3.10
+  - python-build
+  - pip
+  - pip:
+    - -r requirements.txt
+  - compilers
+  - cmake
+
+  - setuptools
+  - wheel
+  - flake8-black
+  - python-dotenv
+  - gtest
+  
+  - wcwidth

@@ -1,0 +1,203 @@
+variables: # Override variables from "Settings > CI/CD > Variables"
+
+  CI_IMAGE_BUILDER: "kubernetes"
+  CI_IMAGE_ARCH: ""
+  CI_IMAGE_SOURCE: true
+
+  CI_RUNNER_CVMFS: "false"
+  CI_RUNNER_ARCH: ""
+  CI_RUNNER_TAGS: ""
+  CI_RUNNER_NPROC: ""
+
+  # Configure non-public submodules from (Settings > CI/CD > Token Access)
+  GIT_SUBMODULE_STRATEGY: none # none, recursive, shallow
+  GIT_SUBMODULE_FORCE_HTTPS: true
+  GIT_SUBMODULE_PATHS: cmake/Modules share/doxygen
+
+  CONDA_ENVS_DIRS: "./.conda/envs/"
+
+stages:
+  - image
+  - presets
+  - build
+  - post-build
+  - deploy
+
+# Dynamic image selection
+workflow:
+  rules:
+    - if: $CI_IMAGE_ARCH == "" && $CI_RUNNER_ARCH == ""
+      variables:
+        CI_IMAGE_ARCH: "x86_64"
+    - if: $CI_IMAGE_ARCH == "" && $CI_RUNNER_ARCH != ""
+      variables:
+        CI_IMAGE_ARCH: "${CI_RUNNER_ARCH}"
+
+    - when: always
+
+cache:
+  policy: pull
+  key: ${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  paths:
+    - .conda
+
+before_script:
+  - if [ ! -z "$GIT_SUBMODULE_PATHS" ]; then git submodule update --init -- $GIT_SUBMODULE_PATHS || true; fi
+  - if [ "$CI_IMAGE_SOURCE" != false ]; then source .bashrc; fi
+
+#
+# Overview of the gitlab environment loaded.
+kaniko:
+  stage: image
+  variables:
+    CI_IMAGE_SOURCE: false
+  tags:
+    - $CI_IMAGE_BUILDER
+    - $CI_RUNNER_ARCH
+  image:
+     # The kaniko debug image is recommended because it has a shell, and a shell is required for an image to be used with GitLab CI/CD.
+     name: gcr.io/kaniko-project/executor:debug
+     entrypoint: [""]
+  script:
+    # Prepare Kaniko configuration file
+    - echo "{\"auths\":{\"'$CI_REGISTRY'\":{\"username\":\"'$CI_REGISTRY_USER'\",\"password\":\"'$CI_REGISTRY_PASSWORD'\"}}}" > /kaniko/.docker/config.json
+    # Build and push the image from the Dockerfile at the root of the project.
+    - BUILD_ARGS=$(cat $CI_PROJECT_DIR/.env 2> /dev/null | sed 's/\"//g' | grep -v '^[[:space:]]*$' | sed -E 's/([[:alnum:]_]+)="([^"]+)"/--build-arg \"\1="\2"/g; s/([[:alnum:]_]+)=([^\"]+)/--build-arg \1="\2"/g' | tr '\n' ' ')
+    - eval /kaniko/executor $BUILD_ARGS
+      --context $CI_PROJECT_DIR
+      --dockerfile $CI_PROJECT_DIR/Dockerfile
+      --destination ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_RUNNER_ARCH:-$(arch)}
+    # Print the full registry path of the pushed image
+    - echo "Image pushed successfully to ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME} for [${CI_RUNNER_ARCH:-$(arch)}] architecture."
+  
+  rules:
+    - exists: 
+        - $CI_COMMIT_TAG
+      when: always
+    - changes:
+      - Dockerfile
+      - Dockerfile.packages
+      when: always
+
+# ###
+# CVMFS: check on demand if CVMFS is setup. (a specific tag on runners is requested on these machines where CVMFS is available)
+# ### ###
+cmvfs:
+  stage: presets
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  allow_failure: true
+  rules:
+    - if: $CI_RUNNER_CVMFS != "true"
+      when: never
+    - when: manual
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+    - cvmfs
+  script:
+    - ls -ls /cvmfs
+
+# ###
+# Conda configuration
+# ### ###
+conda:
+  stage: presets
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  tags:
+    - $CI_RUNNER_ARCH
+  script:
+    - make -j${CI_RUNNER_NPROC} env
+    - conda activate $ENVNAME
+  rules:
+      - exists:
+        - environment.yml
+  cache:
+    policy: pull-push
+    key: ${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+    paths:
+      - .conda
+
+# ###
+# Environment: return list of variables, load container from registry, and check if specific architecture is provided
+# ### ###
+env:
+  stage: presets
+  allow_failure: true
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+  script:
+    - arch
+    - env
+    - conda env list
+  rules:
+    - when: manual  
+
+python: 
+  stage: build
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  allow_failure: true
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+  artifacts:
+    paths:
+      - var/install
+  script:
+    - conda activate $ENVNAME || true
+    - make modules
+
+# ###
+# Tests
+# ### ###
+tests:
+  stage: post-build
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  dependencies:
+    - python
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+  script:
+    - conda activate $ENVNAME || true
+    - make tests
+
+# ###
+# Package Installation
+# ### ###
+package:
+  stage: deploy
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  dependencies:
+    - python
+    - tests
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+  script:
+    - conda activate $ENVNAME || true
+    - make pip
+  artifacts:
+    when: on_success
+    paths:
+      - var/install
+
+# ###
+# Documentation
+# ### ###
+pages:
+  stage: deploy
+  image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
+  dependencies:
+    - python
+    - tests
+  tags:
+    - $CI_RUNNER_ARCH
+    - $CI_RUNNER_TAGS
+  rules:
+    - if: '$CI_COMMIT_TAG && $CI_COMMIT_TAG =~ /^(v?\d+)(\.\d+){0,2}$/'
+      when: always
+  script:
+    - conda activate $ENVNAME || true
+    - make -j${CI_RUNNER_NPROC} pages

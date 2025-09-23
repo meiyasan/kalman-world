@@ -1,0 +1,69 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+
+# DEV-C++ files
+*.dev
+*.layout
+
+**/.DS_Store
+
+# Temporary files
+**/.DS_Store
+.vscode
+.idea
+**/*Config.h
+
+# CMake temporary
+**/cmake-build-debug
+**/CMakeFiles
+**/cmake_install.cmake
+**/build
+**/install
+**/CMakeCache.txt
+
+.bash_history
+.local
+
+.ssh
+.lesshst
+.virtualenv
+
+var/container
+!build
+var/build
+var/install
+var/cache
+__pycache__
+*.bak
+*.egg-info
+*.bak

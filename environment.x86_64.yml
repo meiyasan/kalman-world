@@ -1,0 +1,16 @@
+
+channels:
+  - hep-forge
+  - conda-forge
+  - defaults
+
+# RECOMMENDED: pin python version for faster dependency resolution
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+    - -r requirements.txt
+
+  # Add x86_64 specific dependencies
+  # ...
+  

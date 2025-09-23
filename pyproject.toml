@@ -1,0 +1,24 @@
+[project]
+name = "MyPython"
+version = "0.1"
+description = "Lorem ipsum dolor sit amet"
+readme = "README.md"
+license = { file = "LICENSE" }
+
+[project.urls]
+homepage = "https://git.ligo.org/kagra/templates/pyproject-template"
+
+
+[project.optional-dependencies]
+test = ["unittest"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "mypython" = "modules" }  # Escaping curly braces
+packages = [
+	"mypython",
+	"mypython.my_module"
+]
