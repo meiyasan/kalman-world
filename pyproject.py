@@ -115,6 +115,7 @@ try:
     load_dotenv()  # Load environment variables from .env if present
     env_loaded = True
 except ImportError:
+    print("Warning: python-dotenv is not installed. Skipping .env loading.")
     env_loaded = False
 
 # Attempt to retrieve PROJECT_NAME from the environment (either from .env or fallback)
