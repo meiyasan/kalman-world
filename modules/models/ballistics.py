@@ -1,5 +1,6 @@
 import numpy as np
-from ..core import KalmanStateModel, KalmanExtendedModel, KalmanOutputType, KalmanStateType
+from ..core import KalmanStateModel, KalmanExtendedModel
+from ..core.io import KalmanObservationFlavor, KalmanStateType, KalmanStateFlavor
 
 class BallisticStateType(KalmanStateType):
     POSITION     = 0
@@ -12,31 +13,34 @@ class BallisticStateModel(KalmanStateModel):
     DESCRIPTION = "State model for ballistic trajectories, simulating the motion of a projectile under the influence of gravity with constant acceleration."
     VERSION = "1.0"
 
-    labels  = {
-        BallisticStateType.POSITION: "Position", 
-        BallisticStateType.SPEED: "Speed",
-        BallisticStateType.ACCELERATION: "Acceleration"
-    }
+    @property
+    def type(self):
+        return BallisticStateType
 
     units  = {
-        BallisticStateType.POSITION: "m",        
-        BallisticStateType.SPEED: "m/s",  
-        BallisticStateType.ACCELERATION: "m/s²"
+        str(BallisticStateType.POSITION): "m",        
+        str(BallisticStateType.SPEED): "m/s",  
+        str(BallisticStateType.ACCELERATION): "m/s²"
     }
 
     coords = ["X", "Y", "Z"]
     colors = {
-        KalmanOutputType.ESTIMATE:    {0:"darkred",    1:"darkgreen",    2:"darkblue"},
-        KalmanOutputType.MEASUREMENT: {0:"rosybrown",  1:"darkseagreen", 2:"lightsteelblue"},
-        KalmanOutputType.TRUTH:       {0:"lightcoral", 1:"lightgreen",   2:"blue"},
-        KalmanOutputType.IDEAL:       {0:"lightcoral", 1:"lightgreen",   2:"blue"}
+        str(KalmanObservationFlavor.MEASURED): {0:"rosybrown",  1:"darkseagreen", 2:"lightsteelblue"},
+        str(KalmanObservationFlavor.TRUE):    {0:"lightcoral", 1:"lightgreen",   2:"blue"},
+        str(KalmanObservationFlavor.IDEAL):    {0:"lightcoral", 1:"lightgreen",   2:"blue"},
+
+        str(KalmanStateFlavor.PRIOR):          {0:"indianred",  1:"seagreen",    2:"steelblue"},
+        str(KalmanStateFlavor.POSTERIOR):      {0:"darkred",    1:"darkgreen",    2:"darkblue"},
+        str(KalmanStateFlavor.SMOOTHED):       {0:"darkred",  1:"darkred",    2:"darkred"}
     }
     
     linestyles = {
-        KalmanOutputType.ESTIMATE:    {0:"-",  1:"-",  2:"-"},
-        KalmanOutputType.MEASUREMENT: {0:"o",  1:"o",  2:"o"},
-        KalmanOutputType.TRUTH:       {0:"--", 1:"--", 2:"--"},
-        KalmanOutputType.IDEAL:       {0:":",  1:":",  2:":"}
+        str(KalmanObservationFlavor.TRUE):     {0:"--", 1:"--", 2:"--"},
+        str(KalmanObservationFlavor.IDEAL):    {0:":",  1:":",  2:":"},
+
+        str(KalmanStateFlavor.PRIOR):          {0:"-",  1:"-",  2:"-"},
+        str(KalmanStateFlavor.POSTERIOR):      {0:"-",  1:"-",  2:"-"},
+        str(KalmanStateFlavor.SMOOTHED):       {0:"-",  1:"-",  2:"-"}
     }
 
     def __init__(self, dim: int = 1, measurement_uncertainty: float = 0.5,
@@ -44,6 +48,9 @@ class BallisticStateModel(KalmanStateModel):
         assert dim in (1, 2, 3), f"Dimension must be 1, 2 or 3, got {dim}"
 
         self.dim = dim
+        if dim < 2:
+            self.coords = ["Z"]
+
         self.measurement_uncertainty = measurement_uncertainty
         self.process_uncertainty     = process_uncertainty
 
@@ -81,41 +88,6 @@ class BallisticStateModel(KalmanStateModel):
 
     def postprocess(self, zk_hat, **kwargs):
         return zk_hat
-    
-    def get_mapping(self, meas_idx: KalmanStateType, axis = 0):
-        """
-        Returns the list of state indices that contribute to measurement[meas_idx].
-        """
-        meas_idx = meas_idx.value if hasattr(meas_idx, 'value') else int(meas_idx)
-        idx = self.dim * axis + meas_idx
-
-        assert 0 <= idx < self.dim * self.m, f"Measurement index out of range. Expected 0 <= idx < {self.dim * self.m}, got {idx}."
-        return idx
-
-    def plot(self, **kwargs):
-
-        """
-        Public plot method. Dispatches to _plot3D if self.dim > 2 and axis=None,
-        otherwise falls back to _plot2D.
-        """
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-
-        # Mode parsing
-        component = kwargs.pop("component", BallisticStateType.POSITION)
-        component = self._normalize_component(component, type=BallisticStateType)
-        dim = kwargs.get("dim", None)
-
-        if dim is None and self.dim > 2:
-            fig, ax = self._plot3D(component, **kwargs)
-        elif dim is None and self.dim > 1:
-            fig, ax = self._plot2D(component, **kwargs)
-        else:
-            fig, ax = self._plot1D(component, **kwargs)
-        
-        ax.set_title(kwargs.pop("title", f"Ballistic Trajectory"))
-        return fig, ax
 
 class BallisticExtendedModel(KalmanExtendedModel):
 

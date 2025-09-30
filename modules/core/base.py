@@ -1,27 +1,18 @@
 from abc import ABC, abstractmethod
 
+# Keep your original imports; helpers are assumed to exist in your codebase
+from .io import KalmanStateFlavor, KalmanStateRecord, KalmanStateType
 from ..helpers import *
 from ..debug import get_debug
 
-import matplotlib.pyplot as plt
 import numpy as np
 import warnings
 import json
 import yaml
 
-from enum import Enum
-class KalmanStateType(Enum):
-    def __int__(self):
-        return self.value
-    
-class KalmanOutputType(Enum):
-    IDEAL   = 0
-    TRUTH = 1
-    MEASUREMENT  = 2
-    ESTIMATE     = 3
-
-    def __int__(self):
-        return self.value
+# =========================
+# Base Model
+# =========================
 
 class KalmanStateModel(ABC):
 
@@ -29,6 +20,18 @@ class KalmanStateModel(ABC):
     DESCRIPTION = "Base class for Kalman state models, providing a framework for state estimation and filtering."
     VERSION = "1.0"
 
+    def name(self):
+        return type(self).NAME if hasattr(type(self), "NAME") else "Generic Kalman Model"
+    def description(self):
+        return type(self).DESCRIPTION if hasattr(type(self), "DESCRIPTION") else "No description available."
+    def version(self):
+        return type(self).VERSION if hasattr(type(self), "VERSION") else "0.0"
+    
+    @property
+    def type(self):
+        return KalmanStateType
+    
+    # Abstract methods for signal processing steps
     @abstractmethod # Preprocess the zk data before passing it to the Kalman filter
     def preprocess(self, zk, uk = None, **kwargs):
         pass
@@ -39,8 +42,31 @@ class KalmanStateModel(ABC):
     def postprocess(self, zk_hat, **kwargs):
         pass
 
+    # Metadata properties to configure plotting and representation
+    @property
+    @abstractmethod
+    def units(self):
+        """Dictionary mapping state types to units."""
+        pass
+    @property
+    @abstractmethod
+    def coords(self):
+        """List of coordinate names."""
+        pass
+    @property
+    @abstractmethod
+    def colors(self):
+        """Nested dictionary mapping KalmanObservationFlavor -> axis -> color."""
+        pass
+    @property
+    @abstractmethod
+    def linestyles(self):
+        """Nested dictionary mapping KalmanObservationFlavor -> axis -> linestyle."""
+        pass
+
     def __init__(self, **kwargs):
 
+        self.records = []
         self.random_seed = kwargs.pop("random_seed", None)
         if self.random_seed: set_random_seed(self.random_seed)
 
@@ -83,24 +109,12 @@ class KalmanStateModel(ABC):
 
         self.reset()
 
-    def __len__(self):
-        """
-        Returns the number of posterior estimates.
-        """
-        return len(self.posterior) if self.posterior else 0
-
-    def print(self):
-        """
-        Print a summary of the Kalman state model.
-        """
-        print(self.__str__())
+    def __destroy__(self):
+        for record in self.records:
+            record.model = None
 
     def reset_with_latest(self):
-        """
-        Reset the model state to the latest estimates erasing all previous estimates.
-        """
         self.reset(with_latest=True)
-
     def reset(self, with_latest=False):
 
         if with_latest:
@@ -108,92 +122,23 @@ class KalmanStateModel(ABC):
             self.P0 = self.get_latest_state_covariance()
             self.x0 = self.get_latest_state_vector()
 
+        # Microstate variables
         self.P = self.P0
         self.x = self.x0
 
+        # Macrostate variables
         self.prior = []
         self.posterior = []
-        self.smooth_posterior = []
+        self.smooth = []
 
         self.measurement = []
         self.control = []
 
-        self.psik_hat = []
-        self.gk_hat = []
+    def __len__(self):
+        return len(self.posterior) if self.posterior else 0
 
-    def time(self, duration: float = None, k = None):
-        """
-        Returns the time vector based on the current sample rate.
-        If k is provided, returns the time of the k-th sample considering t0.
-        """
-        if k is not None:
-            return self.t0 + k / self.fs
-
-        duration = duration or len(self.posterior) / self.fs
-        n_samples = int(duration * self.fs)
-        return self.t0 + np.arange(n_samples) / self.fs if n_samples > 0 else np.array([])
-
-    def ideal(self, duration: float = None):
-        _, psik = self.sample(duration, process_noise=False, measurement_noise=False)
-        return psik
-
-    def truth(self, duration: float = None):
-        _, psik = self.sample(duration, process_noise=True, measurement_noise=False)
-        return psik
-
-    def duration(self):
-        """
-        Returns the duration of the current state estimation.
-        """
-        return len(self.posterior) / self.fs if self.fs else 0
-    
-    def _preprocess(self, zk, uk = None, **kwargs):
-        """
-        Preprocess the zk data before passing it to the Kalman filter.
-        Override this method in subclasses to implement specific preprocessing steps.
-        """
-        # Matrix dimension checks
-        if zk.shape[1] != self.m:
-            raise ValueError(f"zk data has incorrect number of columns. Expected {self.m}, got {format_shape(zk)}.")
-
-        zk, uk = self.preprocess(zk, uk, **kwargs)
-
-        # Ensure zk has valid dimensions
-        if zk.shape[1] != self.m:
-            raise ValueError(f"State vector data has incorrect number of columns. Expected {self.m}, got {format_shape(zk)}.")
-
-        if uk is not None and uk.shape[1] != self.l:
-            raise ValueError(f"Control data data has incorrect number of columns. Expected {self.l}, got {format_shape(uk)}.")
-
-        return zk, uk
-
-    def _inprocess(self, state_vector, **kwargs):
-        """
-        Transform the state vector to a different representation.
-        Override this method in subclasses to implement specific transformations.
-        """
-
-        if state_vector.shape[1] != self.n:
-            raise ValueError(f"State vector has incorrect dimensions. Expected {self.n}, got {format_shape(state_vector)}.")
-
-        state_vector = self.inprocess(state_vector, **kwargs)
-        if state_vector.shape[1] != self.n:
-            raise ValueError(f"Transformed state vector has incorrect dimensions. Expected {self.n} size, got {format_shape(state_vector)}.")
-
-        return state_vector
-    
-    def _postprocess(self, psik_hat, **kwargs):
-
-        zk_hat = np.array([self.H @ psi_hat for psi_hat in psik_hat])
-        gk_hat = self.postprocess(zk_hat, **kwargs)
-
-        # Matrix dimension checks
-        if gk_hat.shape[0] != len(gk_hat):
-            raise ValueError(f"Postprocessed result has incorrect number of rows. Expected {len(gk_hat)}, got {gk_hat.shape[0]}.")
-        if gk_hat.shape[1] != self.m:
-            raise ValueError(f"Postprocessed result has incorrect number of columns. Expected {self.m}, got {gk_hat.shape[1]}.")
-
-        return gk_hat
+    def print(self):
+        print(self.__str__())
 
     def __str__(self):
 
@@ -323,9 +268,105 @@ class KalmanStateModel(ABC):
         else:
             raise ValueError("Unsupported file format. Use '.json', '.npz', '.yaml', or '.xml'.")
 
+    def time(self, duration: float = None, k = None):
+        """
+        Returns the time vector based on the current sample rate.
+        If k is provided, returns the time of the k-th sample considering t0.
+        """
+        if k is not None:
+            return self.t0 + k / self.fs
+
+        duration = duration or len(self.posterior) / self.fs
+        n_samples = int(duration * self.fs)
+
+        return self.t0 + np.arange(n_samples) / self.fs if n_samples > 0 else np.array([])
+
+    def duration(self):
+        """
+        Returns the duration of the current state estimation.
+        """
+        return len(self.posterior) / self.fs if self.fs else 0
+    
+    def ideal(self, duration: float = None):
+        record = self.sample(duration, process_noise=False, measurement_noise=False)
+        return record.xk
+
+    def truth(self, duration: float = None):
+        record = self.sample(duration, process_noise=True, measurement_noise=False)
+        return record.xk, record.Pk
+
+    # State record management
+    def get_latest_record(self):
+        return self.records[-1] if self.records else None
+    def get_record(self, i):
+        return self.records[i] if self.records else None
+    def get_records(self):
+        return self.records
+    def clear_records(self):
+        self.records = []
+
+    def get_posterior_record(self) -> KalmanStateRecord:
+        if not self.posterior: return KalmanStateRecord()
+        return KalmanStateRecord(self, self.time(), self.get_posterior_state_vector(), self.get_posterior_state_covariance(), zk=self.get_measurement(), flavor=KalmanStateFlavor.POSTERIOR, model=self)
+    def get_prior_record(self) -> KalmanStateRecord:
+        if not self.prior: return KalmanStateRecord()
+        return KalmanStateRecord(self, self.time(), self.get_prior_state_vector(), self.get_prior_state_covariance(), zk=self.get_measurement(), flavor=KalmanStateFlavor.PRIOR, model=self)
+    def get_smooth_record(self) -> KalmanStateRecord:
+        if not self.smooth: return KalmanStateRecord()
+        return KalmanStateRecord(self, self.time(), self.get_smooth_state_vector(), self.get_smooth_state_covariance(), zk=self.get_measurement(), flavor=KalmanStateFlavor.SMOOTHED, model=self)
+
+    # Signal manipulation methods
+    def _preprocess(self, zk, uk = None, **kwargs):
+        """
+        Preprocess the zk data before passing it to the Kalman filter.
+        Override this method in subclasses to implement specific preprocessing steps.
+        """
+        # Matrix dimension checks
+        if zk.shape[1] != self.m:
+            raise ValueError(f"zk data has incorrect number of columns. Expected {self.m}, got {format_shape(zk)}.")
+
+        zk, uk = self.preprocess(zk, uk, **kwargs)
+
+        # Ensure zk has valid dimensions
+        if zk.shape[1] != self.m:
+            raise ValueError(f"State vector data has incorrect number of columns. Expected {self.m}, got {format_shape(zk)}.")
+
+        if uk is not None and uk.shape[1] != self.l:
+            raise ValueError(f"Control data data has incorrect number of columns. Expected {self.l}, got {format_shape(uk)}.")
+
+        return zk, uk
+
+    def _inprocess(self, state_vector, **kwargs):
+        """
+        Transform the state vector to a different representation.
+        Override this method in subclasses to implement specific transformations.
+        """
+
+        if state_vector.shape[1] != self.n:
+            raise ValueError(f"State vector has incorrect dimensions. Expected {self.n}, got {format_shape(state_vector)}.")
+
+        state_vector = self.inprocess(state_vector, **kwargs)
+        if state_vector.shape[1] != self.n:
+            raise ValueError(f"Transformed state vector has incorrect dimensions. Expected {self.n} size, got {format_shape(state_vector)}.")
+
+        return state_vector
+    
+    def _postprocess(self, xk_hat, **kwargs):
+
+        zk_hat = np.array([self.H @ x_hat for x_hat in xk_hat])
+        gk_hat = self.postprocess(zk_hat, **kwargs)
+
+        # Matrix dimension checks
+        if gk_hat.shape[0] != len(gk_hat):
+            raise ValueError(f"Postprocessed result has incorrect number of rows. Expected {len(gk_hat)}, got {gk_hat.shape[0]}.")
+        if gk_hat.shape[1] != self.m:
+            raise ValueError(f"Postprocessed result has incorrect number of columns. Expected {self.m}, got {gk_hat.shape[1]}.")
+
+        return gk_hat
+
     def sample_state(self, duration: float, **kwargs):
-        _, psik, psik_cov = self.sample_measurement(duration, **kwargs)
-        return psik, psik_cov
+        _, xk, Pk = self.sample_measurement(duration, **kwargs)
+        return xk, Pk
     def sample_state_vector(self, duration: float, **kwargs):
         return self._get_tuple(self.sample_state(duration, **kwargs), ith=0)
     def sample_state_covariance(self, duration: float, **kwargs):
@@ -339,11 +380,7 @@ class KalmanStateModel(ABC):
         """
             
         n_samples = int(duration * self.fs)
-        control_input = np.random.normal(
-            0, 1, (n_samples, self.l)
-        ) if self.l > 0 else np.zeros((n_samples, 1))
-        
-        return control_input
+        return np.random.normal(0, 1, (n_samples, self.l)) if self.l > 0 else np.zeros((n_samples, 1))
     
     def sample_process_noise(self, duration: float, **kwargs):
         """
@@ -387,8 +424,8 @@ class KalmanStateModel(ABC):
 
         n_samples = int(duration * self.fs)
         zk = np.zeros((n_samples, self.m, 1))
-        psik = np.zeros((n_samples, self.n, 1))
-        psik_cov = np.zeros((n_samples, self.n, self.n))
+        xk = np.zeros((n_samples, self.n, 1))
+        Pk = np.zeros((n_samples, self.n, self.n))
 
         x, P = kwargs.pop("x0", self.get_initial_state_vector()), kwargs.pop("P0", self.get_initial_state_covariance())
         if x.shape != (self.n, 1):
@@ -397,12 +434,12 @@ class KalmanStateModel(ABC):
             raise ValueError(f"Initial state covariance has incorrect dimensions. Expected {self.n}x{self.n}, got {format_shape(P)}.")
 
         for i in range(n_samples):
-            psik[i] = x
-            psik_cov[i] = P
+            xk[i] = x
+            Pk[i] = P
             zk[i] = self.H @ x
-            x, P = self.__predict(x, P, **kwargs)
+            x, P = self.__predict(x, P, **kwargs) # process noise sampling (in here)
 
-        return zk, psik, psik_cov  # observation vector, state vector, and state covariance
+        return zk, xk, Pk  # observation vector, state vector, and state covariance
 
     def sample(self, duration: float, **kwargs):
         '''
@@ -412,65 +449,21 @@ class KalmanStateModel(ABC):
 
         measurement_noise = kwargs.pop("measurement_noise", True)
         process_noise = kwargs.pop("process_noise", True)
-        zk, psik, _ = self.sample_measurement(duration, process_noise=process_noise, **kwargs)
+        zk, xk, Pk = self.sample_measurement(duration, process_noise=process_noise, **kwargs)
         if measurement_noise:
             zk += self.sample_measurement_noise(duration, **kwargs)
 
-        return zk, psik
+        return KalmanStateRecord(self.time(duration), zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self)
 
-    def _normalize_in(self, x, indexing=None):
-        """
-        Normalize the input zk to ensure it has the correct shape.
-        Converts vectors or lists into a column-shaped numpy array.
-        Supports indexing modes "ij" (default) or "xy" for convenience.
-        """
-        if x is None:
-            return None
-
-        indexing = indexing or "xy"
-        if indexing not in ["ij", "xy"]:
-            raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
-
-        x = np.asarray(x)
-        if x.ndim == 1:
-            x = np.expand_dims(x, axis=-1)
-
-        if indexing == "ij":
-            x = np.transpose(x, axes=(1, 0))
-
-        return x
-
-    def _normalize_out(self, x, indexing = None):
-        """
-        Normalize the output zk_hat to ensure it has the correct shape.
-        Converts vectors or lists into a column-shaped numpy array.
-        Supports indexing modes "ij" (default) or "xy" for convenience.
-        """        
-        if x is None:
-            return None
-
-        indexing = indexing or "xy"
-        if indexing not in ["ij", "xy"]:
-            raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
-        
-        x = np.asarray(x)
-        if x.ndim == 2 and x.shape[-1] == 1:
-            x = np.squeeze(x, axis=-1)
-
-        if indexing == "ij":
-            x = np.transpose(x, axes=(1, 0))
-
-        return x
-        
     def __predict(self, x, P, **kwargs):
 
         assert x.shape == (self.n,1), f"State vector has incorrect dimensions. Expected {self.x.shape}, got {format_shape(x)}."
         assert P.shape == (self.n, self.n), f"State covariance has incorrect dimensions. Expected {self.P.shape}, got {format_shape(P)}."
         
-        u = self._normalize_in(kwargs.pop("u", None) or np.zeros(self.l))
+        u = KalmanStateRecord._normalize_in(kwargs.pop("u", None) or np.zeros(self.l))
         assert u.shape == (self.l,1), f"Control input has incorrect dimensions. Expected {self.l}, got {format_shape(u)}."
 
-        w = self._normalize_in(self.sample_process_noise(1)[0] if kwargs.pop("process_noise", False) else np.zeros((self.n, 1)))
+        w = KalmanStateRecord._normalize_in(self.sample_process_noise(1)[0] if kwargs.pop("process_noise", False) else np.zeros((self.n, 1)))
         assert w.shape == (self.n, 1), f"Process noise has incorrect dimensions. Expected {self.n}, got {format_shape(w)}."
 
         x = self.F @ x + self.B @ u + w
@@ -489,23 +482,26 @@ class KalmanStateModel(ABC):
 
         return self.x, self.P
 
-    def __smooth(self, prior, posterior):
+    def __smooth(self, prior = None, posterior = None):
         """
         Rauch-Tung-Striebel (RTS) smoother.
         Requires that filter() has been run and stored prior and posterior estimates.
         """
+        prior = prior if prior is not None else self.prior
+        posterior = posterior if posterior is not None else self.posterior
+        
         N = len(posterior)
         assert N > 0, "No posterior estimates available for smoothing."
         assert len(prior) == N, "Prior estimates must match the number of posterior estimates."
         
         # Initialize last smoothed state as last posterior
-        smooth_posterior = [None] * N
-        smooth_posterior[-1] = posterior[-1]
+        smooth = np.zeros((N, 2), dtype=object)
+        smooth[-1] = posterior[-1]
         
         for k in reversed(range(N - 1)):
             x, P = posterior[k]
             xp, Pp = prior[k+1]
-            xs, Ps = smooth_posterior[k+1]
+            xs, Ps = smooth[k+1]
             
             # Compute smoothing gain (stable)
             if np.linalg.cond(Pp) < 1e12:
@@ -517,13 +513,14 @@ class KalmanStateModel(ABC):
             _xs = x + C @ (xs - xp)
             _Ps = P + C @ (Ps - Pp) @ C.T
             
-            smooth_posterior[k] = (_xs, _Ps)
+            smooth[k] = (_xs, _Ps)
         
-        return smooth_posterior
+        return smooth
     
     def filter(self, gk, uk = None, **kwargs):
 
         indexing = kwargs.pop("indexing", "xy")
+        preprocess = kwargs.pop("preprocess", True)
 
         reset    = kwargs.pop("reset", True)
         buffer   = kwargs.pop("buffer", 60) # in seconds
@@ -533,15 +530,18 @@ class KalmanStateModel(ABC):
             self.reset()
        
         # normalize input data
+        gk = gk.zk if isinstance(gk, KalmanStateRecord) else gk
+        gk = KalmanStateRecord._normalize_in(gk, indexing=indexing)
+        assert gk.shape[1] == self.m, f"gk data has incorrect number of columns. Expected {self.m}, got {format_shape(gk)}."
+        
+        # normalize control data
+        uk = uk.zk if isinstance(uk, KalmanStateRecord) else uk
         if uk is None or len(uk) < 1:
             uk = np.zeros((len(gk), self.l)) if self.l > 0 else None
-
-        gk = self._normalize_in(gk)
-        assert gk.shape[1] == self.m, f"gk data has incorrect number of columns. Expected {self.m}, got {format_shape(gk)}."
-        uk = self._normalize_in(uk)
+        uk = KalmanStateRecord._normalize_in(uk, indexing=indexing)
         assert uk.shape[1] == self.l, f"uk data has incorrect number of columns. Expected {self.l}, got {format_shape(uk)}."
 
-        zk, uk = self.preprocess(gk, uk)
+        zk, uk = self.preprocess(gk, uk) if preprocess else (gk, uk)
         assert self.m == 1 or zk.shape[1] == self.m, f"zk data has incorrect number of columns. Expected ({self.m},1), got {format_shape(zk)}."
         assert self.l == 1 or uk is None or uk.shape[1] == self.l, f"uk data has incorrect number of columns. Expected ({self.l},1), got {format_shape(uk)}."
 
@@ -557,82 +557,41 @@ class KalmanStateModel(ABC):
             self.x, self.P = self.__update(z)
             self.posterior.append((self.x, self.P)) 
 
-        # kalman posterior estimates
-        self.posterior_psik_hat = self._inprocess(self.get_posterior_state_vector(), **kwargs)
-        self.posterior_gk_hat = self._postprocess(self.posterior_psik_hat, **kwargs) 
-
-        # kalman prior estimates
-        self.prior_psik_hat = self._inprocess(self.get_prior_state_vector(), **kwargs)
-        self.prior_gk_hat = self._postprocess(self.prior_psik_hat, **kwargs) 
-
         # kalman smoothing (backward pass)
+        smooth = kwargs.get("smooth", False)
+        if smooth: self.smooth = self.__smooth()
+
+        self.records.append(self.get_output(indexing=indexing, **kwargs))
+        return self.records[-1]
+
+    def get_output(self, k = None, **kwargs):
+
+        postprocess = kwargs.pop("postprocess", True)
         smooth = kwargs.pop("smooth", False)
-        if smooth:
-            self.smooth_posterior = self.__smooth(self.prior, self.posterior)
-            self.smooth_psik_hat = self._inprocess(self.get_smooth_state_vector(), **kwargs)
-            self.smooth_gk_hat = self._postprocess(self.smooth_psik_hat, **kwargs)
 
-        return self.get_output(indexing=indexing)
+        if self.prior is None or self.posterior is None:
+            raise ValueError("No prior or posterior estimates available. Please run filter() first.")
 
-    def _normalize_index(self, idx, size=None):
-        """Convert int, Enum, or tuple/list/array to np.array of ints."""
-        if isinstance(idx, (tuple, list, np.ndarray)):
-            return np.array([i.value if hasattr(i, "value") else int(i) for i in idx])
-        else:
-            i = idx.value if hasattr(idx, "value") else int(idx)
-            if size is not None:
-                return np.array([i] * size)
-            return np.array([i])
+        xk_hat, Pk_hat = self.get_posterior_state_vector(), self.get_posterior_state_covariance()
+        if smooth: xk_hat = self.get_smooth_state_vector()
+            
+        zk_hat = self._inprocess(xk_hat, **kwargs)
+        if postprocess: zk_hat = self._postprocess(zk_hat, **kwargs)
 
-    def _normalize_component(self, component, type: KalmanStateType = None, dim = 1):
-        """
-        Normalize component to a tuple of length `dim`.
-
-        Rules:
-        - If a single value is passed, repeat it `dim` times.
-        - If a list/tuple/array of length < dim, repeat the last element to reach dim.
-        - If length > dim, truncate to dim.
-        - Always returns a tuple of length dim.
-        """
-
-        if not isinstance(component, (list, tuple, np.ndarray)):
-            components = [component]
-        else:
-            components = list(component)
-
-        if not components:
-            components = [0]
-
-        # Extend or truncate to match dim
-        if len(components) < dim:
-            components += [components[-1]] * (dim - len(components))
-        elif len(components) > dim:
-            components = components[:dim]
-
-        # Convert all to enum
-        if type is not None:
-            components = [str2enum(c, type) for c in components]
-
-        return tuple(components)
-
-    def get_mapping(self, meas_idx: KalmanStateType):
-        
-        meas_idx = meas_idx.value if hasattr(meas_idx, 'value') else int(meas_idx)
-        idx = meas_idx
-
-        assert 0 <= idx < self.m, f"Measurement index out of range. Expected 0 <= idx < {self.m}, got {idx}."
-        return idx
+        return KalmanStateRecord(self.time(k), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=KalmanStateFlavor.SMOOTHED if smooth else KalmanStateFlavor.POSTERIOR, model=self)
     
     def exclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple):
+
         """Check if measurement(s) exclusively observe state(s)."""
         # Convert to arrays
         if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
+            
             # Determine broadcasting length
             n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
                     len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
-            state_idx = self._normalize_index(state_idx, n)
-            meas_idx  = self._normalize_index(meas_idx, n)
-
+            
+            state_idx = KalmanStateRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
             for i in range(n):
                 if self.exclusive_mapping(state_idx[i], meas_idx[i]) is False:
                     return False
@@ -640,10 +599,12 @@ class KalmanStateModel(ABC):
             return True if n else False
 
         else:
+
             s = state_idx.value if hasattr(state_idx, 'value') else int(state_idx)
-            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
             assert 0 <= s < self.n
+            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
             assert 0 <= m < self.m
+
             coeff = self.H[m, s]
             return coeff != 0
 
@@ -653,8 +614,10 @@ class KalmanStateModel(ABC):
             # Determine broadcasting length
             n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
                     len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
-            state_idx = self._normalize_index(state_idx, n)
-            meas_idx  = self._normalize_index(meas_idx, n)
+            
+            print("BROADCAST: ",state_idx, meas_idx, n)
+            state_idx = KalmanStateRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
 
             for i in range(n):
                 if self.inclusive_mapping(state_idx[i], meas_idx[i]) is False:
@@ -678,25 +641,20 @@ class KalmanStateModel(ABC):
     def get_measurement_noise_covariance(self):
         return self.R
 
-    def get_measurement(self, k = None, indexing=None):
-        return self._normalize_out(self.measurement, indexing=indexing) if k is None else self.measurement[k]
+    def get_measurement(self, k = None, indexing = None):
+        return KalmanStateRecord._normalize_out(self.measurement, indexing=indexing) if k is None else self.measurement[k]
 
-    def get_output(self, k = None, indexing=None):
-        psik_hat = self._normalize_out(self.psik_hat, indexing=indexing) if k is None else self.psik_hat[k]
-        gk_hat = self._normalize_out(self.gk_hat, indexing=indexing) if k is None else self.gk_hat[k]
-        return gk_hat, psik_hat
-    
-    def get_observation(self, H = None, k=None, indexing=None):
+    def get_observation(self, H = None, k=None, indexing = None):
         H = self.H if H is None else np.asarray(H)
         assert H.shape == (self.m, self.n), f"Observation matrix H has incorrect dimensions. Expected {self.m}x{self.n}, got {format_shape(H)}."
-        return self._normalize_out([H @ psi for psi in self.psik_hat] if k is None else H @ self.psik_hat[k], indexing=indexing)
+        return KalmanStateRecord._normalize_out([H @ x for x in self.xk_hat] if k is None else H @ self.xk_hat[k], indexing=indexing)
 
-    def get_control(self, k = None, indexing=None):
+    def get_control(self, k = None, indexing = None):
         return self.get_control_vector(k, indexing=indexing), self.B
-    def get_control_vector(self, k = None, indexing=None):
+    def get_control_vector(self, k = None, indexing = None):
         if self.control is None or len(self.control) == 0:
-            return self._normalize_out(np.zeros((0, self.l))) if k is None else np.zeros((1, self.l))
-        return self._normalize_out(self.control, indexing=indexing) if k is None else self.control[k]
+            return KalmanStateRecord._normalize_out(np.zeros((0, self.l))) if k is None else np.zeros((1, self.l))
+        return KalmanStateRecord._normalize_out(self.control, indexing=indexing) if k is None else self.control[k]
     def get_control_matrix(self):
         return self.B
 
@@ -710,7 +668,7 @@ class KalmanStateModel(ABC):
     def initial_state(self, x0 = None, P0 = None):
 
         if x0 is not None:
-            x0 = self._normalize_in(x0)
+            x0 = KalmanStateRecord._normalize_in(x0)
             if x0.shape != (self.n,1):
                 warnings.warn(
                     f"Initial state vector dimension expected {self.n}x1, got {format_shape(x0)}. Automatic resizing applied."
@@ -721,7 +679,7 @@ class KalmanStateModel(ABC):
             self.x0 = x0
 
         if P0 is not None:
-            P0 = self._normalize_in(P0)
+            P0 = KalmanStateRecord._normalize_in(P0)
             if P0.shape != (self.n, self.n):
                 warnings.warn(
                     f"Initial state covariance dimension expected {self.n}x{self.n}, got {format_shape(P0)}. Automatic resizing applied."
@@ -768,7 +726,8 @@ class KalmanStateModel(ABC):
         return self._postprocess(zk_hat, **kwargs)
 
     def get_smooth_state(self, i = None): # estimated state incorporating the ith measurement
-        return self.smooth_posterior if i is None else self.smooth_posterior[i]
+        self.smooth = self.smooth if self.smooth is not None else self.__smooth()
+        return self.smooth if i is None else self.smooth[i]
     def get_smooth_state_vector(self, i = None):
         return self._get_tuple(self.get_smooth_state(i), ith=0)
     def get_smooth_state_covariance(self, i = None):
@@ -834,408 +793,3 @@ class KalmanStateModel(ABC):
         if isinstance(state, tuple):
             return state[ith]
         return np.array([s[ith] for s in state])
-
-    @property
-    @abstractmethod
-    def labels(self):
-        """Dictionary mapping state types to labels."""
-        pass
-
-    @property
-    @abstractmethod
-    def units(self):
-        """Dictionary mapping state types to units."""
-        pass
-
-    @property
-    @abstractmethod
-    def coords(self):
-        """List of coordinate names."""
-        pass
-
-    @property
-    @abstractmethod
-    def colors(self):
-        """Nested dictionary mapping KalmanOutputType -> axis -> color."""
-        pass
-
-    @property
-    @abstractmethod
-    def linestyles(self):
-        """Nested dictionary mapping KalmanOutputType -> axis -> linestyle."""
-        pass
-
-    def plot(self, **kwargs):
-
-        """
-        Public plot method. Dispatches to _plot3D if self.dim > 2 and axis=None,
-        otherwise falls back to _plot2D.
-        """
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-
-        # Mode parsing
-        component = kwargs.pop("component", 0)
-        component = self._normalize_component(component)
-        dim = kwargs.get("dim", None)
-
-        # Dispatch
-        if dim is None and len(component) > 2:
-            return self._plot3D(component, **kwargs)
-        elif dim is None and len(component) > 1:
-            return self._plot2D(component, **kwargs)
-        else:
-            return self._plot1D(component, **kwargs)
-
-    def _plot1D(self, component, **kwargs):
-
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-
-        # Determine axes parameter
-        dim = kwargs.pop("dim", None)
-        state_vec = self.get_posterior_state_vector()
-        ideal = self.ideal(duration=self.duration())
-        truth = kwargs.pop("truth", None)
-        measurement = self._normalize_out(self.get_measurement())
-
-        # Determine limits with padding, comparing with current plot limits
-        padding = kwargs.pop("padding", 0.05)
-        legend = kwargs.pop("legend", True)
-        
-        # --- 2D branch ---
-        c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
-
-        if dim is None:
-            axes = list(range(self.dim))
-        elif isinstance(dim, (list, tuple)):
-            axes = dim
-        else:
-            axes = [dim]
-
-        for a in axes:
-            if not (0 <= a < self.dim):
-                raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
-
-        component = component[0]  # Use only the first component for 1D plot
-        
-        # Initialize y_min and y_max
-        current_ylim = c.get_ylim() # Check all ylim from all canvas 
-        y_min, y_max = current_ylim if current_ylim else (np.inf, -np.inf)
-        for a in axes:
-
-            idx = self.dim * a + int(component.value)
-            if measurement is not None and self.exclusive_mapping(idx, a):
-                y_min = min(y_min, measurement[:, a].min())
-                y_max = max(y_max, measurement[:, a].max())
-            if ideal is not None:
-                y_min = min(y_min, ideal[:, idx].min())
-                y_max = max(y_max, ideal[:, idx].max())
-            if truth is not None and truth.shape[1] > idx:
-                y_min = min(y_min, truth[:, idx].min())
-                y_max = max(y_max, truth[:, idx].max())
-
-            y_min = min(y_min, state_vec[:, idx].min())
-            y_max = max(y_max, state_vec[:, idx].max())
-            
-            y_range = y_max - y_min
-            y_min -= padding * y_range
-            y_max += padding * y_range
-
-            if "fig" not in kwargs and kwargs.pop("units", True):
-                X0 = self._normalize_out(self.get_initial_state_vector())[idx]
-                c.axhline(X0, color='black', alpha=1, linestyle=':', linewidth=0.75)  # x-axis reference
-                c.axvline(0, color='black', alpha=1, linestyle=':', linewidth=0.75)  # y-axis reference
-
-            if measurement is not None and self.exclusive_mapping(idx, a):
-                c.scatter(
-                    t, measurement[:, a], s=1, 
-                    label=f"{self.coords[a]} (Measured)", 
-                    color=self.colors[KalmanOutputType.MEASUREMENT].get(a % len(self.colors[KalmanOutputType.MEASUREMENT]), "gray")
-                )
-
-            if ideal is not None:
-                c.plot(t, ideal[:, idx], self.linestyles[KalmanOutputType.IDEAL].get(a % len(self.linestyles[KalmanOutputType.IDEAL]), "-"),
-                       label=f"{self.coords[a]} (Ideal)", 
-                       color=self.colors[KalmanOutputType.IDEAL].get(a % len(self.colors[KalmanOutputType.IDEAL]), "gray"))
-
-            if truth is not None and truth.shape[1] > idx:
-                c.plot(t, truth[:, idx], self.linestyles[KalmanOutputType.TRUTH].get(a % len(self.linestyles[KalmanOutputType.TRUTH]), "--"),
-                       label=f"{self.coords[a]} (Truth)", 
-                       color=self.colors[KalmanOutputType.TRUTH].get(a % len(self.colors[KalmanOutputType.TRUTH]), "gray"))
-
-            c.plot(t, state_vec[:, idx], 
-                   label=f"{self.coords[a]} (" + ("Smoothed " if len(self.smooth_posterior) else "") + "Estimate)", 
-                   color=self.colors[KalmanOutputType.ESTIMATE].get(a % len(self.colors[KalmanOutputType.ESTIMATE]), "gray"))
-
-        c.set_xlim(kwargs.pop("xlim", None))
-        c.set_ylim(kwargs.pop("ylim", (y_min, y_max)))
-
-        c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
-        if legend:
-            c.set_ylabel(kwargs.pop("label", f"{self.labels[component]} ({self.units[component]})"))
-        else:
-            c.set_ylabel(kwargs.pop("label", f"{self.labels[component]} ({self.units[component]}) along {self.coords[dim or 0]}"))
-
-        c.grid(kwargs.pop("grid", True))
-        if legend:
-            c.legend(fontsize=10, handlelength=4, handleheight=0.01)
-
-        return get_figure(c), get_axis(c)
-
-    def _plot2D(self, component, **kwargs):
-        """
-        Plot the ballistic trajectory in 2D (x vs y). Supports multiple components.
-        `component` can be a single value, tuple/list, or array of length 2.
-        """
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-
-        # Normalize component to a tuple of length 2
-        component = self._normalize_component(component, dim=2)
-
-        # Determine state vectors
-        state_vec = self.get_posterior_state_vector()
-        ideal = self.ideal(duration=self.duration())
-        truth = kwargs.pop("truth", None)
-        measurement = self._normalize_out(self.get_measurement())
-
-        # Common kwargs
-        padding = kwargs.pop("padding", 0.05)
-        projectors = kwargs.pop("projectors", True)
-        connectors = kwargs.pop("connectors", True)
-
-        # Canvas / figure
-        fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize",(8,8)))
-        ax = fig.add_subplot(1,1,1)
-
-        # Map components to state indices
-        i0, i1 = self.get_mapping(component[0], axis=0), self.get_mapping(component[1], axis=1)
-        X, Y = state_vec[:, i0], state_vec[:, i1]
-        X0, Y0 = self._normalize_out(self.get_initial_state_vector())[i0], self._normalize_out(self.get_initial_state_vector())[i1]
-        TX, TY = (truth[:, i0], truth[:, i1]) if truth is not None else (None, None)
-        IX, IY = (ideal[:, i0], ideal[:, i1]) if ideal is not None else (None, None)
-
-        # Measurements
-        if self.exclusive_mapping((i0,i1), component):
-            if measurement is not None and measurement.shape[1] >= 2:
-                ax.scatter(measurement[:,0], measurement[:,1], s=1, color='black', alpha=0.75, label="Measurements")
-
-        # Determine plot limits
-        xmin = min(X.min(), TX.min() if TX is not None else X.min(), IX.min() if IX is not None else X.min())
-        xmax = max(X.max(), TX.max() if TX is not None else X.max(), IX.max() if IX is not None else X.max())
-        ymin = min(Y.min(), TY.min() if TY is not None else Y.min(), IY.min() if IY is not None else Y.min())
-        ymax = max(Y.max(), TY.max() if TY is not None else Y.max(), IY.max() if IY is not None else Y.max())
-
-        # Apply padding
-        xpad = padding * (xmax - xmin)
-        ypad = padding * (ymax - ymin)
-        ax.set_xlim(xmin - xpad, xmax + xpad)
-        ax.set_ylim(ymin - ypad, ymax + ypad)
-
-        # Plot ideal, truth, estimate
-        if IX is not None:
-            ax.plot(IX, IY, label='Ideal', color=self.colors[KalmanOutputType.IDEAL].get(0, "gray"),
-                    linestyle=self.linestyles[KalmanOutputType.IDEAL].get(0, "-"))
-        if TX is not None:
-            ax.plot(TX, TY, label='Truth', color=self.colors[KalmanOutputType.TRUTH].get(0, "gray"),
-                    linestyle=self.linestyles[KalmanOutputType.TRUTH].get(0, "--"))
-
-        ax.plot(X, Y, label=("Smoothed " if len(self.smooth_posterior) else "") + "Estimate",
-                color=self.colors[KalmanOutputType.ESTIMATE].get(0, "black"), linewidth=2)
-
-        # Projectors / connectors (optional)
-        if projectors:
-            ax.plot(X, [Y0]*len(X), color=self.colors[KalmanOutputType.ESTIMATE].get(1, "gray"),
-                    linestyle=self.linestyles[KalmanOutputType.ESTIMATE].get(1, "-"), alpha=0.5)
-            ax.plot([X0]*len(Y), Y, color=self.colors[KalmanOutputType.ESTIMATE].get(0, "gray"),
-                    linestyle=self.linestyles[KalmanOutputType.ESTIMATE].get(0, "-"), alpha=0.5)
-            if connectors:
-                for j in (0, len(X)-1):
-                    ax.plot([X0, X[j]], [Y0, Y[j]], color='gray', linestyle='-.', alpha=0.5, linewidth=0.5)
-
-        # Labels and grid
-        ax.set_xlabel(f"{self.coords[0]} {self.labels[component[0]]} ({self.units[component[0]]})")
-        ax.set_ylabel(f"{self.coords[1]} {self.labels[component[1]]} ({self.units[component[1]]})")
-        ax.grid(kwargs.pop("grid", True))
-        if kwargs.pop("legend", True):
-            ax.legend(fontsize=10)
-
-        return fig, ax
-
-    def _plot3D(self, component, **kwargs):
-        """
-        Plot the ballistic trajectory:
-          - 3D view (with projections & connectors) if dim>2 and axis=None.
-          - Otherwise: 2D plot of Position / Speed / Acceleration vs time.
-        """
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-        
-        # Normalize component to a list of length 3
-        component = self._normalize_component(component, dim=self.dim)
-
-        # Determine axes parameter
-        state_vec = self.get_posterior_state_vector()
-        ideal = self.ideal(duration=self.duration())
-        truth = kwargs.pop("truth", None)
-                
-        # Common kwargs for plot styling
-        plot_kwargs = kwargs.pop("plot", {"color": "black", "linestyle": "-.", "linewidth": 0.5, "alpha": 0.5})
-
-        # Padding factor
-        padding = kwargs.pop("padding", 0)
-
-        fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize",(10,10)))
-        ax = fig.add_subplot(projection='3d')
-
-        i0, i1, i2 = self.get_mapping(component[0], axis=0), self.get_mapping(component[1], axis=1), self.get_mapping(component[2], axis=2)
-        X,  Y,  Z  = state_vec[:, i0], state_vec[:, i1], state_vec[:, i2]
-        X0, Y0, Z0 = self._normalize_out(self.get_initial_state_vector())[i0], self._normalize_out(self.get_initial_state_vector())[i1], self._normalize_out(self.get_initial_state_vector())[i2]
-        TX, TY, TZ = None, None, None
-        if truth is not None:
-            TX, TY, TZ = truth[:, i0], truth[:, i1], truth[:, i2]
-        IX, IY, IZ = None, None, None
-        if ideal is not None:
-            IX, IY, IZ = ideal[:, i0], ideal[:, i1], ideal[:, i2]
-
-        projectors = kwargs.pop("projectors", True)
-        connectors = kwargs.pop("connectors", True)
-        
-        if self.exclusive_mapping([0,1,2], component):
-            meas = self._normalize_out(self.get_measurement())
-            if meas is not None and meas.shape[1] >= 3:
-                ax.scatter(meas[:,0], meas[:,1], meas[:,2], label='Measurements', color='black', s=1, alpha=0.75, depthshade=False)
-
-        # Ensure X0, Y0, Z0 are within the limit range
-        x0, y0, z0 = np.clip(X0, X.min(), X.max()), np.clip(Y0, Y.min(), Y.max()), np.clip(Z0, Z.min(), Z.max())
-        
-        # Apply padding
-        if isinstance(padding, (tuple, list)) and len(padding) == 3:
-            xpad, ypad, zpad = padding
-        else:
-            xpad = ypad = zpad = padding
-
-        xlim = (min(X.min(), TX.min() if TX is not None else X.min(), IX.min() if IX is not None else X.min()) - xpad*(X.max()-X.min()),
-                max(X.max(), TX.max() if TX is not None else X.max(), IX.max() if IX is not None else X.max()) + xpad*(X.max()-X.min()))
-        ylim = (min(Y.min(), TY.min() if TY is not None else Y.min(), IY.min() if IY is not None else Y.min()) - ypad*(Y.max()-Y.min()),
-                max(Y.max(), TY.max() if TY is not None else Y.max(), IY.max() if IY is not None else Y.max()) + ypad*(Y.max()-Y.min()))
-        zlim = (min(Z.min(), TZ.min() if TZ is not None else Z.min(), IZ.min() if IZ is not None else Z.min()) - zpad*(Z.max()-Z.min()),
-                max(Z.max(), TZ.max() if TZ is not None else Z.max(), IZ.max() if IZ is not None else Z.max()) + zpad*(Z.max()-Z.min()))
-
-        xlim = kwargs.pop("xlim", xlim)
-        if xlim[0] != xlim[1]: ax.set_xlim(xlim)
-        ylim = kwargs.pop("ylim", ylim)
-        if ylim[0] != ylim[1]: ax.set_ylim(ylim)
-        zlim = kwargs.pop("zlim", zlim)
-        if zlim[0] != zlim[1]: ax.set_zlim(zlim)
-
-        # Lines along XYZ-axis
-        if x0 != xlim[0] and x0 != xlim[1]:
-            ax.plot([xlim[0], xlim[1]], [y0, y0], [z0, z0], **plot_kwargs)
-        if y0 != ylim[0] and y0 != ylim[1]:
-            ax.plot([x0, x0], [ylim[0], ylim[1]], [z0, z0], **plot_kwargs)
-        if z0 != zlim[0] and z0 != zlim[1]:
-            if x0 != xlim[0]:
-                ax.plot([xlim[0], xlim[1]], [y0, y0], [zlim[0], zlim[0]], **plot_kwargs)
-            if y0 != ylim[0]:
-                ax.plot([x0, x0], [ylim[0], ylim[1]], [zlim[0], zlim[0]], **plot_kwargs)
-
-        # Outline XY plane
-        if z0 != zlim[0] and z0 != zlim[1]:
-            ax.plot([xlim[0], xlim[1]], [ylim[0], ylim[0]], [z0, z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[0], ylim[1]], [z0, z0], **plot_kwargs)
-
-        # Projecting lines from Z0 to Zmin
-        if z0 != zlim[0]:        
-            ax.plot([xlim[0], xlim[0]], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[0], xlim[0]], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-        
-            if x0 != xlim[0] and x0 != xlim[1]:
-                ax.plot([x0, x0], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-                ax.plot([x0, x0], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-            if x0 != xlim[0] and x0 != xlim[1] and y0 != ylim[0] and y0 != ylim[1]:
-                ax.plot([x0, x0], [y0, y0], [zlim[0], z0], **plot_kwargs)
-            if y0 != ylim[0] and y0 != ylim[1]:
-                ax.plot([xlim[1], xlim[1]], [y0, y0], [zlim[0], z0], **plot_kwargs)
-                ax.plot([xlim[0], xlim[0]], [y0, y0], [zlim[0], z0], **plot_kwargs)
-
-        if ideal is not None:
-            ax.plot(IX, IY, IZ, label='Ideal', color=self.colors[KalmanOutputType.IDEAL].get(0, "black"), linestyle=self.linestyles[KalmanOutputType.IDEAL].get(0))
-        if truth is not None:
-            ax.plot(TX, TY, TZ, label='Truth', color=self.colors[KalmanOutputType.TRUTH].get(0, "black"), linestyle=self.linestyles[KalmanOutputType.TRUTH].get(0))
-
-        if projectors:
-            z0, y0, x0 = float(Z0), float(ylim[1]), float(xlim[0])
-            ax.plot(X,           Y,          [Z0]*len(Z), color=self.colors[KalmanOutputType.ESTIMATE].get(0, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.ESTIMATE].get(0, "-"))
-            ax.plot(X,          [y0]*len(X), Z,           color=self.colors[KalmanOutputType.ESTIMATE].get(1, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.ESTIMATE].get(1, "-"))
-            ax.plot([x0]*len(Y), Y,          Z,           color=self.colors[KalmanOutputType.ESTIMATE].get(2, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.ESTIMATE].get(2, "-"))
-            
-            ax.plot(IX,           IY,          [Z0]*len(IZ), color=self.colors[KalmanOutputType.IDEAL].get(0, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.IDEAL].get(0, "-"))
-            ax.plot(IX,          [y0]*len(IX), IZ,           color=self.colors[KalmanOutputType.IDEAL].get(1, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.IDEAL].get(1, "-"))
-            ax.plot([x0]*len(IY), IY,          IZ,           color=self.colors[KalmanOutputType.IDEAL].get(2, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.IDEAL].get(2, "-"))
-            
-            ax.plot(TX,           TY,          [Z0]*len(TZ), color=self.colors[KalmanOutputType.TRUTH].get(0, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.TRUTH].get(0, "-"))
-            ax.plot(TX,          [y0]*len(TX), TZ,           color=self.colors[KalmanOutputType.TRUTH].get(1, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.TRUTH].get(1, "-"))
-            ax.plot([x0]*len(TY), TY,          TZ,           color=self.colors[KalmanOutputType.TRUTH].get(2, "gray"), alpha=0.75, linestyle=self.linestyles[KalmanOutputType.TRUTH].get(2, "-"))
-            if connectors:
-                for j in (0, len(X)-1):
-                    xi, yi, zi = float(X[j]), float(Y[j]), float(Z[j])
-                    ax.plot([xi,xi],[yi,yi],[z0,zi], color=self.colors[KalmanOutputType.ESTIMATE].get(0, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
-                    ax.plot([xi,xi],[y0,yi],[zi,zi], color=self.colors[KalmanOutputType.ESTIMATE].get(1, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
-                    ax.plot([x0,xi],[yi,yi],[zi,zi], color=self.colors[KalmanOutputType.ESTIMATE].get(2, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
-
-        ax.plot(X, Y, Z, label=("Smoothed " if len(self.smooth_posterior) else "") + 'Estimate', color=self.colors[KalmanOutputType.ESTIMATE].get(0, "black"), linewidth=2)
-        ax.set_xlabel(kwargs.pop("xlabel", self.coords[0] + " " + self.labels[component[0]] + " (" + self.units[component[0]] + ")"))
-        ax.set_ylabel(kwargs.pop("ylabel", self.coords[1] + " " + self.labels[component[1]] + " (" + self.units[component[1]] + ")"))
-        ax.set_zlabel(kwargs.pop("zlabel", self.coords[2] + " " + self.labels[component[2]] + " (" + self.units[component[2]] + ")"))
-        
-        ax.grid(kwargs.pop("grid", True))
-        ax.set_box_aspect([1,1,1])
-        if kwargs.pop("legend", True):
-            ax.legend(fontsize=10, handlelength=4, handleheight=0.01)
-
-        return fig, ax
-    
-    def plot_error(self, **kwargs):
-        """
-        Plot the estimation error of the state vector.
-        """
-        t = self.time()
-        if t is None or len(t) == 0:
-            return None, None
-        
-        state_vec = self.get_posterior_state_vector()
-        ideal = self.ideal(duration=self.duration())
-        truth = kwargs.pop("truth", None)
-        
-        if ideal is None and truth is None:
-            raise ValueError("Either ideal or truth data must be provided for error plotting.")
-        
-        if ideal is not None:
-            error_ideal = state_vec - ideal
-        if truth is not None:
-            error_truth = state_vec - truth
-        
-        fig, ax = get_canvas(figsize=kwargs.pop("figsize", (10, 6)))
-        
-        for i in range(state_vec.shape[1]):
-            if ideal is not None:
-                ax.plot(t, error_ideal[:, i], label=f'Error Ideal State {i+1}', linestyle='--')
-            if truth is not None:
-                ax.plot(t, error_truth[:, i], label=f'Error Truth State {i+1}', linestyle=':')
-        
-        ax.set_title("Estimation Error")
-        ax.set_xlabel("Time (s)")
-        ax.set_ylabel("Error")
-        ax.axhline(0, color='black', linestyle=':', linewidth=0.75)
-        ax.legend()
-        plt.tight_layout()
-        
-        return fig, ax

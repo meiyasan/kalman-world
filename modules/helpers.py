@@ -5,11 +5,18 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
+from enum import Enum
 import random
 import numpy as np
 def set_random_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
+
+def format_shape(x):
+    try:
+        return "x".join(map(str, np.asarray(x).shape))
+    except Exception:
+        return str(type(x))
 
 def show_canvas(canvas = None, **kwargs):
     from IPython.display import display
@@ -80,7 +87,7 @@ def get_canvas3d(*args, **kwargs):
     kwargs["projection"] = "3d"
     return get_canvas(*args, **kwargs)
 
-def str2enum(e, _type):
+def str2enum(e, _type: Enum):
 
     if isinstance(e, str):
         try:
@@ -89,7 +96,7 @@ def str2enum(e, _type):
             raise ValueError(f"Invalid component '{e}'. Must be one of {list(_type)}")
 
     if not isinstance(e, _type):
-        raise ValueError(f"Component must be one of {list(_type)}")
+        raise ValueError(f"Component must be one of {list(_type)}; got {e.__repr__()}")
 
     return e
 
