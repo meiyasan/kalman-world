@@ -1084,13 +1084,13 @@ class KalmanStateRecord:
                 ax.scatter(measurement[:, dx], measurement[:, dy], measurement[:, dz],
                         depthshade=False, **kw_meas)
             if mx_ok and my_ok:
-                ax.scatter(measurement[:, dx], measurement[:, dy], np.full_like(measurement[:, dz], z0),
+                ax.scatter(measurement[:, dx], measurement[:, dy], np.full_like(measurement[:, dz], min(zlim)),
                         depthshade=False, **kw_meas_proj(dz))
             if mx_ok and mz_ok:
-                ax.scatter(measurement[:, dx], np.full_like(measurement[:, dy], ylim[1]), measurement[:, dz],
+                ax.scatter(measurement[:, dx], np.full_like(measurement[:, dy], max(ylim)), measurement[:, dz],
                         depthshade=False, **kw_meas_proj(dy))
             if my_ok and mz_ok:
-                ax.scatter(np.full_like(measurement[:, dx], xlim[0]), measurement[:, dy], measurement[:, dz],
+                ax.scatter(np.full_like(measurement[:, dx], min(xlim)), measurement[:, dy], measurement[:, dz],
                         depthshade=False, **kw_meas_proj(dx))
 
         # --- ancillary series -----------------------------------------------------
@@ -1113,17 +1113,17 @@ class KalmanStateRecord:
         # --- projections (drawn; legend will show proxies in base color) ----------
         if projectors:
             if X is not None and Y is not None and Z is not None:
-                ax.plot(X, Y, np.full_like(Z, z0), **kw_proj_state(dz))
-                ax.plot(X, np.full_like(X, ylim[1]), Z, **kw_proj_state(dy))
-                ax.plot(np.full_like(Y, xlim[0]), Y, Z, **kw_proj_state(dx))
+                ax.plot(X, Y, np.full_like(Z, min(zlim)), **kw_proj_state(dz))
+                ax.plot(X, np.full_like(X, max(ylim)), Z, **kw_proj_state(dy))
+                ax.plot(np.full_like(Y, min(xlim)), Y, Z, **kw_proj_state(dx))
             if IX is not None:
-                ax.plot(IX, IY, np.full_like(IZ, z0), **kw_proj_ideal(dz))
-                ax.plot(IX, np.full_like(IX, ylim[1]), IZ, **kw_proj_ideal(dy))
-                ax.plot(np.full_like(IY, xlim[0]), IY, IZ, **kw_proj_ideal(dx))
+                ax.plot(IX, IY, np.full_like(IZ, min(zlim)), **kw_proj_ideal(dz))
+                ax.plot(IX, np.full_like(IX, max(ylim)), IZ, **kw_proj_ideal(dy))
+                ax.plot(np.full_like(IY, min(xlim)), IY, IZ, **kw_proj_ideal(dx))
             if TX is not None:
-                ax.plot(TX, TY, np.full_like(TZ, z0), **kw_proj_true(dz))
-                ax.plot(TX, np.full_like(TX, ylim[1]), TZ, **kw_proj_true(dy))
-                ax.plot(np.full_like(TY, xlim[0]), TY, TZ, **kw_proj_true(dx))
+                ax.plot(TX, TY, np.full_like(TZ, min(zlim)), **kw_proj_true(dz))
+                ax.plot(TX, np.full_like(TX, max(ylim)), TZ, **kw_proj_true(dy))
+                ax.plot(np.full_like(TY, min(xlim)), TY, TZ, **kw_proj_true(dx))
 
         # --- connectors -----------------------------------------------------------
         if connectors and X is not None and len(X) > 0:
