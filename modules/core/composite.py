@@ -4,7 +4,7 @@ from scipy.linalg import block_diag
 
 from . import KalmanStateModel
 
-class KalmanObservationMode(Enum):
+class KalmanObservationStack(Enum):
     IDENTITY = "identity" # Full identity (each state observed directly)
     LINEAR   = "linear"   # Horizontal blocks for H and list for R (combined observations)
     CUSTOM   = "custom"   # User provides explicit H and R
@@ -14,7 +14,7 @@ class KalmanCompositeModel(KalmanStateModel):
     Composite Kalman Model that aggregates multiple Kalman models into one system.
     """
 
-    def __init__(self, *models, mode=KalmanObservationMode.CUSTOM, H=None, R=None):
+    def __init__(self, *models, mode=KalmanObservationStack.CUSTOM, H=None, R=None):
         if not models:
             raise ValueError("At least one model must be provided.")
         
@@ -33,13 +33,13 @@ class KalmanCompositeModel(KalmanStateModel):
         P0 = block_diag(*[m.P0 for m in models])
 
         # Define H and R based on observation mode
-        if mode == KalmanObservationMode.IDENTITY:
+        if mode == KalmanObservationStack.IDENTITY:
             H = block_diag(*[m.H for m in models])
             R = block_diag(*[m.R for m in models])
-        elif mode == KalmanObservationMode.LINEAR:
+        elif mode == KalmanObservationStack.LINEAR:
             H = np.hstack([m.H for m in models])       # Stack H matrices horizontally
             R = sum(m.R for m in models) / len(models) # Average of all R matrices
-        elif mode == KalmanObservationMode.CUSTOM:
+        elif mode == KalmanObservationStack.CUSTOM:
             if H is None or R is None:
                 raise ValueError("For CUSTOM mode, H and R must be provided by the user.")
         else:

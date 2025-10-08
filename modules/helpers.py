@@ -5,12 +5,112 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.axes import Axes
 
+import matplotlib.colors as mcolors
+import colorsys
+from collections.abc import Iterable, Mapping
+
 from enum import Enum
 import random
 import numpy as np
+
 def set_random_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
+
+try:
+    from colorspacious import cspace_convert
+    _HAS_COLORSPACIOUS = True
+except ImportError:
+    _HAS_COLORSPACIOUS = False
+
+def barycentric_interpolation(*colors, space="rgb"):
+    """
+    Compute the barycentric (average) color of a collection of colors.
+
+    Parameters
+    ----------
+    *colors : str | tuple | list | dict
+        Color specifications (names, hex codes, RGB tuples, or nested containers).
+        Dicts are flattened using their values.
+    space : {"rgb","lab"}, default="rgb"
+        Color space in which to average:
+        - "rgb": arithmetic mean in RGB (numerical average).
+        - "lab": perceptual mean in Lab (requires colorspacious).
+
+    Returns
+    -------
+    tuple of floats
+        (R, G, B) each in [0,1].
+    """
+    def _flatten(items):
+        for i in items:
+            if isinstance(i, str):
+                yield i
+            elif isinstance(i, Mapping):
+                yield from _flatten(i.values())
+            elif isinstance(i, Iterable):
+                yield from _flatten(i)
+            else:
+                yield i
+
+    flat_colors = list(_flatten(colors))
+    if not flat_colors:
+        raise ValueError("No colors provided")
+
+    # Convert to RGB triples
+    rgbs = np.array([mcolors.to_rgb(c) for c in flat_colors])
+
+    if space == "lab":
+        if not _HAS_COLORSPACIOUS:
+            raise RuntimeError("Lab averaging requires `colorspacious` installed.")
+        labs = cspace_convert(rgbs, "sRGB1", "CIELab")
+        mean_lab = labs.mean(axis=0)
+        mean_rgb = cspace_convert(mean_lab[np.newaxis, :], "CIELab", "sRGB1")[0]
+    else:
+        mean_rgb = rgbs.mean(axis=0)
+
+    return tuple(np.clip(mean_rgb, 0, 1))
+
+def rainbow(N, l=0.9, s=1):
+    """Generate N distinct colors in a rainbow spectrum."""
+    return [colorsys.hls_to_rgb(i / N, l, s) for i in range(N)]
+
+def darken(color, percent=0.5):
+    """Darken by moving lightness toward 0 (black)."""
+    rgb = mcolors.to_rgb(color)
+    h, l, s = colorsys.rgb_to_hls(*rgb)
+    l = l * (1 - percent)   # interpolate toward 0
+    return colorsys.hls_to_rgb(h, l, s)
+
+def lighten(color, percent=0.5):
+    """Lighten by moving lightness toward 1 (white)."""
+    rgb = mcolors.to_rgb(color)
+    h, l, s = colorsys.rgb_to_hls(*rgb)
+    l = l + (1 - l) * percent   # interpolate toward 1
+    return colorsys.hls_to_rgb(h, l, s)
+
+def fade(color, percent=0.5):
+    rgb = mcolors.to_rgb(color)
+    h, l, s = colorsys.rgb_to_hls(*rgb)
+    s = (1 - percent) * s   # interpolate to 0
+    return colorsys.hls_to_rgb(h, l, s)
+
+def vivid(color, percent=0.5):
+    rgb = mcolors.to_rgb(color)
+    h, l, s = colorsys.rgb_to_hls(*rgb)
+    s = s + (1 - s) * percent   # interpolate to 1
+    return colorsys.hls_to_rgb(h, l, s)
+
+def rotate(color, degrees = 30, units="degrees"):
+    """Return a color with the hue rotated by the given degrees."""
+    rgb = mcolors.to_rgb(color)
+    h, l, s = colorsys.rgb_to_hls(*rgb)
+
+    if units == "radians":
+        degrees = degrees * 180 / np.pi
+
+    h = (h + degrees / 360.0) % 1.0
+    return colorsys.hls_to_rgb(h, l, s)
 
 def format_shape(x):
     try:
@@ -48,6 +148,7 @@ def get_canvas(ncols: int = 1, nrows: int = 1, canvas = None, squeeze = True, **
         return canvas if nrows * ncols > 1 else canvas[0]
     
     if isinstance(canvas, Figure): # if passing a Figure
+        
         fig = canvas
         ax = fig.axes
 
@@ -58,14 +159,33 @@ def get_canvas(ncols: int = 1, nrows: int = 1, canvas = None, squeeze = True, **
         canvas = np.array(ax).reshape(nrows, ncols) if not squeeze else ax
         return canvas if nrows * ncols > 1 else canvas[0]
 
-    # Rearrange size (if new subplot set)
-    kwargs.setdefault("figsize", (5,5)) # Rearrange the total canvas size based on figsize and the number of rows and cols
-    kwargs["figsize"] = (ncols * kwargs["figsize"][0], nrows * kwargs["figsize"][1])
+    fig_kwargs = {}
+    for k in ["sharex", "sharey", "squeeze", "width_ratios", "height_ratios", "subplot_kw", "gridspec_kw"]:
+        if k in kwargs:
+            fig_kwargs[k] = kwargs.pop(k)
 
-    fig, ax = plt.subplots(nrows, ncols, **kwargs)
+    if "fig_kwargs" in kwargs:
+        fig_kwargs.update(kwargs.pop("fig_kwargs"))
+
+    figsize = fig_kwargs.pop("figsize", None) or kwargs.pop("figsize", (5,5))
+    
+    fig_kwargs.setdefault("figsize", (5,5))
+    fig_kwargs["figsize"] = (ncols * figsize[0], nrows * figsize[1])
+
+    fig, ax = plt.subplots(nrows, ncols, **fig_kwargs)
 
     canvas = np.array(ax).reshape(nrows, ncols) if not squeeze else np.array(ax).reshape(nrows * ncols) # canvas output 
     return canvas if nrows * ncols > 1 else canvas[0]
+
+def get_lines(**kwargs):
+    fig = kwargs.get("fig", None)
+    ax = kwargs.get("ax", None) or kwargs.get("canvas", None) or plt.gca()
+    return ax.lines
+
+def get_ylim(**kwargs):
+    fig = kwargs.get("fig", None)
+    ax = kwargs.get("ax", None) or kwargs.get("canvas", None) or plt.gca()
+    return ax.get_ylim() if len(ax.lines) > 0 else None
 
 def get_figure(canvas = None, **kwargs):
     

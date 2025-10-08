@@ -56,19 +56,15 @@ env: motd
 .virtualenv: environment*.yml requirements.txt
 	@$(MAKE) .envcheck
 
-	@if [ -f "environment.yml" ]; then \
+	@if [ -f "environment.$(shell arch).yml" ] && [ -f "environment.yml" ]; then \
 		if conda env list | grep -q $(ENVNAME); then \
-			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.yml\`"; \
-			conda env update -n $(ENVNAME) -f environment.yml; \
+			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\` and \`environment.yml\`"; \
+			conda env update -n $(ENVNAME) -f environment.$(shell arch).yml -f environment.yml; \
 		else \
-			echo "Creating new environment \`$(ENVNAME)\` with \`environment.yml\`"; \
-			conda env create -n $(ENVNAME) -f environment.yml; \
+			echo "Creating new environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\` and \`environment.yml\`"; \
+			conda env create -n $(ENVNAME) -f environment.$(shell arch).yml -f environment.yml; \
 		fi; \
-	else \
-		echo "File \`environment.yml\` not found, skipping."; \
-	fi
-
-	@if [ -f "environment.$(shell arch).yml" ]; then \
+	elif [ -f "environment.$(shell arch).yml" ]; then \
 		if conda env list | grep -q $(ENVNAME); then \
 			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
 			conda env update -n $(ENVNAME) -f environment.$(shell arch).yml; \
@@ -76,8 +72,16 @@ env: motd
 			echo "Creating new environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
 			conda env create -n $(ENVNAME) -f environment.$(shell arch).yml; \
 		fi; \
-	else \
-		echo "File \`environment.$(shell arch).yml\` not found, skipping."; \
+	elif [ -f "environment.yml" ]; then \
+                if conda env list | grep -q $(ENVNAME); then \
+                        echo "Updating existing environment \`$(ENVNAME)\` with \`environment.yml\`"; \
+                        conda env update -n $(ENVNAME) -f environment.yml; \
+                else \
+                        echo "Creating new environment \`$(ENVNAME)\` with \`environment.yml\`"; \
+                        conda env create -n $(ENVNAME) -f environment.yml; \
+                fi; \
+        else \
+		echo "File \`environment.yml\` and/or \`environment.$(shell arch).yml\` not found, skipping."; \
 	fi
 
 	@if [ -f "requirements.txt" ]; then \
@@ -91,30 +95,7 @@ env: motd
 		echo "No \`requirements.txt\` found, skipping Python package installation."; \
 	fi
 
-	@if [ -f "environment.$(shell arch).yml" ]; then \
-		if conda env list | grep -q $(ENVNAME); then \
-			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
-			conda env update -n $(ENVNAME) -f environment.$(shell arch).yml; \
-		else \
-			echo "Creating new environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
-			conda env create -n $(ENVNAME) -f environment.$(shell arch).yml; \
-		fi \
-	else \
-		echo "File \`environment.$(shell arch).yml\` not found, skipping."; \
-	fi
-
-	@if [ -f "requirements.txt" ]; then \
-		if ! grep -q "requirements.txt" environment.yml environment.$(shell arch).yml 2>/dev/null; then \
-			echo "Installing additional Python packages from \`requirements.txt\`"; \
-			conda run -n $(ENVNAME) pip install -r requirements.txt; \
-		else \
-			echo "\`requirements.txt\` is already referenced in environment files, skipping Python package installation."; \
-		fi \
-	else \
-		echo "No \`requirements.txt\` found, skipping Python package installation."; \
-	fi
-
-	@touch .virtualenv
+	@touch .virtualenv 2> /dev/null || true
 
 .envcheck:
 	@. $$(conda info --base)/etc/profile.d/conda.sh

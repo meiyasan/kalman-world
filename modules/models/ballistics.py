@@ -1,6 +1,6 @@
 import numpy as np
-from ..core import KalmanStateModel, KalmanExtendedModel
-from ..core.io import KalmanObservationFlavor, KalmanStateType, KalmanStateFlavor
+from ..core import KalmanStateModel, KalmanExtendedModel, KalmanCompositeModel
+from ..core.io import KalmanStateType
 
 class BallisticStateType(KalmanStateType):
     POSITION     = 0
@@ -17,39 +17,20 @@ class BallisticStateModel(KalmanStateModel):
     def type(self):
         return BallisticStateType
 
-    units  = {
+    axis  = ["X", "Y", "Z"]
+    units = {
         str(BallisticStateType.POSITION): "m",        
         str(BallisticStateType.SPEED): "m/s",  
         str(BallisticStateType.ACCELERATION): "m/s²"
     }
 
-    coords = ["X", "Y", "Z"]
-    colors = {
-        str(KalmanObservationFlavor.MEASURED): {0:"rosybrown",  1:"darkseagreen", 2:"lightsteelblue"},
-        str(KalmanObservationFlavor.TRUE):    {0:"lightcoral", 1:"lightgreen",   2:"blue"},
-        str(KalmanObservationFlavor.IDEAL):    {0:"lightcoral", 1:"lightgreen",   2:"blue"},
+    def __init__(self, dim: int = 1, measurement_uncertainty: float = 0.5, process_uncertainty: float = 0.05, **kwargs):
 
-        str(KalmanStateFlavor.PRIOR):          {0:"indianred",  1:"seagreen",    2:"steelblue"},
-        str(KalmanStateFlavor.POSTERIOR):      {0:"darkred",    1:"darkgreen",    2:"darkblue"},
-        str(KalmanStateFlavor.SMOOTHED):       {0:"darkred",  1:"darkred",    2:"darkred"}
-    }
-    
-    linestyles = {
-        str(KalmanObservationFlavor.TRUE):     {0:"--", 1:"--", 2:"--"},
-        str(KalmanObservationFlavor.IDEAL):    {0:":",  1:":",  2:":"},
-
-        str(KalmanStateFlavor.PRIOR):          {0:"-",  1:"-",  2:"-"},
-        str(KalmanStateFlavor.POSTERIOR):      {0:"-",  1:"-",  2:"-"},
-        str(KalmanStateFlavor.SMOOTHED):       {0:"-",  1:"-",  2:"-"}
-    }
-
-    def __init__(self, dim: int = 1, measurement_uncertainty: float = 0.5,
-                       process_uncertainty: float = 0.05, **kwargs):
         assert dim in (1, 2, 3), f"Dimension must be 1, 2 or 3, got {dim}"
 
         self.dim = dim
         if dim < 2:
-            self.coords = ["Z"]
+            self.axis = ["Z"]
 
         self.measurement_uncertainty = measurement_uncertainty
         self.process_uncertainty     = process_uncertainty
@@ -89,11 +70,53 @@ class BallisticStateModel(KalmanStateModel):
     def postprocess(self, zk_hat, **kwargs):
         return zk_hat
 
+class BallisticCompositeModel(KalmanCompositeModel):
+
+    NAME = "Ballistic Composite Model"
+    DESCRIPTION = "State model for ballistic trajectories, simulating the motion of a projectile under the influence of gravity with non uniform acceleration."
+    VERSION = "1.0"
+    
+    @property
+    def type(self):
+        return BallisticStateType
+
+    axis       = []
+    units      = BallisticStateModel.units
+
+    def __init__(self, dim):
+
+        for i in range(dim):
+            self.axis.append(f"X{i}")
+
+        pass
+
+    def preprocess(self, zk, uk=None, **kwargs):
+        return zk, uk
+
+    def inprocess(self, zk_hat, **kwargs):
+        return zk_hat
+
+    def postprocess(self, zk_hat, **kwargs):
+        return zk_hat
+
 class BallisticExtendedModel(KalmanExtendedModel):
 
-    NAME = "Ballistic Extended State Model"
+    NAME = "Ballistic Extended Model"
     DESCRIPTION = "State model for ballistic trajectories, simulating the motion of a projectile under the influence of gravity with non uniform acceleration."
     VERSION = "1.0"
 
-    def __init__():
+    @property
+    def type(self):
+        return BallisticStateType
+
+    def __init__(self):
         pass
+
+    def preprocess(self, zk, uk=None, **kwargs):
+        return zk, uk
+
+    def inprocess(self, zk_hat, **kwargs):
+        return zk_hat
+
+    def postprocess(self, zk_hat, **kwargs):
+        return zk_hat

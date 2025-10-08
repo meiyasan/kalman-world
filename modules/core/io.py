@@ -4,6 +4,8 @@ from dataclasses import dataclass, field
 from enum import Enum
 from ..helpers import *
 
+from ..debug import get_debug
+
 # =========================
 # Types / Utilities
 # =========================
@@ -46,6 +48,26 @@ class KalmanStateRecord:
 
     model: object = None # KalmanStateModel
     flavor: KalmanStateFlavor = None
+
+    # Properties for dimensions
+    @property
+    def n(self):
+        return self.xk.shape[1] if self.xk.ndim > 1 else 0
+    @property
+    def m(self):
+        return self.zk.shape[1] if self.zk.ndim > 1 else 0
+    @property
+    def dim(self):
+        return len(self.zk[0]) if self.zk is not None and len(self.zk) > 0 else 0
+    @property
+    def duration(self):
+        return 0 if self.time is None else len(self.time) * (self.time[1] - self.time[0])
+    @property
+    def sample_rate(self):
+        return 1 / (self.time[1] - self.time[0]) if self.time is not None and len(self.time) > 1 else 0
+
+    def __len__(self):
+        return len(self.time)
 
     @staticmethod
     def __freeze_array(a):
@@ -164,21 +186,14 @@ class KalmanStateRecord:
         assert 0 <= idx < self.dim * self.m, f"Measurement index out of range. Expected 0 <= idx < {self.dim * self.m}, got {idx}."
         return idx
 
-
-
-    # inside KalmanStateRecord
-    def print(self):
-        print(self.__str__())
+    def print(self, **kwargs):
+        print(self.__str__(**kwargs))
 
     def __repr__(self):
-        # short, one-liner representation
-        N = len(self)
-        n = self.n
-        m = self.m
         flav = (str(self.flavor) if self.flavor is not None else "Unknown")
         model = (self.model.NAME if getattr(self.model, "NAME", None) else "Model?")
-        return f"KalmanStateRecord(N={N}, n={n}, m={m}, flavor={flav}, model={model})"
-
+        return f"KalmanStateRecord(N={len(self)}, n={self.n}, m={self.m}, flavor={flav}, model={model})"
+        
     def __str__(self):
         import textwrap, numpy as np
         
@@ -222,11 +237,45 @@ class KalmanStateRecord:
             a = np.asarray(a)
             return (int(np.isnan(a).sum()), int(np.isinf(a).sum()))
 
-        def _print_matrix(name, mat, prefix=""):
-            if mat is None:
-                return ""
-            text = str(mat).replace("\n", f"\n{prefix}")
-            return f"{prefix}{name} = {text}\n"
+        # Compact preview helpers for debug lines
+        def _preview_row(row, k):
+            """Return a short '[a, b, c, d ...]' style preview of a 1D row."""
+            row = np.asarray(row).ravel()
+            m = row.shape[0]
+            k = max(1, min(k, m))
+            head = ", ".join(f"{float(v):.4g}" for v in row[:k])
+            if m > k:
+                return f"[{head}, …]"
+            return f"[{head}]"
+        
+        def _one_line_matrix_stats(name, A, k):
+
+            """
+            One-liner: '<name>: N=<N>, [<first k> .. <last k>], mean=<>, std=<>'
+            Shows the first k and last k elements/rows for 1D/2D arrays.
+            """
+            if A is None:
+                return f"{name}: None"
+            
+            A = np.asarray(A)
+            if A.ndim == 0:
+                return f"{name}: scalar={float(A):.6g}"
+            
+            if A.ndim == 1:
+                N = A.shape[0]
+                first = _preview_row(A[:k], k=k)
+                last  = _preview_row(A[-k:], k=k) if N > 1 else first
+                return (f"{name}: N={N}, [{first} .. {last}], "
+                    f"μ={np.nanmean(A):.6g}, σ={np.nanstd(A):.6g}")
+            
+            # 2D or higher: use first and last k rows
+            N = A.shape[0]
+            first_rows = [_preview_row(A[i], k=k) for i in range(min(k, N))]
+            last_rows  = [_preview_row(A[i], k=k) for i in range(max(0, N - k), N)]
+            first_str = "[" + ", ".join(first_rows) + "]"
+            last_str  = "[" + ", ".join(last_rows) + "]"
+            return (f"{name}: N={N}, [{first_str} .. {last_str}], "
+                f"μ={np.nanmean(A):.6g}, σ={np.nanstd(A):.6g}")
 
         # ---- snapshot numpy options ---------------------------------------------
         opt = np.get_printoptions()
@@ -242,22 +291,19 @@ class KalmanStateRecord:
 
         # time metrics
         approx_fs = None
-        monotonic  = "N/A"
         if N >= 2 and self.time is not None:
             dt = np.diff(self.time)
             finite_dt = dt[np.isfinite(dt)]
             if finite_dt.size:
                 mean_dt = float(np.mean(finite_dt))
                 approx_fs = (1.0/mean_dt) if mean_dt > 0 else None
-            monotonic = "Monotonic" if np.all(dt >= 0) else "Not Monotonic"
-
+        
         # bad counts
         nan_x, inf_x = _count_bad(self.xk)
         nan_p, inf_p = _count_bad(self.Pk)
         nan_z, inf_z = _count_bad(self.zk)
 
         # covariance quick checks
-        P_shape = np.shape(self.Pk)
         diag_neg = None
         if isinstance(self.Pk, np.ndarray) and self.Pk.ndim == 3 and self.Pk.shape[1] == self.Pk.shape[2] and N > 0:
             try:
@@ -280,7 +326,6 @@ class KalmanStateRecord:
         s = []
 
         # ---- header --------------------------------------------------------------
-        # Custom model name formatting
         s.append(f"{self.__class__.__name__}:")
         s.append("")
         s.append(f"{spacer}{model_name} (v.{model_ver})")
@@ -299,7 +344,6 @@ class KalmanStateRecord:
             s.append(f"{2*spacer}Sampling Rate.....................................: {approx_fs:.6g} Hz")
         if fs_model is not None:
             s.append(f"{2*spacer}Model Sampling Rate...............................: {fs_model} Hz")
-        s.append(f"{2*spacer}Time Monotonicity.................................: {monotonic}")
         s.append(f"{2*spacer}Time Stats........................................: {t_stats}")
         s.append("")
         # ---- dimensions & data quality ------------------------------------------
@@ -324,84 +368,186 @@ class KalmanStateRecord:
         s.append(f"{2*spacer}State Covariance {_dims_line('Pk', self.Pk, ndots=28)}{covar_bad}{diag_str}")
         s.append("")
 
-        # ---- debug dump (optional) ----------------------------------------------
-        try:
-            from ..helpers import get_debug
-        except Exception:
-            def get_debug(): return False
-
+        # ---- averages per dimension (original behavior kept) ----------------------
+        if isinstance(self.xk, np.ndarray) and self.xk.ndim == 2 and self.xk.shape[1] > 0:
+            s.append(f"{spacer}State Vector Averages (per dimension):")
+            avg_xk = np.nanmean(self.xk, axis=0)
+            for i in range(self.xk.shape[1]):
+                s.append(f"{2*spacer}xk[{i}] avg = {avg_xk[i]:.6g}")
+            s.append("")
+        if isinstance(self.zk, np.ndarray) and self.zk.ndim == 2 and self.zk.shape[1] > 0:
+            s.append(f"{spacer}Measurement Vector Averages (per dimension):")
+            avg_zk = np.nanmean(self.zk, axis=0)
+            for j in range(self.zk.shape[1]):
+                s.append(f"{2*spacer}zk[{j}] avg = {avg_zk[j]:.6g}")
+            s.append("")
+        
+        # ---- concise one-line debug summaries ------------------------------------
         if get_debug():
-            s.append(f"{spacer}Debug Dump (first/last rows and small slices):")
-            # time
+            s.append(f"{spacer}Debug (compact one-liners):")
+            # time line
             if self.time is not None and len(self.time) > 0:
-                s.append(_print_matrix("time[:10]", self.time[:10], prefix=2*spacer))
-                if len(self.time) > 10:
-                    s.append(_print_matrix("time[-10:]", self.time[-10:], prefix=2*spacer))
-            # xk
-            if isinstance(self.xk, np.ndarray) and self.xk.size:
-                rows = min(3, self.xk.shape[0])
-                s.append(_print_matrix("xk[:3,:]", self.xk[:rows, :], prefix=2*spacer))
-                if self.xk.shape[0] > rows:
-                    s.append(_print_matrix("xk[-3:,:]", self.xk[-rows:, :], prefix=2*spacer))
-            # Pk
-            if isinstance(self.Pk, np.ndarray) and self.Pk.size:
-                rows = min(2, self.Pk.shape[0])
-                s.append(_print_matrix("Pk[:2,:,:]", self.Pk[:rows, :, :], prefix=2*spacer))
-            # zk
-            if isinstance(self.zk, np.ndarray) and self.zk.size:
-                rows = min(3, self.zk.shape[0])
-                s.append(_print_matrix("zk[:3,:]", self.zk[:rows, :], prefix=2*spacer))
-                if self.zk.shape[0] > rows:
-                    s.append(_print_matrix("zk[-3:,:]", self.zk[-rows:, :], prefix=2*spacer))
+                s.append(f"{2*spacer}time: N={len(self.time)}, {[float(v) for v in self.time[:2]] if len(self.time)>=1 else []}"
+                        f" .. {[float(v) for v in self.time[-2:]] if len(self.time)>=2 else []}, "
+                        f"μ = {np.nanmean(self.time):.6g}, σ={np.nanstd(self.time):.6g}")
+                
+            # xk & zk one-liners
+            s.append(f"{2*spacer}{_one_line_matrix_stats('xk  ', self.xk, k=2)}")
+            s.append(f"{2*spacer}{_one_line_matrix_stats('zk  ', self.zk, k=2)}")
 
         np.set_printoptions(**opt)
         return "\n".join(s)
 
     # Properties for model-dependent information
-    def _labels(self, type : KalmanStateType, default = None, **kwargs):
-        labels = kwargs.get("labels", None) or []
-        label = labels[int(type)] if type in labels else None
-        default = default or (f"{str(type)} Component #{int(type)}")
-        return label or (str(type) if isinstance(type, Enum) else default)
+    def _plot_time(self, **kwargs):
+        return "Time (s)" # always seconds, but could be overridden later
 
-    def _units(self, type : KalmanStateType, default = "∅", **kwargs):
+    def _plot_labels(self, component : KalmanStateType, axis = None, units = False, **kwargs):
+
+        labels = kwargs.get("labels", None) or []
+        label = labels[int(component)] if component in labels else None
+        label = label or (str(component)+" " if isinstance(component, Enum) else f"Component #{int(axis)} ") if isinstance(axis, int) else ""
+
+        model = kwargs.get("model", None) or self.model
+
+        # Mix in axis label if axis is provided
+        if axis is not None:
+            if model is not None and hasattr(model, "axis"):
+                axis_label = model.axis[axis % len(model.axis)]
+                label = f"{label}{axis_label}"
+
+        # Mix in units if requested
+        if isinstance(units, str) and units:
+            label = f"{label} ({units})"
+        elif units:
+            units_val = self._plot_units(component, model=model)
+            label = f"{label} ({units_val})" if units_val else label
+
+        return label
+
+    def _plot_units(self, component : KalmanStateType, default = "∅", **kwargs):
         model = kwargs.get("model", None) or self.model
         units = kwargs.get("units", None) or model.units if model else {}
-        return units[str(type)] if str(type) in units else default
+        return units[str(component)] if str(component) in units else default
 
-    def _coords(self, axis, type=None, default = None, **kwargs):
-        model = kwargs.get("model", None) or self.model
-        coords = kwargs.get("coords", None) or (model.coords if model and hasattr(model, "coords") else [])
-        coord = coords[int(axis) % len(coords)] if coords else None
-        default = (f"{str(type)} Dimension #{int(axis)}") if type else (f"Dimension #{int(axis)}")
-        return coord if coord else default
+    def _plot_kwargs(self, **kwargs):
 
-    def _colors(self, axis, type : KalmanStateType, default = "gray", **kwargs):
-        model = kwargs.get("model", None) or self.model
-        colors = kwargs.get("colors", None) or model.colors if model else {}
-        return colors[str(type)].get(axis, None) if str(type) in colors else default
+        _kwargs = {}
+        flavor = kwargs.pop("flavor", None)
+        axis = kwargs.pop("axis", None)
+        kind = kwargs.pop("kind", None)
+        model = kwargs.pop("model", None) or self.model # to be used to compute labels
+        units = kwargs.pop("units", False)
+        common = kwargs.pop("common", False)
 
-    def _linestyles(self, axis, type : KalmanStateType, default = "-", **kwargs):
-        model = kwargs.get("model", None) or self.model
-        linestyles = kwargs.get("linestyles", None) or model.linestyles if model else {}
-        return linestyles[str(type)].get(axis, None) if str(type) in linestyles else default
+        # Label handling
+        _kwargs["label"] = kwargs.pop("label", f"{self._plot_labels(flavor, axis=axis, units=units, model=model)}")
 
-    # Properties for dimensions
-    @property
-    def n(self):
-        return self.xk.shape[1] if self.xk.ndim > 1 else 0
-    @property
-    def m(self):
-        return self.zk.shape[1] if self.zk.ndim > 1 else 0
-    @property
-    def dim(self):
-        return len(self.zk[0]) if self.zk is not None and len(self.zk) > 0 else 0
-    @property
-    def duration(self):
-        return 0 if self.time is None else len(self.time) * (self.time[1] - self.time[0])
+        # Marker handling
+        marker = kwargs.pop("marker", None)
+        marker = marker or ("o" if kind == "scatter" else None)
+        if marker: _kwargs["marker"] = marker
 
-    def __len__(self):
-        return len(self.time)
+        # Colors handling
+        colors = kwargs.get("colors", None) or "tab10"
+        if isinstance(colors, str):
+            try:
+                cmap = plt.get_cmap(colors)
+                colors = [cmap(i) for i in range(cmap.N)]
+            except Exception:
+                colors = None
+
+        _kwargs["alpha"] = kwargs.pop("alpha", 1)
+        if str(flavor) == str(KalmanObservationFlavor.MEASURED):
+            _kwargs["alpha"] = 2./3 * _kwargs["alpha"]
+
+
+        color = kwargs.pop("color", None)
+        if isinstance(color, int) and color > 0 and str(flavor) == str(KalmanObservationFlavor.IDEAL) and common:
+            color = "black"
+        else:
+            if not isinstance(color, str):
+                color = colors[color % len(colors)] if colors and isinstance(color, int) and len(colors) > 0 else "gray"
+            if str(flavor) == str(KalmanObservationFlavor.MEASURED):
+                color = lighten(fade(color))
+            elif str(flavor) in (str(KalmanObservationFlavor.TRUE), str(KalmanObservationFlavor.IDEAL)):
+                color = lighten(vivid(color))
+            elif str(flavor) == str(KalmanStateFlavor.PRIOR):
+                color = darken(color, 0.25)
+            elif str(flavor) in (str(KalmanStateFlavor.POSTERIOR), str(KalmanStateFlavor.SMOOTHED)):
+                color = darken(color)
+
+        _kwargs["color"] = color
+    
+        for key, val in kwargs.items():
+            if key not in _kwargs and val is not None:
+                _kwargs[key] = val
+
+        if kind != "scatter":
+            _kwargs["linestyle"] = kwargs.get("linestyle", None)
+            if str(flavor) == str(KalmanObservationFlavor.TRUE):
+                _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
+                _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", "--")
+            elif str(flavor) == str(KalmanObservationFlavor.IDEAL):
+                _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
+                _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", ":")
+
+            _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", "-")
+
+        return _kwargs
+
+    # ---------- Arrow helpers (N/4 or N/5 placement) ----------
+    def _arrow_indices(self, N: int, arrows: int | None = None) -> list[int]:
+        """
+        Choose ~uniform indices along a curve to place arrows.
+        If `arrows` is None:
+          - use 5 for longer series (N >= 100), else 4.
+        Positions at fractions i/(arrows+1), i = 1..arrows  (≈ N/5 or N/4).
+        """
+        if N < 2:
+            return []
+        if arrows is None:
+            arrows = 5 if N >= 100 else 4
+        arrows = max(1, int(arrows))
+        idxs = []
+        for i in range(1, arrows + 1):
+            j = int(round(i * (N - 1) / (arrows + 1)))
+            if 0 <= j < N - 1:
+                idxs.append(j)
+        return sorted(set(idxs))
+
+    def _draw_arrows_1d(self, ax, t, y, color, arrows=None, lw=1):
+        idxs = self._arrow_indices(len(t), arrows=arrows)
+        for j in idxs:
+            ax.annotate(
+                "", xy=(t[j+1], y[j+1]), xytext=(t[j], y[j]),
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0)
+            )
+
+    def _draw_arrows_2d(self, ax, x, y, color, arrows=None, lw=1):
+        idxs = self._arrow_indices(len(x), arrows=arrows)
+        for j in idxs:
+            ax.annotate(
+                "", xy=(x[j+1], y[j+1]), xytext=(x[j], y[j]),
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0)
+            )
+
+    def _draw_arrows_3d(self, ax, x, y, z, color, arrows=None, lw=1):
+        """
+        Use 3D quivers between j -> j+1 for selected indices.
+        """
+        import numpy as np
+        idxs = self._arrow_indices(len(x), arrows=arrows)
+        if not idxs:
+            return
+        xs = np.array([x[j] for j in idxs])
+        ys = np.array([y[j] for j in idxs])
+        zs = np.array([z[j] for j in idxs])
+        us = np.array([x[j+1] - x[j] for j in idxs])
+        vs = np.array([y[j+1] - y[j] for j in idxs])
+        ws = np.array([z[j+1] - z[j] for j in idxs])
+        ax.quiver(xs, ys, zs, us, vs, ws, color=color, linewidth=lw,
+                  arrow_length_ratio=0.25, length=1.0, normalize=False)
 
     def plot(self, **kwargs):
         """
@@ -518,326 +664,510 @@ class KalmanStateRecord:
         else:
             fig, ax = self._plot1D(component, dim=dim, type=type, **kwargs)
 
-        ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
+        if ax.get_title() == "":
+            ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
+
         return fig, ax
-    
+
     def _plot1D(self, component, **kwargs):
+        """
+        Plot 1D time series for one component across one or more spatial axes.
+
+        Args (kwargs):
+        dim: None | int | [int, ...]
+            - None -> plot all axes [0..self.dim-1]
+            - int  -> plot that axis
+            - list -> plot the listed axes (e.g., [0,2])
+        type: Optional component interpretation passed to _normalize_component
+        sample, ideal, truth, measurement: arrays or will be derived as in _plot1D original
+        legend: bool (default True)
+        sharey: bool (default False)  # if False and a single axis, set ylabel
+        units: bool (default True)    # draw reference lines once when no fig/canvas provided
+        grid: bool (default True)
+        s: scatter size for measurements (default 1)
+        color: base color id or explicit color (forwarded)
+        legend_loc: str (default "best")
+        arrows: Optional[int] -> if None, auto (4 or 5 per curve)
+        Returns:
+        (figure, axis)
+        """
+        import numpy as np
+        import matplotlib.pyplot as plt
 
         if self.time is None or len(self.time) < 1:
             return None, None
 
-        dim = kwargs.pop("dim", None)
-        type = kwargs.pop("type", None)
+        # ----------------- read/normalize inputs -----------------
+        dim_arg  = kwargs.pop("dim", None)
+        kind     = kwargs.pop("type", None)
+        legend   = kwargs.pop("legend", True)
+        sharey   = kwargs.pop("sharey", False)
+        units    = kwargs.pop("units", True)
+        grid     = kwargs.pop("grid", True)
+        s_size   = kwargs.get("s", 1)
 
-        # Determine axes parameters
-        component = component[0] if isinstance(component, (list, tuple, np.ndarray)) else component
-        dim = dim[0] if isinstance(dim, (list, tuple, np.ndarray)) else dim
+        legend_loc = kwargs.get("legend_loc", "best")
+        arrows_ct = kwargs.get("arrows", None)
 
-        sample = kwargs.pop("sample", None)
-        ideal = kwargs.pop("ideal", None) or self.model.ideal(duration=self.duration) if self.model else None
-        ideal = KalmanStateRecord._normalize_out(ideal) if sample is not None and ideal is not None else None
-        truth = kwargs.pop("truth", None) or sample.xk if sample is not None else None
-        truth = KalmanStateRecord._normalize_out(truth) if sample is not None and truth is not None else None
-        measurement = kwargs.pop("measurement", None) or sample.zk if sample is not None else None
-        measurement = KalmanStateRecord._normalize_out(measurement) if sample is not None and measurement is not None else None
+        sample      = kwargs.pop("sample", None)
+        ideal_in    = kwargs.pop("ideal", None)
+        truth_in    = kwargs.pop("truth", None)
+        meas_in     = kwargs.pop("measurement", None)
+        commons     = kwargs.pop("commons", [])
 
-        # Determine limits with padding, comparing with current plot limits
-        padding = kwargs.pop("padding", 0.05)
-        legend = kwargs.pop("legend", True)
+        # Derive defaults like your original
+        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
-        # --- 2D branch ---
-        c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+        truth = truth_in or (sample.xk if sample is not None else None)
+        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
 
-        if dim is None: axes = list(range(self.dim))
-        elif isinstance(dim, (list, tuple)): axes = dim
-        else: axes = [dim]
+        measurement = meas_in or (sample.zk if sample is not None else None)
+        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
+
+        # Canvas
+        c = kwargs.get("canvas", None) or get_canvas(**kwargs)
+        plt.sca(c)
+
+        # dims → list[int]
+        if dim_arg is None:
+            axes = list(range(self.dim))
+        elif isinstance(dim_arg, (list, tuple, np.ndarray)):
+            axes = list(map(int, dim_arg))
+        else:
+            axes = [int(dim_arg)]
 
         for a in axes:
             if not (0 <= a < self.dim):
                 raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
 
-        component = self._normalize_component(component, type=type)[0]  # Use only the first component for 1D plot
+        # component (use first if a sequence)
+        component = component[0] if isinstance(component, (list, tuple, np.ndarray)) else component
+        component = self._normalize_component(component, type=kind)[0]
+        comp_id   = int(component.value)
 
-        # Initialize y_min and y_max
-        current_ylim = c.get_ylim() # Check all ylim from all canvas 
-        y_min, y_max = current_ylim if current_ylim else (np.inf, -np.inf)
-        for a in axes:
+        # Base color id; allow passing a concrete color via kwargs['color']
+        base_color_id = len(get_lines(**kwargs))
 
-            idx = self.dim * a + int(component.value)
+        # ----------------- plotting loop -----------------
+        handles, labels = [], []
+        used_label = set()
+
+        for i, a in enumerate(axes):
+            idx = self.dim * a + comp_id
+
+            # measurement
             if measurement is not None and self.model is not None and self.model.exclusive_mapping(idx, a):
-                y_min = min(y_min, measurement[:, a].min())
-                y_max = max(y_max, measurement[:, a].max())
-            if ideal is not None:
-                y_min = min(y_min, ideal[:, idx].min())
-                y_max = max(y_max, ideal[:, idx].max())
+                h = c.scatter(self.time, measurement[:, a],
+                            **self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED,
+                                                axis=a, kind="scatter",
+                                                s=s_size, common=self.flavor in commons,
+                                                color=kwargs.get("color", base_color_id + i)))
+
+            # ideal
+            if ideal is not None and ideal.shape[1] > idx:
+                h, = c.plot(self.time, ideal[:, idx],
+                            **self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL,
+                                                axis=a, common=KalmanObservationFlavor.IDEAL in commons,
+                                                color=kwargs.get("color", base_color_id + i)))
+                self._draw_arrows_1d(c, self.time, ideal[:, idx], color=h.get_color(), arrows=arrows_ct)
+
+            # truth
             if truth is not None and truth.shape[1] > idx:
-                y_min = min(y_min, truth[:, idx].min())
-                y_max = max(y_max, truth[:, idx].max())
+                h, = c.plot(self.time, truth[:, idx],
+                            **self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,
+                                                axis=a, common=KalmanObservationFlavor.TRUE in commons,
+                                                color=kwargs.get("color", base_color_id + i)))
+                self._draw_arrows_1d(c, self.time, truth[:, idx], color=h.get_color(), arrows=arrows_ct)
 
-            y_min = min(y_min, self.xk[:, idx].min())
-            y_max = max(y_max, self.xk[:, idx].max())
-            
-            y_range = y_max - y_min
-            y_min -= padding * y_range
-            y_max += padding * y_range
+            # filtered/state (main)
+            h, = c.plot(self.time, self.xk[:, idx],
+                        **self._plot_kwargs(flavor=self.flavor, axis=a, common=self.flavor in commons,
+                                            color=kwargs.get("color", base_color_id + i)))
+            # label once under flavor name
+            self._draw_arrows_1d(c, self.time, self.xk[:, idx], color=h.get_color(), arrows=arrows_ct)
 
-            if "fig" not in kwargs and kwargs.pop("units", True):
-                X0 = self._normalize_out(self.xk[0])[idx]
-                c.axhline(X0, color='black', alpha=1, linestyle=':', linewidth=0.75)  # x-axis reference
-                c.axvline(0, color='black', alpha=1, linestyle=':', linewidth=0.75)  # y-axis reference
+        # ----------------- labels / legend / grid -----------------
+        # X label: time formatter like your original (allow override)
+        c.set_xlabel(kwargs.pop("xlabel", self._plot_time()))
 
-            if measurement is not None and self.model is not None and self.model.exclusive_mapping(idx, a):
-                color = self._colors(a, KalmanObservationFlavor.MEASURED) or "gray"
-                c.scatter(self.time, measurement[:, a], s=1, label=f"{str(KalmanObservationFlavor.MEASURED)} {self._coords(a, KalmanObservationFlavor.MEASURED)}", color=color)
+        # Y label:
+        user_ylabel = kwargs.pop("ylabel", None)
+        if user_ylabel is not None:
+            c.set_ylabel(user_ylabel)
+        elif not sharey and len(axes) == 1:
+            c.set_ylabel(self._plot_labels(component, axis=axes[0]))
 
-            if ideal is not None:
-                c.plot(self.time, ideal[:, idx], linestyle=self._linestyles(a, KalmanObservationFlavor.IDEAL) or "-" , label=f"{str(KalmanObservationFlavor.IDEAL)} {self._coords(a, KalmanObservationFlavor.IDEAL)}", color=self._colors(a, KalmanObservationFlavor.IDEAL, "gray"))
-            if truth is not None and truth.shape[1] > idx:
-                c.plot(self.time, truth[:, idx], linestyle=self._linestyles(a, KalmanObservationFlavor.TRUE) or "--", label=f"{str(KalmanObservationFlavor.TRUE)} {self._coords(a, KalmanObservationFlavor.TRUE)}", color=self._colors(a, KalmanObservationFlavor.TRUE, "gray"))
+        c.grid(grid)
 
-            c.plot(self.time, self.xk[:, idx], label=f"{str(self.flavor)} {self._coords(a, self.flavor)}", color=self._colors(a, self.flavor, "gray"))
-
-        c.set_xlim(kwargs.pop("xlim", None))
-        c.set_ylim(kwargs.pop("ylim", (y_min, y_max)))
-
-        c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
-        if not kwargs.pop("sharey", False):
-            if legend:
-                c.set_ylabel(kwargs.pop("label", f"{self._labels(component)} ({self._units(component)})"))
-            else:
-                c.set_ylabel(kwargs.pop("label", f"{self._labels(component)} ({self._units(component)}) along {self._coords(dim or 0)}"))
-
-        c.grid(kwargs.pop("grid", True))
         if legend:
-            c.legend(fontsize=10, handlelength=4, handleheight=0.01)
+            c.legend(fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
 
         return get_figure(c), get_axis(c)
 
     def _plot2D(self, component, **kwargs):
         """
-        Plot the ballistic trajectory in 2D (x vs y). Supports multiple components.
-        `component` can be a single value, tuple/list, or array of length 2.
+        2D phase plot:
+        X = component[0] projected on axis dim[0]
+        Y = component[1] projected on axis dim[1]
+
+        Usage:
+        _plot2D([compX, compY], dim=[0,1])
+        _plot2D([compX, compY], dim=[1,0])
         """
-        t = self.time
-        if t is None or len(t) == 0:
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        if self.time is None or len(self.time) < 1:
             return None, None
 
-        # Normalize component to a tuple of length 2
-        component = self._normalize_component(component, type=kwargs.pop("type", None))
-        sample = kwargs.pop("sample", None)
-        ideal = kwargs.pop("ideal", None) or self.model.ideal(duration=self.duration) if self.model else None
-        ideal = KalmanStateRecord._normalize_out(ideal) if sample is not None and ideal is not None else None
-        truth = kwargs.pop("truth", None) or (sample.xk if sample is not None else None)
-        truth = KalmanStateRecord._normalize_out(truth) if sample is not None and truth is not None else None
-        measurement = kwargs.pop("measurement", None) or (sample.zk if sample is not None else None)
-        measurement = KalmanStateRecord._normalize_out(measurement) if sample is not None and measurement is not None else None
+        # --- args / inputs ---
+        dim_arg    = kwargs.pop("dim", None)          # e.g., [0,1] or [1,0]
+        kind       = kwargs.pop("type", None)
+        legend     = kwargs.pop("legend", True)
+        units      = kwargs.pop("units", True)
+        grid       = kwargs.pop("grid", True)
+        s_size     = kwargs.get("s", 1)
+        legend_loc = kwargs.get("legend_loc", "best")
+        arrows_ct  = kwargs.get("arrows", None)
+        commons    = kwargs.get("commons", [])
 
-        # Common kwargs
-        padding = kwargs.pop("padding", 0.05)
-        projectors = kwargs.pop("projectors", True)
-        connectors = kwargs.pop("connectors", True)
+        # components: need two
+        if not isinstance(component, (list, tuple, np.ndarray)) or len(component) < 2:
+            raise ValueError("plot2D requires component[0] and component[1].")
 
-        # Canvas / figure
-        fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize",(8,8)))
-        ax = fig.add_subplot(1,1,1)
+        # normalize both components
+        comp_norm = self._normalize_component(component, type=kind)
+        comp0_id  = int(comp_norm[0].value)
+        comp1_id  = int(comp_norm[1].value)
 
-        # Map components to state indices
-        i0, i1 = self._normalize_idx(component[0], axis=0), self._normalize_idx(component[1], axis=1)
-        X,  Y  = self.xk[:, i0], self.xk[:, i1]
-        X0, Y0 = self._normalize_out(self.xk[0])[i0], self._normalize_out(self.xk[0])[i1]
-        TX, TY = (truth[:, i0], truth[:, i1]) if truth is not None else (None, None)
-        IX, IY = (ideal[:, i0], ideal[:, i1]) if ideal is not None else (None, None)
+        # dims → two axes (x-axis index, y-axis index)
+        if dim_arg is None:
+            if self.dim < 2:
+                raise ValueError("plot2D needs at least 2 spatial axes or an explicit dim=[x,y].")
+            ax_x, ax_y = 0, 1
+        elif isinstance(dim_arg, (list, tuple, np.ndarray)) and len(dim_arg) == 2:
+            ax_x, ax_y = int(dim_arg[0]), int(dim_arg[1])
+        else:
+            raise ValueError("`dim` must be a 2-element list/tuple like [0,1] or [1,0].")
 
-        # Measurements
-        if self.model is not None and self.model.exclusive_mapping((i0,i1), component):
-            if measurement is not None and measurement.shape[1] >= 2:
-                ax.scatter(measurement[:,0], measurement[:,1], s=1, color='black', alpha=0.75, label="Measurements")
+        for a in (ax_x, ax_y):
+            if not (0 <= a < self.dim):
+                raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
 
-        # Determine plot limits
-        xmin = min(X.min(), TX.min() if TX is not None else X.min(), IX.min() if IX is not None else X.min())
-        xmax = max(X.max(), TX.max() if TX is not None else X.max(), IX.max() if IX is not None else X.max())
-        ymin = min(Y.min(), TY.min() if TY is not None else Y.min(), IY.min() if IY is not None else Y.min())
-        ymax = max(Y.max(), TY.max() if TY is not None else Y.max(), IY.max() if IY is not None else Y.max())
+        # indices into state arrays following your convention: idx = self.dim * axis + component_id
+        idx_x = self.dim * ax_x + comp0_id
+        idx_y = self.dim * ax_y + comp1_id
 
-        # Apply padding
-        xpad = padding * (xmax - xmin)
-        ypad = padding * (ymax - ymin)
-        ax.set_xlim(xmin - xpad, xmax + xpad)
-        ax.set_ylim(ymin - ypad, ymax + ypad)
+        # --- inputs like _plot1D ---
+        sample       = kwargs.pop("sample", None)
+        ideal_in     = kwargs.pop("ideal", None)
+        truth_in     = kwargs.pop("truth", None)
+        meas_in      = kwargs.pop("measurement", None)
 
-        # Plot ideal, truth, estimate
-        if IX is not None:
-            ax.plot(IX, IY, label='Ideal', color=self._colors(0, KalmanObservationFlavor.IDEAL),
-                    linestyle=self._linestyles(0, KalmanObservationFlavor.IDEAL))
-        if TX is not None:
-            ax.plot(TX, TY, label='Truth', color=self._linestyles(0, KalmanObservationFlavor.TRUE, "--"))
+        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
-        ax.plot(X, Y, label=f"{str(self.flavor)} {self._coords(0, self.flavor)}", color=self._colors(0, self.flavor, "black"), linewidth=1.5)
+        truth = truth_in or (sample.xk if sample is not None else None)
+        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
 
-        # Projectors / connectors (optional)
-        if projectors:
-            ax.plot(X, [Y0]*len(X), color=self._colors(1, self.flavor, "gray"),
-                    linestyle=self._linestyles(1, self.flavor, "-"), alpha=0.5)
-            ax.plot([X0]*len(Y), Y, color=self._colors(0, self.flavor, "gray"),
-                    linestyle=self._linestyles(0, self.flavor, "-"), alpha=0.5)
-            if connectors:
-                for j in (0, len(X)-1):
-                    ax.plot([X0, X[j]], [Y0, Y[j]], color='gray', linestyle='-.', alpha=0.5, linewidth=0.5)
+        measurement = meas_in or (sample.zk if sample is not None else None)
+        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
 
-        # Labels and grid
-        ax.set_xlabel(f"{self._coords(0)} {self._labels(component[0])} ({self._units(component[0])})")
-        ax.set_ylabel(f"{self._coords(1)} {self._labels(component[1])} ({self._units(component[1])})")
-        ax.grid(kwargs.pop("grid", True))
+        # --- canvas ---
+        c = kwargs.get("canvas", None) or get_canvas(**kwargs)
+        plt.sca(c)
+        colorid = len(get_lines(**kwargs))
+        base_color = kwargs.get("color", colorid)
 
-        if kwargs.pop("legend", True): ax.legend(fontsize=10)
-        return fig, ax
+        # --- styles ---
+        kw_main  = self._plot_kwargs(flavor=self.flavor, axis=ax_x, color=base_color, common=self.flavor in commons)
+        kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,  axis=ax_x, color=base_color, common=KalmanObservationFlavor.TRUE in kwargs.get("commons", []))
+        kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, axis=ax_x, color=base_color, common=KalmanObservationFlavor.IDEAL in kwargs.get("commons", []))
+        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, axis=ax_x,
+                                     kind="scatter", s=s_size, color=base_color, alpha=kwargs.get("alpha", 0.7),
+                                     common=KalmanObservationFlavor.MEASURED in kwargs.get("commons", []))
 
+        handles, labels = [], []
+
+        # --- measurement scatter with exclusive mapping on BOTH axes ---
+        if measurement is not None and self.model is not None:
+            mx_ok = self.model.exclusive_mapping(idx_x, ax_x)
+            my_ok = self.model.exclusive_mapping(idx_y, ax_y)
+            if mx_ok and my_ok and measurement.shape[1] > max(ax_x, ax_y):
+                h = c.scatter(measurement[:, ax_x], measurement[:, ax_y], **kw_meas)
+
+        # --- ideal curve ---
+        if ideal is not None and ideal.shape[1] > max(idx_x, idx_y):
+            IX, IY = ideal[:, idx_x], ideal[:, idx_y]
+            h, = c.plot(IX, IY, **kw_ideal)
+            self._draw_arrows_2d(c, IX, IY, color=h.get_color(), arrows=arrows_ct)
+
+        # --- truth curve ---
+        if truth is not None and truth.shape[1] > max(idx_x, idx_y):
+            TX, TY = truth[:, idx_x], truth[:, idx_y]
+            h, = c.plot(TX, TY, **kw_true)
+            self._draw_arrows_2d(c, TX, TY, color=h.get_color(), arrows=arrows_ct)
+
+        # --- filtered/state curve ---
+        X = self.xk[:, idx_x]; Y = self.xk[:, idx_y]
+        h, = c.plot(X, Y, **kw_main)
+        self._draw_arrows_2d(c, X, Y, color=h.get_color(), arrows=arrows_ct)
+
+        # --- labels / legend / grid ---
+        c.set_xlabel(kwargs.pop("xlabel", self._plot_labels(comp_norm[0], axis=ax_x)))
+        c.set_ylabel(kwargs.pop("ylabel", self._plot_labels(comp_norm[1], axis=ax_y)))
+        c.grid(grid)
+
+        if legend and handles:
+            c.legend(fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
+
+        return get_figure(c), get_axis(c)
+    
     def _plot3D(self, component, **kwargs):
         """
-        Plot the ballistic trajectory:
-          - 3D view (with projections & connectors) if dim>2 and axis=None.
-          - Otherwise: 2D plot of Position / Speed / Acceleration vs time.
+        3D state trajectory with optional projections ("projectors") and start/end
+        connectors to the projection planes. Arrows (≈N/4 or N/5) show direction.
+
+        X = component[0] on axis dim[0]
+        Y = component[1] on axis dim[1]
+        Z = component[2] on axis dim[2]
         """
+        import numpy as np
+        import matplotlib.pyplot as plt
+        from matplotlib.lines import Line2D
+        from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
         t = self.time
         if t is None or len(t) == 0:
             return None, None
-        
-        # Normalize component to a list of length 3
-        component = self._normalize_component(component, type=kwargs.pop("type", None))
 
-        # Determine axes parameter
-        sample = kwargs.pop("sample", None)
-        ideal = kwargs.pop("ideal", None) or self.model.ideal(duration=self.duration) if self.model else None
-        ideal = KalmanStateRecord._normalize_out(ideal) if sample is not None and ideal is not None else None
-        truth = kwargs.pop("truth", None) or sample.xk if sample is not None else None
-        truth = KalmanStateRecord._normalize_out(truth) if sample is not None and truth is not None else None
-        measurement = kwargs.pop("measurement", None) or sample.zk if sample is not None else None
-        measurement = KalmanStateRecord._normalize_out(measurement) if sample is not None and measurement is not None else None
+        # --- normalize components (need 3) ---------------------------------------
+        type_ = kwargs.pop("type", None)
+        comps = self._normalize_component(component, type=type_)
+        if len(comps) < 3:
+            raise ValueError("plot3D requires component[0], component[1], component[2].")
 
-        # Common kwargs for plot styling
-        plot_kwargs = kwargs.pop("plot", {"color": "black", "linestyle": "-.", "linewidth": 0.5, "alpha": 0.5})
+        c0, c1, c2 = int(comps[0].value), int(comps[1].value), int(comps[2].value)
 
-        # Padding factor
-        padding = kwargs.pop("padding", 0)
+        # --- dimensions -----------------------------------------------------------
+        dim_arg = kwargs.pop("dim", None)
+        if dim_arg is None:
+            if self.dim < 3:
+                raise ValueError("plot3D needs dim>=3 or an explicit dim=[dx,dy,dz].")
+            dx, dy, dz = 0, 1, 2
+        else:
+            if not (isinstance(dim_arg, (list, tuple, np.ndarray)) and len(dim_arg) == 3):
+                raise ValueError("`dim` must be a 3-element list/tuple like [0,1,2].")
+            dx, dy, dz = map(int, dim_arg)
 
-        fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize",(10,10)))
-        ax = fig.add_subplot(projection='3d')
+        for a in (dx, dy, dz):
+            if not (0 <= a < self.dim):
+                raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
 
-        i0, i1, i2 = self._normalize_idx(component[0], axis=0), self._normalize_idx(component[1], axis=1), self._normalize_idx(component[2], axis=2)
-        X,  Y,  Z  = self.xk[:, i0], self.xk[:, i1], self.xk[:, i2]
-        X0, Y0, Z0 = self._normalize_out(self.xk[0])[i0], self._normalize_out(self.xk[0])[i1], self._normalize_out(self.xk[0])[i2]
-        TX, TY, TZ = None, None, None
-        if truth is not None:
-            TX, TY, TZ = truth[:, i0], truth[:, i1], truth[:, i2]
-        IX, IY, IZ = None, None, None
-        if ideal is not None:
-            IX, IY, IZ = ideal[:, i0], ideal[:, i1], ideal[:, i2]
+        # indices in flattened state (idx = self.dim*axis + comp_id)
+        idx_x = self.dim * dx + c0
+        idx_y = self.dim * dy + c1
+        idx_z = self.dim * dz + c2
 
+        # --- derive series like in _plot1D/_plot2D --------------------------------
+        sample      = kwargs.pop("sample", None)
+        ideal_in    = kwargs.pop("ideal", None)
+        truth_in    = kwargs.pop("truth", None)
+        meas_in     = kwargs.pop("measurement", None)
+
+        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
+
+        truth = truth_in or (sample.xk if sample is not None else None)
+        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
+
+        measurement = meas_in or (sample.zk if sample is not None else None)
+        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
+
+        # main state
+        X = self.xk[:, idx_x]; Y = self.xk[:, idx_y]; Z = self.xk[:, idx_z]
+        X0 = self._normalize_out(self.xk[0])[idx_x]
+        Y0 = self._normalize_out(self.xk[0])[idx_y]
+        Z0 = self._normalize_out(self.xk[0])[idx_z]
+
+        # optional series
+        TX = TY = TZ = None
+        if truth is not None and truth.shape[1] > max(idx_x, idx_y, idx_z):
+            TX, TY, TZ = truth[:, idx_x], truth[:, idx_y], truth[:, idx_z]
+
+        IX = IY = IZ = None
+        if ideal is not None and ideal.shape[1] > max(idx_x, idx_y, idx_z):
+            IX, IY, IZ = ideal[:, idx_x], ideal[:, idx_y], ideal[:, idx_z]
+
+        # --- figure / axis --------------------------------------------------------
+        fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize", (8, 8)))
+        ax = fig.add_subplot(projection="3d")
+        plt.sca(ax)
+
+        # styling helpers
+        colorid   = len(get_lines(**kwargs))
+        base_color = kwargs.get("color", colorid)
+        alpha     = kwargs.get("alpha", 0.75)
+        legend    = kwargs.pop("legend", True)
+        legend_loc = kwargs.pop("legend_loc", "best")
+        grid      = kwargs.pop("grid", True)
         projectors = kwargs.pop("projectors", True)
         connectors = kwargs.pop("connectors", True)
+        arrows_ct  = kwargs.get("arrows", None)
+        s_size     = kwargs.get("s", 1)
+        commons    = kwargs.get("commons", [])
 
-        if self.model is not None and self.model.exclusive_mapping([0,1,2], component):
-            if measurement is not None and measurement.shape[1] >= 3:
-                ax.scatter(measurement[:,0], measurement[:,1], measurement[:,2], label='Measurements', color='black', s=1, alpha=0.75, depthshade=False)
+        # --- limits ---------------------------------------------------------------
+        def _finite_minmax(*arrays):
+            vals = []
+            for a in arrays:
+                if a is not None:
+                    aa = np.asarray(a).ravel()
+                    aa = aa[np.isfinite(aa)]
+                    if aa.size:
+                        vals.append((aa.min(), aa.max()))
+            if not vals:
+                return (0.0, 1.0)
+            lo = min(v[0] for v in vals)
+            hi = max(v[1] for v in vals)
+            return (lo, hi if hi != lo else hi + 1.0)
 
-        # Ensure X0, Y0, Z0 are within the limit range
-        x0, y0, z0 = np.clip(X0, X.min(), X.max()), np.clip(Y0, Y.min(), Y.max()), np.clip(Z0, Z.min(), Z.max())
+        xlim = kwargs.pop("xlim", _finite_minmax(X, TX, IX))
+        ylim = kwargs.pop("ylim", _finite_minmax(Y, TY, IY))
+        zlim = kwargs.pop("zlim", _finite_minmax(Z, TZ, IZ))
+
+        ax.set_xlim(xlim); ax.set_ylim(ylim); ax.set_zlim(zlim)
+
+        # clip initial point to box
+        x0 = float(np.clip(X0, *xlim))
+        y0 = float(np.clip(Y0, *ylim))
+        z0 = float(np.clip(Z0, *zlim))
         
-        # Apply padding
-        if isinstance(padding, (tuple, list)) and len(padding) == 3:
-            xpad, ypad, zpad = padding
-        else:
-            xpad = ypad = zpad = padding
+        # Primary styles derived from base_color via _plot_kwargs
+        kw_main  = self._plot_kwargs(flavor=self.flavor,                      common=self.flavor in commons, axis=dx, color=base_color)
+        kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,     common=KalmanObservationFlavor.TRUE in commons,  axis=dx, color=base_color)
+        kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL,    common=KalmanObservationFlavor.IDEAL in commons, axis=dx, color=base_color)
+        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons,
+                                    axis=dx, color=base_color, kind="scatter", s=s_size, alpha=alpha)
 
-        xlim = (min(X.min(), TX.min() if TX is not None else X.min(), IX.min() if IX is not None else X.min()) - xpad*(X.max()-X.min()),
-                max(X.max(), TX.max() if TX is not None else X.max(), IX.max() if IX is not None else X.max()) + xpad*(X.max()-X.min()))
-        ylim = (min(Y.min(), TY.min() if TY is not None else Y.min(), IY.min() if IY is not None else Y.min()) - ypad*(Y.max()-Y.min()),
-                max(Y.max(), TY.max() if TY is not None else Y.max(), IY.max() if IY is not None else Y.max()) + ypad*(Y.max()-Y.min()))
-        zlim = (min(Z.min(), TZ.min() if TZ is not None else Z.min(), IZ.min() if IZ is not None else Z.min()) - zpad*(Z.max()-Z.min()),
-                max(Z.max(), TZ.max() if TZ is not None else Z.max(), IZ.max() if IZ is not None else Z.max()) + zpad*(Z.max()-Z.min()))
+        # Aux (projections/connectors) – route through _plot_kwargs but we’ll keep legend proxies in base color
+        def kw_proj_state(axis):
+            kw = self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, alpha=0.65)
+            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            kw["label"] = f"Projection {axis_str}"
+            return kw
+        def kw_proj_true(axis):
+            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE, common=KalmanObservationFlavor.TRUE in commons, axis=axis, color=axis+1, alpha=0.65)
+            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            kw["label"] = f"Projection {axis_str}"
+            return kw
+        def kw_proj_ideal(axis):
+            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=KalmanObservationFlavor.IDEAL in commons, axis=axis, color=axis+1, alpha=0.65)
+            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            kw["label"] = f"Projection {axis_str}"
+            return kw
+        def kw_meas_proj(axis):
+            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", s=s_size, alpha=alpha)
+            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            kw["label"] = f"Projection {axis_str}"
+            return kw
+        def kw_conn(axis):
+            return self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, linewidth=0.6, alpha=0.6)
 
-        xlim = kwargs.pop("xlim", xlim)
-        if xlim[0] != xlim[1]: ax.set_xlim(xlim)
-        ylim = kwargs.pop("ylim", ylim)
-        if ylim[0] != ylim[1]: ax.set_ylim(ylim)
-        zlim = kwargs.pop("zlim", zlim)
-        if zlim[0] != zlim[1]: ax.set_zlim(zlim)
+        # --- measurement scatter --------------------------------------------------
+        if measurement is not None and self.model is not None:
+            mx_ok = self.model.exclusive_mapping(idx_x, dx)
+            my_ok = self.model.exclusive_mapping(idx_y, dy)
+            mz_ok = self.model.exclusive_mapping(idx_z, dz)
+            if mx_ok and my_ok and mz_ok and measurement.shape[1] > max(dx, dy, dz):
+                ax.scatter(measurement[:, dx], measurement[:, dy], measurement[:, dz],
+                        depthshade=False, **kw_meas)
+            if mx_ok and my_ok:
+                ax.scatter(measurement[:, dx], measurement[:, dy], np.full_like(measurement[:, dz], z0),
+                        depthshade=False, **kw_meas_proj(dz))
+            if mx_ok and mz_ok:
+                ax.scatter(measurement[:, dx], np.full_like(measurement[:, dy], ylim[1]), measurement[:, dz],
+                        depthshade=False, **kw_meas_proj(dy))
+            if my_ok and mz_ok:
+                ax.scatter(np.full_like(measurement[:, dx], xlim[0]), measurement[:, dy], measurement[:, dz],
+                        depthshade=False, **kw_meas_proj(dx))
 
-        # Lines along XYZ-axis
-        if x0 != xlim[0] and x0 != xlim[1]:
-            ax.plot([xlim[0], xlim[1]], [y0, y0], [z0, z0], **plot_kwargs)
-        if y0 != ylim[0] and y0 != ylim[1]:
-            ax.plot([x0, x0], [ylim[0], ylim[1]], [z0, z0], **plot_kwargs)
-        if z0 != zlim[0] and z0 != zlim[1]:
-            if x0 != xlim[0]:
-                ax.plot([xlim[0], xlim[1]], [y0, y0], [zlim[0], zlim[0]], **plot_kwargs)
-            if y0 != ylim[0]:
-                ax.plot([x0, x0], [ylim[0], ylim[1]], [zlim[0], zlim[0]], **plot_kwargs)
+        # --- ancillary series -----------------------------------------------------
+        if IX is not None:
+            h_ideal, = ax.plot(IX, IY, IZ, **kw_ideal)
+            self._draw_arrows_3d(ax, IX, IY, IZ, color=h_ideal.get_color(), arrows=arrows_ct)
+        if TX is not None:
+            h_truth, = ax.plot(TX, TY, TZ, **kw_true)
+            self._draw_arrows_3d(ax, TX, TY, TZ, color=h_truth.get_color(), arrows=arrows_ct)
 
-        # Outline XY plane
-        if z0 != zlim[0] and z0 != zlim[1]:
-            ax.plot([xlim[0], xlim[1]], [ylim[0], ylim[0]], [z0, z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[0], ylim[1]], [z0, z0], **plot_kwargs)
+        # --- subtle reference box lines (neutral) --------------------------------
+        ref_style = dict(color="black", linestyle=":", linewidth=0.75, alpha=0.8)
+        if xlim[0] < x0 < xlim[1]:
+            ax.plot([xlim[0], xlim[1]], [y0, y0], [z0, z0], **ref_style)
+        if ylim[0] < y0 < ylim[1]:
+            ax.plot([x0, x0], [ylim[0], ylim[1]], [z0, z0], **ref_style)
+        if zlim[0] < z0 < zlim[1]:
+            ax.plot([x0, x0], [y0, y0], [zlim[0], zlim[1]], **ref_style)
 
-        # Projecting lines from Z0 to Zmin
-        if z0 != zlim[0]:        
-            ax.plot([xlim[0], xlim[0]], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[0], xlim[0]], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-            ax.plot([xlim[1], xlim[1]], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-        
-            if x0 != xlim[0] and x0 != xlim[1]:
-                ax.plot([x0, x0], [ylim[0], ylim[0]], [zlim[0], z0], **plot_kwargs)
-                ax.plot([x0, x0], [ylim[1], ylim[1]], [zlim[0], z0], **plot_kwargs)
-            if x0 != xlim[0] and x0 != xlim[1] and y0 != ylim[0] and y0 != ylim[1]:
-                ax.plot([x0, x0], [y0, y0], [zlim[0], z0], **plot_kwargs)
-            if y0 != ylim[0] and y0 != ylim[1]:
-                ax.plot([xlim[1], xlim[1]], [y0, y0], [zlim[0], z0], **plot_kwargs)
-                ax.plot([xlim[0], xlim[0]], [y0, y0], [zlim[0], z0], **plot_kwargs)
-
-        if ideal is not None:
-            ax.plot(IX, IY, IZ, label='Ideal', color=self._colors(0, KalmanObservationFlavor.IDEAL, "black"), linestyle=self._linestyles(0, KalmanObservationFlavor.IDEAL))
-        if truth is not None:
-            ax.plot(TX, TY, TZ, label='Truth', color=self._colors(0, KalmanObservationFlavor.TRUE, "black"), linestyle=self._linestyles(0, KalmanObservationFlavor.TRUE))
-
+        # --- projections (drawn; legend will show proxies in base color) ----------
         if projectors:
-
-            z0, y0, x0 = float(Z0), float(ylim[1]), float(xlim[0])
-
             if X is not None and Y is not None and Z is not None:
-                ax.plot(X,           Y,          [Z0]*len(Z), color=self._colors(0, KalmanStateFlavor.POSTERIOR, "gray"), alpha=0.75, linestyle=self._linestyles(0, KalmanStateFlavor.POSTERIOR, "-"))
-                ax.plot(X,          [y0]*len(X), Z,           color=self._colors(1, KalmanStateFlavor.POSTERIOR, "gray"), alpha=0.75, linestyle=self._linestyles(1, KalmanStateFlavor.POSTERIOR, "-"))
-                ax.plot([x0]*len(Y), Y,          Z,           color=self._colors(2, KalmanStateFlavor.POSTERIOR, "gray"), alpha=0.75, linestyle=self._linestyles(2, KalmanStateFlavor.POSTERIOR, "-"))
+                ax.plot(X, Y, np.full_like(Z, z0), **kw_proj_state(dz))
+                ax.plot(X, np.full_like(X, ylim[1]), Z, **kw_proj_state(dy))
+                ax.plot(np.full_like(Y, xlim[0]), Y, Z, **kw_proj_state(dx))
+            if IX is not None:
+                ax.plot(IX, IY, np.full_like(IZ, z0), **kw_proj_ideal(dz))
+                ax.plot(IX, np.full_like(IX, ylim[1]), IZ, **kw_proj_ideal(dy))
+                ax.plot(np.full_like(IY, xlim[0]), IY, IZ, **kw_proj_ideal(dx))
+            if TX is not None:
+                ax.plot(TX, TY, np.full_like(TZ, z0), **kw_proj_true(dz))
+                ax.plot(TX, np.full_like(TX, ylim[1]), TZ, **kw_proj_true(dy))
+                ax.plot(np.full_like(TY, xlim[0]), TY, TZ, **kw_proj_true(dx))
 
-            if IX is not None and IY is not None and IZ is not None:
-                ax.plot(IX,           IY,          [Z0]*len(IZ), color=self._colors(0, KalmanObservationFlavor.IDEAL, "gray"), alpha=0.75, linestyle=self._linestyles(0, KalmanObservationFlavor.IDEAL, "-"))
-                ax.plot(IX,          [y0]*len(IX), IZ,           color=self._colors(1, KalmanObservationFlavor.IDEAL, "gray"), alpha=0.75, linestyle=self._linestyles(1, KalmanObservationFlavor.IDEAL, "-"))
-                ax.plot([x0]*len(IY), IY,          IZ,           color=self._colors(2, KalmanObservationFlavor.IDEAL, "gray"), alpha=0.75, linestyle=self._linestyles(2, KalmanObservationFlavor.IDEAL, "-"))
+        # --- connectors -----------------------------------------------------------
+        if connectors and X is not None and len(X) > 0:
+            for j in (0, len(X) - 1):
+                xi, yi, zi = float(X[j]), float(Y[j]), float(Z[j])
+                ax.plot([xi, xi], [yi, yi], [z0, zi], **kw_conn(dz))
+                ax.plot([xi, xi], [ylim[0], yi], [zi, zi], **kw_conn(dy))
+                ax.plot([xlim[0], xi], [yi, yi], [zi, zi], **kw_conn(dx))
 
-            if TX is not None and TY is not None and TZ is not None:
-                ax.plot(TX,           TY,          [Z0]*len(TZ), color=self._colors(0, KalmanObservationFlavor.TRUE, "gray"), alpha=0.75, linestyle=self._linestyles(0, KalmanObservationFlavor.TRUE, "-"))
-                ax.plot(TX,          [y0]*len(TX), TZ,           color=self._colors(1, KalmanObservationFlavor.TRUE, "gray"), alpha=0.75, linestyle=self._linestyles(1, KalmanObservationFlavor.TRUE, "-"))
-                ax.plot([x0]*len(TY), TY,          TZ,           color=self._colors(2, KalmanObservationFlavor.TRUE, "gray"), alpha=0.75, linestyle=self._linestyles(2, KalmanObservationFlavor.TRUE, "-"))
-            
-            if connectors:
-                for j in (0, len(X)-1):
-                    xi, yi, zi = float(X[j]), float(Y[j]), float(Z[j])
-                    ax.plot([xi,xi],[yi,yi],[z0,zi], color=self._colors(0, KalmanStateFlavor.POSTERIOR, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
-                    ax.plot([xi,xi],[y0,yi],[zi,zi], color=self._colors(1, KalmanStateFlavor.POSTERIOR, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
-                    ax.plot([x0,xi],[yi,yi],[zi,zi], color=self._colors(2, KalmanStateFlavor.POSTERIOR, "gray"), linestyle='-.', linewidth=0.5, alpha=0.75)
+        # --- main trajectory + arrows --------------------------------------------
+        h_main, = ax.plot(X, Y, Z, **kw_main)
+        self._draw_arrows_3d(ax, X, Y, Z, color=h_main.get_color(), arrows=arrows_ct)
 
-        if X is not None and Y is not None and Z is not None:
-            ax.plot(X, Y, Z, label=f"{str(self.flavor)}", color=self._colors(0, self.flavor, "black"), linewidth=1.5)
-            ax.set_xlabel(kwargs.pop("xlabel", self._coords(0) + " " + self._labels(component[0]) + " (" + self._units(component[0]) + ")"))
-            ax.set_ylabel(kwargs.pop("ylabel", self._coords(1) + " " + self._labels(component[1]) + " (" + self._units(component[1]) + ")"))
-            ax.set_zlabel(kwargs.pop("zlabel", self._coords(2) + " " + self._labels(component[2]) + " (" + self._units(component[2]) + ")"))
-        
-        ax.grid(kwargs.pop("grid", True))
-        ax.set_box_aspect([1,1,1])
-        if kwargs.pop("legend", True):
-            ax.legend(fontsize=10, handlelength=4, handleheight=0.01)
+        # --- labels / cosmetics ---------------------------------------------------
+        ax.set_xlabel(kwargs.pop("xlabel", self._plot_labels(comps[0], axis=dx)))
+        ax.set_ylabel(kwargs.pop("ylabel", self._plot_labels(comps[1], axis=dy)))
+        ax.set_zlabel(kwargs.pop("zlabel", self._plot_labels(comps[2], axis=dz)))
+        ax.grid(grid)
+        ax.set_box_aspect([1, 1, 1])
 
-        return fig, ax
+        # --- CLEAN LEGEND: only base color entries (trajectory + three projections)
+        if legend:
+
+            base_col = h_main.get_color()
+
+            # pull applied styles for consistency
+            main_ls  = kw_main.get("linestyle", "-")
+            main_lw  = kw_main.get("linewidth", 1.5)
+
+            kw_meas_projx = kw_proj_state(dx)
+            kw_meas_projy = kw_proj_state(dy)
+            kw_meas_projz = kw_proj_state(dz)
+
+            # proxies use base color (not the axis-colored projection lines)
+            proxies = [
+                Line2D([0], [0], color=base_col, linestyle=main_ls, linewidth=main_lw, label=str(self.flavor) + " 3D"),
+                Line2D([0], [0], **kw_meas_projx),
+                Line2D([0], [0], **kw_meas_projy),
+                Line2D([0], [0], **kw_meas_projz),
+            ]
+            ax.legend(proxies, [h.get_label() for h in proxies],
+                    fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
+
+        return get_figure(ax), get_axis(ax)
 
     def plot_error(self, flavor: KalmanStateFlavor | KalmanObservationFlavor = KalmanObservationFlavor.MEASURED, component=None, dim=None, **kwargs):
         """
@@ -888,11 +1218,13 @@ class KalmanStateRecord:
 
         # figure/axis + cosmetics
         c       = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+        plt.sca(c)
+
         legend  = kwargs.pop("legend", True)
-        padding = kwargs.pop("padding", 0.05)
 
         # default flavor for labels/colors
         flavor = flavor or self.flavor
+        colorid = len(get_lines(**kwargs))
 
         # helpers
         def _axes_from_dim(d):
@@ -915,8 +1247,10 @@ class KalmanStateRecord:
             # Measurement error: uses 'measurement' as zk_hat when available
             fig, ax = self._plot_error_measurement(
                 flavor=flavor, axes=axes, zk0=measurement,
-                canvas=c, legend=legend, padding=padding, **kwargs
-            )
+                canvas=c, legend=legend, color=kwargs.pop("color", colorid), **kwargs)
+
+            if ax.get_title() == "":
+                ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
             return fig, ax
 
         if component is not None:
@@ -933,26 +1267,39 @@ class KalmanStateRecord:
 
             fig, ax = self._plot_error_state(
                 component=component, axes=axes, xk0=reference,
-                canvas=c, legend=legend, padding=padding, **kwargs
+                canvas=c, legend=legend, **kwargs
             )
+
+            if ax.get_title() == "":
+                ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
             return fig, ax
 
         # L2 over full state (requires reference)
         if reference is None:
             raise ValueError("Provide 'sample' or ('truth' or 'ideal') to compute L2 state error.")
         fig, ax = self._plot_error_l2(
-            xk0=reference, canvas=c, legend=legend, padding=padding, **kwargs
+            xk0=reference, canvas=c, legend=legend, **kwargs
         )
+
+        if ax.get_title() == "":
+            ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
         return fig, ax
 
 
-    def _plot_error_measurement(self, *, flavor, axes, zk0, canvas, legend, padding, **kwargs):
+    def _plot_error_measurement(self, *, flavor, axes, zk0, **kwargs):
         """
         Plot zk0 error per axis: zk - zk_hat.
         Here zk_hat is taken from 'zk0' (preferred: sample.zk).
         If 'zk0' is None, we error.
         """
-        c = canvas
+
+        kind = kwargs.pop("kind", "hist")
+        bins = kwargs.pop("bins", 50)
+        legend = kwargs.pop("legend", True)
+        
+        c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+        plt.sca(c)
+
         if self.zk is None:
             raise ValueError("Cannot plot measurement error: 'zk' is None.")
         if zk0 is None:
@@ -965,25 +1312,51 @@ class KalmanStateRecord:
             err = self.zk[:, a] - zk0[:, a]
             ymin = min(ymin, np.nanmin(err))
             ymax = max(ymax, np.nanmax(err))
-            c.plot(self.time, err,
-                color=self._colors(a, flavor, "gray"),
-                label=f"{str(flavor)} error @ {self._coords(a, flavor)}")
 
-        if np.isfinite(ymin) and np.isfinite(ymax):
-            yr = max(1e-12, ymax - ymin)
-            c.set_ylim(ymin - padding*yr, ymax + padding*yr)
+            if kind == "hist":
+                # draw histogram and capture counts/edges (counts needed for scaling)
+                counts, edges, _ = c.hist(err, bins=bins, **self._plot_kwargs(flavor=flavor, axis=a))
+
+                # fit Gaussian (MLE via mean/std with ddof=0)
+                mu = float(np.mean(err))
+                sigma = float(np.std(err, ddof=0)) or 1e-12  # avoid zero
+
+                # overlay Gaussian scaled to counts
+                x = np.linspace(edges[0], edges[-1], 512)
+                inv = 1.0 / (sigma * np.sqrt(2.0 * np.pi))
+                pdf = inv * np.exp(-0.5 * ((x - mu) / sigma) ** 2)
+
+                n = np.sum(counts)
+                bw = float(np.mean(np.diff(edges)))  # assumes ~uniform bins
+                y = n * pdf * bw
+
+                fit_kw = self._plot_kwargs(color=kwargs.pop("color", "red"), axis=a)
+
+                if legend:
+                    fit_kw["label"] = f"Gaussian Fit\n(μ={mu:.3g}, σ={sigma:.3g})"
+                c.plot(x, y, **fit_kw)
+
+            else:
+                c.plot(self.time, err, **self._plot_kwargs(flavor=flavor, axis=a, color=kwargs.pop("color", None)))
         
         c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
-        c.set_ylabel(kwargs.pop("ylabel", "Absolute Measurement Error"))
+        if kind == "hist":
+            c.set_title(kwargs.pop("ylabel", "Absolute Measurement Error"))
+            c.set_ylabel(kwargs.pop("xlabel", "Counts"))
+        else :
+            c.set_ylabel(kwargs.pop("ylabel", "Absolute Measurement Error"))
         c.grid(kwargs.pop("grid", True))
         if legend: c.legend()
+
         return get_figure(c), get_axis(c)
 
-    def _plot_error_state(self, *, component, axes, xk0, canvas, legend, padding, **kwargs):
+    def _plot_error_state(self, *, component, axes, xk0, canvas, legend, **kwargs):
         """
         Plot per-axis state component error: xk[:, idx] - xk0[:, idx]
         """
         c = canvas
+        plt.sca(c)
+
         ymin, ymax = np.inf, -np.inf
         
         def _state_index(component, axis):
@@ -1000,25 +1373,23 @@ class KalmanStateRecord:
             c.plot(self.time, err,
                 color=self._colors(a, self.flavor, "black"),
                 linestyle=self._linestyles(a, self.flavor, "-"),
-                label=f"{self._coords(a, component)} error")
+                label=f"{self._axis(a, component)} error")
 
-        # cosmetics
-        if np.isfinite(ymin) and np.isfinite(ymax):
-            yr = max(1e-12, ymax - ymin)
-            c.set_ylim(ymin - padding*yr, ymax + padding*yr)
         
         c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
-        c.set_ylabel(kwargs.pop("ylabel", f"Absolute {self._labels(component)} Error"))
+        c.set_ylabel(kwargs.pop("ylabel", f"Absolute {self._plot_labels(component)} Error"))
         c.grid(kwargs.pop("grid", True))
         
         if legend: c.legend()
         return get_figure(c), get_axis(c)
 
-    def _plot_error_l2(self, *, xk0, canvas, legend, padding, **kwargs):
+    def _plot_error_l2(self, *, xk0, canvas, legend, **kwargs):
         """
         Plot total L2 state error per time: ||xk - xk0||_2
         """
         c = canvas
+        plt.sca(c)
+
         n_cols = min(self.xk.shape[1], xk0.shape[1])
         e  = self.xk[:, :n_cols] - xk0[:, :n_cols]
         l2 = np.sqrt(np.sum(e*e, axis=1))
@@ -1028,17 +1399,13 @@ class KalmanStateRecord:
             linestyle=self._linestyles(0, self.flavor, "-"),
             label=f"{str(self.flavor)} L2 error")
 
-        if np.isfinite(l2).any():
-            ymin, ymax = np.nanmin(l2), np.nanmax(l2)
-            yr = max(1e-12, ymax - ymin)
-            c.set_ylim(ymin - padding*yr, ymax + padding*yr)
 
         c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
         c.set_ylabel(kwargs.pop("ylabel", "Least Square State Errors (L2)"))
         c.grid(kwargs.pop("grid", True))
         if legend: c.legend()
         return get_figure(c), get_axis(c)
-
+    
 class KalmanStateCollection:
     
     def __init__(self, records=()):
@@ -1069,7 +1436,167 @@ class KalmanStateCollection:
         return iter(self._records)
 
     def __repr__(self):
-        return f"KalmanStateCollection with {len(self)} records"
+        return f"KalmanStateCollection(N={len(self)})"
 
-    def __str__(self):
-        return self.__repr__()
+    def __str__(self, **kwargs):
+
+        max = kwargs.pop("max", None if get_debug() else 8)
+        extra = f"(only display {max})" if max is not None and len(self) > max else ""
+        lines = [f"KalmanStateCollection with {len(self)} records: {extra}"]
+
+        n = len(self)
+        if max is not None and n > max:
+            show = max // 2
+            for i, rec in enumerate(self._records[:show]):
+                lines.append(f"  {i}: {rec!r}")
+            lines.append(f"  ... ({n - max} more records) ...")
+            for i, rec in enumerate(self._records[-show:], start=n-show):
+                lines.append(f"  {i}: {rec!r}")
+        else:
+            for i, rec in enumerate(self._records):
+                lines.append(f"  {i}: {rec!r}")
+        return "\n".join(lines)
+
+    def print(self, **kwargs):
+        print(self.__str__(**kwargs))
+
+    def plot(self, **kwargs):
+        """
+        Overlay plot for all records with one combined legend.
+        kwargs forwarded to each record.plot().
+        """
+        from ..helpers import get_canvas, get_axis, get_figure, get_ylim
+        from matplotlib.lines import Line2D
+
+        c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+        legend = kwargs.pop("legend", len(self._records) <= 4)
+        handles, labels = [], []
+
+        samples = kwargs.pop("samples", None)
+
+        for i, rec in enumerate(self._records):
+
+            sample = samples[i] if isinstance(samples, (list, tuple, KalmanStateCollection)) and i < len(samples) else samples
+            if sample is None: kwargs["sample"] = kwargs.get("sample", None)
+
+            rec.plot(sample=sample, commons=[KalmanObservationFlavor.IDEAL], canvas=c, legend=False, color=i, **kwargs)
+            if legend and len(self._records) < kwargs.get("legend_max", 8):
+                plt_kwargs = { k: v for k, v in rec._plot_kwargs(color=i, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
+                plt_kwargs["color"] = darken(plt_kwargs["color"])
+                handles.append(Line2D([0], [0], **plt_kwargs))
+                labels.append(f"Record #{i+1}")
+
+        if samples is not None and rec is not None:
+            plt_kwargs = { k: v for k, v in rec._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=True, color=1, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
+            handles.insert(0, Line2D([0], [0], **plt_kwargs))
+            labels.insert(0, str(KalmanObservationFlavor.IDEAL))
+        
+        if kwargs.get("legend", True) and handles:
+            c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01)
+
+        return get_figure(c), get_axis(c)
+
+    def plot_error(self, **kwargs):
+        """
+        Overlay error plots for all records on a single axes, with one combined legend.
+
+        Parameters (kwargs):
+        samples      : None | KalmanStateCollection | list[KalmanStateRecord] | single sample
+                        - If a collection/list is provided, samples[i] is passed to record i.
+                        - Else the same 'sample' (if provided) is used for all.
+        legend       : bool (default: len(self._records) <= 4)
+        legend_max   : int  (default: 10)  # max number of legend entries
+        legend_loc   : str  (default: "best")
+        alpha_decay  : float in (0,1] (default: 0.9)
+                        - Multiplies alpha for successive records to reduce clutter.
+        color        : optional; if provided, all records share this base color
+                        (still routed through _plot_kwargs). Otherwise uses color=i.
+        ...          : forwarded to each record.plot_error()
+                        (e.g., flavor, component, dim, kind, bins, grid, title, etc.)
+
+        Returns:
+        (figure, axis)
+        """
+        from ..helpers import get_canvas, get_axis, get_figure
+        from matplotlib.lines import Line2D
+        import copy
+
+        if len(self._records) == 0:
+            # Nothing to plot — return an empty canvas
+            c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+            return get_figure(c), get_axis(c)
+
+        c          = kwargs.pop("canvas", None) or get_canvas(**kwargs)
+        legend     = kwargs.pop("legend", len(self._records) <= 4)
+        legend_max = kwargs.pop("legend_max", 10)
+        legend_loc = kwargs.pop("legend_loc", "best")
+        alpha_decay = float(kwargs.pop("alpha_decay", 0.9))
+        alpha_decay = alpha_decay if 0 < alpha_decay <= 1 else 0.9
+
+        # Allow per-record samples (mirrors .plot())
+        samples = kwargs.pop("samples", None)
+
+        handles, labels = [], []
+
+        # We’ll not mutate the caller’s kwargs; copy for safety per-record
+        for i, rec in enumerate(self._records):
+            # Build per-record kwargs
+            local = copy.deepcopy(kwargs)
+            local["legend"] = False  # consolidate legend here
+
+            # Ensure color coherence:
+            # - if user passed an explicit color, keep it
+            # - otherwise use color=i
+            base_color = kwargs.get("color", i)
+            local["color"] = base_color
+
+            # Apply alpha decay to help readability on heavy overlays
+            if "alpha" in local:
+                try:
+                    local["alpha"] = float(local["alpha"]) * (alpha_decay ** i)
+                except Exception:
+                    pass
+            else:
+                # Set a gentle default alpha if not specified
+                local["alpha"] = 0.95 * (alpha_decay ** i)
+
+            # Per-record sample selection
+            if isinstance(samples, (list, tuple, KalmanStateCollection)):
+                sample_i = samples[i] if i < len(samples) else None
+                if sample_i is not None:
+                    local["sample"] = sample_i
+            elif samples is not None:
+                local["sample"] = samples
+            else:
+                # Respect a pre-existing 'sample' already in kwargs if present
+                if "sample" in kwargs:
+                    local["sample"] = kwargs["sample"]
+
+            # Draw the record’s error onto the shared canvas
+            rec.plot_error(canvas=c, **local)
+
+            # Construct a legend handle that matches the style used for this record’s error
+            # Try to use the same 'flavor' as the one used in plot_error() if provided.
+            flavor_for_handle = local.get("flavor", kwargs.get("flavor", rec.flavor))
+            plt_kwargs = {
+                k: v for k, v in rec._plot_kwargs(
+                    flavor=flavor_for_handle,
+                    color=base_color,
+                    alpha=local.get("alpha", 1.0),
+                    **local
+                ).items()
+                if k in ("color", "linewidth", "linestyle", "alpha")
+            }
+
+            handles.append(Line2D([0], [0], **plt_kwargs))
+            labels.append(f"Record #{i+1}")
+
+            # Cap legend size if requested
+            if legend and len(handles) >= legend_max:
+                break
+
+        # Final legend
+        if legend and handles:
+            c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
+
+        return get_figure(c), get_axis(c)

@@ -45,23 +45,13 @@ class KalmanStateModel(ABC):
     # Metadata properties to configure plotting and representation
     @property
     @abstractmethod
-    def units(self):
-        """Dictionary mapping state types to units."""
-        pass
-    @property
-    @abstractmethod
-    def coords(self):
+    def axis(self):
         """List of coordinate names."""
         pass
     @property
     @abstractmethod
-    def colors(self):
-        """Nested dictionary mapping KalmanObservationFlavor -> axis -> color."""
-        pass
-    @property
-    @abstractmethod
-    def linestyles(self):
-        """Nested dictionary mapping KalmanObservationFlavor -> axis -> linestyle."""
+    def units(self):
+        """Dictionary mapping state types to units."""
         pass
 
     def __init__(self, **kwargs):
@@ -113,11 +103,11 @@ class KalmanStateModel(ABC):
         for record in self.records:
             record.model = None
 
-    def reset_with_latest(self):
-        self.reset(with_latest=True)
-    def reset(self, with_latest=False):
+    def reset_to_latest(self):
+        self.reset(to_latest=True)
+    def reset(self, to_latest=False):
 
-        if with_latest:
+        if to_latest:
             self.t0 = self.t0 + len(self.posterior) / self.fs
             self.P0 = self.get_latest_state_covariance()
             self.x0 = self.get_latest_state_vector()
@@ -525,7 +515,7 @@ class KalmanStateModel(ABC):
         reset    = kwargs.pop("reset", True)
         buffer   = kwargs.pop("buffer", 60) # in seconds
         if len(self.posterior) > buffer * self.fs:
-            self.reset_with_latest()
+            self.reset_to_latest()
         elif reset:
             self.reset()
        
@@ -579,8 +569,8 @@ class KalmanStateModel(ABC):
         if postprocess: zk_hat = self._postprocess(zk_hat, **kwargs)
 
         return KalmanStateRecord(self.time(k), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=KalmanStateFlavor.SMOOTHED if smooth else KalmanStateFlavor.POSTERIOR, model=self)
-    
-    def exclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple):
+
+    def exclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple) -> bool:
 
         """Check if measurement(s) exclusively observe state(s)."""
         # Convert to arrays
@@ -592,8 +582,9 @@ class KalmanStateModel(ABC):
             
             state_idx = KalmanStateRecord._normalize_index(state_idx, n)
             meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
+            
             for i in range(n):
-                if self.exclusive_mapping(state_idx[i], meas_idx[i]) is False:
+                if not self.exclusive_mapping(state_idx[i], meas_idx[i]):
                     return False
 
             return True if n else False
@@ -605,17 +596,15 @@ class KalmanStateModel(ABC):
             m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
             assert 0 <= m < self.m
 
-            coeff = self.H[m, s]
-            return coeff != 0
+            return self.H[m, s] != 0
 
-    def inclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple):
+    def inclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple) -> bool:
         """Check if measurement(s) depend on state(s) in any way."""
         if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
             # Determine broadcasting length
             n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
                     len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
             
-            print("BROADCAST: ",state_idx, meas_idx, n)
             state_idx = KalmanStateRecord._normalize_index(state_idx, n)
             meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
 
