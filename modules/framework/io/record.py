@@ -5,6 +5,7 @@ from ...helpers import *
 from ...runtime.debug import get_debug
 
 from ..constants import KalmanState, KalmanStateFlavor, KalmanObservationFlavor
+from enum import Enum as _PyEnum
 
 # =========================
 # Record & Collection
@@ -118,45 +119,200 @@ class KalmanStateRecord:
     def _normalize_index(idx, size=None):
         """Convert int, Enum, or tuple/list/array to np.array of ints."""
         if isinstance(idx, (tuple, list, np.ndarray)):
-            return np.array([i.value if hasattr(i, "value") else int(i) for i in idx])
+            return np.array([i if hasattr(i, "value") else int(i) for i in idx])
         else:
-            i = idx.value if hasattr(idx, "value") else int(idx)
+            i = idx if hasattr(idx, "value") else int(idx)
             if size is not None:
                 return np.array([i] * size)
             return np.array([i])
 
-    def _normalize_component(self, component, type: KalmanState = None):
+    def _resolve_component_symbol(self, val):
         """
-        Normalize component to a tuple of length `dim`.
-
-        Rules:
-        - If a single value is passed, repeat it `dim` times.
-        - If a list/tuple/array of length < dim, repeat the last element to reach dim.
-        - If length > dim, truncate to dim.
-        - Always returns a tuple of length dim.
+        Accepts an Enum member (KalmanState/KalmanObservation), name (str), or int.
+        - If Enum: return as-is
+        - If str : try model.states[NAME] then model.observables[NAME]
+        - Else   : return as-is (assumed int index)
         """
-        if type is not None and not issubclass(type, Enum):
-            raise ValueError(f"'type' must be a subclass of Enum, got {type}.")
+        from enum import Enum as _PyEnum
 
+        # already an enum (any Enum subtype) -> ok
+        if isinstance(val, _PyEnum):
+            return val
+
+        # name -> try state then observables
+        if isinstance(val, str) and self.model is not None:
+            name = val.upper()
+            try:
+                return self.model.states[name]
+            except Exception:
+                pass
+            try:
+                return self.model.observables[name]
+            except Exception:
+                pass
+
+        # int or anything else -> pass through
+        return val
+
+    def _enum_classes(self):
+        """
+        Returns (StateEnumClass or None, ObsEnumClass or None).
+        We expect model.states / model.observables to return Enum classes.
+        """
+        S = None; O = None
+        if self.model is not None:
+            try:
+                S = self.model.states
+            except Exception:
+                S = None
+            try:
+                O = self.model.observables
+            except Exception:
+                O = None
+        return S, O
+
+    def _resolve_name_to_enum(self, name: str):
+        """
+        Map a string name to the unique matching Enum member.
+        - If it exists only in states -> return that member
+        - If it exists only in observables -> return that member
+        - If it exists in BOTH -> raise ValueError (ambiguity)
+        - If it exists in NONE -> raise KeyError
+        """
+        S, O = self._enum_classes()
+        key = name.upper()
+
+        s_hit = o_hit = None
+        if S is not None and hasattr(S, "__members__") and key in S.__members__:
+            s_hit = S.__members__[key]
+        if O is not None and hasattr(O, "__members__") and key in O.__members__:
+            o_hit = O.__members__[key]
+        
+        if s_hit and o_hit:
+            raise ValueError(f"Ambiguous component '{name}': found in both KalmanState and KalmanObservation enums.\n"
+                             f"Please specify {S.__name__}.{name.upper()} or {O.__name__}.{name.upper()}")
+        if s_hit:
+            return s_hit
+        if o_hit:
+            return o_hit
+
+        raise KeyError(f"Unknown component name '{name}' in {S.__name__}/{O.__name__} enums.")
+
+    def _resolve_index_to_enum(self, idx: int):
+        """
+        Map an integer index to a unique Enum member by position.
+        - Try states[idx] (iter order) and observables[idx]
+        - If both exist and point to different members -> ambiguity error
+        - If only one exists -> return it
+        - If none exist -> raise IndexError (unless no enums are available, then return idx)
+        """
+        S, O = self._enum_classes()
+
+        s_hit = o_hit = None
+
+        try:
+            if S is not None:
+                s_list = list(S)
+                if 0 <= idx < len(s_list):
+                    s_hit = s_list[idx]
+        except Exception:
+            pass
+
+        try:
+            if O is not None:
+                o_list = list(O)
+                if 0 <= idx < len(o_list):
+                    o_hit = o_list[idx]
+        except Exception:
+            pass
+
+        if s_hit and o_hit and s_hit is not o_hit:
+            raise ValueError(f"Ambiguous index {idx}: matches both State and Observation enums.")
+        if s_hit:
+            return s_hit
+        if o_hit:
+            return o_hit
+
+        # If we have neither enum, keep int (backward compatible).
+        if S is None and O is None:
+            return idx
+
+        raise IndexError(f"Index {idx} does not match any State/Observation member.")
+    
+    def _normalize_component(self, component, *, preserve_shape: bool = False):
+        """
+        Normalize `component` with ambiguity-safe enum resolution.
+
+        Returns:
+        - preserve_shape=True:
+            * scalar -> Enum (KalmanState or KalmanObservation)
+            * flat list/tuple -> list[Enum]
+            * nested list/tuple -> list[tuple[Enum, ...]]  (one nesting level preserved)
+        - preserve_shape=False (default / plotting path):
+            * returns a tuple[Enum, ...] of length `self.dim`
+                (pad by repeating last; truncate if longer)
+        """
+        # --- local resolver that yields an Enum or raises ---
+        def _norm_one(v):
+            if isinstance(v, _PyEnum):
+                return v
+            if isinstance(v, str):
+                return self._resolve_name_to_enum(v)
+            if isinstance(v, (int, np.integer)):
+                return self._resolve_index_to_enum(int(v))
+            # anything else is unsupported for components
+            raise TypeError(f"Unsupported component type: {type(v).__name__}")
+
+        # --- scalar path ------------------------------------------------------------
         if not isinstance(component, (list, tuple, np.ndarray)):
-            components = [component]
+            member = _norm_one(component)
+            if preserve_shape:
+                return member
+            # flattening mode: repeat to dim
+            return tuple([member] * max(1, self.dim or 1))
+
+        # --- sequence path: detect one-level nesting --------------------------------
+        seq = list(component)
+
+        def _is_seq(x):
+            return isinstance(x, (list, tuple, np.ndarray))
+
+        has_nested = any(_is_seq(x) for x in seq)
+
+        if preserve_shape:
+            if not has_nested:
+                # flat -> list[Enum]
+                return [ _norm_one(x) for x in seq ]
+            # nested -> list[tuple[Enum,...]]
+            out = []
+            for grp in seq:
+                if not _is_seq(grp):
+                    raise TypeError("Mixed nested/flat component structure is not supported.")
+                out.append(tuple(_norm_one(x) for x in grp))
+            return out
+
+        # flattening mode for plotting: produce tuple of length self.dim
+        flat = []
+        if not has_nested:
+            flat = [ _norm_one(x) for x in seq ]
         else:
-            components = list(component)
+            # flatten one level (left-to-right) then use pad/truncate
+            for grp in seq:
+                if not _is_seq(grp):
+                    raise TypeError("Mixed nested/flat component structure is not supported.")
+                for x in grp:
+                    flat.append(_norm_one(x))
 
-        if not components:
-            components = [0]
+        if len(flat) == 0:
+            # fallback: one arbitrary member replicated (but this should rarely happen)
+            return tuple([_norm_one(0)] * max(1, self.dim or 1))
 
-        # Extend or truncate to match dim
-        if len(components) < self.dim:
-            components += [components[-1]] * (self.dim - len(components))
-        elif len(components) > self.dim:
-            components = components[:self.dim]
-
-        # Convert all to enum
-        if type is not None:
-            components = [str2enum(c, type) for c in components]
-
-        return tuple(components)
+        need = max(1, self.dim or 1)
+        if len(flat) < need:
+            flat += [flat[-1]] * (need - len(flat))
+        elif len(flat) > need:
+            flat = flat[:need]
+        return tuple(flat)
 
     @staticmethod
     def _normalize_in(x, indexing = None):
@@ -208,7 +364,7 @@ class KalmanStateRecord:
         """
         Returns the list of state indices that contribute to measurement[meas_idx].
         """
-        idx = idx.value if hasattr(idx, 'value') else int(idx)
+        idx = idx if hasattr(idx, 'value') else int(idx)
         idx = self.dim * axis + idx
 
         assert 0 <= idx < self.dim * self.m, f"Measurement index out of range. Expected 0 <= idx < {self.dim * self.m}, got {idx}."
@@ -239,16 +395,13 @@ class KalmanStateRecord:
             if arr is None:
                 return f"{label}: N/A{(' ' + extra) if extra else ''}"
 
-            # Display as X0 x (X1 x X2 x ...) for any ndim >= 2
-            dt = f"(dtype={arr.dtype})" if isinstance(arr, np.ndarray) else ""
-
             if isinstance(arr, np.ndarray) and arr.ndim >= 2:
                 shape_str = f"{arr.shape[0]}x(" + "x".join(str(d) for d in arr.shape[1:]) + ")"
             else:
                 shape_str = _shape(arr)
 
             dots = "." * ndots
-            return f"({label}) {dots}: {extra if extra else shape_str} {dt}"
+            return f"({label}) {dots}: {extra if extra else shape_str}"
 
         def _count_bad(a):
             if a is None:
@@ -325,6 +478,10 @@ class KalmanStateRecord:
         # model info
         model_name = getattr(self.model, "NAME", None) or "Model ?"
         model_ver  = getattr(self.model, "VERSION", None) or "?"
+        
+        model_type = getattr(self.model, "dtype", None) or "N/A"
+        if isinstance(model_type, type):
+            model_type = model_type.__name__
 
         # optional long description if the model has one
         description = getattr(self.model, "DESCRIPTION", None) or ""
@@ -336,21 +493,20 @@ class KalmanStateRecord:
 
         # ---- header --------------------------------------------------------------
         s.append(f"{self.__class__.__name__}:")
-        s.append("")
-        s.append(f"{spacer}{model_name} (v.{model_ver})")
-        if description:
-            s.append(f"{2*spacer}{description}")
-        s.append("")
+        # s.append("")
 
         # ---- high-level summary --------------------------------------------------
         s.append(f"{spacer}Summary:")
+        s.append(f"{2*spacer}Attached Model....................................: {model_name} (v{model_ver})")
+        s.append(f"{2*spacer}Description.......................................: {model_type}")
         s.append(f"{2*spacer}Samples...........................................: {N} data points")
+        s.append(f"{2*spacer}Sample Rate.......................................: {self.sample_rate:.6g} Hz")
         s.append(f"{2*spacer}State Dimension (n)...............................: {n}D")
         s.append(f"{2*spacer}Observation Dimension (m).........................: {m}D")
         s.append(f"{2*spacer}Flavor............................................: {flav}")
         s.append(f"{2*spacer}Start Time........................................: {t0:.6g}s")
         s.append(f"{2*spacer}Duration..........................................: {duration:.6g}s")
-        s.append("")
+        # s.append("")
         # ---- dimensions & data quality ------------------------------------------
         s.append(f"{spacer}Dimensions & Data Quality:")
 
@@ -407,35 +563,27 @@ class KalmanStateRecord:
 
     # Properties for model-dependent information
     def _plot_time(self, **kwargs):
-        return "Time (s)" # always seconds, but could be overridden later
+        return "Time (s)" # always seconds, but could be overridden later..
 
     def _plot_labels(self, component : KalmanState, axis = None, units = False, **kwargs):
 
-        labels = kwargs.get("labels", None) or []
-        label = labels[int(component)] if component in labels else None
-        label = label or (str(component)+" " if isinstance(component, Enum) else f"Component #{int(axis)} ") if isinstance(axis, int) else ""
-
+        label = (str(component).capitalize()+" " if isinstance(component, Enum) else f"Component #{int(axis)} ") if isinstance(axis, int) else ""
         model = kwargs.get("model", None) or self.model
 
         # Mix in axis label if axis is provided
         if axis is not None:
-            if model is not None and hasattr(model, "axis"):
-                axis_label = model.axis[axis % len(model.axis)]
+            if model is not None and hasattr(model, "sensor"):
+                axis_label = model.sensor(axis)
                 label = f"{label}{axis_label}"
 
         # Mix in units if requested
         if isinstance(units, str) and units:
             label = f"{label} ({units})"
         elif units:
-            units_val = self._plot_units(component, model=model)
+            units_val = component.value
             label = f"{label} ({units_val})" if units_val else label
 
         return label
-
-    def _plot_units(self, component : KalmanState, default = "∅", **kwargs):
-        model = kwargs.get("model", None) or self.model
-        units = kwargs.get("units", None) or model.units if model else {}
-        return units[str(component)] if str(component) in units else default
 
     def _plot_kwargs(self, **kwargs):
 
@@ -465,12 +613,11 @@ class KalmanStateRecord:
                 colors = None
 
         _kwargs["alpha"] = kwargs.pop("alpha", 1)
-        if str(flavor) == str(KalmanObservationFlavor.MEASURED):
+        if flavor == KalmanObservationFlavor.MEASURED:
             _kwargs["alpha"] = 2./3 * _kwargs["alpha"]
 
-
         color = kwargs.pop("color", None)
-        if isinstance(color, int) and color > 0 and str(flavor) == str(KalmanObservationFlavor.IDEAL) and common:
+        if isinstance(color, int) and color > 0 and flavor == KalmanObservationFlavor.IDEAL and common:
             color = "black"
         else:
             if not isinstance(color, str):
@@ -586,7 +733,6 @@ class KalmanStateRecord:
         - view:        "auto" | "1d" | "2d" | "3d"   (default: "auto")
         - component:   int | Enum | sequence of them (optional)
         - dim:         int  | sequence of ints        (optional)
-        - type:        Enum subclass for component normalization (optional)
         - ...          any other kwargs forwarded to _plot1D/_plot2D/_plot3D
         """
         if self.time is None or len(self.time) < 1:
@@ -595,9 +741,6 @@ class KalmanStateRecord:
         # ----------------------- pull kwargs with defaults ------------------------
         component  = kwargs.pop("component", None)
         dim       = kwargs.pop("dim", None)
-        type  = kwargs.pop("type", getattr(self.model, "type", None))
-        if not list(type):
-            raise ValueError("'type' Enum subclass inheriting from KalmanState must be provided either via model.type or as a kwarg.")
 
         view       = kwargs.pop("view", "auto")
         def _is_single(x):
@@ -633,44 +776,9 @@ class KalmanStateRecord:
                     raise ValueError(f"Axis {x} out of range [0,{max(1, dim_available or 1)-1}]")
             return out
 
-        def _norm_component(comp, need, enum_t):
-            # makes a tuple of length 'need'; accepts ints/enums/strings
-            if comp is None:
-                lst = [0] * need
-            elif isinstance(comp, (list, tuple)):
-                lst = list(comp)
-            else:
-                lst = [comp]
-
-            # pad or truncate
-            if len(lst) < need:
-                lst += [lst[-1]] * (need - len(lst))
-            elif len(lst) > need:
-                lst = lst[:need]
-
-            # convert to enum if type given
-            if enum_t is not None:
-                if not issubclass(enum_t, Enum):
-                    raise ValueError("'type' must be an Enum subclass")
-                try:
-                    lst = [lst[i] if isinstance(lst[i], enum_t) else str2enum(lst[i], enum_t) for i in range(len(lst))]
-                except Exception:
-                    # fallback: try enum_t(value)
-                    for i, v in enumerate(lst):
-                        if not isinstance(v, enum_t):
-                            try:
-                                lst[i] = enum_t(v)
-                            except Exception:
-                                # last resort: by name
-                                if isinstance(v, str):
-                                    lst[i] = enum_t[v.upper()]
-                                else:
-                                    raise
-            return tuple(lst)
-
         # ----------------------- normalize dim/component/view -------------------
         dim_available = self.dim or 1
-        dim = _norm_dim(dim, dim_available)
+        dim  = _norm_dim(dim, dim_available)
         view = _decide_view(view, len(dim))
         need = _need_by_view(view) or len(dim)
 
@@ -681,19 +789,15 @@ class KalmanStateRecord:
         elif len(dim) > need:
             dim = list(dim[:need])
 
-        component = _norm_component(component, need, type)
-
-        # final sanity
-        if len(component) != need or len(dim) != need:
-            raise RuntimeError("Normalization failed to align component and dim.")
+        component = self._normalize_component(component)
 
         # ----------------------- dispatch -----------------------------------------
         if view == "3d":
-            fig, ax = self._plot3D(component, dim=dim, type=type, **kwargs)
+            fig, ax = self._plot3D(component, dim=dim, **kwargs)
         elif view == "2d":
-            fig, ax = self._plot2D(component, dim=dim, type=type, **kwargs)
+            fig, ax = self._plot2D(component, dim=dim, **kwargs)
         else:
-            fig, ax = self._plot1D(component, dim=dim, type=type, **kwargs)
+            fig, ax = self._plot1D(component, dim=dim, **kwargs)
 
         if ax.get_title() == "":
             ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
@@ -709,7 +813,6 @@ class KalmanStateRecord:
             - None -> plot all axes [0..self.dim-1]
             - int  -> plot that axis
             - list -> plot the listed axes (e.g., [0,2])
-        type: Optional component interpretation passed to _normalize_component
         sample, ideal, truth, measurement: arrays or will be derived as in _plot1D original
         legend: bool (default True)
         sharey: bool (default False)  # if False and a single axis, set ylabel
@@ -730,7 +833,6 @@ class KalmanStateRecord:
 
         # ----------------- read/normalize inputs -----------------
         dim_arg  = kwargs.pop("dim", None)
-        type     = kwargs.pop("type", None)
         legend   = kwargs.pop("legend", True)
         sharey   = kwargs.pop("sharey", False)
         grid     = kwargs.pop("grid", True)
@@ -773,8 +875,8 @@ class KalmanStateRecord:
 
         # component (use first if a sequence)
         component = component[0] if isinstance(component, (list, tuple, np.ndarray)) else component
-        component = self._normalize_component(component, type=type)[0]
-        comp_id   = int(component.value)
+        component = self._normalize_component(component)[0]
+        comp_id   = int(component)
 
         # Base color id; allow passing a concrete color via kwargs['color']
         base_color_id = len(get_lines(**kwargs))
@@ -850,7 +952,6 @@ class KalmanStateRecord:
 
         # --- args / inputs ---
         dim_arg    = kwargs.pop("dim", None)          # e.g., [0,1] or [1,0]
-        type       = kwargs.pop("type", None)
         legend     = kwargs.pop("legend", True)
         grid       = kwargs.pop("grid", True)
         s_size     = kwargs.get("s", 1)
@@ -863,9 +964,9 @@ class KalmanStateRecord:
             raise ValueError("plot2D requires component[0] and component[1].")
 
         # normalize both components
-        comp_norm = self._normalize_component(component, type=type)
-        comp0_id  = int(comp_norm[0].value)
-        comp1_id  = int(comp_norm[1].value)
+        comp_norm = self._normalize_component(component)
+        comp0_id  = int(comp_norm[0])
+        comp1_id  = int(comp_norm[1])
 
         # dims: two axes (x-axis index, y-axis index)
         if dim_arg is None:
@@ -966,12 +1067,11 @@ class KalmanStateRecord:
             return None, None
 
         # --- normalize components (need 3) ---------------------------------------
-        type_ = kwargs.pop("type", None)
-        comps = self._normalize_component(component, type=type_)
+        comps = self._normalize_component(component)
         if len(comps) < 3:
             raise ValueError("plot3D requires component[0], component[1], component[2].")
 
-        c0, c1, c2 = int(comps[0].value), int(comps[1].value), int(comps[2].value)
+        c0, c1, c2 = int(comps[0]), int(comps[1]), int(comps[2])
 
         # --- dimensions -----------------------------------------------------------
         dim_arg = kwargs.pop("dim", None)
@@ -1077,22 +1177,22 @@ class KalmanStateRecord:
         # Aux (projections/connectors) – route through _plot_kwargs but we’ll keep legend proxies in base color
         def kw_proj_state(axis):
             kw = self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_true(axis):
             kw = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE, common=KalmanObservationFlavor.TRUE in commons, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_ideal(axis):
             kw = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=KalmanObservationFlavor.IDEAL in commons, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_meas_proj(axis):
             kw = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", zorder=-1, s=s_size, alpha=alpha)
-            axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
+            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_conn(axis):
@@ -1277,14 +1377,10 @@ class KalmanStateRecord:
             return fig, ax
 
         if component is not None:
-            # State component error (requires reference)
-            enum_t = kwargs.pop("type", getattr(self.model, "flavor", None))
-            if enum_t is not None and isinstance(enum_t, flavor) and issubclass(enum_t, Enum):
-                try:
-                    component = _as_enum(component, enum_t)
-                except Exception:
-                    component = component  # fallback
+            
+            component = self._normalize_component(component)
 
+            # State component error (requires reference)
             if reference is None:
                 raise ValueError("Provide 'sample' or ('truth' or 'ideal') to compute state error.")
 
@@ -1383,7 +1479,7 @@ class KalmanStateRecord:
         ymin, ymax = np.inf, -np.inf
         
         def _state_index(component, axis):
-            k = component.value if hasattr(component, "value") else int(component)
+            k = component if hasattr(component, "value") else int(component)
             return self.dim * int(axis) + int(k)
 
         for a in axes:

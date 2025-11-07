@@ -86,7 +86,7 @@ class KalmanStateCollection:
         if samples is not None and rec is not None:
             plt_kwargs = { k: v for k, v in rec._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=True, color=1, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
             handles.insert(0, Line2D([0], [0], **plt_kwargs))
-            labels.insert(0, str(KalmanObservationFlavor.IDEAL))
+            labels.insert(0, str(KalmanObservationFlavor.IDEAL).capitalize())
         
         if kwargs.get("legend", True) and handles:
             c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01)

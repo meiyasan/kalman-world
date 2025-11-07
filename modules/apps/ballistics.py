@@ -5,20 +5,12 @@ from ..models import KalmanExtendedModel, KalmanLinearModel
 
 # ===== State enums/units =====
 class BallisticState(KalmanState):
-    POSITION     = 0
-    SPEED        = 1
-    ACCELERATION = 2
-
-class BallisticStateUnits(KalmanStateUnits):
     POSITION     = "m"
     SPEED        = "m/s"
     ACCELERATION = "m/s²"
 
 class BallisticObservation(KalmanObservation):
-    POSITION = 0
-
-class BallisticObservationUnits(KalmanStateUnits):
-    POSITION     = "m"
+    POSITION = "m"
 
 # ===== Linear =====
 class BallisticLinearModel(KalmanLinearModel):
@@ -28,14 +20,11 @@ class BallisticLinearModel(KalmanLinearModel):
     VERSION = "1.3"
 
     @property
-    def type(self):
+    def states(self):
         return BallisticState
-
-    units = {
-        str(BallisticState.POSITION): "m",        
-        str(BallisticState.SPEED): "m/s",  
-        str(BallisticState.ACCELERATION): "m/s²"
-    }
+    @property
+    def observables(self):
+        return BallisticObservation
 
     def __init__(self, sensor_id: str | int,
                  measurement_uncertainty: float = 0.5,
@@ -89,14 +78,11 @@ class BallisticModel(KalmanExtendedModel):
     VERSION = "1.0"
 
     @property
-    def type(self):
+    def states(self):
         return BallisticState
-
-    units = {
-        str(BallisticState.POSITION): "m",        
-        str(BallisticState.SPEED): "m/s",  
-        str(BallisticState.ACCELERATION): "m/s²"
-    }
+    @property
+    def observables(self):
+        return BallisticObservation
 
     def __init__(self, name, *,
                  G=6.674e-11,                 # gravitational constant [m^3/kg/s^2]
@@ -136,6 +122,10 @@ class BallisticModel(KalmanExtendedModel):
         self.m = 3
 
         super().__init__(name, Q=Qd, R=R, **kwargs)
+        self.clear_sensors()
+        self.add_sensor("X")
+        self.add_sensor("Y")
+        self.add_sensor("Z")
 
     # ----------------------------------------------------------------------
     # Process noise covariance generator (internal)

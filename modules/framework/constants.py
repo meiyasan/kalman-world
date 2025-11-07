@@ -1,31 +1,59 @@
 from enum import Enum, auto
 
 class EnumBis(Enum):
-    def __int__(self): return self.value
-    def __str__(self): return self.name.lower().capitalize()
+    """Enhanced Enum base with class-safe introspection methods."""
 
     def __eq__(self, other):
-        if isinstance(other, Enum):
-            return self is other
-        if isinstance(other, str):
-            return self.name.lower() == other.lower()
-        if isinstance(other, int):
-            return self.value == other
+        if isinstance(other, Enum): return self is other
+        if isinstance(other, str) : return super().name.lower() == other.lower()
+        if isinstance(other, int) : return self.value == other
         return False
-
-    def __hash__(self):
+    def __hash__(self): 
         return hash(self.name.lower())
-
+    def __repr__(self):
+        return f"{self.__class__.__name__}.{super().name}(index={int(self)}, value='{self.value}')"
+    def __len__(self):
+        self = type(self) if isinstance(self, Enum) else self
+        return len(self.__members__)
+    def __int__(self): 
+        return list(self.__class__).index(self)
+    def __str__(self): 
+        return super().name.lower()
     def matches(self, *args):
         return any(self == arg for arg in args)
+    
+    @classmethod
+    def name(cls) -> str:
+        return cls.__name__
+    @classmethod
+    def repr(cls) -> str:
+        return cls.__name__ + "<" + ", ".join([e.upper() for e in cls.keys()]) + ">"
+    
+    @classmethod
+    def keys(cls):
+        """Return member names for this specific Enum subclass."""
+        return [k.lower() for k, v in cls.items()]
+    @classmethod
+    def values(cls):
+        """Return member values for this Enum subclass."""
+        return [v for k, v in cls.items()]
+    @classmethod
+    def items(cls):
+        """Return (name, value) pairs for this Enum subclass."""
+        return list(cls.__members__.items())
 
-# -----------------------------
-# ----- State enums -----------
-# -----------------------------
+    @classmethod
+    def index(cls, member=None):
+        """Return index of a member or all indices as dict."""
+        members = list(cls)
+        if member is None:
+            return {m: i for i, m in enumerate(members)}
+        if not isinstance(member, cls):
+            raise TypeError(f"{member!r} is not a member of {cls.__name__}")
+        return members.index(member)
 
 class KalmanState(EnumBis):
     pass
-
 class KalmanStateUnits(EnumBis):
     pass
 
@@ -40,7 +68,6 @@ class KalmanStateFlavor(EnumBis):
 # -----------------------------
 class KalmanObservation(EnumBis):
     pass
-
 class KalmanObservationUnits(EnumBis):
     pass
 
@@ -50,25 +77,6 @@ class KalmanObservationFlavor(EnumBis):
     MEASURED  = 2 # Measured observation (with measurement noise)
 
 class KalmanObservationMode(Enum):
-    """
-    Defines how submodel observations are combined into a global measurement.
-
-    - INDEPENDENT: each submodel contributes its own observation (block-diagonal H)
-    - FUSED:       observations from all submodels are summed / averaged (shared z)
-    - SHARED:      all submodels observe the same global state (stacked H)
-    """
-
-    INDEPENDENT = auto()
-    """Each submodel provides an independent measurement.
-    z = [h₁(x₁); h₂(x₂); …],  H = block_diag(H₁, H₂, …)
-    """
-
-    FUSED = auto()
-    """All submodels contribute additively to the same measurement.
-    z = Σ hᵢ(xᵢ),  H = [H₁ H₂ H₃ …] (horizontal)
-    """
-
-    SHARED = auto()
-    """All submodels observe the same global state.
-    z = [h₁(x); h₂(x); …],  H = [H₁; H₂; H₃; …] (vertical)
-    """
+    INDEPENDENT = auto() # Each submodel provides an independent measurement.
+    FUSED = auto() # All submodels contribute additively to the same measurement
+    

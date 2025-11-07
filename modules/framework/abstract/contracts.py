@@ -1,7 +1,7 @@
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 from typing import Optional
 
-from ..constants import KalmanState, KalmanStateUnits
+from ..constants import KalmanState, KalmanObservation
 from ..io.record import KalmanStateRecord
 
 import numpy as np
@@ -9,24 +9,11 @@ import numpy as np
 # =========================
 # Abstract Base Model
 # =========================
-class KalmanModelABC():
+class KalmanModelABC(ABC):
     """
     Abstract base class for Kalman models.
     Subclasses must implement f, h, and optionally override Jacobians / covariances.
     """
-
-    # ------------------------------------------------------
-    # Metadata
-    # ------------------------------------------------------
-    @property
-    @abstractmethod
-    def type(self):
-        return KalmanState
-
-    @property
-    @abstractmethod
-    def units(self):
-        return KalmanStateUnits
 
     # ------------------------------------------------------
     # Data processing hooks
@@ -51,13 +38,15 @@ class KalmanModelABC():
     # ------------------------------------------------------------
     @property
     @abstractmethod
-    def type(self) -> KalmanState:
-        return KalmanState
+    def states(self) -> KalmanState:
+        """Return KalmanState enum defining model states."""
+        ...
 
     @property
     @abstractmethod
-    def units(self) -> KalmanStateUnits:
-        return KalmanStateUnits
+    def observables(self) -> KalmanObservation:
+        """Return KalmanObservation enum defining model observables."""
+        ...
 
     # ------------------------------------------------------------
     # Core model equations
@@ -113,7 +102,7 @@ class KalmanModelABC():
         """Measurement noise covariance (time-varying if callable)."""
         ...
 
-class KalmanEngineABC():
+class KalmanEngineABC(ABC):
 
     """
     Abstract base class for Kalman engines.
@@ -128,9 +117,11 @@ class KalmanEngineABC():
         """Perform update step."""
         ...
 
+    @abstractmethod
     def forward(self, z, u = None, **kwargs) -> 'KalmanEngineABC | KalmanStateRecord':
         """Perform forward filtering over given measurements and controls."""
         ...
+    @abstractmethod
     def backward(self, **kwargs) -> KalmanStateRecord:
         """Perform backward smoothing over stored states."""
         ...

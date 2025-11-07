@@ -25,50 +25,6 @@ class KalmanCompositeModel(KalmanModel):
       in the submodels themselves.
     """
 
-    @property
-    def type(self):
-        """
-        Infer the common state type across all submodels.
-        - If all submodels have identical types → return that type.
-        - If submodels have compatible subclasses → return the nearest common base.
-        - Otherwise, raise an error.
-        """
-        if not self.models:
-            raise AttributeError("Composite model has no submodels to infer type from.")
-
-        # --- 1. Collect all model types ---
-        types = []
-        for m in self.models:
-            m_type = getattr(m, "type", None)
-            if m_type is None:
-                raise AttributeError(f"Submodel {m} does not define a 'type' property.")
-            types.append(m_type)
-
-        # --- 2. If all types identical, easy case ---
-        if all(t == types[0] for t in types):
-            return types[0]
-
-        # --- 3. Find nearest common base class ---
-        common_bases = set.intersection(*(set(t.mro()) for t in types))
-        # Drop trivial classes like object or generic bases
-        common_bases = [b for b in common_bases if b.__name__ not in ("object", "ABC")]
-
-        if not common_bases:
-            raise TypeError(
-                f"Incompatible submodel types in KalmanCompositeModel: "
-                + ", ".join(t.__name__ for t in types)
-            )
-
-        # --- 4. Pick the most specific shared base ---
-        # The MRO order is important: first common base is the most specific
-        base_reference_mro = types[0].mro()
-        for cls in base_reference_mro:
-            if cls in common_bases:
-                return cls
-
-        # --- 5. Fallback (shouldn't happen) ---
-        raise TypeError(f"Failed to resolve common type for submodels: {types}")
-
     def __init__(
         self,
         *models: List[KalmanModelMetadata],
@@ -115,9 +71,9 @@ class KalmanCompositeModel(KalmanModel):
         self.postprocess = self._bind_postprocess()
 
         super().__init__("Composite", x0=x0, P0=P0, fs=self.fs, **kwargs)
-        self.axis.clear()
+        self._sensor.clear()
         for m in self.models:
-            self.axis.extend(m.axis)
+            self._sensor.extend(m._sensor)
 
     # ==========================================================
     #  Core binding methods
@@ -307,3 +263,132 @@ class KalmanCompositeModel(KalmanModel):
             out = [m.postprocess(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
             return np.concatenate(out, axis=1)
         return postprocess
+    
+    # -----------------------------
+    # Abstract methods are dynamically bounded in __init__
+    # -----------------------------
+
+    def preprocess(self, zk, uk = None, **kwargs):
+        pass
+    def inprocess(self, zk_hat, **kwargs):
+        pass
+    def postprocess(self, zk_hat, **kwargs):
+        pass
+
+    def f(self, x: np.ndarray, u: Optional[np.ndarray] = None, w: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
+        """Global state transition: block-diagonal composition."""
+        pass
+    def h(self, x: np.ndarray, v: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
+        """Global observation mapping according to observation mode."""
+        pass
+    def F(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
+        """Global state Jacobian: block-diagonal composition."""
+        pass
+    def H(self, x: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
+        """Global observation Jacobian."""
+        pass
+    def B(self, t: Optional[float] = None) -> Optional[np.ndarray]:
+        """Global control-input Jacobian: block-diagonal composition."""
+        pass
+    def L(self, t: Optional[float] = None) -> Optional[np.ndarray]:
+        """Global process-noise Jacobian: block-diagonal composition."""
+        pass
+    def M(self, t: Optional[float] = None) -> Optional[np.ndarray]:
+        """Global measurement-noise Jacobian: block-diagonal composition."""
+        pass
+
+    def Q(self, t: Optional[float] = None) -> np.ndarray:
+        """Global process noise covariance: block-diagonal composition."""
+        pass
+    def R(self, t: Optional[float] = None) -> np.ndarray:
+        """Global measurement noise covariance: block-diagonal composition."""
+        pass
+
+    # -------------------------------------
+    # ----- State / Observables enums -----
+    # -------------------------------------
+    @property
+    def states(self):
+        """
+        Infer the common state state across all submodels.
+        - If all submodels have identical states → return that state.
+        - If submodels have compatible subclasses → return the nearest common base.
+        - Otherwise, raise an error.
+        """
+        if not self.models:
+            raise AttributeError("Composite model has no submodels to infer state from.")
+
+        # --- 1. Collect all model states ---
+        states = []
+        for m in self.models:
+            if m.states is None:
+                raise AttributeError(f"Submodel {m} does not define a 'states' property.")
+            states.append(m.states)
+
+        # --- 2. If all states identical, easy case ---
+        if all(t == states[0] for t in states):
+            return states[0]
+
+        # --- 3. Find nearest common base class ---
+        common_bases = set.intersection(*(set(t.mro()) for t in states))
+        # Drop trivial classes like object or generic bases
+        common_bases = [b for b in common_bases if b.__name__ not in ("object", "ABC")]
+
+        if not common_bases:
+            raise TypeError(
+                f"Incompatible submodel states in KalmanCompositeModel: "
+                + ", ".join(t.__name__ for t in states)
+            )
+
+        # --- 4. Pick the most specific shared base ---
+        # The MRO order is important: first common base is the most specific
+        base_reference_mro = states[0].mro()
+        for cls in base_reference_mro:
+            if cls in common_bases:
+                return cls
+
+        # --- 5. Fallback (shouldn't happen) ---
+        raise TypeError(f"Failed to resolve common state for submodels: {states}")
+
+    @property
+    def observables(self):
+        """
+        Infer the common state observable across all submodels.
+        - If all submodels have identical observables → return that observable.
+        - If submodels have compatible subclasses → return the nearest common base.
+        - Otherwise, raise an error.
+        """
+        if not self.models:
+            raise AttributeError("Composite model has no submodels to infer observable from.")
+
+        # --- 1. Collect all model observables ---
+        observables = []
+        for m in self.models:
+            if m.observables is None:
+                raise AttributeError(f"Submodel {m} does not define a 'observables' property.")
+            observables.append(m.observables)
+
+        # --- 2. If all observables identical, easy case ---
+        if all(t == observables[0] for t in observables):
+            return observables[0]
+
+        # --- 3. Find nearest common base class ---
+        common_bases = set.intersection(*(set(t.mro()) for t in observables))
+        # Drop trivial classes like object or generic bases
+        common_bases = [b for b in common_bases if b.__name__ not in ("object", "ABC")]
+
+        if not common_bases:
+            raise TypeError(
+                f"Incompatible submodel observables in KalmanCompositeModel: "
+                + ", ".join(t.__name__ for t in observables)
+            )
+
+        # --- 4. Pick the most specific shared base ---
+        # The MRO order is important: first common base is the most specific
+        base_reference_mro = observables[0].mro()
+        for cls in base_reference_mro:
+            if cls in common_bases:
+                return cls
+
+        # --- 5. Fallback (shouldn't happen) ---
+        raise TypeError(f"Failed to resolve common observable for submodels: {observables}")

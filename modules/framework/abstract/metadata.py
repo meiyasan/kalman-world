@@ -73,10 +73,10 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
     VERSION = "1.0"
 
     dtype: type = np.float64 # Numerical data type
-    
+
     t0 = None # Initial time
     fs = None # Sampling frequency
-    
+
     x0 = None # Initial state vector
     P0 = None # Initial covariance matrix
 
@@ -106,25 +106,46 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
     # --------------------------------------------------------------
     # Sensor axis management
     # --------------------------------------------------------------
-    axis: list[str] = None # List of coordinate names
+    _sensor: list[str] = None # List of sensor names
+
+    def sensor(self, id) -> list[str]:
+        if self._sensor is None:
+            return None
+        if isinstance(id, int):
+            if id < 0 or id >= len(self._sensor):
+                raise IndexError(f"Sensor ID #{id} is out of range: 0 to {len(self._sensor)-1}.")
+            return self._sensor[id]
+        elif isinstance(id, str):
+            if id not in self._sensor:
+                raise ValueError(f"Sensor ID {id!r} not found in sensor list.")
+            return id
+        else:
+            raise TypeError("Sensor ID must be an integer index or a string name.")
+
     def add_sensor(self, sensor_id: str | int):
-        if self.axis is None:
-            self.axis = []
-        if sensor_id in self.axis:
-            raise ValueError(f"Sensor ID {sensor_id!r} already exists in axis list.")
-        self.axis.append(sensor_id)
+        if self._sensor is None:
+            self._sensor = []
+        if sensor_id in self._sensor:
+            raise ValueError(f"Sensor ID {sensor_id!r} already exists in sensor list.")
+        self._sensor.append(sensor_id)
         
     def remove_sensor(self, sensor_id: str | int):
-        if self.axis is not None and sensor_id in self.axis:
-            self.axis.remove(sensor_id)
+        if self._sensor is not None and sensor_id in self._sensor:
+            self._sensor.remove(sensor_id)
+
+    def clear_sensors(self):
+        self._sensor = []
 
     # ------------------------------------------------------
     # Optional dictionary for extra metadata
     # ------------------------------------------------------
     metadata : dict = None
-    def __getitem__(self, key): return self.get(key)
-    def __setitem__(self, key, val): self.set(key, val)
-    def __contains__(self, key): return key in self.items()
+    def __getitem__(self, key): 
+        return self.get(key)
+    def __setitem__(self, key, val): 
+        self.set(key, val)
+    def __contains__(self, key): 
+        return key in self.items()
 
     def get(self, key, default=None): 
         if self.metadata is None:
@@ -185,20 +206,19 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
             return name
 
         kalman_base = _find_kalman_base(type(self))
-        result  = f"{kalman_base} @ fs={getattr(self, 'fs', None)}Hz\n\n"
+        result  = f"{kalman_base} @ fs={getattr(self, 'fs', None)}Hz\n"
         result += f"{1*spacer}{self.NAME} (v{self.VERSION})\n"
-        result += f"{2*spacer}{description}\n\n"
+        result += f"{2*spacer}{description}\n"
         result += f"{1*spacer}Dimensions Summary:\n"
-        result += f"{2*spacer}Observation.....................................: {self.m} dim{'s' if self.m != 1 else ''}\n"
-        result += f"{2*spacer}State Vector....................................: {self.n} dim{'s' if self.n != 1 else ''}\n"
-        result += f"{2*spacer}Control Input...................................: {self.l} dim{'s' if self.l != 1 else ''}\n\n"
+        result += f"{2*spacer}State Vector....................................: {self.n} dim{'s' if self.n != 1 else ' '} ({self.states.repr()})\n"
+        result += f"{2*spacer}Observation.....................................: {self.m} dim{'s' if self.m != 1 else ' '} ({self.observables.repr()})\n"
+        result += f"{2*spacer}Control Input...................................: {self.l} dim{'s' if self.l != 1 else ' '}\n"
 
         result += f"{1*spacer}Initial State:\n"
         result += f"{2*spacer}{_print_dimensions('State Vector (x0)...............................', self.x0)}\n"
         result += (f"{2*spacer}" + _print(self.x0, prefix=2*spacer) + "\n\n") if get_debug() else ""
         result += f"{2*spacer}{_print_dimensions('State Covariance (P0)...........................', self.P0)}\n"
         result += (f"{2*spacer}" + _print(self.P0, prefix=2*spacer) + "\n") if get_debug() else ""
-        result += "\n"
 
         np.set_printoptions(**opt)
 
@@ -221,7 +241,7 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
     DESCRIPTION = "Base class for Kalman engines."
     VERSION = "1.0"
 
-    _model : object = None
+    _model : KalmanModelMetadata = None
     epsilon = sys.float_info.epsilon
 
     # Microstate variables (single observation at a time, updated iteratively)
@@ -229,12 +249,12 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
     P = None
 
     # Macrostate variables (multiple observation combined over time)
-    prior       = []
-    posterior   = []
-    smooth      = []
-    measurement = []
-    control     = []
-    transition  = []
+    prior       = None
+    posterior   = None
+    smooth      = None
+    measurement = None
+    control     = None
+    transition  = None
 
     def __str__(self):
 
@@ -257,9 +277,11 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
 
         res  = f"{self.NAME} (v{self.VERSION})\n"
         res += f"{spacer}{desc}\n\n"
-        if self.model:
-            res += f"{spacer}Model.....................: {type(self.model).__name__}\n"
-            res += f"{spacer}Sampling frequency (fs)...: {self.model.fs} Hz\n"
+        if self._model:
+            res += f"{spacer}Model.....................: {type(self._model).__name__}\n"
+            res += f"{spacer}State Space Hz............: {self._model.state} Hz\n"
+            res += f"{spacer}Observable Space Hz.......: {self._model.observables} Hz\n"
+            res += f"{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n"
         res += f"{spacer}Precision.................: {self.epsilon:.3e}\n\n"
 
         res += f"{spacer}Microstate variable sizes:\n"

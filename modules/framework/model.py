@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import Optional
 import numpy as np
 from ..helpers import set_random_seed, as_col, numerical_jacobian
 from .abstract.mixins import KalmanModelMixin
@@ -125,7 +125,6 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
                           u: Optional[np.ndarray] = None,
                           w: Optional[np.ndarray] = None,
                           v: Optional[np.ndarray] = None) -> tuple[np.ndarray, np.ndarray]:
-
         """Return (Q, R)."""
         Q = self.Q(t)
         L = self.L(x, u, w, t)

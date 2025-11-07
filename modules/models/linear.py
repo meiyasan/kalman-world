@@ -26,10 +26,6 @@ class KalmanLinearModel(KalmanModel):
         R : (m,m) measurement noise covariance or callable R(t)
     """
 
-    NAME = "Linear Kalman Model"
-    DESCRIPTION = "Linear state-space model supporting fixed or time-varying matrices."
-    VERSION = "2.1"
-
     def __init__(self, sensor_id: str, F, H, B=None, Q=None, R=None,
                  L=None, M=None, x0=None, P0=None, fs=None, **kwargs):
 
@@ -106,6 +102,9 @@ class KalmanLinearModel(KalmanModel):
         """Measurement noise covariance (R(t) if callable)."""
         return self._R(t) if callable(self._R) else self._R
     
+    # ------------------------------------------------------
+    # String representation
+    # ------------------------------------------------------
     def __str__(self):
         base = super().__str__()
         spacer = " " * 4
@@ -147,14 +146,15 @@ class KalmanLinearModel(KalmanModel):
         # --- Header summary ---
         lines = [
             f"{spacer}Linear Model Structure (n={self.n}, m={self.m}, l={self.l}):",
-            _desc("F (or A)", "state transition", self._F, (t0, self.x0)),
-            _desc("H (or C)", "measurement map", self._H, (t0, self.x0)),
-            _desc("B", "control map", self._B, (t0, self.x0, self.u0) if self.u0 is not None else (t0, self.x0)),
-            _desc("L", "proc-noise influence", self._L, (t0, self.x0, self.u0, self.w0)),
-            _desc("M", "meas-noise influence", self._M, (t0, self.x0, self.v0)),
-            "",
-            _desc("Q (or W)", "process covariance", self._Q, (t0,)),
-            _desc("R (or V)", "measurement covariance", self._R, (t0,)),
+            f"{spacer}{spacer}Jacobian Matrices:",
+            _desc(f"{spacer}F (or A)", "state transition", self._F, (t0, self.x0)),
+            _desc(f"{spacer}H (or C)", "measurement map", self._H, (t0, self.x0)),
+            _desc(f"{spacer}B       ", "control map", self._B, (t0, self.x0, self.u0) if self.u0 is not None else (t0, self.x0)),
+            _desc(f"{spacer}L       ", "proc-noise influence", self._L, (t0, self.x0, self.u0, self.w0)),
+            _desc(f"{spacer}M       ", "meas-noise influence", self._M, (t0, self.x0, self.v0)),
+            f"{spacer}{spacer}Covariance Matrices:",
+            _desc(f"{spacer}Q (or W)", "process covariance", self._Q, (t0,)),
+            _desc(f"{spacer}R (or V)", "measurement covariance", self._R, (t0,)),
         ]
 
         # --- Verbose block mode ---

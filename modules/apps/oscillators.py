@@ -1,11 +1,7 @@
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.linalg import expm
 
 from ..models.linear import KalmanLinearModel
-
-from ..framework.model import KalmanModel
-from ..models.composite import KalmanCompositeModel
 from ..framework.constants import KalmanState, KalmanObservation
 
 class OscillatorState(KalmanState):
@@ -22,11 +18,11 @@ class OscillatorModel(KalmanLinearModel):
     VERSION = "1.0"
 
     @property
-    def type(self):
+    def states(self):
         return OscillatorState
-
-    units = {str(OscillatorState.POSITION): "m",
-             str(OscillatorState.SPEED): "m/s"}
+    @property
+    def observables(self):
+        return OscillatorObservation
 
     def __init__(self, sensor_id, **kwargs):
 
@@ -38,9 +34,10 @@ class OscillatorModel(KalmanLinearModel):
         self.process_uncertainty = process_uncertainty
 
         dt = 1.0 / self.fs
-        w0 = kwargs.get("w0", 1)
-        Q = kwargs.pop("Q", None)
-        b = w0/Q if Q is not None else 0
+
+        w0 = self["w0"] = kwargs.pop("w0", 1)
+        Q  = self["Q"] = kwargs.pop("Q", None)
+        b  = self["b"] = w0/Q if Q is not None else 0
         
         # the state-transition model
         F = np.array([[        1,     dt], 
@@ -90,37 +87,13 @@ class OscillatorModel(KalmanLinearModel):
     #     if smooth_state_vector is not None:
     #         plt.plot(t, smooth_state_vector[:, 0], label='Smoothed Estimate', color='green')
 
-class OscillatorCompositeModel(KalmanCompositeModel):
-
-    NAME = "Oscillator Composite Model"
-    DESCRIPTION = "Composite model for oscillatory motion, combining multiple oscillators."
-    VERSION = "1.0"
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def preprocess(self, zk, uk=None, **kwargs):
-        return zk, uk
-
-    def inprocess(self, zk_hat, **kwargs):
-        return zk_hat
-
-    def postprocess(self, zk_hat, **kwargs):
-        return zk_hat
-
-
-
-
-
-
 
 class AnalyticOscillatorState(KalmanState):
     REAL = 0
     IMAG = 1
     
 class AnalyticOscillatorObservation(KalmanObservation):
-    REAL = 0
-    IMAG = 1
+    PSI = 0
 
 class AnalyticOscillatorModel(KalmanLinearModel):
 
@@ -128,12 +101,10 @@ class AnalyticOscillatorModel(KalmanLinearModel):
     DESCRIPTION = "State model for oscillatory motion, simulating the behavior of a simple harmonic oscillator."
     VERSION = "1.0"
 
-    @property
-    def type(self):
+    def states(self):
         return AnalyticOscillatorState
-
-    units = {str(AnalyticOscillatorState.REAL): "m",
-             str(AnalyticOscillatorState.IMAG): "m"}
+    def observables(self):
+        return AnalyticOscillatorObservation
 
     def __init__(self, name, **kwargs):
         measurement_uncertainty = kwargs.pop("measurement_uncertainty", 0.5)
@@ -207,7 +178,6 @@ class AnalyticOscillatorModel(KalmanLinearModel):
         
         return np.allclose(zk, zk_trans, rtol=1e-8, atol=1e-10)
         
-
     # def plot(self, *args, **kwargs):
     #     t = self.time()
     #     if t is None:
@@ -230,21 +200,3 @@ class AnalyticOscillatorModel(KalmanLinearModel):
     #     plt.plot(t, state_vector[:, 0], label='State Estimate', color='orange')
     #     if smooth_state_vector is not None:
     #         plt.plot(t, smooth_state_vector[:, 0], label='Smoothed Estimate', color='green')
-
-class AnalyticOscillatorCompositeModel(KalmanCompositeModel):
-
-    NAME = "Oscillator Composite Model"
-    DESCRIPTION = "Composite model for oscillatory motion, combining multiple oscillators."
-    VERSION = "1.0"
-
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-
-    def preprocess(self, zk, uk=None, **kwargs):
-        return zk, uk
-
-    def inprocess(self, zk_hat, **kwargs):
-        return zk_hat
-
-    def postprocess(self, zk_hat, **kwargs):
-        return zk_hat
