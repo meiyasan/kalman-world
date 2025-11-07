@@ -2,7 +2,7 @@ import numpy as np
 from scipy.linalg import block_diag
 from typing import List, Optional
 from ..framework.abstract.metadata import KalmanModelMetadata
-from ..framework.constants import KalmanObservationMode
+from ..framework.constants import KalmanObservableReadout
 from ..framework.model import KalmanModel
 
 
@@ -18,7 +18,7 @@ class KalmanCompositeModel(KalmanModel):
     Principles
     -----------
     - F, Q are always block-diagonal (independent state evolution)
-    - Observation composition governed by KalmanObservationMode:
+    - Observation composition governed by KalmanObservableReadout:
         * INDEPENDENT → z = [h1(x1); h2(x2); ...]
         * FUSED       → z = sum_i h_i(x_i)
     - No custom overrides; complex coupling should be encoded
@@ -28,7 +28,7 @@ class KalmanCompositeModel(KalmanModel):
     def __init__(
         self,
         *models: List[KalmanModelMetadata],
-        obs_mode: KalmanObservationMode = KalmanObservationMode.INDEPENDENT,
+        obs_mode: KalmanObservableReadout = KalmanObservableReadout.INDEPENDENT,
         **kwargs,
     ):
         if not models:
@@ -118,7 +118,7 @@ class KalmanCompositeModel(KalmanModel):
     # ---------- Observation ----------
     def _bind_h(self, mode):
         """Global observation mapping according to observation mode."""
-        if mode == KalmanObservationMode.INDEPENDENT:
+        if mode == KalmanObservableReadout.INDEPENDENT:
             def _h(x, v=None, t=None):
                 """
                 x may be a single state vector (n_total, 1)
@@ -144,7 +144,7 @@ class KalmanCompositeModel(KalmanModel):
                 return np.concatenate(zs, axis=axis)
             return _h
 
-        elif mode == KalmanObservationMode.FUSED:
+        elif mode == KalmanObservableReadout.FUSED:
             def _h(x, v=None, t=None):
                 if x is None or x.size == 0:
                     return np.empty((0, 0, 1))
@@ -171,13 +171,13 @@ class KalmanCompositeModel(KalmanModel):
             raise ValueError(f"Unknown observation mode: {mode}")
     def _bind_H(self, mode):
         """Global observation Jacobian."""
-        if mode == KalmanObservationMode.INDEPENDENT:
+        if mode == KalmanObservableReadout.INDEPENDENT:
             def H(x=None, t=None):
                 blocks = [m.H(x, t) for m in self.models]
                 return block_diag(*blocks)
             return H
 
-        elif mode == KalmanObservationMode.FUSED:
+        elif mode == KalmanObservableReadout.FUSED:
             def H(x=None, t=None):
                 """Sum of local observation Jacobians."""
                 blocks = [m.H(x, t) for m in self.models]

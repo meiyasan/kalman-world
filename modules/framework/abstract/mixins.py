@@ -5,7 +5,7 @@ import numpy as np
 from typing import Any, Optional
 
 from ...helpers import as_col, format_shape
-from ..io.record import KalmanStateRecord
+from ..io.record import KalmanRecord
 from .metadata import KalmanModelMetadata, KalmanEngineMetadata
 from ..constants import KalmanStateFlavor
 
@@ -55,7 +55,7 @@ class KalmanProxyMixin:
     
     def smooth(self, **kwargs):
         return self._check_engine().backward(**kwargs)
-    def sample(self, duration: float, **kwargs) -> KalmanStateRecord:
+    def sample(self, duration: float, **kwargs) -> KalmanRecord:
         from ..sampler import KalmanSampler
         return KalmanSampler(self._check_engine()).measurement(duration, **kwargs)
 
@@ -303,7 +303,7 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
         if x0 is None:
             self.x0 = np.zeros((n, 1))
         else:
-            x0 = KalmanStateRecord._normalize_in(x0)
+            x0 = KalmanRecord._normalize_in(x0)
             if x0.shape != (n, 1):
                 warnings.warn(
                     f"Initial state vector dimension expected {n}x1, got {format_shape(x0)}. Resizing."
@@ -314,7 +314,7 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
             self.x0 = x0    
 
         P0 = P0 if P0 is not None else self.Q(0)
-        P0 = KalmanStateRecord._normalize_in(P0)
+        P0 = KalmanRecord._normalize_in(P0)
         if P0.shape != (n, n):
             warnings.warn(
                 f"Initial state covariance dimension expected {n}x{n}, got {format_shape(P0)}. Resizing."
@@ -359,12 +359,7 @@ class KalmanStateMixin:
 
     # Measurement getters
     def get_measurement(self : KalmanEngineMetadata, k=None, indexing=None):
-        return KalmanStateRecord._normalize_out(self.measurement, indexing=indexing) if k is None else self.measurement[k]
-
-    def get_observation(self : KalmanEngineMetadata, xk, k=None, indexing=None):
-        if k is None:
-            return KalmanStateRecord._normalize_out([self._model.h(x) for x in xk], indexing=indexing)
-        return self._model.h(xk[k])
+        return KalmanRecord._normalize_out(self.measurement, indexing=indexing) if k is None else self.measurement[k]
 
     # Initial state API
     def get_initial_state_vector(self : KalmanEngineMetadata):
@@ -454,7 +449,7 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
     def __getitem__(self, idx):
         return self.posterior[idx]
 
-    def get_record(self, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanStateRecord:
+    def get_record(self, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanRecord:
 
         indexing    = kwargs.pop("indexing", None)
         inprocess   = kwargs.pop("inprocess", True)
@@ -470,30 +465,30 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
         elif flavor is KalmanStateFlavor.SMOOTHED:
             xk_hat, Pk_hat = self.get_smooth_state_vector(), self.get_smooth_state_covariance()        
         else:
-            raise ValueError(f"Unexpected flavor {flavor} for KalmanStateRecord.")
+            raise ValueError(f"Unexpected flavor {flavor} for KalmanRecord.")
             
         if inprocess:
             xk_hat = self.model.inprocess(xk_hat, **kwargs)
 
-        zk_hat = self.get_observation(xk_hat, indexing=indexing)
+        zk_hat = KalmanRecord._normalize_out([self._model.h(x) for x in xk_hat], indexing=indexing)
         if postprocess:
             zk_hat = self.model.postprocess(zk_hat, **kwargs)
 
-        return KalmanStateRecord(self.time(), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=flavor, engine=self)
+        return KalmanRecord(self.time(), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=flavor, engine=self)
 
-    def get_posterior_record(self) -> KalmanStateRecord:
-        if not self.posterior: return KalmanStateRecord()
-        return KalmanStateRecord(self, self.time(), self.get_posterior_state_vector(), self.get_posterior_state_covariance(),
+    def get_posterior_record(self) -> KalmanRecord:
+        if not self.posterior: return KalmanRecord()
+        return KalmanRecord(self, self.time(), self.get_posterior_state_vector(), self.get_posterior_state_covariance(),
                                  zk=self.get_measurement(), flavor=KalmanStateFlavor.POSTERIOR, model=self)
 
-    def get_prior_record(self) -> KalmanStateRecord:
-        if not self.prior: return KalmanStateRecord()
-        return KalmanStateRecord(self, self.time(), self.get_prior_state_vector(), self.get_prior_state_covariance(),
+    def get_prior_record(self) -> KalmanRecord:
+        if not self.prior: return KalmanRecord()
+        return KalmanRecord(self, self.time(), self.get_prior_state_vector(), self.get_prior_state_covariance(),
                                  zk=self.get_measurement(), flavor=KalmanStateFlavor.PRIOR, model=self)
 
-    def get_smooth_record(self) -> KalmanStateRecord:
-        if not self.smooth: return KalmanStateRecord()
-        return KalmanStateRecord(self, self.time(), self.get_smooth_state_vector(), self.get_smooth_state_covariance(),
+    def get_smooth_record(self) -> KalmanRecord:
+        if not self.smooth: return KalmanRecord()
+        return KalmanRecord(self, self.time(), self.get_smooth_state_vector(), self.get_smooth_state_covariance(),
                                  zk=self.get_measurement(), flavor=KalmanStateFlavor.SMOOTHED, model=self)
 
     def exclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple) -> bool:
@@ -506,8 +501,8 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
             n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
                     len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
             
-            state_idx = KalmanStateRecord._normalize_index(state_idx, n)
-            meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
+            state_idx = KalmanRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
             
             for i in range(n):
                 if not self.exclusive_mapping(state_idx[i], meas_idx[i]):
@@ -531,8 +526,8 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
             n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
                     len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
             
-            state_idx = KalmanStateRecord._normalize_index(state_idx, n)
-            meas_idx  = KalmanStateRecord._normalize_index(meas_idx, n)
+            state_idx = KalmanRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
 
             for i in range(n):
                 if self.inclusive_mapping(state_idx[i], meas_idx[i]) is False:

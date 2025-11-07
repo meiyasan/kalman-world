@@ -1,8 +1,8 @@
 from abc import abstractmethod, ABC
 from typing import Optional
 
-from ..constants import KalmanState, KalmanObservation
-from ..io.record import KalmanStateRecord
+from ..constants import KalmanState, KalmanObservable
+from ..io.record import KalmanRecord
 
 import numpy as np
 
@@ -44,8 +44,8 @@ class KalmanModelABC(ABC):
 
     @property
     @abstractmethod
-    def observables(self) -> KalmanObservation:
-        """Return KalmanObservation enum defining model observables."""
+    def observables(self) -> KalmanObservable:
+        """Return KalmanObservable enum defining model observables."""
         ...
 
     # ------------------------------------------------------------
@@ -118,10 +118,10 @@ class KalmanEngineABC(ABC):
         ...
 
     @abstractmethod
-    def forward(self, z, u = None, **kwargs) -> 'KalmanEngineABC | KalmanStateRecord':
+    def forward(self, z, u = None, **kwargs) -> 'KalmanEngineABC | KalmanRecord':
         """Perform forward filtering over given measurements and controls."""
         ...
     @abstractmethod
-    def backward(self, **kwargs) -> KalmanStateRecord:
+    def backward(self, **kwargs) -> KalmanRecord:
         """Perform backward smoothing over stored states."""
         ...

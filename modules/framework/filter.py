@@ -2,7 +2,7 @@
 from __future__ import annotations
 import numpy as np
 
-from .io.record import KalmanStateRecord
+from .io.record import KalmanRecord
 from ..models.composite import KalmanCompositeModel
 from ..helpers import format_shape
 from .abstract.metadata import KalmanEngineMetadata
@@ -117,14 +117,14 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         # ------------------------------------------------------
         # Normalize input and control
         # ------------------------------------------------------
-        gk = gk.zk if isinstance(gk, KalmanStateRecord) else gk
-        gk = KalmanStateRecord._normalize_in(gk, indexing=indexing)
+        gk = gk.zk if isinstance(gk, KalmanRecord) else gk
+        gk = KalmanRecord._normalize_in(gk, indexing=indexing, dtype=self.model.dtype)
         assert gk.shape[1] == self.m, f"gk data has incorrect number of columns. Expected {self.m}, got {format_shape(gk)}."
 
-        uk = uk.zk if isinstance(uk, KalmanStateRecord) else uk
+        uk = uk.zk if isinstance(uk, KalmanRecord) else uk
         if uk is None or len(uk) < 1:
             uk = np.zeros((len(gk), self.l))
-        uk = KalmanStateRecord._normalize_in(uk, indexing=indexing)
+        uk = KalmanRecord._normalize_in(uk, indexing=indexing, dtype=self.model.dtype)
         if self.l > 0:
             if uk is not None:
                 assert uk.shape[1] == self.l, f"Control input uk has wrong number of columns. Expected shape ({self.l},1), got {format_shape(uk)}."

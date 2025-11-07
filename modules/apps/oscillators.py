@@ -2,13 +2,13 @@ import numpy as np
 from scipy.linalg import expm
 
 from ..models.linear import KalmanLinearModel
-from ..framework.constants import KalmanState, KalmanObservation
+from ..framework.constants import KalmanState, KalmanObservable
 
 class OscillatorState(KalmanState):
     POSITION = 0
     SPEED = 1
 
-class OscillatorObservation(KalmanObservation):
+class OscillatorObservable(KalmanObservable):
     POSITION = 0
 
 class OscillatorModel(KalmanLinearModel):
@@ -22,7 +22,7 @@ class OscillatorModel(KalmanLinearModel):
         return OscillatorState
     @property
     def observables(self):
-        return OscillatorObservation
+        return OscillatorObservable
 
     def __init__(self, sensor_id, **kwargs):
 
@@ -92,7 +92,7 @@ class AnalyticOscillatorState(KalmanState):
     REAL = 0
     IMAG = 1
     
-class AnalyticOscillatorObservation(KalmanObservation):
+class AnalyticOscillatorObservable(KalmanObservable):
     PSI = 0
 
 class AnalyticOscillatorModel(KalmanLinearModel):
@@ -101,10 +101,12 @@ class AnalyticOscillatorModel(KalmanLinearModel):
     DESCRIPTION = "State model for oscillatory motion, simulating the behavior of a simple harmonic oscillator."
     VERSION = "1.0"
 
+    @property
     def states(self):
         return AnalyticOscillatorState
+    @property
     def observables(self):
-        return AnalyticOscillatorObservation
+        return AnalyticOscillatorObservable
 
     def __init__(self, name, **kwargs):
         measurement_uncertainty = kwargs.pop("measurement_uncertainty", 0.5)
@@ -115,15 +117,14 @@ class AnalyticOscillatorModel(KalmanLinearModel):
         self.process_uncertainty = process_uncertainty
 
         dt = 1.0 / self.fs
-        w0 = kwargs.get("w0", 1)
-        self.wc = kwargs.get("wc", 1)
-        # wc = self.wc
-        delta_omega = np.power(w0, 1)# - np.power(wc, 1)
+        w0 = self["w0"] = kwargs.get("w0", 1)
+        wc = self["wc"] = kwargs.get("wc", 1)
+        dw = np.power(w0, 1) - np.power(wc, 1)
         Q = kwargs.pop("Q", None) # quality factor (not Q matrix)
 
         # the state-transition model
-        A = expm(np.array([[-w0 / (2 * Q) * dt, -delta_omega * dt],
-                           [delta_omega * dt,  -w0 / (2 * Q) * dt]]))
+        A = expm(np.array([[-w0 / (2 * Q) * dt, -dw * dt],
+                           [dw * dt,  -w0 / (2 * Q) * dt]]))
         
         # the observeation model
         C = np.identity(2)
@@ -141,7 +142,7 @@ class AnalyticOscillatorModel(KalmanLinearModel):
 
         t_start = self.time()[0] if self.time().size > 0 else self.t0
         times = t_start + np.arange(0, zk.shape[0], 1)/self.fs
-        arg = self.wc * times
+        arg = self["wc"] * times
         arg = arg.reshape((len(times), 1, zk.shape[2]))
 
         zk = (np.array([zr * np.cos(arg) + zi * np.sin(arg),
@@ -160,7 +161,7 @@ class AnalyticOscillatorModel(KalmanLinearModel):
 
         t_start = self.time()[0] if self.time().size > 0 else self.t0
         times = t_start + np.arange(0, zk_hat.shape[0], 1)/self.fs
-        arg = self.wc * times
+        arg = self["wc"] * times
         arg = arg.reshape((len(times), 1, zk_hat.shape[2]))
         
         zk_hat = (np.array([zr * np.cos(arg) - zi * np.sin(arg),

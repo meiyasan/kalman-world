@@ -1,18 +1,19 @@
+from collections.abc import Sequence
 from ...helpers import *
-from ..constants import  KalmanObservationFlavor
-from .record import KalmanStateRecord
+from ..constants import  KalmanObservableFlavor
+from .record import KalmanRecord
 from ...runtime.debug import get_debug
 
-class KalmanStateCollection:
+class KalmanRecordCollection(Sequence[KalmanRecord]):
     
     def __init__(self, records=()):
         # use a list so add/remove/clear work
         self._records = list(records)
 
-    def add(self, record: KalmanStateRecord):
+    def add(self, record: KalmanRecord):
         self._records.append(record)
 
-    def remove(self, record: KalmanStateRecord):
+    def remove(self, record: KalmanRecord):
         self._records.remove(record)
 
     def clear(self):
@@ -24,7 +25,7 @@ class KalmanStateCollection:
     def __len__(self):
         return len(self._records)
 
-    def __getitem__(self, index: int) -> KalmanStateRecord:
+    def __getitem__(self, index: int) -> KalmanRecord:
         if 0 <= index < len(self._records):
             return self._records[index]
         return None
@@ -33,13 +34,13 @@ class KalmanStateCollection:
         return iter(self._records)
 
     def __repr__(self):
-        return f"KalmanStateCollection(N={len(self)})"
+        return f"KalmanRecordCollection(N={len(self)})"
 
     def __str__(self, **kwargs):
 
         max = kwargs.pop("max", None if get_debug() else 8)
         extra = f"(only display {max})" if max is not None and len(self) > max else ""
-        lines = [f"KalmanStateCollection with {len(self)} records: {extra}"]
+        lines = [f"KalmanRecordCollection with {len(self)} records: {extra}"]
 
         n = len(self)
         if max is not None and n > max:
@@ -73,10 +74,10 @@ class KalmanStateCollection:
 
         for i, rec in enumerate(self._records):
 
-            sample = samples[i] if isinstance(samples, (list, tuple, KalmanStateCollection)) and i < len(samples) else samples
+            sample = samples[i] if isinstance(samples, (list, tuple, KalmanRecordCollection)) and i < len(samples) else samples
             if sample is None: kwargs["sample"] = kwargs.get("sample", None)
 
-            rec.plot(sample=sample, commons=[KalmanObservationFlavor.IDEAL], canvas=c, legend=False, color=i, **kwargs)
+            rec.plot(sample=sample, commons=[KalmanObservableFlavor.IDEAL], canvas=c, legend=False, color=i, **kwargs)
             if legend and len(self._records) < kwargs.get("legend_max", 8):
                 plt_kwargs = { k: v for k, v in rec._plot_kwargs(color=i, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
                 plt_kwargs["color"] = darken(plt_kwargs["color"])
@@ -84,9 +85,9 @@ class KalmanStateCollection:
                 labels.append(f"Record #{i+1}")
 
         if samples is not None and rec is not None:
-            plt_kwargs = { k: v for k, v in rec._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=True, color=1, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
+            plt_kwargs = { k: v for k, v in rec._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL, common=True, color=1, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
             handles.insert(0, Line2D([0], [0], **plt_kwargs))
-            labels.insert(0, str(KalmanObservationFlavor.IDEAL).capitalize())
+            labels.insert(0, str(KalmanObservableFlavor.IDEAL).capitalize())
         
         if kwargs.get("legend", True) and handles:
             c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01)
@@ -98,7 +99,7 @@ class KalmanStateCollection:
         Overlay error plots for all records on a single axes, with one combined legend.
 
         Parameters (kwargs):
-        samples      : None | KalmanStateCollection | list[KalmanStateRecord] | single sample
+        samples      : None | KalmanRecordCollection | list[KalmanRecord] | single sample
                         - If a collection/list is provided, samples[i] is passed to record i.
                         - Else the same 'sample' (if provided) is used for all.
         legend       : bool (default: len(self._records) <= 4)
@@ -158,7 +159,7 @@ class KalmanStateCollection:
                 local["alpha"] = 0.95 * (alpha_decay ** i)
 
             # Per-record sample selection
-            if isinstance(samples, (list, tuple, KalmanStateCollection)):
+            if isinstance(samples, (list, tuple, KalmanRecordCollection)):
                 sample_i = samples[i] if i < len(samples) else None
                 if sample_i is not None:
                     local["sample"] = sample_i

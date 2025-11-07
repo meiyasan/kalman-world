@@ -1,6 +1,6 @@
 import numpy as np
 
-from ..framework.constants import KalmanObservation, KalmanState, KalmanStateUnits
+from ..framework.constants import KalmanObservable, KalmanState
 from ..models import KalmanExtendedModel, KalmanLinearModel
 
 # ===== State enums/units =====
@@ -9,7 +9,7 @@ class BallisticState(KalmanState):
     SPEED        = "m/s"
     ACCELERATION = "m/s²"
 
-class BallisticObservation(KalmanObservation):
+class BallisticObservable(KalmanObservable):
     POSITION = "m"
 
 # ===== Linear =====
@@ -24,7 +24,7 @@ class BallisticLinearModel(KalmanLinearModel):
         return BallisticState
     @property
     def observables(self):
-        return BallisticObservation
+        return BallisticObservable
 
     def __init__(self, sensor_id: str | int,
                  measurement_uncertainty: float = 0.5,
@@ -82,7 +82,7 @@ class BallisticModel(KalmanExtendedModel):
         return BallisticState
     @property
     def observables(self):
-        return BallisticObservation
+        return BallisticObservable
 
     def __init__(self, name, *,
                  G=6.674e-11,                 # gravitational constant [m^3/kg/s^2]

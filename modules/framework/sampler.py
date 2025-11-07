@@ -1,8 +1,9 @@
 # kalman/core/engine_sampler.py
 from __future__ import annotations
+from .abstract.metadata import KalmanModelMetadata
 import numpy as np
 
-from .io.record import KalmanStateRecord
+from .io.record import KalmanRecord
 from .abstract.mixins import KalmanModelMixin, KalmanEngineMixin
 from ..helpers import format_shape
 from .constants import KalmanStateFlavor
@@ -24,7 +25,7 @@ class KalmanSampler:
         self.engine = engine
 
     @property
-    def model(self) -> KalmanModelMixin:
+    def model(self) -> 'KalmanModelMixin | KalmanModelMetadata':
         return self.engine.model
     @property
     def fs(self) -> float:
@@ -46,6 +47,10 @@ class KalmanSampler:
         Returns the observation vector with measurement noise added.
         '''
 
+        inprocess = kwargs.pop("inprocess", True)
+        postprocess = kwargs.pop("postprocess", True)
+        indexing = kwargs.pop("indexing", "xy")
+
         measurement_noise = kwargs.pop("measurement_noise", True)
         process_noise = kwargs.pop("process_noise", True)
         
@@ -65,10 +70,16 @@ class KalmanSampler:
         wk = self.process_noise(duration, **kwargs) if measurement_noise else [self.model.w0] * n_samples
         for i in range(n_samples):
             xk[i], Pk[i] = x, P
-            zk[i] = self.model.h(x, vk[i])
             x, P, _ = self.engine._predict(x, P, u=uk[i], w=wk[i], **kwargs)
 
-        return KalmanStateRecord(self.engine.time(duration), zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, engine=self.engine)
+        if inprocess:
+            xk = self.model.inprocess(xk, **kwargs)
+
+        zk = KalmanRecord._normalize_out([self.model.h(x, v, self.model.t0 + self.model.duration(k)) for x, v, k in zip(xk, vk, range(n_samples))], indexing=indexing, dtype=self.model.dtype)
+        if postprocess:
+            zk = self.model.postprocess(zk, **kwargs)
+
+        return KalmanRecord(self.engine.time(duration), zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, engine=self.engine)
 
     def process_noise(self, duration: float):
         """

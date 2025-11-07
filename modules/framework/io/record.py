@@ -4,14 +4,14 @@ from dataclasses import dataclass, field
 from ...helpers import *
 from ...runtime.debug import get_debug
 
-from ..constants import KalmanState, KalmanStateFlavor, KalmanObservationFlavor
+from ..constants import KalmanState, KalmanStateFlavor, KalmanObservableFlavor
 from enum import Enum as _PyEnum
 
 # =========================
 # Record & Collection
 # =========================
 @dataclass(frozen=True)
-class KalmanStateRecord:
+class KalmanRecord:
     """
     Posterior-centric record:
       - time: (N,)
@@ -128,7 +128,7 @@ class KalmanStateRecord:
 
     def _resolve_component_symbol(self, val):
         """
-        Accepts an Enum member (KalmanState/KalmanObservation), name (str), or int.
+        Accepts an Enum member (KalmanState/KalmanObservable), name (str), or int.
         - If Enum: return as-is
         - If str : try model.states[NAME] then model.observables[NAME]
         - Else   : return as-is (assumed int index)
@@ -171,7 +171,7 @@ class KalmanStateRecord:
                 O = None
         return S, O
 
-    def _resolve_name_to_enum(self, name: str):
+    def _resolve_name_to_enum(self, name: str, raise_ambiguous: bool = False):
         """
         Map a string name to the unique matching Enum member.
         - If it exists only in states -> return that member
@@ -189,8 +189,11 @@ class KalmanStateRecord:
             o_hit = O.__members__[key]
         
         if s_hit and o_hit:
-            raise ValueError(f"Ambiguous component '{name}': found in both KalmanState and KalmanObservation enums.\n"
-                             f"Please specify {S.__name__}.{name.upper()} or {O.__name__}.{name.upper()}")
+            if raise_ambiguous:
+                raise ValueError(f"Ambiguous component '{name}': found in both KalmanState and KalmanObservable enums.\n"
+                                 f"Please specify {S.__name__}.{name.upper()} or {O.__name__}.{name.upper()}")
+            return s_hit  # Prefer state if ambiguous and not raising
+        
         if s_hit:
             return s_hit
         if o_hit:
@@ -245,7 +248,7 @@ class KalmanStateRecord:
 
         Returns:
         - preserve_shape=True:
-            * scalar -> Enum (KalmanState or KalmanObservation)
+            * scalar -> Enum (KalmanState or KalmanObservable)
             * flat list/tuple -> list[Enum]
             * nested list/tuple -> list[tuple[Enum, ...]]  (one nesting level preserved)
         - preserve_shape=False (default / plotting path):
@@ -315,7 +318,7 @@ class KalmanStateRecord:
         return tuple(flat)
 
     @staticmethod
-    def _normalize_in(x, indexing = None):
+    def _normalize_in(x, indexing = None, dtype=None):
         """
         Normalize the input zk to ensure it has the correct shape.
         Converts vectors or lists into a column-shaped numpy array.
@@ -328,7 +331,7 @@ class KalmanStateRecord:
         if indexing not in ["ij", "xy"]:
             raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
 
-        x = np.asarray(x, dtype=np.float64)
+        x = np.asarray(x, dtype)
         if x.ndim == 1:
             x = np.expand_dims(x, axis=-1)
 
@@ -338,7 +341,7 @@ class KalmanStateRecord:
         return x
     
     @staticmethod
-    def _normalize_out(x, indexing = None):
+    def _normalize_out(x, indexing = None, dtype=None):
         """
         Normalize the output zk_hat to ensure it has the correct shape.
         Converts vectors or lists into a column-shaped numpy array.
@@ -351,7 +354,7 @@ class KalmanStateRecord:
         if indexing not in ["ij", "xy"]:
             raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
         
-        x = np.asarray(x)
+        x = np.asarray(x, dtype)
         if x.ndim == 2 and x.shape[-1] == 1:
             x = np.squeeze(x, axis=-1)
 
@@ -376,7 +379,7 @@ class KalmanStateRecord:
     def __repr__(self):
         flav = (str(self.flavor) if self.flavor is not None else "Unknown")
         model = (self.model.NAME if getattr(self.model, "NAME", None) else "Model?")
-        return f"KalmanStateRecord(N={len(self)}, n={self.n}, m={self.m}, flavor={flav}, model={model})"
+        return f"KalmanRecord(N={len(self)}, n={self.n}, m={self.m}, flavor={flav}, model={model})"
 
     def __str__(self):
         import textwrap, numpy as np
@@ -613,18 +616,18 @@ class KalmanStateRecord:
                 colors = None
 
         _kwargs["alpha"] = kwargs.pop("alpha", 1)
-        if flavor == KalmanObservationFlavor.MEASURED:
+        if flavor == KalmanObservableFlavor.MEASURED:
             _kwargs["alpha"] = 2./3 * _kwargs["alpha"]
 
         color = kwargs.pop("color", None)
-        if isinstance(color, int) and color > 0 and flavor == KalmanObservationFlavor.IDEAL and common:
+        if isinstance(color, int) and color > 0 and flavor == KalmanObservableFlavor.IDEAL and common:
             color = "black"
         else:
             if not isinstance(color, str):
                 color = colors[color % len(colors)] if colors and isinstance(color, int) and len(colors) > 0 else "gray"
-            if   flavor == KalmanObservationFlavor.MEASURED:
+            if   flavor == KalmanObservableFlavor.MEASURED:
                 color = lighten(fade(color))
-            elif flavor in (KalmanObservationFlavor.TRUE, KalmanObservationFlavor.IDEAL):
+            elif flavor in (KalmanObservableFlavor.TRUE, KalmanObservableFlavor.IDEAL):
                 color = lighten(vivid(color))
             elif flavor == KalmanStateFlavor.PRIOR:
                 color = darken(color, 0.25)
@@ -639,10 +642,10 @@ class KalmanStateRecord:
 
         if kind != "scatter":
             _kwargs["linestyle"] = kwargs.get("linestyle", None)
-            if flavor == KalmanObservationFlavor.TRUE:
+            if flavor == KalmanObservableFlavor.TRUE:
                 _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
                 _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", "--")
-            elif flavor == KalmanObservationFlavor.IDEAL:
+            elif flavor == KalmanObservableFlavor.IDEAL:
                 _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
                 _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", ":")
 
@@ -849,13 +852,13 @@ class KalmanStateRecord:
 
         # Derive defaults like your original
         ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
-        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
+        ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
-        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
+        truth = KalmanRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
 
         measurement = meas_in or (sample.zk if sample is not None else None)
-        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
+        measurement = KalmanRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
 
         # Canvas
         c = kwargs.get("canvas", None) or get_canvas(**kwargs)
@@ -888,7 +891,7 @@ class KalmanStateRecord:
             # measurement
             if measurement is not None and self.model is not None and self.engine.exclusive_mapping(idx, a):
                 h = c.scatter(self.time, measurement[:, a],
-                            **self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED,
+                            **self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED,
                                                 axis=a, kind="scatter", zorder=-1,
                                                 s=s_size, common=self.flavor in commons,
                                                 color=kwargs.get("color", base_color_id + i)))
@@ -896,16 +899,16 @@ class KalmanStateRecord:
             # ideal
             if ideal is not None and ideal.shape[1] > idx:
                 h, = c.plot(self.time, ideal[:, idx],
-                            **self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL,
-                                                axis=a, common=KalmanObservationFlavor.IDEAL in commons,
+                            **self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL,
+                                                axis=a, common=KalmanObservableFlavor.IDEAL in commons,
                                                 color=kwargs.get("color", base_color_id + i)))
                 self._draw_arrows_1d(c, self.time, ideal[:, idx], color=h.get_color(), arrows=arrows_ct)
 
             # truth
             if truth is not None and truth.shape[1] > idx:
                 h, = c.plot(self.time, truth[:, idx],
-                            **self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,
-                                                axis=a, common=KalmanObservationFlavor.TRUE in commons,
+                            **self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE,
+                                                axis=a, common=KalmanObservableFlavor.TRUE in commons,
                                                 color=kwargs.get("color", base_color_id + i)))
                 self._draw_arrows_1d(c, self.time, truth[:, idx], color=h.get_color(), arrows=arrows_ct)
 
@@ -993,13 +996,13 @@ class KalmanStateRecord:
         meas_in      = kwargs.pop("measurement", None)
 
         ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
-        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
+        ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
-        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
+        truth = KalmanRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
 
         measurement = meas_in or (sample.zk if sample is not None else None)
-        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
+        measurement = KalmanRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
 
         # --- canvas ---
         c = kwargs.get("canvas", None) or get_canvas(**kwargs)
@@ -1009,11 +1012,11 @@ class KalmanStateRecord:
 
         # --- styles ---
         kw_main  = self._plot_kwargs(flavor=self.flavor, axis=ax_x, color=base_color, common=self.flavor in commons)
-        kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,  axis=ax_x, color=base_color, common=KalmanObservationFlavor.TRUE in kwargs.get("commons", []))
-        kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, axis=ax_x, color=base_color, common=KalmanObservationFlavor.IDEAL in kwargs.get("commons", []))
-        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, axis=ax_x, zorder=-1,
+        kw_true  = self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE,  axis=ax_x, color=base_color, common=KalmanObservableFlavor.TRUE in kwargs.get("commons", []))
+        kw_ideal = self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL, axis=ax_x, color=base_color, common=KalmanObservableFlavor.IDEAL in kwargs.get("commons", []))
+        kw_meas  = self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED, axis=ax_x, zorder=-1,
                                      kind="scatter", s=s_size, color=base_color, alpha=kwargs.get("alpha", 0.7),
-                                     common=KalmanObservationFlavor.MEASURED in kwargs.get("commons", []))
+                                     common=KalmanObservableFlavor.MEASURED in kwargs.get("commons", []))
 
         # --- measurement scatter with exclusive mapping on BOTH axes ---
         if measurement is not None and self.model is not None:
@@ -1100,13 +1103,13 @@ class KalmanStateRecord:
         meas_in     = kwargs.pop("measurement", None)
 
         ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
-        ideal = KalmanStateRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
+        ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
-        truth = KalmanStateRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
+        truth = KalmanRecord._normalize_out(truth) if (sample is not None and truth is not None) else None
 
         measurement = meas_in or (sample.zk if sample is not None else None)
-        measurement = KalmanStateRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
+        measurement = KalmanRecord._normalize_out(measurement) if (sample is not None and measurement is not None) else None
 
         # main state
         X = self.xk[:, idx_x]; Y = self.xk[:, idx_y]; Z = self.xk[:, idx_z]
@@ -1168,10 +1171,10 @@ class KalmanStateRecord:
         z0 = float(np.clip(Z0, *zlim))
         
         # Primary styles derived from base_color via _plot_kwargs
-        kw_main  = self._plot_kwargs(flavor=self.flavor,                      common=self.flavor in commons, axis=dx, color=base_color)
-        kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,     common=KalmanObservationFlavor.TRUE in commons,  axis=dx, color=base_color)
-        kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL,    common=KalmanObservationFlavor.IDEAL in commons, axis=dx, color=base_color)
-        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons,
+        kw_main  = self._plot_kwargs(flavor=self.flavor,                     common=self.flavor in commons, axis=dx, color=base_color)
+        kw_true  = self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE,     common=KalmanObservableFlavor.TRUE in commons,  axis=dx, color=base_color)
+        kw_ideal = self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL,    common=KalmanObservableFlavor.IDEAL in commons, axis=dx, color=base_color)
+        kw_meas  = self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED, common=KalmanObservableFlavor.MEASURED in commons,
                                     axis=dx, zorder=-1,color=base_color, kind="scatter", s=s_size, alpha=alpha)
 
         # Aux (projections/connectors) – route through _plot_kwargs but we’ll keep legend proxies in base color
@@ -1181,17 +1184,17 @@ class KalmanStateRecord:
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_true(axis):
-            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE, common=KalmanObservationFlavor.TRUE in commons, axis=axis, color=axis+1, alpha=0.65)
+            kw = self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE, common=KalmanObservableFlavor.TRUE in commons, axis=axis, color=axis+1, alpha=0.65)
             axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_ideal(axis):
-            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=KalmanObservationFlavor.IDEAL in commons, axis=axis, color=axis+1, alpha=0.65)
+            kw = self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL, common=KalmanObservableFlavor.IDEAL in commons, axis=axis, color=axis+1, alpha=0.65)
             axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_meas_proj(axis):
-            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", zorder=-1, s=s_size, alpha=alpha)
+            kw = self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED, common=KalmanObservableFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", zorder=-1, s=s_size, alpha=alpha)
             axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
@@ -1282,7 +1285,7 @@ class KalmanStateRecord:
 
             # proxies use base color (not the axis-colored projection lines)
             proxies = [
-                Line2D([0], [0], color=base_col, linestyle=main_ls, linewidth=main_lw, label=str(self.flavor) + " 3D"),
+                Line2D([0], [0], color=base_col, linestyle=main_ls, linewidth=main_lw, label=str(self.flavor).capitalize() + " 3D"),
                 Line2D([0], [0], **kw_meas_projx),
                 Line2D([0], [0], **kw_meas_projy),
                 Line2D([0], [0], **kw_meas_projz),
@@ -1292,7 +1295,7 @@ class KalmanStateRecord:
 
         return get_figure(ax), get_axis(ax)
 
-    def plot_error(self, flavor: KalmanStateFlavor | KalmanObservationFlavor = KalmanObservationFlavor.MEASURED, component=None, dim=None, **kwargs):
+    def plot_error(self, flavor: KalmanStateFlavor | KalmanObservableFlavor = KalmanObservableFlavor.MEASURED, component=None, dim=None, **kwargs):
         """
         Error plotting dispatcher with sample-driven data:
         - If 'sample' is provided:
@@ -1323,18 +1326,18 @@ class KalmanStateRecord:
         if sample is not None:
             # Use user's exact scheme
             ideal = ideal or (self.model.ideal(duration=self.duration) if self.model else None)
-            ideal = KalmanStateRecord._normalize_out(ideal) if ideal is not None else None
+            ideal = KalmanRecord._normalize_out(ideal) if ideal is not None else None
 
             truth = truth or getattr(sample, "xk", None)
-            truth = KalmanStateRecord._normalize_out(truth) if truth is not None else None
+            truth = KalmanRecord._normalize_out(truth) if truth is not None else None
 
             measurement = measurement or getattr(sample, "zk", None)
-            measurement = KalmanStateRecord._normalize_out(measurement) if measurement is not None else None
+            measurement = KalmanRecord._normalize_out(measurement) if measurement is not None else None
         else:
             # No sample: normalize whatever was provided
-            if ideal is not None:       ideal = KalmanStateRecord._normalize_out(ideal)
-            if truth is not None:       truth = KalmanStateRecord._normalize_out(truth)
-            if measurement is not None: measurement = KalmanStateRecord._normalize_out(measurement)
+            if ideal is not None:       ideal = KalmanRecord._normalize_out(ideal)
+            if truth is not None:       truth = KalmanRecord._normalize_out(truth)
+            if measurement is not None: measurement = KalmanRecord._normalize_out(measurement)
 
         # pick reference for state error (prefer truth)
         reference = truth if truth is not None else ideal
@@ -1366,7 +1369,7 @@ class KalmanStateRecord:
         axes = _axes_from_dim(dim)
 
         # ---------------- dispatch ----------------
-        if isinstance(flavor, KalmanObservationFlavor) and component is None:
+        if isinstance(flavor, KalmanObservableFlavor) and component is None:
             # Measurement error: uses 'measurement' as zk_hat when available
             fig, ax = self._plot_error_measurement(
                 flavor=flavor, axes=axes, zk0=measurement,

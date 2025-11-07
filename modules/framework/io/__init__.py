@@ -7,7 +7,7 @@ sys.modules[__name__ + ".record"] = record
 sys.modules[__name__ + ".collection"] = collection
 
 # Shortcut alias (points to same class)
-KalmanStateRecord = record.KalmanStateRecord
-KalmanStateCollection = collection.KalmanStateCollection
+KalmanRecord = record.KalmanRecord
+KalmanRecordCollection = collection.KalmanRecordCollection
 
-__all__ = ["KalmanStateRecord", "KalmanStateCollection", "record", "collection"]
+__all__ = ["KalmanRecord", "KalmanRecordCollection", "record", "collection"]
