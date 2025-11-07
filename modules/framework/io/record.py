@@ -1,33 +1,10 @@
 import numpy as np
 from dataclasses import dataclass, field
 
-from enum import Enum
-from ..helpers import *
+from ...helpers import *
+from ...runtime.debug import get_debug
 
-from ..debug import get_debug
-
-# =========================
-# Types / Utilities
-# =========================
-
-class KalmanStateType(Enum):
-    def __int__(self): return self.value
-    def __str__(self): return self.name.lower().capitalize()
-
-class KalmanStateFlavor(Enum):
-    SAMPLED   = 0
-    PRIOR     = 1
-    POSTERIOR = 2
-    SMOOTHED  = 3
-    def __int__(self): return self.value
-    def __str__(self): return self.name.lower().capitalize()
-
-class KalmanObservationFlavor(Enum):
-    IDEAL     = 0
-    TRUE      = 1
-    MEASURED  = 2
-    def __int__(self): return self.value
-    def __str__(self): return self.name.lower().capitalize()
+from ..constants import KalmanState, KalmanStateFlavor, KalmanObservationFlavor
 
 # =========================
 # Record & Collection
@@ -41,12 +18,18 @@ class KalmanStateRecord:
       - xk:   (N, n)  state estimate sequence (posterior/prior/smoothed/etc.)
       - Pk:   (N, n, n) state covariance sequence aligned with xk
     """
-    time: np.ndarray = field(default_factory=lambda: np.array([]))
+    time: np.ndarray = field(default_factory=lambda: np.array([])) # time vector
     xk:   np.ndarray = field(default_factory=lambda: np.array([])) # state vector
     Pk:   np.ndarray = field(default_factory=lambda: np.array([])) # state covariance
     zk:   np.ndarray = field(default_factory=lambda: np.array([])) # measurement vector
 
-    model: object = None # KalmanStateModel
+    # Engine and Model references
+    engine: object = None
+    @property
+    def model(self):
+        return self.engine.model if self.engine is not None else None
+
+    # Optional flavor
     flavor: KalmanStateFlavor = None
 
     # Properties for dimensions
@@ -69,6 +52,13 @@ class KalmanStateRecord:
     def __len__(self):
         return len(self.time)
 
+    def __len__(self):
+        return len(self.xk)
+    def __getitem__(self, idx):
+        return self.xk[idx]
+    def __iter__(self):
+        return iter(zip(self.time, self.xk, self.Pk, self.zk))
+    
     @staticmethod
     def __freeze_array(a):
         a = np.array(a, copy=True)
@@ -76,16 +66,54 @@ class KalmanStateRecord:
         return a
 
     def __post_init__(self):
+        from ..abstract.contracts import KalmanEngineABC
         object.__setattr__(self, "time", self.__freeze_array(self.time))
         object.__setattr__(self, "zk",   self.__freeze_array(self.zk))
         object.__setattr__(self, "xk",   self.__freeze_array(self.xk))
         object.__setattr__(self, "Pk",   self.__freeze_array(self.Pk))
-
-        object.__setattr__(self, "model", self.model)
-        assert self.model is None or hasattr(self.model, "NAME"), f"'model' must be a KalmanStateModel instance, got {type(self.model)}"
+        object.__setattr__(self, "engine", self.engine)
         object.__setattr__(self, "flavor", self.flavor)
-        assert self.flavor is None or isinstance(self.flavor, KalmanStateFlavor), f"'flavor' must be of type KalmanStateFlavor, got {type(self.flavor)}"
 
+        # -----------------------------
+        # Type and structural checks
+        # -----------------------------
+        if not isinstance(self.time, (np.ndarray, list, tuple)):
+            raise ValueError(f"'time' must be a numpy array or list, got {type(self.time)}")
+
+        assert self.engine is None or isinstance(self.engine, KalmanEngineABC), \
+            f"'engine' must be a KalmanEngine instance, got {type(self.engine)}"
+        assert self.flavor is None or isinstance(self.flavor, KalmanStateFlavor), \
+            f"'flavor' must be of type KalmanStateFlavor, got {type(self.flavor)}"
+
+        # -----------------------------
+        # Shape validation if engine provided
+        # -----------------------------
+        if self.engine is not None:
+            n, m = self.engine.n, self.engine.m
+            N = len(self.xk)
+
+            if self.xk.size > 0:
+                assert self.xk.shape[1] == n, \
+                    f"xk has wrong state dimension: expected ({N},{n}), got {self.xk.shape}"
+
+            if self.zk.size > 0:
+                assert self.zk.shape[1] == m, \
+                    f"zk has wrong measurement dimension: expected ({N},{m}), got {self.zk.shape}"
+
+            if self.Pk.size > 0:
+                assert self.Pk.shape[1:] == (n, n), \
+                    f"Pk has wrong covariance shape: expected ({N},{n},{n}), got {self.Pk.shape}"
+
+            if len(self.time) not in (0, N):
+                raise ValueError(f"time length ({len(self.time)}) does not match state sequence ({N})")
+
+            # Sanity check for NaNs or inf
+            if np.isnan(self.xk).any() or np.isinf(self.xk).any():
+                raise ValueError("xk contains NaN or Inf values.")
+            if np.isnan(self.Pk).any() or np.isinf(self.Pk).any():
+                raise ValueError("Pk contains NaN or Inf values.")
+            if np.isnan(self.zk).any() or np.isinf(self.zk).any():
+                raise ValueError("zk contains NaN or Inf values.")
     @staticmethod
     def _normalize_index(idx, size=None):
         """Convert int, Enum, or tuple/list/array to np.array of ints."""
@@ -97,7 +125,7 @@ class KalmanStateRecord:
                 return np.array([i] * size)
             return np.array([i])
 
-    def _normalize_component(self, component, type: KalmanStateType = None):
+    def _normalize_component(self, component, type: KalmanState = None):
         """
         Normalize component to a tuple of length `dim`.
 
@@ -144,7 +172,7 @@ class KalmanStateRecord:
         if indexing not in ["ij", "xy"]:
             raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
 
-        x = np.asarray(x)
+        x = np.asarray(x, dtype=np.float64)
         if x.ndim == 1:
             x = np.expand_dims(x, axis=-1)
 
@@ -176,7 +204,7 @@ class KalmanStateRecord:
 
         return x
         
-    def _normalize_idx(self, idx: KalmanStateType, axis = 0):
+    def _normalize_idx(self, idx: KalmanState, axis = 0):
         """
         Returns the list of state indices that contribute to measurement[meas_idx].
         """
@@ -193,14 +221,14 @@ class KalmanStateRecord:
         flav = (str(self.flavor) if self.flavor is not None else "Unknown")
         model = (self.model.NAME if getattr(self.model, "NAME", None) else "Model?")
         return f"KalmanStateRecord(N={len(self)}, n={self.n}, m={self.m}, flavor={flav}, model={model})"
-        
+
     def __str__(self):
         import textwrap, numpy as np
         
         # ---- local helpers -------------------------------------------------------
         def _shape(x):
             if x is None:
-                return "None"
+                return "N/A"
             try:
                 s = "x".join(map(str, np.shape(x)))
             except Exception:
@@ -209,10 +237,10 @@ class KalmanStateRecord:
         
         def _dims_line(label, arr, extra="", ndots=0):
             if arr is None:
-                return f"{label}: None{(' ' + extra) if extra else ''}"
+                return f"{label}: N/A{(' ' + extra) if extra else ''}"
 
             # Display as X0 x (X1 x X2 x ...) for any ndim >= 2
-            dt = f" dtype={arr.dtype}" if isinstance(arr, np.ndarray) else ""
+            dt = f"(dtype={arr.dtype})" if isinstance(arr, np.ndarray) else ""
 
             if isinstance(arr, np.ndarray) and arr.ndim >= 2:
                 shape_str = f"{arr.shape[0]}x(" + "x".join(str(d) for d in arr.shape[1:]) + ")"
@@ -220,16 +248,7 @@ class KalmanStateRecord:
                 shape_str = _shape(arr)
 
             dots = "." * ndots
-            return f"({label}) {dots}: {shape_str} {dt}{(' ' + extra) if extra else ''}"
-
-        def _stats1d(a):
-            if a is None or len(a) == 0:
-                return "empty"
-            a = np.asarray(a)
-            finite = np.isfinite(a)
-            if not finite.any():
-                return "all non-finite"
-            return f"min={np.nanmin(a):.6g}, max={np.nanmax(a):.6g}, mean={np.nanmean(a):.6g}"
+            return f"({label}) {dots}: {extra if extra else shape_str} {dt}"
 
         def _count_bad(a):
             if a is None:
@@ -287,17 +306,8 @@ class KalmanStateRecord:
         m = self.m
         flav = (str(self.flavor) if self.flavor is not None else "Unknown")
         duration = float(self.duration) if N > 0 else 0.0
-        t_stats = _stats1d(self.time)
+        t0 = self.time[0] if self.time is not None and len(self.time) > 0 else 0.0
 
-        # time metrics
-        approx_fs = None
-        if N >= 2 and self.time is not None:
-            dt = np.diff(self.time)
-            finite_dt = dt[np.isfinite(dt)]
-            if finite_dt.size:
-                mean_dt = float(np.mean(finite_dt))
-                approx_fs = (1.0/mean_dt) if mean_dt > 0 else None
-        
         # bad counts
         nan_x, inf_x = _count_bad(self.xk)
         nan_p, inf_p = _count_bad(self.Pk)
@@ -315,7 +325,6 @@ class KalmanStateRecord:
         # model info
         model_name = getattr(self.model, "NAME", None) or "Model ?"
         model_ver  = getattr(self.model, "VERSION", None) or "?"
-        fs_model   = getattr(self.model, "fs", None)
 
         # optional long description if the model has one
         description = getattr(self.model, "DESCRIPTION", None) or ""
@@ -335,16 +344,12 @@ class KalmanStateRecord:
 
         # ---- high-level summary --------------------------------------------------
         s.append(f"{spacer}Summary:")
-        s.append(f"{2*spacer}Samples (N).......................................: {N}")
-        s.append(f"{2*spacer}State Dimension (n)...............................: {n}")
-        s.append(f"{2*spacer}Observation Dimension (m).........................: {m}")
+        s.append(f"{2*spacer}Samples...........................................: {N} data points")
+        s.append(f"{2*spacer}State Dimension (n)...............................: {n}D")
+        s.append(f"{2*spacer}Observation Dimension (m).........................: {m}D")
         s.append(f"{2*spacer}Flavor............................................: {flav}")
-        s.append(f"{2*spacer}Duration..........................................: {duration:.6g} s")
-        if approx_fs is not None:
-            s.append(f"{2*spacer}Sampling Rate.....................................: {approx_fs:.6g} Hz")
-        if fs_model is not None:
-            s.append(f"{2*spacer}Model Sampling Rate...............................: {fs_model} Hz")
-        s.append(f"{2*spacer}Time Stats........................................: {t_stats}")
+        s.append(f"{2*spacer}Start Time........................................: {t0:.6g}s")
+        s.append(f"{2*spacer}Duration..........................................: {duration:.6g}s")
         s.append("")
         # ---- dimensions & data quality ------------------------------------------
         s.append(f"{spacer}Dimensions & Data Quality:")
@@ -360,7 +365,9 @@ class KalmanStateRecord:
             if inf: parts.append(f"#Inf={inf}")
             return (" [" + ", ".join(parts) + "]") if parts else ""
 
-        s.append(f"{2*spacer}Time {_dims_line('t', self.time, ndots=41)}{_bad_str(nan_time, inf_time)}")
+        dt = 1./self.model.sample_rate()
+        extra = f"[{self.time[0]:.6g}s .. {self.time[-1]+dt:.6g}s["
+        s.append(f"{2*spacer}Time {_dims_line('s', self.time, extra=extra, ndots=41)}{_bad_str(nan_time, inf_time)}")
         s.append(f"{2*spacer}Measurements {_dims_line('zk', self.zk, ndots=32)}{_bad_str(nan_z, inf_z)}")
         s.append(f"{2*spacer}State Vector {_dims_line('xk', self.xk, ndots=32)}{_bad_str(nan_x, inf_x)}")
         covar_bad = _bad_str(nan_p, inf_p)
@@ -402,7 +409,7 @@ class KalmanStateRecord:
     def _plot_time(self, **kwargs):
         return "Time (s)" # always seconds, but could be overridden later
 
-    def _plot_labels(self, component : KalmanStateType, axis = None, units = False, **kwargs):
+    def _plot_labels(self, component : KalmanState, axis = None, units = False, **kwargs):
 
         labels = kwargs.get("labels", None) or []
         label = labels[int(component)] if component in labels else None
@@ -425,7 +432,7 @@ class KalmanStateRecord:
 
         return label
 
-    def _plot_units(self, component : KalmanStateType, default = "∅", **kwargs):
+    def _plot_units(self, component : KalmanState, default = "∅", **kwargs):
         model = kwargs.get("model", None) or self.model
         units = kwargs.get("units", None) or model.units if model else {}
         return units[str(component)] if str(component) in units else default
@@ -468,13 +475,13 @@ class KalmanStateRecord:
         else:
             if not isinstance(color, str):
                 color = colors[color % len(colors)] if colors and isinstance(color, int) and len(colors) > 0 else "gray"
-            if str(flavor) == str(KalmanObservationFlavor.MEASURED):
+            if   flavor == KalmanObservationFlavor.MEASURED:
                 color = lighten(fade(color))
-            elif str(flavor) in (str(KalmanObservationFlavor.TRUE), str(KalmanObservationFlavor.IDEAL)):
+            elif flavor in (KalmanObservationFlavor.TRUE, KalmanObservationFlavor.IDEAL):
                 color = lighten(vivid(color))
-            elif str(flavor) == str(KalmanStateFlavor.PRIOR):
+            elif flavor == KalmanStateFlavor.PRIOR:
                 color = darken(color, 0.25)
-            elif str(flavor) in (str(KalmanStateFlavor.POSTERIOR), str(KalmanStateFlavor.SMOOTHED)):
+            elif flavor in (KalmanStateFlavor.POSTERIOR, KalmanStateFlavor.SMOOTHED):
                 color = darken(color)
 
         _kwargs["color"] = color
@@ -485,10 +492,10 @@ class KalmanStateRecord:
 
         if kind != "scatter":
             _kwargs["linestyle"] = kwargs.get("linestyle", None)
-            if str(flavor) == str(KalmanObservationFlavor.TRUE):
+            if flavor == KalmanObservationFlavor.TRUE:
                 _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
                 _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", "--")
-            elif str(flavor) == str(KalmanObservationFlavor.IDEAL):
+            elif flavor == KalmanObservationFlavor.IDEAL:
                 _kwargs["linewidth"] = kwargs.get("linewidth", 1.5)
                 _kwargs["linestyle"] = _kwargs["linestyle"] or kwargs.get("linestyle", ":")
 
@@ -496,7 +503,7 @@ class KalmanStateRecord:
 
         return _kwargs
 
-    # ---------- Arrow helpers (N/4 or N/5 placement) ----------
+    # ---------- Arrow helpers ----------
     def _arrow_indices(self, N: int, arrows: int | None = None) -> list[int]:
         """
         Choose ~uniform indices along a curve to place arrows.
@@ -516,39 +523,61 @@ class KalmanStateRecord:
                 idxs.append(j)
         return sorted(set(idxs))
 
-    def _draw_arrows_1d(self, ax, t, y, color, arrows=None, lw=1):
+    def _draw_arrows_1d(self, ax, t, y, color, arrows=None, lw=1, size=15):
         idxs = self._arrow_indices(len(t), arrows=arrows)
         for j in idxs:
             ax.annotate(
                 "", xy=(t[j+1], y[j+1]), xytext=(t[j], y[j]),
-                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0)
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0, mutation_scale=size)
             )
 
-    def _draw_arrows_2d(self, ax, x, y, color, arrows=None, lw=1):
+    def _draw_arrows_2d(self, ax, x, y, color, arrows=None, lw=1, size=15):
         idxs = self._arrow_indices(len(x), arrows=arrows)
         for j in idxs:
             ax.annotate(
                 "", xy=(x[j+1], y[j+1]), xytext=(x[j], y[j]),
-                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0)
+                arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0, mutation_scale=size)
             )
-
-    def _draw_arrows_3d(self, ax, x, y, z, color, arrows=None, lw=1):
+    
+    def _draw_arrows_3d(self, ax, x, y, z, color='r', arrows=None, lw=1, size=15):
         """
-        Use 3D quivers between j -> j+1 for selected indices.
+        Draw '−|>' arrowheads along a 3D curve using projected FancyArrowPatch.
+        No tails — just visible heads aligned to curve direction.
         """
         import numpy as np
+        from mpl_toolkits.mplot3d import proj3d
+        from matplotlib.patches import FancyArrowPatch
+
+        class Arrow3D(FancyArrowPatch):
+            def __init__(self, xs, ys, zs, *args, **kwargs):
+                super().__init__((0, 0), (0, 0), *args, **kwargs)
+                self._verts3d = xs, ys, zs
+
+            def do_3d_projection(self, renderer=None):
+                xs3d, ys3d, zs3d = map(np.ravel, self._verts3d)
+                xs, ys, zs = proj3d.proj_transform(xs3d, ys3d, zs3d, self.axes.M)
+                self.set_positions((xs[0], ys[0]), (xs[1], ys[1]))
+                return np.min(zs)
+
         idxs = self._arrow_indices(len(x), arrows=arrows)
         if not idxs:
             return
-        xs = np.array([x[j] for j in idxs])
-        ys = np.array([y[j] for j in idxs])
-        zs = np.array([z[j] for j in idxs])
-        us = np.array([x[j+1] - x[j] for j in idxs])
-        vs = np.array([y[j+1] - y[j] for j in idxs])
-        ws = np.array([z[j+1] - z[j] for j in idxs])
-        ax.quiver(xs, ys, zs, us, vs, ws, color=color, linewidth=lw,
-                  arrow_length_ratio=0.25, length=1.0, normalize=False)
 
+        x, y, z = np.asarray(x), np.asarray(y), np.asarray(z)
+
+        for j in idxs:
+            if j + 1 >= len(x):
+                continue
+            xs, ys, zs = [x[j], x[j+1]], [y[j], y[j+1]], [z[j], z[j+1]]
+
+            arrow = Arrow3D(xs, ys, zs,
+                            mutation_scale=size,
+                            lw=lw,
+                            arrowstyle='-|>',
+                            color=color,
+                            shrinkA=0, shrinkB=0)
+            ax.add_artist(arrow)
+            
     def plot(self, **kwargs):
         """
         Unified plotting entrypoint using kwargs only.
@@ -567,6 +596,8 @@ class KalmanStateRecord:
         component  = kwargs.pop("component", None)
         dim       = kwargs.pop("dim", None)
         type  = kwargs.pop("type", getattr(self.model, "type", None))
+        if not list(type):
+            raise ValueError("'type' Enum subclass inheriting from KalmanState must be provided either via model.type or as a kwarg.")
 
         view       = kwargs.pop("view", "auto")
         def _is_single(x):
@@ -699,10 +730,9 @@ class KalmanStateRecord:
 
         # ----------------- read/normalize inputs -----------------
         dim_arg  = kwargs.pop("dim", None)
-        kind     = kwargs.pop("type", None)
+        type     = kwargs.pop("type", None)
         legend   = kwargs.pop("legend", True)
         sharey   = kwargs.pop("sharey", False)
-        units    = kwargs.pop("units", True)
         grid     = kwargs.pop("grid", True)
         s_size   = kwargs.get("s", 1)
 
@@ -729,7 +759,7 @@ class KalmanStateRecord:
         c = kwargs.get("canvas", None) or get_canvas(**kwargs)
         plt.sca(c)
 
-        # dims → list[int]
+        # dims: list[int]
         if dim_arg is None:
             axes = list(range(self.dim))
         elif isinstance(dim_arg, (list, tuple, np.ndarray)):
@@ -743,24 +773,21 @@ class KalmanStateRecord:
 
         # component (use first if a sequence)
         component = component[0] if isinstance(component, (list, tuple, np.ndarray)) else component
-        component = self._normalize_component(component, type=kind)[0]
+        component = self._normalize_component(component, type=type)[0]
         comp_id   = int(component.value)
 
         # Base color id; allow passing a concrete color via kwargs['color']
         base_color_id = len(get_lines(**kwargs))
 
         # ----------------- plotting loop -----------------
-        handles, labels = [], []
-        used_label = set()
-
         for i, a in enumerate(axes):
             idx = self.dim * a + comp_id
 
             # measurement
-            if measurement is not None and self.model is not None and self.model.exclusive_mapping(idx, a):
+            if measurement is not None and self.model is not None and self.engine.exclusive_mapping(idx, a):
                 h = c.scatter(self.time, measurement[:, a],
                             **self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED,
-                                                axis=a, kind="scatter",
+                                                axis=a, kind="scatter", zorder=-1,
                                                 s=s_size, common=self.flavor in commons,
                                                 color=kwargs.get("color", base_color_id + i)))
 
@@ -823,9 +850,8 @@ class KalmanStateRecord:
 
         # --- args / inputs ---
         dim_arg    = kwargs.pop("dim", None)          # e.g., [0,1] or [1,0]
-        kind       = kwargs.pop("type", None)
+        type       = kwargs.pop("type", None)
         legend     = kwargs.pop("legend", True)
-        units      = kwargs.pop("units", True)
         grid       = kwargs.pop("grid", True)
         s_size     = kwargs.get("s", 1)
         legend_loc = kwargs.get("legend_loc", "best")
@@ -837,11 +863,11 @@ class KalmanStateRecord:
             raise ValueError("plot2D requires component[0] and component[1].")
 
         # normalize both components
-        comp_norm = self._normalize_component(component, type=kind)
+        comp_norm = self._normalize_component(component, type=type)
         comp0_id  = int(comp_norm[0].value)
         comp1_id  = int(comp_norm[1].value)
 
-        # dims → two axes (x-axis index, y-axis index)
+        # dims: two axes (x-axis index, y-axis index)
         if dim_arg is None:
             if self.dim < 2:
                 raise ValueError("plot2D needs at least 2 spatial axes or an explicit dim=[x,y].")
@@ -884,16 +910,14 @@ class KalmanStateRecord:
         kw_main  = self._plot_kwargs(flavor=self.flavor, axis=ax_x, color=base_color, common=self.flavor in commons)
         kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,  axis=ax_x, color=base_color, common=KalmanObservationFlavor.TRUE in kwargs.get("commons", []))
         kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, axis=ax_x, color=base_color, common=KalmanObservationFlavor.IDEAL in kwargs.get("commons", []))
-        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, axis=ax_x,
+        kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, axis=ax_x, zorder=-1,
                                      kind="scatter", s=s_size, color=base_color, alpha=kwargs.get("alpha", 0.7),
                                      common=KalmanObservationFlavor.MEASURED in kwargs.get("commons", []))
 
-        handles, labels = [], []
-
         # --- measurement scatter with exclusive mapping on BOTH axes ---
         if measurement is not None and self.model is not None:
-            mx_ok = self.model.exclusive_mapping(idx_x, ax_x)
-            my_ok = self.model.exclusive_mapping(idx_y, ax_y)
+            mx_ok = self.engine.exclusive_mapping(idx_x, ax_x)
+            my_ok = self.engine.exclusive_mapping(idx_y, ax_y)
             if mx_ok and my_ok and measurement.shape[1] > max(ax_x, ax_y):
                 h = c.scatter(measurement[:, ax_x], measurement[:, ax_y], **kw_meas)
 
@@ -919,7 +943,7 @@ class KalmanStateRecord:
         c.set_ylabel(kwargs.pop("ylabel", self._plot_labels(comp_norm[1], axis=ax_y)))
         c.grid(grid)
 
-        if legend and handles:
+        if legend:
             c.legend(fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
 
         return get_figure(c), get_axis(c)
@@ -936,7 +960,6 @@ class KalmanStateRecord:
         import numpy as np
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D
-        from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
 
         t = self.time
         if t is None or len(t) == 0:
@@ -1002,7 +1025,7 @@ class KalmanStateRecord:
 
         # --- figure / axis --------------------------------------------------------
         fig = kwargs.get("fig") or plt.figure(figsize=kwargs.pop("figsize", (8, 8)))
-        ax = fig.add_subplot(projection="3d")
+        ax = fig.add_subplot(projection="3d", computed_zorder=False)
         plt.sca(ax)
 
         # styling helpers
@@ -1049,7 +1072,7 @@ class KalmanStateRecord:
         kw_true  = self._plot_kwargs(flavor=KalmanObservationFlavor.TRUE,     common=KalmanObservationFlavor.TRUE in commons,  axis=dx, color=base_color)
         kw_ideal = self._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL,    common=KalmanObservationFlavor.IDEAL in commons, axis=dx, color=base_color)
         kw_meas  = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons,
-                                    axis=dx, color=base_color, kind="scatter", s=s_size, alpha=alpha)
+                                    axis=dx, zorder=-1,color=base_color, kind="scatter", s=s_size, alpha=alpha)
 
         # Aux (projections/connectors) – route through _plot_kwargs but we’ll keep legend proxies in base color
         def kw_proj_state(axis):
@@ -1068,21 +1091,18 @@ class KalmanStateRecord:
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_meas_proj(axis):
-            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", s=s_size, alpha=alpha)
+            kw = self._plot_kwargs(flavor=KalmanObservationFlavor.MEASURED, common=KalmanObservationFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", zorder=-1, s=s_size, alpha=alpha)
             axis_str = self.model.axis[axis] if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_conn(axis):
-            return self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, linewidth=0.6, alpha=0.6)
+            return self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, linewidth=0.5, alpha=0.25, linestyle="-.")
 
         # --- measurement scatter --------------------------------------------------
         if measurement is not None and self.model is not None:
-            mx_ok = self.model.exclusive_mapping(idx_x, dx)
-            my_ok = self.model.exclusive_mapping(idx_y, dy)
-            mz_ok = self.model.exclusive_mapping(idx_z, dz)
-            if mx_ok and my_ok and mz_ok and measurement.shape[1] > max(dx, dy, dz):
-                ax.scatter(measurement[:, dx], measurement[:, dy], measurement[:, dz],
-                        depthshade=False, **kw_meas)
+            mx_ok = self.engine.exclusive_mapping(idx_x, dx)
+            my_ok = self.engine.exclusive_mapping(idx_y, dy)
+            mz_ok = self.engine.exclusive_mapping(idx_z, dz)
             if mx_ok and my_ok:
                 ax.scatter(measurement[:, dx], measurement[:, dy], np.full_like(measurement[:, dz], min(zlim)),
                         depthshade=False, **kw_meas_proj(dz))
@@ -1092,7 +1112,10 @@ class KalmanStateRecord:
             if my_ok and mz_ok:
                 ax.scatter(np.full_like(measurement[:, dx], min(xlim)), measurement[:, dy], measurement[:, dz],
                         depthshade=False, **kw_meas_proj(dx))
-
+            if mx_ok and my_ok and mz_ok and measurement.shape[1] > max(dx, dy, dz):
+                ax.scatter(measurement[:, dx], measurement[:, dy], measurement[:, dz],
+                        depthshade=False, **kw_meas)
+            
         # --- ancillary series -----------------------------------------------------
         if IX is not None:
             h_ideal, = ax.plot(IX, IY, IZ, **kw_ideal)
@@ -1102,7 +1125,7 @@ class KalmanStateRecord:
             self._draw_arrows_3d(ax, TX, TY, TZ, color=h_truth.get_color(), arrows=arrows_ct)
 
         # --- subtle reference box lines (neutral) --------------------------------
-        ref_style = dict(color="black", linestyle=":", linewidth=0.75, alpha=0.8)
+        ref_style = dict(color="black", linestyle=":", linewidth=0.75, alpha=0.8, zorder=-10)
         if xlim[0] < x0 < xlim[1]:
             ax.plot([xlim[0], xlim[1]], [y0, y0], [z0, z0], **ref_style)
         if ylim[0] < y0 < ylim[1]:
@@ -1112,10 +1135,6 @@ class KalmanStateRecord:
 
         # --- projections (drawn; legend will show proxies in base color) ----------
         if projectors:
-            if X is not None and Y is not None and Z is not None:
-                ax.plot(X, Y, np.full_like(Z, min(zlim)), **kw_proj_state(dz))
-                ax.plot(X, np.full_like(X, max(ylim)), Z, **kw_proj_state(dy))
-                ax.plot(np.full_like(Y, min(xlim)), Y, Z, **kw_proj_state(dx))
             if IX is not None:
                 ax.plot(IX, IY, np.full_like(IZ, min(zlim)), **kw_proj_ideal(dz))
                 ax.plot(IX, np.full_like(IX, max(ylim)), IZ, **kw_proj_ideal(dy))
@@ -1124,13 +1143,17 @@ class KalmanStateRecord:
                 ax.plot(TX, TY, np.full_like(TZ, min(zlim)), **kw_proj_true(dz))
                 ax.plot(TX, np.full_like(TX, max(ylim)), TZ, **kw_proj_true(dy))
                 ax.plot(np.full_like(TY, min(xlim)), TY, TZ, **kw_proj_true(dx))
+            if X is not None and Y is not None and Z is not None:
+                ax.plot(X, Y, np.full_like(Z, min(zlim)), **kw_proj_state(dz))
+                ax.plot(X, np.full_like(X, max(ylim)), Z, **kw_proj_state(dy))
+                ax.plot(np.full_like(Y, min(xlim)), Y, Z, **kw_proj_state(dx))
 
         # --- connectors -----------------------------------------------------------
         if connectors and X is not None and len(X) > 0:
             for j in (0, len(X) - 1):
                 xi, yi, zi = float(X[j]), float(Y[j]), float(Z[j])
-                ax.plot([xi, xi], [yi, yi], [z0, zi], **kw_conn(dz))
-                ax.plot([xi, xi], [ylim[0], yi], [zi, zi], **kw_conn(dy))
+                ax.plot([xi, xi], [yi, yi], [zlim[0], zi], **kw_conn(dz))
+                ax.plot([xi, xi], [ylim[1], yi], [zi, zi], **kw_conn(dy))
                 ax.plot([xlim[0], xi], [yi, yi], [zi, zi], **kw_conn(dx))
 
         # --- main trajectory + arrows --------------------------------------------
@@ -1404,199 +1427,4 @@ class KalmanStateRecord:
         c.set_ylabel(kwargs.pop("ylabel", "Least Square State Errors (L2)"))
         c.grid(kwargs.pop("grid", True))
         if legend: c.legend()
-        return get_figure(c), get_axis(c)
-    
-class KalmanStateCollection:
-    
-    def __init__(self, records=()):
-        # use a list so add/remove/clear work
-        self._records = list(records)
-
-    def add(self, record: KalmanStateRecord):
-        self._records.append(record)
-
-    def remove(self, record: KalmanStateRecord):
-        self._records.remove(record)
-
-    def clear(self):
-        self._records.clear()
-
-    def list(self):
-        return list(range(len(self._records)))
-
-    def __len__(self):
-        return len(self._records)
-
-    def __getitem__(self, index: int) -> KalmanStateRecord:
-        if 0 <= index < len(self._records):
-            return self._records[index]
-        return None
-
-    def __iter__(self):
-        return iter(self._records)
-
-    def __repr__(self):
-        return f"KalmanStateCollection(N={len(self)})"
-
-    def __str__(self, **kwargs):
-
-        max = kwargs.pop("max", None if get_debug() else 8)
-        extra = f"(only display {max})" if max is not None and len(self) > max else ""
-        lines = [f"KalmanStateCollection with {len(self)} records: {extra}"]
-
-        n = len(self)
-        if max is not None and n > max:
-            show = max // 2
-            for i, rec in enumerate(self._records[:show]):
-                lines.append(f"  {i}: {rec!r}")
-            lines.append(f"  ... ({n - max} more records) ...")
-            for i, rec in enumerate(self._records[-show:], start=n-show):
-                lines.append(f"  {i}: {rec!r}")
-        else:
-            for i, rec in enumerate(self._records):
-                lines.append(f"  {i}: {rec!r}")
-        return "\n".join(lines)
-
-    def print(self, **kwargs):
-        print(self.__str__(**kwargs))
-
-    def plot(self, **kwargs):
-        """
-        Overlay plot for all records with one combined legend.
-        kwargs forwarded to each record.plot().
-        """
-        from ..helpers import get_canvas, get_axis, get_figure, get_ylim
-        from matplotlib.lines import Line2D
-
-        c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
-        legend = kwargs.pop("legend", len(self._records) <= 4)
-        handles, labels = [], []
-
-        samples = kwargs.pop("samples", None)
-
-        for i, rec in enumerate(self._records):
-
-            sample = samples[i] if isinstance(samples, (list, tuple, KalmanStateCollection)) and i < len(samples) else samples
-            if sample is None: kwargs["sample"] = kwargs.get("sample", None)
-
-            rec.plot(sample=sample, commons=[KalmanObservationFlavor.IDEAL], canvas=c, legend=False, color=i, **kwargs)
-            if legend and len(self._records) < kwargs.get("legend_max", 8):
-                plt_kwargs = { k: v for k, v in rec._plot_kwargs(color=i, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
-                plt_kwargs["color"] = darken(plt_kwargs["color"])
-                handles.append(Line2D([0], [0], **plt_kwargs))
-                labels.append(f"Record #{i+1}")
-
-        if samples is not None and rec is not None:
-            plt_kwargs = { k: v for k, v in rec._plot_kwargs(flavor=KalmanObservationFlavor.IDEAL, common=True, color=1, **kwargs).items() if k in ("color", "linewidth", "linestyle") }
-            handles.insert(0, Line2D([0], [0], **plt_kwargs))
-            labels.insert(0, str(KalmanObservationFlavor.IDEAL))
-        
-        if kwargs.get("legend", True) and handles:
-            c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01)
-
-        return get_figure(c), get_axis(c)
-
-    def plot_error(self, **kwargs):
-        """
-        Overlay error plots for all records on a single axes, with one combined legend.
-
-        Parameters (kwargs):
-        samples      : None | KalmanStateCollection | list[KalmanStateRecord] | single sample
-                        - If a collection/list is provided, samples[i] is passed to record i.
-                        - Else the same 'sample' (if provided) is used for all.
-        legend       : bool (default: len(self._records) <= 4)
-        legend_max   : int  (default: 10)  # max number of legend entries
-        legend_loc   : str  (default: "best")
-        alpha_decay  : float in (0,1] (default: 0.9)
-                        - Multiplies alpha for successive records to reduce clutter.
-        color        : optional; if provided, all records share this base color
-                        (still routed through _plot_kwargs). Otherwise uses color=i.
-        ...          : forwarded to each record.plot_error()
-                        (e.g., flavor, component, dim, kind, bins, grid, title, etc.)
-
-        Returns:
-        (figure, axis)
-        """
-        from ..helpers import get_canvas, get_axis, get_figure
-        from matplotlib.lines import Line2D
-        import copy
-
-        if len(self._records) == 0:
-            # Nothing to plot — return an empty canvas
-            c = kwargs.pop("canvas", None) or get_canvas(**kwargs)
-            return get_figure(c), get_axis(c)
-
-        c          = kwargs.pop("canvas", None) or get_canvas(**kwargs)
-        legend     = kwargs.pop("legend", len(self._records) <= 4)
-        legend_max = kwargs.pop("legend_max", 10)
-        legend_loc = kwargs.pop("legend_loc", "best")
-        alpha_decay = float(kwargs.pop("alpha_decay", 0.9))
-        alpha_decay = alpha_decay if 0 < alpha_decay <= 1 else 0.9
-
-        # Allow per-record samples (mirrors .plot())
-        samples = kwargs.pop("samples", None)
-
-        handles, labels = [], []
-
-        # We’ll not mutate the caller’s kwargs; copy for safety per-record
-        for i, rec in enumerate(self._records):
-            # Build per-record kwargs
-            local = copy.deepcopy(kwargs)
-            local["legend"] = False  # consolidate legend here
-
-            # Ensure color coherence:
-            # - if user passed an explicit color, keep it
-            # - otherwise use color=i
-            base_color = kwargs.get("color", i)
-            local["color"] = base_color
-
-            # Apply alpha decay to help readability on heavy overlays
-            if "alpha" in local:
-                try:
-                    local["alpha"] = float(local["alpha"]) * (alpha_decay ** i)
-                except Exception:
-                    pass
-            else:
-                # Set a gentle default alpha if not specified
-                local["alpha"] = 0.95 * (alpha_decay ** i)
-
-            # Per-record sample selection
-            if isinstance(samples, (list, tuple, KalmanStateCollection)):
-                sample_i = samples[i] if i < len(samples) else None
-                if sample_i is not None:
-                    local["sample"] = sample_i
-            elif samples is not None:
-                local["sample"] = samples
-            else:
-                # Respect a pre-existing 'sample' already in kwargs if present
-                if "sample" in kwargs:
-                    local["sample"] = kwargs["sample"]
-
-            # Draw the record’s error onto the shared canvas
-            rec.plot_error(canvas=c, **local)
-
-            # Construct a legend handle that matches the style used for this record’s error
-            # Try to use the same 'flavor' as the one used in plot_error() if provided.
-            flavor_for_handle = local.get("flavor", kwargs.get("flavor", rec.flavor))
-            plt_kwargs = {
-                k: v for k, v in rec._plot_kwargs(
-                    flavor=flavor_for_handle,
-                    color=base_color,
-                    alpha=local.get("alpha", 1.0),
-                    **local
-                ).items()
-                if k in ("color", "linewidth", "linestyle", "alpha")
-            }
-
-            handles.append(Line2D([0], [0], **plt_kwargs))
-            labels.append(f"Record #{i+1}")
-
-            # Cap legend size if requested
-            if legend and len(handles) >= legend_max:
-                break
-
-        # Final legend
-        if legend and handles:
-            c.legend(handles, labels, fontsize=10, handlelength=4, handleheight=0.01, loc=legend_loc)
-
         return get_figure(c), get_axis(c)

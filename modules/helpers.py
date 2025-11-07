@@ -208,7 +208,6 @@ def get_canvas3d(*args, **kwargs):
     return get_canvas(*args, **kwargs)
 
 def str2enum(e, _type: Enum):
-
     if isinstance(e, str):
         try:
             e = _type[e.upper()]
@@ -232,6 +231,27 @@ def apply_crop(data, crop):
         start, end = crop, len(data) - crop
     return data[start:end]
 
+def as_col(x, name = "array"):
+    x = np.asarray(x)
+    if x.ndim == 1:
+        x = x.reshape(-1, 1)
+    if x.ndim != 2 or x.shape[1] != 1:
+        raise ValueError(f"{name} must be (d,1) or (d,), got {format_shape(x)}")
+    return x
+
+def numerical_jacobian(func, x: np.ndarray, *args, eps: float = 1e-6) -> np.ndarray:
+    x = as_col(x)
+    y0 = as_col(func(x, *args))
+    m, n = y0.shape[0], x.shape[0]
+    J = np.zeros((m, n), dtype=float)
+    for j in range(n):
+        dx = np.zeros_like(x)
+        step = eps * max(1.0, abs(x[j, 0]))
+        dx[j, 0] = step
+        y1 = as_col(func(x + dx, *args))
+        J[:, j] = ((y1 - y0) / step).ravel()
+    return J
+
 def format_shape(arr):
     """
     Returns a human-readable string for array shape:
@@ -239,6 +259,11 @@ def format_shape(arr):
     - (n,1) -> "Nx1"
     - (n,m) -> "NxM"
     """
+    if not isinstance(arr, np.ndarray):
+        arr = np.asarray(arr)
+
+    if arr.ndim == 0:
+        return "0"
     if arr.ndim == 1:
         return f"{arr.shape[0]}"
     elif arr.ndim == 2:

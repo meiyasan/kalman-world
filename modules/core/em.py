@@ -1,2 +1,0 @@
-class ExpectationMaximizationAlgorithm():
-    pass

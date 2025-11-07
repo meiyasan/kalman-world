@@ -1,0 +1,3 @@
+
+class MultiRateKalmanFilter:
+    pass

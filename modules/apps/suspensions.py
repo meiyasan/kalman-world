@@ -1,8 +1,6 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from .oscillators import OscillatorModel
 
-from . import OscillatorCompositeModel
-class SuspensionModel(OscillatorCompositeModel):
+class SuspensionModel(OscillatorModel):
 
     NAME = "Suspension Model"
     DESCRIPTION = "Composite model for simulating the behavior of a suspension system."
