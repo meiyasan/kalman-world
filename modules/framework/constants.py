@@ -54,8 +54,6 @@ class EnumBis(Enum):
 
 class KalmanState(EnumBis):
     pass
-class KalmanStateUnits(EnumBis):
-    pass
 
 class KalmanStateFlavor(EnumBis):
     SAMPLED   = 0 # Sampled state
@@ -68,8 +66,6 @@ class KalmanStateFlavor(EnumBis):
 # -----------------------------
 class KalmanObservation(EnumBis):
     pass
-class KalmanObservationUnits(EnumBis):
-    pass
 
 class KalmanObservationFlavor(EnumBis):
     IDEAL     = 0 # Full ideal observation (no noise)
@@ -79,4 +75,3 @@ class KalmanObservationFlavor(EnumBis):
 class KalmanObservationMode(Enum):
     INDEPENDENT = auto() # Each submodel provides an independent measurement.
     FUSED = auto() # All submodels contribute additively to the same measurement
-    
