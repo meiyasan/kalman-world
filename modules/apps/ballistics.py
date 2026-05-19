@@ -57,6 +57,15 @@ class BallisticLinearModel(KalmanLinearModel):
         r = self.dtype(measurement_uncertainty)
         R = r * np.eye(1, dtype=self.dtype)
 
+        # Initial covariance: positive-definite diagonal based on measurement uncertainty.
+        # Q is rank-1 (acceleration row zero), so using Q as P0 causes singular covariance
+        # which leads to pathological RTS smoother gains. Use explicit per-state variances.
+        if "P0" not in kwargs:
+            p_var = self.dtype(measurement_uncertainty) ** 2
+            v_var = (self.dtype(measurement_uncertainty) / 10.0) ** 2
+            a_var = (self.dtype(measurement_uncertainty) / 100.0) ** 2
+            kwargs["P0"] = np.diag([p_var, v_var, a_var]).astype(self.dtype)
+
         super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
@@ -89,6 +98,7 @@ class BallisticModel(KalmanExtendedModel):
                  M=5.972e24,                  # central body mass [kg] (Earth)
                  m=1.0,                       # object mass [kg]
                  c_drag=0,                    # drag coefficient [kg/m]
+                 g=9.81,                      # surface gravity [m/s²]; None → use G*M/r³ orbital formula
                  fs=128.0,                    # sampling frequency [Hz]
                  order=3,                     # model order [p,v,a]
                  process_uncertainty=0.05,    # process noise std [m/s^3]
@@ -105,6 +115,7 @@ class BallisticModel(KalmanExtendedModel):
         self["G"] = G
         self["M"] = M
         self["m"] = m
+        self["g"] = g
 
         if f is not None:
             self.f = f
@@ -116,6 +127,20 @@ class BallisticModel(KalmanExtendedModel):
         # ------------------------------------------------------------------
         Qd = self.Qd(process_uncertainty, order)
         R = (measurement_uncertainty**2) * np.eye(3, dtype=self.dtype)
+
+        # ------------------------------------------------------------------
+        # Initial covariance P0 — unit-appropriate diagonal per axis-major
+        # layout [px,vx,ax, py,vy,ay, pz,vz,az]
+        # ------------------------------------------------------------------
+        if kwargs.get("P0") is None:
+            p_var = measurement_uncertainty ** 2
+            v_var = (measurement_uncertainty / 10.0) ** 2
+            a_var = (measurement_uncertainty / 100.0) ** 2
+            if order == 3:
+                block = [p_var, v_var, a_var]
+            else:
+                block = [p_var, v_var]
+            kwargs["P0"] = np.diag(block * 3).astype(self.dtype)
 
         # Derived sizes
         self.n = 3 * order
@@ -186,69 +211,78 @@ class BallisticModel(KalmanExtendedModel):
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
         dt = 1.0 / self.fs
 
-        # Extract state components
-        p = x[0:3, 0]
-        v = x[3:6, 0]
-        a = x[6:9, 0] if self.order >= 3 else np.zeros(3, dtype=self.dtype)
+        # Extract from axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
+        p = x[[0, 3, 6], 0]  # [px, py, pz]
+        v = x[[1, 4, 7], 0]  # [vx, vy, vz]
+        a = x[[2, 5, 8], 0] if self.order >= 3 else np.zeros(3, dtype=self.dtype)
 
-        # Gravity (depends on position, no control)
-        r = np.linalg.norm(p)
-        a_grav = -self["G"] * self["M"] * p / r**3 if r > 0 else np.zeros(3, dtype=self.dtype)
+        # Gravity
+        # Near-surface mode (g provided): constant downward acceleration in Z.
+        # Orbital mode (g=None): full geocentric G*M/r³ formula — requires
+        # positions in geocentric metres (origin = Earth's centre).
+        if self["g"] is not None:
+            a_grav = np.array([0.0, 0.0, -self["g"]], dtype=self.dtype)
+        else:
+            r = np.linalg.norm(p)
+            a_grav = -self["G"] * self["M"] * p / r**3 if r > 0 else np.zeros(3, dtype=self.dtype)
 
         # Drag (depends on velocity, without control)
         vmag = np.linalg.norm(v)
-        a_drag = - (self["c_drag"] / self["m"]) * vmag * v if vmag > 0 else np.zeros(3, dtype=self.dtype)
+        a_drag = -(self["c_drag"] / self["m"]) * vmag * v if vmag > 0 else np.zeros(3, dtype=self.dtype)
 
         # Control (optional controlled thrust force)
         a_ctrl = np.zeros(3, dtype=self.dtype)
-        if u is not None and u != []:
-            thrust = np.asarray(u, dtype=self.dtype).reshape(3)
-            a_ctrl = thrust / self["m"]
+        if u is not None:
+            u_arr = np.asarray(u, dtype=self.dtype).ravel()
+            if u_arr.size > 0:
+                a_ctrl = u_arr.reshape(3) / self["m"]
 
         # Total acceleration
         a_total = a_grav + a_drag + a_ctrl
 
-        # Kinematic matrix exponential for p,v coupling
+        # Kinematic matrix exponential for p,v coupling (per spatial axis)
         if self.order >= 2:
-            F = np.block([
-                [np.zeros((3, 3)), np.eye(3)],
-                [np.zeros((3, 3)), np.zeros((3, 3))]
-            ])
-            Phi = expm(F * dt)
-            state = np.vstack((p.reshape(3, 1), v.reshape(3, 1)))
-            state_next = Phi @ state
-            p, v = state_next[0:3, 0], state_next[3:6, 0]
+            F1d = np.array([[0.0, 1.0], [0.0, 0.0]])
+            Phi1d = expm(F1d * dt)
+            p_next = np.zeros(3, dtype=self.dtype)
+            v_next = np.zeros(3, dtype=self.dtype)
+            for i in range(3):
+                pv = Phi1d @ np.array([p[i], v[i]])
+                p_next[i] = pv[0]
+                v_next[i] = pv[1]
+            p, v = p_next, v_next
 
-        # Apply acceleration effects
+        # Apply acceleration contribution
         p += 0.5 * a_total * dt**2
         v += a_total * dt
         a = a_total if self.order >= 3 else np.zeros_like(a_total)
 
-        # Compose next state
-        x = np.zeros_like(x)
-        x[0:3, 0] = p
-        x[3:6, 0] = v
+        # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
+        x_next = np.zeros_like(x)
+        x_next[[0, 3, 6], 0] = p
+        x_next[[1, 4, 7], 0] = v
         if self.order >= 3:
-            x[6:9, 0] = a
+            x_next[[2, 5, 8], 0] = a
 
         # Add process noise
         if w is not None:
             L = self.L(t)
-            x += w if L is None else (L @ w)
+            x_next += w if L is None else (L @ w)
 
-        return x
+        return x_next
 
     # ----------------------------------------------------------------------
     # Measurement
     # ----------------------------------------------------------------------
     def h(self, x, v=None, t=None):
         """
-        Measurement model for 3D ballistic motion.
-        Observes position only (nonlinear base case).
-        z = p + v  (additive noise)
+        Measurement model: observes position only.
+        Extracts [px, py, pz] from axis-major state [px,vx,ax, py,vy,ay, pz,vz,az].
+        z = [px, py, pz] + v  (additive noise)
         """
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
-        z = x[0:3, :].copy()
+        # positions sit at indices 0, 3, 6 in the axis-major layout
+        z = x[[0, 3, 6], :].copy()
 
         if v is not None:
             v = np.asarray(v, dtype=self.dtype).reshape(3, 1)

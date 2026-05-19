@@ -1,4 +1,4 @@
-.PHONY: $(filter-out .%, $(MAKECMDGOALS))
+.PHONY: $(filter-out .%, $(MAKECMDGOALS)) .virtualenv*
 
 # Setup environment variables
 ifneq (,$(wildcard .env))
@@ -6,18 +6,18 @@ include .env
 export
 endif
 
+# Create an outdated .virtualenv file if it doesn't exist, with timestamp set to epoch (to prevent issue at docker stage)
+$(shell touch .bash_history .virtualenv.yml)
+
 export PLATFORM  ?= linux/amd64
-export CONTAINER ?= $(shell basename $(PWD) | tr ' ' '-' | tr -d '.')
+export CONTAINER ?= $(shell basename $(PWD) | tr ' ' '-')
 ifneq (,$(NOCACHE))
     export NOCACHE = "--no-cache"
 endif
+export CONDA_ROOT ?= $(shell conda info --base 2>/dev/null || echo "$(HOME)/.conda")
 
-ifndef ENVNAME
-  $(error ENVNAME is not defined. Please set it in .env or in your environment context)
-endif
-export MODULE    ?= $(shell echo $(PROJECT_NAME) | tr ' ' '-' | tr '[:upper:]' '[:lower:]' | tr '-' '_' || echo "unnamed")
-export LINT      ?= modules tests
-export DISCOVER  ?= "discover"
+BUILD_DIR   := $(shell if [ -f "/.dockerenv" ]; then echo "var/container/.build"; else echo "var/build"; fi)
+INSTALL_DIR := $(shell if [ -f "/.dockerenv" ]; then echo "var/container/.install"; else echo "var/install"; fi)
 
 ## Display the help message
 help: usage
@@ -25,13 +25,13 @@ usage: motd
 	@printf "${COLOR_TITLE_BLOCK}Project Application \"$(PROJECT_NAME)\"${COLOR_RESET}\n"
 	@printf "\n"
 	@printf "${COLOR_COMMENT}Usage:${COLOR_RESET}\n"
-	@printf " make [target]\n\n"
+	@printf "\tmake [target]\n\n"
 	@printf "${COLOR_COMMENT}Available targets:${COLOR_RESET}\n"
 	@awk 'BEGIN { inComment = 0 } \
 	/^[a-zA-Z\-\_0-9\@]+:/ { \
 		if (inComment) { \
 			helpCommand = substr($$1, 0, index($$1, ":")); \
-			printf " ${COLOR_INFO}%-16s${COLOR_RESET} %s\n", helpCommand, helpMessage; \
+			printf "\t${COLOR_INFO}%-16s${COLOR_RESET} %s\n", helpCommand, helpMessage; \
 			inComment = 0; \
 		} \
 	} \
@@ -42,50 +42,102 @@ usage: motd
 	' $(MAKEFILE_LIST)
 
 ## Complete procedure to build and install
-all: motd env tests docs build install
+all: motd env vendor build install
 motd:
 ifneq ($(MOTD),0)
 	@if [ -s "share/motd" ] && [ ! -z "$$(which envsubst)" ]; then echo "$$(env | envsubst < share/motd)"; fi
 endif
 
+## Download the necessary PDF sets
+lhapdf:
+#	@python3 lhapdf5-getdata #SMRS ?
+	@lhapdf install GRVPI0 GRVPI1
+	@lhapdf install CT14nlo
+
+legacy: motd
+	@echo "Checking for legacy environment.. "
+	@if conda env list | grep -q $(ENVLEGACY); then \
+			echo "Updating existing environment \`$(ENVLEGACY)\` with \`environment.legacy.yml\`"; \
+			conda env update -n $(ENVLEGACY) -f environment.legacy.yml -v; \
+		else \
+			echo "Creating new environment \`$(ENVLEGACY)\` with \`environment.legacy.yml\`"; \
+			conda env create -n $(ENVLEGACY) -f environment.legacy.yml -v; \
+		fi
+
+## Setup conda
+conda:
+	@test -n "$(CONDA_ROOT)" || { echo "ERROR: CONDA_ROOT not set"; exit 1; }
+	@if [ -f "$(CONDA_ROOT)/bin/conda" ]; then \
+		echo "conda found at $(CONDA_ROOT)"; \
+	elif command -v conda >/dev/null 2>&1; then \
+		echo "conda found at $$(conda info --base)"; \
+	else \
+		url=$$(uname -s | grep -q Darwin && echo "https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-$$(uname -m).sh" || echo "https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$$(uname -m).sh"); \
+		tmp=$$(mktemp).sh; curl -fsSL "$$url" -o "$$tmp"; chmod +x "$$tmp"; \
+		"$$tmp" -b -p "$(CONDA_ROOT)"; rm -f "$$tmp"; \
+		conda tos accept --override-channels -c https://repo.anaconda.com/pkgs/main -c https://repo.anaconda.com/pkgs/r; \
+	fi
+	
+	@. $(CONDA_ROOT)/etc/profile.d/conda.sh && \
+	CONDA_CURRENT_VERSION="$$(conda --version 2>/dev/null | awk '{print $$2}')" && \
+	if [ -n "$(CONDA_VERSION)" ]; then \
+		if [ -z "$$CONDA_CURRENT_VERSION" ]; then \
+			echo "conda command not available after install; skipping version enforcement"; \
+		elif [ "$$CONDA_CURRENT_VERSION" != "$(CONDA_VERSION)" ]; then \
+			echo "adjusting conda from $$CONDA_CURRENT_VERSION to $(CONDA_VERSION) (based on CONDA_VERSION)"; \
+			conda install -n base -y "conda=$(CONDA_VERSION)"; \
+		else \
+			echo "conda is set to ($$CONDA_CURRENT_VERSION)"; \
+		fi; \
+	else \
+		echo "skipping conda version enforcement"; \
+	fi
+	@echo ""
+	@echo "run the following command to activate conda:"
+	@echo "     source $(CONDA_ROOT)/etc/profile.d/conda.sh"
+	@echo "     conda activate base"
+	@echo ""
+
 ## Create a Conda environment from environment.yml
 env: motd
 	@echo "Checking for environment.. "
-	@$(MAKE) --no-print-directory .virtualenv
+	@$(MAKE) --no-print-directory .virtualenv.yml
 
-.virtualenv: environment*.yml requirements.txt
+.envcheck:
+	@. $(CONDA_ROOT)/etc/profile.d/conda.sh && \
+		(command -v mamba >/dev/null 2>&1 || conda install --name base -c conda-forge -y mamba) && \
+		(command -v conda-merge >/dev/null 2>&1 || conda install --name base -c conda-forge -y conda-merge) && $(MAKE) conda
+
+.virtualenv.yml: environment*.yml requirements.txt
+
 	@$(MAKE) .envcheck
 
-	@if [ -f "environment.$(shell arch).yml" ] && [ -f "environment.yml" ]; then \
-		if conda env list | grep -q $(ENVNAME); then \
-			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\` and \`environment.yml\`"; \
-			conda env update -n $(ENVNAME) -f environment.$(shell arch).yml -f environment.yml; \
+	@envfiles=""; \
+	[ -f "environment.yml" ] && envfiles="environment.yml"; \
+	[ -f "environment.$(shell arch).yml" ] && envfiles="$$envfiles environment.$(shell arch).yml"; \
+	if [ -n "$$envfiles" ]; then \
+		filecount=$$(echo $$envfiles | wc -w | tr -d ' '); \
+		if [ "$$filecount" -gt 1 ]; then \
+			echo "Merging $$envfiles (for $(shell arch))"; \
+			conda-merge $$envfiles > .virtualenv.yml; \
 		else \
-			echo "Creating new environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\` and \`environment.yml\`"; \
-			conda env create -n $(ENVNAME) -f environment.$(shell arch).yml -f environment.yml; \
+			echo "Using single $$envfiles (for $(shell arch))"; \
+			cp $$envfiles .virtualenv.yml; \
 		fi; \
-	elif [ -f "environment.$(shell arch).yml" ]; then \
 		if conda env list | grep -q $(ENVNAME); then \
-			echo "Updating existing environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
-			conda env update -n $(ENVNAME) -f environment.$(shell arch).yml; \
+			echo "Updating environment \`$(ENVNAME)\`"; \
+			conda env update -n $(ENVNAME) -f .virtualenv.yml; \
 		else \
-			echo "Creating new environment \`$(ENVNAME)\` with \`environment.$(shell arch).yml\`"; \
-			conda env create -n $(ENVNAME) -f environment.$(shell arch).yml; \
+			echo "Creating environment \`$(ENVNAME)\`"; \
+			conda env create -n $(ENVNAME) -f .virtualenv.yml; \
 		fi; \
-	elif [ -f "environment.yml" ]; then \
-                if conda env list | grep -q $(ENVNAME); then \
-                        echo "Updating existing environment \`$(ENVNAME)\` with \`environment.yml\`"; \
-                        conda env update -n $(ENVNAME) -f environment.yml; \
-                else \
-                        echo "Creating new environment \`$(ENVNAME)\` with \`environment.yml\`"; \
-                        conda env create -n $(ENVNAME) -f environment.yml; \
-                fi; \
-        else \
-		echo "File \`environment.yml\` and/or \`environment.$(shell arch).yml\` not found, skipping."; \
+	else \
+		echo "No environment files found"; \
+		touch .virtualenv.yml; \
 	fi
 
 	@if [ -f "requirements.txt" ]; then \
-		if ! grep -q "requirements.txt" "environment.yml" "environment.$(shell arch).yml" 2>/dev/null; then \
+		if ! grep -q "requirements.txt" ".virtualenv.yml" 2>/dev/null; then \
 			echo "Installing additional Python packages from \`requirements.txt\`"; \
 			conda run -n $(ENVNAME) pip install -r requirements.txt; \
 		else \
@@ -95,67 +147,58 @@ env: motd
 		echo "No \`requirements.txt\` found, skipping Python package installation."; \
 	fi
 
-	@touch .virtualenv 2> /dev/null || true
+## Run a single command inside the container (usage: make console "command")
+console:
+	@MOTD=0 $(MAKE) start
+	@CONTAINER_ID=$$(docker ps -aqf ancestor=$${CONTAINER}-container) && \
+	 if [ ! -z "$$CONTAINER_ID" ]; then docker exec -it $$CONTAINER_ID /bin/bash -c "$(filter-out $@,$(MAKECMDGOALS))"; else echo "No running container found, please check \`docker ps\`"; fi
 
-.envcheck:
-	@. $$(conda info --base)/etc/profile.d/conda.sh
-	@command -v conda >/dev/null 2>&1 || { echo "Error: conda is not installed. Please install conda to use this command."; exit 1; }
-	@command -v mamba >/dev/null 2>&1 || { conda activate base && conda install mamba; }
-	@command -v mamba >/dev/null 2>&1 || { echo "Error: mamba is not installed. Please install mamba to use this command."; exit 1; }
+## Building with debug symbols
+debug: motd
+	@MOTD=0 BUILDTYPE=Debug $(MAKE) -s configure
 
-## Test the project
-tests: motd
-	@python -m unittest "$(DISCOVER)"; ec=$$?; [ $$ec -eq 0 ] || [ $$ec -eq 5 ] || exit $$ec
+## Building in release mode
+release: motd
+	@MOTD=0 BUILDTYPE=Release $(MAKE) -s configure
+
+## Configure the build environment and build
+configure: motd
+	@MOTD=0 ./bootstrap.sh $(BUILDTYPE)
+
+## Building the project
+build: motd
+	@if [ ! -d "$(BUILD_DIR)" ]; then MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) lib
 
 ## Vendor dependencies
 vendor: motd
 	@$(MAKE) -sC vendor
 
-## Build project documentation and open in browser
-pages: docs
-	@cd var/build/public/docs; ln -sf $$(git describe --tags 2> /dev/null || git rev-parse --short HEAD)/ latest
-	@cp var/build/index.html var/build/public/docs/
-	@find var/build/public/docs -mindepth 1 -maxdepth 1 -type d | rev | cut -d'/' -f 1 | rev | sort > var/build/public/docs/metadata.txt
-	@rsync -a --delete ./var/build/public/ var/www 2> /dev/null || true
-	@if [ -f "public/latest/index.html" ]; then open public/latest/index.html; fi
+## Compile the tools
+tools: motd
+	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) tools
 
-## Build project documentation
-docs: motd
-	@MOTD=0 $(MAKE) -s env
-	@mkdir -p var/build/public/docs var/www/docs && ln -sf var/www/docs/ ./public
-	@cd var/build; if [ ! -f "Makefile" ]; then cmake ../../share/doxygen; fi
-	@doxygen -u var/build/Doxyfile && doxygen var/build/Doxyfile;
+## Compile the examples
+examples: motd
+	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) examples
 
-## Build the python package and distribute it
-modules: motd
-	@mkdir -p var/install/lib var/build
-	@ln -sfnT ../modules tools/$(MODULE)
-	@ln -sfnT ../modules tests/$(MODULE)
-	@ln -sfnT ../../modules var/build/modules
-	@ln -sf   ../../pyproject.toml var/build
-	@export EGG_CACHE=var/build/.eggs; \
-	SITEPACKAGE="var/install/lib/python-$$(python --version | awk '{print $$2}' | cut -d '.' -f 1,2)/site-packages"; \
-	 cd var/build && python -m build --skip-dependency-check --no-isolation --outdir ../../$$SITEPACKAGE ; \
-	 [ $$? -eq 0 ] && echo "Distributed package is now available in \`./$$SITEPACKAGE\`" || exit 1
+## Run Python unit tests with a summary coverage report (% per module)
+tests: motd
+	@conda run -n $(ENVNAME) env FORCE_COLOR=1 pytest tests/ --tb=short --color=yes \
+		--cov=modules --cov-report=term
 
-## Install the python package in the environment
-pip: motd
-	@SITEPACKAGE="var/install/lib/python-$$(python --version | awk '{print $$2}' | cut -d '.' -f 1,2)/site-packages"; \
-	 mkdir -p $$SITEPACKAGE && pip install $$SITEPACKAGE/$(MODULE)-$(PROJECT_VERSION).tar.gz;
+## Run Python unit tests and list every uncovered function by name
+coverage: motd
+	@conda run -n $(ENVNAME) env FORCE_COLOR=1 pytest tests/ --tb=short --color=yes \
+		--cov=modules --cov-report=term -q
+	@conda run -n $(ENVNAME) python3 share/coverage.py
 
-## Run the linter for python package
-lint: motd
-	@flake8 $(LINT)
-
-## Format the code using black
-format: motd 
-	@read -p "Make sure to commit your code first; Do you want to modify your code using black? (yes/no): " response; \
-	if [ "$$response" = "yes" ]; then \
-		black $(LINT)
-	else \
-		echo "Exiting..."; \
-		exit 1; \
-	fi
+## Install the project in the final directory
+install: motd
+	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) install
 
 ## Build the Docker image
 image: motd
@@ -164,7 +207,7 @@ image: motd
 ## Prepare the container (including warm up)
 container:
 	@$(MAKE) stop
-	@docker compose -f docker-compose.yml up --build
+	@docker compose -f docker-compose.yml up --build --force-recreate --remove-orphans
 
 ## Start the container
 start: motd
@@ -185,14 +228,25 @@ shell: motd
 	@CONTAINER_ID=$$(docker ps -aqf ancestor=$${CONTAINER}-container) && \
 	 if [ ! -z "$$CONTAINER_ID" ]; then docker exec -it $$CONTAINER_ID /bin/bash; else echo "No running container found, please check \`docker ps\`"; fi
 
+## Build project documentation and open in browser
+pages: motd
+	@if [ ! -d "$(BUILD_DIR)/share/doxygen" ]; then BUILDTYPE=Doc MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) pages
+	@if [ -f "public/latest/index.html" ]; then open public/latest/index.html; fi
+
+## Build project documentation
+docs: motd
+	@if [ ! -d "$(BUILD_DIR)/share/doxygen" ]; then BUILDTYPE=Doc MOTD=0 $(MAKE) -s configure; fi
+	@$(MAKE) -sC $(BUILD_DIR) doxygen
+
 ## Clean up build artifacts
 clean: motd
-	@$(RM) -rf var/cache/* var/log/* var/build/* 2> /dev/null || true
+	@$(RM) -rf var/cache/* var/log/* $(BUILD_DIR)/* 2> /dev/null || true
 
 ## Clean up build artifacts and remove the environment
 distclean: clean
 	@conda env remove -n $(ENVNAME) 2> /dev/null || true
-	@$(RM) -rf .virtualenv var/install var/build 2> /dev/null || true
+	@$(RM) -rf .virtualenv.yml $(BUILD_DIR) $(INSTALL_DIR) 2> /dev/null || true
 
 %:
 	@:

@@ -43,15 +43,24 @@ class KalmanRecord:
     @property
     def dim(self):
         return len(self.zk[0]) if self.zk is not None and len(self.zk) > 0 else 0
+
+    @property
+    def _spc(self):
+        """
+        States per measurement channel = n // dim.
+        Used as the stride in the state-index formula  idx = _spc * axis + comp_id,
+        which is correct for both single models and composite models:
+          - BallisticModel (n=9, m=3):  _spc = 3  (pos/vel/acc per axis)
+          - OscillatorComposite (n=2N, m=N): _spc = 2  (pos+vel per oscillator)
+          - AnalyticOscillator (n=2, m=2):   _spc = 1  (one state per obs channel)
+        """
+        return self.n // max(1, self.dim)
     @property
     def duration(self):
         return 0 if self.time is None else len(self.time) * (self.time[1] - self.time[0])
     @property
     def sample_rate(self):
         return 1 / (self.time[1] - self.time[0]) if self.time is not None and len(self.time) > 1 else 0
-
-    def __len__(self):
-        return len(self.time)
 
     def __len__(self):
         return len(self.xk)
@@ -355,7 +364,9 @@ class KalmanRecord:
             raise ValueError(f"Invalid indexing mode '{indexing}'. Use 'ij' or 'xy'.")
         
         x = np.asarray(x, dtype)
-        if x.ndim == 2 and x.shape[-1] == 1:
+        # Squeeze trailing unit dim for 3D+ arrays: (N, m, 1) → (N, m).
+        # Do NOT squeeze 2D (N, 1) because downstream code relies on shape[1] == m.
+        while x.ndim >= 3 and x.shape[-1] == 1:
             x = np.squeeze(x, axis=-1)
 
         if indexing == "ij":
@@ -365,12 +376,12 @@ class KalmanRecord:
         
     def _normalize_idx(self, idx: KalmanState, axis = 0):
         """
-        Returns the list of state indices that contribute to measurement[meas_idx].
+        Returns the state index for (component, sensor-axis) using the stride _spc.
         """
         idx = idx if hasattr(idx, 'value') else int(idx)
-        idx = self.dim * axis + idx
+        idx = self._spc * axis + idx
 
-        assert 0 <= idx < self.dim * self.m, f"Measurement index out of range. Expected 0 <= idx < {self.dim * self.m}, got {idx}."
+        assert 0 <= idx < self.n, f"State index out of range. Expected 0 <= idx < {self.n}, got {idx}."
         return idx
 
     def print(self, **kwargs):
@@ -575,8 +586,9 @@ class KalmanRecord:
 
         # Mix in axis label if axis is provided
         if axis is not None:
-            if model is not None and hasattr(model, "sensor"):
-                axis_label = model.sensor(axis)
+            if model is not None and hasattr(model, "sensor") and hasattr(model, "_sensor") and len(model._sensor) > 0:
+                safe_axis = min(axis, len(model._sensor) - 1)
+                axis_label = model.sensor(safe_axis)
                 label = f"{label}{axis_label}"
 
         # Mix in units if requested
@@ -673,22 +685,50 @@ class KalmanRecord:
                 idxs.append(j)
         return sorted(set(idxs))
 
+    def _smooth_dir_pts(self, arrays, j, w):
+        """
+        Return (tail_coords, head_coords) for an arrow centered at index j.
+        Each coordinate is the mean over a window of width w on each side,
+        which suppresses noise-driven direction flips.
+
+        tail = mean(a[max(0, j-w) : j+1])
+        head = mean(a[j : min(N-1, j+w)+1])
+        """
+        N = len(arrays[0])
+        j0 = max(0, j - w)
+        j1 = min(N - 1, j + w)
+        tail = [float(np.mean(a[j0 : j + 1])) for a in arrays]
+        head = [float(np.mean(a[j  : j1 + 1])) for a in arrays]
+        return tail, head
+
     def _draw_arrows_1d(self, ax, t, y, color, arrows=None, lw=1, size=15):
-        idxs = self._arrow_indices(len(t), arrows=arrows)
+        t, y = np.asarray(t), np.asarray(y)
+        N = len(t)
+        idxs = self._arrow_indices(N, arrows=arrows)
+        w = max(1, min(N // 15, 50))
         for j in idxs:
+            (t0, y0), (t1, y1) = self._smooth_dir_pts((t, y), j, w)
+            if np.isclose(t0, t1) and np.isclose(y0, y1):
+                continue
             ax.annotate(
-                "", xy=(t[j+1], y[j+1]), xytext=(t[j], y[j]),
+                "", xy=(t1, y1), xytext=(t0, y0),
                 arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0, mutation_scale=size)
             )
 
     def _draw_arrows_2d(self, ax, x, y, color, arrows=None, lw=1, size=15):
-        idxs = self._arrow_indices(len(x), arrows=arrows)
+        x, y = np.asarray(x), np.asarray(y)
+        N = len(x)
+        idxs = self._arrow_indices(N, arrows=arrows)
+        w = max(1, min(N // 15, 50))
         for j in idxs:
+            (x0, y0), (x1, y1) = self._smooth_dir_pts((x, y), j, w)
+            if np.isclose(x0, x1) and np.isclose(y0, y1):
+                continue
             ax.annotate(
-                "", xy=(x[j+1], y[j+1]), xytext=(x[j], y[j]),
+                "", xy=(x1, y1), xytext=(x0, y0),
                 arrowprops=dict(arrowstyle="-|>", color=color, lw=lw, shrinkA=0, shrinkB=0, mutation_scale=size)
             )
-    
+
     def _draw_arrows_3d(self, ax, x, y, z, color='r', arrows=None, lw=1, size=15):
         """
         Draw '−|>' arrowheads along a 3D curve using projected FancyArrowPatch.
@@ -709,18 +749,20 @@ class KalmanRecord:
                 self.set_positions((xs[0], ys[0]), (xs[1], ys[1]))
                 return np.min(zs)
 
-        idxs = self._arrow_indices(len(x), arrows=arrows)
+        x, y, z = np.asarray(x), np.asarray(y), np.asarray(z)
+        N = len(x)
+        idxs = self._arrow_indices(N, arrows=arrows)
         if not idxs:
             return
 
-        x, y, z = np.asarray(x), np.asarray(y), np.asarray(z)
-
+        w = max(1, min(N // 15, 50))
         for j in idxs:
-            if j + 1 >= len(x):
+            if j + 1 >= N:
                 continue
-            xs, ys, zs = [x[j], x[j+1]], [y[j], y[j+1]], [z[j], z[j+1]]
-
-            arrow = Arrow3D(xs, ys, zs,
+            (x0, y0, z0), (x1, y1, z1) = self._smooth_dir_pts((x, y, z), j, w)
+            if np.allclose([x0, y0, z0], [x1, y1, z1]):
+                continue
+            arrow = Arrow3D([x0, x1], [y0, y1], [z0, z1],
                             mutation_scale=size,
                             lw=lw,
                             arrowstyle='-|>',
@@ -850,8 +892,13 @@ class KalmanRecord:
         meas_in     = kwargs.pop("measurement", None)
         commons     = kwargs.pop("commons", [])
 
-        # Derive defaults like your original
-        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        # Derive defaults; ideal=False disables the ideal line explicitly
+        if ideal_in is None:
+            ideal = self.model.ideal(duration=self.duration) if self.model else None
+        elif ideal_in is False:
+            ideal = None
+        else:
+            ideal = ideal_in
         ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
@@ -886,7 +933,7 @@ class KalmanRecord:
 
         # ----------------- plotting loop -----------------
         for i, a in enumerate(axes):
-            idx = self.dim * a + comp_id
+            idx = self._spc * a + comp_id
 
             # measurement
             if measurement is not None and self.model is not None and self.engine.exclusive_mapping(idx, a):
@@ -985,9 +1032,9 @@ class KalmanRecord:
             if not (0 <= a < self.dim):
                 raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
 
-        # indices into state arrays following your convention: idx = self.dim * axis + component_id
-        idx_x = self.dim * ax_x + comp0_id
-        idx_y = self.dim * ax_y + comp1_id
+        # indices into state arrays: idx = _spc * axis + component_id
+        idx_x = self._spc * ax_x + comp0_id
+        idx_y = self._spc * ax_y + comp1_id
 
         # --- inputs like _plot1D ---
         sample       = kwargs.pop("sample", None)
@@ -995,7 +1042,12 @@ class KalmanRecord:
         truth_in     = kwargs.pop("truth", None)
         meas_in      = kwargs.pop("measurement", None)
 
-        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        if ideal_in is None:
+            ideal = self.model.ideal(duration=self.duration) if self.model else None
+        elif ideal_in is False:
+            ideal = None
+        else:
+            ideal = ideal_in
         ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
@@ -1091,10 +1143,10 @@ class KalmanRecord:
             if not (0 <= a < self.dim):
                 raise ValueError(f"Invalid axis {a} considering {self.dim}D model")
 
-        # indices in flattened state (idx = self.dim*axis + comp_id)
-        idx_x = self.dim * dx + c0
-        idx_y = self.dim * dy + c1
-        idx_z = self.dim * dz + c2
+        # indices in flattened state: idx = _spc * axis + comp_id
+        idx_x = self._spc * dx + c0
+        idx_y = self._spc * dy + c1
+        idx_z = self._spc * dz + c2
 
         # --- derive series like in _plot1D/_plot2D --------------------------------
         sample      = kwargs.pop("sample", None)
@@ -1102,7 +1154,12 @@ class KalmanRecord:
         truth_in    = kwargs.pop("truth", None)
         meas_in     = kwargs.pop("measurement", None)
 
-        ideal = ideal_in or (self.model.ideal(duration=self.duration) if self.model else None)
+        if ideal_in is None:
+            ideal = self.model.ideal(duration=self.duration) if self.model else None
+        elif ideal_in is False:
+            ideal = None
+        else:
+            ideal = ideal_in
         ideal = KalmanRecord._normalize_out(ideal) if (sample is not None and ideal is not None) else None
 
         truth = truth_in or (sample.xk if sample is not None else None)
@@ -1461,11 +1518,11 @@ class KalmanRecord:
             else:
                 c.plot(self.time, err, **self._plot_kwargs(flavor=flavor, axis=a, color=kwargs.pop("color", None)))
         
-        c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
         if kind == "hist":
-            c.set_title(kwargs.pop("ylabel", "Absolute Measurement Error"))
-            c.set_ylabel(kwargs.pop("xlabel", "Counts"))
-        else :
+            c.set_xlabel(kwargs.pop("xlabel", "Measurement Error"))
+            c.set_ylabel(kwargs.pop("ylabel", "Counts"))
+        else:
+            c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
             c.set_ylabel(kwargs.pop("ylabel", "Absolute Measurement Error"))
         c.grid(kwargs.pop("grid", True))
         if legend: c.legend()
@@ -1480,22 +1537,24 @@ class KalmanRecord:
         plt.sca(c)
 
         ymin, ymax = np.inf, -np.inf
-        
+
         def _state_index(component, axis):
             k = component if hasattr(component, "value") else int(component)
-            return self.dim * int(axis) + int(k)
+            return self._spc * int(axis) + int(k)
 
-        for a in axes:
-            idx = _state_index(component, a)
+        colorid = len(get_lines(canvas=c))
+        comp_one = component[0] if isinstance(component, (tuple, list)) else component
+
+        for i, a in enumerate(axes):
+            idx = _state_index(comp_one, a)
             if idx >= self.n or idx >= xk0.shape[1]:
                 continue
             err = self.xk[:, idx] - xk0[:, idx]
             ymin = min(ymin, np.nanmin(err))
             ymax = max(ymax, np.nanmax(err))
-            c.plot(self.time, err,
-                color=self._colors(a, self.flavor, "black"),
-                linestyle=self._linestyles(a, self.flavor, "-"),
-                label=f"{self._axis(a, component)} error")
+            kw = self._plot_kwargs(flavor=self.flavor, axis=a, color=kwargs.get("color", colorid + i))
+            kw["label"] = f"{self._plot_labels(comp_one, axis=a)} error"
+            c.plot(self.time, err, **kw)
 
         
         c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))
@@ -1516,10 +1575,9 @@ class KalmanRecord:
         e  = self.xk[:, :n_cols] - xk0[:, :n_cols]
         l2 = np.sqrt(np.sum(e*e, axis=1))
 
-        c.plot(self.time, l2,
-            color=self._colors(0, self.flavor, "black"),
-            linestyle=self._linestyles(0, self.flavor, "-"),
-            label=f"{str(self.flavor)} L2 error")
+        kw = self._plot_kwargs(flavor=self.flavor, axis=0, color=kwargs.get("color", 0))
+        kw["label"] = f"{str(self.flavor).capitalize()} L2 error"
+        c.plot(self.time, l2, **kw)
 
 
         c.set_xlabel(kwargs.pop("xlabel", "Time (s)"))

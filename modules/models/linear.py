@@ -36,6 +36,12 @@ class KalmanLinearModel(KalmanModel):
         self._L = L if not callable(L) else np.asarray(L, dtype=np.float64) if L is not None else None
         self._M = M if not callable(M) else np.asarray(M, dtype=np.float64) if M is not None else None
 
+        # Infer l from B matrix columns so that _infer_l() picks it up correctly
+        if self._B is not None:
+            B_mat = self._B(0) if callable(self._B) else self._B
+            if B_mat is not None:
+                self.l = int(np.asarray(B_mat).shape[1])
+
         # --- Initialize via parent ---
         super().__init__(sensor_id, x0=x0, P0=P0, Q=Q, R=R, fs=fs, **kwargs)
 

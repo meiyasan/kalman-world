@@ -4,7 +4,7 @@ import numpy as np
 # Expect your codebase provides these:
 # - KalmanStateModel-like API on each model: n, m, x, P, Q, R, optional L, M, and callables f, h
 # - KalmanCompositeModel(*models) -> merged model exposing same API
-from . import KalmanCompositeModel
+from ..models.composite import KalmanCompositeModel
 
 class UnscentedKalmanFilter:
     """
@@ -34,8 +34,19 @@ class UnscentedKalmanFilter:
         self.m = int(self.model.m)
 
         # local filter state (kept in sync with model)
-        self.x = np.asarray(self.model.x, dtype=np.float64).reshape(-1)
-        self.P = np.asarray(self.model.P, dtype=np.float64)
+        # Models store initial state as x0/P0, not x/P (which live on the engine)
+        x0 = getattr(self.model, "x0", None)
+        if x0 is None:
+            x0 = getattr(self.model, "x", None)
+        P0 = getattr(self.model, "P0", None)
+        if P0 is None:
+            P0 = getattr(self.model, "P", None)
+        if x0 is None:
+            raise ValueError("Model has no initial state (x0 is None); call model.initial_state() first.")
+        if P0 is None:
+            raise ValueError("Model has no initial covariance (P0 is None); call model.initial_state() first.")
+        self.x = np.asarray(x0, dtype=np.float64).reshape(-1)
+        self.P = np.asarray(P0, dtype=np.float64)
 
         # Non-additive detection: f(..., w) / h(..., v)
         self._nonadd_proc = self._accepts_param(self.model.f, "w")
@@ -94,23 +105,33 @@ class UnscentedKalmanFilter:
     # ---------- model adapters ----------
     def _Qw(self, x=None, u=None, t=None):
         Q = self.model.Q
-        return Q(x, u, t) if callable(Q) else Q
+        # Q is always a bound method on KalmanModel subclasses; call with t only
+        return Q(t=t) if callable(Q) else np.asarray(Q, dtype=np.float64)
 
     def _Rv(self, x=None, t=None):
         R = self.model.R
-        return R(x, t) if callable(R) else R
+        # R is always a bound method on KalmanModel subclasses; call with t only
+        return R(t=t) if callable(R) else np.asarray(R, dtype=np.float64)
 
     def _Lx(self, x=None, u=None, t=None):
         L = getattr(self.model, "L", None)
-        if callable(L): return L(x, u, t)
-        if L is None:   return np.eye(self.n, dtype=np.float64)
-        return L
+        if callable(L):
+            # KalmanModel.L(x, u, w, t) returns None when w=None → treat as identity
+            result = L(x=x, u=u, t=t)
+            return result if result is not None else np.eye(self.n, dtype=np.float64)
+        if L is None:
+            return np.eye(self.n, dtype=np.float64)
+        return np.asarray(L, dtype=np.float64)
 
     def _Mx(self, x=None, t=None):
         M = getattr(self.model, "M", None)
-        if callable(M): return M(x, t)
-        if M is None:   return np.eye(self.m, dtype=np.float64)
-        return M
+        if callable(M):
+            # KalmanModel.M(x, v, t) returns None when v=None → treat as identity
+            result = M(x=x, t=t)
+            return result if result is not None else np.eye(self.m, dtype=np.float64)
+        if M is None:
+            return np.eye(self.m, dtype=np.float64)
+        return np.asarray(M, dtype=np.float64)
 
     # ---------- sigma points ----------
     def _sigmas(self, mean, cov, gamma):
@@ -127,27 +148,19 @@ class UnscentedKalmanFilter:
 
     # ---------- function wrappers ----------
     def _f_call(self, x, u=None, t=None, w=None):
-        f = self.model.f
+        # Reshape w to column vector so BallisticModel.f (and similar) handle it correctly
+        if w is not None:
+            w = np.asarray(w, dtype=np.float64).reshape(-1, 1)
         try:
-            return self._to_vec(f(x, u, t, w))
+            return self._to_vec(self.model.f(x, u=u, w=w, t=t))
         except TypeError:
-            try:
-                return self._to_vec(f(x, u, t))
-            except TypeError:
-                try:
-                    return self._to_vec(f(x, u))
-                except TypeError:
-                    return self._to_vec(f(x))
+            return self._to_vec(self.model.f(x, u=u, t=t))
 
     def _h_call(self, x, t=None, v=None):
-        h = self.model.h
         try:
-            return self._to_vec(h(x, t, v))
+            return self._to_vec(self.model.h(x, v=v, t=t))
         except TypeError:
-            try:
-                return self._to_vec(h(x, t))
-            except TypeError:
-                return self._to_vec(h(x))
+            return self._to_vec(self.model.h(x, t=t))
 
     # ---------- UKF steps ----------
     def __predict(self, u=None, t=None):
@@ -268,3 +281,68 @@ class UnscentedKalmanFilter:
         self.model.x = self.x.copy()
         self.model.P = self.P.copy()
         return self.x, self.P
+
+    # ---------- public API ----------
+    def reset(self):
+        """Reset filter state to model initial conditions."""
+        x0 = getattr(self.model, "x0", None)
+        if x0 is None:
+            x0 = getattr(self.model, "x", None)
+        P0 = getattr(self.model, "P0", None)
+        if P0 is None:
+            P0 = getattr(self.model, "P", None)
+        self.x = np.asarray(x0, dtype=np.float64).reshape(-1)
+        self.P = np.asarray(P0, dtype=np.float64)
+
+    def filter(self, zk, uk=None, *, reset=True):
+        """Run the UKF over a batch of measurements.
+
+        Parameters
+        ----------
+        zk : array_like, shape (N, m)
+            Measurement sequence. NaN rows trigger prediction-only steps.
+        uk : array_like, shape (N, l) or None
+            Control input sequence.
+        reset : bool
+            Reset state to model.x0 / model.P0 before filtering.
+
+        Returns
+        -------
+        xk : ndarray, shape (N, n)
+            Filtered state sequence.
+        Pk : ndarray, shape (N, n, n)
+            Filtered covariance sequence.
+        """
+        zk = np.asarray(zk, dtype=np.float64)
+        if zk.ndim == 1:
+            zk = zk.reshape(-1, 1)
+        N = len(zk)
+
+        if reset:
+            self.reset()
+
+        fs = getattr(self.model, "fs", None) or 1.0
+        t0 = getattr(self.model, "t0", 0.0) or 0.0
+        dt = 1.0 / float(fs)
+
+        l = getattr(self.model, "l", 0) or 0
+        if uk is None:
+            uk = np.zeros((N, l))
+        uk = np.asarray(uk, dtype=np.float64)
+        if uk.ndim == 1:
+            uk = uk.reshape(-1, 1)
+
+        xk_out = np.zeros((N, self.n), dtype=np.float64)
+        Pk_out = np.zeros((N, self.n, self.n), dtype=np.float64)
+
+        for k in range(N):
+            t = t0 + k * dt
+            u_k = uk[k] if l > 0 else None
+            self.__predict(u=u_k, t=t)
+            z_k = zk[k]
+            if not np.any(np.isnan(z_k)):
+                self.__update(z_k, t=t)
+            xk_out[k] = self.x
+            Pk_out[k] = self.P
+
+        return xk_out, Pk_out

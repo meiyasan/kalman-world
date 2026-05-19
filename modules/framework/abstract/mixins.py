@@ -46,10 +46,13 @@ class KalmanProxyMixin:
         return self._engine
 
     def filter(self, z, u=None, **kwargs):
+        # Accept uk= as an alias for u= (mirrors forward()'s parameter name).
+        if u is None:
+            u = kwargs.pop("uk", None)
 
         if kwargs.pop("smooth", False):
             return self._check_engine().forward(z, u, **kwargs).backward(**kwargs)
-    
+
         kwargs["record"] = True
         return self._check_engine().forward(z, u, **kwargs)
     
@@ -143,7 +146,7 @@ class KalmanShapeMixin:
 
         # --- Optional control input ---
         if isinstance(l, int) and l > 0:
-            self._check_vector(self.u, l, "u")
+            self._check_vector(self.u0, l, "u0")
 
         return True
 
@@ -274,8 +277,9 @@ class KalmanInferenceMixin:
 
 class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, KalmanInferenceMixin):
 
-    def time(self: KalmanModelMetadata, k: int | None = None) -> np.ndarray:
-        return self.t0 + np.arange(0, k, 1./self.fs, dtype=float)
+    def time(self: KalmanModelMetadata, k: int | float | None = None) -> np.ndarray:
+        N = int(round(k * self.fs)) if k is not None else 0
+        return self.t0 + np.arange(N, dtype=float) / self.fs
     def duration(self : KalmanModelMetadata, k: int) -> float:
         return (k / self.fs) if self.t0 is not None and self.fs is not None else 0.0
     def sample_rate(self : KalmanModelMetadata) -> float:
@@ -313,7 +317,10 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
                     x0 = np.resize(x0, (n, 1))
             self.x0 = x0    
 
-        P0 = P0 if P0 is not None else self.Q(0)
+        if P0 is None:
+            # Preserve an already-set positive-definite P0; fall back to Q(0) only on first call.
+            existing = getattr(self, "P0", None)
+            P0 = existing if existing is not None else self.Q(0)
         P0 = KalmanRecord._normalize_in(P0)
         if P0.shape != (n, n):
             warnings.warn(
@@ -454,12 +461,14 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
         indexing    = kwargs.pop("indexing", None)
         inprocess   = kwargs.pop("inprocess", True)
         postprocess = kwargs.pop("postprocess", True)
-        
+        if kwargs.pop("smooth", False):
+            flavor = KalmanStateFlavor.SMOOTHED
+
         if self.prior is None or self.posterior is None:
             raise ValueError("No prior or posterior estimates available. Please run filter() first.")
 
         if flavor is KalmanStateFlavor.PRIOR:
-            xk_hat, Pk_hat = self.get_posterior_state_vector(), self.get_posterior_state_covariance()
+            xk_hat, Pk_hat = self.get_prior_state_vector(), self.get_prior_state_covariance()
         elif flavor is KalmanStateFlavor.POSTERIOR:
             xk_hat, Pk_hat = self.get_posterior_state_vector(), self.get_posterior_state_covariance()
         elif flavor is KalmanStateFlavor.SMOOTHED:
@@ -469,8 +478,10 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
             
         if inprocess:
             xk_hat = self.model.inprocess(xk_hat, **kwargs)
+        # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
+        xk_hat = KalmanRecord._normalize_out(xk_hat)
 
-        zk_hat = KalmanRecord._normalize_out([self._model.h(x) for x in xk_hat], indexing=indexing)
+        zk_hat = KalmanRecord._normalize_out([self._model.h(x.reshape(-1, 1)) for x in xk_hat], indexing=indexing)
         if postprocess:
             zk_hat = self.model.postprocess(zk_hat, **kwargs)
 

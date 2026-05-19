@@ -54,6 +54,13 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         self.measurement = [] # list of z
         self.control     = [] # list of u (or None)
         self.transition  = [] # list of F (for RTS)
+        self.F           = np.eye(self.model.n)  # latest transition matrix
+
+    def reset(self, to_latest=False):
+        """Reset engine state, including the transition-matrix log."""
+        super().reset(to_latest=to_latest)
+        self.transition = []
+        self.F = np.eye(self.model.n)
 
     # -------------------- low-level EKF (NO hooks here) --------------------
     def _predict(self, x, P, **kwargs):
@@ -62,31 +69,56 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         Returns predicted (x, P, F) for optional smoother use.
         """
         u = kwargs.get("u", np.zeros((self.l, 1)))
-        w = kwargs.get("w", np.zeros((self.n, 1)))
         t = kwargs.get("t", None)
 
-        F = self.model.F(x, u, t)
-        B = getattr(self.model, "B", None)
-        Q = self.model.Q(t)
+        # Ensure u is a column vector (loop yields row slices of shape (l,))
+        if u is not None:
+            u = np.asarray(u).reshape(-1, 1)
 
-        x = F @ x
-        if B is not None and self.l > 0:
-            x += B @ u
-        if w is not None:
-            x += w
+        # Jacobian for covariance propagation (for linear models this is the
+        # state-transition matrix; for EKF models it is ∂f/∂x at x).
+        F = self.model.F(x=x, u=u, t=t)
+        Q = self.model.Q(t=t)
+
+        # Apply LQL^T if the model provides a process-noise coupling Jacobian L.
+        # KalmanLinearModel / KalmanCompositeModel expose L(t); base KalmanModel
+        # exposes L(x, u, w, t) as a numerical Jacobian ∂f/∂w evaluated at w=0.
+        w0 = np.zeros((self.n, 1))
+        try:
+            L = self.model.L(x=x, u=u, w=w0, t=t)
+        except TypeError:
+            L = self.model.L(t=t)
+        if L is not None:
+            Q = L @ Q @ L.T
+
+        # State propagation via the model's nonlinear (or linear) dynamics.
+        # For linear models f(x,u,t) = F@x + B@u, so behaviour is unchanged.
+        # For EKF models f() uses the actual nonlinear dynamics — critical for
+        # correct EKF operation (using F@x here would be a first-order
+        # linearisation around x=0, not the true state prediction).
+        # Pass u=None when l=0 to avoid feeding a zero-sized (0,1) array into f().
+        u_for_f = u if self.l > 0 else None
+        x = self.model.f(x, u=u_for_f, w=None, t=t)
 
         P = F @ P @ F.T + Q
         return x, P, F
 
-    def _update(self, z):
+    def _update(self, z, t=None):
         """
         Standard Kalman update.
         """
-        H = self.model.H(self.x)
-        R = self.model.R()
+        # Ensure z is a column vector (loop yields row slices of shape (m,))
+        z = np.asarray(z).reshape(-1, 1)
+
+        H = self.model.H(x=self.x, t=t)
+        R = self.model.R(t=t)
         I = np.eye(self.n)
 
-        y = z - H @ self.x
+        # EKF innovation: use nonlinear h(x) for predicted measurement.
+        # For linear models h(x) = H*x, so this is equivalent to H @ self.x.
+        # For nonlinear models (EKF), H*x ≠ h(x) — must use h(x) here.
+        h_pred = self.model.h(self.x, v=None, t=t).reshape(-1, 1)
+        y = z - h_pred
         S = R + H @ self.P @ H.T
 
         try: 
@@ -95,7 +127,8 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
             raise RuntimeError("Kalman loop failed. Please check your model for instability and noise covariance issues.")
 
         self.x = self.x + K @ y
-        self.P = (I - K @ H) @ self.P
+        IKH = I - K @ H
+        self.P = IKH @ self.P @ IKH.T + K @ R @ K.T  # Joseph form (numerically stable)
         return self.x, self.P
 
     # -------------------- public API --------------------
@@ -119,7 +152,9 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         # ------------------------------------------------------
         gk = gk.zk if isinstance(gk, KalmanRecord) else gk
         gk = KalmanRecord._normalize_in(gk, indexing=indexing, dtype=self.model.dtype)
-        assert gk.shape[1] == self.m, f"gk data has incorrect number of columns. Expected {self.m}, got {format_shape(gk)}."
+        # Allow preprocess to expand the column count (e.g. real signal → analytic signal).
+        # The authoritative shape check happens after preprocess below.
+        assert gk.shape[1] >= 1, f"gk must have at least 1 column, got {format_shape(gk)}."
 
         uk = uk.zk if isinstance(uk, KalmanRecord) else uk
         if uk is None or len(uk) < 1:
@@ -146,17 +181,25 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         # ------------------------------------------------------
         # Main Kalman Loop
         # ------------------------------------------------------
+        t = float(self.model.t0) if self.model.t0 is not None else 0.0
+        dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
 
         for z, u in zip(zk, uk):
             self.measurement.append(z)
             self.control.append(u)
 
-            self.x, self.P, self.F = self._predict(self.x, self.P, u=u)
+            self.x, self.P, self.F = self._predict(self.x, self.P, u=u, t=t)
             self.prior.append((self.x, self.P))
             self.transition.append(self.F)
 
-            self.x, self.P = self._update(z)
-            self.posterior.append((self.x, self.P))
+            # Multi-rate support: skip update when measurement contains NaN
+            if np.any(np.isnan(z)):
+                self.posterior.append((self.x, self.P))
+            else:
+                self.x, self.P = self._update(z, t=t)
+                self.posterior.append((self.x, self.P))
+
+            t += dt
 
         return self.get_record(indexing=indexing, inprocess=inprocess, postprocess=postprocess) if record else self
 

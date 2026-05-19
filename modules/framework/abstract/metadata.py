@@ -279,8 +279,8 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
         res += f"{spacer}{desc}\n\n"
         if self._model:
             res += f"{spacer}Model.....................: {type(self._model).__name__}\n"
-            res += f"{spacer}State Space Hz............: {self._model.state} Hz\n"
-            res += f"{spacer}Observable Space Hz.......: {self._model.observables} Hz\n"
+            res += f"{spacer}States (n={self._model.n})...........: {self._model.states.repr()}\n"
+            res += f"{spacer}Observables (m={self._model.m})........: {self._model.observables.repr()}\n"
             res += f"{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n"
         res += f"{spacer}Precision.................: {self.epsilon:.3e}\n\n"
 

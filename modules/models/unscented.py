@@ -84,15 +84,29 @@ class KalmanUnscentedFilter(KalmanFilter):
 
         Q = self.model.Q(t)
         x_pred, P_pred = self._unscented_transform(X_pred, Q)
-        return x_pred, P_pred, X_pred
 
-    def _update(self, z, x_pred=None, P_pred=None, X_pred=None, t=None):
+        # Cache sigma points so _update can reuse them without re-running prediction
+        self._x_pred_ukf = x_pred
+        self._P_pred_ukf = P_pred
+        self._X_pred_ukf = X_pred
+
+        # Return identity as transition: UKF has no explicit F matrix.
+        # The RTS smoother requires a linearised F; use UKS separately for smoothing.
+        return x_pred, P_pred, np.eye(self.model.n)
+
+    def _update(self, z, t=None):
         """Unscented measurement update (no H)."""
         n = self.model.n
         m = self.model.m
 
+        # Reuse sigma points cached during _predict (avoids redundant computation)
+        x_pred = getattr(self, "_x_pred_ukf", None)
+        P_pred = getattr(self, "_P_pred_ukf", None)
+        X_pred = getattr(self, "_X_pred_ukf", None)
         if x_pred is None or P_pred is None or X_pred is None:
-            x_pred, P_pred, X_pred = self._predict(self.x, self.P, t=t)
+            # Fallback: re-run prediction (should not normally happen)
+            x_pred, P_pred, _ = self._predict(self.x, self.P, t=t)
+            X_pred = self._X_pred_ukf
 
         n_sig = X_pred.shape[1]
         Z_sigma = np.zeros((m, n_sig))
@@ -111,6 +125,6 @@ class KalmanUnscentedFilter(KalmanFilter):
 
         # Kalman gain and update
         K = Pxz @ np.linalg.pinv(Pz)
-        x_upd = x_pred + K @ (z - z_pred)
-        P_upd = P_pred - K @ Pz @ K.T
-        return x_upd, P_upd
+        self.x = x_pred + K @ (z - z_pred)
+        self.P = P_pred - K @ Pz @ K.T
+        return self.x, self.P

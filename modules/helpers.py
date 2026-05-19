@@ -307,6 +307,51 @@ def resample_poly_float(y, fs_old, fs_new, max_denominator=1e12):
 
     return y_resampled
 
+def make_multirate_input(sensor_data, base_fs):
+    """
+    Interleave multiple sensors running at different rates into a single
+    NaN-padded measurement matrix at `base_fs`.
+
+    Parameters
+    ----------
+    sensor_data : list of (zk, fs_sensor) tuples
+        Each tuple is an (N_i, m_i) measurement array and its sample rate.
+        The duration is inferred from each array's length and its fs_sensor.
+    base_fs : float
+        The base filter sample rate.
+
+    Returns
+    -------
+    zk_out : ndarray, shape (N_base, m_total)
+        NaN where the sensor did not fire at that base-rate step.
+    """
+    if not sensor_data:
+        raise ValueError("sensor_data must contain at least one (zk, fs) pair.")
+
+    # Determine total duration from the longest sensor
+    durations = [len(zk) / fs for zk, fs in sensor_data]
+    duration = max(durations)
+    N_base = int(round(duration * base_fs))
+
+    # Total observable dimension
+    m_total = sum(zk.shape[1] if zk.ndim == 2 else 1 for zk, _ in sensor_data)
+
+    zk_out = np.full((N_base, m_total), np.nan)
+
+    col = 0
+    for zk, fs_sensor in sensor_data:
+        zk = np.atleast_2d(zk) if zk.ndim == 1 else zk
+        m_i = zk.shape[1]
+        n_sensor = len(zk)
+        # Map each sensor sample index to the nearest base-rate index
+        for k in range(n_sensor):
+            base_idx = int(round(k * base_fs / fs_sensor))
+            if base_idx < N_base:
+                zk_out[base_idx, col:col + m_i] = zk[k]
+        col += m_i
+
+    return zk_out
+
 def vectorize(z):
 		return np.stack((z.real, z.imag), axis=-1)
 

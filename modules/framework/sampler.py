@@ -66,16 +66,18 @@ class KalmanSampler:
             raise ValueError(f"Initial state covariance has incorrect dimensions. Expected {self.n}x{self.n}, got {format_shape(P)}.")
 
         uk = uk if uk is not None else [self.model.u0] * n_samples
-        vk = self.measurement_noise(duration, **kwargs) if process_noise else [self.model.v0] * n_samples
-        wk = self.process_noise(duration, **kwargs) if measurement_noise else [self.model.w0] * n_samples
+        wk = self.process_noise(duration, **kwargs) if process_noise else [self.model.w0] * n_samples
+        vk = self.measurement_noise(duration, **kwargs) if measurement_noise else [self.model.v0] * n_samples
         for i in range(n_samples):
             xk[i], Pk[i] = x, P
             x, P, _ = self.engine._predict(x, P, u=uk[i], w=wk[i], **kwargs)
 
         if inprocess:
             xk = self.model.inprocess(xk, **kwargs)
+        # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
+        xk = KalmanRecord._normalize_out(xk)
 
-        zk = KalmanRecord._normalize_out([self.model.h(x, v, self.model.t0 + self.model.duration(k)) for x, v, k in zip(xk, vk, range(n_samples))], indexing=indexing, dtype=self.model.dtype)
+        zk = KalmanRecord._normalize_out([self.model.h(x.reshape(-1, 1), v, self.model.t0 + self.model.duration(k)) for x, v, k in zip(xk, vk, range(n_samples))], indexing=indexing, dtype=self.model.dtype)
         if postprocess:
             zk = self.model.postprocess(zk, **kwargs)
 
