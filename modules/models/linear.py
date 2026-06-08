@@ -30,11 +30,18 @@ class KalmanLinearModel(KalmanModel):
                  L=None, M=None, x0=None, P0=None, fs=None, **kwargs):
 
         # --- Store base matrices internally ---
-        self._F = F if not callable(F) else np.asarray(F, dtype=np.float64) if F is not None else None
-        self._H = H if not callable(H) else np.asarray(H, dtype=np.float64) if H is not None else None
-        self._B = B if not callable(B) else np.asarray(B, dtype=np.float64) if B is not None else None
-        self._L = L if not callable(L) else np.asarray(L, dtype=np.float64) if L is not None else None
-        self._M = M if not callable(M) else np.asarray(M, dtype=np.float64) if M is not None else None
+        # Callables are stored as-is; the accessor methods (F, H, …) dispatch
+        # via  return self._X(t) if callable(self._X) else self._X
+        def _store(v):
+            if v is None or callable(v):
+                return v
+            return np.asarray(v, dtype=np.float64)
+
+        self._F = _store(F)
+        self._H = _store(H)
+        self._B = _store(B)
+        self._L = _store(L)
+        self._M = _store(M)
 
         # Infer l from B matrix columns so that _infer_l() picks it up correctly
         if self._B is not None:

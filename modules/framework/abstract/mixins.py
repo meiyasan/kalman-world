@@ -447,6 +447,7 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
 
         self.measurement = []
         self.control = []
+        self.transition = []   # RTS smoother transition matrices
 
     def __call__(self, gk, uk=None, **kwargs):
         return self.forward(gk, uk, **kwargs)

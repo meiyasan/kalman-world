@@ -111,13 +111,16 @@ class KalmanFilter(KalmanEngineMetadata, KalmanEngineMixin):
         z = np.asarray(z).reshape(-1, 1)
 
         H = self.model.H(x=self.x, t=t)
+
+        # h_pred MUST be computed before R() — time-varying models (e.g. calorimeter shower
+        # models) advance an internal step counter inside R(), so calling R() first
+        # would cause h() to use the wrong layer's matrix.
+        # For linear models h(x) = H @ x; for EKF models h() uses actual dynamics.
+        h_pred = self.model.h(self.x, v=None, t=t).reshape(-1, 1)
+
         R = self.model.R(t=t)
         I = np.eye(self.n)
 
-        # EKF innovation: use nonlinear h(x) for predicted measurement.
-        # For linear models h(x) = H*x, so this is equivalent to H @ self.x.
-        # For nonlinear models (EKF), H*x ≠ h(x) — must use h(x) here.
-        h_pred = self.model.h(self.x, v=None, t=t).reshape(-1, 1)
         y = z - h_pred
         S = R + H @ self.P @ H.T
 
