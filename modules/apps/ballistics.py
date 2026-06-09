@@ -69,8 +69,8 @@ class BallisticLinearModel(KalmanLinearModel):
         super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
-    def inprocess(self, state_vector, **kwargs): return state_vector
-    def postprocess(self, xk_hat, **kwargs):     return xk_hat
+    def inprocess(self, xk_hat, **kwargs): return xk_hat
+    def postprocess(self, zk_hat, **kwargs):     return zk_hat
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
 import numpy as np
@@ -292,7 +292,7 @@ class BallisticModel(KalmanExtendedModel):
     
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk
-    def inprocess(self, state_vector, **kwargs):
-        return state_vector
-    def postprocess(self, xk_hat, **kwargs):    
+    def inprocess(self, xk_hat, **kwargs):
         return xk_hat
+    def postprocess(self, zk_hat, **kwargs):    
+        return zk_hat

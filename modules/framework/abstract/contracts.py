@@ -24,8 +24,8 @@ class KalmanModelABC(ABC):
         ...
 
     @abstractmethod
-    def inprocess(self, zk_hat, **kwargs):
-        """Transform state vectors before mapping to observations."""
+    def inprocess(self, xk_hat, **kwargs):
+        """Transform state estimates before h is applied."""
         ...
 
     @abstractmethod

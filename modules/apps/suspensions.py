@@ -4,8 +4,9 @@ from scipy.signal import hilbert as _hilbert
 
 from ..models.linear import KalmanLinearModel
 from ..models.composite import KalmanCompositeModel
-from ..framework.constants import KalmanState, KalmanObservable
-from .oscillators import AnalyticOscillatorModel, InharmonicOscillatorModel
+from ..framework.model import KalmanModel
+from ..framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from .oscillators import AnalyticOscillatorModel, AnalyticOscillatorState, AnalyticOscillatorObservable, InharmonicOscillatorModel
 
 
 class SuspensionState(KalmanState):
@@ -144,8 +145,8 @@ class SuspensionModel(KalmanLinearModel):
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk
 
-    def inprocess(self, zk_hat, **kwargs):
-        return zk_hat
+    def inprocess(self, xk_hat, **kwargs):
+        return xk_hat
 
     def postprocess(self, zk_hat, **kwargs):
         return zk_hat
@@ -531,4 +532,337 @@ class ViolinForestModel(KalmanCompositeModel):
             violin, residual = model.extract(record, residual)
             violins.append(violin)
         return violins, residual
+
+
+# ===========================================================================
+#  Augmented-state EKF: jointly estimates frequency offset  (Section 3)
+# ===========================================================================
+
+class ViolinAugmented(KalmanModel):
+    """
+    EKF violin tracker with jointly estimated frequency offset Δω.
+
+    State vector: x = [Re(ψ), Im(ψ), Δω]
+    where ψ(t) is the slowly-varying envelope in a rotating frame at ωc and
+    Δω = ω₀ − ωc is the (unknown, drifting) detuning from the carrier.
+
+    Dynamics (continuous)::
+
+        dψ/dt = (−γ − i Δω) ψ + noise
+        dΔω/dt = noise   (random walk)
+
+    Because A_c depends on the state variable Δω = x[2], f(x) is nonlinear.
+    ``KalmanModel`` provides analytical numerical Jacobians automatically, so
+    the filter runs as a full EKF without any hand-coded derivatives.
+
+    Preprocess/extract follow the same Hilbert + rotating-frame convention as
+    ``ViolinModel``, making the two classes interchangeable at the call site.
+
+    Parameters
+    ----------
+    sensor_id : str
+        Channel name.
+    f0 : float
+        Nominal violin mode frequency [Hz] (used to set ωc = 2π·f0 by default).
+    Q_mode : float
+        Quality factor of the violin mode.
+    fs : float
+        Sampling rate [Hz].
+    wc : float | None
+        Carrier frequency [rad/s].  Default: 2π·f0 (on-resonance).
+    process_uncertainty : float | None
+        SVE process noise std.  Overrides ``amplitude``-based FDT formula.
+    amplitude : float | None
+        Expected SVE amplitude.  Sets σ_w = A·γ·Δt (unit-agnostic FDT).
+    measurement_uncertainty : float | None
+        Measurement noise std.  None → derived from ``noise_psd``.
+    noise_psd : float
+        One-sided noise PSD [1/Hz], default 1e-40.
+    dw_std : float
+        Process noise std for the random-walk frequency offset [rad/s/√s],
+        default 2π·0.005 (≈ 5 mHz/s typical thermal drift rate).
+    """
+
+    NAME        = "Violin Augmented EKF"
+    DESCRIPTION = ("EKF violin tracker with jointly estimated frequency offset Δω. "
+                   "State: [Re(ψ), Im(ψ), Δω].  f(x) is nonlinear; numerical "
+                   "Jacobians used automatically for the EKF covariance update.")
+    VERSION     = "1.0"
+
+    @property
+    def states(self):
+        return AnalyticOscillatorState
+
+    @property
+    def observables(self):
+        return AnalyticOscillatorObservable
+
+    def __init__(self, sensor_id: str,
+                 f0: float,
+                 Q_mode: float,
+                 fs: float,
+                 wc: float | None = None,
+                 process_uncertainty: float | None = None,
+                 amplitude: float | None = None,
+                 measurement_uncertainty: float | None = None,
+                 noise_psd: float = 1e-40,
+                 dw_std: float = 2 * np.pi * 0.005,
+                 **kwargs):
+
+        w0    = 2.0 * np.pi * f0
+        if wc is None:
+            wc = w0
+        gamma = w0 / (2.0 * Q_mode)
+        dt    = 1.0 / fs
+
+        self._gamma = gamma
+        self._dt    = dt
+        self._wc    = wc
+
+        # SVE process noise
+        if process_uncertainty is not None:
+            sigma_w = float(process_uncertainty)
+        elif amplitude is not None:
+            sigma_w = float(amplitude) * gamma / fs
+        else:
+            sigma_w = 1e-21  # safe fallback for dimensionless strain
+
+        # Measurement noise
+        if measurement_uncertainty is not None:
+            sigma_v = float(measurement_uncertainty)
+        else:
+            sigma_v = float(np.sqrt(noise_psd * fs / 2.0))
+
+        # Per-step std for random-walk frequency offset
+        sigma_dw = dw_std * np.sqrt(dt)
+
+        Q_mat = np.diag([sigma_w ** 2, sigma_w ** 2, sigma_dw ** 2])
+        R_mat = sigma_v ** 2 * np.eye(2)
+
+        x0_kw = kwargs.pop("x0", None)
+        P0_kw = kwargs.pop("P0", None)
+
+        if x0_kw is None:
+            A0 = float(amplitude) if amplitude is not None else 0.0
+            x0_kw = np.array([[A0], [0.0], [0.0]])  # [Re(ψ₀), Im(ψ₀), Δω₀=0]
+
+        if P0_kw is None:
+            P0_kw = np.diag([sigma_v ** 2, sigma_v ** 2,
+                              (2 * np.pi * 0.1) ** 2])  # ±0.1 Hz initial Δω uncertainty
+
+        # Pre-set dimensions so KalmanModel._infer_n/m pick them up
+        self.n = 3
+        self.m = 2
+        self.l = 0
+
+        super().__init__(sensor_id, Q=Q_mat, R=R_mat,
+                         x0=x0_kw, P0=P0_kw, fs=fs, **kwargs)
+
+    # ------------------------------------------------------------------
+    # Nonlinear dynamics (EKF uses numerical ∂f/∂x via KalmanModel.F)
+    # ------------------------------------------------------------------
+    def f(self, x, u=None, w=None, t=None):
+        x = np.asarray(x).ravel()
+        dw  = float(x[2])
+        psi = x[:2].reshape(2, 1)
+
+        A_c   = np.array([[-self._gamma, -dw],
+                          [ dw,          -self._gamma]])
+        F_sub = expm(A_c * self._dt)
+
+        return np.vstack([F_sub @ psi, [[dw]]])
+
+    def h(self, x, v=None, t=None):
+        """Observe [Re(ψ), Im(ψ)] — first two state components."""
+        return np.asarray(x).ravel()[:2].reshape(2, 1)
+
+    # ------------------------------------------------------------------
+    # Processing hooks
+    # ------------------------------------------------------------------
+    def preprocess(self, zk, uk=None, **kwargs):
+        """Hilbert + demodulate to rotating frame at ωc (same as ViolinModel)."""
+        if zk.shape[1] == 1:
+            xa = _hilbert(zk[:, 0].astype(float))
+            zk = np.column_stack([xa.real, xa.imag])
+        times   = self.t0 + np.arange(len(zk)) / self.fs
+        arg     = self._wc * times
+        zr, zi  = zk[:, 0], zk[:, 1]
+        return np.column_stack([
+            zr * np.cos(arg) + zi * np.sin(arg),
+            zi * np.cos(arg) - zr * np.sin(arg),
+        ]), uk
+
+    def inprocess(self, xk_hat, **kwargs):
+        return xk_hat
+
+    def postprocess(self, zk_hat, **kwargs):
+        return zk_hat
+
+    # ------------------------------------------------------------------
+    # Extraction
+    # ------------------------------------------------------------------
+    def extract(self, record, strain):
+        """
+        Reconstruct violin mode from the augmented filtered state.
+
+        Returns
+        -------
+        violin : ndarray
+            Estimated violin mode contribution.
+        residual : ndarray
+            ``strain`` with the violin mode removed.
+        dw_track : ndarray, shape (N,)
+            Tracked frequency offset Δω [rad/s] (state x[2]).
+        """
+        xk     = record.xk           # (N, 3): [Re(ψ), Im(ψ), Δω]
+        N      = len(xk)
+        times  = self.t0 + np.arange(N) / self.fs
+        arg    = self._wc * times
+        violin = xk[:, 0] * np.cos(arg) - xk[:, 1] * np.sin(arg)
+
+        strain    = np.asarray(strain, dtype=float).ravel()
+        L         = min(len(strain), N)
+        dw_track  = xk[:L, 2]
+        return violin[:L], strain[:L] - violin[:L], dw_track
+
+
+# ===========================================================================
+#  Composite Kalman filter for closely-spaced violin modes  (Section 4)
+# ===========================================================================
+
+class CloseModeComposite(KalmanCompositeModel):
+    """
+    FUSED composite Kalman filter for two closely-spaced violin modes.
+
+    When the frequency separation Δf = |f₂ − f₁| is smaller than a few
+    line-widths, independent ``ViolinModel`` filters cannot distinguish the
+    two modes: their rotating frames overlap and each filter locks onto the
+    sum of both phasors.
+
+    This class uses a **FUSED** ``KalmanCompositeModel``:
+
+    * Both sub-models share a common carrier ωc = π(f₁ + f₂).
+    * The fused measurement is z = ψ₁ + ψ₂ (sum of phasors in the shared frame).
+    * Each sub-model has a different detuning Δω_n = ωn − ωc encoded in its F.
+    * The combined innovation drives both SVEs simultaneously.
+    * The FUSED H Jacobian [I₂ | I₂] (2×4) is computed by the fixed framework.
+
+    The filter separates the two phasors by exploiting their *different dynamics*
+    (different Δω_n → different precession rates in the shared rotating frame).
+
+    Parameters
+    ----------
+    sensor_id : str
+        Channel name.
+    f1, f2 : float
+        Frequencies of the two violin modes [Hz].
+    Q1, Q2 : float
+        Quality factors for each mode.
+    fs : float
+        Sampling rate [Hz].
+    amplitude1, amplitude2 : float | None
+        Expected SVE amplitudes (unit-agnostic FDT noise scaling).
+    measurement_uncertainty : float | None
+        Measurement noise std.  None → noise_psd fallback.
+    noise_psd : float
+        One-sided noise PSD [1/Hz].
+    """
+
+    NAME        = "Close-Mode Composite Kalman Filter"
+    DESCRIPTION = ("FUSED composite for two closely-spaced violin modes. "
+                   "Shared carrier at fc = (f1+f2)/2; FUSED h = ψ1+ψ2.")
+    VERSION     = "1.0"
+
+    def __init__(self, sensor_id: str,
+                 f1: float, f2: float,
+                 Q1: float, Q2: float,
+                 fs: float,
+                 amplitude1: float | None = None,
+                 amplitude2: float | None = None,
+                 measurement_uncertainty: float | None = None,
+                 noise_psd: float = 1e-40,
+                 **kwargs):
+
+        fc  = (f1 + f2) / 2.0
+        wc  = 2.0 * np.pi * fc
+        self._wc_shared = wc
+        self._fs_shared = fs
+
+        sub_kwargs = {k: v for k, v in kwargs.items()
+                      if k not in ("x0", "P0")}
+
+        m1 = ViolinModel(f"{sensor_id}_f1", f0=f1, Q=Q1, fs=fs, wc=wc,
+                         amplitude=amplitude1,
+                         measurement_uncertainty=measurement_uncertainty,
+                         noise_psd=noise_psd, **sub_kwargs)
+        m2 = ViolinModel(f"{sensor_id}_f2", f0=f2, Q=Q2, fs=fs, wc=wc,
+                         amplitude=amplitude2,
+                         measurement_uncertainty=measurement_uncertainty,
+                         noise_psd=noise_psd, **sub_kwargs)
+
+        super().__init__(m1, m2, obs_mode=KalmanObservableReadout.FUSED)
+
+        # Override the FUSED pass-through preprocess with our Hilbert + demod.
+        # KalmanCompositeModel.__init__ binds self.preprocess as an instance
+        # attribute; we replace it here so the correct demodulation runs.
+        self.preprocess = self._hilbert_demod
+
+    # ------------------------------------------------------------------
+    # Custom preprocess: real strain → shared rotating-frame phasor sum
+    # ------------------------------------------------------------------
+    def _hilbert_demod(self, zk, uk=None, **kwargs):
+        """
+        Hilbert + demodulate at shared carrier ωc = 2π·fc.
+
+        Converts real strain → [Re(z_A·e^{−iωct}), Im(z_A·e^{−iωct})]
+        where z_A is the analytic signal and ωc = π(ω₁+ω₂).
+        """
+        if zk.shape[1] == 1:
+            xa = _hilbert(zk[:, 0].astype(float))
+            zk = np.column_stack([xa.real, xa.imag])
+        times   = self.t0 + np.arange(len(zk)) / self._fs_shared
+        arg     = self._wc_shared * times
+        zr, zi  = zk[:, 0], zk[:, 1]
+        return np.column_stack([
+            zr * np.cos(arg) + zi * np.sin(arg),
+            zi * np.cos(arg) - zr * np.sin(arg),
+        ]), uk
+
+    def inprocess(self, xk_hat, **kwargs):
+        return xk_hat
+
+    def postprocess(self, zk_hat, **kwargs):
+        return zk_hat
+
+    # ------------------------------------------------------------------
+    # Extraction: decompose joint state into per-mode contributions
+    # ------------------------------------------------------------------
+    def extract(self, record, strain):
+        """
+        Decompose filtered state into individual violin mode contributions.
+
+        The joint state is x = [Re(ψ₁), Im(ψ₁), Re(ψ₂), Im(ψ₂)] in the
+        shared rotating frame.  Each mode is reconstructed as::
+
+            v_n(t) = Re(ψ_n) cos(ωct) − Im(ψ_n) sin(ωct)
+
+        Returns
+        -------
+        v1, v2 : ndarray
+            Per-mode estimated contributions.
+        residual : ndarray
+            ``strain`` with both modes removed.
+        """
+        xk    = record.xk      # (N, 4)
+        N     = len(xk)
+        times = self.t0 + np.arange(N) / self._fs_shared
+        arg   = self._wc_shared * times
+
+        v1 = xk[:, 0] * np.cos(arg) - xk[:, 1] * np.sin(arg)
+        v2 = xk[:, 2] * np.cos(arg) - xk[:, 3] * np.sin(arg)
+
+        strain   = np.asarray(strain, dtype=float).ravel()
+        L        = min(len(strain), N)
+        residual = strain[:L] - v1[:L] - v2[:L]
+        return v1[:L], v2[:L], residual
 

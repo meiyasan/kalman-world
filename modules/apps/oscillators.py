@@ -60,8 +60,8 @@ class OscillatorModel(KalmanLinearModel):
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk
 
-    def inprocess(self, zk_hat, **kwargs):
-        return zk_hat
+    def inprocess(self, xk_hat, **kwargs):
+        return xk_hat
 
     def postprocess(self, zk_hat, **kwargs):
         return zk_hat
@@ -154,8 +154,8 @@ class AnalyticOscillatorModel(KalmanLinearModel):
 
         return zk_rot, uk
 
-    def inprocess(self, zk_hat, **kwargs):
-        return zk_hat
+    def inprocess(self, xk_hat, **kwargs):
+        return xk_hat
 
     def postprocess(self, zk_hat, **kwargs):
         # zk_hat is (N, 2) — inverse rotation back to lab frame

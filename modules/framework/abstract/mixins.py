@@ -479,6 +479,7 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
             
         if inprocess:
             xk_hat = self.model.inprocess(xk_hat, **kwargs)
+
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk_hat = KalmanRecord._normalize_out(xk_hat)
 

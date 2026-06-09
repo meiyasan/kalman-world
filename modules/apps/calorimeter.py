@@ -217,8 +217,8 @@ class CalorimeterLinearModel(_CalorimeterBase):
 
     def preprocess(self, zk, uk=None, **kwargs):
         self._step = 0; return zk, uk
-    def inprocess(self, state_vector, **kwargs): return state_vector
-    def postprocess(self, xk_hat, **kwargs): return xk_hat
+    def inprocess(self, xk_hat, **kwargs): return xk_hat
+    def postprocess(self, zk_hat, **kwargs): return zk_hat
 
     @staticmethod
     def build_measurements(hits):
@@ -329,11 +329,11 @@ class _CalorimeterEnergyModel(_CalorimeterBase):
     def preprocess(self, zk, uk=None, **kwargs):
         self._step = 0; return zk, uk
 
-    def inprocess(self, state_vector, **kwargs):
-        return state_vector
-
-    def postprocess(self, xk_hat, **kwargs):
+    def inprocess(self, xk_hat, **kwargs):
         return xk_hat
+
+    def postprocess(self, zk_hat, **kwargs):
+        return zk_hat
 
     def extract_smoothed(self):
         """Return dict {x0, y0, tx, ty, E, P, theta_rad, phi_rad, chi2_dof}."""

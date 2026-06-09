@@ -1,82 +1,171 @@
-# Python Project Template
+# kalman-framework
 
-This repository provides a comprehensive template for Python projects, focusing on modern development practices using `pyproject.toml`, Docker integration, tests, and package distribution.
+A modular Python framework for Kalman-family filters, supporting linear, extended (EKF),
+and unscented (UKF) variants, with composable multi-sensor models.
 
+---
 
-## Features
+## Notation
 
-### Project Structure
-- **`src/`**: Contains the main Python package code. Using `src/` ensures proper isolation and avoids common import issues.
-- **`pyproject.toml`**: Manages dependencies, build tools, and configuration.
-- **`.gitlab-ci.yml`**: Pre-configured CI/CD pipeline for automated testing and deployment.
-- **`Makefile`**: Simplifies tasks:
-  - `make install`: Installs dependencies.
-  - `make test`: Runs tests with `pytest`.
-  - `make lint`: Lints code with `flake8`.
-  - `make format`: Formats code using `black`.
-  - `make docker-build`: Builds a Docker image.
-  - `make docker-run`: Runs the project in a Docker container.
-- **Doxygen Documentation**: Generates a responsive webpage (using Doxygen Awesome) including versioning and additional documentation information based on markdown files located in `./docs`.
-- **Docker Integration**: Dockerfile provided for custom image creation, facilitating CI/CD workflows.
-- **GitLab CI/CD**: GitLab CI/CD templates to set up the environment, compile, and deploy library documentation through a dedicated pipeline.
+| Symbol | Shape | Meaning |
+|--------|-------|---------|
+| `gk` | `(T, M, 1)` | Raw input timeseries (before any conditioning) |
+| `uk` | `(T, L, 1)` | Control input timeseries |
+| `zk` | `(T, M, 1)` | Conditioned measurements (after `preprocess`) |
+| `xk` | `(n, 1)` | State vector at a single timestep |
+| `xk_hat` | `(T, n, 1)` | Batch of state estimates (prior / posterior / smoothed) |
+| `zk_hat` | `(T, M, 1)` | Predicted measurements in filter space — output of `h(xk_hat)` |
+| `gk_hat` | `(T, M, 1)` | Predicted measurements in raw space — output of `postprocess(zk_hat)` |
+| `n` | — | State dimension |
+| `m` | — | Measurement dimension |
+| `l` | — | Control input dimension |
 
-## Python Package Distribution
+---
 
-The `src/` directory is used to store the main package, following best practices for Python projects. This approach ensures that imports work correctly and keeps your package cleanly separated from other project files. The structure is designed for easy distribution through package managers like PyPI.
+## Filter pipeline
 
-### Documentation
+```
+gk          raw input timeseries            (T, M, 1)
+ │
+ ▼  preprocess(gk, uk) ──────────────────── gk → filter space
+ │
+zk          conditioned measurements         (T, M, 1)
+ │
+ ▼  ── filter loop: for z, u in zip(zk, uk) ─────────────────────────────────
+ │      predict:  x⁻, P⁻  ←  f(x, u),  F, Q
+ │      update:   x⁺, P⁺  ←  x⁻ + K·(z − h(x⁻)),  H, R
+ │                                    ↑
+ │                    h is mode-aware (INDEPENDENT stacks, FUSED sums)
+ ▼
+xk_hat      state estimates                  (T, n, 1)   prior / posterior / smoothed
+ │
+ ▼  inprocess(xk_hat) ──────────────────── optional state-space transform
+ │
+ ▼  h(xk_hat)   ← mode-aware ────────────── state → filter space
+ │
+zk_hat      predicted measurements           (T, M, 1)   filter space
+ │
+ ▼  postprocess(zk_hat) ─────────────────── filter space → raw space
+ │
+gk_hat      predicted raw output             (T, M, 1)   mirrors gk
+```
 
-Generate documentation using Doxygen's `make docs`. The `docs` directory contains Markdown files instrumental in generating comprehensive Doxygen documentation, available post-compilation in `./public/share/docs`. Serve this directory using HTTP servers like NGINX or Apache2.
+`preprocess` and `postprocess` are intended as a matched pair: if `preprocess` whitens
+or conditions the signal, `postprocess` should map predictions back to the original domain
+so that `gk_hat` is directly comparable to `gk`.
 
-### GitLab CI/CD and Pages Integration
+---
 
-Seamlessly integrate the project with GitLab CI/CD for automated testing, building, and deployment. GitLab Pages are automatically generated upon successful pipeline completion and tag publication, configurable via the GitLab repository settings post the initial successful pipeline run.
+## Model hierarchy
 
-The CI/CD workflow executes on a GitLab instance, compiling the library within a Docker container, conducting comprehensive tests, and deploying documentation upon creating a new tag.
+```
+KalmanModelABC          (abstract contract: f, h, F, H, B, L, M, Q, R, pre/in/postprocess)
+    └── KalmanModel         (numerical Jacobian defaults, covariance inference)
+            ├── KalmanLinearModel     (constant or time-varying F, H matrices)
+            ├── KalmanExtendedModel   (nonlinear f, h with analytic Jacobians)
+            ├── KalmanUnscentedModel  (nonlinear f, h for UKF)
+            └── KalmanCompositeModel  (composes N submodels — see below)
+```
 
-### Docker Integration
+### Filter engines
 
-A complete Dockerfile is included to containerize the application using `Dockerfile` and `Dockerfile.packages`, ensuring consistency across environments.
-  - **Build**: Use `make docker` to create a Docker image.
-  - **Run**: Use `make docker-exec` to execute the project in a Docker container.
+| Class | Algorithm |
+|-------|-----------|
+| `KalmanFilter` | EKF (works for linear and nonlinear models) |
+| `LinearKalmanFilter` | Standard linear KF |
+| `MultiRateKalmanFilter` | Multi-rate / asynchronous measurements |
+| `UnscentedKalmanFilter` | UKF |
 
-The Dockerfile is also usd as needed during CI/CD to run tests & build. 
+---
 
-## Usage
+## KalmanCompositeModel
 
-1. **Clone the Repository**:
+Combines N submodels into a single model. State evolution is always block-diagonal
+(submodels evolve independently). Observation composition depends on `obs_mode`.
 
-    ```bash
-    git clone --recursive https://git.ligo.org/kagra/templates/pyproject-template mypyproject
-    cd mypyproject
-    ```
+### Observation modes (`KalmanObservableReadout`)
 
-2. **Bootstrap the Project**:
+| Mode | Measurement vector | Use case |
+|------|--------------------|----------|
+| `INDEPENDENT` | `z = [h₁(x₁); h₂(x₂); ...]` — stacked | separate sensors, each with its own measurement |
+| `FUSED` | `z = Σ hᵢ(xᵢ)` — summed | all submodels contribute additively to the same observable |
 
-    Make sure to install conda, first depending on your operating system and architecture. (See [here](https://conda.io/projects/conda/en/latest/user-guide/install/index.html) for conda installation)
-    Run the following command to prepare environment, compile, and check distribution of your python module
-    ```bash
-    make all
-    ```
+### Mode-awareness
 
-3. **Building and Testing**:
+Only operators that touch the measurement vector `z` need to be mode-aware.
+`_bind_h` and `_bind_H` implement the dispatch. All other operators follow fixed rules:
 
-    Execute tests to ensure library functionality:
-    ```bash
-    make tests
-    make build
-    ```
+| Operator | Rule | Why |
+|----------|------|-----|
+| `f`, `F`, `Q` | block-diagonal | state evolution is always independent |
+| `h`, `H` | **mode-aware** | measurement composition depends on `obs_mode` |
+| `preprocess` | INDEPENDENT: split by `m.m`, delegate per submodel; FUSED: pass-through | runs before the filter loop on raw `gk`; must align `z` with `h(x)` |
+| `inprocess` | identity (pass-through) | `_bind_h` composes submodel contributions; no splitting needed |
+| `postprocess` | identity (pass-through) | `_bind_h` already ran; output is in the correct space |
 
-4. **Generating Documentation**:
+### Subclassing for domain-specific processing
 
-    Generate comprehensive documentation, including versioning and additional Markdown information:
+Override `_bind_preprocess`, `_bind_inprocess`, or `_bind_postprocess` in a subclass
+to inject domain logic while keeping the composite wiring intact.
 
-    ```bash
-    make docs
-    ```
+```python
+class ThermalNoiseComposite(KalmanCompositeModel):
 
-    Access the generated documentation from `./public/share/docs` in a web browser.
+    def _bind_preprocess(self, mode):
+        independent_default = super()._bind_preprocess(mode)
 
-## Contributions and Support
+        def preprocess(gk, uk=None, **kwargs):
+            # apply notch / whitening filter before delegating
+            gk = self._whiten(gk)
+            return independent_default(gk, uk, **kwargs)
 
-Contributions, bug reports, and feature requests are encouraged! Refer to CONTRIBUTING.md for detailed guidelines.
+        return preprocess
+
+    def _bind_postprocess(self):
+        def postprocess(zk_hat):
+            # colour the predictions back to the raw domain
+            return self._colour(zk_hat)
+        return postprocess
+```
+
+---
+
+## Quick start
+
+```python
+from modules.models.linear    import KalmanLinearModel
+from modules.models.composite import KalmanCompositeModel
+from modules.framework.constants import KalmanObservableReadout
+from modules.filters.kf        import LinearKalmanFilter
+import numpy as np
+
+# --- two independent 1-D constant-velocity submodels ---
+F = np.array([[1, dt], [0, 1]])
+H = np.array([[1, 0]])
+Q = np.diag([1e-4, 1e-3])
+R = np.array([[0.1]])
+
+m1 = KalmanLinearModel("sensor_a", F=F, H=H, Q=Q, R=R, x0=np.zeros((2,1)))
+m2 = KalmanLinearModel("sensor_b", F=F, H=H, Q=Q, R=R, x0=np.zeros((2,1)))
+
+# stacked: z = [h1(x1); h2(x2)]
+composite = KalmanCompositeModel(m1, m2, obs_mode=KalmanObservableReadout.INDEPENDENT)
+
+kf = LinearKalmanFilter(composite)
+kf.forward(gk, record=True)
+record = kf.get_record()   # contains gk_hat, xk_hat, Pk_hat
+```
+
+---
+
+## Processing hooks contract
+
+```
+preprocess(gk, uk)  → (zk, uk)      before the filter loop   shape: (T, M, 1)
+inprocess(xk_hat)   → xk_hat        before h is applied       shape: (T, n, 1)
+postprocess(zk_hat) → gk_hat        after h is applied        shape: (T, M, 1)
+```
+
+All three default to identity in `KalmanCompositeModel`. Override them in subclasses
+for signal conditioning (`preprocess`), coordinate transforms (`inprocess`), or
+domain reconstruction (`postprocess`).

@@ -203,5 +203,5 @@ class PolarizationModel(KalmanExtendedModel):
                                    zk[:, 1].real, zk[:, 1].imag])
         return zk, uk
 
-    def inprocess(self, state_vector, **kwargs):  return state_vector
-    def postprocess(self, xk_hat, **kwargs):      return xk_hat
+    def inprocess(self, xk_hat, **kwargs):  return xk_hat
+    def postprocess(self, zk_hat, **kwargs):      return zk_hat

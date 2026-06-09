@@ -19,10 +19,36 @@ class KalmanCompositeModel(KalmanModel):
     -----------
     - F, Q are always block-diagonal (independent state evolution)
     - Observation composition governed by KalmanObservableReadout:
-        * INDEPENDENT → z = [h1(x1); h2(x2); ...]
-        * FUSED       → z = sum_i h_i(x_i)
+        * INDEPENDENT → z = [h1(x1); h2(x2); ...]   (stacked, split-able per submodel)
+        * FUSED       → z = sum_i h_i(x_i)           (summed, cannot be split back)
     - No custom overrides; complex coupling should be encoded
       in the submodels themselves.
+
+    Mode-awareness
+    --------------
+    Several operators depend on ``obs_mode`` (KalmanObservableReadout) because the
+    mathematical structure of the measurement vector z changes with the mode:
+
+    - INDEPENDENT: z is a block-concatenation of each submodel's measurement.
+      Operators can split z along the channel axis (axis=1) by [m.m for m in models]
+      and delegate to each submodel independently.
+
+    - FUSED: z is the element-wise sum of all submodel measurements.
+      The individual contributions are irrecoverable from z alone, so operators
+      that split z per-submodel (h, H) must be implemented for each mode.
+
+    Operators marked "mode-aware" implement this dispatch: they behave differently
+    depending on whether the model was constructed with INDEPENDENT or FUSED.
+
+    Processing hooks
+    ----------------
+    Only preprocess is mode-aware; _bind_h handles everything after that:
+      - preprocess(zk, uk)  → INDEPENDENT: delegates per submodel (split by m.m/m.l)
+                               FUSED: pass-through (fused z cannot be demixed)
+      - inprocess(xk_hat)   → pass-through; _bind_h composes submodel h's correctly
+      - postprocess(zk_hat) → pass-through; _bind_h already ran
+    Override any hook in a subclass for domain-specific transforms
+    (e.g. thermal-noise filtering in preprocess).
     """
 
     def __init__(
@@ -42,7 +68,12 @@ class KalmanCompositeModel(KalmanModel):
 
         # Global dimensions
         self.n = sum(m.n for m in models)
-        self.m = sum(m.m for m in models)
+        # FUSED: all submodels contribute to the same measurement space → m = m of one submodel
+        # INDEPENDENT: each submodel has its own channel → m = sum
+        if obs_mode == KalmanObservableReadout.FUSED:
+            self.m = models[0].m
+        else:
+            self.m = sum(m.m for m in models)
         self.l = sum(m.l for m in models)
 
         # Aggregate state and covariance
@@ -59,14 +90,28 @@ class KalmanCompositeModel(KalmanModel):
         # Structural matrices (block-diagonal)
         self.B = self._bind_matrix("B")
         self.L = self._bind_matrix("L")
-        self.M = self._bind_matrix("M")
+        if obs_mode == KalmanObservableReadout.FUSED:
+            # FUSED: measurement space is shared (dim = models[0].m).
+            # M = ∂h/∂v in the fused measurement space = I_m (identity).
+            # The block-diagonal _bind_matrix("M") would give (sum_m × sum_m),
+            # which would fail the shape check for the (m × m) noise covariance.
+            _fused_m = models[0].m
+            self.M = lambda t=None: np.eye(_fused_m)
+        else:
+            self.M = self._bind_matrix("M")
 
-        # Covariances (block-diagonal)
+        # Covariances (block-diagonal for Q always; R depends on obs_mode)
         self.Q = lambda t=None: block_diag(*[(m.Q(t) if callable(m.Q) else m.Q) for m in self.models])
-        self.R = lambda t=None: block_diag(*[(m.R(t) if callable(m.R) else m.R) for m in self.models if m.m > 0])
+        if obs_mode == KalmanObservableReadout.FUSED:
+            # All submodels share the same measurement channel → R is single-channel noise.
+            # Use the first submodel's R (the noise on the fused measurement).
+            _r0 = models[0]
+            self.R = lambda t=None: (_r0.R(t) if callable(_r0.R) else _r0.R)
+        else:
+            self.R = lambda t=None: block_diag(*[(m.R(t) if callable(m.R) else m.R) for m in self.models if m.m > 0])
 
-        # Processing hooks
-        self.preprocess  = self._bind_preprocess()
+        # Processing hooks — only preprocess is mode-aware; _bind_h handles the rest
+        self.preprocess  = self._bind_preprocess(obs_mode)
         self.inprocess   = self._bind_inprocess()
         self.postprocess = self._bind_postprocess()
 
@@ -179,9 +224,9 @@ class KalmanCompositeModel(KalmanModel):
 
         elif mode == KalmanObservableReadout.FUSED:
             def H(x=None, t=None):
-                """Sum of local observation Jacobians."""
+                """Jacobian of fused h w.r.t. full state: horizontal concatenation [H₁|H₂|...]."""
                 blocks = [m.H(x, t) for m in self.models]
-                return sum(blocks)
+                return np.concatenate(blocks, axis=1)
             return H
 
         else:
@@ -202,20 +247,25 @@ class KalmanCompositeModel(KalmanModel):
         return func
 
     # ==========================================================
-    #  Pre / In / Post processing (mode-aware)
+    #  Pre / In / Post processing
     # ==========================================================
-    def _bind_preprocess(self):
-        """Bind preprocess — always independent of observation mode."""
+    def _bind_preprocess(self, mode: KalmanObservableReadout):
+        """Preprocess binding.
+
+        INDEPENDENT: delegates per submodel by splitting zk/uk on the channel axis (m.m / m.l).
+        FUSED: pass-through — the fused measurement cannot be demixed; override in subclass
+               if global preprocessing (e.g. normalisation) is needed.
+        """
+        if mode == KalmanObservableReadout.FUSED:
+            def preprocess(zk, uk: Optional[np.ndarray] = None):
+                return zk, uk
+            return preprocess
+
         def preprocess(zk, uk: Optional[np.ndarray] = None, **kwargs):
-            """
-            Apply each submodel’s preprocess independently.
-            zk: (T, M, 1)
-            uk: (T, L, 1)
-            """
+            """zk: (T, M, 1), uk: (T, L, 1)"""
             if zk is None:
                 return np.empty((0, 0, 1)), np.empty((0, 0, 1))
 
-            # Split along channel axis, not time
             zk_parts = np.split(zk, np.cumsum([m.m for m in self.models[:-1]]), axis=1)
             uk_parts = (
                 np.split(uk, np.cumsum([m.l for m in self.models[:-1]]), axis=1)
@@ -232,48 +282,21 @@ class KalmanCompositeModel(KalmanModel):
             return np.concatenate(out_zk, axis=1), np.concatenate(out_uk, axis=1)
         return preprocess
 
-
     def _bind_inprocess(self):
-        """Bind inprocess — independent across observation channels."""
-        def inprocess(zk_hat, **kwargs):
-            """
-            Transform predicted measurements per submodel.
-            zk_hat: (T, M, 1)
-            """
-            if zk_hat is None or zk_hat.size == 0:
-                return np.empty((0, 0, 1))
-
-            parts = np.split(zk_hat, np.cumsum([m.m for m in self.models[:-1]]), axis=1)
-            out = [m.inprocess(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
-            return np.concatenate(out, axis=1)
-        return inprocess
-
+        """Inprocess binding — identity.  Override in subclass for state-space transforms."""
+        return lambda xk_hat, **_: xk_hat
 
     def _bind_postprocess(self):
-        """Bind postprocess — independent of observation mode."""
-        def postprocess(zk_hat, **kwargs):
-            """
-            Apply each submodel’s postprocessing to predicted measurements.
-            zk_hat: (T, M, 1)
-            """
-            if zk_hat is None or zk_hat.size == 0:
-                return np.empty((0, 0, 1))
+        """Postprocess binding — identity.  Override in subclass for output transforms."""
+        return lambda zk_hat, **_: zk_hat
 
-            parts = np.split(zk_hat, np.cumsum([m.m for m in self.models[:-1]]), axis=1)
-            out = [m.postprocess(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
-            return np.concatenate(out, axis=1)
-        return postprocess
-    
     # -----------------------------
     # Abstract methods are dynamically bounded in __init__
     # -----------------------------
 
-    def preprocess(self, zk, uk = None, **kwargs):
-        pass
-    def inprocess(self, zk_hat, **kwargs):
-        pass
-    def postprocess(self, zk_hat, **kwargs):
-        pass
+    def preprocess(self, zk, uk=None, **kwargs): ...
+    def inprocess(self, xk_hat, **kwargs): ...
+    def postprocess(self, zk_hat, **kwargs): ...
 
     def f(self, x: np.ndarray, u: Optional[np.ndarray] = None, w: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
         """Global state transition: block-diagonal composition."""
