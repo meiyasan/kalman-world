@@ -283,7 +283,8 @@ class CalorimeterGeometry:
         if ax is None:
             _, ax = plt.subplots(figsize=(12, 3))
 
-        half = self.aperture_mm * height_frac
+        half_bar  = self.aperture_mm * height_frac   # visual bar height
+        half_axis = self.aperture_mm * 0.5           # full aperture for ylim
         seen_mats = {}
         z = self._z_start
         for layer in self._layers:
@@ -292,7 +293,7 @@ class CalorimeterGeometry:
             alpha = 0.90 if layer.is_active else 0.45
             lw    = 0.6  if layer.is_active else 0.3
             rect  = mpatches.FancyBboxPatch(
-                (z, -half), layer.thickness_mm, 2 * half,
+                (z, -half_bar), layer.thickness_mm, 2 * half_bar,
                 boxstyle="square,pad=0", facecolor=color,
                 edgecolor="k", linewidth=lw, alpha=alpha,
             )
@@ -304,7 +305,7 @@ class CalorimeterGeometry:
             z += layer.thickness_mm
 
         ax.set_xlim(self._z_start - 5, self._z_start + self.total_length_mm + 5)
-        ax.set_ylim(-half * 1.15, half * 1.15)
+        ax.set_ylim(-half_axis * 1.05, half_axis * 1.05)
         ax.set_xlabel("z [mm]"); ax.set_ylabel("y [mm]")
         title = "Calorimeter — Side View (z–y)"
         if particle:
