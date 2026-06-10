@@ -5,7 +5,9 @@ from .powergrids  import PowerGridStateModel
 from .gravwave    import PolarizationModel, GWPolarizationState, GWPolarizationObservable, jones_signal
 
 from .calorimeter import (
-    HCALConfig,
+    MATERIALS, MATERIAL_COLORS,
+    CaloLayer, CalorimeterGeometry, CalorimeterSampler,
+    moliere_radius_mm, build_measurements,
     CalorimeterLinearModel,
     CalorimeterElectromagneticModel,
     CalorimeterHadronicModel,
@@ -20,5 +22,4 @@ from .calorimeter import (
     hcal_model_from_hits,
     ECAL_PRESETS,
     HCAL_PRESETS,
-    rechits_to_hits,
 )
