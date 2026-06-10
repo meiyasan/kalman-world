@@ -139,45 +139,39 @@ class AnalyticOscillatorModel(KalmanLinearModel):
         super().__init__(name, F=A, H=C, Q=Q, R=R, P0=P0, x0=x0, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs):
-        # zk is (N, 2) — real and imaginary parts
-        zr = zk[:, 0]  # (N,)
-        zi = zk[:, 1]  # (N,)
+        # zk is (N, 1) real lab-frame signal x(t), or (N, 2) analytic signal [Re(xa), Im(xa)].
+        # For (N, 1): apply Hilbert transform first to form the analytic signal.
+        # Then demodulate into the rotating frame → (N, 2) [Re(ψ), Im(ψ)].
+        from scipy.signal import hilbert
+        if zk.shape[1] == 1:
+            zr = zk[:, 0]
+            zi = np.imag(hilbert(zr))
+        else:
+            zr, zi = zk[:, 0], zk[:, 1]
 
-        t_start = self.t0
-        times = t_start + np.arange(len(zk)) / self.fs
-        arg = self["wc"] * times  # (N,)
+        times = self.t0 + np.arange(len(zk)) / self.fs
+        arg = self["wc"] * times
 
         zk_rot = np.column_stack([
-            zr * np.cos(arg) + zi * np.sin(arg),
-            zi * np.cos(arg) - zr * np.sin(arg),
-        ])  # (N, 2)
-
+            zr * np.cos(arg) + zi * np.sin(arg),   # Re(ψ)
+            zi * np.cos(arg) - zr * np.sin(arg),   # Im(ψ)
+        ])
         return zk_rot, uk
 
     def inprocess(self, xk_hat, **kwargs):
         return xk_hat
 
     def postprocess(self, zk_hat, **kwargs):
-        # zk_hat is (N, 2) — inverse rotation back to lab frame
-        zr = zk_hat[:, 0]  # (N,)
-        zi = zk_hat[:, 1]  # (N,)
+        # zk_hat is (N, 2) rotating-frame state [Re(ψ), Im(ψ)]
+        # Remodulate and take the real part to recover the lab-frame signal x(t).
+        zr = zk_hat[:, 0]
+        zi = zk_hat[:, 1]
 
-        t_start = self.t0
-        times = t_start + np.arange(len(zk_hat)) / self.fs
-        arg = self["wc"] * times  # (N,)
+        times = self.t0 + np.arange(len(zk_hat)) / self.fs
+        arg = self["wc"] * times
 
-        zk_out = np.column_stack([
-            zr * np.cos(arg) - zi * np.sin(arg),
-            zi * np.cos(arg) + zr * np.sin(arg),
-        ])  # (N, 2)
-
-        return zk_out
-    
-    def test_invariance(self, zk, **kwargs):
-        """Verify that postprocess(preprocess(zk)) ≈ zk (rotation invariance)."""
-        zk_hat, _ = self.preprocess(zk, **kwargs)
-        zk_trans = self.postprocess(zk_hat, **kwargs)
-        return np.allclose(zk, zk_trans, rtol=1e-8, atol=1e-10)
+        x_real = zr * np.cos(arg) - zi * np.sin(arg)   # Re[ψ · e^{iω_c t}]
+        return x_real.reshape(-1, 1)
 
 
 class OscillatorCompositeModel(KalmanCompositeModel):
@@ -234,9 +228,12 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
     ``B = 0`` (default) recovers a perfectly **harmonic** model ($f_n = n f_1$),
     making this class the general case that subsumes the harmonic special case.
 
-    The model stacks one `OscillatorModel` (or `AnalyticOscillatorModel` when
-    ``analytic=True``) per tracked partial, each tuned to its inharmonic
-    frequency $f_n$.
+    Each partial is tracked by an ``AnalyticOscillatorModel`` in its own rotating
+    frame at carrier omega_{c,n} = omega_n, using matrix-exponential discretization
+    (unconditionally stable at any frequency).  A broadcast preprocess applies
+    Hilbert demodulation independently per partial so the model accepts a single
+    real (N, 1) sensor signal — the only physically meaningful input when all
+    partials share one measurement channel.
 
     Parameters
     ----------
@@ -250,14 +247,14 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
         Inharmonicity coefficient.  ``B=0`` → perfectly harmonic.
     fs : float
         Sampling frequency [Hz].
-    Q_factor : float
-        Quality factor shared by all partials (or pass a list).
+    Q_factor : float or list
+        Quality factor shared by all partials, or a per-partial list.
     measurement_uncertainty : float
         Observation noise std [same unit as the signal].
     process_uncertainty : float
         State-model mismatch std.
     **kwargs
-        Forwarded to each ``OscillatorModel`` and ultimately to
+        Forwarded to each ``AnalyticOscillatorModel`` and ultimately to
         ``KalmanLinearModel.__init__``.
 
     Attributes
@@ -287,11 +284,11 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
     """
 
     NAME        = "Inharmonic Oscillator"
-    DESCRIPTION = ("Multi-partial oscillator with Fletcher inharmonicity. "
-                   "Each partial is tracked by an independent OscillatorModel. "
-                   "The inharmonicity coefficient B shifts partial n to "
+    DESCRIPTION = ("Multi-partial analytic oscillator with Fletcher inharmonicity. "
+                   "Accepts a single real (N,1) signal; each partial is tracked in "
+                   "its own rotating frame via independent Hilbert demodulation. "
                    "f_n = n·f0·sqrt(1 + B·n²).")
-    VERSION     = "1.0"
+    VERSION     = "2.0"
 
     def __init__(self, sensor_id: str,
                  f0:                    float,
@@ -301,7 +298,6 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
                  Q_factor:              float | list = 500.0,
                  measurement_uncertainty: float = 0.1,
                  process_uncertainty:   float = 0.001,
-                 analytic:              bool  = False,
                  **kwargs):
 
         self.f0 = float(f0)
@@ -322,35 +318,65 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
         sub_models = []
         for i, (fn, Qn) in enumerate(zip(partial_freqs, q_list)):
             wn = 2.0 * np.pi * fn
-            if analytic:
-                m = AnalyticOscillatorModel(
-                    f"{sensor_id}_p{i+1}",
-                    fs=fs,
-                    w0=wn,
-                    wc=wn,
-                    Q=Qn,
-                    measurement_uncertainty=measurement_uncertainty,
-                    process_uncertainty=process_uncertainty,
-                    **kwargs,
-                )
-            else:
-                m = OscillatorModel(
-                    f"{sensor_id}_p{i+1}",
-                    fs=fs,
-                    w0=wn,
-                    Q=Qn,
-                    measurement_uncertainty=measurement_uncertainty,
-                    process_uncertainty=process_uncertainty,
-                    **kwargs,
-                )
+            m = AnalyticOscillatorModel(
+                f"{sensor_id}_p{i+1}",
+                fs=fs,
+                w0=wn,
+                wc=wn,         # carrier = partial frequency → Δω = 0 at resonance
+                Q=Qn,
+                measurement_uncertainty=measurement_uncertainty,
+                process_uncertainty=process_uncertainty,
+                **kwargs,
+            )
             sub_models.append(m)
 
-        super().__init__(*sub_models)  # obs_mode defaults to INDEPENDENT
+        super().__init__(*sub_models)  # INDEPENDENT obs_mode: each partial gets its own channel
+
+        # Broadcast preprocess: accept a single real (N,1) signal and feed it to every
+        # sub-model, each of which applies Hilbert + demodulation at its own carrier wc.
+        # This is the only physically correct input for a single-sensor measurement.
+        _models = self.models
+        def _broadcast_preprocess(zk, uk=None, **kwargs_):
+            parts = [m.preprocess(zk, uk, **kwargs_)[0] for m in _models]
+            return np.concatenate(parts, axis=1), uk
+        self.preprocess = _broadcast_preprocess
+
         # KalmanCompositeModel._bind_matrix("L") returns a block-diagonal of zeros
         # (each OscillatorModel.L returns None → zeros in the composite).
         # If left as-is, filter._predict would compute Q = 0@Q@0^T = 0, killing
         # process noise.  Override with None so the filter skips the LQL^T step.
         self.L = lambda x=None, u=None, w=None, t=None: None
+
+    # ------------------------------------------------------------------
+    # Extraction helper
+    # ------------------------------------------------------------------
+
+    def extract(self, record, signal):
+        """
+        Reconstruct each partial's real contribution from the filtered state
+        and subtract them from ``signal``.
+
+        Parameters
+        ----------
+        record : KalmanRecord
+            Output of ``model.filter()``.  ``record.xk`` shape: (N, 2·n_harmonics).
+        signal : array_like, shape (N,)
+            Original real mixed signal.
+
+        Returns
+        -------
+        partials : list of ndarray, each shape (N,)
+            Estimated real signal per partial: Re[ψ_i · e^{iω_i t}].
+        residual : ndarray, shape (N,)
+            ``signal`` with all estimated partials subtracted.
+        """
+        signal = np.asarray(signal, dtype=float).ravel()
+        t = np.arange(len(record.xk)) / self.fs
+        partials = []
+        for i, m in enumerate(self.models):
+            arg = m["wc"] * t
+            partials.append(record.xk[:, 2*i] * np.cos(arg) - record.xk[:, 2*i+1] * np.sin(arg))
+        return partials, signal - sum(partials)
 
     # ------------------------------------------------------------------
     # Class helpers
@@ -464,7 +490,6 @@ class InharmonicOscillatorModel(OscillatorCompositeModel):
 
         return float(popt[0]), float(popt[1])
 
-
 class HarmonicOscillatorModel(InharmonicOscillatorModel):
     """
     Multi-partial **harmonic** oscillator — special case of
@@ -506,7 +531,6 @@ class HarmonicOscillatorModel(InharmonicOscillatorModel):
                  Q_factor: float | list = 500.0,
                  measurement_uncertainty: float = 0.1,
                  process_uncertainty: float = 0.001,
-                 analytic: bool = False,
                  **kwargs):
         if "B" in kwargs:
             raise TypeError(
@@ -517,4 +541,4 @@ class HarmonicOscillatorModel(InharmonicOscillatorModel):
                          fs=fs, Q_factor=Q_factor,
                          measurement_uncertainty=measurement_uncertainty,
                          process_uncertainty=process_uncertainty,
-                         analytic=analytic, **kwargs)
+                         **kwargs)

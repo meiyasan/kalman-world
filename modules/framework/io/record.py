@@ -107,8 +107,8 @@ class KalmanRecord:
                     f"xk has wrong state dimension: expected ({N},{n}), got {self.xk.shape}"
 
             if self.zk.size > 0:
-                assert self.zk.shape[1] == m, \
-                    f"zk has wrong measurement dimension: expected ({N},{m}), got {self.zk.shape}"
+                assert self.zk.shape[1] in (1, m), \
+                    f"zk has wrong measurement dimension: expected ({N},{m}) or ({N},1) after postprocess, got {self.zk.shape}"
 
             if self.Pk.size > 0:
                 assert self.Pk.shape[1:] == (n, n), \
