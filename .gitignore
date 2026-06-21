@@ -67,3 +67,10 @@ __pycache__
 *.bak
 *.egg-info
 *.bak
+
+# Python test / lint artifacts
+.coverage
+.coverage.*
+.pytest_cache/
+.ruff_cache/
+htmlcov/

@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import expm
 
-from ..models.linear import KalmanLinearModel
+from ..framework.models.linear import LinearKalmanModel
 from ..framework.constants import KalmanState, KalmanObservable
 
 
@@ -16,7 +16,7 @@ class SuspensionObservable(KalmanObservable):
     SPRUNG_DISP = "m"       # measured by proximity / laser sensor
 
 
-class SuspensionModel(KalmanLinearModel):
+class SuspensionModel(LinearKalmanModel):
     """
     Quarter-car linear suspension model (2-DOF).
 
@@ -141,8 +141,77 @@ class SuspensionModel(KalmanLinearModel):
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk
 
-    def inprocess(self, xk_hat, **kwargs):
-        return xk_hat
+    def inprocess(self, zk_hat, **kwargs):
+        return zk_hat
 
     def postprocess(self, zk_hat, **kwargs):
         return zk_hat
+
+    # ==================================================================
+    # Signature figure — quarter-car state estimates (override KalmanModel.plot).
+    # Reached via ``model.plot(record, sample=sample[, road=u_road])``.
+    # ==================================================================
+    def _plot_static(self, record, sample=None, *, component=None, error=True,
+                     road=None, sigma=2.0, figsize=(16, 12), **kwargs):
+        """Signature figure: the four states (sprung/unsprung displacement + velocity)
+        with ±σ bands and truth in the left column, and a covariance trace plus a
+        road-excitation-vs-response panel in the right column. The sensor scatter is
+        recovered from the record's (NaN-masked) ``zk``; pass the road excitation as
+        ``road`` to overlay the input."""
+        import matplotlib.pyplot as plt
+        import matplotlib.gridspec as gridspec
+        t  = np.asarray(record.time)
+        xk = np.asarray(record.xk)
+        Pk = np.asarray(record.Pk)
+        sig = sigma * np.sqrt(np.diagonal(Pk, axis1=1, axis2=2)) if Pk.size else np.zeros_like(xk)
+        xt = np.asarray(sample.xk) if sample is not None else None
+        zk = np.asarray(record.zk) if np.size(record.zk) else None
+
+        # NB: SuspensionState aliases sprung/unsprung (shared units collapse the enum),
+        # so we index the raw state vector by position and label explicitly.
+        labels = ["sprung disp", "sprung vel", "unsprung disp", "unsprung vel"]
+        units  = ["m", "m/s", "m", "m/s"]
+        colors = ["steelblue", "darkorange", "seagreen", "purple"]
+        ns     = min(4, xk.shape[1])
+
+        fig = plt.figure(figsize=figsize)
+        gs  = gridspec.GridSpec(4, 2, figure=fig, hspace=0.55, wspace=0.35, width_ratios=[1.6, 1])
+        for i in range(ns):
+            ax = fig.add_subplot(gs[i, 0])
+            ax.fill_between(t, xk[:, i] - sig[:, i], xk[:, i] + sig[:, i],
+                            alpha=0.25, color=colors[i], label=rf"$\pm{sigma:g}\sigma$")
+            if xt is not None and xt.shape[1] > i:
+                ax.plot(t, xt[:, i], "--", lw=1.0, color="gray", alpha=0.8, label="Truth")
+            ax.plot(t, xk[:, i], lw=1.8, color=colors[i], label="Kalman")
+            if i == 0 and zk is not None:
+                m = ~np.isnan(zk[:, 0])
+                ax.scatter(t[m], zk[m, 0], s=6, color="black", alpha=0.5, zorder=5, label="Sensor")
+            ax.set_ylabel(f"{labels[i]} [{units[i]}]", fontsize=9)
+            if i == ns - 1:
+                ax.set_xlabel("Time (s)")
+            ax.legend(fontsize=8, loc="upper right"); ax.grid(True, alpha=0.3)
+
+        ax_cov = fig.add_subplot(gs[0:2, 1])
+        if Pk.size:
+            ax_cov.semilogy(t, np.trace(Pk, axis1=1, axis2=2), color="indigo", lw=1.2, alpha=0.85)
+        ax_cov.set_xlabel("Time (s)"); ax_cov.set_ylabel(r"tr($P_k$)")
+        ax_cov.set_title("Covariance trace\n(inflates between updates → contracts on each measurement)", fontsize=9)
+        ax_cov.grid(True, alpha=0.3, which="both")
+
+        ax_road = fig.add_subplot(gs[2:, 1])
+        if road is not None:
+            ax_road.plot(t, np.asarray(road).reshape(-1) * 100, color="saddlebrown",
+                         lw=1.5, alpha=0.7, label="Road input [cm]")
+        ax_road.plot(t, xk[:, 0] * 100, color="steelblue", lw=1.8, label=r"Sprung $z_s$ [cm]")
+        ax_road.fill_between(t, (xk[:, 0] - sig[:, 0]) * 100, (xk[:, 0] + sig[:, 0]) * 100,
+                             alpha=0.2, color="steelblue")
+        if xk.shape[1] > 2:
+            ax_road.plot(t, xk[:, 2] * 100, color="seagreen", lw=1.4, alpha=0.8, label=r"Unsprung $z_u$ [cm]")
+            ax_road.fill_between(t, (xk[:, 2] - sig[:, 2]) * 100, (xk[:, 2] + sig[:, 2]) * 100,
+                                 alpha=0.15, color="seagreen")
+        ax_road.set_xlabel("Time (s)"); ax_road.set_ylabel("Displacement [cm]")
+        ax_road.set_title("Road excitation vs. suspension response", fontsize=9)
+        ax_road.legend(fontsize=8); ax_road.grid(True, alpha=0.3)
+
+        fig.suptitle(rf"{self.name()} — Kalman state estimates with $\pm{sigma:g}\sigma$", fontsize=13, y=1.01)
+        return fig

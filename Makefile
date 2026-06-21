@@ -19,6 +19,16 @@ export CONDA_ROOT ?= $(shell conda info --base 2>/dev/null || echo "$(HOME)/.con
 BUILD_DIR   := $(shell if [ -f "/.dockerenv" ]; then echo "var/container/.build"; else echo "var/build"; fi)
 INSTALL_DIR := $(shell if [ -f "/.dockerenv" ]; then echo "var/container/.install"; else echo "var/install"; fi)
 
+# Python interpreter used by the test/coverage/linter targets. Prefer a local
+# virtualenv (.venv), then a conda env named $(ENVNAME), then the system python3.
+# Override explicitly with `make tests PYTHON=...` if needed.
+ifndef PYTHON
+PYTHON := $(shell \
+	if [ -x ".venv/bin/python" ]; then echo ".venv/bin/python"; \
+	elif command -v conda >/dev/null 2>&1 && conda env list | grep -q "$(ENVNAME)"; then echo "conda run -n $(ENVNAME) python"; \
+	else echo "python3"; fi)
+endif
+
 ## Display the help message
 help: usage
 usage: motd
@@ -184,16 +194,20 @@ examples: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) examples
 
-## Run Python unit tests with a summary coverage report (% per module)
+## Run the Python unit-test suite with a per-module coverage summary
 tests: motd
-	@conda run -n $(ENVNAME) env FORCE_COLOR=1 pytest tests/ --tb=short --color=yes \
+	@FORCE_COLOR=1 $(PYTHON) -m pytest tests/ --tb=short --color=yes \
 		--cov=modules --cov-report=term
 
-## Run Python unit tests and list every uncovered function by name
+## Run the unit tests, then list every uncovered function by name
 coverage: motd
-	@conda run -n $(ENVNAME) env FORCE_COLOR=1 pytest tests/ --tb=short --color=yes \
+	@FORCE_COLOR=1 $(PYTHON) -m pytest tests/ --tb=short --color=yes \
 		--cov=modules --cov-report=term -q
-	@conda run -n $(ENVNAME) python3 share/coverage.py
+	@$(PYTHON) share/coverage.py
+
+## Lint the Python sources with ruff (correctness-focused; see [tool.ruff] in pyproject)
+linter: motd
+	@$(PYTHON) -m ruff check modules/ tests/
 
 ## Install the project in the final directory
 install: motd

@@ -1,5 +1,17 @@
+"""Extended Kalman Filter (EKF) — wraps a model with the Jacobian engine."""
+from ..framework.filter import KalmanFilter
+from ..framework.constants import EngineKind
 
-from ..framework.model import KalmanModel
 
-class ExtendedKalmanFilter(KalmanModel):
-    pass
+class ExtendedKalmanFilter(KalmanFilter):
+    """
+    Extended Kalman filter (Jacobian linearisation). Runs on nonlinear models and
+    reduces to the linear computation on matrix models::
+
+        ekf = ExtendedKalmanFilter(BallisticModel("gps", fs=10))
+        rec = ekf.forward(zk)
+    """
+
+    NAME = "Extended Kalman Filter"
+    DESCRIPTION = "Extended Kalman filter (EKF): Jacobian engine over a model."
+    KIND = EngineKind.EXTENDED

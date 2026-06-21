@@ -4,7 +4,6 @@ import warnings
 warnings.filterwarnings('ignore')
 import numpy as np
 from kalman.apps.ballistics import BallisticModel
-from kalman.framework.filter import KalmanFilter
 from kalman.filters.ukf import UnscentedKalmanFilter
 from kalman.helpers import make_multirate_input
 
@@ -20,7 +19,6 @@ class BallisticDopplerModel(BallisticModel):
         new_R[3, 3] = float(vel_noise) ** 2
         self._R = new_R
         self.m = 4
-        self.attach(KalmanFilter(self))
     def h(self, x, v=None, t=None):
         x = np.asarray(x).reshape(-1)
         p = x[[0,3,6]]; vel = x[[1,4,7]]
@@ -54,7 +52,6 @@ class BallisticAugmentedModel(BallisticModel):
         self._Q = Q10
         x0 = np.zeros((10,1), dtype=self.dtype); x0[:9] = self.x0; self.x0 = x0
         P0 = np.zeros((10,10), dtype=self.dtype); P0[:9,:9] = self.P0; P0[9,9] = 1.0; self.P0 = P0
-        self.attach(KalmanFilter(self))
     def f(self, x, u=None, w=None, t=None):
         x = np.asarray(x, dtype=self.dtype).reshape(-1,1)
         old = self["c_drag"]; self["c_drag"] = float(x[9,0])
@@ -87,8 +84,8 @@ m_ukf = BallisticModel('XYZ', order=3, fs=64, c_drag=0.002,
 m_ukf.initial_state([[100,80,0],[200,80,0],[300,80,-9.81]])
 s_ukf = m_ukf.sample(4)
 ukf = UnscentedKalmanFilter(model=m_ukf, alpha=1e-3)
-xk_u, Pk_u = ukf.filter(s_ukf.zk, reset=True)
-print(f'[3] UKF filter OK  xk={xk_u.shape}  finite={np.isfinite(xk_u).all()}')
+r_ukf = ukf.forward(s_ukf.zk, reset=True)
+print(f'[3] UKF filter OK  xk={r_ukf.xk.shape}  finite={np.isfinite(r_ukf.xk).all()}')
 
 # ---- Multi-rate ----
 m_mr = BallisticModel('XYZ', order=3, fs=128, measurement_uncertainty=300,

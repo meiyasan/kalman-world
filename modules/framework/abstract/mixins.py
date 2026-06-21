@@ -6,61 +6,47 @@ from typing import Any, Optional
 
 from ...helpers import as_col, format_shape
 from ..io.record import KalmanRecord
-from .metadata import KalmanModelMetadata, KalmanEngineMetadata
+from .metadata import KalmanModelMetadata, KalmanEngineMetadata, KalmanFilterMetadata
 from ..constants import KalmanStateFlavor
 
-from .contracts import KalmanModelABC, KalmanEngineABC
+from .contracts import KalmanModelABC, KalmanEngineABC, KalmanFilterABC
 class KalmanProxyMixin:
     """
-    Drop-in mixin for KalmanModel:
-      - self.foo(...) uses self.foo if present; otherwise tries engine.foo(...)
-      - self.call("foo", ...) does the same explicitly
-      - self(...): forwards to engine if engine is callable
+    Model-side convenience sugar (intent: the model is *not* the algorithm).
+
+    ``filter()`` / ``smooth()`` lazily build and cache a default ``KalmanFilter``
+    (composition ``model + engine``, the engine resolved from ``DEFAULT_ENGINE``);
+    ``sample()`` builds a ``KalmanSampler`` over the model. The model holds no
+    filtering equations or history — the transient filter does.
     """
-    _engine: Any = None  # attach an engine object with attributes/methods to delegate to
-    def attach(self: KalmanModelMetadata, engine: Any = None, **kwargs):
+    _filter: Any = None  # cached default KalmanFilter from the last filter()/smooth()
 
-        if engine is None:
-            raise ValueError("Engine must be provided (class or instance of KalmanEngineABC).")
-
-        # If a class is passed, ensure it subclasses KalmanEngineABC and instantiate it
-        if isclass(engine):
-            if not issubclass(engine, KalmanEngineABC):
-                raise TypeError(f"Engine class must subclass KalmanEngineABC, got {engine}")
-            engine = engine(self, **kwargs)
-        else:
-            # If an instance is passed, ensure it is an instance of KalmanEngineABC
-            if not isinstance(engine, KalmanEngineABC):
-                raise TypeError(f"Engine must be a KalmanEngineABC instance or class, got {type(engine)}")
-
-        self._engine = engine
-        self._engine.bind(self)
-        self._engine.reset()
-        return self
-
-    def _check_engine(self) -> KalmanEngineMixin:
-
-        from .contracts import KalmanEngineABC
-        if not isinstance(self._engine, KalmanEngineABC):
-            raise RuntimeError("No engine class attached to model; cannot proceed.")
-        return self._engine
+    def _make_filter(self):
+        from ..filter import KalmanFilter
+        self._filter = KalmanFilter(self)   # engine resolved from self.DEFAULT_ENGINE
+        return self._filter
 
     def filter(self, z, u=None, **kwargs):
         # Accept uk= as an alias for u= (mirrors forward()'s parameter name).
         if u is None:
             u = kwargs.pop("uk", None)
 
+        flt = self._make_filter()
         if kwargs.pop("smooth", False):
-            return self._check_engine().forward(z, u, **kwargs).backward(**kwargs)
+            flt.forward(z, u, record=False, **kwargs)
+            return flt.backward(**kwargs)
 
         kwargs["record"] = True
-        return self._check_engine().forward(z, u, **kwargs)
-    
+        return flt.forward(z, u, **kwargs)
+
     def smooth(self, **kwargs):
-        return self._check_engine().backward(**kwargs)
+        if self._filter is None:
+            raise RuntimeError("No prior forward pass; call filter() first.")
+        return self._filter.backward(**kwargs)
+
     def sample(self, duration: float, **kwargs) -> KalmanRecord:
         from ..sampler import KalmanSampler
-        return KalmanSampler(self._check_engine()).measurement(duration, **kwargs)
+        return KalmanSampler(self).measurement(duration, **kwargs)
 
     def truth(self, duration: float = None):
         record = self.sample(duration, process_noise=True, measurement_noise=False)
@@ -330,8 +316,77 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
             if P0.ndim == 1:
                 P0 = np.diag(P0)
             P0 = np.resize(P0, (n, n))
-    
+
         self.P0 = P0
+
+    # ------------------------------------------------------
+    # Measurement <-> state mapping (via the observation matrix H)
+    # ------------------------------------------------------
+    def exclusive_mapping(self, state_idx, meas_idx) -> bool:
+        """Check if measurement(s) exclusively observe state(s) (via H)."""
+        if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
+            n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
+                    len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
+            state_idx = KalmanRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
+            for i in range(n):
+                if not self.exclusive_mapping(state_idx[i], meas_idx[i]):
+                    return False
+            return True if n else False
+        else:
+            s = state_idx.value if hasattr(state_idx, 'value') else int(state_idx)
+            assert 0 <= s < self.n
+            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
+            assert 0 <= m < self.m
+            return self.H()[m, s] != 0
+
+    def inclusive_mapping(self, state_idx, meas_idx) -> bool:
+        """Check if measurement(s) depend on state(s) in any way (via H)."""
+        if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
+            n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
+                    len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
+            state_idx = KalmanRecord._normalize_index(state_idx, n)
+            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
+            for i in range(n):
+                if self.inclusive_mapping(state_idx[i], meas_idx[i]) is False:
+                    return False
+            return True if n else False
+        else:
+            s = state_idx.value if hasattr(state_idx, 'value') else int(state_idx)
+            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
+            assert 0 <= s < self.n
+            assert 0 <= m < self.m
+            return self.H()[m, s] != 0
+
+    # ------------------------------------------------------
+    # Signature-figure renderers (apps override for bespoke layouts;
+    # the public ``plot`` entry point dispatches to these).
+    # ------------------------------------------------------
+    def _plot_static(self, record, sample=None, *, component, error=True, **kwargs):
+        """Default static figure: one time-series panel per state component plus an
+        optional measurement-error panel (override per app for a bespoke layout)."""
+        from ...helpers import get_canvas
+        comps = list(component) if isinstance(component, (list, tuple)) else [component]
+        n = len(comps) + (1 if error else 0)
+        axes = np.atleast_1d(get_canvas(n, 1)).ravel()
+        for i, comp in enumerate(comps):
+            record.plot(component=comp, sample=sample, canvas=axes[i], **kwargs)
+        if error:
+            record.plot_error(sample=sample, canvas=axes[len(comps)])
+        return axes[0].figure
+
+    def _plot_interactive(self, record, sample=None, *, component, error=True, **kwargs):
+        """Default interactive figure: the joint-slider time-cursor dashboard
+        (override per app for a bespoke interactive layout). Inside a Jupyter kernel it
+        returns an embedded HTML player; elsewhere a Matplotlib ``FuncAnimation``."""
+        comps = list(component) if isinstance(component, (list, tuple)) else [component]
+        try:
+            from IPython import get_ipython
+            in_nb = getattr(get_ipython(), "kernel", None) is not None
+        except Exception:
+            in_nb = False
+        kwargs.setdefault("jshtml", in_nb)
+        return record.plot(interactive=True, component=comps, sample=sample, error=error, **kwargs)
 
 class KalmanStateMixin:
 
@@ -386,16 +441,57 @@ class KalmanStateMixin:
             return state[ith]
         return np.array([s[ith] for s in state]) if state is not None else None
 
-class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
+class KalmanEngineMixin(KalmanEngineABC):
+    """
+    Thin base behaviour shared by all engines.
+
+    Engines are stateless w.r.t. run state — they receive ``(model, x, P, …)`` per
+    step and return the new belief. The only optional per-run hook is
+    ``reset(model)`` for engines that carry their own state (e.g. ``ParticleEngine``).
+    """
+    KIND = None
+
+    def reset(self, model):
+        """No-op for stateless engines; stateful engines (PF) override to (re)seed."""
+        return self
+
+    def infer(self, model, x, P, z, u=None, t=None, **kwargs):
+        """One full step: predict then (missing-measurement-aware) update.
+
+        Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.
+        """
+        xp, Pp, F = self._predict(model, x, P, u=u, t=t, **kwargs)
+        xpost, Ppost = self._update(model, xp, Pp, z, t=t, **kwargs)
+        return (xp, Pp), (xpost, Ppost), F
+
+class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
+    """
+    Filter-side behaviour: owns the run state and the state getters, delegates
+    dimensions/time to the model, and builds records. ``forward``/``backward`` are
+    implemented by the concrete :class:`~kalman.framework.filter.KalmanFilter`.
+    """
 
     # -------------------------------
-    # Model binding and access
+    # Composition accessors
     # -------------------------------
-    def bind(self, model: KalmanModelMixin):
-        self._model = model
+    @property
+    def model(self) -> 'KalmanModelMixin | KalmanModelMetadata':
+        return self._model
+    @property
+    def engine(self):
+        return self._engine
+
+    def _check_engine(self):
+        """Return the attached engine, validating it is a KalmanEngineABC.
+
+        Kept for now; a future `get_engine(check=True)` may supersede it.
+        """
+        if not isinstance(self._engine, KalmanEngineABC):
+            raise RuntimeError("No valid engine attached to filter; cannot proceed.")
+        return self._engine
 
     # -------------------------------
-    # Basic dimension properties
+    # Dimensions (delegate to model)
     # -------------------------------
     @property
     def n(self):
@@ -406,32 +502,28 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
     @property
     def l(self):
         return self.model._infer_l()
-
-    @property
-    def model(self) -> 'KalmanModelMixin | KalmanModelMetadata':
-        return self._model
     @property
     def fs(self) -> float:
         return self.model.fs
-    
+
     # -------------------------------
-    # Basic engine API
+    # Time helpers (delegate to model)
     # -------------------------------
     def time(self, k: Optional[int] = None) -> float:
         return self.model.time(k if k is not None else len(self.posterior)/self.fs)
-    def duration(self, k: int) -> float:
+    def duration(self, k: Optional[int] = None) -> float:
         return self.model.duration(k if k is not None else len(self.posterior)/self.fs)
     def sample_rate(self) -> float:
         return self.model.fs
 
+    # -------------------------------
+    # Run-state management
+    # -------------------------------
     def reset_to_latest(self):
         self.reset(to_latest=True)
 
     def reset(self, to_latest=False):
-        """
-        Reset engine state. Enforce at runtime that self provides both the
-        KalmanEngineMetadata and KalmanStateTupleMixin APIs.
-        """
+        """Reset the filter run state (x/P + logs); re-seed a stateful engine."""
         if to_latest:
             self.model.P0 = self.get_latest_state_covariance()
             self.model.x0 = self.get_latest_state_vector()
@@ -447,7 +539,11 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
 
         self.measurement = []
         self.control = []
-        self.transition = []   # RTS smoother transition matrices
+        self.transition = []
+
+        # let a stateful engine (e.g. ParticleEngine) (re)seed its own state
+        self.engine.reset(self.model)
+        return self
 
     def __call__(self, gk, uk=None, **kwargs):
         return self.forward(gk, uk, **kwargs)
@@ -457,6 +553,9 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
     def __getitem__(self, idx):
         return self.posterior[idx]
 
+    # -------------------------------
+    # Record building
+    # -------------------------------
     def get_record(self, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanRecord:
 
         indexing    = kwargs.pop("indexing", None)
@@ -466,91 +565,24 @@ class KalmanEngineMixin(KalmanEngineABC, KalmanStateMixin):
             flavor = KalmanStateFlavor.SMOOTHED
 
         if self.prior is None or self.posterior is None:
-            raise ValueError("No prior or posterior estimates available. Please run filter() first.")
+            raise ValueError("No prior or posterior estimates available. Please run forward() first.")
 
         if flavor is KalmanStateFlavor.PRIOR:
             xk_hat, Pk_hat = self.get_prior_state_vector(), self.get_prior_state_covariance()
         elif flavor is KalmanStateFlavor.POSTERIOR:
             xk_hat, Pk_hat = self.get_posterior_state_vector(), self.get_posterior_state_covariance()
         elif flavor is KalmanStateFlavor.SMOOTHED:
-            xk_hat, Pk_hat = self.get_smooth_state_vector(), self.get_smooth_state_covariance()        
+            xk_hat, Pk_hat = self.get_smooth_state_vector(), self.get_smooth_state_covariance()
         else:
             raise ValueError(f"Unexpected flavor {flavor} for KalmanRecord.")
-            
+
         if inprocess:
             xk_hat = self.model.inprocess(xk_hat, **kwargs)
-
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk_hat = KalmanRecord._normalize_out(xk_hat)
 
-        zk_hat = KalmanRecord._normalize_out([self._model.h(x.reshape(-1, 1)) for x in xk_hat], indexing=indexing)
+        zk_hat = KalmanRecord._normalize_out([self.model.h(x.reshape(-1, 1)) for x in xk_hat], indexing=indexing)
         if postprocess:
             zk_hat = self.model.postprocess(zk_hat, **kwargs)
 
-        return KalmanRecord(self.time(), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=flavor, engine=self)
-
-    def get_posterior_record(self) -> KalmanRecord:
-        if not self.posterior: return KalmanRecord()
-        return KalmanRecord(self, self.time(), self.get_posterior_state_vector(), self.get_posterior_state_covariance(),
-                                 zk=self.get_measurement(), flavor=KalmanStateFlavor.POSTERIOR, model=self)
-
-    def get_prior_record(self) -> KalmanRecord:
-        if not self.prior: return KalmanRecord()
-        return KalmanRecord(self, self.time(), self.get_prior_state_vector(), self.get_prior_state_covariance(),
-                                 zk=self.get_measurement(), flavor=KalmanStateFlavor.PRIOR, model=self)
-
-    def get_smooth_record(self) -> KalmanRecord:
-        if not self.smooth: return KalmanRecord()
-        return KalmanRecord(self, self.time(), self.get_smooth_state_vector(), self.get_smooth_state_covariance(),
-                                 zk=self.get_measurement(), flavor=KalmanStateFlavor.SMOOTHED, model=self)
-
-    def exclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple) -> bool:
-
-        """Check if measurement(s) exclusively observe state(s)."""
-        # Convert to arrays
-        if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
-            
-            # Determine broadcasting length
-            n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
-                    len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
-            
-            state_idx = KalmanRecord._normalize_index(state_idx, n)
-            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
-            
-            for i in range(n):
-                if not self.exclusive_mapping(state_idx[i], meas_idx[i]):
-                    return False
-
-            return True if n else False
-
-        else:
-
-            s = state_idx.value if hasattr(state_idx, 'value') else int(state_idx)
-            assert 0 <= s < self.n
-            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
-            assert 0 <= m < self.m
-
-            return self.model.H()[m, s] != 0
-
-    def inclusive_mapping(self, state_idx: int|tuple, meas_idx: int|tuple) -> bool:
-        """Check if measurement(s) depend on state(s) in any way."""
-        if isinstance(state_idx, (tuple, list, np.ndarray)) or isinstance(meas_idx, (tuple, list, np.ndarray)):
-            # Determine broadcasting length
-            n = max(len(state_idx) if hasattr(state_idx, "__len__") else 1,
-                    len(meas_idx) if hasattr(meas_idx, "__len__") else 1)
-            
-            state_idx = KalmanRecord._normalize_index(state_idx, n)
-            meas_idx  = KalmanRecord._normalize_index(meas_idx, n)
-
-            for i in range(n):
-                if self.inclusive_mapping(state_idx[i], meas_idx[i]) is False:
-                    return False
-
-            return True if n else False
-            
-        else:
-            s = state_idx.value if hasattr(state_idx, 'value') else int(state_idx)
-            m = meas_idx.value  if hasattr(meas_idx,  'value') else int(meas_idx)
-            assert 0 <= s < self.n
-            assert 0 <= m < self.m
-            return self.H[m, s] != 0
+        return KalmanRecord(self.time(), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=flavor, model=self.model)

@@ -10,16 +10,43 @@ license = { file = "LICENSE" }
 homepage = "https://max-planck.sv.yc.tcu.ac.jp/kagra/sus/kalman-framework"
 
 [project.optional-dependencies]
-test = ["unittest"]
+test = ["pytest>=8", "pytest-cov>=5", "coverage>=7", "ruff>=0.6"]
 
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+
+[tool.coverage.run]
+source = ["modules"]
+# runtime/* is logging/timing infrastructure, not core filter/model logic.
+omit = ["modules/runtime/*"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["var", "share", ".venv"]
+
+[tool.ruff.lint]
+# House style in this Kalman codebase is deliberate: compact one-liners (E701/E702) and
+# single-letter mathematical names (n, m, l, F, H, Q, R ...; E741). Lint for correctness
+# (pyflakes + syntax) rather than cosmetics, and allow the intentional `from helpers import *`.
+select = ["E9", "F"]
+ignore = ["F403", "F405"]
+
 [tool.setuptools]
 package-dir = { "kalman" = "modules" }  # Escaping curly braces
 packages = [
 	"kalman",
-	"kalman.core",
-	"kalman.models"
+	"kalman.runtime",
+	"kalman.framework",
+	"kalman.framework.abstract",
+	"kalman.framework.io",
+	"kalman.framework.engines",
+	"kalman.framework.models",
+	"kalman.filters",
+	"kalman.apps",
 ]

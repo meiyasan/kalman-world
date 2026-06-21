@@ -105,23 +105,38 @@ class KalmanModelABC(ABC):
 class KalmanEngineABC(ABC):
 
     """
-    Abstract base class for Kalman engines.
-    Subclasses must implement _predict / _update methods.
+    Abstract base class for Kalman engines — the inference algorithm (HOW).
+
+    An engine implements one estimation *step*; it is handed the model and the
+    current belief ``(x, P)`` and returns the new belief. It owns no run state and
+    knows nothing about workflow (that is the Filter's job).
     """
     @abstractmethod
-    def _predict(self, x, P, u = None, w = None, **kwargs):
-        """Perform prediction step."""
+    def _predict(self, model, x, P, u=None, w=None, t=None, **kwargs):
+        """Prediction step: return ``(x_pred, P_pred, F)``."""
         ...
     @abstractmethod
-    def _update(self, z):
-        """Perform update step."""
+    def _update(self, model, x, P, z, t=None, **kwargs):
+        """Update step: return ``(x_post, P_post)`` (missing-measurement aware)."""
+        ...
+    @abstractmethod
+    def _smooth(self, model, post_k, prior_next, smooth_next, F_k):
+        """RTS smoothing equations for one reverse step: return ``(x_s, P_s)``."""
         ...
 
+class KalmanFilterABC(ABC):
+
+    """
+    Abstract base class for Kalman filters — the workflow (WHEN).
+
+    A filter composes a ``model`` and an ``engine``, owns the run state and decides
+    when/in which order the engine's steps run.
+    """
     @abstractmethod
-    def forward(self, z, u = None, **kwargs) -> 'KalmanEngineABC | KalmanRecord':
-        """Perform forward filtering over given measurements and controls."""
+    def forward(self, z, u=None, **kwargs) -> 'KalmanFilterABC | KalmanRecord':
+        """Forward filtering pass over the given measurements and controls."""
         ...
     @abstractmethod
     def backward(self, **kwargs) -> KalmanRecord:
-        """Perform backward smoothing over stored states."""
+        """Backward (RTS) smoothing pass over the stored states."""
         ...
