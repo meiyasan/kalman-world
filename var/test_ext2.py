@@ -4,7 +4,6 @@ import warnings
 warnings.filterwarnings('ignore')
 import numpy as np
 from kalman.apps.ballistics import BallisticModel
-from kalman.framework.filter import KalmanFilter
 from kalman.filters.ukf import UnscentedKalmanFilter
 from kalman.helpers import make_multirate_input
 
@@ -34,7 +33,6 @@ class BallisticDopplerModel(BallisticModel):
                 z += np.asarray(v, dtype=dtype).reshape(4, 1)
             return z
         self.h = _h
-        self.attach(KalmanFilter(self))
 
 m_dop = BallisticDopplerModel('XYZ', order=3, fs=64,
                                measurement_uncertainty=300,
@@ -73,7 +71,6 @@ class BallisticAugmentedModel(BallisticModel):
             x = np.asarray(x, dtype=dtype).reshape(-1, 1)
             return _parent_h(x[:9], v=v, t=t)
         self.f = _aug_f; self.h = _aug_h
-        self.attach(KalmanFilter(self))
 
     def initial_state(self, x0=None, P0=None):
         """Override to pad a 9D initial state to 10D, setting c_drag=0."""
@@ -110,8 +107,8 @@ m_ukf = BallisticModel('XYZ', order=3, fs=64, c_drag=0.002,
 m_ukf.initial_state([[100, 80, 0], [200, 80, 0], [300, 80, -9.81]])
 s_ukf = m_ukf.sample(4)
 ukf = UnscentedKalmanFilter(model=m_ukf, alpha=1e-3)
-xk_u, Pk_u = ukf.filter(s_ukf.zk, reset=True)
-print(f'[3] UKF filter  xk={xk_u.shape}  finite={np.isfinite(xk_u).all()}')
+r_ukf = ukf.forward(s_ukf.zk, reset=True)
+print(f'[3] UKF filter  xk={r_ukf.xk.shape}  finite={np.isfinite(r_ukf.xk).all()}')
 
 # ---- Extension 4: Multi-rate ----
 m_mr = BallisticModel('XYZ', order=3, fs=128,

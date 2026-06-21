@@ -207,6 +207,45 @@ def get_canvas3d(*args, **kwargs):
     kwargs["projection"] = "3d"
     return get_canvas(*args, **kwargs)
 
+def animate(fig, draw, frames, *, interval=90, jshtml=None, blit=False):
+    """Build a matplotlib ``FuncAnimation`` and return it ready for the current environment.
+
+    One animation primitive serves both worlds, which is why every ``_plot_interactive`` /
+    replay routine funnels through ``FuncAnimation``:
+
+      - inside a **Jupyter** kernel it returns a self-contained ``IPython.display.HTML``
+        play/scrub player (via ``anim.to_jshtml()``) that survives notebook serialization
+        with no live kernel;
+      - in a plain **Python** session it returns the raw ``FuncAnimation`` so a GUI
+        backend's ``plt.show()`` plays it live.
+
+    Parameters
+    ----------
+    fig : matplotlib Figure        the figure to animate (closed here so the static frame
+                                   isn't also rendered alongside the player).
+    draw : callable                per-frame update ``draw(frame)`` (the ``_draw`` closure).
+    frames : iterable | int        frame indices forwarded to ``FuncAnimation``.
+    interval, blit                 standard ``FuncAnimation`` knobs.
+    jshtml : bool | None           force the HTML player (True) or the raw anim (False);
+                                   ``None`` auto-detects whether an IPython kernel is active.
+    """
+    from matplotlib.animation import FuncAnimation
+    anim = FuncAnimation(fig, draw, frames=frames, interval=interval, blit=blit)
+    plt.close(fig)
+    if jshtml is None:
+        try:
+            from IPython import get_ipython
+            jshtml = getattr(get_ipython(), "kernel", None) is not None
+        except Exception:
+            jshtml = False
+    if jshtml:
+        try:
+            from IPython.display import HTML
+            return HTML(anim.to_jshtml())
+        except Exception:
+            return anim
+    return anim
+
 def str2enum(e, _type: Enum):
     if isinstance(e, str):
         try:

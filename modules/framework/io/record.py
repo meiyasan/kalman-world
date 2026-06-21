@@ -24,11 +24,8 @@ class KalmanRecord:
     Pk:   np.ndarray = field(default_factory=lambda: np.array([])) # state covariance
     zk:   np.ndarray = field(default_factory=lambda: np.array([])) # measurement vector
 
-    # Engine and Model references
-    engine: object = None
-    @property
-    def model(self):
-        return self.engine.model if self.engine is not None else None
+    # Model reference (a record describes model output: dims, states/observables, mappings)
+    model: object = None
 
     # Optional flavor
     flavor: KalmanStateFlavor = None
@@ -76,12 +73,12 @@ class KalmanRecord:
         return a
 
     def __post_init__(self):
-        from ..abstract.contracts import KalmanEngineABC
+        from ..abstract.contracts import KalmanModelABC
         object.__setattr__(self, "time", self.__freeze_array(self.time))
         object.__setattr__(self, "zk",   self.__freeze_array(self.zk))
         object.__setattr__(self, "xk",   self.__freeze_array(self.xk))
         object.__setattr__(self, "Pk",   self.__freeze_array(self.Pk))
-        object.__setattr__(self, "engine", self.engine)
+        object.__setattr__(self, "model", self.model)
         object.__setattr__(self, "flavor", self.flavor)
 
         # -----------------------------
@@ -90,16 +87,16 @@ class KalmanRecord:
         if not isinstance(self.time, (np.ndarray, list, tuple)):
             raise ValueError(f"'time' must be a numpy array or list, got {type(self.time)}")
 
-        assert self.engine is None or isinstance(self.engine, KalmanEngineABC), \
-            f"'engine' must be a KalmanEngine instance, got {type(self.engine)}"
+        assert self.model is None or isinstance(self.model, KalmanModelABC), \
+            f"'model' must be a KalmanModel instance, got {type(self.model)}"
         assert self.flavor is None or isinstance(self.flavor, KalmanStateFlavor), \
             f"'flavor' must be of type KalmanStateFlavor, got {type(self.flavor)}"
 
         # -----------------------------
-        # Shape validation if engine provided
+        # Shape validation if model provided
         # -----------------------------
-        if self.engine is not None:
-            n, m = self.engine.n, self.engine.m
+        if self.model is not None:
+            n, m = self.model.n, self.model.m
             N = len(self.xk)
 
             if self.xk.size > 0:
@@ -251,7 +248,7 @@ class KalmanRecord:
 
         raise IndexError(f"Index {idx} does not match any State/Observation member.")
     
-    def _normalize_component(self, component, *, preserve_shape: bool = False):
+    def _normalize_component(self, component, *, preserve_shape: bool = False, count: int | None = None):
         """
         Normalize `component` with ambiguity-safe enum resolution.
 
@@ -261,9 +258,14 @@ class KalmanRecord:
             * flat list/tuple -> list[Enum]
             * nested list/tuple -> list[tuple[Enum, ...]]  (one nesting level preserved)
         - preserve_shape=False (default / plotting path):
-            * returns a tuple[Enum, ...] of length `self.dim`
-                (pad by repeating last; truncate if longer)
+            * returns a tuple[Enum, ...] of length `count` (pad by repeating last;
+              truncate if longer). `count` defaults to `self.dim`, but plotters that
+              need a fixed number of components regardless of the sensor count pass it
+              explicitly — e.g. a 2-D phase plot passes ``count=2`` so a single-sensor
+              model (``self.dim == 1``) keeps both phase components instead of
+              truncating to one.
         """
+        need = max(1, count if count is not None else (self.dim or 1))
         # --- local resolver that yields an Enum or raises ---
         def _norm_one(v):
             if isinstance(v, _PyEnum):
@@ -280,8 +282,8 @@ class KalmanRecord:
             member = _norm_one(component)
             if preserve_shape:
                 return member
-            # flattening mode: repeat to dim
-            return tuple([member] * max(1, self.dim or 1))
+            # flattening mode: repeat to the requested count (defaults to self.dim)
+            return tuple([member] * need)
 
         # --- sequence path: detect one-level nesting --------------------------------
         seq = list(component)
@@ -319,7 +321,6 @@ class KalmanRecord:
             # fallback: one arbitrary member replicated (but this should rarely happen)
             return tuple([_norm_one(0)] * max(1, self.dim or 1))
 
-        need = max(1, self.dim or 1)
         if len(flat) < need:
             flat += [flat[-1]] * (need - len(flat))
         elif len(flat) > need:
@@ -788,11 +789,26 @@ class KalmanRecord:
         dim       = kwargs.pop("dim", None)
 
         view       = kwargs.pop("view", "auto")
+        slider     = kwargs.pop("slider", False) or kwargs.pop("interactive", False) or kwargs.pop("replay", False)
+        error      = kwargs.pop("error", False)
+
+        dim_explicit  = dim is not None
+        is_multi_comp = isinstance(component, (list, tuple)) and len(component) > 1
+
         def _is_single(x):
             if x is None: return False
             return not isinstance(x, (list, tuple)) or (isinstance(x, (list, tuple)) and len(x) == 1)
 
         if view == "auto" and _is_single(component) and _is_single(dim):
+            view = "1d"
+        # A multi-component request without an explicit axis is a per-component
+        # *dashboard* (one panel per component vs time), not a cross-axis phase
+        # plot: resolve it to 1d so each component indexes its own state slot
+        # (idx = _spc*axis + comp_id). Otherwise auto-filling dim to the available
+        # sensor axes (e.g. [0, 1]) forces a 2d phase plot whose second axis
+        # overflows on models that carry one component per axis (AnalyticOscillator
+        # re/im, _spc=1 → iy = _spc*1 + 1 = 2 on a 2-wide state vector).
+        elif view == "auto" and is_multi_comp and not dim_explicit:
             view = "1d"
 
         # ----------------------- small local helpers ------------------------------
@@ -827,14 +843,47 @@ class KalmanRecord:
         view = _decide_view(view, len(dim))
         need = _need_by_view(view) or len(dim)
 
-        # if dim shorter than need, extend with 0,1,2…; if longer, trim
+        # if dim shorter than need, extend with 0,1,2…; if longer, trim.
+        # Clamp extra axes to the available spatial axes so a 2D *phase* plot on a
+        # single-sensor model (e.g. position-vs-speed) reuses axis 0 for both
+        # components instead of indexing a non-existent axis.
         base_axes = [0, 1, 2]
         if len(dim) < need:
-            dim = list(dim) + base_axes[len(dim):need]
+            extra = [min(a, dim_available - 1) for a in base_axes[len(dim):need]]
+            dim = list(dim) + extra
         elif len(dim) > need:
             dim = list(dim[:need])
 
-        component = self._normalize_component(component)
+        # An explicit multi-component 2d/3d plot with no axis given is a *phase /
+        # state-space* portrait: the distinct components share one sensor axis
+        # (idx = _spc*axis + comp_id), so collapse the auto-filled axis list onto
+        # dim[0] rather than spreading components across separate sensor axes
+        # (which overflows on one-component-per-axis models, e.g. _spc=1).
+        if is_multi_comp and not dim_explicit and view in ("2d", "3d"):
+            dim = [dim[0]] * need
+
+        # ----------------------- interactive (time-slider) variant ----------------
+        if slider:
+            # multi-panel dashboard: a list of components and/or a measurement-error pad
+            is_list = isinstance(component, (list, tuple)) and len(component) > 1
+            if view != "2d" and (is_list or error):
+                return self._replay(component=list(component) if is_list else [component],
+                                   dim=dim[0], view="1d", sample=kwargs.get("sample"), error=error,
+                                   jshtml=kwargs.pop("jshtml", False),
+                                   frames=kwargs.pop("frames", 80), interval=kwargs.pop("interval", 90))
+            if view == "2d" or len(dim) >= 2:
+                cc = list(component) if isinstance(component, (list, tuple)) else [component, component]
+                return self._replay(component=cc[:2], dim=dim[:2], view="2d",
+                                   sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
+                                   frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
+            c = component[0] if isinstance(component, (list, tuple)) else (component if component is not None else 0)
+            return self._replay(component=c, dim=dim[0], view="1d",
+                               sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
+                               frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
+
+        # `need` is the view's component count (1d→1, 2d→2, 3d→3); pass it so phase
+        # plots keep all components even when the model has fewer sensor axes.
+        component = self._normalize_component(component, count=need)
 
         # ----------------------- dispatch -----------------------------------------
         if view == "3d":
@@ -848,6 +897,249 @@ class KalmanRecord:
             ax.set_title(kwargs.pop("title", self.model.name() if self.model else "Generic Kalman Model"))
 
         return fig, ax
+
+    def replay(self, *args, **kwargs):
+        """Deprecated: use ``model.plot(record, sample=sample, interactive=True)``
+        (or ``record.plot(replay=True, ...)``). Kept as a thin alias."""
+        import warnings
+        warnings.warn(
+            "record.replay(...) is deprecated; use model.plot(record, sample=sample, "
+            "interactive=True) to animate the model's signature figure.",
+            DeprecationWarning, stacklevel=2,
+        )
+        return self._replay(*args, **kwargs)
+
+    def _replay(self, component=0, dim=0, sample=None, view="1d", frames=80,
+               interval=90, jshtml=False, figsize=None, dpi=80, title=None, error=False):
+        """
+        Interactive **time-cursor replay** of the reconstruction — play the filtered
+        estimate as a function of time, optionally overlaying the **truth** and the noisy
+        **measurements** (pass the sampled record as ``sample=``) so you can watch the
+        filter track the data.
+
+        Works both in a plain **Python window** (a GUI backend → ``plt.show()`` plays it)
+        and in **Jupyter** (``jshtml=True`` returns an embedded play/scrub-slider player).
+        It is also reachable as ``record.plot(slider=True, ...)`` with the same
+        ``component`` / ``dim`` / ``sample`` arguments as :meth:`plot`.
+
+            rec = model.filter(z)
+            rec.replay(jshtml=True)                      # estimate of component 0 vs time
+            rec.replay(component="speed", sample=truth, jshtml=True)
+            rec.replay(component=["position","speed"], view="2d", jshtml=True)  # phase plane
+
+        Parameters
+        ----------
+        component : int | Enum | str | pair
+            State component(s) (same meaning as in :meth:`plot`); a pair is needed for ``view="2d"``.
+        dim : int | pair
+            Spatial/sensor axis (or pair of axes for 2D).
+        sample : KalmanRecord | None
+            A sampled record (truth ``xk`` + measurements ``zk``) to overlay.
+        view : "1d" | "2d"
+            Component-vs-time (default) or a two-component phase plot.
+        jshtml : bool
+            If True, return an ``IPython.display.HTML`` slider player; else a ``FuncAnimation``.
+        """
+        import matplotlib.pyplot as plt
+
+        t = np.asarray(self.time)
+        if t is None or len(t) < 2:
+            return None
+        N = len(t)
+
+        # Multi-panel dashboard: a list of components and/or a measurement-error
+        # pad, all driven by ONE joint time slider (uses the standard palette).
+        comps = list(component) if isinstance(component, (list, tuple, np.ndarray)) else [component]
+        if view != "2d" and (len(comps) > 1 or error):
+            return self._replay_dashboard(
+                comps, dim=dim, sample=sample, frames=frames, interval=interval,
+                jshtml=jshtml, figsize=figsize, dpi=dpi, title=title, error=error)
+
+        fr = list(range(0, N, max(1, N // max(1, frames)))) + [N - 1]
+        base_title = title or (self.model.name() if self.model is not None else "Kalman record")
+
+        def _resolve(c):
+            """Return (component_index, label_object) without the ambiguous-index error."""
+            if isinstance(c, (int, np.integer)):
+                cid = int(c)
+                try:
+                    states = list(self.model.states)
+                    lbl = states[cid] if 0 <= cid < len(states) else cid
+                except Exception:
+                    lbl = cid
+                return cid, lbl
+            e = self._normalize_component(c)[0]
+            return int(e), e
+
+        if view == "2d":
+            cl = list(component) if isinstance(component, (list, tuple, np.ndarray)) else [component, component]
+            dl = list(dim) if isinstance(dim, (list, tuple)) else [int(dim), int(dim)]
+            ax_x, ax_y = int(dl[0]), int(dl[1])
+            (c0id, c0lbl), (c1id, c1lbl) = _resolve(cl[0]), _resolve(cl[1])
+            ix = self._spc * ax_x + c0id
+            iy = self._spc * ax_y + c1id
+            X, Y = self.xk[:, ix], self.xk[:, iy]
+            fig, ax = plt.subplots(figsize=figsize or (6.0, 6.0), dpi=dpi)
+            ax.plot(X, Y, color="lightgray", lw=1.0, zorder=1)
+            if sample is not None:
+                ax.plot(sample.xk[:, ix], sample.xk[:, iy], color="crimson", lw=1.0, alpha=0.55,
+                        zorder=2, label="truth")
+            ln, = ax.plot([], [], color="navy", lw=2.0, zorder=3, label="estimate")
+            hd, = ax.plot([], [], "o", color="navy", ms=6, zorder=4)
+            meas = None
+            if sample is not None:
+                try:
+                    if self.model.exclusive_mapping(ix, ax_x) and self.model.exclusive_mapping(iy, ax_y):
+                        meas = np.asarray(sample.zk)[:, [ax_x, ax_y]]
+                except Exception:
+                    meas = None
+            msc = ax.scatter([], [], s=5, color="lightgray", zorder=0, label="measured") if meas is not None else None
+            ax.set_xlabel(self._plot_labels(c0lbl, axis=ax_x))
+            ax.set_ylabel(self._plot_labels(c1lbl, axis=ax_y))
+            ax.grid(alpha=0.3); ax.legend(fontsize=8, loc="best")
+
+            def _draw(k):
+                ln.set_data(X[:k + 1], Y[:k + 1]); hd.set_data([X[k]], [Y[k]])
+                if msc is not None: msc.set_offsets(meas[:k + 1])
+                ax.set_title(f"{base_title}    t = {t[k]:.3g} s")
+                return (ln, hd) + ((msc,) if msc is not None else ())
+        else:
+            c = component[0] if isinstance(component, (list, tuple, np.ndarray)) else component
+            comp_id, comp = _resolve(c)
+            ax_a = int(dim[0]) if isinstance(dim, (list, tuple)) else int(dim)
+            idx = self._spc * ax_a + comp_id
+            y = self.xk[:, idx]
+            fig, ax = plt.subplots(figsize=figsize or (8.5, 4.0), dpi=dpi)
+            ax.plot(t, y, color="lightgray", lw=1.0, zorder=1)
+            if sample is not None and sample.xk.shape[1] > idx:
+                ax.plot(t, sample.xk[:, idx], color="crimson", lw=1.2, alpha=0.6, zorder=2, label="truth")
+            ln, = ax.plot([], [], color="navy", lw=2.0, zorder=3, label="estimate")
+            hd, = ax.plot([], [], "o", color="navy", ms=6, zorder=4)
+            cur = ax.axvline(t[0], color="gray", ls="--", lw=1, zorder=2)
+            meas = None
+            if sample is not None:
+                try:
+                    if self.model.exclusive_mapping(idx, ax_a):
+                        meas = np.asarray(sample.zk)[:, ax_a]
+                except Exception:
+                    meas = None
+            msc = ax.scatter([], [], s=7, color="lightgray", zorder=0, label="measured") if meas is not None else None
+            ax.set_xlim(t[0], t[-1])
+            ax.set_xlabel(self._plot_time()); ax.set_ylabel(self._plot_labels(comp, axis=ax_a))
+            ax.grid(alpha=0.3)
+            if sample is not None: ax.legend(fontsize=8, loc="best")
+
+            def _draw(k):
+                ln.set_data(t[:k + 1], y[:k + 1]); hd.set_data([t[k]], [y[k]]); cur.set_xdata([t[k]])
+                if msc is not None: msc.set_offsets(np.column_stack([t[:k + 1], meas[:k + 1]]))
+                ax.set_title(f"{base_title}    t = {t[k]:.3g} s")
+                return (ln, hd, cur) + ((msc,) if msc is not None else ())
+
+        return animate(fig, _draw, frames=fr, interval=interval, jshtml=jshtml)
+
+    def _replay_dashboard(self, components, dim=0, sample=None, frames=80, interval=90,
+                          jshtml=False, figsize=None, dpi=80, title=None, error=False):
+        """
+        Multi-panel time-cursor replay: one panel per state component, plus an
+        optional measurement-error histogram, all driven by a single joint time
+        slider. Colors follow the standard per-flavor palette (Measured / Ideal /
+        True / Smoothed) via :meth:`_plot_kwargs`, exactly like :meth:`plot`.
+
+        Reached via ``replay(component=[...], error=True)`` or, equivalently,
+        ``plot(replay=True, component=[...], error=True)``.
+        """
+        import numpy as np
+        import matplotlib.pyplot as plt
+
+        t = np.asarray(self.time); N = len(t)
+        fr = list(range(0, N, max(1, N // max(1, frames)))) + [N - 1]
+        base_title = title or (self.model.name() if self.model is not None else "Kalman record")
+        ax_a = int(dim[0]) if isinstance(dim, (list, tuple, np.ndarray)) else int(dim)
+
+        def _resolve(c):
+            if isinstance(c, (int, np.integer)):
+                cid = int(c)
+                try:
+                    states = list(self.model.states)
+                    lbl = states[cid] if 0 <= cid < len(states) else cid
+                except Exception:
+                    lbl = cid
+                return cid, lbl
+            e = self._normalize_component(c)[0]
+            return int(e), e
+
+        npan = len(components) + (1 if error else 0)
+        fig, axes = plt.subplots(1, npan, figsize=figsize or (4.8 * npan, 4.2), dpi=dpi)
+        axes = np.atleast_1d(axes).ravel()
+
+        truth = KalmanRecord._normalize_out(sample.xk) if sample is not None else None
+        ideal = self.model.ideal(duration=self.duration) if (sample is not None and self.model is not None) else None
+        ideal = KalmanRecord._normalize_out(ideal) if ideal is not None else None
+
+        panels = []
+        for j, comp in enumerate(components):
+            ax = axes[j]
+            comp_id, comp_lbl = _resolve(comp)
+            idx = self._spc * ax_a + comp_id
+            y = self.xk[:, idx]
+
+            kw_main  = self._plot_kwargs(flavor=self.flavor, axis=ax_a, color=0)
+            kw_true  = self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE,  axis=ax_a, color=0)
+            kw_ideal = self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL, axis=ax_a, color=0)
+            kw_meas  = self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED, axis=ax_a, color=0, kind="scatter", s=7)
+            col = kw_main["color"]
+
+            ax.plot(t, y, color="lightgray", lw=1.0, zorder=1)               # faint full guide
+            if ideal is not None and ideal.shape[1] > idx:
+                ax.plot(t, ideal[:, idx], zorder=2, **kw_ideal)
+            if truth is not None and truth.shape[1] > idx:
+                ax.plot(t, truth[:, idx], zorder=2, **kw_true)
+
+            meas = None
+            if sample is not None and self.model is not None and self.model.exclusive_mapping(idx, ax_a):
+                meas = np.asarray(sample.zk)[:, ax_a]
+            msc = ax.scatter([], [], zorder=0, color=kw_meas["color"], s=kw_meas.get("s", 7),
+                             alpha=kw_meas.get("alpha", 0.6), label=kw_meas["label"]) if meas is not None else None
+            (ln,) = ax.plot([], [], color=col, lw=kw_main.get("linewidth", 2.0), zorder=3, label=kw_main["label"])
+            (hd,) = ax.plot([], [], "o", color=col, ms=6, zorder=4)
+            cur = ax.axvline(t[0], color="gray", ls="--", lw=1, zorder=2)
+
+            ax.set_xlim(t[0], t[-1]); ax.set_xlabel(self._plot_time())
+            ax.set_ylabel(self._plot_labels(comp_lbl, axis=ax_a, units=True))
+            ax.grid(alpha=0.3); ax.legend(fontsize=8, loc="best"); ax.set_title(base_title)
+            panels.append((y, ln, hd, cur, msc, meas))
+
+        # Optional measurement-error histogram pad (accumulates toward its Gaussian).
+        err_ax = err = bins = err_col = None
+        if error and sample is not None:
+            err_ax = axes[len(components)]
+            zk  = np.asarray(sample.zk)[:, ax_a]
+            ref = np.asarray(sample.xk)[:, self._spc * ax_a + 0]
+            err = zk - ref
+            bins = np.linspace(float(np.nanmin(err)), float(np.nanmax(err)), 40)
+            err_col = self._plot_kwargs(flavor=self.flavor, axis=ax_a, color=0)["color"]
+
+        def _draw(k):
+            for (y, ln, hd, cur, msc, meas) in panels:
+                ln.set_data(t[:k + 1], y[:k + 1]); hd.set_data([t[k]], [y[k]]); cur.set_xdata([t[k]])
+                if msc is not None:
+                    msc.set_offsets(np.column_stack([t[:k + 1], meas[:k + 1]]))
+            if err_ax is not None:
+                err_ax.cla()
+                e = err[:k + 1]
+                err_ax.hist(e, bins=bins, color="lightgray", label="Measured Z")
+                if k > 5 and np.std(e) > 0:
+                    from scipy.stats import norm
+                    mu, sg = float(np.mean(e)), float(np.std(e))
+                    xs = np.linspace(bins[0], bins[-1], 200); bw = bins[1] - bins[0]
+                    err_ax.plot(xs, len(e) * bw * norm.pdf(xs, mu, sg), color=err_col, lw=1.6,
+                                label=f"μ={mu:.2g}, σ={sg:.1f}")
+                    err_ax.legend(fontsize=8)
+                err_ax.set_xlabel("Measurement Error"); err_ax.set_ylabel("Counts"); err_ax.set_title(base_title)
+            fig.suptitle(f"t = {t[k]:.3g} s", fontsize=12)
+            return ()
+
+        return animate(fig, _draw, frames=fr, interval=interval, jshtml=jshtml)
 
     def _plot1D(self, component, **kwargs):
         """
@@ -936,7 +1228,7 @@ class KalmanRecord:
             idx = self._spc * a + comp_id
 
             # measurement
-            if measurement is not None and self.model is not None and self.engine.exclusive_mapping(idx, a):
+            if measurement is not None and self.model is not None and self.model.exclusive_mapping(idx, a):
                 h = c.scatter(self.time, measurement[:, a],
                             **self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED,
                                                 axis=a, kind="scatter", zorder=-1,
@@ -1013,8 +1305,8 @@ class KalmanRecord:
         if not isinstance(component, (list, tuple, np.ndarray)) or len(component) < 2:
             raise ValueError("plot2D requires component[0] and component[1].")
 
-        # normalize both components
-        comp_norm = self._normalize_component(component)
+        # normalize both components (phase plot always needs exactly 2)
+        comp_norm = self._normalize_component(component, count=2)
         comp0_id  = int(comp_norm[0])
         comp1_id  = int(comp_norm[1])
 
@@ -1072,8 +1364,8 @@ class KalmanRecord:
 
         # --- measurement scatter with exclusive mapping on BOTH axes ---
         if measurement is not None and self.model is not None:
-            mx_ok = self.engine.exclusive_mapping(idx_x, ax_x)
-            my_ok = self.engine.exclusive_mapping(idx_y, ax_y)
+            mx_ok = self.model.exclusive_mapping(idx_x, ax_x)
+            my_ok = self.model.exclusive_mapping(idx_y, ax_y)
             if mx_ok and my_ok and measurement.shape[1] > max(ax_x, ax_y):
                 h = c.scatter(measurement[:, ax_x], measurement[:, ax_y], **kw_meas)
 
@@ -1122,7 +1414,7 @@ class KalmanRecord:
             return None, None
 
         # --- normalize components (need 3) ---------------------------------------
-        comps = self._normalize_component(component)
+        comps = self._normalize_component(component, count=3)
         if len(comps) < 3:
             raise ValueError("plot3D requires component[0], component[1], component[2].")
 
@@ -1260,9 +1552,9 @@ class KalmanRecord:
 
         # --- measurement scatter --------------------------------------------------
         if measurement is not None and self.model is not None:
-            mx_ok = self.engine.exclusive_mapping(idx_x, dx)
-            my_ok = self.engine.exclusive_mapping(idx_y, dy)
-            mz_ok = self.engine.exclusive_mapping(idx_z, dz)
+            mx_ok = self.model.exclusive_mapping(idx_x, dx)
+            my_ok = self.model.exclusive_mapping(idx_y, dy)
+            mz_ok = self.model.exclusive_mapping(idx_z, dz)
             if mx_ok and my_ok:
                 ax.scatter(measurement[:, dx], measurement[:, dy], np.full_like(measurement[:, dz], min(zlim)),
                         depthshade=False, **kw_meas_proj(dz))

@@ -7,19 +7,19 @@ sys.path.insert(0, ".")
 try:
     from modules.apps import (
         OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel,
-        BallisticLinearModel, BallisticModel,
-        SuspensionModel, ViolinModel,
+        BallisticLinearModel,
+        SuspensionModel,
         PowerGridStateModel,
     )
-    from modules.framework.filter import KalmanFilter
+    from modules.filters import LinearKalmanFilter
 except ImportError:
     from modules.apps import (
         OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel,
-        BallisticLinearModel, BallisticModel,
-        SuspensionModel, ViolinModel,
+        BallisticLinearModel,
+        SuspensionModel,
         PowerGridStateModel,
     )
-    from modules.framework.filter import KalmanFilter
+    from modules.filters import LinearKalmanFilter
 
 
 # ---------------------------------------------------------------------------
@@ -38,10 +38,16 @@ def _no_nan_inf(arr, label="array"):
 class TestModelDimensions(unittest.TestCase):
 
     def test_oscillator_dims(self):
-        m = OscillatorModel("s", fs=100)
-        self.assertEqual(m.n, 2)
-        self.assertEqual(m.m, 1)
+        m = OscillatorModel("s", [10.0], fc=10.0, dfc=2.0, fs=100)
+        self.assertEqual(m.n, 2)   # one in-band mode → [Re, Im]
+        self.assertEqual(m.m, 2)   # FUSED demodulated band channel
         self.assertEqual(m.l, 0)
+
+    def test_oscillator_window_mask(self):
+        # the window masks the candidate list to in-band modes (FUSED-joined)
+        m = OscillatorModel("s", [8.0, 10.0, 30.0], fc=10.0, dfc=3.0, fs=100)
+        np.testing.assert_allclose(np.sort(m.frequencies), [8.0, 10.0])  # 30 Hz masked out
+        self.assertEqual((m.n, m.m), (4, 2))
 
     def test_ballistic_linear_dims(self):
         m = BallisticLinearModel("gps", fs=10)
@@ -55,18 +61,10 @@ class TestModelDimensions(unittest.TestCase):
         self.assertEqual(m.m, 1)   # sprung displacement only
         self.assertEqual(m.l, 1)   # road input
 
-    def test_violin_mode_dims(self):
-        m = ViolinModel("darm", f0=180.1, Q=1e5, fs=4096,
-                            measurement_uncertainty=1e-19,
-                            process_uncertainty=1e-23)
-        self.assertEqual(m.n, 2)   # [Re(ψ), Im(ψ)]
-        self.assertEqual(m.m, 2)   # demodulated [Re, Im]
-        self.assertEqual(m.l, 0)
-
     def test_power_grid_dims(self):
         m = PowerGridStateModel("L1", f0=50.0, harmonics=3, fs=1024)
-        self.assertEqual(m.n, 6)   # 2 states × 3 harmonics
-        self.assertEqual(m.m, 6)   # 2 obs × 3 harmonics
+        self.assertEqual(m.n, 6)   # 2 phasor states (Re/Im) × 3 harmonics
+        self.assertEqual(m.m, 1)   # joint estimator: single scalar voltage observation
         self.assertEqual(m.l, 0)
 
     def test_analytic_oscillator_dims(self):
@@ -81,14 +79,6 @@ class TestModelDimensions(unittest.TestCase):
 # ===========================================================================
 class TestModelSample(unittest.TestCase):
 
-    def test_oscillator_sample(self):
-        m = OscillatorModel("s", fs=100)
-        rec = m.sample(1.0)
-        self.assertEqual(rec.xk.shape[0], 100)
-        self.assertEqual(rec.xk.shape[1], 2)
-        _no_nan_inf(rec.xk, "OscillatorModel xk")
-        _no_nan_inf(rec.zk, "OscillatorModel zk")
-
     def test_ballistic_linear_sample(self):
         m = BallisticLinearModel("gps", fs=10)
         rec = m.sample(1.0)
@@ -99,6 +89,17 @@ class TestModelSample(unittest.TestCase):
         m = SuspensionModel("road", fs=256)
         rec = m.sample(0.5)
         _no_nan_inf(rec.xk, "SuspensionModel xk")
+
+    def test_sample_default_injects_process_noise(self):
+        """sample() defaults to covariance=False: the truth is a real stochastic path
+        (it drifts under Q), while covariance=True gives the deterministic mean + Pk."""
+        np.random.seed(0)
+        m = BallisticLinearModel("gps", fs=100, process_uncertainty=1.0)
+        rec_default = m.sample(2.0)                       # default → drifting truth, Pk zeros
+        rec_cov = m.sample(2.0, covariance=True)          # deterministic mean, analytic Pk
+        self.assertGreater(np.std(np.diff(rec_default.xk[:, 0])), 0.0)   # truth actually moves
+        self.assertAlmostEqual(float(np.sum(np.abs(rec_default.Pk))), 0.0)  # no Pk on fast path
+        self.assertGreater(float(np.sum(np.abs(rec_cov.Pk))), 0.0)       # analytic Pk present
 
 
 # ===========================================================================
@@ -116,10 +117,13 @@ class TestModelFilter(unittest.TestCase):
         _no_nan_inf(rec.Pk, f"{name} Pk")
 
     def test_oscillator_filter(self):
-        m = OscillatorModel("s", fs=100)
-        rec_s = m.sample(1.0)
-        rec_f = m.filter(rec_s.zk)
-        self._assert_record(rec_f, "OscillatorModel", 2, 1, 100)
+        fs, N = 256, 512
+        t = np.arange(N) / fs
+        strain = np.cos(2 * np.pi * 10 * t) + 0.05 * np.random.randn(N)
+        m = OscillatorModel("s", [10.0], fc=10.0, dfc=3.0, fs=fs,
+                            measurement_uncertainty=0.05, process_uncertainty=1e-4)
+        rec_f = m.filter(strain, smooth=True)
+        self._assert_record(rec_f, "OscillatorModel", 2, 2, N)
 
     def test_ballistic_linear_filter(self):
         m = BallisticLinearModel("gps", fs=10)
@@ -135,18 +139,6 @@ class TestModelFilter(unittest.TestCase):
         rec_f = s.filter(zk, uk)
         self._assert_record(rec_f, "SuspensionModel", 4, 1, N)
 
-    def test_violin_mode_filter_real_input(self):
-        """ViolinModeModel accepts a real (N,1) strain signal."""
-        f0, fs = 180.1, 4096
-        N = fs  # 1 second
-        t = np.arange(N) / fs
-        sig = 1e-19 * np.sin(2 * np.pi * f0 * t) + 5e-20 * np.random.randn(N)
-        v = ViolinModel("darm", f0=f0, Q=1e5, fs=fs,
-                         measurement_uncertainty=1e-19,
-                         process_uncertainty=1e-23)
-        rec_f = v.filter(sig.reshape(N, 1))
-        self._assert_record(rec_f, "ViolinModel", 2, 2, N)
-
     def test_power_grid_filter(self):
         from scipy.signal import hilbert
         f0, harmonics, fs = 50.0, 2, 512
@@ -160,14 +152,18 @@ class TestModelFilter(unittest.TestCase):
         self._assert_record(rec_f, "PowerGridModel", pg.n, pg.m, N)
 
     def test_composite_oscillator_filter(self):
-        f1 = OscillatorModel("s1", fs=100, w0=2 * np.pi * 5)
-        f2 = OscillatorModel("s2", fs=100, w0=2 * np.pi * 10)
-        comp = OscillatorCompositeModel(f1, f2)
-        N = 100
-        zk = 0.1 * np.random.randn(N, 2)  # 2 sensors
-        rec_f = comp.filter(zk)
-        self.assertEqual(rec_f.xk.shape[1], 4)  # 2 states per oscillator × 2
+        # bank of two windows over ONE real signal (10 Hz and 40 Hz tones)
+        fs, N = 256, 512
+        t = np.arange(N) / fs
+        strain = np.cos(2 * np.pi * 10 * t) + 0.5 * np.cos(2 * np.pi * 40 * t) + 0.05 * np.random.randn(N)
+        cands = [10.0, 40.0]
+        w1 = OscillatorModel("s", cands, fc=10.0, dfc=3.0, fs=fs)
+        w2 = OscillatorModel("s", cands, fc=40.0, dfc=3.0, fs=fs)
+        comp = OscillatorCompositeModel(w1, w2)
+        rec_f = comp.filter(strain)
+        self.assertEqual(rec_f.xk.shape[1], 4)  # 2 windows × [Re, Im]
         _no_nan_inf(rec_f.xk, "OscillatorComposite xk")
+        self.assertEqual(comp.reconstruct(rec_f).shape[0], N)  # real summed reconstruction
 
 
 # ===========================================================================
@@ -178,24 +174,16 @@ class TestFilterConvergence(unittest.TestCase):
     def test_oscillator_tracks_signal(self):
         """After convergence, filtered position should be close to truth."""
         np.random.seed(42)
-        fs = 100
-        N = 300  # 3 seconds
-        m = OscillatorModel("s", fs=fs, w0=2 * np.pi * 2,
-                             measurement_uncertainty=0.1,
-                             process_uncertainty=0.001)
-
-        # Ground truth: pure oscillation
+        fs, N = 256, 1024
         t = np.arange(N) / fs
-        truth_pos = np.sin(2 * np.pi * 2 * t)
-        zk = truth_pos.reshape(N, 1) + 0.1 * np.random.randn(N, 1)
-
-        rec_f = m.filter(zk)
-        # xk has shape (N, n, 1) — squeeze to (N, n) then take position (index 0)
-        pos_hat = rec_f.xk[50:, 0].ravel()   # skip first 50 transient samples
-        truth_tail = truth_pos[50:]
-
-        rms_error = np.sqrt(np.mean((pos_hat - truth_tail) ** 2))
-        self.assertLess(rms_error, 0.3, f"Oscillator filter RMS error too large: {rms_error:.4f}")
+        truth = np.cos(2 * np.pi * 10 * t)                 # unit-amplitude 10 Hz tone
+        strain = truth + 0.1 * np.random.randn(N)
+        m = OscillatorModel("s", [10.0], fc=10.0, dfc=3.0, fs=fs,
+                            measurement_uncertainty=0.1, process_uncertainty=1e-4)
+        rec = m.filter(strain, smooth=True)
+        amp = m.amplitudes(rec)[N // 4:].mean()            # recovered envelope amplitude
+        self.assertAlmostEqual(amp, 1.0, delta=0.25,
+                               msg=f"window amplitude off: {amp:.3f}")
 
     def test_suspension_covariance_reaches_steady_state(self):
         """Filter covariance should stabilise (vary < 50%) in the second half."""
@@ -217,25 +205,23 @@ class TestFilterConvergence(unittest.TestCase):
 # ===========================================================================
 class TestMultiRate(unittest.TestCase):
 
-    def test_nan_masked_steps_no_crash(self):
-        """NaN rows in zk should trigger prediction-only (no update) without crash."""
+    def test_multirate_via_nan_mask(self):
+        """A plain filter handles multi-rate: NaN rows -> predict-only (engine masks update)."""
         from modules.helpers import make_multirate_input
 
-        m = OscillatorModel("s", fs=100)
+        m = BallisticLinearModel("gps", fs=100)
         N_base = 100  # 1 second at 100 Hz
         N_slow = 10   # 10 Hz sensor
-
         z_slow = 0.1 * np.random.randn(N_slow, 1)
+
+        # make_multirate_input builds the NaN-padded base-rate measurement matrix.
         zk = make_multirate_input([(z_slow, 10)], base_fs=100)
         self.assertEqual(zk.shape, (N_base, 1))
+        # ~90% of rows should be NaN (prediction-only steps)
+        self.assertGreater(np.sum(np.isnan(zk[:, 0])), 80)
 
-        # 90% of rows should be NaN
-        nan_rows = np.sum(np.isnan(zk[:, 0]))
-        self.assertGreater(nan_rows, 80)
-
-        rec_f = m.filter(zk)
+        rec_f = LinearKalmanFilter(m).forward(zk, record=True)
         self.assertEqual(rec_f.xk.shape[0], N_base)
-        # Allow NaN in missed update states (covariance grows); just check no Inf
         _no_nan_inf(rec_f.xk, "multirate xk")
 
 
@@ -245,19 +231,22 @@ class TestMultiRate(unittest.TestCase):
 class TestKalmanFilter(unittest.TestCase):
 
     def test_reset_clears_logs(self):
-        m = OscillatorModel("s", fs=100)
-        eng = m._engine
-        m.filter(m.sample(1.0).zk)
-        self.assertGreater(len(eng.posterior), 0)
-        eng.reset()
-        self.assertEqual(len(eng.posterior), 0)
-        self.assertEqual(len(eng.transition), 0)
+        fs, N = 256, 256
+        strain = np.cos(2 * np.pi * 10 * np.arange(N) / fs)
+        m = OscillatorModel("s", [10.0], fc=10.0, dfc=3.0, fs=fs)
+        kf = LinearKalmanFilter(m)
+        kf.forward(strain.reshape(-1, 1))
+        self.assertGreater(len(kf.posterior), 0)
+        kf.reset()
+        self.assertEqual(len(kf.posterior), 0)
+        self.assertEqual(len(kf.transition), 0)
 
     def test_rts_smoother_no_crash(self):
-        m = OscillatorModel("s", fs=100)
-        zk = 0.1 * np.random.randn(100, 1)
-        rec_smooth = m.filter(zk, smooth=True)
-        self.assertEqual(rec_smooth.xk.shape[0], 100)
+        fs, N = 256, 256
+        strain = np.cos(2 * np.pi * 10 * np.arange(N) / fs) + 0.1 * np.random.randn(N)
+        m = OscillatorModel("s", [10.0], fc=10.0, dfc=3.0, fs=fs)
+        rec_smooth = m.filter(strain, smooth=True)
+        self.assertEqual(rec_smooth.xk.shape[0], N)
         _no_nan_inf(rec_smooth.xk, "RTS smoother xk")
 
 

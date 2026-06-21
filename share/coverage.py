@@ -4,7 +4,13 @@ Report functions that were never called according to the most recent coverage ru
 Reads the .coverage data file written by pytest-cov / coverage.py.
 """
 import ast
+import os
 import sys
+
+# This file is named coverage.py, so its own directory on sys.path[0] would shadow the
+# installed ``coverage`` package. Drop it before importing the real package.
+_here = os.path.dirname(os.path.abspath(__file__))
+sys.path[:] = [p for p in sys.path if os.path.abspath(p or ".") != _here]
 
 try:
     import coverage as cov_module
@@ -32,6 +38,26 @@ def _is_excluded(path: str) -> bool:
     return any(p in path for p in EXCLUDE_PATHS)
 
 
+def _is_docstring(stmt) -> bool:
+    """True if ``stmt`` is a bare string-literal expression (a docstring)."""
+    return (isinstance(stmt, ast.Expr)
+            and isinstance(getattr(stmt, "value", None), ast.Constant)
+            and isinstance(stmt.value.value, str))
+
+
+def _first_executable_line(node) -> int:
+    """First *executable* body line, skipping a leading docstring.
+
+    A docstring is compiled into ``__doc__`` at def-time and is never recorded as an
+    executed line, so using ``body[0]`` blindly would flag every documented function as
+    uncovered even when it ran.
+    """
+    body = node.body
+    if body and _is_docstring(body[0]):
+        body = body[1:]
+    return body[0].lineno if body else node.body[0].lineno
+
+
 def _uncovered_functions(fname: str, executed_lines: set) -> list[str]:
     try:
         with open(fname) as fh:
@@ -43,8 +69,8 @@ def _uncovered_functions(fname: str, executed_lines: set) -> list[str]:
     results = []
     for node in ast.walk(tree):
         if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
-            # A function is "not covered" when its first body line was never executed
-            body_first_line = node.body[0].lineno
+            # A function is "not covered" when its first executable line was never executed
+            body_first_line = _first_executable_line(node)
             if body_first_line not in executed_lines:
                 file_part = DIM(fname)
                 func_part = YELLOW(node.name)

@@ -3,19 +3,38 @@ import numpy as np
 from ..helpers import set_random_seed, as_col, numerical_jacobian
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
+from .constants import EngineKind, ALL_ENGINES, KalmanState, KalmanObservable
 
 class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     """
-    A generic model container holding dimensions (n, m, l), noise covariances (Q, R),
-    and initial state (x0, P0). It does NOT assume linearity; engines (Linear/EKF/UKF)
-    consume the f/h/jacobians contract on subclasses.
+    The single, flexible Kalman **model** contract (the *system*, WHAT).
+
+    A model defines ``f/h`` and the noise covariances ``Q/R``; the Jacobians
+    ``F/H/B/L/M`` are optional refinements with a numerical default. Construct it two
+    ways, **same contract**, runnable by **any** engine:
+
+      - **matrices** — pass ``F=,H=,B=,L=,M=`` (constant or callable ``M(t)``); ``f``/``h``
+        then default to ``f(x)=Fx+Bu+Lw`` / ``h(x)=Hx+Mv`` and ``F()/H()/…`` return them;
+      - **functions** — override ``f``/``h`` (nonlinear); ``F/H`` come from
+        :func:`numerical_jacobian`.
+
+    Engines consume only what they need: UKF/PF use ``f/h/Q/R``; EKF additionally reads
+    ``F/H`` (numerical/analytic); KF reads ``F/H`` as constants.
+
+    Engine binding is **declared, not imported**: ``DEFAULT_ENGINE`` /
+    ``ALLOWED_ENGINES`` are :class:`EngineKind` values, so a model never imports an
+    engine; the :class:`~kalman.framework.filter.KalmanFilter` resolves/validates them.
     """
 
     NAME = "Kalman Model"
-    DESCRIPTION = "Generic model for Kalman-family filters; provide f/h/jacobians in subclasses."
-    VERSION = "1.1"
+    DESCRIPTION = "Generic model for Kalman-family filters; matrices (F/H/…) or override f/h."
+    VERSION = "2.0"
 
-    def __init__(self, sensor_id : str | int, **kwargs):
+    # Engine binding (declared via EngineKind so the model never imports an engine).
+    DEFAULT_ENGINE  = EngineKind.EXTENDED      # safe universal default (falls back to linear on matrices)
+    ALLOWED_ENGINES = ALL_ENGINES              # any engine
+
+    def __init__(self, sensor_id: str | int, **kwargs):
 
         self.add_sensor(sensor_id)
 
@@ -33,17 +52,29 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         # --- Time base ---
         self.t0 = kwargs.pop("t0", 0.0)
 
+        # --- Optional explicit matrices (the "linear" construction path) ---
+        def _store(M):
+            if M is None:
+                return None
+            return M if callable(M) else np.asarray(M, dtype=self.dtype)
+
+        self._F = _store(kwargs.pop("F", None))
+        self._H = _store(kwargs.pop("H", None))
+        self._B = _store(kwargs.pop("B", None))
+        self._L = _store(kwargs.pop("L", None))
+        self._M = _store(kwargs.pop("M", None))
+        self._is_linear = self._F is not None and self._H is not None
+
+        # Infer l from B columns so _infer_l() picks it up
+        if self._B is not None:
+            B_mat = self._B(0) if callable(self._B) else self._B
+            if B_mat is not None:
+                self.l = int(np.asarray(B_mat).shape[1])
+
         # --- Infer dimensions ---
         self.n = self._infer_n()
         self.m = self._infer_m()
         self.l = self._infer_l()
-
-        # --- Attach default engine ---
-        from .filter import KalmanFilter
-        engine = kwargs.pop("engine", KalmanFilter)
-        if not isinstance(engine, type):
-            raise ValueError("engine parameter must be a class, e.g., KalmanFilter, LinearKalmanFilter, etc.")
-        self.attach(engine(self))
 
         # --- Infer covariances ---
         self._Q = self._infer_Q(kwargs.pop("Q", None))
@@ -59,37 +90,88 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         self._check_shapes(strict=False)
 
     # ============================================================
-    # Jacobians (numerical defaults)
+    # Engine resolution (declarative; lazy import keeps layering clean)
+    # ============================================================
+    def default_engine(self):
+        """Instantiate the model's default engine (resolved from ``DEFAULT_ENGINE``).
+
+        Routes through ``resolve_engine`` so the lookup survives ``EngineKind``
+        identity changes from ``%autoreload`` (otherwise a reloaded ``DEFAULT_ENGINE``
+        member would miss the registry and raise ``KeyError``).
+        """
+        from .engines import resolve_engine
+        return resolve_engine(self.DEFAULT_ENGINE)
+
+    # ============================================================
+    # Core equations (matrix path; subclasses override for nonlinear f/h)
+    # ============================================================
+    def f(self, x, u=None, w=None, t=None):
+        """State transition. Uses constant matrices if provided; else override me."""
+        if self._F is None:
+            raise NotImplementedError(
+                "Model must define f() or be constructed with matrices (F=, H=, ...).")
+        x = self.F(t=t) @ x
+        if u is not None:
+            B = self.B(t=t)
+            x = x + (u if B is None else B @ u)
+        if w is not None:
+            L = self.L(t=t)
+            x = x + (w if L is None else L @ w)
+        return x
+
+    def h(self, x, v=None, t=None):
+        """Observation map. Uses constant matrices if provided; else override me."""
+        if self._H is None:
+            raise NotImplementedError(
+                "Model must define h() or be constructed with matrices (F=, H=, ...).")
+        z = self.H(t=t) @ x
+        if v is not None:
+            M = self.M(t=t)
+            z = z + (v if M is None else M @ v)
+        return z
+
+    # ============================================================
+    # Jacobians (stored matrices if given, else numerical)
     # ============================================================
     def F(self, x: np.ndarray = None, u: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:
-        """State-transition Jacobian: ∂f/∂x."""
+        """State-transition Jacobian ∂f/∂x (constant matrix if provided)."""
+        if self._F is not None:
+            return self._F(t) if callable(self._F) else self._F
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda xx: self.f(xx, u=u, w=None, t=t), as_col(x))
 
     def H(self, x: np.ndarray = None, t: Optional[float] = None) -> np.ndarray:
-        """Observation Jacobian: ∂h/∂x."""
+        """Observation Jacobian ∂h/∂x (constant matrix if provided)."""
+        if self._H is not None:
+            return self._H(t) if callable(self._H) else self._H
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda xx: self.h(xx, v=None, t=t), as_col(x))
 
     def B(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None, t: Optional[float] = None) -> Optional[np.ndarray]:
-        """Control-input Jacobian: ∂f/∂u (if u provided)."""
-        if u is None:
+        """Control-input map ∂f/∂u (constant matrix if provided, numerical if u given)."""
+        if self._B is not None:
+            return self._B(t) if callable(self._B) else self._B
+        if u is None or self._F is not None:
             return None
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
 
     def L(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None,
            w: Optional[np.ndarray] = None, t: Optional[float] = None) -> Optional[np.ndarray]:
-        """Process-noise Jacobian: ∂f/∂w (if w provided)."""
-        if w is None:
+        """Process-noise map ∂f/∂w (constant matrix if provided, numerical if w given)."""
+        if self._L is not None:
+            return self._L(t) if callable(self._L) else self._L
+        if w is None or self._F is not None:
             return None
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda ww: self.f(as_col(x), u=u, w=ww, t=t), as_col(w))
 
     def M(self, x: Optional[np.ndarray] = None, v: Optional[np.ndarray] = None,
            t: Optional[float] = None) -> Optional[np.ndarray]:
-        """Measurement-noise Jacobian: ∂h/∂v (if v provided)."""
-        if v is None:
+        """Measurement-noise map ∂h/∂v (constant matrix if provided, numerical if v given)."""
+        if self._M is not None:
+            return self._M(t) if callable(self._M) else self._M
+        if v is None or self._H is not None:
             return None
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda vv: self.h(as_col(x), v=vv, t=t), as_col(v))
@@ -99,15 +181,9 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
                         u: Optional[np.ndarray] = None,
                         v: Optional[np.ndarray] = None,
                         w: Optional[np.ndarray] = None,
-                        t: Optional[float] = None) -> tuple[np.ndarray, np.ndarray, Optional[np.ndarray], Optional[np.ndarray], Optional[np.ndarray]]:
-        
+                        t: Optional[float] = None):
         """Return (F, H, B, L, M) in a consistent order."""
-        F = self.F(x, u, t)
-        H = self.H(x, t)
-        B = self.B(x, u, t)
-        L = self.L(x, u, w, t)
-        M = self.M(x, v, t)
-        return F, H, B, L, M
+        return self.F(x, u, t), self.H(x, t), self.B(x, u, t), self.L(x, u, w, t), self.M(x, v, t)
 
     # ============================================================
     # Covariances
@@ -124,16 +200,58 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
                           x: Optional[np.ndarray] = None,
                           u: Optional[np.ndarray] = None,
                           w: Optional[np.ndarray] = None,
-                          v: Optional[np.ndarray] = None) -> tuple[np.ndarray, np.ndarray]:
-        """Return (Q, R)."""
+                          v: Optional[np.ndarray] = None):
+        """Return (Q, R) with optional L Q Lᵀ / M R Mᵀ coupling."""
         Q = self.Q(t)
         L = self.L(x, u, w, t)
         if L is not None:
             Q = L @ Q @ L.T
-        
         R = self.R(t)
         M = self.M(x, v, t)
         if M is not None:
             R = M @ R @ M.T
-
         return Q, R
+
+    # ============================================================
+    # Generic, override-friendly defaults (so a bare model is usable)
+    # ============================================================
+    @property
+    def states(self) -> KalmanState:
+        """Generic (unlabelled) state enum; override with a domain enum."""
+        return KalmanState
+    @property
+    def observables(self) -> KalmanObservable:
+        """Generic (unlabelled) observable enum; override with a domain enum."""
+        return KalmanObservable
+
+    def preprocess(self, zk, uk=None, **kwargs):
+        """Identity measurement/control preprocessing (override per domain)."""
+        return zk, uk
+    def inprocess(self, zk_hat, **kwargs):
+        """Identity state in-processing (override per domain)."""
+        return zk_hat
+    def postprocess(self, zk_hat, **kwargs):
+        """Identity observation post-processing (override per domain)."""
+        return zk_hat
+
+    # ============================================================
+    # Signature figure for this model (the app's "main plot").
+    # Apps override _plot_static / _plot_interactive for a bespoke layout;
+    # the generic defaults already cover any time-series model.
+    # ============================================================
+    def plot(self, record, sample=None, *, interactive=False, component=None, error=True, **kwargs):
+        """The model's signature figure for a filtered ``record``.
+
+        - ``model.plot(record, sample=sample)`` → static multi-panel figure.
+        - ``model.plot(record, sample=sample, interactive=True)`` → the same content
+          driven by one joint time slider (the standardized replacement for the old
+          ``record.replay(...)``).
+
+        ``component`` defaults to every state in ``self.states``; ``error=True`` appends
+        a measurement-error panel. Apps override ``_plot_static`` / ``_plot_interactive``
+        for a bespoke domain layout (see e.g. ``PowerGridStateModel``).
+        """
+        comps = component if component is not None else list(self.states)
+        if interactive:
+            return self._plot_interactive(record, sample=sample, component=comps, error=error, **kwargs)
+        return self._plot_static(record, sample=sample, component=comps, error=error, **kwargs)

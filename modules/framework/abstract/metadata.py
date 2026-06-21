@@ -7,7 +7,7 @@ import sys
 
 import json, yaml
 from ...runtime.debug import get_debug
-from .contracts import KalmanModelABC, KalmanEngineABC
+from .contracts import KalmanModelABC, KalmanEngineABC, KalmanFilterABC
 
 class KalmanMetadata(ABC):
 
@@ -238,10 +238,31 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
 class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
 
     NAME = "Kalman Engine"
-    DESCRIPTION = "Base class for Kalman engines."
+    DESCRIPTION = "Base class for Kalman engines (one estimation step: predict / update / smooth)."
+    VERSION = "2.0"
+
+    epsilon = sys.float_info.epsilon
+
+    def __str__(self):
+        import textwrap
+        spacer = " " * 4
+        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)
+        kind = getattr(self, "KIND", None)
+        res  = f"{self.NAME} (v{self.VERSION})\n"
+        res += f"{spacer}{desc}\n"
+        if kind is not None:
+            res += f"{spacer}Kind......................: {kind}\n"
+        res += f"{spacer}Precision.................: {self.epsilon:.3e}\n"
+        return res
+
+class KalmanFilterMetadata(KalmanFilterABC, KalmanMetadata):
+
+    NAME = "Kalman Filter"
+    DESCRIPTION = "Base class for Kalman filters (workflow: forward / backward over a model + engine)."
     VERSION = "1.0"
 
     _model : KalmanModelMetadata = None
+    _engine = None
     epsilon = sys.float_info.epsilon
 
     # Microstate variables (single observation at a time, updated iteratively)
@@ -282,6 +303,8 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
             res += f"{spacer}States (n={self._model.n})...........: {self._model.states.repr()}\n"
             res += f"{spacer}Observables (m={self._model.m})........: {self._model.observables.repr()}\n"
             res += f"{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n"
+        if self._engine is not None:
+            res += f"{spacer}Engine....................: {type(self._engine).__name__}\n"
         res += f"{spacer}Precision.................: {self.epsilon:.3e}\n\n"
 
         res += f"{spacer}Microstate variable sizes:\n"
@@ -289,15 +312,9 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
         res += f"{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n\n"
 
         res += f"{spacer}Macrostate variable sizes:\n"
-        res += f"{2*spacer}Prior.................: {len(self.prior)} element(s)\n"
-        res += f"{2*spacer}Posterior.............: {len(self.posterior)} element(s)\n"
-        res += f"{2*spacer}Measurement...........: {len(self.measurement)} element(s)\n"
-        res += f"{2*spacer}Control...............: {len(self.control)} element(s)\n"
-
-        if debug and self.records:
-            res += f"\n{spacer}Record preview (first entry):\n"
-            first = self.records[0]
-            for k, v in first.items():
-                res += f"{2*spacer}{k:<12}: {v}\n"
+        res += f"{2*spacer}Prior.................: {len(self.prior or [])} element(s)\n"
+        res += f"{2*spacer}Posterior.............: {len(self.posterior or [])} element(s)\n"
+        res += f"{2*spacer}Measurement...........: {len(self.measurement or [])} element(s)\n"
+        res += f"{2*spacer}Control...............: {len(self.control or [])} element(s)\n"
 
         return res

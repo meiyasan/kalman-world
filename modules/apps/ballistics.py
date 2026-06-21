@@ -1,7 +1,7 @@
 import numpy as np
 
 from ..framework.constants import KalmanObservable, KalmanState
-from ..models import KalmanExtendedModel, KalmanLinearModel
+from ..framework.models.linear import LinearKalmanModel; from ..framework.models.extended import ExtendedKalmanModel
 
 # ===== State enums/units =====
 class BallisticState(KalmanState):
@@ -13,7 +13,7 @@ class BallisticObservable(KalmanObservable):
     POSITION = "m"
 
 # ===== Linear =====
-class BallisticLinearModel(KalmanLinearModel):
+class BallisticLinearModel(LinearKalmanModel):
 
     NAME = "Ballistic State Model"
     DESCRIPTION = "Linear constant-acceleration toy model; position measured."
@@ -40,9 +40,11 @@ class BallisticLinearModel(KalmanLinearModel):
         assert isinstance(fs, (int, float)), "You must provide fs or sample_rate"
         dt = self.dtype(1.0 / fs)
 
-        F = np.array([[1.0, dt, 0.0],
-                      [0.0, 1.0, dt ],
-                      [0.0, 0.0, 1.0]], dtype=self.dtype)
+        # Exact constant-acceleration discretization F = expm(A·dt): the (0,2)
+        # entry is ½dt² (position picks up ½·a·dt² over a step), not 0.
+        F = np.array([[1.0, dt,  0.5 * dt * dt],
+                      [0.0, 1.0, dt           ],
+                      [0.0, 0.0, 1.0          ]], dtype=self.dtype)
 
         H = np.array([[1.0, 0.0, 0.0]], dtype=self.dtype)
 
@@ -60,23 +62,30 @@ class BallisticLinearModel(KalmanLinearModel):
         # Initial covariance: positive-definite diagonal based on measurement uncertainty.
         # Q is rank-1 (acceleration row zero), so using Q as P0 causes singular covariance
         # which leads to pathological RTS smoother gains. Use explicit per-state variances.
+        #
+        # Acceleration is only weakly observable from position alone, so its prior must
+        # NOT scale with the sensor noise: the old a_var=(measurement_uncertainty/100)²
+        # inflated it to ±5 m/s² for a noisy sensor and let the smoothed acceleration
+        # drift. Use a fixed, sensor-independent prior (override via acc_uncertainty=, in
+        # m/s²; pass acc_uncertainty=0 to pin acceleration exactly to its initial value).
+        acc_unc = kwargs.pop("acc_uncertainty", 1.0)
         if "P0" not in kwargs:
             p_var = self.dtype(measurement_uncertainty) ** 2
             v_var = (self.dtype(measurement_uncertainty) / 10.0) ** 2
-            a_var = (self.dtype(measurement_uncertainty) / 100.0) ** 2
+            a_var = self.dtype(acc_unc) ** 2
             kwargs["P0"] = np.diag([p_var, v_var, a_var]).astype(self.dtype)
 
         super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
-    def inprocess(self, xk_hat, **kwargs): return xk_hat
-    def postprocess(self, zk_hat, **kwargs):     return zk_hat
+    def inprocess(self, state_vector, **kwargs): return state_vector
+    def postprocess(self, xk_hat, **kwargs):     return xk_hat
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
 import numpy as np
 from scipy.linalg import expm
 
-class BallisticModel(KalmanExtendedModel):
+class BallisticModel(ExtendedKalmanModel):
     """
     Nonlinear 3D ballistic model with explicit gravity (G*M),
     aerodynamic drag, thrust input, and internally computed Q/R matrices.
@@ -132,10 +141,14 @@ class BallisticModel(KalmanExtendedModel):
         # Initial covariance P0 — unit-appropriate diagonal per axis-major
         # layout [px,vx,ax, py,vy,ay, pz,vz,az]
         # ------------------------------------------------------------------
+        # Acceleration prior is sensor-independent (see LinearKalmanModel note above);
+        # override via acc_uncertainty= (m/s²). Harmless for this EKF since f() recomputes
+        # acceleration from the dynamics each step, but kept consistent with the linear model.
+        acc_unc = kwargs.pop("acc_uncertainty", 1.0)
         if kwargs.get("P0") is None:
             p_var = measurement_uncertainty ** 2
             v_var = (measurement_uncertainty / 10.0) ** 2
-            a_var = (measurement_uncertainty / 100.0) ** 2
+            a_var = float(acc_unc) ** 2
             if order == 3:
                 block = [p_var, v_var, a_var]
             else:
@@ -292,7 +305,29 @@ class BallisticModel(KalmanExtendedModel):
     
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk
-    def inprocess(self, xk_hat, **kwargs):
+    def inprocess(self, state_vector, **kwargs):
+        return state_vector
+    def postprocess(self, xk_hat, **kwargs):
         return xk_hat
-    def postprocess(self, zk_hat, **kwargs):    
-        return zk_hat
+
+    # ==================================================================
+    # Signature figure — per-axis state grid (override KalmanModel.plot).
+    # Reached via ``model.plot(record, sample=sample[, interactive=True])``.
+    # ==================================================================
+    def _plot_static(self, record, sample=None, *, component=None, error=True,
+                     figsize=(14, 9), **kwargs):
+        """Signature figure: a (component × axis) grid of state estimates — position,
+        speed and acceleration (rows) for each spatial axis X/Y/Z (columns), with the
+        truth and noisy measurements overlaid from ``sample``."""
+        import matplotlib.pyplot as plt
+        comps = ["position", "speed", "acceleration"][:self.order]
+        axis_names = ["X", "Y", "Z"]
+        fig, axes = plt.subplots(len(comps), 3, figsize=figsize, squeeze=False)
+        fig.suptitle(f"{self.name()} — per-axis state estimate", fontweight="bold")
+        for r, comp in enumerate(comps):
+            for c in range(3):
+                record.plot(component=comp, dim=c, sample=sample, canvas=axes[r, c])
+                if r == 0:
+                    axes[r, c].set_title(axis_names[c])
+        fig.tight_layout()
+        return fig

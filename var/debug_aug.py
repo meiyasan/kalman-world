@@ -4,7 +4,6 @@ import warnings
 warnings.filterwarnings('ignore')
 import numpy as np
 from kalman.apps.ballistics import BallisticModel
-from kalman.framework.filter import KalmanFilter
 from kalman.framework.io.record import KalmanRecord
 
 INIT = [[100, 100, 0], [200, 100, 0], [300, 100, -9.81]]
@@ -52,7 +51,6 @@ class BallisticAugmentedModel(BallisticModel):
 
         self.f = _aug_f
         self.h = _aug_h
-        self.attach(KalmanFilter(self))
 
     def initial_state(self, x0=None, P0=None):
         print(f'  [override] initial_state called, n={self.n}')

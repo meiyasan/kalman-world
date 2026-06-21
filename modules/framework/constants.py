@@ -75,3 +75,30 @@ class KalmanObservableFlavor(EnumBis):
 class KalmanObservableReadout(Enum):
     INDEPENDENT = auto() # Each submodel provides an independent measurement.
     FUSED = auto() # All submodels contribute additively to the same measurement
+
+
+# -----------------------------
+# ----- Engine kinds ----------
+# -----------------------------
+class EngineKind(Enum):
+    """
+    Algorithm family of an estimation engine.
+
+    Threads the shared term (Linear / Extended / Unscented / Particle) through every
+    layer so cross-layer compatibility is both readable and checkable:
+
+      - engines tag their ``KIND``;
+      - models declare ``DEFAULT_ENGINE`` + ``ALLOWED_ENGINES`` (these enum values,
+        so a model never imports an engine);
+      - the ``KalmanFilter`` resolves the default and validates
+        ``engine.KIND in model.ALLOWED_ENGINES``.
+    """
+    LINEAR        = auto()  # constant-matrix Kalman step (KF)
+    EXTENDED      = auto()  # Jacobian linearisation (EKF)
+    UNSCENTED     = auto()  # sigma-point transform (UKF)
+    PARTICLE      = auto()  # sequential importance resampling (PF)
+    COMBINATORIAL = auto()  # branch-on-ambiguous-hit track finding (CKF)
+
+
+# All engine kinds — convenient default for ``ALLOWED_ENGINES``.
+ALL_ENGINES = frozenset(EngineKind)

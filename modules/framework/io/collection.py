@@ -72,10 +72,11 @@ class KalmanRecordCollection(Sequence[KalmanRecord]):
 
         samples = kwargs.pop("samples", None)
 
+        single = kwargs.pop("sample", None)   # avoid double-passing 'sample' below
         for i, rec in enumerate(self._records):
 
-            sample = samples[i] if isinstance(samples, (list, tuple, KalmanRecordCollection)) and i < len(samples) else samples
-            if sample is None: kwargs["sample"] = kwargs.get("sample", None)
+            sample = (samples[i] if isinstance(samples, (list, tuple, KalmanRecordCollection)) and i < len(samples)
+                      else (samples if samples is not None else single))
 
             rec.plot(sample=sample, commons=[KalmanObservableFlavor.IDEAL], canvas=c, legend=False, color=i, **kwargs)
             if legend and len(self._records) < kwargs.get("legend_max", 8):
