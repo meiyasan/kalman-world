@@ -5,10 +5,10 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.framework.model import KalmanModel
-from modules.filters.ikf import InteractiveKalmanFilter, NeuralInteractiveKalmanFilter
-from modules.filters.routers          import (BayesianRouter, ThresholdRouter,
-                                               NeuralRouter, HybridRouter)
-from modules.filters.routers.nn.mlp  import MLP
+from modules.filters.ikf import InteractiveKalmanFilter
+from modules.framework.routers          import (BayesianRouter, ThresholdRouter,
+                                                 NeuralRouter, HybridRouter)
+from modules.framework.routers.nn.mlp  import MLP
 
 
 # ── shared fixtures ───────────────────────────────────────────────────────────
@@ -151,15 +151,6 @@ class TestIKFFitAPI(unittest.TestCase):
         # No error; BayesianRouter.fit is a no-op
         self.assertIsInstance(router, BayesianRouter)
 
-    def test_fit_router_alias_deprecated(self):
-        """fit_router() must still work as an alias."""
-        m0, m1 = _two_models()
-        ikf  = InteractiveKalmanFilter([m0, m1], PI,
-                                        router=NeuralRouter(MLP(4), window=2))
-        train_zk, train_lbl = self._data()
-        result = ikf.fit_router(train_zk, train_lbl, epochs=10)
-        self.assertIs(result, ikf)
-
 
 # ── routing accuracy ──────────────────────────────────────────────────────────
 
@@ -216,30 +207,6 @@ class TestIKFWithControl(unittest.TestCase):
         zero_ctrl = lambda x, P, t, nu=None: np.zeros((1, 1))
         rec = ikf.forward(zk, uk=zero_ctrl)
         self.assertFalse(np.any(np.isnan(rec.xk)))
-
-
-# ── NeuralInteractiveKalmanFilter backward compat ─────────────────────────────
-
-class TestNeuralIKFBackwardCompat(unittest.TestCase):
-
-    def test_neural_ikf_is_ikf(self):
-        m0, m1 = _two_models()
-        nikf = NeuralInteractiveKalmanFilter([m0, m1], PI, hidden=8, window=3)
-        self.assertIsInstance(nikf, InteractiveKalmanFilter)
-
-    def test_neural_ikf_fit_trains(self):
-        m0, m1 = _two_models()
-        nikf = NeuralInteractiveKalmanFilter([m0, m1], PI, hidden=4, window=2)
-        zk, lbl = _sim(REGIME_200, seed=0)
-        nikf.fit([zk], [lbl], epochs=20)
-        self.assertTrue(nikf.router._is_trained)
-
-    def test_neural_ikf_forward_works(self):
-        m0, m1 = _two_models()
-        nikf = NeuralInteractiveKalmanFilter([m0, m1], PI, hidden=4, window=2)
-        zk, _ = _sim(np.zeros(30, int))
-        rec = nikf.forward(zk)
-        self.assertEqual(rec.xk.shape, (30, 1))
 
 
 if __name__ == "__main__":

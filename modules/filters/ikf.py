@@ -5,15 +5,15 @@ Pluggable routing — swap the router without touching the filter::
     ikf = InteractiveKalmanFilter(models, Pi)                           # Bayesian default
     ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())
     ikf = InteractiveKalmanFilter(models, Pi,
-                                  router=NeuralRouter(MLP(hidden=32)))
+                                  router=NeuralRouter(model=MLP(hidden=32)))
 
 Training (for learning routers)::
 
     ikf.fit(training_zk_list, labels_list)   # collects NIS, trains router
     record = ikf.forward(test_zk)
 
-See ``kalman.filters.routers`` for all built-in routers and
-``kalman.filters.routers.nn`` for pluggable neural architectures.
+See ``kalman.framework.routers`` for all built-in routers and
+``kalman.framework.routers.nn`` for pluggable neural architectures.
 """
 from __future__ import annotations
 import numpy as np
@@ -21,10 +21,8 @@ from scipy.stats import multivariate_normal
 
 from ..framework.filter import KalmanFilter
 from ..framework.io.record import KalmanRecord
-from .routers.base     import KalmanRouter
-from .routers.bayesian import BayesianRouter
-from .routers.neural   import NeuralRouter
-from .routers.nn.mlp   import MLP
+from ..framework.routers.base     import KalmanRouter
+from ..framework.routers.bayesian import BayesianRouter
 
 
 class InteractiveKalmanFilter:
@@ -111,17 +109,9 @@ class InteractiveKalmanFilter:
             label_arrays.append(np.asarray(labels, dtype=int))
 
         self.router = saved
-        if hasattr(self.router, "fit"):
-            self.router.fit(nis_arrays, label_arrays,
-                            epochs=epochs, lr=lr, seed=seed, **kwargs)
+        self.router.fit(nis_arrays, label_arrays,
+                        epochs=epochs, lr=lr, seed=seed, **kwargs)
         return self
-
-    def fit_router(self, training_zk_list, true_regime_list,
-                   epochs: int = 500, lr: float = 2e-3,
-                   seed=None) -> "InteractiveKalmanFilter":
-        """Deprecated alias for :meth:`fit`.  Use ``fit()`` instead."""
-        return self.fit(training_zk_list, true_regime_list,
-                        epochs=epochs, lr=lr, seed=seed)
 
     # ── forward pass ──────────────────────────────────────────────────────────
 
@@ -242,31 +232,3 @@ class InteractiveKalmanFilter:
         """Mode-probability history, shape (T, M)."""
         return (np.array(self.mu_log) if self.mu_log
                 else np.empty((0, self.M_count)))
-
-
-# Backward-compatibility alias
-class NeuralInteractiveKalmanFilter(InteractiveKalmanFilter):
-    """Convenience alias: ``InteractiveKalmanFilter(router=NeuralRouter(MLP(...)))``.
-
-    Prefer the explicit form::
-
-        from kalman.filters.routers import NeuralRouter
-        from kalman.filters.routers.nn import MLP
-
-        ikf = InteractiveKalmanFilter(models, Pi,
-                                      router=NeuralRouter(MLP(hidden=32)))
-        ikf.fit(training_zk_list, labels)
-    """
-
-    def __init__(self, models, transition,
-                 hidden=16, window=5, initial_probs=None):
-        super().__init__(models, transition,
-                         initial_probs=initial_probs,
-                         router=NeuralRouter(MLP(hidden=hidden), window=window))
-
-    def fit(self, training_zk_list, true_regime_list,  # type: ignore[override]
-            epochs=500, lr=2e-3, seed=None,
-            **kwargs) -> "NeuralInteractiveKalmanFilter":
-        super().fit(training_zk_list, true_regime_list,
-                    epochs=epochs, lr=lr, seed=seed, **kwargs)
-        return self

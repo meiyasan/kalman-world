@@ -4,15 +4,15 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.filters.routers.base      import KalmanRouter
-from modules.filters.routers.bayesian  import BayesianRouter
-from modules.filters.routers.threshold import ThresholdRouter
-from modules.filters.routers.hybrid    import HybridRouter
-from modules.filters.routers.neural    import NeuralRouter
-from modules.filters.routers.nn.mlp   import MLP
-from modules.filters.routers.nn.transformer import TransformerNN
-from modules.filters.routers.nn.lstm        import LSTM
-from modules.filters.routers.nn.cnn         import CNN
+from modules.framework.routers.base      import KalmanRouter
+from modules.framework.routers.bayesian  import BayesianRouter
+from modules.framework.routers.threshold import ThresholdRouter
+from modules.framework.routers.hybrid    import HybridRouter
+from modules.framework.routers.neural    import NeuralRouter
+from modules.framework.routers.nn.mlp   import MLP
+from modules.framework.routers.nn.transformer import TransformerNN
+from modules.framework.routers.nn.lstm        import LSTM
+from modules.framework.routers.nn.cnn         import CNN
 
 
 # ── helpers ──────────────────────────────────────────────────────────────────
@@ -319,38 +319,6 @@ class TestNNStubs(unittest.TestCase):
 
     def test_cnn_raises(self):
         self._check_stub(CNN)
-
-
-# ── backward-compat: MLPRouter ────────────────────────────────────────────────
-
-class TestMLPRouterBackwardCompat(unittest.TestCase):
-
-    def test_mlp_router_is_neural_router(self):
-        from modules.framework.routers import MLPRouter
-        r = MLPRouter(hidden=8, window=3)
-        self.assertIsInstance(r, NeuralRouter)
-
-    def test_mlp_router_trains(self):
-        from modules.framework.routers import MLPRouter
-        rng = np.random.default_rng(0)
-        nis_arr = [rng.uniform(0, 3, (10, 2))]
-        lbl_arr = [np.array([0]*5 + [1]*5)]
-        r = MLPRouter(hidden=4, window=2)
-        r.fit(nis_arr, lbl_arr, epochs=20)
-        self.assertTrue(r._is_trained)
-
-    def test_fit_on_nis_still_works(self):
-        """Old fit_on_nis API must not crash."""
-        from modules.framework.routers import MLPRouter
-        rng = np.random.default_rng(0)
-        nis_arr = [rng.uniform(0, 3, (10, 2))]
-        lbl_arr = [np.array([0]*5 + [1]*5)]
-        r = MLPRouter(hidden=4, window=2)
-        # fit_on_nis was the old name on KalmanRouter base
-        # It no longer exists on the new base, but HybridRouter.fit delegates
-        # So this verifies the new fit() works instead
-        r.fit(nis_arr, lbl_arr, epochs=10)
-        self.assertTrue(r._is_trained)
 
 
 if __name__ == "__main__":

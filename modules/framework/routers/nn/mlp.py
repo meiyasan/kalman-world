@@ -2,8 +2,8 @@
 
 Usage::
 
-    from kalman.filters.routers import NeuralRouter
-    from kalman.filters.routers.nn import MLP
+    from kalman.framework.routers import NeuralRouter
+    from kalman.framework.routers.nn import MLP
 
     router = NeuralRouter(model=MLP(hidden=32), window=5)
     ikf.fit(training_zk_list, labels)
