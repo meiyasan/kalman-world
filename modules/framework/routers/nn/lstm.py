@@ -1,76 +1,86 @@
-"""LSTM — stub for recurrent architectures.
+"""LSTM — single-layer recurrent router over the NIS window.
 
-An LSTM sees the full NIS sequence step-by-step, making it well-suited
-for online routing where the window need not be fixed in advance.
+The NIS history is processed step by step (one of the ``window`` timesteps at
+a time).  Unlike MLP's fixed concatenated window or CNN's local receptive
+field, the LSTM carries hidden/cell state forward — useful when the
+discriminating signal is a temporal pattern (e.g. burst timing) rather than
+the instantaneous NIS level.
 
 Plug into NeuralRouter::
 
-    router = NeuralRouter(model=MyLSTM(), window=10)
-    ikf.fit(training_zk_list, labels)
+    from kalman.framework.routers import NeuralRouter
+    from kalman.framework.routers.nn import LSTM
 
-The NeuralRouter presents the last ``window`` NIS steps as a flat feature
-vector.  To use the full sequence, override ``NeuralRouter._window_feat``
-or provide raw NIS arrays directly to a custom fit method.
-
-Implement three methods:
-
-* ``build(d_in, d_out, seed=None)`` — initialise
-* ``fit(X, y, **kwargs)``           — train
-* ``__call__(x)``                   — forward: (d_in,) → (d_out,) probs
-
-PyTorch example
----------------
-.. code-block:: python
-
-    import torch, torch.nn as nn
-
-    class MyLSTM(LSTM):
-
-        def build(self, d_in, d_out, seed=None):
-            M = d_out
-            self._lstm = nn.LSTM(input_size=M, hidden_size=32, batch_first=True)
-            self._head = nn.Linear(32, d_out)
-            self._opt  = torch.optim.Adam(
-                list(self._lstm.parameters()) + list(self._head.parameters()))
-            self._M    = M
-            self._window = d_in // M
-
-        def fit(self, X, y, epochs=200, **_):
-            # reshape flat (N, M*W) → (N, W, M) sequences
-            N, W, M = len(X), self._window, self._M
-            Xt = torch.tensor(X.reshape(N, W, M), dtype=torch.float32)
-            yt = torch.tensor(y, dtype=torch.long)
-            loss_fn = nn.CrossEntropyLoss()
-            for _ in range(epochs):
-                self._opt.zero_grad()
-                out, _ = self._lstm(Xt)
-                logits = self._head(out[:, -1])
-                loss_fn(logits, yt).backward()
-                self._opt.step()
-
-        def __call__(self, x):
-            with torch.no_grad():
-                W, M = self._window, self._M
-                t   = torch.tensor(x.reshape(1, W, M), dtype=torch.float32)
-                out, _ = self._lstm(t)
-                logits = self._head(out[0, -1])
-                return torch.softmax(logits, dim=-1).numpy()
+    router = NeuralRouter(model=LSTM(hidden=16), window=10)
+    ikf.fit(training_zk_list, labels_list)
 """
 from __future__ import annotations
 import numpy as np
+import torch
+import torch.nn as nn
+
+_DEVICE = ("mps"  if torch.backends.mps.is_available()  else
+           "cuda" if torch.cuda.is_available()           else "cpu")
 
 
 class LSTM:
-    """Stub: override ``build``, ``fit``, ``__call__`` with your framework."""
+    """Single-layer LSTM + linear softmax head.
 
-    def build(self, d_in: int, d_out: int, seed=None) -> None:
-        raise NotImplementedError(
-            "LSTM.build: implement with your framework.\n"
-            "See the module docstring for a PyTorch example."
+    Parameters
+    ----------
+    hidden : int
+        Hidden / cell state size.
+    """
+
+    def __init__(self, hidden: int = 16):
+        self.hidden = int(hidden)
+        self._M: int | None = None
+        self._W: int | None = None
+        self._lstm: nn.LSTM | None = None
+        self._head: nn.Linear | None = None
+        self._opt: torch.optim.Optimizer | None = None
+
+    def build(self, d_in: int, d_out: int, seed=None) -> "LSTM":
+        if seed is not None:
+            torch.manual_seed(seed)
+        M = d_out
+        W = d_in // M
+        self._M, self._W = M, W
+        self._lstm = nn.LSTM(M, self.hidden, batch_first=True).to(_DEVICE)
+        self._head = nn.Linear(self.hidden, d_out).to(_DEVICE)
+        params = list(self._lstm.parameters()) + list(self._head.parameters())
+        self._opt = torch.optim.Adam(params)
+        return self
+
+    def _to_seq(self, X: np.ndarray) -> torch.Tensor:
+        """(N, M*W) → (N, W, M) float32 tensor on device."""
+        return torch.tensor(
+            X.reshape(-1, self._W, self._M), dtype=torch.float32, device=_DEVICE
         )
 
-    def fit(self, X: np.ndarray, y: np.ndarray, **kwargs) -> None:
-        raise NotImplementedError("LSTM.fit")
+    def fit(self, X: np.ndarray, y: np.ndarray,
+            epochs: int = 300, lr: float = 2e-3,
+            batch_size: int = 64, **_) -> "LSTM":
+        self._opt.param_groups[0]["lr"] = lr
+        Xt = self._to_seq(X)                                       # (N, W, M)
+        yt = torch.tensor(y, dtype=torch.long, device=_DEVICE)
+        loss_fn = nn.CrossEntropyLoss()
+        N = len(Xt)
+        for _ in range(epochs):
+            idx = torch.randperm(N, device=_DEVICE)
+            for s in range(0, N, batch_size):
+                b = idx[s:s + batch_size]
+                self._opt.zero_grad()
+                out, _ = self._lstm(Xt[b])          # (batch, W, hidden)
+                logits = self._head(out[:, -1, :])  # last step → (batch, d_out)
+                loss_fn(logits, yt[b]).backward()
+                self._opt.step()
+        return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
-        raise NotImplementedError("LSTM.__call__")
+        with torch.no_grad():
+            xt = self._to_seq(x[None])              # (1, W, M)
+            out, _ = self._lstm(xt)
+            logits = self._head(out[:, -1, :]).squeeze(0).cpu().numpy()
+        e = np.exp(logits - logits.max())
+        return e / e.sum()

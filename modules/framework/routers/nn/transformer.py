@@ -1,86 +1,102 @@
-"""TransformerNN — stub for self-attention architectures.
+"""TransformerNN — single-head self-attention router over the NIS window.
 
-The NIS history (T × M) is a natural sequence for a Transformer: each step
-is a token, each model's NIS is a feature.  Self-attention can capture
-long-range regime correlations that a fixed-window MLP misses.
+The NIS history (window × M) is a natural sequence for a Transformer: each
+of the ``window`` timesteps is a token, each model's NIS is a feature.
+Self-attention lets every position attend to every other position in one
+step — no fixed receptive field (unlike the CNN) and no sequential
+bottleneck (unlike the LSTM).
+
+Architecture: per-token linear embedding → TransformerEncoderLayer (one block,
+single head) → global average pool over tokens → linear softmax head.
 
 Plug into NeuralRouter::
 
-    router = NeuralRouter(model=MyTransformerNN(), window=16)
-    ikf.fit(training_zk_list, labels)
+    from kalman.framework.routers import NeuralRouter
+    from kalman.framework.routers.nn import TransformerNN
 
-Implement three methods:
-
-* ``build(d_in, d_out, seed=None)`` — initialise your architecture
-* ``fit(X, y, **kwargs)``           — train on (N, d_in) features, (N,) labels
-* ``__call__(x)``                   — forward pass: (d_in,) → (d_out,) probs
-
-PyTorch example
----------------
-.. code-block:: python
-
-    import torch, torch.nn as nn
-
-    class MyTransformerNN(TransformerNN):
-
-        def build(self, d_in, d_out, seed=None):
-            if seed is not None:
-                torch.manual_seed(seed)
-            self._net = nn.Sequential(
-                nn.Linear(d_in, 64),
-                nn.ReLU(),
-                nn.Linear(64, d_out),
-                nn.Softmax(dim=-1),
-            )
-            self._opt = torch.optim.Adam(self._net.parameters(), lr=2e-3)
-
-        def fit(self, X, y, epochs=200, **_):
-            Xt = torch.tensor(X, dtype=torch.float32)
-            yt = torch.tensor(y, dtype=torch.long)
-            loss_fn = nn.CrossEntropyLoss()
-            for _ in range(epochs):
-                self._opt.zero_grad()
-                loss_fn(self._net(Xt), yt).backward()
-                self._opt.step()
-
-        def __call__(self, x):
-            with torch.no_grad():
-                t = torch.tensor(x, dtype=torch.float32)
-                return self._net(t).numpy()
-
-sklearn example
----------------
-.. code-block:: python
-
-    from sklearn.ensemble import RandomForestClassifier
-
-    class ForestNN(TransformerNN):
-
-        def build(self, d_in, d_out, seed=None):
-            self._clf = RandomForestClassifier(n_estimators=100,
-                                               random_state=seed)
-
-        def fit(self, X, y, **_):
-            self._clf.fit(X, y)
-
-        def __call__(self, x):
-            return self._clf.predict_proba(x.reshape(1, -1))[0]
+    router = NeuralRouter(model=TransformerNN(d_model=16), window=10)
+    ikf.fit(training_zk_list, labels_list)
 """
 from __future__ import annotations
 import numpy as np
+import torch
+import torch.nn as nn
+
+_DEVICE = ("mps"  if torch.backends.mps.is_available()  else
+           "cuda" if torch.cuda.is_available()           else "cpu")
+
+
+class _Block(nn.Module):
+    def __init__(self, M: int, d: int, d_ff: int, d_out: int):
+        super().__init__()
+        self.embed   = nn.Linear(M, d)
+        self.encoder = nn.TransformerEncoderLayer(
+            d_model=d, nhead=1, dim_feedforward=d_ff,
+            dropout=0.0, batch_first=True,
+        )
+        self.head = nn.Linear(d, d_out)
+
+    def forward(self, x: torch.Tensor) -> torch.Tensor:  # (B, W, M)
+        e = self.embed(x)           # (B, W, d)
+        o = self.encoder(e)         # (B, W, d)
+        return self.head(o.mean(1)) # (B, d_out)
 
 
 class TransformerNN:
-    """Stub: override ``build``, ``fit``, ``__call__`` with your framework."""
+    """Single-head self-attention block + FFN + dense softmax head.
 
-    def build(self, d_in: int, d_out: int, seed=None) -> None:
-        raise NotImplementedError(
-            "TransformerNN.build: implement with your framework.\n"
-            "See the module docstring for PyTorch and sklearn examples."
+    Parameters
+    ----------
+    d_model : int
+        Embedding / attention dimension.
+    d_ff : int, optional
+        Feed-forward hidden width.  Defaults to ``2 * d_model``.
+    """
+
+    def __init__(self, d_model: int = 16, d_ff: int | None = None):
+        self.d_model = int(d_model)
+        self.d_ff    = int(d_ff) if d_ff is not None else 2 * self.d_model
+        self._M: int | None = None
+        self._W: int | None = None
+        self._block: _Block | None = None
+        self._opt: torch.optim.Optimizer | None = None
+
+    def build(self, d_in: int, d_out: int, seed=None) -> "TransformerNN":
+        if seed is not None:
+            torch.manual_seed(seed)
+        M = d_out
+        W = d_in // M
+        self._M, self._W = M, W
+        self._block = _Block(M, self.d_model, self.d_ff, d_out).to(_DEVICE)
+        self._opt   = torch.optim.Adam(self._block.parameters())
+        return self
+
+    def _to_seq(self, X: np.ndarray) -> torch.Tensor:
+        """(N, M*W) → (N, W, M) float32 tensor on device."""
+        return torch.tensor(
+            X.reshape(-1, self._W, self._M), dtype=torch.float32, device=_DEVICE
         )
 
-    def fit(self, X: np.ndarray, y: np.ndarray, **kwargs) -> None:
-        raise NotImplementedError("TransformerNN.fit")
+    def fit(self, X: np.ndarray, y: np.ndarray,
+            epochs: int = 300, lr: float = 2e-3,
+            batch_size: int = 64, **_) -> "TransformerNN":
+        self._opt.param_groups[0]["lr"] = lr
+        Xt = self._to_seq(X)
+        yt = torch.tensor(y, dtype=torch.long, device=_DEVICE)
+        loss_fn = nn.CrossEntropyLoss()
+        N = len(Xt)
+        for _ in range(epochs):
+            idx = torch.randperm(N, device=_DEVICE)
+            for s in range(0, N, batch_size):
+                b = idx[s:s + batch_size]
+                self._opt.zero_grad()
+                loss_fn(self._block(Xt[b]), yt[b]).backward()
+                self._opt.step()
+        return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
-        raise NotImplementedError("TransformerNN.__call__")
+        with torch.no_grad():
+            xt = self._to_seq(x[None])
+            logits = self._block(xt).squeeze(0).cpu().numpy()
+        e = np.exp(logits - logits.max())
+        return e / e.sum()

@@ -4,11 +4,18 @@ All follow the same three-method protocol recognised by NeuralRouter:
 
 * ``build(d_in, d_out, seed=None)`` — lazy parameter initialisation
 * ``fit(X, y, **kwargs)``           — training on (N, d_in) features
-* ``__call__(x)``                   — forward: (d_in,) → (d_out,) probs
+* ``__call__(x)``                   — forward: (d_in,) → (d_out,) probs (numpy)
 
-MLP is a working pure-numpy implementation.
-TransformerNN, LSTM, CNN are stubs — see their module docstrings for
-complete PyTorch implementation examples.
+All four are PyTorch (``torch.nn``) implementations trained with batched Adam.
+Device is selected automatically: MPS (Apple Silicon) > CUDA > CPU.
+
+* ``MLP``           — 2-layer tanh MLP on the flattened NIS window
+* ``CNN``           — 1-D convolution + global average pool over time
+* ``LSTM``          — single-layer LSTM, reads the NIS window as a sequence
+* ``TransformerNN`` — single-head self-attention block + FFN
+
+Any callable ``model(features) → probs`` can be substituted — the three
+methods are optional hooks; if absent the model is assumed pre-trained.
 """
 from .mlp         import MLP
 from .transformer import TransformerNN

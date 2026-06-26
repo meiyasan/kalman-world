@@ -1,77 +1,87 @@
-"""CNN — stub for 1-D temporal convolutional architectures.
+"""CNN — 1-D temporal convolution over the NIS window.
 
-A 1-D CNN treats the NIS history (window × M) as a multichannel sequence.
-Convolutional filters learn local temporal patterns across models
-(e.g., sudden NIS spikes indicating a regime switch).
+Architecture: Conv1d (M channels × window positions) → tanh → global average
+pool → linear softmax head.  Input layout: (batch, M, window) — M models are
+treated as channels, window steps as the temporal axis.
 
 Plug into NeuralRouter::
 
-    router = NeuralRouter(model=MyCNN(), window=10)
-    ikf.fit(training_zk_list, labels)
+    from kalman.framework.routers import NeuralRouter
+    from kalman.framework.routers.nn import CNN
 
-Implement three methods:
-
-* ``build(d_in, d_out, seed=None)`` — initialise
-* ``fit(X, y, **kwargs)``           — train
-* ``__call__(x)``                   — forward: (d_in,) → (d_out,) probs
-
-PyTorch example
----------------
-.. code-block:: python
-
-    import torch, torch.nn as nn
-
-    class MyCNN(CNN):
-
-        def build(self, d_in, d_out, seed=None):
-            M = d_out
-            W = d_in // M
-            self._net = nn.Sequential(
-                # (batch, M, W) — M channels, W time steps
-                nn.Conv1d(M, 32, kernel_size=3, padding=1),
-                nn.ReLU(),
-                nn.AdaptiveAvgPool1d(1),      # global average pooling
-                nn.Flatten(),
-                nn.Linear(32, d_out),
-                nn.Softmax(dim=-1),
-            )
-            self._opt = torch.optim.Adam(self._net.parameters(), lr=2e-3)
-            self._M   = M
-            self._W   = W
-
-        def fit(self, X, y, epochs=200, **_):
-            N = len(X)
-            # reshape flat (N, M*W) → (N, M, W)
-            Xt = torch.tensor(
-                X.reshape(N, self._M, self._W), dtype=torch.float32)
-            yt = torch.tensor(y, dtype=torch.long)
-            loss_fn = nn.CrossEntropyLoss()
-            for _ in range(epochs):
-                self._opt.zero_grad()
-                loss_fn(self._net(Xt), yt).backward()
-                self._opt.step()
-
-        def __call__(self, x):
-            with torch.no_grad():
-                t = torch.tensor(
-                    x.reshape(1, self._M, self._W), dtype=torch.float32)
-                return self._net(t).squeeze(0).numpy()
+    router = NeuralRouter(model=CNN(out_channels=8, kernel_size=3), window=10)
+    ikf.fit(training_zk_list, labels_list)
 """
 from __future__ import annotations
 import numpy as np
+import torch
+import torch.nn as nn
+
+_DEVICE = ("mps"  if torch.backends.mps.is_available()  else
+           "cuda" if torch.cuda.is_available()           else "cpu")
 
 
 class CNN:
-    """Stub: override ``build``, ``fit``, ``__call__`` with your framework."""
+    """1-D convolution + global average pool + dense softmax head.
 
-    def build(self, d_in: int, d_out: int, seed=None) -> None:
-        raise NotImplementedError(
-            "CNN.build: implement with your framework.\n"
-            "See the module docstring for a PyTorch example."
-        )
+    Parameters
+    ----------
+    out_channels : int
+        Number of convolutional filters.
+    kernel_size : int
+        Temporal kernel width (clipped to window length at build time).
+    """
 
-    def fit(self, X: np.ndarray, y: np.ndarray, **kwargs) -> None:
-        raise NotImplementedError("CNN.fit")
+    def __init__(self, out_channels: int = 8, kernel_size: int = 3):
+        self.out_channels = int(out_channels)
+        self.kernel_size  = int(kernel_size)
+        self._M: int | None = None
+        self._W: int | None = None
+        self._net: nn.Module | None = None
+        self._opt: torch.optim.Optimizer | None = None
+
+    def build(self, d_in: int, d_out: int, seed=None) -> "CNN":
+        if seed is not None:
+            torch.manual_seed(seed)
+        M = d_out
+        W = d_in // M
+        k = min(self.kernel_size, W)
+        self._M, self._W = M, W
+        h = self.out_channels
+        self._net = nn.Sequential(
+            nn.Conv1d(M, h, kernel_size=k, padding=k // 2),
+            nn.Tanh(),
+            nn.AdaptiveAvgPool1d(1),   # → (batch, h, 1)
+            nn.Flatten(),              # → (batch, h)
+            nn.Linear(h, d_out),
+        ).to(_DEVICE)
+        self._opt = torch.optim.Adam(self._net.parameters())
+        return self
+
+    def _reshape(self, X: np.ndarray) -> np.ndarray:
+        """(N, M*W) → (N, M, W)."""
+        return X.reshape(-1, self._M, self._W)
+
+    def fit(self, X: np.ndarray, y: np.ndarray,
+            epochs: int = 300, lr: float = 3e-3,
+            batch_size: int = 64, **_) -> "CNN":
+        self._opt.param_groups[0]["lr"] = lr
+        Xt = torch.tensor(self._reshape(X), dtype=torch.float32, device=_DEVICE)
+        yt = torch.tensor(y, dtype=torch.long, device=_DEVICE)
+        loss_fn = nn.CrossEntropyLoss()
+        N = len(Xt)
+        for _ in range(epochs):
+            idx = torch.randperm(N, device=_DEVICE)
+            for s in range(0, N, batch_size):
+                b = idx[s:s + batch_size]
+                self._opt.zero_grad()
+                loss_fn(self._net(Xt[b]), yt[b]).backward()
+                self._opt.step()
+        return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:
-        raise NotImplementedError("CNN.__call__")
+        with torch.no_grad():
+            xt = torch.tensor(self._reshape(x[None]), dtype=torch.float32, device=_DEVICE)
+            logits = self._net(xt).squeeze(0).cpu().numpy()
+        e = np.exp(logits - logits.max())
+        return e / e.sum()
