@@ -11,7 +11,7 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.framework import LinearKalmanModel, ExtendedKalmanModel, EngineKind
+from modules.framework import LinearKalmanModel, ExtendedKalmanModel, KalmanEngineKind
 from modules.filters import (
     LinearKalmanFilter, ExtendedKalmanFilter, UnscentedKalmanFilter, ParticleFilter,
 )
@@ -153,10 +153,10 @@ class TestNonlinearFilters(unittest.TestCase):
             self.assertLess(rmse, rmse_meas, f"{Filt.__name__} should beat raw position")
 
     def test_filter_KIND_matches_engine(self):
-        self.assertEqual(LinearKalmanFilter.KIND, EngineKind.LINEAR)
-        self.assertEqual(ExtendedKalmanFilter.KIND, EngineKind.EXTENDED)
-        self.assertEqual(UnscentedKalmanFilter.KIND, EngineKind.UNSCENTED)
-        self.assertEqual(ParticleFilter.KIND, EngineKind.PARTICLE)
+        self.assertEqual(LinearKalmanFilter.KIND, KalmanEngineKind.LINEAR)
+        self.assertEqual(ExtendedKalmanFilter.KIND, KalmanEngineKind.EXTENDED)
+        self.assertEqual(UnscentedKalmanFilter.KIND, KalmanEngineKind.UNSCENTED)
+        self.assertEqual(ParticleFilter.KIND, KalmanEngineKind.PARTICLE)
 
 
 if __name__ == "__main__":

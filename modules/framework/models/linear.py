@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..model import KalmanModel
-from ..constants import EngineKind, ALL_ENGINES
+from ..constants import KalmanEngineKind, ALL_ENGINES
 
 
 class LinearKalmanModel(KalmanModel):
@@ -18,7 +18,7 @@ class LinearKalmanModel(KalmanModel):
     DESCRIPTION = "Linear state-space model: f(x)=Fx+Bu+Lw, h(x)=Hx+Mv (constant matrices)."
     VERSION = "1.0"
 
-    DEFAULT_ENGINE  = EngineKind.LINEAR
+    DEFAULT_ENGINE  = KalmanEngineKind.LINEAR
     ALLOWED_ENGINES = ALL_ENGINES
 
     def __init__(self, sensor_id, **kwargs):

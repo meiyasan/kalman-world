@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..engine import KalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 
 class ExtendedKalmanEngine(KalmanEngine):
@@ -18,7 +18,7 @@ class ExtendedKalmanEngine(KalmanEngine):
     NAME = "Extended Kalman Engine"
     DESCRIPTION = "EKF step: nonlinear f/h with Jacobian linearisation (falls back to linear)."
     VERSION = "1.0"
-    KIND = EngineKind.EXTENDED
+    KIND = KalmanEngineKind.EXTENDED
 
     def _propagate(self, model, x, u, t):
         F = model.F(x=x, u=u, t=t)

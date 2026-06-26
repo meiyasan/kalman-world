@@ -24,8 +24,14 @@ from modules.apps import (
 )
 from modules.apps.ballistics import BallisticModel
 from modules.apps.rocket import (
-    TransLunarModel, RocketLaunchModel, R_EARTH, KM, D_MOON, GM_EARTH,
+    RocketAscentModel, RocketLiftoffModel, RocketLandingModel, RocketDescentModel,
+    RocketLaunchModel, RocketTakeoffModel,            # legacy aliases
 )
+from modules.apps.space import (
+    TransLunarModel, InterplanetaryModel, lambert, hohmann_transfer,
+)
+from modules.runtime.astro import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state
+from modules.apps.vehicles import CarSpeedModel
 from modules.filters import ExtendedKalmanFilter
 
 
@@ -76,8 +82,12 @@ class TestRocket(unittest.TestCase):
         moon = m.moon_track(np.arange(5) * m._dt)
         self.assertEqual(moon.shape, (5, 3))
 
+    def test_legacy_aliases_resolve(self):
+        self.assertIs(RocketLaunchModel, RocketAscentModel)
+        self.assertIs(RocketTakeoffModel, RocketLiftoffModel)
+
     def test_powered_ascent_with_control_input(self):
-        launch = RocketLaunchModel(dt_s=1.0, track_km=0.5)
+        launch = RocketAscentModel(dt_s=1.0, track_km=0.5)
         self.assertEqual((launch.n, launch.m, launch.l), (4, 2, 2))   # state, obs, thrust control
         N = 40
         uk = np.zeros((N, 2))
@@ -93,6 +103,203 @@ class TestRocket(unittest.TestCase):
         # thrust must have lifted the vehicle off the pad
         alt = np.linalg.norm(asc.xk[:, :2], axis=1) - R_EARTH
         self.assertGreater(alt[-1], alt[0])
+
+
+# ===========================================================================
+# Rocket vertical liftoff — propellant burn (mass is a state)
+# ===========================================================================
+class TestRocketLiftoff(unittest.TestCase):
+
+    def test_dims_and_figures_of_merit(self):
+        m = RocketLiftoffModel("LIFTOFF", m0=1000.0, m_dry=400.0, ve=2500.0, mdot=8.0)
+        self.assertEqual((m.n, m.m, m.l), (3, 1, 0))   # [h, v, m], observe altitude
+        self.assertAlmostEqual(m.thrust, 2500.0 * 8.0)            # T = ve * mdot
+        self.assertAlmostEqual(m.burn_time, 600.0 / 8.0)          # propellant / mdot
+        self.assertGreater(m.twr(), 1.0)                          # it must leave the pad
+
+    def test_liftoff_burns_fuel_and_ekf_recovers_velocity(self):
+        np.random.seed(0)
+        m = RocketLiftoffModel("LIFTOFF", fs=10.0, track_m=20.0)
+        m.initial_state([0.0, 0.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))
+        flight = m.sample(60.0, process_noise=False)             # clean burn
+        self.assertEqual(flight.xk.shape, (600, 3))
+        # mass strictly decreases while burning; altitude rises
+        self.assertLess(flight.xk[-1, 2], m.m0)
+        self.assertGreaterEqual(flight.xk[:, 2].min(), m.m_dry - 1e-6)
+        self.assertGreater(flight.xk[-1, 0], flight.xk[0, 0])
+
+        est = ExtendedKalmanFilter(m).forward(flight.zk)
+        _no_nan_inf(est.xk, "rocket-takeoff EKF xk")
+        # altitude tracking beats the raw radar fixes ...
+        rmse_filt = np.sqrt(np.mean((est.xk[:, 0] - flight.xk[:, 0]) ** 2))
+        rmse_radar = np.sqrt(np.mean((flight.zk.reshape(-1) - flight.xk[:, 0]) ** 2))
+        self.assertLess(rmse_filt, rmse_radar)
+        # ... and the unmeasured climb rate is recovered to within a few m/s
+        rmse_vel = np.sqrt(np.mean((est.xk[:, 1] - flight.xk[:, 1]) ** 2))
+        self.assertLess(rmse_vel, 5.0)
+
+    def test_metrics_keys(self):
+        m = RocketLiftoffModel("LIFTOFF", fs=10.0)
+        m.initial_state([0.0, 0.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))
+        flight = m.sample(80.0, process_noise=False)
+        met = m.metrics(flight)
+        for key in ("burnout time [s]", "apogee [km]", "max accel [g]", "max-Q [kPa]"):
+            self.assertIn(key, met)
+        self.assertGreater(met["apogee [km]"], 0.0)
+
+
+# ===========================================================================
+# Rocket vertical landing — the hoverslam / powered descent
+# ===========================================================================
+class TestRocketLanding(unittest.TestCase):
+
+    def _model(self, **kw):
+        m = RocketLandingModel("LANDING", fs=10.0, track_m=20.0, **kw)
+        m.initial_state([1500.0, -50.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))
+        return m
+
+    def test_dims(self):
+        m = RocketLandingModel("LANDING")
+        self.assertEqual((m.n, m.m, m.l), (3, 1, 0))   # [h, v, m], observe altitude
+
+    def test_soft_touchdown_and_fuel_burn(self):
+        np.random.seed(0)
+        m = self._model()
+        flight = m.sample(40.0, process_noise=False)
+        h, v, mass = flight.xk[:, 0], flight.xk[:, 1], flight.xk[:, 2]
+        # the booster reaches the pad and arrives slowly (a hoverslam, not a crash)
+        self.assertLessEqual(h.min(), 1.0)
+        i_td = int(np.argmin(np.abs(h)))
+        self.assertLess(abs(v[i_td]), 2.0)
+        # it burned propellant to do it, but never past the dry mass
+        self.assertLess(mass.min(), m.m0)
+        self.assertGreaterEqual(mass.min(), m.m_dry - 1e-6)
+
+    def test_ekf_recovers_descent_rate_from_altitude(self):
+        np.random.seed(1)
+        m = self._model()
+        flight = m.sample(40.0, process_noise=False)
+        est = ExtendedKalmanFilter(m).forward(flight.zk)
+        _no_nan_inf(est.xk, "rocket-landing EKF xk")
+        rmse_filt = np.sqrt(np.mean((est.xk[:, 0] - flight.xk[:, 0]) ** 2))
+        rmse_radar = np.sqrt(np.mean((flight.zk.reshape(-1) - flight.xk[:, 0]) ** 2))
+        self.assertLess(rmse_filt, rmse_radar)                   # beats raw radar on altitude
+        rmse_vel = np.sqrt(np.mean((est.xk[:, 1] - flight.xk[:, 1]) ** 2))
+        self.assertLess(rmse_vel, 5.0)                           # recovers the unmeasured speed
+
+    def test_metrics_keys(self):
+        m = self._model()
+        flight = m.sample(40.0, process_noise=False)
+        met = m.metrics(flight)
+        for key in ("ignition time [s]", "touchdown speed [m/s]", "propellant burned [kg]"):
+            self.assertIn(key, met)
+        self.assertGreater(met["propellant burned [kg]"], 0.0)
+
+
+# ===========================================================================
+# Rocket 2-D powered descent — gimballed, lands upright, control input
+# ===========================================================================
+class TestRocketDescent(unittest.TestCase):
+
+    def _x0(self):
+        return np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 1000.0])
+
+    def test_dims(self):
+        self.assertEqual(RocketDescentModel().l, 0)                 # closed-loop autopilot
+        self.assertEqual(RocketDescentModel(control=True).l, 2)     # [throttle, gimbal]
+        self.assertEqual((RocketDescentModel().n, RocketDescentModel().m), (7, 3))
+
+    def test_closed_loop_lands_upright_on_pad(self):
+        m = RocketDescentModel(fs=20.0)
+        m.initial_state(self._x0())
+        X = np.asarray(m.sample(70.0, process_noise=False).xk)
+        i = int(np.argmin(np.abs(X[:, 1])))
+        self.assertLess(abs(X[i, 0]), 5.0)                          # within 5 m of the pad
+        self.assertLess(np.hypot(X[i, 2], X[i, 3]), 2.0)            # soft touchdown
+        self.assertLess(np.degrees(abs(X[i, 4])), 3.0)             # arrives upright
+
+    def test_control_input_program_and_ekf(self):
+        m = RocketDescentModel(fs=20.0, control=True)
+        x0 = self._x0(); N = int(70 * m.fs)
+        uk, truth = m.autopilot(x0, N)
+        self.assertEqual(uk.shape, (N, 2))
+        self.assertTrue(np.all((uk[:, 0] >= 0.0) & (uk[:, 0] <= 1.0)))            # throttle in [0,1]
+        self.assertLessEqual(np.abs(uk[:, 1]).max(), m.gimbal_max + 1e-9)         # gimbal bounded
+        self.assertGreater(np.abs(uk[:, 1]).max(), 0.0)                           # it actually steers
+        m.initial_state(x0)
+        s = m.sample(N / m.fs, uk=uk, process_noise=False)
+        est = m.filter(s.zk, uk)
+        _no_nan_inf(est.xk, "rocket-descent EKF xk")
+        X = np.asarray(s.xk); i = int(np.argmin(np.abs(X[:, 1])))
+        self.assertLess(abs(X[i, 0]), 5.0)                          # control program lands on pad
+
+
+# ===========================================================================
+# Interplanetary — Lambert, Hohmann and the heliocentric N-body cruise
+# ===========================================================================
+class TestInterplanetary(unittest.TestCase):
+
+    def test_lambert_round_trip(self):
+        # A known transfer: solve Lambert, then check the arc reproduces the geometry.
+        r1, _ = body_state("earth", "2027-01-01")
+        r2, _ = body_state("mars",  "2027-09-01")
+        v1, v2 = lambert(r1, r2, 243 * DAY, mu=GM_SUN)
+        for v in (v1, v2):                                          # heliocentric speeds are sane
+            self.assertTrue(5.0 < np.linalg.norm(v) < 60.0)
+
+    def test_hohmann_earth_mars(self):
+        h = hohmann_transfer("earth", "mars", epoch="2027-01-01")
+        self.assertTrue(np.isfinite(h["dv_total_kms"]) and h["dv_total_kms"] > 0)
+        self.assertTrue(150.0 < h["tof_days"] < 400.0)             # Earth→Mars ballpark
+
+    def test_two_body_cruise_ekf(self):
+        # No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.
+        m = InterplanetaryModel("earth", "mars", epoch=None, dt_s=43200.0, track_Mm=0.02)
+        from modules.runtime.astro import D_SUN
+        x0 = np.array([[D_SUN], [0], [0], [0], [np.sqrt(GM_SUN / D_SUN)], [0]])
+        m.initial_state(x0)
+        s = m.sample(80 * DAY, process_noise=False)
+        est = m.filter(s.zk)
+        _no_nan_inf(est.xk, "interplanetary EKF xk")
+        self.assertEqual(np.asarray(s.xk).shape[1], 6)
+
+
+# ===========================================================================
+# Car straight-line speed test
+# ===========================================================================
+class TestCarSpeed(unittest.TestCase):
+
+    def test_dims(self):
+        car = CarSpeedModel("CAR", fs=20.0)
+        self.assertEqual((car.n, car.m, car.l), (2, 1, 0))   # [s, v], observe position
+
+    def test_ekf_beats_naive_differencing(self):
+        np.random.seed(0)
+        car = CarSpeedModel("CAR", fs=20.0, gps_uncertainty=0.5)
+        car.initial_state([0.0, 0.0], P0=np.diag([0.5 ** 2, 0.5 ** 2]))
+        run = car.sample(10.0)
+        self.assertEqual(run.xk.shape, (200, 2))
+        # the car actually accelerates off the line
+        self.assertGreater(run.xk[-1, 1], run.xk[0, 1])
+
+        est = ExtendedKalmanFilter(car).forward(run.zk)
+        _no_nan_inf(est.xk, "car EKF xk")
+        v_true = run.xk[:, 1]
+        v_naive = np.gradient(run.zk.reshape(-1), car._dt)       # differentiate raw GPS
+        rmse_filt = np.sqrt(np.mean((est.xk[:, 1] - v_true) ** 2))
+        rmse_naive = np.sqrt(np.mean((v_naive - v_true) ** 2))
+        self.assertLess(rmse_filt, rmse_naive)
+
+    def test_metrics_zero_to_hundred(self):
+        np.random.seed(0)
+        car = CarSpeedModel("CAR", fs=20.0)
+        car.initial_state([0.0, 0.0], P0=np.diag([0.5 ** 2, 0.5 ** 2]))
+        run = car.sample(12.0, process_noise=False)
+        met = car.metrics(run)
+        # a 1500 kg / 150 kW car reaches 100 km/h in a handful of seconds
+        self.assertIsNotNone(met["0-100 km/h [s]"])
+        self.assertTrue(2.0 < met["0-100 km/h [s]"] < 12.0)
+        self.assertGreater(met["top speed [km/h]"], 100.0)
 
 
 # ===========================================================================

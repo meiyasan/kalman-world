@@ -1,7 +1,13 @@
 import numpy as np
+from collections import namedtuple
 
-from ..framework.constants import KalmanObservable, KalmanState
+from ..framework.constants import KalmanObservable, KalmanState, EnumBis
 from ..framework.models.linear import LinearKalmanModel; from ..framework.models.extended import ExtendedKalmanModel
+
+# Results of the trajectory estimators below; the *_std fields are 1-σ uncertainties
+# (None when no state covariance is supplied). Times are relative to the state's epoch.
+ApexEstimate   = namedtuple("ApexEstimate",   ["time", "height", "time_std", "height_std"])
+ImpactEstimate = namedtuple("ImpactEstimate", ["time", "speed", "time_std"])
 
 # ===== State enums/units =====
 class BallisticState(KalmanState):
@@ -11,6 +17,26 @@ class BallisticState(KalmanState):
 
 class BallisticObservable(KalmanObservable):
     POSITION = "m"
+
+# Process-noise type — the member VALUE is the physical unit of
+# ``process_uncertainty``, which is exactly what distinguishes the two: feeding a
+# value in m/s² means "acceleration noise" (constant-acceleration model), m/s³
+# means "jerk noise" (nearly-constant-acceleration model). Picking the unit picks
+# the model. Compares equal to its name too (e.g. ``noise == "acceleration"``).
+class BallisticNoise(EnumBis):
+    ACCELERATION = "m/s²"   # white-noise-acceleration → accel stays flat (constant-accel)
+    JERK         = "m/s³"   # white-noise-jerk        → accel random-walks (nearly-constant-accel)
+
+    @classmethod
+    def of(cls, noise):
+        """Resolve a member from itself, its name ('acceleration'/'jerk'), or its
+        UNIT ('m/s²'/'m/s³') — so the unit of process_uncertainty selects the model."""
+        if isinstance(noise, cls):
+            return noise
+        for m in cls:
+            if m == noise or m.value == noise:   # match by name (EnumBis.__eq__) or by unit
+                return m
+        raise ValueError(f"Unknown noise {noise!r}; use {cls.repr()} or a unit in {cls.values()}.")
 
 # ===== Linear =====
 class BallisticLinearModel(LinearKalmanModel):
@@ -27,8 +53,8 @@ class BallisticLinearModel(LinearKalmanModel):
         return BallisticObservable
 
     def __init__(self, sensor_id: str | int,
-                 measurement_uncertainty: float = 0.5,
-                 process_uncertainty: float = 0.05,
+                 measurement_uncertainty: float = 0.5,  # position-sensor noise std σ [m]; R = σ²
+                 process_uncertainty: float = 0.5,  # acceleration-noise std [m/s²]; see Q note for magnitude
                  **kwargs):
 
         self.dtype = kwargs.pop("dtype", np.float64)
@@ -49,30 +75,40 @@ class BallisticLinearModel(LinearKalmanModel):
         H = np.array([[1.0, 0.0, 0.0]], dtype=self.dtype)
 
         # -------------------------------------------
-        # Toy model for Q
-        # -------------------------------------------
-        q = self.dtype(process_uncertainty)
-        Q = q * np.array([[1.0, 1.0, 0.0],
-                          [1.0, 1.0, 0.0],
-                          [0.0, 0.0, 0.0]], dtype=self.dtype)
-
-        r = self.dtype(measurement_uncertainty)
-        R = r * np.eye(1, dtype=self.dtype)
-
-        # Initial covariance: positive-definite diagonal based on measurement uncertainty.
-        # Q is rank-1 (acceleration row zero), so using Q as P0 causes singular covariance
-        # which leads to pathological RTS smoother gains. Use explicit per-state variances.
+        # Process noise Q — white-noise-ACCELERATION only. This is a
+        # CONSTANT-acceleration model, so there is deliberately NO jerk option:
+        # jerk would let the acceleration random-walk, which contradicts the model.
+        # The acceleration row/col is ZERO, so the truth acceleration stays flat
+        # (e.g. -9.81); process_uncertainty is the acceleration-noise std [m/s²] and
+        # drives drift in velocity (∝dt) and position (∝dt³); q=0 ⇒ truth == ideal.
         #
-        # Acceleration is only weakly observable from position alone, so its prior must
-        # NOT scale with the sensor noise: the old a_var=(measurement_uncertainty/100)²
-        # inflated it to ±5 m/s² for a noisy sensor and let the smoothed acceleration
-        # drift. Use a fixed, sensor-independent prior (override via acc_uncertainty=, in
-        # m/s²; pass acc_uncertainty=0 to pin acceleration exactly to its initial value).
-        acc_unc = kwargs.pop("acc_uncertainty", 1.0)
+        # Order of magnitude (~20 s flight):
+        #     0.05 m/s² → ~1 m drift     0.5 m/s² → ~10 m (default)     2 m/s² → ~35 m
+        # -------------------------------------------
+        q = self.dtype(process_uncertainty) ** 2
+        Q = q * np.array([[dt**3 / 3.0, dt**2 / 2.0, 0.0],
+                          [dt**2 / 2.0, dt,          0.0],
+                          [0.0,         0.0,         0.0]], dtype=self.dtype)
+
+        # measurement_uncertainty is the position-sensor noise std σ [m]; the
+        # filter needs the variance, so R = σ²·I (consistent with the EKF model
+        # and with the P0 position prior below, both of which square it).
+        r = self.dtype(measurement_uncertainty)
+        R = (r ** 2) * np.eye(1, dtype=self.dtype)
+
+        # Initial covariance P0 — a positive-definite diagonal built from the two
+        # Kalman noises only (measurement R and process Q); there is no separate
+        # acceleration knob:
+        #   position     : R                       (position is what we measure)
+        #   velocity     : (measurement_uncertainty/10)²   (unobserved → looser)
+        #   acceleration : q = process_uncertainty²        (from the process noise)
+        # Tying the acceleration prior to the PROCESS noise (not the sensor noise)
+        # keeps it sensible for quiet and noisy sensors alike, and means a smaller
+        # process noise automatically pins the acceleration closer to its initial value.
         if "P0" not in kwargs:
             p_var = self.dtype(measurement_uncertainty) ** 2
             v_var = (self.dtype(measurement_uncertainty) / 10.0) ** 2
-            a_var = self.dtype(acc_unc) ** 2
+            a_var = self.dtype(process_uncertainty) ** 2
             kwargs["P0"] = np.diag([p_var, v_var, a_var]).astype(self.dtype)
 
         super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
@@ -80,6 +116,85 @@ class BallisticLinearModel(LinearKalmanModel):
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
     def inprocess(self, state_vector, **kwargs): return state_vector
     def postprocess(self, xk_hat, **kwargs):     return xk_hat
+
+    # ------------------------------------------------------------------
+    # Trajectory estimators (closed-form for constant acceleration)
+    #
+    # Both take a [position, speed, acceleration] state — e.g. one row of a
+    # filtered/smoothed track, ``record.xk[k]`` — and assume the linear model's
+    # own constant-acceleration dynamics z(t) = z + ż·t + ½·z̈·t² hold from there
+    # on. Pass the matching covariance ``record.Pk[k]`` to also get 1-σ error bars
+    # by linear (first-order) propagation σ² = Jᵀ·P·J. Times are relative to the
+    # epoch of ``state``; add ``record.time[k]`` for an absolute time.
+    # ------------------------------------------------------------------
+    def _zva(self, state, cov):
+        """Unpack a state into scalars (z, ż, z̈) and a 3×3 covariance (or None)."""
+        x = self.x0 if state is None else state
+        x = np.asarray(x, dtype=self.dtype).reshape(-1)
+        if x.shape[0] != 3:
+            raise ValueError(f"apex/impact_time need a [position, speed, acceleration] "
+                             f"state (n=3); got length {x.shape[0]}.")
+        P = None if cov is None else np.asarray(cov, dtype=self.dtype).reshape(3, 3)
+        return float(x[0]), float(x[1]), float(x[2]), P
+
+    def apex(self, state=None, cov=None):
+        """Maximum height of the constant-acceleration path and the time to reach it.
+
+        The height z(t) = z + ż·t + ½·z̈·t² peaks where the velocity vanishes, at
+        ``t* = −ż / z̈`` (needs z̈ ≠ 0; t* is negative if the body is already past its
+        peak), giving ``z* = z − ż² / (2·z̈)``. With ``cov`` given, returns 1-σ bars too.
+
+        Returns an :class:`ApexEstimate` (time, height, time_std, height_std);
+        ``state`` defaults to the model's initial state (the nominal launch).
+        """
+        z, v, a, P = self._zva(state, cov)
+        if a == 0.0:
+            raise ValueError("Acceleration is zero — a constant-velocity path has no apex.")
+        t_star = -v / a
+        height = z - v * v / (2.0 * a)
+        t_std = h_std = None
+        if P is not None:
+            J_t = np.array([0.0, -1.0 / a, v / (a * a)], dtype=self.dtype)
+            J_h = np.array([1.0, -v / a, v * v / (2.0 * a * a)], dtype=self.dtype)
+            t_std = float(np.sqrt(max(J_t @ P @ J_t, 0.0)))
+            h_std = float(np.sqrt(max(J_h @ P @ J_h, 0.0)))
+        return ApexEstimate(t_star, height, t_std, h_std)
+
+    def impact_time(self, state=None, cov=None, level=0.0):
+        """Time at which the trajectory crosses ``level`` (default 0) coming down.
+
+        Solves ½·z̈·t² + ż·t + (z − level) = 0 and returns the future **descending**
+        root (the "hitting time"). With ``cov`` given, the 1-σ time uncertainty is
+        propagated via the implicit derivative  dt/dx = −[1, t, ½t²] / v_impact.
+
+        Returns an :class:`ImpactEstimate` (time, speed-at-impact, time_std). Raises if
+        the path never reaches ``level`` (negative discriminant) or only in the past.
+        """
+        z, v, a, P = self._zva(state, cov)
+        c = z - level
+        tol = 1e-9
+        if a == 0.0:                                   # constant-velocity fallback
+            if abs(v) < tol:
+                raise ValueError("Static state never crosses the level.")
+            roots = [-c / v]
+        else:
+            disc = v * v - 2.0 * a * c
+            if disc < 0.0:
+                raise ValueError(f"Trajectory never reaches level={level} (no real crossing).")
+            sq = float(np.sqrt(disc))
+            roots = [(-v + sq) / a, (-v - sq) / a]
+        # prefer a future, descending (velocity < 0) crossing; else any future root
+        descending = [t for t in roots if t > tol and (v + a * t) < 0.0]
+        future     = descending or [t for t in roots if t > tol]
+        if not future:
+            raise ValueError("No positive-time crossing of the level.")
+        t = min(future)
+        v_imp = v + a * t
+        t_std = None
+        if P is not None and abs(v_imp) > tol:
+            J = -np.array([1.0, t, 0.5 * t * t], dtype=self.dtype) / v_imp
+            t_std = float(np.sqrt(max(J @ P @ J, 0.0)))
+        return ImpactEstimate(t, v_imp, t_std)
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
 import numpy as np
@@ -110,7 +225,9 @@ class BallisticModel(ExtendedKalmanModel):
                  g=9.81,                      # surface gravity [m/s²]; None → use G*M/r³ orbital formula
                  fs=128.0,                    # sampling frequency [Hz]
                  order=3,                     # model order [p,v,a]
-                 process_uncertainty=0.05,    # process noise std [m/s^3]
+                 process_uncertainty=0.5,     # std of the disturbance; UNIT set by `process_noise_model`
+                 process_noise_model=BallisticNoise.ACCELERATION,  # m/s² (accel; recommended) or m/s³ (jerk; see Qd note)
+                 drag_uncertainty=None,       # ε: if set, the FILTER's Q grows with speed as σ_a(v)=ε·(c_drag/m)|v|² (air-friction uncertainty); None → constant Q
                  measurement_uncertainty=0.5, # measurement noise std [m],
                  f = None,                    # Transition function (optional, use default one if None)
                  h = None,                    # Measurement function (optional, use default one if None)
@@ -134,25 +251,30 @@ class BallisticModel(ExtendedKalmanModel):
         # ------------------------------------------------------------------
         # Noise covariances
         # ------------------------------------------------------------------
-        Qd = self.Qd(process_uncertainty, order)
+        Qd = self.Qd(process_uncertainty, order, process_noise_model=process_noise_model)
+        # Air-friction (drag) UNCERTAINTY mode: the constant Qd stays as the base
+        # floor; when drag_uncertainty (ε) is set, Q(x) rides the local speed (see
+        # Q() below). _Q_unit is the σ²=1 block structure used to rescale it.
+        self._sigma_a_base     = float(process_uncertainty)
+        self._drag_uncertainty = None if drag_uncertainty is None else float(drag_uncertainty)
+        self._Q_unit           = self.Qd(1.0, order, process_noise_model=process_noise_model)
         R = (measurement_uncertainty**2) * np.eye(3, dtype=self.dtype)
 
         # ------------------------------------------------------------------
-        # Initial covariance P0 — unit-appropriate diagonal per axis-major
-        # layout [px,vx,ax, py,vy,ay, pz,vz,az]
-        # ------------------------------------------------------------------
-        # Acceleration prior is sensor-independent (see LinearKalmanModel note above);
-        # override via acc_uncertainty= (m/s²). Harmless for this EKF since f() recomputes
-        # acceleration from the dynamics each step, but kept consistent with the linear model.
-        acc_unc = kwargs.pop("acc_uncertainty", 1.0)
+        # Initial covariance P0 — PD diagonal per axis-major layout
+        # [px,vx,ax, py,vy,ay, pz,vz,az], built from the two Kalman noises only
+        # (measurement R and process Q); no separate acceleration knob:
+        #   position     : R                              (what we measure)
+        #   velocity     : (measurement_uncertainty/10)² (unobserved → looser)
+        #   acceleration : process_uncertainty²          (from the process noise)
+        # The acceleration prior is sensor-independent (tied to Q, not R). Harmless
+        # for this EKF anyway since f() recomputes acceleration from the dynamics each
+        # step, but kept consistent with BallisticLinearModel.
         if kwargs.get("P0") is None:
             p_var = measurement_uncertainty ** 2
             v_var = (measurement_uncertainty / 10.0) ** 2
-            a_var = float(acc_unc) ** 2
-            if order == 3:
-                block = [p_var, v_var, a_var]
-            else:
-                block = [p_var, v_var]
+            a_var = float(process_uncertainty) ** 2
+            block = [p_var, v_var, a_var] if order == 3 else [p_var, v_var]
             kwargs["P0"] = np.diag(block * 3).astype(self.dtype)
 
         # Derived sizes
@@ -169,41 +291,76 @@ class BallisticModel(ExtendedKalmanModel):
     # Process noise covariance generator (internal)
     # ----------------------------------------------------------------------
     def Q(self, t=None, x=None):
-        return self._Q
+        # Constant base covariance, unless air-friction (drag) UNCERTAINTY is enabled
+        # AND a state is supplied (the engine passes the predicted x). Then the
+        # process-noise acceleration std rides the local speed,
+        #     σ_a(v) = ε · (c_drag/m) · |v|² ,
+        # added in quadrature to the constant base floor → Q is large at the muzzle
+        # (fast, drag poorly known) and ≈ base near apex (slow). Q scales as σ_a²,
+        # i.e. ∝ v⁴ in the drag term. The truth sampler still uses the constant base.
+        if self._drag_uncertainty is None or x is None:
+            return self._Q
+        xv = np.asarray(x, dtype=self.dtype).reshape(-1)
+        if self.order < 2:
+            return self._Q
+        vi   = [self.order * i + 1 for i in range(3)]      # velocity slot of each axis
+        vmag = float(np.linalg.norm(xv[vi]))
+        sigma_drag = self._drag_uncertainty * (self["c_drag"] / self["m"]) * vmag**2
+        sigma2     = self._sigma_a_base**2 + sigma_drag**2
+        return sigma2 * self._Q_unit
     
-    def Qd(self, sigma: float, order: int) -> np.ndarray:
+    def Qd(self, sigma: float, order: int, process_noise_model=BallisticNoise.ACCELERATION) -> np.ndarray:
         """
-        Build discrete process covariance Q for 3D ballistic motion.
-        Supports [p,v] or [p,v,a] states (order=2 or 3).
+        Build the block-diagonal (per-axis) discrete process covariance Q for 3D
+        ballistic motion. Uses the same per-axis kinematic blocks as
+        BallisticLinearModel (kept consistent by convention, not shared code).
 
         Parameters
         ----------
         sigma : float
-            Process noise std (e.g., jerk std for order=3).
+            Std of the disturbance; its UNIT is set by ``process_noise_model``
+            (BallisticNoise.ACCELERATION → m/s², BallisticNoise.JERK → m/s³).
         order : int
             Model order (2 or 3).
+        process_noise_model : BallisticNoise
+            ACCELERATION (white-noise-acceleration) or JERK (white-noise-jerk) —
+            the same per-axis blocks BallisticLinearModel uses.
 
         Returns
         -------
         Q : ndarray, shape (3*order, 3*order)
             Block-diagonal process covariance matrix.
+
+        Note
+        ----
+        Default ``ACCELERATION`` drives the disturbance through velocity &
+        position, which is the right choice here: this EKF's ``f()`` recomputes the
+        acceleration from the dynamics every step (gravity + drag), so it is not a
+        free integrator state — a JERK disturbance placed on it would be dropped
+        from the propagated truth while still inflating the predicted covariance.
+        ``JERK`` is supported for completeness but is only physically meaningful for
+        a pure-kinematic constant-acceleration model (i.e. BallisticLinearModel).
         """
+        process_noise_model = BallisticNoise.of(process_noise_model)
         q = self.dtype(sigma)**2
         dt = self.dtype(1.0 / self.fs)
 
-        if order == 3:
-            Q1D = np.array([
-                [dt**5/20.0, dt**4/8.0, dt**3/6.0],
-                [dt**4/8.0,  dt**3/3.0, dt**2/2.0],
-                [dt**3/6.0,  dt**2/2.0, dt]
-            ], dtype=self.dtype)
-        elif order == 2:
-            Q1D = np.array([
-                [dt**3/3.0, dt**2/2.0],
-                [dt**2/2.0, dt]
-            ], dtype=self.dtype)
-        else:
-            raise ValueError(f"Unsupported order={order}. Must be 2 or 3.")
+        if process_noise_model == BallisticNoise.ACCELERATION:
+            if order == 3:
+                Q1D = np.array([[dt**3/3.0, dt**2/2.0, 0.0],
+                                [dt**2/2.0, dt,        0.0],
+                                [0.0,       0.0,       0.0]], dtype=self.dtype)
+            elif order == 2:
+                Q1D = np.array([[dt**3/3.0, dt**2/2.0],
+                                [dt**2/2.0, dt]], dtype=self.dtype)
+            else:
+                raise ValueError(f"order must be 2 or 3, got {order}.")
+        else:  # BallisticNoise.JERK
+            if order != 3:
+                raise ValueError("JERK noise requires order==3 (acceleration must be a state).")
+            Q1D = np.array([[dt**5/20.0, dt**4/8.0, dt**3/6.0],
+                            [dt**4/8.0,  dt**3/3.0, dt**2/2.0],
+                            [dt**3/6.0,  dt**2/2.0, dt]], dtype=self.dtype)
 
         Q = np.zeros((3*order, 3*order), dtype=self.dtype)
         for i in range(3):  # fixed XYZ
@@ -318,7 +475,8 @@ class BallisticModel(ExtendedKalmanModel):
                      figsize=(14, 9), **kwargs):
         """Signature figure: a (component × axis) grid of state estimates — position,
         speed and acceleration (rows) for each spatial axis X/Y/Z (columns), with the
-        truth and noisy measurements overlaid from ``sample``."""
+        truth and noisy measurements overlaid from ``sample``. Extra kwargs (e.g.
+        ``sigma=3`` for a ±3σ covariance band) are forwarded to ``record.plot``."""
         import matplotlib.pyplot as plt
         comps = ["position", "speed", "acceleration"][:self.order]
         axis_names = ["X", "Y", "Z"]
@@ -326,7 +484,7 @@ class BallisticModel(ExtendedKalmanModel):
         fig.suptitle(f"{self.name()} — per-axis state estimate", fontweight="bold")
         for r, comp in enumerate(comps):
             for c in range(3):
-                record.plot(component=comp, dim=c, sample=sample, canvas=axes[r, c])
+                record.plot(component=comp, dim=c, sample=sample, canvas=axes[r, c], **kwargs)
                 if r == 0:
                     axes[r, c].set_title(axis_names[c])
         fig.tight_layout()

@@ -1,6 +1,6 @@
 """
-Tests for the three comparison/teaching apps:
-  - signals   (ScalarSignalModel + Wiener/low-pass baselines)
+Tests for the comparison/teaching helpers and apps:
+  - signals   (runtime.signals: Wiener/low-pass/high-pass baselines, pull, error_ratio)
   - fusion    (SensorFusionModel, multi-sensor variance reduction)
   - detection (DetectionModel, linear object tracker with occlusion)
 
@@ -13,10 +13,12 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.apps import (
-    ScalarSignalModel, WienerFilter, LowPassFilter, HighPassFilter, pull, error_ratio,
     SensorFusionModel, SensorSpec,
     DetectionModel,
     GPSModel,
+)
+from modules.runtime.signals import (
+    steady_state_gain, WienerFilter, LowPassFilter, HighPassFilter, pull, error_ratio,
 )
 
 
@@ -37,27 +39,39 @@ def _assert_record(tc, rec, name, n, m, N):
 
 
 # ===========================================================================
-# App 1 — scalar signal / Kalman ≡ low-pass ≡ Wiener
+# App 1 — scalar signal helpers / Kalman ≡ low-pass ≡ Wiener
+#   (runtime.signals — no Kalman model class needed)
 # ===========================================================================
+def _random_walk(n, q, r, seed=0):
+    """Synthetic local-level random walk: truth x_{k+1}=x_k+w (w~N(0,q²)) and z=x+v (v~N(0,r²))."""
+    rng = np.random.default_rng(seed)
+    x = np.cumsum(rng.normal(0.0, q, n))
+    z = x + rng.normal(0.0, r, n)
+    return x, z
+
+
+def _scalar_kf(z, q, r):
+    """Plain scalar constant-model Kalman filter; returns (estimate, posterior_var) per step."""
+    q2, r2 = q * q, r * r
+    x, P = float(z[0]), r2
+    xs, Ps = np.empty_like(z), np.empty_like(z)
+    for k, zk in enumerate(z):
+        P = P + q2                       # predict
+        K = P / (P + r2)                 # gain
+        x = x + K * (zk - x)             # update
+        P = (1.0 - K) * P
+        xs[k], Ps[k] = x, P
+    return xs, Ps
+
+
 class TestScalarSignal(unittest.TestCase):
-
-    def test_dims(self):
-        m = ScalarSignalModel("s", fs=100)
-        self.assertEqual((m.n, m.m, m.l), (1, 1, 0))
-
-    def test_sample_and_filter_shapes(self):
-        m = ScalarSignalModel("s", fs=100, measurement_uncertainty=1.0, process_uncertainty=0.05)
-        rec_s = m.sample(2.0, covariance=False)
-        self.assertEqual(rec_s.xk.shape[0], 200)
-        rec_f = m.filter(rec_s.zk, smooth=True)
-        _assert_record(self, rec_f, "ScalarSignal", 1, 1, 200)
 
     def test_steady_state_gain_matches_converged_kalman(self):
         """The closed-form K_ss must match the gain the recursion converges to."""
-        m = ScalarSignalModel("s", fs=100, measurement_uncertainty=1.0, process_uncertainty=0.05)
-        ss = m.steady_state_gain()
+        q, r = 0.05, 1.0
+        ss = steady_state_gain(q, r)
         # Iterate the scalar Riccati recursion to convergence.
-        q2, r2 = float(m._q) ** 2, float(m._r) ** 2
+        q2, r2 = q ** 2, r ** 2
         P = r2
         for _ in range(5000):
             P = P + q2                       # predict
@@ -66,52 +80,48 @@ class TestScalarSignal(unittest.TestCase):
         self.assertAlmostEqual(K, ss.gain, places=6)
         self.assertTrue(0.0 < ss.gain < 1.0)
 
-    def test_lowpass_from_model_reproduces_steady_state_kalman(self):
-        """A low-pass seeded with K_ss matches the steady-state Kalman estimate."""
-        np.random.seed(0)
-        m = ScalarSignalModel("s", fs=200, measurement_uncertainty=1.0, process_uncertainty=0.1)
-        rec_s = m.sample(8.0, covariance=False)
-        rec_f = m.filter(rec_s.zk)                              # forward posterior
-        lp = LowPassFilter.from_model(m).apply(rec_s.zk)
-        # After the gain has converged the two agree closely.
-        tail = slice(len(lp) // 2, None)
-        diff = np.std(rec_f.xk.ravel()[tail] - lp[tail])
-        self.assertLess(diff, 0.05, f"low-pass vs steady Kalman diff too large: {diff:.3f}")
+    def test_steady_state_gain_edge_cases(self):
+        self.assertEqual(steady_state_gain(0.0, 1.0).gain, 0.0)   # static signal → no trust in data
+        self.assertEqual(steady_state_gain(1.0, 0.0).gain, 1.0)   # perfect sensor → follow it fully
+
+    def test_lowpass_from_qr_reproduces_steady_state_kalman(self):
+        """A low-pass seeded with K_ss matches the steady-state scalar Kalman estimate."""
+        q, r = 0.1, 1.0
+        _, z = _random_walk(1600, q, r, seed=0)
+        xk, _ = _scalar_kf(z, q, r)                             # converged Kalman posterior
+        lp = LowPassFilter.from_qr(q, r).apply(z)
+        tail = slice(len(lp) // 2, None)                       # after the gain has converged
+        diff = np.std(xk[tail] - lp[tail])
+        self.assertLess(diff, 1e-9, f"low-pass vs steady Kalman diff too large: {diff:.2e}")
 
     def test_complementary_highpass(self):
-        np.random.seed(1)
-        m = ScalarSignalModel("s", fs=100, process_uncertainty=0.1)
-        z = m.sample(4.0, covariance=False).zk.ravel()
-        lp = LowPassFilter.from_model(m).apply(z)
-        hp = HighPassFilter.from_model(m).apply(z)
+        q, r = 0.1, 1.0
+        _, z = _random_walk(400, q, r, seed=1)
+        lp = LowPassFilter.from_qr(q, r).apply(z)
+        hp = HighPassFilter.from_qr(q, r).apply(z)
         np.testing.assert_allclose(lp + hp, z, atol=1e-9)       # low + high == identity
 
     def test_pull_is_unit_gaussian(self):
-        """Forward-filter pulls should have ~unit std (well-calibrated covariance)."""
+        """Scalar-KF pulls should have ~unit std (well-calibrated covariance)."""
+        q, r = 0.05, 1.0
         stds = []
         for seed in range(12):
-            np.random.seed(seed)
-            m = ScalarSignalModel("s", fs=100, measurement_uncertainty=1.0, process_uncertainty=0.05)
-            s = m.sample(12.0, covariance=False)
-            rf = m.filter(s.zk)
+            x, z = _random_walk(1200, q, r, seed=seed)
+            xk, Pk = _scalar_kf(z, q, r)
             burn = 200
-            stds.append(np.std(pull(rf.xk.ravel()[burn:], s.xk.ravel()[burn:],
-                                    np.sqrt(rf.Pk[burn:, 0, 0]))))
+            stds.append(np.std(pull(xk[burn:], x[burn:], np.sqrt(Pk[burn:]))))
         self.assertAlmostEqual(float(np.mean(stds)), 1.0, delta=0.15)
 
     def test_filter_beats_raw(self):
-        np.random.seed(3)
-        m = ScalarSignalModel("s", fs=100, measurement_uncertainty=1.0, process_uncertainty=0.05)
-        s = m.sample(12.0, covariance=False)
-        rf = m.filter(s.zk)
+        q, r = 0.05, 1.0
+        x, z = _random_walk(1200, q, r, seed=3)
+        xk, _ = _scalar_kf(z, q, r)
         burn = 200
-        ratio = error_ratio(s.zk.ravel()[burn:] - s.xk.ravel()[burn:],
-                            rf.xk.ravel()[burn:] - s.xk.ravel()[burn:])
+        ratio = error_ratio(z[burn:] - x[burn:], xk[burn:] - x[burn:])
         self.assertGreater(ratio, 1.5, "Kalman should noticeably beat the raw measurement")
 
     def test_wiener_response_dc_passes(self):
-        m = ScalarSignalModel("s", fs=100, process_uncertainty=0.05)
-        wf = WienerFilter.from_model(m)
+        wf = WienerFilter.from_qr(0.05, 1.0)
         self.assertAlmostEqual(float(wf.response(np.array([0.0]))[0]), 1.0, places=6)  # DC → 1
         self.assertLess(float(wf.response(np.array([np.pi]))[0]), 0.5)                 # Nyquist attenuated
 

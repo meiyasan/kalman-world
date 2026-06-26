@@ -3,7 +3,7 @@ import numpy as np
 from ..helpers import set_random_seed, as_col, numerical_jacobian
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
-from .constants import EngineKind, ALL_ENGINES, KalmanState, KalmanObservable
+from .constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
 
 class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     """
@@ -22,7 +22,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     ``F/H`` (numerical/analytic); KF reads ``F/H`` as constants.
 
     Engine binding is **declared, not imported**: ``DEFAULT_ENGINE`` /
-    ``ALLOWED_ENGINES`` are :class:`EngineKind` values, so a model never imports an
+    ``ALLOWED_ENGINES`` are :class:`KalmanEngineKind` values, so a model never imports an
     engine; the :class:`~kalman.framework.filter.KalmanFilter` resolves/validates them.
     """
 
@@ -30,8 +30,8 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     DESCRIPTION = "Generic model for Kalman-family filters; matrices (F/H/…) or override f/h."
     VERSION = "2.0"
 
-    # Engine binding (declared via EngineKind so the model never imports an engine).
-    DEFAULT_ENGINE  = EngineKind.EXTENDED      # safe universal default (falls back to linear on matrices)
+    # Engine binding (declared via KalmanEngineKind so the model never imports an engine).
+    DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED      # safe universal default (falls back to linear on matrices)
     ALLOWED_ENGINES = ALL_ENGINES              # any engine
 
     def __init__(self, sensor_id: str | int, **kwargs):
@@ -95,7 +95,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     def default_engine(self):
         """Instantiate the model's default engine (resolved from ``DEFAULT_ENGINE``).
 
-        Routes through ``resolve_engine`` so the lookup survives ``EngineKind``
+        Routes through ``resolve_engine`` so the lookup survives ``KalmanEngineKind``
         identity changes from ``%autoreload`` (otherwise a reloaded ``DEFAULT_ENGINE``
         member would miss the registry and raise ``KeyError``).
         """
@@ -223,6 +223,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     def observables(self) -> KalmanObservable:
         """Generic (unlabelled) observable enum; override with a domain enum."""
         return KalmanObservable
+
+    def control_cost(self):
+        """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
+        return np.eye(self.n), np.eye(max(self.l, 1)), np.zeros((self.n, 1))
 
     def preprocess(self, zk, uk=None, **kwargs):
         """Identity measurement/control preprocessing (override per domain)."""

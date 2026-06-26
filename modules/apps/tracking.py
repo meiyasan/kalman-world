@@ -23,7 +23,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from ..framework.models.extended import ExtendedKalmanModel
-from ..framework.constants import EngineKind, ALL_ENGINES, KalmanState, KalmanObservable
+from ..framework.constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
 
 
 # ---------------------------------------------------------------------------
@@ -70,8 +70,8 @@ class DriftChamberModel(ExtendedKalmanModel):
 
     NAME = "Drift Chamber (transverse tracker)"; VERSION = "1.0"
 
-    DEFAULT_ENGINE  = EngineKind.COMBINATORIAL
-    ALLOWED_ENGINES = ALL_ENGINES - {EngineKind.LINEAR}
+    DEFAULT_ENGINE  = KalmanEngineKind.COMBINATORIAL
+    ALLOWED_ENGINES = ALL_ENGINES - {KalmanEngineKind.LINEAR}
 
     @property
     def states(self):      return TrackState

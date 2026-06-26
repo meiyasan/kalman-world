@@ -260,7 +260,7 @@ class PolarizationModel(ExtendedKalmanModel):
             ax = fig.add_subplot(gs[idx // 2, idx % 2])
             ax.fill_between(t, hat - band, hat + band, alpha=0.15, color="red", label=rf"$\pm{sigma:g}\sigma$")
             if true is not None:
-                ax.plot(t, true, color="black", lw=1.5, label="True")
+                ax.plot(t, true, color="black", lw=1.5, label="Truth")
             ax.plot(t, hat, color="red", lw=1.8, label="EKF")
             ax.set_xlabel("Time (s)"); ax.set_ylabel(ylab, fontsize=10)
             ax.legend(fontsize=8); ax.grid(True, alpha=0.25)

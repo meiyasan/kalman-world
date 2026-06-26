@@ -241,7 +241,17 @@ def animate(fig, draw, frames, *, interval=90, jshtml=None, blit=False):
     if jshtml:
         try:
             from IPython.display import HTML
-            return HTML(anim.to_jshtml())
+            import matplotlib as mpl
+            # to_jshtml() silently DROPS frames once the embedded size passes
+            # animation.embed_limit (20 MB default) — the usual "animation doesn't finish"
+            # cause. Lift it for the render so long replays play to the end, then restore.
+            prev = mpl.rcParams.get("animation.embed_limit", 20.0)
+            mpl.rcParams["animation.embed_limit"] = max(prev, 100.0)   # MB
+            try:
+                html = anim.to_jshtml()
+            finally:
+                mpl.rcParams["animation.embed_limit"] = prev
+            return HTML(html)
         except Exception:
             return anim
     return anim

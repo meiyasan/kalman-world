@@ -44,6 +44,18 @@ class KalmanProxyMixin:
             raise RuntimeError("No prior forward pass; call filter() first.")
         return self._filter.backward(**kwargs)
 
+    # --- consistency diagnostics (proxy to the cached filter; run filter() first) ---
+    def _require_filter(self):
+        if self._filter is None:
+            raise RuntimeError("No prior filter run; call filter() first.")
+        return self._filter
+    def innovations(self):       return self._require_filter().innovations()
+    def gains(self):             return self._require_filter().gains()
+    def nis(self):               return self._require_filter().nis()
+    def nees(self, truth):       return self._require_filter().nees(truth)
+    def diagnostics(self, sample=None, **kwargs):
+        return self._require_filter().diagnostics(sample=sample, **kwargs)
+
     def sample(self, duration: float, **kwargs) -> KalmanRecord:
         from ..sampler import KalmanSampler
         return KalmanSampler(self).measurement(duration, **kwargs)
@@ -291,17 +303,18 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
         n = int(self.n)
 
         if x0 is None:
-            self.x0 = np.zeros((n, 1))
-        else:
-            x0 = KalmanRecord._normalize_in(x0)
-            if x0.shape != (n, 1):
-                warnings.warn(
-                    f"Initial state vector dimension expected {n}x1, got {format_shape(x0)}. Resizing."
-                )
-                x0 = np.asarray(x0, dtype=np.float64).reshape(-1, 1)
-                if x0.shape[0] != n:
-                    x0 = np.resize(x0, (n, 1))
-            self.x0 = x0    
+            # Preserve an already-set x0; fall back to zeros only on the first call.
+            existing = getattr(self, "x0", None)
+            x0 = existing if existing is not None else np.zeros((n, 1))
+        x0 = KalmanRecord._normalize_in(x0)
+        if x0.shape != (n, 1):
+            warnings.warn(
+                f"Initial state vector dimension expected {n}x1, got {format_shape(x0)}. Resizing."
+            )
+            x0 = np.asarray(x0, dtype=np.float64).reshape(-1, 1)
+            if x0.shape[0] != n:
+                x0 = np.resize(x0, (n, 1))
+        self.x0 = x0
 
         if P0 is None:
             # Preserve an already-set positive-definite P0; fall back to Q(0) only on first call.
@@ -318,6 +331,10 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
             P0 = np.resize(P0, (n, n))
 
         self.P0 = P0
+
+        # Return the (vector, covariance) so initial_state_vector()/_covariance() — which
+        # unpack this — work, and callers can read back what was set.
+        return self.x0, self.P0
 
     # ------------------------------------------------------
     # Measurement <-> state mapping (via the observation matrix H)
@@ -475,13 +492,13 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
     # Composition accessors
     # -------------------------------
     @property
-    def model(self) -> 'KalmanModelMixin | KalmanModelMetadata':
+    def model(self : KalmanFilterMetadata) -> 'KalmanModelMixin | KalmanModelMetadata':
         return self._model
     @property
-    def engine(self):
+    def engine(self : KalmanFilterMetadata):
         return self._engine
 
-    def _check_engine(self):
+    def _check_engine(self : KalmanFilterMetadata):
         """Return the attached engine, validating it is a KalmanEngineABC.
 
         Kept for now; a future `get_engine(check=True)` may supersede it.
@@ -522,7 +539,7 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
     def reset_to_latest(self):
         self.reset(to_latest=True)
 
-    def reset(self, to_latest=False):
+    def reset(self : KalmanFilterMetadata, to_latest=False):
         """Reset the filter run state (x/P + logs); re-seed a stateful engine."""
         if to_latest:
             self.model.P0 = self.get_latest_state_covariance()
@@ -540,6 +557,7 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
         self.measurement = []
         self.control = []
         self.transition = []
+        self.innovation = []
 
         # let a stateful engine (e.g. ParticleEngine) (re)seed its own state
         self.engine.reset(self.model)
@@ -548,15 +566,15 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
     def __call__(self, gk, uk=None, **kwargs):
         return self.forward(gk, uk, **kwargs)
 
-    def __len__(self):
+    def __len__(self : KalmanFilterMetadata):
         return len(self.posterior)
-    def __getitem__(self, idx):
+    def __getitem__(self : KalmanFilterMetadata, idx):
         return self.posterior[idx]
 
     # -------------------------------
     # Record building
     # -------------------------------
-    def get_record(self, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanRecord:
+    def get_record(self : KalmanFilterMetadata, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanRecord:
 
         indexing    = kwargs.pop("indexing", None)
         inprocess   = kwargs.pop("inprocess", True)

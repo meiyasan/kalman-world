@@ -111,12 +111,12 @@ class AnalyticOscillatorModel(LinearKalmanModel):
             if zk is not None:
                 ax.scatter(t, zk[:, j], s=1, alpha=0.3, color=col_aux, label="Measured (demod)")
             if xt is not None:
-                ax.plot(t, xt[:, j], "--", lw=1.5, color=col_aux, label="True")
+                ax.plot(t, xt[:, j], "--", lw=1.5, color=col_aux, label="Truth")
             ax.plot(t, xk[:, j], lw=2, color=col_est, label="Estimate")
             ax.set_xlabel("Time (s)"); ax.set_ylabel(ylab); ax.set_title(ylab)
             ax.legend(fontsize=8, markerscale=4)
         if xt is not None:
-            ax_ph.plot(xt[:, 0], xt[:, 1], "--", lw=1.5, color="steelblue", label="True")
+            ax_ph.plot(xt[:, 0], xt[:, 1], "--", lw=1.5, color="steelblue", label="Truth")
         ax_ph.plot(xk[:, 0], xk[:, 1], lw=2, color="navy", label="Estimate")
         ax_ph.plot(xk[0, 0], xk[0, 1], "o", ms=6, color="green", label="Start", zorder=5)
         ax_ph.plot(xk[-1, 0], xk[-1, 1], "s", ms=6, color="red", label="End", zorder=5)

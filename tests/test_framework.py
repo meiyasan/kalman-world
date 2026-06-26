@@ -13,7 +13,7 @@ import numpy as np
 sys.path.insert(0, ".")
 from modules.framework import (
     LinearKalmanModel, ExtendedKalmanModel, UnscentedKalmanModel,
-    CompositeKalmanModel, EngineKind,
+    CompositeKalmanModel, KalmanEngineKind,
     LinearKalmanEngine, ExtendedKalmanEngine,
 )
 from modules.framework.abstract.mixins import KalmanModelMixin
@@ -46,7 +46,7 @@ class TestLinearMatrixModel(unittest.TestCase):
     def test_dims_and_default_engine(self):
         m = _linear_model()
         self.assertEqual((m.n, m.m, m.l), (2, 1, 0))
-        self.assertEqual(m.DEFAULT_ENGINE, EngineKind.LINEAR)
+        self.assertEqual(m.DEFAULT_ENGINE, KalmanEngineKind.LINEAR)
         self.assertIsInstance(m.default_engine(), LinearKalmanEngine)
 
     def test_requires_F_and_H(self):
@@ -109,8 +109,8 @@ class TestExtendedModel(unittest.TestCase):
 
     def test_default_engine_and_allowed(self):
         m = _Pendulum()
-        self.assertEqual(m.DEFAULT_ENGINE, EngineKind.EXTENDED)
-        self.assertNotIn(EngineKind.LINEAR, m.ALLOWED_ENGINES)
+        self.assertEqual(m.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
+        self.assertNotIn(KalmanEngineKind.LINEAR, m.ALLOWED_ENGINES)
         self.assertIsInstance(m.default_engine(), ExtendedKalmanEngine)
 
     def test_numerical_jacobian_matches_default(self):
@@ -148,8 +148,8 @@ class TestUnscentedModel(unittest.TestCase):
             def f(self, x, u=None, w=None, t=None): return np.tanh(x)
             def h(self, x, v=None, t=None): return x
         m = M()
-        self.assertEqual(m.DEFAULT_ENGINE, EngineKind.UNSCENTED)
-        self.assertNotIn(EngineKind.LINEAR, m.ALLOWED_ENGINES)
+        self.assertEqual(m.DEFAULT_ENGINE, KalmanEngineKind.UNSCENTED)
+        self.assertNotIn(KalmanEngineKind.LINEAR, m.ALLOWED_ENGINES)
 
 
 # ===========================================================================

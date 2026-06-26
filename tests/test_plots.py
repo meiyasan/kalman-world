@@ -17,7 +17,8 @@ from modules.apps import (
     BallisticLinearModel, SuspensionModel, PowerGridStateModel,
     PolarizationModel, jones_signal,
 )
-from modules.apps.rocket import TransLunarModel, R_EARTH, KM, D_MOON, GM_EARTH
+from modules.apps.space import TransLunarModel
+from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
 from modules.filters import ExtendedKalmanFilter
 
 

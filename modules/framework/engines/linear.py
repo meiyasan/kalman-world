@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..engine import KalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 
 class LinearKalmanEngine(KalmanEngine):
@@ -15,7 +15,7 @@ class LinearKalmanEngine(KalmanEngine):
     NAME = "Linear Kalman Engine"
     DESCRIPTION = "Standard linear Kalman step (constant F/H matrices)."
     VERSION = "1.0"
-    KIND = EngineKind.LINEAR
+    KIND = KalmanEngineKind.LINEAR
 
     def _propagate(self, model, x, u, t):
         F = model.F(t=t)

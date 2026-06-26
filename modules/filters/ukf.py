@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..framework.filter import KalmanFilter
-from ..framework.constants import EngineKind
+from ..framework.constants import KalmanEngineKind
 
 
 class UnscentedKalmanFilter(KalmanFilter):
@@ -18,8 +18,8 @@ class UnscentedKalmanFilter(KalmanFilter):
 
     NAME = "Unscented Kalman Filter"
     DESCRIPTION = "Unscented Kalman filter (UKF): sigma-point engine over a model."
-    KIND = EngineKind.UNSCENTED
+    KIND = KalmanEngineKind.UNSCENTED
 
-    def __init__(self, model, *, alpha=1e-3, beta=2.0, kappa=0.0, **kwargs):
+    def __init__(self, model=None, *, alpha=1e-3, beta=2.0, kappa=0.0, **kwargs):
         from ..framework.engines.unscented import UnscentedKalmanEngine
         super().__init__(model, engine=UnscentedKalmanEngine(alpha=alpha, beta=beta, kappa=kappa), **kwargs)

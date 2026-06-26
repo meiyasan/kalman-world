@@ -586,11 +586,19 @@ class KalmanRecord:
         model = kwargs.get("model", None) or self.model
 
         # Mix in axis label if axis is provided
+        appended_noun = False
         if axis is not None:
             if model is not None and hasattr(model, "sensor") and hasattr(model, "_sensor") and len(model._sensor) > 0:
                 safe_axis = min(axis, len(model._sensor) - 1)
                 axis_label = model.sensor(safe_axis)
                 label = f"{label}{axis_label}"
+                appended_noun = bool(axis_label)
+
+        # A bare TRUE flavor reads better as the noun "Truth" (parallel to the
+        # "Ideal" curve); when a sensor noun follows it, keep the adjective form
+        # ("True position").
+        if isinstance(component, Enum) and component == KalmanObservableFlavor.TRUE and not appended_noun:
+            label = "Truth "
 
         # Mix in units if requested
         if isinstance(units, str) and units:
@@ -864,11 +872,12 @@ class KalmanRecord:
 
         # ----------------------- interactive (time-slider) variant ----------------
         if slider:
+            sigma = kwargs.pop("sigma", None)   # ±sigma·√Pkk band on the 1d panels
             # multi-panel dashboard: a list of components and/or a measurement-error pad
             is_list = isinstance(component, (list, tuple)) and len(component) > 1
             if view != "2d" and (is_list or error):
                 return self._replay(component=list(component) if is_list else [component],
-                                   dim=dim[0], view="1d", sample=kwargs.get("sample"), error=error,
+                                   dim=dim[0], view="1d", sample=kwargs.get("sample"), error=error, sigma=sigma,
                                    jshtml=kwargs.pop("jshtml", False),
                                    frames=kwargs.pop("frames", 80), interval=kwargs.pop("interval", 90))
             if view == "2d" or len(dim) >= 2:
@@ -877,7 +886,7 @@ class KalmanRecord:
                                    sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
                                    frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
             c = component[0] if isinstance(component, (list, tuple)) else (component if component is not None else 0)
-            return self._replay(component=c, dim=dim[0], view="1d",
+            return self._replay(component=c, dim=dim[0], view="1d", sigma=sigma,
                                sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
                                frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
 
@@ -910,7 +919,7 @@ class KalmanRecord:
         return self._replay(*args, **kwargs)
 
     def _replay(self, component=0, dim=0, sample=None, view="1d", frames=80,
-               interval=90, jshtml=False, figsize=None, dpi=80, title=None, error=False):
+               interval=90, jshtml=False, figsize=None, dpi=80, title=None, error=False, sigma=None):
         """
         Interactive **time-cursor replay** of the reconstruction — play the filtered
         estimate as a function of time, optionally overlaying the **truth** and the noisy
@@ -953,7 +962,7 @@ class KalmanRecord:
         if view != "2d" and (len(comps) > 1 or error):
             return self._replay_dashboard(
                 comps, dim=dim, sample=sample, frames=frames, interval=interval,
-                jshtml=jshtml, figsize=figsize, dpi=dpi, title=title, error=error)
+                jshtml=jshtml, figsize=figsize, dpi=dpi, title=title, error=error, sigma=sigma)
 
         fr = list(range(0, N, max(1, N // max(1, frames)))) + [N - 1]
         base_title = title or (self.model.name() if self.model is not None else "Kalman record")
@@ -1011,6 +1020,11 @@ class KalmanRecord:
             y = self.xk[:, idx]
             fig, ax = plt.subplots(figsize=figsize or (8.5, 4.0), dpi=dpi)
             ax.plot(t, y, color="lightgray", lw=1.0, zorder=1)
+            # ±sigma uncertainty band from Pk (full-time, drawn once like the guide)
+            if sigma and isinstance(self.Pk, np.ndarray) and self.Pk.ndim == 3 and self.Pk.shape[1] > idx:
+                sd = np.sqrt(np.clip(self.Pk[:, idx, idx], 0.0, None))
+                ax.fill_between(t, y - sigma * sd, y + sigma * sd, color="navy",
+                                alpha=0.15, linewidth=0, zorder=-1, label=f"±{sigma:g}σ")  # behind scatter (zorder=0)
             if sample is not None and sample.xk.shape[1] > idx:
                 ax.plot(t, sample.xk[:, idx], color="crimson", lw=1.2, alpha=0.6, zorder=2, label="truth")
             ln, = ax.plot([], [], color="navy", lw=2.0, zorder=3, label="estimate")
@@ -1038,7 +1052,7 @@ class KalmanRecord:
         return animate(fig, _draw, frames=fr, interval=interval, jshtml=jshtml)
 
     def _replay_dashboard(self, components, dim=0, sample=None, frames=80, interval=90,
-                          jshtml=False, figsize=None, dpi=80, title=None, error=False):
+                          jshtml=False, figsize=None, dpi=80, title=None, error=False, sigma=None):
         """
         Multi-panel time-cursor replay: one panel per state component, plus an
         optional measurement-error histogram, all driven by a single joint time
@@ -1090,6 +1104,11 @@ class KalmanRecord:
             col = kw_main["color"]
 
             ax.plot(t, y, color="lightgray", lw=1.0, zorder=1)               # faint full guide
+            # ±sigma uncertainty band from Pk (drawn once over all time, like the guide)
+            if sigma and isinstance(self.Pk, np.ndarray) and self.Pk.ndim == 3 and self.Pk.shape[1] > idx:
+                sd = np.sqrt(np.clip(self.Pk[:, idx, idx], 0.0, None))
+                ax.fill_between(t, y - sigma * sd, y + sigma * sd, color=col,
+                                alpha=0.15, linewidth=0, zorder=-1, label=f"±{sigma:g}σ")  # behind scatter (zorder=0)
             if ideal is not None and ideal.shape[1] > idx:
                 ax.plot(t, ideal[:, idx], zorder=2, **kw_ideal)
             if truth is not None and truth.shape[1] > idx:
@@ -1183,6 +1202,7 @@ class KalmanRecord:
         truth_in    = kwargs.pop("truth", None)
         meas_in     = kwargs.pop("measurement", None)
         commons     = kwargs.pop("commons", [])
+        sigma       = kwargs.pop("sigma", None)   # if set (e.g. 2 or 3), shade ±sigma·√Pkk band
 
         # Derive defaults; ideal=False disables the ideal line explicitly
         if ideal_in is None:
@@ -1257,6 +1277,16 @@ class KalmanRecord:
                                             color=kwargs.get("color", base_color_id + i)))
             # label once under flavor name
             self._draw_arrows_1d(c, self.time, self.xk[:, idx], color=h.get_color(), arrows=arrows_ct)
+
+            # ±sigma uncertainty band from the state covariance Pk (diagonal element idx)
+            if sigma and isinstance(self.Pk, np.ndarray) and self.Pk.ndim == 3 and self.Pk.shape[1] > idx:
+                sd = np.sqrt(np.clip(self.Pk[:, idx, idx], 0.0, None))
+                c.fill_between(self.time,
+                               self.xk[:, idx] - sigma * sd,
+                               self.xk[:, idx] + sigma * sd,
+                               color=h.get_color(), alpha=0.18, linewidth=0,
+                               zorder=-2,   # backdrop: stays behind the measurement scatter (zorder=-1)
+                               label=(f"±{sigma:g}σ" if i == 0 else None))
 
         # ----------------- labels / legend / grid -----------------
         # X label: time formatter like your original (allow override)

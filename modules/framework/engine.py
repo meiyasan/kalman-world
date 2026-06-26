@@ -77,7 +77,9 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
 
         xp, F = self._propagate(model, x, u_for, t)
 
-        Q = model.Q(t=t)
+        # Pass the current state to Q only for models whose Q accepts it (e.g. a
+        # speed-dependent air-friction Q). Constant-Q models keep Q(t=t) untouched.
+        Q = model.Q(t=t, x=x) if self._accepts_param(model.Q, "x") else model.Q(t=t)
         L = self._safe_L(model, x, u_for, t)
         if L is not None:
             Q = L @ Q @ L.T

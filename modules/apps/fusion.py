@@ -188,9 +188,16 @@ class SensorFusionModel(LinearKalmanModel):
     # Signature figure — model.plot(record, sample=sample, measurements=zk)
     # ==================================================================
     def _plot_static(self, record, sample=None, *, component=None, error=True,
-                     measurements=None, sigma=1.0, figsize=(15, 9), **kwargs):
+                     measurements=None, sigma=1.0, figsize=(15, 9),
+                     meas=None, colors=None, **kwargs):
         """Top: per-sensor scatter + fused position with ±σ + truth. Bottom: the fused
-        position-σ compared against every single-sensor σ (fusion beats each one)."""
+        position-σ compared against every single-sensor σ (fusion beats each one).
+
+        ``meas`` is a dict of kwargs forwarded to ``Axes.scatter`` for measurement points
+        (e.g. ``meas=dict(alpha=1.0, s=20, marker='x')``); a uniform ``color`` there
+        overrides every sensor's color. ``colors`` overrides the default (pale) per-sensor
+        palette outright — e.g. ``colors=rainbow(len(self.sensors), l=0.6)`` for saturated
+        dots while keeping each sensor distinguishable."""
         import matplotlib.pyplot as plt
 
         t = np.asarray(record.time)
@@ -199,7 +206,7 @@ class SensorFusionModel(LinearKalmanModel):
         pos = xk[:, 0]
         pos_sig = np.sqrt(np.maximum(Pk[:, 0, 0], 0.0)) if Pk.size else np.zeros_like(pos)
         xt = np.asarray(sample.xk).reshape(len(sample), -1)[:, 0] if sample is not None else None
-        colors = rainbow(max(3, len(self.sensors)))
+        colors = colors if colors is not None else rainbow(max(3, len(self.sensors)))
 
         fig, (axT, axB) = plt.subplots(2, 1, figsize=figsize,
                                        gridspec_kw=dict(height_ratios=[1.5, 1], hspace=0.3))
@@ -212,8 +219,11 @@ class SensorFusionModel(LinearKalmanModel):
                     continue
                 col = zk[:, i]
                 mask = ~np.isnan(col)
-                axT.scatter(t[mask], col[mask], s=12, color=colors[i], alpha=0.45,
-                            label=f"{s.name} (σ={s.uncertainty:g}, {s.rate or self.fs:g} Hz)")
+                scatter_kw = dict(s=12, alpha=0.45, color=colors[i])
+                scatter_kw.update(meas or {})
+                axT.scatter(t[mask], col[mask],
+                            label=f"{s.name} (σ={s.uncertainty:g}, {s.rate or self.fs:g} Hz)",
+                            **scatter_kw)
         if xt is not None:
             axT.plot(t, xt, color="gray", lw=1.6, ls="--", alpha=0.9, label="truth")
         axT.fill_between(t, pos - sigma * pos_sig, pos + sigma * pos_sig,

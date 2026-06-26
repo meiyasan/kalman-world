@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..engine import KalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 
 class ParticleEngine(KalmanEngine):
@@ -22,7 +22,7 @@ class ParticleEngine(KalmanEngine):
     NAME = "Particle Engine"
     DESCRIPTION = "Sequential importance-resampling particle filter (forward-only)."
     VERSION = "1.0"
-    KIND = EngineKind.PARTICLE
+    KIND = KalmanEngineKind.PARTICLE
 
     def __init__(self, n_particles: int = 500, resample_threshold: float = 0.5):
         self.n_particles = int(n_particles)

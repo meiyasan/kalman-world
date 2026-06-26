@@ -80,7 +80,7 @@ class KalmanObservableReadout(Enum):
 # -----------------------------
 # ----- Engine kinds ----------
 # -----------------------------
-class EngineKind(Enum):
+class KalmanEngineKind(Enum):
     """
     Algorithm family of an estimation engine.
 
@@ -101,4 +101,4 @@ class EngineKind(Enum):
 
 
 # All engine kinds — convenient default for ``ALLOWED_ENGINES``.
-ALL_ENGINES = frozenset(EngineKind)
+ALL_ENGINES = frozenset(KalmanEngineKind)

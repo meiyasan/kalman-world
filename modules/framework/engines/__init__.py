@@ -1,12 +1,12 @@
 """
 Concrete Kalman engines (the *how* — one estimation step per algorithm).
 
-Each engine tags its :class:`~kalman.framework.constants.EngineKind`. The
+Each engine tags its :class:`~kalman.framework.constants.KalmanEngineKind`. The
 ``ENGINE_BY_KIND`` registry lets a model/filter resolve its declared
 ``DEFAULT_ENGINE`` to a concrete class without the model importing any engine.
 """
 from ..engine import KalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 from .linear import LinearKalmanEngine
 from .extended import ExtendedKalmanEngine
@@ -15,19 +15,19 @@ from .particle import ParticleEngine
 from .combinatorial import CombinatorialKalmanEngine
 
 ENGINE_BY_KIND = {
-    EngineKind.LINEAR:        LinearKalmanEngine,
-    EngineKind.EXTENDED:      ExtendedKalmanEngine,
-    EngineKind.UNSCENTED:     UnscentedKalmanEngine,
-    EngineKind.PARTICLE:      ParticleEngine,
-    EngineKind.COMBINATORIAL: CombinatorialKalmanEngine,
+    KalmanEngineKind.LINEAR:        LinearKalmanEngine,
+    KalmanEngineKind.EXTENDED:      ExtendedKalmanEngine,
+    KalmanEngineKind.UNSCENTED:     UnscentedKalmanEngine,
+    KalmanEngineKind.PARTICLE:      ParticleEngine,
+    KalmanEngineKind.COMBINATORIAL: CombinatorialKalmanEngine,
 }
 
-def resolve_engine(kind: EngineKind) -> KalmanEngine:
+def resolve_engine(kind: KalmanEngineKind) -> KalmanEngine:
     """Instantiate the concrete engine for ``kind`` (defaults if unknown -> Extended).
 
-    Robust to ``EngineKind`` *identity* changes caused by ``%autoreload`` or
+    Robust to ``KalmanEngineKind`` *identity* changes caused by ``%autoreload`` or
     duplicate imports: if the member is not found by identity, fall back to matching
-    by its ``name`` so a reloaded ``EngineKind.LINEAR`` still resolves to the linear
+    by its ``name`` so a reloaded ``KalmanEngineKind.LINEAR`` still resolves to the linear
     engine instead of silently degrading to Extended.
     """
     cls = ENGINE_BY_KIND.get(kind)

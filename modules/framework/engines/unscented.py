@@ -3,7 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..engine import KalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 
 class UnscentedKalmanEngine(KalmanEngine):
@@ -21,7 +21,7 @@ class UnscentedKalmanEngine(KalmanEngine):
     NAME = "Unscented Kalman Engine"
     DESCRIPTION = "UKF engine with automatic augmented-state for non-additive noise."
     VERSION = "3.0"
-    KIND = EngineKind.UNSCENTED
+    KIND = KalmanEngineKind.UNSCENTED
 
     def __init__(self, alpha=1e-3, beta=2.0, kappa=0.0):
         self.alpha = float(alpha)

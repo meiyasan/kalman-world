@@ -7,15 +7,16 @@ Layers (dependency points downward only: Filter → Engine → Model):
 - ``filter.py``  : ``KalmanFilter`` — the workflow (WHEN): forward/backward + run state.
 - ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite``).
 - ``engines/``   : concrete engines (``LinearKalmanEngine`` / ``Extended`` / ``Unscented`` / ``Particle``).
-- ``constants.py``: ``EngineKind`` (LINEAR/EXTENDED/UNSCENTED/PARTICLE) used to bind models↔engines.
+- ``constants.py``: ``KalmanEngineKind`` (LINEAR/EXTENDED/UNSCENTED/PARTICLE) used to bind models↔engines.
 
 Domain applications live in ``kalman.apps``; the recognisable filters (KF/EKF/UKF/PF) in
 ``kalman.filters``.
 """
-from .constants import EngineKind
+from .constants import KalmanEngineKind
 from .model import KalmanModel
 from .engine import KalmanEngine
 from .filter import KalmanFilter
+from .control import KalmanController
 from .models import (
     LinearKalmanModel,
     ExtendedKalmanModel,
@@ -28,12 +29,21 @@ from .engines import (
     UnscentedKalmanEngine,
     ParticleEngine,
 )
+from .controllers import (
+    ProportionalKalmanController,
+    PIDKalmanController,
+    LQRKalmanController,
+    NeuralKalmanController,
+    BoostKalmanController,
+    AdaptiveQRKalmanController,
+)
 
 __all__ = [
-    "EngineKind",
+    "KalmanEngineKind",
     "KalmanModel",
     "KalmanEngine",
     "KalmanFilter",
+    "KalmanController",
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
@@ -42,4 +52,10 @@ __all__ = [
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",
     "ParticleEngine",
+    "ProportionalKalmanController",
+    "PIDKalmanController",
+    "LQRKalmanController",
+    "NeuralKalmanController",
+    "BoostKalmanController",
+    "AdaptiveQRKalmanController",
 ]

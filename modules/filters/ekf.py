@@ -1,6 +1,6 @@
 """Extended Kalman Filter (EKF) — wraps a model with the Jacobian engine."""
 from ..framework.filter import KalmanFilter
-from ..framework.constants import EngineKind
+from ..framework.constants import KalmanEngineKind
 
 
 class ExtendedKalmanFilter(KalmanFilter):
@@ -14,4 +14,4 @@ class ExtendedKalmanFilter(KalmanFilter):
 
     NAME = "Extended Kalman Filter"
     DESCRIPTION = "Extended Kalman filter (EKF): Jacobian engine over a model."
-    KIND = EngineKind.EXTENDED
+    KIND = KalmanEngineKind.EXTENDED

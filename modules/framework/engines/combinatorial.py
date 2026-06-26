@@ -12,7 +12,7 @@ from __future__ import annotations
 import numpy as np
 
 from .extended import ExtendedKalmanEngine
-from ..constants import EngineKind
+from ..constants import KalmanEngineKind
 
 
 class CombinatorialKalmanEngine(ExtendedKalmanEngine):
@@ -31,7 +31,7 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
     NAME = "Combinatorial Kalman Engine"
     DESCRIPTION = "EKF track-following step plus a χ² (Mahalanobis) measurement gate for branching."
     VERSION = "1.0"
-    KIND = EngineKind.COMBINATORIAL
+    KIND = KalmanEngineKind.COMBINATORIAL
 
     def gate(self, model, x_pred, P_pred, z, t=None):
         """Score and apply one candidate measurement.

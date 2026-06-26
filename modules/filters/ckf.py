@@ -23,7 +23,7 @@ from dataclasses import dataclass, field
 import numpy as np
 
 from ..framework.filter import KalmanFilter
-from ..framework.constants import EngineKind, KalmanStateFlavor
+from ..framework.constants import KalmanEngineKind, KalmanStateFlavor
 from ..framework.io.record import KalmanRecord
 from ..framework.io.collection import KalmanRecordCollection
 
@@ -85,13 +85,13 @@ class CombinatorialKalmanFilter(KalmanFilter):
 
     NAME = "Combinatorial Kalman Filter"
     DESCRIPTION = "CKF: layer-by-layer track following with branching, pruning and hit arbitration."
-    KIND = EngineKind.COMBINATORIAL
+    KIND = KalmanEngineKind.COMBINATORIAL
 
-    def __init__(self, model, *, chi2_cut=None, max_candidates=6, max_holes=2,
+    def __init__(self, model=None, *, chi2_cut=None, max_candidates=6, max_holes=2,
                  min_hits=3, shared_hit_frac=0.3, hole_penalty=None, **kwargs):
         from ..framework.engines.combinatorial import CombinatorialKalmanEngine
         super().__init__(model, engine=CombinatorialKalmanEngine(), **kwargs)
-        self.chi2_cut = float(chi2_cut) if chi2_cut is not None else _default_chi2_cut(model.m)
+        self.chi2_cut = float(chi2_cut) if chi2_cut is not None else _default_chi2_cut(self.m)
         self.max_candidates = int(max_candidates)
         self.max_holes = int(max_holes)
         self.min_hits = int(min_hits)

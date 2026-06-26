@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..model import KalmanModel
-from ..constants import EngineKind, ALL_ENGINES
+from ..constants import KalmanEngineKind, ALL_ENGINES
 
 
 class ExtendedKalmanModel(KalmanModel):
@@ -17,5 +17,5 @@ class ExtendedKalmanModel(KalmanModel):
     DESCRIPTION = "Nonlinear state-space model (override f/h); numerical/analytic Jacobians."
     VERSION = "1.0"
 
-    DEFAULT_ENGINE  = EngineKind.EXTENDED
-    ALLOWED_ENGINES = ALL_ENGINES - {EngineKind.LINEAR}
+    DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED
+    ALLOWED_ENGINES = ALL_ENGINES - {KalmanEngineKind.LINEAR}

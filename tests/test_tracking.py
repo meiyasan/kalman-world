@@ -47,8 +47,8 @@ class TestTrackingModel(unittest.TestCase):
             self.assertAlmostEqual(float(np.hypot(s[0], s[1])), float(r), places=4)
 
     def test_default_engine_is_combinatorial(self):
-        from modules.framework.constants import EngineKind
-        self.assertEqual(DriftChamberModel().DEFAULT_ENGINE, EngineKind.COMBINATORIAL)
+        from modules.framework.constants import KalmanEngineKind
+        self.assertEqual(DriftChamberModel().DEFAULT_ENGINE, KalmanEngineKind.COMBINATORIAL)
 
 
 # ===========================================================================

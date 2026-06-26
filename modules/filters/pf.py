@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..framework.filter import KalmanFilter
-from ..framework.constants import EngineKind
+from ..framework.constants import KalmanEngineKind
 
 
 class ParticleFilter(KalmanFilter):
@@ -15,9 +15,9 @@ class ParticleFilter(KalmanFilter):
 
     NAME = "Particle Filter"
     DESCRIPTION = "Particle filter (PF): sequential importance resampling over a model."
-    KIND = EngineKind.PARTICLE
+    KIND = KalmanEngineKind.PARTICLE
 
-    def __init__(self, model, *, n_particles=500, **kwargs):
+    def __init__(self, model=None, *, n_particles=500, **kwargs):
         from ..framework.engines.particle import ParticleEngine
         super().__init__(model, engine=ParticleEngine(n_particles=n_particles), **kwargs)
 

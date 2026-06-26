@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from ..model import KalmanModel
-from ..constants import EngineKind, ALL_ENGINES
+from ..constants import KalmanEngineKind, ALL_ENGINES
 
 
 class UnscentedKalmanModel(KalmanModel):
@@ -16,5 +16,5 @@ class UnscentedKalmanModel(KalmanModel):
     DESCRIPTION = "Nonlinear state-space model intended for the sigma-point (UKF) engine."
     VERSION = "1.0"
 
-    DEFAULT_ENGINE  = EngineKind.UNSCENTED
-    ALLOWED_ENGINES = ALL_ENGINES - {EngineKind.LINEAR}
+    DEFAULT_ENGINE  = KalmanEngineKind.UNSCENTED
+    ALLOWED_ENGINES = ALL_ENGINES - {KalmanEngineKind.LINEAR}

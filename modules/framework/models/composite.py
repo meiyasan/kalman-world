@@ -2,7 +2,7 @@ import numpy as np
 from scipy.linalg import block_diag
 from typing import List, Optional
 from ..abstract.metadata import KalmanModelMetadata
-from ..constants import KalmanObservableReadout, EngineKind, ALL_ENGINES
+from ..constants import KalmanObservableReadout, KalmanEngineKind, ALL_ENGINES
 from ..model import KalmanModel
 
 
@@ -12,7 +12,7 @@ class CompositeKalmanModel(KalmanModel):
     DESCRIPTION = "Composite Kalman model combining multiple submodels (block-stacked F/H/Q/R)."
     VERSION = "1.0"
 
-    DEFAULT_ENGINE  = EngineKind.EXTENDED   # general; reduces per linear block automatically
+    DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED   # general; reduces per linear block automatically
     ALLOWED_ENGINES = ALL_ENGINES
 
     """
