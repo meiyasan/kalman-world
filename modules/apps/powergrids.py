@@ -12,28 +12,33 @@ class PowerGridStateModel(PhasorOscillatorModel):
     """
     Harmonic voltage tracker for power grid signals (50/60 Hz).
 
-    **Mains specialization of** :class:`PhasorOscillatorModel`. It *is* the lab-frame
-    joint phasor estimator (real voltage in, ``F = I``, time-varying observation
-    ``H(t) = [cos ω_k t, −sin ω_k t]``, scalar measurement) — the base class supplies
-    that machinery. This subclass only fixes the **mains structure**: the carrier
-    frequencies are the harmonic ladder of a fundamental ``f0``::
+    **Mains specialization of** :class:`PhasorOscillatorModel`. It *is* the **lab-frame**
+    joint phasor estimator — the base class supplies all the machinery; this subclass only
+    fixes the **mains harmonic structure**.
 
-        v(t) = Σ_k  Re_k·cos(ω_k t) − Im_k·sin(ω_k t),   ω_k = 2π·partial_freqs[k]
+    **Lab-frame formulation** (contrast with notebook 02's rotating-frame
+    :class:`~kalman.apps.oscillators.OscillatorModel`):
 
-    Because the filter must explain the single measured voltage with the *whole* phasor
-    set, the strong fundamental is fully accounted for by H1 and leaves nothing for the
-    even harmonics — so **H2/H4 correctly read ≈ 0**. This is the key advantage over
-    demodulate-then-low-pass schemes, where a strong neighbour (e.g. the 230 V
-    fundamental) leaks into an absent channel as a constant-magnitude rotating phasor
-    and shows up as a spurious amplitude.
+    * ``F = I`` — phasors are constant in the lab frame (for a steady sinusoid the phasor
+      does not rotate; it is the signal that oscillates).
+    * ``H(t) = [cos ω₁t, −sin ω₁t, cos ω₂t, −sin ω₂t, …]`` — the carrier rotation lives
+      entirely in the **time-varying observation map**, not in the state transition.
+    * Single scalar measurement ``z(t) = v(t)`` — no Hilbert transform, no demodulation;
+      the raw voltage is ingested directly.
+
+    Because ``H(t)`` couples all harmonics to the one measured voltage, the strong
+    fundamental is fully claimed by H1 and leaves nothing for the even harmonics —
+    so **H2/H4 correctly read ≈ 0**.  An independent-demodulator bank cannot do this:
+    the 230 V fundamental survives demodulation in the H2 frame as a rotating phasor and
+    shows up as a spurious amplitude.
 
     **Why mains lines are (ideally) odd-only.** A clean AC waveform has half-wave
     symmetry ``v(t ± T/2) = −v(t)``, which forces a Fourier series of **odd harmonics
-    only** (f0, 3·f0, 5·f0, …). Even harmonics (2·f0, 4·f0) vanish unless something
-    breaks that symmetry — DC bias, half-wave rectifier loads, transformer saturation,
-    geomagnetically induced currents. So tracking all harmonics and *seeing* the even
-    ones collapse to ≈ 0 is not just a sanity check: a non-zero even harmonic is a
-    physical **diagnostic** of asymmetry. ``B>0`` covers inharmonic partials
+    only** (f0, 3·f0, 5·f0, …).  Even harmonics vanish unless something breaks that
+    symmetry — DC bias, half-wave rectifier loads, transformer saturation, geomagnetically
+    induced currents.  Tracking all harmonics and *seeing* the even ones collapse to ≈ 0
+    is therefore a **physics verification**; a non-zero even harmonic is a diagnostic
+    of load asymmetry.  ``B > 0`` covers inharmonic partials
     (``f_k = k·f0·√(1+B·k²)``) for completeness.
 
     State layout (state = phasor per harmonic, observation = scalar voltage):

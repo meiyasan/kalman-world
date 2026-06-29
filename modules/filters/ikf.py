@@ -169,9 +169,9 @@ class InteractiveKalmanFilter:
                 fj.prior.append((fj.x, fj.P))
                 fj.transition.append(F)
 
-                H_j, h_pred = fj.engine._measure(mj, fj.x, t)
+                zk, H_j = fj.engine._measure(mj, fj.x, t)
                 nu_j = (np.asarray(z, dtype=float).reshape(-1, 1)
-                        - np.asarray(h_pred, dtype=float).reshape(-1, 1))
+                        - np.asarray(zk, dtype=float).reshape(-1, 1))
                 S_j  = H_j @ fj.P @ H_j.T + mj.R(t=t)
                 fj.innovation.append(nu_j)
 

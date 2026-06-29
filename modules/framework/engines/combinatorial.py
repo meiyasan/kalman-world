@@ -22,10 +22,10 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
     Inherits ``_propagate``/``_measure`` (hence ``_predict``/``_update``/``_smooth``) from
     :class:`ExtendedKalmanEngine`, so layer-to-layer propagation through the (curved)
     trajectory and the RTS smoother come for free. :meth:`gate` is the combinatorial
-    primitive: given a *prediction* ``(x_pred, P_pred)`` and one candidate measurement
-    ``z`` it returns ``(chi2, x_post, P_post)`` — the χ² compatibility of the hit and the
-    belief updated with it (Joseph form). The filter opens a branch per hit whose
-    ``chi2`` is below its gate.
+    primitive: given a *prediction* ``(xk, Pk)`` and one candidate measurement
+    ``z`` it returns ``(chi2, xk, Pk)`` — the χ² compatibility of the hit and the
+    belief updated with it (Joseph form), overwriting the predicted belief passed in.
+    The filter opens a branch per hit whose ``chi2`` is below its gate.
     """
 
     NAME = "Combinatorial Kalman Engine"
@@ -33,38 +33,38 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
     VERSION = "1.0"
     KIND = KalmanEngineKind.COMBINATORIAL
 
-    def gate(self, model, x_pred, P_pred, z, t=None):
+    def gate(self, model, xk, Pk, z, t=None):
         """Score and apply one candidate measurement.
 
         Parameters
         ----------
         model : KalmanModel       the system (provides ``h``/``H``/``R``).
-        x_pred, P_pred            the *predicted* state mean (n×1) and covariance (n×n).
+        xk, Pk                    the *predicted* state mean (n×1) and covariance (n×n).
         z                         one candidate measurement (m×1); NaN channels are skipped.
         t                         station/time tag forwarded to ``h``/``H``/``R``.
 
         Returns
         -------
-        (chi2, x_post, P_post) : the innovation χ² (float), and the Kalman-updated mean
+        (chi2, xk, Pk) : the innovation χ² (float), and the Kalman-updated mean
         and covariance. ``chi2`` is ``+inf`` if every channel is missing.
         """
         z = np.asarray(z, dtype=float).reshape(-1, 1)
         keep = ~np.isnan(z).ravel()
         if not keep.any():
-            return np.inf, x_pred, P_pred
+            return np.inf, xk, Pk
 
-        H, h_pred = self._measure(model, x_pred, t)
+        zk, H = self._measure(model, xk, t)
         H = np.asarray(H)[keep, :]
         R = np.asarray(model.R(t=t))[np.ix_(keep, keep)]
-        y = z[keep] - np.asarray(h_pred, dtype=float).reshape(-1, 1)[keep]
+        y = z[keep] - np.asarray(zk, dtype=float).reshape(-1, 1)[keep]
 
-        S = R + H @ P_pred @ H.T
+        S = R + H @ Pk @ H.T
         Sinv = np.linalg.pinv(S)
         chi2 = float((y.T @ Sinv @ y).item())
 
-        K = P_pred @ H.T @ Sinv
+        K = Pk @ H.T @ Sinv
         I = np.eye(model.n)
-        x_post = x_pred + K @ y
+        xk = xk + K @ y
         IKH = I - K @ H
-        P_post = IKH @ P_pred @ IKH.T + K @ R @ K.T   # Joseph form (numerically stable)
-        return chi2, x_post, P_post
+        Pk = IKH @ Pk @ IKH.T + K @ R @ K.T   # Joseph form (numerically stable)
+        return chi2, xk, Pk

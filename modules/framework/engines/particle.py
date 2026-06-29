@@ -61,12 +61,12 @@ class ParticleEngine(KalmanEngine):
     # ------------------------------------------------------------------
     # Steps (stateless signature, internal particle state)
     # ------------------------------------------------------------------
-    def _predict(self, model, x, P, u=None, w=None, t=None, **kw):
+    def _predict(self, model, x, P, u=None, t=None, **kw):
         if self._particles is None:
             self.reset(model)
 
         n = model.n
-        u_for = (np.asarray(u).reshape(-1, 1) if (u is not None and model.l > 0) else None)
+        u = (np.asarray(u).reshape(-1, 1) if (u is not None and model.l > 0) else None)
         Q = np.asarray(model.Q(t=t), dtype=np.float64)
         noise = np.random.multivariate_normal(np.zeros(n), Q, size=self.n_particles)
         accepts_w = self._accepts_param(model.f, "w")
@@ -75,9 +75,9 @@ class ParticleEngine(KalmanEngine):
         for i, xp in enumerate(self._particles):
             xi = xp.reshape(-1, 1)
             if accepts_w:
-                xi2 = model.f(xi, u=u_for, w=noise[i].reshape(-1, 1), t=t)
+                xi2 = model.f(xi, u=u, w=noise[i].reshape(-1, 1), t=t)
             else:
-                xi2 = np.asarray(model.f(xi, u=u_for, t=t)).reshape(-1, 1) + noise[i].reshape(-1, 1)
+                xi2 = np.asarray(model.f(xi, u=u, t=t)).reshape(-1, 1) + noise[i].reshape(-1, 1)
             prop[i] = np.asarray(xi2, dtype=np.float64).reshape(-1)
         self._particles = prop
 

@@ -1,5 +1,7 @@
 from .ballistics  import BallisticLinearModel, BallisticModel
-from .oscillators import OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel, InharmonicOscillatorModel, HarmonicOscillatorModel, PhasorOscillatorModel
+from .oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel,
+                          InharmonicOscillatorModel, HarmonicOscillatorModel, PhasorOscillatorModel,
+                          wire_inharmonicity, wire_fundamental, partial_frequencies)
 from .suspensions import SuspensionModel
 from .powergrids  import PowerGridStateModel, PowerGridObservable
 from .gravwave     import PolarizationModel, PolarizationState, PolarizationObservable, jones_signal

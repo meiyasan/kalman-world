@@ -112,12 +112,12 @@ class KalmanEngineABC(ABC):
     knows nothing about workflow (that is the Filter's job).
     """
     @abstractmethod
-    def _predict(self, model, x, P, u=None, w=None, t=None, **kwargs):
-        """Prediction step: return ``(x_pred, P_pred, F)``."""
+    def _predict(self, model, x, P, u=None, t=None, **kwargs):
+        """Prediction step: return ``(xk, Pk, F)``."""
         ...
     @abstractmethod
     def _update(self, model, x, P, z, t=None, **kwargs):
-        """Update step: return ``(x_post, P_post)`` (missing-measurement aware)."""
+        """Update step: return ``(x, P)`` (missing-measurement aware)."""
         ...
     @abstractmethod
     def _smooth(self, model, post_k, prior_next, smooth_next, F_k):

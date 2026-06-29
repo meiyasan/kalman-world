@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.linalg import expm
 from scipy.optimize import curve_fit
-from scipy.signal import hilbert
+from scipy.signal import hilbert  # used by AnalyticOscillatorModel docstring examples
 
 from ..framework.models.linear import LinearKalmanModel
 from ..framework.models.composite import CompositeKalmanModel
@@ -20,25 +20,115 @@ class OscillatorObservable(KalmanObservable):
     PSI = ""      # demodulated narrowband signal (complex envelope ψ)
 
 # ======================================================================
+# Physical parameter utilities
+# ======================================================================
+def wire_inharmonicity(E: float, d: float, L: float, T: float) -> float:
+    """
+    Inharmonicity coefficient B for a stiff wire under tension (Fletcher 1964).
+
+    Predicts partial frequencies: ``f_n = n·f0·√(1 + B·n²)``.
+
+    Parameters
+    ----------
+    E : Young's modulus [Pa]  (steel ≈ 2e11 Pa, tungsten ≈ 4e11 Pa)
+    d : wire diameter [m]
+    L : wire length [m]
+    T : wire tension [N]
+
+    Returns
+    -------
+    B : inharmonicity coefficient (dimensionless)
+    """
+    return np.pi**3 * E * d**4 / (64.0 * T * L**2)
+
+
+def wire_fundamental(d: float, L: float, T: float, rho: float) -> float:
+    """
+    Fundamental transverse vibration frequency of a wire under tension.
+
+    ``f0 = (1/2L) · √(T/μ)``,  ``μ = ρ·π·d²/4``  (linear mass density).
+
+    Parameters
+    ----------
+    d   : wire diameter [m]
+    L   : wire length [m]
+    T   : wire tension [N]
+    rho : material density [kg/m³]  (steel ≈ 7800, tungsten ≈ 19300)
+
+    Returns
+    -------
+    f0 : fundamental frequency [Hz]
+    """
+    mu = rho * np.pi * d**2 / 4.0      # linear mass density [kg/m]
+    return (1.0 / (2.0 * L)) * np.sqrt(T / mu)
+
+
+# ======================================================================
+# Inharmonic frequency helpers (shared)
+# ======================================================================
+def partial_frequencies(f0: float, B: float, n_harmonics: int) -> np.ndarray:
+    """
+    Fletcher (in)harmonic partial series: ``f_n = n·f0·√(1 + B·n²)``.
+
+    ``B = 0`` gives the perfectly harmonic series ``f_n = n·f0``.  For a stiff wire
+    under tension, B can be derived from physical parameters via
+    :func:`wire_inharmonicity`.  A typical KAGRA suspension wire has B ≈ 0.1.
+
+    Parameters
+    ----------
+    f0         : fundamental frequency [Hz]
+    B          : inharmonicity coefficient (dimensionless, ≥ 0)
+    n_harmonics: number of partials to compute
+
+    Returns
+    -------
+    freqs : (n_harmonics,) array of partial frequencies [Hz]
+    """
+    n = np.arange(1, n_harmonics + 1, dtype=float)
+    return n * f0 * np.sqrt(1.0 + B * n ** 2)
+
+
+# ======================================================================
 # Single rotating-frame mode — the building block AND the standalone model
 # ======================================================================
 class AnalyticOscillatorModel(LinearKalmanModel):
     """
     A single oscillator tracked as a **complex envelope** ``ψ = Re + i·Im`` in a frame
-    rotating at carrier ``wc``. On resonance (``wc = w0``) ψ is a constant; off resonance
-    it precesses at the detuning ``Δω = w0 − wc``. The state is two real numbers
-    ``[Re, Im]`` — the slowly-varying amplitude/phase of the mode.
+    rotating at carrier ``fc`` [Hz].  On resonance (``fc = f0``) ψ is a constant (DC
+    in the rotating frame — the lock-in / heterodyne limit); off resonance it precesses
+    at the detuning ``Δf = f0 − fc``.
 
-    This is the atomic block the windowed :class:`OscillatorModel` stacks, and a useful
-    standalone illustration of the rotating-frame (lock-in / heterodyne) representation.
-    Used standalone it expects a 2-column analytic signal ``[real, imag]`` (e.g. from
-    ``scipy.signal.hilbert``); inside an :class:`OscillatorModel` window the demodulation
-    is done once at the window level instead.
+    The state is two real numbers ``[Re, Im]`` — the slowly-varying amplitude and phase
+    of the mode.
+
+    **Parameters (preferred — Hz):**
+    - ``f0`` : resonance frequency [Hz]
+    - ``fc`` : carrier / demodulation frequency [Hz]
+
+    **Legacy parameters (rad/s) — still accepted for backward compat:**
+    - ``w0`` : resonance angular frequency [rad/s]
+    - ``wc`` : carrier angular frequency [rad/s]
+
+    **Frames:** This is the rotating-frame atom.  The carrier rotation lives in the
+    **signal** (``preprocess`` multiplies by ``e^{−iω_c t}``); ``H = identity``; and
+    the frequency-offset precession sits in ``F = expm(Δω·dt)``.  Its lab-frame dual
+    is :class:`PhasorOscillatorModel`, where the carrier lives in the time-varying
+    ``H(t)`` and ``F = I``.
+
+    This model is the atomic block the windowed :class:`OscillatorModel` stacks.  Used
+    standalone it expects a 2-column analytic signal ``[real, imag]`` (e.g. from
+    ``scipy.signal.hilbert``); inside an :class:`OscillatorModel` window the
+    demodulation is done once at the window level.
+
+    **pre/in/postprocess symmetry:** ``preprocess`` rotates the analytic input into the
+    rotating frame; ``postprocess`` inverse-rotates back to the lab-frame analytic signal.
+    This means ``sample().zk`` is in the same space as the model's input → you can call
+    ``model.filter(sample.zk)`` directly.
     """
 
     NAME = "Analytic Oscillator (rotating-frame envelope)"
-    DESCRIPTION = "Single oscillator as a complex envelope [Re, Im] in a frame rotating at wc."
-    VERSION = "2.0"
+    DESCRIPTION = "Single oscillator as a complex envelope [Re, Im] in a frame rotating at fc."
+    VERSION = "2.1"
 
     @property
     def states(self):
@@ -56,23 +146,49 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         self.process_uncertainty = process_uncertainty
 
         dt = 1.0 / self.fs
-        w0 = self["w0"] = kwargs.get("w0", 1)
-        wc = self["wc"] = kwargs.get("wc", 1)
-        dw = w0 - wc                                   # detuning Δω
-        Q = kwargs.pop("Q", None)                      # quality factor (not the Q matrix)
 
-        # F = expm(A·dt), A = [[−γ, −Δω], [Δω, −γ]], γ = w0/(2Q)  (slowly-varying envelope)
-        A = expm(np.array([[-w0 / (2 * Q) * dt, -dw * dt],
-                           [          dw * dt, -w0 / (2 * Q) * dt]]))
-        C = np.identity(2)                                            # observe [Re, Im]
+        # Accept f0/fc [Hz] as primary parameters; fall through to w0/wc [rad/s]
+        # for backward compatibility with existing code that passes w0/wc.
+        f0_hz = kwargs.pop("f0", None)
+        fc_hz = kwargs.pop("fc", None)
+        w0_rad = kwargs.pop("w0", None)
+        wc_rad = kwargs.pop("wc", None)
+
+        if f0_hz is not None:
+            w0 = 2.0 * np.pi * float(f0_hz)
+        elif w0_rad is not None:
+            w0 = float(w0_rad)
+        else:
+            w0 = 2.0 * np.pi          # default 1 Hz
+
+        if fc_hz is not None:
+            wc = 2.0 * np.pi * float(fc_hz)
+        elif wc_rad is not None:
+            wc = float(wc_rad)
+        else:
+            wc = w0                    # default: carrier on resonance (lock-in)
+
+        self["f0"] = w0 / (2.0 * np.pi)
+        self["fc"] = wc / (2.0 * np.pi)
+        self["w0"] = w0                # kept for internal / legacy access
+        self["wc"] = wc
+
+        dw = w0 - wc                   # detuning Δω [rad/s]
+        Q = kwargs.pop("Q", None)
+
+        # F = expm(A·dt),  A = [[−γ, −Δω], [Δω, −γ]],  γ = w0/(2Q)
+        gamma = w0 / (2.0 * Q) if Q else 0.0
+        A = expm(np.array([[-gamma * dt, -dw * dt],
+                           [   dw * dt, -gamma * dt]]))
+        C = np.identity(2)
         R = measurement_uncertainty * np.sqrt(2) * np.identity(2)
-        Q = process_uncertainty * np.sqrt(2) * np.identity(2)
+        Qn = process_uncertainty * np.sqrt(2) * np.identity(2)
 
         x0, P0 = kwargs.pop("x0", None), kwargs.pop("P0", None)
-        super().__init__(name, F=A, H=C, Q=Q, R=R, P0=P0, x0=x0, **kwargs)
+        super().__init__(name, F=A, H=C, Q=Qn, R=R, P0=P0, x0=x0, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs):
-        # zk is (N, 2) — real and imaginary parts → rotate into the carrier frame
+        """Analytic signal [real, imag] → rotate into the rotating frame at wc."""
         zr, zi = zk[:, 0], zk[:, 1]
         times = self.t0 + np.arange(len(zk)) / self.fs
         arg = self["wc"] * times
@@ -84,7 +200,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         return zk_hat
 
     def postprocess(self, zk_hat, **kwargs):
-        # inverse rotation back to the lab frame
+        """Inverse-rotate back to the lab-frame analytic signal."""
         zr, zi = zk_hat[:, 0], zk_hat[:, 1]
         times = self.t0 + np.arange(len(zk_hat)) / self.fs
         arg = self["wc"] * times
@@ -94,6 +210,20 @@ class AnalyticOscillatorModel(LinearKalmanModel):
     # ==================================================================
     # Signature figure — the envelope ψ in the rotating frame.
     # ==================================================================
+    def _rotframe_sample(self, sample):
+        """Return a copy of ``sample`` with zk preprocessed into the rotating frame."""
+        if sample is None:
+            return None
+        from ..framework.io.record import KalmanRecord
+        zk_rot = self.preprocess(np.asarray(sample.zk))[0]
+        return KalmanRecord(sample.time, zk=zk_rot, xk=sample.xk, Pk=sample.Pk,
+                            flavor=sample.flavor, model=sample.model)
+
+    def _plot_interactive(self, record, sample=None, *, component, error=True, **kwargs):
+        return super()._plot_interactive(
+            record, sample=self._rotframe_sample(sample),
+            component=component, error=error, **kwargs)
+
     def _plot_static(self, record, sample=None, *, component=None, error=True,
                      figsize=(15, 4), **kwargs):
         import matplotlib.pyplot as plt
@@ -142,39 +272,30 @@ class PhasorObservable(KalmanObservable):
 class PhasorOscillatorModel(LinearKalmanModel):
     r"""
     Track a set of sinusoids as **lab-frame phasors**, straight from a **real** signal —
-    no demodulation, no Hilbert transform. This is the *dual* of
-    :class:`AnalyticOscillatorModel`: same ``[Re, Im]`` phasor per mode, but the carrier
-    rotation lives in the **observation map** instead of in the signal.
+    no demodulation, no Hilbert transform.
 
-    The state holds one constant phasor per frequency::
+    This is the *dual* of :class:`AnalyticOscillatorModel`:
 
-        x = [Re_1, Im_1,  Re_2, Im_2,  …,  Re_N, Im_N]      (2N states)
+    * **Rotating frame** (`AnalyticOscillatorModel` / `OscillatorModel`): the carrier
+      rotation lives in the **signal** — we demodulate by multiplying ``z(t)`` by
+      ``e^{−iω_c t}`` so the mode appears as a slowly-varying envelope.  ``F = expm(Δω)``,
+      ``H = identity``.  Right for **weak, narrowband** lines (KAGRA violin modes).
 
-    and the single scalar measurement is reconstructed from **all** phasors at once
-    through a **time-varying** observation row::
+    * **Lab frame** (`PhasorOscillatorModel`): the carrier rotation lives in the
+      **observation map** instead.  The phasors ``[Re_k, Im_k]`` are constant (``F = I``)
+      and the single real measurement is reconstructed from all of them at once through a
+      time-varying row ``H(t) = [cos ω₁t, −sin ω₁t, cos ω₂t, −sin ω₂t, …]``.  No
+      Hilbert, causal/streaming.  Because every mode must together explain the one
+      measurement, a strong mode cannot leak into an absent neighbour.  Right for
+      **strong, wide-spread** lines (mains harmonics 50→250 Hz, or any wide-band set).
 
-        z(t) = Σ_k  Re_k·cos(ω_k t) − Im_k·sin(ω_k t),   ω_k = 2π·frequencies[k]
-        H(t) = [cos ω_1 t, −sin ω_1 t,  cos ω_2 t, −sin ω_2 t,  …]      shape (1, 2N)
+    State layout (one phasor per frequency, scalar observation)::
 
-    ``F = I`` — the phasors are constant in the lab frame (``process_uncertainty`` sets a
-    slow random-walk drift); ``R = σ_meas²`` is a single channel.
+        x = [Re₁, Im₁,  Re₂, Im₂,  …,  Re_N, Im_N]      (2N states)
+        z = [v(t)]                                          (1 observation)
 
-    **Why this is its own model (vs. the rotating-frame oscillators):**
-
-    * It is fed a **real** scalar and never demodulates — the rotation is carried by
-      ``H(t)``, applied at each mode's *true* frequency. Causal / streaming, no Hilbert.
-    * Because the filter must explain the one measurement with the **whole** phasor set,
-      every strong line is fully owned by its own state and cannot leak into a neighbour.
-      An absent mode therefore reads ≈ 0 — the joint coupling that fixes the
-      even-harmonic leakage of demodulate-then-low-pass schemes.
-    * It is the right tool when the lines are **strong** and **spread across a wide band**
-      (e.g. mains harmonics 50→250 Hz), where a single demodulation carrier cannot cover
-      them and there is nothing to gain from decimation.
-
-    Contrast with :class:`OscillatorModel` (rotating frame): there the *real* signal is
-    demodulated inside ``preprocess`` (Hilbert → baseband), the state is the slow envelope,
-    ``H = identity`` and the rotation sits in ``F = expm(detuning)``. That path can decimate
-    and is the right tool for **weak, narrowband** lines (noise-limited violin modes).
+    ``F = I`` (phasors constant; ``process_uncertainty`` allows slow drift);
+    ``R = σ_meas²`` is a single channel.
 
     Parameters
     ----------
@@ -290,30 +411,35 @@ class PhasorOscillatorModel(LinearKalmanModel):
 
 
 # ======================================================================
-# Inharmonic frequency helpers (shared)
-# ======================================================================
-def partial_frequencies(f0: float, B: float, n_harmonics: int) -> np.ndarray:
-    """Fletcher (in)harmonic partials: ``f_n = n·f0·√(1 + B·n²)`` (``B=0`` → harmonic)."""
-    n = np.arange(1, n_harmonics + 1, dtype=float)
-    return n * f0 * np.sqrt(1.0 + B * n ** 2)
-
-
-# ======================================================================
 # One analysis window  [fc ± dfc]  — the atomic windowed model
 # ======================================================================
 class OscillatorModel(CompositeKalmanModel):
     """
-    One analysis window ``[fc ± dfc]`` over a **real** signal.
+    One analysis window ``[fc ± dfc]`` over a **real** signal — the generic rotating-frame
+    oscillator tracker.
 
-    ``frequencies`` is the full candidate mode list (already expanded over harmonics /
-    inharmonicity). The window acts as a **mask**: only modes with ``|f − fc| ≤ dfc`` are
-    kept and tracked; the rest are dropped from the state. The in-band modes share the
-    single demodulated band channel, so they are combined in **FUSED** mode
-    (``H = [I₂ … I₂]``, ``z = Σ_i ψ_i``) — the joint Kalman filter of Moisset et al. (2025)
-    / Mukherjee & Finn (1999). A single in-band mode is the trivial case.
+    ``frequencies`` is the full candidate mode list (already expanded, e.g. from
+    :func:`partial_frequencies`).  The window acts as a **mask**: only modes with
+    ``|f − fc| ≤ dfc`` are kept and tracked; the rest are silently dropped from the
+    state.  This is the key property: even if :class:`HarmonicOscillatorModel` or
+    :class:`InharmonicOscillatorModel` generates a full ladder ``[f0, 2f0, 3f0, …]``,
+    only those partials inside ``[fc ± dfc]`` are tracked by *this* window.  To track
+    the whole ladder, stack one window per partial inside an
+    :class:`OscillatorCompositeModel`.
 
-    Real signal in (`preprocess` demodulates it at ``fc``), real band reconstruction out
-    (`postprocess`). Inherits :class:`CompositeKalmanModel` — the window *is* the composite.
+    The in-band modes share the single demodulated band channel in **FUSED** mode
+    (``H = [I₂ … I₂]``, ``z = Σ_i ψ_i``) — the joint Kalman filter of Moisset et al.
+    (2025) / Mukherjee & Finn (1999).  A single in-band mode is the trivial (degenerate)
+    case.
+
+    **Signal flow:**
+
+    * ``preprocess`` — real strain → Hilbert → demodulate at ``fc`` → ``[Re, Im]``
+    * Filter runs in rotating frame on the ``[Re, Im]`` envelope
+    * ``postprocess`` — ``[Re, Im]`` → remodulate at ``fc`` → **real band reconstruction**
+
+    The postprocess remodulation ensures that ``sample().zk`` is a real signal in the
+    same space as the model's input, so ``model.filter(sample.zk)`` works directly.
 
     Parameters
     ----------
@@ -321,7 +447,7 @@ class OscillatorModel(CompositeKalmanModel):
     frequencies : float | array-like
         Candidate mode frequencies [Hz]; masked to those inside ``[fc ± dfc]``.
     fc : float
-        Window center frequency [Hz] (the demodulation carrier).
+        Window center frequency [Hz] — the demodulation carrier.
     dfc : float
         Window half-width [Hz].
     Q : float | list
@@ -332,8 +458,8 @@ class OscillatorModel(CompositeKalmanModel):
 
     NAME = "Windowed Oscillator (one fc ± dfc band)"
     DESCRIPTION = ("One demodulated analysis window; in-band modes combined FUSED "
-                   "(z = Σ ψ_i). Real in, real band reconstruction out.")
-    VERSION = "3.0"
+                   "(z = Σ ψ_i). Real in → filter → real band out.")
+    VERSION = "3.1"
 
     partial_frequencies = staticmethod(partial_frequencies)
 
@@ -361,39 +487,88 @@ class OscillatorModel(CompositeKalmanModel):
         self.frequencies = in_band
         self._wc = 2.0 * np.pi * float(fc)                        # angular carrier ω_c = 2π f_c
 
-        # Acquisition-friendly initial covariance: large vs the measurement noise so the
-        # un-seeded filter locks onto the demodulated amplitude (scale-invariant via R).
+        # Decimated sample rate: 4× dfc gives 2× oversampling above Nyquist
+        self._fs_original = float(fs)
+        self._fs_dec = 4.0 * float(dfc)
+        self._preprocess_N = None
+
         p0_var = float(p0) if p0 is not None else 1e3 * measurement_uncertainty * np.sqrt(2)
         blocks = [AnalyticOscillatorModel(
-                      f"{sensor_id}@{f:.3f}Hz", fs=fs,
-                      w0=2 * np.pi * f, wc=2 * np.pi * fc, Q=q,
+                      f"{sensor_id}@{f:.3f}Hz", fs=self._fs_dec,
+                      f0=f, fc=fc, Q=q,
                       measurement_uncertainty=measurement_uncertainty,
                       process_uncertainty=process_uncertainty,
                       P0=p0_var * np.eye(2))
                   for f, q in zip(in_band, Qs)]
 
         super().__init__(*blocks, obs_mode=KalmanObservableReadout.FUSED, **kwargs)
-        self.fs = float(fs)
-        # Window-level real→complex demodulation (replaces the per-submodel split);
-        # postprocess is identity so the record keeps the [ΣRe, ΣIm] band estimate.
+        self.fs = self._fs_dec
+
         self.preprocess = self._demod_preprocess
-        self.postprocess = lambda zk_hat, **kw: zk_hat
+        self.postprocess = self._reconstruct_postprocess
 
-    # --- real strain → demodulated [Re, Im] band channel ---
+    # --- resample_poly helper (handles float sample rates) ---
+    @staticmethod
+    def _resample(y, fs_old, fs_new, tolerance=1e2):
+        from scipy.signal import resample_poly
+        from math import gcd
+        fs_old_int = int(round(float(fs_old) * tolerance))
+        fs_new_int = int(round(float(fs_new) * tolerance))
+        g = gcd(fs_old_int, fs_new_int)
+        up = fs_new_int // g
+        down = fs_old_int // g
+        return resample_poly(y, up, down)
+
+    # --- real strain → heterodyne rotation → resample_poly downsample ---
     def _demod_preprocess(self, zk, uk=None, **kwargs):
-        x = np.asarray(zk, dtype=float).reshape(np.shape(zk)[0], -1)[:, 0]   # real strain (T,)
-        za = hilbert(x)                                                       # analytic signal
-        t = self.t0 + np.arange(len(x)) / self.fs
-        psi = za * np.exp(-1j * self._wc * t)                            # demodulate to band
-        return np.column_stack([psi.real, psi.imag]), uk                     # (T, 2)
+        """Preprocess: real strain → complex baseband phasor at decimated rate.
 
-    # --- [ΣRe, ΣIm] band estimate (record.zk) → real band reconstruction (T,) ---
-    def reconstruct(self, record):
-        """Real-valued band reconstruction ``Re[ψ·e^{iω_c t}]`` from the filtered record."""
-        z = np.asarray(record.zk, dtype=float).reshape(np.shape(record.zk)[0], -1)
-        t = np.asarray(record.time)
+        Heterodyne rotation ``ψ = 2·x·e^{-jωc·t}`` followed by anti-aliased
+        downsampling to ``fs_dec = 4·dfc``.  Returns ``(N_dec, 2)`` = ``[Re(ψ), Im(ψ)]``.
+        Symmetric counterpart: ``_reconstruct_postprocess``.
+        """
+        x = np.asarray(zk, dtype=float).reshape(np.shape(zk)[0], -1)[:, 0]   # real strain (T,)
+        N = len(x)
+        self._preprocess_N = N
+        t = self.t0 + np.arange(N) / self._fs_original
+        psi = 2.0 * x * np.exp(-1j * self._wc * t)
+        psi_dec = self._resample(psi, self._fs_original, self._fs_dec)
+        return np.column_stack([psi_dec.real, psi_dec.imag]), uk              # (N_dec, 2)
+
+    # --- postprocess: filtered phasor sum → real band signal at original rate ---
+    def _reconstruct_postprocess(self, zk_hat, **kwargs):
+        """Postprocess: FUSED phasor sum (decimated) → real band signal at original rate.
+
+        ``zk_hat`` = ``h(xk)`` from the FUSED composite = ``Σψ̂_i``, shape ``(N_dec, 2)``.
+        Upsamples to ``fs_original`` then remodulates: ``Re[Σψ̂ · e^{jωc·t}]``.
+        Symmetric counterpart: ``_demod_preprocess``.
+        Returns ``(N, 1)`` real.
+        """
+        z = np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
+        psi = z[:, 0] + 1j * z[:, 1]
+        psi_up = self._resample(psi, self._fs_dec, self._fs_original)
+        N = self._preprocess_N
+        if len(psi_up) > N:
+            psi_up = psi_up[:N]
+        elif len(psi_up) < N:
+            psi_up = np.concatenate([psi_up, np.zeros(N - len(psi_up))])
+        t = self.t0 + np.arange(N) / self._fs_original
         arg = self._wc * t
-        return z[:, 0] * np.cos(arg) - z[:, 1] * np.sin(arg)
+        return (psi_up.real * np.cos(arg) - psi_up.imag * np.sin(arg)).reshape(-1, 1)
+
+    # --- identity postprocess (kept for backward compat / standalone use) ---
+    @staticmethod
+    def _identity_postprocess(zk_hat, **kwargs):
+        """Identity postprocess: pass ``h(xk)`` through unchanged as ``[Re, Im]`` phasors."""
+        return np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
+
+    def reconstruct(self, record):
+        """Return the lab-frame band reconstruction stored in ``record.zk``.
+
+        ``record.zk`` is populated by ``_reconstruct_postprocess`` during ``filter()``
+        / ``get_record()``.  It holds ``Re[Σψ̂ · e^{jωc·t}]`` at the original sample rate.
+        """
+        return np.asarray(record.zk, dtype=float).ravel()
 
     def amplitudes(self, record):
         """Per-mode amplitude ``|ψ_i| = √(Re²+Im²)`` for the in-band modes — shape ``(T, n)``."""
@@ -423,17 +598,29 @@ class OscillatorModel(CompositeKalmanModel):
 class OscillatorCompositeModel(CompositeKalmanModel):
     """
     A bank of :class:`OscillatorModel` windows analysing **one** real signal across
-    several distinct centers ``fc_i``. The windows are combined **INDEPENDENT** (each its
-    own demodulated band), and the single input strain is **broadcast** to every window
-    (each demodulates it at its own ``fc``).
+    several distinct centers ``fc_i``.
 
-    ``record.zk`` holds one real band reconstruction per window; their **sum** is the total
-    extracted signal and ``strain − sum`` is the cleaned residual.
+    Internally this is a :class:`CompositeKalmanModel` with ``obs_mode=INDEPENDENT``:
+    each window tracks its own demodulated band and the observations are stacked.
+    The standard :class:`CompositeKalmanModel` preprocess would try to split the input
+    by channel count, which cannot broadcast one real signal to N demodulators.  This
+    class overrides preprocess with :meth:`_broadcast_preprocess` to send the single
+    real strain to every window's own Hilbert demodulator.
+
+    Composition pattern::
+
+        OscillatorCompositeModel(w1, w2, w3)
+          = CompositeKalmanModel(w1, w2, w3, obs_mode=INDEPENDENT)
+          + preprocess: broadcast real strain → each window's own _demod_preprocess
+
+    Each window's postprocess remodulates to a real band, so ``record.zk`` has one
+    real column per window.  ``reconstruct(record)`` sums them to give the total
+    extracted signal; ``strain − reconstruct(record)`` is the cleaned residual.
     """
 
     NAME = "Oscillator Composite (window bank)"
     DESCRIPTION = "INDEPENDENT bank of windowed OscillatorModels over one real signal."
-    VERSION = "1.0"
+    VERSION = "1.1"
 
     def __init__(self, *windows, **kwargs):
         if not windows:
@@ -441,25 +628,72 @@ class OscillatorCompositeModel(CompositeKalmanModel):
         self.windows = list(windows)
         super().__init__(*windows, obs_mode=KalmanObservableReadout.INDEPENDENT, **kwargs)
         self.fs = windows[0].fs
-        self.preprocess = self._broadcast_preprocess
+        self._fs_original = windows[0]._fs_original
+        self.preprocess = self._broadcast_preprocess   # expand: 1 real → N basebands
+        self.postprocess = self._reconstruct_postprocess  # contract: N basebands → 1 real
 
     def _broadcast_preprocess(self, zk, uk=None, **kwargs):
-        """Broadcast the one real strain to every window; each demodulates at its own fc."""
-        x = np.asarray(zk, dtype=float).reshape(np.shape(zk)[0], -1)[:, :1]   # (T,1) real strain
-        outs = [w._demod_preprocess(x)[0] for w in self.windows]              # each (T,2)
-        return np.concatenate(outs, axis=1), uk                              # (T, 2·N_win)
+        """Preprocess: broadcast one real strain to every window, each demodulates + downsamples.
 
-    def reconstruct(self, record):
-        """Sum of every window's real band reconstruction — shape ``(T,)``."""
-        z = np.asarray(record.zk, dtype=float).reshape(np.shape(record.zk)[0], -1)
-        t = np.asarray(record.time)
-        offsets = np.cumsum([0] + [w.m for w in self.windows])
-        total = np.zeros(len(t))
-        for k, w in enumerate(self.windows):
-            zk = z[:, offsets[k]:offsets[k + 1]]                 # window k's [ΣRe, ΣIm]
-            arg = w._wc * t
-            total += zk[:, 0] * np.cos(arg) - zk[:, 1] * np.sin(arg)
-        return total
+        Returns ``(N_dec, 2·N_win)`` — columns ``[Re_ψ1, Im_ψ1, Re_ψ2, Im_ψ2, …]``.
+        Symmetric counterpart: ``_reconstruct_postprocess``.
+        """
+        x = np.asarray(zk, dtype=float).reshape(np.shape(zk)[0], -1)[:, :1]   # (T, 1) real strain
+        outs = [w._demod_preprocess(x)[0] for w in self.windows]               # each (N_dec, 2)
+        return np.concatenate(outs, axis=1), uk                                 # (N_dec, 2·N_win)
+
+    def _reconstruct_postprocess(self, zk_hat, **kwargs):
+        """Postprocess: N window phasors (decimated) → one real signal at original rate.
+
+        ``zk_hat`` = ``h(xk)`` from the INDEPENDENT composite, shape ``(N_dec, 2·N_win)``.
+        Columns ``2i, 2i+1`` are ``[Re(Σψ̂_win_i), Im(Σψ̂_win_i)]`` — already the FUSED
+        phasor sum within window ``i`` (computed by each window's FUSED ``h``).
+        Each window's phasor is upsampled to ``fs_original``, remodulated at ``fc_i``,
+        and summed across windows.  Returns ``(N, 1)`` real.
+        Symmetric counterpart: ``_broadcast_preprocess``.
+        """
+        z = np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
+        w0 = self.windows[0]
+        N = w0._preprocess_N
+        t = w0.t0 + np.arange(N) / self._fs_original
+        total = np.zeros(N)
+        for i, w in enumerate(self.windows):
+            psi = z[:, 2 * i] + 1j * z[:, 2 * i + 1]
+            psi_up = w._resample(psi, w._fs_dec, self._fs_original)
+            if len(psi_up) > N:
+                psi_up = psi_up[:N]
+            elif len(psi_up) < N:
+                psi_up = np.concatenate([psi_up, np.zeros(N - len(psi_up))])
+            total += psi_up.real * np.cos(w._wc * t) - psi_up.imag * np.sin(w._wc * t)
+        return total.reshape(-1, 1)
+
+    def reconstruct(self, record, *, per_window=False):
+        """Return the reconstruction from ``record``.
+
+        Parameters
+        ----------
+        per_window : bool, default False
+            If ``False`` (default): return the combined signal ``(N_original,)``
+            stored in ``record.zk`` — equivalent to ``Σ_i reconstruct_window(rec, i)``.
+            If ``True``: return a list of per-window arrays ``[(N_original,), …]``
+            without re-filtering (delegates to :meth:`window_records`).
+        """
+        if per_window:
+            return [self.reconstruct_window(record, i) for i in range(len(self.windows))]
+        return np.asarray(record.zk, dtype=float).ravel()
+
+    def reconstruct_window(self, record, i):
+        """Return the real-band reconstruction for window ``i`` without re-filtering.
+
+        Slices window ``i``'s state from ``record.xk``, computes the FUSED phasor sum,
+        upsamples, and remodulates.  Does not touch the other windows.
+        """
+        offset = sum(w.n for w in self.windows[:i])
+        n = self.windows[i].n
+        xk_w = np.asarray(record.xk, dtype=float)[:, offset:offset + n]
+        zk_hat_w = np.column_stack([xk_w[:, 0::2].sum(axis=1),
+                                    xk_w[:, 1::2].sum(axis=1)])
+        return self.windows[i]._reconstruct_postprocess(zk_hat_w).ravel()
 
 
 # ======================================================================
@@ -469,13 +703,34 @@ class InharmonicOscillatorModel(OscillatorModel):
     """
     One :class:`OscillatorModel` window whose candidate frequency list is an **inharmonic
     ladder**: ``f_n = n·f0·√(1+B·n²)`` for ``n = 1 … n_harmonics``, generated from
-    ``(f0, B)``. As any window it masks to ``[fc ± dfc]``. To track a whole ladder, place
-    one per partial and compose them in an :class:`OscillatorCompositeModel`.
+    ``(f0, B)``.
+
+    As any :class:`OscillatorModel` window it **masks** to ``[fc ± dfc]``: only partials
+    inside the window are tracked, even though the full ladder is generated.  To track
+    the whole ladder, place one :class:`InharmonicOscillatorModel` per partial and
+    compose them in an :class:`OscillatorCompositeModel` (INDEPENDENT).
+
+    Physical parameters (Young's modulus, wire diameter, length, tension) can be
+    converted to ``(f0, B)`` via :func:`wire_fundamental` and :func:`wire_inharmonicity`.
+
+    Parameters
+    ----------
+    sensor_id : str
+    f0 : float
+        Fundamental frequency [Hz].
+    fc : float
+        Window center frequency [Hz] — which partial to track.
+    dfc : float
+        Window half-width [Hz].
+    n_harmonics : int
+        Number of partials to include in the candidate ladder.
+    B : float
+        Inharmonicity coefficient (``B = 0`` → harmonic, use :class:`HarmonicOscillatorModel`).
     """
 
     NAME = "Inharmonic Oscillator (windowed)"
     DESCRIPTION = "Windowed oscillator over an inharmonic ladder f_n = n·f0·√(1+B·n²)."
-    VERSION = "3.0"
+    VERSION = "3.1"
 
     def __init__(self, sensor_id, f0, fc, dfc, *, n_harmonics=3, B=0.0,
                  Q=1e4, fs=4096.0, measurement_uncertainty=1.0,
@@ -490,12 +745,18 @@ class InharmonicOscillatorModel(OscillatorModel):
 
 
 class HarmonicOscillatorModel(InharmonicOscillatorModel):
-    """Perfectly harmonic ladder — :class:`InharmonicOscillatorModel` with ``B = 0``
-    (partials at exact integer multiples ``f_n = n·f0``)."""
+    """
+    Perfectly harmonic ladder — :class:`InharmonicOscillatorModel` with ``B = 0``
+    (partials at exact integer multiples ``f_n = n·f0``).
+
+    All windowing and masking semantics of :class:`OscillatorModel` apply: passing
+    ``fc`` and ``dfc`` selects which harmonic(s) this window tracks.  Only partials
+    inside ``[fc ± dfc]`` enter the state; the rest are generated but silently dropped.
+    """
 
     NAME = "Harmonic Oscillator (windowed, B=0)"
     DESCRIPTION = "Windowed oscillator over a harmonic ladder f_n = n·f0."
-    VERSION = "3.0"
+    VERSION = "3.1"
 
     def __init__(self, sensor_id, f0, fc, dfc, *, n_harmonics=3, **kwargs):
         if kwargs.pop("B", 0.0):

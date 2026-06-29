@@ -3,7 +3,6 @@ import numpy as np
 from ..framework.constants import KalmanObservable, KalmanState
 from ..framework.models.extended import ExtendedKalmanModel
 
-
 # ===== State / Observable enums =====
 
 class PolarizationState(KalmanState):
@@ -319,3 +318,131 @@ class PolarizationModel(ExtendedKalmanModel):
             return tuple(lines.values())
 
         return animate(fig, _draw, frames=starts, interval=interval)
+
+    # ==================================================================
+    # Poincaré sphere — static and interactive HTML widget.
+    # ==================================================================
+
+    @staticmethod
+    def _poincare_xyz(theta, phi):
+        """(θ, φ) → Cartesian Stokes coords (x=S2, y=S3, z=S1)."""
+        return (np.sin(theta) * np.cos(phi),
+                np.sin(theta) * np.sin(phi),
+                np.cos(theta))
+
+    @staticmethod
+    def _draw_poincare_ax(ax3d, xh, yh, zh, t_idx, azim,
+                          xt=None, yt=None, zt=None, t_val=None):
+        """Render one Poincaré sphere frame (up to t_idx) into ax3d."""
+        u = np.linspace(0, 2 * np.pi, 32)
+        v = np.linspace(0, np.pi, 16)
+        ax3d.plot_wireframe(np.outer(np.cos(u), np.sin(v)),
+                            np.outer(np.sin(u), np.sin(v)),
+                            np.outer(np.ones_like(u), np.cos(v)),
+                            color='lightgray', alpha=0.20, lw=0.4)
+        phi_c = np.linspace(0, 2 * np.pi, 200)
+        _z = np.zeros_like(phi_c)
+        for c1, c2, cz in [(np.cos(phi_c), np.sin(phi_c), _z),
+                            (_z, np.cos(phi_c), np.sin(phi_c)),
+                            (np.cos(phi_c), _z, np.sin(phi_c))]:
+            ax3d.plot(c1, c2, cz, 'k--', lw=0.5, alpha=0.28)
+        for xyz, lbl in [((0, 0, 1.22), 'S1'), ((1.22, 0, 0), 'S2'), ((0, 1.22, 0), 'S3')]:
+            ax3d.text(*xyz, lbl, fontsize=8, ha='center', color='gray')
+
+        k = t_idx + 1
+        if xt is not None:
+            ax3d.plot(xt[:k], yt[:k], zt[:k], color='black', lw=1.3, alpha=0.85, label='Truth')
+            ax3d.scatter(xt[t_idx], yt[t_idx], zt[t_idx], color='black', s=35, zorder=5)
+        ax3d.plot(xh[:k], yh[:k], zh[:k], color='crimson', lw=1.6, alpha=0.80, label='EKF')
+        ax3d.scatter(xh[t_idx], yh[t_idx], zh[t_idx], color='crimson', s=40, zorder=5)
+
+        ax3d.set_xlim(-1.1, 1.1); ax3d.set_ylim(-1.1, 1.1); ax3d.set_zlim(-1.1, 1.1)
+        ax3d.set_box_aspect([1, 1, 1])
+        ax3d.set_xlabel('S2', fontsize=7); ax3d.set_ylabel('S3', fontsize=7)
+        ax3d.set_zlabel('S1', fontsize=7)
+        ax3d.tick_params(labelsize=6)
+        ttl = 'Poincaré sphere'
+        if t_val is not None:
+            ttl += f'  (t = {t_val:.2f} s)'
+        ax3d.set_title(ttl, fontsize=9)
+        if xt is not None:
+            ax3d.legend(fontsize=7, loc='upper left')
+        ax3d.view_init(elev=20, azim=int(azim))
+
+    def _plot_poincare_static(self, record, *, truth_theta=None, truth_phi=None,
+                               figsize=(7, 7), azim=45, **kwargs):
+        """Static Poincaré sphere showing the full trajectory."""
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+
+        p = self.physical_parameters(record)
+        xh, yh, zh = self._poincare_xyz(p["theta"], p["phi"])
+        xt = yt = zt = None
+        if truth_theta is not None and truth_phi is not None:
+            xt, yt, zt = self._poincare_xyz(np.asarray(truth_theta), np.asarray(truth_phi))
+        N = len(p["theta"])
+
+        fig = plt.figure(figsize=figsize)
+        ax3d = fig.add_subplot(111, projection='3d')
+        self._draw_poincare_ax(ax3d, xh, yh, zh, N - 1, azim, xt, yt, zt)
+        ax3d.set_title(f'{self.name()} — Poincaré sphere (full trajectory)', fontsize=10)
+        return fig
+
+    def _plot_poincare_interactive(self, record, *, truth_theta=None, truth_phi=None,
+                                    figsize=(5, 5), azim=45, frames=80,
+                                    interval=80, **kwargs):
+        """Animated Poincaré sphere — same pattern as every other _plot_interactive.
+
+        Uses ``helpers.animate()`` (FuncAnimation):
+          - Jupyter: returns ``IPython.display.HTML`` jshtml scrubber player.
+          - GUI Python: returns raw ``FuncAnimation`` for ``plt.show()``.
+
+        Pass ``azim`` to set the viewing angle (default 45°).
+        """
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+        from ..helpers import animate
+
+        p = self.physical_parameters(record)
+        t_arr = np.asarray(record.time)
+        N = len(t_arr)
+        xh, yh, zh = self._poincare_xyz(p["theta"], p["phi"])
+        xt = yt = zt = None
+        if truth_theta is not None and truth_phi is not None:
+            xt, yt, zt = self._poincare_xyz(np.asarray(truth_theta), np.asarray(truth_phi))
+
+        frame_idx = np.linspace(0, N - 1, min(frames, N), dtype=int)
+
+        fig = plt.figure(figsize=figsize)
+        ax3d = fig.add_subplot(111, projection='3d')
+
+        def _draw(i):
+            ax3d.cla()
+            self._draw_poincare_ax(ax3d, xh, yh, zh, frame_idx[i], azim,
+                                   xt, yt, zt, float(t_arr[frame_idx[i]]))
+
+        _draw(len(frame_idx) - 1)
+        return animate(fig, _draw, frames=range(len(frame_idx)), interval=interval)
+
+    def plot_poincare(self, record, *, truth_theta=None, truth_phi=None,
+                      interactive=False, **kwargs):
+        """Poincaré sphere visualization of the tracked polarization trajectory.
+
+        Parameters
+        ----------
+        record : KalmanRecord
+            Filtered record from ``model.filter(...)``.
+        truth_theta, truth_phi : array_like, optional
+            Ground-truth polarization angles (same length as the record) to overlay.
+        interactive : bool
+            If True, returns a live matplotlib figure (requires ``%matplotlib widget``
+            / ipympl): drag-rotate the globe with the mouse, scrub time with the
+            built-in slider.  No extra dependencies beyond ``ipympl``.
+        **kwargs
+            ``figsize`` for the interactive version; ``azim``, ``figsize`` for static.
+        """
+        if interactive:
+            return self._plot_poincare_interactive(
+                record, truth_theta=truth_theta, truth_phi=truth_phi, **kwargs)
+        return self._plot_poincare_static(
+            record, truth_theta=truth_theta, truth_phi=truth_phi, **kwargs)

@@ -50,7 +50,7 @@ class _Candidate:
     xk: list = field(default_factory=list)        # per assigned-hit: posterior mean
     Pk: list = field(default_factory=list)        # per assigned-hit: posterior cov
     zk: list = field(default_factory=list)        # per assigned-hit: the hit (m,)
-    priors: list = field(default_factory=list)    # per assigned-hit: (x_pred, P_pred)
+    priors: list = field(default_factory=list)    # per assigned-hit: predicted (x, P)
     Fc: list = field(default_factory=list)        # per assigned-hit: transition from prev posterior
     Faccum: np.ndarray = None                     # transition product since the last assigned hit
 
@@ -118,27 +118,27 @@ class CombinatorialKalmanFilter(KalmanFilter):
                 r = float(radii[l]); layer = hits[l]
                 grown = []
                 for c in cands:
-                    x_pred, P_pred, F = self.engine._predict(self.model, c.x, c.P, t=r)
-                    if not np.all(np.isfinite(x_pred)):
+                    x, P, F = self.engine._predict(self.model, c.x, c.P, t=r)
+                    if not np.all(np.isfinite(x)):
                         continue                                  # track left the detector
                     Faccum = F @ c.Faccum
                     for j in range(len(layer)):
                         hit = layer[j].reshape(self.m, 1)
-                        chi2, x_post, P_post = self.engine.gate(self.model, x_pred, P_pred, hit, t=r)
+                        chi2, xk, Pk = self.engine.gate(self.model, x, P, hit, t=r)
                         if chi2 < self.chi2_cut:
                             nc = c.branch()
-                            nc.x, nc.P = x_post, P_post
+                            nc.x, nc.P = xk, Pk
                             nc.chi2 += chi2; nc.score += chi2
                             nc.hit_ids.append((l, j))
                             nc.radii.append(r)
-                            nc.xk.append(x_post); nc.Pk.append(P_post)
+                            nc.xk.append(xk); nc.Pk.append(Pk)
                             nc.zk.append(layer[j])
-                            nc.priors.append((x_pred, P_pred)); nc.Fc.append(Faccum)
+                            nc.priors.append((x, P)); nc.Fc.append(Faccum)
                             nc.Faccum = I
                             grown.append(nc)
                     if c.holes < self.max_holes:                  # no-hit (hole) branch
                         nc = c.branch()
-                        nc.x, nc.P = x_pred, P_pred
+                        nc.x, nc.P = x, P
                         nc.holes += 1; nc.score += self.hole_penalty
                         nc.Faccum = Faccum
                         grown.append(nc)

@@ -22,9 +22,8 @@ class ExtendedKalmanEngine(KalmanEngine):
 
     def _propagate(self, model, x, u, t):
         F = model.F(x=x, u=u, t=t)
-        xp = model.f(x, u=u, t=t)
-        return xp, F
+        return model.f(x, u=u, t=t), F
 
     def _measure(self, model, x, t):
         H = model.H(x=x, t=t)
-        return H, model.h(x, t=t)
+        return model.h(x, t=t), H

@@ -185,12 +185,14 @@ class TestCompositeModel(unittest.TestCase):
 # ===========================================================================
 class TestSampler(unittest.TestCase):
 
-    def test_covariance_path_is_deterministic_with_pk(self):
-        """covariance=True -> deterministic mean truth + analytic prior band Pk."""
+    def test_sample_tracks_analytic_pk(self):
+        """sample() always routes through engine._predict, so Pk carries the
+        analytic prior covariance band; with process_noise=False the mean is
+        also deterministic (no random draw injected)."""
         m = _linear_model()
         m.initial_state([0.0, 1.0])
-        a = m.sample(1.0, covariance=True)
-        b = m.sample(1.0, covariance=True)
+        a = m.sample(1.0, process_noise=False)
+        b = m.sample(1.0, process_noise=False)
         np.testing.assert_allclose(a.xk, b.xk)        # deterministic mean
         self.assertGreater(float(np.sum(np.abs(a.Pk))), 0.0)   # analytic Pk present
 

@@ -70,30 +70,17 @@ class KalmanSampler:
         Generate synthetic measurements for a given duration.
         Returns a KalmanRecord with the sampled truth (xk) and measurements (zk).
 
-        ``covariance`` (default ``False``) selects how the truth is propagated:
-
-          - ``False`` (default) — **fast truth path**: propagate the mean with
-            ``model.f`` directly (one dynamics call/step) and inject process noise
-            additively, so the returned ``xk`` is a genuine stochastic realisation of
-            the system (it actually drifts under ``Q``). The Jacobian and covariance
-            recursion are skipped, so ``Pk`` is returned as zeros (not computed). This
-            is what you want for filtering/statistics — the truth is a real sample path.
-          - ``True``  — route each step through ``engine._predict`` and record the
-            predicted covariance ``Pk`` (``F P Fᵀ + Q``); the truth *mean* is the
-            deterministic (noise-free) propagation, with ``Q`` reflected solely in
-            ``Pk``. On an EKF/UKF engine this also evaluates a per-step numerical
-            Jacobian ``model.F``, costing ~``n+2`` dynamics calls per sample. Use it
-            when you specifically need the analytic prior covariance band.
-
-        Note: process noise enters the truth *mean* only on the (default)
-        ``covariance=False`` path; ``covariance=True`` reflects ``Q`` solely in ``Pk``.
+        Each step routes through ``engine._predict`` (so ``Pk`` carries the
+        analytic prior covariance band, ``F P Fᵀ + Q``) and then injects an
+        explicit process-noise draw into the mean, so the returned ``xk`` is a
+        genuine stochastic realisation of the system (it actually drifts under
+        ``Q``) while ``Pk`` still reflects the model's analytic uncertainty growth.
         '''
 
         inprocess = kwargs.pop("inprocess", True)
         postprocess = kwargs.pop("postprocess", True)
         indexing = kwargs.pop("indexing", "xy")
 
-        covariance = kwargs.pop("covariance", False)
         measurement_noise = kwargs.pop("measurement_noise", True)
         process_noise = kwargs.pop("process_noise", True)
 
@@ -117,15 +104,11 @@ class KalmanSampler:
         for i in range(n_samples):
             xk[i] = x
             t_i = t_start + i / self.fs                 # propagate time (for time-varying f/h)
-            if covariance:
-                Pk[i] = P
-                x, P, _ = self.engine._predict(self.model, x, P, u=uk[i], w=wk[i], t=t_i, **kwargs)
-            else:
-                # Fast truth path: advance the mean with the model's own dynamics
-                # (one f-eval) and add process noise additively — no per-step Jacobian
-                # or covariance recursion. Pk is left at its pre-allocated zeros.
-                u_for = np.asarray(uk[i]).reshape(-1, 1) if self.model.l > 0 else None
-                x = self.model.f(x, u=u_for, t=t_i) + wk[i]
+            u_i = np.asarray(uk[i]).reshape(-1, 1) if self.model.l > 0 else None
+            
+            Pk[i] = P
+            x, P, _ = self.engine._predict(self.model, x, P, u=u_i, t=t_i, **kwargs)
+            x = x + wk[i]
 
         # advance the cursor so the next measurement() resumes at t+1 with the latest state
         self._t = t_start + n_samples / self.fs
@@ -133,6 +116,7 @@ class KalmanSampler:
 
         if inprocess:
             xk = self.model.inprocess(xk, **kwargs)
+       
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk = KalmanRecord._normalize_out(xk)
 

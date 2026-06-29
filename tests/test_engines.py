@@ -101,9 +101,9 @@ class TestLinearKalmanEngine(unittest.TestCase):
         np.testing.assert_array_equal(P_post, Pp)
 
     def test_measure_returns_H_and_pred(self):
-        H, h_pred = self.e._measure(self.m, X0, t=0.0)
+        zk, H = self.e._measure(self.m, X0, t=0.0)
         np.testing.assert_array_equal(H, H_POS)
-        np.testing.assert_allclose(h_pred, H_POS @ X0, atol=1e-12)
+        np.testing.assert_allclose(zk, H_POS @ X0, atol=1e-12)
 
 
 # ── ExtendedKalmanEngine ──────────────────────────────────────────────────────

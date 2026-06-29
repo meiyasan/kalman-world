@@ -128,10 +128,10 @@ class UnscentedKalmanEngine(KalmanEngine):
     # ==========================================================
     # Prediction and update (stateless: (model, x, P, ...))
     # ==========================================================
-    def _predict(self, model, x, P, u=None, w=None, t=None, **kw):
+    def _predict(self, model, x, P, u=None, t=None, **kw):
         if u is not None:
             u = np.asarray(u).reshape(-1, 1)
-        u_for = u if model.l > 0 else None
+        u = u if model.l > 0 else None
 
         n = model.n
         x_vec = self._to_vec(x)
@@ -144,17 +144,17 @@ class UnscentedKalmanEngine(KalmanEngine):
             mean_a = np.zeros(n_a); mean_a[:n] = x_vec
             P_a = np.zeros((n_a, n_a)); P_a[:n, :n] = P; P_a[n:, n:] = Qw
             sig_a = self._sigmas(mean_a, P_a, gamma)
-            Y = np.array([self._f_call(model, sp[:n], u=u_for, t=t, w=sp[n:]) for sp in sig_a])
+            Y = np.array([self._f_call(model, sp[:n], u=u, t=t, w=sp[n:]) for sp in sig_a])
             x_pred = np.einsum("i,ij->j", Wm, Y)
             P_pred = sum(Wc[i] * np.outer(Y[i] - x_pred, Y[i] - x_pred) for i in range(Y.shape[0]))
             P_pred = self._sym_psd(P_pred)
         else:
             gamma, Wm, Wc = self._ut_weights(n)
             sig = self._sigmas(x_vec, P, gamma)
-            Y = np.array([self._f_call(model, sp, u=u_for, t=t) for sp in sig])
+            Y = np.array([self._f_call(model, sp, u=u, t=t) for sp in sig])
             x_pred = np.einsum("i,ij->j", Wm, Y)
             P_pred = sum(Wc[i] * np.outer(Y[i] - x_pred, Y[i] - x_pred) for i in range(Y.shape[0]))
-            L = self._L(model, x_vec.reshape(-1, 1), u_for, t)
+            L = self._L(model, x_vec.reshape(-1, 1), u, t)
             P_pred = self._sym_psd(P_pred + self._sym_psd(L @ self._Q(model, t) @ L.T))
 
         return x_pred.reshape(-1, 1), P_pred, np.eye(n)

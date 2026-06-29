@@ -448,7 +448,7 @@ class BallisticModel(ExtendedKalmanModel):
         """
         Measurement model: observes position only.
         Extracts [px, py, pz] from axis-major state [px,vx,ax, py,vy,ay, pz,vz,az].
-        z = [px, py, pz] + v  (additive noise)
+        z = [px, py, pz] + v  (additive noise, by default)
         """
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
         # positions sit at indices 0, 3, 6 in the axis-major layout

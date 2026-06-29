@@ -19,12 +19,12 @@ class LinearKalmanEngine(KalmanEngine):
 
     def _propagate(self, model, x, u, t):
         F = model.F(t=t)
-        xp = F @ x
+        x = F @ x
         if u is not None:
             B = model.B(t=t)
-            xp = xp + (u if B is None else B @ u)
-        return xp, F
+            x = x + (u if B is None else B @ u)
+        return x, F
 
     def _measure(self, model, x, t):
         H = model.H(t=t)
-        return H, H @ x
+        return H @ x, H
