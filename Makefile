@@ -195,7 +195,7 @@ examples: motd
 
 ## Build the optional C acceleration extension for the Kalman engines
 accel: motd
-	@$(PYTHON) modules/framework/native/cffi.py
+	@$(PYTHON) -m modules.framework.native.cffi
 
 ## Run the Python unit-test suite with a per-module coverage summary
 tests: motd

@@ -1,9 +1,10 @@
 """cffi out-of-line API-mode builder for the kalman C acceleration kernels.
 
 Compiles ``kalman.c`` (declared in ``kalman.h``) into a small CPython extension,
-``_kalman_native``, that lives next to this file. Run directly to (re)build::
+``_kalman_native``, that lives next to this file. Run as a module to (re)build
+(running it as a bare script shadows the real ``cffi`` package with this file)::
 
-    python modules/framework/native/cffi.py
+    python -m modules.framework.native.cffi
 
 or let the build system run it via the ``cffi_modules`` hook in ``pyproject.toml``.
 The compiled extension is optional: ``native/__init__.py`` falls back to pure

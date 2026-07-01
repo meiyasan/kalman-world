@@ -14,8 +14,8 @@ sys.path.insert(0, ".")
 from modules.framework.native import HAS_C_ACCEL
 
 if not HAS_C_ACCEL:
-    print("C extension not built — build with  make accel  first.")
-    sys.exit(1)
+    print("C extension not built — build with  make accel  first. Skipping benchmark.")
+    sys.exit(0)
 
 
 def _time(fn, n_reps=5):

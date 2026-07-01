@@ -161,6 +161,7 @@ tests:
     - $CI_RUNNER_TAGS
   script:
     - conda activate $ENVNAME || true
+    - make accel
     - make tests
 
 # ###
