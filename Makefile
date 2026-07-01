@@ -115,8 +115,7 @@ env: motd
 
 .envcheck:
 	@. $(CONDA_ROOT)/etc/profile.d/conda.sh && \
-		(command -v mamba >/dev/null 2>&1 || conda install --name base -c conda-forge -y mamba) && \
-		(command -v conda-merge >/dev/null 2>&1 || conda install --name base -c conda-forge -y conda-merge) && $(MAKE) conda
+		(command -v conda-merge >/dev/null 2>&1 || python -m pip install --quiet conda-merge) && $(MAKE) conda
 
 .virtualenv.yml: environment*.yml requirements.txt
 
