@@ -95,7 +95,14 @@ class KalmanDiagnostics:
 
         Consistency check that needs NO ground truth — usable on real data."""
         nu, S = self.innovations()
-        return np.array([float(nu[k] @ np.linalg.solve(S[k], nu[k])) for k in range(len(nu))])
+        N, m = nu.shape
+        from .native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from .native import lib, as_contiguous, dptr
+            nis = np.empty(N, dtype=np.float64)
+            lib.diag_nis_batch(N, m, dptr(as_contiguous(nu)), dptr(as_contiguous(S)), dptr(nis))
+            return nis
+        return np.array([float(nu[k] @ np.linalg.solve(S[k], nu[k])) for k in range(N)])
 
     def nees(self, truth):
         """Normalized Estimation Error Squared (needs ground truth, e.g. ``sample.xk``):
@@ -107,6 +114,12 @@ class KalmanDiagnostics:
         truth = np.asarray(truth)
         truth = truth.reshape(truth.shape[0], -1)
         e = truth[:N] - xpo.reshape(N, n)
+        from .native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from .native import lib, as_contiguous, dptr
+            nees = np.empty(N, dtype=np.float64)
+            lib.diag_nees_batch(N, n, dptr(as_contiguous(e)), dptr(as_contiguous(Ppo)), dptr(nees))
+            return nees
         return np.array([float(e[k] @ np.linalg.pinv(Ppo[k]) @ e[k]) for k in range(N)])
 
     # ------------------------------------------------------------------

@@ -125,6 +125,40 @@ class UnscentedKalmanEngine(KalmanEngine):
         except TypeError:
             return self._to_vec(model.h(x, t=t))
 
+    # ---- weighted sigma-point covariance accumulation (C-accelerated when available) ----
+    @staticmethod
+    def _weighted_outer_sum(Wc, Y, mean):
+        """``sum(Wc[i] * outer(Y[i]-mean, Y[i]-mean))`` over sigma points."""
+        n_sigma, n = Y.shape
+        from ..native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from ..native import lib, as_contiguous, dptr
+            P_out = np.empty((n, n), dtype=np.float64)
+            lib.ukf_weighted_outer_sum(
+                n_sigma, n,
+                dptr(as_contiguous(Wc)), dptr(as_contiguous(Y)), dptr(as_contiguous(mean)),
+                dptr(P_out),
+            )
+            return P_out
+        return sum(Wc[i] * np.outer(Y[i] - mean, Y[i] - mean) for i in range(n_sigma))
+
+    @staticmethod
+    def _weighted_cross_sum(Wc, A, B):
+        """``sum(Wc[i] * outer(A[i], B[i]))`` for already-centered deviations A, B."""
+        n_sigma, na = A.shape
+        nb = B.shape[1]
+        from ..native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from ..native import lib, as_contiguous, dptr
+            C_out = np.empty((na, nb), dtype=np.float64)
+            lib.ukf_weighted_cross_sum(
+                n_sigma, na, nb,
+                dptr(as_contiguous(Wc)), dptr(as_contiguous(A)), dptr(as_contiguous(B)),
+                dptr(C_out),
+            )
+            return C_out
+        return sum(Wc[i] * np.outer(A[i], B[i]) for i in range(n_sigma))
+
     # ==========================================================
     # Prediction and update (stateless: (model, x, P, ...))
     # ==========================================================
@@ -146,14 +180,14 @@ class UnscentedKalmanEngine(KalmanEngine):
             sig_a = self._sigmas(mean_a, P_a, gamma)
             Y = np.array([self._f_call(model, sp[:n], u=u, t=t, w=sp[n:]) for sp in sig_a])
             x_pred = np.einsum("i,ij->j", Wm, Y)
-            P_pred = sum(Wc[i] * np.outer(Y[i] - x_pred, Y[i] - x_pred) for i in range(Y.shape[0]))
+            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)
             P_pred = self._sym_psd(P_pred)
         else:
             gamma, Wm, Wc = self._ut_weights(n)
             sig = self._sigmas(x_vec, P, gamma)
             Y = np.array([self._f_call(model, sp, u=u, t=t) for sp in sig])
             x_pred = np.einsum("i,ij->j", Wm, Y)
-            P_pred = sum(Wc[i] * np.outer(Y[i] - x_pred, Y[i] - x_pred) for i in range(Y.shape[0]))
+            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)
             L = self._L(model, x_vec.reshape(-1, 1), u, t)
             P_pred = self._sym_psd(P_pred + self._sym_psd(L @ self._Q(model, t) @ L.T))
 
@@ -161,7 +195,6 @@ class UnscentedKalmanEngine(KalmanEngine):
 
     def _update(self, model, x, P, z, t=None, **kw):
         n = model.n
-        m = model.m
         x_pred = self._to_vec(x)
         P_pred = np.asarray(P, dtype=np.float64)
         z = self._to_vec(z)
@@ -178,24 +211,16 @@ class UnscentedKalmanEngine(KalmanEngine):
             sig_a = self._sigmas(mean_a, P_a, gamma)
             Z = np.array([self._h_call(model, sp[:n], t=t, v=sp[n:]) for sp in sig_a])
             z_pred = np.einsum("i,ij->j", Wm, Z)
-            S = np.zeros((m, m)); Pxz = np.zeros((n, m))
-            for i in range(Z.shape[0]):
-                dz = Z[i] - z_pred
-                dx = sig_a[i][:n] - x_pred
-                S += Wc[i] * np.outer(dz, dz)
-                Pxz += Wc[i] * np.outer(dx, dz)
+            S = self._weighted_outer_sum(Wc, Z, z_pred)
+            Pxz = self._weighted_cross_sum(Wc, sig_a[:, :n] - x_pred, Z - z_pred)
             S = self._sym_psd(S)
         else:
             gamma, Wm, Wc = self._ut_weights(n)
             sig = self._sigmas(x_pred, P_pred, gamma)
             Z = np.array([self._h_call(model, sp, t=t) for sp in sig])
             z_pred = np.einsum("i,ij->j", Wm, Z)
-            S = np.zeros((m, m)); Pxz = np.zeros((n, m))
-            for i in range(Z.shape[0]):
-                dz = Z[i] - z_pred
-                dx = sig[i] - x_pred
-                S += Wc[i] * np.outer(dz, dz)
-                Pxz += Wc[i] * np.outer(dx, dz)
+            S = self._weighted_outer_sum(Wc, Z, z_pred)
+            Pxz = self._weighted_cross_sum(Wc, sig - x_pred, Z - z_pred)
             M = self._M(model, x_pred.reshape(-1, 1), t)
             S = self._sym_psd(S + self._sym_psd(M @ self._R(model, t) @ M.T))
 

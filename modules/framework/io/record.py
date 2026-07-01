@@ -87,8 +87,9 @@ class KalmanRecord:
         if not isinstance(self.time, (np.ndarray, list, tuple)):
             raise ValueError(f"'time' must be a numpy array or list, got {type(self.time)}")
 
-        assert self.model is None or isinstance(self.model, KalmanModelABC), \
-            f"'model' must be a KalmanModel instance, got {type(self.model)}"
+        assert self.model is None or any(
+            c.__name__ == "KalmanModelABC" for c in type(self.model).__mro__
+        ), f"'model' must be a KalmanModel instance, got {type(self.model)}"
         assert self.flavor is None or isinstance(self.flavor, KalmanStateFlavor), \
             f"'flavor' must be of type KalmanStateFlavor, got {type(self.flavor)}"
 
@@ -1807,16 +1808,25 @@ class KalmanRecord:
             raise ValueError("Cannot plot measurement error: no predicted measurement available (pass 'sample' or 'measurement').")
 
         ymin, ymax = np.inf, -np.inf
-        for a in axes:
+        # Pop the user's colour once (not per axis): a per-axis base index keeps
+        # X/Y/Z visually distinct and pairs each histogram with its own Gaussian
+        # fit in the same hue (the faded bars + a saturated fit line).
+        base_color = kwargs.pop("color", None)
+        for i, a in enumerate(axes):
             if a >= self.zk.shape[1] or a >= zk0.shape[1]:
                 continue
             err = self.zk[:, a] - zk0[:, a]
             ymin = min(ymin, np.nanmin(err))
             ymax = max(ymax, np.nanmax(err))
 
+            # Per-axis colour: honour an explicit string colour, otherwise step
+            # through the palette so each axis gets its own hue.
+            axis_color = base_color if isinstance(base_color, str) else \
+                (base_color if isinstance(base_color, int) else 0) + i
+
             if kind == "hist":
                 # draw histogram and capture counts/edges (counts needed for scaling)
-                counts, edges, _ = c.hist(err, bins=bins, **self._plot_kwargs(flavor=flavor, axis=a))
+                counts, edges, _ = c.hist(err, bins=bins, **self._plot_kwargs(flavor=flavor, axis=a, color=axis_color))
 
                 # fit Gaussian (MLE via mean/std with ddof=0)
                 mu = float(np.mean(err))
@@ -1831,14 +1841,15 @@ class KalmanRecord:
                 bw = float(np.mean(np.diff(edges)))  # assumes ~uniform bins
                 y = n * pdf * bw
 
-                fit_kw = self._plot_kwargs(color=kwargs.pop("color", "red"), axis=a)
+                # solid, saturated line in the same hue as this axis' bars
+                fit_kw = self._plot_kwargs(color=axis_color, axis=a, linewidth=2)
 
                 if legend:
                     fit_kw["label"] = f"Gaussian Fit\n(μ={mu:.3g}, σ={sigma:.3g})"
                 c.plot(x, y, **fit_kw)
 
             else:
-                c.plot(self.time, err, **self._plot_kwargs(flavor=flavor, axis=a, color=kwargs.pop("color", None)))
+                c.plot(self.time, err, **self._plot_kwargs(flavor=flavor, axis=a, color=axis_color))
         
         if kind == "hist":
             c.set_xlabel(kwargs.pop("xlabel", "Measurement Error"))

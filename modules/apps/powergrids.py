@@ -4,6 +4,117 @@ from ..framework.constants import KalmanObservable
 from .oscillators import partial_frequencies, PhasorOscillatorModel
 
 
+def plot_phasor_diagram(f0, phasors, *, colors=None, frames=60, interval=60, figsize=(14, 4)):
+    """Animated phasor diagram for power-grid odd harmonics.
+
+    Three synchronized panels: lab-frame phasors rotating at each harmonic's own
+    angular frequency, the individual harmonic waveforms, and their composite vs the
+    ideal (fundamental-only) waveform — tied together by a moving time cursor.
+
+    Parameters
+    ----------
+    f0 : float
+        Fundamental frequency [Hz].
+    phasors : list of (V, phi)
+        Amplitude [V] and phase [rad] for H1, H3, H5, … (odd harmonics, in order) —
+        half-wave-symmetric grid harmonics.  ``phasors[0]`` is the fundamental H1.
+    colors : list of str, optional
+        Per-harmonic colors.  Default: matplotlib tab10 cycle.
+    frames, interval : int
+        Animation frame count and interval [ms] over one fundamental period.
+
+    Returns
+    -------
+    Jupyter HTML player (or raw ``FuncAnimation`` outside Jupyter) — see ``helpers.animate``.
+    """
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyArrowPatch
+    from ..helpers import animate
+
+    n = len(phasors)
+    if colors is None:
+        cmap = plt.cm.tab10
+        colors = [cmap(k) for k in range(n)]
+    labels_short = [f"H{2 * k + 1}" for k in range(n)]
+    labels = [f"{lbl} ({'f₀' if k == 0 else f'{2 * k + 1}f₀'})" for k, lbl in enumerate(labels_short)]
+    omegas = [2 * np.pi * (2 * k + 1) * f0 for k in range(n)]
+
+    T = 1.0 / f0
+    t_cyc = np.linspace(0, T, 500)
+    harmonic_waves = [V * np.cos(omegas[k] * t_cyc + phi) for k, (V, phi) in enumerate(phasors)]
+    v_clean = sum(harmonic_waves)
+    v_ideal = phasors[0][0] * np.cos(omegas[0] * t_cyc)
+
+    frame_t = np.linspace(0, T, frames, endpoint=False)
+
+    fig, axes = plt.subplots(1, 3, figsize=figsize)
+    fig.suptitle("Power grid phasors — amplitude, phase, and time-domain reconstruction", fontweight="bold")
+
+    # Phasor diagram — arrows rotate at each harmonic's own angular frequency. Axis is
+    # square and sized to the largest amplitude in BOTH dimensions: a rotating phasor
+    # swings through the full +/-amplitude range on y too, not just on x.
+    ax0 = axes[0]
+    ax0.set_aspect("equal")
+    Vmax = max(V for V, _ in phasors)
+    ax0.set_xlim(-Vmax * 1.15, Vmax * 1.15); ax0.set_ylim(-Vmax * 1.15, Vmax * 1.15)
+    ax0.axhline(0, color="gray", lw=0.5); ax0.axvline(0, color="gray", lw=0.5)
+    ax0.set_xlabel("Re [V]"); ax0.set_ylabel("Im [V]")
+    ax0.set_title("Phasor diagram (rotating, lab frame)")
+    arrows = []
+    for (V, phi), col in zip(phasors, colors):
+        arrow = FancyArrowPatch((0, 0), (V * np.cos(phi), V * np.sin(phi)),
+                                color=col, arrowstyle="-|>", mutation_scale=14, lw=2.2)
+        ax0.add_patch(arrow)
+        arrows.append(arrow)
+    # Fixed-position readout instead of labels at each arrow tip: harmonic amplitudes
+    # vary by orders of magnitude, so tip-anchored labels collide near the origin.
+    info_text = ax0.text(0.02, 0.98, "", transform=ax0.transAxes, va="top", ha="left",
+                         fontsize=7.5, family="monospace",
+                         bbox=dict(facecolor="white", alpha=0.85, edgecolor="gray", pad=3))
+
+    # Individual harmonic waveforms — static curves + moving cursor dots
+    ax1 = axes[1]
+    for wave, lbl, col in zip(harmonic_waves, labels, colors):
+        ax1.plot(t_cyc * 1e3, wave, color=col, lw=1.5, label=lbl)
+    ax1.axhline(0, color="gray", lw=0.5)
+    ax1.set_xlabel("t [ms]"); ax1.set_ylabel("voltage [V]")
+    ax1.set_title("Individual harmonics")
+    ax1.legend(fontsize=8)
+    cursor1 = ax1.axvline(0, color="black", lw=0.8, ls=":")
+    dots1 = [ax1.plot([], [], "o", color=col, ms=5)[0] for col in colors]
+
+    # Composite waveform — static curves + moving cursor dot
+    ax2 = axes[2]
+    ax2.plot(t_cyc * 1e3, v_clean, color="purple", lw=2, label=" + ".join(labels_short))
+    ax2.plot(t_cyc * 1e3, v_ideal, "--", color="steelblue", lw=1, label="H1 only (ideal)")
+    ax2.axhline(0, color="gray", lw=0.5)
+    ax2.set_xlabel("t [ms]"); ax2.set_ylabel("voltage [V]")
+    ax2.set_title("Composite: distorted vs ideal")
+    ax2.legend(fontsize=8)
+    cursor2 = ax2.axvline(0, color="black", lw=0.8, ls=":")
+    dot2 = ax2.plot([], [], "o", color="purple", ms=5)[0]
+
+    def _draw(i):
+        t = frame_t[i]
+        tm = t * 1e3
+        lines = []
+        for k, ((V, phi), arrow, col) in enumerate(zip(phasors, arrows, colors)):
+            ang = omegas[k] * t + phi
+            x, y = V * np.cos(ang), V * np.sin(ang)
+            arrow.set_positions((0, 0), (x, y))
+            lines.append(f"{labels[k]}: V={V:>5.1f}V  φ={np.degrees(ang) % 360:>5.1f}°")
+            dots1[k].set_data([tm], [x])
+        info_text.set_text("\n".join(lines))
+        cursor1.set_xdata([tm, tm])
+        cursor2.set_xdata([tm, tm])
+        v_now = sum(V * np.cos(omegas[k] * t + phi) for k, (V, phi) in enumerate(phasors))
+        dot2.set_data([tm], [v_now])
+        return tuple(arrows) + (info_text,) + tuple(dots1) + (cursor1, cursor2, dot2)
+
+    plt.tight_layout()
+    return animate(fig, _draw, frames=frames, interval=interval)
+
+
 class PowerGridObservable(KalmanObservable):
     VOLTAGE = "V"   # measured instantaneous voltage (single scalar channel)
 
@@ -124,6 +235,12 @@ class PowerGridStateModel(PhasorOscillatorModel):
         """Reconstruct the time-domain voltage from the phasor state:
         ``v(t) = Σ_k Re_k·cos(ω_k t) − Im_k·sin(ω_k t)``."""
         return self.reconstruct(record, t)
+
+    def subtract_voltage(self, measured, record, t=None) -> np.ndarray:
+        """Return ``measured − reconstruct_voltage(record)``: the harmonic-suppressed
+        residual — e.g. mains hum/THD removed from a measured voltage, analogous to
+        :meth:`InterferometerModel.subtract` for spectral-line noise."""
+        return np.asarray(measured, dtype=float).ravel() - self.reconstruct_voltage(record, t)
 
     # ==================================================================
     # Signature figures — override the generic KalmanModel.plot hooks.

@@ -161,36 +161,101 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             assert uk is not None and uk.shape[1] == self.l, \
                 f"Preprocessed uk has incorrect number of columns. Expected ({self.l},1), got {format_shape(uk)}."
 
-        # --- main loop (engine does predict + masked update) ---
-        t = float(self.model.t0) if self.model.t0 is not None else 0.0
-        dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
-        nu = np.zeros((self.model.m, 1))
-        u = np.zeros((max(self.l, 1), 1))
+        # --- main loop (engine does predict + masked update); a constant-matrix
+        # linear model with no control callback can run the whole pass fused in C ---
+        if self._native_forward_eligible(uk_fn):
+            self._forward_native(zk, uk)
+        else:
+            t = float(self.model.t0) if self.model.t0 is not None else 0.0
+            dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
+            nu = np.zeros((self.model.m, 1))
+            u = np.zeros((max(self.l, 1), 1))
 
-        for idx, z in enumerate(zk):
-            if uk_fn is not None:
-                u_raw = uk_fn(self.x, self.P, t, nu=nu)
-                u = np.asarray(u_raw, dtype=float).reshape(-1, 1)
-            else:
-                u = uk[idx]
+            for idx, z in enumerate(zk):
+                if uk_fn is not None:
+                    u_raw = uk_fn(self.x, self.P, t, nu=nu)
+                    u = np.asarray(u_raw, dtype=float).reshape(-1, 1)
+                else:
+                    u = uk[idx]
 
-            self.measurement.append(z)
-            self.control.append(u.ravel() if np.ndim(u) > 1 else u)
+                self.measurement.append(z)
+                self.control.append(u.ravel() if np.ndim(u) > 1 else u)
 
-            self.x, self.P, F = self.engine._predict(self.model, self.x, self.P, u=u, t=t)
-            self.prior.append((self.x, self.P))
-            self.transition.append(F)
+                self.x, self.P, F = self.engine._predict(self.model, self.x, self.P, u=u, t=t)
+                self.prior.append((self.x, self.P))
+                self.transition.append(F)
 
-            h_pred = self.model.h(self.x, t=t)
-            nu = np.asarray(z, dtype=float).reshape(-1, 1) - np.asarray(h_pred, dtype=float).reshape(-1, 1)
-            self.innovation.append(nu)
+                h_pred = self.model.h(self.x, t=t)
+                nu = np.asarray(z, dtype=float).reshape(-1, 1) - np.asarray(h_pred, dtype=float).reshape(-1, 1)
+                self.innovation.append(nu)
 
-            self.x, self.P = self.engine._update(self.model, self.x, self.P, z, t=t)
-            self.posterior.append((self.x, self.P))
+                self.x, self.P = self.engine._update(self.model, self.x, self.P, z, t=t)
+                self.posterior.append((self.x, self.P))
 
-            t += dt
+                t += dt
 
         return self.get_record(indexing=indexing, inprocess=inprocess, postprocess=postprocess) if record else self
+
+    # ------------------------------------------------------------------
+    # C-accelerated fast path (constant-matrix linear model, no control
+    # callback): fuses the whole N-step predict+update loop into one
+    # ``kf_forward_linear`` call. Falls back transparently to the Python loop
+    # above whenever the model/engine don't fit this shape.
+    # ------------------------------------------------------------------
+    def _native_forward_eligible(self, uk_fn) -> bool:
+        if uk_fn is not None:
+            return False
+        from .native import HAS_C_ACCEL
+        if not HAS_C_ACCEL:
+            return False
+        from .engines.linear import LinearKalmanEngine
+        if not isinstance(self.engine, LinearKalmanEngine):
+            return False
+        model = self._model
+        return not any(callable(getattr(model, attr)) for attr in ("_F", "_H", "_B", "_L", "_Q", "_R"))
+
+    def _forward_native(self, zk, uk):
+        from .native import lib, ffi, as_contiguous, dptr
+
+        model = self._model
+        n, m, l = model.n, model.m, model.l
+        N = len(zk)
+
+        F, H, Q, R = (as_contiguous(M()) for M in (model.F, model.H, model.Q, model.R))
+        B, L = model.B(), model.L()
+
+        zk_c = as_contiguous(zk)
+        uk_c = as_contiguous(uk)
+        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))
+        P0 = as_contiguous(self.P)
+
+        x_prior = np.empty((N, n), dtype=np.float64)
+        P_prior = np.empty((N, n, n), dtype=np.float64)
+        x_post  = np.empty((N, n), dtype=np.float64)
+        P_post  = np.empty((N, n, n), dtype=np.float64)
+        innovations = np.empty((N, m), dtype=np.float64)
+
+        lib.kf_forward_linear(
+            n, m, l, N,
+            dptr(F), dptr(H), dptr(Q), dptr(R),
+            dptr(as_contiguous(B)) if B is not None else ffi.NULL,
+            dptr(as_contiguous(L)) if L is not None else ffi.NULL,
+            dptr(zk_c), dptr(uk_c),
+            dptr(x0), dptr(P0),
+            dptr(x_prior), dptr(P_prior),
+            dptr(x_post), dptr(P_post),
+            dptr(innovations),
+        )
+
+        self.measurement.extend(zk_c)
+        self.control.extend(uk_c)
+        self.prior.extend((x_prior[k].reshape(n, 1), P_prior[k]) for k in range(N))
+        self.posterior.extend((x_post[k].reshape(n, 1), P_post[k]) for k in range(N))
+        self.transition.extend([F] * N)
+        self.innovation.extend(innovations[k].reshape(m, 1) for k in range(N))
+
+        self.x = x_post[-1].reshape(n, 1)
+        self.P = P_post[-1]
 
     # ------------------------------------------------------------------
     # Backward smoothing (RTS) — drives engine._smooth
@@ -203,13 +268,49 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         self.smooth = np.zeros((N, 2), dtype=object)
         self.smooth[-1] = self.posterior[-1]
 
-        for k in reversed(range(N - 1)):
-            self.smooth[k] = self.engine._smooth(
-                self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k]
-            )
+        if N > 1 and self._native_backward_eligible():
+            self._backward_native(N)
+        else:
+            for k in reversed(range(N - 1)):
+                self.smooth[k] = self.engine._smooth(
+                    self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k]
+                )
 
         kwargs.pop("smooth", None)
         return self.get_record(smooth=True, **kwargs)
+
+    # ------------------------------------------------------------------
+    # C-accelerated RTS smoother: valid whenever the transition matrix is
+    # constant across the run (so a single F applies to every step), which
+    # is the only assumption ``kf_backward_rts`` makes.
+    # ------------------------------------------------------------------
+    def _native_backward_eligible(self) -> bool:
+        from .native import HAS_C_ACCEL
+        return HAS_C_ACCEL and not callable(self._model._F)
+
+    def _backward_native(self, N):
+        from .native import lib, as_contiguous, dptr
+
+        n = self.model.n
+        F = as_contiguous(self.transition[0])
+        x_post  = as_contiguous(np.array([x.reshape(-1) for x, _ in self.posterior]))
+        P_post  = as_contiguous(np.array([P for _, P in self.posterior]))
+        x_prior = as_contiguous(np.array([x.reshape(-1) for x, _ in self.prior]))
+        P_prior = as_contiguous(np.array([P for _, P in self.prior]))
+
+        x_smooth = np.empty((N, n), dtype=np.float64)
+        P_smooth = np.empty((N, n, n), dtype=np.float64)
+
+        lib.kf_backward_rts(
+            n, N,
+            dptr(x_post), dptr(P_post),
+            dptr(x_prior), dptr(P_prior),
+            dptr(F),
+            dptr(x_smooth), dptr(P_smooth),
+        )
+
+        for k in range(N):
+            self.smooth[k] = (x_smooth[k].reshape(n, 1), P_smooth[k])
 
     # ------------------------------------------------------------------
     # Convenience aliases (mirror the model-level API: filter()/smooth())

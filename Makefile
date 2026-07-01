@@ -194,10 +194,16 @@ examples: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) examples
 
+## Build the optional C acceleration extension for the Kalman engines
+accel: motd
+	@$(PYTHON) modules/framework/native/cffi.py
+
 ## Run the Python unit-test suite with a per-module coverage summary
 tests: motd
 	@FORCE_COLOR=1 $(PYTHON) -m pytest tests/ --tb=short --color=yes \
 		--cov=modules --cov-report=term
+	@echo ""
+	@$(PYTHON) tests/bench_native.py
 
 ## Run the unit tests, then list every uncovered function by name
 coverage: motd

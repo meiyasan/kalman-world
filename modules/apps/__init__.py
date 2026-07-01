@@ -1,15 +1,17 @@
 from .ballistics  import BallisticLinearModel, BallisticModel
-from .oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel,
+from .oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel,
+                          OscillatorCompositeModel,   # legacy alias of OscillatorBankModel
                           InharmonicOscillatorModel, HarmonicOscillatorModel, PhasorOscillatorModel,
                           wire_inharmonicity, wire_fundamental, partial_frequencies)
 from .suspensions import SuspensionModel
-from .powergrids  import PowerGridStateModel, PowerGridObservable
+from .powergrids  import PowerGridStateModel, PowerGridObservable, plot_phasor_diagram
 from .gravwave     import PolarizationModel, PolarizationState, PolarizationObservable, jones_signal
 from .rocket       import (RocketAscentModel, RocketLiftoffModel, RocketLandingModel,
                            RocketDescentModel, RocketDescentState, RocketDescentObservable,
                            RocketLaunchModel, RocketTakeoffModel)  # last two: legacy aliases
 from .space       import (TransLunarModel, TransLunarState, TransLunarObservable,
                            InterplanetaryModel, InterplanetaryState, InterplanetaryObservable,
+                           TrajectoryControlManeuver,
                            hohmann_transfer, hohmann_sequence, lambert,
                            porkchop, best_departure, gravity,
                            gravity_assist, flyby_porkchop, plot_flyby_porkchop,
@@ -25,3 +27,8 @@ from .vision        import (DetectionModel, BoxTrackModel, SortTracker, KalmanTr
                             mot_detections, sort_mot_hypothesis, mot_sequences_from_root,
                             evaluate_mot, synthetic_multi)
 from .gps           import GPSModel, GPSConstellation, GPSState, GPSObservable
+from .interferometer import (InterferometerModel,
+                              InterferometerK1, InterferometerH1,
+                              InterferometerL1, InterferometerV1,
+                              welch_psd, find_peaks_in_band,
+                              fit_lorentzian_peak, group_peaks_into_windows)

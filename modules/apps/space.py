@@ -29,9 +29,10 @@ import numpy as np
 
 from ..framework.models.extended import ExtendedKalmanModel
 from ..framework.constants import KalmanState, KalmanObservable
+from ..framework.control import KalmanController
 from ..runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
-    gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
+    G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,
 )
 
@@ -1394,9 +1395,22 @@ class InterplanetaryModel(ExtendedKalmanModel):
     a Lambert solution, e.g. ``model.initial_state(best["x0"])`` where ``best`` comes from
     :func:`best_departure`. If ``epoch`` is ``None`` the perturbers are dropped and the model
     reduces to a fast two-body Sun cruise (handy for tests without the ephemeris).
+
+    **Spacecraft defaults** are representative of an MRO / InSight class probe at departure:
+
+    * dry mass  ~600 kg  (structure + instruments + avionics)
+    * wet mass ~1200 kg  (+ ~600 kg hydrazine / bipropellant)
+    * cruise speed ~29–33 km/s heliocentric (seeded by the Lambert solution)
+
+    Pass these to :class:`TrajectoryControlManeuver` to get realistic burn durations and
+    propellant accounting.
     """
 
     NAME = "Interplanetary cruise (heliocentric N-body)"; VERSION = "1.0"
+
+    # Representative spacecraft mass for an MRO/InSight-class Mars probe [kg]
+    SPACECRAFT_DRY_MASS_KG = 600.0
+    SPACECRAFT_WET_MASS_KG = 1200.0
 
     @property
     def states(self):      return InterplanetaryState
@@ -1785,6 +1799,196 @@ class InterplanetaryModel(ExtendedKalmanModel):
                     *([no_burn_ln] if no_burn_ln is not None else []))
 
         return animate(fig, _draw, frames=frame_idx, interval=interval)
+
+
+# ===========================================================================
+#  4) Trajectory Correction Manoeuvre (TCM) controller
+# ===========================================================================
+class TrajectoryControlManeuver(KalmanController):
+    """Realistic finite-burn Trajectory Correction Manoeuvre (TCM) controller.
+
+    Inherits from :class:`~kalman.framework.KalmanController`.  At each
+    scheduled epoch the controller:
+
+    1. Solves **Lambert's problem** from the current EKF position to the
+       target arrival position to find the velocity vector needed.
+    2. Computes **Δv** = v_needed − v_current.
+    3. Applies the **Tsiolkovsky rocket equation** to derive propellant
+       consumed and **burn duration** (seconds to minutes, not an instant).
+    4. Returns the velocity impulse; the EKF applies it as a state update.
+
+    **Early TCMs amplify corrections geometrically.**  A 1 m/s Δv fired
+    175 days before Mars arrival shifts the arrival point by ≈ 15 000 km,
+    whereas the same burn fired 5 days out moves it only ≈ 430 km.  The
+    default schedule (day 5, 30, 90) exploits this leverage:
+
+    * **TCM-1 (day 5)** — dominant burn, corrects launch-injection error.
+    * **TCM-2 (day 30)** — mid-course trim.
+    * **TCM-3 (day 90)** — optional fine-tune; often < 1 m/s.
+
+    Default spacecraft: MRO / InSight class (~600 kg dry, 1200 kg wet,
+    22 N hydrazine thrusters, Isp 220 s).  Pass ``dry_mass_kg`` /
+    ``wet_mass_kg`` / ``Isp_s`` / ``thrust_N`` to override.
+
+    Parameters
+    ----------
+    model : InterplanetaryModel
+        Cruise model.  ``control=True`` is enforced automatically.
+    r_target : (3,) array_like
+        Heliocentric arrival position [Mm] (e.g. ``best["x0"][:3]`` for
+        the Lambert best solution at the *target* date, or compute via
+        ``body_state(target, arrival_date)[0]``).
+    t_arrival_ks : float
+        Mission-elapsed arrival time [ks]  (``tof_days * DAY``).
+    tcm_days : list of float, optional
+        Mission-elapsed days at which TCMs fire.  Default: [5, 30, 90].
+    dry_mass_kg, wet_mass_kg : float
+        Spacecraft dry / wet mass [kg].
+    Isp_s : float
+        Specific impulse [s].
+    thrust_N : float
+        Total thruster thrust [N].
+    max_dv_kms : float
+        Per-TCM Δv cap [km/s] (default 0.05 = 50 m/s).  Guards against
+        overburn when the Lambert solution diverges from the current state
+        by more than a realistic injection error.
+    mu : float, optional
+        Gravitational parameter for Lambert solve [Mm³/ks²].  Defaults to
+        ``GM_SUN`` (heliocentric cruise).
+    """
+
+    DRY_MASS_KG      = 600.0    # kg  — MRO/InSight class dry mass
+    WET_MASS_KG      = 1200.0   # kg  — including ~600 kg hydrazine
+    ISP_S            = 220.0    # s   — MR-106 class monoprop thrusters
+    THRUST_N         = 22.0     # N   — Aerojet MR-106 (×1 thruster; real missions use clusters)
+    MAX_DV_KMS       = 0.050    # km/s — 50 m/s per-TCM cap
+    TCM_DAYS_DEFAULT = [5.0, 30.0, 90.0]
+
+    def __init__(self, model, r_target, t_arrival_ks, *,
+                 tcm_days=None, dry_mass_kg=None, wet_mass_kg=None,
+                 Isp_s=None, thrust_N=None, max_dv_kms=None, mu=None):
+        model.l = 3                              # ensure model accepts control input
+        super().__init__(model, Rcost=np.eye(3))
+        self.r_target      = np.asarray(r_target, float).reshape(3)
+        self.t_arrival     = float(t_arrival_ks)
+        tcm_days           = list(tcm_days or self.TCM_DAYS_DEFAULT)
+        self._tcm_times    = sorted(float(d) * DAY for d in tcm_days)   # [TU = ks]
+        self.dry_mass      = float(dry_mass_kg  if dry_mass_kg  is not None else self.DRY_MASS_KG)
+        self._wet_mass_init = float(wet_mass_kg if wet_mass_kg  is not None else self.WET_MASS_KG)
+        self.current_mass  = self._wet_mass_init
+        self.Isp           = float(Isp_s        if Isp_s        is not None else self.ISP_S)
+        self.thrust        = float(thrust_N     if thrust_N     is not None else self.THRUST_N)
+        self.max_dv        = float(max_dv_kms   if max_dv_kms   is not None else self.MAX_DV_KMS)
+        self.mu            = float(mu if mu is not None else GM_SUN)
+        self.burns         = []       # list of burn metadata dicts (populated at each TCM)
+        self._fired        = set()    # indices of TCMs already executed
+        self._dt_half      = 0.5 * model._dt   # match tolerance: half an EKF step
+
+    @property
+    def propellant_remaining_kg(self):
+        """Propellant left in the tanks [kg]."""
+        return max(self.current_mass - self.dry_mass, 0.0)
+
+    @property
+    def propellant_consumed_kg(self):
+        """Total propellant consumed across all TCMs [kg]."""
+        return sum(b["prop_kg"] for b in self.burns)
+
+    def _policy(self, x_hat, P, t, *, nu=None):
+        t = float(t)
+        for i, t_tcm in enumerate(self._tcm_times):
+            if i in self._fired:
+                continue
+            if abs(t - t_tcm) <= self._dt_half:
+                return self._execute_tcm(i, x_hat, t)
+        return np.zeros(3)
+
+    def _execute_tcm(self, idx, x_hat, t):
+        """Compute and log the burn for scheduled TCM *idx*."""
+        self._fired.add(idx)
+        r_now = x_hat[:3].flatten()
+        v_now = x_hat[3:6].flatten()
+        tof   = self.t_arrival - t          # remaining time-of-flight [ks]
+
+        if tof <= 0.0 or self.propellant_remaining_kg <= 0.0:
+            return np.zeros(3)
+
+        # Lambert targeting: what velocity do we need NOW to reach r_target in tof?
+        try:
+            v_needed, _ = lambert(r_now, self.r_target, tof, mu=self.mu)
+        except Exception:
+            return np.zeros(3)
+
+        dv_vec = v_needed - v_now           # required Δv [km/s]
+        dv_mag = float(np.linalg.norm(dv_vec))
+
+        # Cap: prevent overburn if injection error is unrealistically large
+        if dv_mag > self.max_dv:
+            dv_vec = dv_vec * (self.max_dv / dv_mag)
+            dv_mag = self.max_dv
+
+        # Tsiolkovsky rocket equation (SI: Isp in s, g0 in m/s², Δv in m/s)
+        dv_ms       = dv_mag * 1e3          # km/s → m/s
+        max_dv_ms   = self.Isp * G0 * np.log(self.current_mass / max(self.dry_mass, 1.0))
+        if dv_ms > max_dv_ms > 0.0:        # out of propellant — burn what's left
+            dv_ms   = max_dv_ms
+            dv_vec  = dv_vec * (dv_ms / max(dv_mag * 1e3, 1e-10))
+            dv_mag  = dv_ms * 1e-3
+
+        prop_kg = self.current_mass * (1.0 - np.exp(-dv_ms / (self.Isp * G0)))
+        prop_kg = min(prop_kg, self.propellant_remaining_kg)
+
+        # Burn duration: Δm × Isp × g0 / F  (constant-thrust, isentropic approximation)
+        burn_s  = prop_kg * self.Isp * G0 / max(self.thrust, 1e-6)
+
+        m_before          = self.current_mass
+        self.current_mass -= prop_kg
+
+        self.burns.append({
+            "tcm_idx":        idx + 1,
+            "t_ks":           t,
+            "t_days":         t / DAY,
+            "dv_kms":         float(dv_mag),
+            "dv_ms":          float(dv_ms),
+            "dv_vec_kms":     dv_vec.copy(),
+            "prop_kg":        float(prop_kg),
+            "mass_before_kg": float(m_before),
+            "mass_after_kg":  float(self.current_mass),
+            "burn_s":         float(burn_s),
+            "tof_rem_days":   float(tof / DAY),
+        })
+        return dv_vec.reshape(3)
+
+    def reset(self):
+        """Reset to the pre-launch state (full tanks, no burns fired).
+
+        Call this between a truth-propagation pass and the EKF filter pass so
+        the controller can re-fire the same TCM schedule on the filter estimate.
+        """
+        super().reset()
+        if not hasattr(self, "_wet_mass_init"):
+            return   # called by KalmanController.__init__ before our attrs exist
+        self.current_mass = self._wet_mass_init
+        self.burns        = []
+        self._fired       = set()
+
+    def summary(self):
+        """Print a formatted table of all TCMs executed so far."""
+        if not self.burns:
+            print("No TCMs executed.")
+            return
+        print("TCM Summary")
+        print("─" * 76)
+        for b in self.burns:
+            print("  TCM-%-2d  t=%6.1f d  Δv=%8.2f m/s  burn=%6.1f s  "
+                  "Δm=%6.2f kg  m_after=%7.2f kg  TOF_rem=%5.0f d"
+                  % (b["tcm_idx"], b["t_days"], b["dv_ms"], b["burn_s"],
+                     b["prop_kg"], b["mass_after_kg"], b["tof_rem_days"]))
+        print("─" * 76)
+        total_dv   = sum(b["dv_ms"]   for b in self.burns)
+        total_prop = sum(b["prop_kg"] for b in self.burns)
+        print("  TOTAL   Δv=%8.2f m/s   Δm=%6.2f kg   propellant left: %.2f kg"
+              % (total_dv, total_prop, self.propellant_remaining_kg))
 
 
 # ===========================================================================

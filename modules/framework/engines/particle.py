@@ -51,10 +51,17 @@ class ParticleEngine(KalmanEngine):
 
     def _resample(self):
         N = self.n_particles
-        positions = (np.arange(N) + np.random.uniform()) / N
-        cumsum = np.cumsum(self._weights)
-        cumsum[-1] = 1.0
-        idx = np.searchsorted(cumsum, positions)
+        from ..native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from ..native import lib, as_contiguous, dptr, iptr
+            weights = as_contiguous(self._weights)
+            idx = np.empty(N, dtype=np.intc)
+            lib.pf_systematic_resample(N, dptr(weights), float(np.random.uniform()), iptr(idx))
+        else:
+            positions = (np.arange(N) + np.random.uniform()) / N
+            cumsum = np.cumsum(self._weights)
+            cumsum[-1] = 1.0
+            idx = np.searchsorted(cumsum, positions)
         self._particles = self._particles[idx]
         self._weights = np.full(N, 1.0 / N)
 
@@ -91,15 +98,29 @@ class ParticleEngine(KalmanEngine):
             return self._estimate()
 
         idx = np.where(keep)[0]
+        mv = len(idx)
         R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]
         Rinv = np.linalg.pinv(R)
         zc = z[idx]
 
-        logw = np.log(self._weights + 1e-300)
+        # model.h() is unavoidable Python (per-particle nonlinear map); only the
+        # quadratic-form reduction below is pushed into C.
+        zp = np.empty((self.n_particles, mv), dtype=np.float64)
         for i, xp in enumerate(self._particles):
-            zp = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
-            dz = zc - zp
-            logw[i] += -0.5 * dz @ Rinv @ dz
+            zp[i] = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
+
+        logw = np.log(self._weights + 1e-300)
+        from ..native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from ..native import lib, as_contiguous, dptr
+            lib.pf_weight_update(
+                self.n_particles, mv,
+                dptr(as_contiguous(zc)), dptr(as_contiguous(zp)), dptr(as_contiguous(Rinv)), dptr(logw),
+            )
+        else:
+            for i in range(self.n_particles):
+                dz = zc - zp[i]
+                logw[i] += -0.5 * dz @ Rinv @ dz
         logw -= logw.max()
         wts = np.exp(logw)
         wts /= wts.sum()

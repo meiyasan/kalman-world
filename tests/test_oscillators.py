@@ -4,7 +4,7 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.apps.oscillators import (
-    OscillatorModel, AnalyticOscillatorModel, OscillatorCompositeModel,
+    OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel, OscillatorCompositeModel,
     HarmonicOscillatorModel, InharmonicOscillatorModel,
     partial_frequencies, wire_fundamental, wire_inharmonicity,
 )
@@ -220,13 +220,17 @@ class TestWirePhysics(unittest.TestCase):
 
 
 # ===========================================================================
-# OscillatorCompositeModel — INDEPENDENT bank of windows
+# OscillatorBankModel — INDEPENDENT bank of windows
 # ===========================================================================
-class TestOscillatorCompositeModel(unittest.TestCase):
+class TestOscillatorBankModel(unittest.TestCase):
+
+    def test_legacy_alias(self):
+        """OscillatorCompositeModel remains a backward-compatible alias."""
+        self.assertIs(OscillatorCompositeModel, OscillatorBankModel)
 
     def test_requires_at_least_one_window(self):
         with self.assertRaises(ValueError):
-            OscillatorCompositeModel()
+            OscillatorBankModel()
 
     def test_composite_filter_dims_and_reconstruct(self):
         fs, N = 256, 512
@@ -236,7 +240,7 @@ class TestOscillatorCompositeModel(unittest.TestCase):
         cands = [10.0, 40.0]
         w1 = OscillatorModel("s", cands, fc=10.0, dfc=3.0, fs=fs)
         w2 = OscillatorModel("s", cands, fc=40.0, dfc=3.0, fs=fs)
-        comp = OscillatorCompositeModel(w1, w2)
+        comp = OscillatorBankModel(w1, w2)
         rec = comp.filter(strain)
         self.assertEqual(rec.xk.shape[1], 4)        # 2 windows × [Re, Im]
         self.assertEqual(rec.zk.shape[1], 4)        # identity postprocess: [Re1,Im1,Re2,Im2]
@@ -249,7 +253,7 @@ class TestOscillatorCompositeModel(unittest.TestCase):
         fs = 256
         w1 = OscillatorModel("s", [10.0], fc=10.0, dfc=3.0, fs=fs)
         w2 = OscillatorModel("s", [40.0], fc=40.0, dfc=3.0, fs=fs)
-        comp = OscillatorCompositeModel(w1, w2)
+        comp = OscillatorBankModel(w1, w2)
         sample = comp.sample(2.0)
         zk = np.asarray(sample.zk)
         self.assertEqual(zk.shape[0], sample.xk.shape[0])
@@ -275,7 +279,7 @@ class TestOscillatorCompositeModel(unittest.TestCase):
                                     measurement_uncertainty=40 * sigma_noise,
                                     process_uncertainty=1e-21)
                   for f, Q in zip(freqs, Qs)]
-        bank = OscillatorCompositeModel(*windows)
+        bank = OscillatorBankModel(*windows)
         for w, a in zip(bank.windows, A):
             w.initial_state([[a, 0.0]])
         bank.initial_state(np.vstack([w.x0 for w in bank.windows]))

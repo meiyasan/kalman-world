@@ -8,25 +8,48 @@ from ..control import KalmanController
 class NeuralKalmanController(KalmanController):
     """Neural controller trained offline via MPPI on ``model.f()``.
 
-    The MLP sees ``[x̂ − x_ref, √diag(P), ν]`` — never F, H, or raw z.
+    Parameters
+    ----------
+    features : tuple of str
+        Which inputs the MLP sees.  Any subset of ``("error", "P", "nu")``:
+
+        * ``"error"`` — state error  ``x̂ − x_ref``  (shape n)
+        * ``"P"``     — navigation uncertainty  ``√diag(P)``  (shape n)
+        * ``"nu"``    — latest innovation  ``z − H x̂⁻``  (shape m)
+
+        Default is ``("error", "P", "nu")`` — the full feature set.  Drop ``"P"``
+        or ``"nu"`` to run the ablation variants.
     """
 
-    def __init__(self, model, hidden=64, **kw):
+    def __init__(self, model, hidden=64, features=("error", "P", "nu"), **kw):
         super().__init__(model, **kw)
         self._hidden = hidden
-        self._weights = None
-        self._input_dim = model.n + model.n + model.m
+        self._features = tuple(features)
+        n, m = model.n, model.m
+        self._input_dim = (
+            (n if "error" in self._features else 0) +
+            (n if "P"     in self._features else 0) +
+            (m if "nu"    in self._features else 0)
+        )
         self._x_mean = np.zeros(self._input_dim)
-        self._x_std = np.ones(self._input_dim)
+        self._x_std  = np.ones(self._input_dim)
+
+    # ------------------------------------------------------------------
+    def _build_input(self, x_hat, P, nu):
+        parts = []
+        if "error" in self._features:
+            parts.append((x_hat - self.x_ref).ravel())
+        if "P" in self._features:
+            parts.append(np.sqrt(np.abs(np.diag(P))))
+        if "nu" in self._features:
+            parts.append(np.zeros(self.model.m) if nu is None
+                         else np.asarray(nu).ravel())
+        return np.concatenate(parts) if parts else np.zeros(1)
 
     def _policy(self, x_hat, P, t, *, nu=None):
         if self._weights is None:
             raise RuntimeError("Call fit_mppi() or load() before using NeuralKalmanController.")
-        inp = np.concatenate([
-            (x_hat - self.x_ref).ravel(),
-            np.sqrt(np.abs(np.diag(P))),
-            np.zeros(self.model.m) if nu is None else np.asarray(nu).ravel(),
-        ])
+        inp = self._build_input(x_hat, P, nu)
         return self._mlp_forward((inp - self._x_mean) / self._x_std)
 
     def _mlp_forward(self, x):
@@ -37,8 +60,8 @@ class NeuralKalmanController(KalmanController):
         h = np.tanh(W2 @ h + b2)
         return W3 @ h + b3
 
-    def _init_weights(self):
-        rng = np.random.default_rng()
+    def _init_weights(self, seed=None):
+        rng = np.random.default_rng(seed)
         d_in, d_h, d_out = self._input_dim, self._hidden, max(self.model.l, 1)
         scale1 = np.sqrt(2.0 / d_in)
         scale2 = np.sqrt(2.0 / d_h)
@@ -104,11 +127,7 @@ class NeuralKalmanController(KalmanController):
                 weights /= weights.sum() + 1e-12
                 u0 = np.einsum("i,il->l", weights, du[:, 0, :]).reshape(-1, 1)
 
-                inp = np.concatenate([
-                    (x - self.x_ref).ravel(),
-                    np.sqrt(np.abs(np.diag(P_dummy))),
-                    np.zeros(m),
-                ])
+                inp = self._build_input(x, P_dummy, None)
                 dataset_x.append(inp)
                 dataset_u.append(u0.ravel())
 
@@ -121,11 +140,11 @@ class NeuralKalmanController(KalmanController):
         # next to a cruise speed ~O(15)) — normalising is what lets gradient descent see
         # the small-scale features at all, instead of the largest feature dominating.
         self._x_mean = X.mean(axis=0)
-        self._x_std = X.std(axis=0)
+        self._x_std  = X.std(axis=0)
         self._x_std[self._x_std < 1e-8] = 1.0
         Xn = (X - self._x_mean) / self._x_std
 
-        self._init_weights()
+        self._init_weights(seed=seed)
         self._train_mlp(Xn, Y, epochs=epochs, lr=lr)
         return self
 
@@ -174,6 +193,6 @@ class NeuralKalmanController(KalmanController):
     def load(self, path):
         data = dict(np.load(path))
         self._x_mean = data.pop("x_mean")
-        self._x_std = data.pop("x_std")
+        self._x_std  = data.pop("x_std")
         self._weights = data
         return self

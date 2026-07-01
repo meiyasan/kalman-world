@@ -142,9 +142,30 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
             return x, P
 
         zk, H = self._measure(model, x, t)
-        H = np.asarray(H)[keep, :]
-        R = np.asarray(model.R(t=t))[np.ix_(keep, keep)]
-        y = z[keep] - np.asarray(zk, dtype=float).reshape(-1, 1)[keep]
+        H = np.asarray(H, dtype=float)
+        R = np.asarray(model.R(t=t), dtype=float)
+        # Residual against the true (possibly nonlinear) h(x), NOT H @ x -- NaN
+        # propagates automatically wherever z is missing, matching `keep`.
+        yk = z.reshape(-1) - np.asarray(zk, dtype=float).reshape(-1)
+
+        from .native import HAS_C_ACCEL
+        if HAS_C_ACCEL:
+            from .native import lib, as_contiguous, dptr
+            n = model.n
+            xk = np.empty(n, dtype=np.float64)
+            Pk = np.empty((n, n), dtype=np.float64)
+            lib.kf_update_residual(
+                n, H.shape[0],
+                dptr(as_contiguous(H)), dptr(as_contiguous(np.asarray(x, dtype=float).reshape(-1))),
+                dptr(as_contiguous(P)),
+                dptr(as_contiguous(yk)), dptr(as_contiguous(R)),
+                dptr(xk), dptr(Pk),
+            )
+            return xk.reshape(-1, 1), Pk
+
+        H = H[keep, :]
+        R = R[np.ix_(keep, keep)]
+        y = yk[keep].reshape(-1, 1)
 
         S = R + H @ P @ H.T
         try:

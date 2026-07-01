@@ -425,7 +425,7 @@ class OscillatorModel(CompositeKalmanModel):
     :class:`InharmonicOscillatorModel` generates a full ladder ``[f0, 2f0, 3f0, …]``,
     only those partials inside ``[fc ± dfc]`` are tracked by *this* window.  To track
     the whole ladder, stack one window per partial inside an
-    :class:`OscillatorCompositeModel`.
+    :class:`OscillatorBankModel`.
 
     The in-band modes share the single demodulated band channel in **FUSED** mode
     (``H = [I₂ … I₂]``, ``z = Σ_i ψ_i``) — the joint Kalman filter of Moisset et al.
@@ -505,19 +505,60 @@ class OscillatorModel(CompositeKalmanModel):
         self.fs = self._fs_dec
 
         self.preprocess = self._demod_preprocess
-        self.postprocess = self._reconstruct_postprocess
+        self.postprocess = self._identity_postprocess
 
     # --- resample_poly helper (handles float sample rates) ---
     @staticmethod
-    def _resample(y, fs_old, fs_new, tolerance=1e2):
+    def _resample(y, fs_old, fs_new, tolerance=1e2, kaiser_beta=12.0):
+        """Rational resample with **edge-replicate padding** and a **sharp Kaiser
+        anti-alias/anti-image filter**.
+
+        Two boundary effects of a plain ``resample_poly`` are corrected here:
+
+        * **Edge transient** — ``resample_poly`` implicitly zero-pads beyond the
+          data, so its FIR runs into zeros at the edges; on **upsampling** the
+          trailing ~half-filter of output ramps linearly to zero (an asymmetric
+          tail decay — the start recovers, the end collapses).  We pad both ends
+          with the edge sample, resample, then trim the padding back out, so the
+          FIR always sees real data across the original span.  Output length
+          matches the unpadded ``resample_poly(y, up, down)`` exactly.  The pad is
+          a **multiple of ``down``** so the trim offset ``pad·up/down`` is an exact
+          integer — otherwise the rounded trim leaves a fractional-sample group
+          delay (here ~2 ms) that rotates every off-carrier phasor by ``2π·Δf·δt``,
+          silently capping the subtraction of detuned modes at ~30 dB.
+
+        * **Upsampling images** — the decimated phasor's spectral copies sit at
+          ``±k·fs_dec`` and re-appear around ``fc ± k·fs_dec`` after remodulation.
+          The default Kaiser window (``β=5``) only suppresses the first image to
+          ≈ −73 dB.  Because the carried signal lives in ``[fc ± dfc]`` while the
+          decimated Nyquist is ``2·dfc`` (a full octave of guard band), a steeper
+          stopband is essentially free: ``β=12`` pushes the first image below
+          −120 dB without touching in-band content.
+        """
         from scipy.signal import resample_poly
         from math import gcd
+        y = np.asarray(y)
         fs_old_int = int(round(float(fs_old) * tolerance))
         fs_new_int = int(round(float(fs_new) * tolerance))
         g = gcd(fs_old_int, fs_new_int)
         up = fs_new_int // g
         down = fs_old_int // g
-        return resample_poly(y, up, down)
+        window = ("kaiser", float(kaiser_beta))
+
+        n_in = len(y)
+        if n_in == 0:
+            return resample_poly(y, up, down, window=window)
+        out_len = -(-n_in * up // down)                  # ceil(n_in*up/down), scipy's length
+        # Transient ≈ 2×(10·max(up,down)/up) input samples; round the pad up to a
+        # whole number of ``down``-blocks so the trim offset is an exact integer.
+        base = int(np.ceil(10.0 * max(up, down) / up)) * 2 + 8
+        reps = max(1, -(-base // down))                   # ceil(base/down), ≥ 1 block
+        pad = reps * down
+        yp = np.concatenate([np.full(pad, y[0], dtype=y.dtype), y,
+                             np.full(pad, y[-1], dtype=y.dtype)])
+        yr = resample_poly(yp, up, down, window=window)
+        off = reps * up                                  # = pad·up/down, exact (zero delay)
+        return yr[off:off + out_len]
 
     # --- real strain → heterodyne rotation → resample_poly downsample ---
     def _demod_preprocess(self, zk, uk=None, **kwargs):
@@ -535,14 +576,42 @@ class OscillatorModel(CompositeKalmanModel):
         psi_dec = self._resample(psi, self._fs_original, self._fs_dec)
         return np.column_stack([psi_dec.real, psi_dec.imag]), uk              # (N_dec, 2)
 
+    # --- optional band-limit: kill the residual upsampling images ---
+    def _band_limit_phasor(self, psi, cutoff_hz):
+        """Zero-phase low-pass a complex baseband phasor at ``cutoff_hz``.
+
+        Upsampling the decimated phasor leaves residual spectral images at
+        ``±fs_dec`` baseband (i.e. ``fc ± fs_dec`` after remodulation, well
+        outside the reconstruction band ``[fc ± 2·dfc]``).  Low-passing the
+        upsampled phasor at ``cutoff_hz = 2·dfc`` removes them, confining the
+        reconstruction to exactly ``[fc ± cutoff_hz]``.  In-band content is
+        untouched (the carried envelope lives within ``±dfc``).
+        """
+        from scipy.signal import firwin, filtfilt
+        psi = np.asarray(psi)
+        n = len(psi)
+        if n < 9 or cutoff_hz <= 0:
+            return psi
+        fnyq = self._fs_original / 2.0
+        # Transition band ~ the (2·dfc → fs_dec) guard; size taps to resolve it.
+        ntaps = int(round(3.3 * self._fs_original / cutoff_hz)) | 1
+        ntaps = min(ntaps, ((n - 1) // 3) | 1)
+        if ntaps < 3:
+            return psi
+        taps = firwin(ntaps, cutoff_hz / fnyq)
+        return filtfilt(taps, 1.0, psi, padlen=min(3 * ntaps, n - 1))
+
     # --- postprocess: filtered phasor sum → real band signal at original rate ---
-    def _reconstruct_postprocess(self, zk_hat, **kwargs):
+    def _reconstruct_postprocess(self, zk_hat, band_limit=False, **kwargs):
         """Postprocess: FUSED phasor sum (decimated) → real band signal at original rate.
 
         ``zk_hat`` = ``h(xk)`` from the FUSED composite = ``Σψ̂_i``, shape ``(N_dec, 2)``.
         Upsamples to ``fs_original`` then remodulates: ``Re[Σψ̂ · e^{jωc·t}]``.
         Symmetric counterpart: ``_demod_preprocess``.
         Returns ``(N, 1)`` real.
+
+        ``band_limit`` (default ``False``) — when ``True``, low-pass the upsampled
+        phasor at ``2·dfc`` to erase the residual ``fc ± fs_dec`` upsampling images.
         """
         z = np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
         psi = z[:, 0] + 1j * z[:, 1]
@@ -552,6 +621,8 @@ class OscillatorModel(CompositeKalmanModel):
             psi_up = psi_up[:N]
         elif len(psi_up) < N:
             psi_up = np.concatenate([psi_up, np.zeros(N - len(psi_up))])
+        if band_limit:
+            psi_up = self._band_limit_phasor(psi_up, 2.0 * self.dfc)
         t = self.t0 + np.arange(N) / self._fs_original
         arg = self._wc * t
         return (psi_up.real * np.cos(arg) - psi_up.imag * np.sin(arg)).reshape(-1, 1)
@@ -562,13 +633,13 @@ class OscillatorModel(CompositeKalmanModel):
         """Identity postprocess: pass ``h(xk)`` through unchanged as ``[Re, Im]`` phasors."""
         return np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
 
-    def reconstruct(self, record):
-        """Return the lab-frame band reconstruction stored in ``record.zk``.
+    def reconstruct(self, record, *, band_limit=False):
+        """Upsample the decimated phasors in ``record.zk`` and remodulate to the
+        original sample rate — returns a real 1-D array of length ``N_original``.
 
-        ``record.zk`` is populated by ``_reconstruct_postprocess`` during ``filter()``
-        / ``get_record()``.  It holds ``Re[Σψ̂ · e^{jωc·t}]`` at the original sample rate.
-        """
-        return np.asarray(record.zk, dtype=float).ravel()
+        ``band_limit`` (default ``False``) clips the output to ``[fc ± 2·dfc]``,
+        removing the residual ``fc ± fs_dec`` upsampling images (~−125 dB)."""
+        return self._reconstruct_postprocess(record.zk, band_limit=band_limit).ravel()
 
     def amplitudes(self, record):
         """Per-mode amplitude ``|ψ_i| = √(Re²+Im²)`` for the in-band modes — shape ``(T, n)``."""
@@ -595,7 +666,7 @@ class OscillatorModel(CompositeKalmanModel):
 # ======================================================================
 # A bank of windows over one real signal — INDEPENDENT across distinct fc
 # ======================================================================
-class OscillatorCompositeModel(CompositeKalmanModel):
+class OscillatorBankModel(CompositeKalmanModel):
     """
     A bank of :class:`OscillatorModel` windows analysing **one** real signal across
     several distinct centers ``fc_i``.
@@ -609,7 +680,7 @@ class OscillatorCompositeModel(CompositeKalmanModel):
 
     Composition pattern::
 
-        OscillatorCompositeModel(w1, w2, w3)
+        OscillatorBankModel(w1, w2, w3)
           = CompositeKalmanModel(w1, w2, w3, obs_mode=INDEPENDENT)
           + preprocess: broadcast real strain → each window's own _demod_preprocess
 
@@ -618,19 +689,23 @@ class OscillatorCompositeModel(CompositeKalmanModel):
     extracted signal; ``strain − reconstruct(record)`` is the cleaned residual.
     """
 
-    NAME = "Oscillator Composite (window bank)"
+    NAME = "Oscillator Bank (window bank)"
     DESCRIPTION = "INDEPENDENT bank of windowed OscillatorModels over one real signal."
     VERSION = "1.1"
 
     def __init__(self, *windows, **kwargs):
         if not windows:
-            raise ValueError("OscillatorCompositeModel needs at least one window.")
+            raise ValueError("OscillatorBankModel needs at least one window.")
         self.windows = list(windows)
         super().__init__(*windows, obs_mode=KalmanObservableReadout.INDEPENDENT, **kwargs)
         self.fs = windows[0].fs
         self._fs_original = windows[0]._fs_original
         self.preprocess = self._broadcast_preprocess   # expand: 1 real → N basebands
-        self.postprocess = self._reconstruct_postprocess  # contract: N basebands → 1 real
+        self.postprocess = self._identity_postprocess  # keep decimated phasors; reconstruct() upsamples
+
+    @staticmethod
+    def _identity_postprocess(zk_hat, **kwargs):
+        return np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
 
     def _broadcast_preprocess(self, zk, uk=None, **kwargs):
         """Preprocess: broadcast one real strain to every window, each demodulates + downsamples.
@@ -667,22 +742,40 @@ class OscillatorCompositeModel(CompositeKalmanModel):
             total += psi_up.real * np.cos(w._wc * t) - psi_up.imag * np.sin(w._wc * t)
         return total.reshape(-1, 1)
 
-    def reconstruct(self, record, *, per_window=False):
-        """Return the reconstruction from ``record``.
+    def reconstruct(self, record, *, per_window=False, band_limit=False):
+        """Upsample per-window decimated phasors from ``record.zk`` and sum to a
+        single real signal at the original sample rate — shape ``(N_original,)``.
 
         Parameters
         ----------
         per_window : bool, default False
-            If ``False`` (default): return the combined signal ``(N_original,)``
-            stored in ``record.zk`` — equivalent to ``Σ_i reconstruct_window(rec, i)``.
-            If ``True``: return a list of per-window arrays ``[(N_original,), …]``
-            without re-filtering (delegates to :meth:`window_records`).
+            If ``True``: return a list of per-window ``(N_original,)`` arrays without
+            re-filtering (delegates to :meth:`reconstruct_window`).
+        band_limit : bool, default False
+            If ``True``: clip each window's output to its ``[fc ± 2·dfc]`` band,
+            removing the residual ``fc ± fs_dec`` upsampling images.
         """
         if per_window:
-            return [self.reconstruct_window(record, i) for i in range(len(self.windows))]
-        return np.asarray(record.zk, dtype=float).ravel()
+            return [self.reconstruct_window(record, i, band_limit=band_limit)
+                    for i in range(len(self.windows))]
+        z = np.asarray(record.zk, dtype=float).reshape(len(record.zk), -1)
+        w0 = self.windows[0]
+        N = w0._preprocess_N
+        t = w0.t0 + np.arange(N) / self._fs_original
+        total = np.zeros(N)
+        for i, w in enumerate(self.windows):
+            psi = z[:, 2 * i] + 1j * z[:, 2 * i + 1]
+            psi_up = w._resample(psi, w._fs_dec, self._fs_original)
+            if len(psi_up) > N:
+                psi_up = psi_up[:N]
+            elif len(psi_up) < N:
+                psi_up = np.concatenate([psi_up, np.zeros(N - len(psi_up))])
+            if band_limit:
+                psi_up = w._band_limit_phasor(psi_up, 2.0 * w.dfc)
+            total += psi_up.real * np.cos(w._wc * t) - psi_up.imag * np.sin(w._wc * t)
+        return total
 
-    def reconstruct_window(self, record, i):
+    def reconstruct_window(self, record, i, *, band_limit=False):
         """Return the real-band reconstruction for window ``i`` without re-filtering.
 
         Slices window ``i``'s state from ``record.xk``, computes the FUSED phasor sum,
@@ -693,7 +786,7 @@ class OscillatorCompositeModel(CompositeKalmanModel):
         xk_w = np.asarray(record.xk, dtype=float)[:, offset:offset + n]
         zk_hat_w = np.column_stack([xk_w[:, 0::2].sum(axis=1),
                                     xk_w[:, 1::2].sum(axis=1)])
-        return self.windows[i]._reconstruct_postprocess(zk_hat_w).ravel()
+        return self.windows[i]._reconstruct_postprocess(zk_hat_w, band_limit=band_limit).ravel()
 
 
 # ======================================================================
@@ -708,7 +801,7 @@ class InharmonicOscillatorModel(OscillatorModel):
     As any :class:`OscillatorModel` window it **masks** to ``[fc ± dfc]``: only partials
     inside the window are tracked, even though the full ladder is generated.  To track
     the whole ladder, place one :class:`InharmonicOscillatorModel` per partial and
-    compose them in an :class:`OscillatorCompositeModel` (INDEPENDENT).
+    compose them in an :class:`OscillatorBankModel` (INDEPENDENT).
 
     Physical parameters (Young's modulus, wire diameter, length, tension) can be
     converted to ``(f0, B)`` via :func:`wire_fundamental` and :func:`wire_inharmonicity`.
@@ -762,3 +855,7 @@ class HarmonicOscillatorModel(InharmonicOscillatorModel):
         if kwargs.pop("B", 0.0):
             raise TypeError("HarmonicOscillatorModel forces B=0; use InharmonicOscillatorModel for B>0.")
         super().__init__(sensor_id, f0, fc, dfc, n_harmonics=n_harmonics, B=0.0, **kwargs)
+
+
+# Backward-compatible alias: the bank was renamed OscillatorCompositeModel → OscillatorBankModel.
+OscillatorCompositeModel = OscillatorBankModel
