@@ -33,9 +33,11 @@ from .controllers import (
     ProportionalKalmanController,
     PIDKalmanController,
     LQRKalmanController,
+    MPPIKalmanController,
     NeuralKalmanController,
     BoostKalmanController,
     AdaptiveQRKalmanController,
+    NeuralAdaptiveQRKalmanController,
 )
 from .routers import (
     KalmanRouter,
@@ -62,9 +64,11 @@ __all__ = [
     "ProportionalKalmanController",
     "PIDKalmanController",
     "LQRKalmanController",
+    "MPPIKalmanController",
     "NeuralKalmanController",
     "BoostKalmanController",
     "AdaptiveQRKalmanController",
+    "NeuralAdaptiveQRKalmanController",
     "KalmanRouter",
     "BayesianRouter",
     "ThresholdRouter",

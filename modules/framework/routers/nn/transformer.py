@@ -60,6 +60,7 @@ class TransformerNN:
         self._W: int | None = None
         self._block: _Block | None = None
         self._opt: torch.optim.Optimizer | None = None
+        self.loss_history: list[float] = []
 
     def build(self, d_in: int, d_out: int, seed=None) -> "TransformerNN":
         if seed is not None:
@@ -69,6 +70,7 @@ class TransformerNN:
         self._M, self._W = M, W
         self._block = _Block(M, self.d_model, self.d_ff, d_out).to(_DEVICE)
         self._opt   = torch.optim.Adam(self._block.parameters())
+        self.loss_history = []
         return self
 
     def _to_seq(self, X: np.ndarray) -> torch.Tensor:
@@ -87,11 +89,15 @@ class TransformerNN:
         N = len(Xt)
         for _ in range(epochs):
             idx = torch.randperm(N, device=_DEVICE)
+            epoch_loss, n_batches = 0.0, 0
             for s in range(0, N, batch_size):
                 b = idx[s:s + batch_size]
                 self._opt.zero_grad()
-                loss_fn(self._block(Xt[b]), yt[b]).backward()
+                loss = loss_fn(self._block(Xt[b]), yt[b])
+                loss.backward()
                 self._opt.step()
+                epoch_loss += float(loss.item()); n_batches += 1
+            self.loss_history.append(epoch_loss / max(n_batches, 1))
         return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:

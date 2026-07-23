@@ -6,7 +6,12 @@ from ..control import KalmanController
 
 
 class NeuralKalmanController(KalmanController):
-    """Neural controller trained offline via MPPI on ``model.f()``.
+    """Neural controller trained offline to imitate :class:`MPPIKalmanController`.
+
+    ``fit_mppi()`` runs the same warm-started, receding-horizon MPPI planner online at a
+    grid of simulated states, records every ``(state, u*)`` decision, and fits a small MLP
+    to reproduce it — turning an expensive online Monte-Carlo optimisation into a single
+    cheap forward pass at deployment time.
 
     Parameters
     ----------
@@ -17,11 +22,19 @@ class NeuralKalmanController(KalmanController):
         * ``"P"``     — navigation uncertainty  ``√diag(P)``  (shape n)
         * ``"nu"``    — latest innovation  ``z − H x̂⁻``  (shape m)
 
-        Default is ``("error", "P", "nu")`` — the full feature set.  Drop ``"P"``
-        or ``"nu"`` to run the ablation variants.
+        Default is ``("error",)``.  MPPI's own decision ``u*`` never depends on ``P`` or
+        ``ν`` — it plans from a state, not a belief — so for a *full-state-feedback* MPPI
+        teacher (the common case) those two channels carry no signal, only noise, unless the
+        training rollouts are given genuinely representative ``P``/``ν`` statistics to match
+        what the controller will see at deployment (``fit_mppi`` does this — see below).
+        Feeding the network a channel that is constant or always zero during training but
+        varies at test time is a real train/test mismatch, not a free extra feature: adding
+        ``"P"`` or ``"nu"`` without matched statistics measurably *hurts* closed-loop cost.
+        Only opt in if your controller's optimal action genuinely depends on uncertainty or
+        innovation (e.g. an uncertainty-aware or predictive policy you designed on purpose).
     """
 
-    def __init__(self, model, hidden=64, features=("error", "P", "nu"), **kw):
+    def __init__(self, model, hidden=64, features=("error",), **kw):
         super().__init__(model, **kw)
         self._hidden = hidden
         self._features = tuple(features)
@@ -75,59 +88,93 @@ class NeuralKalmanController(KalmanController):
         }
 
     def fit_mppi(self, n_rollouts=100, horizon=15, noise_sigma=0.1, lam=1.0,
-                 epochs=200, lr=1e-3, n_episodes=8, rollout_steps=30, x0_std=1.0, seed=None):
-        """Train via **receding-horizon** Model Predictive Path Integral on ``model.f()``.
+                 epochs=200, lr=1e-3, n_episodes=8, rollout_steps=30, x0_std=1.0, seed=None,
+                 n_iters=3):
+        """Train by **imitating** a warm-started, receding-horizon MPPI planner on ``model.f()``.
 
-        At every step of ``n_episodes`` simulated episodes:
+        This runs the same planner as :class:`MPPIKalmanController` — see its docstring for
+        why warm-starting matters — as the *teacher*, and distils its decisions into the MLP:
 
-        1. Sample ``n_rollouts`` random control sequences of length ``horizon``
-        2. Roll each through ``model.f(x, u+δu, t)`` from the *current* state (full
-           nonlinear physics), accumulating cost ``J = Σ eᵀ Qcost e + uᵀ Rcost u``
-        3. Weight ``w_i = exp(−J_i / λ)``, normalised; average to a control sequence
-        4. Apply only the **first** action (receding horizon, replanned every step) and
-           record the ``(state, u)`` pair
-        5. Advance the true state by that one action and repeat
+        For every step of ``n_episodes`` simulated episodes:
 
-        Replanning from the actual current state at every step — rather than committing
-        to one open-loop sequence per episode — is what makes the collected dataset
-        genuinely state-conditioned, so the trained MLP generalises as a feedback policy
-        instead of just memorising a single nominal trajectory.
+        1. Starting from the nominal sequence carried over from the previous step (zero on
+           the first step of an episode), refine it over ``n_iters`` rounds: sample
+           ``n_rollouts`` perturbations around the nominal, roll each through
+           ``model.f(x, u+δu, t)`` (full nonlinear physics, so any actuator clip the model
+           enforces internally is respected during planning), weight by
+           ``w_i = exp(−J_i / λ)`` on cost ``J = Σ eᵀ Qcost e + uᵀ Rcost u``, and replace the
+           nominal with the weighted average.
+        2. Record ``(state, u*_0)`` — the *first* action of the refined nominal sequence.
+        3. Apply that action, advance the true state, shift the nominal by one step
+           (receding horizon), and repeat.
+
+        Refining a warm-started nominal (rather than resampling raw noise from zero every
+        step, as one-shot random shooting does) is what lets MPPI actually converge toward
+        its cost-optimal sequence within a practical rollout budget — without it, the
+        collected ``u*`` targets are far noisier and the imitating MLP inherits that noise
+        as a training-time bias.
+
+        Replanning from the actual current state at every step — rather than committing to
+        one open-loop sequence per episode — is what makes the collected dataset genuinely
+        state-conditioned, so the trained MLP generalises as a feedback policy instead of
+        just memorising a single nominal trajectory.
 
         Episodes start near ``model.x0`` (the system's typical operating point — not
-        ``x_ref``, which may sit at an unreachable corner of state space, e.g. zero
-        speed) with spread ``x0_std``.
+        ``x_ref``, which may sit at an unreachable corner of state space, e.g. zero speed)
+        with spread ``x0_std``.
         """
+        from .mppi import MPPIKalmanController
+
         rng = np.random.default_rng(seed)
         model = self.model
         n, l, m = model.n, max(model.l, 1), model.m
         dt = 1.0 / model.fs if model.fs else 1.0
 
+        # Realistic P(t)/S(t) schedule for the "P"/"nu" features, if requested — the
+        # covariance recursion (unlike the state trajectory) doesn't depend on which control
+        # is applied, so it can be precomputed once from the model's own F/H/Q/R rather than
+        # left as the constant placeholder that would silently mismatch what a real filter
+        # produces at deployment.
+        need_P = "P" in self._features or "nu" in self._features
+        if need_P:
+            F0, H0, Q0, R0 = model.F(), model.H(), model.Q(), model.R()
+            P0 = model.P0.copy() if hasattr(model, "P0") else np.eye(n)
+            P_sched, S_sched = [], []
+            Pc = P0
+            for _ in range(rollout_steps + 1):
+                Pm = F0 @ Pc @ F0.T + Q0
+                S = H0 @ Pm @ H0.T + R0
+                K = Pm @ H0.T @ np.linalg.inv(S)
+                Pc = (np.eye(n) - K @ H0) @ Pm
+                P_sched.append(Pm)
+                S_sched.append(S)
+        else:
+            P_dummy = np.eye(n)
+
+        planner = MPPIKalmanController(
+            model, n_rollouts=n_rollouts, horizon=horizon, noise_sigma=noise_sigma,
+            lam=lam, n_iters=n_iters, seed=seed, Qcost=self.Qcost, Rcost=self.Rcost,
+            x_ref=self.x_ref,
+        )
+
         dataset_x, dataset_u = [], []
-        P_dummy = np.eye(n)
 
         for _ in range(n_episodes):
             x = (model.x0.ravel() + rng.normal(0, x0_std, n)).reshape(-1, 1)
+            planner.reset()
 
             for step in range(rollout_steps):
                 t0 = step * dt
-                du = rng.normal(0, noise_sigma, (n_rollouts, horizon, l))
-                costs = np.zeros(n_rollouts)
+                u0 = planner._policy(x, None, t0)
 
-                for i in range(n_rollouts):
-                    xi = x.copy()
-                    cost = 0.0
-                    for k in range(horizon):
-                        u_k = du[i, k].reshape(-1, 1)
-                        xi = np.asarray(model.f(xi, u=u_k, t=t0 + k * dt), dtype=float).reshape(-1, 1)
-                        e = xi - self.x_ref
-                        cost += float((e.T @ self.Qcost @ e + u_k.T @ self.Rcost @ u_k).item())
-                    costs[i] = cost
+                if need_P:
+                    P_here, S_here = P_sched[step], S_sched[step]
+                    nu_here = (rng.multivariate_normal(np.zeros(m), S_here).reshape(-1, 1)
+                               if "nu" in self._features else None)
+                else:
+                    P_here, nu_here = P_dummy, None
 
-                weights = np.exp(-(costs - costs.min()) / lam)
-                weights /= weights.sum() + 1e-12
-                u0 = np.einsum("i,il->l", weights, du[:, 0, :]).reshape(-1, 1)
-
-                inp = self._build_input(x, P_dummy, None)
+                inp = self._build_input(x, P_here, nu_here)
                 dataset_x.append(inp)
                 dataset_u.append(u0.ravel())
 

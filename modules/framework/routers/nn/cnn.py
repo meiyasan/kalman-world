@@ -39,6 +39,7 @@ class CNN:
         self._W: int | None = None
         self._net: nn.Module | None = None
         self._opt: torch.optim.Optimizer | None = None
+        self.loss_history: list[float] = []
 
     def build(self, d_in: int, d_out: int, seed=None) -> "CNN":
         if seed is not None:
@@ -56,6 +57,7 @@ class CNN:
             nn.Linear(h, d_out),
         ).to(_DEVICE)
         self._opt = torch.optim.Adam(self._net.parameters())
+        self.loss_history = []
         return self
 
     def _reshape(self, X: np.ndarray) -> np.ndarray:
@@ -72,11 +74,15 @@ class CNN:
         N = len(Xt)
         for _ in range(epochs):
             idx = torch.randperm(N, device=_DEVICE)
+            epoch_loss, n_batches = 0.0, 0
             for s in range(0, N, batch_size):
                 b = idx[s:s + batch_size]
                 self._opt.zero_grad()
-                loss_fn(self._net(Xt[b]), yt[b]).backward()
+                loss = loss_fn(self._net(Xt[b]), yt[b])
+                loss.backward()
                 self._opt.step()
+                epoch_loss += float(loss.item()); n_batches += 1
+            self.loss_history.append(epoch_loss / max(n_batches, 1))
         return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:

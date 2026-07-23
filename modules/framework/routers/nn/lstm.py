@@ -39,6 +39,7 @@ class LSTM:
         self._lstm: nn.LSTM | None = None
         self._head: nn.Linear | None = None
         self._opt: torch.optim.Optimizer | None = None
+        self.loss_history: list[float] = []
 
     def build(self, d_in: int, d_out: int, seed=None) -> "LSTM":
         if seed is not None:
@@ -50,6 +51,7 @@ class LSTM:
         self._head = nn.Linear(self.hidden, d_out).to(_DEVICE)
         params = list(self._lstm.parameters()) + list(self._head.parameters())
         self._opt = torch.optim.Adam(params)
+        self.loss_history = []
         return self
 
     def _to_seq(self, X: np.ndarray) -> torch.Tensor:
@@ -68,13 +70,17 @@ class LSTM:
         N = len(Xt)
         for _ in range(epochs):
             idx = torch.randperm(N, device=_DEVICE)
+            epoch_loss, n_batches = 0.0, 0
             for s in range(0, N, batch_size):
                 b = idx[s:s + batch_size]
                 self._opt.zero_grad()
                 out, _ = self._lstm(Xt[b])          # (batch, W, hidden)
                 logits = self._head(out[:, -1, :])  # last step → (batch, d_out)
-                loss_fn(logits, yt[b]).backward()
+                loss = loss_fn(logits, yt[b])
+                loss.backward()
                 self._opt.step()
+                epoch_loss += float(loss.item()); n_batches += 1
+            self.loss_history.append(epoch_loss / max(n_batches, 1))
         return self
 
     def __call__(self, x: np.ndarray) -> np.ndarray:

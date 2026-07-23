@@ -102,7 +102,12 @@ class CarSpeedModel(ExtendedKalmanModel):
 
         Q = np.diag([q_pos, q_vel]).astype(float)
         R = np.array([[gps_uncertainty ** 2]], dtype=float)
-        super().__init__(name, Q=Q, R=R, fs=fs, **kw)
+        # f() doesn't route an additive-noise `w` through (it's accepted for API
+        # compatibility only), so the engine's generic "numerically differentiate f
+        # w.r.t. w" fallback for L would silently see zero sensitivity and multiply Q
+        # by a zero matrix every predict step. L=I says explicitly: Q enters
+        # additively on every state, which is what q_pos/q_vel are actually meant to do.
+        super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
     # ----------------------------------------------------------------------
     # Longitudinal dynamics
@@ -276,7 +281,12 @@ class CarLaneModel(ExtendedKalmanModel):
         B = np.array([[0.0], [v0 / wheelbase * self._dt], [0.0]])
 
         kw.setdefault("x0", np.array([[0.0], [0.0], [v0]]))
-        super().__init__(name, Q=Q, R=R, B=B, fs=fs, **kw)
+        # f() doesn't route an additive-noise `w` through (accepted for API compatibility
+        # only), so the engine's generic "numerically differentiate f w.r.t. w" fallback
+        # for L would see zero sensitivity and silently multiply Q by a zero matrix every
+        # predict step -- Q would have no effect on P at all. L=I says explicitly: Q
+        # enters additively on every state, which is what q_lat/q_head/q_vel are meant to do.
+        super().__init__(name, Q=Q, R=R, B=B, L=np.eye(self.n), fs=fs, **kw)
 
     def f(self, x, u=None, w=None, t=None):
         x = np.asarray(x, float).reshape(-1)
