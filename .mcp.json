@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "kalman": {
+      "command": "python",
+      "args": [
+        "-m",
+        "kalman.mcp"
+      ],
+      "env": {
+        "PYTHONPATH": "."
+      }
+    }
+  }
+}

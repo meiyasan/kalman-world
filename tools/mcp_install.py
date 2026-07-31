@@ -88,9 +88,15 @@ PROJECT_TARGETS = {
 
 
 def server_entry(python: str, token: str | None, secret: str | None,
-                 transport: str) -> dict:
-    """The launch spec every client understands."""
-    env = {"PYTHONPATH": str(REPO)}
+                 transport: str, portable: bool = False) -> dict:
+    """The launch spec every client understands.
+
+    ``portable`` emits machine-independent values (``python`` from PATH,
+    ``PYTHONPATH="."``) suitable for a config committed to the repo; the
+    default embeds absolute paths, which is what a per-user config wants."""
+    if portable:
+        python = "python"
+    env = {"PYTHONPATH": "." if portable else str(REPO)}
     if secret:
         env["KALMAN_JWT_SECRET"] = secret
     if token:
@@ -219,6 +225,9 @@ def main(argv=None) -> int:
     ap.add_argument("--transport", default="stdio", choices=("stdio", "sse", "streamable-http"))
     ap.add_argument("--project", action="store_true",
                     help="also write repo-local configs (.vscode/mcp.json, .mcp.json)")
+    ap.add_argument("--portable", action="store_true",
+                    help="machine-independent paths (python from PATH, PYTHONPATH=.) "
+                         "- use for a config committed to the repo")
     args = ap.parse_args(argv)
 
     targets = dict(CLIENTS)
@@ -250,7 +259,7 @@ def main(argv=None) -> int:
         ap.error(f"unknown client(s): {', '.join(unknown)} (see --list)")
 
     entry = None if args.remove else server_entry(
-        args.python, args.token, args.jwt_secret, args.transport)
+        args.python, args.token, args.jwt_secret, args.transport, args.portable)
 
     print(f"{'Removing' if args.remove else 'Registering'} '{SERVER_NAME}'"
           f"{' (dry run)' if args.dry_run else ''} — repo {REPO}")
