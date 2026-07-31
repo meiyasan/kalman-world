@@ -98,7 +98,66 @@ class KalmanEngineKind(Enum):
     UNSCENTED     = auto()  # sigma-point transform (UKF)
     PARTICLE      = auto()  # sequential importance resampling (PF)
     COMBINATORIAL = auto()  # branch-on-ambiguous-hit track finding (CKF)
+    ENSEMBLE      = auto()  # perturbed-observation ensemble Kalman filter (EnKF)
 
 
 # All engine kinds — convenient default for ``ALLOWED_ENGINES``.
 ALL_ENGINES = frozenset(KalmanEngineKind)
+
+
+# -----------------------------
+# ----- Integrator kinds ------
+# -----------------------------
+class KalmanIntegratorKind(Enum):
+    """
+    Time-stepping scheme of a :class:`~kalman.framework.integrator.KalmanIntegrator`
+    — advances ``x(t) → x(t+dt)`` given a continuous derivative ``ẋ = f(x,u,t)``.
+
+    Same declared-not-imported pattern as engines: integrators tag their ``KIND``;
+    models declare ``DEFAULT_INTEGRATOR`` + ``ALLOWED_INTEGRATORS``; the model
+    resolves/validates via ``resolve_integrator``.
+    """
+    EULER          = auto()  # explicit forward Euler (1st order)
+    RK4            = auto()  # classic 4-stage Runge–Kutta (4th order)
+    DORMAND_PRINCE = auto()  # RK45 embedded pair, adaptive substeps (Dormand–Prince)
+    IMPLICIT_EULER = auto()  # backward Euler (stiff; needs a nonlinear solve — reserved)
+
+
+ALL_INTEGRATORS = frozenset(KalmanIntegratorKind)
+
+
+# -----------------------------
+# ----- Solver kinds ----------
+# -----------------------------
+class KalmanSolverKind(Enum):
+    """
+    Spatial-discretization strategy of a :class:`~kalman.framework.solver.KalmanSolver`.
+    A solver ``discretize``s a field then ``integrate``s it in time by *composing* a
+    :class:`KalmanIntegratorKind` — for an ODE the two coincide (identity discretize).
+    """
+    SPECTRAL         = auto()  # pseudo-spectral (FFT) discretization
+    FINITE_DIFFERENCE = auto()  # finite differences (reserved)
+    FINITE_VOLUME    = auto()  # finite volumes (reserved)
+    FINITE_ELEMENT   = auto()  # finite elements (reserved)
+
+
+ALL_SOLVERS = frozenset(KalmanSolverKind)
+
+
+# -----------------------------
+# ----- Provider kinds --------
+# -----------------------------
+class KalmanProviderKind(Enum):
+    """
+    Data-source family of a :class:`~kalman.providers.KalmanProvider` — the "WHERE the
+    data comes from" role (synthetic / file / reanalysis / turbulence / live / remote).
+    """
+    SYNTHETIC  = auto()  # generated from a model via KalmanSampler
+    ERA5       = auto()  # ERA5 reanalysis fields
+    TURBULENCE = auto()  # Kraichnan/NSKT turbulence datasets
+    FILE       = auto()  # arrays/records loaded from disk
+    SENSOR     = auto()  # live streaming sensor feed
+    REMOTE     = auto()  # remote HTTP/DB fetch
+
+
+ALL_PROVIDERS = frozenset(KalmanProviderKind)

@@ -1,5 +1,5 @@
 """
-Public Kalman filter terminology (KF / EKF / UKF / PF / IKF).
+Public Kalman filter terminology (KF / EKF / UKF / PF / EnKF / IKF).
 
 Each filter is a thin :class:`~kalman.framework.filter.KalmanFilter` leaf that wraps a model
 with the matching engine (selected by ``KIND``), exposing ``forward()`` / ``backward()``.
@@ -17,6 +17,7 @@ from .ukf import UnscentedKalmanFilter
 from .pf  import ParticleFilter
 from .ckf import CombinatorialKalmanFilter
 from .ikf import InteractiveKalmanFilter
+from .enkf import EnsembleKalmanFilter
 
 __all__ = [
     "LinearKalmanFilter",
@@ -25,4 +26,5 @@ __all__ = [
     "ParticleFilter",
     "CombinatorialKalmanFilter",
     "InteractiveKalmanFilter",
+    "EnsembleKalmanFilter",
 ]

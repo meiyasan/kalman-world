@@ -13,6 +13,7 @@ from .extended import ExtendedKalmanEngine
 from .unscented import UnscentedKalmanEngine
 from .particle import ParticleEngine
 from .combinatorial import CombinatorialKalmanEngine
+from .ensemble import EnsembleKalmanEngine, gaspari_cohn
 
 ENGINE_BY_KIND = {
     KalmanEngineKind.LINEAR:        LinearKalmanEngine,
@@ -20,6 +21,7 @@ ENGINE_BY_KIND = {
     KalmanEngineKind.UNSCENTED:     UnscentedKalmanEngine,
     KalmanEngineKind.PARTICLE:      ParticleEngine,
     KalmanEngineKind.COMBINATORIAL: CombinatorialKalmanEngine,
+    KalmanEngineKind.ENSEMBLE:      EnsembleKalmanEngine,
 }
 
 def resolve_engine(kind: KalmanEngineKind) -> KalmanEngine:
@@ -43,6 +45,8 @@ __all__ = [
     "UnscentedKalmanEngine",
     "ParticleEngine",
     "CombinatorialKalmanEngine",
+    "EnsembleKalmanEngine",
+    "gaspari_cohn",
     "ENGINE_BY_KIND",
     "resolve_engine",
 ]
