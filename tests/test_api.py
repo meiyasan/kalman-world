@@ -26,6 +26,22 @@ class TestIntrospection(unittest.TestCase):
         self.assertIn("spectral", cat["solvers"])
         self.assertIn("ensemble", cat["engines"])
         self.assertGreater(len(cat["controllers"]), 0)
+        # every app domain is reachable by name, calorimeter included
+        self.assertIn("CalorimeterLinearModel", cat["models"])
+
+    def test_registered_kinds_appear_in_the_catalog(self):
+        from modules.framework import (KalmanIntegrator, register_integrator,
+                                       unregister_integrator)
+
+        class _Noop(KalmanIntegrator):
+            def step(self, f, x, u=None, t=None, dt=1.0): return x
+
+        register_integrator("catalog_probe", _Noop)
+        try:
+            self.assertIn("catalog_probe", api.catalog()["integrators"])
+        finally:
+            unregister_integrator("catalog_probe")
+        self.assertNotIn("catalog_probe", api.catalog()["integrators"])
 
     def test_describe(self):
         d = api.describe("OscillatorModel")
@@ -192,6 +208,44 @@ class TestAuth(unittest.TestCase):
             # a >72-byte password is truncated, not an error (bcrypt's limit)
             auth.add_user("bob", "x" * 200, path)
             self.assertTrue(auth.verify_user("bob", "x" * 200, path))
+
+
+class TestPlotAndForecast(unittest.TestCase):
+
+    def test_render_plot_works_for_a_declarative_spec(self):
+        """A spec-built model has no domain state labels; the figure must still
+        render (the error panel is dropped when no truth is stored)."""
+        import matplotlib
+        matplotlib.use("Agg", force=True)
+        for run_id in (api.sample(CV, 1.0)["run_id"],
+                       api.run_filter(CV, [[0.1 * i] for i in range(10)])["run_id"]):
+            png = api.render_plot(run_id)
+            self.assertGreater(len(png), 1000)
+            self.assertEqual(png[:4], b"\x89PNG")
+        with self.assertRaises(KeyError):
+            api.render_plot("no-such-run")
+
+    def test_synthetic_state_labels(self):
+        """An unlabelled model reports one label per state/observable."""
+        m = api.make_model(CV)
+        self.assertEqual(len(list(m.states)), m.n)
+        self.assertEqual(len(list(m.observables)), m.m)
+
+    def test_forecast_propagates_state_and_covariance(self):
+        out = api.forecast(CV, [[0.0], [1.0]], None, 4)
+        xk, Pk = np.asarray(out["xk"]), np.asarray(out["Pk"])
+        self.assertEqual(xk.shape, (4, 2, 1))
+        self.assertEqual(Pk.shape, (4, 2, 2))
+        # constant velocity: position advances by v*dt each step, uncertainty grows
+        np.testing.assert_allclose(xk[:, 0, 0], [0.1, 0.2, 0.3, 0.4], atol=1e-9)
+        self.assertGreater(Pk[-1][0, 0], Pk[0][0, 0])
+
+    def test_forecast_uses_a_models_own_cone_when_it_has_one(self):
+        m = api.make_model({"base": "StormModel", "fs": 1 / 3600.})
+        out = api.forecast({"base": "StormModel", "fs": 1 / 3600.},
+                           np.asarray(m.x0).tolist(), None, 3)
+        for key in ("lon", "lat", "I"):
+            self.assertIn(key, out)
 
 
 if __name__ == "__main__":

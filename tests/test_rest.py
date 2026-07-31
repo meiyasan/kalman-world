@@ -47,6 +47,24 @@ class TestRest(unittest.TestCase):
     def test_openapi_served(self):
         self.assertEqual(self.client.get("/openapi.json").status_code, 200)
 
+    def test_plot_and_diagnostics_of_a_run(self):
+        """A run made from a declarative spec must be plottable, not a 500."""
+        import matplotlib
+        matplotlib.use("Agg", force=True)
+        run = self.client.post("/filter", json={"spec": CV, "data": [[0.1 * i] for i in range(10)]})
+        rid = run.json()["run_id"]
+        self.assertEqual(self.client.get(f"/diagnostics/{rid}").status_code, 200)
+        png = self.client.get(f"/plot/{rid}")
+        self.assertEqual(png.status_code, 200)
+        self.assertEqual(png.headers["content-type"], "image/png")
+        self.assertEqual(png.content[:4], b"\x89PNG")
+        self.assertEqual(self.client.get("/plot/no-such-run").status_code, 404)
+
+    def test_forecast(self):
+        r = self.client.post("/forecast", json={"spec": CV, "x0": [[0.0], [1.0]], "steps": 3})
+        self.assertEqual(r.status_code, 200)
+        self.assertEqual(np.array(r.json()["xk"]).shape, (3, 2, 1))
+
     def test_auth_scopes(self):
         import jwt  # noqa
         from modules.api import auth

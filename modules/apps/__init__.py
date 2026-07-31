@@ -1,4 +1,7 @@
 from .ballistics  import BallisticLinearModel, BallisticModel
+from .calorimeter import (CalorimeterLinearModel, CalorimeterElectromagneticModel,
+                          CalorimeterHadronicModel, CalorimeterGeometry, CaloLayer,
+                          CalorimeterSampler, ECAL_PRESETS, HCAL_PRESETS)
 from .resonators.oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel,
                           OscillatorCompositeModel,   # legacy alias of OscillatorBankModel
                           InharmonicOscillatorModel, HarmonicOscillatorModel, PhasorOscillatorModel,

@@ -67,9 +67,8 @@ def create_app():
 
     @app.post("/forecast")
     def forecast(body: dict, tok=Depends(require("send_measurement"))):
-        m = facade.make_model(body["spec"])
-        cone = m.forecast_cone(body["x0"], body.get("P0"), int(body["steps"]))
-        return facade.jsonify(cone)
+        return facade.forecast(body["spec"], body["x0"], body.get("P0"),
+                               int(body.get("steps", 1)))
 
     @app.post("/osse")
     def osse(body: dict, tok=Depends(require("send_measurement"))):

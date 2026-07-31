@@ -35,12 +35,6 @@ import scipy.special as sps
 from dataclasses import dataclass
 from typing import List, Optional
 
-import os, sys
-_HERE    = os.path.dirname(os.path.abspath(__file__))
-_ROOT_KF = os.path.dirname(os.path.dirname(_HERE))
-if _ROOT_KF not in sys.path:
-    sys.path.insert(0, _ROOT_KF)
-
 from scipy.linalg import expm
 
 from ...framework.models.linear import LinearKalmanModel

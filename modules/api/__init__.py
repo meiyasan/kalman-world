@@ -95,9 +95,9 @@ def _describe_class(cls) -> dict:
 def catalog() -> dict:
     """Everything discoverable: models, engines, integrators, solvers,
     controllers, filters, providers — names + one-line metadata."""
-    from ..framework.engines import ENGINE_BY_KIND
-    from ..framework.integrators import INTEGRATOR_BY_KIND
-    from ..framework.solvers import SOLVER_BY_KIND
+    from ..framework.engines import available_engines
+    from ..framework.integrators import available_integrators
+    from ..framework.solvers import available_solvers
     prov = []
     try:
         from ..providers import PROVIDER_BY_KIND
@@ -107,9 +107,9 @@ def catalog() -> dict:
     return {
         "models": sorted(_model_catalog()),
         "controllers": sorted(_controller_catalog()),
-        "engines": [k.name.lower() for k in ENGINE_BY_KIND],
-        "integrators": [k.name.lower() for k in INTEGRATOR_BY_KIND],
-        "solvers": [k.name.lower() for k in SOLVER_BY_KIND],
+        "engines": available_engines(),
+        "integrators": available_integrators(),      # shipped kinds + registered ones
+        "solvers": available_solvers(),
         "providers": prov,
         "authored": sorted(_SESSION_MODELS),
     }
@@ -140,9 +140,14 @@ def describe(name: str) -> dict:
 # Spec -> objects
 # ======================================================================
 def _kind(enum_cls, value):
-    if value is None:
-        return None
-    return enum_cls[value.upper()] if isinstance(value, str) else value
+    """Spec binding → a Kind member, or the name itself when it is a custom
+    (registered) kind — the resolvers accept both and raise on a typo."""
+    if value is None or not isinstance(value, str):
+        return value
+    try:
+        return enum_cls[value.upper()]
+    except KeyError:
+        return value
 
 
 def make_model(spec: dict) -> KalmanModel:
@@ -212,9 +217,9 @@ def make_filter(spec: dict) -> KalmanFilter:
 # ======================================================================
 # Execute
 # ======================================================================
-def _stash(record, model, spec) -> str:
+def _stash(record, model, spec, truth=None) -> str:
     rid = f"run{len(_RUNS)}"
-    _RUNS[rid] = {"record": record, "model": model, "spec": spec}
+    _RUNS[rid] = {"record": record, "model": model, "spec": spec, "truth": truth}
     return rid
 
 
@@ -222,7 +227,7 @@ def sample(spec: dict, duration: float, **kw) -> dict:
     """Generate synthetic truth + measurements; returns ``{run_id, time, xk, zk}``."""
     model = make_model(spec)
     rec = model.sample(duration, **kw)
-    rid = _stash(rec, model, spec)
+    rid = _stash(rec, model, spec, truth=rec)
     return {"run_id": rid, "time": jsonify(rec.time), "xk": jsonify(rec.xk), "zk": jsonify(rec.zk)}
 
 
@@ -295,17 +300,57 @@ def diagnostics(run_id: str) -> dict:
 
 
 def render_plot(run_id: str) -> bytes:
-    """Render a stored run's signature figure to PNG bytes (base64-encode for JSON)."""
+    """Render a stored run's signature figure to PNG bytes (base64-encode for JSON).
+
+    The default figure carries a measurement-error panel that needs a truth
+    trajectory, which only a :func:`sample` run has; for a filtered run the panel
+    is dropped (``error=False``) rather than raising.
+    """
     import io, matplotlib
     matplotlib.use("Agg", force=True)
     import matplotlib.pyplot as plt
     r = _RUNS.get(run_id)
     if r is None:
         raise KeyError(f"unknown run_id {run_id!r}.")
-    fig = r["model"].plot(r["record"])
+    model, record, truth = r["model"], r["record"], r.get("truth")
+    try:
+        # A stored run carries no separate ground truth (except a sample() run,
+        # where the record *is* the truth), so drop the measurement-error panel
+        # rather than raise.
+        fig = (model.plot(record, sample=truth) if truth is not None and truth is not record
+               else model.plot(record, error=False))
+    except TypeError:
+        fig = model.plot(record)      # an app whose plot() takes neither keyword
     buf = io.BytesIO(); fig.savefig(buf, format="png", dpi=90, bbox_inches="tight")
     plt.close(fig)
     return buf.getvalue()
+
+
+def forecast(spec: dict, x0, P0=None, steps: int = 1, **kw) -> dict:
+    """Forecast ahead from ``x0``/``P0`` for ``steps``.
+
+    Uses the model's ``forecast_cone`` when it defines one (the storm family
+    returns a track cone: ``{lon, lat, I, I_sigma, ellipses}``); otherwise the
+    state and its covariance are propagated with the model's own ``f``/``F``, so
+    every model answers something rather than only the storms.
+    """
+    model = make_model(spec)
+    x = _arr(x0).reshape(model.n, 1)
+    P = _arr(P0) if P0 is not None else np.asarray(model.P0, dtype=float)
+    steps = int(steps)
+
+    cone = getattr(model, "forecast_cone", None)
+    if callable(cone):
+        return jsonify(cone(x, P, steps, **kw))
+
+    Q = model.Q()
+    xs, Ps = [], []
+    for k in range(steps):
+        F = model.F(x=x, t=None)
+        x = np.asarray(model.f(x), dtype=float).reshape(model.n, 1)
+        P = F @ P @ F.T + Q
+        xs.append(x); Ps.append(P)
+    return {"xk": jsonify(xs), "Pk": jsonify(Ps)}
 
 
 def fetch(provider_spec: dict, query: dict = None, *, credential: str | None = None) -> dict:
@@ -326,7 +371,8 @@ from .scaffold import scaffold, write_scaffold          # noqa: E402
 
 __all__ = [
     "catalog", "describe", "make_model", "make_filter",
-    "sample", "run_filter", "run_osse", "run_control", "diagnostics", "render_plot",
+    "sample", "run_filter", "forecast", "run_osse", "run_control",
+    "diagnostics", "render_plot",
     "fetch",
     "register_model", "save_spec", "load_spec", "scaffold", "write_scaffold",
     "jsonify",
