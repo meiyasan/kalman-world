@@ -1,7 +1,7 @@
 """ERA5 provider — reanalysis fields as a truth trajectory for a flow model.
 
 A **weather-domain** provider (lives under ``apps/weather``, beside the models it
-feeds).  Wraps the ERA5 loaders (``apps.reanalysis``); guarded on ``cdsapi``/
+feeds).  Wraps the ERA5 loaders (``apps.weather.geo``); guarded on ``cdsapi``/
 ``xarray``.  The outbound CDS credential is handled by ``cdsapi`` itself
 (``~/.cdsapirc``); this provider only turns fetched/loaded fields into a
 ``truth`` trajectory the ensemble estimator consumes.

@@ -5,7 +5,7 @@ part (FFT, 2/3-rule dealiasing, spectral ``ik`` operators) and delegates the tim
 march to a composed :class:`~kalman.framework.integrator.KalmanIntegrator` (RK4)
 applied to the **spectral** field.  Subclasses supply the physics via
 ``rhs_hat(wh) → dω̂/dt``; this class is domain-agnostic (the Kolmogorov forcing
-lives in ``apps.fluids.NS2D``, which subclasses this).
+lives in ``apps.weather.flow.NS2D``, which subclasses this).
 
 **Backend.** ``backend="numpy"`` (default) or ``"torch"`` with ``device`` in
 ``cpu/cuda/mps``.  The torch path runs ``solve`` on GPU/MPS and accepts a batched

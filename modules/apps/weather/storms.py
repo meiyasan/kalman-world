@@ -1,7 +1,7 @@
 """Reduced storm models — typhoon track/intensity and tornado-environment regime.
 
 Two low-dimensional models built to sit *on top of* the field-scale EnKF
-(``kalman.apps.fluids``): the EnKF estimates the environment, these estimate the
+(``kalman.apps.weather.flow``): the EnKF estimates the environment, these estimate the
 local phenomenon and — crucially — its **covariance**.
 
 - :class:`TyphoonModel` — a reduced tropical-cyclone tracker.  State
@@ -523,7 +523,7 @@ def analytic_steering(lon, lat, t=None, *, ridge_lat=27.0, easterly=-26.0,
     poleward (beta), crosses the ridge into the westerlies and **recurves** —
     recurvature as physics, not a fitted turn rate.  In the real system this
     callable is replaced by the deep-layer mean flow diagnosed from the field
-    EnKF (``kalman.apps.fluids``); the signature is identical.
+    EnKF (``kalman.apps.weather.flow``); the signature is identical.
     """
     pole = 1.0 if str(hemisphere).upper() == "N" else -1.0
     frac = 0.5 * (1.0 + np.tanh(pole * (lat - ridge_lat) / width))   # 0 tropics → 1 mid-lat

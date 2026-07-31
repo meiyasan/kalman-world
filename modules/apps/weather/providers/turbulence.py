@@ -1,6 +1,6 @@
 """Turbulence provider — Kraichnan/NSKT datasets as a truth trajectory.
 
-A **weather-domain** provider.  Wraps ``apps.reanalysis.turbulence_truth`` /
+A **weather-domain** provider.  Wraps ``apps.weather.geo.turbulence_truth`` /
 ``load_turbulence`` (guarded on ``h5py`` for HDF5 files); a doubly-periodic box
 is geometrically ideal for the spectral flow model.
 """

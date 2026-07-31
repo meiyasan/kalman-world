@@ -1,10 +1,10 @@
-"""CNN forecast surrogate for :class:`~kalman.apps.fluids.KolmogorovFlowModel`.
+"""CNN forecast surrogate for :class:`~kalman.apps.weather.flow.KolmogorovFlowModel`.
 
 Imports torch at module level, so it is **not** re-exported from
 ``kalman.apps`` — import it explicitly (same convention as
 ``kalman.framework.routers.nn``)::
 
-    from kalman.apps.flowsurrogate import (make_trajectory, train_surrogate,
+    from kalman.apps.weather.surrogate import (make_trajectory, train_surrogate,
                                            as_forecaster, rollout_rmse)
 
 The prototype that preceded this module showed that a surrogate trained on

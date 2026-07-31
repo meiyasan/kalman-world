@@ -12,7 +12,7 @@ scaffold: truth from the real solver, synthetic observations at known probe
 locations, cycled analysis, RMSE/spread diagnostics against a free-running
 control.  It is the standard validation harness for any learned component
 (surrogate forecast, learned observation operator, …) before it is trusted in
-a filter; see ``kalman.apps.flowsurrogate`` for the CNN forecast surrogate.
+a filter; see ``kalman.apps.weather.surrogate`` for the CNN forecast surrogate.
 
 **RNG discipline** (hard-won): the harness draws the *observation* noise from
 one shared stream so every method sees literally the same measurement
@@ -291,7 +291,7 @@ class KolmogorovFlowModel(KalmanModel):
         """Incompressible velocity ``(u, v) = ∇⊥ψ`` from the vorticity field —
         delegates to the solver's operator (``NS2D.velocity``).  This is the
         deep-layer flow the storm tracker consumes as *steering* (see
-        ``kalman.apps.storms.field_steering``)."""
+        ``kalman.apps.weather.storms.field_steering``)."""
         return self.solver.velocity(field)
 
     def velocity_sampler(self, field, region, *, speed=40.0):
@@ -302,7 +302,7 @@ class KolmogorovFlowModel(KalmanModel):
         the flow's periodic box (bilinear interpolation, torus-wrapped) and
         scales the non-dimensional velocity to ``speed`` km/h at unit magnitude.
         This is the bridge that lets the field EnKF **supply the deep-layer
-        steering flow** to :func:`kalman.apps.storms.field_steering` — the
+        steering flow** to :func:`kalman.apps.weather.storms.field_steering` — the
         environment estimate (with its ensemble uncertainty) driving the
         typhoon tracker.
         """
@@ -435,7 +435,7 @@ class TwinExperiment:
     (a *perfect-model* twin).  Pass ``truth_trajectory=`` (one field per cycle,
     ``(T, n)`` or ``(T, grid, grid)``) to replay an **external** truth instead:
     a run of the solver with different physics (imperfect-model experiment) or
-    a real reanalysis sequence (see ``kalman.apps.reanalysis`` for the ERA5
+    a real reanalysis sequence (see ``kalman.apps.weather.geo`` for the ERA5
     loader chain).  Observations are then synthesized from the replayed fields
     at the model's probes, and every RMSE is measured against them — so the
     same harness, ratios (:meth:`skill`) and RNG discipline cover real data.

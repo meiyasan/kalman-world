@@ -92,8 +92,9 @@ expose a `DOMAINS` map. Grouping is by shared foundation or application area —
 `VARIANTS`; cross-family imports are normal (e.g. `interferometer` uses
 `resonators.oscillators`).
 
-`apps/{fluids,reanalysis,storms,flowsurrogate}.py` are **back-compat shims** for
-the weather move. Do not add logic to them; import from `kalman.apps.weather`.
+`apps/` contains **packages only** — there are no flat domain modules and no
+shims. Import from the canonical path (`kalman.apps.weather.flow`, …) or from
+the stable `kalman.apps` surface.
 
 ---
 
@@ -149,7 +150,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **448 passed, 7 skipped** (skips are optional-dependency
+Current baseline: **447 passed, 7 skipped** (skips are optional-dependency
 gates). The suite must stay green; a red suite is never "expected".
 
 If you touch `apps/` layout, also verify the notebooks still import:

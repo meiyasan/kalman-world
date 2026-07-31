@@ -1,7 +1,7 @@
 """ERA5 / reanalysis truth-replay chain for the Kolmogorov-flow DA testbed.
 
 Turns a real atmospheric field sequence into a ``truth_trajectory`` for
-:class:`~kalman.apps.fluids.TwinExperiment` — the imperfect-model experiment
+:class:`~kalman.apps.weather.flow.TwinExperiment` — the imperfect-model experiment
 where the "nature run" is the actual atmosphere and the forecast model is the
 toy solver (or a learned surrogate).  The chain::
 

@@ -7,7 +7,8 @@ These guard the architecture itself rather than any single model:
   that re-exports its public names and a ``VARIANTS`` registry);
 - the plug-in registries (engine / integrator / solver / provider) cover their
   full kind enum and resolve by name;
-- the public ``kalman.apps`` surface stays importable after reorganisation.
+- the public ``kalman.apps`` surface stays importable after reorganisation;
+- ``apps/`` holds packages only (no flat domain modules).
 """
 import importlib
 import inspect
@@ -24,8 +25,8 @@ from modules.framework.constants import (ALL_ENGINES, ALL_INTEGRATORS,
 
 APPS_DIR = os.path.dirname(apps.__file__)
 
-# Flat modules deliberately kept as back-compat shims for the weather move.
-SHIMS = {"fluids", "reanalysis", "storms", "flowsurrogate"}
+# apps/ contains packages only — no flat domain modules, no shims.
+SHIMS: set[str] = set()
 
 
 # Family packages group related domains; their members are the real domains.
@@ -132,20 +133,6 @@ class TestAppsAreUniformPackages(unittest.TestCase):
             self.assertGreater(len(mod.DOMAINS), 1, f"{fam} should group >1 domain")
             for name, dom in mod.DOMAINS.items():
                 self.assertTrue(hasattr(dom, "VARIANTS"), f"{fam}.{name} needs VARIANTS")
-
-    def test_shims_forward_to_weather(self):
-        """The back-compat shims still resolve to the weather package objects."""
-        from modules.apps import weather
-        for shim, canonical in (("fluids", "flow"), ("reanalysis", "geo"),
-                                ("storms", "storms"), ("flowsurrogate", "surrogate")):
-            m = importlib.import_module(f"modules.apps.{shim}")
-            target = importlib.import_module(f"modules.apps.weather.{canonical}")
-            shared = [n for n in dir(target)
-                      if not n.startswith("_") and hasattr(m, n)
-                      and (inspect.isclass(getattr(target, n)) or inspect.isfunction(getattr(target, n)))]
-            self.assertTrue(shared, f"shim {shim} forwards nothing")
-            for n in shared[:5]:
-                self.assertIs(getattr(m, n), getattr(target, n), f"{shim}.{n} is not the canonical object")
 
 
 if __name__ == "__main__":
