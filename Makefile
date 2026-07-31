@@ -219,6 +219,30 @@ install: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) install
 
+## Serve the REST API + MCP server via docker-compose
+serve: motd
+	@docker compose up -d rest mcp
+
+## Run the REST API locally (uvicorn, default 0.0.0.0:8000)
+rest:
+	@$(PYTHON) -m kalman.rest
+
+## Run the MCP server locally (stdio)
+mcp:
+	@$(PYTHON) -m kalman.mcp
+
+## Add/update an API account (username + password) in the .htpasswd store: make api-user USER=alice
+api-user:
+	@$(PYTHON) -m kalman.api.auth adduser --user "$(USER)"
+
+## Mint a scoped JWT for an API account: make api-token USER=alice SCOPES="read,send_measurement"
+api-token:
+	@$(PYTHON) -m kalman.api.auth token --user "$(USER)" --scopes "$(or $(SCOPES),read)" --exp "$(or $(EXP),24)"
+
+## Mint a full-scope admin JWT: make api-admin-token USER=root
+api-admin-token:
+	@$(PYTHON) -m kalman.api.auth token --user "$(USER)" --scopes "admin" --exp "$(or $(EXP),24)"
+
 ## Build the Docker image
 image: motd
 	@docker buildx build --platform=$(PLATFORM) -t $$(basename $(PWD)) $(NOCACHE) .

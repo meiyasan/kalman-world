@@ -44,3 +44,55 @@ services:
       - ./var:/mnt/local/var:rw
 
     entrypoint: /mnt/local/entrypoint.sh
+
+  # ---- REST API (FastAPI/uvicorn) over the kalman.api facade ----
+  rest:
+    container_name: ${CONTAINER:-docker}-rest
+    platform: ${PLATFORM:-linux/amd64}
+    networks:
+      - extranet
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - KALMAN_REST_HOST=0.0.0.0
+      - KALMAN_REST_PORT=8000
+      - KALMAN_JWT_SECRET=${KALMAN_JWT_SECRET:-}
+      - KALMAN_HTPASSWD=/run/secrets/htpasswd
+    volumes:
+      - ./:/mnt/local:ro
+      - ${KALMAN_HTPASSWD:-/dev/null}:/run/secrets/htpasswd:ro
+    working_dir: /mnt/local
+    command: ["python", "-m", "kalman.rest"]
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://localhost:8000/healthz').status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  # ---- MCP server (SSE transport in the container) ----
+  mcp:
+    container_name: ${CONTAINER:-docker}-mcp
+    platform: ${PLATFORM:-linux/amd64}
+    networks:
+      - extranet
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    environment:
+      - KALMAN_MCP_TRANSPORT=sse
+      - KALMAN_MCP_HOST=0.0.0.0
+      - KALMAN_MCP_PORT=8765
+      - KALMAN_JWT_SECRET=${KALMAN_JWT_SECRET:-}
+    volumes:
+      - ./:/mnt/local:ro
+    working_dir: /mnt/local
+    command: ["python", "-m", "kalman.mcp"]
+    ports:
+      - "8765:8765"
