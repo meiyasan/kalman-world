@@ -1,4 +1,5 @@
 from scipy.signal import resample_poly, butter, filtfilt
+from scipy.linalg import expm
 from fractions import Fraction
 
 import matplotlib.pyplot as plt
@@ -300,6 +301,59 @@ def numerical_jacobian(func, x: np.ndarray, *args, eps: float = 1e-6) -> np.ndar
         y1 = as_col(func(x + dx, *args))
         J[:, j] = ((y1 - y0) / step).ravel()
     return J
+
+def van_loan_discretize(A: np.ndarray, L: np.ndarray, Qc: np.ndarray, dt: float):
+    """Exact continuous->discrete conversion (Van Loan, 1978) for a linear system
+    ``ẋ = Ax + Lw`` driven by continuous white noise of spectral density ``Qc``.
+
+    Returns ``(F, Q)`` for the equivalent discrete model ``x_{k+1} = F x_k + q_k``,
+    ``Cov(q_k) = Q``, exact over the step ``dt`` — including the off-diagonal
+    position/velocity-type coupling that a naive ``Q ≈ L Qc Lᵀ · dt`` misses, and
+    correct even when ``A`` is singular/nilpotent (as every kinematic chain here is),
+    where the closed-form ``Q = A⁻¹(...)`` alternative doesn't apply.
+
+    Built from the block matrix exponential
+    ``expm([[-A, L·Qc·Lᵀ], [0, Aᵀ]]·dt) = [[M11, M12], [0, M22]]``,
+    giving ``F = M22ᵀ`` and ``Q = F·M12``.
+    """
+    n = A.shape[0]
+    Z = np.zeros((2 * n, 2 * n), dtype=float)
+    Z[:n, :n] = -A
+    Z[:n, n:] = L @ Qc @ L.T
+    Z[n:, n:] = A.T
+    M = expm(Z * dt)
+    F = M[n:, n:].T
+    Q = F @ M[:n, n:]
+    return F, Q
+
+def symbolic_discretize(A: np.ndarray, t: str = "dt"):
+    """Closed-form ``F(t) = exp(A·t)`` as a symbolic expression, for reading a
+    model's discretization as an equation (the way it's designed) rather than a
+    numeric matrix you have to run code to see. Lazy ``sympy`` import — this is a
+    read/inspect tool (call it from a notebook on a model's ``A``), not something
+    any model needs at runtime, so it isn't a hard dependency of the framework.
+
+    Display with ``print(...)`` (flat ``dt**2/2`` form), not ``sympy.pprint``
+    (its 2D box/fraction layout is ambiguous in a plain terminal); in a Jupyter
+    cell the bare returned Matrix already renders as typeset math.
+    """
+    import sympy as sp
+    t_sym = sp.symbols(t, positive=True)
+    A_sym = sp.nsimplify(sp.Matrix(A), rational=True)
+    return sp.simplify((A_sym * t_sym).exp())
+
+def zoh_discretize(A: np.ndarray, B: np.ndarray, dt: float):
+    """Exact zero-order-hold discretization of ``ẋ = Ax + Bu`` into ``F, B_d`` such
+    that ``x_{k+1} = F x_k + B_d u_k``. Uses the augmented matrix exponential
+    ``expm([[A, B], [0, 0]]·dt) = [[F, B_d], [0, I]]`` rather than the closed form
+    ``B_d = A⁻¹(F − I)B``, so it stays valid when ``A`` is singular/nilpotent.
+    """
+    n, l = A.shape[0], B.shape[1]
+    Z = np.zeros((n + l, n + l), dtype=float)
+    Z[:n, :n] = A
+    Z[:n, n:] = B
+    M = expm(Z * dt)
+    return M[:n, :n], M[:n, n:]
 
 def format_shape(arr):
     """

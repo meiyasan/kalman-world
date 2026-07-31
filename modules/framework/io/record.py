@@ -880,16 +880,16 @@ class KalmanRecord:
                 return self._replay(component=list(component) if is_list else [component],
                                    dim=dim[0], view="1d", sample=kwargs.get("sample"), error=error, sigma=sigma,
                                    jshtml=kwargs.pop("jshtml", False),
-                                   frames=kwargs.pop("frames", 80), interval=kwargs.pop("interval", 90))
+                                   frames=kwargs.pop("frames", 30), interval=kwargs.pop("interval", 90))
             if view == "2d" or len(dim) >= 2:
                 cc = list(component) if isinstance(component, (list, tuple)) else [component, component]
                 return self._replay(component=cc[:2], dim=dim[:2], view="2d",
                                    sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
-                                   frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
+                                   frames=kwargs.pop("frames", 40), interval=kwargs.pop("interval", 80))
             c = component[0] if isinstance(component, (list, tuple)) else (component if component is not None else 0)
             return self._replay(component=c, dim=dim[0], view="1d", sigma=sigma,
                                sample=kwargs.get("sample"), jshtml=kwargs.pop("jshtml", False),
-                               frames=kwargs.pop("frames", 150), interval=kwargs.pop("interval", 80))
+                               frames=kwargs.pop("frames", 40), interval=kwargs.pop("interval", 80))
 
         # `need` is the view's component count (1d→1, 2d→2, 3d→3); pass it so phase
         # plots keep all components even when the model has fewer sensor axes.
@@ -919,7 +919,7 @@ class KalmanRecord:
         )
         return self._replay(*args, **kwargs)
 
-    def _replay(self, component=0, dim=0, sample=None, view="1d", frames=80,
+    def _replay(self, component=0, dim=0, sample=None, view="1d", frames=30,
                interval=90, jshtml=False, figsize=None, dpi=80, title=None, error=False, sigma=None):
         """
         Interactive **time-cursor replay** of the reconstruction — play the filtered
@@ -1052,7 +1052,7 @@ class KalmanRecord:
 
         return animate(fig, _draw, frames=fr, interval=interval, jshtml=jshtml)
 
-    def _replay_dashboard(self, components, dim=0, sample=None, frames=80, interval=90,
+    def _replay_dashboard(self, components, dim=0, sample=None, frames=30, interval=90,
                           jshtml=False, figsize=None, dpi=80, title=None, error=False, sigma=None):
         """
         Multi-panel time-cursor replay: one panel per state component, plus an

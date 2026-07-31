@@ -8,12 +8,25 @@ spec is indistinguishable from a built-in.  The ``mcp`` SDK is imported lazily.
 from __future__ import annotations
 
 
+def _server_class():
+    """The SDK's decorator-style server class.
+
+    MCP SDK 2.x exposes it as ``mcp.server.MCPServer``; 1.x called the same
+    thing ``mcp.server.fastmcp.FastMCP``.  Support both so the server works
+    against whichever generation is installed."""
+    try:
+        from mcp.server import MCPServer          # SDK >= 2.0
+        return MCPServer
+    except ImportError:
+        from mcp.server.fastmcp import FastMCP    # SDK 1.x
+        return FastMCP
+
+
 def build_server():
-    from mcp.server.fastmcp import FastMCP
     from .. import api as facade
     from ..api.auth import authorize
 
-    mcp = FastMCP("kalman")
+    mcp = _server_class()("kalman")
 
     # ---- read ----
     @mcp.tool()

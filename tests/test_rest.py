@@ -73,16 +73,57 @@ class TestRest(unittest.TestCase):
 
 class TestMcp(unittest.TestCase):
 
-    def test_import_and_main_hint(self):
-        # __main__.main() must not raise even when the mcp SDK is absent.
+    @unittest.skipIf(_has("mcp"), "mcp installed — main() would start the server")
+    def test_main_prints_hint_without_sdk(self):
+        """Without the SDK, the entry point prints an install hint and exits 0
+        rather than crashing (the core never hard-depends on mcp)."""
         from modules.mcp.__main__ import main
         self.assertEqual(main([]), 0)
 
     @unittest.skipUnless(_has("mcp"), "mcp SDK not installed")
     def test_build_server_registers_tools(self):
-        from modules.mcp.server import build_server
+        """The server must actually construct against the installed SDK — this
+        caught a real breakage when SDK 2.0 renamed FastMCP -> MCPServer."""
+        from modules.mcp.server import build_server, _server_class
+        self.assertIsNotNone(_server_class())
         server = build_server()
         self.assertIsNotNone(server)
+
+    @unittest.skipUnless(_has("mcp"), "mcp SDK not installed")
+    def test_live_stdio_session(self):
+        """End-to-end: drive the server as a real MCP client over stdio —
+        handshake, tool listing, a scoped call, and scope enforcement."""
+        import asyncio, json, os, subprocess
+
+        async def drive():
+            from mcp import ClientSession, StdioServerParameters
+            from mcp.client.stdio import stdio_client
+            from modules.api.auth import mint_token
+            secret = "a-long-enough-integration-test-secret-key"
+            env = dict(os.environ, PYTHONPATH=os.getcwd(), KALMAN_JWT_SECRET=secret)
+            params = StdioServerParameters(command=sys.executable,
+                                           args=["-m", "kalman.mcp"], env=env,
+                                           cwd=os.getcwd())
+            async with stdio_client(params) as (r, w):
+                async with ClientSession(r, w) as s:
+                    await s.initialize()
+                    tools = {t.name for t in (await s.list_tools()).tools}
+                    reader = mint_token("bob", ["read"], secret=secret)
+                    sender = mint_token("ada", ["send_measurement"], secret=secret)
+                    ok = await s.call_tool("run_filter",
+                                           {"spec": CV, "data": [[0.1 * i] for i in range(10)],
+                                            "token": sender})
+                    denied = await s.call_tool("run_filter",
+                                               {"spec": CV, "data": [[0.0]], "token": reader})
+                    return tools, ok, denied
+
+        tools, ok, denied = asyncio.run(drive())
+        self.assertIn("run_filter", tools)
+        self.assertIn("register_model", tools)
+        self.assertFalse(ok.is_error)
+        payload = json.loads("".join(c.text for c in ok.content if getattr(c, "type", "") == "text"))
+        self.assertEqual(len(payload["xk"]), 10)
+        self.assertTrue(denied.is_error)          # read-only token refused
 
 
 class TestRestMainHint(unittest.TestCase):

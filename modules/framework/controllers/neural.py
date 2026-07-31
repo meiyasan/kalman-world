@@ -122,11 +122,23 @@ class NeuralKalmanController(KalmanController):
         Episodes start near ``model.x0`` (the system's typical operating point — not
         ``x_ref``, which may sit at an unreachable corner of state space, e.g. zero speed)
         with spread ``x0_std``.
+
+        Rollouts are advanced with the model's own process noise ``Q`` injected at every
+        step, matching how :func:`closed_loop_run`-style deployment actually behaves. A
+        clean, noise-free rollout only ever visits *one* smooth corrective arc per episode
+        — it converges toward ``x_ref`` and stays there, so the dataset ends up almost
+        entirely one-sided (states still short of the target, actions that push toward it)
+        and starves the network of examples on the *other* side of the target (small
+        negative error, having overshot) that real sensor/process noise puts it in
+        constantly once deployed. Without noise here, the MLP has no data to learn a
+        symmetric policy from and inherits whatever asymmetric bias the unseen side
+        defaults to.
         """
         from .mppi import MPPIKalmanController
 
         rng = np.random.default_rng(seed)
         model = self.model
+        q_std = np.sqrt(np.diag(model.Q()))
         n, l, m = model.n, max(model.l, 1), model.m
         dt = 1.0 / model.fs if model.fs else 1.0
 
@@ -179,6 +191,7 @@ class NeuralKalmanController(KalmanController):
                 dataset_u.append(u0.ravel())
 
                 x = np.asarray(model.f(x, u=u0, t=t0), dtype=float).reshape(-1, 1)
+                x = x + rng.normal(0, q_std, n).reshape(-1, 1)
 
         X = np.array(dataset_x)
         Y = np.array(dataset_u)

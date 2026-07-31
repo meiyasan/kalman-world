@@ -150,8 +150,15 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **447 passed, 7 skipped** (skips are optional-dependency
+Current baseline: **452 passed, 3 skipped** (skips are optional-dependency
 gates). The suite must stay green; a red suite is never "expected".
+
+Install the optional extras to exercise the transports for real rather than
+skipping them — `pip install 'mcp>=2' 'fastapi' 'uvicorn[standard]'`. The MCP
+server is covered by a **live stdio session** test that spawns
+`python -m kalman.mcp` and drives it as a client; it caught a real breakage
+when SDK 2.0 renamed `FastMCP` to `MCPServer`, which a mocked test would have
+missed.
 
 If you touch `apps/` layout, also verify the notebooks still import:
 

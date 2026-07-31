@@ -31,8 +31,15 @@ class KalmanController:
             self.model._B = np.asarray(B_new, dtype=float)
             self.B_log.append((t, B_new.copy()))
 
+        # Cost against the command the actuator can actually deliver (model.clip_u), not
+        # the controller's raw ask -- a fixed-gain controller with no notion of an actuator
+        # limit (e.g. LQR) can ask for far more than the plant ever receives, and charging
+        # Rcost against that fictitious, never-applied effort would inflate its cost against
+        # a controller (e.g. MPPI) whose raw output already respects the limit. u_log still
+        # keeps the raw command for diagnostics -- only the logged cost uses the clipped one.
+        u_applied = np.asarray(self.model.clip_u(u), dtype=float).reshape(-1, 1)
         e = x_hat - self.x_ref
-        cost = float((e.T @ self.Qcost @ e + u.T @ self.Rcost @ u).item())
+        cost = float((e.T @ self.Qcost @ e + u_applied.T @ self.Rcost @ u_applied).item())
         self.cost_log.append((t, cost))
         self.u_log.append((t, u.copy()))
         return u

@@ -200,14 +200,28 @@ class CompositeKalmanModel(KalmanModel):
 
     # ---------- Structural matrices ----------
     def _bind_matrix(self, attr):
-        """Bind block-diagonal structural matrices (B, L, or M)."""
+        """Bind block-diagonal structural matrices (B, L, or M).
+
+        A submodel returning ``None`` means "unspecified", and the right
+        default differs by matrix: for ``B``/``M`` (no control input / no
+        measurement-noise shaping) zero is correct — multiplying by zero
+        contributes nothing, which is exactly the "not present" case. For
+        ``L`` (the process-noise map, ``Q_eff = L @ Q @ L.T`` in
+        ``KalmanEngine._predict``), ``None`` means "``Q`` is already in the
+        right state-space units, use it unshaped" — the *identity*, not
+        zero. Defaulting L to zero silently cancels every leaf's process
+        noise once composed, making ``process_uncertainty`` inert for any
+        composite built from leaves that don't set an explicit L (e.g. every
+        ``AnalyticOscillatorModel``-based window: ``OscillatorModel``,
+        ``OscillatorBankModel``, and anything built on them).
+        """
         def func(t=None):
             blocks = []
             for m in self.models:
                 rows = m.m if attr == "M" else m.n
                 mat = getattr(m, attr)(t) if hasattr(m, attr) else None
                 if mat is None:
-                    mat = np.zeros((rows, rows))
+                    mat = np.eye(rows) if attr == "L" else np.zeros((rows, rows))
                 blocks.append(mat)
             return block_diag(*blocks)
         return func

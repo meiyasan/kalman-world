@@ -59,7 +59,17 @@ class MPPIKalmanController(KalmanController):
                 xi = x_hat.copy()
                 cost = 0.0
                 for k in range(self.horizon):
-                    u_k = u_try[i, k].reshape(-1, 1)
+                    # Clip the *candidate* action before rolling it out or costing it, not
+                    # after -- otherwise dynamics/cost go flat past the limit (any raw value
+                    # out there looks identical), and the cost-weighted average of many
+                    # different "however far past the limit" samples can land anywhere out
+                    # there with no pull back toward what's deliverable. Clipping here keeps
+                    # every candidate, and so the weighted-average nominal, inside the box
+                    # the actuator can actually reach -- matching real MPC practice, and
+                    # keeping u_try consistent with what u_nom will be averaged from.
+                    u_k = np.asarray(model.clip_u(u_try[i, k].reshape(-1, 1)), dtype=float).reshape(-1)
+                    u_try[i, k] = u_k
+                    u_k = u_k.reshape(-1, 1)
                     xi = np.asarray(model.f(xi, u=u_k, t=t + k * dt), dtype=float).reshape(-1, 1)
                     e = xi - self.x_ref
                     cost += float((e.T @ self.Qcost @ e + u_k.T @ self.Rcost @ u_k).item())

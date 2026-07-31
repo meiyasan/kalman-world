@@ -22,6 +22,7 @@ class LinearKalmanModel(KalmanModel):
     ALLOWED_ENGINES = ALL_ENGINES
 
     def __init__(self, sensor_id, **kwargs):
-        if kwargs.get("F") is None or kwargs.get("H") is None:
-            raise ValueError("LinearKalmanModel requires F= and H= matrices (guaranteed-linear model).")
+        has_F = kwargs.get("F") is not None or kwargs.get("A") is not None
+        if not has_F or kwargs.get("H") is None:
+            raise ValueError("LinearKalmanModel requires H= and either F= or A= (guaranteed-linear model).")
         super().__init__(sensor_id, **kwargs)
