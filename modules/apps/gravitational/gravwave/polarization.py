@@ -1,7 +1,7 @@
 import numpy as np
 
-from ...framework.constants import KalmanObservable, KalmanState
-from ...framework.models.extended import ExtendedKalmanModel
+from ....framework.constants import KalmanObservable, KalmanState
+from ....framework.models.extended import ExtendedKalmanModel
 
 # ===== State / Observable enums =====
 
@@ -287,7 +287,7 @@ class PolarizationModel(ExtendedKalmanModel):
         """Interactive replay: slide a window across the signal, showing the measured
         first component against the EKF reconstruction. Pass ``measured`` (noisy comp 1)."""
         import matplotlib.pyplot as plt
-        from ...helpers import animate
+        from ....helpers import animate
         t = np.asarray(record.time)
         sig_ekf = self.reconstruct_component(record).real
         meas = None
@@ -401,7 +401,7 @@ class PolarizationModel(ExtendedKalmanModel):
         """
         import matplotlib.pyplot as plt
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
-        from ...helpers import animate
+        from ....helpers import animate
 
         p = self.physical_parameters(record)
         t_arr = np.asarray(record.time)

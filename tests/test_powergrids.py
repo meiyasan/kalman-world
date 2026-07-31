@@ -3,8 +3,8 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.apps.powergrids import PowerGridStateModel
-from modules.apps.oscillators import PhasorOscillatorModel
+from modules.apps.resonators.powergrids import PowerGridStateModel
+from modules.apps.resonators.oscillators import PhasorOscillatorModel
 
 
 def _no_nan_inf(arr, label="array"):

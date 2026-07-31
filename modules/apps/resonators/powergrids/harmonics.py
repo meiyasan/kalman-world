@@ -1,6 +1,6 @@
 import numpy as np
 
-from ...framework.constants import KalmanObservable
+from ....framework.constants import KalmanObservable
 from ..oscillators import partial_frequencies, PhasorOscillatorModel
 
 
@@ -29,7 +29,7 @@ def plot_phasor_diagram(f0, phasors, *, colors=None, frames=30, interval=60, fig
     """
     import matplotlib.pyplot as plt
     from matplotlib.patches import FancyArrowPatch
-    from ...helpers import animate
+    from ....helpers import animate
 
     n = len(phasors)
     if colors is None:
@@ -319,7 +319,7 @@ class PowerGridStateModel(PhasorOscillatorModel):
         the signal and watch the Kalman reconstruction track measured vs truth.
         Returns a Jupyter HTML player (or a ``FuncAnimation`` outside Jupyter)."""
         import matplotlib.pyplot as plt
-        from ...helpers import animate
+        from ....helpers import animate
         t = np.asarray(record.time)
         v_hat = self.reconstruct_voltage(record, t)
         win = max(2, int(window_ms * 1e-3 * self.fs))

@@ -28,10 +28,10 @@ come from :mod:`kalman.runtime.astro`.
 """
 import numpy as np
 
-from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable
-from ...framework.control import KalmanController
-from ...runtime.astro import (
+from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.control import KalmanController
+from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,
@@ -542,7 +542,7 @@ def plot_gravity_assist(ga, planet="jupiter", *, n_pts=200, figsize=(8, 7),
     """
     import matplotlib.pyplot as plt
     from matplotlib.patches import Circle, Arc
-    from ...helpers import animate
+    from ....helpers import animate
 
     v_inf = ga["v_inf_mag"]
     r_p   = radius(planet) + 300.0 * KM
@@ -644,7 +644,7 @@ def plot_two_leg(best, *, planets=("earth", "mars", "venus"),
     """
     import matplotlib.pyplot as plt
     from astropy.time import TimeDelta
-    from ...helpers import animate
+    from ....helpers import animate
 
     dep_name, fly_name, tgt_name = best["departure"], best["flyby"], best["target"]
     t_dep = best["dep_date"]
@@ -819,7 +819,7 @@ def plot_multi_leg(legs, *, title=None, extra_planets=("mars",),
     """
     import matplotlib.pyplot as plt
     from astropy.time import TimeDelta
-    from ...helpers import animate
+    from ....helpers import animate
 
     AU = D_SUN
 

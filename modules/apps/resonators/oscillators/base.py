@@ -2,7 +2,7 @@
 wire/partial-frequency helpers every oscillator variant builds on."""
 import numpy as np
 
-from ...framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from ....framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
 
 
 # ======================================================================

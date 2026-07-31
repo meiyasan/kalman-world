@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.apps.interferometer import (
+from modules.apps.gravitational.interferometer import (
     InterferometerModel,
     welch_psd,
     find_peaks_in_band,
@@ -12,7 +12,7 @@ from modules.apps.interferometer import (
     lorentzian,
     ViolinBankController,
 )
-from modules.apps.oscillators import OscillatorModel, AnalyticOscillatorModel
+from modules.apps.resonators.oscillators import OscillatorModel, AnalyticOscillatorModel
 from modules.framework.controllers.boost import BoostKalmanController
 from modules.framework.controllers.adaptive_qr import AdaptiveQRKalmanController
 from modules.framework.filter import KalmanFilter
@@ -315,7 +315,7 @@ class TestBoostControllerRefactor(unittest.TestCase):
         np.testing.assert_allclose(u, 0.0)
 
     def test_scale_log_populated(self):
-        from modules.apps.oscillators import AnalyticOscillatorModel as AOM
+        from modules.apps.resonators.oscillators import AnalyticOscillatorModel as AOM
         m    = AOM("s", fs=128, f0=10.0, fc=10.0, Q=100,
                    measurement_uncertainty=0.5, process_uncertainty=0.01,
                    random_seed=1)
@@ -368,7 +368,7 @@ class TestDetectorSubclasses(unittest.TestCase):
         Q=200 is artificially low (real K1 Q ~ 10^3-10^4) so FWHM ~ f/Q ~ 1-4 Hz
         is resolvable by 1-Hz Welch and produces a single clean peak per band.
         """
-        from modules.apps.oscillators import partial_frequencies
+        from modules.apps.resonators.oscillators import partial_frequencies
         rng = np.random.default_rng(seed)
         N = int(fs * T)
         t = np.arange(N) / fs
@@ -381,7 +381,7 @@ class TestDetectorSubclasses(unittest.TestCase):
         return x, fs, freqs
 
     def test_k1_violin_bands_contains_partials(self):
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         p = InterferometerK1._CATALOG["O3GK"]
         bands = InterferometerK1.violin_bands("O3GK")
         # One band per mode
@@ -393,34 +393,34 @@ class TestDetectorSubclasses(unittest.TestCase):
                 self.assertLess(f0, f_hi, msg=f"{f0} Hz above band upper edge {f_hi}")
 
     def test_h1_violin_bands_length(self):
-        from modules.apps.interferometer import InterferometerH1
+        from modules.apps.gravitational.interferometer import InterferometerH1
         bands = InterferometerH1.violin_bands("O3")
         self.assertEqual(len(bands), InterferometerH1._CATALOG["O3"]["n_harmonics"])
 
     def test_l1_violin_bands_length(self):
-        from modules.apps.interferometer import InterferometerL1
+        from modules.apps.gravitational.interferometer import InterferometerL1
         bands = InterferometerL1.violin_bands("O4")
         self.assertEqual(len(bands), InterferometerL1._CATALOG["O4"]["n_harmonics"])
 
     def test_v1_violin_bands_length(self):
-        from modules.apps.interferometer import InterferometerV1
+        from modules.apps.gravitational.interferometer import InterferometerV1
         bands = InterferometerV1.violin_bands("O3")
         self.assertEqual(len(bands), InterferometerV1._CATALOG["O3"]["n_harmonics"])
 
     def test_latest_run_returns_string(self):
-        from modules.apps.interferometer import InterferometerK1, InterferometerH1
+        from modules.apps.gravitational.interferometer import InterferometerK1, InterferometerH1
         self.assertIsInstance(InterferometerK1.latest_run(), str)
         self.assertIn(InterferometerK1.latest_run(), InterferometerK1._CATALOG)
         self.assertIsInstance(InterferometerH1.latest_run(), str)
 
     def test_violin_bands_bad_run_raises_key_error(self):
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         with self.assertRaises(KeyError):
             InterferometerK1.violin_bands("O99")
 
     def test_k1_fit_from_catalog_bands(self):
         """InterferometerK1.fit() with catalog bands detects the right number of windows."""
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         strain, fs, freqs = self._make_synthetic_strain()
         bands = InterferometerK1.violin_bands("O3GK")
         model = InterferometerK1.fit("K1", strain, fs=fs, bands=bands)
@@ -429,7 +429,7 @@ class TestDetectorSubclasses(unittest.TestCase):
 
     def test_k1_fit_peak_frequencies_in_band(self):
         """Detected peak centre frequencies should fall within the catalog band limits."""
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         strain, fs, _ = self._make_synthetic_strain()
         bands = InterferometerK1.violin_bands("O3GK")
         model = InterferometerK1.fit("K1", strain, fs=fs, bands=bands)
@@ -439,7 +439,7 @@ class TestDetectorSubclasses(unittest.TestCase):
                 self.assertLess(p["f0"], f_hi)
 
     def test_k1_filter_and_subtract_shape(self):
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         strain, fs, _ = self._make_synthetic_strain()
         bands = InterferometerK1.violin_bands("O3GK")
         model = InterferometerK1.fit("K1", strain, fs=fs, bands=bands)
@@ -450,7 +450,7 @@ class TestDetectorSubclasses(unittest.TestCase):
 
     def test_from_gps_raises_without_gwpy(self):
         """from_gps with no gwpy installed should raise ImportError or similar."""
-        from modules.apps.interferometer import InterferometerK1
+        from modules.apps.gravitational.interferometer import InterferometerK1
         import unittest.mock as mock
         # Patch gwpy to be unavailable
         with mock.patch.dict("sys.modules", {"gwpy": None, "gwpy.timeseries": None}):

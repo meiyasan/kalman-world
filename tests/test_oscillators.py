@@ -3,7 +3,7 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.apps.oscillators import (
+from modules.apps.resonators.oscillators import (
     OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel, OscillatorCompositeModel,
     HarmonicOscillatorModel, InharmonicOscillatorModel,
     partial_frequencies, wire_fundamental, wire_inharmonicity,

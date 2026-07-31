@@ -56,9 +56,9 @@ import numpy as np
 from scipy.optimize import curve_fit
 from scipy.signal import welch as scipy_welch, find_peaks as scipy_find_peaks
 
-from ..oscillators import OscillatorModel, OscillatorBankModel
-from ...framework.controllers.adaptive_qr import AdaptiveQRKalmanController
-from ...framework.control import KalmanController
+from ...resonators.oscillators import OscillatorModel, OscillatorBankModel
+from ....framework.controllers.adaptive_qr import AdaptiveQRKalmanController
+from ....framework.control import KalmanController
 from .control import _LeafAdaptiveQR, ViolinBankController
 from .spectral import _estimate_half_max_width, find_peaks_in_band, fit_lorentzian_peak, group_peaks_into_windows, welch_psd
 
@@ -369,7 +369,7 @@ class _DetectorBase(InterferometerModel):
         -------
         list of (f_low, f_high) float tuples [Hz]
         """
-        from ..oscillators import partial_frequencies as _pf
+        from ...resonators.oscillators import partial_frequencies as _pf
         if run not in cls._CATALOG:
             raise KeyError(
                 f"Run '{run}' not in {cls.__name__}._CATALOG. "

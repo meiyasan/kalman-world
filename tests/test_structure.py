@@ -28,8 +28,24 @@ APPS_DIR = os.path.dirname(apps.__file__)
 SHIMS = {"fluids", "reanalysis", "storms", "flowsurrogate"}
 
 
+# Family packages group related domains; their members are the real domains.
+FAMILIES = {"astro", "gravitational", "resonators"}
+
+
 def _domain_packages():
-    return sorted(m.name for m in pkgutil.iter_modules([APPS_DIR]) if m.ispkg)
+    """(import_path, name) for every leaf domain package, families expanded."""
+    out = []
+    for m in pkgutil.iter_modules([APPS_DIR]):
+        if not m.ispkg:
+            continue
+        if m.name in FAMILIES:
+            fam_dir = os.path.join(APPS_DIR, m.name)
+            for sub in pkgutil.iter_modules([fam_dir]):
+                if sub.ispkg:
+                    out.append((f"{m.name}.{sub.name}", sub.name))
+        else:
+            out.append((m.name, m.name))
+    return sorted(out)
 
 
 class TestFrameworkOwnsContracts(unittest.TestCase):
@@ -80,8 +96,8 @@ class TestAppsAreUniformPackages(unittest.TestCase):
                          f"{sorted(flat - SHIMS)})")
 
     def test_every_domain_has_variants_and_all(self):
-        for name in _domain_packages():
-            mod = importlib.import_module(f"modules.apps.{name}")
+        for path, name in _domain_packages():
+            mod = importlib.import_module(f"modules.apps.{path}")
             self.assertTrue(hasattr(mod, "__all__"), f"{name} package needs __all__")
             self.assertTrue(hasattr(mod, "VARIANTS"), f"{name} package needs VARIANTS")
             self.assertGreater(len(mod.VARIANTS), 0, f"{name}.VARIANTS is empty")
@@ -91,8 +107,8 @@ class TestAppsAreUniformPackages(unittest.TestCase):
 
     def test_variants_are_kalman_models(self):
         """VARIANTS entries are models (the estimable object of that domain)."""
-        for name in _domain_packages():
-            mod = importlib.import_module(f"modules.apps.{name}")
+        for path, name in _domain_packages():
+            mod = importlib.import_module(f"modules.apps.{path}")
             for key, cls in mod.VARIANTS.items():
                 self.assertTrue(issubclass(cls, KalmanModel),
                                 f"{name}.VARIANTS[{key!r}] = {cls.__name__} is not a KalmanModel")
@@ -100,13 +116,22 @@ class TestAppsAreUniformPackages(unittest.TestCase):
     def test_public_names_resolve_from_apps(self):
         """Every name a domain exports is reachable and identical via kalman.apps
         when re-exported there (the stable public surface)."""
-        for name in _domain_packages():
-            mod = importlib.import_module(f"modules.apps.{name}")
+        for path, name in _domain_packages():
+            mod = importlib.import_module(f"modules.apps.{path}")
             for public in mod.__all__:
                 self.assertTrue(hasattr(mod, public), f"{name}.{public} missing")
                 if hasattr(apps, public):
                     self.assertIs(getattr(apps, public), getattr(mod, public),
                                   f"kalman.apps.{public} differs from {name}.{public}")
+
+    def test_families_expose_their_domains(self):
+        """A family package groups domains and exposes them via DOMAINS."""
+        for fam in FAMILIES:
+            mod = importlib.import_module(f"modules.apps.{fam}")
+            self.assertTrue(hasattr(mod, "DOMAINS"), f"{fam} family needs DOMAINS")
+            self.assertGreater(len(mod.DOMAINS), 1, f"{fam} should group >1 domain")
+            for name, dom in mod.DOMAINS.items():
+                self.assertTrue(hasattr(dom, "VARIANTS"), f"{fam}.{name} needs VARIANTS")
 
     def test_shims_forward_to_weather(self):
         """The back-compat shims still resolve to the weather package objects."""

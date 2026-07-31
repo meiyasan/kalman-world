@@ -56,9 +56,9 @@ import numpy as np
 from scipy.optimize import curve_fit
 from scipy.signal import welch as scipy_welch, find_peaks as scipy_find_peaks
 
-from ..oscillators import OscillatorModel, OscillatorBankModel
-from ...framework.controllers.adaptive_qr import AdaptiveQRKalmanController
-from ...framework.control import KalmanController
+from ...resonators.oscillators import OscillatorModel, OscillatorBankModel
+from ....framework.controllers.adaptive_qr import AdaptiveQRKalmanController
+from ....framework.control import KalmanController
 from .model import InterferometerModel, _DetectorBase
 
 

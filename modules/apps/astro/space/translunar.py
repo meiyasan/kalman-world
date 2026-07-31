@@ -28,10 +28,10 @@ come from :mod:`kalman.runtime.astro`.
 """
 import numpy as np
 
-from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable
-from ...framework.control import KalmanController
-from ...runtime.astro import (
+from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.control import KalmanController
+from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,
@@ -270,7 +270,7 @@ class TransLunarModel(ExtendedKalmanModel):
         beside it — you watch the two diverge at the flyby, which *is* the catapult."""
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D
-        from ...helpers import animate
+        from ....helpers import animate
         truth, estx, meas, K = self._trajectory_arrays(record, sample, nmax)
         kep    = None if kepler is None else np.asarray(getattr(kepler, "xk", kepler))
         # Auto-extend the Keplerian (Earth-only) path until it returns to periapsis, capped at

@@ -1,8 +1,8 @@
 import numpy as np
 from scipy.linalg import expm
 
-from ...framework.models.linear import LinearKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable
+from ....framework.models.linear import LinearKalmanModel
+from ....framework.constants import KalmanState, KalmanObservable
 
 
 class SuspensionState(KalmanState):

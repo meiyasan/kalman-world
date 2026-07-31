@@ -23,11 +23,11 @@ from modules.apps import (
     PhasorOscillatorModel, AnalyticOscillatorModel,
 )
 from modules.apps.ballistics import BallisticModel
-from modules.apps.rocket import (
+from modules.apps.astro.rocket import (
     RocketAscentModel, RocketLiftoffModel, RocketLandingModel, RocketDescentModel,
     RocketLaunchModel, RocketTakeoffModel,            # legacy aliases
 )
-from modules.apps.space import (
+from modules.apps.astro.space import (
     TransLunarModel, InterplanetaryModel, lambert, hohmann_transfer,
 )
 from modules.runtime.astro import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state

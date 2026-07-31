@@ -28,9 +28,9 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable
-from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.constants import KalmanState, KalmanObservable
+from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -267,7 +267,7 @@ class RocketLiftoffModel(ExtendedKalmanModel):
         propellant gauge + live readout (narrow right column)."""
         import matplotlib.pyplot as plt
         from matplotlib.patches import Polygon
-        from ...helpers import animate
+        from ....helpers import animate
 
         truth = np.asarray(sample.xk) if sample is not None else np.asarray(record.xk)
         estx  = np.asarray(record.xk)

@@ -28,9 +28,9 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable
-from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.constants import KalmanState, KalmanObservable
+from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 

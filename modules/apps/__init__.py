@@ -1,15 +1,15 @@
 from .ballistics  import BallisticLinearModel, BallisticModel
-from .oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel,
+from .resonators.oscillators import (OscillatorModel, AnalyticOscillatorModel, OscillatorBankModel,
                           OscillatorCompositeModel,   # legacy alias of OscillatorBankModel
                           InharmonicOscillatorModel, HarmonicOscillatorModel, PhasorOscillatorModel,
                           wire_inharmonicity, wire_fundamental, partial_frequencies)
-from .suspensions import SuspensionModel
-from .powergrids  import PowerGridStateModel, PowerGridObservable, plot_phasor_diagram
-from .gravwave     import PolarizationModel, PolarizationState, PolarizationObservable, jones_signal
-from .rocket       import (RocketAscentModel, RocketLiftoffModel, RocketLandingModel,
+from .resonators.suspensions import SuspensionModel
+from .resonators.powergrids  import PowerGridStateModel, PowerGridObservable, plot_phasor_diagram
+from .gravitational.gravwave     import PolarizationModel, PolarizationState, PolarizationObservable, jones_signal
+from .astro.rocket       import (RocketAscentModel, RocketLiftoffModel, RocketLandingModel,
                            RocketDescentModel, RocketDescentState, RocketDescentObservable,
                            RocketLaunchModel, RocketTakeoffModel)  # last two: legacy aliases
-from .space       import (TransLunarModel, TransLunarState, TransLunarObservable,
+from .astro.space       import (TransLunarModel, TransLunarState, TransLunarObservable,
                            InterplanetaryModel, InterplanetaryState, InterplanetaryObservable,
                            TrajectoryControlManeuver,
                            hohmann_transfer, hohmann_sequence, lambert,
@@ -35,7 +35,7 @@ from .weather       import (NS2D, KolmogorovFlowModel, FlowObservable, TwinExper
                             TornadoEnvironmentModel, TornadoState, TornadoObservable,
                             synthetic_environment, brazil_season, brazil_tornado_scenario,
                             seasonal_tornado_probability)
-from .interferometer import (InterferometerModel,
+from .gravitational.interferometer import (InterferometerModel,
                               InterferometerK1, InterferometerH1,
                               InterferometerL1, InterferometerV1,
                               welch_psd, find_peaks_in_band,
