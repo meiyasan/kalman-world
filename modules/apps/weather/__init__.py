@@ -29,6 +29,12 @@ from .geo import (earth_geometry, land_mask, plot_global_field, band_coordinates
                   load_vorticity, load_turbulence, fetch_era5, EARTH_RADIUS)
 from .providers import ERA5Provider, TurbulenceProvider
 
+VARIANTS = {
+    "flow": KolmogorovFlowModel,          # 2-D turbulence field (ensemble DA)
+    "typhoon": TyphoonModel,              # reduced tropical-cyclone tracker
+    "tornado": TornadoEnvironmentModel,   # tornado-environment regime latent
+}
+
 __all__ = [
     # flow / OSSE
     "NS2D", "KolmogorovFlowModel", "FlowObservable", "TwinExperiment",
@@ -46,4 +52,5 @@ __all__ = [
     "load_vorticity", "load_turbulence", "fetch_era5", "EARTH_RADIUS",
     # providers
     "ERA5Provider", "TurbulenceProvider",
+    "VARIANTS",
 ]
