@@ -10,8 +10,12 @@ from modules.framework import (KalmanModel, KalmanEngine, KalmanEstimator,
                                KalmanIntegrator, KalmanSolver, SpectralSolver,
                                EulerIntegrator, RK4Integrator, DormandPrinceIntegrator)
 from modules.framework.solvers import FiniteDifferenceSolver
-from modules.framework.integrators import INTEGRATOR_BY_KIND, resolve_integrator
-from modules.framework.solvers import SOLVER_BY_KIND, resolve_solver
+from modules.framework.integrators import (INTEGRATOR_BY_KIND, resolve_integrator,
+                                           register_integrator, unregister_integrator,
+                                           available_integrators)
+from modules.framework.solvers import (SOLVER_BY_KIND, resolve_solver, register_solver,
+                                       unregister_solver, available_solvers)
+from modules.framework.engines import resolve_engine
 from modules.framework.constants import (KalmanIntegratorKind, ALL_INTEGRATORS,
                                          KalmanSolverKind, ALL_SOLVERS)
 
@@ -259,6 +263,89 @@ class TestModelDelegation(unittest.TestCase):
 
     def test_estimator_alias(self):
         self.assertIs(KalmanEstimator, KalmanEngine)
+
+
+# ── Custom (out-of-enum) schemes ──────────────────────────────────────────────
+
+class _Heun(KalmanIntegrator):
+    """A scheme the framework has never heard of: no KalmanIntegratorKind."""
+    NAME = "Heun"
+    tableau = ([0.0, 1.0], [[], [1.0]], [0.5, 0.5])
+
+    def step(self, f, x, u=None, t=None, dt=1.0):
+        k1 = f(x, u, t)
+        return x + 0.5 * dt * (k1 + f(x + dt * k1, u, t + dt))
+
+
+class _Trivial(KalmanSolver):
+    NAME = "Trivial"
+
+    def solve(self, field, steps=1, u=None, t=None):
+        return np.asarray(field)
+
+
+class TestCustomSchemes(unittest.TestCase):
+    """A downstream scheme must be usable without editing the kind enum."""
+
+    def tearDown(self):
+        unregister_integrator("heun")
+        unregister_solver("trivial")
+
+    def test_instance_and_class_override_accepted(self):
+        self.assertIsNone(_Heun.KIND)                       # not an enum member
+        for override in (_Heun(), _Heun):
+            self.assertIsInstance(_Decay(integrator=override).default_integrator(), _Heun)
+
+    def test_registered_name_resolves_everywhere(self):
+        self.assertIs(register_integrator("heun", _Heun), _Heun)
+        self.assertIn("heun", available_integrators())
+        self.assertIsInstance(resolve_integrator("heun"), _Heun)
+        self.assertIsInstance(_Decay(integrator="heun").default_integrator(), _Heun)
+        # shipped kinds keep resolving by name too
+        self.assertIsInstance(resolve_integrator("rk4"), RK4Integrator)
+
+    def test_registered_solver(self):
+        register_solver("trivial", _Trivial)
+        self.assertIn("trivial", available_solvers())
+        self.assertIsInstance(resolve_solver("trivial"), _Trivial)
+
+    def test_shipped_kind_needs_the_enum_member_to_rebind(self):
+        with self.assertRaises(ValueError):
+            register_integrator("rk4", _Heun)               # ambiguous by name
+        register_integrator(KalmanIntegratorKind.EULER, _Heun)   # explicit rebind
+        try:
+            self.assertIsInstance(resolve_integrator(KalmanIntegratorKind.EULER), _Heun)
+        finally:
+            INTEGRATOR_BY_KIND[KalmanIntegratorKind.EULER] = EulerIntegrator
+
+    def test_non_subclass_rejected(self):
+        with self.assertRaises(TypeError):
+            register_integrator("nope", object)
+        with self.assertRaises(TypeError):
+            register_solver("nope", object)
+
+    def test_unknown_kind_raises_instead_of_falling_back(self):
+        """A typo must fail, not silently run a different scheme."""
+        for bad in ("nonsense", "rk-4"):
+            with self.assertRaises(ValueError):
+                resolve_integrator(bad)
+            with self.assertRaises(ValueError):
+                resolve_solver(bad)
+        with self.assertRaises(ValueError):
+            resolve_engine("nonsense")
+        with self.assertRaises(ValueError):
+            _Decay(integrator="nonsense")
+        # None still means "the default"
+        self.assertIsInstance(resolve_integrator(None), RK4Integrator)
+        self.assertIsInstance(resolve_solver(None), SpectralSolver)
+
+    def test_allowed_list_still_gates_enum_kinds(self):
+        """Custom schemes bypass ALLOWED_*; declared enum kinds still do not."""
+        class R(_Decay):
+            ALLOWED_INTEGRATORS = frozenset({KalmanIntegratorKind.RK4})
+        with self.assertRaises(TypeError):
+            R(integrator=KalmanIntegratorKind.EULER)
+        self.assertIsInstance(R(integrator=_Heun()).default_integrator(), _Heun)
 
 
 if __name__ == "__main__":

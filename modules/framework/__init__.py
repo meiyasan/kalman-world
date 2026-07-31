@@ -17,9 +17,12 @@ from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind
 from .model import KalmanModel
 from .engine import KalmanEngine, KalmanEstimator
 from .integrator import KalmanIntegrator
-from .integrators import EulerIntegrator, RK4Integrator, DormandPrinceIntegrator, resolve_integrator
+from .integrators import (EulerIntegrator, RK4Integrator, DormandPrinceIntegrator,
+                          resolve_integrator, register_integrator, unregister_integrator,
+                          available_integrators)
 from .solver import KalmanSolver
-from .solvers import SpectralSolver, resolve_solver
+from .solvers import (SpectralSolver, FiniteDifferenceSolver, resolve_solver,
+                      register_solver, unregister_solver, available_solvers)
 from .provider import KalmanProvider
 from .filter import KalmanFilter
 from .control import KalmanController
@@ -66,9 +69,16 @@ __all__ = [
     "RK4Integrator",
     "DormandPrinceIntegrator",
     "resolve_integrator",
+    "register_integrator",
+    "unregister_integrator",
+    "available_integrators",
     "KalmanSolver",
     "SpectralSolver",
+    "FiniteDifferenceSolver",
     "resolve_solver",
+    "register_solver",
+    "unregister_solver",
+    "available_solvers",
     "KalmanProvider",
     "KalmanFilter",
     "KalmanController",

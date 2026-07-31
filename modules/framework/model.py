@@ -157,11 +157,36 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
 
     @staticmethod
     def _validate_kind(value, allowed, label):
-        """Normalise an ``integrator=``/``solver=`` override: accept a Kind, a
-        concrete instance (has ``.KIND``), or None; validate against ``allowed``."""
+        """Normalise an ``integrator=``/``solver=`` override.
+
+        Accepts a Kind, a registered name, a concrete class, a ready instance,
+        or None.  A **custom** scheme — one whose ``KIND`` is not a member of the
+        framework enum — is validated by its *base class* instead of by
+        ``ALLOWED_*``, since a closed enum cannot describe a kind it has never
+        heard of.  Names are checked by resolving them (raising on a typo) but
+        returned unresolved, so ``default_solver(**kwargs)`` can still pass
+        constructor arguments.
+        """
         if value is None:
             return None
-        kind = getattr(value, "KIND", value)   # instance → its KIND; else the Kind itself
+
+        from .integrator import KalmanIntegrator
+        from .solver import KalmanSolver
+        if label == "integrator":
+            base, enum_cls = KalmanIntegrator, KalmanIntegratorKind
+            from .integrators import resolve_integrator as _resolve
+        else:
+            base, enum_cls = KalmanSolver, KalmanSolverKind
+            from .solvers import resolve_solver as _resolve
+
+        if isinstance(value, str):
+            _resolve(value)                    # raises ValueError on an unknown name
+            return value                       # resolved later, with kwargs
+
+        is_impl = isinstance(value, base) or (isinstance(value, type) and issubclass(value, base))
+        kind = getattr(value, "KIND", value)   # instance/class → its KIND; else the Kind itself
+        if is_impl and not isinstance(kind, enum_cls):
+            return value                       # custom scheme: the base class is the contract
         if allowed is not None and kind not in allowed:
             raise TypeError(f"{label} {kind} not in ALLOWED_{label.upper()}S "
                             f"({sorted(k.name for k in allowed)}).")
@@ -360,12 +385,31 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # ============================================================
     @property
     def states(self) -> KalmanState:
-        """Generic (unlabelled) state enum; override with a domain enum."""
-        return KalmanState
+        """State enum — a domain enum when declared, else one synthesized from
+        ``n`` (``X0 … Xn-1``).
+
+        The bare ``KalmanState`` has no members, which left every unlabelled
+        model (anything built from matrices, including a ``KalmanSpec``) with an
+        empty component list and therefore unplottable.  Synthesizing labels
+        keeps the generic path usable; a domain model overriding this property
+        is unaffected.
+        """
+        if getattr(self, "_states_enum", None) is None:
+            self._states_enum = self._synthetic_labels(KalmanState, "State", "X", self.n)
+        return self._states_enum
+
     @property
     def observables(self) -> KalmanObservable:
-        """Generic (unlabelled) observable enum; override with a domain enum."""
-        return KalmanObservable
+        """Observable enum — a domain enum when declared, else one synthesized
+        from ``m`` (``Z0 … Zm-1``).  See :attr:`states`."""
+        if getattr(self, "_observables_enum", None) is None:
+            self._observables_enum = self._synthetic_labels(KalmanObservable, "Observable", "Z", self.m)
+        return self._observables_enum
+
+    def _synthetic_labels(self, base, suffix, prefix, count):
+        """Build an unlabelled-but-indexable enum of ``count`` members."""
+        return base(f"{type(self).__name__}{suffix}",
+                    {f"{prefix}{i}": i for i in range(int(count or 0))})
 
     def control_cost(self):
         """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
