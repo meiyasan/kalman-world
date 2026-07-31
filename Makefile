@@ -262,7 +262,7 @@ mcp-serve:
 mcp: motd
 	@echo "==> installing the MCP SDK (if missing)"
 	@$(PYTHON) -c "import mcp" 2>/dev/null || $(PYTHON) -m pip install -q "mcp>=1.0"
-	@echo "==> registering the 'kalman-ai' server with detected clients"
+	@echo "==> registering the 'Kalman-AI' server with detected clients"
 	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
 	@echo ""
 	@echo "==> verifying the server starts"
@@ -270,7 +270,7 @@ mcp: motd
 	@echo ""
 	@$(PYTHON) tools/mcp_install.py --list
 
-## Register the Kalman AI MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
+## Register the Kalman-AI MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
 mcp-install:
 	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
 
@@ -278,7 +278,7 @@ mcp-install:
 mcp-clients:
 	@$(PYTHON) tools/mcp_install.py --list
 
-## Unregister the Kalman AI MCP server from all clients
+## Unregister the Kalman-AI MCP server from all clients
 mcp-uninstall:
 	@$(PYTHON) tools/mcp_install.py --all --remove
 
@@ -326,12 +326,27 @@ shell: motd
 pages: motd
 	@if [ ! -d "$(BUILD_DIR)/share/doxygen" ]; then BUILDTYPE=Doc MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) pages
-	@if [ -f "public/latest/index.html" ]; then open public/latest/index.html; fi
+	@echo "==> documentation: $$(pwd)/public/latest/index.html"
+	@# Open a browser only for an interactive local build (never in CI, and
+	@# `open` does not exist on Linux).
+	@if [ -f "public/latest/index.html" ] && [ -z "$(CI)" ] && [ -t 1 ]; then \
+		if command -v open >/dev/null 2>&1; then open public/latest/index.html; \
+		elif command -v xdg-open >/dev/null 2>&1; then xdg-open public/latest/index.html; fi; \
+	fi
 
 ## Build project documentation
 docs: motd
 	@if [ ! -d "$(BUILD_DIR)/share/doxygen" ]; then BUILDTYPE=Doc MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) doxygen
+
+## Replace the public/ symlink with a real directory (CI artifacts do not follow links)
+pages-materialize:
+	@src="$(BUILD_DIR)/public/docs"; \
+	if [ -d "$$src" ]; then \
+		echo "==> materialising public/ from $$src"; \
+		$(RM) -rf public && cp -RL "$$src" public; \
+	fi
+	@test -n "$$(ls -A public 2>/dev/null)" || { echo "! no documentation was generated" >&2; exit 1; }
 
 ## Clean up build artifacts
 clean: motd

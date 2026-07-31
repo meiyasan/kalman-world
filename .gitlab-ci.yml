@@ -185,20 +185,58 @@ package:
       - var/install
 
 # ###
-# Documentation
+# Documentation — Doxygen + doxygen-awesome (share/doxygen submodule)
+#
+# `docs` compiles the site on *every* commit, so a broken docstring, a dangling
+# cross-reference or a missing submodule fails the pipeline where it was
+# introduced. `pages` publishes, and only runs where GitLab Pages can serve it.
 # ### ###
-pages:
-  stage: deploy
+.doxygen:
   image: ${CI_REGISTRY_IMAGE}/${CI_COMMIT_REF_NAME}:${CI_IMAGE_ARCH}
-  dependencies:
-    - python
-    - tests
+  variables:
+    # The theme carries its own nested cmake submodule, so this one is recursive.
+    GIT_SUBMODULE_STRATEGY: recursive
   tags:
     - $CI_RUNNER_ARCH
     - $CI_RUNNER_TAGS
+  before_script:
+    - git submodule update --init --recursive -- $GIT_SUBMODULE_PATHS
+    - if [ "$CI_IMAGE_SOURCE" != false ]; then source .bashrc; fi
+    - conda activate $ENVNAME || true
+
+docs:
+  extends: .doxygen
+  stage: post-build
+  dependencies:
+    - python
+  script:
+    - make -j${CI_RUNNER_NPROC} docs
+    # The theme links public/ into the build tree; artifacts do not follow
+    # symlinks, so turn it into a real directory — and fail if it is empty.
+    - make -s pages-materialize
+  artifacts:
+    # A branch preview of the site. It is ~60 MB, so keep it short-lived —
+    # the job exists mainly to fail the pipeline when the docs stop building.
+    expire_in: 1 day
+    paths:
+      - public
+
+pages:
+  extends: .doxygen
+  stage: deploy
+  dependencies:
+    - python
+    - tests
   rules:
+    # Publish the default branch, and any version tag.
     - if: '$CI_COMMIT_TAG && $CI_COMMIT_TAG =~ /^(v?\d+)(\.\d+){0,2}$/'
       when: always
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      when: always
+    - when: never
   script:
-    - conda activate $ENVNAME || true
     - make -j${CI_RUNNER_NPROC} pages
+    - make -s pages-materialize
+  artifacts:
+    paths:
+      - public
