@@ -231,6 +231,18 @@ rest:
 mcp:
 	@$(PYTHON) -m kalman.mcp
 
+## Register the Kalman MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
+mcp-install:
+	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
+
+## List MCP clients detected on this machine and whether kalman is registered
+mcp-clients:
+	@$(PYTHON) tools/mcp_install.py --list
+
+## Unregister the Kalman MCP server from all clients
+mcp-uninstall:
+	@$(PYTHON) tools/mcp_install.py --all --remove
+
 ## Add/update an API account (username + password) in the .htpasswd store: make api-user USER=alice
 api-user:
 	@$(PYTHON) -m kalman.api.auth adduser --user "$(USER)"

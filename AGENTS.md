@@ -118,6 +118,14 @@ Pre-set `self.n` **before** `super().__init__()` — construction runs
 base, tag `KIND`, and add it to the registry. Follow the existing
 `resolve_*()` pattern including the `%autoreload` name-fallback.
 
+**Registering the MCP server with a client** — `make mcp-clients` lists the
+MCP clients detected on this machine; `make mcp-install` (or
+`python tools/mcp_install.py --all`) registers the server with all of them,
+`--dry-run` shows the diff first and `--remove` unregisters. The script knows
+each client's config location and container key (`mcpServers`, VS Code's
+`servers`, Codex's TOML table), edits only our own entry and backs the file up
+first. To add a client, append it to `CLIENTS` in that script.
+
 **A new API verb** — add it to `modules/api/`, declare its scope (`read`,
 `send_measurement`, `write_models`, `admin`), then expose it in `mcp/` and
 `rest/` as a thin adapter. Never put logic in a transport.
