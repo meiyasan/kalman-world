@@ -25,9 +25,9 @@ from dataclasses import dataclass
 
 import numpy as np
 
-from ..helpers import make_multirate_input, rainbow, set_random_seed
-from ..framework.constants import KalmanObservable, KalmanState
-from ..framework.models.linear import LinearKalmanModel
+from ...helpers import make_multirate_input, rainbow, set_random_seed
+from ...framework.constants import KalmanObservable, KalmanState
+from ...framework.models.linear import LinearKalmanModel
 
 
 # ===== State / observable enums (units) =====
@@ -104,11 +104,11 @@ class SensorFusionModel(LinearKalmanModel):
         if not sensors:
             raise ValueError("SensorFusionModel needs at least one SensorSpec.")
         self.sensors = list(sensors)
-        dt = self.dtype(1.0 / fs)
 
-        # Constant-velocity dynamics x = [pos, vel].
-        F = np.array([[1.0, dt],
-                      [0.0, 1.0]], dtype=self.dtype)
+        # Continuous-time generator: ṗ=v, v̇=0 (constant velocity). Passed as
+        # A= (not F=): the base KalmanModel discretizes exactly via expm(A/fs).
+        A = np.array([[0.0, 1.0],
+                      [0.0, 0.0]], dtype=self.dtype)
 
         # Stack one observation row per sensor.
         rows, rvar = [], []
@@ -118,16 +118,17 @@ class SensorFusionModel(LinearKalmanModel):
         H = np.array(rows, dtype=self.dtype)
         R = np.diag(rvar).astype(self.dtype)
 
-        # White-noise-acceleration process covariance.
-        qa = self.dtype(process_uncertainty) ** 2
-        Q = qa * np.array([[dt ** 3 / 3.0, dt ** 2 / 2.0],
-                           [dt ** 2 / 2.0, dt]], dtype=self.dtype)
+        # Continuous white-noise-acceleration disturbance driving v̇ (Lc picks
+        # out that row); passed as Qc=/Lc= so the base model Van Loan-discretizes
+        # it exactly alongside A=.
+        Lc = np.array([[0.0], [1.0]], dtype=self.dtype)
+        Qc = np.array([[self.dtype(process_uncertainty) ** 2]], dtype=self.dtype)
 
         self.m = len(self.sensors)
         if kwargs.get("P0") is None:
             kwargs["P0"] = np.diag([10.0, 10.0]).astype(self.dtype)
 
-        super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
+        super().__init__(sensor_id, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
     def inprocess(self, state_vector, **kwargs): return state_vector

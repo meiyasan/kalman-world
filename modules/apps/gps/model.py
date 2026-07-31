@@ -28,8 +28,8 @@ from __future__ import annotations
 
 import numpy as np
 
-from ..framework.constants import KalmanObservable, KalmanState
-from ..framework.models.extended import ExtendedKalmanModel
+from ...framework.constants import KalmanObservable, KalmanState
+from ...framework.models.extended import ExtendedKalmanModel
 
 # ---- physical constants (SI) ----
 C_LIGHT = 299_792_458.0            # speed of light [m/s]
@@ -169,7 +169,6 @@ class GPSModel(ExtendedKalmanModel):
         # tracks the FULL constellation and masks each satellite epoch-by-epoch as it rises/sets
         # (the EKF skips the masked pseudoranges); when None, the legacy fixed-set behaviour holds.
         self.elevation_mask = None if elevation_mask is None else float(elevation_mask)
-        dt = 1.0 / self.fs
 
         # Receiver truth (ECEF, spherical) + local ENU basis.
         lat, lon = np.radians(receiver_lat), np.radians(receiver_lon)
@@ -189,17 +188,24 @@ class GPSModel(ExtendedKalmanModel):
             else self._select_visible(pool, n_sat)
         M = self.constellation.size
 
-        # State [x,y,z, b, b_dot]; linear dynamics (static receiver + clock drift).
-        F = np.eye(5, dtype=self.dtype)
-        F[3, 4] = dt                                             # b_{k+1} = b_k + b_dot·dt
-        self._Fmat = F
+        # State [x,y,z, b, b_dot]; continuous generator: static receiver
+        # (ẋ=ẏ=ż=0), clock bias driven by drift (ḃ=b_dot), drift itself
+        # constant (ḃ_dot=0) — only entry is the b<-b_dot coupling. Passed as
+        # A= (not F=) below: the base KalmanModel discretizes exactly via
+        # expm(A/fs) into self._F, which f() below reads directly.
+        A = np.zeros((5, 5), dtype=self.dtype)
+        A[3, 4] = 1.0
 
-        Q = np.zeros((5, 5), dtype=self.dtype)
-        qp = process_uncertainty ** 2 * dt
-        Q[0, 0] = Q[1, 1] = Q[2, 2] = qp
+        # Continuous noise: direct random-walk disturbance on x,y,z (receiver
+        # isn't perfectly static) plus a white-noise disturbance driving b_dot's
+        # own rate (clock-drift wander) — same Lc/Qc-per-column pattern as the
+        # v̇ disturbance elsewhere; passed as Qc=/Lc= for exact Van Loan discretization.
+        Lc = np.zeros((5, 4), dtype=self.dtype)
+        Lc[0, 0] = Lc[1, 1] = Lc[2, 2] = 1.0
+        Lc[4, 3] = 1.0
+        qp = process_uncertainty ** 2
         qd = clock_drift_uncertainty ** 2
-        Q[3:5, 3:5] = qd * np.array([[dt ** 3 / 3.0, dt ** 2 / 2.0],
-                                     [dt ** 2 / 2.0, dt]], dtype=self.dtype)
+        Qc = np.diag([qp, qp, qp, qd]).astype(self.dtype)
         R = (self._sigma_rho ** 2) * np.eye(M, dtype=self.dtype)
 
         self.n = 5
@@ -210,7 +216,7 @@ class GPSModel(ExtendedKalmanModel):
             kwargs["P0"] = np.diag([100.0 ** 2, 100.0 ** 2, 100.0 ** 2,
                                     100.0 ** 2, 1.0 ** 2]).astype(self.dtype)
 
-        super().__init__(sensor_id, Q=Q, R=R, fs=fs, **kwargs)
+        super().__init__(sensor_id, A=A, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     # ------------------------------------------------------------------
     # Constellation construction / visibility
@@ -243,13 +249,10 @@ class GPSModel(ExtendedKalmanModel):
     # ------------------------------------------------------------------
     def f(self, x, u=None, w=None, t=None):
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
-        xn = self._Fmat @ x
+        xn = self._F @ x
         if w is not None:
             xn = xn + np.asarray(w, dtype=self.dtype).reshape(-1, 1)
         return xn
-
-    def F(self, x=None, u=None, t=None):
-        return self._Fmat
 
     def h(self, x, v=None, t=None):
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)

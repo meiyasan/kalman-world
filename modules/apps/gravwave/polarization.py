@@ -1,7 +1,7 @@
 import numpy as np
 
-from ..framework.constants import KalmanObservable, KalmanState
-from ..framework.models.extended import ExtendedKalmanModel
+from ...framework.constants import KalmanObservable, KalmanState
+from ...framework.models.extended import ExtendedKalmanModel
 
 # ===== State / Observable enums =====
 
@@ -283,11 +283,11 @@ class PolarizationModel(ExtendedKalmanModel):
         return fig
 
     def _plot_interactive(self, record, sample=None, *, measured=None, window=None,
-                          frames=80, interval=120, figsize=(11, 4.5), **kwargs):
+                          frames=30, interval=120, figsize=(11, 4.5), **kwargs):
         """Interactive replay: slide a window across the signal, showing the measured
         first component against the EKF reconstruction. Pass ``measured`` (noisy comp 1)."""
         import matplotlib.pyplot as plt
-        from ..helpers import animate
+        from ...helpers import animate
         t = np.asarray(record.time)
         sig_ekf = self.reconstruct_component(record).real
         meas = None
@@ -389,7 +389,7 @@ class PolarizationModel(ExtendedKalmanModel):
         return fig
 
     def _plot_poincare_interactive(self, record, *, truth_theta=None, truth_phi=None,
-                                    figsize=(5, 5), azim=45, frames=80,
+                                    figsize=(5, 5), azim=45, frames=30,
                                     interval=80, **kwargs):
         """Animated Poincaré sphere — same pattern as every other _plot_interactive.
 
@@ -401,7 +401,7 @@ class PolarizationModel(ExtendedKalmanModel):
         """
         import matplotlib.pyplot as plt
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
-        from ..helpers import animate
+        from ...helpers import animate
 
         p = self.physical_parameters(record)
         t_arr = np.asarray(record.time)
