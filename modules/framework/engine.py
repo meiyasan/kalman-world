@@ -201,3 +201,9 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
         else:
             C = P @ F_k.T @ np.linalg.pinv(Pp)
         return x + C @ (xs - xp), P + C @ (Ps - Pp) @ C.T
+
+
+# ``Estimator`` is the truer name for this role (it estimates the state's mean
+# and uncertainty from data). ``KalmanEngine`` is the established name and stays
+# primary; this is a pure alias (identical class) for traditionalists.
+KalmanEstimator = KalmanEngine

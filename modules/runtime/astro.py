@@ -95,15 +95,20 @@ H_SCALE = 8.5 * KM               # density scale height (scaled ascent model)
 
 
 # ---------------------------------------------------------------------------
-#  Numerical integrator (shared)
+#  Numerical integrator (shared) — thin shim over the single RK4Integrator so
+#  there is one home for the RK4 math. Signature kept (``deriv(s, t)``) for the
+#  rocket/space callers; the integrator's step is ``f(x, u, t)``, adapted below.
 # ---------------------------------------------------------------------------
+_RK4 = None
+
 def rk4(s, t, dt, deriv):
-    """One 4th-order Runge–Kutta step of ``ds/dt = deriv(s, t)``."""
-    k1 = deriv(s, t)
-    k2 = deriv(s + 0.5 * dt * k1, t + 0.5 * dt)
-    k3 = deriv(s + 0.5 * dt * k2, t + 0.5 * dt)
-    k4 = deriv(s + dt * k3, t + dt)
-    return s + dt / 6.0 * (k1 + 2 * k2 + 2 * k3 + k4)
+    """One 4th-order Runge–Kutta step of ``ds/dt = deriv(s, t)`` (delegates to
+    :class:`~kalman.framework.integrators.RK4Integrator`)."""
+    global _RK4
+    if _RK4 is None:
+        from ..framework.integrators import RK4Integrator
+        _RK4 = RK4Integrator()
+    return _RK4.step(lambda x, u, tt: deriv(x, tt), s, t=t, dt=dt)
 
 
 # ---------------------------------------------------------------------------

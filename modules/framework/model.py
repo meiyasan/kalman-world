@@ -1,9 +1,12 @@
 from typing import Optional
 import numpy as np
-from ..helpers import set_random_seed, as_col, numerical_jacobian
+from scipy.linalg import expm
+from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
-from .constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
+from .constants import (KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable,
+                        KalmanIntegratorKind, ALL_INTEGRATORS,
+                        KalmanSolverKind, ALL_SOLVERS)
 
 class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     """
@@ -15,6 +18,12 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
 
       - **matrices** — pass ``F=,H=,B=,L=,M=`` (constant or callable ``M(t)``); ``f``/``h``
         then default to ``f(x)=Fx+Bu+Lw`` / ``h(x)=Hx+Mv`` and ``F()/H()/…`` return them;
+      - **continuous** — pass ``A=`` (and, for process noise, ``Qc=`` with optional
+        ``Lc=``) instead of ``F=``/``Q=``; the model discretizes exactly via
+        ``expm``/Van Loan (needs ``fs=``/``sample_rate=``). ``Ac()``/``Qc()``/``Lc()``
+        return the continuous inputs back for inspection (e.g.
+        ``helpers.symbolic_discretize(model.Ac())``); mutually exclusive with
+        ``F=``/``Q=`` respectively;
       - **functions** — override ``f``/``h`` (nonlinear); ``F/H`` come from
         :func:`numerical_jacobian`.
 
@@ -34,6 +43,16 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED      # safe universal default (falls back to linear on matrices)
     ALLOWED_ENGINES = ALL_ENGINES              # any engine
 
+    # Time-stepping binding (declared, not imported — same pattern as the engine).
+    # An ODE model overriding ``f_continuous`` gets its discrete ``f`` by having
+    # this integrator advance the derivative one filter step (``SOLVER_SUBSTEPS``
+    # substeps of ``1/fs``). A PDE model instead binds a solver and overrides f().
+    DEFAULT_INTEGRATOR  = KalmanIntegratorKind.RK4
+    ALLOWED_INTEGRATORS = ALL_INTEGRATORS
+    DEFAULT_SOLVER      = KalmanSolverKind.SPECTRAL
+    ALLOWED_SOLVERS     = ALL_SOLVERS
+    SOLVER_SUBSTEPS     = 1
+
     def __init__(self, sensor_id: str | int, **kwargs):
 
         self.add_sensor(sensor_id)
@@ -49,6 +68,14 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if seed is not None:
             set_random_seed(seed)
 
+        # --- Optional per-instance integrator/solver override (Kind or instance) ---
+        self._integrator_override = self._validate_kind(
+            kwargs.pop("integrator", None), self.ALLOWED_INTEGRATORS, "integrator")
+        self._solver_override = self._validate_kind(
+            kwargs.pop("solver", None), self.ALLOWED_SOLVERS, "solver")
+        self._integrator_inst = None
+        self._solver_inst = None
+
         # --- Time base ---
         self.t0 = kwargs.pop("t0", 0.0)
 
@@ -57,6 +84,32 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             if M is None:
                 return None
             return M if callable(M) else np.asarray(M, dtype=self.dtype)
+
+        # --- Continuous-time construction path: A (+ optional Qc/Lc) --------
+        # Alternative to passing F=/Q= directly: give the continuous generator
+        # ẋ=Ax(+Lw) and let the model discretize exactly (expm for F, Van Loan
+        # for Q). Kept as self._Ac/_Qc/_Lc for introspection — NOT the same
+        # slot as the framework's own _L (discrete process-noise map ∂f/∂w,
+        # set below), which is a distinct thing left untouched here.
+        A, Qc, Lc = kwargs.pop("A", None), kwargs.pop("Qc", None), kwargs.pop("Lc", None)
+        self._Ac = self._Qc = self._Lc = None
+        if A is not None:
+            if kwargs.get("F") is not None:
+                raise ValueError("Pass either F= or A=, not both.")
+            if not self.fs:
+                raise ValueError("A= needs fs= (or sample_rate=) to discretize via expm(A/fs).")
+            A = np.asarray(A, dtype=self.dtype)
+            dt = 1.0 / self.fs
+            kwargs["F"] = expm(A * dt)
+            self._Ac = A
+            if Qc is not None:
+                if kwargs.get("Q") is not None:
+                    raise ValueError("Pass either Q= or Qc=, not both.")
+                Lc = np.eye(A.shape[0], dtype=self.dtype) if Lc is None else np.asarray(Lc, dtype=self.dtype)
+                _, kwargs["Q"] = van_loan_discretize(A, Lc, np.asarray(Qc, dtype=self.dtype), dt)
+                self._Qc, self._Lc = Qc, Lc
+        elif Qc is not None:
+            raise ValueError("Qc= requires A= (Van Loan needs the continuous generator).")
 
         self._F = _store(kwargs.pop("F", None))
         self._H = _store(kwargs.pop("H", None))
@@ -102,14 +155,79 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from .engines import resolve_engine
         return resolve_engine(self.DEFAULT_ENGINE)
 
+    @staticmethod
+    def _validate_kind(value, allowed, label):
+        """Normalise an ``integrator=``/``solver=`` override: accept a Kind, a
+        concrete instance (has ``.KIND``), or None; validate against ``allowed``."""
+        if value is None:
+            return None
+        kind = getattr(value, "KIND", value)   # instance → its KIND; else the Kind itself
+        if allowed is not None and kind not in allowed:
+            raise TypeError(f"{label} {kind} not in ALLOWED_{label.upper()}S "
+                            f"({sorted(k.name for k in allowed)}).")
+        return value
+
+    def default_integrator(self):
+        """Instantiate the model's time integrator (override → ``DEFAULT_INTEGRATOR``)."""
+        if self._integrator_inst is None:
+            from .integrators import resolve_integrator
+            from .integrator import KalmanIntegrator
+            ovr = self._integrator_override
+            if isinstance(ovr, KalmanIntegrator):
+                self._integrator_inst = ovr
+            else:
+                self._integrator_inst = resolve_integrator(ovr or self.DEFAULT_INTEGRATOR)
+        return self._integrator_inst
+
+    def default_solver(self, **kwargs):
+        """Instantiate the model's spatial solver (override → ``DEFAULT_SOLVER``)."""
+        if self._solver_inst is None:
+            from .solvers import resolve_solver
+            from .solver import KalmanSolver
+            ovr = self._solver_override
+            if isinstance(ovr, KalmanSolver):
+                self._solver_inst = ovr
+            else:
+                self._solver_inst = resolve_solver(ovr or self.DEFAULT_SOLVER, **kwargs)
+        return self._solver_inst
+
+    # ------------------------------------------------------------------
+    # Continuous dynamics hook (opt-in): override ``f_continuous`` (the
+    # derivative ẋ=f_c(x,u,t)) and the base ``f`` below integrates it with the
+    # model's integrator — the ODE counterpart of binding a solver for a PDE.
+    # ------------------------------------------------------------------
+    def f_continuous(self, x, u=None, t=None):
+        """Continuous-time derivative ẋ = f_continuous(x,u,t).  Override to opt in."""
+        raise NotImplementedError
+
+    def _uses_continuous(self) -> bool:
+        return type(self).f_continuous is not KalmanModel.f_continuous
+
+    def _integrate_continuous(self, x, u, t):
+        integ = self.default_integrator()
+        substeps = max(1, int(getattr(self, "SOLVER_SUBSTEPS", 1)))
+        dt = (1.0 / self.fs) if self.fs else 1.0
+        dt /= substeps
+        fc = lambda xx, uu, tt: np.asarray(self.f_continuous(xx, u=uu, t=tt), dtype=self.dtype)
+        return integ.integrate(fc, np.asarray(x, dtype=self.dtype), u=u,
+                               t=(0.0 if t is None else t), dt=dt, n=substeps)
+
     # ============================================================
     # Core equations (matrix path; subclasses override for nonlinear f/h)
     # ============================================================
     def f(self, x, u=None, w=None, t=None):
-        """State transition. Uses constant matrices if provided; else override me."""
+        """State transition. Uses constant matrices if provided; else a
+        continuous ``f_continuous`` integrated by the model's integrator; else
+        override me."""
         if self._F is None:
+            if self._uses_continuous():                 # ODE: integrate the derivative
+                xk = self._integrate_continuous(x, u, t)
+                if w is not None:
+                    L = self.L(t=t)
+                    xk = xk + (w if L is None else L @ w)
+                return xk
             raise NotImplementedError(
-                "Model must define f() or be constructed with matrices (F=, H=, ...).")
+                "Model must define f()/f_continuous or be constructed with matrices (F=, H=, ...).")
         x = self.F(t=t) @ x
         if u is not None:
             B = self.B(t=t)
@@ -156,6 +274,14 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         x = self.x0 if x is None else x
         return numerical_jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
 
+    def clip_u(self, u: np.ndarray) -> np.ndarray:
+        """Actuator-limit hook: map a controller's raw command to what the plant can
+        actually deliver. Identity by default; models with real actuator limits (e.g. a
+        steering-angle clip) override this so callers — controllers logging cost, or
+        anything else that needs the *deliverable* command rather than the raw one — see
+        the same constraint the model enforces internally in ``f()``."""
+        return u
+
     def L(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None,
            w: Optional[np.ndarray] = None, t: Optional[float] = None) -> Optional[np.ndarray]:
         """Process-noise map ∂f/∂w (constant matrix if provided, numerical if w given)."""
@@ -195,6 +321,23 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     def R(self, t: Optional[float] = None) -> np.ndarray:
         """Measurement noise covariance."""
         return self._R(t) if callable(self._R) else self._R
+
+    # ============================================================
+    # Continuous-time introspection (only set if constructed via A=/Qc=)
+    # ============================================================
+    def Ac(self) -> Optional[np.ndarray]:
+        """Continuous-time generator ẋ=Ax(+Lw) the model was built from, or
+        None if constructed via F= directly. Feed to
+        :func:`helpers.symbolic_discretize` to read F back as an equation."""
+        return self._Ac
+
+    def Qc(self) -> Optional[np.ndarray]:
+        """Continuous process-noise spectral density, or None if constructed via Q= directly."""
+        return self._Qc
+
+    def Lc(self) -> Optional[np.ndarray]:
+        """Continuous noise-input map (ẋ=Ax+Lw), or None if constructed via Q= directly."""
+        return self._Lc
 
     def covariances(self, t: Optional[float] = None,
                           x: Optional[np.ndarray] = None,

@@ -12,9 +12,15 @@ Layers (dependency points downward only: Filter → Engine → Model):
 Domain applications live in ``kalman.apps``; the recognisable filters (KF/EKF/UKF/PF) in
 ``kalman.filters``.
 """
-from .constants import KalmanEngineKind
+from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind,
+                        KalmanProviderKind)
 from .model import KalmanModel
-from .engine import KalmanEngine
+from .engine import KalmanEngine, KalmanEstimator
+from .integrator import KalmanIntegrator
+from .integrators import EulerIntegrator, RK4Integrator, DormandPrinceIntegrator, resolve_integrator
+from .solver import KalmanSolver
+from .solvers import SpectralSolver, resolve_solver
+from .provider import KalmanProvider
 from .filter import KalmanFilter
 from .control import KalmanController
 from .models import (
@@ -49,8 +55,21 @@ from .routers import (
 
 __all__ = [
     "KalmanEngineKind",
+    "KalmanIntegratorKind",
+    "KalmanSolverKind",
+    "KalmanProviderKind",
     "KalmanModel",
     "KalmanEngine",
+    "KalmanEstimator",
+    "KalmanIntegrator",
+    "EulerIntegrator",
+    "RK4Integrator",
+    "DormandPrinceIntegrator",
+    "resolve_integrator",
+    "KalmanSolver",
+    "SpectralSolver",
+    "resolve_solver",
+    "KalmanProvider",
     "KalmanFilter",
     "KalmanController",
     "LinearKalmanModel",

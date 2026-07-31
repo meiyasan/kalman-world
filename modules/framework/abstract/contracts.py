@@ -124,6 +124,42 @@ class KalmanEngineABC(ABC):
         """RTS smoothing equations for one reverse step: return ``(x_s, P_s)``."""
         ...
 
+class KalmanIntegratorABC(ABC):
+    """
+    Abstract base for time integrators — advance ``x(t) → x(t+dt)`` for ``ẋ=f(x,u,t)``.
+
+    One method to implement (``step``); ``integrate`` (n steps) has a default loop.
+    Integrators own no run state and know nothing of the filter/model workflow.
+    """
+    @abstractmethod
+    def step(self, f, x, u=None, t=None, dt=1.0):
+        """Advance one step of size ``dt`` and return ``x(t+dt)``."""
+        ...
+
+
+class KalmanSolverABC(ABC):
+    """
+    Abstract base for spatial-discretization solvers. A solver ``discretize``s a field
+    into a semi-discrete RHS and ``integrate``s it in time by composing a
+    :class:`KalmanIntegratorABC`; ``solve`` is the public ``discretize``→``integrate``.
+    """
+    @abstractmethod
+    def solve(self, field, steps=1, u=None, t=None):
+        """Advance ``field`` by ``steps`` and return the evolved field."""
+        ...
+
+
+class KalmanProviderABC(ABC):
+    """
+    Abstract base for data/knowledge providers — the "WHERE the data comes from" role.
+    ``fetch`` pulls a dataset for a query; ``stream`` yields live data.
+    """
+    @abstractmethod
+    def fetch(self, **query):
+        """Pull data for ``query`` (arrays / KalmanRecord / fields)."""
+        ...
+
+
 class KalmanFilterABC(ABC):
 
     """

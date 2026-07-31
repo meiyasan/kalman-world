@@ -7,7 +7,8 @@ import sys
 
 import json, yaml
 from ...runtime.debug import get_debug
-from .contracts import KalmanModelABC, KalmanEngineABC, KalmanFilterABC
+from .contracts import (KalmanModelABC, KalmanEngineABC, KalmanFilterABC,
+                        KalmanIntegratorABC, KalmanSolverABC, KalmanProviderABC)
 
 class KalmanMetadata(ABC):
 
@@ -63,8 +64,8 @@ class KalmanMetadata(ABC):
         else:
             raise ValueError("Unsupported file format. Use '.json', '.npz', '.yaml', or '.xml'.")
 
-    def print(self):
-        print(self.__str__())
+    def print(self, **kwargs):
+        print(self.__str__(**kwargs) if kwargs else self.__str__())
     
 class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
 
@@ -167,7 +168,7 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
     # ------------------------------------------------------
     # String Representation
     # ------------------------------------------------------
-    def __str__(self):
+    def __str__(self, matrices: bool = False):
         import textwrap
         opt = np.get_printoptions()
         np.set_printoptions(linewidth=np.inf)
@@ -220,6 +221,27 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
         result += f"{2*spacer}{_print_dimensions('State Covariance (P0)...........................', self.P0)}\n"
         result += (f"{2*spacer}" + _print(self.P0, prefix=2*spacer) + "\n") if get_debug() else ""
 
+        if matrices:
+            result += f"{1*spacer}Matrices:\n"
+            for label, getter in (("F", self.F), ("H", self.H), ("B", self.B),
+                                   ("L", self.L), ("M", self.M), ("Q", self.Q), ("R", self.R)):
+                try:
+                    mat = getter()
+                except Exception:
+                    mat = None
+                if mat is None:
+                    continue
+                result += f"{2*spacer}{_print_dimensions(label, mat)}\n"
+                result += f"{2*spacer}" + _print(mat, prefix=2*spacer) + "\n"
+            Ac, Qc, Lc = getattr(self, "_Ac", None), getattr(self, "_Qc", None), getattr(self, "_Lc", None)
+            if Ac is not None:
+                result += f"{1*spacer}Continuous-time design (A=/Qc=/Lc=):\n"
+                for label, mat in (("A", Ac), ("Qc", Qc), ("Lc", Lc)):
+                    if mat is None:
+                        continue
+                    result += f"{2*spacer}{_print_dimensions(label, mat)}\n"
+                    result += f"{2*spacer}" + _print(mat, prefix=2*spacer) + "\n"
+
         np.set_printoptions(**opt)
 
         metadata_keys = sorted(self.keys())
@@ -254,6 +276,41 @@ class KalmanEngineMetadata(KalmanEngineABC, KalmanMetadata):
             res += f"{spacer}Kind......................: {kind}\n"
         res += f"{spacer}Precision.................: {self.epsilon:.3e}\n"
         return res
+
+class KalmanIntegratorMetadata(KalmanIntegratorABC, KalmanMetadata):
+
+    NAME = "Kalman Integrator"
+    DESCRIPTION = "Base class for time integrators (advance x(t) -> x(t+dt) for xdot=f)."
+    VERSION = "1.0"
+
+    def __str__(self):
+        import textwrap
+        spacer = " " * 4
+        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)
+        kind = getattr(self, "KIND", None)
+        res  = f"{self.NAME} (v{self.VERSION})\n{spacer}{desc}\n"
+        if kind is not None:
+            res += f"{spacer}Kind......................: {kind}\n"
+        return res
+
+
+class KalmanSolverMetadata(KalmanSolverABC, KalmanMetadata):
+
+    NAME = "Kalman Solver"
+    DESCRIPTION = "Base class for spatial-discretization solvers (discretize + integrate)."
+    VERSION = "1.0"
+
+    __str__ = KalmanIntegratorMetadata.__str__
+
+
+class KalmanProviderMetadata(KalmanProviderABC, KalmanMetadata):
+
+    NAME = "Kalman Provider"
+    DESCRIPTION = "Base class for data/knowledge providers (fetch / stream)."
+    VERSION = "1.0"
+
+    __str__ = KalmanIntegratorMetadata.__str__
+
 
 class KalmanFilterMetadata(KalmanFilterABC, KalmanMetadata):
 
@@ -309,12 +366,21 @@ class KalmanFilterMetadata(KalmanFilterABC, KalmanMetadata):
 
         res += f"{spacer}Microstate variable sizes:\n"
         res += f"{2*spacer}x.....................: {fmt_arr(self.x)} element(s)\n"
-        res += f"{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n\n"
+        res += f"{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n"
 
-        res += f"{spacer}Macrostate variable sizes:\n"
-        res += f"{2*spacer}Prior.................: {len(self.prior or [])} element(s)\n"
-        res += f"{2*spacer}Posterior.............: {len(self.posterior or [])} element(s)\n"
-        res += f"{2*spacer}Measurement...........: {len(self.measurement or [])} element(s)\n"
-        res += f"{2*spacer}Control...............: {len(self.control or [])} element(s)\n"
+        # Macrostate logs (prior/posterior/smooth/measurement/control) only exist
+        # once forward()/backward() has actually run — before that they're all
+        # empty, and printing four "0 element(s)" lines is just noise, not
+        # information. Show the section only once there is something to show.
+        n_prior       = len(self.prior or [])
+        n_posterior   = len(self.posterior or [])
+        n_measurement = len(self.measurement or [])
+        n_control     = len(self.control or [])
+        if n_prior or n_posterior or n_measurement or n_control:
+            res += f"\n{spacer}Macrostate variable sizes:\n"
+            res += f"{2*spacer}Prior.................: {n_prior} element(s)\n"
+            res += f"{2*spacer}Posterior.............: {n_posterior} element(s)\n"
+            res += f"{2*spacer}Measurement...........: {n_measurement} element(s)\n"
+            res += f"{2*spacer}Control...............: {n_control} element(s)\n"
 
         return res
