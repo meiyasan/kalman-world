@@ -27,6 +27,14 @@ from .vision        import (DetectionModel, BoxTrackModel, SortTracker, KalmanTr
                             mot_detections, sort_mot_hypothesis, mot_sequences_from_root,
                             evaluate_mot, synthetic_multi)
 from .gps           import GPSModel, GPSConstellation, GPSState, GPSObservable
+from .weather       import (NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment,
+                            TyphoonModel, TyphoonState, TyphoonObservable, synthetic_track,
+                            synthetic_steered_track, analytic_steering, analytic_environment,
+                            LearnedIntensityModel, japan_steering, field_steering,
+                            japan_region, landfall_probability, JAPAN_BBOX,
+                            TornadoEnvironmentModel, TornadoState, TornadoObservable,
+                            synthetic_environment, brazil_season, brazil_tornado_scenario,
+                            seasonal_tornado_probability)
 from .interferometer import (InterferometerModel,
                               InterferometerK1, InterferometerH1,
                               InterferometerL1, InterferometerV1,

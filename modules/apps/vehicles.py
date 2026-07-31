@@ -16,15 +16,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..framework.models.extended import ExtendedKalmanModel
-from ..framework.constants import KalmanState, KalmanObservable
-
-
-def _rk4(s, t, dt, deriv):
-    k1 = deriv(s, t)
-    k2 = deriv(s + 0.5 * dt * k1, t + 0.5 * dt)
-    k3 = deriv(s + 0.5 * dt * k2, t + 0.5 * dt)
-    k4 = deriv(s + dt * k3, t + dt)
-    return s + dt / 6.0 * (k1 + 2 * k2 + 2 * k3 + k4)
+from ..framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind
 
 
 # ===========================================================================
@@ -126,11 +118,16 @@ class CarSpeedModel(ExtendedKalmanModel):
         f_grade = self.mass * self.g * np.sin(self.grade)
         return (f_drive - f_drag - f_roll - f_grade) / self.mass
 
-    def f(self, x, u=None, w=None, t=None):
+    def f_continuous(self, x, u=None, t=None):
+        """Longitudinal derivative ẋ = [v, accel(v)] (the force balance)."""
         s = np.asarray(x, float).reshape(-1)
-        deriv = lambda s, tt: np.array([s[1], self.accel(s[1])])
-        s = _rk4(s, float(t or 0.0), self._dt, deriv)
-        s[1] = max(s[1], 0.0)            # the car does not roll backwards in a speed run
+        return np.array([[s[1]], [self.accel(s[1])]])
+
+    def f(self, x, u=None, w=None, t=None):
+        # Integrate the continuous dynamics with the model's integrator (RK4),
+        # then clamp: the car does not roll backwards in a speed run.
+        s = np.asarray(self._integrate_continuous(x, u, t), float).reshape(-1)
+        s[1] = max(s[1], 0.0)
         return s.reshape(-1, 1)
 
     def h(self, x, v=None, t=None):
@@ -288,22 +285,27 @@ class CarLaneModel(ExtendedKalmanModel):
         # enters additively on every state, which is what q_lat/q_head/q_vel are meant to do.
         super().__init__(name, Q=Q, R=R, B=B, L=np.eye(self.n), fs=fs, **kw)
 
-    def f(self, x, u=None, w=None, t=None):
+    def clip_u(self, u):
+        """Steering-angle actuator limit: ``|delta| <= steer_limit``."""
+        u_arr = np.asarray(u, float).reshape(-1).copy()
+        if len(u_arr) > 0:
+            u_arr[0] = np.clip(u_arr[0], -self.steer_limit, self.steer_limit)
+        return u_arr.reshape(-1, 1)
+
+    # Bicycle kinematics were historically integrated with explicit Euler; keep that
+    # exact scheme by binding the Euler integrator (RK4 would shift the trajectory).
+    DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER
+
+    def f_continuous(self, x, u=None, t=None):
+        """Bicycle-kinematic derivative ẋ = [v·sin ψ, v·tan δ / L, 0]."""
         x = np.asarray(x, float).reshape(-1)
         y, psi, v = x[0], x[1], x[2]
-        dt = self._dt
-
         delta = 0.0
         if u is not None:
-            u_arr = np.asarray(u, float).reshape(-1)
+            u_arr = self.clip_u(u).reshape(-1)
             if len(u_arr) > 0:
-                delta = np.clip(u_arr[0], -self.steer_limit, self.steer_limit)
-
-        y_new = y + v * np.sin(psi) * dt
-        psi_new = psi + v * np.tan(delta) / self.wheelbase * dt
-        v_new = v
-
-        return np.array([[y_new], [psi_new], [v_new]])
+                delta = u_arr[0]
+        return np.array([[v * np.sin(psi)], [v * np.tan(delta) / self.wheelbase], [0.0]])
 
     def h(self, x, v=None, t=None):
         x = np.asarray(x, float).reshape(-1)
