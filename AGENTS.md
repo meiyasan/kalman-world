@@ -56,7 +56,7 @@ fails — fix the code, do not weaken the test.
    after any reorganisation; `kalman.apps.X` must be the *same object* as the
    domain's `X`.
 6. **Optional dependencies are lazily imported and guarded** (`torch`, `mcp`,
-   `fastapi`, `passlib`, `pyjwt`, `httpx`, `cdsapi`, `xarray`, `h5py`). The core
+   `fastapi`, `bcrypt`, `pyjwt`, `httpx`, `cdsapi`, `xarray`, `h5py`). The core
    must import and the suite must pass without them. Entry points print an
    install hint and exit 0 rather than crashing.
 7. **No `eval`/`exec` in `modules/api/`.** Spec authoring is data-only; code is
@@ -153,16 +153,17 @@ first. To add a client, append it to `CLIENTS` in that script.
 ## 6. Verification — required before claiming done
 
 ```bash
+make setup                     # one-command onboarding (deps, extras, accel, self-check)
 make tests                     # or: python -m pytest tests/ -q
 python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **452 passed, 3 skipped** (skips are optional-dependency
+Current baseline: **453 passed, 2 skipped** (skips are optional-dependency
 gates). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than
-skipping them — `pip install 'mcp>=2' 'fastapi' 'uvicorn[standard]'`. The MCP
+skipping them — `make setup`. The MCP
 server is covered by a **live stdio session** test that spawns
 `python -m kalman.mcp` and drives it as a client; it caught a real breakage
 when SDK 2.0 renamed `FastMCP` to `MCPServer`, which a mocked test would have

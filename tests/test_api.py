@@ -171,14 +171,27 @@ class TestAuth(unittest.TestCase):
 
     def test_htpasswd_roundtrip(self):
         try:
-            import passlib  # noqa
+            import bcrypt  # noqa
         except ImportError:
-            self.skipTest("passlib not installed")
+            self.skipTest("bcrypt not installed")
         with tempfile.TemporaryDirectory() as d:
             path = os.path.join(d, "htpasswd")
             auth.add_user("alice", "pw123", path)
             self.assertTrue(auth.verify_user("alice", "pw123", path))
             self.assertFalse(auth.verify_user("alice", "wrong", path))
+            self.assertFalse(auth.verify_user("nobody", "pw123", path))
+            # Apache htpasswd format: one user:hash line, owner-only perms
+            line = open(path).read().strip()
+            self.assertTrue(line.startswith("alice:$2"))
+            self.assertEqual(oct(os.stat(path).st_mode)[-3:], "600")
+            # updating a password replaces the line rather than appending
+            auth.add_user("alice", "pw456", path)
+            self.assertEqual(len(open(path).read().strip().splitlines()), 1)
+            self.assertTrue(auth.verify_user("alice", "pw456", path))
+            self.assertFalse(auth.verify_user("alice", "pw123", path))
+            # a >72-byte password is truncated, not an error (bcrypt's limit)
+            auth.add_user("bob", "x" * 200, path)
+            self.assertTrue(auth.verify_user("bob", "x" * 200, path))
 
 
 if __name__ == "__main__":

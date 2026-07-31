@@ -14,7 +14,7 @@ Each verb declares its required scope; :func:`authorize` verifies the JWT
 (HS256, ``KALMAN_JWT_SECRET``) and the scope.  **Auth disabled** (no secret
 configured) allows in-process Python use (the local user already has the box);
 when a secret *is* set, a valid token is required and anything missing/invalid/
-expired is denied.  Optional deps ``pyjwt`` + ``passlib[bcrypt]`` (``kalman[auth]``),
+expired is denied.  Optional deps ``pyjwt`` + ``bcrypt`` (``kalman[auth]``),
 lazily imported; secrets are never logged.
 
 CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify``.
@@ -89,23 +89,69 @@ def mint_token(user: str, scopes, *, secret: str | None = None, exp_hours: float
     return jwt.encode(payload, secret, algorithm="HS256")
 
 
+# bcrypt caps the password at 72 bytes and (since 5.0) refuses longer input
+# outright, so truncate explicitly rather than let it raise.
+_BCRYPT_MAX = 72
+
+
+def _bcrypt():
+    try:
+        import bcrypt
+        return bcrypt
+    except ImportError as e:
+        raise AuthError("account management needs bcrypt "
+                        "(pip install 'kalman[auth]').") from e
+
+
 def add_user(user: str, password: str, path: str | None = None) -> str:
-    """Add/update a bcrypt ``.htpasswd`` account; returns the file path."""
-    from passlib.apache import HtpasswdFile
+    """Add/update a bcrypt ``.htpasswd`` account; returns the file path.
+
+    Written in the Apache ``user:$2b$…`` format that httpd, nginx and every
+    htpasswd tool understand.  Uses the maintained ``bcrypt`` package directly
+    — ``passlib`` is unmaintained and breaks against bcrypt >= 5.
+    """
+    bc = _bcrypt()
+    if ":" in user:
+        raise ValueError("username must not contain ':'")
     path = path or _htpasswd_path()
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    ht = HtpasswdFile(path, new=not os.path.exists(path))
-    ht.set_password(user, password)
-    ht.save()
+    parent = os.path.dirname(path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
+    digest = bc.hashpw(password.encode()[:_BCRYPT_MAX], bc.gensalt()).decode()
+
+    lines = []
+    if os.path.exists(path):
+        with open(path) as fh:
+            lines = [ln for ln in fh.read().splitlines()
+                     if ln.strip() and ln.split(":", 1)[0] != user]
+    lines.append(f"{user}:{digest}")
+    with open(path, "w") as fh:
+        fh.write("\n".join(lines) + "\n")
+    os.chmod(path, 0o600)                       # credentials file: owner-only
     return path
 
 
 def verify_user(user: str, password: str, path: str | None = None) -> bool:
-    from passlib.apache import HtpasswdFile
+    """Check ``password`` against the account store (constant-time via bcrypt)."""
+    bc = _bcrypt()
     path = path or _htpasswd_path()
     if not os.path.exists(path):
         return False
-    return bool(HtpasswdFile(path).check_password(user, password))
+    for line in open(path).read().splitlines():
+        name, _, digest = line.partition(":")
+        if name != user or not digest:
+            continue
+        # Apache writes $2y$; it is bit-identical to $2b$ for verification.
+        if digest.startswith("$2y$"):
+            digest = "$2b$" + digest[4:]
+        if not digest.startswith("$2"):
+            raise AuthError(f"account {user!r} uses a non-bcrypt hash; "
+                            f"re-add it with `make api-user USER={user}`.")
+        try:
+            return bc.checkpw(password.encode()[:_BCRYPT_MAX], digest.encode())
+        except ValueError:
+            return False
+    return False
 
 
 # ---------------------------------------------------------------------------

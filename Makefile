@@ -197,6 +197,33 @@ examples: motd
 accel: motd
 	@$(PYTHON) -m modules.framework.native.cffi
 
+## One-command onboarding: dependencies, optional extras, C acceleration, self-check
+setup: motd
+	@echo "==> python: $(PYTHON)"
+	@$(PYTHON) -m pip install -q --upgrade pip
+	@if [ -f requirements.txt ]; then \
+		echo "==> core dependencies (requirements.txt)"; \
+		$(PYTHON) -m pip install -q -r requirements.txt; \
+	fi
+	@echo "==> optional extras (mcp, rest, auth, remote)"
+	@$(PYTHON) -m pip install -q "mcp>=1.0" "fastapi>=0.110" "uvicorn[standard]>=0.29" \
+		"bcrypt>=4.0" "pyjwt>=2.0" "httpx>=0.27" \
+		|| echo "    (some extras unavailable - the core works without them)"
+	@echo "==> C acceleration (optional)"
+	@-MOTD=0 $(MAKE) --no-print-directory accel >/dev/null 2>&1 \
+		&& echo "    built" || echo "    skipped (pure-Python fallback in use)"
+	@echo "==> self-check"
+	@$(PYTHON) -c "import kalman; from kalman.api import catalog; \
+c = catalog(); \
+print(f'    {len(c[\"models\"])} models, {len(c[\"engines\"])} engines, {len(c[\"integrators\"])} integrators, {len(c[\"solvers\"])} solvers, {len(c[\"providers\"])} providers')"
+	@$(PYTHON) -c "import importlib; \
+mods = {'mcp': 'MCP server', 'fastapi': 'REST API', 'jwt': 'scoped auth', 'torch': 'GPU/ML'}; \
+[print(f'    {label:12s} {\"ready\" if importlib.util.find_spec(m) else \"not installed\"}') for m, label in mods.items()]"
+	@echo ""
+	@echo "Next:  make tests        run the suite"
+	@echo "       make mcp          register the MCP server with your clients"
+	@echo "       make serve        run REST + MCP via docker-compose"
+
 ## Run the Python unit-test suite with a per-module coverage summary
 tests: motd
 	@FORCE_COLOR=1 $(PYTHON) -m pytest tests/ --tb=short --color=yes \
@@ -228,8 +255,20 @@ rest:
 	@$(PYTHON) -m kalman.rest
 
 ## Run the MCP server locally (stdio)
-mcp:
+mcp-serve:
 	@$(PYTHON) -m kalman.mcp
+
+## Set up MCP end-to-end: install the SDK, register with every detected client, verify
+mcp: motd
+	@echo "==> installing the MCP SDK (if missing)"
+	@$(PYTHON) -c "import mcp" 2>/dev/null || $(PYTHON) -m pip install -q "mcp>=1.0"
+	@echo "==> registering the kalman server with detected clients"
+	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
+	@echo ""
+	@echo "==> verifying the server starts"
+	@$(PYTHON) -c "from kalman.mcp import build_server; s = build_server(); print('    OK: server builds -', type(s).__name__)"
+	@echo ""
+	@$(PYTHON) tools/mcp_install.py --list
 
 ## Register the Kalman MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
 mcp-install:
