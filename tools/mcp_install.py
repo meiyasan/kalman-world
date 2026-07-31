@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Register the Kalman AI MCP server with any MCP-capable client — one command for
+Register the Kalman-AI MCP server with any MCP-capable client — one command for
 all of them.
 
     python tools/mcp_install.py --list                 # what's installed here
@@ -30,8 +30,8 @@ import shutil
 import sys
 from pathlib import Path
 
-SERVER_NAME = "kalman-ai"          # config key; also the MCP tool-name prefix
-LEGACY_NAMES = ("kalman",)         # earlier keys, removed on (re)install
+SERVER_NAME = "Kalman-AI"                    # config key; also the MCP tool-name prefix
+LEGACY_NAMES = ("kalman", "kalman-ai")       # earlier keys, removed on (re)install
 REPO = Path(__file__).resolve().parent.parent
 HOME = Path.home()
 OS = {"Darwin": "mac", "Windows": "win"}.get(platform.system(), "linux")
@@ -230,7 +230,7 @@ def _detect(targets: dict) -> list[str]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
-        prog="mcp_install", description="Register the Kalman AI MCP server with MCP clients.")
+        prog="mcp_install", description="Register the Kalman-AI MCP server with MCP clients.")
     ap.add_argument("clients", nargs="*", help="client names (default: --all)")
     ap.add_argument("--all", action="store_true", help="every detected client")
     ap.add_argument("--list", action="store_true", help="list clients and detection status")

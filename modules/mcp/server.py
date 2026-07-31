@@ -22,8 +22,9 @@ def _server_class():
         return FastMCP
 
 
-SERVER_NAME = "kalman-ai"          # identifier: also the tool-name prefix
-SERVER_TITLE = "Kalman AI"         # human-facing name shown by clients
+SERVER_NAME = "Kalman-AI"          # identifier: also the tool-name prefix and the
+                                   # config key most clients display in their list
+SERVER_TITLE = "Kalman-AI"         # human-facing name shown by clients
 
 
 def build_server():
@@ -63,6 +64,13 @@ def build_server():
         """Filter a measurement set through a KalmanSpec's filter."""
         authorize(token or None, "send_measurement")
         return facade.run_filter(spec, data)
+
+    @mcp.tool()
+    def forecast(spec: dict, x0: list, P0: list = None, steps: int = 1, token: str = "") -> dict:
+        """Forecast ahead from a state: a track cone where the model defines one,
+        else the propagated state + covariance."""
+        authorize(token or None, "send_measurement")
+        return facade.forecast(spec, x0, P0, steps)
 
     @mcp.tool()
     def run_osse(spec: dict, n_cycles: int = 40, n_members: int = 16, token: str = "") -> dict:
