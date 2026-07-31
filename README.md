@@ -1,7 +1,25 @@
 # kalman-framework
 
-A modular Python framework for Kalman-family filters, supporting linear, extended (EKF),
-and unscented (UKF) variants, with composable multi-sensor models.
+A modular Python framework for Kalman-family estimation — linear (KF), extended
+(EKF), unscented (UKF), particle (PF), ensemble (EnKF), combinatorial (CKF) and
+interacting-multiple-model (IMM) — with composable multi-sensor models, 46 domain
+applications, and one JSON API exposed over REST and MCP.
+
+## Documentation
+
+Full documentation lives in [`docs/`](docs/README.md):
+
+| | |
+|---|---|
+| [Getting Started](docs/1_Getting-Started.md) · [Installation](docs/2_Installation.md) · [Overview](docs/3_Overview.md) | first filter, setup, architecture |
+| [Models](docs/4_Models.md) · [Filters and Diagnostics](docs/5_Filters-and-Diagnostics.md) · [Integrators and Solvers](docs/6_Integrators-and-Solvers.md) | the modelling surface |
+| [Providers](docs/7_Providers.md) · [Control and Routing](docs/8_Control-and-Routing.md) | data in, action out |
+| [Python API](docs/9_Python-API.md) · [REST API](docs/10_REST-API.md) · [MCP Server](docs/11_MCP-Server.md) · [Authentication](docs/12_Authentication.md) · [Deployment](docs/13_Deployment.md) | API access |
+| [Troubleshooting](docs/14_Troubleshooting.md) | error messages, decoded |
+
+`make setup` installs everything and self-checks; [`AGENTS.md`](AGENTS.md) has the
+conventions for changing the code. The rest of this file is the reference for
+notation, the filter pipeline and composite models.
 
 ---
 
@@ -61,24 +79,31 @@ so that `gk_hat` is directly comparable to `gk`.
 ```
 KalmanModelABC          (abstract contract: f, h, F, H, B, L, M, Q, R, pre/in/postprocess)
     └── KalmanModel         (numerical Jacobian defaults, covariance inference)
-            ├── KalmanLinearModel     (constant or time-varying F, H matrices)
-            ├── KalmanExtendedModel   (nonlinear f, h with analytic Jacobians)
-            ├── KalmanUnscentedModel  (nonlinear f, h for UKF)
-            └── KalmanCompositeModel  (composes N submodels — see below)
+            ├── LinearKalmanModel     (constant or time-varying F, H matrices)
+            ├── ExtendedKalmanModel   (nonlinear f, h with analytic Jacobians)
+            ├── UnscentedKalmanModel  (nonlinear f, h for UKF)
+            └── CompositeKalmanModel  (composes N submodels — see below)
 ```
 
-### Filter engines
+### Filters
 
-| Class | Algorithm |
-|-------|-----------|
-| `KalmanFilter` | EKF (works for linear and nonlinear models) |
-| `LinearKalmanFilter` | Standard linear KF |
-| `MultiRateKalmanFilter` | Multi-rate / asynchronous measurements |
-| `UnscentedKalmanFilter` | UKF |
+Each is a thin `KalmanFilter` leaf binding the matching engine
+(`kalman.filters`). See [docs/5](docs/5_Filters-and-Diagnostics.md).
+
+| Class | Algorithm | Smoother |
+|-------|-----------|----------|
+| `KalmanFilter` | resolves the model's `DEFAULT_ENGINE` (EKF by default) | yes |
+| `LinearKalmanFilter` | standard linear KF | yes |
+| `ExtendedKalmanFilter` | EKF — Jacobian linearisation | yes |
+| `UnscentedKalmanFilter` | UKF — sigma points; non-additive noise | yes |
+| `ParticleFilter` | bootstrap / SIR particle filter | no |
+| `EnsembleKalmanFilter` | perturbed-observation EnKF, for fields and grids | no |
+| `CombinatorialKalmanFilter` | branch-and-prune track *finding* | yes |
+| `InteractiveKalmanFilter` | IMM over a bank of models, pluggable routing | per-model |
 
 ---
 
-## KalmanCompositeModel
+## CompositeKalmanModel
 
 Combines N submodels into a single model. State evolution is always block-diagonal
 (submodels evolve independently). Observation composition depends on `obs_mode`.
@@ -109,7 +134,7 @@ Override `_bind_preprocess`, `_bind_inprocess`, or `_bind_postprocess` in a subc
 to inject domain logic while keeping the composite wiring intact.
 
 ```python
-class ThermalNoiseComposite(KalmanCompositeModel):
+class ThermalNoiseComposite(CompositeKalmanModel):
 
     def _bind_preprocess(self, mode):
         independent_default = super()._bind_preprocess(mode)
@@ -133,27 +158,28 @@ class ThermalNoiseComposite(KalmanCompositeModel):
 ## Quick start
 
 ```python
-from modules.models.linear    import KalmanLinearModel
-from modules.models.composite import KalmanCompositeModel
-from modules.framework.constants import KalmanObservableReadout
-from modules.filters.kf        import LinearKalmanFilter
 import numpy as np
+from kalman.framework import LinearKalmanModel, CompositeKalmanModel
+from kalman.framework.constants import KalmanObservableReadout
+from kalman.filters import LinearKalmanFilter
 
 # --- two independent 1-D constant-velocity submodels ---
+dt = 0.01
 F = np.array([[1, dt], [0, 1]])
-H = np.array([[1, 0]])
+H = np.array([[1.0, 0.0]])
 Q = np.diag([1e-4, 1e-3])
 R = np.array([[0.1]])
 
-m1 = KalmanLinearModel("sensor_a", F=F, H=H, Q=Q, R=R, x0=np.zeros((2,1)))
-m2 = KalmanLinearModel("sensor_b", F=F, H=H, Q=Q, R=R, x0=np.zeros((2,1)))
+m1 = LinearKalmanModel("sensor_a", F=F, H=H, Q=Q, R=R, x0=np.zeros((2, 1)), fs=1/dt)
+m2 = LinearKalmanModel("sensor_b", F=F, H=H, Q=Q, R=R, x0=np.zeros((2, 1)), fs=1/dt)
 
 # stacked: z = [h1(x1); h2(x2)]
-composite = KalmanCompositeModel(m1, m2, obs_mode=KalmanObservableReadout.INDEPENDENT)
+composite = CompositeKalmanModel(m1, m2, obs_mode=KalmanObservableReadout.INDEPENDENT)
 
-kf = LinearKalmanFilter(composite)
+kf = LinearKalmanFilter(composite)          # n = 4, m = 2
+gk = composite.sample(2.0).zk               # or your own (T, m) measurements
 kf.forward(gk, record=True)
-record = kf.get_record()   # contains gk_hat, xk_hat, Pk_hat
+record = kf.get_record()                    # contains gk_hat, xk_hat, Pk_hat
 ```
 
 ---
@@ -166,7 +192,7 @@ inprocess(xk_hat)   → xk_hat        before h is applied       shape: (T, n, 1)
 postprocess(zk_hat) → gk_hat        after h is applied        shape: (T, M, 1)
 ```
 
-All three default to identity in `KalmanCompositeModel`. Override them in subclasses
+All three default to identity in `CompositeKalmanModel`. Override them in subclasses
 for signal conditioning (`preprocess`), coordinate transforms (`inprocess`), or
 domain reconstruction (`postprocess`).
 

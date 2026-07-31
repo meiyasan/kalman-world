@@ -120,7 +120,7 @@ base, tag `KIND`, and add it to the registry. Follow the existing
 
 **Registering the MCP server with a client** — `make mcp-clients` lists the
 MCP clients detected on this machine; `make mcp-install` (or
-`python tools/mcp_install.py --all`) registers 'kalman-ai' with all of them,
+`python tools/mcp_install.py --all`) registers 'Kalman-AI' with all of them,
 `--dry-run` shows the diff first and `--remove` unregisters. The script knows
 each client's config location and container key (`mcpServers`, VS Code's
 `servers`, Codex's TOML table), edits only our own entry and backs the file up
@@ -222,4 +222,53 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
 - Notebook 14 still names `TyphoonModel`; `StormModel` (basin-agnostic) is the
   canonical class, with `TyphoonModel`/`HurricaneModel`/`CycloneModel` as basin
   presets.
-- `README.md`'s filter table predates PF/CKF/IKF/EnKF and is stale.
+- `KalmanSolver` carries no mesh contract: `n`/`shape`/`length`/`dt` and the
+  physics hook are re-declared per concrete solver, and the hook is named
+  `rhs_hat` (spectral) vs `rhs` (finite-difference). A new discretization family
+  inherits nothing; subclass a shipped solver instead.
+- `KalmanIntegrator.step()` returns no error estimate, so embedded pairs cannot
+  adapt at the framework level; field solvers run Dormand–Prince as fixed-step
+  RK5 off its Butcher tableau.
+- Two Doxygen warnings come from source docstrings, not the docs:
+  `filters/ckf.py:139` (an inline comment read as a declaration) and
+  `helpers.py:358` (a docstring bullet list read as a member).
+- A `KalmanSpec`'s top-level `fs` only reaches models whose `__init__` names
+  `fs`; for `**kwargs` models it has to go in `dynamics.params`.
+- `KalmanSpec`'s documented `labels` / `control` fields are accepted but ignored
+  by `make_model`.
+
+## 9. Documentation
+
+`docs/` is a numbered Markdown tree (`docs/README.md` is the index); `AGENTS.md`
+is for changing the code, `docs/` for using it. When you change a public
+surface — a verb, an endpoint, a registry, an error message — update the page
+that documents it in the same commit. Pages 6, 9, 10 and 14 quote real behaviour
+including failure modes, so a fixed bug means an edited page.
+
+Those same files are **published**: `make docs` renders them, plus `modules/`
+docstrings, through Doxygen + doxygen-awesome (the `share/doxygen` submodule,
+which carries its own nested `cmake` submodule). The CI `docs` job runs on every
+commit and fails the pipeline if the build breaks; `pages` publishes from the
+default branch and version tags. See `docs/13_Deployment.md`.
+
+```bash
+git submodule update --init --recursive     # once per clone: share/doxygen + cmake/Modules
+make docs        # needs cmake + doxygen + graphviz
+```
+
+Doxygen's Markdown parser is stricter than a web renderer, and a malformed
+construct silently swallows the rest of the page rather than erroring. Three
+rules, all learned from real breakage here:
+
+- **Keep a `[text](link)` on one line.** A link split across a newline
+  terminates the page — every table after it collapses into one cell.
+- **No `'single quotes'` inside `` `inline code` `` in a table cell.** They
+  become typographic quotes and unbalance the `<tt>`, merging the rest of the
+  table.
+- **Never write a `---` rule directly after a blockquote**, and avoid
+  `<angle-bracket>` placeholders in prose — Doxygen reads them as HTML tags and
+  drops them.
+
+Page filenames use hyphens (`9_Python-API.md`), not spaces: Doxygen cannot
+resolve `%20`-encoded cross-references. `make docs` must end with no warnings
+outside the two known docstring ones above.
