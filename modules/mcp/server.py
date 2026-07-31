@@ -22,11 +22,21 @@ def _server_class():
         return FastMCP
 
 
+SERVER_NAME = "kalman-ai"          # identifier: also the tool-name prefix
+SERVER_TITLE = "Kalman AI"         # human-facing name shown by clients
+
+
 def build_server():
     from .. import api as facade
     from ..api.auth import authorize
 
-    mcp = _server_class()("kalman")
+    cls = _server_class()
+    try:                            # SDK 2.x carries a display title/description
+        mcp = cls(SERVER_NAME, title=SERVER_TITLE,
+                  description="Kalman estimation framework: models, filters, "
+                              "solvers, providers, and spec authoring.")
+    except TypeError:               # SDK 1.x FastMCP takes the name only
+        mcp = cls(SERVER_TITLE)
 
     # ---- read ----
     @mcp.tool()

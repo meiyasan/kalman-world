@@ -262,7 +262,7 @@ mcp-serve:
 mcp: motd
 	@echo "==> installing the MCP SDK (if missing)"
 	@$(PYTHON) -c "import mcp" 2>/dev/null || $(PYTHON) -m pip install -q "mcp>=1.0"
-	@echo "==> registering the kalman server with detected clients"
+	@echo "==> registering the 'kalman-ai' server with detected clients"
 	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
 	@echo ""
 	@echo "==> verifying the server starts"
@@ -270,7 +270,7 @@ mcp: motd
 	@echo ""
 	@$(PYTHON) tools/mcp_install.py --list
 
-## Register the Kalman MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
+## Register the Kalman AI MCP server with your MCP clients: make mcp-install [CLIENTS="cursor vscode"]
 mcp-install:
 	@$(PYTHON) tools/mcp_install.py $(or $(CLIENTS),--all) $(if $(TOKEN),--token "$(TOKEN)")
 
@@ -278,7 +278,7 @@ mcp-install:
 mcp-clients:
 	@$(PYTHON) tools/mcp_install.py --list
 
-## Unregister the Kalman MCP server from all clients
+## Unregister the Kalman AI MCP server from all clients
 mcp-uninstall:
 	@$(PYTHON) tools/mcp_install.py --all --remove
 

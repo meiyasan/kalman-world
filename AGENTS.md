@@ -120,7 +120,7 @@ base, tag `KIND`, and add it to the registry. Follow the existing
 
 **Registering the MCP server with a client** — `make mcp-clients` lists the
 MCP clients detected on this machine; `make mcp-install` (or
-`python tools/mcp_install.py --all`) registers the server with all of them,
+`python tools/mcp_install.py --all`) registers 'kalman-ai' with all of them,
 `--dry-run` shows the diff first and `--remove` unregisters. The script knows
 each client's config location and container key (`mcpServers`, VS Code's
 `servers`, Codex's TOML table), edits only our own entry and backs the file up

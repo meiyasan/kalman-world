@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Register the Kalman MCP server with any MCP-capable client — one command for
+Register the Kalman AI MCP server with any MCP-capable client — one command for
 all of them.
 
     python tools/mcp_install.py --list                 # what's installed here
@@ -30,7 +30,8 @@ import shutil
 import sys
 from pathlib import Path
 
-SERVER_NAME = "kalman"
+SERVER_NAME = "kalman-ai"          # config key; also the MCP tool-name prefix
+LEGACY_NAMES = ("kalman",)         # earlier keys, removed on (re)install
 REPO = Path(__file__).resolve().parent.parent
 HOME = Path.home()
 OS = {"Darwin": "mac", "Windows": "win"}.get(platform.system(), "linux")
@@ -144,6 +145,17 @@ def apply(path: Path, key: str, fmt: str, entry: dict | None,
     """Add (entry) or remove (entry=None) our server. Returns a status word."""
     if fmt == "toml":
         text = _load(path, fmt) or ""
+        for legacy in LEGACY_NAMES:            # migrate off any earlier key
+            if f"[{key}.{legacy}]" in text:
+                lines, out, skip = text.splitlines(True), [], False
+                for ln in lines:
+                    if ln.strip().startswith(f"[{key}.{legacy}]"):
+                        skip = True
+                    elif skip and ln.lstrip().startswith("["):
+                        skip = False
+                    if not skip:
+                        out.append(ln)
+                text = "".join(out)
         marker = f"[{key}.{SERVER_NAME}]"
         present = marker in text
         if entry is None:
@@ -183,17 +195,22 @@ def apply(path: Path, key: str, fmt: str, entry: dict | None,
     container = doc if not key else doc.setdefault(key, {})
     if not isinstance(container, dict):
         raise SystemExit(f"! {path}: '{key}' is not an object.")
+    stale = [n for n in LEGACY_NAMES if n in container]
     if entry is None:
-        if SERVER_NAME not in container:
+        if SERVER_NAME not in container and not stale:
             return "absent"
         if dry_run:
             return "would-remove"
-        container.pop(SERVER_NAME)
+        container.pop(SERVER_NAME, None)
+        for n in stale:
+            container.pop(n)
     else:
-        if container.get(SERVER_NAME) == entry:
+        if container.get(SERVER_NAME) == entry and not stale:
             return "already-current"
         if dry_run:
-            return "would-update"
+            return "would-rename" if stale else "would-update"
+        for n in stale:                       # migrate off the old key
+            container.pop(n)
         container[SERVER_NAME] = entry
     path.parent.mkdir(parents=True, exist_ok=True)
     _backup(path)
@@ -213,7 +230,7 @@ def _detect(targets: dict) -> list[str]:
 
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(
-        prog="mcp_install", description="Register the Kalman MCP server with MCP clients.")
+        prog="mcp_install", description="Register the Kalman AI MCP server with MCP clients.")
     ap.add_argument("clients", nargs="*", help="client names (default: --all)")
     ap.add_argument("--all", action="store_true", help="every detected client")
     ap.add_argument("--list", action="store_true", help="list clients and detection status")
