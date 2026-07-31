@@ -52,9 +52,29 @@ class TyphoonObservable(KalmanObservable):
     I   = "kt"
 
 
-class TyphoonModel(ExtendedKalmanModel):
+# Tropical cyclones are one phenomenon; the regional name is a matter of basin.
+# (Intensity thresholds differ slightly by agency, but the physics does not.)
+BASINS = {
+    "atlantic": ("Hurricane", "N"),   # North Atlantic
+    "epac":     ("Hurricane", "N"),   # Northeast Pacific
+    "wpac":     ("Typhoon",   "N"),   # Northwest Pacific
+    "nio":      ("Cyclone",   "N"),   # North Indian Ocean
+    "sio":      ("Cyclone",   "S"),   # South Indian Ocean
+    "spac":     ("Cyclone",   "S"),   # South Pacific
+}
+
+
+class StormModel(ExtendedKalmanModel):
     """
     Reduced tropical-cyclone track + intensity model (steering + beta + turn).
+
+    **Basin-agnostic**: a hurricane, a typhoon and a cyclone are the same
+    phenomenon — a tropical cyclone — under different regional names, so one
+    model covers all of them.  ``basin`` selects the region, which fixes both
+    the customary name (:attr:`storm_name`) and the hemisphere (hence the
+    beta-drift and recurvature directions); ``hemisphere=`` still overrides it
+    explicitly if you need to.  :class:`TyphoonModel`, :class:`HurricaneModel`
+    and :class:`CycloneModel` are thin basin presets of this class.
 
     State ``x = [lon, lat, v_e, v_n, I]``.  Over one step ``dt`` (hours):
 
@@ -90,20 +110,28 @@ class TyphoonModel(ExtendedKalmanModel):
         Intensity measurement std [kt] (default 10).
     """
 
-    NAME = "Typhoon Tracker"
+    NAME = "Storm Tracker"
     DESCRIPTION = ("Reduced tropical-cyclone track + intensity model "
-                   "(steering flow + beta drift + coordinated turn).")
-    VERSION = "1.0"
+                   "(steering flow + beta drift + coordinated turn); "
+                   "basin-agnostic — hurricane / typhoon / cyclone.")
+    VERSION = "2.0"
+    BASIN = "wpac"                     # subclasses override to preset a region
 
     @property
     def states(self):      return TyphoonState
     @property
     def observables(self): return TyphoonObservable
 
+    @property
+    def storm_name(self) -> str:
+        """Customary regional name of this basin's storms ('Typhoon', …)."""
+        return BASINS.get(self.basin, ("Storm", "N"))[0]
+
     def __init__(self, sensor_id="TC", *,
+                 basin=None,
                  omega=0.0,
                  beta_drift=5.0,
-                 hemisphere="N",
+                 hemisphere=None,
                  dt_hours=6.0,
                  observe_intensity=True,
                  fix_noise=0.3,
@@ -114,7 +142,12 @@ class TyphoonModel(ExtendedKalmanModel):
         self.dtype = np.float64
         self.omega = float(omega)
         self.beta_drift = float(beta_drift)
-        self.hemisphere = str(hemisphere).upper()
+        # Basin fixes the regional name and the default hemisphere; an explicit
+        # hemisphere= still wins (e.g. a synthetic SH storm in a NH basin).
+        self.basin = str(basin or self.BASIN).lower()
+        if self.basin not in BASINS:
+            raise ValueError(f"unknown basin {self.basin!r}; choose from {sorted(BASINS)}.")
+        self.hemisphere = str(hemisphere or BASINS[self.basin][1]).upper()
         self._dt = float(dt_hours)
         self.observe_intensity = bool(observe_intensity)
         # Optional physics couplings (both None → the pure kinematic model):
@@ -188,7 +221,7 @@ class TyphoonModel(ExtendedKalmanModel):
     # ------------------------------------------------------------------
     @classmethod
     def imm_bank(cls, sensor_id="TC", *, omega_recurve=0.022, stall=True,
-                 stay=0.90, hemisphere="N", **kw):
+                 stay=0.90, basin=None, hemisphere=None, **kw):
         """Build the IMM model bank + Markov transition matrix.
 
         Returns ``(models, transition, initial_probs)`` ready for
@@ -203,14 +236,15 @@ class TyphoonModel(ExtendedKalmanModel):
         off-diagonal mass is split among the other regimes.  Feed a season /
         basin prior by adjusting ``stay`` or passing your own transition later.
         """
-        pole_sign = -1.0 if str(hemisphere).upper() == "N" else 1.0
+        hemi = str(hemisphere or BASINS.get(str(basin or cls.BASIN).lower(), (None, "N"))[1]).upper()
+        pole_sign = -1.0 if hemi == "N" else 1.0
         w_rec = pole_sign * abs(omega_recurve)
         models = [
-            cls(sensor_id, omega=0.0,   hemisphere=hemisphere, **kw),
-            cls(sensor_id, omega=w_rec, hemisphere=hemisphere, **kw),
+            cls(sensor_id, omega=0.0,   basin=basin, hemisphere=hemi, **kw),
+            cls(sensor_id, omega=w_rec, basin=basin, hemisphere=hemi, **kw),
         ]
         if stall:
-            models.append(cls(sensor_id, omega=0.0, hemisphere=hemisphere,
+            models.append(cls(sensor_id, omega=0.0, basin=basin, hemisphere=hemi,
                               q_vel=18.0, **kw))
         M = len(models)
         off = (1.0 - stay) / (M - 1)
@@ -277,47 +311,163 @@ class TyphoonModel(ExtendedKalmanModel):
         return (float(cx), float(cy), float(a), float(b), float(ang))
 
     # ------------------------------------------------------------------
-    def _plot_static(self, record, sample=None, *, component=None, error=True,
-                     fixes=None, cone=None, figsize=(8, 8), **kwargs):
-        """Track figure: estimated centre track with ±1σ position ellipses over
-        coastlines, optional truth (``sample``), raw ``fixes`` and a
-        :meth:`forecast_cone` ``cone`` overlay."""
-        import matplotlib.pyplot as plt
+    # ------------------------------------------------------------------
+    # Signature figures — reached via the standard ``model.plot(record)`` /
+    # ``model.plot(record, interactive=True)``, so a notebook needs no
+    # bespoke plotting code to reproduce the canonical storm figure.
+    # ------------------------------------------------------------------
+    def _draw_track(self, ax, record, *, sample=None, fixes=None, cone=None,
+                    ens=None, k_sigma=1.0, pad=5.0):
+        """Draw the track map onto ``ax`` (shared by static + interactive)."""
         from matplotlib.patches import Ellipse
         xk = np.asarray(record.xk); Pk = np.asarray(record.Pk)
         lon, lat = xk[:, 0], xk[:, 1]
-
-        fig, ax = plt.subplots(figsize=figsize)
-        pad = 5.0
-        ax.set_xlim(lon.min() - pad, lon.max() + pad)
-        ax.set_ylim(lat.min() - pad, lat.max() + pad)
-        try:
+        lons, lats = [lon], [lat]
+        if sample is not None:
+            st = np.asarray(sample.xk); lons.append(st[:, 0]); lats.append(st[:, 1])
+        if cone is not None:
+            lons.append(np.asarray(cone["lon"])); lats.append(np.asarray(cone["lat"]))
+        allx, ally = np.concatenate(lons), np.concatenate(lats)
+        ax.set_xlim(allx.min() - pad, allx.max() + pad)
+        ax.set_ylim(ally.min() - pad, ally.max() + pad)
+        try:                                          # coastlines if geo data is present
             from .geo import earth_geometry
             for seg in earth_geometry("coastline"):
-                ax.plot(seg[:, 0], seg[:, 1], color="0.6", lw=0.6)
+                ax.plot(seg[:, 0], seg[:, 1], color="0.6", lw=0.6, zorder=0)
         except Exception:
             pass
+        if ens is not None:                           # spaghetti ensemble, if supplied
+            for tr in np.asarray(ens):
+                ax.plot(tr[:, 0], tr[:, 1], "-", color="tab:orange", lw=0.4, alpha=0.25, zorder=1)
         if sample is not None:
             st = np.asarray(sample.xk)
-            ax.plot(st[:, 0], st[:, 1], "k-", lw=2, label="truth track")
+            ax.plot(st[:, 0], st[:, 1], "k-", lw=2, label="truth track", zorder=3)
         if fixes is not None:
             fx = np.asarray(fixes)
-            ax.plot(fx[:, 0], fx[:, 1], "x", color="tab:red", ms=5, alpha=0.6, label="fixes")
-        ax.plot(lon, lat, "-", color="tab:blue", lw=1.8, label="estimated track")
+            ax.plot(fx[:, 0], fx[:, 1], "x", color="tab:red", ms=5, alpha=0.6,
+                    label="fixes", zorder=4)
+        ax.plot(lon, lat, "-", color="tab:blue", lw=1.8, label="analysis track", zorder=5)
         for k in range(0, len(lon), max(1, len(lon) // 20)):
-            cx, cy, a, b, ang = self._ellipse(lon[k], lat[k], Pk[k, :2, :2], 1.0)
+            cx, cy, a, b, ang = self._ellipse(lon[k], lat[k], Pk[k, :2, :2], k_sigma)
             ax.add_patch(Ellipse((cx, cy), 2*a, 2*b, angle=ang, fill=False,
-                                 edgecolor="tab:blue", alpha=0.4, lw=0.8))
+                                 edgecolor="tab:blue", alpha=0.4, lw=0.8, zorder=5))
         if cone is not None:
-            ax.plot(cone["lon"], cone["lat"], "--", color="tab:orange", lw=1.5, label="forecast track")
+            ax.plot(cone["lon"], cone["lat"], "--", color="tab:orange", lw=1.5,
+                    label="forecast track", zorder=4)
             for (cx, cy, a, b, ang) in cone["ellipses"]:
                 ax.add_patch(Ellipse((cx, cy), 2*a, 2*b, angle=ang, fill=True,
-                                     facecolor="tab:orange", alpha=0.12, edgecolor="none"))
+                                     facecolor="tab:orange", alpha=0.12,
+                                     edgecolor="none", zorder=2))
         ax.set_aspect(1.0 / np.cos(np.deg2rad(np.mean(lat))))
         ax.set_xlabel("longitude [°E]"); ax.set_ylabel("latitude [°N]")
-        ax.legend(loc="best", fontsize=9); ax.grid(alpha=0.3)
-        ax.set_title(f"{self.name()} — track with ±1σ position covariance", fontweight="bold")
+        ax.legend(loc="best", fontsize=8); ax.grid(alpha=0.3)
+        ax.set_title(f"{self.storm_name} track — ±{k_sigma:g}σ position covariance")
+        return ax
+
+    def _draw_intensity(self, ax, record, *, sample=None, fixes=None, cone=None,
+                        k_sigma=1.0):
+        """Draw the intensity panel with its ±σ band onto ``ax``."""
+        xk = np.asarray(record.xk); Pk = np.asarray(record.Pk)
+        t = np.arange(len(xk)) * self._dt
+        I = xk[:, 4]
+        sig = np.sqrt(np.maximum(Pk[:, 4, 4], 0.0))
+        if sample is not None:
+            st = np.asarray(sample.xk)
+            ax.plot(t[:len(st)], st[:, 4], "k-", lw=2, label="truth")
+        if fixes is not None:
+            fx = np.asarray(fixes)
+            if fx.shape[1] > 2:
+                ax.plot(t[:len(fx)], fx[:, 2], "x", color="tab:red", ms=4, alpha=0.6,
+                        label="fixes")
+        ax.plot(t, I, "-", color="tab:blue", lw=1.8, label="analysis")
+        ax.fill_between(t, I - k_sigma * sig, I + k_sigma * sig, color="tab:blue",
+                        alpha=0.2, label=f"±{k_sigma:g}σ")
+        if cone is not None:
+            tf = t[-1] + np.arange(1, len(cone["I"]) + 1) * self._dt
+            ax.plot(tf, cone["I"], "--", color="tab:orange", lw=1.5, label="forecast")
+            ax.fill_between(tf, cone["I"] - k_sigma * cone["I_sigma"],
+                            cone["I"] + k_sigma * cone["I_sigma"],
+                            color="tab:orange", alpha=0.15)
+        ax.set_xlabel("time [h]"); ax.set_ylabel("intensity [kt]")
+        ax.legend(loc="best", fontsize=8); ax.grid(alpha=0.3)
+        ax.set_title("Intensity with uncertainty")
+        return ax
+
+    def _plot_static(self, record, sample=None, *, component=None, error=True,
+                     fixes=None, cone=None, ens=None, k_sigma=1.0,
+                     figsize=(13, 5.6), **kwargs):
+        """The model's signature figure: the track map with ±σ position
+        ellipses (plus optional truth, raw ``fixes``, a :meth:`forecast_cone`
+        and an :meth:`ensemble_forecast` spaghetti) beside the intensity trace
+        with its ±σ band — the model's two deliverables, both with covariance."""
+        import matplotlib.pyplot as plt
+        fig, (ax_map, ax_int) = plt.subplots(
+            1, 2, figsize=figsize, gridspec_kw={"width_ratios": [1.25, 1]})
+        self._draw_track(ax_map, record, sample=sample, fixes=fixes, cone=cone,
+                         ens=ens, k_sigma=k_sigma)
+        self._draw_intensity(ax_int, record, sample=sample, fixes=fixes, cone=cone,
+                             k_sigma=k_sigma)
+        fig.suptitle(f"{self.name()} — {self.storm_name} ({self.basin.upper()} basin)",
+                     fontweight="bold")
+        fig.tight_layout()
         return fig
+
+    def _plot_interactive(self, record, sample=None, *, fixes=None, cone=None,
+                          k_sigma=1.0, frames=30, interval=150, figsize=(13, 5.6),
+                          **kwargs):
+        """Interactive replay: the track grows cycle by cycle with its covariance
+        ellipse while the intensity band fills in.  Returns the framework's
+        standard Jupyter play/scrub player (see ``helpers.animate``)."""
+        import matplotlib.pyplot as plt
+        from ...helpers import animate
+        xk = np.asarray(record.xk)
+        n = len(xk)
+        steps = sorted(set(np.linspace(2, n, min(frames, max(n - 1, 2)), dtype=int)))
+
+        fig, (ax_map, ax_int) = plt.subplots(
+            1, 2, figsize=figsize, gridspec_kw={"width_ratios": [1.25, 1]})
+
+        class _Slice:                       # a record view truncated to k cycles
+            def __init__(self, rec, k):
+                self.xk = np.asarray(rec.xk)[:k]
+                self.Pk = np.asarray(rec.Pk)[:k]
+
+        def _draw(k):
+            ax_map.clear(); ax_int.clear()
+            part = _Slice(record, k)
+            smp = _Slice(sample, k) if sample is not None else None
+            fx = None if fixes is None else np.asarray(fixes)[:k]
+            self._draw_track(ax_map, part, sample=smp, fixes=fx,
+                             cone=cone if k >= n else None, k_sigma=k_sigma)
+            self._draw_intensity(ax_int, part, sample=smp, fixes=fx,
+                                 cone=cone if k >= n else None, k_sigma=k_sigma)
+            fig.suptitle(f"{self.name()} — {self.storm_name}  "
+                         f"(cycle {k}/{n}, t = {k * self._dt:.0f} h)", fontweight="bold")
+            return (ax_map, ax_int)
+
+        fig.tight_layout()
+        return animate(fig, _draw, frames=steps, interval=interval)
+
+
+# ----------------------------------------------------------------------
+# Basin presets — same physics, regional naming and hemisphere
+# ----------------------------------------------------------------------
+class TyphoonModel(StormModel):
+    """Northwest-Pacific preset of :class:`StormModel` (a *typhoon*)."""
+    NAME = "Typhoon Tracker"
+    BASIN = "wpac"
+
+
+class HurricaneModel(StormModel):
+    """North-Atlantic preset of :class:`StormModel` (a *hurricane*)."""
+    NAME = "Hurricane Tracker"
+    BASIN = "atlantic"
+
+
+class CycloneModel(StormModel):
+    """South-Indian-Ocean preset of :class:`StormModel` (a *cyclone*, SH)."""
+    NAME = "Cyclone Tracker"
+    BASIN = "sio"
 
 
 def synthetic_track(n_steps=40, *, recurve_at=18, dt_hours=6.0, hemisphere="N",

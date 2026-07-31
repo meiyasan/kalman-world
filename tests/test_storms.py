@@ -6,7 +6,8 @@ import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.apps.weather.storms import (TyphoonModel, TornadoEnvironmentModel,
+from modules.apps.weather.storms import (StormModel, TyphoonModel, HurricaneModel,
+                                  CycloneModel, BASINS, TornadoEnvironmentModel,
                                   synthetic_track, synthetic_environment,
                                   synthetic_steered_track, analytic_steering,
                                   analytic_environment, LearnedIntensityModel,
@@ -104,6 +105,38 @@ class TestTyphoonTracking(unittest.TestCase):
         semis = np.array([e[2] for e in cone["ellipses"]])
         self.assertTrue(np.all(np.diff(semis) >= -1e-9))     # monotone growth
         self.assertTrue(np.all(np.diff(cone["I_sigma"]) >= -1e-9))
+
+    def test_basin_agnostic_naming_and_hemisphere(self):
+        """One physics, regional names: basin fixes the name and hemisphere."""
+        self.assertEqual(StormModel(basin="wpac").storm_name, "Typhoon")
+        self.assertEqual(StormModel(basin="atlantic").storm_name, "Hurricane")
+        self.assertEqual(StormModel(basin="sio").storm_name, "Cyclone")
+        self.assertEqual(TyphoonModel().basin, "wpac")
+        self.assertEqual(HurricaneModel().storm_name, "Hurricane")
+        self.assertEqual(CycloneModel().hemisphere, "S")
+        # SH basins drift poleward = south; NH = north
+        self.assertGreater(StormModel(basin="wpac").beta_n, 0)
+        self.assertLess(StormModel(basin="spac").beta_n, 0)
+        # explicit hemisphere still overrides the basin default
+        self.assertEqual(StormModel(basin="wpac", hemisphere="S").hemisphere, "S")
+        with self.assertRaises(ValueError):
+            StormModel(basin="nope")
+        self.assertEqual(set(BASINS), {"atlantic", "epac", "wpac", "nio", "sio", "spac"})
+
+    def test_standard_plot_is_self_contained(self):
+        """model.plot(record) reproduces the canonical figure with no extra code."""
+        import matplotlib
+        matplotlib.use("Agg", force=True)
+        import matplotlib.pyplot as plt
+        truth, fixes, _, rec = self._run(fix_noise=0.5)
+        mdl = rec.model
+        cone = mdl.forecast_cone(np.asarray(rec.xk)[-1].reshape(-1, 1),
+                                 np.asarray(rec.Pk)[-1], steps=6)
+        fig = mdl.plot(rec, fixes=fixes, cone=cone)
+        self.assertEqual(len(fig.axes), 2)          # track + intensity panels
+        anim = mdl.plot(rec, interactive=True, fixes=fixes, frames=4)
+        self.assertIsNotNone(anim)
+        plt.close("all")
 
     def test_plot_static_smoke(self):
         import matplotlib

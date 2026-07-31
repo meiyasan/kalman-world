@@ -16,7 +16,7 @@ together and the package ``__init__`` is its public interface.
   :class:`TurbulenceProvider`).
 """
 from .flow import NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment
-from .storms import (TyphoonModel, TyphoonState, TyphoonObservable, synthetic_track,
+from .storms import (StormModel, TyphoonModel, HurricaneModel, CycloneModel, BASINS, TyphoonState, TyphoonObservable, synthetic_track,
                      synthetic_steered_track, analytic_steering, analytic_environment,
                      LearnedIntensityModel, japan_steering, field_steering,
                      japan_region, landfall_probability, JAPAN_BBOX,
@@ -31,7 +31,8 @@ from .providers import ERA5Provider, TurbulenceProvider
 
 VARIANTS = {
     "flow": KolmogorovFlowModel,          # 2-D turbulence field (ensemble DA)
-    "typhoon": TyphoonModel,              # reduced tropical-cyclone tracker
+    "storm": StormModel,                  # tropical cyclone (basin-agnostic)
+    "typhoon": TyphoonModel,              # NW-Pacific preset
     "tornado": TornadoEnvironmentModel,   # tornado-environment regime latent
 }
 
@@ -39,7 +40,8 @@ __all__ = [
     # flow / OSSE
     "NS2D", "KolmogorovFlowModel", "FlowObservable", "TwinExperiment",
     # storms
-    "TyphoonModel", "TyphoonState", "TyphoonObservable", "synthetic_track",
+    "StormModel", "TyphoonModel", "HurricaneModel", "CycloneModel", "BASINS",
+    "TyphoonState", "TyphoonObservable", "synthetic_track",
     "synthetic_steered_track", "analytic_steering", "analytic_environment",
     "LearnedIntensityModel", "japan_steering", "field_steering", "japan_region",
     "landfall_probability", "JAPAN_BBOX", "TornadoEnvironmentModel", "TornadoState",

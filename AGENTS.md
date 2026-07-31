@@ -149,7 +149,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **446 passed, 7 skipped** (skips are optional-dependency
+Current baseline: **448 passed, 7 skipped** (skips are optional-dependency
 gates). The suite must stay green; a red suite is never "expected".
 
 If you touch `apps/` layout, also verify the notebooks still import:
@@ -202,4 +202,7 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
   reserved stubs that raise `NotImplementedError`.
 - Several `apps/` models still override `f()` directly and could move to
   `f_continuous` (rocket, space, tracking, storms).
+- Notebook 14 still names `TyphoonModel`; `StormModel` (basin-agnostic) is the
+  canonical class, with `TyphoonModel`/`HurricaneModel`/`CycloneModel` as basin
+  presets.
 - `README.md`'s filter table predates PF/CKF/IKF/EnKF and is stale.
