@@ -18,6 +18,21 @@ class TurbulenceProvider(KalmanProvider):
     VERSION = "1.0"
     KIND = KalmanProviderKind.TURBULENCE
 
+    MEASUREMENTS = (
+        {"name": "vorticity", "units": "1/s",
+         "description": "Vorticity field block-coarsened onto the model grid — "
+                        "payload['truth'], shape (T, n). The default variable."},
+        {"name": "velocity", "units": "m/s",
+         "description": "Velocity components where the source dataset carries "
+                        "them; select with variable=."},
+    )
+
+    REQUIRES = (
+        "h5py — only for HDF5 sources",
+        "a flow model to coarsen onto (model=), which defines the grid",
+        "a dataset: source= path or array",
+    )
+
     def __init__(self, model=None, **kw):
         super().__init__(**kw)
         self.model = model

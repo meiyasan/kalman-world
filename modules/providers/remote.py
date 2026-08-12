@@ -22,6 +22,15 @@ class RemoteProvider(KalmanProvider):
     VERSION = "1.0"
     KIND = KalmanProviderKind.REMOTE
 
+    MEASUREMENTS = (
+        {"name": "zk", "units": "as served",
+         "description": "Rows pulled from the endpoint's JSON, taken from the "
+                        "field named by field= (default 'zk')."},
+    )
+
+    REQUIRES = ("a base_url=", "an outbound secret via credential_name= when the "
+                "endpoint is authenticated")
+
     def __init__(self, base_url=None, *, credential_name=None, min_interval=0.0,
                  field="zk", client=None, **kw):
         super().__init__(**kw)

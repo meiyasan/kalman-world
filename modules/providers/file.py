@@ -21,6 +21,18 @@ class FileProvider(KalmanProvider):
     VERSION = "1.0"
     KIND = KalmanProviderKind.FILE
 
+    MEASUREMENTS = (
+        {"name": "zk", "units": "as stored",
+         "description": "Measurement rows, shape (T, m). Required in every "
+                        "supported format; a .npy or .csv file IS this array."},
+        {"name": "xk", "units": "as stored",
+         "description": "Optional truth trajectory (npz/json key 'xk')."},
+        {"name": "time", "units": "s",
+         "description": "Optional sample times (npz/json key 'time')."},
+    )
+
+    REQUIRES = ("a readable path= (.npz / .npy / .json / .csv)",)
+
     def __init__(self, path=None, **kw):
         super().__init__(**kw)
         self.path = path

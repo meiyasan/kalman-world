@@ -58,6 +58,20 @@ def build_server():
         authorize(token or None, "read")
         return facade.diagnostics(run_id)
 
+    @mcp.tool()
+    def list_providers(token: str = "") -> dict:
+        """List data providers with the measurements each can supply, the query
+        keys fetch_data takes, and any credentials/packages they need."""
+        authorize(token or None, "read")
+        return facade.providers()
+
+    @mcp.tool()
+    def describe_provider(name: str, token: str = "") -> dict:
+        """Describe one provider (synthetic/era5/turbulence/file/sensor/remote):
+        its measurements, query keys, and prerequisites."""
+        authorize(token or None, "read")
+        return facade.describe_provider(name)
+
     # ---- send_measurement ----
     @mcp.tool()
     def run_filter(spec: dict, data: list, token: str = "") -> dict:

@@ -14,6 +14,20 @@ class SyntheticProvider(KalmanProvider):
     VERSION = "1.0"
     KIND = KalmanProviderKind.SYNTHETIC
 
+    MEASUREMENTS = (
+        {"name": "zk", "units": "model observables",
+         "description": "Simulated measurements, shape (T, m) — exactly the "
+                        "observables the wrapped model declares."},
+        {"name": "xk", "units": "model states",
+         "description": "The simulated state trajectory, shape (T, n)."},
+        {"name": "truth", "units": "model states",
+         "description": "Alias of xk, named for the OSSE verbs that consume it."},
+        {"name": "time", "units": "s",
+         "description": "Sample times, shape (T,)."},
+    )
+
+    REQUIRES = ("a model or spec to sample (model= or spec=)",)
+
     def __init__(self, model=None, *, spec=None, **kw):
         super().__init__(**kw)
         self._model = model

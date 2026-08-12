@@ -16,9 +16,29 @@ from ....framework.constants import KalmanProviderKind
 class ERA5Provider(KalmanProvider):
 
     NAME = "ERA5 Provider"
-    DESCRIPTION = "ERA5 reanalysis fields → truth trajectory for a KolmogorovFlowModel."
+    DESCRIPTION = ("ECMWF ERA5 reanalysis (Copernicus CDS) → truth trajectory "
+                   "regridded onto a KolmogorovFlowModel mesh.")
     VERSION = "1.0"
     KIND = KalmanProviderKind.ERA5
+
+    MEASUREMENTS = (
+        {"name": "u_component_of_wind", "units": "m/s",
+         "description": "Zonal wind on the requested pressure level, from the "
+                        "ERA5 reanalysis-era5-pressure-levels dataset."},
+        {"name": "v_component_of_wind", "units": "m/s",
+         "description": "Meridional wind on the same level; with u it gives the "
+                        "horizontal wind field the truth trajectory is built from."},
+        {"name": "vorticity", "units": "1/s",
+         "description": "Relative vorticity derived from u/v on the model's own "
+                        "mesh — the state a KolmogorovFlowModel actually carries, "
+                        "returned as payload['truth'] with shape (T, n)."},
+    )
+
+    REQUIRES = (
+        "cdsapi (pip install cdsapi) — only when downloading rather than reading path=",
+        "Copernicus CDS credentials in ~/.cdsapirc",
+        "a flow model to regrid onto (model=), which defines the mesh",
+    )
 
     def __init__(self, model=None, **kw):
         super().__init__(**kw)

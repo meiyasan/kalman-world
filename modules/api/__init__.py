@@ -150,9 +150,81 @@ def _kind(enum_cls, value):
         return value
 
 
+#: Where each KalmanSpec key lives.  A spec is nested, and the overwhelmingly
+#: common authoring mistake — especially from an agent writing JSON by hand — is
+#: to put the matrices at the top level.  Mapping inner key -> owning section is
+#: what lets :func:`_check_spec` say "F belongs in dynamics" instead of letting a
+#: dimensionless model fail deep in the framework.
+_SPEC_SECTIONS = {
+    "F": "dynamics", "H": "dynamics", "B": "dynamics", "L": "dynamics",
+    "M": "dynamics", "A": "dynamics", "Qc": "dynamics", "Lc": "dynamics",
+    "params": "dynamics",
+    "Q": "noise", "R": "noise",
+    "x0": "initial", "P0": "initial",
+    "states": "labels", "observables": "labels",
+    "engine": "bindings", "integrator": "bindings", "solver": "bindings",
+    "cost": "control", "Qcost": "control", "Rcost": "control", "x_ref": "control",
+}
+
+_SPEC_TOP_LEVEL = {"base", "name", "sensor_id", "fs", "dynamics", "noise",
+                   "initial", "labels", "control", "bindings", "description"}
+
+#: Names callers reach for that the spec calls something else.  ``model`` is the
+#: big one: every other verb in this facade takes a model *name*, so a spec
+#: argument invites ``{"model": "SomeModel"}`` — which is a spec with no base
+#: and no dynamics, i.e. the dimensionless-model failure again.
+_SPEC_ALIASES = {"model": "base", "class": "base", "model_name": "base",
+                 "state_names": "labels.states", "observable_names": "labels.observables",
+                 "measurements": "(pass measurements to run_filter's data argument)",
+                 "data": "(pass measurements to run_filter's data argument)"}
+
+
+def _check_spec(spec: dict):
+    """Reject a malformed spec while the caller can still see their own mistake.
+
+    Without this a spec whose matrices sat at the top level simply produced a
+    model with no dimensions, and the failure surfaced from deep inside the
+    framework as ``array must be (d,1) or (d,), got 0`` — a message that names
+    nothing the caller wrote, and that reads like a broken server rather than a
+    misplaced key.  (It cost a downstream integration an afternoon.)  Checked
+    here, in :func:`make_model`, so every verb that builds a model —
+    ``run_filter``, ``run_osse``, ``forecast``, ``register_model`` — gets the
+    same guidance.
+    """
+    if not isinstance(spec, dict):
+        raise ValueError("spec must be a dict; see catalog()/describe() for the shape.")
+
+    problems = [f"{k!r} belongs in {_SPEC_SECTIONS[k]}[{k!r}]"
+                for k in sorted(spec) if k in _SPEC_SECTIONS]
+    problems += [f"{k!r} is named {_SPEC_ALIASES[k]!r} in a spec"
+                 for k in sorted(spec) if k in _SPEC_ALIASES]
+    problems += [f"{k!r} is not a spec key" for k in sorted(spec)
+                 if k not in _SPEC_TOP_LEVEL and k not in _SPEC_SECTIONS
+                 and k not in _SPEC_ALIASES]
+    if problems:
+        raise ValueError(
+            "malformed KalmanSpec — " + "; ".join(problems) + ". A spec is nested: "
+            '{"base": "matrices", "fs": 1.0, "dynamics": {"F": .., "H": ..}, '
+            '"noise": {"Q": .., "R": ..}, "initial": {"x0": .., "P0": ..}}; for a '
+            'catalog model use {"base": "<ClassName>", "dynamics": {"params": {..}}}.')
+
+    base = spec.get("base", "matrices")
+    if base in ("matrices", "continuous"):
+        dyn = spec.get("dynamics", {}) or {}
+        if not any(dyn.get(k) is not None
+                   for k in ("F", "H", "A", "Qc", "B", "L", "M", "Lc")):
+            raise ValueError(
+                f"a {base!r} spec carries its own dynamics, but none were given. "
+                'Provide dynamics.F and dynamics.H (base "matrices"), or '
+                'dynamics.A and dynamics.Qc (base "continuous"). To use a '
+                "catalog model instead, set base to its class name — see "
+                "catalog()['models'].")
+
+
 def make_model(spec: dict) -> KalmanModel:
     """Instantiate a :class:`KalmanModel` from a :class:`KalmanSpec` dict."""
     spec = dict(spec or {})
+    _check_spec(spec)
     base = spec.get("base", "matrices")
     if base in _SESSION_MODELS:                    # authored spec referenced by name
         return make_model(_SESSION_MODELS[base])
@@ -217,9 +289,17 @@ def make_filter(spec: dict) -> KalmanFilter:
 # ======================================================================
 # Execute
 # ======================================================================
-def _stash(record, model, spec, truth=None) -> str:
+def _stash(record, model, spec, truth=None, measurements=None) -> str:
+    """Store a run for later diagnostics/plotting.
+
+    ``measurements`` is kept SEPARATELY from ``record`` on purpose: a filtered
+    record's ``zk`` holds the filter's own output, not the data that went in, so
+    a diagnostic that reaches for ``record.zk`` ends up re-filtering estimates
+    (see :func:`diagnostics`)."""
     rid = f"run{len(_RUNS)}"
-    _RUNS[rid] = {"record": record, "model": model, "spec": spec, "truth": truth}
+    _RUNS[rid] = {"record": record, "model": model, "spec": spec, "truth": truth,
+                  "measurements": None if measurements is None
+                                  else np.asarray(measurements, dtype=float)}
     return rid
 
 
@@ -237,7 +317,7 @@ def run_filter(spec: dict, data, *, smooth: bool = False, **kw) -> dict:
     filt = make_filter(spec)
     zk = np.asarray(data, dtype=float)
     rec = filt.filter(zk, smooth=smooth, **kw)
-    rid = _stash(rec, filt.model, spec)
+    rid = _stash(rec, filt.model, spec, measurements=zk)
     return {"run_id": rid, "xk": jsonify(rec.xk), "Pk": jsonify(rec.Pk),
             "time": jsonify(rec.time)}
 
@@ -290,13 +370,39 @@ def _ctrl_name(key):
 
 
 def diagnostics(run_id: str) -> dict:
-    """Filter-consistency diagnostics (NIS + innovation) for a stored run."""
+    """Filter-consistency diagnostics (NIS + innovation) for a stored run.
+
+    NIS answers the only question a filter can ask without ground truth: are the
+    innovations the size the claimed noise says they should be (≈ m on average,
+    χ²(m))?  That makes it the measurement contract — and therefore a diagnostic
+    that must be fed the MEASUREMENTS.
+
+    It previously reached for ``record.zk``, which on a filtered run holds the
+    filter's own output rather than its input; the pass then re-filtered
+    estimates and reported NIS ≈ 0.1 instead of ≈ 1 — a filter flagged as
+    over-conservative when it was in fact consistent, and a check that failed
+    quietly in the direction of looking fine.  Stored measurements are used when
+    present, and a run that has none says so rather than silently diagnosing
+    the wrong array."""
     r = _RUNS.get(run_id)
     if r is None:
         raise KeyError(f"unknown run_id {run_id!r}.")
+
+    zk = r.get("measurements")
+    if zk is None:
+        record = r["record"]
+        zk = getattr(record, "zk", None)
+        # A sample() run IS its own measurement set; a filtered run is not.
+        if zk is None or r.get("truth") is not record:
+            raise ValueError(
+                f"run {run_id!r} carries no stored measurements to diagnose; "
+                "re-run it through run_filter (which now keeps them) or pass a "
+                "sample() run.")
     filt = KalmanFilter(r["model"])
-    filt.forward(np.asarray(r["record"].zk, dtype=float), record=False)
-    return {"nis": jsonify(filt.nis()), "innovation": jsonify(filt.innovations()[0])}
+    filt.forward(np.asarray(zk, dtype=float), record=False)
+    nu, S = filt.innovations()
+    return {"nis": jsonify(filt.nis()), "innovation": jsonify(nu),
+            "innovation_covariance": jsonify(S)}
 
 
 def render_plot(run_id: str) -> bytes:
@@ -365,6 +471,36 @@ def fetch(provider_spec: dict, query: dict = None, *, credential: str | None = N
     return jsonify(prov.fetch(**(query or {})))
 
 
+def providers() -> dict:
+    """Every provider with what it can actually supply — the data half of
+    :func:`catalog`.
+
+    ``catalog()['providers']`` answers "which providers exist"; this answers
+    "and what measurements can I get from them", which is the question a caller
+    has to answer before ``fetch`` can be written. Models were already
+    introspectable through :func:`describe`; sources now are too."""
+    from ..providers import PROVIDER_BY_KIND
+    out = {}
+    for kind, cls in PROVIDER_BY_KIND.items():
+        record = cls.describe()
+        out[getattr(kind, "name", str(kind)).lower()] = record
+    return {"providers": out}
+
+
+def describe_provider(name: str) -> dict:
+    """Full record for one provider: measurements, query keys, prerequisites.
+
+    ``name`` is the provider kind as it appears in ``catalog()['providers']``
+    (``synthetic``, ``era5``, ``turbulence``, ``file``, ``sensor``, ``remote``)."""
+    from ..providers import PROVIDER_BY_KIND
+    key = str(name).strip().lower()
+    for kind, cls in PROVIDER_BY_KIND.items():
+        if getattr(kind, "name", str(kind)).lower() == key:
+            return cls.describe()
+    known = sorted(getattr(k, "name", str(k)).lower() for k in PROVIDER_BY_KIND)
+    raise ValueError(f"unknown provider {name!r}; known providers: {known}.")
+
+
 # Authoring verbs live in spec.py / scaffold.py; re-exported here.
 from .spec import register_model, save_spec, load_spec  # noqa: E402
 from .scaffold import scaffold, write_scaffold          # noqa: E402
@@ -373,7 +509,7 @@ __all__ = [
     "catalog", "describe", "make_model", "make_filter",
     "sample", "run_filter", "forecast", "run_osse", "run_control",
     "diagnostics", "render_plot",
-    "fetch",
+    "fetch", "providers", "describe_provider",
     "register_model", "save_spec", "load_spec", "scaffold", "write_scaffold",
     "jsonify",
 ]

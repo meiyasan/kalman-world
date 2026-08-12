@@ -19,6 +19,15 @@ class SensorProvider(KalmanProvider):
     VERSION = "1.0"
     KIND = KalmanProviderKind.SENSOR
 
+    MEASUREMENTS = (
+        {"name": "zk", "units": "as delivered",
+         "description": "Whatever the wrapped source yields, row per item — the "
+                        "provider does not interpret it, so the units are the "
+                        "sensor's own."},
+    )
+
+    REQUIRES = ("a live source= (iterable, generator, or callback)",)
+
     def __init__(self, source=None, *, max_items=None, **kw):
         super().__init__(cache=False, **kw)
         self.source = source

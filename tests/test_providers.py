@@ -61,7 +61,7 @@ class TestFile(unittest.TestCase):
 class TestSensor(unittest.TestCase):
 
     def test_stream_bounded_and_consumed_by_filter(self):
-        from modules.filters import LinearKalmanFilter
+        from modules.framework.filters import LinearKalmanFilter
         rows = [[float(i)] for i in range(5)]
         p = SensorProvider(rows)
         streamed = list(p.stream())
@@ -159,6 +159,51 @@ class TestFacadeFetch(unittest.TestCase):
             self.assertIn("zk", ok)
         finally:
             os.environ.pop("KALMAN_JWT_SECRET", None)
+
+
+class TestProviderDiscovery(unittest.TestCase):
+    """A provider must advertise what it can supply, not only that it exists.
+
+    ``catalog()['providers']`` answers "which sources are there"; without the
+    measurement declaration a caller still has to read the source to learn that
+    ERA5 yields 500 hPa wind, which is exactly the question ``fetch`` needs
+    answered before it can be written.
+    """
+
+    def test_every_provider_declares_its_measurements(self):
+        for name, record in api.providers()["providers"].items():
+            self.assertTrue(record["measurements"],
+                            f"provider {name!r} advertises no measurements")
+            for measurement in record["measurements"]:
+                self.assertIn("name", measurement)
+                self.assertIn("description", measurement)
+
+    def test_era5_declares_the_ecmwf_variables_and_its_prerequisites(self):
+        era5 = api.describe_provider("era5")
+        names = [m["name"] for m in era5["measurements"]]
+        self.assertIn("u_component_of_wind", names)
+        self.assertIn("v_component_of_wind", names)
+        self.assertIn("vorticity", names)
+        # The credentials/packages a fetch needs are stated up front rather than
+        # surfacing as an ImportError mid-download.
+        requires = " ".join(era5["requires"]).lower()
+        self.assertIn("cdsapi", requires)
+        self.assertIn("cdsapirc", requires)
+
+    def test_query_keys_are_read_off_the_real_fetch_signature(self):
+        era5 = api.describe_provider("era5")
+        keys = {q["name"] for q in era5["query"]}
+        for expected in ("path", "dates", "area", "level", "stride"):
+            self.assertIn(expected, keys)
+
+    def test_streaming_providers_are_marked(self):
+        self.assertTrue(api.describe_provider("sensor")["streams"])
+        self.assertFalse(api.describe_provider("era5")["streams"])
+
+    def test_unknown_provider_lists_the_known_ones(self):
+        with self.assertRaises(ValueError) as ctx:
+            api.describe_provider("ecmwf")
+        self.assertIn("era5", str(ctx.exception))
 
 
 if __name__ == "__main__":
