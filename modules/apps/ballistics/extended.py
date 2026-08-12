@@ -4,7 +4,6 @@ The ``EXTENDED`` variant of the ballistics domain.  See ``linear.py`` for the
 constant-acceleration KF variant.
 """
 import numpy as np
-from scipy.linalg import expm
 
 from ...framework.models.extended import ExtendedKalmanModel
 from .base import BallisticState, BallisticObservable, BallisticNoise, ApexEstimate, ImpactEstimate
@@ -191,10 +190,14 @@ class BallisticModel(ExtendedKalmanModel):
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
         dt = 1.0 / self.fs
 
-        # Extract from axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
-        p = x[[0, 3, 6], 0]  # [px, py, pz]
-        v = x[[1, 4, 7], 0]  # [vx, vy, vz]
-        a = x[[2, 5, 8], 0] if self.order >= 3 else np.zeros(3, dtype=self.dtype)
+        # Extract from axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az] at order 3, or
+        # [px,vx, py,vy, pz,vz] at order 2. The stride is `order`, not a literal 3 -- see h().
+        pi = [self.order * i for i in range(3)]
+        vi = [self.order * i + 1 for i in range(3)]
+        p = x[pi, 0]
+        v = x[vi, 0]
+        a = (x[[self.order * i + 2 for i in range(3)], 0] if self.order >= 3
+             else np.zeros(3, dtype=self.dtype))
 
         # Gravity
         # Near-surface mode (g provided): constant downward acceleration in Z.
@@ -220,17 +223,15 @@ class BallisticModel(ExtendedKalmanModel):
         # Total acceleration
         a_total = a_grav + a_drag + a_ctrl
 
-        # Kinematic matrix exponential for p,v coupling (per spatial axis)
+        # Kinematic p,v coupling (per spatial axis). The 1-D generator
+        # [[0, 1], [0, 0]] is nilpotent — A² = 0 — so exp(A·dt) is *exactly*
+        # [[1, dt], [0, 1]]; there is no series to sum and nothing is approximated
+        # by writing it out. Doing so matters because f() runs 2n+1 times per
+        # filter step (the central-difference Jacobian re-evaluates it per state
+        # component), and the matrix exponential was a third of f()'s cost while
+        # never changing: both A and dt = 1/fs are constants of the run.
         if self.order >= 2:
-            F1d = np.array([[0.0, 1.0], [0.0, 0.0]])
-            Phi1d = expm(F1d * dt)
-            p_next = np.zeros(3, dtype=self.dtype)
-            v_next = np.zeros(3, dtype=self.dtype)
-            for i in range(3):
-                pv = Phi1d @ np.array([p[i], v[i]])
-                p_next[i] = pv[0]
-                v_next[i] = pv[1]
-            p, v = p_next, v_next
+            p = p + dt * v
 
         # Apply acceleration contribution
         p += 0.5 * a_total * dt**2
@@ -239,10 +240,10 @@ class BallisticModel(ExtendedKalmanModel):
 
         # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
         x_next = np.zeros_like(x)
-        x_next[[0, 3, 6], 0] = p
-        x_next[[1, 4, 7], 0] = v
+        x_next[pi, 0] = p
+        x_next[vi, 0] = v
         if self.order >= 3:
-            x_next[[2, 5, 8], 0] = a
+            x_next[[self.order * i + 2 for i in range(3)], 0] = a
 
         # Add process noise
         if w is not None:
@@ -261,8 +262,12 @@ class BallisticModel(ExtendedKalmanModel):
         z = [px, py, pz] + v  (additive noise, by default)
         """
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
-        # positions sit at indices 0, 3, 6 in the axis-major layout
-        z = x[[0, 3, 6], :].copy()
+        # Positions are the first slot of each axis in the axis-major layout, so they are
+        # `order` apart -- not always 0, 3, 6. Hardcoding that stride made the documented
+        # order=2 (position+velocity, no acceleration state) raise IndexError on a 6-state
+        # vector. Derived the same way self.velocity_indices already derives its own.
+        pi = [self.order * i for i in range(3)]
+        z = x[pi, :].copy()
 
         if v is not None:
             v = np.asarray(v, dtype=self.dtype).reshape(3, 1)

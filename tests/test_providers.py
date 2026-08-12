@@ -208,3 +208,53 @@ class TestProviderDiscovery(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCatalogSpecInitialState(unittest.TestCase):
+    """initial.x0/P0 must reach catalog models, not just the matrices path.
+
+    Regression for a SILENT failure: make_model filtered kw against the class's NAMED
+    signature, so a model taking **kwargs (as the app models do) never received x0/P0. The
+    filter then started from the origin with a default covariance and returned confident
+    nonsense instead of raising -- a satellite spec carrying its true initial state diverged
+    by 892 km before anyone noticed the state had been dropped.
+    """
+
+    def _spec(self, order, n, x0_first=6771e3):
+        MU, G = 3.986004418e14, 6.674e-11
+        x0 = [0.0] * n
+        x0[0] = x0_first
+        return {
+            "base": "BallisticModel", "fs": 1.0,
+            "dynamics": {"params": {"G": G, "M": MU / G, "m": 1.0, "c_drag": 0, "g": None,
+                                    "order": order, "fs": 1.0,
+                                    "process_uncertainty": 0.05,
+                                    "measurement_uncertainty": 500.0}},
+            "initial": {"x0": x0,
+                        "P0": [[(1234.0 ** 2 if i == j else 0.0) for j in range(n)]
+                               for i in range(n)]},
+        }
+
+    def test_x0_and_p0_reach_a_catalog_model(self):
+        m = api.make_model(self._spec(3, 9))
+        self.assertAlmostEqual(float(np.ravel(m.x0)[0]), 6771e3, places=3)
+        self.assertAlmostEqual(float(np.asarray(m.P0)[0, 0]), 1234.0 ** 2, places=3)
+
+    def test_ballistic_order_2_is_not_an_index_error(self):
+        """order=2 is documented and used to raise IndexError from a hardcoded [0,3,6]."""
+        for order, n in ((3, 9), (2, 6)):
+            with self.subTest(order=order):
+                m = api.make_model(self._spec(order, n))
+                z = np.ravel(m.h(m.x0))
+                self.assertEqual(z.shape, (3,))
+                self.assertAlmostEqual(float(z[0]), 6771e3, places=3)
+
+    def test_orbital_gravity_is_order_independent(self):
+        """g=None selects GM/r^3; acceleration must not depend on the state layout."""
+        for order, n in ((3, 9), (2, 6)):
+            with self.subTest(order=order):
+                m = api.make_model(self._spec(order, n))
+                x = np.zeros((n, 1))
+                x[0, 0] = 6771e3
+                x[order + 1, 0] = 7660.0
+                self.assertAlmostEqual(float(np.ravel(m.f(x))[1]), -8.694, places=3)

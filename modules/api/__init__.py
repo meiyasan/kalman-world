@@ -265,10 +265,21 @@ def make_model(spec: dict) -> KalmanModel:
     except (TypeError, ValueError):
         plist = []
     accepted = set(plist)
+    # A class taking **kwargs accepts x0/P0 even though they are not named parameters --
+    # KalmanModel's base __init__ reads them straight out of kwargs, which is exactly how the
+    # matrices path passes them. Filtering on the NAMED signature alone silently dropped
+    # initial.x0 for every catalog model, and silently is the problem: the filter then starts
+    # at the origin with a default covariance and produces confident nonsense rather than an
+    # error. A satellite spec carrying its true initial state diverged by 892 km this way.
+    try:
+        takes_var_kw = any(p.kind is inspect.Parameter.VAR_KEYWORD
+                           for p in inspect.signature(cls.__init__).parameters.values())
+    except (TypeError, ValueError):
+        takes_var_kw = False
     if "fs" in accepted and "fs" not in params:
         params["fs"] = fs
     for k, v in list(kw.items()):
-        if k in accepted:
+        if k in accepted or takes_var_kw:
             params.setdefault(k, v)
     ordered = [p for p in plist if p != "self"]
     if ordered and ordered[0] in ("sensor_id", "name"):
