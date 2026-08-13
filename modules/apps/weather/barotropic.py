@@ -138,6 +138,33 @@ class BarotropicFlowModel(KolmogorovFlowModel):
         self.latitude_deg = float(latitude_deg)
         self.clim_vorticity_rms = float(clim_vorticity_rms)
 
+    def climatology_from(self, fields):
+        """Use MEASURED fields as the climatology, instead of a synthetic spin-up.
+
+        An unforced barotropic model has no attractor worth sampling — it decays — so its own
+        spin-up produces states that are dynamically self-consistent and meteorologically
+        unlike anything the atmosphere is doing this week. An ensemble drawn from those starts
+        far from the truth in a way no number of assimilation cycles can repair on a short
+        window. Drawing from real fields instead is standard practice (a climatological
+        ensemble) and is the honest fix.
+
+        **The caller must pass a period DISJOINT from the one being scored.** Seeding from the
+        scoring window would put the answer in the initial ensemble and every score after it
+        would be circular — the same failure as tuning process noise on truth. This method
+        cannot check that for you; it is the caller's contract, and the OSSE script splits the
+        window explicitly.
+
+        ``fields`` is ``(T, n)`` or ``(T, grid, grid)``; columns become ensemble candidates.
+        """
+        arr = np.asarray(fields, dtype=float)
+        arr = arr.reshape(arr.shape[0], -1)
+        if arr.shape[1] != self.n:
+            raise ValueError(f"climatology fields have {arr.shape[1]} states, model has {self.n}")
+        if not np.all(np.isfinite(arr)):
+            raise ValueError("climatology fields contain non-finite values")
+        self._clim = arr.T.copy()
+        return self._clim
+
     def climatology(self, n_snapshots=150, spinup=600, stride=10):
         """Snapshots at a **physical** vorticity amplitude.
 

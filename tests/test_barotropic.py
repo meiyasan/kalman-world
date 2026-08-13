@@ -104,6 +104,39 @@ def test_the_climatology_is_at_a_physical_vorticity_scale():
     assert 1e-6 < clim.std() < 1e-3, f"climatology std {clim.std():.3e} is not a weather scale"
 
 
+def test_a_data_seeded_climatology_replaces_the_synthetic_one():
+    """Real fields as ensemble candidates — the standard climatological ensemble.
+
+    An unforced barotropic model has no attractor worth sampling, so its own spin-up produces
+    states that are dynamically fine and meteorologically unlike this week's weather.
+    """
+    model = BarotropicFlowModel("test", grid=32, dt=60.0, cycle=60)
+    rng = np.random.default_rng(0)
+    fields = rng.standard_normal((12, 32 * 32)) * 4.5e-5
+
+    clim = model.climatology_from(fields)
+    assert clim.shape == (32 * 32, 12), "columns should be candidate states"
+
+    # And it must actually be used, not just stored beside a spin-up.
+    assert model.climatology() is clim
+    ensemble = model.initial_ensemble(4)
+    assert ensemble.shape == (32 * 32, 4)
+    for col in range(4):
+        assert np.any(np.all(np.isclose(clim, ensemble[:, [col]]), axis=0)), \
+            "every member should be one of the supplied fields"
+
+
+def test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans():
+    model = BarotropicFlowModel("test", grid=32, dt=60.0, cycle=60)
+    with pytest.raises(ValueError):
+        model.climatology_from(np.zeros((5, 17)))
+
+    bad = np.zeros((5, 32 * 32))
+    bad[0, 0] = np.nan
+    with pytest.raises(ValueError):
+        model.climatology_from(bad)
+
+
 def test_the_model_advances_a_physical_field_without_blowing_up():
     model = BarotropicFlowModel("test", grid=32, dt=60.0, cycle=60)
     model.climatology(n_snapshots=4, spinup=60, stride=5)
