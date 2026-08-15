@@ -6,10 +6,11 @@
 #     ./bootstrap.sh [BUILDTYPE]        # Release (default), Debug, Doc, ...
 #
 # Same shape as the sibling projects using this template, with one difference:
-# it stops after configuring. There is no CMake library to compile here — the
-# Python package is installed with pip (`make setup`) and the C fast path is
-# built by CFFI (`make accel`) — so the Makefile drives `docs` / `pages` /
-# `install` explicitly rather than having bootstrap build everything.
+# it stops after configuring rather than building. CMake here owns the C++ ROOT
+# library (`make build` → libKalman) and the documentation; the Python package
+# is installed with pip (`make setup`) and its C fast path by CFFI (`make
+# accel`), neither of which CMake touches. So the Makefile drives `build` /
+# `ctests` / `docs` / `pages` / `install` explicitly.
 
 [[ $_ != $0 ]] && REALPATH=`dirname $(readlink -f ${BASH_SOURCE[0]})` || REALPATH=`dirname $(readlink -f $0)`
 

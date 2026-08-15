@@ -174,10 +174,16 @@ release: motd
 configure: motd
 	@MOTD=0 ./bootstrap.sh $(BUILDTYPE)
 
-## Building the project
+## Building the project (the C++ ROOT library, libKalman — needs ROOT + cmake)
 build: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) lib
+
+## Run the C++ (libKalman) test suite under ctest. `make tests` is the Python one.
+ctests: motd
+	@if [ ! -d "$(BUILD_DIR)" ]; then MOTD=0 $(MAKE) -s configure; fi
+	@cmake -S . -B $(BUILD_DIR) -DBUILD_TESTS=ON > /dev/null
+	@$(MAKE) -sC $(BUILD_DIR) ctests
 
 ## Vendor dependencies
 vendor: motd

@@ -1,0 +1,205 @@
+/**
+ * \file 05_imm.cc
+ * \brief The IMM filter: does it actually find the regime, and switch when it changes?
+ */
+#include "Kalman/Kalman.h"
+#include "Check.h"
+#include "Fixtures.h"
+
+#include <cmath>
+#include <random>
+#include <vector>
+
+using namespace Kalman;
+
+int main()
+{
+    // Two modes of the same 1-D system, differing in how much unmodelled
+    // acceleration they expect: a quiet cruise and a manoeuvre.
+    //
+    // The contrast has to be large enough to *show up in the data*. With a
+    // measurement noise comparable to the process noise, both modes explain the
+    // track equally well (measured: innovation covariances 8% apart, both with
+    // mean NIS ~ 1.09) and a correct Bayesian router then returns ~0.5 — not
+    // because the IMM is broken but because there is genuinely nothing to
+    // choose between. Hence a sharp sensor and a violent manoeuvre.
+    const double sigmaZ = 0.05;
+
+    Fixture::ConstantVelocity quiet(1, 50.);
+    quiet.SetProcessNoise(0.05);
+    quiet.SetMeasurementNoise(sigmaZ);
+
+    Fixture::ConstantVelocity agile(1, 50.);
+    agile.SetProcessNoise(50.0);
+    agile.SetMeasurementNoise(sigmaZ);
+
+    Matrix Pi(2, 2, 0.);
+    Pi(0, 0) = 0.95; Pi(0, 1) = 0.05;
+    Pi(1, 0) = 0.05; Pi(1, 1) = 0.95;
+
+    // --- construction is validated ------------------------------------------
+    {
+        bool threw = false;
+        try { Matrix bad(3, 3, 1.); Filters::IMM imm({&quiet, &agile}, bad); }
+        catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "IMM: a Pi of the wrong shape throws");
+
+        threw = false;
+        try { Matrix bad(2, 2, 0.7); Filters::IMM imm({&quiet, &agile}, bad); }
+        catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "IMM: a Pi whose rows do not sum to 1 throws");
+
+        threw = false;
+        try { Filters::IMM imm({&quiet}, Matrix::Identity(1)); }
+        catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "IMM: fewer than two modes throws");
+
+        threw = false;
+        try
+        {
+            Fixture::ConstantVelocity plane(2, 50.);       // n = 4, not 2
+            Filters::IMM imm({&quiet, &plane}, Pi);
+        }
+        catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "IMM: modes with different dimensions throw");
+    }
+
+    // --- a quiet track: the IMM should settle on the quiet mode ---------------
+    {
+        Vector x0(2); x0(0) = 0.; x0(1) = 2.;
+        quiet.SetInitialState(x0);
+        agile.SetInitialState(x0);
+
+        Sampler sampler(&quiet, 4242);
+        sampler.Generate(400, x0);
+
+        Routers::Bayesian router;
+        Filters::IMM imm({&quiet, &agile}, Pi, &router);
+        const Record rec = imm.Forward(sampler.Measurements());
+
+        CHECK(rec.NSteps() == 400, "IMM: one record entry per measurement");
+        CHECK(rec.NState() == 2, "IMM: the combined estimate has the shared state size");
+
+        const Matrix &modes = imm.ModeHistory();
+        CHECK(modes.Rows() == 400 && modes.Cols() == 2, "IMM: mode history is (T, M)");
+
+        bool normalised = true;
+        for (std::size_t k = 0; k < modes.Rows(); ++k)
+            if (std::abs(modes(k, 0) + modes(k, 1) - 1.) > 1e-9) normalised = false;
+        CHECK(normalised, "IMM: mode probabilities sum to 1 at every step");
+
+        // Average over the second half, once the filter has had time to decide.
+        double quietShare = 0.;
+        for (std::size_t k = 200; k < 400; ++k) quietShare += modes(k, 0);
+        quietShare /= 200.;
+        std::printf("    quiet-mode probability on a quiet track: %.3f\n", quietShare);
+        CHECK(quietShare > 0.6, "IMM: settles on the mode that generated the data");
+
+        // The estimate must still be a good estimate, not just a good classifier.
+        double eraw = 0.;
+        for (std::size_t k = 0; k < 400; ++k)
+            eraw += std::pow(sampler.Measurements()[k](0) - sampler.Truth()[k](0), 2);
+        eraw = std::sqrt(eraw / 400.);
+        CHECK(rec.RMSE(0, sampler.Truth()) < eraw, "IMM: the combined estimate beats the raw measurement");
+    }
+
+    // --- a switching track: the IMM should follow the switch ------------------
+    {
+        // Cruise for 200 steps, then manoeuvre hard for 200. Built by hand so the
+        // regime boundary is known exactly.
+        std::mt19937_64 rng(7);
+        std::normal_distribution<double> gauss(0., 1.);
+        const double dt = 1. / 50.;
+
+        std::vector<Vector> zk;
+        double p = 0., v = 2.;
+        for (std::size_t k = 0; k < 400; ++k)
+        {
+            const double sigmaA = (k < 200) ? 0.05 : 50.0;   // the regime change
+            const double a = sigmaA * gauss(rng);
+            p += dt * v + 0.5 * a * dt * dt;
+            v += dt * a;
+
+            Vector z(1);
+            z(0) = p + sigmaZ * gauss(rng);
+            zk.push_back(z);
+        }
+
+        Vector x0(2); x0(0) = 0.; x0(1) = 2.;
+        quiet.SetInitialState(x0);
+        agile.SetInitialState(x0);
+
+        Routers::Bayesian router;
+        Filters::IMM imm({&quiet, &agile}, Pi, &router);
+        imm.Forward(zk);
+
+        const Matrix &modes = imm.ModeHistory();
+        double before = 0., after = 0.;
+        for (std::size_t k = 100; k < 200; ++k) before += modes(k, 1);   // agile share, cruising
+        for (std::size_t k = 300; k < 400; ++k) after += modes(k, 1);    // agile share, manoeuvring
+        before /= 100.; after /= 100.;
+
+        std::printf("    agile-mode probability: %.3f while cruising -> %.3f while manoeuvring\n",               before, after);
+        CHECK(after > before + 0.2, "IMM: the agile mode gains sharply once the target manoeuvres");
+        CHECK(before < 0.45, "IMM: the quiet mode is preferred while cruising");
+        CHECK(after > 0.6, "IMM: the agile mode dominates during the manoeuvre");
+
+        // A single step can go either way on noise; the question is which mode
+        // wins across the manoeuvre.
+        std::size_t agileWins = 0;
+        for (std::size_t k = 300; k < 400; ++k)
+            if (imm.DominantMode(k) == 1) ++agileWins;
+        CHECK(agileWins > 70, "IMM: DominantMode reports the manoeuvring mode most of the time");
+
+        const Matrix &nis = imm.NisHistory();
+        CHECK(nis.Rows() == 400 && nis.Cols() == 2, "IMM: NIS history is (T, M)");
+        bool finite = true;
+        for (std::size_t k = 0; k < nis.Rows(); ++k)
+            for (std::size_t j = 0; j < nis.Cols(); ++j)
+                if (!std::isfinite(nis(k, j))) finite = false;
+        CHECK(finite, "IMM: every NIS entry is finite");
+    }
+
+    // --- the router really is pluggable, and dropouts are handled -------------
+    {
+        Vector x0(2); x0(0) = 0.; x0(1) = 2.;
+        quiet.SetInitialState(x0);
+        agile.SetInitialState(x0);
+
+        Sampler sampler(&agile, 99);
+        sampler.Generate(300, x0);
+        sampler.DropChannel(0, 0.25);
+
+        Routers::Bayesian bayes;
+        Routers::Threshold thresh(1, 5, true);
+        Routers::Hybrid hybrid(&bayes, &thresh, 0.5);
+
+        for (const Routers::Router *r :
+             {static_cast<const Routers::Router *>(&bayes),
+              static_cast<const Routers::Router *>(&thresh),
+              static_cast<const Routers::Router *>(&hybrid)})
+        {
+            Filters::IMM imm({&quiet, &agile}, Pi, r);
+            const Record rec = imm.Forward(sampler.Measurements());
+
+            bool ok = true;
+            for (std::size_t k = 0; k < rec.NSteps(); ++k)
+                if (!std::isfinite(rec.State(k)(0)) || !std::isfinite(rec.Covariance(k)(0, 0)))
+                    ok = false;
+            CHECK(ok, (std::string("IMM + ") + r->Title() + ": finite through 25% dropouts").c_str());
+        }
+
+        // Swapping the decision layer must not require rebuilding the bank.
+        Filters::IMM imm({&quiet, &agile}, Pi, &bayes);
+        CHECK(imm.GetRouter() == &bayes, "IMM: holds the router it was given");
+        imm.SetRouter(&thresh);
+        CHECK(imm.GetRouter() == &thresh, "IMM: SetRouter swaps the decision layer");
+
+        // No router at all means the classical update, not a crash.
+        Filters::IMM plain({&quiet, &agile}, Pi);
+        CHECK(plain.GetRouter() != nullptr, "IMM: defaults to the Bayesian router");
+        CHECK(plain.Forward(sampler.Measurements()).NSteps() == 300, "IMM: the default runs");
+    }
+
+    return Check::Summary("imm");
+}

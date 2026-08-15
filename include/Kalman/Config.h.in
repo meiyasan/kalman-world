@@ -1,0 +1,59 @@
+/**
+ * *********************************************
+ *
+ * \file Config.h.in
+ * \brief Build-time configuration of libKalman
+ * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
+ *
+ * *********************************************
+ *
+ * \details Configured by CMake into `Kalman/Config.h`.
+ *
+ * libKalman has **no required dependency**. Every flag below defaults to 0, and
+ * the library is complete and correct with all of them off — they only select
+ * faster or richer implementations of things that already work.
+ *
+ * *********************************************
+ */
+
+#ifndef KALMAN_CONFIG_H_IN
+#define KALMAN_CONFIG_H_IN
+
+#define KALMAN_VERSION       "@KALMAN_VERSION@"
+#define KALMAN_VERSION_MAJOR @KALMAN_VERSION_MAJOR@
+#define KALMAN_VERSION_MINOR @KALMAN_VERSION_MINOR@
+
+/**
+ * A CBLAS implementation (Accelerate, OpenBLAS, MKL) is linked, and matrix
+ * products at or above KALMAN_BLAS_MIN_DIM go through `cblas_dgemm`.
+ *
+ * Below that threshold the hand-rolled kernel is measurably faster — a BLAS call
+ * costs ~20 ns of argument handling, which is more than a 4x4 product — so the
+ * backend is chosen per operation, not once for the whole library.
+ */
+#cmakedefine01 KALMAN_WITH_BLAS
+
+/// Size at or above which matrix products are handed to BLAS. Measured, not guessed.
+#define KALMAN_BLAS_MIN_DIM @KALMAN_BLAS_MIN_DIM@
+
+/**
+ * libTorch is available, for executing TorchScript routing policies — the direct
+ * counterpart of `modules/framework/routers/nn/`, whose architectures are all
+ * torch.nn modules.
+ *
+ * Deliberately *not* used for Kalman::Matrix. A Torch op carries a ~230 ns
+ * dispatch floor, which is 10-25x an entire small matrix product, so routing the
+ * core through tensors would make every filter slower.
+ */
+#cmakedefine01 KALMAN_WITH_TORCH
+
+/**
+ * ONNX Runtime is available, for loading trained decision / routing policies.
+ *
+ * This is the seam between the two implementations: a router or controller is
+ * trained in the Python framework, exported to ONNX, and executed here — so the
+ * learned policy is the portable artifact, not a language binding.
+ */
+#cmakedefine01 KALMAN_WITH_ONNXRUNTIME
+
+#endif // KALMAN_CONFIG_H_IN
