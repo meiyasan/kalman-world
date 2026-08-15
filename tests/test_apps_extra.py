@@ -32,7 +32,7 @@ from modules.apps.astro.space import (
 )
 from modules.runtime.astro import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state
 from modules.apps.vehicles import CarSpeedModel
-from modules.filters import ExtendedKalmanFilter
+from modules.framework.filters import ExtendedKalmanFilter
 
 
 def _no_nan_inf(arr, label="array"):

@@ -22,7 +22,7 @@ them. `modules/` is published as the `kalman` package (see
 | **Engine** (alias **Estimator**) | HOW to infer under uncertainty | `framework/engine.py` | `framework/engines/` |
 | **Integrator** | HOW to step *time*: `x(t) → x(t+dt)` | `framework/integrator.py` | `framework/integrators/` |
 | **Solver** | HOW to discretize *space* | `framework/solver.py` | `framework/solvers/` |
-| **Filter** | WHEN — the forward/backward workflow | `framework/filter.py` | `filters/` |
+| **Filter** | WHEN — the forward/backward workflow | `framework/filter.py` | `framework/filters/` |
 | **Provider** | WHERE the data comes from | `framework/provider.py` | `providers/`, `apps/<domain>/providers/` |
 | **Controller / Router** | acting on, and selecting between, models | `framework/control.py`, `routers/` | `framework/controllers/`, `routers/` |
 
@@ -70,8 +70,8 @@ fails — fix the code, do not weaken the test.
 modules/                        → the `kalman` package
   framework/                    contracts + bases + registries (the core)
     model.py engine.py integrator.py solver.py provider.py filter.py control.py
-    models/ engines/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
-  filters/                      public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
+    models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
+    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)
@@ -82,7 +82,10 @@ modules/                        → the `kalman` package
     weather/       flow  storms  geo  surrogate  data/  providers/
     ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
   runtime/  helpers.py
-tests/                          mirrors concerns, not files
+tests/                          mirrors concerns, not files (pytest)
+  cxx/                          the libKalmanFramework suite (plain binaries, ctest)
+include/Kalman/  src/           libKalmanFramework — the standalone C++ port (see §10)
+examples/cxx/                   standalone C++ programs using libKalmanFramework
 share/notebooks/                executed, output-bearing narrative docs
 ```
 
@@ -118,6 +121,18 @@ Pre-set `self.n` **before** `super().__init__()` — construction runs
 base, tag `KIND`, and add it to the registry. Follow the existing
 `resolve_*()` pattern including the `%autoreload` name-fallback.
 
+**A new filter** — it should be a *thin leaf*: `NAME`, `DESCRIPTION`, `KIND`,
+and at most an `__init__` forwarding hyper-parameters to its engine (see
+`filters/ukf.py`). A filter that defines `forward` / `backward` / `smooth` is a
+smell: that is algorithm, and algorithm belongs to the engine. If one
+predict/update step genuinely does not describe your algorithm — a
+combinatorial search over a whole event, say — set `OWNS_PASS = True` on the
+**engine** and implement `KalmanEngine.forward()` / `backward()` there.
+`KalmanFilter` then hands the engine its data and turns the returned objects
+into records via their `to_record(model, flavor)`; the result type (a track, a
+cluster) stays private to the engine, and the leaf is thin again.
+`CombinatorialKalmanEngine` is the worked example.
+
 **Registering the MCP server with a client** — `make mcp-clients` lists the
 MCP clients detected on this machine; `make mcp-install` (or
 `python tools/mcp_install.py --all`) registers 'Kalman-AI' with all of them,
@@ -147,6 +162,20 @@ first. To add a client, append it to `CLIENTS` in that script.
 - Comparing several filter variants in one loop: give each its **own RNG
   stream** (`seed=`) and share only the observation stream, or results
   cross-contaminate. This is a real bug we already fixed once.
+- **Never call `expm()` inside `f()`, `F()` or any other per-step hook.** The
+  EKF re-evaluates `f()` `2n+1` times per step for the central-difference
+  Jacobian, so anything loop-invariant in there is paid thousands of times per
+  second. Two cases were found and removed:
+  - A **nilpotent** generator (`A² = 0` — a slope drives a coordinate, nothing
+    drives the slope: constant-velocity kinematics, straight-line tracks) has
+    `exp(A·s) = I + A·s` **exactly**. Write the closed form. It is not an
+    approximation; it agrees with `scipy.linalg.expm` to the last bit at small
+    `s` and is 1–2 ULP *more* accurate at large `s`, because the exact answer is
+    representable and Padé scaling-and-squaring rounds. Removing it took
+    `BallisticModel.f()` from 21.1 µs to 8.8 µs and its EKF forward pass from
+    1.9 s to 0.63 s (**3×**).
+  - Otherwise, hoist it: `dt = 1/fs` and the generator are constants of a run.
+  Discretisation belongs in `__init__` or in a cache, never in the hot path.
 
 ---
 
@@ -230,7 +259,7 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
   adapt at the framework level; field solvers run Dormand–Prince as fixed-step
   RK5 off its Butcher tableau.
 - Two Doxygen warnings come from source docstrings, not the docs:
-  `filters/ckf.py:139` (an inline comment read as a declaration) and
+  `framework/filters/ckf.py` (an inline comment read as a declaration) and
   `helpers.py:358` (a docstring bullet list read as a member).
 - A `KalmanSpec`'s top-level `fs` only reaches models whose `__init__` names
   `fs`; for `**kwargs` models it has to go in `dynamics.params`.
@@ -272,3 +301,92 @@ rules, all learned from real breakage here:
 Page filenames use hyphens (`9_Python-API.md`), not spaces: Doxygen cannot
 resolve `%20`-encoded cross-references. `make docs` must end with no warnings
 outside the two known docstring ones above.
+
+---
+
+## 10. libKalmanFramework — the C++ port
+
+`include/Kalman/` + `src/` build `libKalmanFramework`: the same Model / Engine / Filter
+contracts in C++, as a **standalone library with no required dependency**. See
+[docs/15](docs/15_Cxx-Library.md) for using it; this section is about changing it.
+
+**The dependency direction is the rule everything else follows.** kalman-framework
+does not depend on ROOT — ROOT+ depends on *it*. A ROOT/ROOT+ component links
+libKalmanFramework, never the reverse. So: no `TObject`, no `ClassDef`, no LinkDef, no
+dictionary, no `TMatrixD`, no `TGraph`, no `TFile`. `Kalman::Matrix` and
+`Kalman::Vector` exist precisely so the core owes nothing to anyone.
+
+**It is a port, not a binding.** It does not wrap the Python package, does not
+link CPython, and is not generated from anything. The two implementations are
+kept in step by hand and only where it matters — the contracts, the Joseph-form
+update, the NaN-channel convention, the RTS smoother. Do **not** try to make one
+call the other; [docs/15](docs/15_Cxx-Library.md) has the measurements showing
+why a callback-based wrapper would be slower than pure Python.
+
+**`include/` and `src/` mirror `modules/framework/`**, file for file and
+subdirectory for subdirectory — `Engines/`, `Models/`, `Filters/`, `IO/`,
+`Abstract/`. A new file on one side has an obvious home on the other. The mapping
+table is in docs/15; keep it accurate when you add to either side.
+
+**No applications.** libKalmanFramework ships no physics. A pendulum, a drift chamber, a
+suspension or a power grid subclasses `Models::Linear` / `Models::Extended` and
+lives at apps level, exactly as `modules/apps/` does for Python. The models in
+`tests/cxx/Fixtures.h` are test fixtures and must stay there.
+
+**Scope is deliberate**: Linear and Extended engines, the record, the sampler,
+the diagnostics and the shared algebra. No integrators, solvers, controllers or
+routers; the sigma-point / particle / ensemble / combinatorial engines stay
+Python-only. `EngineKind` still *names* them, and `Filter::MakeEngine` throws for
+the ones with no C++ engine rather than substituting a different algorithm.
+
+Conventions, most of which the build or the tests will enforce:
+
+- **Everything is in `namespace Kalman`**, with `Engines::`, `Models::`,
+  `Filters::`, `IO::` and `Abstract::` nested to match the directories. No `T`
+  prefix: these are not ROOT classes, and the prefix would invite confusion with
+  root-plus' own `ROOT::IOPlus::TKalmanFilter`, which is a separate and much
+  smaller standalone filter. Both can live in one process.
+- **Optional backends stay optional.** `KALMAN_WITH_BLAS`, `KALMAN_WITH_TORCH`
+  and `KALMAN_WITH_ONNXRUNTIME` all default to 0, and the library is complete and
+  correct with all three off. Never make one load-bearing.
+- **Do not route `Kalman::Matrix` through Torch.** A Torch op has a ~230 ns
+  dispatch floor — 10-25x an entire small matrix product. BLAS is used instead,
+  and only at or above `KALMAN_BLAS_MIN_DIM`, because below the crossover the
+  built-in kernel is measurably faster. Both numbers are measurements; re-measure
+  before changing them.
+- **Covariance inverses go through `Utils::Inverse`**, which tries Cholesky and
+  then falls back to an eigenvalue pseudo-inverse. There is deliberately **no**
+  Tikhonov ladder there: ridging a singular innovation covariance makes the
+  Cholesky succeed and returns an inverse of order 1e12, i.e. a colossal Kalman
+  gain conjured from a direction the measurement says nothing about. The jitter
+  ladder belongs in `Utils::CholeskyFactor` (sampling), where it is harmless.
+- **C++20.** Do not set `CMAKE_CXX_STANDARD_REQUIRED`:
+  `cmake/Modules/StandardCompilerCXX.cmake` repurposes it as a *minimum standard
+  number*, so the usual `ON` is read as "require C++23" and configuration fails.
+- **The C++ tests are `tests/cxx/*.cc`**, plain executables returning a failure
+  count, run by `make ctests`. `make tests` stays the Python suite. They assert
+  on filter *consistency* (NIS ~ m, NEES ~ n), not on golden numbers, so they
+  catch a mis-scaled covariance rather than just a changed one.
+- **The routing layer crosses the language boundary as a trained policy, not a
+  binding.** Training stays in Python (`routers/nn/` is Torch and stays
+  Python-only); `export_onnx()` / `export_torchscript()` write one
+  self-contained artifact with the feature standardisation and the softmax head
+  baked in. Do not add a second file carrying the normalisation: shipped apart
+  from its weights it still yields a valid-looking probability vector. Keep
+  `export_onnx`'s `ir_version=9` default — Torch emits IR 10 and ONNX Runtime
+  1.16 rejects it outright. `tests/test_router_export.py` pins the equivalence,
+  currently 2e-13 (ONNX) and 1.8e-13 (TorchScript).
+- **Keep the router/model split, and keep the runtimes out of the router.**
+  `Kalman::Routers::Neural` owns features and normalisation and holds a
+  `NN::Model`; the backends own the forward pass. ONNX Runtime is reached only
+  from `NN/Onnx.cc` and libTorch only from `NN/Torch.cc`, both behind a pImpl.
+  That is what makes them optional in fact and not just in name: `NN::MLP`
+  needs nothing, so the routing layer works in a build with no optional
+  dependency at all. Never `#include <onnxruntime...>` or `<torch/...>` in
+  `Routers/Neural.*` or any public header.
+- **A wrong-looking IMM is usually a wrong-looking *test*.** Two modes that
+  differ only in Q, under a measurement noise that swamps both, genuinely cannot
+  be told apart — measured: innovation covariances 8% apart and both with mean
+  NIS ~ 1.09, at which point ~0.5/0.5 is the *correct* answer, not a bug. Before
+  suspecting the filter, check that the regimes are distinguishable in the data
+  at all.

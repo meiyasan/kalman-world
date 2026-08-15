@@ -3,6 +3,8 @@ from __future__ import annotations
 import numpy as np
 
 from .io.record import KalmanRecord
+from .io.collection import KalmanRecordCollection
+from .constants import KalmanStateFlavor
 from ..helpers import format_shape
 from .abstract.metadata import KalmanFilterMetadata
 from .abstract.mixins import KalmanFilterMixin
@@ -114,6 +116,14 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # Forward filtering
     # ------------------------------------------------------------------
     def forward(self, gk, uk=None, *, record: bool = True, **kwargs):
+
+        # A whole-pass engine (e.g. the combinatorial track finder) is handed the data
+        # and returns finished results; there is no per-step loop to run, and none of
+        # the time-series normalisation below applies. See KalmanEngine.OWNS_PASS.
+        if self.engine.OWNS_PASS:
+            self.pass_result = self.engine.forward(self.model, gk, **kwargs)
+            self.pass_records = self._pass_records(KalmanStateFlavor.POSTERIOR)
+            return self.pass_records if record else self
 
         indexing    = kwargs.pop("indexing", "xy")
         preprocess  = kwargs.pop("preprocess", True)
@@ -261,6 +271,14 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # Backward smoothing (RTS) — drives engine._smooth
     # ------------------------------------------------------------------
     def backward(self, **kwargs):
+        if self.engine.OWNS_PASS:
+            if self.pass_result is None:
+                raise RuntimeError(
+                    f"No results to smooth; run {type(self).__name__}.forward() first.")
+            self.pass_result = self.engine.backward(self.model, self.pass_result, **kwargs)
+            self.pass_records = self._pass_records(KalmanStateFlavor.SMOOTHED)
+            return self.pass_records
+
         N = len(self.posterior)
         assert N > 0, "No posterior estimates available for smoothing. (run forward() first?)"
         assert len(self.prior) == N, "Prior estimates must match the number of posterior estimates."
@@ -313,6 +331,18 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             self.smooth[k] = (x_smooth[k].reshape(n, 1), P_smooth[k])
 
     # ------------------------------------------------------------------
+    # Whole-pass engines: turn their results into records
+    # ------------------------------------------------------------------
+    def _pass_records(self, flavor) -> KalmanRecordCollection:
+        """Wrap an ``OWNS_PASS`` engine's output as a collection of records.
+
+        The only thing the filter needs to know about those results is that each one
+        can describe itself — hence the ``to_record(model, flavor)`` contract, which
+        keeps the result type (a track, a cluster, …) private to its engine.
+        """
+        return KalmanRecordCollection(r.to_record(self.model, flavor) for r in self.pass_result)
+
+    # ------------------------------------------------------------------
     # Convenience aliases (mirror the model-level API: filter()/smooth())
     # ------------------------------------------------------------------
     def filter(self, z, u=None, **kwargs):
@@ -332,6 +362,13 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # Sampling convenience (uses this filter's engine for the dynamics)
     # ------------------------------------------------------------------
     def sample(self, duration, **kwargs):
+        # A whole-pass engine consumes a whole event, not a time series of single
+        # measurements, so there is nothing for the time-series sampler to produce.
+        if self.engine.OWNS_PASS:
+            raise NotImplementedError(
+                f"{type(self.engine).__name__} consumes a whole pass, not a time series; "
+                f"generate its input from the model instead "
+                f"(e.g. {type(self.model).__name__}.generate_event()).")
         from .sampler import KalmanSampler
         return KalmanSampler(self.model, engine=self.engine).measurement(duration, **kwargs)
 

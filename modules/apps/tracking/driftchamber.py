@@ -6,7 +6,7 @@ A pedagogical Belle II–style tracker: a charged particle bends in a uniform ax
 seen here in the transverse ``x–y`` plane. The trajectory is a circular arc; a "hit" is the
 ``(x, y)`` position where the arc crosses a layer (equivalent to the CDC r–φ measurement at a
 known radius). Because each layer carries **several hits** (signal tracks + background), track
-finding is combinatorial — exactly what :class:`~kalman.filters.ckf.CombinatorialKalmanFilter`
+finding is combinatorial — exactly what :class:`~kalman.framework.filters.ckf.CombinatorialKalmanFilter`
 is for.
 
 * **State** ``x = [x, y, px, py]`` — transverse position and momentum (speed ``|p|`` is

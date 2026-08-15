@@ -35,7 +35,6 @@ import scipy.special as sps
 from dataclasses import dataclass
 from typing import List, Optional
 
-from scipy.linalg import expm
 
 from ...framework.models.linear import LinearKalmanModel
 from ...helpers             import van_loan_discretize
@@ -44,6 +43,22 @@ from ...framework.filter    import KalmanFilter as _KalmanFilter
 
 
 # ── State / observable enumerations ──────────────────────────────────────────
+
+
+
+def _straight_line_transition(A, dz):
+    """``exp(A·dz)`` for a straight-line depth generator, in closed form.
+
+    These generators are **nilpotent** — ``A² = 0``, because a slope drives a
+    coordinate but nothing drives the slope — so the exponential series
+    terminates after one term and ``exp(A·dz)`` is *exactly* ``I + A·dz``. It is
+    not an approximation: it agrees with :func:`scipy.linalg.expm` bit for bit.
+
+    Worth writing out because ``_F()`` is called once per layer on every filter
+    step, so the exponential was being recomputed for a handful of distinct
+    ``dz`` values throughout the run.
+    """
+    return np.eye(A.shape[0]) + A * dz
 
 
 class _CaloBase(LinearKalmanModel):
@@ -98,8 +113,7 @@ class CalorimeterLinearModel(_CaloBase):
         return float(self._z_k[k + 1] - self._z_k[k])
 
     def _F(self, t=None, x=None, u=None):
-        dz = self._dz(self._step)
-        return expm(self._Adz * dz)
+        return _straight_line_transition(self._Adz, self._dz(self._step))
 
     def _Q(self, t=None):
         dz = self._dz(self._step)
@@ -196,8 +210,7 @@ class _CaloEnergyModel(_CaloBase):
                      - self._z_k[min(k, len(self._z_k) - 2)])
 
     def _F(self, t=None, x=None, u=None):
-        dz = self._dz(self._step)
-        return expm(self._Adz * dz)
+        return _straight_line_transition(self._Adz, self._dz(self._step))
 
     def _Q(self, t=None):
         dz = self._dz(self._step)

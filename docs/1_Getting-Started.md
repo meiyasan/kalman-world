@@ -83,7 +83,7 @@ a sampling rate and somewhere to hang domain logic later.
 ```python
 import numpy as np
 from kalman.framework import KalmanModel
-from kalman.filters import LinearKalmanFilter
+from kalman.framework.filters import LinearKalmanFilter
 
 dt = 0.01
 model = KalmanModel(
@@ -106,7 +106,7 @@ record = kf.forward(model.sample(5.0).zk)
 
 ```python
 from kalman.apps import BallisticModel
-from kalman.filters import ExtendedKalmanFilter
+from kalman.framework.filters import ExtendedKalmanFilter
 
 model = BallisticModel("shot", fs=50)     # 9 states, 3 observables, nonlinear
 kf = ExtendedKalmanFilter(model)

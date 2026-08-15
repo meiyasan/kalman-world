@@ -9,7 +9,7 @@ from modules.apps import (
     BallisticLinearModel,
     SuspensionModel,
 )
-from modules.filters import LinearKalmanFilter
+from modules.framework.filters import LinearKalmanFilter
 
 
 # ---------------------------------------------------------------------------

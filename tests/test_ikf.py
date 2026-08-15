@@ -5,7 +5,7 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.framework.model import KalmanModel
-from modules.filters.ikf import InteractiveKalmanFilter
+from modules.framework.filters.ikf import InteractiveKalmanFilter
 from modules.framework.routers          import (BayesianRouter, ThresholdRouter,
                                                  NeuralRouter, HybridRouter)
 from modules.framework.routers.nn.mlp  import MLP

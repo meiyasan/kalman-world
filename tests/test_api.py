@@ -248,5 +248,93 @@ class TestPlotAndForecast(unittest.TestCase):
             self.assertIn(key, out)
 
 
+class TestSpecDiagnostics(unittest.TestCase):
+    """A malformed spec must name the caller's own mistake.
+
+    Before these, every one of the cases below produced ``array must be (d,1)
+    or (d,), got 0`` from deep in the framework — a message naming nothing the
+    caller wrote, which reads as a broken server rather than a misplaced key.
+    """
+
+    def test_matrices_at_the_top_level_say_where_they_belong(self):
+        flat = {"base": "matrices", "fs": 4,
+                "F": [[1, 0.25], [0, 1]], "H": [[1, 0]],
+                "Q": [[0.01, 0], [0, 0.01]], "R": [[1.0]],
+                "x0": [0, 0], "P0": [[1, 0], [0, 1]]}
+        with self.assertRaises(ValueError) as ctx:
+            api.make_model(flat)
+        msg = str(ctx.exception)
+        for fragment in ("'F' belongs in dynamics['F']",
+                         "'Q' belongs in noise['Q']",
+                         "'x0' belongs in initial['x0']"):
+            self.assertIn(fragment, msg)
+
+    def test_model_key_is_reported_as_base(self):
+        with self.assertRaises(ValueError) as ctx:
+            api.make_model({"model": "KolmogorovFlowModel",
+                            "params": {"grid": 32}})
+        msg = str(ctx.exception)
+        self.assertIn("'model' is named 'base'", msg)
+        self.assertIn("'params' belongs in dynamics['params']", msg)
+
+    def test_a_declarative_spec_without_dynamics_says_so(self):
+        with self.assertRaises(ValueError) as ctx:
+            api.make_model({})
+        self.assertIn("dynamics", str(ctx.exception))
+
+    def test_every_verb_that_builds_a_model_gets_the_same_guidance(self):
+        flat = {"base": "matrices", "F": [[1]], "H": [[1]]}
+        for call in (lambda: api.run_filter(flat, [[0.0]]),
+                     lambda: api.forecast(flat, [0.0], None, 1),
+                     lambda: api.register_model(flat, "flat")):
+            with self.assertRaises(ValueError) as ctx:
+                call()
+            self.assertIn("belongs in", str(ctx.exception))
+
+    def test_valid_specs_are_untouched(self):
+        model = api.make_model(CV)
+        self.assertEqual((model.n, model.m), (2, 1))
+
+
+class TestDiagnosticsUseTheMeasurements(unittest.TestCase):
+    """NIS is the filter's self-check: innovations must be the size the claimed
+    noise predicts (mean ~ m).  It is only that check if it is fed the
+    measurements — ``record.zk`` on a filtered run holds the filter's OUTPUT, so
+    diagnosing it re-filtered estimates and reported NIS ~ 0.1, i.e. a
+    consistent filter flagged as wildly over-conservative.  A contract that
+    fails in the direction of looking fine is worse than no contract.
+    """
+
+    SPEC = {"base": "matrices", "fs": 10,
+            "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]]},
+            "noise": {"Q": [[1e-4, 0], [0, 1e-4]], "R": [[0.25]]},
+            "initial": {"x0": [[0], [7.669]]}}
+
+    def test_nis_is_consistent_for_a_correctly_specified_filter(self):
+        zk = np.asarray(api.make_model(self.SPEC).sample(30.0).zk)
+        out = api.run_filter(self.SPEC, zk.tolist())
+        nis = np.asarray(api.diagnostics(out["run_id"])["nis"])
+        # chi2(1): mean 1, and a filter whose noise model is honest lands near it.
+        self.assertGreater(nis.mean(), 0.4)
+        self.assertLess(nis.mean(), 2.5)
+
+    def test_diagnostics_sees_the_input_not_the_output(self):
+        zk = np.asarray(api.make_model(self.SPEC).sample(20.0).zk)
+        out = api.run_filter(self.SPEC, zk.tolist())
+        stored = api._RUNS[out["run_id"]]["measurements"]
+        np.testing.assert_allclose(np.asarray(stored).reshape(zk.shape), zk)
+        # The filtered record is NOT the measurement set — that is the trap.
+        filtered = np.asarray(api._RUNS[out["run_id"]]["record"].zk).reshape(zk.shape)
+        self.assertGreater(np.abs(filtered - zk).max(), 1e-6)
+
+    def test_innovation_covariance_is_reported_alongside(self):
+        zk = np.asarray(api.make_model(self.SPEC).sample(10.0).zk)
+        out = api.run_filter(self.SPEC, zk.tolist())
+        d = api.diagnostics(out["run_id"])
+        S = np.asarray(d["innovation_covariance"])
+        # S = H P- H' + R >= R, so the reported spread is never below the sensor's.
+        self.assertGreaterEqual(S.mean(), 0.25 - 1e-9)
+
+
 if __name__ == "__main__":
     unittest.main()

@@ -213,7 +213,7 @@ class TestSampler(unittest.TestCase):
 class TestEngineBinding(unittest.TestCase):
 
     def test_disallowed_engine_rejected(self):
-        from modules.filters import LinearKalmanFilter
+        from modules.framework.filters import LinearKalmanFilter
         with self.assertRaises(TypeError):
             LinearKalmanFilter(_Pendulum())     # nonlinear model forbids the linear engine
 

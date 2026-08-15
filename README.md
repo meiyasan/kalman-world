@@ -16,10 +16,18 @@ Full documentation lives in [`docs/`](docs/README.md):
 | [Providers](docs/7_Providers.md) · [Control and Routing](docs/8_Control-and-Routing.md) | data in, action out |
 | [Python API](docs/9_Python-API.md) · [REST API](docs/10_REST-API.md) · [MCP Server](docs/11_MCP-Server.md) · [Authentication](docs/12_Authentication.md) · [Deployment](docs/13_Deployment.md) | API access |
 | [Troubleshooting](docs/14_Troubleshooting.md) | error messages, decoded |
+| [C++ Library](docs/15_Cxx-Library.md) | `libKalmanFramework`, for ROOT / ROOT+ analyses |
 
 `make setup` installs everything and self-checks; [`AGENTS.md`](AGENTS.md) has the
 conventions for changing the code. The rest of this file is the reference for
 notation, the filter pipeline and composite models.
+
+The framework core also exists in C++ as **`libKalmanFramework`** — the same Model /
+Engine / Filter contracts, packaged as a ROOT library with a dictionary so it
+loads into a ROOT+ analysis (`make build`). It is a port rather than a binding:
+it carries the linear and extended engines, the record with its covariance band,
+and `TGraph` output, and it does not link against Python. See
+[docs/15](docs/15_Cxx-Library.md).
 
 ---
 
@@ -88,7 +96,7 @@ KalmanModelABC          (abstract contract: f, h, F, H, B, L, M, Q, R, pre/in/po
 ### Filters
 
 Each is a thin `KalmanFilter` leaf binding the matching engine
-(`kalman.filters`). See [docs/5](docs/5_Filters-and-Diagnostics.md).
+(`kalman.framework.filters`). See [docs/5](docs/5_Filters-and-Diagnostics.md).
 
 | Class | Algorithm | Smoother |
 |-------|-----------|----------|
@@ -161,7 +169,7 @@ class ThermalNoiseComposite(CompositeKalmanModel):
 import numpy as np
 from kalman.framework import LinearKalmanModel, CompositeKalmanModel
 from kalman.framework.constants import KalmanObservableReadout
-from kalman.filters import LinearKalmanFilter
+from kalman.framework.filters import LinearKalmanFilter
 
 # --- two independent 1-D constant-velocity submodels ---
 dt = 0.01

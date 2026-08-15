@@ -92,7 +92,7 @@ asks the router for updated probabilities, and recombines
 `x̂ = Σ μⱼ x̂ⱼ`.
 
 ```python
-from kalman.filters import InteractiveKalmanFilter
+from kalman.framework.filters import InteractiveKalmanFilter
 from kalman.framework.routers import BayesianRouter, ThresholdRouter, NeuralRouter, HybridRouter
 from kalman.framework.routers.nn import MLP
 

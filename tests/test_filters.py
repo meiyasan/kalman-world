@@ -1,4 +1,4 @@
-"""Tests for the public filter terminologies (KF / EKF / UKF / PF) in ``modules.filters``.
+"""Tests for the public filter terminologies (KF / EKF / UKF / PF) in ``modules.framework.filters``.
 
 Each filter is a thin ``KalmanFilter`` leaf binding a model to an engine. These tests
 run every engine on a shared model so the sigma-point (UKF) and particle (PF) engines —
@@ -12,7 +12,7 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.framework import LinearKalmanModel, ExtendedKalmanModel, KalmanEngineKind
-from modules.filters import (
+from modules.framework.filters import (
     LinearKalmanFilter, ExtendedKalmanFilter, UnscentedKalmanFilter, ParticleFilter,
 )
 

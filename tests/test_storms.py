@@ -14,7 +14,7 @@ from modules.apps.weather.storms import (StormModel, TyphoonModel, HurricaneMode
                                   japan_steering, japan_region, landfall_probability,
                                   JAPAN_BBOX, brazil_season, brazil_tornado_scenario,
                                   seasonal_tornado_probability, _SEASON_PI)
-from modules.filters import InteractiveKalmanFilter, ExtendedKalmanFilter
+from modules.framework.filters import InteractiveKalmanFilter, ExtendedKalmanFilter
 
 
 # ── TyphoonModel dynamics ─────────────────────────────────────────────────────

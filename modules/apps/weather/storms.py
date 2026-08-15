@@ -8,7 +8,7 @@ local phenomenon and — crucially — its **covariance**.
   ``[lon, lat, v_e, v_n, I]`` (centre, translation velocity, intensity); the
   dynamics are the textbook **steering flow + beta drift + coordinated turn**,
   so the motion has genuine *regimes* (straight-running vs. recurving).  That
-  regime structure is exactly what an :class:`~kalman.filters.InteractiveKalmanFilter`
+  regime structure is exactly what an :class:`~kalman.framework.filters.InteractiveKalmanFilter`
   (IMM) is for — recurvature is the "manoeuvre".  Use
   :meth:`TyphoonModel.imm_bank` to get the ready-made model bank + transition
   matrix.  The ensemble/covariance gives the track **cone of uncertainty**
@@ -225,7 +225,7 @@ class StormModel(ExtendedKalmanModel):
         """Build the IMM model bank + Markov transition matrix.
 
         Returns ``(models, transition, initial_probs)`` ready for
-        :class:`~kalman.filters.InteractiveKalmanFilter`.  Regimes:
+        :class:`~kalman.framework.filters.InteractiveKalmanFilter`.  Regimes:
 
         - **straight** — ``ω=0`` (trade-wind steering, WNW motion);
         - **recurve**  — ``ω`` set for the hemisphere (poleward-then-eastward);
@@ -768,7 +768,7 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
     A tornado is not deterministically trackable, so the deliverable is the
     **probability the environment sits in the tornadic regime** — obtained by
     running a benign and a tornadic instance of this model in an
-    :class:`~kalman.filters.InteractiveKalmanFilter`; the IMM mode probability
+    :class:`~kalman.framework.filters.InteractiveKalmanFilter`; the IMM mode probability
     *is* that probability, and it comes with the latent's covariance.
     ``imm_bank(season=...)`` sets the Markov transition matrix from the local
     **seasonal climatology** — the physically-honest way "seasoning" enters.
@@ -915,7 +915,7 @@ def seasonal_tornado_probability(obs, months, *, season_fn=brazil_season,
     season and a hedged one off-season — the Bayesian-correct way to fold the
     Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.
     """
-    from ...filters import InteractiveKalmanFilter
+    from ...framework.filters import InteractiveKalmanFilter
     cls = model_cls or TornadoEnvironmentModel
     obs = np.asarray(obs, float)
     months = np.asarray(months)

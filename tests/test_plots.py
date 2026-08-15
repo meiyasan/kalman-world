@@ -19,7 +19,7 @@ from modules.apps import (
 )
 from modules.apps.astro.space import TransLunarModel
 from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
-from modules.filters import ExtendedKalmanFilter
+from modules.framework.filters import ExtendedKalmanFilter
 
 
 class TestSignatureFigures(unittest.TestCase):

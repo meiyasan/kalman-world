@@ -16,12 +16,21 @@ and combinatorial track finding.
 | **Engine** (alias *Estimator*) | HOW to infer under uncertainty | `framework/engine.py` | `framework/engines/` |
 | **Integrator** | HOW to step *time*: `x(t) → x(t+dt)` | `framework/integrator.py` | `framework/integrators/` |
 | **Solver** | HOW to discretize *space* | `framework/solver.py` | `framework/solvers/` |
-| **Filter** | WHEN — the forward/backward workflow | `framework/filter.py` | `filters/` |
+| **Filter** | WHEN — the forward/backward workflow | `framework/filter.py` | `framework/filters/` |
 | **Provider** | WHERE the data comes from | `framework/provider.py` | `providers/`, `apps/<domain>/providers/` |
 | **Controller / Router** | acting on, and choosing between, models | `framework/control.py`, `routers/` | `framework/controllers/`, `routers/` |
 
 Dependencies point one way only: **Filter → Engine → Model**. A model never
 imports an engine, a solver or a filter.
+
+The Engine/Filter split is where the algorithm ends and the workflow begins: a
+filter says *when* things run and what is kept, an engine says *how* the belief
+moves. So the concrete filters are thin — `LinearKalmanFilter` is six lines —
+and none of them implement `forward`/`backward` themselves. When one
+predict/update step does not describe an algorithm at all, the engine takes over
+the whole pass instead (`KalmanEngine.OWNS_PASS`); `CombinatorialKalmanEngine`
+does this, consuming an entire detector event and returning finished tracks,
+while its filter stays as thin as the rest.
 
 ### Integrator vs Solver
 
@@ -119,8 +128,8 @@ directly comparable with `gk`. All three hooks default to identity.
 modules/                        → the `kalman` package
   framework/                    contracts + bases + registries (the core)
     model.py engine.py integrator.py solver.py provider.py filter.py control.py
-    models/ engines/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
-  filters/                      public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
+    models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
+    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)

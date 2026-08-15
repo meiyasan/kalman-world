@@ -238,7 +238,7 @@ class TestModelDelegation(unittest.TestCase):
         self.assertTrue(np.all(np.isfinite(m.F())))       # numerical Jacobian of f
 
     def test_check_shapes_passes_and_filters(self):
-        from modules.filters import ExtendedKalmanFilter
+        from modules.framework.filters import ExtendedKalmanFilter
         m = _Decay()
         rec = ExtendedKalmanFilter(m).forward(np.array([[1.9], [1.7], [1.5]]))
         self.assertEqual(np.asarray(rec.xk).shape, (3, 1))

@@ -31,6 +31,12 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 | 13 | [Deployment](13_Deployment.md) | Docker Compose, environment variables, ports, hardening |
 | 14 | [Troubleshooting](14_Troubleshooting.md) | Error messages and what they actually mean |
 
+## For C++ / ROOT
+
+| # | Page | What it answers |
+|---|------|-----------------|
+| 15 | [C++ Library](15_Cxx-Library.md) | `libKalmanFramework`: the core ported to C++, loadable in a ROOT+ analysis |
+
 ## Also in this repository
 
 - [`../README.md`](../README.md) — notation, filter pipeline, composite models.

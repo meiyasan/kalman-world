@@ -6,7 +6,7 @@ it composes. So every filter below is a thin leaf over the same
 `KalmanFilter`, differing only in which engine it binds.
 
 ```python
-from kalman.filters import LinearKalmanFilter
+from kalman.framework.filters import LinearKalmanFilter
 kf = LinearKalmanFilter(model)     # engine chosen by the leaf's KIND
 ```
 
@@ -87,7 +87,7 @@ fig = model.plot(record, sample=truth, sigma=2)   # estimate, truth, ±2σ band
 ### EnKF — high-dimensional assimilation
 
 ```python
-from kalman.filters import EnsembleKalmanFilter
+from kalman.framework.filters import EnsembleKalmanFilter
 
 enkf = EnsembleKalmanFilter(model, n_members=32, inflation=1.05, seed=0)
 record = enkf.forward(zk)
@@ -110,13 +110,24 @@ gate (plus a "hole" branch for detector inefficiency), prunes to a bounded beam,
 then arbitrates shared hits so the reported tracks are disjoint.
 
 ```python
-from kalman.filters import CombinatorialKalmanFilter
+from kalman.framework.filters import CombinatorialKalmanFilter
 
 ckf = CombinatorialKalmanFilter(model, chi2_cut=None, max_candidates=6, max_holes=2)
 tracks = ckf.forward(hits_by_layer, layer_radii=radii)
 ```
 
 `chi2_cut=None` derives the gate from the measurement dimension at p = 0.99.
+`ckf.backward()` then RTS-smooths the found tracks. Alongside the records,
+`ckf.tracks_raw` keeps the search bookkeeping the records drop — `hit_ids`,
+`chi2`, `holes` — which is what you need to score a reconstruction against truth.
+
+The search itself lives in `CombinatorialKalmanEngine`, not in the filter: it is
+the one shipped engine that declares `OWNS_PASS`, meaning it consumes a whole
+event and returns finished tracks rather than exposing a single step for the
+filter to loop over. Two consequences worth knowing: the filter's per-step logs
+(`prior`, `posterior`, `innovation`) stay empty, so the `nis()` / `gains()`
+diagnostics do not apply; and `ckf.sample()` raises, because there is no time
+series to draw — use `model.generate_event()`.
 
 ### IMM — regime switching
 
@@ -124,7 +135,7 @@ Runs M filters in parallel, one per regime, mixing their states each step and
 re-weighting by likelihood. The *routing* policy is pluggable.
 
 ```python
-from kalman.filters import InteractiveKalmanFilter
+from kalman.framework.filters import InteractiveKalmanFilter
 from kalman.framework.routers import BayesianRouter, ThresholdRouter, NeuralRouter
 from kalman.framework.routers.nn import MLP
 

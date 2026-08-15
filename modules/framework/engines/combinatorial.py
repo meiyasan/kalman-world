@@ -1,37 +1,215 @@
-"""Combinatorial Kalman engine (CKF) — track-following step with a χ² validation gate.
+"""
+Combinatorial Kalman engine (CKF) — track *finding* by track following.
 
-This is the per-step *math* for combinatorial track finding (the Belle II CKF family).
-It reuses the Extended engine's nonlinear propagation (``model.f`` / Jacobian ``model.F``)
-and measurement map (``model.h`` / ``model.H``); the only addition is :meth:`gate`, which
-scores a *candidate hit* against the prediction with a Mahalanobis χ² and returns the
-Kalman-updated belief. The branch/prune/arbitrate **workflow** lives in
-:class:`~kalman.filters.ckf.CombinatorialKalmanFilter`, not here — the engine stays
-stateless, exactly like the other engines.
+Where the other engines estimate **one** trajectory from a time series of single
+measurements, this one reconstructs **several tracks** from an event whose every layer
+holds **many hits** (signal + background). For each seed it follows the track outward
+layer by layer; at each layer it opens a **branch** per hit that passes a χ² gate (plus a
+**hole** branch for detector inefficiency), **prunes** to a bounded beam of best
+candidates, and finally **arbitrates** shared hits so the reported tracks are disjoint.
+This is the Belle II CKF in miniature.
+
+Unlike the Jacobian engines, a single predict/update step is not the whole algorithm here:
+the *search* is. So this engine declares ``OWNS_PASS`` and implements :meth:`forward` /
+:meth:`backward` itself, and :class:`~kalman.framework.filters.ckf.CombinatorialKalmanFilter`
+stays the same thin leaf as ``LinearKalmanFilter`` — it names the engine and passes the
+search hyper-parameters, and owns no algorithm of its own.
+
+The per-step math still comes from :class:`ExtendedKalmanEngine`: nonlinear propagation
+(``model.f`` / Jacobian ``model.F``), the measurement map (``model.h`` / ``model.H``) and
+the RTS smoother are inherited unchanged. The additions are the χ² :meth:`gate` and the
+search around it.
 """
 from __future__ import annotations
+from dataclasses import dataclass, field
 import numpy as np
 
 from .extended import ExtendedKalmanEngine
-from ..constants import KalmanEngineKind
+from ..constants import KalmanEngineKind, KalmanStateFlavor
+from ..io.record import KalmanRecord
+
+
+def _default_chi2_cut(dof: int, p: float = 0.99) -> float:
+    """χ² gate threshold for ``dof`` measurement channels (falls back if SciPy absent)."""
+    try:
+        from scipy.stats import chi2
+        return float(chi2.ppf(p, df=dof))
+    except Exception:
+        return {1: 6.63, 2: 9.21, 3: 11.34}.get(int(dof), 9.21)
+
+
+@dataclass
+class TrackCandidate:
+    """One track hypothesis under construction (a node in the search tree)."""
+    x: np.ndarray                       # current posterior mean (n×1)
+    P: np.ndarray                       # current posterior covariance (n×n)
+    chi2: float = 0.0                   # accumulated measurement χ² (for ranking)
+    score: float = 0.0                  # chi2 + hole penalties (for pruning)
+    holes: int = 0
+    hit_ids: list = field(default_factory=list)   # (layer, hit_index) of assigned hits
+    radii: list = field(default_factory=list)     # per assigned-hit: layer radius
+    xk: list = field(default_factory=list)        # per assigned-hit: posterior mean
+    Pk: list = field(default_factory=list)        # per assigned-hit: posterior cov
+    zk: list = field(default_factory=list)        # per assigned-hit: the hit (m,)
+    priors: list = field(default_factory=list)    # per assigned-hit: predicted (x, P)
+    Fc: list = field(default_factory=list)        # per assigned-hit: transition from prev posterior
+    Faccum: np.ndarray = None                     # transition product since the last assigned hit
+
+    @property
+    def n_hits(self):
+        return len(self.zk)
+
+    @property
+    def seed_layer(self):
+        """Layer the search continues *after* — the last layer this candidate has visited."""
+        return self.hit_ids[-1][0] if self.hit_ids else -1
+
+    @property
+    def quality(self):
+        """Sort key for picking the best track: most hits first, then lowest χ²/hit.
+
+        Used both to choose a seed's winning candidate and to order arbitration, so the
+        two rankings cannot drift apart.
+        """
+        return (-self.n_hits, self.chi2 / max(1, self.n_hits))
+
+    def branch(self):
+        """Copy for a new tree node (lists duplicated; arrays shared, never mutated in place)."""
+        return TrackCandidate(
+            x=self.x, P=self.P, chi2=self.chi2, score=self.score, holes=self.holes,
+            hit_ids=list(self.hit_ids), radii=list(self.radii),
+            xk=list(self.xk), Pk=list(self.Pk), zk=list(self.zk),
+            priors=list(self.priors), Fc=list(self.Fc), Faccum=self.Faccum,
+        )
+
+    def to_record(self, model, flavor=KalmanStateFlavor.POSTERIOR):
+        """This track as a :class:`KalmanRecord`, indexed by layer radius rather than time.
+
+        The whole-pass contract: a filter turns whatever an ``OWNS_PASS`` engine returns
+        into records by calling this.
+        """
+        X = np.array([np.asarray(x, float).reshape(-1) for x in self.xk])
+        P = np.array([np.asarray(p, float) for p in self.Pk])
+        Z = np.array([np.asarray(z, float).reshape(-1) for z in self.zk])
+        return KalmanRecord(time=np.asarray(self.radii, float), xk=X, Pk=P, zk=Z,
+                            model=model, flavor=flavor)
+
+
+class GateContext:
+    """Everything about a gate that depends on the **prediction only**, not on the hit.
+
+    At one layer a candidate is tested against every hit on it. The predicted
+    measurement ``h(x)``, its Jacobian ``H``, the innovation covariance ``S``, the gain
+    ``K`` — and, because the Joseph form ``(I-KH) P (I-KH)ᵀ + K R Kᵀ`` never mentions
+    ``z``, the *posterior covariance itself* — are identical for all of them. Computing
+    them once per (candidate, layer) instead of once per (candidate, hit) lifts the
+    pseudo-inverse and the n×n products out of the inner loop.
+
+    Build one with :meth:`CombinatorialKalmanEngine.gate_context`, then call
+    :meth:`score` per hit.
+    """
+
+    __slots__ = ("zpred", "H", "R", "Sinv", "K", "P")
+
+    def __init__(self, zpred, H, R, Sinv, K, P):
+        self.zpred = zpred    # (m,1) predicted measurement h(x)
+        self.H = H            # (m,n) observation Jacobian
+        self.R = R            # (m,m) measurement noise
+        self.Sinv = Sinv      # (m,m) inverse innovation covariance
+        self.K = K            # (n,m) Kalman gain
+        self.P = P            # (n,n) posterior covariance — shared by every hit
+
+    def score(self, x, z):
+        """Score one candidate measurement → ``(chi2, x_post)``.
+
+        ``z`` is a single hit ``(m,)`` or ``(m,1)`` with no missing channels. The
+        posterior covariance is :attr:`P` for every hit, so it is not returned.
+        """
+        y = np.asarray(z, dtype=float).reshape(-1, 1) - self.zpred
+        chi2 = float((y.T @ self.Sinv @ y).item())
+        return chi2, x + self.K @ y
 
 
 class CombinatorialKalmanEngine(ExtendedKalmanEngine):
     """
-    Extended-Kalman step + a measurement **gate**.
+    Extended-Kalman step + a measurement **gate**, driving a branch/prune/arbitrate search.
 
-    Inherits ``_propagate``/``_measure`` (hence ``_predict``/``_update``/``_smooth``) from
-    :class:`ExtendedKalmanEngine`, so layer-to-layer propagation through the (curved)
-    trajectory and the RTS smoother come for free. :meth:`gate` is the combinatorial
-    primitive: given a *prediction* ``(xk, Pk)`` and one candidate measurement
-    ``z`` it returns ``(chi2, xk, Pk)`` — the χ² compatibility of the hit and the
-    belief updated with it (Joseph form), overwriting the predicted belief passed in.
-    The filter opens a branch per hit whose ``chi2`` is below its gate.
+    Search hyper-parameters, the CKF's counterpart of the UKF's ``alpha/beta/kappa``::
+
+        chi2_cut        per-hit χ² gate (default: 99% of a χ²_m distribution)
+        max_candidates  beam width kept per seed after each layer (default 6)
+        max_holes       missed layers allowed on a track (default 2)
+        min_hits        minimum assigned hits to accept a track (default 3)
+        shared_hit_frac max fraction of a track's hits shared with an already-accepted
+                        track during arbitration (default 0.3)
+        hole_penalty    score added per hole (default: one gate's worth of χ²)
+
+    Two gate entry points, same math:
+
+    - :meth:`gate` — one hit at a time, tolerates missing (NaN) channels.
+    - :meth:`gate_context` — hoists the hit-independent work out of the loop when a
+      whole layer is scored against one prediction. This is what :meth:`forward` uses.
     """
 
     NAME = "Combinatorial Kalman Engine"
-    DESCRIPTION = "EKF track-following step plus a χ² (Mahalanobis) measurement gate for branching."
-    VERSION = "1.0"
+    DESCRIPTION = "EKF track-following with a χ² gate, beam pruning and hit arbitration."
+    VERSION = "2.0"
     KIND = KalmanEngineKind.COMBINATORIAL
+
+    # The search *is* the algorithm here, so this engine drives the whole pass
+    # rather than exposing a single step for the filter's loop to call.
+    OWNS_PASS = True
+
+    def __init__(self, *, chi2_cut=None, max_candidates=6, max_holes=2,
+                 min_hits=3, shared_hit_frac=0.3, hole_penalty=None):
+        # chi2_cut/hole_penalty stay None until a model is in hand: the default
+        # threshold depends on the number of measurement channels.
+        self.chi2_cut = None if chi2_cut is None else float(chi2_cut)
+        self.hole_penalty = None if hole_penalty is None else float(hole_penalty)
+        self.max_candidates = int(max_candidates)
+        self.max_holes = int(max_holes)
+        self.min_hits = int(min_hits)
+        self.shared_hit_frac = float(shared_hit_frac)
+
+    # ------------------------------------------------------------------
+    #  Hyper-parameter resolution
+    # ------------------------------------------------------------------
+    def gate_threshold(self, model) -> float:
+        """The χ² cut in force for ``model`` — explicit if given, else 99% of χ²(m)."""
+        if self.chi2_cut is not None:
+            return self.chi2_cut
+        return _default_chi2_cut(model.m)
+
+    def hole_cost(self, model) -> float:
+        """Score charged for a missed layer — explicit if given, else one gate's worth."""
+        if self.hole_penalty is not None:
+            return self.hole_penalty
+        return self.gate_threshold(model)
+
+    # ------------------------------------------------------------------
+    #  The gate
+    # ------------------------------------------------------------------
+    def gate_context(self, model, xk, Pk, t=None) -> GateContext:
+        """Prepare the hit-independent half of the gate for the prediction ``(xk, Pk)``.
+
+        Assumes every measurement channel is present; for hits with NaN channels use
+        :meth:`gate`, which compresses the system per hit.
+        """
+        zpred, H = self._measure(model, xk, t)
+        return self._context(model, Pk,
+                             np.asarray(zpred, dtype=float).reshape(-1, 1),
+                             np.asarray(H, dtype=float),
+                             np.asarray(model.R(t=t), dtype=float))
+
+    @staticmethod
+    def _context(model, Pk, zpred, H, R) -> GateContext:
+        """Shared gain/covariance algebra — see :class:`GateContext`."""
+        S = R + H @ Pk @ H.T
+        Sinv = np.linalg.pinv(S)
+        K = Pk @ H.T @ Sinv
+        IKH = np.eye(model.n) - K @ H
+        P = IKH @ Pk @ IKH.T + K @ R @ K.T     # Joseph form (numerically stable)
+        return GateContext(zpred, H, R, Sinv, K, P)
 
     def gate(self, model, xk, Pk, z, t=None):
         """Score and apply one candidate measurement.
@@ -53,18 +231,142 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         if not keep.any():
             return np.inf, xk, Pk
 
-        zk, H = self._measure(model, xk, t)
-        H = np.asarray(H)[keep, :]
-        R = np.asarray(model.R(t=t))[np.ix_(keep, keep)]
-        y = z[keep] - np.asarray(zk, dtype=float).reshape(-1, 1)[keep]
+        zpred, H = self._measure(model, xk, t)
+        zpred = np.asarray(zpred, dtype=float).reshape(-1, 1)
+        H = np.asarray(H, dtype=float)
+        R = np.asarray(model.R(t=t), dtype=float)
 
-        S = R + H @ Pk @ H.T
-        Sinv = np.linalg.pinv(S)
-        chi2 = float((y.T @ Sinv @ y).item())
+        ctx = self._context(model, Pk, zpred[keep], H[keep, :], R[np.ix_(keep, keep)])
+        chi2, xk = ctx.score(xk, z[keep])
+        return chi2, xk, ctx.P
 
-        K = Pk @ H.T @ Sinv
+    # ------------------------------------------------------------------
+    #  Forward pass: seed → grow (branch/prune) → arbitrate
+    # ------------------------------------------------------------------
+    def forward(self, model, hits_by_layer, *, layer_radii=None, seeds=None, **kwargs):
+        """Find tracks in one event.
+
+        Parameters
+        ----------
+        hits_by_layer : sequence of (n_hits_l, m) arrays, innermost layer first.
+        layer_radii   : (L,) radii of those layers; defaults to ``model.radii``.
+        seeds         : explicit :class:`TrackCandidate` seeds, or None to build one
+                        per hit on the innermost populated layer.
+
+        Returns
+        -------
+        list[TrackCandidate] — the accepted, arbitrated tracks.
+        """
+        radii = np.asarray(layer_radii if layer_radii is not None else model.radii, dtype=float)
+        hits = [np.asarray(h, dtype=float).reshape(-1, model.m) for h in hits_by_layer]
+        L = len(hits)
         I = np.eye(model.n)
-        xk = xk + K @ y
-        IKH = I - K @ H
-        Pk = IKH @ Pk @ IKH.T + K @ R @ K.T   # Joseph form (numerically stable)
-        return chi2, xk, Pk
+
+        cut = self.gate_threshold(model)
+        penalty = self.hole_cost(model)
+        seeds = self.seed(model, hits, radii) if seeds is None else list(seeds)
+
+        seed_tracks = []
+        for seed in seeds:
+            cands = [seed]
+            # Follow outward from the seed's own layer, whichever that is: seed() picks
+            # the innermost *populated* layer (not necessarily layer 0), and callers may
+            # pass seeds of their own. Starting at a fixed layer 1 would re-scan the
+            # seeding layer, letting a track take a second hit at the same radius off a
+            # zero-length propagation.
+            for l in range(seed.seed_layer + 1, L):
+                r = float(radii[l]); layer = hits[l]
+                # NaN channels need the per-hit compression in gate(); without them the
+                # whole layer shares one prepared gate (see GateContext).
+                masked = layer.size and bool(np.isnan(layer).any())
+                grown = []
+                for c in cands:
+                    x, P, F = self._predict(model, c.x, c.P, t=r)
+                    if not np.all(np.isfinite(x)):
+                        continue                                  # track left the detector
+                    Faccum = F @ c.Faccum
+                    ctx = None if masked else self.gate_context(model, x, P, t=r)
+                    for j in range(len(layer)):
+                        if ctx is None:
+                            chi2, xk, Pk = self.gate(model, x, P, layer[j].reshape(model.m, 1), t=r)
+                        else:
+                            chi2, xk = ctx.score(x, layer[j]); Pk = ctx.P
+                        if chi2 < cut:
+                            nc = c.branch()
+                            nc.x, nc.P = xk, Pk
+                            nc.chi2 += chi2; nc.score += chi2
+                            nc.hit_ids.append((l, j))
+                            nc.radii.append(r)
+                            nc.xk.append(xk); nc.Pk.append(Pk)
+                            nc.zk.append(layer[j])
+                            nc.priors.append((x, P)); nc.Fc.append(Faccum)
+                            nc.Faccum = I
+                            grown.append(nc)
+                    # no-hit (hole) branch: the track survives a missed layer
+                    if c.holes < self.max_holes:
+                        nc = c.branch()
+                        nc.x, nc.P = x, P
+                        nc.holes += 1; nc.score += penalty
+                        nc.Faccum = Faccum
+                        grown.append(nc)
+                if not grown:
+                    break
+                grown.sort(key=lambda c: c.score)
+                cands = grown[: self.max_candidates]
+
+            finished = [c for c in cands if c.n_hits >= self.min_hits]
+            if finished:
+                seed_tracks.append(min(finished, key=lambda c: c.quality))
+
+        return self.arbitrate(seed_tracks)
+
+    # ------------------------------------------------------------------
+    #  Backward pass: RTS-smooth each accepted track
+    # ------------------------------------------------------------------
+    def backward(self, model, tracks, **kwargs):
+        """RTS-smooth every track from :meth:`forward` → new, smoothed candidates."""
+        smoothed = []
+        for c in tracks:
+            N = c.n_hits
+            xs = [None] * N; Ps = [None] * N
+            xs[-1], Ps[-1] = c.xk[-1], c.Pk[-1]
+            for k in range(N - 2, -1, -1):
+                xs[k], Ps[k] = self._smooth(
+                    model, (c.xk[k], c.Pk[k]), c.priors[k + 1], (xs[k + 1], Ps[k + 1]), c.Fc[k + 1]
+                )
+            out = c.branch()
+            out.xk, out.Pk = xs, Ps
+            smoothed.append(out)
+        return smoothed
+
+    # ------------------------------------------------------------------
+    #  Search helpers
+    # ------------------------------------------------------------------
+    def seed(self, model, hits, radii):
+        """One seed per hit on the innermost non-empty layer."""
+        seeds = []
+        I = np.eye(model.n)
+        for l in range(len(hits)):
+            if len(hits[l]) == 0:
+                continue
+            r = float(radii[l])
+            for j in range(len(hits[l])):
+                hit = hits[l][j]
+                x0, P0 = model.seed_state(hit)
+                seeds.append(TrackCandidate(
+                    x=x0, P=P0, hit_ids=[(l, j)], radii=[r],
+                    xk=[x0], Pk=[P0], zk=[np.asarray(hit, float).reshape(-1)],
+                    priors=[(x0, P0)], Fc=[I], Faccum=I,
+                ))
+            break                                   # seed only from the first populated layer
+        return seeds
+
+    def arbitrate(self, tracks):
+        """Greedy hit competition: accept best tracks, reject those overlapping too much."""
+        accepted, used = [], set()
+        for c in sorted(tracks, key=lambda c: c.quality):
+            ids = set(c.hit_ids)
+            if len(ids & used) <= self.shared_hit_frac * len(ids):
+                accepted.append(c)
+                used |= ids
+        return accepted

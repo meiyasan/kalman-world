@@ -11,7 +11,7 @@ sys.path.insert(0, ".")
 from modules.framework import LinearKalmanModel
 from modules.framework.engines.linear import LinearKalmanEngine
 from modules.framework.engines.ensemble import EnsembleKalmanEngine, gaspari_cohn
-from modules.filters import EnsembleKalmanFilter, ParticleFilter
+from modules.framework.filters import EnsembleKalmanFilter, ParticleFilter
 from modules.apps.weather.flow import KolmogorovFlowModel, TwinExperiment
 
 

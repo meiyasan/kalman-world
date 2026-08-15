@@ -5,7 +5,7 @@ import numpy as np
 
 sys.path.insert(0, ".")
 from modules.apps import DriftChamberModel
-from modules.filters import CombinatorialKalmanFilter
+from modules.framework.filters import CombinatorialKalmanFilter
 from modules.framework.engines.combinatorial import CombinatorialKalmanEngine
 
 
