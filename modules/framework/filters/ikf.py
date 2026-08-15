@@ -19,10 +19,10 @@ from __future__ import annotations
 import numpy as np
 from scipy.stats import multivariate_normal
 
-from ..framework.filter import KalmanFilter
-from ..framework.io.record import KalmanRecord
-from ..framework.routers.base     import KalmanRouter
-from ..framework.routers.bayesian import BayesianRouter
+from ..filter import KalmanFilter
+from ..io.record import KalmanRecord
+from ..routers.base     import KalmanRouter
+from ..routers.bayesian import BayesianRouter
 
 
 class InteractiveKalmanFilter:

@@ -559,6 +559,11 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
         self.transition = []
         self.innovation = []
 
+        # Whole-pass engines (KalmanEngine.OWNS_PASS) fill these instead of the logs
+        # above: the raw results the engine returned, and the records made from them.
+        self.pass_result = None
+        self.pass_records = None
+
         # let a stateful engine (e.g. ParticleEngine) (re)seed its own state
         self.engine.reset(self.model)
         return self

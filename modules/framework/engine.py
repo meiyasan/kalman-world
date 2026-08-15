@@ -44,12 +44,38 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
 
     The engine *knows the model* (it calls ``model.F/H`` or ``model.f/h``) but owns no
     run state and nothing about workflow — that is the ``KalmanFilter``'s job.
+
+    **Whole-pass engines.** For some algorithms one predict/update step is not the
+    whole story: a combinatorial track finder branches, prunes and arbitrates across a
+    whole event, and no per-step loop over single measurements describes it. Such an
+    engine sets ``OWNS_PASS = True`` and implements :meth:`forward` / :meth:`backward`;
+    ``KalmanFilter`` then hands it the data and turns whatever it returns into records,
+    instead of running its own loop. The algorithm still lives in the engine and the
+    workflow still lives in the filter — the split just falls in a different place.
+    Objects returned by such a ``forward`` must expose ``to_record(model, flavor)``.
     """
 
     NAME = "Kalman Engine"
     DESCRIPTION = "Abstract engine base: shared masked update + RTS smoother; per-algorithm hooks."
     VERSION = "2.0"
     KIND = None
+
+    #: True when this engine drives the whole forward/backward pass itself
+    #: (see :meth:`forward`), rather than exposing one step for the filter to loop over.
+    OWNS_PASS = False
+
+    # ------------------------------------------------------------------
+    # Whole-pass hooks (only for OWNS_PASS engines)
+    # ------------------------------------------------------------------
+    def forward(self, model, data, **kwargs):
+        """Run the entire forward algorithm → a sequence of ``to_record``-able results."""
+        raise NotImplementedError(
+            f"{type(self).__name__} is a per-step engine; the filter drives the pass.")
+
+    def backward(self, model, result, **kwargs):
+        """Refine :meth:`forward`'s output (smoothing) → the same kind of sequence."""
+        raise NotImplementedError(
+            f"{type(self).__name__} is a per-step engine; the filter drives the pass.")
 
     # ------------------------------------------------------------------
     # Per-algorithm hooks (Linear / Extended override these)

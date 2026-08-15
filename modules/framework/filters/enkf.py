@@ -1,8 +1,8 @@
 """Ensemble Kalman Filter (EnKF) — wraps a model with the perturbed-obs ensemble engine."""
 from __future__ import annotations
 
-from ..framework.filter import KalmanFilter
-from ..framework.constants import KalmanEngineKind
+from ..filter import KalmanFilter
+from ..constants import KalmanEngineKind
 
 
 class EnsembleKalmanFilter(KalmanFilter):
@@ -25,7 +25,7 @@ class EnsembleKalmanFilter(KalmanFilter):
 
     def __init__(self, model=None, *, n_members=50, inflation=1.0,
                  localization=None, seed=None, **kwargs):
-        from ..framework.engines.ensemble import EnsembleKalmanEngine
+        from ..engines.ensemble import EnsembleKalmanEngine
         super().__init__(model, engine=EnsembleKalmanEngine(
             n_members=n_members, inflation=inflation,
             localization=localization, seed=seed), **kwargs)
@@ -35,5 +35,5 @@ class EnsembleKalmanFilter(KalmanFilter):
 
     def sample(self, duration, **kwargs):
         # Sample the *truth* with the model's default (Gaussian) engine, not the ensemble.
-        from ..framework.sampler import KalmanSampler
+        from ..sampler import KalmanSampler
         return KalmanSampler(self.model).measurement(duration, **kwargs)

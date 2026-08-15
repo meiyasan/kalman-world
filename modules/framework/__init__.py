@@ -7,10 +7,10 @@ Layers (dependency points downward only: Filter → Engine → Model):
 - ``filter.py``  : ``KalmanFilter`` — the workflow (WHEN): forward/backward + run state.
 - ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite``).
 - ``engines/``   : concrete engines (``LinearKalmanEngine`` / ``Extended`` / ``Unscented`` / ``Particle``).
+- ``filters/``   : the recognisable filter names (``LinearKalmanFilter`` / ``Extended`` / ``Unscented`` / ``Particle`` / ``Ensemble`` / ``Combinatorial`` / ``Interactive``).
 - ``constants.py``: ``KalmanEngineKind`` (LINEAR/EXTENDED/UNSCENTED/PARTICLE) used to bind models↔engines.
 
-Domain applications live in ``kalman.apps``; the recognisable filters (KF/EKF/UKF/PF) in
-``kalman.filters``.
+Domain applications live in ``kalman.apps``.
 """
 from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind,
                         KalmanProviderKind)
@@ -54,6 +54,15 @@ from .routers import (
     ThresholdRouter,
     NeuralRouter,
     HybridRouter,
+)
+from .filters import (
+    LinearKalmanFilter,
+    ExtendedKalmanFilter,
+    UnscentedKalmanFilter,
+    ParticleFilter,
+    CombinatorialKalmanFilter,
+    InteractiveKalmanFilter,
+    EnsembleKalmanFilter,
 )
 
 __all__ = [
@@ -103,4 +112,11 @@ __all__ = [
     "ThresholdRouter",
     "NeuralRouter",
     "HybridRouter",
+    "LinearKalmanFilter",
+    "ExtendedKalmanFilter",
+    "UnscentedKalmanFilter",
+    "ParticleFilter",
+    "CombinatorialKalmanFilter",
+    "InteractiveKalmanFilter",
+    "EnsembleKalmanFilter",
 ]

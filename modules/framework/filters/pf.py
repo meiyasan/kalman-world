@@ -1,8 +1,8 @@
 """Particle Filter (PF) — wraps a model with the sequential-importance-resampling engine."""
 from __future__ import annotations
 
-from ..framework.filter import KalmanFilter
-from ..framework.constants import KalmanEngineKind
+from ..filter import KalmanFilter
+from ..constants import KalmanEngineKind
 
 
 class ParticleFilter(KalmanFilter):
@@ -18,7 +18,7 @@ class ParticleFilter(KalmanFilter):
     KIND = KalmanEngineKind.PARTICLE
 
     def __init__(self, model=None, *, n_particles=500, **kwargs):
-        from ..framework.engines.particle import ParticleEngine
+        from ..engines.particle import ParticleEngine
         super().__init__(model, engine=ParticleEngine(n_particles=n_particles), **kwargs)
 
     def backward(self, **kwargs):
@@ -26,5 +26,5 @@ class ParticleFilter(KalmanFilter):
 
     def sample(self, duration, **kwargs):
         # Sample the *truth* with the model's default (Gaussian) engine, not the PF cloud.
-        from ..framework.sampler import KalmanSampler
+        from ..sampler import KalmanSampler
         return KalmanSampler(self.model).measurement(duration, **kwargs)

@@ -1,6 +1,6 @@
 """Linear Kalman Filter (KF) — wraps a model with the linear engine."""
-from ..framework.filter import KalmanFilter
-from ..framework.constants import KalmanEngineKind
+from ..filter import KalmanFilter
+from ..constants import KalmanEngineKind
 
 
 class LinearKalmanFilter(KalmanFilter):
