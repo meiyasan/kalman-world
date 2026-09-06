@@ -34,6 +34,7 @@ $ make mcp                        # register with every detected client, then ve
 | `fetch_data` | `send_measurement` | `provider`, `query?`, `token?` |
 | `register_model` | `write_models` | `spec`, `name?`, `token?` |
 | `scaffold_app` | `write_models` | `spec`, `class_name?`, `token?` |
+| `load_plugin` | `load_plugins` | `name`, `token?` — a compiled (C++) model library, by name from the allow-listed dirs |
 
 One resource is published: **`catalog://models`**, the model-name list.
 
@@ -151,6 +152,8 @@ A useful session shape, all through the tools above:
 4. `get_diagnostics` → NIS and innovations, to judge whether the tuning holds;
 5. `register_model` → author a new spec, validated and smoke-tested;
 6. `scaffold_app` → emit reviewable Python for a human to commit.
+7. `load_plugin` → bring a compiled C++ model library into the catalogue (see
+   [C++ Library](15_Cxx-Library.md)); its models are then ordinary spec bases.
 
 The authoring path is safe to expose because **specs are pure data**: there is
 no `eval`/`exec` anywhere in `kalman.api`, only catalog names and the

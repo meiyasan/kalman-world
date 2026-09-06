@@ -110,6 +110,14 @@ def build_server():
         """Validate + register an authored KalmanSpec (session)."""
         return facade.register_model(spec, name, credential=token or None)
 
+    # ---- load_plugins ----
+    @mcp.tool()
+    def load_plugin(name: str, token: str = "") -> dict:
+        """Load a compiled (C++) model library by *name* from the server's allow-listed
+        plugin directories (KALMAN_PLUGIN_PATH); its models then appear in list_models
+        and can be used as a spec base. Paths are refused unless inside those directories."""
+        return facade.load_plugin(name, credential=token or None)
+
     @mcp.tool()
     def scaffold_app(spec: dict, class_name: str = None, token: str = "") -> dict:
         """Emit reviewable modules/apps/<name>.py source from a spec (human commits)."""

@@ -9,10 +9,13 @@ from .linear import LinearKalmanModel
 from .extended import ExtendedKalmanModel
 from .unscented import UnscentedKalmanModel
 from .composite import CompositeKalmanModel
+from .native import NativeModel, native_model_classes
 
 __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
     "CompositeKalmanModel",
+    "NativeModel",
+    "native_model_classes",
 ]

@@ -4,10 +4,13 @@
 dependency**. Not ROOT, not Eigen, not Torch — a C++20 compiler and nothing else.
 
 It is a **port, not a binding**. It does not wrap the Python package, does not
-link CPython, and is not generated from anything. The two implementations are
-peers that share a design — Model / Engine / Filter — and interoperate by *data*,
-not by a foreign-function boundary; the last section of this page has the
-measurements showing why a wrapper would be the wrong call.
+link CPython, and is not generated from anything. The two implementations share
+a design — Model / Engine / Filter — and meet at exactly one, deliberate seam:
+**models**. A model compiled here registers itself with `Kalman::Factory`, and
+the Python package reaches it through the C API (`Kalman/CAPI.h`) as an ordinary
+`KalmanModel` — catalogue, API, MCP server and notebooks included. The last
+section of this page has the measurements that put the seam *there* and not at
+every filter step.
 
 The dependency direction matters and runs one way:
 
@@ -57,6 +60,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/filters/ikf.py` | `Kalman/Filters/IMM.h` | `Filters::IMM` |
 | — (numpy) | `Kalman/Matrix.h` | `Kalman::Matrix`, `Kalman::Vector` |
 | `modules/helpers.py` | `Kalman/Utils.h` | `Kalman::Utils` |
+| `framework/models/native.py` | `Kalman/Factory.h` | `Kalman::Factory` + `KALMAN_REGISTER_MODEL` |
+| `framework/native/core.py` | `Kalman/CAPI.h` | the `extern "C"` surface (`kalman_*`) |
 
 `src/` follows the same tree wherever there is an implementation to hold; the
 purely declarative headers (`Abstract/`, `Models/`, `Filters/`) have no `.cc`
@@ -284,6 +289,73 @@ lives one level up, in `Routers::Neural`, which routes by Bayes when it has no
 usable model. A missing optional dependency costs you the *policy*, never the
 filter.
 
+## The factory: how a C++ model reaches Python
+
+libKalmanFramework ships no physics, so the question is how physics written
+*against* it — in an application, a ROOT+ analysis, a plugin — becomes visible
+to something that did not compile it. The answer is one line per model:
+
+```cpp
+class ConstantVelocity : public Kalman::Models::Linear { /* F, H, Q, R ... */ };
+KALMAN_REGISTER_MODEL(ConstantVelocity, "constant-velocity");
+KALMAN_REGISTER_MODEL(ConstantVelocity, "constant-velocity-slow", 10., 0.5, 0.2);  // configured
+```
+
+The registrar runs at static-initialisation time and `Kalman::Factory::Instance()`
+then knows the name: `Names()`, `Has()`, `Describe()` (title, dimensions, engine,
+origin) and `Create()` — a fresh `std::unique_ptr<Model>` with no knowledge of
+the type. Names are lowercase-hyphenated by convention so they can never be
+mistaken for the CamelCase Python classes they sit beside. Every failure is loud:
+a duplicate name, an unknown name, a library that registers nothing.
+
+**Plugins.** A translation unit like `examples/cxx/example_plugin.cc` compiled
+as a shared library (`libKalmanPlugin_example`) is a plugin: `Factory::LoadPlugin(path)`
+dlopens it, the registrars run, and its models are in the catalogue. The plugin
+may link anything it likes — ROOT, RooFit, a detector library — because the
+framework only ever sees `Kalman::Model`. That is the one code path by which a
+model written for ROOT+ reaches the Python side, and ROOT stays inside the plugin.
+
+**The C API.** `Kalman/CAPI.h` is the flat `extern "C"` view of the factory and
+of a model — `kalman_factory_*` to discover and load, `kalman_model_*` to
+construct one and evaluate `F/H/B/L/Q/R`, `f/h`, the Jacobians and the initial
+state, all row-major `double` arrays, `0`/`-1` returns and `kalman_last_error()`.
+No exception crosses it. `tests/cxx/06_factory.cc` covers the registry, the
+loader and this surface.
+
+**The Python side.** `modules/framework/native/core.py` dlopens the library
+through cffi in *ABI mode* (no compiler) and `NativeModel` in
+`modules/framework/models/native.py` wraps a factory instance as a `KalmanModel`:
+
+```python
+from kalman.framework import NativeModel
+import kalman.api as api
+
+api.load_plugin("KalmanPlugin_example")           # by name, from the allow-listed dirs
+m = NativeModel("pendulum", "sensor-1")           # a C++ model ...
+rec = m.filter(m.sample(5.0).zk)                  # ... driven by the Python EKF
+api.run_filter({"base": "constant-velocity", "sensor_id": "cv", "fs": 20}, zk)
+```
+
+Every registered name becomes a class in `api.catalog()["models"]`, `describe()`
+reports `"backend": "native"` with its plugin, and the MCP `list_models` /
+`run_filter` / `forecast` tools need no change. `fs=`, `x0=`, `P0=` given from
+Python are pushed *into* the C++ instance, so both sides agree on every step.
+
+**What crosses, and what does not.** One C call per `f`, `h` or coefficient
+evaluation — cheap, and in the direction the measurements below say is
+affordable. What does *not* cross is a Python callback from inside a C++ loop;
+a Python-defined model keeps running on the Python engines, and a C++ model on
+either side. The library is found through `KALMAN_FRAMEWORK_LIBRARY`,
+`KALMANFRAMEWORK_ROOT`, or this checkout's `var/install/lib`; without it the
+Python package simply reports `catalog()["native"]["library"] = None`.
+
+**Loading a plugin runs code.** So `api.load_plugin` takes a plugin *name*, not
+a path, resolved only inside allow-listed directories (`KALMAN_PLUGIN_PATH`,
+default: this checkout's `var/install/lib` and `var/build/lib`); a path is
+accepted only when it already lies inside one of them, after `realpath`. It is
+gated by its own scope, `load_plugins` — never by `write_models`, which only
+ever writes data — and the MCP tool of the same name exposes exactly that.
+
 ## Integrating with root-plus
 
 `examples/cxx/ballistics_root.cc` is the worked demonstrator — a projectile under
@@ -304,15 +376,20 @@ wrote ballistics_root.pdf, .png and .root
 15% of the altitude fixes are dropped at random (NaN), and the filter coasts
 through the gaps on prediction with no special case anywhere in the example.
 
-### The ROOT+ component
+### The ROOT+ side
 
-`root-plus` carries a `Kalman` component that wraps results for ROOT users:
+`root-plus` wraps results for ROOT users inside its **Signal** component, next
+to its own unrelated `TKalmanFilter`, with libKalmanFramework as an *optional*
+dependency of that component:
 
 ```
 root-plus/
   cmake/Packages/Kalman/FindKalmanFramework.cmake
-  include/ROOT/IOPlus/Kalman/TKalmanRecord.h
-  src/Kalman/
+  include/ROOT/IOPlus/Signal/DSP/Filters/TKalmanRecord.h
+  include/libRIOPlus_Signal.Config.h.in      # #cmakedefine KALMANFRAMEWORK_FOUND
+  include/libRIOPlus_Signal.LinkDef.h        # the dictionary entry, guarded
+  src/Signal/TKalmanRecord.cc
+  tests/Signal/17_kalmanrecord.cc
 ```
 
 `ROOT::IOPlus::TKalmanRecord` takes a `Kalman::IO::Record` and adds the two
@@ -327,15 +404,22 @@ full `n × n` per step would dominate the file for no gain; use the
 It is only a source-level name: ROOT I/O stores the real class, so files written
 under either spelling are interchangeable.
 
-The component is skipped with a message when libKalmanFramework is not found, so
-it never blocks a root-plus build. Point it at a prefix with
-`-DKalmanFramework_ROOT=<prefix>`.
+When libKalmanFramework is not found, `KALMANFRAMEWORK_FOUND` stays undefined
+and header, source and dictionary entry compile to nothing — Signal builds
+unchanged, and its test reports itself skipped. Point CMake at a prefix with
+`-DKalmanFramework_ROOT=<prefix>`. The class stays `ROOT::IOPlus::TKalmanRecord`,
+not a `Kalman::` sub-namespace: root-plus' namespace is flat, and a nested
+`Kalman` would shadow the framework's own `Kalman::` in every lookup.
 
 > **Not** `ROOT::IOPlus::TKalmanFilter`. That is root-plus' own small
-> self-contained linear filter in the Signal component, unrelated to this
-> framework. They share a word, not an implementation, and both can be loaded in
-> one process — which is exactly why the framework's own classes carry no `T`
-> prefix and no `TObject` base.
+> self-contained linear filter, now its neighbour in the same directory and
+> unrelated to this framework. They share a word, not an implementation, and
+> both can be loaded in one process — which is exactly why the framework's own
+> classes carry no `T` prefix and no `TObject` base.
+>
+> A ROOT+ *model* — physics that wants `TF1` or RooFit inside `f()` — does not
+> go here either. It is a plugin (previous section): it links ROOT, registers
+> with `Kalman::Factory`, and the Python side loads it by name.
 
 ### Linking it yourself
 
@@ -377,12 +461,13 @@ A model asking for an engine kind C++ does not implement raises rather than
 silently substituting, so a model declaring `Unscented` will not quietly get a
 linear step.
 
-## Why not a Python wrapper
+## Where the Python boundary is, and why
 
-The obvious idea — wrap libKalmanFramework so the existing Python apps transparently get
-the C++ speed — does not survive contact with the numbers. Transparency means the
-C++ engine calling back into Python for `model.f/h/F/Q`, and measured on
-`BallisticModel`:
+The framework *is* wrapped in Python — for **models**, through the factory and
+the C API above. What it deliberately does not do is the other obvious thing:
+wrap the C++ *engines* so the existing Python apps transparently get C++ speed.
+That would mean the C++ engine calling back into Python for `model.f/h/F/Q` at
+every step, and measured on `BallisticModel`:
 
 ```
 model.f  (Python/numpy/scipy)   :  20.74 µs per call
@@ -400,6 +485,7 @@ entirely — constant matrices, no control callable — and then fuses all N ste
 into one call, for a measured **21× on linear forward, 33.9× geometric mean**.
 The limit is the language boundary, not the language.
 
-So the two implementations stay peers. The portable artifacts between them are
-**data** (a record) and, once the routing layer lands, a **trained ONNX policy** —
-both of which cross the boundary once, not once per step.
+So the seam sits where a crossing is paid once per evaluation *into* C++ — a
+compiled model evaluated by a Python engine — and never once per step *out* of
+it. The portable artifacts between the two sides are a **registered model**
+(through the factory), **data** (a record) and a **trained ONNX policy**.

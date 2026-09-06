@@ -8,6 +8,8 @@ present at runtime carrying fine-grained **scopes**:
   - ``read``            — introspection (catalog/describe/diagnostics/plots)
   - ``send_measurement``— execution (run_filter/forecast/osse/control, fetch)
   - ``write_models``    — authoring (register_model/save_spec/scaffold)
+  - ``load_plugins``    — loading compiled model libraries (load_plugin); this
+                          one runs code, which is why it is not ``write_models``
   - ``admin``           — everything + account management
 
 Each verb declares its required scope; :func:`authorize` verifies the JWT
@@ -23,7 +25,7 @@ from __future__ import annotations
 import os
 import time
 
-SCOPES = ("read", "send_measurement", "write_models", "admin")
+SCOPES = ("read", "send_measurement", "write_models", "load_plugins", "admin")
 
 
 class AuthError(PermissionError):

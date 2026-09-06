@@ -29,6 +29,7 @@ tokens, never passwords.
 | `read` | introspection: `catalog`, `describe`, `diagnostics`, plots |
 | `send_measurement` | execution: `run_filter`, `forecast`, `run_osse`, `run_control`, `fetch` |
 | `write_models` | authoring: `register_model`, `save_spec`, `scaffold` |
+| `load_plugins` | loading compiled model libraries: `load_plugin` — this one runs code, hence its own scope |
 | `admin` | everything, plus account management |
 
 `admin` is a superscope — a token carrying it satisfies every check. Scopes are

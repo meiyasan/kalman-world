@@ -28,10 +28,17 @@ message_title("Examples")
 # libKalmanFramework, while the library itself knows about neither.
 file(GLOB EXAMPLE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cc")
 
+# `*_plugin.cc` examples are built as *shared libraries*: they define models and
+# register them with Kalman::Factory, and exist to be dlopen'ed — by the Python
+# package, the MCP server, a ROOT+ analysis or the C++ tests — not to be run.
 set(ROOT_EXAMPLES)
+set(PLUGIN_EXAMPLES)
 foreach(SRC ${EXAMPLE_SOURCES})
     if(${SRC} MATCHES "_root\\.cc$")
         list(APPEND ROOT_EXAMPLES ${SRC})
+        list(REMOVE_ITEM EXAMPLE_SOURCES ${SRC})
+    elseif(${SRC} MATCHES "_plugin\\.cc$")
+        list(APPEND PLUGIN_EXAMPLES ${SRC})
         list(REMOVE_ITEM EXAMPLE_SOURCES ${SRC})
     endif()
 endforeach()
@@ -47,6 +54,26 @@ endif()
 if(NOT TARGET examples)
     add_custom_target(examples COMMENT "Compiling the examples")
 endif()
+
+# example_plugin.cc -> libKalmanPlugin_example, next to libKalmanFramework so a
+# consumer of either tree (build or install) finds both with one search path.
+foreach(SRC ${PLUGIN_EXAMPLES})
+    get_filename_component(PLUGIN_STEM ${SRC} NAME_WE)
+    string(REGEX REPLACE "_plugin$" "" PLUGIN_STEM ${PLUGIN_STEM})
+    set(PLUGIN_NAME "KalmanPlugin_${PLUGIN_STEM}")
+    message_color("   ./cxx/${PLUGIN_NAME} (plugin)")
+
+    add_library(${PLUGIN_NAME} SHARED ${SRC})
+    target_link_libraries(${PLUGIN_NAME} PRIVATE ${LIBRARY})
+    set_target_properties(${PLUGIN_NAME} PROPERTIES
+        LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib"
+        SKIP_BUILD_RPATH FALSE
+        BUILD_WITH_INSTALL_RPATH FALSE
+        BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
+    )
+    install(TARGETS ${PLUGIN_NAME} LIBRARY DESTINATION lib)
+    add_dependencies(examples ${PLUGIN_NAME})
+endforeach()
 
 foreach(SRC ${EXAMPLE_SOURCES} ${ROOT_EXAMPLES})
     get_filename_component(EXAMPLE_NAME ${SRC} NAME_WE)

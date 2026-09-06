@@ -231,13 +231,15 @@ if(BUILD_LIBRARY)
         # calling it only in the subdirectory builds the binaries but leaves the
         # root CTestTestfile.cmake empty, so `ctest` from the build directory
         # reports "No tests were found".
+        # Examples first: `06_factory` loads the example plugin, so the test
+        # list file needs that target to exist when it is configured.
+        if(BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples/cxx)
+            add_subdirectory("examples/cxx")
+        endif()
+
         if(BUILD_TESTS AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/tests/cxx)
             enable_testing()
             add_subdirectory("tests/cxx")
-        endif()
-
-        if(BUILD_EXAMPLES AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/examples/cxx)
-            add_subdirectory("examples/cxx")
         endif()
     endif()
 endif()

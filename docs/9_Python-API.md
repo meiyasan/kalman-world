@@ -28,6 +28,7 @@ Use it directly from Python; use [REST](10_REST-API.md) or
 | `diagnostics(run_id)` | `read` | `{nis, innovation}` for a stored run |
 | `render_plot(run_id)` | `read` | PNG bytes |
 | `register_model(spec, name)` | `write_models` | validates, smoke-tests and registers an authored spec |
+| `load_plugin(name)` | `load_plugins` | loads a compiled (C++) model library from the allow-listed plugin dirs; its models join the catalogue |
 | `save_spec(name, directory)` / `load_spec(path)` | `write_models` | JSON persistence |
 | `scaffold(spec, class_name)` / `write_scaffold(…)` | `write_models` | reviewable Python source |
 | `jsonify(obj)` | — | NumPy → JSON-native, recursively |

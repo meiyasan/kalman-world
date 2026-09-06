@@ -85,6 +85,11 @@
 #include "Kalman/Filter.h"
 #include "Kalman/Sampler.h"
 #include "Kalman/Diagnostics.h"
+#include "Kalman/Factory.h"
+
+// The C surface — what a non-C++ consumer (the Python package, a ROOT macro
+// through cling, another language) sees of the two headers above.
+#include "Kalman/CAPI.h"
 
 // Concretes — mirrors the matching subpackages
 #include "Kalman/Abstract/Metadata.h"

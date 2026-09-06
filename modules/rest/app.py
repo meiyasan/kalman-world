@@ -87,6 +87,10 @@ def create_app():
     def register(body: dict, tok=Depends(require("write_models"))):
         return facade.register_model(body["spec"], body.get("name"), credential=tok)
 
+    @app.post("/plugins")
+    def plugins(body: dict, tok=Depends(require("load_plugins"))):
+        return facade.load_plugin(body["name"], credential=tok)
+
     @app.post("/scaffold")
     def scaffold(body: dict, tok=Depends(require("write_models"))):
         return {"source": facade.scaffold(body["spec"], body.get("class_name"), credential=tok)}

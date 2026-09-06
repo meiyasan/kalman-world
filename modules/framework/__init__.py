@@ -31,6 +31,7 @@ from .models import (
     ExtendedKalmanModel,
     UnscentedKalmanModel,
     CompositeKalmanModel,
+    NativeModel,
 )
 from .engines import (
     LinearKalmanEngine,
@@ -94,7 +95,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel",
+    "CompositeKalmanModel", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

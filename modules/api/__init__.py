@@ -70,7 +70,33 @@ def _model_catalog() -> dict:
             if inspect.isclass(obj) and issubclass(obj, KalmanModel):
                 out.setdefault(name, obj)
     out.setdefault("KalmanModel", KalmanModel)
+    # Models compiled into libKalmanFramework (or a plugin it has loaded), one
+    # class per registered name. They are keyed by that name — lowercase-hyphenated
+    # by convention, so a clash with a CamelCase Python class does not happen; if
+    # one did, the Python class keeps the name.
+    for name, cls in _native_classes().items():
+        out.setdefault(name, cls)
     return out
+
+
+def _native_classes() -> dict:
+    try:
+        from ..framework.models.native import native_model_classes
+        return native_model_classes()
+    except Exception:            # no cffi, no library: the catalogue is just Python
+        return {}
+
+
+def native() -> dict:
+    """What the C++ core contributes: the library actually loaded (or why not),
+    the models it registers, and the plugins loaded so far."""
+    from ..framework.native import core
+    if not core.HAS_CXX_CORE:
+        return {"library": None, "error": core.LOAD_ERROR, "models": [], "plugins": [],
+                "plugin_dirs": core.plugin_dirs()}
+    return {"library": core.LIBRARY_PATH, "version": core.version(),
+            "models": core.names(), "plugins": core.plugins(),
+            "plugin_dirs": core.plugin_dirs()}
 
 
 def _controller_catalog() -> dict:
@@ -112,6 +138,7 @@ def catalog() -> dict:
         "solvers": available_solvers(),
         "providers": prov,
         "authored": sorted(_SESSION_MODELS),
+        "native": native(),
     }
 
 
@@ -130,6 +157,15 @@ def describe(name: str) -> dict:
         for attr in ("ALLOWED_ENGINES", "ALLOWED_INTEGRATORS", "ALLOWED_SOLVERS"):
             v = getattr(cls, attr, None)
             d[attr.lower()] = sorted(k.name.lower() for k in v) if v else None
+        if getattr(cls, "NATIVE_NAME", None):
+            from ..framework.native import core
+            info = core.describe(cls.NATIVE_NAME)
+            d["backend"] = "native"
+            d["plugin"] = info["plugin"]
+            d["library"] = core.LIBRARY_PATH
+            d.update({k: info[k] for k in ("n", "m", "l", "fs", "analytic")})
+        else:
+            d["backend"] = "python"
         return d
     if name in controllers:
         d = _describe_class(controllers[name]); d["kind"] = "controller"; return d
@@ -480,6 +516,24 @@ def fetch(provider_spec: dict, query: dict = None, *, credential: str | None = N
     spec = dict(provider_spec or {})
     prov = resolve_provider(spec.get("kind"), **(spec.get("init", {}) or {}))
     return jsonify(prov.fetch(**(query or {})))
+
+
+def load_plugin(name: str, *, credential: str | None = None) -> dict:
+    """Load a compiled model library into the C++ factory and return what it added.
+
+    ``name`` is a plugin *name* resolved inside the allow-listed directories
+    (``KALMAN_PLUGIN_PATH``, default: this checkout's ``var/install/lib`` and
+    ``var/build/lib``); a path is accepted only when it already lies inside one
+    of them.  Loading executes code, so this is gated by its own scope,
+    ``load_plugins`` — never by ``write_models``, which only ever writes data.
+    """
+    from .auth import authorize
+    authorize(credential, "load_plugins")
+    from ..framework.native import core
+    core.require()
+    path = core.resolve_plugin(name)
+    added = core.load_plugin(path)
+    return {"plugin": path, "models": added, "native": sorted(core.names())}
 
 
 def providers() -> dict:

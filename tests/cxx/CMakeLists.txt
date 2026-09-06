@@ -53,6 +53,15 @@ foreach(SRC ${TEST_SOURCES})
         BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
     )
 
+    # The factory test exercises LoadPlugin() on the example plugin when the
+    # examples are built; without them that part of the test reports itself as
+    # skipped rather than failing.
+    if(TEST_NAME STREQUAL "06_factory" AND TARGET KalmanPlugin_example)
+        target_compile_definitions(${TEST_NAME} PRIVATE
+            KALMAN_EXAMPLE_PLUGIN="$<TARGET_FILE:KalmanPlugin_example>")
+        add_dependencies(${TEST_NAME} KalmanPlugin_example)
+    endif()
+
     add_test(NAME ${TEST_NAME} COMMAND ${TEST_NAME})
     add_dependencies(ctests ${TEST_NAME})
 endforeach()
