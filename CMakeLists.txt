@@ -166,6 +166,9 @@ if(BUILD_LIBRARY)
         SOVERSION ${PROJECT_VERSION_MAJOR}
         LIBRARY_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/lib")
 
+    # Kalman::Factory::LoadPlugin dlopens; on glibc < 2.34 that lives in libdl.
+    target_link_libraries(${LIBRARY} PRIVATE ${CMAKE_DL_LIBS})
+
     if(KALMAN_WITH_BLAS)
         target_link_libraries(${LIBRARY} PRIVATE ${BLAS_LIBRARIES})
     endif()

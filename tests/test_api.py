@@ -11,6 +11,38 @@ sys.path.insert(0, ".")
 import modules.api as api
 from modules.api import auth
 
+import contextlib
+
+
+@contextlib.contextmanager
+def _kalman_importable():
+    """Make ``import kalman...`` resolve while a scaffolded module is executed.
+
+    The scaffold imports the *installed* package name, ``kalman`` -- right for
+    the user who will commit it, but a bare checkout (CI runs ``make tests`` on
+    the source tree, where the package is only importable as ``modules``) has
+    no such name. Alias every loaded ``modules.*`` module under ``kalman.*`` for
+    the duration, so the scaffold binds to the very same classes the test
+    compares against, and remove the aliases afterwards. A real installation
+    is left alone.
+    """
+    if importlib.util.find_spec("kalman") is not None:
+        yield
+        return
+    added = []
+    for name, mod in list(sys.modules.items()):
+        if name == "modules" or name.startswith("modules."):
+            alias = "kalman" + name[len("modules"):]
+            if alias not in sys.modules:
+                sys.modules[alias] = mod
+                added.append(alias)
+    try:
+        yield
+    finally:
+        for alias in added:
+            sys.modules.pop(alias, None)
+
+
 CV = {"base": "matrices", "sensor_id": "cv", "fs": 10,
       "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]]},
       "noise": {"Q": [[1e-3, 0], [0, 1e-3]], "R": [[0.25]]},
@@ -122,7 +154,7 @@ class TestAuthoring(unittest.TestCase):
     def test_scaffold_imports(self):
         src = api.scaffold(CV, "MyCV")
         self.assertIn("class MyCV(LinearKalmanModel)", src)
-        with tempfile.TemporaryDirectory() as d:
+        with tempfile.TemporaryDirectory() as d, _kalman_importable():
             p = os.path.join(d, "m.py")
             api.write_scaffold(CV, p, "MyCV")
             sp = importlib.util.spec_from_file_location("m", p)
