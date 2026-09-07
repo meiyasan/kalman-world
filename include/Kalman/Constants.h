@@ -35,6 +35,36 @@ namespace Kalman
     };
 
     /**
+     * \brief Time-stepping scheme of a Kalman::Integrator — advances `x(t) -> x(t + dt)`
+     * for a continuous `xdot = f(x, u, t)`.
+     *
+     * A model declares its DefaultIntegrator(); Kalman::Integrators::Make resolves it.
+     * ImplicitEuler is reserved (needs a per-step Newton solve) and Make() throws for it.
+     */
+    enum class IntegratorKind
+    {
+        Euler = 0,          ///< explicit forward Euler (first order)
+        RK4 = 1,            ///< classic 4-stage Runge-Kutta (fourth order)
+        DormandPrince = 2,  ///< RK45 embedded pair, adaptive substeps
+        ImplicitEuler = 3   ///< backward Euler (stiff) — reserved
+    };
+
+    /**
+     * \brief Spatial-discretization strategy of a Kalman::Solver.
+     *
+     * A solver discretizes a field and marches it in time by *composing* an
+     * Integrator; for an ODE the two coincide. FiniteVolume and FiniteElement are
+     * reserved and Kalman::Solvers::Make throws for them.
+     */
+    enum class SolverKind
+    {
+        Spectral = 0,          ///< pseudo-spectral (FFT) discretization
+        FiniteDifference = 1,  ///< central stencils on a rectangular grid
+        FiniteVolume = 2,      ///< reserved
+        FiniteElement = 3      ///< reserved
+    };
+
+    /**
      * \brief Which pass of the filter a stored estimate came from.
      */
     enum class StateFlavor
@@ -49,6 +79,10 @@ namespace Kalman
 
     /// Human-readable name of a state flavour (never null).
     const char *ToString(StateFlavor flavor);
+    /// Human-readable name of an integrator kind (never null).
+    const char *ToString(IntegratorKind kind);
+    /// Human-readable name of a solver kind (never null).
+    const char *ToString(SolverKind kind);
 }
 
 #endif // KALMAN_TYPES_H

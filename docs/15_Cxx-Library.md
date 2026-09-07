@@ -35,6 +35,15 @@ included, so a change on one side has an obvious home on the other:
 |---|---|---|
 | `framework/constants.py` | `Kalman/Constants.h` | `EngineKind`, `StateFlavor` |
 | `framework/model.py` | `Kalman/Model.h` | `Kalman::Model` |
+| `framework/integrator.py` | `Kalman/Integrator.h` | `Kalman::Integrator`, `Tableau`, `RungeKuttaStep` |
+| `framework/integrators/euler.py` | `Kalman/Integrators/Euler.h` | `Integrators::Euler` |
+| `framework/integrators/rk4.py` | `Kalman/Integrators/RK4.h` | `Integrators::RK4` |
+| `framework/integrators/dormand_prince.py` | `Kalman/Integrators/DormandPrince.h` | `Integrators::DormandPrince` |
+| `framework/solver.py` | `Kalman/Solver.h` | `Kalman::Solver` |
+| `framework/solvers/spectral.py` | `Kalman/Solvers/Spectral.h` | `Solvers::Spectral` |
+| `framework/solvers/finite_difference.py` | `Kalman/Solvers/FiniteDifference.h` | `Solvers::FiniteDifference` |
+| — (numpy arrays) | `Kalman/Grid.h` | `Kalman::Field`, `Kalman::SpectralField` |
+| — (`numpy.fft`) | `Kalman/FFT.h` | `Kalman::FFT` (radix-2 + Bluestein, no dependency) |
 | `framework/engine.py` | `Kalman/Engine.h` | `Kalman::Engine` (aliased `Estimator`) |
 | `framework/filter.py` | `Kalman/Filter.h` | `Kalman::Filter` |
 | `framework/sampler.py` | `Kalman/Sampler.h` | `Kalman::Sampler` |
@@ -74,9 +83,10 @@ purely declarative headers (`Abstract/`, `Models/`, `Filters/`) have no `.cc`
 because there is nothing to compile, not because they are missing.
 
 **Not ported yet**, and deliberately absent rather than stubbed:
-`framework/integrators/`, `framework/solvers/`, `framework/controllers/`,
-`framework/native/` (the cffi accelerator kernels have no reason to exist here),
-and the Combinatorial engine — a track-*finding* pass over an event of many hits
+`framework/controllers/`, `framework/native/` (the cffi accelerator kernels
+have no reason to exist here), the reserved integrator/solver kinds
+(`ImplicitEuler`, `FiniteVolume`, `FiniteElement` — `Make()` throws for them,
+as `resolve_*` does in Python), and the Combinatorial engine — a track-*finding* pass over an event of many hits
 per layer, which needs a detector contract (`radii`, `seed_state`) that
 `Kalman::Model` does not carry. Of the routers, *training* stays Python-only by
 design — `routers/nn/` is Torch, and the optimiser and data loaders belong
@@ -92,8 +102,18 @@ silently substituting a different algorithm.
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble` |
 | **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`, `Filters::IMM` |
+| **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
+| **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
 
 Dependencies point one way only: **Filter → Engine → Model**.
+
+An ODE model overrides `Model::Derivative()` and calls `UseContinuousDynamics()`;
+the default `f()` then advances the derivative one sample with the model's
+declared integrator (RK4 unless `SetIntegrator()` says otherwise, in
+`Substeps()` pieces), exactly as `f_continuous` does in Python. A field solver
+composes an integrator the same way and marches a `Kalman::Field` through the
+integrator's Butcher tableau — one `RungeKuttaStep` template serves a
+`Kalman::Vector` and a spectral field alike.
 
 `Engine::Predict` / `Update` / `Smooth` have a shared Gaussian implementation
 that the Jacobian engines use as is; the sigma-point engine overrides the first
@@ -464,9 +484,11 @@ linear filter. Both can be present in one process.
 | | Python | C++ |
 |---|---|---|
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | Linear, Extended, Unscented, Particle, Ensemble |
+| Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
+| ODE models | override `f_continuous`, bind `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
+| Spectral solver backend | numpy, or torch on CUDA/MPS for batched ensembles | built-in FFT only (no torch); one field at a time |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
-| Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference | none (a model owns its own stepping) |
 | Controllers / routers | P, PID, LQR, MPPI, Neural, IMM | none yet — the ONNX seam is the plan |
 | Applications | `modules/apps/` | none — they belong downstream |
 | Missing data | NaN channel skipped | NaN channel skipped (same) |

@@ -82,6 +82,16 @@ namespace Kalman
 
     Vector Model::f(const Vector &x, const Vector &u, double t) const
     {
+        if (fContinuous)
+        {
+            // The ODE path: the integrator advances Derivative() across one sample,
+            // in Substeps() pieces, holding the control across the step.
+            const double dt = DeltaT() / static_cast<double>(fSubsteps);
+            return GetIntegrator().Integrate(
+                [this](const Vector &xx, const Vector &uu, double tt) { return this->Derivative(xx, uu, tt); },
+                x, u, t, dt, fSubsteps);
+        }
+
         Vector out = F(t) * x;
         if (fNControl > 0 && u.Size() == fNControl)
         {
@@ -97,6 +107,45 @@ namespace Kalman
     Vector Model::h(const Vector &x, double t) const
     {
         return H(t) * x;
+    }
+
+    Vector Model::Derivative(const Vector &, const Vector &, double) const
+    {
+        throw std::runtime_error("Kalman::Model: '" + fName + "' declares continuous dynamics "
+                                 "but does not override Derivative(x, u, t).");
+    }
+
+    // --- time stepping -------------------------------------------------------
+
+    void Model::UseContinuousDynamics(bool on)
+    {
+        fContinuous = on;
+        if (on) fAnalyticJacobian = false;
+    }
+
+    void Model::SetIntegrator(IntegratorKind kind)
+    {
+        fDefaultIntegrator = kind;
+        fIntegrator.reset();                    // rebuilt from the new kind on first use
+    }
+
+    void Model::SetIntegrator(std::shared_ptr<Integrator> integrator)
+    {
+        if (!integrator) throw std::runtime_error("Kalman::Model: the integrator must not be null.");
+        fDefaultIntegrator = integrator->Kind();
+        fIntegrator = std::move(integrator);
+    }
+
+    Integrator &Model::GetIntegrator() const
+    {
+        if (!fIntegrator) fIntegrator = Integrators::Make(fDefaultIntegrator);
+        return *fIntegrator;
+    }
+
+    void Model::SetSubsteps(std::size_t n)
+    {
+        if (n == 0) throw std::runtime_error("Kalman::Model: at least one integrator substep.");
+        fSubsteps = n;
     }
 
     Matrix Model::Jacobian(const Vector &x, const Vector &u, double t) const
@@ -233,6 +282,9 @@ namespace Kalman
            << ", l = " << fNControl << ", fs = " << fSampleRate << " Hz, engine = "
            << ToString(fDefaultEngine) << ", Jacobian = "
            << (fAnalyticJacobian ? "analytic" : "numerical");
+        if (fContinuous)
+            os << ", integrator = " << ToString(fDefaultIntegrator)
+               << (fSubsteps > 1 ? " x" + std::to_string(fSubsteps) : "");
         return os.str();
     }
 }

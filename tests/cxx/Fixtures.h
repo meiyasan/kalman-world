@@ -182,6 +182,36 @@ namespace Fixture
                 SetR(R);
             }
     };
+
+    /**
+     * \brief The same pendulum written as an **ODE**: Derivative() plus the model's
+     * integrator, instead of a hand-written RK4 in f().
+     *
+     * With the RK4 integrator and one substep the two fixtures must agree to
+     * round-off, which is the test that the integrator path is wired correctly.
+     */
+    class PendulumODE : public Pendulum
+    {
+        public:
+            PendulumODE(double length, double damping, double fs)
+                : Pendulum(length, damping, fs)
+            {
+                UseContinuousDynamics();          // f() now integrates Derivative()
+            }
+
+            Kalman::Vector Derivative(const Kalman::Vector &x, const Kalman::Vector &,
+                                      double = 0.) const override
+            {
+                return Pendulum::Derivative(x);
+            }
+
+            // Back to the base f(): Pendulum's hand-stepped override is what we compare against.
+            Kalman::Vector f(const Kalman::Vector &x, const Kalman::Vector &u,
+                             double t = 0.) const override
+            {
+                return Kalman::Model::f(x, u, t);
+            }
+    };
 }
 
 #endif // KALMAN_TESTS_FIXTURES_H

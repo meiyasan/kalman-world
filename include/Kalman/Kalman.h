@@ -80,6 +80,10 @@
 #include "Kalman/Constants.h"
 #include "Kalman/Matrix.h"
 #include "Kalman/Utils.h"
+#include "Kalman/Grid.h"
+#include "Kalman/FFT.h"
+#include "Kalman/Integrator.h"
+#include "Kalman/Solver.h"
 #include "Kalman/Model.h"
 #include "Kalman/Engine.h"
 #include "Kalman/Filter.h"
@@ -93,6 +97,11 @@
 
 // Concretes — mirrors the matching subpackages
 #include "Kalman/Abstract/Metadata.h"
+#include "Kalman/Integrators/Euler.h"
+#include "Kalman/Integrators/RK4.h"
+#include "Kalman/Integrators/DormandPrince.h"
+#include "Kalman/Solvers/Spectral.h"
+#include "Kalman/Solvers/FiniteDifference.h"
 #include "Kalman/Engines/Linear.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Unscented.h"

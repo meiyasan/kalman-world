@@ -31,6 +31,30 @@ namespace Kalman
         return "Unknown";
     }
 
+    const char *ToString(IntegratorKind kind)
+    {
+        switch (kind)
+        {
+            case IntegratorKind::Euler:         return "Euler";
+            case IntegratorKind::RK4:           return "RK4";
+            case IntegratorKind::DormandPrince: return "DormandPrince";
+            case IntegratorKind::ImplicitEuler: return "ImplicitEuler";
+        }
+        return "Unknown";
+    }
+
+    const char *ToString(SolverKind kind)
+    {
+        switch (kind)
+        {
+            case SolverKind::Spectral:         return "Spectral";
+            case SolverKind::FiniteDifference: return "FiniteDifference";
+            case SolverKind::FiniteVolume:     return "FiniteVolume";
+            case SolverKind::FiniteElement:    return "FiniteElement";
+        }
+        return "Unknown";
+    }
+
     const char *ToString(StateFlavor flavor)
     {
         switch (flavor)

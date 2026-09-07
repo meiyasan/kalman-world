@@ -30,6 +30,15 @@
  * JacobianH() with the analytic ones — tell the base which by calling
  * SetAnalyticJacobian(false) in your constructor.
  *
+ * For a system given as an **ODE**, override Derivative() with `xdot = f(x, u, t)`
+ * and call UseContinuousDynamics() in your constructor: the default f() then
+ * advances the derivative one sample with the model's Kalman::Integrator
+ * (DefaultIntegrator(), RK4 unless declared otherwise, in Substeps() substeps),
+ * which is the ODE counterpart of a PDE model binding a Kalman::Solver. The
+ * integrator is *declared* through its kind and resolved on first use, so a
+ * model never constructs one — and a custom scheme can still be handed in
+ * through SetIntegrator(std::shared_ptr<Integrator>).
+ *
  * \note This class is the *contract*, not a catalogue. libKalman ships no
  * physics: a pendulum, a drift chamber or a power grid is an **application**, and
  * applications are built on top of this header, not inside it. The equations live
@@ -44,7 +53,9 @@
 #include "Kalman/Matrix.h"
 #include "Kalman/Abstract/Metadata.h"
 #include "Kalman/Constants.h"
+#include "Kalman/Integrator.h"
 
+#include <memory>
 #include <string>
 
 namespace Kalman
@@ -74,6 +85,14 @@ namespace Kalman
             EngineKind fDefaultEngine = EngineKind::Linear;
             bool fAnalyticJacobian = true;  // false => differentiate f()/h() numerically
             double fEpsilon = 1e-5;         // step for the numerical Jacobian
+
+            // Time stepping, for a model that overrides Derivative(). Declared by
+            // kind; the instance is built lazily so a model never imports a scheme.
+            bool fContinuous = false;
+            IntegratorKind fDefaultIntegrator = IntegratorKind::RK4;
+            SolverKind fDefaultSolver = SolverKind::Spectral;
+            mutable std::shared_ptr<Integrator> fIntegrator;
+            std::size_t fSubsteps = 1;
 
         public:
             Model() = default;
@@ -112,8 +131,19 @@ namespace Kalman
             virtual Matrix R(double t = 0.) const;
 
             // --- maps --------------------------------------------------------
-            /// One step of the dynamics. Default: `F x + B u`.
+            /**
+             * \brief One step of the dynamics.
+             *
+             * Default: `F x + B u`, or — when UseContinuousDynamics() is on — the
+             * integral of Derivative() over DeltaT() with the model's integrator.
+             */
             virtual Vector f(const Vector &x, const Vector &u, double t = 0.) const;
+
+            /**
+             * \brief The continuous dynamics `xdot = f(x, u, t)`, for an ODE model.
+             * \throws std::runtime_error unless overridden.
+             */
+            virtual Vector Derivative(const Vector &x, const Vector &u, double t = 0.) const;
             /// The observation map. Default: `H x`.
             virtual Vector h(const Vector &x, double t = 0.) const;
 
@@ -137,6 +167,29 @@ namespace Kalman
 
             EngineKind DefaultEngine() const { return fDefaultEngine; }
             void SetDefaultEngine(EngineKind kind) { fDefaultEngine = kind; }
+
+            // --- time stepping -----------------------------------------------
+            /// Route the default f() through Derivative() and the integrator.
+            /// Also switches the Jacobian to numerical: F(t) is not df/dx of an ODE step.
+            void UseContinuousDynamics(bool on = true);
+            bool HasContinuousDynamics() const { return fContinuous; }
+
+            IntegratorKind DefaultIntegrator() const { return fDefaultIntegrator; }
+            /// Declare the scheme; the instance is built on first use.
+            void SetIntegrator(IntegratorKind kind);
+            /// Hand in a scheme of your own (a custom Integrator subclass, or a configured one).
+            void SetIntegrator(std::shared_ptr<Integrator> integrator);
+            /// The resolved integrator (built from DefaultIntegrator() if none was given).
+            Integrator &GetIntegrator() const;
+
+            /// Integrator substeps per sample (each of DeltaT() / Substeps()).
+            std::size_t Substeps() const { return fSubsteps; }
+            void SetSubsteps(std::size_t n);
+
+            /// The spatial discretization a field model declares (informational here:
+            /// a PDE model owns and drives its Kalman::Solver itself).
+            SolverKind DefaultSolver() const { return fDefaultSolver; }
+            void SetDefaultSolver(SolverKind kind) { fDefaultSolver = kind; }
 
             bool HasAnalyticJacobian() const { return fAnalyticJacobian; }
             void SetAnalyticJacobian(bool on) { fAnalyticJacobian = on; }
