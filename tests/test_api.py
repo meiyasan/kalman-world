@@ -26,21 +26,29 @@ def _kalman_importable():
     compares against, and remove the aliases afterwards. A real installation
     is left alone.
     """
-    if importlib.util.find_spec("kalman") is not None:
+    # Not find_spec(): a stale editable-install finder or a stray namespace
+    # directory can *claim* the name and still fail to import it, which is
+    # exactly the case that has to be caught. Only a working import counts.
+    try:
+        importlib.import_module("kalman.framework")
         yield
         return
-    added = []
+    except ImportError:
+        pass
+    previous = {}
     for name, mod in list(sys.modules.items()):
         if name == "modules" or name.startswith("modules."):
             alias = "kalman" + name[len("modules"):]
-            if alias not in sys.modules:
-                sys.modules[alias] = mod
-                added.append(alias)
+            previous[alias] = sys.modules.get(alias)      # None when absent
+            sys.modules[alias] = mod                        # override a broken claimant too
     try:
         yield
     finally:
-        for alias in added:
-            sys.modules.pop(alias, None)
+        for alias, before in previous.items():
+            if before is None:
+                sys.modules.pop(alias, None)
+            else:
+                sys.modules[alias] = before
 
 
 CV = {"base": "matrices", "sensor_id": "cv", "fs": 10,
