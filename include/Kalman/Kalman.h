@@ -32,6 +32,7 @@
  * | Model  | WHAT is the system? | Kalman::Model |
  * | Engine | HOW to infer?       | Kalman::Engine (Kalman::Engines::Linear, Extended, Unscented, Particle, Ensemble) |
  * | Filter | WHEN does it run?   | Kalman::Filter (Kalman::Filters::KF, EKF, UKF, PF, EnKF); Kalman::Filters::IMM, Kalman::Filters::CKF |
+ * | Controller | WHAT to command? | Kalman::Controller (Kalman::Controllers::Proportional, PID, LQR, MPPI, Boost, AdaptiveQR) |
  *
  * \section libkalman_routing The decision layer
  *
@@ -90,6 +91,7 @@
 #include "Kalman/Sampler.h"
 #include "Kalman/Diagnostics.h"
 #include "Kalman/Factory.h"
+#include "Kalman/Controller.h"
 
 // The C surface — what a non-C++ consumer (the Python package, a ROOT macro
 // through cling, another language) sees of the two headers above.
@@ -102,6 +104,11 @@
 #include "Kalman/Integrators/DormandPrince.h"
 #include "Kalman/Solvers/Spectral.h"
 #include "Kalman/Solvers/FiniteDifference.h"
+#include "Kalman/Controllers/Proportional.h"
+#include "Kalman/Controllers/PID.h"
+#include "Kalman/Controllers/LQR.h"
+#include "Kalman/Controllers/MPPI.h"
+#include "Kalman/Controllers/Adaptive.h"
 #include "Kalman/Engines/Linear.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Unscented.h"

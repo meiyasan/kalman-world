@@ -38,6 +38,7 @@
 #define KALMAN_FILTER_H
 
 #include "Kalman/Abstract/Metadata.h"
+#include "Kalman/Controller.h"
 #include "Kalman/Diagnostics.h"
 #include "Kalman/Engine.h"
 #include "Kalman/Matrix.h"
@@ -66,6 +67,7 @@ namespace Kalman
             std::vector<Matrix> fPostP;       // per step: corrected covariance
             std::vector<Matrix> fTransition;  // per step: the F used
             std::vector<Vector> fMeasure;     // per step: the measurement fed in
+            std::vector<Vector> fControl;     // per step: the command applied (empty when none)
             std::vector<Vector> fInnovation;  // per step: nu = z - h(x_prior)
             std::vector<double> fTime;        // per step: time tag
 
@@ -109,6 +111,16 @@ namespace Kalman
             Record Forward(const std::vector<Vector> &zk,
                            const std::vector<Vector> *uk = nullptr,
                            bool reset = true);
+
+            /**
+             * \brief The closed-loop forward pass: \p controller decides each step's command.
+             *
+             * Once per step, before the prediction, the controller is called with the
+             * current belief, the time and the previous innovation, exactly as
+             * `KalmanFilter.forward(zk, uk=controller)` does in Python. The commands are
+             * kept in Controls(); the controller keeps its own cost log.
+             */
+            Record Forward(const std::vector<Vector> &zk, Controller &controller, bool reset = true);
 
             /**
              * \brief Rauch–Tung–Striebel smoother over the stored forward pass.
@@ -158,6 +170,8 @@ namespace Kalman
             const std::vector<Matrix> &PosteriorCovariances() const { return fPostP; }
             const std::vector<Matrix> &Transitions() const { return fTransition; }
             const std::vector<Vector> &Measurements() const { return fMeasure; }
+            /// The command applied at each step (from uk or the controller); empty vectors when none.
+            const std::vector<Vector> &Controls() const { return fControl; }
             const std::vector<Vector> &Innovations() const { return fInnovation; }
             const std::vector<double> &Times() const { return fTime; }
             const std::vector<Vector> &SmoothedStates() const { return fSmoothX; }
@@ -183,6 +197,10 @@ namespace Kalman
             /// Assemble a record from one of the stored logs.
             Record MakeRecord(const std::vector<Vector> &x, const std::vector<Matrix> &P,
                               StateFlavor flavor) const;
+
+            /// The one loop behind both Forward() overloads.
+            Record Run(const std::vector<Vector> &zk, const std::vector<Vector> *uk,
+                       Controller *controller, bool reset);
     };
 }
 

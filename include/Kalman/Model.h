@@ -147,6 +147,15 @@ namespace Kalman
             /// The observation map. Default: `H x`.
             virtual Vector h(const Vector &x, double t = 0.) const;
 
+            /**
+             * \brief Actuator-limit hook: the command the plant can actually deliver.
+             *
+             * Identity by default. A model with real limits (a steering clip, a
+             * thrust ceiling) overrides it so a controller's logged cost and an MPPI
+             * rollout see the same constraint `f()` enforces internally.
+             */
+            virtual Vector ClipControl(const Vector &u) const { return u; }
+
             /// `df/dx` — F(t) when analytic, central differences otherwise.
             virtual Matrix Jacobian(const Vector &x, const Vector &u, double t = 0.) const;
             /// `dh/dx` — H(t) when analytic, central differences otherwise.

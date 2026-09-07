@@ -103,6 +103,9 @@ spec = {"base": "BallisticModel", "sensor_id": "shot", "fs": 50.0,
 
 ### Bindings
 
+`bindings.backend: "native"` runs the C++ engine of that kind behind the Python
+filter — only for a native (C++) model, see [C++ Library](15_Cxx-Library.md);
+`bindings.engine_params` carries its constructor parameters.
 `bindings.engine` is applied by `make_filter` (the engine belongs to the filter,
 not the model); `integrator` and `solver` are passed to the model constructor.
 

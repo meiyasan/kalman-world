@@ -42,6 +42,9 @@ extern "C" {
 /// An instance created through the factory. Opaque; destroy it with kalman_model_destroy().
 typedef struct kalman_model kalman_model_t;
 
+/// An estimation engine. Opaque; destroy it with kalman_engine_destroy().
+typedef struct kalman_engine kalman_engine_t;
+
 /// What kalman_factory_describe() fills in. String fields are thread-local, see above.
 typedef struct kalman_model_info
 {
@@ -169,6 +172,66 @@ int kalman_model_jacobian(const kalman_model_t *model, const double *x, const do
 
 /// dh/dx at (x, t). Writes m x n.
 int kalman_model_jacobian_h(const kalman_model_t *model, const double *x, double t, double *J);
+
+/* --- engines: the C++ estimation step, driven from outside ------------------ */
+
+/**
+ * An engine of `kind` (Kalman::EngineKind as an integer) with default settings,
+ * or NULL with kalman_last_error() set. The configured constructors below take
+ * the same parameters as the C++ classes.
+ */
+kalman_engine_t *kalman_engine_create(int kind);
+kalman_engine_t *kalman_engine_create_unscented(double alpha, double beta, double kappa);
+kalman_engine_t *kalman_engine_create_particle(int n_particles, double threshold, unsigned long long seed);
+kalman_engine_t *kalman_engine_create_ensemble(int n_members, double inflation, unsigned long long seed);
+void kalman_engine_destroy(kalman_engine_t *engine);
+
+/// The engine's kind as an integer, or -1.
+int kalman_engine_kind(const kalman_engine_t *engine);
+/// 1 when the engine has an RTS smoother, 0 when it is a sample set, -1 on error.
+int kalman_engine_has_smoother(const kalman_engine_t *engine);
+/// Start a run: a stateful engine reseeds its cloud / ensemble from the model's x0 / P0.
+int kalman_engine_reset(kalman_engine_t *engine, const kalman_model_t *model);
+
+/// Predict: (x, P) -> (x_out, P_out) with the transition F_out (n x n). `u` may be NULL.
+int kalman_engine_predict(const kalman_engine_t *engine, const kalman_model_t *model,
+                          const double *x, const double *P, const double *u, double t,
+                          double *x_out, double *P_out, double *F_out);
+
+/// Update with `z` (m; NaN marks a missing channel). Returns the channels used, or -1.
+int kalman_engine_update(const kalman_engine_t *engine, const kalman_model_t *model,
+                         const double *x, const double *P, const double *z, double t,
+                         double *x_out, double *P_out);
+
+/// Innovation nu = z - h(x) (m) and its covariance S (m x m) at the prediction (x, P).
+int kalman_engine_innovation(const kalman_engine_t *engine, const kalman_model_t *model,
+                             const double *x, const double *P, const double *z, double t,
+                             double *nu, double *S);
+
+/// One reverse RTS step (all n / n x n); -1 for an engine without a smoother.
+int kalman_engine_smooth(const kalman_engine_t *engine, int n,
+                         const double *x_post, const double *P_post,
+                         const double *x_prior_next, const double *P_prior_next,
+                         const double *x_smooth_next, const double *P_smooth_next,
+                         const double *F, double *x_smooth, double *P_smooth);
+
+/* --- a whole pass, fused ---------------------------------------------------- */
+
+/**
+ * Run Kalman::Filter over N steps with `engine` on `model`: the forward pass and,
+ * when `smooth` is non-zero, the RTS backward pass.
+ *
+ *   zk: N x m (NaN = missing channel)   uk: N x l or NULL
+ *   x_prior, x_post, x_smooth: N x n    P_prior, P_post, P_smooth: N x n x n
+ *   innovations: N x m                  transitions: N x n x n
+ *
+ * Every output pointer may be NULL to skip that quantity; x_smooth / P_smooth are
+ * only written when `smooth` is set. Returns 0, or -1 with the reason.
+ */
+int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                      const double *zk, const double *uk, int smooth,
+                      double *x_prior, double *P_prior, double *x_post, double *P_post,
+                      double *x_smooth, double *P_smooth, double *innovations, double *transitions);
 
 #ifdef __cplusplus
 }

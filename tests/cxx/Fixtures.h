@@ -18,6 +18,7 @@
 #include "Kalman/Models/Extended.h"
 #include "Kalman/Models/Linear.h"
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
@@ -87,6 +88,48 @@ namespace Fixture
                 }
 
                 SetF(F); SetH(H); SetQ(Q); SetR(R);
+            }
+    };
+
+    /**
+     * \brief Constant velocity with an **acceleration command** — the controlled plant.
+     *
+     * State (position, velocity), one input `a`: `B = (dt^2/2, dt)`. An optional
+     * actuator limit clips `|a|` so the cost hook and MPPI's rollouts can be
+     * checked against it.
+     */
+    class ControlledVelocity : public ConstantVelocity
+    {
+        private:
+            double fLimit = 0.;           // 0 = no limit
+
+        public:
+            ControlledVelocity(double fs, double limit = 0.)
+                : ConstantVelocity(1, fs), fLimit(limit)
+            {
+                Allocate(2, 1, 1);        // re-size with l = 1 (keeps F/H/Q/R placeholders)
+                Build();
+                const double dt = DeltaT();
+                Kalman::Matrix B(2, 1, 0.);
+                B(0, 0) = 0.5 * dt * dt;
+                B(1, 0) = dt;
+                SetB(B);
+            }
+
+            double Limit() const { return fLimit; }
+
+            Kalman::Vector ClipControl(const Kalman::Vector &u) const override
+            {
+                if (fLimit <= 0.) return u;
+                Kalman::Vector out = u;
+                out(0) = std::max(-fLimit, std::min(fLimit, out(0)));
+                return out;
+            }
+
+            Kalman::Vector f(const Kalman::Vector &x, const Kalman::Vector &u,
+                             double t = 0.) const override
+            {
+                return Kalman::Model::f(x, u.Empty() ? u : ClipControl(u), t);
             }
     };
 

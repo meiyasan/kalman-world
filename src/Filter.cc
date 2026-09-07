@@ -93,13 +93,27 @@ namespace Kalman
         fPostX.clear();  fPostP.clear();
         fTransition.clear();
         fMeasure.clear();
+        fControl.clear();
         fInnovation.clear();
         fTime.clear();
         fSmoothX.clear(); fSmoothP.clear();
     }
 
-    Record Filter::Forward(const std::vector<Vector> &zk, const std::vector<Vector> *uk,
-                           bool reset)
+    Record Filter::Forward(const std::vector<Vector> &zk, const std::vector<Vector> *uk, bool reset)
+    {
+        return Run(zk, uk, nullptr, reset);
+    }
+
+    Record Filter::Forward(const std::vector<Vector> &zk, Controller &controller, bool reset)
+    {
+        if (controller.GetModel() != fModel)
+            throw std::runtime_error("Kalman::Filter::Forward: the controller was built for a different model.");
+        if (reset) controller.Reset();
+        return Run(zk, nullptr, &controller, reset);
+    }
+
+    Record Filter::Run(const std::vector<Vector> &zk, const std::vector<Vector> *uk,
+                       Controller *controller, bool reset)
     {
         if (zk.empty()) throw std::runtime_error("Kalman::Filter::Forward: no measurements given.");
         fModel->CheckShapes();
@@ -119,6 +133,11 @@ namespace Kalman
         fPriorX.reserve(fPriorX.size() + N);
         fPostX.reserve(fPostX.size() + N);
 
+        // The closed loop hands the controller the previous innovation; on the first
+        // step there is none yet.
+        Vector command;
+        const Vector *lastNu = nullptr;
+
         for (std::size_t k = 0; k < N; ++k)
         {
             const Vector &z = zk[k];
@@ -131,6 +150,11 @@ namespace Kalman
             }
 
             const Vector *u = (uk && l > 0) ? &(*uk)[k] : nullptr;
+            if (controller)
+            {
+                command = controller->Command(fX, fP, t, lastNu);
+                u = l > 0 ? &command : nullptr;
+            }
 
             // --- predict --------------------------------------------------
             Vector xPrior;
@@ -153,11 +177,13 @@ namespace Kalman
             fPostP.push_back(PPost);
             fTransition.push_back(F);
             fMeasure.push_back(z);
+            fControl.push_back(u ? *u : Vector());
             fInnovation.push_back(nu);
             fTime.push_back(t);
 
             fX = xPost;
             fP = PPost;
+            lastNu = &fInnovation.back();
 
             t += dt;
         }

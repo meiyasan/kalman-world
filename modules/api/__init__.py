@@ -326,7 +326,14 @@ def make_model(spec: dict) -> KalmanModel:
 def make_filter(spec: dict) -> KalmanFilter:
     """Build a :class:`KalmanFilter` (model + resolved engine) from a spec."""
     model = make_model(spec)
-    engine_kind = _kind(KalmanEngineKind, (spec.get("bindings", {}) or {}).get("engine"))
+    binds = spec.get("bindings", {}) or {}
+    engine_kind = _kind(KalmanEngineKind, binds.get("engine"))
+    if str(binds.get("backend", "python")).lower() == "native":
+        # The C++ engine behind the Python filter. Only a native (C++) model can be
+        # driven this way -- NativeEngine says so itself if the model is Python.
+        from ..framework.engines import NativeEngine
+        kind = engine_kind or getattr(model, "DEFAULT_ENGINE", KalmanEngineKind.EXTENDED)
+        return KalmanFilter(model, engine=NativeEngine(kind, **(binds.get("engine_params", {}) or {})))
     if engine_kind is not None:
         from ..framework.engines import resolve_engine
         return KalmanFilter(model, engine=resolve_engine(engine_kind))

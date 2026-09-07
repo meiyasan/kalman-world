@@ -64,6 +64,9 @@ included, so a change on one side has an obvious home on the other:
 | `framework/filters/pf.py` | `Kalman/Filters/PF.h` | `Filters::PF` |
 | `framework/filters/enkf.py` | `Kalman/Filters/EnKF.h` | `Filters::EnKF` |
 | `framework/filters/ckf.py` | `Kalman/Filters/CKF.h` | `Filters::CKF` |
+| `framework/control.py` | `Kalman/Controller.h` | `Kalman::Controller` |
+| `framework/controllers/proportional.py`, `pid.py`, `lqr.py`, `mppi.py` | `Kalman/Controllers/*.h` | `Controllers::Proportional`, `PID`, `LQR`, `MPPI` |
+| `framework/controllers/boost.py`, `adaptive_qr.py` | `Kalman/Controllers/Adaptive.h` | `Controllers::Boost`, `Controllers::AdaptiveQR` |
 | `framework/io/record.py` | `Kalman/IO/Record.h` | `IO::Record` (aliased `Kalman::Record`) |
 | `framework/io/collection.py` | `Kalman/IO/Collection.h` | `IO::Collection` |
 | `framework/routers/base.py` | `Kalman/Routers/Base.h` | `Routers::Router` |
@@ -85,8 +88,10 @@ included, so a change on one side has an obvious home on the other:
 purely declarative headers (`Abstract/`, `Models/`, `Filters/`) have no `.cc`
 because there is nothing to compile, not because they are missing.
 
-**Not ported yet**, and deliberately absent rather than stubbed:
-`framework/controllers/`, `framework/native/` (the cffi accelerator kernels
+**Not ported yet**, and deliberately absent rather than stubbed: the *learned*
+controllers (`NeuralKalmanController`, `NeuralAdaptiveQRKalmanController` — their
+training is Torch, and what would cross is a trained policy through the ONNX
+seam, as for the routers), `framework/native/` (the cffi accelerator kernels
 have no reason to exist here), the reserved integrator/solver kinds
 (`ImplicitEuler`, `FiniteVolume`, `FiniteElement` — `Make()` throws for them,
 as `resolve_*` does in Python). Of the routers, *training* stays Python-only by
@@ -102,6 +107,7 @@ raises rather than silently becoming a linear step.
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
 | **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IMM`, `Filters::CKF` |
+| **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPPI`; `Boost`, `AdaptiveQR` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
 | **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
 
@@ -114,6 +120,15 @@ declared integrator (RK4 unless `SetIntegrator()` says otherwise, in
 composes an integrator the same way and marches a `Kalman::Field` through the
 integrator's Butcher tableau — one `RungeKuttaStep` template serves a
 `Kalman::Vector` and a spectral field alike.
+
+A controller closes the loop: `Filter::Forward(zk, controller)` calls it once
+per step with the belief, the time and the last innovation, and feeds the
+command to the prediction — `KalmanFilter.forward(zk, uk=controller)` in
+Python. The cost it logs is charged against `Model::ClipControl(u)`, what the
+actuator delivers, not the raw ask; MPPI's rollouts clip the same way, so a
+planner sees the limit it will hit. LQR solves the Riccati equation by
+iteration (no scipy); the two adapters scale `R` (a gain boost when the NIS
+says the filter is surprised) and `Q` (from the empirical innovation covariance).
 
 Track *finding* is a different shape of problem — an event of many hits per
 layer in, a set of tracks out — so `Engines::Combinatorial` adds `Find()` and
@@ -360,12 +375,15 @@ may link anything it likes — ROOT, RooFit, a detector library — because the
 framework only ever sees `Kalman::Model`. That is the one code path by which a
 model written for ROOT+ reaches the Python side, and ROOT stays inside the plugin.
 
-**The C API.** `Kalman/CAPI.h` is the flat `extern "C"` view of the factory and
-of a model — `kalman_factory_*` to discover and load, `kalman_model_*` to
-construct one and evaluate `F/H/B/L/Q/R`, `f/h`, the Jacobians and the initial
-state, all row-major `double` arrays, `0`/`-1` returns and `kalman_last_error()`.
-No exception crosses it. `tests/cxx/06_factory.cc` covers the registry, the
-loader and this surface.
+**The C API.** `Kalman/CAPI.h` is the flat `extern "C"` view of the factory, of
+a model, and of the engines — `kalman_factory_*` to discover and load,
+`kalman_model_*` to construct one and evaluate `F/H/B/L/Q/R`, `f/h`, the
+Jacobians and the initial state, `kalman_engine_*` to build a C++ engine and
+run its predict / update / innovation / smooth steps, and `kalman_filter_run`
+for a whole `Kalman::Filter` pass (forward, optionally RTS) in one call. All
+row-major `double` arrays, `0`/`-1` returns and `kalman_last_error()`; no
+exception crosses it. `tests/cxx/06_factory.cc` covers the registry, the loader
+and the model surface.
 
 **The Python side.** `modules/framework/native/core.py` dlopens the library
 through cffi in *ABI mode* (no compiler) and `NativeModel` in
@@ -385,6 +403,15 @@ Every registered name becomes a class in `api.catalog()["models"]`, `describe()`
 reports `"backend": "native"` with its plugin, and the MCP `list_models` /
 `run_filter` / `forecast` tools need no change. `fs=`, `x0=`, `P0=` given from
 Python are pushed *into* the C++ instance, so both sides agree on every step.
+
+The *engines* cross too, in the same direction. `NativeEngine("extended")` is a
+`KalmanEngine` whose predict / update / smooth run in C++ behind the ordinary
+Python `KalmanFilter` (records, diagnostics and plots unchanged), and
+`NativeModel.filter_native(zk, engine=..., smooth=...)` runs the whole
+`Kalman::Filter` pass fused in one call and hands back a `KalmanRecord`. In a
+spec, `"bindings": {"engine": "extended", "backend": "native"}` selects it. Both
+need a native model: there is no route from a C++ engine back into a
+Python-defined `f`, by design.
 
 **What crosses, and what does not.** One C call per `f`, `h` or coefficient
 evaluation — cheap, and in the direction the measurements below say is
@@ -494,6 +521,9 @@ linear filter. Both can be present in one process.
 |---|---|---|
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
 | Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
+| Controllers | P, PID, LQR (scipy DARE), MPPI, Boost, AdaptiveQR, Neural (Torch) | the same six; LQR by Riccati iteration; no Neural |
+| Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
+| Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
 | ODE models | override `f_continuous`, bind `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | numpy, or torch on CUDA/MPS for batched ensembles | built-in FFT only (no torch); one field at a time |

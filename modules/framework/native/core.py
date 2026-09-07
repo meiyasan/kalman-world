@@ -104,6 +104,35 @@ int kalman_model_f(const kalman_model_t *model, const double *x, const double *u
 int kalman_model_h(const kalman_model_t *model, const double *x, double t, double *z);
 int kalman_model_jacobian(const kalman_model_t *model, const double *x, const double *u, double t, double *J);
 int kalman_model_jacobian_h(const kalman_model_t *model, const double *x, double t, double *J);
+
+typedef struct kalman_engine kalman_engine_t;
+
+kalman_engine_t *kalman_engine_create(int kind);
+kalman_engine_t *kalman_engine_create_unscented(double alpha, double beta, double kappa);
+kalman_engine_t *kalman_engine_create_particle(int n_particles, double threshold, unsigned long long seed);
+kalman_engine_t *kalman_engine_create_ensemble(int n_members, double inflation, unsigned long long seed);
+void kalman_engine_destroy(kalman_engine_t *engine);
+int kalman_engine_kind(const kalman_engine_t *engine);
+int kalman_engine_has_smoother(const kalman_engine_t *engine);
+int kalman_engine_reset(kalman_engine_t *engine, const kalman_model_t *model);
+int kalman_engine_predict(const kalman_engine_t *engine, const kalman_model_t *model,
+                          const double *x, const double *P, const double *u, double t,
+                          double *x_out, double *P_out, double *F_out);
+int kalman_engine_update(const kalman_engine_t *engine, const kalman_model_t *model,
+                         const double *x, const double *P, const double *z, double t,
+                         double *x_out, double *P_out);
+int kalman_engine_innovation(const kalman_engine_t *engine, const kalman_model_t *model,
+                             const double *x, const double *P, const double *z, double t,
+                             double *nu, double *S);
+int kalman_engine_smooth(const kalman_engine_t *engine, int n,
+                         const double *x_post, const double *P_post,
+                         const double *x_prior_next, const double *P_prior_next,
+                         const double *x_smooth_next, const double *P_smooth_next,
+                         const double *F, double *x_smooth, double *P_smooth);
+int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                      const double *zk, const double *uk, int smooth,
+                      double *x_prior, double *P_prior, double *x_post, double *P_post,
+                      double *x_smooth, double *P_smooth, double *innovations, double *transitions);
 """
 
 ffi = None
@@ -239,6 +268,61 @@ def load_plugin(path: str) -> list[str]:
         return added
     # Already loaded earlier: report what that library owns.
     return [n for n in after if describe(n)["plugin"] == path]
+
+
+# --- engines and a fused pass --------------------------------------------------
+# Kalman::EngineKind by name, the contract shared with Constants.h and models/native.py.
+ENGINE_KINDS = {"linear": 0, "extended": 1, "unscented": 2, "particle": 3,
+                "ensemble": 4, "combinatorial": 5}
+
+
+def create_engine(kind="extended", **params):
+    """A C++ engine handle (garbage-collected) of ``kind`` — a name or the integer —
+    configured by the same parameters as the C++ constructors: ``alpha/beta/kappa``
+    for the unscented one, ``n_particles/threshold/seed`` for the particle one,
+    ``n_members/inflation/seed`` for the ensemble one."""
+    L = require()
+    code = ENGINE_KINDS[kind.lower()] if isinstance(kind, str) else int(kind)
+    if code == 2 and params:
+        h = L.kalman_engine_create_unscented(float(params.get("alpha", 1e-3)),
+                                             float(params.get("beta", 2.0)), float(params.get("kappa", 0.0)))
+    elif code == 3 and params:
+        h = L.kalman_engine_create_particle(int(params.get("n_particles", 500)),
+                                            float(params.get("threshold", 0.5)), int(params.get("seed", 0)))
+    elif code == 4 and params:
+        h = L.kalman_engine_create_ensemble(int(params.get("n_members", 50)),
+                                            float(params.get("inflation", 1.0)), int(params.get("seed", 0)))
+    else:
+        if params:
+            raise TypeError(f"engine kind {kind!r} takes no parameters (got {sorted(params)}).")
+        h = L.kalman_engine_create(code)
+    if h == ffi.NULL:
+        raise RuntimeError(f"create_engine({kind!r}): {last_error()}")
+    return ffi.gc(h, L.kalman_engine_destroy)
+
+
+def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False):
+    """The fused pass: Kalman::Filter over ``zk`` (N x m; NaN = missing) with ``uk``
+    (N x l or None) on a native model and engine. Returns the per-step arrays."""
+    L = require()
+    zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(-1, m))
+    N = zk.shape[0]
+    if uk is not None and l > 0:
+        uk = np.ascontiguousarray(np.asarray(uk, dtype=np.float64).reshape(N, l))
+    out = {"x_prior": np.empty((N, n)), "P_prior": np.empty((N, n, n)),
+           "x_post": np.empty((N, n)), "P_post": np.empty((N, n, n)),
+           "innovations": np.empty((N, m)), "transitions": np.empty((N, n, n))}
+    if smooth:
+        out["x_smooth"] = np.empty((N, n))
+        out["P_smooth"] = np.empty((N, n, n))
+    rc = L.kalman_filter_run(
+        model_handle, engine_handle, int(N), cdptr(zk),
+        cdptr(uk) if (uk is not None and l > 0) else ffi.NULL, 1 if smooth else 0,
+        dptr(out["x_prior"]), dptr(out["P_prior"]), dptr(out["x_post"]), dptr(out["P_post"]),
+        dptr(out["x_smooth"]) if smooth else ffi.NULL, dptr(out["P_smooth"]) if smooth else ffi.NULL,
+        dptr(out["innovations"]), dptr(out["transitions"]))
+    check(rc, "kalman_filter_run")
+    return out
 
 
 # --- plugin policy -----------------------------------------------------------

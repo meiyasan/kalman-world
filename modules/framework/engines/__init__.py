@@ -14,6 +14,7 @@ from .unscented import UnscentedKalmanEngine
 from .particle import ParticleEngine
 from .combinatorial import CombinatorialKalmanEngine
 from .ensemble import EnsembleKalmanEngine, gaspari_cohn
+from .native import NativeEngine          # a C++ backend for the kinds above, not a kind
 
 ENGINE_BY_KIND = {
     KalmanEngineKind.LINEAR:        LinearKalmanEngine,
@@ -71,6 +72,7 @@ __all__ = [
     "ParticleEngine",
     "CombinatorialKalmanEngine",
     "EnsembleKalmanEngine",
+    "NativeEngine",
     "gaspari_cohn",
     "ENGINE_BY_KIND",
     "available_engines",

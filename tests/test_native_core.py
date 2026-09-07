@@ -240,6 +240,96 @@ class TestApiIntegration(unittest.TestCase):
             api.load_plugin("not-a-plugin")
 
 
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalmanFramework not built — skipping C++ core tests")
+class TestNativeEngine(unittest.TestCase):
+    """The C++ estimation step behind the Python filter, and the fused pass."""
+
+    @classmethod
+    def setUpClass(cls):
+        api.load_plugin(PLUGIN)
+        from modules.framework.models.native import NativeModel
+        from modules.framework.engines import NativeEngine
+        from modules.framework.filter import KalmanFilter
+        cls.NativeModel, cls.NativeEngine, cls.KalmanFilter = NativeModel, NativeEngine, KalmanFilter
+
+    def test_engine_identity(self):
+        e = self.NativeEngine("unscented", alpha=1e-2)
+        self.assertIs(e.KIND, KalmanEngineKind.UNSCENTED)
+        self.assertTrue(e.has_smoother)
+        self.assertFalse(self.NativeEngine("particle", n_particles=50, seed=1).has_smoother)
+        with self.assertRaises(ValueError):
+            self.NativeEngine("no-such-engine")
+        with self.assertRaises(TypeError):
+            self.NativeEngine("linear", alpha=1.0)              # the linear engine takes no parameters
+
+    def test_refuses_a_python_model(self):
+        from modules.framework.model import KalmanModel
+        py = KalmanModel("py", F=np.eye(2), H=np.eye(2)[:1], Q=np.eye(2) * 1e-3, R=np.eye(1) * 0.1, fs=10)
+        with self.assertRaises(TypeError):
+            self.KalmanFilter(py, engine=self.NativeEngine("linear")).forward(np.zeros((5, 1)))
+
+    def test_cxx_step_matches_the_python_step_on_a_linear_model(self):
+        np.random.seed(1)
+        m = self.NativeModel("constant-velocity", "cv")
+        zk = m.sample(2.0).zk
+        native = self.KalmanFilter(m, engine=self.NativeEngine("linear")).forward(zk)
+        python = self.KalmanFilter(m).forward(zk)                 # the Python linear engine, same C++ model
+        np.testing.assert_allclose(np.asarray(native.xk), np.asarray(python.xk), atol=1e-10)
+        np.testing.assert_allclose(np.asarray(native.Pk), np.asarray(python.Pk), atol=1e-10)
+
+    def test_cxx_ekf_matches_the_python_ekf_on_the_pendulum(self):
+        np.random.seed(2)
+        p = self.NativeModel("pendulum", "pendulum")
+        zk = p.sample(2.0).zk
+        native = self.KalmanFilter(p, engine=self.NativeEngine("extended")).forward(zk)
+        python = self.KalmanFilter(p).forward(zk)
+        # The two Jacobians are both central differences, with slightly different
+        # step conventions, so agreement is to 1e-5 rather than round-off.
+        np.testing.assert_allclose(np.asarray(native.xk), np.asarray(python.xk), atol=1e-5)
+
+    def test_fused_pass_equals_the_stepwise_pass(self):
+        np.random.seed(3)
+        p = self.NativeModel("pendulum", "pendulum")
+        zk = p.sample(1.5).zk
+        stepwise = self.KalmanFilter(p, engine=self.NativeEngine("extended")).forward(zk)
+        fused = p.run_native(zk, engine="extended")
+        np.testing.assert_allclose(fused["x_post"], np.asarray(stepwise.xk).reshape(len(zk), -1), atol=1e-12)
+        self.assertEqual(fused["innovations"].shape, (len(zk), 1))
+        self.assertEqual(fused["transitions"].shape, (len(zk), 2, 2))
+
+    def test_filter_native_returns_a_record_and_smooths(self):
+        np.random.seed(4)
+        m = self.NativeModel("constant-velocity", "cv")
+        sampled = m.sample(2.0)
+        post = m.filter_native(sampled.zk, engine="linear")
+        smooth = m.filter_native(sampled.zk, engine="linear", smooth=True)
+        self.assertEqual(np.asarray(post.xk).shape[0], 200)
+        err_post = np.asarray(post.xk)[:, 0].ravel() - np.asarray(sampled.xk)[:, 0].ravel()
+        err_smooth = np.asarray(smooth.xk)[:, 0].ravel() - np.asarray(sampled.xk)[:, 0].ravel()
+        self.assertLessEqual(np.sqrt(np.mean(err_smooth ** 2)), np.sqrt(np.mean(err_post ** 2)) + 1e-9)
+        with self.assertRaises(RuntimeError):
+            m.filter_native(sampled.zk, engine="particle", smooth=True, n_particles=50)   # no smoother
+
+    def test_sample_set_engines_run_and_seed(self):
+        np.random.seed(5)
+        m = self.NativeModel("constant-velocity", "cv")
+        zk = m.sample(1.0).zk
+        a = m.run_native(zk, engine="particle", n_particles=200, seed=7)["x_post"]
+        b = m.run_native(zk, engine="particle", n_particles=200, seed=7)["x_post"]
+        c = m.run_native(zk, engine="ensemble", n_members=40, inflation=1.02, seed=7)["x_post"]
+        np.testing.assert_array_equal(a, b)
+        self.assertTrue(np.all(np.isfinite(a)) and np.all(np.isfinite(c)))
+
+    def test_api_binding_selects_the_native_backend(self):
+        spec = {"base": "pendulum", "sensor_id": "p", "fs": 50,
+                "bindings": {"engine": "extended", "backend": "native"}}
+        filt = api.make_filter(spec)
+        self.assertEqual(type(filt.engine).__name__, "NativeEngine")
+        sampled = api.sample(spec, 1.0)
+        out = api.run_filter(spec, sampled["zk"])
+        self.assertEqual(len(out["xk"]), 50)
+
+
 @unittest.skipUnless(core.HAS_CXX_CORE and importlib_available("jwt"), "needs libKalmanFramework + PyJWT")
 class TestLoadPluginAuth(unittest.TestCase):
     """Loading a plugin runs code, so it has its own scope."""

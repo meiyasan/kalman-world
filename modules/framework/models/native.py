@@ -188,6 +188,33 @@ class NativeModel(KalmanModel):
             out = out + self._flat(v, self.m, "v")
         return self._like(out, x)
 
+    # --- the fused C++ pass -----------------------------------------------------
+    def run_native(self, zk, uk=None, *, engine="extended", smooth=False, **engine_params) -> dict:
+        """Kalman::Filter over ``zk`` entirely in C++ with a native ``engine`` (name
+        or kind, plus its constructor parameters). Returns the per-step arrays:
+        ``x_prior/P_prior/x_post/P_post/innovations/transitions`` and, with
+        ``smooth=True``, ``x_smooth/P_smooth``."""
+        eng = core.create_engine(engine.name.lower() if hasattr(engine, "name") else str(engine).lower(),
+                                 **engine_params)
+        return core.run_filter(self._handle, eng, self.n, self.m, self.l, zk, uk, smooth=smooth)
+
+    def filter_native(self, zk, uk=None, *, engine="extended", smooth=False, **engine_params):
+        """:meth:`run_native` as a :class:`~kalman.framework.io.record.KalmanRecord` —
+        posterior, or smoothed when ``smooth=True`` — so it plots, records and
+        compares like any Python filter's output."""
+        from ..io.record import KalmanRecord
+        from ..constants import KalmanStateFlavor
+        out = self.run_native(zk, uk, engine=engine, smooth=smooth, **engine_params)
+        N = out["x_post"].shape[0]
+        t0 = float(self.t0 or 0.0)
+        time = t0 + np.arange(N, dtype=float) / (self.fs or 1.0)
+        zk = np.asarray(zk, dtype=float).reshape(N, self.m)
+        if smooth:
+            return KalmanRecord(time=time, xk=out["x_smooth"], Pk=out["P_smooth"], zk=zk,
+                                model=self, flavor=KalmanStateFlavor.SMOOTHED)
+        return KalmanRecord(time=time, xk=out["x_post"], Pk=out["P_post"], zk=zk,
+                            model=self, flavor=KalmanStateFlavor.POSTERIOR)
+
     # --- introspection ----------------------------------------------------------
     def describe_native(self) -> dict:
         """The C++ side's own account of this model (title, plugin, dims ...)."""
