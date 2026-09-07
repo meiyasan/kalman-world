@@ -162,6 +162,7 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
 
     def __init__(self, *, chi2_cut=None, max_candidates=6, max_holes=2,
                  min_hits=3, shared_hit_frac=0.3, hole_penalty=None):
+        self.candidates = []
         # chi2_cut/hole_penalty stay None until a model is in hand: the default
         # threshold depends on the number of measurement channels.
         self.chi2_cut = None if chi2_cut is None else float(chi2_cut)
@@ -318,6 +319,9 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
             if finished:
                 seed_tracks.append(min(finished, key=lambda c: c.quality))
 
+        # Kept for inspection: the best candidate of every seed, before arbitration
+        # decides which of them survive as tracks (CombinatorialKalmanFilter.candidates).
+        self.candidates = seed_tracks
         return self.arbitrate(seed_tracks)
 
     # ------------------------------------------------------------------

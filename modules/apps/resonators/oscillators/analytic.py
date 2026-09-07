@@ -135,7 +135,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         """Return a copy of ``sample`` with zk preprocessed into the rotating frame."""
         if sample is None:
             return None
-        from ..framework.io.record import KalmanRecord
+        from ....framework.io.record import KalmanRecord
         zk_rot = self.preprocess(np.asarray(sample.zk))[0]
         return KalmanRecord(sample.time, zk=zk_rot, xk=sample.xk, Pk=sample.Pk,
                             flavor=sample.flavor, model=sample.model)

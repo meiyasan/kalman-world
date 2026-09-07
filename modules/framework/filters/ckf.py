@@ -47,6 +47,13 @@ class CombinatorialKalmanFilter(KalmanFilter):
         return self.pass_records
 
     @property
+    def candidates(self):
+        """The best candidate of every seed *before* arbitration -- one per seed, so
+        ``len(ckf.candidates)`` is the number of seeds that grew into a track at all.
+        Arbitration then keeps the disjoint subset in :attr:`tracks_raw`."""
+        return self.engine.candidates
+
+    @property
     def tracks_raw(self):
         """The accepted tracks as raw ``TrackCandidate`` objects, which still carry the
         search bookkeeping the records drop: ``hit_ids``, ``chi2``, ``holes``."""
