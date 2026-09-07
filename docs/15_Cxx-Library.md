@@ -54,6 +54,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/engines/unscented.py` | `Kalman/Engines/Unscented.h` | `Engines::Unscented` |
 | `framework/engines/particle.py` | `Kalman/Engines/Particle.h` | `Engines::Particle` |
 | `framework/engines/ensemble.py` | `Kalman/Engines/Ensemble.h` | `Engines::Ensemble` |
+| `framework/engines/combinatorial.py` | `Kalman/Engines/Combinatorial.h` | `Engines::Combinatorial` |
+| `framework/engines/combinatorial.py` (`TrackCandidate`, `GateContext`) | `Kalman/Tracking.h` | `Tracking::Candidate`, `Tracking::GateContext`, `Tracking::Detector` |
 | `framework/models/linear.py` | `Kalman/Models/Linear.h` | `Models::Linear` |
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
@@ -61,6 +63,7 @@ included, so a change on one side has an obvious home on the other:
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
 | `framework/filters/pf.py` | `Kalman/Filters/PF.h` | `Filters::PF` |
 | `framework/filters/enkf.py` | `Kalman/Filters/EnKF.h` | `Filters::EnKF` |
+| `framework/filters/ckf.py` | `Kalman/Filters/CKF.h` | `Filters::CKF` |
 | `framework/io/record.py` | `Kalman/IO/Record.h` | `IO::Record` (aliased `Kalman::Record`) |
 | `framework/io/collection.py` | `Kalman/IO/Collection.h` | `IO::Collection` |
 | `framework/routers/base.py` | `Kalman/Routers/Base.h` | `Routers::Router` |
@@ -86,22 +89,19 @@ because there is nothing to compile, not because they are missing.
 `framework/controllers/`, `framework/native/` (the cffi accelerator kernels
 have no reason to exist here), the reserved integrator/solver kinds
 (`ImplicitEuler`, `FiniteVolume`, `FiniteElement` — `Make()` throws for them,
-as `resolve_*` does in Python), and the Combinatorial engine — a track-*finding* pass over an event of many hits
-per layer, which needs a detector contract (`radii`, `seed_state`) that
-`Kalman::Model` does not carry. Of the routers, *training* stays Python-only by
+as `resolve_*` does in Python). Of the routers, *training* stays Python-only by
 design — `routers/nn/` is Torch, and the optimiser and data loaders belong
 there. What crosses is the finished policy, via `NN::Torch` or `NN::Onnx`.
-`EngineKind` still *names* the Combinatorial kind so a model's declared default
-survives a round-trip, and asking a C++ filter for it raises rather than
-silently substituting a different algorithm.
+Every `EngineKind` now has a C++ engine; an integer that is not a kind still
+raises rather than silently becoming a linear step.
 
 ## The three roles
 
 | Role | Question | Class |
 |------|----------|-------|
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
-| **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble` |
-| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`, `Filters::IMM` |
+| **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
+| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IMM`, `Filters::CKF` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
 | **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
 
@@ -114,6 +114,15 @@ declared integrator (RK4 unless `SetIntegrator()` says otherwise, in
 composes an integrator the same way and marches a `Kalman::Field` through the
 integrator's Butcher tableau — one `RungeKuttaStep` template serves a
 `Kalman::Vector` and a spectral field alike.
+
+Track *finding* is a different shape of problem — an event of many hits per
+layer in, a set of tracks out — so `Engines::Combinatorial` adds `Find()` and
+`SmoothTracks()` over a whole event on top of the inherited Extended step, and
+`Filters::CKF` is its leaf rather than a `Kalman::Filter`. A trackable model
+implements `Kalman::Tracking::Detector` (`Radii()`, `SeedState()`) next to
+`Kalman::Model`; `tests/cxx/DriftChamber.h` is the fixture, the counterpart of
+`apps/tracking/driftchamber.py`. On an identical event the two searches find
+the same tracks hit for hit — the test records one such case.
 
 `Engine::Predict` / `Update` / `Smooth` have a shared Gaussian implementation
 that the Jacobian engines use as is; the sigma-point engine overrides the first
@@ -483,7 +492,8 @@ linear filter. Both can be present in one process.
 
 | | Python | C++ |
 |---|---|---|
-| Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | Linear, Extended, Unscented, Particle, Ensemble |
+| Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
+| Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
 | ODE models | override `f_continuous`, bind `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | numpy, or torch on CUDA/MPS for batched ensembles | built-in FFT only (no torch); one field at a time |
@@ -497,9 +507,8 @@ linear filter. Both can be present in one process.
 | Singular `S` | `np.linalg.pinv` drops null directions | eigenvalue pseudo-inverse, same semantics |
 | Diagnostics | innovations, gains, NIS, NEES | NIS, NEES |
 
-A model asking for an engine kind C++ does not implement (today: Combinatorial)
-raises rather than silently substituting, so a model declaring it will not
-quietly get a time-series step.
+Every engine kind resolves on both sides; a value that is not a kind raises
+rather than silently substituting a different algorithm.
 
 ## Where the Python boundary is, and why
 

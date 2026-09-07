@@ -11,6 +11,7 @@
 #include "Kalman/Filters/IMM.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Unscented.h"
+#include "Kalman/Engines/Combinatorial.h"
 #include "Kalman/Engines/Linear.h"
 #include "Kalman/Routers/Bayesian.h"
 #include "Kalman/Utils.h"
@@ -30,6 +31,7 @@ namespace Kalman::Filters
                 case EngineKind::Linear:    return std::make_unique<Engines::Linear>();
                 case EngineKind::Extended:  return std::make_unique<Engines::Extended>();
                 case EngineKind::Unscented: return std::make_unique<Engines::Unscented>();
+                case EngineKind::Combinatorial: return std::make_unique<Engines::Combinatorial>();
                 // Particle and Ensemble are deliberately absent: the IMM mixing step
                 // hands each mode a Gaussian (x, P) to predict from, and a sample-set
                 // engine ignores that argument -- the modes would silently decouple.

@@ -31,7 +31,7 @@
  * |------|----------|-------|
  * | Model  | WHAT is the system? | Kalman::Model |
  * | Engine | HOW to infer?       | Kalman::Engine (Kalman::Engines::Linear, Extended, Unscented, Particle, Ensemble) |
- * | Filter | WHEN does it run?   | Kalman::Filter (Kalman::Filters::KF, EKF, UKF, PF, EnKF; Kalman::Filters::IMM) |
+ * | Filter | WHEN does it run?   | Kalman::Filter (Kalman::Filters::KF, EKF, UKF, PF, EnKF); Kalman::Filters::IMM, Kalman::Filters::CKF |
  *
  * \section libkalman_routing The decision layer
  *
@@ -107,6 +107,8 @@
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Engines/Particle.h"
 #include "Kalman/Engines/Ensemble.h"
+#include "Kalman/Tracking.h"
+#include "Kalman/Engines/Combinatorial.h"
 #include "Kalman/Models/Linear.h"
 #include "Kalman/Models/Extended.h"
 #include "Kalman/Filters/KF.h"
@@ -114,6 +116,7 @@
 #include "Kalman/Filters/UKF.h"
 #include "Kalman/Filters/PF.h"
 #include "Kalman/Filters/EnKF.h"
+#include "Kalman/Filters/CKF.h"
 #include "Kalman/Filters/IMM.h"
 #include "Kalman/IO/Record.h"
 #include "Kalman/IO/Collection.h"

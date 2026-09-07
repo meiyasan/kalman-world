@@ -119,10 +119,8 @@ int main()
         CHECK(std::string(ToString(EngineKind::Combinatorial)) == "Combinatorial", "kinds: Combinatorial is nameable");
 
         cv.SetDefaultEngine(EngineKind::Combinatorial);
-        bool threw = false;
-        try { Filter g(&cv); }
-        catch (const std::exception &) { threw = true; }
-        CHECK(threw, "resolution: the Python-only Combinatorial kind still throws");
+        Filter g(&cv);
+        CHECK(g.GetEngine()->Kind() == EngineKind::Combinatorial, "resolution: the Combinatorial kind builds its engine too");
     }
 
     return Check::Summary("07_unscented");

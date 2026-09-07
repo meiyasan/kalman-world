@@ -16,10 +16,9 @@ namespace Kalman
     /**
      * \brief Which inference algorithm a model wants, and which one an engine provides.
      *
-     * The C++ core carries the Linear, Extended, Unscented, Particle and Ensemble
-     * engines. Combinatorial is declared so that a model's declared default
-     * survives a round-trip with the Python framework, where the track-finding
-     * pass lives; asking a C++ filter for it throws rather than substituting.
+     * Every kind has a C++ engine. Combinatorial is an Extended step plus a
+     * track-finding search over an event (Kalman::Engines::Combinatorial::Find);
+     * Kalman::Filters::CKF is its leaf, since its input is not a time series.
      *
      * The integer values are the contract with `modules/framework/models/native.py`
      * (`ENGINE_BY_INT`): never renumber.
@@ -31,7 +30,7 @@ namespace Kalman
         Unscented = 2,     ///< sigma points (UKF)
         Particle = 3,      ///< sequential importance resampling (PF)
         Ensemble = 4,      ///< perturbed-observation ensemble (EnKF)
-        Combinatorial = 5  ///< branch-on-ambiguous-hit track finding (CKF) — Python only
+        Combinatorial = 5  ///< branch-on-ambiguous-hit track finding (CKF)
     };
 
     /**

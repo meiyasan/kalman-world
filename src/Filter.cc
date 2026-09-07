@@ -9,6 +9,7 @@
  */
 
 #include "Kalman/Filter.h"
+#include "Kalman/Engines/Combinatorial.h"
 #include "Kalman/Engines/Ensemble.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Linear.h"
@@ -59,15 +60,17 @@ namespace Kalman
             case EngineKind::Unscented: return new Engines::Unscented();
             case EngineKind::Particle:  return new Engines::Particle();
             case EngineKind::Ensemble:  return new Engines::Ensemble();
-            default: break;
+            // As a per-step engine the combinatorial one is an Extended step; the
+            // track-finding pass itself is reached through Filters::CKF.
+            case EngineKind::Combinatorial: return new Engines::Combinatorial();
         }
 
-        // Fail loudly rather than silently substituting a different algorithm: a
-        // model that asks for a track-finding pass and is given a time-series step
-        // would return plausible, wrong numbers.
+        // Fail loudly rather than silently substituting a different algorithm: an
+        // integer that is not a kind (a corrupt spec, a version skew) must not
+        // quietly become a linear step.
         std::ostringstream os;
-        os << "Kalman::Filter: no C++ engine implements the '" << ToString(kind)
-           << "' kind (the combinatorial track finder lives in the Python framework).";
+        os << "Kalman::Filter: no engine implements kind " << static_cast<int>(kind)
+           << " ('" << ToString(kind) << "').";
         throw std::runtime_error(os.str());
     }
 
