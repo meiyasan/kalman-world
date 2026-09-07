@@ -16,18 +16,22 @@ namespace Kalman
     /**
      * \brief Which inference algorithm a model wants, and which one an engine provides.
      *
-     * The C++ core carries the two Jacobian-based engines; the sigma-point,
-     * particle and ensemble kinds are declared so that a model's declared default
-     * survives a round-trip with the Python framework, but no engine is registered
-     * for them here.
+     * The C++ core carries the Linear, Extended, Unscented, Particle and Ensemble
+     * engines. Combinatorial is declared so that a model's declared default
+     * survives a round-trip with the Python framework, where the track-finding
+     * pass lives; asking a C++ filter for it throws rather than substituting.
+     *
+     * The integer values are the contract with `modules/framework/models/native.py`
+     * (`ENGINE_BY_INT`): never renumber.
      */
     enum class EngineKind
     {
-        Linear = 0,     ///< constant-matrix predict/update (KF)
-        Extended = 1,   ///< Jacobian linearisation (EKF)
-        Unscented = 2,  ///< sigma points (UKF) — not implemented in C++
-        Particle = 3,   ///< sequential importance resampling (PF) — not implemented in C++
-        Ensemble = 4    ///< perturbed-observation ensemble (EnKF) — not implemented in C++
+        Linear = 0,        ///< constant-matrix predict/update (KF)
+        Extended = 1,      ///< Jacobian linearisation (EKF)
+        Unscented = 2,     ///< sigma points (UKF)
+        Particle = 3,      ///< sequential importance resampling (PF)
+        Ensemble = 4,      ///< perturbed-observation ensemble (EnKF)
+        Combinatorial = 5  ///< branch-on-ambiguous-hit track finding (CKF) — Python only
     };
 
     /**

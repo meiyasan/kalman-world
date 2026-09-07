@@ -9,8 +9,11 @@
  */
 
 #include "Kalman/Filter.h"
+#include "Kalman/Engines/Ensemble.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Linear.h"
+#include "Kalman/Engines/Particle.h"
+#include "Kalman/Engines/Unscented.h"
 #include "Kalman/Diagnostics.h"
 #include "Kalman/Utils.h"
 
@@ -51,18 +54,20 @@ namespace Kalman
     {
         switch (kind)
         {
-            case EngineKind::Linear:   return new Engines::Linear();
-            case EngineKind::Extended: return new Engines::Extended();
+            case EngineKind::Linear:    return new Engines::Linear();
+            case EngineKind::Extended:  return new Engines::Extended();
+            case EngineKind::Unscented: return new Engines::Unscented();
+            case EngineKind::Particle:  return new Engines::Particle();
+            case EngineKind::Ensemble:  return new Engines::Ensemble();
             default: break;
         }
 
         // Fail loudly rather than silently substituting a different algorithm: a
-        // model that asks for sigma points and is given a linear step would return
-        // plausible, wrong numbers.
+        // model that asks for a track-finding pass and is given a time-series step
+        // would return plausible, wrong numbers.
         std::ostringstream os;
         os << "Kalman::Filter: no C++ engine implements the '" << ToString(kind)
-           << "' kind (libKalman carries Linear and Extended; use the Python "
-              "framework for Unscented / Particle / Ensemble).";
+           << "' kind (the combinatorial track finder lives in the Python framework).";
         throw std::runtime_error(os.str());
     }
 
@@ -72,12 +77,14 @@ namespace Kalman
         if (fOwnsEngine) delete fEngine;
         fEngine = engine;
         fOwnsEngine = false;
+        fEngine->Reset(*fModel);
     }
 
     void Filter::Reset()
     {
         fX = fModel->X0();
         fP = fModel->P0();
+        if (fEngine) fEngine->Reset(*fModel);
 
         fPriorX.clear(); fPriorP.clear();
         fPostX.clear();  fPostP.clear();
@@ -159,6 +166,9 @@ namespace Kalman
     {
         const std::size_t N = NSteps();
         if (N == 0) throw std::runtime_error("Kalman::Filter::Backward: run Forward() first.");
+        if (!fEngine->HasSmoother())
+            throw std::runtime_error(std::string("Kalman::Filter::Backward: the ") + fEngine->Title()
+                                     + " has no RTS smoother; use Forward() only.");
 
         fSmoothX = fPostX;
         fSmoothP = fPostP;

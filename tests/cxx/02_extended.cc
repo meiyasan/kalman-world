@@ -96,10 +96,10 @@ int main()
         CHECK(generic.GetEngine()->Kind() == EngineKind::Extended, "generic filter: SetEngine swaps it");
     }
 
-    // --- a model asking for an unimplemented kind must fail loudly ----------
+    // --- a model asking for a kind with no C++ engine must fail loudly --------
     {
         Fixture::ConstantVelocity cv(1, 100.);
-        cv.SetDefaultEngine(EngineKind::Unscented);
+        cv.SetDefaultEngine(EngineKind::Combinatorial);   // the track finder is Python-only
 
         bool threw = false;
         try { Filter f(&cv); }

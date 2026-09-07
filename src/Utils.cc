@@ -26,6 +26,7 @@ namespace Kalman
             case EngineKind::Unscented: return "Unscented";
             case EngineKind::Particle:  return "Particle";
             case EngineKind::Ensemble:  return "Ensemble";
+            case EngineKind::Combinatorial: return "Combinatorial";
         }
         return "Unknown";
     }

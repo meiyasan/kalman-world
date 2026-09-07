@@ -42,10 +42,16 @@ included, so a change on one side has an obvious home on the other:
 | `framework/abstract/metadata.py` | `Kalman/Abstract/Metadata.h` | `Abstract::Metadata` |
 | `framework/engines/linear.py` | `Kalman/Engines/Linear.h` | `Engines::Linear` |
 | `framework/engines/extended.py` | `Kalman/Engines/Extended.h` | `Engines::Extended` |
+| `framework/engines/unscented.py` | `Kalman/Engines/Unscented.h` | `Engines::Unscented` |
+| `framework/engines/particle.py` | `Kalman/Engines/Particle.h` | `Engines::Particle` |
+| `framework/engines/ensemble.py` | `Kalman/Engines/Ensemble.h` | `Engines::Ensemble` |
 | `framework/models/linear.py` | `Kalman/Models/Linear.h` | `Models::Linear` |
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
+| `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
+| `framework/filters/pf.py` | `Kalman/Filters/PF.h` | `Filters::PF` |
+| `framework/filters/enkf.py` | `Kalman/Filters/EnKF.h` | `Filters::EnKF` |
 | `framework/io/record.py` | `Kalman/IO/Record.h` | `IO::Record` (aliased `Kalman::Record`) |
 | `framework/io/collection.py` | `Kalman/IO/Collection.h` | `IO::Collection` |
 | `framework/routers/base.py` | `Kalman/Routers/Base.h` | `Routers::Router` |
@@ -69,22 +75,32 @@ because there is nothing to compile, not because they are missing.
 
 **Not ported yet**, and deliberately absent rather than stubbed:
 `framework/integrators/`, `framework/solvers/`, `framework/controllers/`,
-`framework/native/`, and the Unscented / Particle / Ensemble / Combinatorial
-engines. Of the routers, *training* stays Python-only by design — `routers/nn/`
-is Torch, and the optimiser and data loaders belong there. What crosses is the
-finished policy, via `NN::Torch` or `NN::Onnx`. `EngineKind` still *names* the missing engines
-so a model's declared default survives a round-trip, and asking for one raises
-rather than silently substituting a different algorithm.
+`framework/native/` (the cffi accelerator kernels have no reason to exist here),
+and the Combinatorial engine — a track-*finding* pass over an event of many hits
+per layer, which needs a detector contract (`radii`, `seed_state`) that
+`Kalman::Model` does not carry. Of the routers, *training* stays Python-only by
+design — `routers/nn/` is Torch, and the optimiser and data loaders belong
+there. What crosses is the finished policy, via `NN::Torch` or `NN::Onnx`.
+`EngineKind` still *names* the Combinatorial kind so a model's declared default
+survives a round-trip, and asking a C++ filter for it raises rather than
+silently substituting a different algorithm.
 
 ## The three roles
 
 | Role | Question | Class |
 |------|----------|-------|
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
-| **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended` |
-| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF` |
+| **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble` |
+| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`, `Filters::IMM` |
 
 Dependencies point one way only: **Filter → Engine → Model**.
+
+`Engine::Predict` / `Update` / `Smooth` have a shared Gaussian implementation
+that the Jacobian engines use as is; the sigma-point engine overrides the first
+two, and the two *sample-set* engines (particle cloud, ensemble) override all
+three — they are **stateful**, reseeded by `Engine::Reset()` when a run starts,
+and declare `HasSmoother() == false`, so `Filter::Backward()` refuses instead of
+pretending an RTS pass exists over a cloud.
 
 Plus `Kalman::Record` (one pass, with its covariance band), `Kalman::Diagnostics`
 (NIS / NEES / gains, asked *about* a run rather than being steps *of* one),
@@ -447,7 +463,9 @@ linear filter. Both can be present in one process.
 
 | | Python | C++ |
 |---|---|---|
-| Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | Linear, Extended |
+| Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | Linear, Extended, Unscented, Particle, Ensemble |
+| Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
+| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference | none (a model owns its own stepping) |
 | Controllers / routers | P, PID, LQR, MPPI, Neural, IMM | none yet — the ONNX seam is the plan |
 | Applications | `modules/apps/` | none — they belong downstream |
@@ -457,9 +475,9 @@ linear filter. Both can be present in one process.
 | Singular `S` | `np.linalg.pinv` drops null directions | eigenvalue pseudo-inverse, same semantics |
 | Diagnostics | innovations, gains, NIS, NEES | NIS, NEES |
 
-A model asking for an engine kind C++ does not implement raises rather than
-silently substituting, so a model declaring `Unscented` will not quietly get a
-linear step.
+A model asking for an engine kind C++ does not implement (today: Combinatorial)
+raises rather than silently substituting, so a model declaring it will not
+quietly get a time-series step.
 
 ## Where the Python boundary is, and why
 

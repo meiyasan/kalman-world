@@ -51,6 +51,16 @@ namespace Kalman
 
             virtual EngineKind Kind() const = 0;
 
+            /**
+             * \brief Start a run: a stateless engine ignores it, a stateful one
+             * (particle cloud, ensemble) reseeds itself from the model's x0 / P0.
+             * Kalman::Filter calls it whenever a forward pass begins.
+             */
+            virtual void Reset(const Model &) {}
+
+            /// False for engines whose belief is a sample set: Filter::Backward() then refuses.
+            virtual bool HasSmoother() const { return true; }
+
             // --- per-algorithm hooks -----------------------------------------
             /**
              * \brief Advance the mean one step and report the transition matrix.
@@ -86,9 +96,9 @@ namespace Kalman
              * \param[out] Pk   the predicted covariance.
              * \param[out] F    the transition used.
              */
-            void Predict(const Model &model, const Vector &x, const Matrix &P,
-                         const Vector *u, double t,
-                         Vector &xk, Matrix &Pk, Matrix &F) const;
+            virtual void Predict(const Model &model, const Vector &x, const Matrix &P,
+                                 const Vector *u, double t,
+                                 Vector &xk, Matrix &Pk, Matrix &F) const;
 
             /**
              * \brief Measurement update in Joseph form; NaN channels of \p z are skipped.
@@ -113,9 +123,9 @@ namespace Kalman
              *         measurement was missing, in which case the belief passes through
              *         unchanged — a predict-only step).
              */
-            std::size_t Update(const Model &model, const Vector &x, const Matrix &P,
-                               const Vector &z, double t,
-                               Vector &xOut, Matrix &POut) const;
+            virtual std::size_t Update(const Model &model, const Vector &x, const Matrix &P,
+                                       const Vector &z, double t,
+                                       Vector &xOut, Matrix &POut) const;
 
             /**
              * \brief One reverse Rauch–Tung–Striebel step.
@@ -131,11 +141,11 @@ namespace Kalman
              * \param F                         the transition stored at step k+1.
              * \param[out] xSmooth, PSmooth     the smoothed estimate at step k.
              */
-            void Smooth(const Vector &xPost, const Matrix &PPost,
-                        const Vector &xPriorNext, const Matrix &PPriorNext,
-                        const Vector &xSmoothNext, const Matrix &PSmoothNext,
-                        const Matrix &F,
-                        Vector &xSmooth, Matrix &PSmooth) const;
+            virtual void Smooth(const Vector &xPost, const Matrix &PPost,
+                                const Vector &xPriorNext, const Matrix &PPriorNext,
+                                const Vector &xSmoothNext, const Matrix &PSmoothNext,
+                                const Matrix &F,
+                                Vector &xSmooth, Matrix &PSmooth) const;
 
             /**
              * \brief Innovation `nu = z - h(x)` and its covariance `S`.
