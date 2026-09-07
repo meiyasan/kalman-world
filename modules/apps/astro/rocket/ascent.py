@@ -30,6 +30,9 @@ import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
 from ....framework.constants import KalmanState, KalmanObservable
+# The drawing helpers live with the descent model since apps/rocket.py was
+# split into this package; the interactive plots here draw the same rocket.
+from .descent import _rocket_shape, _add_rocket, _make_reticle, _set_reticle
 from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 

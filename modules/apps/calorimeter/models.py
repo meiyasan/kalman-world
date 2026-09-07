@@ -39,6 +39,11 @@ from typing import List, Optional
 from ...framework.models.linear import LinearKalmanModel
 from ...helpers             import van_loan_discretize
 from ...framework.constants import KalmanState, KalmanObservable
+# The module-level builder went to sampler.py when apps/calorimeter.py was
+# split into this package; the static wrappers below still call the bare name.
+from .sampler import build_measurements, em_shower_profile, hadronic_shower_profile
+from .geometry import (CalorimeterGeometry, CalorimeterState4, CalorimeterState5,
+                       CalorimeterObservable2, CalorimeterObservable3)
 from ...framework.filter    import KalmanFilter as _KalmanFilter
 
 

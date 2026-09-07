@@ -41,6 +41,7 @@ from ...framework.models.linear import LinearKalmanModel
 from ...helpers             import van_loan_discretize
 from ...framework.constants import KalmanState, KalmanObservable
 from ...framework.filter    import KalmanFilter as _KalmanFilter
+from .geometry import CalorimeterGeometry
 
 
 # ── State / observable enumerations ──────────────────────────────────────────

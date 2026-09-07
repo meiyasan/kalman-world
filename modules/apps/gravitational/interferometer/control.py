@@ -59,6 +59,9 @@ from scipy.signal import welch as scipy_welch, find_peaks as scipy_find_peaks
 from ...resonators.oscillators import OscillatorModel, OscillatorBankModel
 from ....framework.controllers.adaptive_qr import AdaptiveQRKalmanController
 from ....framework.control import KalmanController
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:                      # model.py imports this module; the name is only an annotation here
+    from .model import InterferometerModel
 
 
 # ======================================================================

@@ -31,6 +31,7 @@ import numpy as np
 from ....framework.models.extended import ExtendedKalmanModel
 from ....framework.constants import KalmanState, KalmanObservable
 from ....framework.control import KalmanController
+from .transfers import lambert          # the Lambert solver moved to transfers.py with the package split
 from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,

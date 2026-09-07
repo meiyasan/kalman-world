@@ -33,6 +33,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from ...helpers import set_random_seed
+from .boxtrack import SortTracker
 from ...framework.constants import KalmanObservable, KalmanState, KalmanStateFlavor
 from ...framework.io.record import KalmanRecord
 from ...framework.models.linear import LinearKalmanModel
