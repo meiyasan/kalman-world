@@ -91,8 +91,7 @@ because there is nothing to compile, not because they are missing.
 **Not ported yet**, and deliberately absent rather than stubbed: the *learned*
 controllers (`NeuralKalmanController`, `NeuralAdaptiveQRKalmanController` — their
 training is Torch, and what would cross is a trained policy through the ONNX
-seam, as for the routers), `framework/native/` (the cffi accelerator kernels
-have no reason to exist here), the reserved integrator/solver kinds
+seam, as for the routers), the reserved integrator/solver kinds
 (`ImplicitEuler`, `FiniteVolume`, `FiniteElement` — `Make()` throws for them,
 as `resolve_*` does in Python). Of the routers, *training* stays Python-only by
 design — `routers/nn/` is Torch, and the optimiser and data loaders belong
@@ -558,11 +557,23 @@ needs ~21 of them per step for the Jacobian. Profiling agrees: of 5.74 s for a
 6000-step EKF, **88% is `numerical_jacobian` + `model.f`**. Amdahl caps the win at
 ~1.1× even if the covariance algebra became free.
 
-That is exactly why the Python package's existing C acceleration
-(`modules/framework/native/`) engages *only* when it can eliminate callbacks
-entirely — constant matrices, no control callable — and then fuses all N steps
-into one call, for a measured **21× on linear forward, 33.9× geometric mean**.
-The limit is the language boundary, not the language.
+That is exactly why the Python package's native path
+(`modules/framework/native/`) engages *only* where it can eliminate callbacks
+entirely — the arithmetic of a step once the model has been evaluated, and,
+for constant matrices with no control callable, all N steps fused into one
+call. The limit is the language boundary, not the language.
+
+Those kernels are now this library's own `kf_*` / `ukf_*` / `pf_*` / `diag_*`
+entry points (`src/Kernels.cc`): a fused linear pass *is* a `Kalman::Filter`
+over `Engines::Linear`, an update *is* `Utils::Correct`, so a Python model here
+and a C++ model in ROOT+ run one implementation. The Python package used to
+carry a hand-rolled C copy of the same arithmetic on stack arrays, which was
+faster — 21× on the linear forward pass against numpy, where the C++ classes
+with their heap-allocated `Matrix`/`Vector` temporaries measure 2.4× (2.6×
+geometric mean over the kernels, `tests/bench_native.py`). One implementation
+was chosen over the second copy; the speed is recoverable inside the C++
+types (small-buffer storage for the n ≤ 16 case) without touching either side
+of the seam, and that is the next performance step, not a design limit.
 
 So the seam sits where a crossing is paid once per evaluation *into* C++ — a
 compiled model evaluated by a Python engine — and never once per step *out* of

@@ -1,22 +1,33 @@
-"""kalman/framework/native — optional C acceleration of small-matrix Kalman loops.
+"""kalman/framework/native — the C++ core's kernels under the Python engines.
 
-Exposes ``HAS_C_ACCEL`` and, when available, ``ffi``/``lib`` (the cffi handles for
-``kalman.c``) plus ``dptr``/``iptr`` helpers to get raw pointers from contiguous
-numpy arrays. Every call site in the engines guards on ``HAS_C_ACCEL`` and falls
-back to the existing pure-Python path when the extension is missing or fails to
-build (e.g. no C compiler available) -- the C path is purely an accelerator, never
-load-bearing for correctness.
+The Python engines evaluate the *model* themselves — ``f`` at the sigma points,
+``F/H/Q/R`` at the current point, ``h`` at every particle — and hand the arrays to
+``libKalmanFramework`` for the *step*: the covariance prediction, the NaN-masked
+Joseph update, a whole linear pass, the RTS sweep, the sigma-point moments,
+particle weights and resampling, NIS and NEES. One crossing per step with
+arrays, never a callback per point. Those kernels are the same code as the C++
+engines a ROOT+ program runs (``Kalman::Filter``, ``Engine::Smooth``,
+``Utils::Correct`` ...), so a Python model here and a C++ model there run one
+implementation of the arithmetic.
+
+Exposes ``HAS_C_ACCEL`` and, when the library was found (see ``core.py`` for
+where it is looked for), ``ffi``/``lib`` plus ``dptr``/``iptr`` helpers to get raw
+pointers from contiguous numpy arrays. Every call site in the engines guards on
+``HAS_C_ACCEL`` and falls back to the pure-Python path when the library is not
+built -- the C++ path is faster and shared, never load-bearing for correctness.
+
+This module used to compile its own C copy of these kernels (``kalman.c``); a
+second implementation of a Kalman step was a second place for it to be wrong.
 """
 from __future__ import annotations
 import numpy as np
 
-try:
-    from ._kalman_native import ffi, lib
-    HAS_C_ACCEL = True
-except ImportError:
-    ffi = None
-    lib = None
-    HAS_C_ACCEL = False
+from . import core
+
+ffi = core.ffi
+lib = core.lib
+HAS_C_ACCEL = core.HAS_CXX_CORE
+LOAD_ERROR = core.LOAD_ERROR
 
 
 def as_contiguous(arr, dtype=np.float64):

@@ -77,18 +77,12 @@ namespace Kalman::Engines
         // Systematic resampling: one uniform draw, N evenly spaced positions.
         const std::size_t N = fParticles.size();
         std::uniform_real_distribution<double> uniform(0., 1.);
-        const double u0 = uniform(fRandom);
+        std::vector<int> indices(N);
+        Utils::SystematicResample(N, fWeights.data(), uniform(fRandom), indices.data());
 
         std::vector<Vector> next;
         next.reserve(N);
-        double cumulative = fWeights[0];
-        std::size_t j = 0;
-        for (std::size_t i = 0; i < N; ++i)
-        {
-            const double position = (static_cast<double>(i) + u0) / static_cast<double>(N);
-            while (position > cumulative && j + 1 < N) cumulative += fWeights[++j];
-            next.push_back(fParticles[j]);
-        }
+        for (std::size_t i = 0; i < N; ++i) next.push_back(fParticles[static_cast<std::size_t>(indices[i])]);
         fParticles.swap(next);
         fWeights.assign(N, 1. / static_cast<double>(N));
         ++fResamples;

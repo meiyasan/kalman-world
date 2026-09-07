@@ -124,6 +124,38 @@ namespace Kalman::Utils
 
     /// Condition number from the symmetric eigenvalues; infinity when singular.
     double ConditionNumber(const Matrix &M);
+
+    // --- the steps themselves, on already-compressed channels ------------------
+    // These are the arithmetic behind Engine::Update, the sigma-point moments and
+    // the particle resampler, exposed so the C kernels the Python engines call are
+    // the same code and not a second implementation.
+
+    /**
+     * \brief The Kalman correction from a residual: gain, mean, Joseph-form covariance.
+     * \param Hc  (p, n) observation rows of the channels present.
+     * \param Rc  (p, p) their noise.
+     * \param yc  (p) the residual `z - h(x)` on those channels.
+     * \param x, P the prediction.
+     * \param[out] xOut, POut the correction.
+     */
+    void Correct(const Matrix &Hc, const Matrix &Rc, const Vector &yc,
+                 const Vector &x, const Matrix &P, Vector &xOut, Matrix &POut);
+
+    /**
+     * \brief `out = sum_s w[s] (A[s] - a)(B[s] - b)^T` over `nsigma` rows.
+     *
+     * Flat row-major inputs: A is (nsigma, na), B is (nsigma, nb), out is (na, nb).
+     * The one accumulation every sigma-point moment needs.
+     */
+    void WeightedOuterSum(std::size_t nsigma, std::size_t na, std::size_t nb,
+                          const double *w, const double *A, const double *a,
+                          const double *B, const double *b, double *out);
+
+    /**
+     * \brief Systematic resampling: `indices[i]` is the particle at position `(i + u0) / n`
+     * on the cumulative weight; \p u0 is one uniform draw in [0, 1).
+     */
+    void SystematicResample(std::size_t n, const double *weights, double u0, int *indices);
 }
 
 #endif // KALMAN_UTILS_H

@@ -27,7 +27,7 @@ def importlib_available(name: str) -> bool:
     return importlib.util.find_spec(name) is not None
 
 
-_PROTO = re.compile(r"^\s*(?:[A-Za-z_][\w ]*\s*\*?\s*)\b(kalman_\w+)\s*\(", re.M)
+_PROTO = re.compile(r"^\s*(?:[A-Za-z_][\w ]*\s*\*?\s*)\b((?:kalman|kf|pf|ukf|diag)_\w+)\s*\(", re.M)
 
 
 def _prototypes(text: str) -> set:

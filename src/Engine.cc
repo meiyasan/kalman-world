@@ -47,18 +47,8 @@ namespace Kalman
         Vector y(z);
         y -= zpred;
 
-        const Vector yc = Utils::Compress(y, keep);
-        const Matrix Hc = Utils::CompressRows(H, keep);
-        const Matrix Rc = Utils::CompressBoth(model.R(t), keep);
-
-        Matrix S = Utils::Similarity(Hc, P);              // H P H^T
-        S += Rc;
-
-        const Matrix K = P * Hc.Transpose() * Utils::Inverse(S);
-
-        xOut += K * yc;
-        POut = Utils::JosephForm(K, Hc, P, Rc);
-
+        Utils::Correct(Utils::CompressRows(H, keep), Utils::CompressBoth(model.R(t), keep),
+                       Utils::Compress(y, keep), x, P, xOut, POut);
         return keep.size();
     }
 

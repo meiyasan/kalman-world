@@ -18,20 +18,24 @@ namespace Kalman::Engines
 {
     namespace
     {
-        // sum_i w_i (A_i - a)(B_i - b)^T — the one accumulation every moment here needs.
+        // Rows of sigma points, flat, for the shared accumulation in Utils.
+        std::vector<double> Pack(const std::vector<Vector> &pts)
+        {
+            std::vector<double> flat;
+            flat.reserve(pts.size() * pts.front().Size());
+            for (const Vector &p : pts) flat.insert(flat.end(), p.Data(), p.Data() + p.Size());
+            return flat;
+        }
+
+        // sum_i w_i (A_i - a)(B_i - b)^T — the one accumulation every moment here
+        // needs, and the same code the Python engine reaches through the C kernels.
         Matrix WeightedOuter(const std::vector<double> &w,
                              const std::vector<Vector> &A, const Vector &a,
                              const std::vector<Vector> &B, const Vector &b)
         {
             Matrix C(a.Size(), b.Size(), 0.);
-            for (std::size_t s = 0; s < A.size(); ++s)
-                for (std::size_t i = 0; i < a.Size(); ++i)
-                {
-                    const double da = w[s] * (A[s](i) - a(i));
-                    if (da == 0.) continue;
-                    for (std::size_t j = 0; j < b.Size(); ++j)
-                        C(i, j) += da * (B[s](j) - b(j));
-                }
+            Utils::WeightedOuterSum(A.size(), a.Size(), b.Size(), w.data(),
+                                    Pack(A).data(), a.Data(), Pack(B).data(), b.Data(), C.Data());
             return C;
         }
 

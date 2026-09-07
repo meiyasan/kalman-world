@@ -354,6 +354,45 @@ namespace Kalman::Utils
         return out;
     }
 
+    void Correct(const Matrix &Hc, const Matrix &Rc, const Vector &yc,
+                 const Vector &x, const Matrix &P, Vector &xOut, Matrix &POut)
+    {
+        Matrix S = Similarity(Hc, P);                  // H P H^T
+        S += Rc;
+        const Matrix K = P * Hc.Transpose() * Inverse(S);
+        xOut = x;
+        xOut += K * yc;
+        POut = JosephForm(K, Hc, P, Rc);
+    }
+
+    void WeightedOuterSum(std::size_t nsigma, std::size_t na, std::size_t nb,
+                          const double *w, const double *A, const double *a,
+                          const double *B, const double *b, double *out)
+    {
+        for (std::size_t i = 0; i < na * nb; ++i) out[i] = 0.;
+        for (std::size_t s = 0; s < nsigma; ++s)
+            for (std::size_t i = 0; i < na; ++i)
+            {
+                const double da = w[s] * (A[s * na + i] - a[i]);
+                if (da == 0.) continue;
+                for (std::size_t j = 0; j < nb; ++j) out[i * nb + j] += da * (B[s * nb + j] - b[j]);
+            }
+    }
+
+    void SystematicResample(std::size_t n, const double *weights, double u0, int *indices)
+    {
+        // Walk the cumulative weight once; the last entry is pinned to 1 so
+        // round-off in the sum cannot leave the final positions unmatched.
+        double cumulative = weights[0];
+        std::size_t j = 0;
+        for (std::size_t i = 0; i < n; ++i)
+        {
+            const double position = (static_cast<double>(i) + u0) / static_cast<double>(n);
+            while (j + 1 < n && cumulative < position) cumulative += weights[++j];
+            indices[i] = static_cast<int>(j);
+        }
+    }
+
     double ConditionNumber(const Matrix &M)
     {
         Vector values;

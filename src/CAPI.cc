@@ -172,6 +172,13 @@ namespace
     }
 }
 
+// The kernels (Kernels.cc) share the error slot without seeing the helpers above.
+namespace Kalman::CAPI
+{
+    void SetError(const std::string &what) { Fail(what); }
+    void ClearError() { Ok(); }
+}
+
 extern "C" {
 
 /* --- library ------------------------------------------------------------ */

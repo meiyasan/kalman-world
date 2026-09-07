@@ -82,15 +82,18 @@ $ make conda
 
 ## Native acceleration (optional)
 
-A CFFI fast path accelerates the linear engine's inner loop.
+The Python engines evaluate the *model* in Python and hand the *step* — the
+covariance prediction, the Joseph update, a whole linear pass, the RTS sweep,
+the sigma-point moments, particle weights, NIS/NEES — to `libKalmanFramework`,
+the same C++ classes a ROOT+ program runs (see [C++ Library](15_Cxx-Library.md)).
 
 ```bash
-$ make accel        # python -m modules.framework.native.cffi
+$ make accel        # = make build install: builds libKalmanFramework into var/install
 ```
 
-If it does not build, the framework silently uses the pure-Python fallback —
-identical results, slower. `make tests` ends with `tests/bench_native.py`, which
-reports which path is actually in use.
+Without the library (no cmake, or not built) the framework silently uses its
+pure-Python path — identical results, slower. `make tests` ends with
+`tests/bench_native.py`, which reports which path is actually in use.
 
 ---
 

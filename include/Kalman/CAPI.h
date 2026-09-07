@@ -233,6 +233,86 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
                       double *x_prior, double *P_prior, double *x_post, double *P_post,
                       double *x_smooth, double *P_smooth, double *innovations, double *transitions);
 
+/* --- kernels: the framework's arithmetic for a model that lives elsewhere ---
+ *
+ * The Python engines evaluate the model themselves -- f at the sigma points, F/H/Q/R
+ * at the current point, h at every particle -- and hand the arrays here for the
+ * step: covariance prediction, the NaN-masked Joseph update, a whole linear pass,
+ * the RTS sweep, the sigma-point moments, particle weights and resampling, NIS and
+ * NEES. One crossing per step with arrays, never a callback per point. Every one of
+ * these is the same code as the C++ engines above (Kalman::Filter, Engine::Smooth,
+ * Utils::Correct, Utils::WeightedOuterSum, Utils::SystematicResample), so a Python
+ * model on these kernels and a C++ model in ROOT+ run one implementation.
+ *
+ * All arrays row-major double; dimensions n (state), m (measurement), l (control);
+ * a NaN in a measurement marks a channel that did not arrive. The void functions
+ * leave their outputs NaN and kalman_last_error() set if anything goes wrong.
+ */
+
+/* x_out = F x (+ B u when B and u are given and l > 0); P_out = F P F^T + L Q L^T (L NULL => + Q). */
+void kf_predict(int n, int l,
+                const double *F, const double *x, const double *P,
+                const double *B, const double *u,
+                const double *L, const double *Q,
+                double *x_out, double *P_out);
+
+/* Joseph-form update; NaN channels of z are dropped. Returns the channels used, 0 = pass-through. */
+int kf_update(int n, int m,
+              const double *H, const double *x, const double *P,
+              const double *z, const double *R,
+              double *x_out, double *P_out);
+
+/* The same from a precomputed residual y = z - h(x) (the nonlinear engines' path). */
+int kf_update_residual(int n, int m,
+                        const double *H, const double *x, const double *P,
+                        const double *y, const double *R,
+                        double *x_out, double *P_out);
+
+/* A whole linear forward pass -- Kalman::Filter over Engines::Linear -- with constant matrices.
+ * zk: N x m, uk: N x l or NULL; outputs N x n, N x n x n, innovations N x m (NaN kept). */
+void kf_forward_linear(int n, int m, int l, int N,
+                        const double *F, const double *H,
+                        const double *Q, const double *R,
+                        const double *B, const double *L,
+                        const double *zk, const double *uk,
+                        const double *x0, const double *P0,
+                        double *x_prior, double *P_prior,
+                        double *x_post, double *P_post,
+                        double *innovations);
+
+/* The RTS sweep over N stored steps with one constant transition F. */
+void kf_backward_rts(int n, int N,
+                      const double *x_post, const double *P_post,
+                      const double *x_prior, const double *P_prior,
+                      const double *F,
+                      double *x_smooth, double *P_smooth);
+
+/* logw[i] += -0.5 (z - zp[i])^T Rinv (z - zp[i]); zp is n_particles x m. */
+void pf_weight_update(int n_particles, int m,
+                       const double *z, const double *zp,
+                       const double *Rinv, double *logw);
+
+/* indices[i] = the particle at cumulative position (i + u0) / n; u0 one uniform draw. */
+void pf_systematic_resample(int n, const double *weights, double u0, int *indices);
+
+/* P_out = sum_s Wc[s] (Y[s] - mean)(Y[s] - mean)^T; Y is n_sigma x n. */
+void ukf_weighted_outer_sum(int n_sigma, int n,
+                             const double *Wc, const double *Y, const double *mean,
+                             double *P_out);
+
+/* C_out = sum_s Wc[s] A[s] B[s]^T for already-centred rows A (n_sigma x na), B (n_sigma x nb). */
+void ukf_weighted_cross_sum(int n_sigma, int na, int nb,
+                             const double *Wc, const double *A, const double *B,
+                             double *C_out);
+
+/* nis[k] = nu_k^T S_k^-1 nu_k over N steps (nu: N x m, S: N x m x m). */
+void diag_nis_batch(int N, int m,
+                     const double *nu, const double *S, double *nis);
+
+/* nees[k] = e_k^T P_k^-1 e_k over N steps (e: N x n, P: N x n x n), pseudo-inverse when singular. */
+void diag_nees_batch(int N, int n,
+                      const double *e, const double *P, double *nees);
+
 #ifdef __cplusplus
 }
 #endif
