@@ -329,3 +329,50 @@ class TestTransformerArchitecture(_ArchitectureTrainingMixin, unittest.TestCase)
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestRouterPersistence(unittest.TestCase):
+    """A trained router round-trips through save()/load(), and cached_fit() skips the fit."""
+
+    def _data(self, seed=0):
+        rng = np.random.default_rng(seed)
+        X = [rng.random((60, 2)) + i for i in range(3)]
+        y = [rng.integers(0, 2, 60) for _ in range(3)]
+        return X, y
+
+    def test_save_load_round_trip(self):
+        import tempfile, os
+        from modules.framework.routers import NeuralRouter
+        from modules.framework.routers.nn import MLP
+        X, y = self._data()
+        r = NeuralRouter(model=MLP(hidden=8), window=4).fit(X, y, epochs=3, seed=0)
+        probe = np.arange(4 * 2, dtype=float).reshape(4, 2) * 0.1
+        before = r.route(probe, 0, np.array([0.5, 0.5]))
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "router.pt")
+            r.save(path)
+            fresh = NeuralRouter(model=MLP(hidden=8), window=4)
+            with self.assertRaises(RuntimeError):
+                NeuralRouter(model=MLP(hidden=8)).save(os.path.join(d, "none.pt"))   # untrained
+            fresh.load(path)
+            np.testing.assert_allclose(fresh.route(probe, 0, np.array([0.5, 0.5])), before, atol=1e-12)
+            from modules.framework.routers.nn import CNN
+            with self.assertRaises(ValueError):
+                NeuralRouter(model=CNN()).load(path)        # a different architecture
+
+    def test_cached_fit_skips_the_second_fit(self):
+        import tempfile, os
+        from modules.helpers import cached_fit
+        calls = []
+        store = {}
+        def fit():
+            calls.append("fit"); store["w"] = 42; return "fitted"
+        def save(path): open(path, "w").write(str(store["w"]))
+        def load(path): store["w"] = int(open(path).read()); return "loaded"
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "w.txt")
+            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=False), "fitted")
+            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=False), "loaded")
+            self.assertEqual(calls, ["fit"])
+            self.assertEqual(cached_fit(path, fit, load=load, save=save, force=True, verbose=False), "fitted")
+            self.assertEqual(calls, ["fit", "fit"])

@@ -501,3 +501,53 @@ def kplot(signals, fs, labels=None, xlim=None):
     axes[-1].set_xlabel("Temps [s]")
     plt.tight_layout()
     plt.subplots_adjust(hspace=0, right=0.85)
+
+
+# ----------------------------------------------------------------------------
+#  Caching a fit -- for notebooks whose training dominates their run time
+# ----------------------------------------------------------------------------
+def notebook_cache(name, root=None):
+    """The cache directory for a notebook: ``<root>/<name>``, created on demand.
+
+    ``root`` defaults to ``$KALMAN_NOTEBOOK_CACHE`` or, failing that, ``cache/``
+    next to the current working directory -- which is the notebook's own folder
+    when run from Jupyter or ``nbconvert``, so ``share/notebooks/cache/<name>/``
+    is where the trained artefacts of the shipped notebooks live.
+    """
+    import os
+    from pathlib import Path
+    base = Path(root or os.environ.get("KALMAN_NOTEBOOK_CACHE") or Path.cwd() / "cache")
+    path = base / str(name)
+    path.mkdir(parents=True, exist_ok=True)
+    return path
+
+
+def cached_fit(path, fit, *, load, save, force=None, verbose=True):
+    """Run ``fit()`` unless ``path`` already holds its result, in which case ``load(path)``.
+
+    After a fit the result is stored with ``save(path)``. A training step that takes
+    minutes then costs a file read on every later run of the notebook -- and the
+    plots downstream see the very same weights, not a retrained near-copy.
+
+    ``force=True`` (or ``KALMAN_CACHE_REFRESH=1`` in the environment) retrains and
+    overwrites, which is what to do after changing the training parameters: the
+    cache is keyed by path alone, on purpose, so that a notebook stays a plain
+    notebook and a stale entry is deleted rather than reasoned about.
+
+    Returns whatever ``fit()`` returned, or ``load(path)``'s result on a cache hit.
+    """
+    import os
+    from pathlib import Path
+    path = Path(path)
+    if force is None:
+        force = os.environ.get("KALMAN_CACHE_REFRESH", "").strip() not in ("", "0", "false", "no")
+    if path.exists() and not force:
+        if verbose:
+            print(f"[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to retrain)")
+        return load(path)
+    result = fit()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    save(path)
+    if verbose:
+        print(f"[cache] saved {path.name}")
+    return result

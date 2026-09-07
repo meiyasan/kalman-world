@@ -129,6 +129,35 @@ class NeuralRouter(KalmanRouter):
 
     # ── export ────────────────────────────────────────────────────────────────
 
+    # ------------------------------------------------------------------
+    # Persistence: a trained router, back into Python
+    # ------------------------------------------------------------------
+    def save(self, path):
+        """Store the trained architecture and the feature normalisation at ``path``
+        (a torch pickle), so a notebook can :meth:`load` it instead of training
+        again. For a policy that must leave Python, use :meth:`export_onnx`."""
+        import torch
+        if not self._is_trained:
+            raise RuntimeError("NeuralRouter.save: nothing to save -- call fit() first.")
+        torch.save({"model": self.model, "x_mean": self._x_mean, "x_std": self._x_std,
+                    "window": self.window, "arch": type(self.model).__name__}, path)
+        return path
+
+    def load(self, path):
+        """Restore what :meth:`save` stored. The architecture object is replaced by the
+        saved one; a mismatch with the one this router was built with is refused
+        rather than silently swapped, since the notebook's parameters would then
+        no longer describe what runs."""
+        import torch
+        data = torch.load(path, weights_only=False)
+        if data.get("arch") != type(self.model).__name__:
+            raise ValueError(f"NeuralRouter.load: {path} holds a {data.get('arch')}, this router "
+                             f"was built with a {type(self.model).__name__}.")
+        self.model = data["model"]
+        self._x_mean, self._x_std = data["x_mean"], data["x_std"]
+        self.window = int(data.get("window", self.window))
+        return self
+
     def export_onnx(self, path, *, opset: int = 17, ir_version: int | None = 9,
                     bake_normalisation: bool = True):
         """Write the trained policy to ONNX, for execution by ``Kalman::Routers::Neural``.
