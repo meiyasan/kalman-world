@@ -551,3 +551,30 @@ def cached_fit(path, fit, *, load, save, force=None, verbose=True):
     if verbose:
         print(f"[cache] saved {path.name}")
     return result
+
+
+def cached(path, compute, *, force=None, verbose=True):
+    """``compute()`` once, pickled at ``path``; later calls return the stored result.
+
+    The counterpart of :func:`cached_fit` for a *result* rather than a trained
+    object -- a multi-seed comparison, a benchmark table -- anything picklable.
+    Same refresh rule: ``force=True`` or ``KALMAN_CACHE_REFRESH=1`` recomputes.
+    """
+    import os
+    import pickle
+    from pathlib import Path
+    path = Path(path)
+    if force is None:
+        force = os.environ.get("KALMAN_CACHE_REFRESH", "").strip() not in ("", "0", "false", "no")
+    if path.exists() and not force:
+        if verbose:
+            print(f"[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to recompute)")
+        with open(path, "rb") as fh:
+            return pickle.load(fh)
+    result = compute()
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with open(path, "wb") as fh:
+        pickle.dump(result, fh, protocol=pickle.HIGHEST_PROTOCOL)
+    if verbose:
+        print(f"[cache] saved {path.name}")
+    return result

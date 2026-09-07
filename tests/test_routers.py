@@ -376,3 +376,19 @@ class TestRouterPersistence(unittest.TestCase):
             self.assertEqual(calls, ["fit"])
             self.assertEqual(cached_fit(path, fit, load=load, save=save, force=True, verbose=False), "fitted")
             self.assertEqual(calls, ["fit", "fit"])
+
+    def test_cached_result_is_computed_once(self):
+        import tempfile, os
+        from modules.helpers import cached
+        calls = []
+        def compute():
+            calls.append(1); return {"a": np.arange(3), "b": 2.5}
+        with tempfile.TemporaryDirectory() as d:
+            path = os.path.join(d, "r.pkl")
+            first = cached(path, compute, verbose=False)
+            second = cached(path, compute, verbose=False)
+            self.assertEqual(len(calls), 1)
+            np.testing.assert_array_equal(first["a"], second["a"])
+            self.assertEqual(second["b"], 2.5)
+            cached(path, compute, force=True, verbose=False)
+            self.assertEqual(len(calls), 2)
