@@ -19,6 +19,12 @@ when a secret *is* set, a valid token is required and anything missing/invalid/
 expired is denied.  Optional deps ``pyjwt`` + ``bcrypt`` (``kalman[auth]``),
 lazily imported; secrets are never logged.
 
+Tokens carry ``sub`` (the user), ``scopes``, ``iat`` and ``exp``. Set
+``KALMAN_JWT_ISSUER`` and/or ``KALMAN_JWT_AUDIENCE`` to also stamp and require
+``iss``/``aud``, so a token minted for one deployment is refused by another
+that shares the secret.  A server that listens on a network interface refuses
+to start without auth (:func:`check_server`).
+
 CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify``.
 """
 from __future__ import annotations
@@ -45,6 +51,97 @@ def enabled() -> bool:
     return _secret() is not None
 
 
+#: HS256 needs a key at least as long as its output (RFC 7518 §3.2).
+MIN_SECRET_BYTES = 32
+
+
+def _decode(credential: str) -> dict:
+    """Verify signature, expiry and (when configured) issuer/audience."""
+    try:
+        import jwt
+    except ImportError as e:                     # fail-closed
+        raise AuthError("auth is enabled but PyJWT is not installed "
+                        "(pip install 'kalman[auth]').") from e
+    iss = os.environ.get("KALMAN_JWT_ISSUER") or None
+    aud = os.environ.get("KALMAN_JWT_AUDIENCE") or None
+    try:
+        return jwt.decode(credential, _secret(), algorithms=["HS256"],
+                          issuer=iss, audience=aud,
+                          options={"require": ["exp", "sub"]})
+    except Exception as e:                       # invalid signature / expired / malformed
+        raise AuthError(f"invalid or expired token: {type(e).__name__}.") from e
+
+
+def claims(credential: str | None) -> dict | None:
+    """The verified claims of ``credential`` with no scope check, or ``None``
+    when auth is disabled. Raises :class:`AuthError` on a bad token."""
+    if not enabled():
+        return None
+    if not credential:
+        raise AuthError("a bearer token is required.")
+    return _decode(credential)
+
+
+def identity(credential: str | None) -> str | None:
+    """Who is calling: the token's ``sub``, or ``None`` when auth is disabled."""
+    c = claims(credential)
+    return None if c is None else c.get("sub")
+
+
+def has_scope(credential: str | None, scope: str) -> bool:
+    try:
+        return authorize(credential, scope)
+    except AuthError:
+        return False
+
+
+def require_owner(record: dict, credential: str | None, what: str):
+    """Allow a change to a shared record only for its owner or an admin.
+
+    With auth disabled everybody is the local user, so anything goes. A record
+    created while auth was off has no owner; only an admin may then change it."""
+    if not enabled():
+        return
+    who = identity(credential)
+    if has_scope(credential, "admin"):
+        return
+    if record.get("owner") is not None and record.get("owner") == who:
+        return
+    raise AuthError(f"{what} belongs to {record.get('owner') or 'nobody'}; "
+                    "only its owner or an admin may change it.")
+
+
+_LOOPBACK = ("127.0.0.1", "localhost", "::1")
+
+
+def check_server(host: str, *, service: str, verified_elsewhere: bool = False):
+    """Refuse to serve an open API on a network interface.
+
+    A server bound to loopback is the local user's own; one bound to anything
+    else (``0.0.0.0``, a LAN address, a container port) must authenticate,
+    unless ``KALMAN_ALLOW_ANONYMOUS=1`` says the network itself is trusted.
+    ``verified_elsewhere`` is for the MCP server in front of the REST API: the
+    REST API checks the tokens, so the MCP server needs no secret of its own."""
+    if enabled():
+        if len(_secret().encode()) < MIN_SECRET_BYTES:
+            raise AuthError(f"{service}: KALMAN_JWT_SECRET is shorter than "
+                            f"{MIN_SECRET_BYTES} bytes; HS256 needs at least that "
+                            "(python -c 'import secrets; print(secrets.token_urlsafe(48))').")
+        return
+    if verified_elsewhere or host in _LOOPBACK:
+        return
+    if os.environ.get("KALMAN_ALLOW_ANONYMOUS") == "1":
+        import sys
+        print(f"WARNING: {service} listens on {host} WITHOUT authentication "
+              "(KALMAN_ALLOW_ANONYMOUS=1). Anybody who can reach it can register "
+              "models and load plugins.", file=sys.stderr)
+        return
+    raise AuthError(f"{service}: refusing to listen on {host} without authentication. "
+                    "Set KALMAN_JWT_SECRET (>= 32 bytes) and give clients a token from "
+                    "`make api-token`, bind to 127.0.0.1, or set KALMAN_ALLOW_ANONYMOUS=1 "
+                    "on a network you trust.")
+
+
 # ---------------------------------------------------------------------------
 # Runtime authorization (inbound)
 # ---------------------------------------------------------------------------
@@ -58,15 +155,7 @@ def authorize(credential: str | None, scope: str) -> bool:
         return True                              # auth disabled — local dev
     if not credential:
         raise AuthError(f"a bearer token with scope '{scope}' is required.")
-    try:
-        import jwt
-    except ImportError as e:                     # fail-closed
-        raise AuthError("auth is enabled but PyJWT is not installed "
-                        "(pip install 'kalman[auth]').") from e
-    try:
-        payload = jwt.decode(credential, secret, algorithms=["HS256"])
-    except Exception as e:                       # invalid signature / expired / malformed
-        raise AuthError(f"invalid or expired token: {type(e).__name__}.") from e
+    payload = _decode(credential)
     scopes = set(payload.get("scopes", []))
     if scope in scopes or "admin" in scopes:
         return True
@@ -88,6 +177,10 @@ def mint_token(user: str, scopes, *, secret: str | None = None, exp_hours: float
         raise ValueError(f"unknown scopes {bad}; choose from {SCOPES}.")
     now = int(time.time())
     payload = {"sub": user, "scopes": scopes, "iat": now, "exp": now + int(exp_hours * 3600)}
+    if os.environ.get("KALMAN_JWT_ISSUER"):
+        payload["iss"] = os.environ["KALMAN_JWT_ISSUER"]
+    if os.environ.get("KALMAN_JWT_AUDIENCE"):
+        payload["aud"] = os.environ["KALMAN_JWT_AUDIENCE"]
     return jwt.encode(payload, secret, algorithm="HS256")
 
 

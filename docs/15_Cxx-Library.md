@@ -427,6 +427,15 @@ accepted only when it already lies inside one of them, after `realpath`. It is
 gated by its own scope, `load_plugins` — never by `write_models`, which only
 ever writes data — and the MCP tool of the same name exposes exactly that.
 
+**Load once, known everywhere.** `load_plugin` also records the plugin name in
+the shared registry (see [REST API](10_REST-API.md#the-shared-registry)). The
+REST server, the MCP server and every other process on the same state
+directory load it again by name, from their own allow-listed directories. This
+also occurs after a restart. Subscribers get a `plugin.loaded` event that lists
+the new models. Thus a model written in C++ (in a ROOT+ analysis, for
+example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
+and Unity, agents and other users can then use it as a spec base.
+
 ## Integrating with root-plus
 
 `examples/cxx/ballistics_root.cc` is the worked demonstrator — a projectile under

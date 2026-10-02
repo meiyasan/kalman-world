@@ -156,7 +156,9 @@ files are gitignored and must stay that way.
 ## Through the API
 
 `fetch` is exposed on the facade, and therefore over MCP and REST, gated by the
-`send_measurement` scope:
+`send_measurement` scope. A raw `file`, `remote` or `sensor` provider also
+needs `admin`: these kinds read server files or use the server's outbound
+credentials. See [Authentication](12_Authentication.md).
 
 ```python
 from kalman.api import fetch, run_filter
@@ -172,6 +174,31 @@ $ curl -X POST localhost:8000/fetch -H 'Content-Type: application/json' \
 
 Note the shape: `{"kind": …, "init": {…}}` is the constructor, and `query` is
 what goes to `fetch()`.
+
+### Named sources
+
+A source is a provider with a name, kept in the shared registry. You set it up
+one time, and then all clients use it by name:
+
+```python
+from kalman.api import register_source, push_measurements, fetch, run_filter
+
+register_source("lab-1", {"kind": "remote",
+                          "init": {"base_url": "https://lab.example/api",
+                                   "credential_name": "lab"}})       # admin
+register_source("scene-1", {"kind": "push", "m": 1})                # write_models
+
+push_measurements("scene-1", [[0.01], [0.02]], time=[0.0, 0.01])    # a device writes
+fetch("scene-1", {"since": 0})                                      # anyone reads
+run_filter({"base": "demo_cv"}, source="lab-1")                     # measure + filter
+```
+
+A `push` source is a buffer in the registry, not a provider class. Devices,
+simulations and game engines send rows into it over REST or MCP. Each push
+gives subscribers a `measurement.received` event. The query of a named source
+can only narrow it. It cannot change the `path` of a file source or the
+`base_url` of a remote source. The REST routes are in
+[REST API](10_REST-API.md#measurement-sources).
 
 ## Writing your own
 

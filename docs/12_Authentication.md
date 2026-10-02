@@ -101,20 +101,46 @@ no password can be typed. Guard the secret accordingly.
 $ curl -s localhost:8000/catalog -H "Authorization: Bearer $TOKEN"
 ```
 
-`401` when no token was presented, `403` when the token lacks the scope.
+`401` when no token was presented, or the token is forged or expired. The
+response has `WWW-Authenticate: Bearer`. `403` when the token does not have
+the scope. `GET /whoami` shows what a token is:
 
-**MCP** — a `token` argument on the tool call:
+```bash
+$ curl -s localhost:8000/whoami -H "Authorization: Bearer $TOKEN"
+{"auth":true,"user":"alice","scopes":["read","send_measurement"],"exp":1790000000}
+```
+
+**MCP over HTTP** (`sse`, `streamable-http`): the same `Authorization: Bearer`
+header, on the connection. The server checks the token before a session opens.
+Thus a client without a valid token gets `401` and cannot call any tool. Each
+tool then checks its own scope.
+
+```json
+{"mcpServers": {"kalman": {"type": "http", "url": "https://kalman.example/mcp",
+                           "headers": {"Authorization": "Bearer eyJ…"}}}}
+```
+
+**MCP over stdio**: there is no header. The server uses `KALMAN_MCP_TOKEN` from
+its launch environment, so the agent never has to handle the token:
+
+```bash
+$ python tools/mcp_install.py claude-code --token "$TOKEN" --jwt-secret "$KALMAN_JWT_SECRET"
+```
+
+A client that cannot set either one can still give the `token` argument on
+each tool call:
 
 ```json
 {"name": "run_filter", "arguments": {"spec": {…}, "data": [...], "token": "eyJ…"}}
 ```
 
-Register the client with the token baked into its launch environment so the
-agent never has to handle it:
+The order is: the `token` argument, then the `Authorization` header, then
+`KALMAN_MCP_TOKEN` (stdio only).
 
-```bash
-$ python tools/mcp_install.py claude-code --token "$TOKEN" --jwt-secret "$KALMAN_JWT_SECRET"
-```
+When the MCP server runs with `KALMAN_API_URL`, it does not have the secret.
+It sends the caller's token to the REST API. The REST API checks the token for
+the connection (`/whoami`, cached 30 s) and for each call. Thus there is only
+one place that checks tokens.
 
 **Python** — pass `credential=` to the verbs that take it:
 
@@ -151,6 +177,35 @@ Token payload:
 {"sub": "marco", "scopes": ["read", "send_measurement"], "iat": …, "exp": …}
 ```
 
+`exp` and `sub` are required. A token without them is refused.
+
+**Issuer and audience.** Set `KALMAN_JWT_ISSUER` and/or `KALMAN_JWT_AUDIENCE`
+on the machine that mints and on the servers. New tokens then contain
+`iss`/`aud`, and the servers refuse tokens without the correct values. Use this
+when two deployments (for example staging and production) must not accept each
+other's tokens.
+
+**A server does not start open on a network.** `python -m kalman.rest` and
+`python -m kalman.mcp` (HTTP transports) do not start in these conditions:
+
+- auth is off and the server listens on an address other than loopback;
+- the secret is shorter than 32 bytes (HS256 needs at least that).
+
+Set `KALMAN_ALLOW_ANONYMOUS=1` to override the first rule, but only on a
+network you trust. A server on `127.0.0.1` with auth off is the local user's
+own server, and it starts as before.
+
+**Ownership.** A model or source in the shared registry records the `sub` of
+the token that created it. Only that user or an `admin` can replace or delete
+it. An entry created while auth was off has no owner. Only an admin can change
+it.
+
+**Providers that reach outside the server.** A raw `file`, `remote` or `sensor`
+provider in `fetch` needs the `admin` scope, and a source of these kinds also
+needs `admin` to set up. Without this rule, a `send_measurement` token could
+read any file on the server, or make the server send its outbound credential to
+a host that the caller chooses. Other users fetch these sources by name.
+
 There is no revocation list. A leaked token is valid until it expires — mint
 short-lived tokens for anything you hand out.
 
@@ -168,9 +223,14 @@ of the API — the tokens are bearer credentials and travel in a header.
 introspect, filter, forecast and fetch, but `register_model` and `scaffold_app`
 are denied.
 
+**A model author** (a person who publishes models from C++/ROOT or Python):
+`SCOPES=read,send_measurement,write_models`. Their models are shared with all
+users, and only they (or an admin) can change them. Loading a compiled plugin
+also needs `load_plugins`, because a plugin runs code on the server.
+
 **A game client or embedded consumer** (see [REST API](10_REST-API.md)).
-`SCOPES=send_measurement`, short expiry, and never an `admin` token — anything
-shipped in a build is public.
+`SCOPES=read,send_measurement`: it can push rows to a source and filter them.
+Use a short expiry, and never an `admin` token. Anything in a build is public.
 
 **CI.** `--no-verify` with the secret from the runner's own secret store.
 

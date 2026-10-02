@@ -31,7 +31,7 @@ class TestRest(unittest.TestCase):
         self.client = TestClient(create_app())
 
     def test_health_and_catalog(self):
-        self.assertEqual(self.client.get("/healthz").json(), {"ok": True})
+        self.assertEqual(self.client.get("/healthz").json(), {"ok": True, "auth": False})
         cat = self.client.get("/catalog").json()
         self.assertIn("OscillatorModel", cat["models"])
 

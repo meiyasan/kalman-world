@@ -128,9 +128,6 @@ class TestExecute(unittest.TestCase):
 
 class TestAuthoring(unittest.TestCase):
 
-    def setUp(self):
-        api._SESSION_MODELS.clear()
-
     def test_register_and_run_by_name(self):
         info = api.register_model(CV, name="my_cv")
         self.assertEqual((info["n"], info["m"]), (2, 1))
@@ -155,7 +152,8 @@ class TestAuthoring(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             path = api.save_spec("rt", d)
             self.assertTrue(os.path.exists(path))
-            api._SESSION_MODELS.clear()
+            api.delete_model("rt")
+            self.assertNotIn("rt", api.catalog()["authored"])
             api.load_spec(path)
             self.assertIn("rt", api.catalog()["authored"])
 
@@ -221,7 +219,6 @@ class TestAuth(unittest.TestCase):
         with self.assertRaises(auth.AuthError):
             api.register_model(CV, name="x", credential=reader)
         writer = auth.mint_token("alice", ["write_models"])
-        api._SESSION_MODELS.clear()
         info = api.register_model(CV, name="ok", credential=writer)
         self.assertEqual(info["name"], "ok")
 

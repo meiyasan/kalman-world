@@ -12,6 +12,10 @@ arrays ↔ nested lists) so any transport can carry them:
     :func:`render_plot`
   - **author**    — :func:`register_model`, :func:`save_spec`, :func:`scaffold`
     (see ``spec.py``/``scaffold.py``), gated by :mod:`kalman.api.auth`
+  - **share**     — :func:`models`, :func:`delete_model`, :func:`register_source`,
+    :func:`push_measurements`, :func:`events`: the registry in :mod:`.store`,
+    one SQLite file that every process on the same state directory sees, so a
+    model registered through REST is in the MCP catalog and the other way round
 
 A model is described by a :class:`KalmanSpec` dict::
 
@@ -25,6 +29,11 @@ A model is described by a :class:`KalmanSpec` dict::
 """
 from __future__ import annotations
 import inspect
+import os
+import re
+import uuid
+from collections import OrderedDict
+from collections.abc import Mapping
 import numpy as np
 
 from ..framework.model import KalmanModel
@@ -32,8 +41,47 @@ from ..framework.filter import KalmanFilter
 from ..framework.constants import (KalmanEngineKind, KalmanIntegratorKind,
                                    KalmanSolverKind)
 
-_RUNS: dict = {}          # run_id -> {"record":.., "model":.., "spec":..}
-_SESSION_MODELS: dict = {}  # authored specs registered this session (name -> spec)
+from . import store
+from .store import ConflictError
+
+#: run_id -> {"record":.., "model":.., "spec":..}. Runs hold live model objects,
+#: so they stay in the process that made them -- one process when the MCP server
+#: talks to the REST API. The oldest go first past KALMAN_MAX_RUNS.
+_RUNS: OrderedDict = OrderedDict()
+_MAX_RUNS = int(os.environ.get("KALMAN_MAX_RUNS", "1000"))
+
+
+class _Registered(Mapping):
+    """Authored specs by name, read through to the shared store on every access
+    -- another process may have registered one a moment ago."""
+
+    def __getitem__(self, name):
+        rec = store.get_model(name)
+        if rec is None:
+            raise KeyError(name)
+        return rec["spec"]
+
+    def __contains__(self, name):
+        return isinstance(name, str) and store.get_model(name) is not None
+
+    def __iter__(self):
+        return iter(store.model_names())
+
+    def __len__(self):
+        return len(store.model_names())
+
+
+_MODELS = _Registered()
+
+#: Names a registry entry may take: no path separators, no spaces, no surprises.
+_NAME = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$")
+
+
+def _check_name(name, what: str) -> str:
+    if not isinstance(name, str) or not _NAME.match(name):
+        raise ValueError(f"{what} name {name!r} must be 1-64 characters of letters, digits, "
+                         "'_', '-' or '.', starting with a letter or digit.")
+    return name
 
 
 # ======================================================================
@@ -87,6 +135,37 @@ def _native_classes() -> dict:
         return {}
 
 
+_PLUGIN_ERRORS: dict = {}   # plugin name -> why it could not be loaded again here
+
+
+def _sync_plugins():
+    """Load every plugin the registry records and this process has not loaded.
+
+    A plugin loaded through any process (or before a restart) is part of the
+    shared catalog; this is what makes that true here. It is resolved again by
+    *name* inside this process's allow-listed directories, never by the
+    recorded path, so a record cannot point a server at a file outside them."""
+    try:
+        recorded = store.list_plugins()
+    except Exception:
+        return
+    if not recorded:
+        return
+    from ..framework.native import core
+    if not core.HAS_CXX_CORE:
+        return
+    loaded = set(core.plugins())
+    for rec in recorded:
+        if rec["name"] in _PLUGIN_ERRORS:
+            continue
+        try:
+            path = core.resolve_plugin(rec["name"])
+            if path not in loaded:
+                core.load_plugin(path)
+        except Exception as e:          # missing here; report, do not break the catalog
+            _PLUGIN_ERRORS[rec["name"]] = str(e)
+
+
 def native() -> dict:
     """What the C++ core contributes: the library actually loaded (or why not),
     the models it registers, and the plugins loaded so far."""
@@ -94,9 +173,12 @@ def native() -> dict:
     if not core.HAS_CXX_CORE:
         return {"library": None, "error": core.LOAD_ERROR, "models": [], "plugins": [],
                 "plugin_dirs": core.plugin_dirs()}
-    return {"library": core.LIBRARY_PATH, "version": core.version(),
-            "models": core.names(), "plugins": core.plugins(),
-            "plugin_dirs": core.plugin_dirs()}
+    out = {"library": core.LIBRARY_PATH, "version": core.version(),
+           "models": core.names(), "plugins": core.plugins(),
+           "plugin_dirs": core.plugin_dirs()}
+    if _PLUGIN_ERRORS:
+        out["unavailable_plugins"] = dict(_PLUGIN_ERRORS)
+    return out
 
 
 def _controller_catalog() -> dict:
@@ -124,6 +206,7 @@ def catalog() -> dict:
     from ..framework.engines import available_engines
     from ..framework.integrators import available_integrators
     from ..framework.solvers import available_solvers
+    _sync_plugins()
     prov = []
     try:
         from ..providers import PROVIDER_BY_KIND
@@ -137,7 +220,8 @@ def catalog() -> dict:
         "integrators": available_integrators(),      # shipped kinds + registered ones
         "solvers": available_solvers(),
         "providers": prov,
-        "authored": sorted(_SESSION_MODELS),
+        "authored": sorted(_MODELS),
+        "sources": [s["name"] for s in store.list_sources()],
         "native": native(),
     }
 
@@ -146,6 +230,13 @@ def describe(name: str) -> dict:
     """Full record for a model or controller ``name`` — params, dims (if
     resolvable), states/observables, and the DEFAULT/ALLOWED engine/integrator/
     solver bindings."""
+    _sync_plugins()
+    rec = store.get_model(name) if isinstance(name, str) else None
+    if rec is not None:
+        return {"name": name, "kind": "authored", "base": rec["spec"].get("base", "matrices"),
+                "description": rec["spec"].get("description", ""),
+                "n": rec.get("n"), "m": rec.get("m"), "l": rec.get("l"),
+                "owner": rec["owner"], "spec": rec["spec"], "backend": "spec"}
     models, controllers = _model_catalog(), _controller_catalog()
     if name in models:
         cls = models[name]
@@ -262,8 +353,8 @@ def make_model(spec: dict) -> KalmanModel:
     spec = dict(spec or {})
     _check_spec(spec)
     base = spec.get("base", "matrices")
-    if base in _SESSION_MODELS:                    # authored spec referenced by name
-        return make_model(_SESSION_MODELS[base])
+    if base in _MODELS:                            # authored spec referenced by name
+        return make_model(_MODELS[base])
     sensor = spec.get("sensor_id", "api")
     fs = spec.get("fs", 1.0)
     noise = spec.get("noise", {}) or {}
@@ -292,6 +383,9 @@ def make_model(spec: dict) -> KalmanModel:
         return KalmanModel(sensor, fs=fs, **kw)
 
     cls = _model_catalog().get(base)
+    if cls is None:
+        _sync_plugins()                            # a plugin another process loaded
+        cls = _model_catalog().get(base)
     if cls is None:
         raise ValueError(f"unknown model base {base!r}; see catalog()['models'].")
     params = dict((spec.get("dynamics", {}) or {}).get("params", {}) or {})
@@ -350,7 +444,9 @@ def _stash(record, model, spec, truth=None, measurements=None) -> str:
     record's ``zk`` holds the filter's own output, not the data that went in, so
     a diagnostic that reaches for ``record.zk`` ends up re-filtering estimates
     (see :func:`diagnostics`)."""
-    rid = f"run{len(_RUNS)}"
+    rid = f"run-{uuid.uuid4().hex[:12]}"   # unique across processes and restarts
+    while len(_RUNS) >= max(_MAX_RUNS, 1):
+        _RUNS.popitem(last=False)
     _RUNS[rid] = {"record": record, "model": model, "spec": spec, "truth": truth,
                   "measurements": None if measurements is None
                                   else np.asarray(measurements, dtype=float)}
@@ -365,11 +461,24 @@ def sample(spec: dict, duration: float, **kw) -> dict:
     return {"run_id": rid, "time": jsonify(rec.time), "xk": jsonify(rec.xk), "zk": jsonify(rec.zk)}
 
 
-def run_filter(spec: dict, data, *, smooth: bool = False, **kw) -> dict:
+def run_filter(spec: dict, data=None, *, smooth: bool = False, source: str | None = None,
+               query: dict | None = None, credential: str | None = None, **kw) -> dict:
     """Filter ``data`` (measurements, list of lists) through a spec's filter.
-    Returns ``{run_id, xk, Pk}`` (posterior mean + covariance)."""
+    Returns ``{run_id, xk, Pk}`` (posterior mean + covariance).
+
+    Give ``source`` (a registered source name) instead of ``data`` to measure
+    and filter in one call: the measurements are fetched first, with ``query``,
+    under the ``send_measurement`` scope."""
+    if source is not None:
+        if data is not None:
+            raise ValueError("give data or source, not both.")
+        data = fetch({"source": source}, query, credential=credential)["zk"]
+    if data is None:
+        raise ValueError("run_filter needs measurements: data=[[...], ...] or source=<name>.")
     filt = make_filter(spec)
     zk = np.asarray(data, dtype=float)
+    if zk.size == 0:
+        raise ValueError("no measurements to filter.")
     rec = filt.filter(zk, smooth=smooth, **kw)
     rid = _stash(rec, filt.model, spec, measurements=zk)
     return {"run_id": rid, "xk": jsonify(rec.xk), "Pk": jsonify(rec.Pk),
@@ -513,16 +622,67 @@ def forecast(spec: dict, x0, P0=None, steps: int = 1, **kw) -> dict:
     return {"xk": jsonify(xs), "Pk": jsonify(Ps)}
 
 
-def fetch(provider_spec: dict, query: dict = None, *, credential: str | None = None) -> dict:
-    """Pull data from a provider (``{"kind": "synthetic"|"file"|..., "init": {...}}``)
-    and return its JSON payload.  Requires the ``send_measurement`` scope.  The
-    result feeds straight into :func:`run_filter`/:func:`run_osse`."""
+#: Provider kinds whose configuration reaches outside the server's own data: a
+#: file path on the server, or a URL the server calls with ITS outbound secrets.
+#: Given raw in a request, they would let any caller read server files or send
+#: the server's credentials to a host of the caller's choice. So they take the
+#: ``admin`` scope raw, and everybody else uses a named source an admin set up.
+_PRIVILEGED_KINDS = ("file", "remote", "sensor")
+
+
+def fetch(provider_spec, query: dict = None, *, credential: str | None = None) -> dict:
+    """Pull data and return its JSON payload; requires ``send_measurement``.
+
+    ``provider_spec`` is a registered source -- ``{"source": "<name>"}`` or just
+    the name -- or a raw provider ``{"kind": "synthetic"|..., "init": {...}}``.
+    Raw ``file``/``remote``/``sensor`` providers also need ``admin`` (see
+    ``_PRIVILEGED_KINDS``). The result feeds straight into
+    :func:`run_filter`/:func:`run_osse`."""
     from .auth import authorize
     authorize(credential, "send_measurement")
-    from ..providers import resolve_provider
+    if isinstance(provider_spec, str):
+        provider_spec = {"source": provider_spec}
     spec = dict(provider_spec or {})
+    if spec.get("source") is not None:
+        return _fetch_source(spec["source"], dict(query or {}))
+    from ..providers import resolve_provider
+    if str(spec.get("kind", "")).lower() in _PRIVILEGED_KINDS:
+        authorize(credential, "admin")
     prov = resolve_provider(spec.get("kind"), **(spec.get("init", {}) or {}))
     return jsonify(prov.fetch(**(query or {})))
+
+
+def _fetch_source(name: str, query: dict) -> dict:
+    rec = store.get_source(name)
+    if rec is None:
+        raise KeyError(f"no source named {name!r}; see sources().")
+    if rec["kind"] == "push":
+        since = int(query.pop("since", 0) or 0)
+        limit = int(query.pop("limit", 10000) or 10000)
+        if query:
+            raise ValueError(f"a push source takes only since= and limit=, not {sorted(query)}.")
+        rows = store.read_measurements(name, since, limit)
+        out = {"zk": [r["row"] for r in rows],
+               "meta": {"provider": "push", "source": name,
+                        "first": rows[0]["seq"] if rows else None,
+                        "last": rows[-1]["seq"] if rows else None,
+                        "next": rows[-1]["seq"] if rows else since}}
+        if rows and all(r["t"] is not None for r in rows):
+            out["time"] = [r["t"] for r in rows]
+        return out
+    # The source fixes where the data comes from; the query may only narrow it.
+    fixed = set(rec.get("init") or {}) | {"path", "source"}
+    if rec["kind"] == "remote":
+        fixed.discard("path")                 # a sub-path under the fixed base_url
+    clash = sorted(k for k in query if k in fixed)
+    if clash:
+        raise ValueError(f"source {name!r} fixes {clash}; a query cannot change them.")
+    from ..providers import resolve_provider
+    prov = resolve_provider(rec["kind"], **(rec.get("init") or {}))
+    out = jsonify(prov.fetch(**query))
+    if isinstance(out, dict):
+        out.setdefault("meta", {})["source"] = name
+    return out
 
 
 def load_plugin(name: str, *, credential: str | None = None) -> dict:
@@ -534,13 +694,156 @@ def load_plugin(name: str, *, credential: str | None = None) -> dict:
     of them.  Loading executes code, so this is gated by its own scope,
     ``load_plugins`` — never by ``write_models``, which only ever writes data.
     """
-    from .auth import authorize
+    from .auth import authorize, identity
     authorize(credential, "load_plugins")
     from ..framework.native import core
     core.require()
     path = core.resolve_plugin(name)
     added = core.load_plugin(path)
+    # Record it by the name it was asked for, so every process and every restart
+    # loads it again (see _sync_plugins) and subscribers hear "plugin.loaded".
+    key = os.path.splitext(os.path.basename(name))[0]
+    store.put_plugin(key, path, added, identity(credential))
+    _PLUGIN_ERRORS.pop(key, None)
     return {"plugin": path, "models": added, "native": sorted(core.names())}
+
+
+def plugins() -> dict:
+    """Plugins recorded in the shared registry, and which loaded here."""
+    _sync_plugins()
+    return {"plugins": store.list_plugins(), "unavailable": dict(_PLUGIN_ERRORS)}
+
+
+# ======================================================================
+# The shared registry: models, sources, pushed measurements, events
+# ======================================================================
+def models() -> dict:
+    """Every authored model in the registry, with its owner and dimensions."""
+    return {"models": store.list_models()}
+
+
+def delete_model(name: str, *, credential: str | None = None) -> dict:
+    """Remove an authored model; ``write_models``, and its owner or an admin."""
+    from .auth import authorize, identity, require_owner
+    authorize(credential, "write_models")
+    rec = store.delete_model(name, by=identity(credential),
+                             may_delete=lambda r: require_owner(r, credential, f"model {name!r}"))
+    return {"deleted": rec["name"]}
+
+
+def register_source(name: str, provider: dict, *, replace: bool = False,
+                    credential: str | None = None) -> dict:
+    """Set up a named measurement source that everybody can fetch by name.
+
+    ``provider`` is ``{"kind": "push", "m": <width>?, "description": ..}`` --
+    a buffer that devices, simulations or game engines write rows into with
+    :func:`push_measurements` -- or a provider ``{"kind": "<kind>", "init":
+    {...}}``. A ``file``/``remote``/``sensor`` source reads server files or
+    uses the server's outbound credentials, so it needs ``admin``; the others
+    need ``write_models``."""
+    from .auth import authorize, identity, require_owner
+    _check_name(name, "source")
+    prov = dict(provider or {})
+    kind = str(prov.get("kind", "")).lower()
+    if not kind:
+        raise ValueError('a source needs a kind: {"kind": "push"} or a provider kind.')
+    authorize(credential, "admin" if kind in _PRIVILEGED_KINDS else "write_models")
+    if kind == "push":
+        m = prov.get("m")
+        if m is not None and (not isinstance(m, int) or m < 1):
+            raise ValueError("a push source's m (the row width) must be a positive integer.")
+        spec = {"kind": "push", "m": m, "description": str(prov.get("description", ""))}
+    else:
+        from ..providers import resolve_provider
+        init = dict(prov.get("init") or {})
+        resolve_provider(kind, **init)        # fails now, not on the first fetch
+        spec = {"kind": kind, "init": init, "description": str(prov.get("description", ""))}
+    rec, action = store.put_source(
+        name, spec, identity(credential), replace=replace,
+        may_replace=lambda r: require_owner(r, credential, f"source {name!r}"))
+    return {**rec, "action": action}
+
+
+def sources() -> dict:
+    """Registered measurement sources. A remote source's ``init`` is shown,
+    but it holds only the *name* of an outbound credential, never the secret."""
+    return {"sources": store.list_sources()}
+
+
+def describe_source(name: str) -> dict:
+    for rec in store.list_sources():
+        if rec["name"] == name:
+            return rec
+    raise KeyError(f"no source named {name!r}; see sources().")
+
+
+def delete_source(name: str, *, credential: str | None = None) -> dict:
+    """Remove a source and its buffered rows; owner or admin."""
+    from .auth import authorize, identity, require_owner
+    authorize(credential, "write_models")
+    rec = store.delete_source(name, by=identity(credential),
+                              may_delete=lambda r: require_owner(r, credential, f"source {name!r}"))
+    return {"deleted": rec["name"]}
+
+
+#: Rows one push may carry; a bigger batch goes in several requests.
+MAX_PUSH_ROWS = 10000
+
+
+def push_measurements(name: str, rows, time=None, *, credential: str | None = None) -> dict:
+    """Append measurement rows to a ``push`` source; requires ``send_measurement``.
+
+    ``rows`` is a list of rows (one measurement vector each) or one row;
+    ``time`` an optional timestamp per row. Subscribers get a
+    ``measurement.received`` event naming the new sequence numbers."""
+    from .auth import authorize, identity
+    authorize(credential, "send_measurement")
+    rec = store.get_source(name)
+    if rec is None:
+        raise KeyError(f"no source named {name!r}; register_source first.")
+    if rec["kind"] != "push":
+        raise ValueError(f"source {name!r} is a {rec['kind']!r} source; only a push "
+                         "source takes measurements.")
+    try:
+        z = np.asarray(rows, dtype=float)
+    except (TypeError, ValueError):
+        raise ValueError("rows must be numbers: [[z1, z2, ...], ...].")
+    if z.ndim == 1:
+        z = z.reshape(1, -1)
+    if z.ndim != 2 or z.shape[0] == 0 or z.shape[1] == 0:
+        raise ValueError(f"rows must be a non-empty list of rows; got shape {z.shape}.")
+    if z.shape[0] > MAX_PUSH_ROWS:
+        raise ValueError(f"at most {MAX_PUSH_ROWS} rows per push; got {z.shape[0]}.")
+    if not np.all(np.isfinite(z)):
+        raise ValueError("rows must be finite (no NaN or infinity).")
+    if rec.get("m") is not None and z.shape[1] != rec["m"]:
+        raise ValueError(f"source {name!r} takes rows of width {rec['m']}; got {z.shape[1]}.")
+    times = None
+    if time is not None:
+        times = [float(t) for t in np.asarray(time, dtype=float).reshape(-1)]
+        if len(times) != z.shape[0]:
+            raise ValueError(f"{len(times)} timestamps for {z.shape[0]} rows.")
+    return store.append_measurements(name, z.tolist(), times, identity(credential))
+
+
+def events(since: int = 0, limit: int = 100) -> dict:
+    """Registry events after ``since``: ``{"events": [...], "last": <id>}``.
+    Pass ``last`` back as ``since`` to read on; ``GET /events/stream`` pushes
+    the same events as Server-Sent Events."""
+    limit = max(1, min(int(limit), 1000))
+    evs = store.events(int(since), limit)
+    return {"events": evs, "last": evs[-1]["id"] if evs else max(int(since), 0)}
+
+
+def whoami(credential: str | None = None) -> dict:
+    """Who a token says the caller is: ``{"auth", "user", "scopes", "exp"}``.
+    Verifies the token, but checks no scope."""
+    from .auth import claims, enabled
+    c = claims(credential)
+    if c is None:
+        return {"auth": enabled(), "user": None, "scopes": ["admin"], "exp": None}
+    return {"auth": True, "user": c.get("sub"), "scopes": c.get("scopes", []),
+            "exp": c.get("exp")}
 
 
 def providers() -> dict:
@@ -581,7 +884,9 @@ __all__ = [
     "catalog", "describe", "make_model", "make_filter",
     "sample", "run_filter", "forecast", "run_osse", "run_control",
     "diagnostics", "render_plot",
-    "fetch", "providers", "describe_provider",
+    "fetch", "providers", "describe_provider", "load_plugin", "plugins",
     "register_model", "save_spec", "load_spec", "scaffold", "write_scaffold",
-    "jsonify",
+    "models", "delete_model", "register_source", "sources", "describe_source",
+    "delete_source", "push_measurements", "events", "whoami",
+    "ConflictError", "jsonify",
 ]

@@ -20,14 +20,19 @@ Use it directly from Python; use [REST](10_REST-API.md) or
 | `make_model(spec)` | — | a live `KalmanModel` |
 | `make_filter(spec)` | — | a live `KalmanFilter` with the engine resolved |
 | `sample(spec, duration)` | — | `{run_id, time, xk, zk}` synthetic truth + measurements |
-| `run_filter(spec, data, smooth=False)` | `send_measurement` | `{run_id, xk, Pk, time}` |
+| `run_filter(spec, data, smooth=False, source=None, query=None)` | `send_measurement` | `{run_id, xk, Pk, time}`; `source=` fetches the measurements first |
 | `forecast(spec, x0, P0, steps)` | `send_measurement` | the model forecast cone, else the propagated `{xk, Pk}` |
 | `run_osse(spec, n_cycles, n_members, inflation)` | `send_measurement` | per-cycle RMSE/spread histories |
 | `run_control(model_spec, controller_spec, duration)` | `send_measurement` | `{run_id, xk, cost, cost_log}` |
-| `fetch(provider_spec, query, credential=…)` | `send_measurement` | a provider payload |
+| `fetch(provider_spec, query, credential=…)` | `send_measurement` (`admin` for raw `file`/`remote`/`sensor`) | a provider payload; `provider_spec` may be a source name |
 | `diagnostics(run_id)` | `read` | `{nis, innovation}` for a stored run |
 | `render_plot(run_id)` | `read` | PNG bytes |
-| `register_model(spec, name)` | `write_models` | validates, smoke-tests and registers an authored spec |
+| `register_model(spec, name, replace=False)` | `write_models` | validates, smoke-tests and registers an authored spec in the shared registry |
+| `models()` / `delete_model(name)` | `read` / `write_models` + owner | the registry's authored models |
+| `register_source(name, provider)` / `sources()` / `delete_source(name)` | `write_models` (`admin` for `file`/`remote`/`sensor`) | named measurement sources |
+| `push_measurements(name, rows, time=None)` | `send_measurement` | append rows to a `push` source |
+| `events(since, limit)` | `read` | what changed in the registry |
+| `whoami(credential)` | a valid token | `{auth, user, scopes, exp}` |
 | `load_plugin(name)` | `load_plugins` | loads a compiled (C++) model library from the allow-listed plugin dirs; its models join the catalogue |
 | `save_spec(name, directory)` / `load_spec(path)` | `write_models` | JSON persistence |
 | `scaffold(spec, class_name)` / `write_scaffold(…)` | `write_models` | reviewable Python source |
@@ -144,11 +149,13 @@ catalog()["authored"]                 # ['demo_cv']
 ### Run IDs
 
 `sample`, `run_filter` and `run_control` stash the record, model and spec under
-a `run_id` (`"run0"`, `"run1"`, …), which `diagnostics()` and `render_plot()`
-then take. The store is an **in-process dict**: IDs do not survive a restart and
-are not shared between workers. If you run REST under multiple uvicorn workers,
-a `run_id` minted by one worker is invisible to the others — keep it to one
-worker, or re-send the data.
+a `run_id` (`"run-3f9c2a1b7d4e"`), which `diagnostics()` and `render_plot()`
+then take. Runs hold live model objects, so they stay in the memory of the
+process that made them. They do not survive a restart, and the oldest go first
+after `KALMAN_MAX_RUNS` (default 1000). If you run REST under multiple uvicorn
+workers, a `run_id` from one worker is not known to the others. Keep it to one
+worker, or send the data again. Registered models, plugins and sources are
+different: they are on disk and shared (see below).
 
 ---
 
@@ -162,8 +169,13 @@ worker, or re-send the data.
    must be mutually consistent;
 3. **a smoke gate** — `f(x0)` and `h(x0)` must evaluate, and a couple of steps
    must actually sample;
-4. **session registration** — `catalog()` and `make_model` now see the name, and
-   an authored spec is indistinguishable from a built-in;
+4. **registration in the shared store** (`$KALMAN_STATE_DIR/registry.sqlite`,
+   default `~/.kalman/state`) — `catalog()` and `make_model` see the name in
+   every process on that directory: this Python session, the REST API, the MCP
+   server. An authored spec is indistinguishable from a built-in. The same spec
+   again is a no-op. A different spec under a used name raises `ConflictError`
+   unless `replace=True`, and with auth on, only the owner or an admin can
+   replace it. A name cannot hide a catalog model;
 5. optional **persistence** — `save_spec(name)` writes `./specs/<name>.json`,
    reloadable with `load_spec(path)`.
 
