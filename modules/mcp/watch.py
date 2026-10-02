@@ -23,8 +23,10 @@ Both ways to subscribe are served, because both are in use:
   every event                   ``registry://events``
   ============================  =======================================
 
-The watcher polls ``backend.events`` — the registry file in-process, or the
-REST API's ``GET /events`` — because the change may come from any process. It
+The watcher polls for events — the registry file in-process, or the REST API
+— because the change may come from any process. In front of a REST API whose
+events it has no token to read, it falls back to ``GET /events/cursor`` and
+reports every resource on every change (see :meth:`RegistryWatcher._poll`). It
 is one task per server however many sessions are open: the SDK enters the
 lifespan once per session on stdio and SSE, and once per server on streamable
 HTTP.
@@ -61,6 +63,7 @@ class RegistryWatcher:
         self.poll = float(os.environ.get("KALMAN_EVENTS_POLL", "1.0")) if poll is None else poll
         self._users = 0
         self._task: asyncio.Task | None = None
+        self._precise = True                     # until the events turn out unreadable
         # resources/subscribe: uri -> {connection key -> session}. The SDK makes a
         # new session object for every request, all on the same connection, so a
         # weak reference would die with the request; one is kept per connection
@@ -71,8 +74,16 @@ class RegistryWatcher:
         """Serve ``resources/subscribe`` / ``unsubscribe`` on ``server``, for
         clients older than ``subscriptions/listen``. Registering the handlers
         is also what makes the server advertise ``resources.subscribe``."""
+        # The SDK's server class has no public hook for these two requests; its
+        # low-level server does (add_request_handler), reached through an
+        # attribute that is not part of the public API. If an SDK release moves
+        # it, say so at start-up -- and tests/test_registry.py fails -- instead
+        # of clients quietly never hearing anything.
         lowlevel = getattr(server, "_lowlevel_server", None)
         if lowlevel is None or not hasattr(lowlevel, "add_request_handler"):
+            print("kalman.mcp: this MCP SDK version gives no way to serve resources/subscribe; "
+                  "clients before MCP 2026-07-28 get no change notifications and must call "
+                  "list_events. subscriptions/listen is not affected.", file=sys.stderr)
             return False
         import mcp.types as types
 
@@ -121,35 +132,52 @@ class RegistryWatcher:
                     pass
                 self._task = None
 
-    async def _events(self, since: int) -> dict:
-        if self.backend.kind == "local":
-            # Our own registry file. No scope check: nothing read here leaves
-            # the process, only "this resource changed".
-            return await asyncio.to_thread(self.backend.api.events, since, 100)
-        return await asyncio.to_thread(self.backend.events, since, 100, self.token)
+    async def _poll(self, cursor: int | None):
+        """``(new cursor, resources to report)`` since ``cursor``; ``None``
+        means "start from now", which reports nothing.
 
-    async def _run(self):
+        Precise when the events can be read: our own registry file, a REST API
+        with auth off, or one that accepts ``KALMAN_MCP_TOKEN``. Otherwise
+        coarse: ``GET /events/cursor`` needs no token and says only *that*
+        something changed, so every resource is reported and the clients read
+        again what they care about — each read checked against their own token.
+        Notifications therefore never depend on this server holding a token."""
         from ..api.auth import AuthError
-        cursor, delay = None, self.poll
-        while True:
+        if self._precise:
             try:
-                if cursor is None:                       # start from now, not from history
-                    cursor = (await self._events(-1))["last"]
-                res = await self._events(cursor)
+                if self.backend.kind == "local":
+                    # Our own registry file. No scope check: nothing read here
+                    # leaves the process, only "this resource changed".
+                    read = lambda since: self.backend.api.events(since, 100)   # noqa: E731
+                else:
+                    read = lambda since: self.backend.events(since, 100, self.token)   # noqa: E731
+                if cursor is None:
+                    return (await asyncio.to_thread(read, -1))["last"], set()
+                res = await asyncio.to_thread(read, cursor)
                 stale = set()
                 for e in res["events"]:
                     stale |= uris_for(e["type"])
-                cursor = res["last"]
+                return res["last"], stale
+            except AuthError as e:
+                self._precise = False
+                print(f"kalman.mcp: no token that may read registry events ({e}) Clients are "
+                      "still notified, of every resource on every change; set KALMAN_MCP_TOKEN "
+                      "to a read token for per-resource notifications.", file=sys.stderr)
+        last = await asyncio.to_thread(self.backend.cursor)
+        if cursor is None or last == cursor:
+            return last, set()
+        return last, {MODELS, SOURCES, EVENTS}
+
+    async def _run(self):
+        cursor, delay = None, self.poll
+        while True:
+            try:
+                cursor, stale = await self._poll(cursor)
                 for uri in sorted(stale):
                     await self._notify(uri)
                 delay = self.poll
             except asyncio.CancelledError:
                 raise
-            except AuthError as e:
-                # Without a token that may read events there is nothing to watch.
-                print(f"kalman.mcp: change notifications are off ({e}) Set KALMAN_MCP_TOKEN "
-                      "to a token with the read scope.", file=sys.stderr)
-                return
             except Exception:                            # the API is down: wait, then look again
                 delay = min(delay * 2, 30.0)
             await asyncio.sleep(delay)

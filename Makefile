@@ -300,8 +300,14 @@ api-user:
 	@$(PYTHON) -m kalman.api.auth adduser --user "$(USER)" $(if $(SCOPES),--scopes "$(SCOPES)")
 
 ## Revoke every token of an account issued until now: make api-revoke USER=alice   (or TOKEN=eyJ... for one token)
+## API=http://localhost:8000 (or KALMAN_API_URL) revokes through the REST API -- needed when the
+## servers' registry is not on this machine, e.g. the Docker services
 api-revoke:
-	@$(PYTHON) -m kalman.api.auth revoke $(if $(TOKEN),--token "$(TOKEN)",--user "$(USER)")
+	@$(PYTHON) -m kalman.api.auth revoke $(if $(TOKEN),--token "$(TOKEN)",--user "$(USER)") $(if $(API),--api "$(API)")
+
+## Forget an account's failed logins (a lockout ends by itself after 5 minutes): make api-unlock USER=alice [API=...]
+api-unlock:
+	@$(PYTHON) -m kalman.api.auth unlock --user "$(USER)" $(if $(API),--api "$(API)")
 
 ## Mint a scoped JWT for an API account: make api-token USER=alice SCOPES="read,send_measurement"
 api-token:

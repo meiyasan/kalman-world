@@ -155,7 +155,8 @@ Someone revoked the token, or all tokens of its user (`POST /token/revoke`,
 
 **`429 too many failed logins`**
 5 failed logins in 5 minutes for this user from this address. Wait for the
-time in `Retry-After`. A restart of the server clears the counters.
+time in `Retry-After`, or ask an admin to run `make api-unlock USER=…`. A
+restart of the server does not clear the count: it is in the shared registry.
 
 **`AuthError: auth is enabled but PyJWT is not installed`**
 Deliberately fail-closed. `pip install "kalman[auth]"`.

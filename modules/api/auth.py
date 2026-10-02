@@ -32,7 +32,7 @@ that shares the secret.  A server that listens on a network interface refuses
 to start without auth (:func:`check_server`).
 
 CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify`` /
-``revoke``.
+``revoke`` / ``unlock``.
 """
 from __future__ import annotations
 import os
@@ -325,16 +325,24 @@ class RateLimited(AuthError):
 
 #: Failed logins allowed per (user, client) inside the window, in seconds.
 LOGIN_ATTEMPTS, LOGIN_WINDOW = 5, 300.0
-_FAILS: dict = {}
 _DUMMY: list = []
 
 
-def _throttle(key) -> list:
-    now = time.monotonic()
-    fails = [t for t in _FAILS.get(key, []) if now - t < LOGIN_WINDOW]
+def _throttle(user: str, client: str):
+    """Refuse when the pair is locked out. The count is in the shared registry,
+    so it holds across uvicorn workers, across the REST and MCP processes and
+    across a restart -- a counter in memory would give every worker its own
+    five tries and forget them all on a restart."""
+    from . import store
+    fails = store.login_failures(user, client, LOGIN_WINDOW)
     if len(fails) >= LOGIN_ATTEMPTS:
-        raise RateLimited(LOGIN_WINDOW - (now - fails[0]))
-    return fails
+        raise RateLimited(LOGIN_WINDOW - (time.time() - fails[0]))
+
+
+def unlock(user: str):
+    """Forget the failed logins of ``user`` (every client address)."""
+    from . import store
+    store.clear_login_failures(user)
 
 
 def login(user: str, password: str, scopes=None, *, exp_hours: float | None = None,
@@ -345,14 +353,15 @@ def login(user: str, password: str, scopes=None, *, exp_hours: float | None = No
     grant (an ``admin`` grant covers any); with ``scopes=None`` it carries the
     whole grant.  Its lifetime is at most ``KALMAN_TOKEN_MAX_HOURS`` (default
     24).  Five failed tries per user and client lock that pair out for five
-    minutes, and an unknown user costs the same bcrypt check as a wrong
+    minutes -- counted in the shared registry, so on every worker and across a
+    restart -- and an unknown user costs the same bcrypt check as a wrong
     password, so the answer's timing does not say which accounts exist."""
     if not enabled():
         raise ValueError("authentication is off (no KALMAN_JWT_SECRET); no token is needed.")
     if not isinstance(user, str) or not isinstance(password, str) or not user:
         raise ValueError("login needs a user and a password.")
-    key = (user, client)
-    fails = _throttle(key)
+    from . import store
+    _throttle(user, client)
     ok = verify_user(user, password)
     if not ok and user not in _accounts():
         bc = _bcrypt()
@@ -360,11 +369,9 @@ def login(user: str, password: str, scopes=None, *, exp_hours: float | None = No
             _DUMMY.append(bc.hashpw(b"no-such-account", bc.gensalt()))
         bc.checkpw(password.encode()[:_BCRYPT_MAX], _DUMMY[0])
     if not ok:
-        _FAILS[key] = fails + [time.monotonic()]
-        if len(_FAILS) > 10000:                  # a bound on what guessing can make us keep
-            _FAILS.clear()
+        store.add_login_failure(user, client, LOGIN_WINDOW)
         raise BadCredentials("wrong user or password.")
-    _FAILS.pop(key, None)
+    store.clear_login_failures(user, client)
 
     granted = user_scopes(user)
     asked = _clean_scopes(scopes) if scopes else granted
@@ -403,6 +410,23 @@ def revoke(credential: str | None = None, *, user: str | None = None) -> dict:
     return {"revoked": "user", "user": user, "before": cutoff}
 
 
+def _api_post(base_url: str, path: str, token: str, body: dict) -> dict:
+    """POST JSON to the REST API with a bearer token (stdlib only: the CLI must
+    work where httpx is not installed)."""
+    import json
+    import urllib.error
+    import urllib.request
+    req = urllib.request.Request(
+        base_url.rstrip("/") + path, data=json.dumps(body).encode(), method="POST",
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="replace")
+        raise RuntimeError(f"HTTP {e.code}: {detail}") from None
+
+
 # ---------------------------------------------------------------------------
 # CLI  (python -m kalman.api.auth ...)
 # ---------------------------------------------------------------------------
@@ -414,6 +438,11 @@ def _main(argv=None):
     a.add_argument("--scopes", help="what the account may ask for at login, e.g. read,send_measurement")
     r = sub.add_parser("revoke", help="revoke one token, or every token of a user issued so far")
     r.add_argument("--token"); r.add_argument("--user")
+    r.add_argument("--api", default=os.environ.get("KALMAN_API_URL"),
+                   help="the REST API whose registry holds the list (default: $KALMAN_API_URL; "
+                        "without it, the registry in $KALMAN_STATE_DIR on this machine)")
+    u = sub.add_parser("unlock", help="forget an account's failed logins"); u.add_argument("--user", required=True)
+    u.add_argument("--api", default=os.environ.get("KALMAN_API_URL"), help="as for revoke")
     t = sub.add_parser("token"); t.add_argument("--user", required=True)
     t.add_argument("--scopes", default="read"); t.add_argument("--exp", type=float, default=24.0)
     t.add_argument("--no-verify", action="store_true", help="mint without checking the htpasswd account")
@@ -425,8 +454,30 @@ def _main(argv=None):
         path = add_user(args.user, pw, args.htpasswd, scopes=args.scopes or None)
         print(f"account '{args.user}' written to {path} "
               f"(login scopes: {','.join(user_scopes(args.user, path))})")
+    elif args.cmd == "unlock" and args.api:
+        try:
+            _api_post(args.api, "/token/unlock", mint_token("cli", ["admin"], exp_hours=1 / 60),
+                      {"user": args.user})
+        except Exception as e:
+            print(f"unlock through {args.api} failed: {e}", file=sys.stderr); return 1
+        print(f"failed logins of '{args.user}' forgotten through {args.api}")
+    elif args.cmd == "unlock":
+        unlock(args.user)
+        print(f"failed logins of '{args.user}' forgotten")
+    elif args.cmd == "revoke" and args.api:
+        # The servers' registry is not on this machine (a container volume, another
+        # host): ask the API. A user's tokens need an admin, so mint one that lives
+        # a minute with the secret this machine has; one token revokes itself.
+        if not (args.user or args.token):
+            print("give --token or --user", file=sys.stderr); return 1
+        try:
+            bearer = args.token if not args.user else mint_token("cli", ["admin"], exp_hours=1 / 60)
+            out = _api_post(args.api, "/token/revoke", bearer, {"user": args.user} if args.user else {})
+        except Exception as e:
+            print(f"revoke through {args.api} failed: {e}", file=sys.stderr); return 1
+        print(f"revoked through {args.api}: {out}")
     elif args.cmd == "revoke":
-        # Run where the servers' KALMAN_STATE_DIR is: the list is in the registry.
+        # The list is in the registry: this writes $KALMAN_STATE_DIR on this machine.
         from . import store
         if args.user:
             store.revoke_user(args.user, "cli")

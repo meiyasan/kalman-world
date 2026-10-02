@@ -12,9 +12,7 @@
 Both expose the same verbs, so :mod:`.server` does not care which one it has.
 """
 from __future__ import annotations
-import hashlib
 import os
-import time
 from urllib.parse import quote
 
 
@@ -112,9 +110,6 @@ class RemoteError(Exception):
 class RemoteBackend:
     kind = "remote"
 
-    #: How long a verified token is trusted before /whoami is asked again.
-    WHOAMI_TTL = 30.0
-
     def __init__(self, base_url: str, *, timeout: float | None = None, client=None):
         if client is None:
             try:
@@ -125,7 +120,6 @@ class RemoteBackend:
                                   timeout=timeout or float(os.environ.get("KALMAN_API_TIMEOUT", "300")))
         self.base_url = base_url.rstrip("/")
         self._http = client
-        self._whoami: dict = {}
 
     def _call(self, method, path, token, *, json=None, params=None):
         headers = {"Authorization": f"Bearer {token}"} if token else {}
@@ -146,15 +140,15 @@ class RemoteBackend:
 
     # ---- read ----
     def whoami(self, token):
-        key = hashlib.sha256((token or "").encode()).hexdigest()
-        hit = self._whoami.get(key)
-        if hit and hit[0] > time.monotonic():
-            return hit[1]
-        info = self._call("GET", "/whoami", token)
-        if len(self._whoami) > 1024:
-            self._whoami.clear()
-        self._whoami[key] = (time.monotonic() + self.WHOAMI_TTL, info)
-        return info
+        # Asked on every request, never cached: a token revoked a moment ago
+        # must not open a connection here because this process still held an
+        # earlier "yes". It is one small GET next to the REST call that the
+        # request makes anyway.
+        return self._call("GET", "/whoami", token)
+
+    def cursor(self) -> int:
+        """The id of the newest registry event; needs no token."""
+        return int(self._call("GET", "/events/cursor", None)["last"])
 
     def catalog(self, token):
         return self._call("GET", "/catalog", token)

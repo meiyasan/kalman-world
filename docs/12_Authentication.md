@@ -126,8 +126,11 @@ $ curl -s -X POST localhost:8000/token -H 'Content-Type: application/json' \
   not exist costs the same bcrypt check as a wrong password, so the response
   time does not show which accounts exist.
 - After 5 failed logins in 5 minutes for one user from one client address, the
-  answer is `429` with `Retry-After`. The counters are in the memory of the
-  server process. Also put a rate limit on `/token` at the reverse proxy.
+  answer is `429` with `Retry-After`. The count is in the shared registry.
+  Thus it is the same for all uvicorn workers and all servers on the registry,
+  and a restart does not clear it. The lockout ends by itself after 5 minutes.
+  An admin can end it sooner: `make api-unlock USER=marco`, or
+  `POST /token/unlock {"user": "marco"}`.
 - Send the password only over TLS.
 
 ## Revoking a token
@@ -155,9 +158,19 @@ $ make api-revoke USER=marco            # all tokens of marco issued until now
 $ make api-revoke TOKEN="$TOKEN"        # one token
 ```
 
-Run `make api-revoke` where `KALMAN_STATE_DIR` is the directory that the
-servers use. For the Docker services, the registry is in the `state` volume, so
-use `POST /token/revoke` with an admin token.
+Without `API`, `make api-revoke` writes to the registry in `KALMAN_STATE_DIR`
+on this machine. That is correct when the servers use the same directory. When
+they do not (the Docker services keep the registry in the `state` volume, or
+the servers are on another host), give the address of the REST API:
+
+```bash
+$ make api-revoke USER=marco API=http://localhost:8000
+$ make api-unlock USER=marco API=http://localhost:8000
+```
+
+The command then makes an admin token that is valid for one minute, with the
+`KALMAN_JWT_SECRET` of this machine, and sends the request to the API. You can
+also set `KALMAN_API_URL` instead of `API`.
 
 A revoked token is kept in the list until it expires, and is then removed. If a
 password leaks, change it with `make api-user` and revoke the user's tokens.
@@ -210,7 +223,8 @@ The order is: the `token` argument, then the `Authorization` header, then
 
 When the MCP server runs with `KALMAN_API_URL`, it does not have the secret.
 It sends the caller's token to the REST API. The REST API checks the token for
-the connection (`/whoami`, cached 30 s) and for each call. Thus there is only
+each request to the MCP server (`/whoami`, not cached) and for each call. A
+revoked token is thus refused on the next request, also by the MCP server. Thus there is only
 one place that checks tokens.
 
 **Python** — pass `credential=` to the verbs that take it:

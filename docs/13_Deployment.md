@@ -25,7 +25,7 @@ Both are published by `docker-compose.yml` as `8000:8000` and `8765:8765`.
 | `KALMAN_MCP_HOST` | `127.0.0.1` | MCP (network transports) |
 | `KALMAN_MCP_PORT` | `8765` | MCP (network transports) |
 | `KALMAN_MCP_PUBLIC_URL` | `http://<host>:<port>` | MCP: the URL clients use, given in its OAuth resource metadata |
-| `KALMAN_MCP_TOKEN` | unset | MCP over stdio: the token used when a call gives none. MCP as a REST client: a `read` token to see registry events, for change notifications |
+| `KALMAN_MCP_TOKEN` | unset | MCP over stdio: the token used when a call gives none. MCP as a REST client: an optional `read` token, so that a change notification names the resource that changed |
 | `KALMAN_API_URL` | unset | MCP: send all work to this REST API (one registry, one set of runs) |
 | `KALMAN_API_TIMEOUT` | `300` | MCP: seconds to wait for the REST API |
 | `KALMAN_JWT_SECRET` | unset | **enables authentication** everywhere; at least 32 bytes |
@@ -130,7 +130,10 @@ are made in the REST process.
   grant it needs (`make api-user USER=… SCOPES=…`), and revoke a token that
   leaks (`POST /token/revoke`).
 - **Rate-limit `POST /token` at the proxy.** The server locks out a user and
-  client address after 5 failed logins, but its counters are per process.
+  client address after 5 failed logins, on all workers and across restarts.
+  Behind a proxy, all clients have the address of the proxy, so the lockout is
+  then per user. A rate limit at the proxy also stops a client that tries many
+  different user names.
 - **Keep the source mount read-only.** `write_scaffold` writes to a path the
   caller chooses.
 - **Watch resource cost.** `run_osse` runs a full ensemble twin experiment and

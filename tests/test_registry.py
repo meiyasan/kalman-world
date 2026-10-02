@@ -312,6 +312,34 @@ class TestMcpRemoteBackend(_Auth, unittest.TestCase):
         self.assertEqual((at.subject, at.scopes), ("eve", ["read"]))
         self.assertIsNone(asyncio.run(v.verify_token("forged.token.value")))
 
+    def test_a_revoked_token_is_refused_at_once(self):
+        """No cached "yes": the MCP server asks the API on every request."""
+        import asyncio
+        from modules.mcp.server import JwtVerifier
+        v, tok = JwtVerifier(self.remote), self.tok("mallory", "read")
+        self.assertIsNotNone(asyncio.run(v.verify_token(tok)))
+        auth.revoke(tok)
+        self.assertIsNone(asyncio.run(v.verify_token(tok)))
+
+    def test_watcher_needs_no_token(self):
+        """With a read token the watcher names the resource that changed.
+        Without one it still notices the change (GET /events/cursor is open)
+        and reports every resource."""
+        import asyncio
+        from modules.mcp.watch import RegistryWatcher, MODELS, SOURCES, EVENTS
+        writer = self.tok("al", "write_models")
+        for token, expected in ((self.tok("w", "read"), {MODELS, EVENTS}),
+                                (None, {MODELS, SOURCES, EVENTS})):
+            w = RegistryWatcher(self.remote, bus=None, token=token)
+            cursor, stale = asyncio.run(w._poll(None))
+            self.assertEqual(stale, set())                       # start from now
+            self.assertEqual(asyncio.run(w._poll(cursor)), (cursor, set()))   # nothing new
+            self.remote.register_model(CV, f"watched-{bool(token)}", False, writer)
+            cursor2, stale = asyncio.run(w._poll(cursor))
+            self.assertGreater(cursor2, cursor)
+            self.assertEqual(stale, expected)
+            self.assertEqual(w._precise, token is not None)
+
 
 @unittest.skipUnless(_has("fastapi") and _has("bcrypt") and _has("jwt"), "fastapi + bcrypt + pyjwt needed")
 class TestLoginAndRevocation(_Auth, unittest.TestCase):
@@ -324,7 +352,7 @@ class TestLoginAndRevocation(_Auth, unittest.TestCase):
         from modules.rest.app import create_app
         self.dir = tempfile.mkdtemp()
         os.environ["KALMAN_HTPASSWD"] = os.path.join(self.dir, "htpasswd")
-        auth._FAILS.clear()
+        store.clear_login_failures()
         auth.add_user("alice", "correct horse", scopes="read,send_measurement,write_models")
         auth.add_user("bob", "battery staple")                       # no grant: read only
         auth.add_user("root", "tr0ub4dor&3", scopes="admin")
@@ -381,6 +409,48 @@ class TestLoginAndRevocation(_Auth, unittest.TestCase):
         self.assertEqual(self.login("nobody", "x").status_code, 401)
         self.assertEqual(self.login("bob", "battery staple").status_code, 200)
 
+    def test_a_lockout_holds_in_another_process_and_an_admin_ends_it(self):
+        """The count is in the registry: a second worker, or the server after a
+        restart, does not hand out five more tries."""
+        for _ in range(auth.LOGIN_ATTEMPTS):
+            self.login("alice", "nope")
+        out = subprocess.run(
+            [sys.executable, "-c",
+             "import modules.api.auth as a\n"
+             "try:\n    a.login('alice', 'correct horse', client='testclient'); print('IN')\n"
+             "except a.RateLimited as e:\n    print('LOCKED', int(e.retry_after) > 0)"],
+            env=_subprocess_env(), capture_output=True, text=True, timeout=120)
+        self.assertIn("LOCKED True", out.stdout, out.stderr)
+        bob = self.login("bob", "battery staple").json()["access_token"]
+        root = self.login("root", "tr0ub4dor&3").json()["access_token"]
+        self.assertEqual(self.client.post("/token/unlock", json={"user": "alice"},
+                                          headers=self.h(bob)).status_code, 403)
+        self.assertEqual(self.client.post("/token/unlock", json={"user": "alice"},
+                                          headers=self.h(root)).status_code, 200)
+        self.assertEqual(self.login("alice", "correct horse").status_code, 200)
+
+    def test_cli_revokes_through_the_api(self):
+        """`make api-revoke API=...`: the registry is the server's, not this
+        machine's, so the CLI asks the API with an admin token it mints."""
+        tok = self.login("alice", "correct horse").json()["access_token"]
+        calls = []
+
+        def post(base_url, path, token, body):
+            calls.append((base_url, path, body))
+            r = self.client.post(path, json=body, headers=self.h(token))
+            if r.status_code >= 400:
+                raise RuntimeError(f"HTTP {r.status_code}: {r.text}")
+            return r.json()
+
+        real, auth._api_post = auth._api_post, post
+        try:
+            self.assertEqual(auth._main(["revoke", "--user", "alice", "--api", "http://api"]), 0)
+            self.assertEqual(auth._main(["unlock", "--user", "alice", "--api", "http://api"]), 0)
+        finally:
+            auth._api_post = real
+        self.assertEqual([c[1] for c in calls], ["/token/revoke", "/token/unlock"])
+        self.assertEqual(self.client.get("/catalog", headers=self.h(tok)).status_code, 401)
+
     def test_changing_the_password_keeps_the_grant(self):
         auth.add_user("alice", "new password")
         self.assertEqual(auth.user_scopes("alice"), ["read", "send_measurement", "write_models"])
@@ -432,6 +502,17 @@ class TestMcpNotifications(unittest.TestCase):
 
     def tearDown(self):
         os.environ.pop("KALMAN_EVENTS_POLL", None)
+
+    def test_the_sdk_still_has_the_subscribe_hook(self):
+        """attach() reaches the low-level server through an attribute that is not
+        public SDK API. If a release moves it, this fails — not a client."""
+        from modules.mcp.server import _server_class
+        from modules.mcp.watch import RegistryWatcher
+        try:
+            from mcp.server.subscriptions import InMemorySubscriptionBus  # noqa: F401
+        except ImportError:
+            self.skipTest("MCP SDK without subscriptions")
+        self.assertTrue(RegistryWatcher(None, None).attach(_server_class()("t")))
 
     def test_uris(self):
         from modules.mcp.watch import uris_for

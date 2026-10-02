@@ -138,6 +138,13 @@ def create_app():
                                 headers={"WWW-Authenticate": "Bearer"})
         return auth.revoke(tok, user=(body or {}).get("user"))
 
+    @app.post("/token/unlock")
+    def unlock(body: dict, _=Depends(require("admin"))):
+        """``{user}``: forget that account's failed logins (admin)."""
+        need(body, "user")
+        auth.unlock(body["user"])
+        return {"unlocked": body["user"]}
+
     # ---- read ----
     @app.get("/catalog")
     def catalog(_=Depends(require("read"))):
@@ -180,6 +187,14 @@ def create_app():
         return facade.describe_source(name)
 
     # ---- subscribe ----
+    @app.get("/events/cursor")
+    def events_cursor():
+        """The id of the newest event, and nothing else — no token needed. It
+        says that the registry changed, never what changed; a watcher without
+        a token (the MCP server in front of this API) uses it to know when to
+        tell its clients to look again."""
+        return {"last": store.last_event()}
+
     @app.get("/events")
     def events(since: int = 0, limit: int = 100, _=Depends(require("read"))):
         return facade.events(since, limit)

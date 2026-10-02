@@ -19,6 +19,8 @@ the registry is on disk:
                       catalog
   - ``revoked_*``     the token revocation list: single tokens by ``jti``, and
                       "every token of this user issued until now"
+  - ``login_failures`` failed logins per user and client, so a lockout holds
+                      across workers, processes and restarts
 
 The file is ``$KALMAN_STATE_DIR/registry.sqlite`` (default ``~/.kalman/state``).
 WAL mode lets one writer and many readers work at the same time, across
@@ -83,6 +85,12 @@ CREATE TABLE IF NOT EXISTS revoked_users (
     by      TEXT,
     at      REAL NOT NULL
 );
+CREATE TABLE IF NOT EXISTS login_failures (
+    user    TEXT NOT NULL,
+    client  TEXT NOT NULL,
+    at      REAL NOT NULL
+);
+CREATE INDEX IF NOT EXISTS login_failures_by_user ON login_failures(user, client, at);
 """
 
 #: Rows kept per push source, and events kept in the log. Old rows go first.
@@ -387,3 +395,34 @@ def is_revoked(jti: str | None, sub: str | None, iat: float | None) -> bool:
             if row is not None and (iat is None or float(iat) <= row[0]):
                 return True
     return False
+
+
+# ---------------------------------------------------------------------------
+# failed logins
+# ---------------------------------------------------------------------------
+def login_failures(user: str, client: str, window: float) -> list[float]:
+    """Wall-clock times of the failed logins of ``user`` from ``client`` inside
+    ``window`` seconds."""
+    with _db() as con:
+        return [r[0] for r in con.execute(
+            "SELECT at FROM login_failures WHERE user=? AND client=? AND at>? ORDER BY at",
+            (user, client, time.time() - window))]
+
+
+def add_login_failure(user: str, client: str, window: float):
+    now = time.time()
+    with _db() as con:
+        con.execute("DELETE FROM login_failures WHERE at<=?", (now - window,))   # everybody's
+        con.execute("INSERT INTO login_failures VALUES (?,?,?)", (user, client, now))
+
+
+def clear_login_failures(user: str | None = None, client: str | None = None):
+    """Forget failed logins: of ``user`` from ``client`` (a good login), of
+    ``user`` from anywhere (an admin's unlock), or all of them."""
+    with _db() as con:
+        if user is None:
+            con.execute("DELETE FROM login_failures")
+        elif client is None:
+            con.execute("DELETE FROM login_failures WHERE user=?", (user,))
+        else:
+            con.execute("DELETE FROM login_failures WHERE user=? AND client=?", (user, client))

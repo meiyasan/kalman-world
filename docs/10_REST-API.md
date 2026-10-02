@@ -48,6 +48,7 @@ detail is in [Deployment](13_Deployment.md).
 | `GET` | `/healthz` | none | — |
 | `POST` | `/token` | none (user + password) | `{user, password, scopes?, exp_hours?}` → `{access_token, …}` |
 | `POST` | `/token/revoke` | any valid token (`admin` for another user) | `{}` this token, or `{user}` all tokens of a user |
+| `POST` | `/token/unlock` | `admin` | `{user}` — forget the failed logins of an account |
 | `GET` | `/whoami` | any valid token | — returns `{auth, user, scopes, exp}` |
 | `GET` | `/catalog` | `read` | — |
 | `GET` | `/describe/{name}` | `read` | — |
@@ -57,6 +58,7 @@ detail is in [Deployment](13_Deployment.md).
 | `GET` | `/models` | `read` | — the registry, with owners |
 | `GET` | `/plugins` | `read` | — plugins recorded in the registry |
 | `GET` | `/sources`, `/sources/{name}` | `read` | — |
+| `GET` | `/events/cursor` | none | — returns `{last}`, the id of the newest event and nothing else |
 | `GET` | `/events` | `read` | `?since=&limit=` |
 | `GET` | `/events/stream` | `read` | `?since=&timeout=`, Server-Sent Events |
 | `POST` | `/filter` | `send_measurement` | `{spec, data, smooth?}` or `{spec, source, query?}` |
@@ -271,6 +273,10 @@ id: 2
 event: measurement.received
 data: {"id": 2, "type": "measurement.received", "payload": {"source": "scene-1", …}}
 ```
+
+`GET /events/cursor` needs no token. It tells a client *that* the registry
+changed, not *what* changed. The MCP server uses it when it has no token of
+its own.
 
 The stream starts from now. It starts from `?since=` if you give it, or from
 the `Last-Event-ID` header that a reconnecting client sends. A comment line is

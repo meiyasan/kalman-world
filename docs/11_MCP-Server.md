@@ -125,9 +125,15 @@ async with Client("https://kalman.example/mcp") as client:
 The notification has no registry content. It tells the client to read the
 resource again, and that read is checked against the client's token as usual.
 The server looks for changes every `KALMAN_EVENTS_POLL` seconds (default 1).
-In REST client mode with auth on, the server needs `KALMAN_MCP_TOKEN` with the
-`read` scope to see the events. Without it, notifications are off, and a line
-on stderr says so.
+
+In REST client mode with auth on, the server has no token of its own to read
+the events. Notifications work in both cases:
+
+- **With `KALMAN_MCP_TOKEN`** (a token with the `read` scope): the server
+  reads the events, and reports only the resource that changed.
+- **Without it**: the server reads `GET /events/cursor`, which needs no token
+  and gives only the id of the newest event. On each change it reports all
+  three resources, and the clients read again the ones they use.
 
 A client that does not subscribe (or a server with SDK 1.x, which has
 neither way) calls `list_events(since=<last>)`, which gives
@@ -213,7 +219,7 @@ $ make mcp-serve                  # python -m kalman.mcp — stdio, waits for a 
 | `KALMAN_MCP_PUBLIC_URL` | `http://<host>:<port>` | the URL clients use (OAuth resource metadata) |
 | `KALMAN_API_URL` | unset | send all work to this REST API |
 | `KALMAN_JWT_SECRET` | unset | enables scope enforcement (in-process mode) |
-| `KALMAN_MCP_TOKEN` | unset | stdio: the token used when a call gives none; REST client mode: the `read` token the server uses to see registry events |
+| `KALMAN_MCP_TOKEN` | unset | stdio: the token used when a call gives none. REST client mode: an optional `read` token, so that a notification names the resource that changed |
 
 Over `sse` and `streamable-http`, clients send `Authorization: Bearer <JWT>`.
 The server requires it when it can check tokens: with `KALMAN_JWT_SECRET`, or
