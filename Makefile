@@ -294,9 +294,14 @@ mcp-clients:
 mcp-uninstall:
 	@$(PYTHON) tools/mcp_install.py --all --remove
 
-## Add/update an API account (username + password) in the .htpasswd store: make api-user USER=alice
+## Add/update an API account (username + password) in the .htpasswd store: make api-user USER=alice SCOPES="read,send_measurement"
+## SCOPES is what the account may ask for when it logs in (POST /token); default: keep its grant, or "read"
 api-user:
-	@$(PYTHON) -m kalman.api.auth adduser --user "$(USER)"
+	@$(PYTHON) -m kalman.api.auth adduser --user "$(USER)" $(if $(SCOPES),--scopes "$(SCOPES)")
+
+## Revoke every token of an account issued until now: make api-revoke USER=alice   (or TOKEN=eyJ... for one token)
+api-revoke:
+	@$(PYTHON) -m kalman.api.auth revoke $(if $(TOKEN),--token "$(TOKEN)",--user "$(USER)")
 
 ## Mint a scoped JWT for an API account: make api-token USER=alice SCOPES="read,send_measurement"
 api-token:

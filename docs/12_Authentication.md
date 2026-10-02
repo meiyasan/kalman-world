@@ -16,10 +16,12 @@ $ pip install "kalman[auth]"        # bcrypt + pyjwt
 
 | Layer | What it is | Where it lives |
 |---|---|---|
-| **Account store** | Apache-format `.htpasswd`, `name:bcrypt` | `~/.kalman/htpasswd`, or `$KALMAN_HTPASSWD` |
+| **Account store** | Apache-format `.htpasswd`, `name:bcrypt[:scopes]` | `~/.kalman/htpasswd`, or `$KALMAN_HTPASSWD` |
 | **Bearer tokens** | signed JWTs (HS256) carrying scopes | minted on demand, never stored |
+| **Revocation list** | revoked token ids, and "all tokens of this user until now" | the shared registry, `$KALMAN_STATE_DIR` |
 
-Accounts exist only to authenticate a person *minting* a token. Callers present
+Accounts exist only to authenticate a person who gets a token: an admin with
+the CLI, or the user with `POST /token`. For all other calls, callers present
 tokens, never passwords.
 
 ## Scopes
@@ -60,10 +62,18 @@ enabled()        # True once the secret is set
 ## Creating an account
 
 ```bash
-$ make api-user USER=marco
+$ make api-user USER=marco SCOPES=read,send_measurement,write_models
 password for marco: ␣
-account 'marco' written to /Users/marco/.kalman/htpasswd
+account 'marco' written to /Users/marco/.kalman/htpasswd (login scopes: read,send_measurement,write_models)
 ```
+
+`SCOPES` is the **grant**: the scopes that the account can ask for when it logs
+in with `POST /token`. It is kept in the third field of the line
+(`marco:$2b$…:read,send_measurement,write_models`). Apache and nginx read that
+field as a comment, so the file stays a normal htpasswd file. If you run
+`make api-user` again without `SCOPES`, the password changes and the grant
+stays. An account without a grant gets `KALMAN_DEFAULT_SCOPES` (default
+`read`).
 
 The file is written `0600` in the Apache `user:$2b$…` format that httpd, nginx
 and every htpasswd tool understand, using the maintained `bcrypt` package
@@ -93,6 +103,67 @@ OK
 `--no-verify` mints without checking the account — for CI and automation where
 no password can be typed. Guard the secret accordingly.
 
+The CLI needs `KALMAN_JWT_SECRET`, so only an admin on the server can use it.
+The CLI does not apply the grant: the admin chooses the scopes.
+
+## Logging in over HTTP
+
+A user who has an account gets a token without the secret and without an admin:
+
+```bash
+$ curl -s -X POST localhost:8000/token -H 'Content-Type: application/json' \
+    -d '{"user": "marco", "password": "…", "scopes": ["read", "send_measurement"], "exp_hours": 8}'
+{"access_token":"eyJ…","token_type":"bearer","expires_in":28800,
+ "scopes":["read","send_measurement"],"user":"marco"}
+```
+
+- `scopes` is optional. Without it, the token has the full grant. Each scope
+  that you ask for must be in the grant (`403` if not). An `admin` grant covers
+  all scopes.
+- `exp_hours` is optional. The lifetime is at most `KALMAN_TOKEN_MAX_HOURS`
+  (default 24).
+- A wrong user or a wrong password gives the same `401`. An account that does
+  not exist costs the same bcrypt check as a wrong password, so the response
+  time does not show which accounts exist.
+- After 5 failed logins in 5 minutes for one user from one client address, the
+  answer is `429` with `Retry-After`. The counters are in the memory of the
+  server process. Also put a rate limit on `/token` at the reverse proxy.
+- Send the password only over TLS.
+
+## Revoking a token
+
+A token works until `exp`, unless you revoke it. The list is in the shared
+registry, so each server that uses the registry refuses the token from the next
+request.
+
+```bash
+# log out: revoke the token that you present
+$ curl -s -X POST localhost:8000/token/revoke -H "Authorization: Bearer $TOKEN"
+{"revoked":"token","user":"marco"}
+
+# revoke all tokens of a user that were issued until now (your own, or any user as admin)
+$ curl -s -X POST localhost:8000/token/revoke -H "Authorization: Bearer $ADMIN" \
+    -H 'Content-Type: application/json' -d '{"user": "marco"}'
+{"revoked":"user","user":"marco","before":1790000000.123}
+```
+
+After "revoke all", the user logs in again and the new token works. On the
+server, an admin can do the same without a token:
+
+```bash
+$ make api-revoke USER=marco            # all tokens of marco issued until now
+$ make api-revoke TOKEN="$TOKEN"        # one token
+```
+
+Run `make api-revoke` where `KALMAN_STATE_DIR` is the directory that the
+servers use. For the Docker services, the registry is in the `state` volume, so
+use `POST /token/revoke` with an admin token.
+
+A revoked token is kept in the list until it expires, and is then removed. If a
+password leaks, change it with `make api-user` and revoke the user's tokens.
+If the *secret* leaks, revocation does not help: change `KALMAN_JWT_SECRET`,
+which makes all tokens invalid.
+
 ## Presenting a token
 
 **REST** — an `Authorization` header:
@@ -101,9 +172,9 @@ no password can be typed. Guard the secret accordingly.
 $ curl -s localhost:8000/catalog -H "Authorization: Bearer $TOKEN"
 ```
 
-`401` when no token was presented, or the token is forged or expired. The
-response has `WWW-Authenticate: Bearer`. `403` when the token does not have
-the scope. `GET /whoami` shows what a token is:
+`401` when no token was presented, or the token is forged, expired or revoked.
+The response has `WWW-Authenticate: Bearer`. `403` when the token is good but
+does not have the scope. `GET /whoami` shows what a token is:
 
 ```bash
 $ curl -s localhost:8000/whoami -H "Authorization: Bearer $TOKEN"
@@ -162,8 +233,13 @@ authorize(token, "read")            # True, or raises AuthError
 
 - **No secret configured** → returns `True` immediately. Auth is off.
 - **Secret configured, no token** → `AuthError: a bearer token with scope 'read' is required.`
-- **Bad signature / expired / malformed** → `AuthError: invalid or expired token: ExceptionType.`
+- **Bad signature / expired / malformed** → `InvalidToken: invalid or expired token: ExceptionType.`
   The underlying exception type is named; its message is not echoed.
+- **Revoked** → `InvalidToken: this token was revoked.` If the revocation list
+  cannot be read, the token is refused, not accepted.
+
+`InvalidToken` is a subclass of `AuthError`. It means "no usable token" (`401`).
+A plain `AuthError` means "a good token, but not allowed" (`403`).
 - **Valid token, wrong scope** → `AuthError: token lacks required scope 'write_models'.`
 - **Secret configured but PyJWT missing** → denied, not bypassed:
   `AuthError: auth is enabled but PyJWT is not installed`.
@@ -174,10 +250,12 @@ dependency degrades every other feature gracefully; here it denies instead.
 Token payload:
 
 ```json
-{"sub": "marco", "scopes": ["read", "send_measurement"], "iat": …, "exp": …}
+{"sub": "marco", "scopes": ["read", "send_measurement"], "iat": …, "exp": …, "jti": "9f2c…"}
 ```
 
-`exp` and `sub` are required. A token without them is refused.
+`exp` and `sub` are required. A token without them is refused. `jti` is the
+id of the token, used to revoke it. `iat` has millisecond precision, so that
+"revoke all tokens until now" does not refuse the token of the next login.
 
 **Issuer and audience.** Set `KALMAN_JWT_ISSUER` and/or `KALMAN_JWT_AUDIENCE`
 on the machine that mints and on the servers. New tokens then contain
@@ -206,8 +284,9 @@ needs `admin` to set up. Without this rule, a `send_measurement` token could
 read any file on the server, or make the server send its outbound credential to
 a host that the caller chooses. Other users fetch these sources by name.
 
-There is no revocation list. A leaked token is valid until it expires — mint
-short-lived tokens for anything you hand out.
+A leaked token is valid until it expires or until you revoke it (see
+[Revoking a token](#revoking-a-token)). Give short-lived tokens to anything
+you hand out.
 
 ---
 

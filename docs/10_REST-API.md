@@ -46,6 +46,8 @@ detail is in [Deployment](13_Deployment.md).
 | Method | Path | Scope | Body / params |
 |---|---|---|---|
 | `GET` | `/healthz` | none | — |
+| `POST` | `/token` | none (user + password) | `{user, password, scopes?, exp_hours?}` → `{access_token, …}` |
+| `POST` | `/token/revoke` | any valid token (`admin` for another user) | `{}` this token, or `{user}` all tokens of a user |
 | `GET` | `/whoami` | any valid token | — returns `{auth, user, scopes, exp}` |
 | `GET` | `/catalog` | `read` | — |
 | `GET` | `/describe/{name}` | `read` | — |
@@ -76,10 +78,11 @@ Status codes:
 | Code | When |
 |---|---|
 | `400` | the request is wrong: a missing field, a bad spec, rows of the wrong width |
-| `401` | no token, or a forged or expired token (with `WWW-Authenticate: Bearer`) |
+| `401` | no token, or a forged, expired or revoked token (with `WWW-Authenticate: Bearer`); a wrong password at `/token` |
 | `403` | a valid token without the scope, or a change to an entry the caller does not own |
 | `404` | an unknown model, source or `run_id` |
 | `409` | the name is already used by a different definition |
+| `429` | too many failed logins (with `Retry-After`) |
 
 ---
 
@@ -368,7 +371,11 @@ Notes for a real integration:
   real-time-safe.
 - **Tokens.** If you enable auth, mint a `read`+`send_measurement` token
   (`make api-token USER=unity SCOPES=read,send_measurement`) and never ship an
-  `admin` token in a build — see [Authentication](12_Authentication.md).
+  `admin` token in a build — see [Authentication](12_Authentication.md). For
+  a build that people use with their own accounts, do not put a token in the
+  build: ask for the user and password, call `POST /token`, keep the
+  `access_token` in memory, and call `POST /token/revoke` when the user logs
+  out.
 - **WebGL builds** also need CORS: set `KALMAN_CORS_ORIGINS` (see above).
 
 ### Sending measurements from a scene and getting the estimate back

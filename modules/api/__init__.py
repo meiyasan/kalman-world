@@ -828,9 +828,12 @@ def push_measurements(name: str, rows, time=None, *, credential: str | None = No
 
 def events(since: int = 0, limit: int = 100) -> dict:
     """Registry events after ``since``: ``{"events": [...], "last": <id>}``.
-    Pass ``last`` back as ``since`` to read on; ``GET /events/stream`` pushes
-    the same events as Server-Sent Events."""
+    Pass ``last`` back as ``since`` to read on; ``since=-1`` returns no events
+    and the newest id, the place to start listening from.  ``GET
+    /events/stream`` pushes the same events as Server-Sent Events."""
     limit = max(1, min(int(limit), 1000))
+    if int(since) < 0:                      # "from now": the cursor a new subscriber starts at
+        return {"events": [], "last": store.last_event()}
     evs = store.events(int(since), limit)
     return {"events": evs, "last": evs[-1]["id"] if evs else max(int(since), 0)}
 

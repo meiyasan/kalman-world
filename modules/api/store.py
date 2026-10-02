@@ -17,6 +17,8 @@ the registry is on disk:
   - ``events``        an append-only log of all of the above; ``GET /events``
                       streams it, so clients subscribe instead of polling the
                       catalog
+  - ``revoked_*``     the token revocation list: single tokens by ``jti``, and
+                      "every token of this user issued until now"
 
 The file is ``$KALMAN_STATE_DIR/registry.sqlite`` (default ``~/.kalman/state``).
 WAL mode lets one writer and many readers work at the same time, across
@@ -67,6 +69,19 @@ CREATE TABLE IF NOT EXISTS events (
     type    TEXT NOT NULL,
     payload TEXT NOT NULL,
     ts      REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS revoked_tokens (
+    jti     TEXT PRIMARY KEY,
+    sub     TEXT,
+    exp     REAL,
+    by      TEXT,
+    at      REAL NOT NULL
+);
+CREATE TABLE IF NOT EXISTS revoked_users (
+    sub     TEXT PRIMARY KEY,
+    before  REAL NOT NULL,
+    by      TEXT,
+    at      REAL NOT NULL
 );
 """
 
@@ -338,3 +353,37 @@ def events(since: int = 0, limit: int = 100) -> list[dict]:
 def last_event() -> int:
     with _db() as con:
         return con.execute("SELECT COALESCE(MAX(id), 0) FROM events").fetchone()[0]
+
+
+# ---------------------------------------------------------------------------
+# token revocation
+# ---------------------------------------------------------------------------
+def revoke_token(jti: str, sub: str | None, exp: float | None, by: str | None):
+    """Refuse the token with this ``jti`` from now on. Entries whose token has
+    expired anyway are dropped here, so the list stays as short as the set of
+    live revoked tokens."""
+    now = time.time()
+    with _db() as con:
+        con.execute("DELETE FROM revoked_tokens WHERE exp IS NOT NULL AND exp < ?", (now,))
+        con.execute("INSERT OR REPLACE INTO revoked_tokens VALUES (?,?,?,?,?)",
+                    (jti, sub, exp, by, now))
+
+
+def revoke_user(sub: str, by: str | None) -> float:
+    """Refuse every token of ``sub`` issued up to now. Returns the cutoff."""
+    now = time.time()
+    with _db() as con:
+        con.execute("INSERT OR REPLACE INTO revoked_users VALUES (?,?,?,?)", (sub, now, by, now))
+    return now
+
+
+def is_revoked(jti: str | None, sub: str | None, iat: float | None) -> bool:
+    with _db() as con:
+        if jti and con.execute("SELECT 1 FROM revoked_tokens WHERE jti=?", (jti,)).fetchone():
+            return True
+        if sub is not None:
+            row = con.execute("SELECT before FROM revoked_users WHERE sub=?", (sub,)).fetchone()
+            # A token with no iat cannot be shown to be newer than the cutoff.
+            if row is not None and (iat is None or float(iat) <= row[0]):
+                return True
+    return False

@@ -218,6 +218,11 @@ class TestRestRegistry(_Auth, unittest.TestCase):
         r = self.client.get("/whoami")
         self.assertEqual(r.status_code, 401)
         self.assertEqual(r.headers.get("www-authenticate"), "Bearer")
+        # 401 = no usable token (none, forged, expired); 403 = a good token, not allowed
+        self.assertEqual(self.client.get("/catalog", headers=self.h("forged.token.x")).status_code, 401)
+        expired = auth.mint_token("al", ["read"], exp_hours=-1.0)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(expired)).status_code, 401)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(self.tok("al", "write_models"))).status_code, 403)
 
     def test_measure_from_a_device_and_filter(self):
         """What a Unity client does: push rows, then ask for the estimate."""
@@ -306,6 +311,199 @@ class TestMcpRemoteBackend(_Auth, unittest.TestCase):
         at = asyncio.run(v.verify_token(self.tok("eve", "read")))
         self.assertEqual((at.subject, at.scopes), ("eve", ["read"]))
         self.assertIsNone(asyncio.run(v.verify_token("forged.token.value")))
+
+
+@unittest.skipUnless(_has("fastapi") and _has("bcrypt") and _has("jwt"), "fastapi + bcrypt + pyjwt needed")
+class TestLoginAndRevocation(_Auth, unittest.TestCase):
+    """POST /token: an account's password for a scoped JWT; POST /token/revoke."""
+
+    def setUp(self):
+        super().setUp()
+        import tempfile
+        from fastapi.testclient import TestClient
+        from modules.rest.app import create_app
+        self.dir = tempfile.mkdtemp()
+        os.environ["KALMAN_HTPASSWD"] = os.path.join(self.dir, "htpasswd")
+        auth._FAILS.clear()
+        auth.add_user("alice", "correct horse", scopes="read,send_measurement,write_models")
+        auth.add_user("bob", "battery staple")                       # no grant: read only
+        auth.add_user("root", "tr0ub4dor&3", scopes="admin")
+        self.client = TestClient(create_app())
+
+    def tearDown(self):
+        super().tearDown()
+        for k in ("KALMAN_HTPASSWD", "KALMAN_TOKEN_MAX_HOURS"):
+            os.environ.pop(k, None)
+
+    def login(self, user, password, **kw):
+        return self.client.post("/token", json={"user": user, "password": password, **kw})
+
+    def h(self, token):
+        return {"Authorization": f"Bearer {token}"}
+
+    def test_login_gives_a_working_token(self):
+        r = self.login("alice", "correct horse")
+        self.assertEqual(r.status_code, 200, r.text)
+        body = r.json()
+        self.assertEqual(body["token_type"], "bearer")
+        self.assertEqual(body["scopes"], ["read", "send_measurement", "write_models"])
+        who = self.client.get("/whoami", headers=self.h(body["access_token"])).json()
+        self.assertEqual(who["user"], "alice")
+        self.assertEqual(self.client.post("/models", json={"spec": CV, "name": "by-login"},
+                                          headers=self.h(body["access_token"])).json()["owner"],
+                         "alice")
+
+    def test_scopes_are_limited_to_the_grant(self):
+        narrow = self.login("alice", "correct horse", scopes=["read"]).json()
+        self.assertEqual(narrow["scopes"], ["read"])
+        self.assertEqual(self.login("alice", "correct horse", scopes=["admin"]).status_code, 403)
+        self.assertEqual(self.login("bob", "battery staple").json()["scopes"], ["read"])
+        self.assertEqual(self.login("bob", "battery staple",
+                                    scopes=["write_models"]).status_code, 403)
+        # an admin grant covers every scope
+        self.assertEqual(self.login("root", "tr0ub4dor&3",
+                                    scopes=["load_plugins"]).json()["scopes"], ["load_plugins"])
+
+    def test_lifetime_is_capped(self):
+        os.environ["KALMAN_TOKEN_MAX_HOURS"] = "2"
+        self.assertEqual(self.login("alice", "correct horse", exp_hours=1000).json()["expires_in"],
+                         7200)
+        self.assertEqual(self.login("alice", "correct horse", exp_hours=0.5).json()["expires_in"],
+                         1800)
+
+    def test_wrong_password_then_lockout(self):
+        for _ in range(auth.LOGIN_ATTEMPTS):
+            self.assertEqual(self.login("alice", "nope").status_code, 401)
+        r = self.login("alice", "correct horse")                     # right, but locked out
+        self.assertEqual(r.status_code, 429)
+        self.assertGreater(int(r.headers["retry-after"]), 0)
+        # the same answer for an account that does not exist, and no lockout of others
+        self.assertEqual(self.login("nobody", "x").status_code, 401)
+        self.assertEqual(self.login("bob", "battery staple").status_code, 200)
+
+    def test_changing_the_password_keeps_the_grant(self):
+        auth.add_user("alice", "new password")
+        self.assertEqual(auth.user_scopes("alice"), ["read", "send_measurement", "write_models"])
+        self.assertTrue(auth.verify_user("alice", "new password"))
+        self.assertFalse(auth.verify_user("alice", "correct horse"))
+
+    def test_logout_revokes_this_token_only(self):
+        a = self.login("alice", "correct horse").json()["access_token"]
+        b = self.login("alice", "correct horse").json()["access_token"]
+        self.assertEqual(self.client.post("/token/revoke", headers=self.h(a)).status_code, 200)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(a)).status_code, 401)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(b)).status_code, 200)
+        self.assertEqual(self.client.post("/token/revoke").status_code, 401)
+
+    def test_admin_revokes_all_tokens_of_a_user(self):
+        a = self.login("alice", "correct horse").json()["access_token"]
+        b = self.login("bob", "battery staple").json()["access_token"]
+        root = self.login("root", "tr0ub4dor&3").json()["access_token"]
+        self.assertEqual(self.client.post("/token/revoke", json={"user": "alice"},
+                                          headers=self.h(b)).status_code, 403)
+        self.assertEqual(self.client.post("/token/revoke", json={"user": "alice"},
+                                          headers=self.h(root)).status_code, 200)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(a)).status_code, 401)
+        self.assertEqual(self.client.get("/catalog", headers=self.h(b)).status_code, 200)
+        time.sleep(0.01)
+        again = self.login("alice", "correct horse").json()["access_token"]
+        self.assertEqual(self.client.get("/catalog", headers=self.h(again)).status_code, 200)
+
+    def test_another_process_refuses_a_revoked_token(self):
+        tok = self.login("alice", "correct horse").json()["access_token"]
+        self.client.post("/token/revoke", headers=self.h(tok))
+        out = subprocess.run(
+            [sys.executable, "-c",
+             "import sys, modules.api.auth as a\n"
+             "try:\n    a.authorize(sys.argv[1], 'read'); print('ALLOWED')\n"
+             "except a.AuthError as e:\n    print('DENIED', e)", tok],
+            env=_subprocess_env(), capture_output=True, text=True, timeout=120)
+        self.assertIn("DENIED this token was revoked", out.stdout, out.stderr)
+
+
+@unittest.skipUnless(_has("mcp"), "mcp SDK not installed")
+class TestMcpNotifications(unittest.TestCase):
+    """A client listening on catalog://models hears about a model that another
+    process registers."""
+
+    def setUp(self):
+        os.environ["KALMAN_EVENTS_POLL"] = "0.1"
+        os.environ.pop("KALMAN_JWT_SECRET", None)
+
+    def tearDown(self):
+        os.environ.pop("KALMAN_EVENTS_POLL", None)
+
+    def test_uris(self):
+        from modules.mcp.watch import uris_for
+        self.assertEqual(uris_for("model.created"), {"catalog://models", "registry://events"})
+        self.assertEqual(uris_for("plugin.loaded"), {"catalog://models", "registry://events"})
+        self.assertEqual(uris_for("measurement.received"),
+                         {"catalog://sources", "registry://events"})
+
+    def test_listen_hears_a_change_made_elsewhere(self):
+        import asyncio
+        try:
+            from mcp.client import Client
+            from mcp.server.subscriptions import ResourceUpdated
+        except ImportError:
+            self.skipTest("MCP SDK without subscriptions/listen")
+        from modules.mcp.server import build_server
+        from modules.mcp.backend import LocalBackend
+        name = f"heard-{os.getpid()}-{int(time.time())}"
+        code = ("import json, sys, modules.api as a; "
+                "a.register_model(json.loads(sys.argv[1]), sys.argv[2])")
+
+        async def run():
+            async with Client(build_server(LocalBackend())) as client:
+                async with client.listen(resource_subscriptions=["catalog://models"]) as sub:
+                    await asyncio.sleep(0.5)                 # the watcher has its cursor
+                    proc = await asyncio.create_subprocess_exec(
+                        sys.executable, "-c", code, json.dumps(CV), name, env=_subprocess_env())
+                    self.assertEqual(await proc.wait(), 0)
+                    event = await asyncio.wait_for(sub.__anext__(), timeout=20)
+                # the notification says "read again"; the content comes from the resource
+                models = await client.read_resource("catalog://models")
+                return event, models
+
+        event, models = asyncio.run(run())
+        self.assertEqual(event, ResourceUpdated(uri="catalog://models"))
+        text = "".join(getattr(c, "text", "") for c in models.contents)
+        self.assertIn(name, json.loads(text)["authored"])
+
+    def test_resources_subscribe_for_clients_before_listen(self):
+        """A real server process over stdio, and a client that speaks the
+        protocol most clients speak today: resources/subscribe, then
+        notifications/resources/updated when this process changes the registry."""
+        import asyncio
+        from mcp import ClientSession, StdioServerParameters
+        from mcp.client.stdio import stdio_client
+        name = f"legacy-{os.getpid()}-{int(time.time())}"
+        got = []
+
+        async def on_message(message):
+            params = getattr(message, "params", None)
+            if getattr(params, "uri", None):
+                got.append(str(params.uri))
+
+        async def run():
+            params = StdioServerParameters(command=sys.executable, args=["-m", "modules.mcp"],
+                                           env=_subprocess_env(), cwd=os.getcwd())
+            async with stdio_client(params) as (r, w):
+                async with ClientSession(r, w, message_handler=on_message) as s:
+                    init = await s.initialize()
+                    self.assertTrue(init.capabilities.resources.subscribe)
+                    await s.subscribe_resource("catalog://sources")
+                    await asyncio.sleep(0.5)                  # the watcher has its cursor
+                    await asyncio.to_thread(api.register_model, CV, name)     # not subscribed
+                    await asyncio.to_thread(api.register_source, name, {"kind": "push"})
+                    for _ in range(100):
+                        if got:
+                            break
+                        await asyncio.sleep(0.1)
+                    await s.unsubscribe_resource("catalog://sources")
+
+        asyncio.run(run())
+        self.assertEqual(got, ["catalog://sources"])       # only what was subscribed
 
 
 def _native():

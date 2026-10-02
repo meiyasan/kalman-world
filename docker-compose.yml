@@ -106,6 +106,9 @@ services:
       - KALMAN_MCP_PORT=8765
       - KALMAN_MCP_PUBLIC_URL=${KALMAN_MCP_PUBLIC_URL:-http://localhost:8765}
       - KALMAN_API_URL=http://rest:8000
+      # A read-only token: lets this server see registry events and notify
+      # listening clients. Optional; without it clients poll list_events.
+      - KALMAN_MCP_TOKEN=${KALMAN_MCP_TOKEN:-}
       - KALMAN_ALLOW_ANONYMOUS=${KALMAN_ALLOW_ANONYMOUS:-0}
     depends_on:
       rest:

@@ -12,9 +12,10 @@ announces each change as it happens. The MCP server can run as a client of this
 API (``KALMAN_API_URL``), so agents and HTTP clients such as Unity share one
 registry and one set of runs.
 
-Errors map to status codes: 400 a bad request, 401 no or bad token, 403 a
-token without the scope (or not the owner), 404 an unknown name or run, 409 a
-name taken by a different definition.
+Errors map to status codes: 400 a bad request, 401 no or bad token (or a wrong
+password), 403 a token without the scope (or not the owner), 404 an unknown
+name or run, 409 a name taken by a different definition, 429 too many failed
+logins.
 """
 import asyncio
 import json
@@ -28,11 +29,12 @@ def _cors_origins() -> list[str]:
 
 
 def create_app():
-    from fastapi import FastAPI, HTTPException, Depends, Header, Query, Request
+    from fastapi import Body, FastAPI, HTTPException, Depends, Header, Query, Request
     from fastapi.responses import JSONResponse, Response, StreamingResponse
     from starlette.concurrency import run_in_threadpool
     from .. import api as facade
     from ..api import store
+    from ..api import auth
     from ..api.auth import authorize, AuthError, enabled
 
     from contextlib import asynccontextmanager
@@ -58,16 +60,18 @@ def create_app():
                            allow_headers=["Authorization", "Content-Type", "Last-Event-ID"])
 
     # ---- errors -> status codes, once for every route ----
-    def _err(status):
+    def _err(status, headers=None):
         async def handler(request, exc):
             msg = exc.args[0] if isinstance(exc, KeyError) and exc.args else str(exc)
-            return JSONResponse(status_code=status, content={"detail": str(msg)})
+            return JSONResponse(status_code=status, content={"detail": str(msg)},
+                                headers=headers)
         return handler
 
     app.add_exception_handler(facade.ConflictError, _err(409))
     app.add_exception_handler(KeyError, _err(404))
     app.add_exception_handler(ValueError, _err(400))
     app.add_exception_handler(AuthError, _err(403))   # a valid token, but not allowed
+    app.add_exception_handler(auth.InvalidToken, _err(401, {"WWW-Authenticate": "Bearer"}))
 
     def _token(authorization):
         if authorization and authorization.lower().startswith("bearer "):
@@ -79,9 +83,11 @@ def create_app():
             token = _token(authorization)
             try:
                 authorize(token, scope)
-            except AuthError as e:
-                raise HTTPException(status_code=401 if not token else 403, detail=str(e),
-                                    headers={"WWW-Authenticate": "Bearer"} if not token else None)
+            except auth.InvalidToken as e:     # none, forged, expired, revoked
+                raise HTTPException(status_code=401, detail=str(e),
+                                    headers={"WWW-Authenticate": "Bearer"})
+            except AuthError as e:             # a good token without the scope
+                raise HTTPException(status_code=403, detail=str(e))
             return token
         return dep
 
@@ -102,6 +108,35 @@ def create_app():
         except AuthError as e:
             raise HTTPException(status_code=401, detail=str(e),
                                 headers={"WWW-Authenticate": "Bearer"})
+
+    # ---- tokens ----
+    @app.post("/token")
+    def token(body: dict, request: Request):
+        """``{user, password, scopes?, exp_hours?}`` -> ``{access_token, ...}``.
+        The scopes must be in the account's grant; see ``make api-user``."""
+        need(body, "user", "password")
+        try:
+            return auth.login(body["user"], body["password"], body.get("scopes"),
+                              exp_hours=body.get("exp_hours"),
+                              client=request.client.host if request.client else "")
+        except auth.RateLimited as e:
+            raise HTTPException(status_code=429, detail=str(e),
+                                headers={"Retry-After": str(int(e.retry_after) + 1)})
+        except auth.BadCredentials as e:
+            raise HTTPException(status_code=401, detail=str(e),
+                                headers={"WWW-Authenticate": "Bearer"})
+
+    @app.post("/token/revoke")
+    def revoke(body: dict = Body(default=None), authorization: str = Header(default=None)):
+        """``{}`` revokes the presented token (logout); ``{user}`` revokes every
+        token of that user issued until now (the user's own, or admin)."""
+        tok = _token(authorization)
+        try:
+            auth.claims(tok)
+        except AuthError as e:
+            raise HTTPException(status_code=401, detail=str(e),
+                                headers={"WWW-Authenticate": "Bearer"})
+        return auth.revoke(tok, user=(body or {}).get("user"))
 
     # ---- read ----
     @app.get("/catalog")

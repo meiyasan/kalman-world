@@ -136,8 +136,8 @@ class RemoteBackend:
             except Exception:
                 detail = r.text
             if r.status_code in (401, 403):
-                from ..api.auth import AuthError
-                raise AuthError(detail)
+                from ..api.auth import AuthError, InvalidToken
+                raise (InvalidToken if r.status_code == 401 else AuthError)(detail)
             raise RemoteError(r.status_code, str(detail))
         return r.json()
 

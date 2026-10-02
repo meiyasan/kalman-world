@@ -43,7 +43,13 @@ $ make mcp                        # register with every detected client, then ve
 | `scaffold_app` | `write_models` | `spec`, `class_name?`, `token?` |
 | `load_plugin` | `load_plugins` | `name`, `token?` — a compiled (C++) model library, by name from the allow-listed dirs |
 
-One resource is published: **`catalog://models`**, the model-name list.
+Three resources are published:
+
+| Resource | Content |
+|---|---|
+| `catalog://models` | every model that can be a spec base, and the authored ones |
+| `catalog://sources` | the named measurement sources |
+| `registry://events` | the 100 newest registry events |
 
 Apps need no per-app MCP code — they are auto-cataloged, and a registered spec
 is indistinguishable from a built-in model.
@@ -80,7 +86,51 @@ $ KALMAN_MCP_TRANSPORT=streamable-http KALMAN_MCP_HOST=0.0.0.0 \
   KALMAN_API_URL=http://rest:8000 python -m kalman.mcp                # shared, on :8765/mcp
 ```
 
-To find what is new, an agent calls `list_events(since=<last>)`. It gets
+### Change notifications
+
+A client that subscribes to a resource gets `notifications/resources/updated`
+when the registry changes. It does not matter who made the change: this
+server, the REST API, another agent or a Unity scene. The server supports both
+ways to subscribe:
+
+- `resources/subscribe`, for MCP versions up to 2025-11-25. Most clients use
+  this today.
+- `subscriptions/listen`, for MCP 2026-07-28.
+
+| Registry event | Resource reported as updated |
+|---|---|
+| `model.*`, `plugin.loaded` | `catalog://models` |
+| `source.*`, `measurement.received` | `catalog://sources` |
+| every event | `registry://events` |
+
+```python
+# MCP up to 2025-11-25: resources/subscribe, notifications to the message handler
+async def on_message(message):
+    if getattr(getattr(message, "params", None), "uri", None) == "catalog://models":
+        ...                                           # a model or plugin was added: read it again
+
+async with ClientSession(read, write, message_handler=on_message) as session:
+    await session.initialize()
+    await session.subscribe_resource("catalog://models")
+
+# MCP 2026-07-28: subscriptions/listen
+from mcp.client import Client
+
+async with Client("https://kalman.example/mcp") as client:
+    async with client.listen(resource_subscriptions=["catalog://models"]) as sub:
+        async for event in sub:
+            models = await client.read_resource("catalog://models")
+```
+
+The notification has no registry content. It tells the client to read the
+resource again, and that read is checked against the client's token as usual.
+The server looks for changes every `KALMAN_EVENTS_POLL` seconds (default 1).
+In REST client mode with auth on, the server needs `KALMAN_MCP_TOKEN` with the
+`read` scope to see the events. Without it, notifications are off, and a line
+on stderr says so.
+
+A client that does not subscribe (or a server with SDK 1.x, which has
+neither way) calls `list_events(since=<last>)`, which gives
 `model.created`, `plugin.loaded`, `measurement.received` and the other events.
 HTTP clients can get the same events as a stream from `GET /events/stream`.
 
@@ -163,7 +213,7 @@ $ make mcp-serve                  # python -m kalman.mcp — stdio, waits for a 
 | `KALMAN_MCP_PUBLIC_URL` | `http://<host>:<port>` | the URL clients use (OAuth resource metadata) |
 | `KALMAN_API_URL` | unset | send all work to this REST API |
 | `KALMAN_JWT_SECRET` | unset | enables scope enforcement (in-process mode) |
-| `KALMAN_MCP_TOKEN` | unset | stdio: the token used when a call gives none |
+| `KALMAN_MCP_TOKEN` | unset | stdio: the token used when a call gives none; REST client mode: the `read` token the server uses to see registry events |
 
 Over `sse` and `streamable-http`, clients send `Authorization: Bearer <JWT>`.
 The server requires it when it can check tokens: with `KALMAN_JWT_SECRET`, or

@@ -25,12 +25,14 @@ Both are published by `docker-compose.yml` as `8000:8000` and `8765:8765`.
 | `KALMAN_MCP_HOST` | `127.0.0.1` | MCP (network transports) |
 | `KALMAN_MCP_PORT` | `8765` | MCP (network transports) |
 | `KALMAN_MCP_PUBLIC_URL` | `http://<host>:<port>` | MCP: the URL clients use, given in its OAuth resource metadata |
-| `KALMAN_MCP_TOKEN` | unset | MCP over stdio: the token used when a call gives none |
+| `KALMAN_MCP_TOKEN` | unset | MCP over stdio: the token used when a call gives none. MCP as a REST client: a `read` token to see registry events, for change notifications |
 | `KALMAN_API_URL` | unset | MCP: send all work to this REST API (one registry, one set of runs) |
 | `KALMAN_API_TIMEOUT` | `300` | MCP: seconds to wait for the REST API |
 | `KALMAN_JWT_SECRET` | unset | **enables authentication** everywhere; at least 32 bytes |
 | `KALMAN_JWT_ISSUER` / `KALMAN_JWT_AUDIENCE` | unset | stamp and require `iss` / `aud` in tokens |
 | `KALMAN_ALLOW_ANONYMOUS` | `0` | `1` lets a server without auth listen on a network address |
+| `KALMAN_DEFAULT_SCOPES` | `read` | login scopes of an account without a grant |
+| `KALMAN_TOKEN_MAX_HOURS` | `24` | longest lifetime of a token from `POST /token` |
 | `KALMAN_CORS_ORIGINS` | unset | REST: browser origins allowed, comma-separated, or `*` |
 | `KALMAN_STATE_DIR` | `~/.kalman/state` | the shared registry (`registry.sqlite`) |
 | `KALMAN_MAX_RUNS` | `1000` | runs kept in memory before the oldest go |
@@ -124,8 +126,11 @@ are made in the REST process.
   `KALMAN_CORS_ORIGINS` to the exact origins, not `*`.
 - **Back up the `state` volume.** It holds the shared registry. It has no
   secrets: a remote source records only the *name* of its outbound credential.
-- **Scope tokens narrowly and expire them quickly.** There is no revocation
-  list.
+- **Scope tokens narrowly and expire them quickly.** Give each account only the
+  grant it needs (`make api-user USER=… SCOPES=…`), and revoke a token that
+  leaks (`POST /token/revoke`).
+- **Rate-limit `POST /token` at the proxy.** The server locks out a user and
+  client address after 5 failed logins, but its counters are per process.
 - **Keep the source mount read-only.** `write_scaffold` writes to a path the
   caller chooses.
 - **Watch resource cost.** `run_osse` runs a full ensemble twin experiment and

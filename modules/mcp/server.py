@@ -14,6 +14,10 @@ The caller's token, first match wins:
      ``streamable-http``), checked by :class:`JwtVerifier` before any tool runs;
   3. on stdio only, ``KALMAN_MCP_TOKEN`` — the token the client was registered
      with (``tools/mcp_install.py --token``).
+
+Clients that listen on the resources (``catalog://models``,
+``catalog://sources``, ``registry://events``) are told when the shared registry
+changes, whoever changed it — see :mod:`.watch`.
 """
 from __future__ import annotations
 import os
@@ -87,10 +91,21 @@ def build_server(backend=None, *, transport: str = "stdio", auth_settings=None,
     kw = {}
     if token_verifier is not None:
         kw = {"token_verifier": token_verifier, "auth": auth_settings}
+    watch_kw = {}
+    try:                            # SDK 2.x: the subscriptions/listen fan-out
+        from mcp.server.subscriptions import InMemorySubscriptionBus
+        from .watch import RegistryWatcher
+        bus = InMemorySubscriptionBus()
+        watcher = RegistryWatcher(backend, bus, token=os.environ.get("KALMAN_MCP_TOKEN") or None)
+        watch_kw = {"subscriptions": bus, "lifespan": watcher.lifespan}
+    except ImportError:             # SDK 1.x: no listen; clients poll list_events
+        pass
     try:                            # SDK 2.x carries a display title/description
         mcp = cls(SERVER_NAME, title=SERVER_TITLE,
                   description="Kalman estimation framework: models, filters, "
-                              "solvers, providers, and spec authoring.", **kw)
+                              "solvers, providers, and spec authoring.", **kw, **watch_kw)
+        if watch_kw:
+            watcher.attach(mcp)     # resources/subscribe, for clients before listen
     except TypeError:               # SDK 1.x FastMCP takes the name only
         mcp = cls(SERVER_TITLE, **kw)
 
@@ -222,8 +237,22 @@ def build_server(backend=None, *, transport: str = "stdio", auth_settings=None,
         return backend.scaffold(spec, class_name, tok(token))
 
     # ---- resources ----
+    # Subscribe to these to hear about registry changes (see .watch).
     @mcp.resource("catalog://models")
     def catalog_models() -> dict:
-        return {"models": backend.catalog(tok(""))["models"]}
+        """Every model usable as a spec base: catalog, plugins and authored."""
+        cat = backend.catalog(tok(""))
+        return {"models": cat["models"], "authored": cat.get("authored", [])}
+
+    @mcp.resource("catalog://sources")
+    def catalog_sources() -> dict:
+        """The named measurement sources, with row counts for push sources."""
+        return backend.sources(tok(""))
+
+    @mcp.resource("registry://events")
+    def registry_events() -> dict:
+        """The 100 newest registry events, oldest first."""
+        last = backend.events(-1, 1, tok(""))["last"]
+        return backend.events(max(last - 100, 0), 100, tok(""))
 
     return mcp
