@@ -119,8 +119,11 @@ class TestMcp(unittest.TestCase):
             from modules.api.auth import mint_token
             secret = "a-long-enough-integration-test-secret-key"
             env = dict(os.environ, PYTHONPATH=os.getcwd(), KALMAN_JWT_SECRET=secret)
+            # `modules.mcp`, not `kalman.mcp`: the tests run on the source tree,
+            # where the package is importable only as `modules` (CI does not
+            # install it).
             params = StdioServerParameters(command=sys.executable,
-                                           args=["-m", "kalman.mcp"], env=env,
+                                           args=["-m", "modules.mcp"], env=env,
                                            cwd=os.getcwd())
             async with stdio_client(params) as (r, w):
                 async with ClientSession(r, w) as s:
