@@ -35,7 +35,8 @@ def _subprocess_env():
 
 
 class _Auth:
-    """Turn auth on for one test."""
+    """Turn auth on for one test. Tokens need PyJWT, which is optional
+    (``kalman[auth]``): every class that uses this must skip without it."""
 
     def setUp(self):
         os.environ["KALMAN_JWT_SECRET"] = SECRET
@@ -128,6 +129,7 @@ class TestPushSources(unittest.TestCase):
             api.fetch("fixed-file", {"path": "/etc/passwd"})
 
 
+@unittest.skipUnless(_has("jwt"), "pyjwt not installed")
 class TestScopesAndOwnership(_Auth, unittest.TestCase):
 
     def test_only_the_owner_or_an_admin_replaces(self):
@@ -193,7 +195,7 @@ class TestServerCheck(unittest.TestCase):
             auth.check_server("127.0.0.1", service="t")
 
 
-@unittest.skipUnless(_has("fastapi"), "fastapi not installed")
+@unittest.skipUnless(_has("fastapi") and _has("jwt"), "fastapi + pyjwt needed")
 class TestRestRegistry(_Auth, unittest.TestCase):
 
     def setUp(self):
@@ -276,7 +278,7 @@ class TestCors(unittest.TestCase):
         self.assertEqual(r.headers.get("access-control-allow-origin"), "https://game.example")
 
 
-@unittest.skipUnless(_has("fastapi") and _has("mcp"), "fastapi + mcp needed")
+@unittest.skipUnless(_has("fastapi") and _has("mcp") and _has("jwt"), "fastapi + mcp + pyjwt needed")
 class TestMcpRemoteBackend(_Auth, unittest.TestCase):
     """The MCP server as a client of the REST API: one registry, one auth."""
 
