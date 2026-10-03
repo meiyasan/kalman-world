@@ -7,6 +7,8 @@ networks:
 
 volumes:
   conda: {name: "${CONTAINER:-docker}-conda"}
+  # The shared registry (models, plugins, sources, events): survives restarts.
+  state: {name: "${CONTAINER:-docker}-state"}
 
 services:
   container:
@@ -60,9 +62,18 @@ services:
       - KALMAN_REST_HOST=0.0.0.0
       - KALMAN_REST_PORT=8000
       - KALMAN_JWT_SECRET=${KALMAN_JWT_SECRET:-}
+      - KALMAN_JWT_ISSUER=${KALMAN_JWT_ISSUER:-}
+      - KALMAN_JWT_AUDIENCE=${KALMAN_JWT_AUDIENCE:-}
       - KALMAN_HTPASSWD=/run/secrets/htpasswd
+      - KALMAN_STATE_DIR=/var/lib/kalman
+      # Browser clients (Unity WebGL, dashboards): comma-separated origins, or "*".
+      - KALMAN_CORS_ORIGINS=${KALMAN_CORS_ORIGINS:-}
+      # Without KALMAN_JWT_SECRET the API refuses to start on 0.0.0.0; set this
+      # to 1 only on a network you trust.
+      - KALMAN_ALLOW_ANONYMOUS=${KALMAN_ALLOW_ANONYMOUS:-0}
     volumes:
       - ./:/mnt/local:ro
+      - state:/var/lib/kalman
       - ${KALMAN_HTPASSWD:-/dev/null}:/run/secrets/htpasswd:ro
     working_dir: /mnt/local
     command: ["python", "-m", "kalman.rest"]
@@ -73,6 +84,8 @@ services:
       interval: 30s
       timeout: 5s
       retries: 3
+      start_period: 30s
+      start_interval: 2s
 
   # ---- MCP server (SSE transport in the container) ----
   mcp:
@@ -85,11 +98,21 @@ services:
       dockerfile: Dockerfile
     env_file:
       - .env
+    # A client of the REST API: one registry, one set of runs, and the tokens
+    # are checked there -- so this container does not get the JWT secret.
     environment:
-      - KALMAN_MCP_TRANSPORT=sse
+      - KALMAN_MCP_TRANSPORT=${KALMAN_MCP_TRANSPORT:-sse}
       - KALMAN_MCP_HOST=0.0.0.0
       - KALMAN_MCP_PORT=8765
-      - KALMAN_JWT_SECRET=${KALMAN_JWT_SECRET:-}
+      - KALMAN_MCP_PUBLIC_URL=${KALMAN_MCP_PUBLIC_URL:-http://localhost:8765}
+      - KALMAN_API_URL=http://rest:8000
+      # Optional read-only token. With it, a change notification names the
+      # resource that changed; without it, clients are told to read all again.
+      - KALMAN_MCP_TOKEN=${KALMAN_MCP_TOKEN:-}
+      - KALMAN_ALLOW_ANONYMOUS=${KALMAN_ALLOW_ANONYMOUS:-0}
+    depends_on:
+      rest:
+        condition: service_healthy
     volumes:
       - ./:/mnt/local:ro
     working_dir: /mnt/local

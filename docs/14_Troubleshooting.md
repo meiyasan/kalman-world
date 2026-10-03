@@ -145,9 +145,18 @@ over REST.
 Valid token, wrong scopes. Mint a new one — and remember `send_measurement` does
 not imply `read`. `403` over REST.
 
-**`AuthError: invalid or expired token`**
-Wrong secret, tampered token, or past `exp`. There is no revocation list; tokens
-simply expire.
+**`InvalidToken: invalid or expired token`**
+Wrong secret, tampered token, or past `exp`. `401` over REST. Log in again
+(`POST /token`) or mint a new token.
+
+**`InvalidToken: this token was revoked.`**
+Someone revoked the token, or all tokens of its user (`POST /token/revoke`,
+`make api-revoke`). Log in again: a token issued after the revocation works.
+
+**`429 too many failed logins`**
+5 failed logins in 5 minutes for this user from this address. Wait for the
+time in `Retry-After`, or ask an admin to run `make api-unlock USER=…`. A
+restart of the server does not clear the count: it is in the shared registry.
 
 **`AuthError: auth is enabled but PyJWT is not installed`**
 Deliberately fail-closed. `pip install "kalman[auth]"`.

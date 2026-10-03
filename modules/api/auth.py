@@ -1,9 +1,12 @@
 """
 Scoped-token auth for the API facade / MCP / REST — fail-closed.
 
-Two layers: a ``.htpasswd`` **account store** (Apache ``name:bcrypt``) that
-authenticates users to *mint* tokens, and **signed JWT bearer tokens** callers
-present at runtime carrying fine-grained **scopes**:
+Two layers: a ``.htpasswd`` **account store** (Apache ``name:bcrypt``, with the
+scopes an account may hold in the optional third field that Apache and nginx
+treat as a comment) that authenticates users to *mint* tokens — on the admin's
+machine with the CLI, or by the user over HTTP with :func:`login` — and
+**signed JWT bearer tokens** callers present at runtime carrying fine-grained
+**scopes**:
 
   - ``read``            — introspection (catalog/describe/diagnostics/plots)
   - ``send_measurement``— execution (run_filter/forecast/osse/control, fetch)
@@ -19,7 +22,17 @@ when a secret *is* set, a valid token is required and anything missing/invalid/
 expired is denied.  Optional deps ``pyjwt`` + ``bcrypt`` (``kalman[auth]``),
 lazily imported; secrets are never logged.
 
-CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify``.
+Tokens carry ``sub`` (the user), ``scopes``, ``iat``, ``exp`` and ``jti`` (the
+token's own id).  A token can be revoked before it expires — one token by its
+``jti``, or every token of a user issued so far (:func:`revoke`); the list is
+in the shared registry, so every server on it refuses the token at once.  Set
+``KALMAN_JWT_ISSUER`` and/or ``KALMAN_JWT_AUDIENCE`` to also stamp and require
+``iss``/``aud``, so a token minted for one deployment is refused by another
+that shares the secret.  A server that listens on a network interface refuses
+to start without auth (:func:`check_server`).
+
+CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify`` /
+``revoke`` / ``unlock``.
 """
 from __future__ import annotations
 import os
@@ -30,6 +43,11 @@ SCOPES = ("read", "send_measurement", "write_models", "load_plugins", "admin")
 
 class AuthError(PermissionError):
     """Raised on missing/invalid/expired token or insufficient scope."""
+
+
+class InvalidToken(AuthError):
+    """No token, or one that is forged, expired, malformed or revoked (HTTP
+    401) — as opposed to a good token that lacks the scope (HTTP 403)."""
 
 
 def _secret() -> str | None:
@@ -45,6 +63,105 @@ def enabled() -> bool:
     return _secret() is not None
 
 
+#: HS256 needs a key at least as long as its output (RFC 7518 §3.2).
+MIN_SECRET_BYTES = 32
+
+
+def _decode(credential: str) -> dict:
+    """Verify signature, expiry and (when configured) issuer/audience."""
+    try:
+        import jwt
+    except ImportError as e:                     # fail-closed
+        raise AuthError("auth is enabled but PyJWT is not installed "
+                        "(pip install 'kalman[auth]').") from e
+    iss = os.environ.get("KALMAN_JWT_ISSUER") or None
+    aud = os.environ.get("KALMAN_JWT_AUDIENCE") or None
+    try:
+        payload = jwt.decode(credential, _secret(), algorithms=["HS256"],
+                             issuer=iss, audience=aud,
+                             options={"require": ["exp", "sub"]})
+    except Exception as e:                       # invalid signature / expired / malformed
+        raise InvalidToken(f"invalid or expired token: {type(e).__name__}.") from e
+    try:
+        from . import store
+        revoked = store.is_revoked(payload.get("jti"), payload.get("sub"), payload.get("iat"))
+    except Exception as e:                       # fail-closed: no list, no entry
+        raise InvalidToken(f"cannot read the revocation list: {type(e).__name__}.") from e
+    if revoked:
+        raise InvalidToken("this token was revoked.")
+    return payload
+
+
+def claims(credential: str | None) -> dict | None:
+    """The verified claims of ``credential`` with no scope check, or ``None``
+    when auth is disabled. Raises :class:`AuthError` on a bad token."""
+    if not enabled():
+        return None
+    if not credential:
+        raise InvalidToken("a bearer token is required.")
+    return _decode(credential)
+
+
+def identity(credential: str | None) -> str | None:
+    """Who is calling: the token's ``sub``, or ``None`` when auth is disabled."""
+    c = claims(credential)
+    return None if c is None else c.get("sub")
+
+
+def has_scope(credential: str | None, scope: str) -> bool:
+    try:
+        return authorize(credential, scope)
+    except AuthError:
+        return False
+
+
+def require_owner(record: dict, credential: str | None, what: str):
+    """Allow a change to a shared record only for its owner or an admin.
+
+    With auth disabled everybody is the local user, so anything goes. A record
+    created while auth was off has no owner; only an admin may then change it."""
+    if not enabled():
+        return
+    who = identity(credential)
+    if has_scope(credential, "admin"):
+        return
+    if record.get("owner") is not None and record.get("owner") == who:
+        return
+    raise AuthError(f"{what} belongs to {record.get('owner') or 'nobody'}; "
+                    "only its owner or an admin may change it.")
+
+
+_LOOPBACK = ("127.0.0.1", "localhost", "::1")
+
+
+def check_server(host: str, *, service: str, verified_elsewhere: bool = False):
+    """Refuse to serve an open API on a network interface.
+
+    A server bound to loopback is the local user's own; one bound to anything
+    else (``0.0.0.0``, a LAN address, a container port) must authenticate,
+    unless ``KALMAN_ALLOW_ANONYMOUS=1`` says the network itself is trusted.
+    ``verified_elsewhere`` is for the MCP server in front of the REST API: the
+    REST API checks the tokens, so the MCP server needs no secret of its own."""
+    if enabled():
+        if len(_secret().encode()) < MIN_SECRET_BYTES:
+            raise AuthError(f"{service}: KALMAN_JWT_SECRET is shorter than "
+                            f"{MIN_SECRET_BYTES} bytes; HS256 needs at least that "
+                            "(python -c 'import secrets; print(secrets.token_urlsafe(48))').")
+        return
+    if verified_elsewhere or host in _LOOPBACK:
+        return
+    if os.environ.get("KALMAN_ALLOW_ANONYMOUS") == "1":
+        import sys
+        print(f"WARNING: {service} listens on {host} WITHOUT authentication "
+              "(KALMAN_ALLOW_ANONYMOUS=1). Anybody who can reach it can register "
+              "models and load plugins.", file=sys.stderr)
+        return
+    raise AuthError(f"{service}: refusing to listen on {host} without authentication. "
+                    "Set KALMAN_JWT_SECRET (>= 32 bytes) and give clients a token from "
+                    "`make api-token`, bind to 127.0.0.1, or set KALMAN_ALLOW_ANONYMOUS=1 "
+                    "on a network you trust.")
+
+
 # ---------------------------------------------------------------------------
 # Runtime authorization (inbound)
 # ---------------------------------------------------------------------------
@@ -57,16 +174,8 @@ def authorize(credential: str | None, scope: str) -> bool:
     if secret is None:
         return True                              # auth disabled — local dev
     if not credential:
-        raise AuthError(f"a bearer token with scope '{scope}' is required.")
-    try:
-        import jwt
-    except ImportError as e:                     # fail-closed
-        raise AuthError("auth is enabled but PyJWT is not installed "
-                        "(pip install 'kalman[auth]').") from e
-    try:
-        payload = jwt.decode(credential, secret, algorithms=["HS256"])
-    except Exception as e:                       # invalid signature / expired / malformed
-        raise AuthError(f"invalid or expired token: {type(e).__name__}.") from e
+        raise InvalidToken(f"a bearer token with scope '{scope}' is required.")
+    payload = _decode(credential)
     scopes = set(payload.get("scopes", []))
     if scope in scopes or "admin" in scopes:
         return True
@@ -86,8 +195,18 @@ def mint_token(user: str, scopes, *, secret: str | None = None, exp_hours: float
     bad = [s for s in scopes if s not in SCOPES]
     if bad:
         raise ValueError(f"unknown scopes {bad}; choose from {SCOPES}.")
-    now = int(time.time())
-    payload = {"sub": user, "scopes": scopes, "iat": now, "exp": now + int(exp_hours * 3600)}
+    import math, uuid
+    t = time.time()
+    now = int(t)
+    # iat to the millisecond (rounded down, so it is never in the future): a
+    # "revoke everything until now" must not catch the token of the login that
+    # follows it in the same second.
+    payload = {"sub": user, "scopes": scopes, "iat": math.floor(t * 1000) / 1000,
+               "exp": now + int(exp_hours * 3600), "jti": uuid.uuid4().hex}
+    if os.environ.get("KALMAN_JWT_ISSUER"):
+        payload["iss"] = os.environ["KALMAN_JWT_ISSUER"]
+    if os.environ.get("KALMAN_JWT_AUDIENCE"):
+        payload["aud"] = os.environ["KALMAN_JWT_AUDIENCE"]
     return jwt.encode(payload, secret, algorithm="HS256")
 
 
@@ -105,28 +224,57 @@ def _bcrypt():
                         "(pip install 'kalman[auth]').") from e
 
 
-def add_user(user: str, password: str, path: str | None = None) -> str:
+def _clean_scopes(scopes) -> list[str]:
+    scopes = [s.strip() for s in (scopes.split(",") if isinstance(scopes, str) else scopes)
+              if s and s.strip()]
+    bad = [s for s in scopes if s not in SCOPES]
+    if bad:
+        raise ValueError(f"unknown scopes {bad}; choose from {SCOPES}.")
+    return scopes
+
+
+def _accounts(path: str | None = None) -> dict:
+    """``{user: (digest, granted scopes or None)}`` from the account store."""
+    path = path or _htpasswd_path()
+    out = {}
+    if os.path.exists(path):
+        with open(path) as fh:
+            for line in fh.read().splitlines():
+                if ":" not in line or line.lstrip().startswith("#"):
+                    continue
+                name, digest, *rest = line.split(":", 2)
+                granted = [s for s in rest[0].split(",") if s] if rest and rest[0].strip() else None
+                out[name] = (digest, granted)
+    return out
+
+
+def add_user(user: str, password: str, path: str | None = None, scopes=None) -> str:
     """Add/update a bcrypt ``.htpasswd`` account; returns the file path.
 
     Written in the Apache ``user:$2b$…`` format that httpd, nginx and every
     htpasswd tool understand.  Uses the maintained ``bcrypt`` package directly
     — ``passlib`` is unmaintained and breaks against bcrypt >= 5.
+
+    ``scopes`` is what the account may ask for when it logs in
+    (:func:`login`), kept in the third field, which those tools read as a
+    comment.  ``None`` keeps the account's present grant.
     """
     bc = _bcrypt()
-    if ":" in user:
-        raise ValueError("username must not contain ':'")
+    if ":" in user or "\n" in user or not user:
+        raise ValueError("username must be non-empty and must not contain ':' or a newline")
     path = path or _htpasswd_path()
     parent = os.path.dirname(path)
     if parent:
         os.makedirs(parent, exist_ok=True)
     digest = bc.hashpw(password.encode()[:_BCRYPT_MAX], bc.gensalt()).decode()
+    granted = _clean_scopes(scopes) if scopes is not None else _accounts(path).get(user, (None, None))[1]
 
     lines = []
     if os.path.exists(path):
         with open(path) as fh:
             lines = [ln for ln in fh.read().splitlines()
                      if ln.strip() and ln.split(":", 1)[0] != user]
-    lines.append(f"{user}:{digest}")
+    lines.append(f"{user}:{digest}" + (f":{','.join(granted)}" if granted else ""))
     with open(path, "w") as fh:
         fh.write("\n".join(lines) + "\n")
     os.chmod(path, 0o600)                       # credentials file: owner-only
@@ -136,24 +284,147 @@ def add_user(user: str, password: str, path: str | None = None) -> str:
 def verify_user(user: str, password: str, path: str | None = None) -> bool:
     """Check ``password`` against the account store (constant-time via bcrypt)."""
     bc = _bcrypt()
-    path = path or _htpasswd_path()
-    if not os.path.exists(path):
+    digest = _accounts(path).get(user, (None, None))[0]
+    if not digest:
         return False
-    for line in open(path).read().splitlines():
-        name, _, digest = line.partition(":")
-        if name != user or not digest:
-            continue
-        # Apache writes $2y$; it is bit-identical to $2b$ for verification.
-        if digest.startswith("$2y$"):
-            digest = "$2b$" + digest[4:]
-        if not digest.startswith("$2"):
-            raise AuthError(f"account {user!r} uses a non-bcrypt hash; "
-                            f"re-add it with `make api-user USER={user}`.")
-        try:
-            return bc.checkpw(password.encode()[:_BCRYPT_MAX], digest.encode())
-        except ValueError:
-            return False
-    return False
+    # Apache writes $2y$; it is bit-identical to $2b$ for verification.
+    if digest.startswith("$2y$"):
+        digest = "$2b$" + digest[4:]
+    if not digest.startswith("$2"):
+        raise AuthError(f"account {user!r} uses a non-bcrypt hash; "
+                        f"re-add it with `make api-user USER={user}`.")
+    try:
+        return bc.checkpw(password.encode()[:_BCRYPT_MAX], digest.encode())
+    except ValueError:
+        return False
+
+
+def user_scopes(user: str, path: str | None = None) -> list[str]:
+    """What ``user`` may ask for at login: the account's grant, or
+    ``KALMAN_DEFAULT_SCOPES`` (default ``read``) for an account without one."""
+    granted = _accounts(path).get(user, (None, None))[1]
+    if granted is None:
+        granted = _clean_scopes(os.environ.get("KALMAN_DEFAULT_SCOPES", "read"))
+    return [s for s in granted if s in SCOPES]
+
+
+# ---------------------------------------------------------------------------
+# Login over the API, and revocation
+# ---------------------------------------------------------------------------
+class BadCredentials(AuthError):
+    """Wrong user or password (HTTP 401; the two are not told apart)."""
+
+
+class RateLimited(AuthError):
+    """Too many failed logins; ``retry_after`` seconds until the next try."""
+
+    def __init__(self, retry_after: float):
+        super().__init__(f"too many failed logins; try again in {int(retry_after) + 1} s.")
+        self.retry_after = retry_after
+
+
+#: Failed logins allowed per (user, client) inside the window, in seconds.
+LOGIN_ATTEMPTS, LOGIN_WINDOW = 5, 300.0
+_DUMMY: list = []
+
+
+def _throttle(user: str, client: str):
+    """Refuse when the pair is locked out. The count is in the shared registry,
+    so it holds across uvicorn workers, across the REST and MCP processes and
+    across a restart -- a counter in memory would give every worker its own
+    five tries and forget them all on a restart."""
+    from . import store
+    fails = store.login_failures(user, client, LOGIN_WINDOW)
+    if len(fails) >= LOGIN_ATTEMPTS:
+        raise RateLimited(LOGIN_WINDOW - (time.time() - fails[0]))
+
+
+def unlock(user: str):
+    """Forget the failed logins of ``user`` (every client address)."""
+    from . import store
+    store.clear_login_failures(user)
+
+
+def login(user: str, password: str, scopes=None, *, exp_hours: float | None = None,
+          client: str = "") -> dict:
+    """Exchange an account's password for a scoped JWT.
+
+    The token carries the scopes asked for, which must all be in the account's
+    grant (an ``admin`` grant covers any); with ``scopes=None`` it carries the
+    whole grant.  Its lifetime is at most ``KALMAN_TOKEN_MAX_HOURS`` (default
+    24).  Five failed tries per user and client lock that pair out for five
+    minutes -- counted in the shared registry, so on every worker and across a
+    restart -- and an unknown user costs the same bcrypt check as a wrong
+    password, so the answer's timing does not say which accounts exist."""
+    if not enabled():
+        raise ValueError("authentication is off (no KALMAN_JWT_SECRET); no token is needed.")
+    if not isinstance(user, str) or not isinstance(password, str) or not user:
+        raise ValueError("login needs a user and a password.")
+    from . import store
+    _throttle(user, client)
+    ok = verify_user(user, password)
+    if not ok and user not in _accounts():
+        bc = _bcrypt()
+        if not _DUMMY:
+            _DUMMY.append(bc.hashpw(b"no-such-account", bc.gensalt()))
+        bc.checkpw(password.encode()[:_BCRYPT_MAX], _DUMMY[0])
+    if not ok:
+        store.add_login_failure(user, client, LOGIN_WINDOW)
+        raise BadCredentials("wrong user or password.")
+    store.clear_login_failures(user, client)
+
+    granted = user_scopes(user)
+    asked = _clean_scopes(scopes) if scopes else granted
+    if "admin" not in granted:
+        denied = [s for s in asked if s not in granted]
+        if denied:
+            raise AuthError(f"account {user!r} is not granted {denied}; it has {granted}.")
+    if not asked:
+        raise AuthError(f"account {user!r} has no scopes.")
+    cap = float(os.environ.get("KALMAN_TOKEN_MAX_HOURS", "24"))
+    hours = cap if exp_hours is None else max(min(float(exp_hours), cap), 1.0 / 60.0)
+    token = mint_token(user, asked, exp_hours=hours)
+    return {"access_token": token, "token_type": "bearer", "expires_in": int(hours * 3600),
+            "scopes": asked, "user": user}
+
+
+def revoke(credential: str | None = None, *, user: str | None = None) -> dict:
+    """Stop a token from working before it expires.
+
+    With no ``user``: the presented token itself (a logout; any valid token may
+    do this).  With ``user``: every token of that user issued until now — the
+    user's own, or anybody's for an ``admin``.  The list is in the shared
+    registry, so every server on it refuses the token from the next request."""
+    from . import store
+    c = claims(credential)
+    if c is None:
+        raise ValueError("authentication is off; there are no tokens to revoke.")
+    if user is None:
+        if not c.get("jti"):
+            raise ValueError("this token has no id (jti); revoke by user instead.")
+        store.revoke_token(c["jti"], c.get("sub"), c.get("exp"), c.get("sub"))
+        return {"revoked": "token", "user": c.get("sub")}
+    if user != c.get("sub") and "admin" not in c.get("scopes", []):
+        raise AuthError("only an admin may revoke another user's tokens.")
+    cutoff = store.revoke_user(user, c.get("sub"))
+    return {"revoked": "user", "user": user, "before": cutoff}
+
+
+def _api_post(base_url: str, path: str, token: str, body: dict) -> dict:
+    """POST JSON to the REST API with a bearer token (stdlib only: the CLI must
+    work where httpx is not installed)."""
+    import json
+    import urllib.error
+    import urllib.request
+    req = urllib.request.Request(
+        base_url.rstrip("/") + path, data=json.dumps(body).encode(), method="POST",
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            return json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        detail = e.read().decode(errors="replace")
+        raise RuntimeError(f"HTTP {e.code}: {detail}") from None
 
 
 # ---------------------------------------------------------------------------
@@ -164,6 +435,14 @@ def _main(argv=None):
     p = argparse.ArgumentParser(prog="kalman.api.auth", description="Kalman API auth")
     sub = p.add_subparsers(dest="cmd", required=True)
     a = sub.add_parser("adduser"); a.add_argument("--user", required=True); a.add_argument("--htpasswd")
+    a.add_argument("--scopes", help="what the account may ask for at login, e.g. read,send_measurement")
+    r = sub.add_parser("revoke", help="revoke one token, or every token of a user issued so far")
+    r.add_argument("--token"); r.add_argument("--user")
+    r.add_argument("--api", default=os.environ.get("KALMAN_API_URL"),
+                   help="the REST API whose registry holds the list (default: $KALMAN_API_URL; "
+                        "without it, the registry in $KALMAN_STATE_DIR on this machine)")
+    u = sub.add_parser("unlock", help="forget an account's failed logins"); u.add_argument("--user", required=True)
+    u.add_argument("--api", default=os.environ.get("KALMAN_API_URL"), help="as for revoke")
     t = sub.add_parser("token"); t.add_argument("--user", required=True)
     t.add_argument("--scopes", default="read"); t.add_argument("--exp", type=float, default=24.0)
     t.add_argument("--no-verify", action="store_true", help="mint without checking the htpasswd account")
@@ -172,8 +451,45 @@ def _main(argv=None):
 
     if args.cmd == "adduser":
         pw = getpass.getpass(f"password for {args.user}: ")
-        path = add_user(args.user, pw, args.htpasswd)
-        print(f"account '{args.user}' written to {path}")
+        path = add_user(args.user, pw, args.htpasswd, scopes=args.scopes or None)
+        print(f"account '{args.user}' written to {path} "
+              f"(login scopes: {','.join(user_scopes(args.user, path))})")
+    elif args.cmd == "unlock" and args.api:
+        try:
+            _api_post(args.api, "/token/unlock", mint_token("cli", ["admin"], exp_hours=1 / 60),
+                      {"user": args.user})
+        except Exception as e:
+            print(f"unlock through {args.api} failed: {e}", file=sys.stderr); return 1
+        print(f"failed logins of '{args.user}' forgotten through {args.api}")
+    elif args.cmd == "unlock":
+        unlock(args.user)
+        print(f"failed logins of '{args.user}' forgotten")
+    elif args.cmd == "revoke" and args.api:
+        # The servers' registry is not on this machine (a container volume, another
+        # host): ask the API. A user's tokens need an admin, so mint one that lives
+        # a minute with the secret this machine has; one token revokes itself.
+        if not (args.user or args.token):
+            print("give --token or --user", file=sys.stderr); return 1
+        try:
+            bearer = args.token if not args.user else mint_token("cli", ["admin"], exp_hours=1 / 60)
+            out = _api_post(args.api, "/token/revoke", bearer, {"user": args.user} if args.user else {})
+        except Exception as e:
+            print(f"revoke through {args.api} failed: {e}", file=sys.stderr); return 1
+        print(f"revoked through {args.api}: {out}")
+    elif args.cmd == "revoke":
+        # The list is in the registry: this writes $KALMAN_STATE_DIR on this machine.
+        from . import store
+        if args.user:
+            store.revoke_user(args.user, "cli")
+            print(f"every token of '{args.user}' issued until now is revoked")
+        elif args.token:
+            c = claims(args.token)
+            if not c or not c.get("jti"):
+                print("this token has no id (jti); use --user", file=sys.stderr); return 1
+            store.revoke_token(c["jti"], c.get("sub"), c.get("exp"), "cli")
+            print(f"token {c['jti']} of '{c.get('sub')}' is revoked")
+        else:
+            print("give --token or --user", file=sys.stderr); return 1
     elif args.cmd == "token":
         if not args.no_verify:
             pw = getpass.getpass(f"password for {args.user}: ")
