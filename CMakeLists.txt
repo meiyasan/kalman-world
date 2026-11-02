@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.20)
 # Project information
 set(PROJECT_TITLE "Kalman Framework")
 project(kalman
-    VERSION 1.0.0
+    VERSION 1.0.1
     DESCRIPTION "Composable Kalman-family estimation 🛰️📈"
     HOMEPAGE_URL "https://max-planck.sv.yc.tcu.ac.jp/kagra/sus/kalman-framework"
 )
@@ -170,7 +170,14 @@ if(BUILD_LIBRARY)
     target_link_libraries(${LIBRARY} PRIVATE ${CMAKE_DL_LIBS})
 
     if(KALMAN_WITH_BLAS)
-        target_link_libraries(${LIBRARY} PRIVATE ${BLAS_LIBRARIES})
+        if(APPLE)
+            # src/Matrix.cc takes cblas_dgemm from Accelerate's headers (new
+            # LAPACK interface), so link Accelerate itself: whatever BLAS
+            # find_package picked (conda's libblas, say) lacks those symbols.
+            target_link_libraries(${LIBRARY} PRIVATE "-framework Accelerate")
+        else()
+            target_link_libraries(${LIBRARY} PRIVATE ${BLAS_LIBRARIES})
+        endif()
     endif()
 
     # ONNX Runtime is reached only from src/Routers/Neural.cc, and only behind a
