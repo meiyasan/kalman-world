@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.20)
 # Project information
 set(PROJECT_TITLE "Kalman Framework")
 project(kalman
-    VERSION 0.1
+    VERSION 1.0.0
     DESCRIPTION "Composable Kalman-family estimation 🛰️📈"
     HOMEPAGE_URL "https://max-planck.sv.yc.tcu.ac.jp/kagra/sus/kalman-framework"
 )
