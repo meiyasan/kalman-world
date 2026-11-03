@@ -7,6 +7,8 @@
 #include "Fixtures.h"
 
 #include <cmath>
+#include <cstdint>
+#include <cstdio>
 #include <random>
 #include <vector>
 
@@ -107,56 +109,68 @@ int main()
     {
         // Cruise for 200 steps, then manoeuvre hard for 200. Built by hand so the
         // regime boundary is known exactly.
-        std::mt19937_64 rng(7);
-        std::normal_distribution<double> gauss(0., 1.);
+        //
+        // One track is a coin toss: of its 100 manoeuvring steps the agile mode
+        // wins anywhere from ~45 to ~100 (300 seeds: mean 76, sd 11.5), so a
+        // threshold on one draw passes or fails with the random stream -- which
+        // libstdc++ and libc++ produce differently from the same seed. The checks
+        // are on the mean over 20 tracks, which moves by a few steps, not tens.
+        const std::size_t nTracks = 20;
         const double dt = 1. / 50.;
-
-        std::vector<Vector> zk;
-        double p = 0., v = 2.;
-        for (std::size_t k = 0; k < 400; ++k)
+        double before = 0., after = 0., agileWins = 0.;
+        bool nisShape = true, finite = true;
+        for (std::uint64_t seed = 0; seed < nTracks; ++seed)
         {
-            const double sigmaA = (k < 200) ? 0.05 : 50.0;   // the regime change
-            const double a = sigmaA * gauss(rng);
-            p += dt * v + 0.5 * a * dt * dt;
-            v += dt * a;
+            std::mt19937_64 rng(seed);
+            std::normal_distribution<double> gauss(0., 1.);
 
-            Vector z(1);
-            z(0) = p + sigmaZ * gauss(rng);
-            zk.push_back(z);
+            std::vector<Vector> zk;
+            double p = 0., v = 2.;
+            for (std::size_t k = 0; k < 400; ++k)
+            {
+                const double sigmaA = (k < 200) ? 0.05 : 50.0;   // the regime change
+                const double a = sigmaA * gauss(rng);
+                p += dt * v + 0.5 * a * dt * dt;
+                v += dt * a;
+
+                Vector z(1);
+                z(0) = p + sigmaZ * gauss(rng);
+                zk.push_back(z);
+            }
+
+            Vector x0(2); x0(0) = 0.; x0(1) = 2.;
+            quiet.SetInitialState(x0);
+            agile.SetInitialState(x0);
+
+            Routers::Bayesian router;
+            Filters::IMM imm({&quiet, &agile}, Pi, &router);
+            imm.Forward(zk);
+
+            const Matrix &modes = imm.ModeHistory();
+            for (std::size_t k = 100; k < 200; ++k) before += modes(k, 1) / 100.;   // agile share, cruising
+            for (std::size_t k = 300; k < 400; ++k) after += modes(k, 1) / 100.;    // agile share, manoeuvring
+
+            // A single step can go either way on noise; the question is which mode
+            // wins across the manoeuvre.
+            for (std::size_t k = 300; k < 400; ++k)
+                if (imm.DominantMode(k) == 1) ++agileWins;
+
+            const Matrix &nis = imm.NisHistory();
+            nisShape = nisShape && nis.Rows() == 400 && nis.Cols() == 2;
+            for (std::size_t k = 0; k < nis.Rows(); ++k)
+                for (std::size_t j = 0; j < nis.Cols(); ++j)
+                    if (!std::isfinite(nis(k, j))) finite = false;
         }
+        before /= nTracks; after /= nTracks; agileWins /= nTracks;
 
-        Vector x0(2); x0(0) = 0.; x0(1) = 2.;
-        quiet.SetInitialState(x0);
-        agile.SetInitialState(x0);
-
-        Routers::Bayesian router;
-        Filters::IMM imm({&quiet, &agile}, Pi, &router);
-        imm.Forward(zk);
-
-        const Matrix &modes = imm.ModeHistory();
-        double before = 0., after = 0.;
-        for (std::size_t k = 100; k < 200; ++k) before += modes(k, 1);   // agile share, cruising
-        for (std::size_t k = 300; k < 400; ++k) after += modes(k, 1);    // agile share, manoeuvring
-        before /= 100.; after /= 100.;
-
-        std::printf("    agile-mode probability: %.3f while cruising -> %.3f while manoeuvring\n",               before, after);
+        std::printf("    agile-mode probability: %.3f while cruising -> %.3f while manoeuvring"
+                    " (mean of %zu tracks)\n", before, after, nTracks);
+        std::printf("    agile mode dominant on %.1f of 100 manoeuvring steps\n", agileWins);
         CHECK(after > before + 0.2, "IMM: the agile mode gains sharply once the target manoeuvres");
         CHECK(before < 0.45, "IMM: the quiet mode is preferred while cruising");
-        CHECK(after > 0.6, "IMM: the agile mode dominates during the manoeuvre");
-
-        // A single step can go either way on noise; the question is which mode
-        // wins across the manoeuvre.
-        std::size_t agileWins = 0;
-        for (std::size_t k = 300; k < 400; ++k)
-            if (imm.DominantMode(k) == 1) ++agileWins;
-        CHECK(agileWins > 70, "IMM: DominantMode reports the manoeuvring mode most of the time");
-
-        const Matrix &nis = imm.NisHistory();
-        CHECK(nis.Rows() == 400 && nis.Cols() == 2, "IMM: NIS history is (T, M)");
-        bool finite = true;
-        for (std::size_t k = 0; k < nis.Rows(); ++k)
-            for (std::size_t j = 0; j < nis.Cols(); ++j)
-                if (!std::isfinite(nis(k, j))) finite = false;
+        CHECK(after > 0.55, "IMM: the agile mode dominates during the manoeuvre");
+        CHECK(agileWins > 65, "IMM: DominantMode reports the manoeuvring mode most of the time");
+        CHECK(nisShape, "IMM: NIS history is (T, M)");
         CHECK(finite, "IMM: every NIS entry is finite");
     }
 

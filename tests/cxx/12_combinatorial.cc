@@ -138,8 +138,13 @@ int main()
 
     // --- with background, across several events ----------------------------------------
     {
-        bool allFound = true;
-        for (std::uint64_t seed = 0; seed < 5; ++seed)
+        // About one event in 40 loses a track to the background (300 seeds: 99.1% of
+        // signal tracks found), so "every track in five events" depends on which five
+        // draws the standard library's distributions hand out -- and libstdc++ and
+        // libc++ hand out different ones. Count the efficiency over 20 events instead.
+        const std::uint64_t nEvents = 20;
+        std::size_t nFound = 0;
+        for (std::uint64_t seed = 0; seed < nEvents; ++seed)
         {
             Fixture::DriftChamber m(8, 0.05);
             const Fixture::TrackingEvent ev = m.GenerateEvent(3, 4, 1., seed);
@@ -147,9 +152,10 @@ int main()
             ckf.Find(ev.hits);
             std::set<long> found;
             for (const Tracking::Candidate &c : ckf.Tracks()) found.insert(MajorityTruth(c, ev));
-            for (long t = 0; t < 3; ++t) allFound = allFound && found.count(t);
+            for (long t = 0; t < 3; ++t) nFound += found.count(t);
         }
-        CHECK(allFound, "find: all three signal tracks recovered despite background, five events");
+        std::printf("    signal tracks found: %zu of %llu\n", nFound, (unsigned long long)(3 * nEvents));
+        CHECK(nFound >= 0.95 * 3 * nEvents, "find: at least 95% of signal tracks recovered despite background, 20 events");
     }
 
     // --- arbitration yields disjoint tracks --------------------------------------------
@@ -172,8 +178,11 @@ int main()
         // layer. A 7-of-8 track *with* a hole occasionally is -- and that is the
         // search, not the port: on the identical event (seed 3 here) the Python
         // engine finds the same fake, hit for hit, chi2 24.98, score 34.19.
+        // The fake rate is about one event in six (300 seeds: 15.7%), so ten events
+        // can hold anywhere from 0 to 3 fakes; 40 events pin it down.
+        const std::uint64_t nEvents = 40;
         std::size_t fakesFull = 0, fakesLoose = 0;
-        for (std::uint64_t seed = 0; seed < 10; ++seed)
+        for (std::uint64_t seed = 0; seed < nEvents; ++seed)
         {
             Fixture::DriftChamber m(8, 0.05);
             const Fixture::TrackingEvent ev = m.GenerateEvent(0, 5, 1., seed);
@@ -182,8 +191,9 @@ int main()
             fakesFull += !full.Find(ev.hits).Empty();
             fakesLoose += !loose.Find(ev.hits).Empty();
         }
-        CHECK(fakesFull == 0, "find: random background never fakes a full-length, hole-free track (10 events)");
-        CHECK(fakesLoose <= 3, "find: with a hole allowed, background fakes a 7-hit track in at most 3 of 10 events");
+        std::printf("    background events with a 7-hit fake: %zu of %llu\n", fakesLoose, (unsigned long long)nEvents);
+        CHECK(fakesFull == 0, "find: random background never fakes a full-length, hole-free track (40 events)");
+        CHECK(fakesLoose <= 0.3 * nEvents, "find: with a hole allowed, background fakes a 7-hit track in at most 30% of events");
         CHECK(fakesLoose >= 1, "find: ... and it does happen (the gate is not secretly too tight)");
     }
 
