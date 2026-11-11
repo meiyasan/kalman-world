@@ -4,14 +4,18 @@ GPS positioning with general (and special) relativity.
 A GPS receiver solves for its position **and clock** from pseudoranges to several
 satellites. The satellites carry atomic clocks that, relative to a ground clock, run
 fast by a net **+38.6 µs/day** — the sum of special-relativistic time dilation
-(−7.2 µs/day, they move fast) and the general-relativistic blueshift (+45.9 µs/day, they
+(−7.2 µs/day, they move fast) and the general-relativistic blueshift (+45.8 µs/day, they
 sit higher in Earth's potential well). Left uncorrected that is **≈ 11.6 km/day** of
 range error. On top of the constant rate, each satellite's eccentric orbit adds a
 *periodic* relativistic term
 
     Δt_rel(t) = F · e · √a · sin E(t),   F = −2√μ / c² ≈ −4.443×10⁻¹⁰ s/√m,
 
-which is the correction a receiver actually applies per satellite (a few to ~15 m).
+which is the correction a receiver actually applies per satellite (up to ~14 m).
+
+Idealisations: the satellite clocks are *not* detuned before launch (real ones are, which
+removes the secular rate), the receiver clock is perfect, the Earth does not rotate (no
+Sagnac term) and there is no atmosphere.
 
 `GPSModel` is an EKF on the state ``x = [x, y, z, b, ḃ]`` (ECEF position, receiver clock
 bias and clock drift, all in metres / m·s⁻¹). The measurement is the per-satellite
@@ -129,6 +133,11 @@ class GPSModel(ExtendedKalmanModel):
         Measurement rate [Hz].
     pseudorange_uncertainty : float
         Pseudorange noise std [m].
+    process_uncertainty : float
+        Position random-walk std [m/sqrt(s)] (the receiver is nearly static).
+    clock_drift_uncertainty : float
+        Random-walk std of the clock drift [m/s per sqrt(s)]. The simulated receiver clock
+        is ideal, so the default is small; a quartz receiver clock needs about 0.1.
     apply_relativistic : bool
         If True, :meth:`preprocess` removes the relativistic terms from the pseudoranges
         before filtering (toggle this to compare before/after).
@@ -154,7 +163,7 @@ class GPSModel(ExtendedKalmanModel):
                  fs: float = 1.0,
                  pseudorange_uncertainty: float = 1.0,
                  process_uncertainty: float = 0.2,
-                 clock_drift_uncertainty: float = 0.05,
+                 clock_drift_uncertainty: float = 1e-3,
                  apply_relativistic: bool = True,
                  secular: bool = True,
                  elevation_mask: float | None = None,
@@ -167,7 +176,7 @@ class GPSModel(ExtendedKalmanModel):
         self._secular_on = bool(secular)
         # Elevation-cutoff [deg] below which a satellite is "out of sight". When set, the model
         # tracks the FULL constellation and masks each satellite epoch-by-epoch as it rises/sets
-        # (the EKF skips the masked pseudoranges); when None, the legacy fixed-set behaviour holds.
+        # (the EKF skips the masked pseudoranges); when None, a fixed set of satellites is used.
         self.elevation_mask = None if elevation_mask is None else float(elevation_mask)
 
         # Receiver truth (ECEF, spherical) + local ENU basis.
@@ -182,7 +191,7 @@ class GPSModel(ExtendedKalmanModel):
 
         # Build a 24-satellite pool. With an elevation mask we keep the WHOLE pool and decide
         # visibility dynamically (satellites set and rise); otherwise we keep the n_sat highest
-        # above the horizon at t0 (legacy fixed set).
+        # above the horizon at t0.
         pool = self._build_pool()
         self.constellation = pool if self.elevation_mask is not None \
             else self._select_visible(pool, n_sat)
@@ -227,7 +236,7 @@ class GPSModel(ExtendedKalmanModel):
         for p in range(n_planes):
             for s in range(per_plane):
                 a.append(GPS_A)
-                e.append(rng.uniform(0.010, 0.025))             # eccentricity (visible Δt_rel)
+                e.append(rng.uniform(0.002, 0.020))             # eccentricity, as in the real constellation
                 inc.append(np.radians(55.0))
                 raan.append(2.0 * np.pi * p / n_planes)
                 argp.append(rng.uniform(0.0, 2.0 * np.pi))

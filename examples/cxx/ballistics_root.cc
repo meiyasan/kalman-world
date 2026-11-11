@@ -65,7 +65,9 @@ class Ballistics : public Kalman::Models::Extended
             const double dt = DeltaT();
             const double q = 0.5 * 0.5;                          // sigma_a^2 [m/s^2]^2
 
-            // White-noise acceleration, per axis, coupling position and velocity.
+            // Discrete white-noise acceleration per axis: an unmodelled acceleration
+            // of standard deviation sigma_a, held constant over each step. It moves
+            // position and velocity together, hence the off-diagonal terms.
             Kalman::Matrix Q(6, 6, 0.);
             for (std::size_t i = 0; i < 3; ++i)
             {
@@ -100,9 +102,10 @@ class Ballistics : public Kalman::Models::Extended
             const double az = -fGravity - fDragOverMass * speed * vz;
 
             Kalman::Vector out(6);
-            // The 1-D position/velocity generator is nilpotent, so its exponential
-            // is exactly [[1, dt], [0, 1]]: the closed form below is not an
-            // approximation of a matrix exponential, it *is* the matrix exponential.
+            // Position and velocity advance with the acceleration held constant over
+            // the step. That is exact for a constant acceleration; drag changes the
+            // acceleration during the step, so this is an explicit first-order step
+            // whose error shrinks with dt.
             out(0) = x(0) + dt * vx + 0.5 * ax * dt * dt;
             out(1) = x(1) + dt * vy + 0.5 * ay * dt * dt;
             out(2) = x(2) + dt * vz + 0.5 * az * dt * dt;
@@ -123,6 +126,8 @@ class Ballistics : public Kalman::Models::Extended
 int main()
 {
     // --- the system ------------------------------------------------------
+    // c_drag/m = 2e-3 1/m is a light ball (terminal speed sqrt(g m/c) = 70 m/s),
+    // not an artillery shell.
     Ballistics model(/* fs */ 50., /* c_drag/m */ 2e-3);
 
     Kalman::Vector x0(6);
@@ -137,8 +142,9 @@ int main()
     Kalman::Sampler sampler(&model, 20260804);
     sampler.Generate(600, x0);
 
-    // A radar that occasionally misses: NaN marks the gap, and the filter
-    // coasts on prediction through it with no special case anywhere.
+    // The altitude coordinate (channel 2) is missing from 15% of the fixes. NaN
+    // marks the gap: the filter updates with the two coordinates it has and
+    // predicts the altitude, with no special case anywhere.
     sampler.DropChannel(2, 0.15);
 
     // --- the estimate -----------------------------------------------------

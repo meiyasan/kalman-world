@@ -43,8 +43,9 @@ KM_PER_DEG_LON = 111.320   # × cos(lat)
 class StormState(KalmanState):
     LON = "°E"      # centre longitude
     LAT = "°N"      # centre latitude
-    VE  = "km/h"    # eastward translation speed
-    VN  = "km/h"    # northward translation speed
+    VE  = "km/h (east)"     # eastward translation speed
+    VN  = "km/h (north)"    # northward translation speed; the two values must differ,
+                            # or Enum makes VN an alias of VE and the state has 4 members
     I   = "kt"      # intensity (max sustained wind)
 
 
@@ -257,14 +258,15 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
         Pure prediction (``engine._predict`` only, no observations), so the
         position covariance grows exactly as the model says it should.  Returns
         a dict with ``lon``/``lat`` (mean track), ``I``/``I_sigma`` (intensity ±σ),
-        and ``ellipses`` — per-step ``(cx, cy, a, b, angle_deg)`` at ``k_sigma``
+        ``sigma_km`` (standard deviation of the position error distance [km]) and
+        ``ellipses`` — per-step ``(cx, cy, a, b, angle_deg)`` at ``k_sigma``
         for the lon/lat error ellipse.
         """
         from ...framework.engines.extended import ExtendedKalmanEngine
         eng = ExtendedKalmanEngine()
         x = np.asarray(x0, float).reshape(-1, 1)
         P = np.asarray(P0, float)
-        lon, lat, Ivals, Isig, ell = [], [], [], [], []
+        lon, lat, Ivals, Isig, ell, sig_km = [], [], [], [], [], []
         t = 0.0
         for _ in range(int(steps)):
             x, P, _ = eng._predict(self, x, P, t=t)
@@ -273,9 +275,12 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
             lon.append(xr[0]); lat.append(xr[1])
             Ivals.append(xr[4]); Isig.append(float(np.sqrt(max(P[4, 4], 0.0))))
             ell.append(self._ellipse(xr[0], xr[1], P[:2, :2], k_sigma))
+            km_lon = KM_PER_DEG_LON * np.cos(np.deg2rad(xr[1]))
+            sig_km.append(float(np.sqrt(max(P[0, 0], 0.0) * km_lon**2
+                                        + max(P[1, 1], 0.0) * KM_PER_DEG_LAT**2)))
         return {"lon": np.array(lon), "lat": np.array(lat),
                 "I": np.array(Ivals), "I_sigma": np.array(Isig),
-                "ellipses": ell}
+                "sigma_km": np.array(sig_km), "ellipses": ell}
 
     def ensemble_forecast(self, x0, P0, steps, *, n_samples=300, seed=0):
         """Monte-Carlo forecast: draw ``n_samples`` initial states from
@@ -558,16 +563,22 @@ class LearnedIntensityModel:
     def _features(sst_warmth, shear, I):
         return np.array([sst_warmth, shear, I])
 
-    def fit(self, tracks, dt_hours=6.0):
+    def fit(self, tracks, dt_hours=6.0, floor=15.0):
         """Fit on a list of truth tracks ``(T, 5)`` — builds ``(features, dI/dt)``
         pairs from consecutive intensities and their environment.  Features are
         **standardised** before the ridge solve (they span very different
         scales: SST ~0–30, shear ~3–30, intensity ~15–120), so no predictor is
-        implicitly penalised more than another."""
+        implicitly penalised more than another.
+
+        Steps that end at or below ``floor`` [kt] are left out: a dissipated
+        storm is held at that value (see :func:`synthetic_steered_track`), so
+        its intensity change there says nothing about the tendency."""
         X, y = [], []
         for tr in tracks:
             tr = np.asarray(tr, float)
             for k in range(len(tr) - 1):
+                if tr[k + 1, 4] <= floor:
+                    continue
                 lon, lat, I = tr[k, 0], tr[k, 1], tr[k, 4]
                 sst, shear = self.env(lon, lat)
                 X.append(self._features(sst, shear, I))

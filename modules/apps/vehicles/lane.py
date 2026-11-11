@@ -1,19 +1,9 @@
-"""Lateral lane-keeping — the bicycle-kinematics (Euler) variant."""
+"""Lateral lane-keeping with steering control (bicycle kinematics, Euler steps).
+
+:class:`CarLaneModel`: state ``x = [y, ψ, v]`` (lateral offset, heading, speed), control
+``u = [δ]`` (steering angle), and a lane camera that measures the lateral offset.
+"""
 from __future__ import annotations
-"""
-Vehicle dynamics models for the Kalman framework.
-
-* :class:`CarSpeedModel` — a **straight-line car speed test** (the "0–100 km/h /
-  standing quarter-mile" run). A single car accelerates in a straight line under a
-  realistic longitudinal force balance — **traction-limited then power-limited** drive
-  force, aerodynamic drag and rolling resistance — while a noisy GPS/radar measures
-  position only. The EKF reconstructs the clean **speed** and **acceleration** the test
-  is after, far better than naively differencing the noisy position fixes.
-
-* :class:`CarLaneModel` — **lateral lane-keeping** with steering control.
-  State ``x = [y, ψ, v]`` (lateral offset, heading, speed); control ``u = [δ]``
-  (steering angle).  Bicycle kinematics; noisy lateral GPS.
-"""
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
@@ -50,9 +40,24 @@ class CarLaneModel(ExtendedKalmanModel):
         ψ_{k+1}  = ψ_k  + v_k · tan(δ_k) / L · dt
         v_{k+1}  = v_k   (constant speed)
 
-    Measurement: noisy lateral GPS  ``z = y + noise``.
+    Measurement: the lateral offset seen by a lane camera, ``z = y + noise``.
 
     ``n = 3, m = 1, l = 1``.
+
+    Parameters
+    ----------
+    wheelbase : float
+        Distance between the axles ``L`` [m].
+    v0 : float
+        Speed [m/s].
+    lateral_uncertainty : float
+        Standard deviation of the measured lateral offset [m] (a lane camera: a few cm).
+    q_lat, q_head, q_vel : float
+        Process-noise variances per step, for ``y`` [m²], ``ψ`` [rad²] and ``v`` [(m/s)²].
+        The defaults are 1 cm, 1 mrad and 1 cm/s per 20 ms step (standard deviations).
+    steer_limit : float
+        Largest steering angle [rad]. The lateral acceleration is ``v² tan δ / L``; at
+        15 m/s the default 0.1 rad gives 8.4 m/s², about what tyres hold on a dry road.
     """
 
     NAME = "Car Lane Keeping"
@@ -68,27 +73,24 @@ class CarLaneModel(ExtendedKalmanModel):
                  wheelbase=2.7,
                  v0=15.0,
                  fs=50.0,
-                 gps_noise=0.3,
-                 q_lat=1e-2, q_head=1e-4, q_vel=1e-3,
-                 steer_limit=0.5,        # max steering angle [rad] (~29°) — actuator saturation
+                 lateral_uncertainty=0.03,
+                 q_lat=1e-4, q_head=1e-6, q_vel=1e-4,
+                 steer_limit=0.1,
                  **kw):
         self.dtype = np.float64
         self.wheelbase = float(wheelbase)
         self.steer_limit = float(steer_limit)
+        self.speed = float(v0)
         self._dt = 1.0 / fs
         self.n, self.m, self.l = 3, 1, 1
 
         Q = np.diag([q_lat, q_head, q_vel]).astype(float)
-        R = np.array([[gps_noise ** 2]], dtype=float)
+        R = np.array([[lateral_uncertainty ** 2]], dtype=float)
 
         B = np.array([[0.0], [v0 / wheelbase * self._dt], [0.0]])
 
         kw.setdefault("x0", np.array([[0.0], [0.0], [v0]]))
-        # f() doesn't route an additive-noise `w` through (accepted for API compatibility
-        # only), so the engine's generic "numerically differentiate f w.r.t. w" fallback
-        # for L would see zero sensitivity and silently multiply Q by a zero matrix every
-        # predict step -- Q would have no effect on P at all. L=I says explicitly: Q
-        # enters additively on every state, which is what q_lat/q_head/q_vel are meant to do.
+        # L = I: the process noise is added to every state.
         super().__init__(name, Q=Q, R=R, B=B, L=np.eye(self.n), fs=fs, **kw)
 
     def clip_u(self, u):
@@ -98,8 +100,7 @@ class CarLaneModel(ExtendedKalmanModel):
             u_arr[0] = np.clip(u_arr[0], -self.steer_limit, self.steer_limit)
         return u_arr.reshape(-1, 1)
 
-    # Bicycle kinematics were historically integrated with explicit Euler; keep that
-    # exact scheme by binding the Euler integrator (RK4 would shift the trajectory).
+    # Explicit Euler steps (RK4 would shift the trajectory).
     DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER
 
     def f_continuous(self, x, u=None, t=None):
@@ -119,7 +120,10 @@ class CarLaneModel(ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(1, 1)
 
     def control_cost(self):
-        Qcost = np.diag([100.0, 10.0, 0.0])
-        Rcost = np.array([[1.0]])
-        x_ref = np.zeros((self.n, 1))
+        """Quadratic cost weights ``(Qcost, Rcost, x_ref)``: 1 per m² of lateral offset
+        and 100 per rad² of steering, so 1 m of offset costs as much as 0.1 rad. The
+        reference is the lane centre, heading along the lane, at the cruise speed."""
+        Qcost = np.diag([1.0, 0.0, 0.0])
+        Rcost = np.array([[100.0]])
+        x_ref = np.array([[0.0], [0.0], [self.speed]])
         return Qcost, Rcost, x_ref

@@ -110,7 +110,7 @@ class KolmogorovFlowModel(KalmanModel):
     error; a *linear* latent space (POD/DMD) hits a representation floor and
     is not offered here; an under-trained one-step surrogate diverges in
     closed loop — check its open-loop rollout error first
-    (``flowsurrogate.rollout_rmse``) and budget separate inflation for it.
+    (``kalman.apps.weather.surrogate.rollout_rmse``) and budget separate inflation for it.
     """
 
     NAME = "Kolmogorov Flow"

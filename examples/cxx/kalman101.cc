@@ -1,6 +1,6 @@
 /**
  * \file kalman101.cc
- * \brief The whole library in one program — notebook 00_Kalman101 in C++.
+ * \brief The whole library in one program: simulate, filter, smooth, check.
  *
  * Generates a noisy constant-velocity track, filters it, smooths it, and reports
  * the consistency diagnostics. Nothing outside libKalman is used, so this also
@@ -39,10 +39,12 @@ class ConstantVelocity : public Kalman::Models::Linear
             H(0, 0) = 1.;                       // only the position is measured
             SetH(H);
 
-            // The continuous white-noise-acceleration block. Its off-diagonal terms
-            // are the point: a position error and a velocity error caused by the
-            // same unmodelled acceleration are correlated, and a diagonal Q here is
-            // the most common way to get a plausible-looking but inconsistent filter.
+            // Discrete white-noise acceleration: an unmodelled acceleration of standard
+            // deviation sigma_a [m/s^2], held constant over each step of length dt.
+            // (The continuous-time version has dt^3/3, dt^2/2, dt and a spectral
+            // density instead.) The off-diagonal terms matter: one acceleration moves
+            // both the position and the velocity, so their errors are correlated, and
+            // dropping these terms makes the filter inconsistent.
             Kalman::Matrix Q(2, 2, 0.);
             Q(0, 0) = q * dt * dt * dt * dt / 4.;
             Q(0, 1) = q * dt * dt * dt / 2.;

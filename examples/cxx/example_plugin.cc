@@ -64,9 +64,10 @@ namespace
                 return F;
             }
 
-            // The continuous white-noise-acceleration block, off-diagonals included:
-            // a diagonal Q here is the classic way to get a plausible-looking but
-            // inconsistent filter.
+            // Discrete white-noise acceleration (standard deviation sigma_a, constant
+            // over each step), off-diagonals included: the one acceleration moves both
+            // position and velocity, and a diagonal Q here would make the filter
+            // inconsistent.
             Kalman::Matrix Q(double) const override
             {
                 const double dt = DeltaT();
@@ -97,6 +98,10 @@ namespace
                 H(0, 0) = 1.;
                 SetH(H);
 
+                // Diagonal Q, unlike ConstantVelocity: these are two independent tuning
+                // values (angle and angular-velocity noise per step), not derived from one
+                // physical noise source. A random angular acceleration would instead give
+                // the correlated form used in ConstantVelocity::Q.
                 Kalman::Matrix Q(2, 2, 0.);
                 Q(0, 0) = 1e-6;
                 Q(1, 1) = 1e-4;
