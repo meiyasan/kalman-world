@@ -55,6 +55,7 @@ namespace Kalman
 
     /**
      * \brief One explicit Runge–Kutta step of \p tableau on any additive state.
+     * \param tableau the Butcher tableau of the scheme.
      * \param rhs   `rhs(state, t)` — the derivative of the state at time t.
      * \param x     the state at \p t.
      * \param t     the time of \p x.

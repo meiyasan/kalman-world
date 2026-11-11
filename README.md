@@ -18,6 +18,7 @@ Full documentation lives in [`docs/`](docs/README.md):
 | [Python API](docs/9_Python-API.md) · [REST API](docs/10_REST-API.md) · [MCP Server](docs/11_MCP-Server.md) · [Authentication](docs/12_Authentication.md) · [Deployment](docs/13_Deployment.md) | API access |
 | [Troubleshooting](docs/14_Troubleshooting.md) | error messages, decoded |
 | [C++ Library](docs/15_Cxx-Library.md) | `libKalmanFramework`, for ROOT / ROOT+ analyses |
+| [C++ Models from Python](docs/16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages |
 
 `make setup` installs everything and self-checks; [`AGENTS.md`](AGENTS.md) has the
 conventions for changing the code. The rest of this file is the reference for

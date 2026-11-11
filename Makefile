@@ -360,7 +360,7 @@ pages: motd
 ## Build project documentation
 docs: motd
 	@if [ ! -d "$(BUILD_DIR)/share/doxygen" ]; then BUILDTYPE=Doc MOTD=0 $(MAKE) -s configure; fi
-	@$(MAKE) -sC $(BUILD_DIR) doxygen
+	@$(MAKE) -sC $(BUILD_DIR) sitesearch
 
 ## Replace the public/ symlink with a real directory (CI artifacts do not follow links)
 pages-materialize:

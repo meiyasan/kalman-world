@@ -77,6 +77,7 @@ namespace Kalman::Filters
 
             /**
              * \brief Find tracks in \p hits; returns them as records (posterior).
+             * \param hits  the event: the hits of each layer, innermost first.
              * \param radii layer radii, or empty to take them from the detector.
              */
             RecordCollection Find(const Tracking::Event &hits, const std::vector<double> &radii = {});

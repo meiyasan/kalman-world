@@ -215,6 +215,26 @@ class NativeModel(KalmanModel):
         return KalmanRecord(time=time, xk=out["x_post"], Pk=out["P_post"], zk=zk,
                             model=self, flavor=KalmanStateFlavor.POSTERIOR)
 
+    # --- named parameters -------------------------------------------------------
+    def parameters(self) -> dict:
+        """The model's named parameters and their current values (``{}`` when it
+        declares none) — the scalars its C++ class exposes with ``DeclareParameter``."""
+        lib = core.lib
+        value = core.ffi.new("double *")
+        out = {}
+        for i in range(core.check(lib.kalman_model_parameter_count(self._handle), "parameter_count")):
+            name = core._s(lib.kalman_model_parameter_name(self._handle, i))
+            core.check(lib.kalman_model_parameter(self._handle, name.encode(), value), name)
+            out[name] = float(value[0])
+        return out
+
+    def set_parameter(self, name: str, value: float):
+        """Set one named parameter of the C++ model. An unknown name raises
+        ``KeyError`` listing the names the model declares."""
+        if core.lib.kalman_model_set_parameter(self._handle, name.encode(), float(value)) < 0:
+            raise KeyError(core.last_error())
+        return self
+
     # --- introspection ----------------------------------------------------------
     def describe_native(self) -> dict:
         """The C++ side's own account of this model (title, plugin, dims ...)."""

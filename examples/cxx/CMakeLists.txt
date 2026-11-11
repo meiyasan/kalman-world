@@ -94,5 +94,13 @@ foreach(SRC ${EXAMPLE_SOURCES} ${ROOT_EXAMPLES})
         BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
     )
 
+    # toy_sensor loads the toy plugin by path; give it the built library as the
+    # default so `./toy_sensor` runs from anywhere in the build tree.
+    if(EXAMPLE_NAME STREQUAL "toy_sensor" AND TARGET KalmanPlugin_toy)
+        target_compile_definitions(${EXAMPLE_NAME} PRIVATE
+            KALMAN_TOY_PLUGIN="$<TARGET_FILE:KalmanPlugin_toy>")
+        add_dependencies(${EXAMPLE_NAME} KalmanPlugin_toy)
+    endif()
+
     add_dependencies(examples ${EXAMPLE_NAME})
 endforeach()

@@ -282,6 +282,21 @@ git submodule update --init --recursive     # once per clone: share/doxygen + cm
 make docs        # needs cmake + doxygen + graphviz
 ```
 
+Three things about that build that are not obvious:
+
+- **Doxygen 1.18.0 crashes** (a bus error in its comment scanner, about one run
+  in four on any Markdown page). Use 1.17 or 1.12:
+  `cmake -S . -B var/build -DDOXYGEN_EXECUTABLE=/path/to/doxygen`.
+- **The page layout is `cmake/DoxygenLayout.xml`**, not the theme's. The theme's
+  file lists the navigation only; from Doxygen 1.13 on, a section the layout
+  does not list is not rendered, and every class page came out empty. The
+  top-level `CMakeLists.txt` appends `LAYOUT_FILE` to the generated Doxyfile.
+- **Search has two halves.** Doxygen's box finds names. `tools/site_search.py`,
+  run by the `sitesearch` target after Doxygen, adds the text of every page: it
+  writes `search/fulltext-index.js` and appends its script to `search/search.js`.
+  It changes no template, so the theme submodule stays as it is.
+  `tests/test_site_search.py` covers the index builder.
+
 Doxygen's Markdown parser is stricter than a web renderer, and a malformed
 construct silently swallows the rest of the page rather than erroring. Three
 rules, all learned from real breakage here:

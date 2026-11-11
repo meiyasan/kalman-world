@@ -273,11 +273,41 @@ endif()
 set(DOXYGEN_INPUT
     "${CMAKE_SOURCE_DIR}/modules"
     "${CMAKE_SOURCE_DIR}/AGENTS.md"
+    # The C++ side: the library's headers, the application models and the examples,
+    # so the site documents and searches both languages.
+    "${CMAKE_SOURCE_DIR}/include/Kalman"
+    "${CMAKE_SOURCE_DIR}/apps/include"
+    "${CMAKE_SOURCE_DIR}/examples"
 )
 set(DOXYGEN_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
 
 if(BUILD_DOCUMENTATION AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/share/doxygen/CMakeLists.txt)
     add_subdirectory("share/doxygen")
+
+    # The theme's layout file lists the navigation only. Doxygen 1.12 filled in
+    # the rest; later versions leave class, namespace and file pages empty. Use
+    # the complete layout kept in cmake/ (see the comment at its top). A later
+    # assignment wins in a Doxyfile, so this is appended to the generated one.
+    if(EXISTS "${CMAKE_BINARY_DIR}/Doxyfile")
+        file(APPEND "${CMAKE_BINARY_DIR}/Doxyfile"
+             "\nLAYOUT_FILE = ${CMAKE_SOURCE_DIR}/cmake/DoxygenLayout.xml\n")
+    endif()
+
+    # Full-text search. Doxygen's search box finds names; tools/site_search.py
+    # adds the text of every page to it, after Doxygen has written the site and
+    # before `pages` publishes it.
+    find_program(KALMAN_SITE_PYTHON NAMES python3 python)
+    if(TARGET doxygen AND KALMAN_SITE_PYTHON)
+        add_custom_target(sitesearch
+            COMMAND ${KALMAN_SITE_PYTHON} "${CMAKE_SOURCE_DIR}/tools/site_search.py"
+                    --newest "${CMAKE_BINARY_DIR}/public/docs"
+            DEPENDS doxygen
+            COMMENT "Indexing the documentation for full-text search"
+            VERBATIM)
+        if(TARGET metadata)
+            add_dependencies(metadata sitesearch)
+        endif()
+    endif()
 elseif(BUILD_DOCUMENTATION)
     message(FATAL_ERROR
         "share/doxygen is empty — initialise the submodules first:\n"

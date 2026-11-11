@@ -36,6 +36,7 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 | # | Page | What it answers |
 |---|------|-----------------|
 | 15 | [C++ Library](15_Cxx-Library.md) | `libKalmanFramework`: the core ported to C++, loadable in a ROOT+ analysis |
+| 16 | [C++ Models from Python](16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages; a worked toy example |
 
 ## Also in this repository
 
