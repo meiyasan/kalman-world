@@ -278,7 +278,7 @@ class PowerGridStateModel(PhasorOscillatorModel):
             if true_amplitudes is not None:
                 ax.axhline(true_amplitudes[0] if j == 0 else 0.0, ls="--",
                            color="steelblue", lw=1.5, label="Truth")
-            ax.set_title(f"H1 — {lbl} component (rotating frame)")
+            ax.set_title(f"H1 phasor — {lbl} part")
             ax.set_xlabel("Time (s)"); ax.set_ylabel("Amplitude (V)")
             ax.grid(alpha=0.3); ax.legend(fontsize=8)
 

@@ -53,7 +53,9 @@ class SuspensionModel(LinearKalmanModel):
     measurement_uncertainty : float
         Measurement noise std [m], default 0.001 (1 mm).
     process_uncertainty : float
-        Process noise std scaling, default 0.001.
+        Strength q of the unmodelled random accelerations on each mass (white
+        noise), in m/s^1.5: alone, it would make a velocity wander by q·√t.
+        Default 0.001.
     fs : float
         Sample rate [Hz], default 256.
     """
@@ -122,8 +124,14 @@ class SuspensionModel(LinearKalmanModel):
         # ------------------------------------------------------------------
         R = (measurement_uncertainty ** 2) * np.eye(1, dtype=self.dtype)
 
-        q = process_uncertainty ** 2
-        Q = q * np.eye(4, dtype=self.dtype)
+        # White random accelerations act on the two velocities (ż_s and ż_u);
+        # Van Loan gives the exact discrete Q over one step, consistent with F,
+        # so it scales correctly with dt and has the right units in each entry.
+        from ....helpers import van_loan_discretize
+        Lc = np.array([[0, 0], [1, 0], [0, 0], [0, 1]], dtype=self.dtype)
+        Qc = (process_uncertainty ** 2) * np.eye(2, dtype=self.dtype)
+        _, Q = van_loan_discretize(A, Lc, Qc, dt)
+        Q = 0.5 * (Q + Q.T)
 
         # ------------------------------------------------------------------
         # Initial covariance (unit-appropriate)

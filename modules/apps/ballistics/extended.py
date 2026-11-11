@@ -35,8 +35,8 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
                  g=9.81,                      # surface gravity [m/s²]; None → use G*M/r³ orbital formula
                  fs=128.0,                    # sampling frequency [Hz]
                  order=3,                     # model order [p,v,a]
-                 process_uncertainty=0.5,     # std of the disturbance; UNIT set by `process_noise_model`
-                 process_noise_model=BallisticNoise.ACCELERATION,  # m/s² (accel; recommended) or m/s³ (jerk; see Qd note)
+                 process_uncertainty=0.5,     # strength of the disturbance (√ of its spectral density); UNIT set by `process_noise_model`
+                 process_noise_model=BallisticNoise.ACCELERATION,  # m/s^1.5 (accel; recommended) or m/s^2.5 (jerk; see Qd note)
                  drag_uncertainty=None,       # ε: if set, the FILTER's Q grows with speed as σ_a(v)=ε·(c_drag/m)|v|² (air-friction uncertainty); None → constant Q
                  measurement_uncertainty=0.5, # measurement noise std [m],
                  f = None,                    # Transition function (optional, use default one if None)
@@ -142,8 +142,10 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         Parameters
         ----------
         sigma : float
-            Std of the disturbance; its UNIT is set by ``process_noise_model``
-            (BallisticNoise.ACCELERATION → m/s², BallisticNoise.JERK → m/s³).
+            Strength of the white disturbance (square root of its spectral
+            density); its UNIT is set by ``process_noise_model``
+            (BallisticNoise.ACCELERATION → m/s^1.5: the velocity wanders by
+            sigma·√t; BallisticNoise.JERK → m/s^2.5).
         order : int
             Model order (2 or 3).
         process_noise_model : BallisticNoise

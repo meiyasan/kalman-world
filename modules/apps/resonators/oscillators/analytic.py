@@ -102,8 +102,10 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         A = expm(np.array([[-gamma * dt, -dw * dt],
                            [   dw * dt, -gamma * dt]]))
         C = np.identity(2)
-        R = measurement_uncertainty * np.sqrt(2) * np.identity(2)
-        Qn = process_uncertainty * np.sqrt(2) * np.identity(2)
+        # Both noise arguments are standard deviations, per component (Re and Im):
+        # of the measured envelope, and of the random change of the state per step.
+        R = measurement_uncertainty ** 2 * np.identity(2)
+        Qn = process_uncertainty ** 2 * np.identity(2)
 
         x0, P0 = kwargs.pop("x0", None), kwargs.pop("P0", None)
         super().__init__(name, F=A, H=C, Q=Qn, R=R, P0=P0, x0=x0, **kwargs)
@@ -154,10 +156,10 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         xt = np.asarray(sample.xk) if sample is not None else None
 
         fig, (ax_re, ax_im, ax_ph) = plt.subplots(1, 3, figsize=figsize)
-        fig.suptitle(f"{self.name()} — envelope ψ (rotating frame)", fontweight="bold")
+        fig.suptitle(f"{self.name()} — envelope in the rotating frame", fontweight="bold")
         for ax, j, col_est, col_aux, ylab in (
-            (ax_re, 0, "navy", "steelblue", r"Re($\psi$)"),
-            (ax_im, 1, "saddlebrown", "darkorange", r"Im($\psi$)"),
+            (ax_re, 0, "navy", "steelblue", "Re"),
+            (ax_im, 1, "saddlebrown", "darkorange", "Im"),
         ):
             if zk is not None:
                 ax.scatter(t, zk[:, j], s=1, alpha=0.3, color=col_aux, label="Measured (demod)")
@@ -171,7 +173,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         ax_ph.plot(xk[:, 0], xk[:, 1], lw=2, color="navy", label="Estimate")
         ax_ph.plot(xk[0, 0], xk[0, 1], "o", ms=6, color="green", label="Start", zorder=5)
         ax_ph.plot(xk[-1, 0], xk[-1, 1], "s", ms=6, color="red", label="End", zorder=5)
-        ax_ph.set_xlabel(r"Re($\psi$)"); ax_ph.set_ylabel(r"Im($\psi$)"); ax_ph.set_title("Phase space")
+        ax_ph.set_xlabel("Re"); ax_ph.set_ylabel("Im"); ax_ph.set_title("Re–Im plane")
         ax_ph.set_aspect("equal"); ax_ph.axhline(0, color="gray", lw=0.5); ax_ph.axvline(0, color="gray", lw=0.5)
         ax_ph.legend(fontsize=8)
         fig.tight_layout()

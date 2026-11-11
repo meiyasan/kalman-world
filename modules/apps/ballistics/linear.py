@@ -26,7 +26,7 @@ class BallisticLinearModel(LinearKalmanModel):
 
     def __init__(self, sensor_id: str | int,
                  measurement_uncertainty: float = 0.5,  # position-sensor noise std σ [m]; R = σ²
-                 process_uncertainty: float = 0.5,  # acceleration-noise std [m/s²]; see Q note for magnitude
+                 process_uncertainty: float = 0.5,  # white-acceleration strength q [m/s^1.5]: velocity wanders by q·√t; see Q note
                  **kwargs):
 
         self.dtype = kwargs.pop("dtype", np.float64)
@@ -56,8 +56,10 @@ class BallisticLinearModel(LinearKalmanModel):
         # Q's acceleration row/col comes out identically zero — the disturbance
         # only smears velocity (∝dt) and position (∝dt³); Qc=0 ⇒ truth == ideal.
         #
-        # Order of magnitude (~20 s flight):
-        #     0.05 m/s² → ~1 m drift     0.5 m/s² → ~10 m (default)     2 m/s² → ~35 m
+        # process_uncertainty is the square root of that disturbance's spectral
+        # density, in m/s^1.5: after a time t the velocity has wandered by q·√t and
+        # the position by q·√(t³/3). Order of magnitude after a 20 s flight:
+        #     0.05 → ~3 m     0.5 → ~26 m (default)     2 → ~100 m
         # -------------------------------------------
         Lc = np.array([[0.0], [1.0], [0.0]], dtype=self.dtype)
         Qc = np.array([[self.dtype(process_uncertainty) ** 2]], dtype=self.dtype)
@@ -73,7 +75,7 @@ class BallisticLinearModel(LinearKalmanModel):
         # acceleration knob:
         #   position     : R                       (position is what we measure)
         #   velocity     : (measurement_uncertainty/10)²   (unobserved → looser)
-        #   acceleration : q = process_uncertainty²        (from the process noise)
+        #   acceleration : process_uncertainty²            (from the process noise)
         # Tying the acceleration prior to the PROCESS noise (not the sensor noise)
         # keeps it sensible for quiet and noisy sensors alike, and means a smaller
         # process noise automatically pins the acceleration closer to its initial value.

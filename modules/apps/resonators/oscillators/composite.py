@@ -53,7 +53,16 @@ class OscillatorModel(CompositeKalmanModel):
     Q : float | list
         Quality factor (scalar, or one per kept mode).
     fs : float
-    measurement_uncertainty, process_uncertainty : float
+    measurement_uncertainty : float
+        Standard deviation of the white noise of the real input signal, per sample
+        at ``fs``.  The model converts it to the noise of the demodulated,
+        decimated envelope (see ``__init__``).
+    process_uncertainty : float
+        Standard deviation of the random change of each envelope component per
+        filter step (the filter runs at the decimated rate ``4·dfc``).
+    p0 : float, optional
+        Initial variance of each envelope component.  Default: ``(1000·σ)²``, a
+        prior loose enough that the first measurements set the amplitude.
     """
 
     NAME = "Windowed Oscillator (one fc ± dfc band)"
@@ -92,11 +101,16 @@ class OscillatorModel(CompositeKalmanModel):
         self._fs_dec = 4.0 * float(dfc)
         self._preprocess_N = None
 
-        p0_var = float(p0) if p0 is not None else 1e3 * measurement_uncertainty * np.sqrt(2)
+        # Noise of the envelope the filter sees.  Demodulation (ψ = 2·x·e^{-jωc·t})
+        # turns white noise of std σ into 2σ² of variance per component; the
+        # anti-alias filter of the decimation keeps the fraction fs_dec/fs of it.
+        sigma_envelope = float(measurement_uncertainty) * np.sqrt(2.0 * self._fs_dec / self._fs_original)
+
+        p0_var = float(p0) if p0 is not None else (1e3 * float(measurement_uncertainty)) ** 2
         blocks = [AnalyticOscillatorModel(
                       f"{sensor_id}@{f:.3f}Hz", fs=self._fs_dec,
                       f0=f, fc=fc, Q=q,
-                      measurement_uncertainty=measurement_uncertainty,
+                      measurement_uncertainty=sigma_envelope,
                       process_uncertainty=process_uncertainty,
                       P0=p0_var * np.eye(2))
                   for f, q in zip(in_band, Qs)]
