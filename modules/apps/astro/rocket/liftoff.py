@@ -114,7 +114,11 @@ class RocketLiftoffModel(ExtendedKalmanModel):
 
         Q = np.diag([q_alt, q_vel, q_mass]).astype(float)
         R = np.array([[track_m ** 2]], dtype=float)
-        super().__init__(name, Q=Q, R=R, fs=fs, **kw)
+        # L = I: Q enters additively on every state. f() does not route an
+        # additive `w` through, so without it the engine would difference f with
+        # respect to w, find no sensitivity, and multiply Q by a zero matrix at
+        # every prediction: the covariance then collapses to zero.
+        super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
     # --- handy figures of merit -------------------------------------------
     @property

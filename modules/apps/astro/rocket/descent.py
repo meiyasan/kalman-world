@@ -223,7 +223,11 @@ class RocketDescentModel(ExtendedKalmanModel):
         self.fs = fs
         Q = np.diag([q_pos, q_pos, q_vel, q_vel, q_ang, q_rate, q_mass]).astype(float)
         R = np.diag([track_m ** 2, track_m ** 2, track_th ** 2]).astype(float)
-        super().__init__(name, Q=Q, R=R, fs=fs, **kw)
+        # L = I: Q enters additively on every state. f() does not route an
+        # additive `w` through, so without it the engine would difference f with
+        # respect to w, find no sensitivity, and multiply Q by a zero matrix at
+        # every prediction: the covariance then collapses to zero.
+        super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
     # --- atmosphere / inertia ---------------------------------------------
     def _rho(self, y):
