@@ -161,11 +161,11 @@ class InterplanetaryModel(ExtendedKalmanModel):
     :func:`best_departure`. If ``epoch`` is ``None`` the perturbers are dropped and the model
     reduces to a fast two-body Sun cruise (handy for tests without the ephemeris).
 
-    **Spacecraft defaults** are representative of an MRO / InSight class probe at departure:
+    **Spacecraft defaults** describe a generic small Mars probe at departure (illustrative
+    round numbers, not a particular mission):
 
-    * dry mass  ~600 kg  (structure + instruments + avionics)
-    * wet mass ~1200 kg  (+ ~600 kg hydrazine / bipropellant)
-    * cruise speed ~29–33 km/s heliocentric (seeded by the Lambert solution)
+    * dry mass   600 kg  (structure + instruments + avionics)
+    * wet mass  1200 kg  (+ 600 kg of propellant)
 
     Pass these to :class:`TrajectoryControlManeuver` to get realistic burn durations and
     propellant accounting.
@@ -173,7 +173,7 @@ class InterplanetaryModel(ExtendedKalmanModel):
 
     NAME = "Interplanetary cruise (heliocentric N-body)"; VERSION = "1.0"
 
-    # Representative spacecraft mass for an MRO/InSight-class Mars probe [kg]
+    # Generic small Mars probe [kg] (illustrative round numbers)
     SPACECRAFT_DRY_MASS_KG = 600.0
     SPACECRAFT_WET_MASS_KG = 1200.0
 
@@ -582,17 +582,18 @@ class TrajectoryControlManeuver(KalmanController):
        consumed and **burn duration** (seconds to minutes, not an instant).
     4. Returns the velocity impulse; the EKF applies it as a state update.
 
-    **Early TCMs amplify corrections geometrically.**  A 1 m/s Δv fired
+    **Early TCMs have the most leverage.**  A 1 m/s Δv fired
     175 days before Mars arrival shifts the arrival point by ≈ 15 000 km,
     whereas the same burn fired 5 days out moves it only ≈ 430 km.  The
-    default schedule (day 5, 30, 90) exploits this leverage:
+    default schedule (day 5, 30, 90) uses this: an early burn for the
+    launch-injection error, then two trims.
 
-    * **TCM-1 (day 5)** — dominant burn, corrects launch-injection error.
-    * **TCM-2 (day 30)** — mid-course trim.
-    * **TCM-3 (day 90)** — optional fine-tune; often < 1 m/s.
+    Lambert targeting assumes the Sun's gravity alone, so the planets' pull
+    after the last burn leaves a residual miss; a further burn close to
+    arrival removes it, at a higher Δv per kilometre.
 
-    Default spacecraft: MRO / InSight class (~600 kg dry, 1200 kg wet,
-    22 N hydrazine thrusters, Isp 220 s).  Pass ``dry_mass_kg`` /
+    Default spacecraft: a generic small probe (600 kg dry, 1200 kg wet,
+    one 22 N hydrazine thruster, Isp 220 s).  Pass ``dry_mass_kg`` /
     ``wet_mass_kg`` / ``Isp_s`` / ``thrust_N`` to override.
 
     Parameters
@@ -622,10 +623,10 @@ class TrajectoryControlManeuver(KalmanController):
         ``GM_SUN`` (heliocentric cruise).
     """
 
-    DRY_MASS_KG      = 600.0    # kg  — MRO/InSight class dry mass
-    WET_MASS_KG      = 1200.0   # kg  — including ~600 kg hydrazine
-    ISP_S            = 220.0    # s   — MR-106 class monoprop thrusters
-    THRUST_N         = 22.0     # N   — Aerojet MR-106 (×1 thruster; real missions use clusters)
+    DRY_MASS_KG      = 600.0    # kg  — generic small probe, dry
+    WET_MASS_KG      = 1200.0   # kg  — including 600 kg of propellant
+    ISP_S            = 220.0    # s   — hydrazine monopropellant thruster
+    THRUST_N         = 22.0     # N   — one small thruster (real missions fire several)
     MAX_DV_KMS       = 0.050    # km/s — 50 m/s per-TCM cap
     TCM_DAYS_DEFAULT = [5.0, 30.0, 90.0]
 
@@ -869,7 +870,7 @@ def plot_porkchop(grid, *, ax=None, dv_max=None, figsize=(9.5, 5.8)):
     ax.set_ylabel("time of flight [days]")
     ax.set_title("%s → %s porkchop  (departure + arrival Δv)" % (best["departure"], best["target"]))
 
-    # ── Lunar-specific: mark perigee dates and annotate basin physics ──────
+    # ── Lunar-specific: mark the Moon's perigee dates and distances ────────
     if best.get("target") == "moon" and grid.get("perigee_dates"):
         y_top = float(np.max(y))
         y_bot = float(np.min(y))
@@ -885,18 +886,6 @@ def plot_porkchop(grid, *, ax=None, dv_max=None, figsize=(9.5, 5.8)):
                         xytext=(3, 0), textcoords="offset points",
                         fontsize=6.5, color="white", alpha=0.85, va="top", rotation=90)
             first_peri = False
-        # Synodic-period annotation: measure spacing between first two perigees
-        visible = [p for p in grid["perigee_dates"]
-                   if x.min() <= mdates.date2num(p.to_datetime()) <= x.max()]
-        if len(visible) >= 2:
-            T_syn = (visible[1] - visible[0]).to_value("jd")
-            ax.text(0.01, 0.01,
-                    f"Lunar synodic period ≈ {T_syn:.1f} d\n"
-                    "Deeper basin = Moon closer to perigee\n"
-                    "(apsidal precession, 8.85-yr cycle)",
-                    transform=ax.transAxes, fontsize=7, color="white",
-                    va="bottom", alpha=0.85,
-                    bbox=dict(boxstyle="round", fc="0.15", ec="none", alpha=0.6))
 
     ax.legend(loc="upper left" if x_frac > 0.55 else "upper right", fontsize=8)
     fig.tight_layout()

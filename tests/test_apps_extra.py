@@ -252,6 +252,37 @@ class TestInterplanetary(unittest.TestCase):
         self.assertTrue(np.isfinite(h["dv_total_kms"]) and h["dv_total_kms"] > 0)
         self.assertTrue(150.0 < h["tof_days"] < 400.0)             # Earth→Mars ballpark
 
+    def test_hohmann_uses_semi_major_axes(self):
+        # The estimate must not depend on where the planets are on the day: the orbit
+        # radii are semi-major axes, so the textbook figures come out at any epoch.
+        for epoch in ("2026-11-11", "2027-08-01"):
+            h = hohmann_transfer("earth", "mars", epoch=epoch)
+            self.assertAlmostEqual(h["a2_AU"], 1.524, delta=0.005)
+            self.assertAlmostEqual(h["dv_total_kms"], 5.6, delta=0.1)
+            self.assertAlmostEqual(h["tof_days"], 259.0, delta=3.0)
+            self.assertAlmostEqual(h["synodic_period_days"], 780.0, delta=5.0)
+
+    def test_chain_lambert_separates_gravity_from_burn(self):
+        from astropy.time import Time
+        from modules.apps.astro.space import chain_lambert
+        sequence = ["earth", "venus", "venus", "earth"]
+        dates = [Time(t) for t in ("1997-10-15 08:43", "1998-04-26 13:52",
+                                   "1999-06-24 20:30", "1999-08-18 03:28")]
+        single = chain_lambert(sequence, dates)
+        self.assertEqual(single[0]["dv_burn_kms"], 0.0)            # the launch is not a flyby
+        for before, leg in zip(single, single[1:]):
+            # the planet turns the velocity for free; the burn is only the speed mismatch
+            self.assertGreater(leg["dv_gravity_kms"], leg["dv_burn_kms"])
+            self.assertAlmostEqual(leg["dv_burn_kms"],
+                                   abs(leg["v_inf_dep_kms"] - before["v_inf_arr_kms"]), places=9)
+        # A deep-space manoeuvre on the Venus-Venus leg makes both Venus flybys free.
+        legs = chain_lambert(sequence, dates, dsm={1: Time("1998-12-03 06:45")})
+        self.assertLess(legs[1]["dv_burn_kms"], 1e-5)
+        self.assertLess(legs[2]["dv_burn_kms"], 1e-5)
+        self.assertTrue(0.3 < legs[1]["dv_dsm_kms"] < 0.8)         # Cassini's was about 0.45 km/s
+        self.assertTrue(100.0 < legs[1]["flyby_altitude_km"] < 2000.0)
+        self.assertTrue(100.0 < legs[2]["flyby_altitude_km"] < 2000.0)
+
     def test_two_body_cruise_ekf(self):
         # No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.
         m = InterplanetaryModel("earth", "mars", epoch=None, dt_s=43200.0, track_Mm=0.02)

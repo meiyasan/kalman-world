@@ -190,14 +190,22 @@ def lambert(r1, r2, tof, mu=GM_SUN, prograde=True):
 
 
 def hohmann_transfer(departure="earth", target="mars", epoch=None, mu=GM_SUN):
-    """Analytic two-impulse Hohmann estimate between two (near-circular, coplanar) planet
-    orbits — the quick first cut. Returns a dict with departure/arrival Δv [km/s], total Δv,
-    time of flight [days], the required phase angle [deg], the synodic period [days] and the
-    next ideal departure date (astropy ``Time``). Orbit radii are taken from the live
-    ephemeris at ``epoch``.
+    """Analytic two-impulse Hohmann estimate between two planet orbits, treated as circular
+    and coplanar — the quick first cut.
+
+    Each orbit's radius is the planet's **semi-major axis** (from its ephemeris position and
+    velocity at ``epoch``), not its distance from the Sun on that day, so the Δv, the time of
+    flight and the synodic period do not depend on where the planets happen to be. Only the
+    next departure date uses their current positions.
+
+    Returns a dict with the two radii [AU], the departure and arrival Δv [km/s] (each is a
+    hyperbolic excess speed, the speed relative to the planet), their sum, the time of flight
+    [days], the required phase angle [deg], the synodic period [days] and the next ideal
+    departure date (astropy ``Time``).
     """
-    r1 = np.linalg.norm(body_state(departure, epoch)[0])
-    r2 = np.linalg.norm(body_state(target,   epoch)[0])
+    (rd, vd), (rt, vt) = body_state(departure, epoch), body_state(target, epoch)
+    r1 = 1.0 / (2.0 / np.linalg.norm(rd) - np.dot(vd, vd) / mu)     # semi-major axes [Mm]
+    r2 = 1.0 / (2.0 / np.linalg.norm(rt) - np.dot(vt, vt) / mu)
     a_t = 0.5 * (r1 + r2)
     v1c, v2c = np.sqrt(mu / r1), np.sqrt(mu / r2)
     vp = np.sqrt(mu * (2.0 / r1 - 1.0 / a_t))            # transfer speed at r1
@@ -207,16 +215,18 @@ def hohmann_transfer(departure="earth", target="mars", epoch=None, mu=GM_SUN):
     w1, w2 = np.sqrt(mu / r1 ** 3), np.sqrt(mu / r2 ** 3)
     phase = np.pi - w2 * tof                             # target lead angle at departure
     t_syn = 2 * np.pi / abs(w1 - w2)
-    # current angular separation (target − departure) and wait time to the window
-    th1 = np.arctan2(body_state(departure, epoch)[0][1], body_state(departure, epoch)[0][0])
-    th2 = np.arctan2(body_state(target,   epoch)[0][1], body_state(target,   epoch)[0][0])
-    sep = (th2 - th1) % (2 * np.pi)
-    t_wait = ((sep - phase) % (2 * np.pi)) / abs(w1 - w2)
+    # current angle from the departure planet to the target, measured along the orbital motion
+    cross = np.cross(rd, rt)
+    sep = np.arctan2(np.sign(cross[2]) * np.linalg.norm(cross), np.dot(rd, rt)) % (2 * np.pi)
+    if w1 < w2:                                          # inward transfer: target catches up
+        t_wait = ((phase - sep) % (2 * np.pi)) / (w2 - w1)
+    else:
+        t_wait = ((sep - phase) % (2 * np.pi)) / (w1 - w2)
     from astropy.time import TimeDelta
     next_dep = _as_time(epoch) + TimeDelta(t_wait * TU, format="sec")
     return {
         "departure": departure, "target": target,
-        "r1_AU": r1 / D_SUN, "r2_AU": r2 / D_SUN,
+        "a1_AU": r1 / D_SUN, "a2_AU": r2 / D_SUN,
         "dv_depart_kms": float(dv1), "dv_arrive_kms": float(dv2), "dv_total_kms": float(dv1 + dv2),
         "tof_days": float(tof / DAY), "phase_angle_deg": float(np.degrees(phase % (2 * np.pi))),
         "synodic_period_days": float(t_syn / DAY), "next_departure": next_dep,
@@ -752,7 +762,59 @@ def plot_two_leg(best, *, planets=("earth", "mars", "venus"),
     return animate(fig, _draw, frames=frames, interval=interval)
 
 
-def chain_lambert(sequence, dates, *, mu=GM_SUN):
+def _flyby_geometry(body, v_inf_in, v_inf_out):
+    """Turn angle [deg] between two hyperbolic excess velocities at ``body`` and the periapsis
+    altitude [km] at which the planet's gravity produces that turn. A negative altitude means
+    the turn would need a pass below the surface."""
+    a_in, a_out = np.linalg.norm(v_inf_in), np.linalg.norm(v_inf_out)
+    turn = np.arccos(np.clip(np.dot(v_inf_in, v_inf_out) / (a_in * a_out), -1.0, 1.0))
+    mu_p, R_p = gm(body), radius(body)
+
+    def excess(rp):      # each half of the hyperbola turns by asin(1/e), e = 1 + rp v∞²/μ
+        return (np.arcsin(1.0 / (1.0 + rp * a_in ** 2 / mu_p))
+                + np.arcsin(1.0 / (1.0 + rp * a_out ** 2 / mu_p)) - turn)
+
+    lo, hi = 1e-9 * R_p, 1e7 * R_p
+    for _ in range(200):
+        mid = np.sqrt(lo * hi)
+        lo, hi = (mid, hi) if excess(mid) > 0 else (lo, mid)
+    return float(np.degrees(turn)), float((lo - R_p) / KM)
+
+
+def _solve_dsm(r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu):
+    """Position of a deep-space manoeuvre between two flybys.
+
+    The leg is flown as two Lambert arcs (``t1`` then ``t2`` [ks]) joined at the manoeuvre.
+    Its position is chosen so that both flybys are free — the excess speed leaving the first
+    planet equals the one that arrived there, and the same at the second — with the smallest
+    velocity change at the manoeuvre. Returns ``(r_dsm, (v_dep, v_before), (v_after, v_arr))``.
+    """
+    from scipy.optimize import minimize
+    v_in, v_out = np.linalg.norm(v_inf_in_a), np.linalg.norm(v_inf_out_b)
+
+    def arcs(q):
+        r = q * D_SUN
+        return lambert(r_a, r, t1, mu=mu), lambert(r, r_b, t2, mu=mu)
+
+    def burn(q):
+        first, second = arcs(q)
+        return np.linalg.norm(second[0] - first[1])
+
+    free_flybys = [
+        {"type": "eq", "fun": lambda q: np.linalg.norm(arcs(q)[0][0] - v_planet_a) - v_in},
+        {"type": "eq", "fun": lambda q: np.linalg.norm(arcs(q)[1][1] - v_planet_b) - v_out},
+    ]
+    v_start, _ = lambert(r_a, r_b, t1 + t2, mu=mu)            # start on the single arc
+    guess = _kep_arc(r_a, v_start, t1, n=100, mu=mu)[-1] / D_SUN
+    sol = minimize(burn, guess, method="SLSQP", constraints=free_flybys,
+                   options={"ftol": 1e-12, "maxiter": 500})
+    if max(abs(c["fun"](sol.x)) for c in free_flybys) > 1e-6:
+        raise ValueError("chain_lambert: no deep-space manoeuvre makes both flybys free")
+    first, second = arcs(sol.x)
+    return sol.x * D_SUN, first, second
+
+
+def chain_lambert(sequence, dates, *, dsm=None, mu=GM_SUN):
     """Chain Lambert solves for a multi-leg gravity-assist trajectory.
 
     Parameters
@@ -763,6 +825,10 @@ def chain_lambert(sequence, dates, *, mu=GM_SUN):
     dates : list of astropy Time
         One timestamp per body (length N).  The i-th entry is the date the spacecraft
         is at ``sequence[i]``.
+    dsm : dict, optional
+        ``{leg index: date}`` — a deep-space manoeuvre on that leg (0-based, between two
+        flybys). The leg is then two Lambert arcs joined at that date, and the manoeuvre is
+        solved so that the flybys at both ends of the leg are free, with the smallest burn.
 
     Returns
     -------
@@ -773,30 +839,73 @@ def chain_lambert(sequence, dates, *, mu=GM_SUN):
     * ``tof_days``                — float, time of flight
     * ``r_dep``, ``r_arr``        — (3,) position vectors [Mm]
     * ``v_dep``, ``v_arr``        — (3,) heliocentric velocity vectors [km/s]
-    * ``dv_flyby_kms``            — Δv at the intermediate flyby (0 for a free slingshot)
+    * ``v_inf_dep_kms``, ``v_inf_arr_kms`` — hyperbolic excess speed (speed relative to the
+      planet) leaving the departure body and reaching the arrival body [km/s]
+
+    and, describing the flyby of the departure body that starts the leg (zeros / NaN on the
+    first leg, which starts with the launch):
+
+    * ``dv_gravity_kms`` — size of the heliocentric velocity change between the incoming and
+      the outgoing arc. The planet's gravity delivers it; it costs no propellant.
+    * ``dv_burn_kms``    — the burn the chain still needs there: the difference between the
+      incoming and outgoing excess *speeds*. Gravity turns the excess velocity but cannot
+      change its size, so this is zero for a free flyby. (Burning at closest approach would
+      need less than this figure.)
+    * ``turn_angle_deg``, ``flyby_altitude_km`` — the turn the flyby must produce and the
+      closest-approach altitude that produces it.
+
+    A leg with a deep-space manoeuvre also has ``dsm_date``, ``r_dsm``, ``v_dsm_before``,
+    ``v_dsm_after`` and ``dv_dsm_kms`` (the size of the manoeuvre).
     """
-    from astropy.time import TimeDelta
     if len(sequence) != len(dates):
         raise ValueError("sequence and dates must have the same length")
+    dsm = {int(k): _as_time(v) for k, v in (dsm or {}).items()}
+    n_legs = len(sequence) - 1
+    for i in dsm:
+        if not 0 < i < n_legs - 1 or (i - 1) in dsm or (i + 1) in dsm:
+            raise ValueError("a deep-space manoeuvre needs a single-arc leg and a flyby on each side")
+    states = [body_state(b, d) for b, d in zip(sequence, dates)]
+    tofs = [float((dates[i + 1] - dates[i]).to_value("jd")) for i in range(n_legs)]
+
+    arcs = {i: lambert(states[i][0], states[i + 1][0], tofs[i] * DAY, mu=mu)
+            for i in range(n_legs) if i not in dsm}
+    extra = {}
+    for i, t_dsm in dsm.items():
+        t1 = float((t_dsm - dates[i]).to_value("jd")) * DAY
+        r_dsm, first, second = _solve_dsm(
+            states[i][0], states[i][1], arcs[i - 1][1] - states[i][1], t1,
+            states[i + 1][0], states[i + 1][1], arcs[i + 1][0] - states[i + 1][1],
+            tofs[i] * DAY - t1, mu)
+        arcs[i] = (first[0], second[1])
+        extra[i] = {"dsm_date": t_dsm, "r_dsm": r_dsm,
+                    "v_dsm_before": first[1], "v_dsm_after": second[0],
+                    "dv_dsm_kms": float(np.linalg.norm(second[0] - first[1]))}
+
     legs = []
-    for i in range(len(sequence) - 1):
-        r_dep, _ = body_state(sequence[i],     dates[i])
-        r_arr, _ = body_state(sequence[i + 1], dates[i + 1])
-        tof_days  = float((dates[i + 1] - dates[i]).to_value("jd"))
-        v_dep, v_arr = lambert(r_dep, r_arr, tof_days * DAY, mu=mu)
-        dv_flyby = 0.0
-        if i > 0:
-            dv_flyby = float(np.linalg.norm(v_dep - legs[-1]["v_arr"]))
-        legs.append({
+    for i in range(n_legs):
+        (r_dep, vp_dep), (r_arr, vp_arr) = states[i], states[i + 1]
+        v_dep, v_arr = arcs[i]
+        leg = {
             "departure":    sequence[i],
             "arrival":      sequence[i + 1],
             "dep_date":     dates[i],
             "arr_date":     dates[i + 1],
-            "tof_days":     tof_days,
+            "tof_days":     tofs[i],
             "r_dep": r_dep, "v_dep": v_dep,
             "r_arr": r_arr, "v_arr": v_arr,
-            "dv_flyby_kms": dv_flyby,
-        })
+            "v_inf_dep_kms": float(np.linalg.norm(v_dep - vp_dep)),
+            "v_inf_arr_kms": float(np.linalg.norm(v_arr - vp_arr)),
+            "dv_gravity_kms": 0.0, "dv_burn_kms": 0.0,
+            "turn_angle_deg": float("nan"), "flyby_altitude_km": float("nan"),
+        }
+        if i > 0:
+            v_inf_in, v_inf_out = legs[-1]["v_arr"] - vp_dep, v_dep - vp_dep
+            leg["dv_gravity_kms"] = float(np.linalg.norm(v_inf_out - v_inf_in))
+            leg["dv_burn_kms"] = float(abs(np.linalg.norm(v_inf_out) - np.linalg.norm(v_inf_in)))
+            leg["turn_angle_deg"], leg["flyby_altitude_km"] = _flyby_geometry(
+                sequence[i], v_inf_in, v_inf_out)
+        leg.update(extra.get(i, {}))
+        legs.append(leg)
     return legs
 
 
@@ -824,7 +933,17 @@ def plot_multi_leg(legs, *, title=None, extra_planets=("mars",),
     AU = D_SUN
 
     # ── Build arcs ──────────────────────────────────────────────────────────
-    arcs  = [_kep_arc(lg["r_dep"], lg["v_dep"], lg["tof_days"] * DAY, n_arc) for lg in legs]
+    def _leg_arc(lg):
+        if "r_dsm" not in lg:
+            return _kep_arc(lg["r_dep"], lg["v_dep"], lg["tof_days"] * DAY, n_arc)
+        # two arcs joined at the deep-space manoeuvre, sampled evenly in time
+        t1 = float((lg["dsm_date"] - lg["dep_date"]).to_value("jd")) * DAY
+        n1 = int(round(n_arc * t1 / (lg["tof_days"] * DAY)))
+        first  = _kep_arc(lg["r_dep"], lg["v_dep"], t1, n1)
+        second = _kep_arc(lg["r_dsm"], lg["v_dsm_after"], lg["tof_days"] * DAY - t1, n_arc - n1)
+        return np.vstack([first, second[1:]])
+
+    arcs  = [_leg_arc(lg) for lg in legs]
     traj  = np.vstack([arcs[0]] + [a[1:] for a in arcs[1:]])
     N_total = len(traj) - 1
     t0_ = 0.0
@@ -908,6 +1027,14 @@ def plot_multi_leg(legs, *, title=None, extra_planets=("mars",),
                         (r[0] / AU, r[1] / AU),
                         xytext=(7, 6), textcoords="offset points", fontsize=7, color="0.3",
                         annotation_clip=True)
+
+        for lg in legs:
+            if "r_dsm" in lg:
+                r = lg["r_dsm"] / AU
+                ax.plot(r[0], r[1], "x", color="black", ms=8, mew=2, zorder=8)
+                ax.annotate("Manoeuvre  %s" % lg["dsm_date"].iso[:10], (r[0], r[1]),
+                            xytext=(7, 6), textcoords="offset points", fontsize=7, color="0.3",
+                            annotation_clip=True)
 
         if show_legend:
             ax.legend(loc="lower left", fontsize=7.5)
