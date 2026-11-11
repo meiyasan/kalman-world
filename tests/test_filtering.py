@@ -264,3 +264,39 @@ class TestGPS(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSamplerAndFilterAgreeOnTiming(unittest.TestCase):
+    """sample() and filter() use one convention: sample k is the state after the
+    k-th step, driven by u[k], and z[k] measures it. A noise-free run filtered
+    from the same x0 must then leave no innovation at all, however far the state
+    moves in a step. (Recording the state *before* each step left every fix, and
+    every control, one step late.)"""
+
+    def run_clean(self, control):
+        import numpy as np
+        from modules.framework.model import KalmanModel
+        F = np.array([[1.0, 1.0], [0.0, 1.0]])
+        kw = dict(F=F, H=np.array([[1.0, 0.0]]), Q=1e-9 * np.eye(2), R=np.array([[1e-6]]),
+                  fs=1.0, x0=np.array([[0.0], [50.0]]), P0=1e-9 * np.eye(2))
+        if control:
+            kw["B"] = np.array([[0.0], [1.0]])
+        make = lambda: KalmanModel("m", **kw)
+        N = 12
+        uk = (np.arange(N, dtype=float) * 3.0).reshape(N, 1) if control else None
+        sample = make().sample(N, uk=uk, process_noise=False, measurement_noise=False) if control \
+            else make().sample(N, process_noise=False, measurement_noise=False)
+        record = make().filter(np.asarray(sample.zk), uk) if control else make().filter(np.asarray(sample.zk))
+        return np.asarray(sample.xk), np.asarray(sample.zk), np.asarray(record.xk)
+
+    def test_first_sample_is_one_step_after_x0(self):
+        xk, zk, _ = self.run_clean(control=False)
+        self.assertAlmostEqual(float(xk[0, 0]), 50.0)          # x0 = 0 moved by one step at 50 per step
+        self.assertAlmostEqual(float(zk[0, 0]), 50.0)
+
+    def test_noise_free_run_filters_back_exactly(self):
+        import numpy as np
+        for control in (False, True):
+            xk, _, est = self.run_clean(control)
+            self.assertLess(float(np.max(np.abs(est - xk))), 1e-3,
+                            f"filter and sampler are a step apart (control={control})")

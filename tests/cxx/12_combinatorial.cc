@@ -47,7 +47,7 @@ int main()
 {
     // --- the fixture ----------------------------------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         CHECK(m.NState() == 4 && m.NMeasure() == 2 && m.NControl() == 0, "model: n = 4, m = 2, l = 0");
         CHECK(m.Radii().size() == 8, "model: eight layers");
         CHECK(m.DefaultEngine() == EngineKind::Combinatorial, "model: asks for the combinatorial engine");
@@ -70,11 +70,12 @@ int main()
         CHECK(m.h(xp).Size() == 2 && m.h(xp)(0) == xp(0), "model: h observes (x, y)");
 
         // A track that curls back before the radius is reported as NaN, not as garbage.
+        // 20 MeV/c in 1.5 T turns on a 4.4 cm circle: it never reaches the first layer at 20 cm.
         Vector slow(4); slow(0) = 1.; slow(1) = 0.; slow(2) = 0.02; slow(3) = 0.;
-        const Vector gone = m.f(slow, Vector(), 8.);
+        const Vector gone = m.f(slow, Vector(), m.Radii()[0]);
         CHECK(std::isnan(gone(0)), "model: an unreachable radius gives NaN");
 
-        Fixture::DriftChamber tiny(8, 0.05);
+        Fixture::DriftChamber tiny(8, 1.5);
         CHECK(Engines::Combinatorial::Chi2Quantile99(2) > 9.2 && Engines::Combinatorial::Chi2Quantile99(2) < 9.22,
               "engine: chi2(2) 99% quantile is 9.21");
         CHECK(std::abs(Engines::Combinatorial::Chi2Quantile99(12) - 26.217) < 0.2, "engine: beyond the table, Wilson-Hilferty");
@@ -82,7 +83,7 @@ int main()
 
     // --- the gate separates on-track from off-track ------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         const Fixture::TrackingEvent ev = m.GenerateEvent(1, 0, 1., 3);
         Engines::Combinatorial eng;
         Vector x0; Matrix P0;
@@ -111,7 +112,7 @@ int main()
 
     // --- a clean event: every track found, every layer on it ---------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         const Fixture::TrackingEvent ev = m.GenerateEvent(3, 0, 1., 2);
         CHECK(ev.NTracks() == 3, "event: three signal tracks generated");
 
@@ -146,7 +147,7 @@ int main()
         std::size_t nFound = 0;
         for (std::uint64_t seed = 0; seed < nEvents; ++seed)
         {
-            Fixture::DriftChamber m(8, 0.05);
+            Fixture::DriftChamber m(8, 1.5);
             const Fixture::TrackingEvent ev = m.GenerateEvent(3, 4, 1., seed);
             Filters::CKF ckf(&m, std::numeric_limits<double>::quiet_NaN(), 8, 2, 4);
             ckf.Find(ev.hits);
@@ -160,7 +161,7 @@ int main()
 
     // --- arbitration yields disjoint tracks --------------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         const Fixture::TrackingEvent ev = m.GenerateEvent(3, 4, 1., 0);
         Filters::CKF ckf(&m, std::numeric_limits<double>::quiet_NaN(), 8, 2, 4, 0.);
         ckf.Find(ev.hits);
@@ -182,9 +183,13 @@ int main()
         // can hold anywhere from 0 to 3 fakes; 40 events pin it down.
         const std::uint64_t nEvents = 40;
         std::size_t fakesFull = 0, fakesLoose = 0;
+        // This needs a chamber in which a fake is possible at all: layers 1 cm apart
+        // with 500 um hits and a tight curl. In the default chamber (layers 12 cm
+        // apart, 130 um hits) five random hits per layer never line up: 0 of 40.
+        const double tightField = 0.05 / Fixture::DriftChamber::kKappa;
         for (std::uint64_t seed = 0; seed < nEvents; ++seed)
         {
-            Fixture::DriftChamber m(8, 0.05);
+            Fixture::DriftChamber m(8, tightField, 1., 1., 1., 0.05, 1., 1e-6, 1e-4, 0.02);
             const Fixture::TrackingEvent ev = m.GenerateEvent(0, 5, 1., seed);
             Filters::CKF full(&m, std::numeric_limits<double>::quiet_NaN(), 8, 0, 8);
             Filters::CKF loose(&m, std::numeric_limits<double>::quiet_NaN(), 8, 2, 7);
@@ -199,7 +204,7 @@ int main()
 
     // --- holes: a track survives a missed layer ---------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         const Fixture::TrackingEvent ev = m.GenerateEvent(2, 2, 0.85, 11);   // 15% inefficiency
         Filters::CKF ckf(&m, std::numeric_limits<double>::quiet_NaN(), 8, 2, 4);
         ckf.Find(ev.hits);
@@ -212,7 +217,7 @@ int main()
 
     // --- smoothing ----------------------------------------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         const Fixture::TrackingEvent ev = m.GenerateEvent(2, 3, 1., 1);
         Filters::CKF ckf(&m, std::numeric_limits<double>::quiet_NaN(), 6, 2, 4);
         const RecordCollection forward = ckf.Find(ev.hits);
@@ -234,7 +239,7 @@ int main()
 
     // --- resolution and misuse ----------------------------------------------------------
     {
-        Fixture::DriftChamber m(8, 0.05);
+        Fixture::DriftChamber m(8, 1.5);
         Filter f(&m);
         CHECK(f.GetEngine()->Kind() == EngineKind::Combinatorial, "resolution: the model's default builds the combinatorial engine");
 

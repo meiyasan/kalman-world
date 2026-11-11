@@ -8,7 +8,7 @@
  * crossing of a layer. Each layer carries several hits (signal + background), so
  * track finding is combinatorial.
  *
- *   state  x = [x, y, px, py]     (|p| is conserved, curvature q Bz / |p| is constant)
+ *   state  x = [x, y, px, py]     (|p| is conserved, curvature kappa q Bz / |p| is constant)
  *   f(x, u, t = r)                propagates the arc (RK4 in arc length) to radius r
  *   h(x) = [x, y]                 the crossing position, R = sigma^2 I
  *
@@ -49,9 +49,14 @@ namespace Fixture
             std::vector<double> fRadii;
 
         public:
-            DriftChamber(std::size_t nLayers = 8, double Bz = 0.05, double rInner = 1., double rStep = 1.,
-                         double q = 1., double sigmaHit = 0.05, double pSeed = 1.,
-                         double qPos = 1e-6, double qMom = 1e-4, double step = 0.02)
+            /// Curvature constant: 1/R [1/cm] = kKappa q [e] B [T] / p [GeV/c] (0.3 in m, T, GeV).
+            static constexpr double kKappa = 0.299792458e-2;
+
+            /// Lengths in cm, the field in tesla, momenta in GeV/c: the defaults of the
+            /// Python DriftChamberModel (1.5 T, layers at 20..104 cm, 130 um hits).
+            DriftChamber(std::size_t nLayers = 8, double Bz = 1.5, double rInner = 20., double rStep = 12.,
+                         double q = 1., double sigmaHit = 0.013, double pSeed = 1.,
+                         double qPos = 1e-6, double qMom = 1e-4, double step = 0.5)
                 : Kalman::Models::Extended("CDC", 4, 2), fBz(Bz), fQ(q), fSigmaHit(sigmaHit),
                   fPSeed(pSeed), fStep(step)
             {
@@ -94,7 +99,7 @@ namespace Fixture
                 const double p = std::hypot(s(2), s(3));
                 Kalman::Vector d(4, 0.);
                 if (p == 0.) return d;
-                const double c = fQ * fBz / p;
+                const double c = kKappa * fQ * fBz / p;
                 d(0) = s(2) / p; d(1) = s(3) / p; d(2) = c * s(3); d(3) = -c * s(2);
                 return d;
             }

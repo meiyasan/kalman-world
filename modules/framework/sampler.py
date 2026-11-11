@@ -101,14 +101,20 @@ class KalmanSampler:
         wk = self.process_noise(duration, **kwargs) if process_noise else [self.model.w0] * n_samples
         vk = self.measurement_noise(duration, **kwargs) if measurement_noise else [self.model.v0] * n_samples
         t_start = self._t                              # resume time from the previous call
+        # Step first, then record: sample k is the state *after* the k-th step
+        # (driven by u[k] and w[k]) and z[k] is a measurement of that state.
+        # This is the order the filter assumes (predict with u[k], then update
+        # with z[k], starting from x0) and the order Kalman::Sampler uses.
+        # Recording before the step made every measurement, and every control,
+        # one step late for the filter.
         for i in range(n_samples):
-            xk[i] = x
             t_i = t_start + i / self.fs                 # propagate time (for time-varying f/h)
             u_i = np.asarray(uk[i]).reshape(-1, 1) if self.model.l > 0 else None
-            
-            Pk[i] = P
+
             x, P, _ = self.engine._predict(self.model, x, P, u=u_i, t=t_i, **kwargs)
             x = x + wk[i]
+            xk[i] = x
+            Pk[i] = P
 
         # advance the cursor so the next measurement() resumes at t+1 with the latest state
         self._t = t_start + n_samples / self.fs
