@@ -39,6 +39,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
                  process_noise_model=BallisticNoise.ACCELERATION,  # m/s^1.5 (accel; recommended) or m/s^2.5 (jerk; see Qd note)
                  drag_uncertainty=None,       # ε: if set, the FILTER's Q grows with speed as σ_a(v)=ε·(c_drag/m)|v|² (air-friction uncertainty); None → constant Q
                  measurement_uncertainty=0.5, # measurement noise std [m],
+                 substeps=1,                  # sub-steps per sample: 1 = one Taylor step (as before); N > 1 or "auto" = velocity-Verlet sub-steps
                  f = None,                    # Transition function (optional, use default one if None)
                  h = None,                    # Measurement function (optional, use default one if None)
                  **kwargs):
@@ -46,6 +47,15 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         self.dtype = kwargs.pop("dtype", np.float64)
         self.fs = fs
         self.order = order
+        # Sub-steps per sample. One step of p += v·dt + ½a·dt², v += a·dt is first order in
+        # velocity: in orbital mode at a long sampling interval it is wrong by far more than
+        # any usable process noise covers (a 2.2 h orbit sampled every 86 s: ~10 m/s of
+        # velocity error per step, and the filter diverged by 1,900 km). N > 1 integrates the
+        # same forces in N velocity-Verlet sub-steps; "auto" takes enough that each turns the
+        # orbit by at most AUTO_SUBSTEP_RADIANS. 1 keeps the original single step exactly.
+        if substeps != "auto" and (int(substeps) < 1):
+            raise ValueError(f"substeps must be >= 1 or 'auto', got {substeps!r}.")
+        self.substeps = substeps if substeps == "auto" else int(substeps)
 
         self["c_drag"] = c_drag
         self["G"] = G
@@ -99,10 +109,11 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
 
     # ----------------------------------------------------------------------
     # C++ twin (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
-    # speed-dependent Q, a thrust control and a user-supplied f/h stay in Python.
+    # speed-dependent Q, a thrust control, a user-supplied f/h and sub-stepping
+    # (the twin takes one step per sample) stay in Python.
     # ----------------------------------------------------------------------
     def native_name(self):
-        if self._drag_uncertainty is not None:
+        if self._drag_uncertainty is not None or self.substeps != 1:
             return None
         return {3: "ballistic", 2: "ballistic-order2"}.get(self.order)
 
@@ -216,7 +227,59 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         a = (x[[self.order * i + 2 for i in range(3)], 0] if self.order >= 3
              else np.zeros(3, dtype=self.dtype))
 
-        # Gravity
+        steps = self._substeps_for(p, dt)
+        if steps == 1:
+            # The original single Taylor step, unchanged.
+            a_total = self._acceleration(p, v, u)
+            if self.order >= 2:
+                p = p + dt * v
+            p += 0.5 * a_total * dt**2
+            v += a_total * dt
+            a = a_total if self.order >= 3 else np.zeros_like(a_total)
+        else:
+            # Velocity Verlet over `steps` sub-steps: second order in position AND velocity,
+            # the acceleration re-evaluated where each sub-step lands.
+            h = dt / steps
+            a_total = self._acceleration(p, v, u)
+            for _ in range(steps):
+                p = p + h * v + 0.5 * a_total * h**2
+                a_next = self._acceleration(p, v + a_total * h, u)
+                v = v + 0.5 * (a_total + a_next) * h
+                a_total = a_next
+            a = a_total if self.order >= 3 else np.zeros_like(a_total)
+
+        # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
+        x_next = np.zeros_like(x)
+        x_next[pi, 0] = p
+        x_next[vi, 0] = v
+        if self.order >= 3:
+            x_next[[self.order * i + 2 for i in range(3)], 0] = a
+
+        # Add process noise
+        if w is not None:
+            L = self.L(t)
+            x_next += w if L is None else (L @ w)
+
+        return x_next
+
+    #: "auto" sub-steps: each turns an orbit by at most this angle (ω = sqrt(GM/r³)).
+    AUTO_SUBSTEP_RADIANS = 0.01
+
+    def _substeps_for(self, p, dt):
+        """Sub-steps for one sample: the fixed count, or in orbital mode with "auto" enough
+        that each covers at most AUTO_SUBSTEP_RADIANS of the local orbital motion."""
+        if self.substeps != "auto":
+            return self.substeps
+        if self["g"] is not None:
+            return 1
+        r = float(np.linalg.norm(p))
+        if r <= 0.0:
+            return 1
+        omega = np.sqrt(self["G"] * self["M"] / r**3)
+        return max(1, min(10_000, int(np.ceil(omega * dt / self.AUTO_SUBSTEP_RADIANS))))
+
+    def _acceleration(self, p, v, u=None):
+        """Gravity + drag + control at position p and velocity v (the forces f() integrates)."""
         # Near-surface mode (g provided): constant downward acceleration in Z.
         # Orbital mode (g=None): full geocentric G*M/r³ formula — requires
         # positions in geocentric metres (origin = Earth's centre).
@@ -237,37 +300,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
             if u_arr.size > 0:
                 a_ctrl = u_arr.reshape(3) / self["m"]
 
-        # Total acceleration
-        a_total = a_grav + a_drag + a_ctrl
-
-        # Kinematic p,v coupling (per spatial axis). The 1-D generator
-        # [[0, 1], [0, 0]] is nilpotent — A² = 0 — so exp(A·dt) is *exactly*
-        # [[1, dt], [0, 1]]; there is no series to sum and nothing is approximated
-        # by writing it out. Doing so matters because f() runs 2n+1 times per
-        # filter step (the central-difference Jacobian re-evaluates it per state
-        # component), and the matrix exponential was a third of f()'s cost while
-        # never changing: both A and dt = 1/fs are constants of the run.
-        if self.order >= 2:
-            p = p + dt * v
-
-        # Apply acceleration contribution
-        p += 0.5 * a_total * dt**2
-        v += a_total * dt
-        a = a_total if self.order >= 3 else np.zeros_like(a_total)
-
-        # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
-        x_next = np.zeros_like(x)
-        x_next[pi, 0] = p
-        x_next[vi, 0] = v
-        if self.order >= 3:
-            x_next[[self.order * i + 2 for i in range(3)], 0] = a
-
-        # Add process noise
-        if w is not None:
-            L = self.L(t)
-            x_next += w if L is None else (L @ w)
-
-        return x_next
+        return a_grav + a_drag + a_ctrl
 
     # ----------------------------------------------------------------------
     # Measurement

@@ -426,6 +426,37 @@ class TestBallisticEKF(unittest.TestCase):
         rmse_meas = np.sqrt(np.mean((truth.zk - truth.xk[:, pos_idx]) ** 2))
         self.assertLess(rmse_filt, rmse_meas)
 
+    def _orbit_step_error(self, substeps):
+        """Position error, m, of one 86.4 s propagation on a circular orbit (r = 5,600 km
+        round GM = 1.06252e14 m^3/s^2, a 2.2 h period) against the exact circle."""
+        G, gm, r, dt = 6.674e-11, 1.06252e14, 5.6e6, 86.4
+        v = np.sqrt(gm / r)
+        m = BallisticModel("XYZ", order=3, fs=1.0 / dt, G=G, M=gm / G, g=None, c_drag=0,
+                           substeps=substeps)
+        x = np.array([r, 0, -gm / r**2, 0, 0, 0, 0, v, 0], dtype=float)
+        nxt = m.f(x).reshape(-1)
+        theta = v / r * dt
+        exact = np.array([r * np.cos(theta), 0.0, r * np.sin(theta)])
+        return float(np.linalg.norm(nxt[[0, 3, 6]] - exact))
+
+    def test_orbit_substeps_follow_the_orbit(self):
+        # One Taylor step per 86 s sample is 283 m off a 2.2 h orbit (and an EKF on it
+        # diverged by 1,900 km); velocity-Verlet sub-steps are 5.8 m off ("auto", 7 of them,
+        # 0.01 rad each) and 1.1 m (16): second order, the error falls as the square.
+        one, auto, sixteen = (self._orbit_step_error(s) for s in (1, "auto", 16))
+        self.assertGreater(one, 100.0)
+        self.assertLess(auto, 10.0)
+        self.assertLess(sixteen, 2.0)
+        self.assertLess(sixteen, auto)
+
+    def test_substeps_one_is_the_original_step(self):
+        m1 = BallisticModel("XYZ", order=3, fs=64)
+        m2 = BallisticModel("XYZ", order=3, fs=64, substeps=1)
+        x = np.array([0, 120, 0, 0, 80, 0, 1000, 0, -9.81], dtype=float)
+        np.testing.assert_array_equal(m1.f(x), m2.f(x))
+        with self.assertRaises(ValueError):
+            BallisticModel("XYZ", order=3, fs=64, substeps=0)
+
 
 # ===========================================================================
 # Oscillator family variants

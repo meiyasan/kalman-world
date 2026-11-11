@@ -454,7 +454,7 @@ the Python loop runs as before.
 | Python class | C++ class | Registered name | Stays in Python |
 |---|---|---|---|
 | `StormModel` | `Apps::Weather::Storm` | `storm`, `storm-track-only` | a `steering` flow or an `intensity_fn` (Python callables) |
-| `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), thrust controls, a user `f`/`h` |
+| `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
 

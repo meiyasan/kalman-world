@@ -211,6 +211,8 @@ class TestBallisticTwin(unittest.TestCase):
 
     def test_features_without_a_twin_keep_the_python_physics(self):
         self.assertIsNone(BallisticModel("b", drag_uncertainty=0.3, c_drag=0.01).native_handle())
+        self.assertIsNone(BallisticModel("b", substeps=4).native_handle())
+        self.assertIsNone(BallisticModel("b", g=None, substeps="auto").native_handle())
         custom = BallisticModel("b", f=lambda x, u=None, w=None, t=None: x)
         self.assertIsNone(custom.native_handle())
         self.assertIsNotNone(BallisticModel("b").native_handle())
