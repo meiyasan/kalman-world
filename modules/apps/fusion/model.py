@@ -15,7 +15,7 @@ declarative model covers both demonstrated regimes:
 
   * **redundant** — several position sensors (the stereo-camera + lidar analog);
   * **complementary** — a slow noisy position sensor + a fast velocity sensor (the
-    GPS + IMU / encoder analog).
+    GPS + wheel-odometry analog).
 
 Multi-rate measurements are built with :func:`kalman.helpers.make_multirate_input`.
 """
@@ -78,7 +78,7 @@ class SensorFusionModel(LinearKalmanModel):
     fs : float
         Base filter sample rate [Hz].
     process_uncertainty : float
-        White-noise-acceleration std driving the constant-velocity ``Q`` block.
+        White-noise-acceleration std [m/s²/√Hz] driving the constant-velocity ``Q`` block.
     """
 
     NAME = "Sensor Fusion Model"

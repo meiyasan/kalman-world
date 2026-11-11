@@ -244,11 +244,16 @@ class RocketDescentModel(ExtendedKalmanModel):
         x, y, vx, vy, th, om, m = np.asarray(s, float).reshape(-1)[:7]
         if m <= self.m_dry or y <= 0.0:
             return 0.0, 0.0
-        # vertical loop: hold a capped descent speed that tapers to v_touch near the pad, so the
-        # engine stays lit through the descent and attitude control is available throughout.
-        v_desc = min(self.v_cruise, np.sqrt(2.0 * self.decel * max(y, 0.0)) + self.v_touch)
-        v_ref = -v_desc
-        a_vert = self.g + self.kp_v * (v_ref - vy)              # needed vertical accel
+        # vertical loop: hold a capped descent speed, then brake at the constant deceleration
+        # `decel` along v² = v_touch² + 2·decel·y, which reaches v_touch at the pad. On that
+        # braking arc the rate of change of the reference, dv_ref/dt = decel·(−vy)/v_brake,
+        # is fed forward: feedback on the speed error alone lags the profile and would hit
+        # the pad at a large fraction of v_cruise.
+        v_brake = np.sqrt(self.v_touch ** 2 + 2.0 * self.decel * max(y, 0.0))
+        braking = v_brake < self.v_cruise
+        v_ref = -(v_brake if braking else self.v_cruise)
+        a_ff = self.decel * max(-vy, 0.0) / v_brake if braking else 0.0
+        a_vert = self.g + a_ff + self.kp_v * (v_ref - vy)       # needed vertical accel
         T = m * a_vert / max(np.cos(th), 0.3)
         T = float(np.clip(T, 0.0, self.thrust_max))
         # outer horizontal loop: desired tilt to null cross-range (x>0 ⇒ lean +θ ⇒ thrust −x)
@@ -320,9 +325,13 @@ class RocketDescentModel(ExtendedKalmanModel):
         """Headline landing figures: touchdown miss distance & speed, final tilt, ignition
         time/altitude and propellant burned, from a sampled/filtered ``record``."""
         t = np.asarray(record.time, float).reshape(-1)
-        s = np.asarray(record.xk)
+        s = np.asarray(record.xk).reshape(len(t), -1)
         y = s[:, 1]
-        i_td = int(np.argmin(np.abs(y)))
+        # Touchdown is the last sample still in the air. Once on the pad, f() zeroes the
+        # velocities, and process noise can relight the engine, so later samples would
+        # report a zero touchdown speed and propellant burned after landing.
+        landed = np.where(y <= 0.5)[0]
+        i_td = max(int(landed[0]) - 1, 0) if len(landed) else int(np.argmin(np.abs(y)))
         T = np.array([self.guidance(si)[0] for si in s])
         burning = T > 1e-6
         i_ig = int(np.argmax(burning)) if burning.any() else 0
@@ -332,7 +341,7 @@ class RocketDescentModel(ExtendedKalmanModel):
             "final tilt [deg]":      float(np.degrees(abs(s[i_td, 4]))),
             "ignition time [s]":     float(t[i_ig]),
             "ignition altitude [m]": float(s[i_ig, 1]),
-            "propellant burned [kg]": float(self.m0 - s[:, 6].min()),
+            "propellant burned [kg]": float(s[0, 6] - s[i_td, 6]),
         }
 
     # ==================================================================

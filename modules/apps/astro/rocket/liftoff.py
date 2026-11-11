@@ -235,7 +235,7 @@ class RocketLiftoffModel(ExtendedKalmanModel):
             _add_rocket(axR, shp, alpha=alpha)
             axR.text(Wd * 2.2, truth[i, 0] + 0.12 * Ld, "%.0fs" % t[i],
                      fontsize=7, color="0.4", va="bottom")
-        axR.set_xlim(-2.5 * Ld, 2.5 * Ld)
+        # Equal aspect with the y range fixed: matplotlib picks the x range itself.
         axR.set_ylim(-0.08 * alt_max, 1.15 * alt_max)
         axR.set_aspect("equal", adjustable="datalim")
         axR.set_xticks([]); axR.set_ylabel("altitude [m]")
@@ -254,10 +254,14 @@ class RocketLiftoffModel(ExtendedKalmanModel):
         axA.set_ylabel("altitude [km]"); axA.legend(fontsize=8); axA.grid(alpha=0.3)
         axA.set_title("Altitude")
 
-        axV.plot(t, truth[:, 1], color="crimson", lw=1.5, label="climb rate [m/s]")
-        axV.plot(t, truth[:, 2], color="darkorange", lw=1.3, label="mass [kg]")
-        axV.axhline(self.m_dry, color="0.6", ls=":", lw=0.8)
-        axV.legend(fontsize=8); axV.grid(alpha=0.3); axV.set_title("Climb rate & mass")
+        # Climb rate and mass differ by orders of magnitude: one axis each.
+        axV.plot(t, truth[:, 1], color="crimson", lw=1.5)
+        axV.set_ylabel("climb rate [m/s]", color="crimson")
+        axM = axV.twinx()
+        axM.plot(t, truth[:, 2] / 1e3, color="darkorange", lw=1.3)
+        axM.axhline(self.m_dry / 1e3, color="0.6", ls=":", lw=0.8)
+        axM.set_ylabel("mass [t]", color="darkorange")
+        axV.grid(alpha=0.3); axV.set_title("Climb rate & mass")
 
         axT.plot(t, twr, color="seagreen"); axT.axhline(1.0, color="0.6", ls=":", lw=0.8)
         axT.set_xlabel("time [s]"); axT.set_ylabel("T / W")
@@ -323,8 +327,10 @@ class RocketLiftoffModel(ExtendedKalmanModel):
         la_e, = axA.plot([], [], "--", color="navy", lw=1.1, label="EKF")
         la_z  = axA.scatter([], [], s=5, color="0.8", label="radar", zorder=3) \
                 if meas is not None else None
-        lv_v, = axV.plot([], [], color="crimson",    lw=1.5, label="climb rate [m/s]")
-        lv_m, = axV.plot([], [], color="darkorange", lw=1.3, label="mass [kg]")
+        # Climb rate and mass differ by orders of magnitude: one axis each.
+        axM = axV.twinx()
+        lv_v, = axV.plot([], [], color="crimson",    lw=1.5)
+        lv_m, = axM.plot([], [], color="darkorange", lw=1.3)
         lt_t, = axT.plot([], [], color="seagreen", lw=1.5)
         cA = axA.axvline(0, color="0.5", lw=0.8, ls=":")
         cV = axV.axvline(0, color="0.5", lw=0.8, ls=":")
@@ -333,10 +339,13 @@ class RocketLiftoffModel(ExtendedKalmanModel):
         axA.set_xlim(0, t[-1]); axA.set_ylim(0, alt_max / 1e3 * 1.12)
         axA.set_ylabel("altitude [km]"); axA.legend(fontsize=7); axA.grid(alpha=0.3)
         axA.set_title("Altitude")
-        v_top = max(truth[:, 1].max(), truth[:, 2].max()) * 1.08
-        axV.set_xlim(0, t[-1]); axV.set_ylim(0, v_top)
-        axV.axhline(self.m_dry, color="0.6", ls=":", lw=0.8)
-        axV.legend(fontsize=7); axV.grid(alpha=0.3); axV.set_title("Climb rate & mass")
+        axV.set_xlim(0, t[-1])
+        axV.set_ylim(min(truth[:, 1].min(), 0.0) * 1.08, truth[:, 1].max() * 1.08)
+        axV.set_ylabel("climb rate [m/s]", color="crimson")
+        axM.set_ylim(0, truth[:, 2].max() / 1e3 * 1.08)
+        axM.set_ylabel("mass [t]", color="darkorange")
+        axM.axhline(self.m_dry / 1e3, color="0.6", ls=":", lw=0.8)
+        axV.grid(alpha=0.3); axV.set_title("Climb rate & mass")
         axT.set_xlim(0, t[-1]); axT.set_ylim(-0.05, twr_all.max() * 1.12)
         axT.axhline(1.0, color="0.6", ls=":", lw=0.8)
         axT.set_xlabel("time [s]"); axT.set_ylabel("T / W")
@@ -360,7 +369,7 @@ class RocketLiftoffModel(ExtendedKalmanModel):
             if la_z is not None:
                 la_z.set_offsets(np.column_stack([t[:k+1], meas[:k+1] / 1e3]))
             lv_v.set_data(t[:k+1], truth[:k+1, 1])
-            lv_m.set_data(t[:k+1], truth[:k+1, 2])
+            lv_m.set_data(t[:k+1], truth[:k+1, 2] / 1e3)
             lt_t.set_data(t[:k+1], twr_all[:k+1])
             for cur in (cA, cV, cT): cur.set_xdata([t[k], t[k]])
             _set_gauge(axG, gbar, self._fuel_frac(m))

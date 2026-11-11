@@ -267,7 +267,7 @@ class PolarizationModel(ExtendedKalmanModel):
         ax_cov = fig.add_subplot(gs[2, 0])
         if Pk.size:
             ax_cov.semilogy(t, np.trace(Pk, axis1=1, axis2=2), color="black", lw=1.2)
-        ax_cov.set_xlabel("Time (s)"); ax_cov.set_ylabel(r"tr($\Gamma_{t|t}$)", fontsize=10)
+        ax_cov.set_xlabel("Time (s)"); ax_cov.set_ylabel(r"tr($P$)", fontsize=10)
         ax_cov.set_title("Posterior covariance trace", fontsize=9); ax_cov.grid(True, alpha=0.25, which="both")
 
         ax_sig = fig.add_subplot(gs[2, 1])

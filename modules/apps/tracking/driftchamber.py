@@ -2,15 +2,16 @@
 Charged-particle tracking detector for the Combinatorial Kalman Filter (CKF).
 
 A pedagogical Belle II–style tracker: a charged particle bends in a uniform axial field
-``Bz`` and is sampled on a stack of **concentric cylindrical layers** (the CDC analogue),
+``Bz`` [T] and is sampled on a stack of **concentric cylindrical layers** (the CDC analogue),
 seen here in the transverse ``x–y`` plane. The trajectory is a circular arc; a "hit" is the
 ``(x, y)`` position where the arc crosses a layer (equivalent to the CDC r–φ measurement at a
 known radius). Because each layer carries **several hits** (signal tracks + background), track
 finding is combinatorial — exactly what :class:`~kalman.framework.filters.ckf.CombinatorialKalmanFilter`
 is for.
 
-* **State** ``x = [x, y, px, py]`` — transverse position and momentum (speed ``|p|`` is
-  conserved by the field, so curvature ``1/R = q·Bz/|p|`` is constant along the arc).
+* **State** ``x = [x, y, px, py]`` — transverse position [cm] and momentum [GeV/c] (``|p|``
+  is conserved by the field, so the curvature ``1/R = 0.3·q·Bz/|p|`` — with ``R`` in metres,
+  ``Bz`` in tesla, ``p`` in GeV/c and ``q`` in units of e — is constant along the arc).
 * **Propagation** ``f(x, t=r_target)`` advances the arc (RK4 in arc length) until it crosses
   radius ``r_target`` — the *next layer*, supplied by the filter via the station tag ``t``.
 * **Measurement** ``h(x) = [x, y]`` — the crossing position (``m = 2``), noise ``R = σ²·I``.
@@ -24,6 +25,10 @@ import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
+
+# Curvature constant: 1/R [1/cm] = KAPPA · q [e] · B [T] / p [GeV/c]. It is the speed of
+# light, 0.299792458 GeV/(T·m), written per centimetre — the "0.3" of p = 0.3·B·R.
+KAPPA = 0.299792458e-2
 
 
 # ---------------------------------------------------------------------------
@@ -63,9 +68,22 @@ class DriftChamberModel(ExtendedKalmanModel):
     The default engine is the **combinatorial** one (track finding); the extended engine is
     also allowed (single-track fit / comparison)::
 
-        model = DriftChamberModel(n_layers=8, Bz=0.05)
+        model = DriftChamberModel(n_layers=8, Bz=1.5)
         event = model.generate_event(n_tracks=3, n_background=4, seed=0)
         tracks = CombinatorialKalmanFilter(model).forward(event.hits, layer_radii=event.radii)
+
+    Defaults are close to the Belle II central drift chamber: a 1.5 T field, layers
+    between 20 cm and 104 cm, and a hit resolution of 130 µm.
+
+    Parameters
+    ----------
+    n_layers, r_inner, r_step : layer count, innermost radius [cm] and layer spacing [cm].
+    Bz        : axial magnetic field [T].
+    q         : particle charge [e].
+    sigma_hit : hit resolution, a standard deviation [cm].
+    p_seed    : momentum guess used when seeding [GeV/c].
+    q_pos, q_mom : process-noise variances per layer, position [cm²] and momentum [(GeV/c)²].
+    step      : RK4 arc-length sub-step [cm].
     """
 
     NAME = "Drift Chamber (transverse tracker)"; VERSION = "1.0"
@@ -78,14 +96,14 @@ class DriftChamberModel(ExtendedKalmanModel):
     @property
     def observables(self): return TrackObservable
 
-    def __init__(self, n_layers=8, r_inner=1.0, r_step=1.0, Bz=0.05, q=+1.0,
-                 sigma_hit=0.05, p_seed=1.0, q_pos=1e-6, q_mom=1e-4,
-                 step=0.02, **kw):
+    def __init__(self, n_layers=8, r_inner=20.0, r_step=12.0, Bz=1.5, q=+1.0,
+                 sigma_hit=0.013, p_seed=1.0, q_pos=1e-6, q_mom=1e-4,
+                 step=0.5, **kw):
         self.dtype = np.float64
-        self.Bz = float(Bz)              # axial field (sets curvature)
-        self.q  = float(q)               # particle charge (fixed for the sample)
+        self.Bz = float(Bz)              # axial field [T] (sets curvature)
+        self.q  = float(q)               # particle charge [e] (fixed for the sample)
         self.sigma_hit = float(sigma_hit)
-        self.p_seed = float(p_seed)      # nominal |p| guess used when seeding
+        self.p_seed = float(p_seed)      # nominal |p| guess used when seeding [GeV/c]
         self._step = float(step)         # RK4 arc-length sub-step (cm)
         self.radii = r_inner + r_step * np.arange(int(n_layers), dtype=float)
 
@@ -100,12 +118,12 @@ class DriftChamberModel(ExtendedKalmanModel):
     #  Dynamics — circular arc in a uniform field, propagated by radius
     # ------------------------------------------------------------------
     def _rhs(self, s):
-        """d(state)/d(arc length): unit-speed motion whose momentum rotates at q·Bz/|p|."""
+        """d(state)/d(arc length): unit-speed motion whose momentum rotates at KAPPA·q·Bz/|p|."""
         x, y, px, py = s
         p = np.hypot(px, py)
         if p == 0.0:
             return np.zeros(4)
-        c = self.q * self.Bz / p
+        c = KAPPA * self.q * self.Bz / p
         return np.array([px / p, py / p, c * py, -c * px])
 
     def _rk4(self, s, dl):

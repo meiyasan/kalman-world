@@ -39,7 +39,7 @@ class TestTrackingModel(unittest.TestCase):
         self.assertEqual(m.h(xp).shape, (2, 1))
 
     def test_propagation_lands_on_radius(self):
-        m = DriftChamberModel(n_layers=8, Bz=0.05)
+        m = DriftChamberModel(n_layers=8, Bz=1.5)
         s = np.array([0.0, 0.0, 1.0, 0.3])
         for r in m.radii:
             s = m.propagate_to_radius(s, float(r))
@@ -57,7 +57,7 @@ class TestTrackingModel(unittest.TestCase):
 class TestGate(unittest.TestCase):
 
     def test_gate_separates_on_and_off_track(self):
-        m = DriftChamberModel(n_layers=8, Bz=0.05)
+        m = DriftChamberModel(n_layers=8, Bz=1.5)
         ev = m.generate_event(n_tracks=1, n_background=0, seed=3)
         eng = CombinatorialKalmanEngine()
         x0, P0 = m.seed_state(ev.hits[0][0])
@@ -78,7 +78,7 @@ class TestGate(unittest.TestCase):
 class TestCKFFinding(unittest.TestCase):
 
     def test_clean_event_recovers_every_track(self):
-        m = DriftChamberModel(n_layers=8, Bz=0.05)
+        m = DriftChamberModel(n_layers=8, Bz=1.5)
         ev = m.generate_event(n_tracks=3, n_background=0, efficiency=1.0, seed=2)
         ckf = CombinatorialKalmanFilter(m, max_candidates=8, min_hits=4)
         tracks = ckf.forward(ev.hits, layer_radii=ev.radii)
@@ -92,7 +92,7 @@ class TestCKFFinding(unittest.TestCase):
     def test_multitrack_with_background(self):
         # All three signal tracks recovered despite background, across several events.
         for seed in range(5):
-            m = DriftChamberModel(n_layers=8, Bz=0.05)
+            m = DriftChamberModel(n_layers=8, Bz=1.5)
             ev = m.generate_event(n_tracks=3, n_background=4, seed=seed)
             ckf = CombinatorialKalmanFilter(m, max_candidates=8, min_hits=4)
             ckf.forward(ev.hits, layer_radii=ev.radii)
@@ -100,7 +100,7 @@ class TestCKFFinding(unittest.TestCase):
             self.assertTrue(set(range(3)).issubset(found), f"seed {seed}: found {found}")
 
     def test_arbitration_yields_disjoint_tracks(self):
-        m = DriftChamberModel(n_layers=8, Bz=0.05)
+        m = DriftChamberModel(n_layers=8, Bz=1.5)
         ev = m.generate_event(n_tracks=3, n_background=4, seed=0)
         ckf = CombinatorialKalmanFilter(m, max_candidates=8, min_hits=4, shared_hit_frac=0.0)
         ckf.forward(ev.hits, layer_radii=ev.radii)
@@ -113,7 +113,7 @@ class TestCKFFinding(unittest.TestCase):
     def test_pure_background_makes_no_full_length_track(self):
         # No genuine track exists; requiring (almost) all layers rejects random background.
         for seed in range(5):
-            m = DriftChamberModel(n_layers=8, Bz=0.05)
+            m = DriftChamberModel(n_layers=8, Bz=1.5)
             ev = m.generate_event(n_tracks=0, n_background=5, seed=seed)
             ckf = CombinatorialKalmanFilter(m, max_candidates=8, min_hits=7)
             tracks = ckf.forward(ev.hits, layer_radii=ev.radii)
@@ -126,7 +126,7 @@ class TestCKFFinding(unittest.TestCase):
 class TestCKFSmooth(unittest.TestCase):
 
     def test_backward_runs_and_is_finite(self):
-        m = DriftChamberModel(n_layers=8, Bz=0.05)
+        m = DriftChamberModel(n_layers=8, Bz=1.5)
         ev = m.generate_event(n_tracks=2, n_background=3, seed=1)
         ckf = CombinatorialKalmanFilter(m, min_hits=4)
         ckf.forward(ev.hits, layer_radii=ev.radii)

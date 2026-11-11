@@ -64,8 +64,8 @@ class CalorimeterObservable3(KalmanObservable):
 MATERIALS = {
     # key: X0_mm (radiation length), lambda_int_mm (nuclear), label, sigma_s (sampling res.)
     "lyso":       {"X0_mm":  11.4, "lambda_int_mm": 210.0, "label": "LYSO",              "sigma_s": 0.020},
-    "pwo":        {"X0_mm":   8.9, "lambda_int_mm": 200.0, "label": "PbWO₄",        "sigma_s": 0.015},
-    "wsi":        {"X0_mm":   3.5, "lambda_int_mm":  96.0, "label": "W/Si",              "sigma_s": 0.015},
+    "pwo":        {"X0_mm":   8.9, "lambda_int_mm": 200.0, "label": "PbWO₄",        "sigma_s": 0.028},
+    "wsi":        {"X0_mm":   3.5, "lambda_int_mm":  96.0, "label": "W/Si",              "sigma_s": 0.17},
     "pb":         {"X0_mm":   5.6, "lambda_int_mm": 194.0, "label": "Lead",              "sigma_s": None},
     "fe":         {"X0_mm":  17.6, "lambda_int_mm": 168.0, "label": "Iron",              "sigma_s": None},
     "w":          {"X0_mm":   3.5, "lambda_int_mm":  96.0, "label": "Tungsten",          "sigma_s": None},
@@ -74,7 +74,7 @@ MATERIALS = {
     # SiPM-on-tile: 25 cm² hexagonal tiles (≈53 mm flat-to-flat, 3 mm thick)
     # Same bulk physics as scint, but hex cell_shape for drawing and better pos resolution
     "scint_tile": {"X0_mm": 400.0, "lambda_int_mm": 700.0, "label": "SiPM-on-Tile",     "sigma_s": 0.50},
-    "si":         {"X0_mm":  93.7, "lambda_int_mm": 465.0, "label": "Silicon",           "sigma_s": 0.05},
+    "si":         {"X0_mm":  93.7, "lambda_int_mm": 465.0, "label": "Silicon",           "sigma_s": 0.17},
     "air":        {"X0_mm": 3.04e5,"lambda_int_mm":7.49e5, "label": "Air",               "sigma_s": None},
 }
 
@@ -223,11 +223,17 @@ class CalorimeterGeometry:
 
     @property
     def moliere_mm(self) -> float:
-        """Mean Molière radius of active layers [mm]."""
-        if not self._active_layers:
+        """Effective Molière radius of the whole stack [mm].
+
+        A shower spreads in every layer it crosses, absorber included, so the layers
+        combine like the mass fractions of a mixture, ``1/R_M = Σ w_i / R_M,i``. With
+        lengths in mm this is the thickness-weighted harmonic mean over all layers.
+        """
+        if not self._layers:
             return 20.
-        return float(np.mean([moliere_radius_mm(l.material)
-                               for l in self._active_layers]))
+        total = sum(l.thickness_mm for l in self._layers)
+        return float(total / sum(l.thickness_mm / moliere_radius_mm(l.material)
+                                 for l in self._layers))
 
     @property
     def sigma_t_em_mm(self) -> float:

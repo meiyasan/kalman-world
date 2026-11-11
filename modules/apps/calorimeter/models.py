@@ -163,9 +163,12 @@ class _CaloEnergyModel(_CaloBase):
 
     def __init__(self, sensor_id, z_layers, R_xy_layers, E_layers, E_seed, *,
                  sigma_t=1e-4, sigma_cell=5.0, sigma_sampling=0.02,
-                 sigma_noise=1e-4, sigma_E_state=1e-3, x0=None, P0=None, **kw):
+                 sigma_noise=1e-4, sigma_E_state=1e-3, z_start=0.0,
+                 x0=None, P0=None, **kw):
 
         self._z_k    = np.asarray(z_layers, dtype=float)
+        self._z_start = float(z_start)     # z of the calorimeter front face [mm]
+        self._meas   = kw.pop("meas", None)
         N            = len(self._z_k)
         self._R_xy   = self._add_floor(R_xy_layers, sigma_cell)
         self._E_k    = np.asarray(E_layers, dtype=float)
@@ -179,8 +182,10 @@ class _CaloEnergyModel(_CaloBase):
         dz = np.diff(self._z_k)
         self._dz_layers = np.append(dz, dz[-1])
 
+        # The shower profile is a function of the depth inside the calorimeter,
+        # not of the absolute z.
         self._f_k = self._profile_fractions(
-            self._z_k, self._dz_layers, self._E_seed,
+            self._z_k - self._z_start, self._dz_layers, self._E_seed,
             **self._profile_kwargs(kw))
 
         meas_xy = kw.pop("meas_xy", None)
@@ -242,6 +247,22 @@ class _CaloEnergyModel(_CaloBase):
     def inprocess(self, xk_hat, **kw):   return xk_hat
     def postprocess(self, zk_hat, **kw): return zk_hat
 
+    def reconstruct(self, meas=None) -> dict:
+        """Filter forward through the layers, smooth backward, and return the estimate at
+        the first layer (see :meth:`extract_smoothed`). ``meas`` defaults to the per-layer
+        measurements of the hits the model was built from."""
+        meas = self._meas if meas is None else meas
+        if meas is None:
+            raise ValueError("No measurements: build the model with from_hits() or pass meas.")
+        self._engine.forward(meas)
+        self._engine.backward()
+        return self.extract_smoothed()
+
+    @property
+    def smoothed_states(self):
+        """The smoothed ``(x, P)`` per layer, after :meth:`reconstruct`."""
+        return self._engine.smooth
+
     def extract_smoothed(self) -> dict:
         """Return {x0, y0, tx, ty, E, P, theta_rad, phi_rad, chi2_dof}."""
         eng = self._engine
@@ -290,7 +311,7 @@ class _CaloEnergyModel(_CaloBase):
     @classmethod
     def from_hits(cls, sensor_id, hits, **kw):
         z, R, m = build_measurements(hits)
-        return cls(sensor_id, z, R, m[:, 2], m[:, 2].sum(), meas_xy=m[:, :2], **kw)
+        return cls(sensor_id, z, R, m[:, 2], m[:, 2].sum(), meas_xy=m[:, :2], meas=m, **kw)
 
     @classmethod
     def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
@@ -325,6 +346,7 @@ class CalorimeterElectromagneticModel(_CaloEnergyModel):
     @classmethod
     def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
         kw.setdefault("X0_mm", geometry.X0_eff_mm)
+        kw.setdefault("z_start", geometry._z_start)
         kw.setdefault("sigma_sampling", geometry.sigma_sampling_em)
         kw.setdefault("sigma_cell",
                       geometry._active_layers[0].cell_size_mm / (12 ** 0.5)
@@ -352,6 +374,7 @@ class CalorimeterHadronicModel(_CaloEnergyModel):
     @classmethod
     def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
         kw.setdefault("lambda_mm", geometry.lambda_eff_mm)
+        kw.setdefault("z_start", geometry._z_start)
         kw.setdefault("sigma_sampling", geometry.sigma_sampling_had)
         kw.setdefault("sigma_cell",
                       geometry._active_layers[0].cell_size_mm / (12 ** 0.5)
@@ -363,8 +386,8 @@ class CalorimeterHadronicModel(_CaloEnergyModel):
 
 ECAL_PRESETS = {
     "lyso": dict(X0_mm=11.4, Ec_GeV=0.010, sigma_sampling=0.020),
-    "pwo":  dict(X0_mm= 8.9, Ec_GeV=0.009, sigma_sampling=0.015),
-    "wsi":  dict(X0_mm= 3.5, Ec_GeV=0.008, sigma_sampling=0.015),
+    "pwo":  dict(X0_mm= 8.9, Ec_GeV=0.009, sigma_sampling=0.028),
+    "wsi":  dict(X0_mm= 3.5, Ec_GeV=0.008, sigma_sampling=0.17),
 }
 HCAL_PRESETS = {
     "fe_scint": dict(lambda_mm=168.0, sigma_sampling=0.50),

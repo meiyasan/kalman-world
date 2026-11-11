@@ -113,9 +113,12 @@ class CalorimeterSampler:
             if E_dep < 1e-9:
                 continue
 
-            # Sampling fluctuation at layer level (not cell level → no bias)
+            # Sampling fluctuation at layer level: a gamma draw with mean E_dep and
+            # variance σ_s²·E_dep, so the layers add up to σ_E/E = σ_s/√E. It is never
+            # negative, where a Gaussian would have to be clipped at zero and a small
+            # deposit (σ_s·√E_dep > E_dep) would come out too large on average.
             if sigma_s > 0 and E_dep > 1e-9:
-                E_dep = max(0., E_dep * (1. + rng.normal(0, sigma_s / np.sqrt(E_dep))))
+                E_dep = float(rng.gamma(E_dep / sigma_s ** 2, sigma_s ** 2))
             if E_dep < E_threshold_GeV * 0.01:
                 continue
 

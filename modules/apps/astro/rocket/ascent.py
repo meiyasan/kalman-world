@@ -53,8 +53,9 @@ class RocketAscentModel(ExtendedKalmanModel):
     """
     Planar **guided** powered ascent from Earth's surface (the steering/guidance model).
 
-    State ``x = [x, y, vx, vy]``; **control** ``u = [ax, ay]`` is the thrust acceleration
-    (km/s²), so this model has ``l = 2`` control channels. Dynamics: central gravity +
+    State ``x = [x, y, vx, vy]`` in Mm and km/s, in Earth-centred axes; **control**
+    ``u = [ax, ay]`` is the thrust acceleration in Mm/ks², which is m/s², so this model has
+    ``l = 2`` control channels. Dynamics: central gravity +
     thrust (+ optional exponential-atmosphere drag). A radar measures position only.
 
     The distinguishing trait is the **2-D control input**: the thrust program is fed in,
@@ -81,7 +82,11 @@ class RocketAscentModel(ExtendedKalmanModel):
         self.fs = 1.0 / self._dt
         Q = np.diag([q_pos, q_pos, q_vel, q_vel]).astype(float)
         R = (track_km * KM) ** 2 * np.eye(2)
-        super().__init__("LAUNCH", Q=Q, R=R, fs=self.fs, **kw)
+        # L = I: Q enters additively on every state. f() does not route an
+        # additive `w` through, so without it the engine would difference f with
+        # respect to w, find no sensitivity, and multiply Q by a zero matrix at
+        # every prediction.
+        super().__init__("LAUNCH", Q=Q, R=R, L=np.eye(self.n), fs=self.fs, **kw)
 
     def acceleration(self, r, v, u):
         a = -GM_EARTH * r / np.linalg.norm(r) ** 3            # gravity
