@@ -173,7 +173,10 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         # --- main loop (engine does predict + masked update); a constant-matrix
         # linear model with no control callback can run the whole pass fused in C ---
-        if self._native_forward_eligible(uk_fn):
+        twin = self._native_twin(uk_fn)
+        if twin is not None:
+            self._forward_twin(twin, zk, uk)
+        elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         else:
             t = float(self.model.t0) if self.model.t0 is not None else 0.0
@@ -205,6 +208,51 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
                 t += dt
 
         return self.get_record(indexing=indexing, inprocess=inprocess, postprocess=postprocess) if record else self
+
+    # ------------------------------------------------------------------
+    # A model with a C++ twin (libKalmanApps): the whole pass — the model's
+    # f/h, its Jacobians and the EKF steps — runs in Kalman::Filter, in one
+    # call. Only the plain extended engine qualifies: a subclass or another
+    # engine kind keeps the Python loop.
+    # ------------------------------------------------------------------
+    def _native_twin(self, uk_fn):
+        if uk_fn is not None:
+            return None
+        handle_of = getattr(self._model, "native_handle", None)
+        if handle_of is None:
+            return None
+        from .engines.extended import ExtendedKalmanEngine
+        if type(self.engine) is not ExtendedKalmanEngine:
+            return None
+        return handle_of()
+
+    def _forward_twin(self, handle, zk, uk):
+        from .native import core
+        from .native import as_contiguous
+
+        model = self._model
+        n, m = model.n, model.m
+        N = len(zk)
+        lib = core.lib
+
+        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))
+        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))
+        core.check(lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+        core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+        core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0),
+                   "set_t0")
+
+        out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
+
+        self.measurement.extend(as_contiguous(zk))
+        self.control.extend(as_contiguous(uk))
+        self.prior.extend((out["x_prior"][k].reshape(n, 1), out["P_prior"][k]) for k in range(N))
+        self.posterior.extend((out["x_post"][k].reshape(n, 1), out["P_post"][k]) for k in range(N))
+        self.transition.extend(out["transitions"][k] for k in range(N))
+        self.innovation.extend(out["innovations"][k].reshape(m, 1) for k in range(N))
+
+        self.x = out["x_post"][-1].reshape(n, 1)
+        self.P = out["P_post"][-1]
 
     # ------------------------------------------------------------------
     # C-accelerated fast path (constant-matrix linear model, no control
@@ -298,13 +346,19 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         return self.get_record(smooth=True, **kwargs)
 
     # ------------------------------------------------------------------
-    # C-accelerated RTS smoother: valid whenever the transition matrix is
+    # C-accelerated RTS smoother: valid only when the transition matrix is
     # constant across the run (so a single F applies to every step), which
-    # is the only assumption ``kf_backward_rts`` makes.
+    # is the one assumption ``kf_backward_rts`` makes. That is checked on the
+    # transitions the forward pass recorded, not on how the model declares F:
+    # a nonlinear model has no stored F at all, and its Jacobian changes at
+    # every step.
     # ------------------------------------------------------------------
     def _native_backward_eligible(self) -> bool:
         from .native import HAS_C_ACCEL
-        return HAS_C_ACCEL and not callable(self._model._F)
+        if not HAS_C_ACCEL or not self.transition:
+            return False
+        first = self.transition[0]
+        return all(F is first for F in self.transition)
 
     def _backward_native(self, N):
         from .native import lib, as_contiguous, dptr

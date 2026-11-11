@@ -15,10 +15,10 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 | 2 | [Installation](2_Installation.md) | Environments, extras, native acceleration, Docker |
 | 3 | [Overview](3_Overview.md) | Architecture: the seven roles and how they compose |
 | 4 | [Models](4_Models.md) | The three ways to define a system; the model catalog |
-| 5 | [Filters and Diagnostics](5_Filters-and-Diagnostics.md) | KF/EKF/UKF/PF/EnKF/CKF/IMM — which one, and is it healthy |
+| 5 | [Filters and Diagnostics](5_Filters-and-Diagnostics.md) | KF/EKF/UKF/PF/EnKF/CKF/IKF — which one, and is it healthy |
 | 6 | [Integrators and Solvers](6_Integrators-and-Solvers.md) | Time stepping, spatial discretization, GPU backends, customization |
 | 7 | [Providers](7_Providers.md) | Where the data comes from: synthetic, file, sensor, remote, ERA5 |
-| 8 | [Control and Routing](8_Control-and-Routing.md) | Closed-loop controllers and IMM model routing |
+| 8 | [Control and Routing](8_Control-and-Routing.md) | Closed-loop controllers and IKF model routing |
 
 ## For API access
 

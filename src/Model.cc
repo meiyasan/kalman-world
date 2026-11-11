@@ -275,6 +275,49 @@ namespace Kalman
         if (hx.Size() != fNMeasure) ShapeError("h(x, t)", hx.Size(), 1, fNMeasure, 1);
     }
 
+    void Model::DeclareParameter(const std::string &name, double value)
+    {
+        if (name.empty()) throw std::invalid_argument("Kalman::Model: a parameter needs a name.");
+        fParameters[name] = value;
+    }
+
+    std::vector<std::string> Model::ParameterNames() const
+    {
+        std::vector<std::string> names;
+        names.reserve(fParameters.size());
+        for (const auto &entry : fParameters) names.push_back(entry.first);   // std::map: sorted
+        return names;
+    }
+
+    namespace
+    {
+        [[noreturn]] void UnknownParameter(const Model &model, const std::string &name)
+        {
+            std::ostringstream os;
+            os << "Kalman::Model '" << model.Name() << "' has no parameter '" << name << "'; it declares";
+            const std::vector<std::string> names = model.ParameterNames();
+            if (names.empty()) os << " none";
+            for (std::size_t i = 0; i < names.size(); ++i) os << (i ? ", " : " ") << names[i];
+            os << '.';
+            throw std::out_of_range(os.str());
+        }
+    }
+
+    double Model::Parameter(const std::string &name) const
+    {
+        const auto it = fParameters.find(name);
+        if (it == fParameters.end()) UnknownParameter(*this, name);
+        return it->second;
+    }
+
+    void Model::SetParameter(const std::string &name, double value)
+    {
+        const auto it = fParameters.find(name);
+        if (it == fParameters.end()) UnknownParameter(*this, name);
+        it->second = value;
+        ParametersChanged();
+    }
+
     std::string Model::Describe() const
     {
         std::ostringstream os;

@@ -2,7 +2,8 @@
 
 A modular Python framework for Kalman-family estimation — linear (KF), extended
 (EKF), unscented (UKF), particle (PF), ensemble (EnKF), combinatorial (CKF) and
-interacting-multiple-model (IMM) — with composable multi-sensor models, 46 domain
+interactive (IKF, the Interacting Multiple Model or IMM of
+the literature) — with composable multi-sensor models, 46 domain
 applications, and one JSON API exposed over REST and MCP.
 
 ## Documentation
@@ -107,7 +108,7 @@ Each is a thin `KalmanFilter` leaf binding the matching engine
 | `ParticleFilter` | bootstrap / SIR particle filter | no |
 | `EnsembleKalmanFilter` | perturbed-observation EnKF, for fields and grids | no |
 | `CombinatorialKalmanFilter` | branch-and-prune track *finding* | yes |
-| `InteractiveKalmanFilter` | IMM over a bank of models, pluggable routing | per-model |
+| `InteractiveKalmanFilter` | IKF over a bank of models, pluggable routing | per-model |
 
 ---
 

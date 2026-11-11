@@ -1,6 +1,6 @@
-"""KalmanRouter — base contract for IMM model routing.
+"""KalmanRouter — base contract for IKF model routing.
 
-A router maps the per-step IMM quantities to updated mode probabilities::
+A router maps the per-step IKF quantities to updated mode probabilities::
 
     mu = router(nis_arr, c, likelihoods)
 
@@ -31,7 +31,7 @@ Returns
 mu : ndarray (M,)
     Updated mode probabilities.  Non-negative and summing to 1.
 
-Anatomy of one IMM step::
+Anatomy of one IKF step::
 
     ┌─────────────────────────────────────────────────────┐
     │ 1. Markov prediction:  c_j = Σ_i Π[i,j] μ_i        │
@@ -50,7 +50,7 @@ import numpy as np
 
 
 class KalmanRouter(ABC):
-    """Abstract base for IMM model routers.
+    """Abstract base for IKF model routers.
 
     Subclass contract:
 
@@ -96,7 +96,7 @@ class KalmanRouter(ABC):
         Parameters
         ----------
         nis_arrays : list of ndarray (T_i, M)
-            NIS history per training scenario (Bayesian-IMM run).
+            NIS history per training scenario (Bayesian-IKF run).
         labels_arrays : list of int ndarray (T_i,)
             True regime index 0 … M−1 at every step.
         """

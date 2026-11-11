@@ -1,4 +1,4 @@
-"""Interacting Multiple Model (IMM) filter.
+"""Interactive Kalman Filter (IKF) — the Interacting Multiple Model (IMM) filter of the literature.
 
 Pluggable routing — swap the router without touching the filter::
 
@@ -26,7 +26,7 @@ from ..routers.bayesian import BayesianRouter
 
 
 class InteractiveKalmanFilter:
-    """Multiple models interact to handle regime switching (IMM filter).
+    """Multiple models interact to handle regime switching (IKF filter).
 
     Runs M ``KalmanFilter`` instances in parallel — one per operating regime.
     At every step:
@@ -46,11 +46,11 @@ class InteractiveKalmanFilter:
         Prior mode probabilities.  Default: uniform.
     router : KalmanRouter or callable, optional
         Any callable ``(nis_arr, c, likelihoods) → mu`` or ``KalmanRouter``
-        instance.  Default: ``BayesianRouter()`` (classical IMM).
+        instance.  Default: ``BayesianRouter()`` (classical IKF).
     """
 
     NAME        = "Interactive Kalman Filter"
-    DESCRIPTION = "IMM — interacting multiple model filter for regime switching."
+    DESCRIPTION = "IKF — runs several models and switches between regimes (the IMM of the literature)."
 
     def __init__(self, models, transition, initial_probs=None, *, router=None):
         self.M_count = len(models)

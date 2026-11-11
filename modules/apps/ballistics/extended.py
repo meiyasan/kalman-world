@@ -6,10 +6,11 @@ constant-acceleration KF variant.
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeTwin
 from .base import BallisticState, BallisticObservable, BallisticNoise, ApexEstimate, ImpactEstimate
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
-class BallisticModel(ExtendedKalmanModel):
+class BallisticModel(NativeTwin, ExtendedKalmanModel):
     """
     Nonlinear 3D ballistic model with explicit gravity (G*M),
     aerodynamic drag, thrust input, and internally computed Q/R matrices.
@@ -95,6 +96,20 @@ class BallisticModel(ExtendedKalmanModel):
         self.add_sensor("X")
         self.add_sensor("Y")
         self.add_sensor("Z")
+
+    # ----------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
+    # speed-dependent Q, a thrust control and a user-supplied f/h stay in Python.
+    # ----------------------------------------------------------------------
+    def native_name(self):
+        if self._drag_uncertainty is not None:
+            return None
+        return {3: "ballistic", 2: "ballistic-order2"}.get(self.order)
+
+    def native_parameters(self):
+        g = self["g"]
+        return {"c_drag": self["c_drag"], "m": self["m"], "G": self["G"], "M": self["M"],
+                "g": 0.0 if g is None else g, "surface_gravity": 0.0 if g is None else 1.0}
 
     # ----------------------------------------------------------------------
     # Process noise covariance generator (internal)

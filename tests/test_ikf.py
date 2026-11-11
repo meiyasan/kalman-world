@@ -1,4 +1,4 @@
-"""Tests for InteractiveKalmanFilter and the full IMM pipeline."""
+"""Tests for InteractiveKalmanFilter and the full IKF pipeline."""
 import sys
 import unittest
 import numpy as np
@@ -175,7 +175,7 @@ class TestRoutingAccuracy(unittest.TestCase):
         return acc
 
     def test_bayesian_accuracy_high(self):
-        # Classical IMM should reach ≥85% on clean Gaussian data
+        # Classical IKF should reach ≥85% on clean Gaussian data
         acc = self._run(BayesianRouter())
         self.assertGreater(acc, 0.85, f"Bayesian accuracy {acc:.1%} too low")
 

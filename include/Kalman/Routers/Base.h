@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Routers::Router
- * \brief Decides *which model is right now* — the IMM decision layer.
+ * \brief Decides *which model is right now* — the IKF decision layer.
  *
  * \details When one model cannot describe a system across all of its regimes —
  * a manoeuvring target, a storm that recurves, a suspension that goes nonlinear
@@ -28,7 +28,7 @@
  * \param likelihoods  `(M)` Gaussian innovation likelihood `L_j = N(nu_j; 0, S_j)`.
  * \return             `(M)` updated mode probabilities: non-negative, summing to 1.
  *
- * One IMM step, with the router as the only pluggable part:
+ * One IKF step, with the router as the only pluggable part:
  *
  * \code{.unparsed}
  *   1. Markov prediction   c_j = sum_i Pi(i,j) mu_i
@@ -38,7 +38,7 @@
  *   5. Combination         x = sum_j mu_j x_j
  * \endcode
  *
- * Kalman::Filters::IMM passes those three quantities and never looks inside.
+ * Kalman::Filters::IKF passes those three quantities and never looks inside.
  * Implementations here mirror `modules/framework/routers/` one for one:
  * Kalman::Routers::Bayesian (classical), Kalman::Routers::Threshold (rule-based),
  * Kalman::Routers::Hybrid (a blend) and Kalman::Routers::Neural (a policy
@@ -76,7 +76,7 @@ namespace Kalman::Routers
              *
              * The floor matters: a mode that reaches exactly zero can never recover,
              * because every subsequent update multiplies it by something finite. An
-             * IMM that has written off a regime cannot switch back to it.
+             * IKF that has written off a regime cannot switch back to it.
              */
             static Vector Normalise(Vector mu);
 

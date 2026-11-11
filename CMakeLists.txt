@@ -230,9 +230,18 @@ if(BUILD_LIBRARY)
             FILES_MATCHING PATTERN "*.h")
     install(FILES "${CMAKE_BINARY_DIR}/include/Kalman/Config.h" DESTINATION include/Kalman)
 
+    # libKalmanApps: the application models, beside the library that defines
+    # their contracts. Before the tests, which link it.
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/apps/CMakeLists.txt)
+        add_subdirectory("apps")
+    endif()
+
     if(CMAKE_MAINPROJECT)
 
         add_custom_target(lib DEPENDS ${LIBRARY} COMMENT "Compiling library")
+        if(TARGET KalmanApps)
+            add_dependencies(lib KalmanApps)
+        endif()
 
         # The C++ tests live in tests/cxx so that `tests/` stays the pytest suite;
         # they are driven by ctest (`make ctests`), not by `make tests`.

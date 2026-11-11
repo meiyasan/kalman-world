@@ -1,14 +1,14 @@
 /**
  * *********************************************
  *
- * \file IMM.cc
- * \brief Implementation of the Kalman::Filters::IMM class
+ * \file IKF.cc
+ * \brief Implementation of the Kalman::Filters::IKF class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Filters/IMM.h"
+#include "Kalman/Filters/IKF.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Engines/Combinatorial.h"
@@ -32,34 +32,34 @@ namespace Kalman::Filters
                 case EngineKind::Extended:  return std::make_unique<Engines::Extended>();
                 case EngineKind::Unscented: return std::make_unique<Engines::Unscented>();
                 case EngineKind::Combinatorial: return std::make_unique<Engines::Combinatorial>();
-                // Particle and Ensemble are deliberately absent: the IMM mixing step
+                // Particle and Ensemble are deliberately absent: the IKF mixing step
                 // hands each mode a Gaussian (x, P) to predict from, and a sample-set
                 // engine ignores that argument -- the modes would silently decouple.
                 default: break;
             }
             std::ostringstream os;
-            os << "Kalman::Filters::IMM: no C++ engine implements the '" << ToString(kind)
+            os << "Kalman::Filters::IKF: no C++ engine implements the '" << ToString(kind)
                << "' kind requested by one of the modes.";
             throw std::runtime_error(os.str());
         }
     }
 
-    IMM::IMM(const std::vector<Model *> &models, const Matrix &Pi, const Routers::Router *router)
+    IKF::IKF(const std::vector<Model *> &models, const Matrix &Pi, const Routers::Router *router)
         : fModels(models), fPi(Pi)
     {
         const std::size_t M = fModels.size();
-        if (M < 2) throw std::runtime_error("Kalman::Filters::IMM: at least two models are required.");
+        if (M < 2) throw std::runtime_error("Kalman::Filters::IKF: at least two models are required.");
         if (Pi.Rows() != M || Pi.Cols() != M)
         {
             std::ostringstream os;
-            os << "Kalman::Filters::IMM: Pi has shape (" << Pi.Rows() << ", " << Pi.Cols()
+            os << "Kalman::Filters::IKF: Pi has shape (" << Pi.Rows() << ", " << Pi.Cols()
                << "), expected (" << M << ", " << M << ").";
             throw std::runtime_error(os.str());
         }
 
         for (std::size_t i = 0; i < M; ++i)
         {
-            if (!fModels[i]) throw std::runtime_error("Kalman::Filters::IMM: a model is null.");
+            if (!fModels[i]) throw std::runtime_error("Kalman::Filters::IKF: a model is null.");
             fModels[i]->CheckShapes();
 
             // Mixing averages states across modes, so it is only meaningful when every
@@ -68,7 +68,7 @@ namespace Kalman::Filters
                 fModels[i]->NMeasure() != fModels[0]->NMeasure())
             {
                 std::ostringstream os;
-                os << "Kalman::Filters::IMM: model '" << fModels[i]->Name() << "' has (n, m) = ("
+                os << "Kalman::Filters::IKF: model '" << fModels[i]->Name() << "' has (n, m) = ("
                    << fModels[i]->NState() << ", " << fModels[i]->NMeasure() << ") but '"
                    << fModels[0]->Name() << "' has (" << fModels[0]->NState() << ", "
                    << fModels[0]->NMeasure() << "). Every mode must share both.";
@@ -86,13 +86,13 @@ namespace Kalman::Filters
             for (std::size_t j = 0; j < M; ++j)
             {
                 if (Pi(i, j) < 0.)
-                    throw std::runtime_error("Kalman::Filters::IMM: Pi has a negative entry.");
+                    throw std::runtime_error("Kalman::Filters::IKF: Pi has a negative entry.");
                 row += Pi(i, j);
             }
             if (std::abs(row - 1.) > 1e-9)
             {
                 std::ostringstream os;
-                os << "Kalman::Filters::IMM: row " << i << " of Pi sums to " << row
+                os << "Kalman::Filters::IKF: row " << i << " of Pi sums to " << row
                    << ", expected 1.";
                 throw std::runtime_error(os.str());
             }
@@ -108,13 +108,13 @@ namespace Kalman::Filters
         Reset();
     }
 
-    void IMM::SetRouter(const Routers::Router *router)
+    void IKF::SetRouter(const Routers::Router *router)
     {
-        if (!router) throw std::runtime_error("Kalman::Filters::IMM: the router must not be null.");
+        if (!router) throw std::runtime_error("Kalman::Filters::IKF: the router must not be null.");
         fRouter = router;
     }
 
-    void IMM::Reset()
+    void IKF::Reset()
     {
         const std::size_t M = fModels.size();
 
@@ -134,14 +134,14 @@ namespace Kalman::Filters
         fTime.clear();
     }
 
-    void IMM::SetModeProbabilities(const Vector &mu)
+    void IKF::SetModeProbabilities(const Vector &mu)
     {
         if (mu.Size() != fModels.size())
-            throw std::runtime_error("Kalman::Filters::IMM: mu must have one entry per model.");
+            throw std::runtime_error("Kalman::Filters::IKF: mu must have one entry per model.");
         fMu = Routers::Router::Normalise(mu);
     }
 
-    double IMM::Likelihood(const Vector &nu, const Matrix &S)
+    double IKF::Likelihood(const Vector &nu, const Matrix &S)
     {
         const std::size_t m = nu.Size();
         if (m == 0) return 1.;                       // nothing measured: no evidence either way
@@ -171,9 +171,9 @@ namespace Kalman::Filters
         return std::max(std::exp(logL), 1e-300);
     }
 
-    Record IMM::Forward(const std::vector<Vector> &zk)
+    Record IKF::Forward(const std::vector<Vector> &zk)
     {
-        if (zk.empty()) throw std::runtime_error("Kalman::Filters::IMM::Forward: no measurements given.");
+        if (zk.empty()) throw std::runtime_error("Kalman::Filters::IKF::Forward: no measurements given.");
 
         const std::size_t M = fModels.size();
         const std::size_t m = fModels[0]->NMeasure();
@@ -196,7 +196,7 @@ namespace Kalman::Filters
             if (zk[k].Size() != m)
             {
                 std::ostringstream os;
-                os << "Kalman::Filters::IMM::Forward: measurement " << k << " has "
+                os << "Kalman::Filters::IKF::Forward: measurement " << k << " has "
                    << zk[k].Size() << " channels, expected " << m << ".";
                 throw std::runtime_error(os.str());
             }
@@ -207,7 +207,7 @@ namespace Kalman::Filters
                 for (std::size_t i = 0; i < M; ++i) c(j) += fPi(i, j) * fMu(i);
 
             // --- 2. Mixing: every mode starts from a blend of all modes ----
-            // This is what separates an IMM from M independent filters: a mode that
+            // This is what separates an IKF from M independent filters: a mode that
             // becomes relevant inherits the state the others built up.
             std::vector<Vector> xMix(M);
             std::vector<Matrix> pMix(M);
@@ -312,17 +312,17 @@ namespace Kalman::Filters
             t += dt;
         }
 
-        Record record("imm", StateFlavor::Posterior);
+        Record record("ikf", StateFlavor::Posterior);
         record.Reserve(N);
         for (std::size_t k = 0; k < N; ++k)
             record.Add(fTime[k], fCombined[k], fCombinedP[k], zk[k]);
         return record;
     }
 
-    std::size_t IMM::DominantMode(std::size_t k) const
+    std::size_t IKF::DominantMode(std::size_t k) const
     {
         if (k >= fModeHistory.Rows())
-            throw std::out_of_range("Kalman::Filters::IMM::DominantMode: step out of range.");
+            throw std::out_of_range("Kalman::Filters::IKF::DominantMode: step out of range.");
 
         std::size_t best = 0;
         for (std::size_t j = 1; j < fModeHistory.Cols(); ++j)

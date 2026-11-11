@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Routers::Bayesian
- * \brief The classical IMM update: `mu_j ∝ c_j · L_j`.
+ * \brief The classical IKF update: `mu_j ∝ c_j · L_j`.
  *
  * \details Combines the Markov transition prior with the Gaussian innovation
  * likelihood — Bayes' theorem, nothing more. Optimal when every model is a
@@ -34,7 +34,7 @@ namespace Kalman::Routers
         public:
             const char *Title() const override { return "Bayesian Router"; }
             const char *Description() const override
-            { return "Classical IMM mode update: mu proportional to c * likelihood."; }
+            { return "Classical IKF mode update: mu proportional to c * likelihood."; }
 
             Vector Route(const Matrix &nis, const Vector &c,
                          const Vector &likelihoods) const override;

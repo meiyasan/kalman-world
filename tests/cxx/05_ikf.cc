@@ -1,6 +1,6 @@
 /**
- * \file 05_imm.cc
- * \brief The IMM filter: does it actually find the regime, and switch when it changes?
+ * \file 05_ikf.cc
+ * \brief The IKF filter: does it actually find the regime, and switch when it changes?
  */
 #include "Kalman/Kalman.h"
 #include "Check.h"
@@ -10,7 +10,10 @@
 #include <cstdint>
 #include <cstdio>
 #include <random>
+#include <type_traits>
 #include <vector>
+
+static_assert(std::is_same_v<Kalman::Filters::IMM, Kalman::Filters::IKF>, "IMM is an alias of IKF");
 
 using namespace Kalman;
 
@@ -23,7 +26,7 @@ int main()
     // measurement noise comparable to the process noise, both modes explain the
     // track equally well (measured: innovation covariances 8% apart, both with
     // mean NIS ~ 1.09) and a correct Bayesian router then returns ~0.5 — not
-    // because the IMM is broken but because there is genuinely nothing to
+    // because the IKF is broken but because there is genuinely nothing to
     // choose between. Hence a sharp sensor and a violent manoeuvre.
     const double sigmaZ = 0.05;
 
@@ -42,31 +45,31 @@ int main()
     // --- construction is validated ------------------------------------------
     {
         bool threw = false;
-        try { Matrix bad(3, 3, 1.); Filters::IMM imm({&quiet, &agile}, bad); }
+        try { Matrix bad(3, 3, 1.); Filters::IKF ikf({&quiet, &agile}, bad); }
         catch (const std::runtime_error &) { threw = true; }
-        CHECK(threw, "IMM: a Pi of the wrong shape throws");
+        CHECK(threw, "IKF: a Pi of the wrong shape throws");
 
         threw = false;
-        try { Matrix bad(2, 2, 0.7); Filters::IMM imm({&quiet, &agile}, bad); }
+        try { Matrix bad(2, 2, 0.7); Filters::IKF ikf({&quiet, &agile}, bad); }
         catch (const std::runtime_error &) { threw = true; }
-        CHECK(threw, "IMM: a Pi whose rows do not sum to 1 throws");
+        CHECK(threw, "IKF: a Pi whose rows do not sum to 1 throws");
 
         threw = false;
-        try { Filters::IMM imm({&quiet}, Matrix::Identity(1)); }
+        try { Filters::IKF ikf({&quiet}, Matrix::Identity(1)); }
         catch (const std::runtime_error &) { threw = true; }
-        CHECK(threw, "IMM: fewer than two modes throws");
+        CHECK(threw, "IKF: fewer than two modes throws");
 
         threw = false;
         try
         {
             Fixture::ConstantVelocity plane(2, 50.);       // n = 4, not 2
-            Filters::IMM imm({&quiet, &plane}, Pi);
+            Filters::IKF ikf({&quiet, &plane}, Pi);
         }
         catch (const std::runtime_error &) { threw = true; }
-        CHECK(threw, "IMM: modes with different dimensions throw");
+        CHECK(threw, "IKF: modes with different dimensions throw");
     }
 
-    // --- a quiet track: the IMM should settle on the quiet mode ---------------
+    // --- a quiet track: the IKF should settle on the quiet mode ---------------
     {
         Vector x0(2); x0(0) = 0.; x0(1) = 2.;
         quiet.SetInitialState(x0);
@@ -76,36 +79,36 @@ int main()
         sampler.Generate(400, x0);
 
         Routers::Bayesian router;
-        Filters::IMM imm({&quiet, &agile}, Pi, &router);
-        const Record rec = imm.Forward(sampler.Measurements());
+        Filters::IKF ikf({&quiet, &agile}, Pi, &router);
+        const Record rec = ikf.Forward(sampler.Measurements());
 
-        CHECK(rec.NSteps() == 400, "IMM: one record entry per measurement");
-        CHECK(rec.NState() == 2, "IMM: the combined estimate has the shared state size");
+        CHECK(rec.NSteps() == 400, "IKF: one record entry per measurement");
+        CHECK(rec.NState() == 2, "IKF: the combined estimate has the shared state size");
 
-        const Matrix &modes = imm.ModeHistory();
-        CHECK(modes.Rows() == 400 && modes.Cols() == 2, "IMM: mode history is (T, M)");
+        const Matrix &modes = ikf.ModeHistory();
+        CHECK(modes.Rows() == 400 && modes.Cols() == 2, "IKF: mode history is (T, M)");
 
         bool normalised = true;
         for (std::size_t k = 0; k < modes.Rows(); ++k)
             if (std::abs(modes(k, 0) + modes(k, 1) - 1.) > 1e-9) normalised = false;
-        CHECK(normalised, "IMM: mode probabilities sum to 1 at every step");
+        CHECK(normalised, "IKF: mode probabilities sum to 1 at every step");
 
         // Average over the second half, once the filter has had time to decide.
         double quietShare = 0.;
         for (std::size_t k = 200; k < 400; ++k) quietShare += modes(k, 0);
         quietShare /= 200.;
         std::printf("    quiet-mode probability on a quiet track: %.3f\n", quietShare);
-        CHECK(quietShare > 0.6, "IMM: settles on the mode that generated the data");
+        CHECK(quietShare > 0.6, "IKF: settles on the mode that generated the data");
 
         // The estimate must still be a good estimate, not just a good classifier.
         double eraw = 0.;
         for (std::size_t k = 0; k < 400; ++k)
             eraw += std::pow(sampler.Measurements()[k](0) - sampler.Truth()[k](0), 2);
         eraw = std::sqrt(eraw / 400.);
-        CHECK(rec.RMSE(0, sampler.Truth()) < eraw, "IMM: the combined estimate beats the raw measurement");
+        CHECK(rec.RMSE(0, sampler.Truth()) < eraw, "IKF: the combined estimate beats the raw measurement");
     }
 
-    // --- a switching track: the IMM should follow the switch ------------------
+    // --- a switching track: the IKF should follow the switch ------------------
     {
         // Cruise for 200 steps, then manoeuvre hard for 200. Built by hand so the
         // regime boundary is known exactly.
@@ -143,19 +146,19 @@ int main()
             agile.SetInitialState(x0);
 
             Routers::Bayesian router;
-            Filters::IMM imm({&quiet, &agile}, Pi, &router);
-            imm.Forward(zk);
+            Filters::IKF ikf({&quiet, &agile}, Pi, &router);
+            ikf.Forward(zk);
 
-            const Matrix &modes = imm.ModeHistory();
+            const Matrix &modes = ikf.ModeHistory();
             for (std::size_t k = 100; k < 200; ++k) before += modes(k, 1) / 100.;   // agile share, cruising
             for (std::size_t k = 300; k < 400; ++k) after += modes(k, 1) / 100.;    // agile share, manoeuvring
 
             // A single step can go either way on noise; the question is which mode
             // wins across the manoeuvre.
             for (std::size_t k = 300; k < 400; ++k)
-                if (imm.DominantMode(k) == 1) ++agileWins;
+                if (ikf.DominantMode(k) == 1) ++agileWins;
 
-            const Matrix &nis = imm.NisHistory();
+            const Matrix &nis = ikf.NisHistory();
             nisShape = nisShape && nis.Rows() == 400 && nis.Cols() == 2;
             for (std::size_t k = 0; k < nis.Rows(); ++k)
                 for (std::size_t j = 0; j < nis.Cols(); ++j)
@@ -166,12 +169,12 @@ int main()
         std::printf("    agile-mode probability: %.3f while cruising -> %.3f while manoeuvring"
                     " (mean of %zu tracks)\n", before, after, nTracks);
         std::printf("    agile mode dominant on %.1f of 100 manoeuvring steps\n", agileWins);
-        CHECK(after > before + 0.2, "IMM: the agile mode gains sharply once the target manoeuvres");
-        CHECK(before < 0.45, "IMM: the quiet mode is preferred while cruising");
-        CHECK(after > 0.55, "IMM: the agile mode dominates during the manoeuvre");
-        CHECK(agileWins > 65, "IMM: DominantMode reports the manoeuvring mode most of the time");
-        CHECK(nisShape, "IMM: NIS history is (T, M)");
-        CHECK(finite, "IMM: every NIS entry is finite");
+        CHECK(after > before + 0.2, "IKF: the agile mode gains sharply once the target manoeuvres");
+        CHECK(before < 0.45, "IKF: the quiet mode is preferred while cruising");
+        CHECK(after > 0.55, "IKF: the agile mode dominates during the manoeuvre");
+        CHECK(agileWins > 65, "IKF: DominantMode reports the manoeuvring mode most of the time");
+        CHECK(nisShape, "IKF: NIS history is (T, M)");
+        CHECK(finite, "IKF: every NIS entry is finite");
     }
 
     // --- the router really is pluggable, and dropouts are handled -------------
@@ -193,27 +196,27 @@ int main()
               static_cast<const Routers::Router *>(&thresh),
               static_cast<const Routers::Router *>(&hybrid)})
         {
-            Filters::IMM imm({&quiet, &agile}, Pi, r);
-            const Record rec = imm.Forward(sampler.Measurements());
+            Filters::IKF ikf({&quiet, &agile}, Pi, r);
+            const Record rec = ikf.Forward(sampler.Measurements());
 
             bool ok = true;
             for (std::size_t k = 0; k < rec.NSteps(); ++k)
                 if (!std::isfinite(rec.State(k)(0)) || !std::isfinite(rec.Covariance(k)(0, 0)))
                     ok = false;
-            CHECK(ok, (std::string("IMM + ") + r->Title() + ": finite through 25% dropouts").c_str());
+            CHECK(ok, (std::string("IKF + ") + r->Title() + ": finite through 25% dropouts").c_str());
         }
 
         // Swapping the decision layer must not require rebuilding the bank.
-        Filters::IMM imm({&quiet, &agile}, Pi, &bayes);
-        CHECK(imm.GetRouter() == &bayes, "IMM: holds the router it was given");
-        imm.SetRouter(&thresh);
-        CHECK(imm.GetRouter() == &thresh, "IMM: SetRouter swaps the decision layer");
+        Filters::IKF ikf({&quiet, &agile}, Pi, &bayes);
+        CHECK(ikf.GetRouter() == &bayes, "IKF: holds the router it was given");
+        ikf.SetRouter(&thresh);
+        CHECK(ikf.GetRouter() == &thresh, "IKF: SetRouter swaps the decision layer");
 
         // No router at all means the classical update, not a crash.
-        Filters::IMM plain({&quiet, &agile}, Pi);
-        CHECK(plain.GetRouter() != nullptr, "IMM: defaults to the Bayesian router");
-        CHECK(plain.Forward(sampler.Measurements()).NSteps() == 300, "IMM: the default runs");
+        Filters::IKF plain({&quiet, &agile}, Pi);
+        CHECK(plain.GetRouter() != nullptr, "IKF: defaults to the Bayesian router");
+        CHECK(plain.Forward(sampler.Measurements()).NSteps() == 300, "IKF: the default runs");
     }
 
-    return Check::Summary("imm");
+    return Check::Summary("ikf");
 }

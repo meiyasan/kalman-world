@@ -4,13 +4,14 @@ Two low-dimensional models built to sit *on top of* the field-scale EnKF
 (``kalman.apps.weather.flow``): the EnKF estimates the environment, these estimate the
 local phenomenon and — crucially — its **covariance**.
 
-- :class:`TyphoonModel` — a reduced tropical-cyclone tracker.  State
+- :class:`StormModel` — a reduced tropical-cyclone tracker (typhoon, hurricane
+  and cyclone are regional names for one storm, so one model covers all).  State
   ``[lon, lat, v_e, v_n, I]`` (centre, translation velocity, intensity); the
   dynamics are the textbook **steering flow + beta drift + coordinated turn**,
   so the motion has genuine *regimes* (straight-running vs. recurving).  That
   regime structure is exactly what an :class:`~kalman.framework.filters.InteractiveKalmanFilter`
-  (IMM) is for — recurvature is the "manoeuvre".  Use
-  :meth:`TyphoonModel.imm_bank` to get the ready-made model bank + transition
+  (IKF) is for — recurvature is the "manoeuvre".  Use
+  :meth:`StormModel.ikf_bank` to get the ready-made model bank + transition
   matrix.  The ensemble/covariance gives the track **cone of uncertainty**
   (:meth:`forecast_cone`) and an intensity error bar for free.
 
@@ -18,8 +19,8 @@ local phenomenon and — crucially — its **covariance**.
   deterministic tracker (a tornado is sub-grid and minutes-predictable); the
   actionable quantity is the **probability the environment is in the tornadic
   regime**.  This is a mean-reverting significant-tornado-parameter latent with
-  a benign and a tornadic regime; IMM returns the regime probability, and the
-  **seasonal climatology enters as the IMM transition matrix** (``season=``).
+  a benign and a tornadic regime; IKF returns the regime probability, and the
+  **seasonal climatology enters as the IKF transition matrix** (``season=``).
 
 Neither needs training data; both deliver calibrated covariance/probability
 from physics + the filter, which is the point (see the notebook 13 discussion
@@ -29,6 +30,7 @@ from __future__ import annotations
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeTwin
 from ...framework.constants import KalmanState, KalmanObservable
 
 KM_PER_DEG_LAT = 110.574
@@ -36,9 +38,9 @@ KM_PER_DEG_LON = 111.320   # × cos(lat)
 
 
 # ======================================================================
-# Typhoon / tropical-cyclone tracker
+# Tropical-cyclone tracker
 # ======================================================================
-class TyphoonState(KalmanState):
+class StormState(KalmanState):
     LON = "°E"      # centre longitude
     LAT = "°N"      # centre latitude
     VE  = "km/h"    # eastward translation speed
@@ -46,35 +48,22 @@ class TyphoonState(KalmanState):
     I   = "kt"      # intensity (max sustained wind)
 
 
-class TyphoonObservable(KalmanObservable):
+class StormObservable(KalmanObservable):
     LON = "°E"
     LAT = "°N"
     I   = "kt"
 
 
-# Tropical cyclones are one phenomenon; the regional name is a matter of basin.
-# (Intensity thresholds differ slightly by agency, but the physics does not.)
-BASINS = {
-    "atlantic": ("Hurricane", "N"),   # North Atlantic
-    "epac":     ("Hurricane", "N"),   # Northeast Pacific
-    "wpac":     ("Typhoon",   "N"),   # Northwest Pacific
-    "nio":      ("Cyclone",   "N"),   # North Indian Ocean
-    "sio":      ("Cyclone",   "S"),   # South Indian Ocean
-    "spac":     ("Cyclone",   "S"),   # South Pacific
-}
 
 
-class StormModel(ExtendedKalmanModel):
+class StormModel(NativeTwin, ExtendedKalmanModel):
     """
     Reduced tropical-cyclone track + intensity model (steering + beta + turn).
 
-    **Basin-agnostic**: a hurricane, a typhoon and a cyclone are the same
-    phenomenon — a tropical cyclone — under different regional names, so one
-    model covers all of them.  ``basin`` selects the region, which fixes both
-    the customary name (:attr:`storm_name`) and the hemisphere (hence the
-    beta-drift and recurvature directions); ``hemisphere=`` still overrides it
-    explicitly if you need to.  :class:`TyphoonModel`, :class:`HurricaneModel`
-    and :class:`CycloneModel` are thin basin presets of this class.
+    A typhoon, a hurricane and a cyclone are the same phenomenon under
+    different regional names, so this one model covers all of them; the only
+    thing that differs between basins is the ``hemisphere``, which sets the
+    beta-drift and recurvature directions.
 
     State ``x = [lon, lat, v_e, v_n, I]``.  Over one step ``dt`` (hours):
 
@@ -88,8 +77,8 @@ class StormModel(ExtendedKalmanModel):
     **Beta drift** ``β`` is the quasi-steady poleward-westward self-advection
     from the planetary-vorticity gradient (~1–2 m/s toward WNW in the NH); its
     sign flips by ``hemisphere``.  The **turn rate** ``ω`` is what distinguishes
-    the motion regimes an IMM switches between (``ω=0`` straight vs.
-    ``ω=ω_recurve`` recurving) — see :meth:`imm_bank`.
+    the motion regimes an IKF switches between (``ω=0`` straight vs.
+    ``ω=ω_recurve`` recurving) — see :meth:`ikf_bank`.
 
     Observation: a centre fix ``[lon, lat]`` (best-track / satellite), plus
     intensity ``I`` when ``observe_intensity`` (default True).  ``n=5``.
@@ -97,7 +86,7 @@ class StormModel(ExtendedKalmanModel):
     Parameters
     ----------
     omega : float
-        Turn rate [rad/h]; 0 = straight-running.  ``imm_bank`` sets this per
+        Turn rate [rad/h]; 0 = straight-running.  ``ikf_bank`` sets this per
         regime.  Sign convention: negative = clockwise in the (east, north)
         plane = NH recurvature (poleward then eastward).
     beta_drift : float
@@ -112,26 +101,19 @@ class StormModel(ExtendedKalmanModel):
 
     NAME = "Storm Tracker"
     DESCRIPTION = ("Reduced tropical-cyclone track + intensity model "
-                   "(steering flow + beta drift + coordinated turn); "
-                   "basin-agnostic — hurricane / typhoon / cyclone.")
-    VERSION = "2.0"
-    BASIN = "wpac"                     # subclasses override to preset a region
+                   "(steering flow + beta drift + coordinated turn) — "
+                   "typhoon, hurricane or cyclone alike.")
+    VERSION = "3.0"
 
     @property
-    def states(self):      return TyphoonState
+    def states(self):      return StormState
     @property
-    def observables(self): return TyphoonObservable
-
-    @property
-    def storm_name(self) -> str:
-        """Customary regional name of this basin's storms ('Typhoon', …)."""
-        return BASINS.get(self.basin, ("Storm", "N"))[0]
+    def observables(self): return StormObservable
 
     def __init__(self, sensor_id="TC", *,
-                 basin=None,
                  omega=0.0,
                  beta_drift=5.0,
-                 hemisphere=None,
+                 hemisphere="N",
                  dt_hours=6.0,
                  observe_intensity=True,
                  fix_noise=0.3,
@@ -142,12 +124,9 @@ class StormModel(ExtendedKalmanModel):
         self.dtype = np.float64
         self.omega = float(omega)
         self.beta_drift = float(beta_drift)
-        # Basin fixes the regional name and the default hemisphere; an explicit
-        # hemisphere= still wins (e.g. a synthetic SH storm in a NH basin).
-        self.basin = str(basin or self.BASIN).lower()
-        if self.basin not in BASINS:
-            raise ValueError(f"unknown basin {self.basin!r}; choose from {sorted(BASINS)}.")
-        self.hemisphere = str(hemisphere or BASINS[self.basin][1]).upper()
+        self.hemisphere = str(hemisphere).upper()
+        if self.hemisphere not in ("N", "S"):
+            raise ValueError(f"hemisphere must be 'N' or 'S', not {hemisphere!r}.")
         self._dt = float(dt_hours)
         self.observe_intensity = bool(observe_intensity)
         # Optional physics couplings (both None → the pure kinematic model):
@@ -179,6 +158,20 @@ class StormModel(ExtendedKalmanModel):
             x0 = np.array([[135.0], [15.0], [-20.0], [6.0], [80.0]])
         super().__init__(sensor_id, Q=Q, R=R, L=np.eye(self.n), fs=1.0 / self._dt,
                          x0=x0, **kw)
+
+    # ------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Storm). A steering flow or
+    # an intensity tendency is a Python callable, which has no C++ counterpart.
+    # ------------------------------------------------------------------
+    def native_name(self):
+        if self.steering is not None or self.intensity_fn is not None:
+            return None
+        return "storm" if self.observe_intensity else "storm-track-only"
+
+    def native_parameters(self):
+        return {"omega": self.omega, "beta_drift": self.beta_drift,
+                "hemisphere": 1.0 if self.hemisphere == "N" else -1.0,
+                "dt_hours": self._dt}
 
     # ------------------------------------------------------------------
     def f(self, x, u=None, w=None, t=None):
@@ -217,12 +210,12 @@ class StormModel(ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(-1, 1)
 
     # ------------------------------------------------------------------
-    # IMM bank: straight-running vs recurving (vs stalling) motion regimes
+    # IKF bank: straight-running vs recurving (vs stalling) motion regimes
     # ------------------------------------------------------------------
     @classmethod
-    def imm_bank(cls, sensor_id="TC", *, omega_recurve=0.022, stall=True,
-                 stay=0.90, basin=None, hemisphere=None, **kw):
-        """Build the IMM model bank + Markov transition matrix.
+    def ikf_bank(cls, sensor_id="TC", *, omega_recurve=0.022, stall=True,
+                 stay=0.90, hemisphere="N", **kw):
+        """Build the IKF model bank + Markov transition matrix.
 
         Returns ``(models, transition, initial_probs)`` ready for
         :class:`~kalman.framework.filters.InteractiveKalmanFilter`.  Regimes:
@@ -233,24 +226,26 @@ class StormModel(ExtendedKalmanModel):
           slow-moving), included when ``stall=True``.
 
         ``stay`` is the self-transition probability (regime persistence);
-        off-diagonal mass is split among the other regimes.  Feed a season /
-        basin prior by adjusting ``stay`` or passing your own transition later.
+        off-diagonal mass is split among the other regimes.  Feed a season
+        prior by adjusting ``stay`` or passing your own transition later.
         """
-        hemi = str(hemisphere or BASINS.get(str(basin or cls.BASIN).lower(), (None, "N"))[1]).upper()
+        hemi = str(hemisphere).upper()
         pole_sign = -1.0 if hemi == "N" else 1.0
         w_rec = pole_sign * abs(omega_recurve)
         models = [
-            cls(sensor_id, omega=0.0,   basin=basin, hemisphere=hemi, **kw),
-            cls(sensor_id, omega=w_rec, basin=basin, hemisphere=hemi, **kw),
+            cls(sensor_id, omega=0.0,   hemisphere=hemi, **kw),
+            cls(sensor_id, omega=w_rec, hemisphere=hemi, **kw),
         ]
         if stall:
-            models.append(cls(sensor_id, omega=0.0, basin=basin, hemisphere=hemi,
+            models.append(cls(sensor_id, omega=0.0, hemisphere=hemi,
                               q_vel=18.0, **kw))
         M = len(models)
         off = (1.0 - stay) / (M - 1)
         Pi = np.full((M, M), off) + (stay - off) * np.eye(M)
         probs = np.full(M, 1.0 / M)
         return models, Pi, probs
+
+    imm_bank = ikf_bank      # the literature's name (Interacting Multiple Model)
 
     # ------------------------------------------------------------------
     # Forecast cone: propagate mean + covariance forward with NO updates
@@ -361,7 +356,7 @@ class StormModel(ExtendedKalmanModel):
         ax.set_aspect(1.0 / np.cos(np.deg2rad(np.mean(lat))))
         ax.set_xlabel("longitude [°E]"); ax.set_ylabel("latitude [°N]")
         ax.legend(loc="best", fontsize=8); ax.grid(alpha=0.3)
-        ax.set_title(f"{self.storm_name} track — ±{k_sigma:g}σ position covariance")
+        ax.set_title(f"Storm track — ±{k_sigma:g}σ position covariance")
         return ax
 
     def _draw_intensity(self, ax, record, *, sample=None, fixes=None, cone=None,
@@ -407,7 +402,7 @@ class StormModel(ExtendedKalmanModel):
                          ens=ens, k_sigma=k_sigma)
         self._draw_intensity(ax_int, record, sample=sample, fixes=fixes, cone=cone,
                              k_sigma=k_sigma)
-        fig.suptitle(f"{self.name()} — {self.storm_name} ({self.basin.upper()} basin)",
+        fig.suptitle(f"{self.name()} — tropical cyclone ({self.hemisphere}H)",
                      fontweight="bold")
         fig.tight_layout()
         return fig
@@ -441,7 +436,7 @@ class StormModel(ExtendedKalmanModel):
                              cone=cone if k >= n else None, k_sigma=k_sigma)
             self._draw_intensity(ax_int, part, sample=smp, fixes=fx,
                                  cone=cone if k >= n else None, k_sigma=k_sigma)
-            fig.suptitle(f"{self.name()} — {self.storm_name}  "
+            fig.suptitle(f"{self.name()}  "
                          f"(cycle {k}/{n}, t = {k * self._dt:.0f} h)", fontweight="bold")
             return (ax_map, ax_int)
 
@@ -449,25 +444,6 @@ class StormModel(ExtendedKalmanModel):
         return animate(fig, _draw, frames=steps, interval=interval)
 
 
-# ----------------------------------------------------------------------
-# Basin presets — same physics, regional naming and hemisphere
-# ----------------------------------------------------------------------
-class TyphoonModel(StormModel):
-    """Northwest-Pacific preset of :class:`StormModel` (a *typhoon*)."""
-    NAME = "Typhoon Tracker"
-    BASIN = "wpac"
-
-
-class HurricaneModel(StormModel):
-    """North-Atlantic preset of :class:`StormModel` (a *hurricane*)."""
-    NAME = "Hurricane Tracker"
-    BASIN = "atlantic"
-
-
-class CycloneModel(StormModel):
-    """South-Indian-Ocean preset of :class:`StormModel` (a *cyclone*, SH)."""
-    NAME = "Cyclone Tracker"
-    BASIN = "sio"
 
 
 def synthetic_track(n_steps=40, *, recurve_at=18, dt_hours=6.0, hemisphere="N",
@@ -477,7 +453,7 @@ def synthetic_track(n_steps=40, *, recurve_at=18, dt_hours=6.0, hemisphere="N",
     a rise-and-decay intensity — plus noisy centre/intensity fixes.
 
     Returns ``(truth (T, 5), fixes (T, 3))`` — feed ``truth`` as the OSSE truth
-    and ``fixes`` as observations to an IMM tracker.  Exercises the regime
+    and ``fixes`` as observations to an IKF tracker.  Exercises the regime
     switch at ``recurve_at``.
     """
     rng = np.random.default_rng(seed)
@@ -566,7 +542,7 @@ class LearnedIntensityModel:
     statistical intensity scheme, which regresses on ~20 predictors).  The
     physics tracker leaves intensity as persistence; this *learns* the
     SST/shear→intensification relationship from past storms and plugs into
-    :class:`TyphoonModel` via :meth:`as_intensity_fn`.
+    :class:`StormModel` via :meth:`as_intensity_fn`.
 
     Deliberately dependency-free (numpy least squares) so it runs anywhere; a
     torch MLP is the drop-in scale-up when the relationship is nonlinear.
@@ -609,7 +585,7 @@ class LearnedIntensityModel:
         return float(np.append(fs, 1.0) @ self.coef_)
 
     def as_intensity_fn(self):
-        """Return the ``intensity_fn(lon, lat, I, t)`` closure for TyphoonModel."""
+        """Return the ``intensity_fn(lon, lat, I, t)`` closure for StormModel."""
         if self.coef_ is None:
             raise RuntimeError("fit() the LearnedIntensityModel first.")
         return self.tendency
@@ -658,7 +634,7 @@ _LAND_PATH = None
 def japan_steering(lon, lat, t=None):
     """Northwest-Pacific steering tuned so a tropical-genesis storm recurves
     into the Japan region (subtropical ridge ~25°N; the westerlies sweep it NE
-    toward Honshu).  Drop-in ``steering`` for :class:`TyphoonModel`."""
+    toward Honshu).  Drop-in ``steering`` for :class:`StormModel`."""
     return analytic_steering(lon, lat, ridge_lat=27.0, easterly=-15.0,
                              westerly=27.0, hemisphere="N")
 
@@ -726,7 +702,7 @@ def landfall_probability(tracks, region=japan_region):
     """Fraction of forecast ensemble tracks that make landfall in ``region``.
 
     ``tracks`` is ``(n_samples, steps, ≥2)`` from
-    :meth:`TyphoonModel.ensemble_forecast`.  Returns ``(probability,
+    :meth:`StormModel.ensemble_forecast`.  Returns ``(probability,
     hit_per_track)`` — the operational **strike probability** read straight off
     the forecast covariance, plus the boolean per-member landfall flag.
     """
@@ -736,7 +712,7 @@ def landfall_probability(tracks, region=japan_region):
 
 
 # ======================================================================
-# Tornado-environment regime model (probabilistic, IMM)
+# Tornado-environment regime model (probabilistic, IKF)
 # ======================================================================
 class TornadoState(KalmanState):
     STP = "STP"     # significant-tornado-parameter proxy (dimensionless)
@@ -746,7 +722,7 @@ class TornadoObservable(KalmanObservable):
     STP = "STP"
 
 
-# Seasonal IMM transition priors: (stay_benign, stay_tornadic).  Higher
+# Seasonal IKF transition priors: (stay_benign, stay_tornadic).  Higher
 # stay_tornadic and easier switch-in during the local severe season.
 _SEASON_PI = {
     "peak":   (0.90, 0.85),   # local tornado season (SH spring–summer for S. Brazil)
@@ -757,7 +733,7 @@ _SEASON_PI = {
 
 class TornadoEnvironmentModel(ExtendedKalmanModel):
     """
-    Mean-reverting tornado-environment latent — one regime of an IMM.
+    Mean-reverting tornado-environment latent — one regime of an IKF.
 
     A single latent ``x = [STP]`` (a significant-tornado-parameter proxy —
     combine CAPE × shear × storm-relative helicity from local mesonet/radar)
@@ -768,9 +744,9 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
     A tornado is not deterministically trackable, so the deliverable is the
     **probability the environment sits in the tornadic regime** — obtained by
     running a benign and a tornadic instance of this model in an
-    :class:`~kalman.framework.filters.InteractiveKalmanFilter`; the IMM mode probability
+    :class:`~kalman.framework.filters.InteractiveKalmanFilter`; the IKF mode probability
     *is* that probability, and it comes with the latent's covariance.
-    ``imm_bank(season=...)`` sets the Markov transition matrix from the local
+    ``ikf_bank(season=...)`` sets the Markov transition matrix from the local
     **seasonal climatology** — the physically-honest way "seasoning" enters.
 
     Parameters
@@ -784,7 +760,7 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
     """
 
     NAME = "Tornado Environment"
-    DESCRIPTION = "Mean-reverting significant-tornado-parameter latent (one IMM regime)."
+    DESCRIPTION = "Mean-reverting significant-tornado-parameter latent (one IKF regime)."
     VERSION = "1.0"
 
     @property
@@ -816,11 +792,11 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(1, 1)
 
     @classmethod
-    def imm_bank(cls, sensor_id="ENV", *, season="shoulder",
+    def ikf_bank(cls, sensor_id="ENV", *, season="shoulder",
                  mu_benign=0.3, mu_tornadic=3.0, **kw):
         """Benign + tornadic instances + the **seasonal** transition matrix.
 
-        Returns ``(models, transition, initial_probs)`` for the IMM; the
+        Returns ``(models, transition, initial_probs)`` for the IKF; the
         transition matrix is drawn from ``_SEASON_PI[season]`` so the local
         severe-weather season raises both the tornadic-regime persistence and
         the prior probability of switching into it.
@@ -832,13 +808,15 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
         probs = np.array([0.9, 0.1])
         return [benign, tornadic], Pi, probs
 
+    imm_bank = ikf_bank      # the literature's name (Interacting Multiple Model)
+
 
 def synthetic_environment(n_steps=200, *, onsets=((70, 110),), season="shoulder",
                           mu_benign=0.3, mu_tornadic=3.0, obs_noise=0.4, seed=0):
     """Synthetic STP time series that spends ``onsets`` cycle-windows in the
     tornadic regime, plus noisy observations and the true regime labels.
 
-    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the IMM tracker and
+    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the IKF tracker and
     compare ``mode_probabilities[:, 1]`` against ``labels``.
     """
     rng = np.random.default_rng(seed)
@@ -861,7 +839,7 @@ def synthetic_environment(n_steps=200, *, onsets=((70, 110),), season="shoulder"
 # tornado hot-spot: the South American Low-Level Jet feeds warm moist Amazonian
 # air into cold fronts sweeping up from the south, spiking shear + instability
 # in the SH spring–summer.  The *season* is the physically-honest prior — it
-# sets the IMM transition matrix, not a hand-tuned threshold.
+# sets the IKF transition matrix, not a hand-tuned threshold.
 _BRAZIL_SEASON = {9: "peak", 10: "peak", 11: "peak", 12: "peak", 1: "peak", 2: "peak",
                   3: "shoulder", 8: "shoulder",
                   4: "off", 5: "off", 6: "off", 7: "off"}
@@ -905,11 +883,11 @@ def brazil_tornado_scenario(n_days=360, *, start_month=7, seed=0,
 
 
 def seasonal_tornado_probability(obs, months, *, season_fn=brazil_season,
-                                 model_cls=None, **imm_kw):
+                                 model_cls=None, **ikf_kw):
     """Per-step P(tornadic) with a **season-dependent prior**.
 
-    Runs the IMM once per season (each with that season's transition matrix from
-    :meth:`TornadoEnvironmentModel.imm_bank`) and, at every step, returns the
+    Runs the IKF once per season (each with that season's transition matrix from
+    :meth:`TornadoEnvironmentModel.ikf_bank`) and, at every step, returns the
     probability from the filter whose season matches that step's month.  So an
     identical environmental signal reads as a confident warning in the peak
     season and a hedged one off-season — the Bayesian-correct way to fold the
@@ -922,7 +900,7 @@ def seasonal_tornado_probability(obs, months, *, season_fn=brazil_season,
     seasons = np.array([season_fn(mo) for mo in months])
     prob = np.zeros(len(obs))
     for s in np.unique(seasons):
-        models, Pi, p0 = cls.imm_bank(season=str(s), **imm_kw)
+        models, Pi, p0 = cls.ikf_bank(season=str(s), **ikf_kw)
         ikf = InteractiveKalmanFilter(models, Pi, p0)
         ikf.forward(obs)
         p_s = ikf.mode_probabilities[:, 1]

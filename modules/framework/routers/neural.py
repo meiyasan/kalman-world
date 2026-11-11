@@ -1,4 +1,4 @@
-"""NeuralRouter — IMM router backed by a pluggable neural model.
+"""NeuralRouter — IKF router backed by a pluggable neural model.
 
 The router owns feature extraction and normalisation.
 The model owns architecture, training, and inference.
@@ -44,7 +44,7 @@ from .base import KalmanRouter
 
 
 class NeuralRouter(KalmanRouter):
-    """IMM router that delegates mode-probability estimation to a neural model.
+    """IKF router that delegates mode-probability estimation to a neural model.
 
     Parameters
     ----------
@@ -97,7 +97,7 @@ class NeuralRouter(KalmanRouter):
         Parameters
         ----------
         nis_arrays : list of ndarray (T_i, M)
-            NIS history per training scenario (from a Bayesian-IMM run).
+            NIS history per training scenario (from a Bayesian-IKF run).
         labels_arrays : list of int ndarray (T_i,)
             True regime 0 … M−1 at every step.
         seed : int, optional

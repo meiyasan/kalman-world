@@ -1,13 +1,12 @@
-"""Tests for the reduced storm models — TyphoonModel (track/intensity + IMM
+"""Tests for the reduced storm models — StormModel (track/intensity + IKF
 recurvature regimes + forecast cone) and TornadoEnvironmentModel (regime-
-probability IMM with seasonal transition priors)."""
+probability IKF with seasonal transition priors)."""
 import sys
 import unittest
 import numpy as np
 
 sys.path.insert(0, ".")
-from modules.apps.weather.storms import (StormModel, TyphoonModel, HurricaneModel,
-                                  CycloneModel, BASINS, TornadoEnvironmentModel,
+from modules.apps.weather.storms import (StormModel, TornadoEnvironmentModel,
                                   synthetic_track, synthetic_environment,
                                   synthetic_steered_track, analytic_steering,
                                   analytic_environment, LearnedIntensityModel,
@@ -17,20 +16,20 @@ from modules.apps.weather.storms import (StormModel, TyphoonModel, HurricaneMode
 from modules.framework.filters import InteractiveKalmanFilter, ExtendedKalmanFilter
 
 
-# ── TyphoonModel dynamics ─────────────────────────────────────────────────────
+# ── StormModel dynamics ─────────────────────────────────────────────────────
 
-class TestTyphoonModel(unittest.TestCase):
+class TestStormModel(unittest.TestCase):
 
     def test_dimensions_and_observe(self):
-        m = TyphoonModel()
+        m = StormModel()
         self.assertEqual((m.n, m.m, m.l), (5, 3, 0))
-        m2 = TyphoonModel(observe_intensity=False)
+        m2 = StormModel(observe_intensity=False)
         self.assertEqual(m2.m, 2)
         self.assertEqual(np.asarray(m2.h(np.zeros((5, 1)))).shape, (2, 1))
 
     def test_straight_motion_wnw(self):
         """Zero turn rate + NH beta: the centre moves west and poleward."""
-        m = TyphoonModel(omega=0.0, hemisphere="N",
+        m = StormModel(omega=0.0, hemisphere="N",
                          x0=np.array([[140.], [15.], [-20.], [5.], [80.]]))
         x1 = m.f(m.x0).ravel()
         self.assertLess(x1[0], 140.0)      # lon decreases (westward)
@@ -40,7 +39,7 @@ class TestTyphoonModel(unittest.TestCase):
 
     def test_recurve_rotates_velocity(self):
         """Nonzero omega rotates the translation velocity vector."""
-        m = TyphoonModel(omega=-0.05, hemisphere="N",
+        m = StormModel(omega=-0.05, hemisphere="N",
                          x0=np.array([[140.], [15.], [-20.], [0.], [80.]]))
         v0 = m.x0.ravel()[2:4]
         v1 = m.f(m.x0).ravel()[2:4]
@@ -48,19 +47,19 @@ class TestTyphoonModel(unittest.TestCase):
         np.testing.assert_allclose(np.hypot(*v1), np.hypot(*v0), rtol=1e-6)  # speed preserved
 
     def test_hemisphere_beta_sign(self):
-        n = TyphoonModel(hemisphere="N"); s = TyphoonModel(hemisphere="S")
+        n = StormModel(hemisphere="N"); s = StormModel(hemisphere="S")
         self.assertGreater(n.beta_n, 0)    # NH beta drifts poleward (north)
         self.assertLess(s.beta_n, 0)       # SH beta drifts poleward (south)
 
     def test_imm_bank_structure(self):
-        models, Pi, probs = TyphoonModel.imm_bank(stall=True)
+        models, Pi, probs = StormModel.ikf_bank(stall=True)
         self.assertEqual(len(models), 3)
         self.assertEqual(Pi.shape, (3, 3))
         np.testing.assert_allclose(Pi.sum(axis=1), 1.0)
         self.assertAlmostEqual(probs.sum(), 1.0)
         self.assertEqual(models[0].omega, 0.0)
         self.assertLess(models[1].omega, 0.0)          # NH recurve = clockwise
-        models2, Pi2, _ = TyphoonModel.imm_bank(stall=False)
+        models2, Pi2, _ = StormModel.ikf_bank(stall=False)
         self.assertEqual(len(models2), 2)
 
 
@@ -69,7 +68,7 @@ class TestTyphoonTracking(unittest.TestCase):
     def _run(self, fix_noise=1.0, seed=1):
         truth, fixes = synthetic_track(n_steps=40, recurve_at=18,
                                        fix_noise=fix_noise, seed=seed)
-        models, Pi, probs = TyphoonModel.imm_bank(fix_noise=fix_noise, stall=True)
+        models, Pi, probs = StormModel.ikf_bank(fix_noise=fix_noise, stall=True)
         for m in models:
             m.initial_state(np.array([[138.], [12.], [-20.], [7.], [40.]]),
                             np.diag([1., 1., 50., 50., 200.]))
@@ -100,28 +99,20 @@ class TestTyphoonTracking(unittest.TestCase):
         truth, _, _, rec = self._run(fix_noise=0.5)
         x0 = np.asarray(rec.xk)[15].reshape(-1, 1)
         P0 = np.asarray(rec.Pk)[15]
-        cone = TyphoonModel.imm_bank()[0][1].forecast_cone(x0, P0, steps=10)
+        cone = StormModel.ikf_bank()[0][1].forecast_cone(x0, P0, steps=10)
         self.assertEqual(len(cone["ellipses"]), 10)
         semis = np.array([e[2] for e in cone["ellipses"]])
         self.assertTrue(np.all(np.diff(semis) >= -1e-9))     # monotone growth
         self.assertTrue(np.all(np.diff(cone["I_sigma"]) >= -1e-9))
 
-    def test_basin_agnostic_naming_and_hemisphere(self):
-        """One physics, regional names: basin fixes the name and hemisphere."""
-        self.assertEqual(StormModel(basin="wpac").storm_name, "Typhoon")
-        self.assertEqual(StormModel(basin="atlantic").storm_name, "Hurricane")
-        self.assertEqual(StormModel(basin="sio").storm_name, "Cyclone")
-        self.assertEqual(TyphoonModel().basin, "wpac")
-        self.assertEqual(HurricaneModel().storm_name, "Hurricane")
-        self.assertEqual(CycloneModel().hemisphere, "S")
-        # SH basins drift poleward = south; NH = north
-        self.assertGreater(StormModel(basin="wpac").beta_n, 0)
-        self.assertLess(StormModel(basin="spac").beta_n, 0)
-        # explicit hemisphere still overrides the basin default
-        self.assertEqual(StormModel(basin="wpac", hemisphere="S").hemisphere, "S")
+    def test_one_model_hemisphere_sets_beta_drift(self):
+        """One storm model: the hemisphere alone sets the poleward drift."""
+        self.assertGreater(StormModel(hemisphere="N").beta_n, 0)
+        self.assertLess(StormModel(hemisphere="S").beta_n, 0)
+        self.assertEqual(StormModel(hemisphere="s").hemisphere, "S")
         with self.assertRaises(ValueError):
-            StormModel(basin="nope")
-        self.assertEqual(set(BASINS), {"atlantic", "epac", "wpac", "nio", "sio", "spac"})
+            StormModel(hemisphere="E")
+        self.assertIs(StormModel.ikf_bank.__func__, StormModel.ikf_bank.__func__)
 
     def test_standard_plot_is_self_contained(self):
         """model.plot(record) reproduces the canonical figure with no extra code."""
@@ -163,7 +154,7 @@ class TestSteeringAndIntensity(unittest.TestCase):
         """Physics-only (steering-coupled) forecast turns the track poleward-east
         with NO fitted turn rate and NO ML."""
         def steer(lon, lat, t=None): return analytic_steering(lon, lat, hemisphere="N")
-        m = TyphoonModel("TC", steering=steer,
+        m = StormModel("TC", steering=steer,
                          x0=np.array([[165.], [9.], [-20.], [3.], [40.]]))
         cone = m.forecast_cone(m.x0, np.diag([0.5, 0.5, 30, 30, 100.]), steps=48)
         lon, lat = cone["lon"], cone["lat"]
@@ -192,7 +183,7 @@ class TestSteeringAndIntensity(unittest.TestCase):
         self.assertEqual(len(lim.coef_), 4)
 
         def build(ifn, tr):
-            m = TyphoonModel("TC", steering=steer, intensity_fn=ifn, q_pos=0.25,
+            m = StormModel("TC", steering=steer, intensity_fn=ifn, q_pos=0.25,
                              x0=np.array([[tr[0, 0]], [tr[0, 1]], [-20.], [3.], [35.]]))
             m.initial_state(m.x0, np.diag([0.5, 0.5, 30, 30, 100.]))
             return m
@@ -211,7 +202,7 @@ class TestSteeringAndIntensity(unittest.TestCase):
         self.assertGreater(np.mean(gains), 0.10)     # ML consistently helps intensity
 
     def test_intensity_fn_none_is_persistence(self):
-        m = TyphoonModel("TC", intensity_fn=None,
+        m = StormModel("TC", intensity_fn=None,
                          x0=np.array([[150.], [12.], [-20.], [3.], [70.]]))
         self.assertAlmostEqual(m.f(m.x0).ravel()[4], 70.0)   # persists exactly
 
@@ -228,7 +219,7 @@ class TestJapanLandfall(unittest.TestCase):
         np.testing.assert_array_equal(arr, [True, False])
 
     def test_ensemble_forecast_shape_and_spread(self):
-        m = TyphoonModel("JP", steering=japan_steering, q_pos=0.25,
+        m = StormModel("JP", steering=japan_steering, q_pos=0.25,
                          x0=np.array([[140.], [20.], [-14.], [6.], [75.]]))
         ens = m.ensemble_forecast(m.x0, np.diag([0.5, 0.5, 30, 30, 100.]),
                                   steps=12, n_samples=100, seed=0)
@@ -241,12 +232,12 @@ class TestJapanLandfall(unittest.TestCase):
         def prob(lon0, seed):
             truth, fixes = synthetic_steered_track(n_steps=32, lon0=lon0, lat0=20, I0=75,
                                                    steering=japan_steering, eddy=6.0, seed=seed)
-            m = TyphoonModel("JP", steering=japan_steering, q_pos=0.25,
+            m = StormModel("JP", steering=japan_steering, q_pos=0.25,
                              x0=np.array([[truth[0,0]], [truth[0,1]], [-14.], [6.], [75.]]))
             m.initial_state(m.x0, np.diag([0.5, 0.5, 30, 30, 100.]))
             rec = ExtendedKalmanFilter(m).forward(fixes[:16])
             x0, P0 = np.asarray(rec.xk)[15].reshape(-1, 1), np.asarray(rec.Pk)[15]
-            m2 = TyphoonModel("JP", steering=japan_steering, q_pos=0.25, x0=m.x0)
+            m2 = StormModel("JP", steering=japan_steering, q_pos=0.25, x0=m.x0)
             m2.initial_state(m.x0, np.diag([0.5, 0.5, 30, 30, 100.]))
             ens = m2.ensemble_forecast(x0, P0, steps=16, n_samples=300, seed=2)
             p, hit = landfall_probability(ens)
@@ -297,7 +288,7 @@ class TestFieldSteeringCoupling(unittest.TestCase):
         ends = []
         for k in range(ens.shape[1]):
             samp = flow.velocity_sampler(ens[:, k], (120., 160., 8., 45.), speed=10.0)
-            m = TyphoonModel("JP", steering=field_steering(samp, base=japan_steering),
+            m = StormModel("JP", steering=field_steering(samp, base=japan_steering),
                              q_pos=0.15, x0=x0)
             c = m.forecast_cone(x0, np.diag([0.3, 0.3, 20, 20, 50.]), steps=24)
             ends.append([c["lon"][-1], c["lat"][-1]])
@@ -317,8 +308,8 @@ class TestTornadoEnvironment(unittest.TestCase):
         self.assertAlmostEqual(m.f(np.array([[3.0]])).ravel()[0], 3.0)   # fixed point at mu
 
     def test_seasonal_transition_matrices_differ(self):
-        _, pi_peak, _ = TornadoEnvironmentModel.imm_bank(season="peak")
-        _, pi_off, _ = TornadoEnvironmentModel.imm_bank(season="off")
+        _, pi_peak, _ = TornadoEnvironmentModel.ikf_bank(season="peak")
+        _, pi_off, _ = TornadoEnvironmentModel.ikf_bank(season="off")
         np.testing.assert_allclose(pi_peak.sum(axis=1), 1.0)
         np.testing.assert_allclose(pi_off.sum(axis=1), 1.0)
         # tornadic-regime persistence higher in peak season
@@ -329,7 +320,7 @@ class TestTornadoEnvironment(unittest.TestCase):
 
     def test_regime_probability_tracks_event(self):
         obs, labels = synthetic_environment(n_steps=200, onsets=((70, 110),), seed=2)
-        models, Pi, probs = TornadoEnvironmentModel.imm_bank(season="peak")
+        models, Pi, probs = TornadoEnvironmentModel.ikf_bank(season="peak")
         ikf = InteractiveKalmanFilter(models, Pi, probs)
         ikf.forward(obs)
         p_tor = ikf.mode_probabilities[:, 1]

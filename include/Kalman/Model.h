@@ -55,6 +55,7 @@
 #include "Kalman/Constants.h"
 #include "Kalman/Integrator.h"
 
+#include <map>
 #include <memory>
 #include <string>
 
@@ -93,6 +94,9 @@ namespace Kalman
             SolverKind fDefaultSolver = SolverKind::Spectral;
             mutable std::shared_ptr<Integrator> fIntegrator;
             std::size_t fSubsteps = 1;
+
+            // Named scalar parameters (see DeclareParameter()).
+            std::map<std::string, double> fParameters;
 
         public:
             Model() = default;
@@ -218,9 +222,28 @@ namespace Kalman
             /// One-line description, for logs.
             virtual std::string Describe() const;
 
+            // --- named parameters ---------------------------------------------
+            // How a caller that did not compile the model configures it: the
+            // Python class a C++ model sits behind, a spec read from JSON, a ROOT
+            // macro. A model declares its scalars once, in its constructor, and
+            // reads them back in ParametersChanged().
+            /// The declared names, sorted.
+            std::vector<std::string> ParameterNames() const;
+            bool HasParameter(const std::string &name) const { return fParameters.count(name) > 0; }
+            /// \throws std::out_of_range naming the unknown parameter and the known ones.
+            double Parameter(const std::string &name) const;
+            /// Set a declared parameter, then call ParametersChanged().
+            /// \throws std::out_of_range as Parameter().
+            void SetParameter(const std::string &name, double value);
+
         protected:
             /// Size every coefficient to (n, m, l) and seed sane defaults.
             void Allocate(std::size_t n, std::size_t m, std::size_t l);
+
+            /// Declare a named parameter with its default (constructor only).
+            void DeclareParameter(const std::string &name, double value);
+            /// Called after every SetParameter(): refresh whatever is derived from them.
+            virtual void ParametersChanged() {}
     };
 }
 

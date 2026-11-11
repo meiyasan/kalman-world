@@ -378,6 +378,58 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0)
     });
 }
 
+/* --- model: named parameters and noise covariances ------------------------- */
+
+int kalman_model_parameter_count(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).ParameterNames().size()); });
+}
+
+const char *kalman_model_parameter_name(const kalman_model_t *model, int i)
+{
+    return GuardStr([model, i]() -> const char * {
+        const std::vector<std::string> names = Deref(model).ParameterNames();
+        if (i < 0 || static_cast<std::size_t>(i) >= names.size()) return nullptr;
+        return Keep(names[static_cast<std::size_t>(i)]);
+    });
+}
+
+int kalman_model_parameter(const kalman_model_t *model, const char *name, double *value)
+{
+    return Guard([&] {
+        if (!name || !value) throw std::invalid_argument("null name or value");
+        *value = Deref(model).Parameter(name);
+        return 0;
+    });
+}
+
+int kalman_model_set_parameter(kalman_model_t *model, const char *name, double value)
+{
+    return Guard([&] {
+        if (!name) throw std::invalid_argument("null name");
+        Deref(model).SetParameter(name, value);
+        return 0;
+    });
+}
+
+int kalman_model_set_Q(kalman_model_t *model, const double *Q)
+{
+    return Guard([&] {
+        auto &M = Deref(model);
+        M.SetQ(Mat(Q, M.NState(), M.NState(), "Q"));
+        return 0;
+    });
+}
+
+int kalman_model_set_R(kalman_model_t *model, const double *R)
+{
+    return Guard([&] {
+        auto &M = Deref(model);
+        M.SetR(Mat(R, M.NMeasure(), M.NMeasure(), "R"));
+        return 0;
+    });
+}
+
 /* --- model: coefficients at time t ---------------------------------------- */
 
 int kalman_model_F(const kalman_model_t *model, double t, double *F)

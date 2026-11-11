@@ -227,6 +227,116 @@ class NativeModel(KalmanModel):
         return f"NativeModel({self.native_name!r}, n={self.n}, m={self.m}, l={self.l}, fs={self.fs})"
 
 
+# --- a Python model with a C++ twin ---------------------------------------------
+APPS_LIBRARY = "KalmanApps"
+#: Switch every twin off (``False``) to run the Python physics — how a before/after
+#: comparison is made. ``KALMAN_NATIVE_TWINS=0`` in the environment does the same.
+USE_NATIVE_TWINS = True
+_apps_names: set[str] | None = None
+
+
+def apps_library_names() -> set[str]:
+    """Names registered by libKalmanApps, loading it on first use; empty when the
+    C++ core or that library is not installed."""
+    global _apps_names
+    if _apps_names is None:
+        _apps_names = set()
+        if core.HAS_CXX_CORE:
+            try:
+                _apps_names = set(core.load_plugin(core.resolve_plugin(APPS_LIBRARY)))
+            except (FileNotFoundError, PermissionError):
+                pass                                  # not built: the Python physics runs
+    return _apps_names
+
+
+class NativeTwin:
+    """Mixin for an application model whose physics also exists in libKalmanApps.
+
+    The Python class stays the model: its constructor, its attributes, ``plot``
+    and the notebooks are unchanged. What changes is who runs the filtering
+    pass. When the configuration has a C++ counterpart, ``KalmanFilter.forward``
+    hands the whole pass to the twin (``Kalman::Filter`` in C++, one call), and
+    otherwise the Python loop runs as before.
+
+    A model declares its twin with two methods:
+
+    - :meth:`native_name` — the registered C++ name for *this* configuration, or
+      ``None`` when it has none (a Python callback, a feature not ported);
+    - :meth:`native_parameters` — the scalars to push, by the names the C++
+      class declares.
+
+    The sample rate, ``Q`` and ``R`` are pushed from the Python instance on every
+    run, and the initial state by the filter, so nothing is defined twice and a
+    change made to the Python model after construction reaches the twin.
+    """
+
+    #: What must be exactly the declaring class's own for the twin to stand in.
+    _TWIN_CONTRACT = ("f", "h", "F", "H", "B", "L", "Q", "R")
+
+    def native_name(self) -> str | None:
+        return None
+
+    def native_parameters(self) -> dict:
+        return {}
+
+    def _twin_owner(self) -> type:
+        for cls in type(self).__mro__:
+            if "native_name" in cls.__dict__ and cls is not NativeTwin:
+                return cls
+        return NativeTwin
+
+    def native_handle(self):
+        """The configured C++ twin, or ``None`` when the Python physics must run."""
+        import os
+        if not USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0":
+            return None
+        if not core.HAS_CXX_CORE:
+            return None
+        name = self.native_name()
+        if not name or name not in apps_library_names():
+            return None
+        # A subclass or an instance that redefines the contract is a different
+        # model from the one that was ported.
+        owner = self._twin_owner()
+        for attr in self._TWIN_CONTRACT:
+            if attr in self.__dict__ or getattr(type(self), attr, None) is not getattr(owner, attr, None):
+                return None
+        if self.l or np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
+            return None
+        if self._F is not None or self._H is not None or callable(self._Q) or callable(self._R):
+            return None
+        L_ = self._L
+        if L_ is not None and (callable(L_) or not np.array_equal(np.asarray(L_), np.eye(self.n))):
+            return None
+
+        lib = core.lib
+        cached = self.__dict__.get("_native_twin")
+        if cached is None or cached[0] != name:
+            handle = lib.kalman_model_create(name.encode())
+            if handle == core.ffi.NULL:
+                raise KeyError(f"{type(self).__name__}: {core.last_error()}")
+            handle = core.ffi.gc(handle, lib.kalman_model_destroy)
+            n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
+            core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
+            if (int(n[0]), int(m[0]), int(l[0])) != (self.n, self.m, self.l):
+                raise RuntimeError(
+                    f"{type(self).__name__}: the C++ twin {name!r} has (n, m, l) = "
+                    f"({n[0]}, {m[0]}, {l[0]}), the Python model ({self.n}, {self.m}, {self.l}).")
+            self._native_twin = cached = (name, handle)
+        handle = cached[1]
+
+        if self.fs:
+            core.check(lib.kalman_model_set_sample_rate(handle, float(self.fs)), "set_sample_rate")
+        for key, value in self.native_parameters().items():
+            core.check(lib.kalman_model_set_parameter(handle, key.encode(), float(value)),
+                       f"set_parameter({key!r})")
+        Q = np.ascontiguousarray(np.asarray(self._Q, dtype=np.float64).reshape(self.n, self.n))
+        R = np.ascontiguousarray(np.asarray(self._R, dtype=np.float64).reshape(self.m, self.m))
+        core.check(lib.kalman_model_set_Q(handle, core.cdptr(Q)), "set_Q")
+        core.check(lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
+        return handle
+
+
 # --- one class per registered name ---------------------------------------------
 _CLASSES: dict[str, type] = {}
 
@@ -247,7 +357,9 @@ def native_model_classes() -> dict[str, type]:
     if not core.HAS_CXX_CORE:
         return {}
     for name in core.names():
-        if name in _CLASSES:
+        # libKalmanApps' models are reached through their Python classes
+        # (StormModel, BallisticModel ...), not listed a second time here.
+        if name in _CLASSES or name in (_apps_names or ()):
             continue
         info = core.describe(name)
         _CLASSES[name] = type(name, (NativeModel,), {

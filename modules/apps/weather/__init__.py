@@ -7,7 +7,7 @@ together and the package ``__init__`` is its public interface.
 - ``flow``       — the 2-D turbulence field model + OSSE harness
   (:class:`NS2D` spectral solver, :class:`KolmogorovFlowModel`,
   :class:`TwinExperiment`);
-- ``storms``     — reduced storm models (:class:`TyphoonModel`,
+- ``storms``     — reduced storm models (:class:`StormModel`,
   :class:`TornadoEnvironmentModel`) that sit on top of the field estimate;
 - ``geo``        — Earth/geo utilities and dataset transforms (land–sea mask,
   global plotting, vorticity/regrid/coarsen, ERA5 + NSKT loaders);
@@ -16,7 +16,7 @@ together and the package ``__init__`` is its public interface.
   :class:`TurbulenceProvider`).
 """
 from .flow import NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment
-from .storms import (StormModel, TyphoonModel, HurricaneModel, CycloneModel, BASINS, TyphoonState, TyphoonObservable, synthetic_track,
+from .storms import (StormModel, StormState, StormObservable, synthetic_track,
                      synthetic_steered_track, analytic_steering, analytic_environment,
                      LearnedIntensityModel, japan_steering, field_steering,
                      japan_region, landfall_probability, JAPAN_BBOX,
@@ -31,8 +31,7 @@ from .providers import ERA5Provider, TurbulenceProvider
 
 VARIANTS = {
     "flow": KolmogorovFlowModel,          # 2-D turbulence field (ensemble DA)
-    "storm": StormModel,                  # tropical cyclone (basin-agnostic)
-    "typhoon": TyphoonModel,              # NW-Pacific preset
+    "storm": StormModel,                  # tropical cyclone (typhoon/hurricane/cyclone)
     "tornado": TornadoEnvironmentModel,   # tornado-environment regime latent
 }
 
@@ -40,8 +39,7 @@ __all__ = [
     # flow / OSSE
     "NS2D", "KolmogorovFlowModel", "FlowObservable", "TwinExperiment",
     # storms
-    "StormModel", "TyphoonModel", "HurricaneModel", "CycloneModel", "BASINS",
-    "TyphoonState", "TyphoonObservable", "synthetic_track",
+    "StormModel", "StormState", "StormObservable", "synthetic_track",
     "synthetic_steered_track", "analytic_steering", "analytic_environment",
     "LearnedIntensityModel", "japan_steering", "field_steering", "japan_region",
     "landfall_probability", "JAPAN_BBOX", "TornadoEnvironmentModel", "TornadoState",

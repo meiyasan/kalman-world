@@ -144,6 +144,21 @@ int kalman_model_P0(const kalman_model_t *model, double *P0);          /* n x n 
 int kalman_model_set_x0(kalman_model_t *model, const double *x0);      /* n     */
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);      /* n x n */
 
+/* --- model: named parameters and noise covariances ------------------------- */
+
+/// Number of named parameters the model declares, or -1.
+int kalman_model_parameter_count(const kalman_model_t *model);
+/// Name of parameter i (sorted order), or NULL.
+const char *kalman_model_parameter_name(const kalman_model_t *model, int i);
+/// Read a parameter into *value; -1 (and a message) when the name is unknown.
+int kalman_model_parameter(const kalman_model_t *model, const char *name, double *value);
+/// Set a parameter; -1 (and a message) when the name is unknown.
+int kalman_model_set_parameter(kalman_model_t *model, const char *name, double value);
+
+/// Replace the constant process / measurement noise covariances.
+int kalman_model_set_Q(kalman_model_t *model, const double *Q);        /* n x n */
+int kalman_model_set_R(kalman_model_t *model, const double *R);        /* m x m */
+
 /* --- model: coefficients at time t ---------------------------------------- */
 
 int kalman_model_F(const kalman_model_t *model, double t, double *F);  /* n x n */

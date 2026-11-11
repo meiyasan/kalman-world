@@ -31,8 +31,7 @@ from .vision        import (DetectionModel, BoxTrackModel, SortTracker, KalmanTr
                             evaluate_mot, synthetic_multi)
 from .gps           import GPSModel, GPSConstellation, GPSState, GPSObservable
 from .weather       import (NS2D, KolmogorovFlowModel, FlowObservable, TwinExperiment,
-                            StormModel, HurricaneModel, CycloneModel, BASINS,
-                            TyphoonModel, TyphoonState, TyphoonObservable, synthetic_track,
+                            StormModel, StormState, StormObservable, synthetic_track,
                             synthetic_steered_track, analytic_steering, analytic_environment,
                             LearnedIntensityModel, japan_steering, field_steering,
                             japan_region, landfall_probability, JAPAN_BBOX,

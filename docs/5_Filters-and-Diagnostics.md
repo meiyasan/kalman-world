@@ -129,7 +129,7 @@ filter to loop over. Two consequences worth knowing: the filter's per-step logs
 diagnostics do not apply; and `ckf.sample()` raises, because there is no time
 series to draw — use `model.generate_event()`.
 
-### IMM — regime switching
+### IKF — regime switching
 
 Runs M filters in parallel, one per regime, mixing their states each step and
 re-weighting by likelihood. The *routing* policy is pluggable.

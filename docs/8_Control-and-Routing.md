@@ -83,7 +83,7 @@ controller defines it.
 
 ---
 
-## Routers (IMM)
+## Routers (IKF)
 
 A router decides how much weight each model in a bank deserves right now.
 `InteractiveKalmanFilter` runs M filters in parallel — one per regime — and each
@@ -106,7 +106,7 @@ record = ikf.forward(zk)
 
 | Router | Decides from | Needs training |
 |---|---|---|
-| `BayesianRouter` | model likelihoods (the textbook IMM update) | no |
+| `BayesianRouter` | model likelihoods (the textbook IKF update) | no |
 | `ThresholdRouter` | NIS crossing a threshold | no |
 | `NeuralRouter` | a learned function of the NIS/likelihood features | yes |
 | `HybridRouter` | Bayesian prior blended with a learned correction | yes |
@@ -127,6 +127,6 @@ Network architectures are pluggable through `kalman.framework.routers.nn`.
 
 - [`12_KalmanAI.ipynb`](../share/notebooks/12_KalmanAI.ipynb) — the control and
   routing layer end to end: P/PID/LQR/MPPI/neural comparison, adaptive `Q`/`R`,
-  IMM routing.
-- [`14_StormTracking.ipynb`](../share/notebooks/14_StormTracking.ipynb) — IMM over
+  IKF routing.
+- [`14_StormTracking.ipynb`](../share/notebooks/14_StormTracking.ipynb) — IKF over
   storm recurvature regimes.

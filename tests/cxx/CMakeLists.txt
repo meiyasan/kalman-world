@@ -41,6 +41,13 @@ foreach(SRC ${TEST_SOURCES})
     add_executable(${TEST_NAME} ${SRC})
     target_include_directories(${TEST_NAME} PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
     target_link_libraries(${TEST_NAME} PRIVATE ${LIBRARY})
+    # The application models have their own library; the tests named *_apps link it.
+    if(TEST_NAME MATCHES "_apps$")
+        if(NOT TARGET KalmanApps)
+            message(FATAL_ERROR "${TEST_NAME} needs libKalmanApps (apps/CMakeLists.txt).")
+        endif()
+        target_link_libraries(${TEST_NAME} PRIVATE KalmanApps)
+    endif()
 
     # A Release build inherits CMAKE_BUILD_WITH_INSTALL_RPATH from
     # ProjectArchitecture, which points these binaries at the install prefix -- so

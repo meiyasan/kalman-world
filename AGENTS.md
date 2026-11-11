@@ -248,9 +248,6 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
   reserved stubs that raise `NotImplementedError`.
 - Several `apps/` models still override `f()` directly and could move to
   `f_continuous` (rocket, space, tracking, storms).
-- Notebook 14 still names `TyphoonModel`; `StormModel` (basin-agnostic) is the
-  canonical class, with `TyphoonModel`/`HurricaneModel`/`CycloneModel` as basin
-  presets.
 - `KalmanSolver` carries no mesh contract: `n`/`shape`/`length`/`dt` and the
   physics hook are re-declared per concrete solver, and the hook is named
   `rhs_hat` (spectral) vs `rhs` (finite-difference). A new discretization family
@@ -328,16 +325,40 @@ subdirectory for subdirectory — `Engines/`, `Models/`, `Filters/`, `IO/`,
 `Abstract/`. A new file on one side has an obvious home on the other. The mapping
 table is in docs/15; keep it accurate when you add to either side.
 
-**No applications.** libKalmanFramework ships no physics. A pendulum, a drift chamber, a
-suspension or a power grid subclasses `Models::Linear` / `Models::Extended` and
-lives at apps level, exactly as `modules/apps/` does for Python. The models in
-`tests/cxx/Fixtures.h` are test fixtures and must stay there.
+**No applications in the core.** libKalmanFramework ships no physics. A pendulum,
+a drift chamber, a suspension or a power grid subclasses `Models::Linear` /
+`Models::Extended` and lives at apps level, exactly as `modules/apps/` does for
+Python. The models in `tests/cxx/Fixtures.h` are test fixtures and must stay
+there.
 
-**Scope is deliberate**: Linear and Extended engines, the record, the sampler,
-the diagnostics and the shared algebra. No integrators, solvers, controllers or
-routers; the sigma-point / particle / ensemble / combinatorial engines stay
-Python-only. `EngineKind` still *names* them, and `Filter::MakeEngine` throws for
-the ones with no C++ engine rather than substituting a different algorithm.
+**The applications are `libKalmanApps`** (`apps/`), a second library that links
+the first. Each model in it is the twin of one Python class in `modules/apps/`,
+which mixes in `NativeTwin` and hands its filtering pass to the twin when the
+library is present. Rules for a twin:
+
+- It must give the Python answer. `tests/test_native_twins.py` compares the two
+  on every ported configuration; add the new one there and to
+  `tools/benchmark_twins.py`.
+- Nothing is defined twice. Scalars cross as named parameters; `Q`, `R`, the
+  sample rate and the initial state are pushed from the Python instance. Do not
+  recompute a covariance in C++ that Python already built.
+- `native_name()` returns `None` for every configuration that was not ported
+  (a Python callable, a state-dependent `Q`, a control). Falling back is
+  correct; guessing is not.
+- Derive from `Kalman::Apps::Model`, which differences `f`/`h` as
+  `helpers.numerical_jacobian` does. Do not use the library's central scheme in
+  a twin: the two sides would linearise differently.
+
+**Adding a member to `Kalman::Model` changes its layout.** Everything compiled
+against the header must be rebuilt together: the library, `libKalmanApps`, the
+example plugin, the tests, and downstream users such as ROOT+. A stale plugin
+does not fail to load; it corrupts memory.
+
+**Scope**: every `EngineKind` has a C++ engine (linear, extended, unscented,
+particle, ensemble, combinatorial), and the integrators, solvers, controllers
+and routers are ported too. Still Python-only: training of the learned routers
+and controllers (Torch), which cross as a finished policy through ONNX or
+TorchScript. docs/15 has the table.
 
 Conventions, most of which the build or the tests will enforce:
 
@@ -346,9 +367,11 @@ Conventions, most of which the build or the tests will enforce:
   prefix: these are not ROOT classes, and the prefix would invite confusion with
   root-plus' own `ROOT::IOPlus::TKalmanFilter`, which is a separate and much
   smaller standalone filter. Both can live in one process.
-- **Optional backends stay optional.** `KALMAN_WITH_BLAS`, `KALMAN_WITH_TORCH`
-  and `KALMAN_WITH_ONNXRUNTIME` all default to 0, and the library is complete and
-  correct with all three off. Never make one load-bearing.
+- **Optional backends stay optional.** `KALMAN_WITH_TORCH` and
+  `KALMAN_WITH_ONNXRUNTIME` are on only when the package is found, and
+  `KALMAN_WITH_BLAS` when a CBLAS is (`-DKALMAN_USE_BLAS=OFF` forces the built-in
+  kernel). The library is complete and correct with all three off. Never make
+  one load-bearing.
 - **Do not route `Kalman::Matrix` through Torch.** A Torch op has a ~230 ns
   dispatch floor — 10-25x an entire small matrix product. BLAS is used instead,
   and only at or above `KALMAN_BLAS_MIN_DIM`, because below the crossover the
@@ -384,7 +407,7 @@ Conventions, most of which the build or the tests will enforce:
   needs nothing, so the routing layer works in a build with no optional
   dependency at all. Never `#include <onnxruntime...>` or `<torch/...>` in
   `Routers/Neural.*` or any public header.
-- **A wrong-looking IMM is usually a wrong-looking *test*.** Two modes that
+- **A wrong-looking IKF is usually a wrong-looking *test*.** Two modes that
   differ only in Q, under a measurement noise that swamps both, genuinely cannot
   be told apart — measured: innovation covariances 8% apart and both with mean
   NIS ~ 1.09, at which point ~0.5/0.5 is the *correct* answer, not a bug. Before

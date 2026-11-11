@@ -78,7 +78,7 @@ included, so a change on one side has an obvious home on the other:
 | `framework/routers/nn/mlp.py` | `Kalman/Routers/NN/MLP.h` | `Routers::NN::MLP` (no dependency) |
 | `framework/routers/nn/*.py` | `Kalman/Routers/NN/Torch.h` | `Routers::NN::Torch` (TorchScript) |
 | `framework/routers/nn/*.py` | `Kalman/Routers/NN/Onnx.h` | `Routers::NN::Onnx` (ONNX) |
-| `framework/filters/ikf.py` | `Kalman/Filters/IMM.h` | `Filters::IMM` |
+| `framework/filters/ikf.py` | `Kalman/Filters/IKF.h` | `Filters::IKF` (aliased `IMM`) |
 | — (numpy) | `Kalman/Matrix.h` | `Kalman::Matrix`, `Kalman::Vector` |
 | `modules/helpers.py` | `Kalman/Utils.h` | `Kalman::Utils` |
 | `framework/models/native.py` | `Kalman/Factory.h` | `Kalman::Factory` + `KALMAN_REGISTER_MODEL` |
@@ -105,7 +105,7 @@ raises rather than silently becoming a linear step.
 |------|----------|-------|
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
-| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IMM`, `Filters::CKF` |
+| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IKF`, `Filters::CKF` |
 | **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPPI`; `Boost`, `AdaptiveQR` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
 | **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
@@ -263,16 +263,16 @@ pass, as an exception naming the matrix and both shapes.
 ## The decision layer
 
 When no single model covers a system's whole behaviour, run several and carry a
-probability on each. `Kalman::Filters::IMM` does the mixing, prediction and
+probability on each. `Kalman::Filters::IKF` does the mixing, prediction and
 combination; the *decision* — which model is right now — is delegated to a
 `Kalman::Routers::Router` and is the only pluggable part of the step.
 
 ```cpp
 Kalman::Routers::Bayesian router;                 // the classical mu ∝ c · L
-Kalman::Filters::IMM imm({&cruise, &manoeuvre}, Pi, &router);
+Kalman::Filters::IKF ikf({&cruise, &manoeuvre}, Pi, &router);
 
-auto record = imm.Forward(measurements);
-const Kalman::Matrix &modes = imm.ModeHistory();  // (T, M): which regime, when
+auto record = ikf.Forward(measurements);
+const Kalman::Matrix &modes = ikf.ModeHistory();  // (T, M): which regime, when
 ```
 
 | Router | Decides on | Needs |
@@ -317,7 +317,7 @@ router.export_torchscript("router.pt")        # for NN::Torch
 ```cpp
 Kalman::Routers::NN::Onnx policy("router.onnx");   // or NN::Torch, or NN::MLP
 Kalman::Routers::Neural   router(&policy, /* window */ 5);
-Kalman::Filters::IMM      imm({&cruise, &manoeuvre}, Pi, &router);
+Kalman::Filters::IKF      ikf({&cruise, &manoeuvre}, Pi, &router);
 ```
 
 Both exports produce the same probabilities as the Python router; measured
@@ -436,6 +436,72 @@ the new models. Thus a model written in C++ (in a ROOT+ analysis, for
 example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
 and Unity, agents and other users can then use it as a spec base.
 
+## libKalmanApps: the application models in C++
+
+`libKalmanFramework` ships no physics. The physics of `modules/apps/` lives in a
+second library, `libKalmanApps` (`apps/include/Kalman/Apps/`, `apps/src/`), which
+links the first and registers each model with the factory. `make build` builds
+both and they install side by side.
+
+Each model there is the **twin** of one Python class. The Python class stays
+the model: its name, its constructor, `plot`, the catalogue entry and the
+notebooks are unchanged. What changes is who runs the filtering pass. When the
+library is present and the configuration has a C++ counterpart,
+`model.filter(z)` hands the whole pass to the twin: the model's `f`/`h`, the
+Jacobians and the EKF steps run inside `Kalman::Filter`, in one call. Otherwise
+the Python loop runs as before.
+
+| Python class | C++ class | Registered name | Stays in Python |
+|---|---|---|---|
+| `StormModel` | `Apps::Weather::Storm` | `storm`, `storm-track-only` | a `steering` flow or an `intensity_fn` (Python callables) |
+| `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), thrust controls, a user `f`/`h` |
+
+Measured with `python tools/benchmark_twins.py` (2000 steps, best of 3, Apple
+silicon); the last two columns are the largest difference between the two
+runs, relative to the largest entry:
+
+| Model | Python | C++ twin | Faster | State | Covariance |
+|---|---|---|---|---|---|
+| `StormModel`, NH straight | 121.3 ms | 11.6 ms | 10.5x | 5.7e-09 | 1.9e-07 |
+| `StormModel`, NH recurving | 129.2 ms | 11.6 ms | 11.1x | 1.4e-08 | 2.2e-07 |
+| `StormModel`, track only | 116.5 ms | 10.6 ms | 11.0x | 1.1e-08 | 1.1e-10 |
+| `BallisticModel`, order 3, drag | 656.5 ms | 16.4 ms | 40.1x | 1.4e-09 | 5.0e-08 |
+| `BallisticModel`, order 2 | 451.5 ms | 14.6 ms | 30.9x | 3.1e-10 | 2.8e-08 |
+| `BallisticModel`, orbital gravity | 700.3 ms | 17.6 ms | 39.7x | 2.2e-10 | 2.8e-05 |
+
+The two runs are not bit-identical, and cannot be. One call of `f` agrees to the
+last digit or two, because numpy and the C math library round a cosine
+differently. Both sides then difference `f` with a step of `1e-6`, which turns
+that last digit into about `1e-9` of noise in each Jacobian. The orbital row
+shows the same effect at its worst: a position of `6.7e6` m differenced against
+an acceleration step of `1e-6` leaves `1e-3` of noise in that Jacobian column
+on *both* sides. An analytic Jacobian would remove it from both.
+
+**How a twin stays the same model.** Nothing is defined twice:
+
+- The twin's scalars are the *named parameters* of `Kalman::Model`
+  (`DeclareParameter`, `SetParameter`, `ParametersChanged`), pushed from the
+  Python instance by name: `omega`, `beta_drift`, `c_drag` and so on.
+- The sample rate, `Q` and `R` are pushed from the Python instance on every
+  run, and the initial state by the filter. A change made to the Python model
+  after construction therefore reaches the twin.
+- `Apps::Model` differences `f` and `h` the way `helpers.numerical_jacobian`
+  does (forward, step `1e-6 max(1, |x_j|)`), not with the library's central
+  scheme, so the two sides linearise alike.
+- A subclass or an instance that redefines `f`, `h`, `F`, `H`, `B`, `L`, `Q` or
+  `R` is a different model from the one that was ported, and keeps the Python
+  loop. So does any engine other than the plain extended one.
+
+`kalman.framework.models.native.USE_NATIVE_TWINS = False`, or
+`KALMAN_NATIVE_TWINS=0` in the environment, switches every twin off. That is how
+the "Python" column above is measured.
+
+**Adding a twin.** Write the class under `apps/` deriving from
+`Kalman::Apps::Model`, declare its parameters, register it; then mix
+`NativeTwin` into the Python class and give it `native_name()` (the registered
+name for this configuration, or `None`) and `native_parameters()`. Add its
+cases to `tests/test_native_twins.py` and to `tools/benchmark_twins.py`.
+
 ## Integrating with root-plus
 
 `examples/cxx/ballistics_root.cc` is the worked demonstrator — a projectile under
@@ -537,8 +603,8 @@ linear filter. Both can be present in one process.
 | Spectral solver backend | numpy, or torch on CUDA/MPS for batched ensembles | built-in FFT only (no torch); one field at a time |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
-| Controllers / routers | P, PID, LQR, MPPI, Neural, IMM | none yet — the ONNX seam is the plan |
-| Applications | `modules/apps/` | none — they belong downstream |
+| Controllers / routers | P, PID, LQR, MPPI, Neural, IKF | none yet — the ONNX seam is the plan |
+| Applications | `modules/apps/` | `libKalmanApps`: `StormModel` and `BallisticModel` so far; none in the core library |
 | Missing data | NaN channel skipped | NaN channel skipped (same) |
 | Covariance update | Joseph form | Joseph form (same) |
 | Smoother | RTS | RTS (same) |

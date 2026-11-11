@@ -8,7 +8,7 @@ Each filter is a thin :class:`~kalman.framework.filter.KalmanFilter` leaf that w
 with the matching engine (selected by ``KIND``), exposing ``forward()`` / ``backward()``.
 Construct by wrapping a model, e.g. ``LinearKalmanFilter(OscillatorModel("s", fs=100))``.
 
-IMM routing classes live in ``kalman.framework.routers``::
+IKF routing classes live in ``kalman.framework.routers``::
 
     from kalman.framework.filters import InteractiveKalmanFilter
     from kalman.framework.routers import NeuralRouter, BayesianRouter

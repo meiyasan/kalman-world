@@ -155,7 +155,7 @@ the worked example in [`../README.md`](../README.md).
 | **resonators.powergrids** | `PowerGridStateModel` |
 | **resonators.suspensions** | `SuspensionModel` |
 | **weather.flow** | `KolmogorovFlowModel` |
-| **weather.storms** | `StormModel` and the basin presets `TyphoonModel` / `HurricaneModel` / `CycloneModel`, plus `TornadoEnvironmentModel` |
+| **weather.storms** | `StormModel` (one model for typhoons, hurricanes and cyclones; `hemisphere=` is the only basin difference), plus `TornadoEnvironmentModel` |
 | **tracking** | `DriftChamberModel` |
 | **vision** | `DetectionModel`, `BoxTrackModel` |
 | **vehicles** | `CarSpeedModel`, `CarLaneModel` |

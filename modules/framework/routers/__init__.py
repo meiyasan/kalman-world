@@ -1,4 +1,4 @@
-"""IMM model routers — pluggable mode-probability update strategies.
+"""IKF model routers — pluggable mode-probability update strategies.
 
 Hierarchy::
 

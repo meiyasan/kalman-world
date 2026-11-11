@@ -91,6 +91,13 @@ int kalman_model_P0(const kalman_model_t *model, double *P0);
 int kalman_model_set_x0(kalman_model_t *model, const double *x0);
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);
 
+int kalman_model_parameter_count(const kalman_model_t *model);
+const char *kalman_model_parameter_name(const kalman_model_t *model, int i);
+int kalman_model_parameter(const kalman_model_t *model, const char *name, double *value);
+int kalman_model_set_parameter(kalman_model_t *model, const char *name, double value);
+int kalman_model_set_Q(kalman_model_t *model, const double *Q);
+int kalman_model_set_R(kalman_model_t *model, const double *R);
+
 int kalman_model_F(const kalman_model_t *model, double t, double *F);
 int kalman_model_H(const kalman_model_t *model, double t, double *H);
 int kalman_model_Q(const kalman_model_t *model, double t, double *Q);
