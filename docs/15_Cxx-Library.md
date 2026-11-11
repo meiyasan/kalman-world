@@ -455,19 +455,23 @@ the Python loop runs as before.
 |---|---|---|---|
 | `StormModel` | `Apps::Weather::Storm` | `storm`, `storm-track-only` | a `steering` flow or an `intensity_fn` (Python callables) |
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), thrust controls, a user `f`/`h` |
+| `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
+| `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
 
-Measured with `python tools/benchmark_twins.py` (2000 steps, best of 3, Apple
-silicon); the last two columns are the largest difference between the two
+Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
+silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two
 runs, relative to the largest entry:
 
 | Model | Python | C++ twin | Faster | State | Covariance |
 |---|---|---|---|---|---|
-| `StormModel`, NH straight | 121.3 ms | 11.6 ms | 10.5x | 5.7e-09 | 1.9e-07 |
-| `StormModel`, NH recurving | 129.2 ms | 11.6 ms | 11.1x | 1.4e-08 | 2.2e-07 |
-| `StormModel`, track only | 116.5 ms | 10.6 ms | 11.0x | 1.1e-08 | 1.1e-10 |
-| `BallisticModel`, order 3, drag | 656.5 ms | 16.4 ms | 40.1x | 1.4e-09 | 5.0e-08 |
-| `BallisticModel`, order 2 | 451.5 ms | 14.6 ms | 30.9x | 3.1e-10 | 2.8e-08 |
-| `BallisticModel`, orbital gravity | 700.3 ms | 17.6 ms | 39.7x | 2.2e-10 | 2.8e-05 |
+| `StormModel`, NH straight | 183.2 ms | 17.2 ms | 10.7x | 5.7e-09 | 1.9e-07 |
+| `StormModel`, NH recurving | 193.6 ms | 17.0 ms | 11.4x | 1.4e-08 | 2.2e-07 |
+| `StormModel`, track only | 177.1 ms | 16.2 ms | 10.9x | 1.1e-08 | 1.1e-10 |
+| `BallisticModel`, order 3, drag | 985.1 ms | 24.6 ms | 40.0x | 1.4e-09 | 5.0e-08 |
+| `BallisticModel`, order 2 | 682.6 ms | 20.7 ms | 33.0x | 3.1e-10 | 2.8e-08 |
+| `BallisticModel`, orbital gravity | 1069.5 ms | 25.3 ms | 42.3x | 2.2e-10 | 2.8e-05 |
+| `TornadoEnvironmentModel` | 89.8 ms | 10.6 ms | 8.5x | 8.7e-11 | 2.5e-11 |
+| `CarSpeedModel` | 220.7 ms | 11.8 ms | 18.8x | 7.8e-12 | 3.2e-08 |
 
 The two runs are not bit-identical, and cannot be. One call of `f` agrees to the
 last digit or two, because numpy and the C math library round a cosine
@@ -604,7 +608,7 @@ linear filter. Both can be present in one process.
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
 | Controllers / routers | P, PID, LQR, MPPI, Neural, IKF | none yet — the ONNX seam is the plan |
-| Applications | `modules/apps/` | `libKalmanApps`: `StormModel` and `BallisticModel` so far; none in the core library |
+| Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel` so far; none in the core library |
 | Missing data | NaN channel skipped | NaN channel skipped (same) |
 | Covariance update | Joseph form | Joseph form (same) |
 | Smoother | RTS | RTS (same) |

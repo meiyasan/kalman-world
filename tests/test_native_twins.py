@@ -18,8 +18,11 @@ from modules.framework.native import core
 import modules.framework.models.native as native
 from modules.framework.models.native import NativeTwin, apps_library_names, native_model_classes
 from modules.framework.filters import UnscentedKalmanFilter
-from modules.apps.weather.storms import StormModel, synthetic_track, analytic_steering
+from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_steering,
+                                         TornadoEnvironmentModel, synthetic_environment)
 from modules.apps.ballistics import BallisticModel
+from modules.apps.vehicles import CarSpeedModel
+from modules.framework.constants import KalmanIntegratorKind
 
 HAVE_APPS = bool(apps_library_names())
 needs_apps = unittest.skipUnless(HAVE_APPS, "libKalmanApps is not built")
@@ -214,6 +217,47 @@ class TestBallisticTwin(unittest.TestCase):
 
 
 @needs_apps
+class TestTornadoTwin(unittest.TestCase):
+
+    def test_twin_matches_python_in_both_regimes(self):
+        obs, _ = synthetic_environment(n_steps=300, onsets=((90, 160),), seed=3)
+        for mu, persistence in ((0.3, 0.85), (3.0, 0.85), (3.0, 0.5)):
+            py, cx = both(lambda: TornadoEnvironmentModel("ENV", mu=mu, persistence=persistence), obs)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, mu={mu} a={persistence}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, mu={mu} a={persistence}")
+
+    def test_the_bank_runs_on_twins(self):
+        models, _, _ = TornadoEnvironmentModel.ikf_bank(season="peak")
+        self.assertTrue(all(m.native_handle() is not None for m in models))
+
+
+@needs_apps
+class TestCarSpeedTwin(unittest.TestCase):
+
+    def run_of(self, **kw):
+        car = CarSpeedModel("CAR", **kw)
+        return np.asarray(car.sample(15.0, seed=1).zk)
+
+    def test_twin_matches_python_through_the_grip_to_power_handoff(self):
+        for kw in ({}, {"power": 300_000.0, "mass": 1200.0}, {"grade": 0.05, "mu": 0.6}, {"fs": 50.0}):
+            z = self.run_of(**kw)
+            py, cx = both(lambda: CarSpeedModel("CAR", **kw), z)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
+            self.assertGreater(float(np.max(np.asarray(cx.xk)[:, 1])), 20.0, "the car got up to speed")
+
+    def test_another_integrator_keeps_the_python_physics(self):
+        class Eulered(CarSpeedModel):
+            DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER
+        self.assertIsNone(Eulered("CAR").native_handle())
+
+        class Substepped(CarSpeedModel):
+            SOLVER_SUBSTEPS = 4
+        self.assertIsNone(Substepped("CAR").native_handle())
+        self.assertIsNotNone(CarSpeedModel("CAR").native_handle())
+
+
+@needs_apps
 class TestTwinContract(unittest.TestCase):
 
     def test_twins_stay_out_of_the_plugin_catalogue(self):
@@ -221,7 +265,7 @@ class TestTwinContract(unittest.TestCase):
         StormModel("TC").native_handle()            # make sure the library is loaded
         listed = set(native_model_classes())
         self.assertFalse(listed & apps_library_names(), listed & apps_library_names())
-        self.assertTrue({"storm", "ballistic"} <= apps_library_names())
+        self.assertTrue({"storm", "ballistic", "tornado-environment", "car-speed"} <= apps_library_names())
 
     def test_parameters_cross_by_name(self):
         model = StormModel("TC", omega=-0.02, beta_drift=4.0, hemisphere="S", dt_hours=3.0)

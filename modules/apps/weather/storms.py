@@ -731,7 +731,7 @@ _SEASON_PI = {
 }
 
 
-class TornadoEnvironmentModel(ExtendedKalmanModel):
+class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
     """
     Mean-reverting tornado-environment latent — one regime of an IKF.
 
@@ -781,6 +781,13 @@ class TornadoEnvironmentModel(ExtendedKalmanModel):
             x0 = np.array([[mu]])
         super().__init__(sensor_id, Q=Q, R=R, L=np.eye(1), fs=1.0 / float(dt_hours),
                          x0=x0, **kw)
+
+    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Tornado).
+    def native_name(self):
+        return "tornado-environment"
+
+    def native_parameters(self):
+        return {"mu": self.mu, "persistence": self.a}
 
     def f(self, x, u=None, w=None, t=None):
         x = np.asarray(x, float).reshape(-1)

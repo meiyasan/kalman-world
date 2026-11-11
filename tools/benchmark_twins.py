@@ -26,7 +26,9 @@ warnings.filterwarnings("ignore")
 import modules as kalman                                          # noqa: E402
 import modules.framework.models.native as native                 # noqa: E402
 from modules.apps.weather.storms import StormModel, synthetic_track   # noqa: E402
+from modules.apps.weather.storms import TornadoEnvironmentModel, synthetic_environment   # noqa: E402
 from modules.apps.ballistics import BallisticModel                # noqa: E402
+from modules.apps.vehicles import CarSpeedModel                   # noqa: E402
 
 
 def compare(make, z, repeat):
@@ -61,6 +63,13 @@ def cases(steps):
     z[::17] = np.nan                                              # dropped measurements
     yield "BallisticModel, order 3, drag", lambda: BallisticModel("b", fs=100.0, c_drag=0.01), z
     yield "BallisticModel, order 2", lambda: BallisticModel("b", fs=100.0, order=2), z
+
+    obs, _ = synthetic_environment(n_steps=steps, onsets=((steps // 3, steps // 2),), seed=0)
+    yield "TornadoEnvironmentModel", lambda: TornadoEnvironmentModel("ENV", mu=3.0), obs
+
+    car = CarSpeedModel("CAR")
+    run = car.sample(steps / car.fs, seed=0)
+    yield "CarSpeedModel", lambda: CarSpeedModel("CAR"), np.asarray(run.zk)
 
     r0 = 6.771e6
     v0 = np.sqrt(6.674e-11 * 5.972e24 / r0)

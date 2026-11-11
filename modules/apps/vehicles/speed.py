@@ -17,6 +17,7 @@ Vehicle dynamics models for the Kalman framework.
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeTwin
 from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind
 
 
@@ -33,7 +34,7 @@ class CarSpeedObservable(KalmanObservable):
     DISTANCE = "m"
 
 
-class CarSpeedModel(ExtendedKalmanModel):
+class CarSpeedModel(NativeTwin, ExtendedKalmanModel):
     """
     Straight-line acceleration ("speed") test of a single car.
 
@@ -102,6 +103,23 @@ class CarSpeedModel(ExtendedKalmanModel):
         # by a zero matrix every predict step. L=I says explicitly: Q enters
         # additively on every state, which is what q_pos/q_vel are actually meant to do.
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
+
+    # ----------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Vehicles::CarSpeed). It takes one
+    # RK4 step per sample, so another integrator or sub-stepping stays in Python.
+    # ----------------------------------------------------------------------
+    def native_name(self):
+        from ...framework.integrators.rk4 import RK4Integrator
+        if type(self.default_integrator()) is not RK4Integrator:
+            return None
+        if int(getattr(self, "SOLVER_SUBSTEPS", 1)) != 1:
+            return None
+        return "car-speed"
+
+    def native_parameters(self):
+        return {"mass": self.mass, "power": self.power, "mu": self.mu,
+                "drag_area": self.drag_area, "rho": self.rho, "c_roll": self.c_roll,
+                "grade": self.grade, "g": self.g, "v_eps": self.v_eps}
 
     # ----------------------------------------------------------------------
     # Longitudinal dynamics

@@ -4,7 +4,9 @@
  */
 #include "Kalman/Kalman.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
+#include "Kalman/Apps/Weather/Tornado.h"
 #include "Check.h"
 
 #include <cmath>
@@ -24,6 +26,8 @@ int main()
               "apps: storm is (n, m) = (5, 3) on the extended engine");
         CHECK(factory.Describe("storm-track-only").m == 2, "apps: the track-only storm observes the centre alone");
         CHECK(factory.Describe("ballistic-order2").n == 6, "apps: the order-2 ballistic model has six states");
+        CHECK(factory.Has("tornado-environment") && factory.Has("car-speed"),
+              "apps: the tornado and car-speed models are registered");
     }
 
     // --- named parameters ------------------------------------------------------
@@ -134,6 +138,41 @@ int main()
         try { Apps::Ballistics::Ballistic bad(4); }
         catch (const std::invalid_argument &) { threw = true; }
         CHECK(threw, "ballistic: an order other than 2 or 3 throws");
+    }
+
+    // --- tornado environment: relaxation toward the regime mean ------------------------
+    {
+        Apps::Weather::Tornado tornado;
+        tornado.SetParameter("mu", 3.);
+        tornado.SetParameter("persistence", 0.5);
+        Vector x(1);
+        x(0) = 1.;
+        CHECK_CLOSE(tornado.f(x, Vector(), 0.)(0), 2., 1e-15, "tornado: one step closes half the gap to mu");
+        x(0) = 3.;
+        CHECK_CLOSE(tornado.f(x, Vector(), 0.)(0), 3., 0., "tornado: the equilibrium is a fixed point");
+        CHECK_CLOSE(tornado.h(x, 0.)(0), 3., 0., "tornado: the latent is observed directly");
+    }
+
+    // --- car speed: grip-limited launch, power-limited run, a top speed ----------------
+    {
+        Apps::Vehicles::CarSpeed car;
+        CHECK_CLOSE(car.Acceleration(0.), 1. * 9.81 - 0.015 * 9.81, 1e-12,
+                    "car: off the line the grip sets the acceleration (mu g minus rolling)");
+        CHECK(car.Acceleration(40.) < car.Acceleration(10.), "car: power-limited acceleration falls with speed");
+        const double hand = 150000. / (1. * 1500. * 9.81);          // P / (mu m g)
+        CHECK(car.Acceleration(hand - 1.) > car.Acceleration(hand + 1.), "car: the hand-off sits at P / (mu m g)");
+
+        Vector x(2);
+        for (int k = 0; k < 20 * 600; ++k) x = car.f(x, Vector(), 0.);   // ten minutes at 20 Hz
+        const double top = x(1);
+        CHECK(std::fabs(car.Acceleration(top)) < 1e-6, "car: the run ends at the speed where the forces balance");
+        CHECK(top > 60. && top < 80., "car: a 150 kW car tops out between 216 and 288 km/h");
+
+        Vector back(2);
+        back(1) = 0.;
+        car.SetParameter("grade", 1.2);                              // a wall of a hill,
+        car.SetParameter("mu", 0.2);                                 // and too little grip to climb it
+        CHECK_CLOSE(car.f(back, Vector(), 0.)(1), 0., 0., "car: the speed is clamped at zero, never negative");
     }
 
     // --- the Jacobian is the forward difference the Python framework takes ----------
