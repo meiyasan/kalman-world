@@ -298,11 +298,15 @@ if(BUILD_DOCUMENTATION AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/share/doxygen/CMak
     # before `pages` publishes it.
     find_program(KALMAN_SITE_PYTHON NAMES python3 python)
     if(TARGET doxygen AND KALMAN_SITE_PYTHON)
+        # The notebooks as web pages, where their interactive players run (a
+        # notebook viewed on GitLab is shown without JavaScript).
         add_custom_target(sitesearch
             COMMAND ${KALMAN_SITE_PYTHON} "${CMAKE_SOURCE_DIR}/tools/site_search.py"
                     --newest "${CMAKE_BINARY_DIR}/public/docs"
+            COMMAND ${KALMAN_SITE_PYTHON} "${CMAKE_SOURCE_DIR}/tools/site_notebooks.py"
+                    --newest "${CMAKE_BINARY_DIR}/public/docs"
             DEPENDS doxygen
-            COMMENT "Indexing the documentation for full-text search"
+            COMMENT "Indexing the documentation and publishing the notebooks"
             VERBATIM)
         if(TARGET metadata)
             add_dependencies(metadata sitesearch)

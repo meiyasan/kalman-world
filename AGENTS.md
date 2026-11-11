@@ -296,6 +296,12 @@ Three things about that build that are not obvious:
   writes `search/fulltext-index.js` and appends its script to `search/search.js`.
   It changes no template, so the theme submodule stays as it is.
   `tests/test_site_search.py` covers the index builder.
+- **The notebooks are pages of the site** (`notebooks/`, linked from the menu),
+  written by `tools/site_notebooks.py` in the same target. A notebook viewed on
+  GitLab is shown without JavaScript, so its interactive players are blank
+  there; on the site they run. The step needs `nbconvert` in the Python that
+  CMake found, and is skipped with a notice otherwise:
+  `cmake -S . -B var/build -DKALMAN_SITE_PYTHON=/path/to/env/bin/python`.
 
 Doxygen's Markdown parser is stricter than a web renderer, and a malformed
 construct silently swallows the rest of the page rather than erroring. Three
