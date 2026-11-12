@@ -226,6 +226,41 @@ target_link_libraries(my_program PRIVATE Kalman::Kalman Kalman::Apps Kalman::Lea
 
 with `-DCMAKE_PREFIX_PATH=<install prefix>`.
 
+### The `kalman` program
+
+`bin/kalman` says what an installation can run. It links `libKalman` only and
+loads `libKalmanApps` as a plugin when it is beside the library:
+
+```sh
+kalman                               # the models, one per line
+kalman models ballistic              # names containing "ballistic"
+kalman model car-speed               # everything one model declares
+kalman plugins                       # the libraries the models came from
+kalman --plugin KalmanPlugin_example models
+kalman models --json                 # the same, for a program
+```
+
+```
+MODEL                DYNAMICS    ENGINE    n  m  l  fs [Hz]   JACOBIAN  PROCESS NOISE  MEAS. NOISE
+ballistic            continuous  Extended  9  3  0  128       forward   additive       additive
+car-speed            continuous  Extended  2  1  0  20        forward   additive       additive
+storm                discrete    Extended  5  3  0  0.166667  forward   additive       additive
+```
+
+| Column | Read from | Values |
+|---|---|---|
+| DYNAMICS | `Model::Dynamics()` | `continuous` (a `Derivative()` or a generator, decoded for the sample rate) or `discrete` (`f` is the step) |
+| ENGINE | `Model::DefaultEngine()` | the engine a filter picks for the model |
+| JACOBIAN | `Model::Differentiator()` | `analytic`, `forward`, `central` |
+| PROCESS NOISE | `HasProcessNoiseInput()`, `L()`, `NoiseIntensity()` | `additive`, `through L`, `in f`; `per unit time` when Q is stated as an intensity |
+| MEAS. NOISE | `HasMeasurementNoiseInput()` | `additive`, `in h` |
+
+`kalman model NAME` adds the integrator and its substeps, the diagonals of Q
+and R, the initial state and the named parameters with their defaults. A
+plugin is given as a file, or as a name looked for in `KALMAN_PLUGIN_PATH`
+(beside `libKalman` when unset). Only compiled models are listed: the models
+written in Python are in `kalman.apps`.
+
 ### Optional backends
 
 None is needed for correctness.
@@ -525,6 +560,11 @@ the Python loop runs as before.
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
+
+The ballistic and car twins are continuous models: each overrides
+`Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
+framework's integration of that derivative followed by the model's own closing
+step (the acceleration slot, the speed kept non-negative).
 
 Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
 silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two

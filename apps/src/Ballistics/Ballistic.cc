@@ -32,6 +32,7 @@ namespace Kalman::Apps::Ballistics
         DeclareParameter("M", 5.972e24);
         DeclareParameter("substeps", 1.);      // integrator steps per sample
         DeclareParameter("integrator", 1.);    // IntegratorKind: 0 Euler, 1 RK4, 2 Dormand-Prince
+        UseContinuousDynamics();
         ParametersChanged();
         SetSampleRate(128.);
 
@@ -72,22 +73,25 @@ namespace Kalman::Apps::Ballistics
             a[i] = grav[i] + (speed > 0. ? -fDragOverMass * speed * v[i] : 0.);
     }
 
-    Vector Ballistic::f(const Vector &x, const Vector &, double t) const
+    Vector Ballistic::Derivative(const Vector &s, const Vector &, double) const
     {
-        // dp/dt = v, dv/dt = a(p, v), da/dt = 0: the whole state goes to the model's
-        // integrator; the acceleration slot is filled in where the step lands.
-        const std::size_t order = fOrder, size = NState();
-        const Kalman::Derivative derivative = [this, order, size](const Vector &s, const Vector &, double) {
-            const double p[3] = {s(0), s(order), s(2 * order)};
-            const double v[3] = {s(1), s(order + 1), s(2 * order + 1)};
-            double a[3];
-            Acceleration(p, v, a);
-            Vector d(size, 0.);
-            for (std::size_t i = 0; i < 3; ++i) { d(order * i) = v[i]; d(order * i + 1) = a[i]; }
-            return d;
-        };
-        const std::size_t steps = Substeps();
-        const Vector y = GetIntegrator().Integrate(derivative, x, Vector(), t, DeltaT() / static_cast<double>(steps), steps);
+        // dp/dt = v, dv/dt = a(p, v), da/dt = 0.
+        const std::size_t order = fOrder;
+        const double p[3] = {s(0), s(order), s(2 * order)};
+        const double v[3] = {s(1), s(order + 1), s(2 * order + 1)};
+        double a[3];
+        Acceleration(p, v, a);
+        Vector d(NState(), 0.);
+        for (std::size_t i = 0; i < 3; ++i) { d(order * i) = v[i]; d(order * i + 1) = a[i]; }
+        return d;
+    }
+
+    Vector Ballistic::f(const Vector &x, const Vector &u, double t) const
+    {
+        // The model is continuous: the framework integrates Derivative() over one
+        // sample; the acceleration slot is then filled in where the step lands.
+        const std::size_t order = fOrder;
+        const Vector y = Kalman::Model::f(x, u, t);
 
         const double p[3] = {y(0), y(order), y(2 * order)};
         const double v[3] = {y(1), y(order + 1), y(2 * order + 1)};

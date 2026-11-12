@@ -60,6 +60,9 @@ namespace Kalman::Apps::Ballistics
 
             std::size_t Order() const { return fOrder; }
 
+            /// The continuous dynamics: dp/dt = v, dv/dt = a(p, v), da/dt = 0.
+            Vector Derivative(const Vector &x, const Vector &u, double t = 0.) const override;
+            /// One sample: Derivative() integrated, then the acceleration slot refreshed.
             Vector f(const Vector &x, const Vector &u, double t = 0.) const override;
             Vector h(const Vector &x, double t = 0.) const override;
 

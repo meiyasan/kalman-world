@@ -177,6 +177,17 @@ if(BUILD_LIBRARY)
             FILES_MATCHING PATTERN "*.h")
     install(FILES "${CMAKE_BINARY_DIR}/include/Kalman/Config.h" DESTINATION include/Kalman)
 
+    # `kalman`: what this installation can run (the models and what each
+    # declares). It links the core only and loads libKalmanApps as a plugin.
+    add_executable(kalman-cli "${CMAKE_CURRENT_SOURCE_DIR}/app/kalman.cc")
+    target_link_libraries(kalman-cli PRIVATE ${LIBRARY} ${CMAKE_DL_LIBS})
+    set_target_properties(kalman-cli PROPERTIES
+        OUTPUT_NAME kalman
+        RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin"
+        BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
+        INSTALL_RPATH "@loader_path/../lib;$ORIGIN/../lib")
+    install(TARGETS kalman-cli RUNTIME DESTINATION bin)
+
     # libKalmanApps: the application models, beside the library that defines
     # their contracts. Before the tests, which link it.
     if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/apps/CMakeLists.txt)

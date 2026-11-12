@@ -28,6 +28,7 @@ namespace Kalman::Apps::Vehicles
         DeclareParameter("grade", 0.);
         DeclareParameter("g", 9.81);
         DeclareParameter("v_eps", 0.5);
+        UseContinuousDynamics();
         ParametersChanged();
         SetSampleRate(20.);
 
@@ -63,24 +64,21 @@ namespace Kalman::Apps::Vehicles
         return (drive - drag - roll - grade) / fMass;
     }
 
-    Vector CarSpeed::f(const Vector &x, const Vector &, double) const
+    Vector CarSpeed::Derivative(const Vector &x, const Vector &, double) const
     {
-        // One RK4 step of [s, v]' = [v, a(v)], written out in the order the
-        // Python integrator sums it.
-        const double dt = DeltaT();
-        const double s = x(0), v = x(1);
+        // [s, v]' = [v, a(v)]
+        Vector d(2);
+        d(0) = x(1);
+        d(1) = Acceleration(x(1));
+        return d;
+    }
 
-        const double k1s = v, k1v = Acceleration(v);
-        const double v2 = v + 0.5 * dt * k1v;
-        const double k2s = v2, k2v = Acceleration(v2);
-        const double v3 = v + 0.5 * dt * k2v;
-        const double k3s = v3, k3v = Acceleration(v3);
-        const double v4 = v + dt * k3v;
-        const double k4s = v4, k4v = Acceleration(v4);
-
-        Vector out(2);
-        out(0) = s + dt / 6.0 * (k1s + 2 * k2s + 2 * k3s + k4s);
-        out(1) = std::max(v + dt / 6.0 * (k1v + 2 * k2v + 2 * k3v + k4v), 0.);   // no rolling back
+    Vector CarSpeed::f(const Vector &x, const Vector &u, double t) const
+    {
+        // The model is continuous: the framework integrates Derivative() over one
+        // sample (RK4), and the car does not roll back.
+        Vector out = Kalman::Model::f(x, u, t);
+        out(1) = std::max(out(1), 0.);
         return out;
     }
 

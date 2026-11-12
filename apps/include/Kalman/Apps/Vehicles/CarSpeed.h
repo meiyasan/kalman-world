@@ -60,6 +60,9 @@ namespace Kalman::Apps::Vehicles
             /// Longitudinal acceleration [m/s^2] at speed \p v: the force balance over the mass.
             double Acceleration(double v) const;
 
+            /// The continuous dynamics: [s, v]' = [v, a(v)].
+            Vector Derivative(const Vector &x, const Vector &u, double t = 0.) const override;
+            /// One sample: Derivative() integrated, with the speed kept non-negative.
             Vector f(const Vector &x, const Vector &u, double t = 0.) const override;
             Vector h(const Vector &x, double t = 0.) const override;
 
