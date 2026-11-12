@@ -29,7 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
 from .descent import _rocket_shape, _add_rocket, _make_reticle, _set_reticle
@@ -98,11 +98,11 @@ class RocketAscentModel(ExtendedKalmanModel):
             a = a - self.Cb * rho * np.linalg.norm(v) * v     # quadratic drag
         return a
 
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      # f is ds/dt; the framework integrates it (RK4)
+
     def f(self, x, u=None, w=None, t=None):
         s = np.asarray(x, float).reshape(-1)
-        def deriv(s, tt):
-            return np.concatenate([s[2:], self.acceleration(s[:2], s[2:], u)])
-        return _rk4(s, float(t or 0.0), self._dt, deriv).reshape(-1, 1)
+        return np.concatenate([s[2:], self.acceleration(s[:2], s[2:], u)]).reshape(np.shape(x))
 
     def h(self, x, v=None, t=None):
         z = np.asarray(x, float).reshape(-1)[:2].reshape(2, 1)

@@ -29,7 +29,7 @@ come from :mod:`kalman.runtime.astro`.
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....framework.control import KalmanController
 from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
@@ -174,16 +174,16 @@ class TransLunarModel(ExtendedKalmanModel):
     def acceleration(self, r, t):
         return gravity(r, t, self.moon_phase, self.sun_phase, self.bodies)
 
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      # f is ds/dt; the framework integrates it (RK4)
+
     def f(self, x, u=None, w=None, t=None):
-        # Advance one measurement step with ``n_sub`` internal RK4 substeps, so a close lunar
-        # flyby (steep gravity gradient) is resolved accurately even though the EKF only sees a
-        # position fix every ``dt_s``. n_sub=1 reproduces the plain one-step f.
         s = np.asarray(x, float).reshape(-1)
-        deriv = lambda s, tt: np.concatenate([s[3:], self.acceleration(s[:3], tt)])
-        t0, h = float(t or 0.0), self._dt / self.n_sub
-        for j in range(self.n_sub):
-            s = _rk4(s, t0 + j * h, h, deriv)
-        return s.reshape(-1, 1)
+        return np.concatenate([s[3:], self.acceleration(s[:3], float(t or 0.0))]).reshape(np.shape(x))
+
+    def substeps(self, x=None):
+        # n_sub integrator steps per measurement, so a close lunar flyby (steep gravity
+        # gradient) is resolved although the filter only sees a position fix every dt_s.
+        return self.n_sub
 
     def h(self, x, v=None, t=None):
         z = np.asarray(x, float).reshape(-1)[:3].reshape(3, 1)

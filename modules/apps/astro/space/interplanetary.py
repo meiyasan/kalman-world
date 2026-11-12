@@ -29,7 +29,7 @@ come from :mod:`kalman.runtime.astro`.
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....framework.control import KalmanController
 from .transfers import lambert          # the Lambert solver moved to transfers.py with the package split
 from ....runtime.astro import (
@@ -213,15 +213,21 @@ class InterplanetaryModel(ExtendedKalmanModel):
                 a += _third_body(r, pos[b], self._field.mu[b])
         return a
 
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      # f is ds/dt; the framework integrates it (RK4)
+
     def f(self, x, u=None, w=None, t=None):
-        s = np.asarray(x, float).reshape(-1).copy()
-        if u is not None and self.l > 0:                    # impulsive mid-course burn
-            s[3:6] = s[3:6] + np.asarray(u, float).reshape(3)
-        deriv = lambda s, tt: np.concatenate([s[3:], self.acceleration(s[:3], tt)])
-        t0, h = float(t or 0.0), self._dt / self.n_sub
-        for j in range(self.n_sub):
-            s = _rk4(s, t0 + j * h, h, deriv)
-        return s.reshape(-1, 1)
+        s = np.asarray(x, float).reshape(-1)
+        return np.concatenate([s[3:], self.acceleration(s[:3], float(t or 0.0))]).reshape(np.shape(x))
+
+    def substeps(self, x=None):
+        return self.n_sub
+
+    def decode_step(self, x, u=None, t=None):
+        # A mid-course burn is an impulse: the velocity jumps, then the coast is integrated.
+        s = np.asarray(x, float).reshape(-1, 1).copy()
+        if u is not None and self.l > 0:
+            s[3:6, 0] = s[3:6, 0] + np.asarray(u, float).reshape(3)
+        return super().decode_step(s, None, t)
 
     def h(self, x, v=None, t=None):
         z = np.asarray(x, float).reshape(-1)[:3].reshape(3, 1)

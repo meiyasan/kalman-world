@@ -29,7 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
 from .descent import _rocket_shape, _add_rocket, _fuel_gauge, _set_gauge
@@ -160,8 +160,13 @@ class RocketLiftoffModel(ExtendedKalmanModel):
             a -= 0.5 * rho * self.drag_area * v * abs(v) / m_eff
         return np.array([v, a, -mdot])
 
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      # f is ds/dt; the framework integrates it (RK4)
+
     def f(self, x, u=None, w=None, t=None):
-        s = _rk4(np.asarray(x, float).reshape(-1), float(t or 0.0), self._dt, self._deriv)
+        return self._deriv(np.asarray(x, float).reshape(-1), float(t or 0.0)).reshape(np.shape(x))
+
+    def after_step(self, x, u=None, t=None):
+        s = np.asarray(x, float).reshape(-1)
         s[2] = max(s[2], self.m_dry)               # mass never drops below the dry mass
         return s.reshape(-1, 1)
 

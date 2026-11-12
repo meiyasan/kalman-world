@@ -29,7 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable
+from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
@@ -156,8 +156,13 @@ class RocketLandingModel(ExtendedKalmanModel):
         mdot = a_T * m_eff / self.ve if m > self.m_dry else 0.0
         return np.array([v, a, -mdot])
 
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      # f is ds/dt; the framework integrates it (RK4)
+
     def f(self, x, u=None, w=None, t=None):
-        s = _rk4(np.asarray(x, float).reshape(-1), float(t or 0.0), self._dt, self._deriv)
+        return self._deriv(np.asarray(x, float).reshape(-1), float(t or 0.0)).reshape(np.shape(x))
+
+    def after_step(self, x, u=None, t=None):
+        s = np.asarray(x, float).reshape(-1)
         if s[0] <= 0.0:                             # touchdown: clamp to the pad
             s[0] = 0.0
             s[1] = 0.0

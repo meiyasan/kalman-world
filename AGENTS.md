@@ -251,8 +251,8 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
   become a learned `KalmanSolverKind.NEURAL` solver rather than a loose module.
 - `IMPLICIT_EULER` integrator and the finite-volume/finite-element solvers are
   reserved stubs that raise `NotImplementedError`.
-- Several physical `apps/` models still write a discrete `f()` with their own
-  time stepping and should move to `DYNAMICS = CONTINUOUS` (rocket, space, storms).
+- The ballistic, car, rocket and space models are `DYNAMICS = CONTINUOUS`. The
+  storm, GPS and oscillator models still write a discrete `f()` and could follow.
 - `KalmanSolver` carries no mesh contract: `n`/`shape`/`length`/`dt` and the
   physics hook are re-declared per concrete solver, and the hook is named
   `rhs_hat` (spectral) vs `rhs` (finite-difference). A new discretization family
