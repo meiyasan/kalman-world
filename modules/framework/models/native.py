@@ -561,7 +561,7 @@ def _unscented_noise(model, handle, guard, col, control, write):
 
 
 def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
-                        engine="extended", **engine_params) -> dict:
+                        engine="extended", control=None, **engine_params) -> dict:
     """Filter ``zk`` with a C++ engine (``"extended"`` or ``"unscented"``, with
     its constructor parameters) on a Python-written ``model``. Returns the
     per-step arrays of :func:`core.run_filter`."""
@@ -575,7 +575,7 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
     core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0), "set_t0")
     try:
         return core.run_filter(handle, core.create_engine(engine, **engine_params), n, int(model.m),
-                               int(model.l), zk, uk, smooth=smooth)
+                               int(model.l), zk, uk, smooth=smooth, control=control)
     except RuntimeError:
         if keep[-1]:
             raise keep[-1][0]                       # the Python exception, not its C++ shadow

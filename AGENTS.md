@@ -351,12 +351,14 @@ libKalman, never the reverse. So: no `TObject`, no `ClassDef`, no LinkDef, no
 dictionary, no `TMatrixD`, no `TGraph`, no `TFile`. `Kalman::Matrix` and
 `Kalman::Vector` exist precisely so the core owes nothing to anyone.
 
-**It is a port, not a binding.** It does not wrap the Python package, does not
-link CPython, and is not generated from anything. The two implementations are
-kept in step by hand and only where it matters — the contracts, the Joseph-form
-update, the NaN-channel convention, the RTS smoother. Do **not** try to make one
-call the other; [docs/15](docs/15_Cxx-Library.md) has the measurements showing
-why a callback-based wrapper would be slower than pure Python.
+**C++ is the implementation; Python is the interface.** The library does not
+link CPython and is not generated from anything. The Python classes forward to
+it: a model written in Python is run by the C++ filter loop, which calls back
+its `f` and `h` (`Kalman::Models::Callback`), and a controller function closes
+the loop the same way (`kalman_filter_run_closed_loop`). The Python
+implementations that remain are the reference the tests compare against
+(`native.python_reference()`), on their way out. Do not add a new feature to a
+Python core; add it in C++ and forward to it.
 
 **`include/` and `src/` mirror `modules/framework/`**, file for file and
 subdirectory for subdirectory — `Engines/`, `Models/`, `Filters/`, `IO/`,

@@ -23,14 +23,25 @@ the two.
 | Filter workflow, records, plots, notebooks, the JSON API | Python | always |
 | The Kalman update, the smoother, sigma-point and particle sums | C++ (`libKalman`) | when the library is found; numpy otherwise |
 | A linear model with fixed matrices | C++, the whole pass in one call | when the library is found |
-| A nonlinear model written in Python | Python computes `f` and `h` at every step | always |
+| A nonlinear model written in Python | the loop and the filter arithmetic in C++; C++ calls the Python `f` and `h` | extended, unscented, particle and ensemble engines, when the library is found |
+| A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
 | The four application models with a C++ twin | C++, the whole pass in one call | when `libKalmanApps` is found |
 
-The rule behind the table: crossing from Python into C++ is cheap, and crossing
-back from C++ into Python at every step is not. So a model whose physics is
-Python keeps the Python loop, and a model whose physics is C++ runs entirely in
-C++.
+One loop runs every case, in C++. What differs is where the physics is
+evaluated. A model written in Python is called back at every step, so its pass
+costs about what the Python loop did (measured: 1.0 to 1.5 times faster with
+the extended engine, 2.4 times with the unscented one in closed loop). A model
+written in C++ never comes back to Python, and that is where the large factors
+below come from.
+
+**Noise and the `w`, `v` arguments.** `f(x, u, w, t)` and `h(x, v, t)` are the
+contract's signatures, so every model has `w` and `v` whether it uses them or
+not. The sigma-point and particle engines hand the noise to the map only when
+the model declares no coupling (`L`, `M`) and the map really responds to the
+argument (it is tried once, at the initial state). Otherwise the noise is
+added, `L Q Lᵀ` and `M R Mᵀ`, as the extended engine does. A model that takes
+`v` and ignores it therefore keeps its `R` in every engine.
 
 ## Install and check
 
@@ -50,7 +61,7 @@ finally the system loader.
 
 | You want | Write | Speed of a nonlinear model |
 |---|---|---|
-| To try an idea quickly | a Python class (see [Models](4_Models.md)) | the Python loop |
+| To try an idea quickly | a Python class (see [Models](4_Models.md)) | the C++ loop calling Python: about the speed of Python |
 | One model for C++ programs, ROOT+ and Python | a C++ class, registered by name | the whole pass in C++ |
 | An existing Python class to run faster, unchanged for its users | a C++ twin behind the Python class | the whole pass in C++ |
 

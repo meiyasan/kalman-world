@@ -155,6 +155,13 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
                       const double *zk, const double *uk, int smooth,
                       double *x_prior, double *P_prior, double *x_post, double *P_post,
                       double *x_smooth, double *P_smooth, double *innovations, double *transitions);
+typedef int (*kalman_control_fn)(void *user, const double *x, const double *P, double t,
+                                 const double *nu, double *u);
+int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                                  const double *zk, kalman_control_fn control, void *user, int smooth,
+                                  double *x_prior, double *P_prior, double *x_post, double *P_post,
+                                  double *x_smooth, double *P_smooth, double *innovations,
+                                  double *transitions, double *controls);
 
 void kf_predict(int n, int l,
                 const double *F, const double *x, const double *P,
@@ -389,12 +396,19 @@ def create_engine(kind="extended", **params):
     return ffi.gc(h, L.kalman_engine_destroy)
 
 
-def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False):
+def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False, control=None):
     """The fused pass: Kalman::Filter over ``zk`` (N x m; NaN = missing) with ``uk``
-    (N x l or None) on a native model and engine. Returns the per-step arrays."""
+    (N x l or None) on a native model and engine. Returns the per-step arrays.
+
+    ``control`` closes the loop: a function ``control(x, P, t, nu=nu) -> u`` called
+    at every step with the belief before the step (``x`` (n,1), ``P`` (n,n)) and the
+    previous innovation (``nu`` (m,1), zeros at first). The commands applied are
+    returned as ``controls`` (N x l)."""
     L = require()
     zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(-1, m))
     N = zk.shape[0]
+    if control is not None:
+        return _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, control)
     if uk is not None and l > 0:
         uk = np.ascontiguousarray(np.asarray(uk, dtype=np.float64).reshape(N, l))
     out = {"x_prior": np.empty((N, n)), "P_prior": np.empty((N, n, n)),
@@ -410,6 +424,42 @@ def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False):
         dptr(out["x_smooth"]) if smooth else ffi.NULL, dptr(out["P_smooth"]) if smooth else ffi.NULL,
         dptr(out["innovations"]), dptr(out["transitions"]))
     check(rc, "kalman_filter_run")
+    return out
+
+
+def _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, control):
+    out = {"x_prior": np.empty((N, n)), "P_prior": np.empty((N, n, n)),
+           "x_post": np.empty((N, n)), "P_post": np.empty((N, n, n)),
+           "innovations": np.empty((N, m)), "transitions": np.empty((N, n, n)),
+           "controls": np.empty((N, l))}
+    if smooth:
+        out["x_smooth"] = np.empty((N, n))
+        out["P_smooth"] = np.empty((N, n, n))
+    raised = []
+
+    @ffi.callback("int(void *, const double *, const double *, double, const double *, double *)")
+    def policy(_user, x, P, t, nu, u):
+        try:
+            xs = np.frombuffer(ffi.buffer(x, n * 8), dtype=np.float64).reshape(n, 1).copy()
+            Ps = np.frombuffer(ffi.buffer(P, n * n * 8), dtype=np.float64).reshape(n, n).copy()
+            nus = np.frombuffer(ffi.buffer(nu, m * 8), dtype=np.float64).reshape(m, 1).copy()
+            command = np.asarray(control(xs, Ps, t, nu=nus), dtype=np.float64).reshape(-1)
+            if command.size != l:
+                raise ValueError(f"the controller returned {command.size} commands, the model takes {l}.")
+            ffi.buffer(u, l * 8)[:] = command.tobytes()
+            return 0
+        except BaseException as e:               # must not cross the C boundary
+            raised.append(e)
+            return -1
+
+    rc = L.kalman_filter_run_closed_loop(
+        model_handle, engine_handle, int(N), cdptr(zk), policy, ffi.NULL, 1 if smooth else 0,
+        dptr(out["x_prior"]), dptr(out["P_prior"]), dptr(out["x_post"]), dptr(out["P_post"]),
+        dptr(out["x_smooth"]) if smooth else ffi.NULL, dptr(out["P_smooth"]) if smooth else ffi.NULL,
+        dptr(out["innovations"]), dptr(out["transitions"]), dptr(out["controls"]))
+    if raised:
+        raise raised[0]
+    check(rc, "kalman_filter_run_closed_loop")
     return out
 
 

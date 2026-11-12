@@ -19,6 +19,7 @@
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Factory.h"
 #include "Kalman/Models/Callback.h"
+#include "Kalman/Controller.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Model.h"
 #include "Kalman/Tracking.h"
@@ -685,12 +686,45 @@ int kalman_engine_smooth(const kalman_engine_t *engine, int n,
 
 /* --- a whole pass ------------------------------------------------------------ */
 
-int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int N,
-                      const double *zk, const double *uk, int smooth,
-                      double *x_prior, double *P_prior, double *x_post, double *P_post,
-                      double *x_smooth, double *P_smooth, double *innovations, double *transitions)
+namespace
 {
-    return Guard([&] {
+    /// A controller whose policy is a function pointer (the closed loop of the C interface).
+    class FunctionController : public Kalman::Controller
+    {
+            kalman_control_fn fPolicy;
+            void *fUser;
+            std::size_t fM;
+
+        public:
+            FunctionController(Kalman::Model *model, kalman_control_fn policy, void *user)
+                : Kalman::Controller(model), fPolicy(policy), fUser(user), fM(model->NMeasure()) {}
+
+            const char *Title() const override { return "Function controller"; }
+
+            Kalman::Vector Policy(const Kalman::Vector &x, const Kalman::Matrix &P, double t,
+                                  const Kalman::Vector *nu) override
+            {
+                const std::size_t n = x.Size(), l = NControl();
+                std::vector<double> xs(n), Ps(n * n), nus(fM, 0.), us(l, 0.);
+                for (std::size_t i = 0; i < n; ++i) xs[i] = x(i);
+                for (std::size_t i = 0; i < n; ++i)
+                    for (std::size_t j = 0; j < n; ++j) Ps[i * n + j] = P(i, j);
+                if (nu)
+                    for (std::size_t i = 0; i < fM && i < nu->Size(); ++i) nus[i] = (*nu)(i);
+                if (fPolicy(fUser, xs.data(), Ps.data(), t, nus.data(), us.data()) != 0)
+                    throw std::runtime_error("the control function failed");
+                Kalman::Vector u(l, 0.);
+                for (std::size_t i = 0; i < l; ++i) u(i) = us[i];
+                return u;
+            }
+    };
+
+    int RunFilter(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                  const double *zk, const double *uk, kalman_control_fn control, void *user, int smooth,
+                  double *x_prior, double *P_prior, double *x_post, double *P_post,
+                  double *x_smooth, double *P_smooth, double *innovations, double *transitions,
+                  double *controls)
+    {
         if (N <= 0) throw std::invalid_argument("N must be positive");
         if (!zk) throw std::invalid_argument("null zk");
         // The filter mutates nothing in the model, but its API takes a pointer.
@@ -698,17 +732,23 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
         Kalman::Engine &E = Deref(engine);
         const std::size_t n = M.NState(), m = M.NMeasure(), l = M.NControl();
         const std::size_t steps = static_cast<std::size_t>(N);
+        if (control && l == 0) throw std::invalid_argument("a closed loop needs a model that takes a control");
 
         std::vector<Kalman::Vector> z(steps), u;
         for (std::size_t k = 0; k < steps; ++k) z[k] = Vec(zk + k * m, m, "zk");
-        if (uk && l > 0)
+        if (!control && uk && l > 0)
         {
             u.resize(steps);
             for (std::size_t k = 0; k < steps; ++k) u[k] = Vec(uk + k * l, l, "uk");
         }
 
         Kalman::Filter filter(&M, &E);
-        filter.Forward(z, u.empty() ? nullptr : &u);
+        if (control)
+        {
+            FunctionController controller(&M, control, user);
+            filter.Forward(z, controller);
+        }
+        else filter.Forward(z, u.empty() ? nullptr : &u);
         if (smooth) filter.Backward();
 
         for (std::size_t k = 0; k < steps; ++k)
@@ -721,8 +761,33 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
             if (transitions) Copy(filter.Transitions()[k], transitions + k * n * n, n, n, "transitions");
             if (smooth && x_smooth) Copy(filter.SmoothedStates()[k], x_smooth + k * n, n, "x_smooth");
             if (smooth && P_smooth) Copy(filter.SmoothedCovariances()[k], P_smooth + k * n * n, n, n, "P_smooth");
+            if (controls && control) Copy(filter.Controls()[k], controls + k * l, l, "controls");
         }
         return 0;
+    }
+}
+
+int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                      const double *zk, const double *uk, int smooth,
+                      double *x_prior, double *P_prior, double *x_post, double *P_post,
+                      double *x_smooth, double *P_smooth, double *innovations, double *transitions)
+{
+    return Guard([&] {
+        return RunFilter(model, engine, N, zk, uk, nullptr, nullptr, smooth, x_prior, P_prior, x_post, P_post,
+                         x_smooth, P_smooth, innovations, transitions, nullptr);
+    });
+}
+
+int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                                  const double *zk, kalman_control_fn control, void *user, int smooth,
+                                  double *x_prior, double *P_prior, double *x_post, double *P_post,
+                                  double *x_smooth, double *P_smooth, double *innovations,
+                                  double *transitions, double *controls)
+{
+    return Guard([&] {
+        if (!control) throw std::invalid_argument("null control function");
+        return RunFilter(model, engine, N, zk, nullptr, control, user, smooth, x_prior, P_prior, x_post, P_post,
+                         x_smooth, P_smooth, innovations, transitions, controls);
     });
 }
 

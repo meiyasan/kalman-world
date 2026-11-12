@@ -111,13 +111,14 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
         agree with it. Many models take ``w`` in ``f``'s signature and ignore
         it: reading the signature alone made the sigma-point and particle
         engines drop their process noise altogether. So the noise goes through
-        ``f`` only when ``f`` takes ``w`` *and* the model declares no coupling.
+        ``f`` only when ``f`` takes ``w``, the model declares no coupling, *and*
+        ``f`` responds to ``w`` when tried (:meth:`_responds_to_noise`).
         """
         from .model import KalmanModel
         if not KalmanEngine._accepts_param(model.f, "w"):
             return False
         declared = getattr(model, "_L", None) is not None or type(model).L is not KalmanModel.L
-        return not declared
+        return not declared and KalmanEngine._responds_to_noise(model, "f")
 
     @staticmethod
     def _noise_through_h(model) -> bool:
@@ -126,7 +127,49 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
         if not KalmanEngine._accepts_param(model.h, "v"):
             return False
         declared = getattr(model, "_M", None) is not None or type(model).M is not KalmanModel.M
-        return not declared
+        return not declared and KalmanEngine._responds_to_noise(model, "h")
+
+    @staticmethod
+    def _responds_to_noise(model, which: str) -> bool:
+        """Whether ``model.f`` (``which="f"``) or ``model.h`` actually changes when
+        handed a noise sample.
+
+        ``f(x, u, w, t)`` and ``h(x, v, t)`` are the contract's signatures, so a
+        model has ``w`` and ``v`` in them whether or not it uses them. One that
+        ignores the argument and declares no coupling would lose its ``Q`` (or
+        ``R``) in the sigma-point and particle engines, which hand the noise to
+        the map: the unscented filter then trusted its sensor completely. So the
+        map is tried once, at the initial state, with and without a sample; a map
+        that does not move takes its noise added (``L = I``, ``M = I``), as the
+        extended engine does. The answer is kept on the model.
+        """
+        cache = model.__dict__.setdefault("_noise_response", {})
+        if which in cache:
+            return cache[which]
+        answer = True                                  # if the map cannot be tried, believe its signature
+        try:
+            n, m = int(model.n), int(model.m)
+            x0 = getattr(model, "x0", None)
+            x = np.zeros((n, 1)) if x0 is None else np.asarray(x0, dtype=float).reshape(n, 1)
+            t = getattr(model, "t0", None)
+            t = 0.0 if t is None else float(t)
+            if which == "f":
+                q = np.asarray(model.Q(t=t)).shape[0]
+                u = np.zeros((int(model.l), 1)) if int(model.l) > 0 else None
+                sample = np.linspace(0.5, 1.0, q).reshape(q, 1)
+                quiet = np.asarray(model.f(x, u=u, w=np.zeros((q, 1)), t=t), dtype=float)
+                moved = np.asarray(model.f(x, u=u, w=sample, t=t), dtype=float)
+            else:
+                r = np.asarray(model.R(t=t)).shape[0]
+                sample = np.linspace(0.5, 1.0, r).reshape(r, 1)
+                quiet = np.asarray(model.h(x, v=np.zeros((r, 1)), t=t), dtype=float)
+                moved = np.asarray(model.h(x, v=sample, t=t), dtype=float)
+            if np.all(np.isfinite(quiet)) and np.all(np.isfinite(moved)):
+                answer = bool(np.any(quiet != moved))
+        except Exception:
+            pass
+        cache[which] = answer
+        return answer
 
     @staticmethod
     def _accepts_param(fn, name: str) -> bool:

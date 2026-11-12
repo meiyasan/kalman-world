@@ -175,11 +175,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         # linear model with no control callback can run the whole pass fused in C ---
         twin = self._native_twin(uk_fn)
         if twin is not None:
-            self._forward_twin(twin, zk, uk)
+            self._forward_twin(twin, zk, uk, uk_fn)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         elif self._callback_eligible(uk_fn):
-            self._forward_callback(zk, uk)
+            self._forward_callback(zk, uk, uk_fn)
         else:
             t = float(self.model.t0) if self.model.t0 is not None else 0.0
             dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
@@ -218,7 +218,7 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # engine kind keeps the Python loop.
     # ------------------------------------------------------------------
     def _native_twin(self, uk_fn):
-        if uk_fn is not None:
+        if uk_fn is not None and not self._closed_loop_eligible():
             return None
         handle_of = getattr(self._model, "native_handle", None)
         if handle_of is None:
@@ -228,7 +228,12 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return None
         return handle_of()
 
-    def _forward_twin(self, handle, zk, uk):
+    def _closed_loop_eligible(self) -> bool:
+        """A controller function can drive the C++ loop when the model takes a control."""
+        from .models import native
+        return native.native_loop_enabled() and self._model.l > 0
+
+    def _forward_twin(self, handle, zk, uk, uk_fn=None):
         from .native import core
         from .native import as_contiguous
 
@@ -243,7 +248,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0),
                    "set_t0")
 
-        out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
+        if uk_fn is not None:
+            out = core.run_filter(handle, core.create_engine("extended"), n, m, model.l, zk, control=uk_fn)
+            uk = out["controls"]
+        else:
+            out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
         self._store_pass(out, zk, uk)
 
     # ------------------------------------------------------------------
@@ -254,7 +263,7 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # another engine kind, state-dependent noise).
     # ------------------------------------------------------------------
     def _callback_eligible(self, uk_fn) -> bool:
-        if uk_fn is not None:
+        if uk_fn is not None and not self._closed_loop_eligible():
             return False
         from .models import native
         if not native.native_loop_enabled():
@@ -276,7 +285,7 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return False
         return native.callback_eligible(self._model)
 
-    def _forward_callback(self, zk, uk):
+    def _forward_callback(self, zk, uk, uk_fn=None):
         from .models.native import run_callback_filter
         from .engines.unscented import UnscentedKalmanEngine
         model, engine = self._model, self.engine
@@ -293,7 +302,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
                     "seed": int(engine.rng.integers(0, 2**31 - 1))}
         else:
             kind = {"engine": "extended"}
-        out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P, **kind)
+        if uk_fn is not None:
+            out = run_callback_filter(model, zk, None, x0=self.x, P0=self.P, control=uk_fn, **kind)
+            uk = out["controls"]
+        else:
+            out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P, **kind)
         self._store_pass(out, zk, uk)
 
     def _store_pass(self, out, zk, uk):

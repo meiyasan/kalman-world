@@ -288,6 +288,25 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
                       double *x_prior, double *P_prior, double *x_post, double *P_post,
                       double *x_smooth, double *P_smooth, double *innovations, double *transitions);
 
+/**
+ * A control policy for a closed loop: from the belief before the step (`x`, n;
+ * `P`, n x n), the time and the previous step's innovation (`nu`, m; zeros on the
+ * first step), write the command (`u`, l). Return 0, or non-zero to stop the run.
+ */
+typedef int (*kalman_control_fn)(void *user, const double *x, const double *P, double t,
+                                 const double *nu, double *u);
+
+/**
+ * kalman_filter_run() in closed loop: at every step the command comes from
+ * `control` instead of an array. `controls` (N x l, may be NULL) receives the
+ * commands applied. The model must take a control (l > 0).
+ */
+int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                                  const double *zk, kalman_control_fn control, void *user, int smooth,
+                                  double *x_prior, double *P_prior, double *x_post, double *P_post,
+                                  double *x_smooth, double *P_smooth, double *innovations,
+                                  double *transitions, double *controls);
+
 /* --- kernels: the framework's arithmetic for a model that lives elsewhere ---
  *
  * The Python engines evaluate the model themselves -- f at the sigma points, F/H/Q/R

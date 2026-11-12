@@ -247,9 +247,31 @@ class TestDeclaredCouplingMeansAddedNoise(unittest.TestCase):
     def test_which_models_carry_noise_through_f(self):
         from modules.framework.engine import KalmanEngine
         self.assertFalse(KalmanEngine._noise_through_f(Pendulum()), "L given: added")
-        undeclared = Pendulum()
-        undeclared._L = None
-        self.assertTrue(KalmanEngine._noise_through_f(undeclared), "no L: through f")
+        ignoring = Pendulum()
+        ignoring._L = None
+        self.assertFalse(KalmanEngine._noise_through_f(ignoring), "no L, but f ignores w: added")
+        using = _NoisyPendulum()
+        using._L = None
+        self.assertTrue(KalmanEngine._noise_through_f(using), "no L and f uses w: through f")
+
+    def test_measurement_noise_is_not_lost_when_h_ignores_v(self):
+        """Pendulum's h has v in its signature, as the contract asks, and ignores it;
+        no M is declared. The unscented filter used to hand R to h, where it
+        vanished, and came out certain of the angle to 1e-12."""
+        from modules.framework.engine import KalmanEngine
+        from modules.framework.filters import UnscentedKalmanFilter, ExtendedKalmanFilter
+        self.assertFalse(KalmanEngine._noise_through_h(Pendulum()))
+        self.assertTrue(KalmanEngine._noise_through_h(_NoisyPendulum()))
+        _, z = _pendulum_run(3, steps=60)
+        for reference in (True, False):
+            if reference:
+                with native.python_reference():
+                    ukf = np.asarray(UnscentedKalmanFilter(Pendulum(), alpha=0.5).forward(z).Pk)[-1]
+            else:
+                ukf = np.asarray(UnscentedKalmanFilter(Pendulum(), alpha=0.5).forward(z).Pk)[-1]
+            ekf = np.asarray(ExtendedKalmanFilter(Pendulum()).forward(z).Pk)[-1]
+            self.assertGreater(ukf[0, 0], 1e-5, "the angle is not known exactly")
+            self.assertLess(abs(ukf[0, 0] - ekf[0, 0]) / ekf[0, 0], 0.2, "close to the extended filter's")
 
     def test_particle_cloud_keeps_its_spread(self):
         from modules.framework.filters import ParticleFilter
@@ -363,3 +385,84 @@ class TestEnsembleOnTheCxxEngine(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class DrivenPendulum(Pendulum):
+    """The pendulum with a torque command, for closed-loop runs."""
+
+    def __init__(self, **kw):
+        super().__init__(**kw)
+        self.l = 1
+
+    def f(self, x, u=None, w=None, t=None):
+        th, om = np.asarray(x, float).reshape(-1)
+        torque = 0.0 if u is None else float(np.asarray(u, float).reshape(-1)[0])
+        dt = 1.0 / self.fs
+        return np.array([[th + dt * om], [om + dt * (-9.81 * np.sin(th) - 0.1 * om + torque)]])
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
+class TestClosedLoopOnTheCxxLoop(unittest.TestCase):
+    """A controller passed as a function drives the C++ filter loop."""
+
+    @staticmethod
+    def _measurements(n=200, seed=4):
+        rng = np.random.default_rng(seed)
+        t = np.arange(n) / 50.0
+        z = 0.4 * np.cos(3.0 * t) * np.exp(-0.3 * t) + 0.05 * rng.standard_normal(n)
+        z[60:70] = np.nan                       # a gap in the sensor
+        return z.reshape(-1, 1)
+
+    @staticmethod
+    def _policy(calls):
+        def policy(x, P, t, nu=None):
+            calls.append((np.shape(x), np.shape(P), np.shape(nu)))
+            th, om = np.asarray(x).reshape(-1)
+            feel = 0.0 if nu is None or not np.all(np.isfinite(nu)) else float(np.asarray(nu).reshape(-1)[0])
+            return np.array([[-4.0 * th - 1.5 * om + 0.2 * feel]])
+        return policy
+
+    def _both(self, engine_kind):
+        from modules.framework.filter import KalmanFilter
+        zk = self._measurements()
+        out = []
+        for reference in (True, False):
+            calls = []
+            f = KalmanFilter(DrivenPendulum(), engine=engine_kind())
+            if reference:
+                with native.python_reference():
+                    f.forward(zk, self._policy(calls), record=False)
+            else:
+                f.forward(zk, self._policy(calls), record=False)
+            out.append((f, calls))
+        return out
+
+    def test_extended_and_unscented_match_the_python_loop(self):
+        from modules.framework.engines.extended import ExtendedKalmanEngine
+        from modules.framework.engines.unscented import UnscentedKalmanEngine
+        # alpha = 0.5: at the default 1e-3 the sigma-point weights are ~1e6 and
+        # rounding is amplified (see test_default_spread_on_application_models).
+        for kind, atol in ((ExtendedKalmanEngine, 1e-9), (lambda: UnscentedKalmanEngine(alpha=0.5), 1e-7)):
+            (ref, ref_calls), (cxx, cxx_calls) = self._both(kind)
+            self.assertEqual(len(cxx_calls), len(ref_calls))
+            self.assertEqual(cxx_calls[0], ref_calls[0])            # the same shapes reach the controller
+            x_ref = np.array([x for x, _ in ref.posterior]).reshape(len(ref_calls), -1)
+            x_cxx = np.array([x for x, _ in cxx.posterior]).reshape(len(cxx_calls), -1)
+            np.testing.assert_allclose(x_cxx, x_ref, atol=atol, err_msg=str(kind))
+            u_ref = np.array([np.ravel(u) for u in ref.control])
+            u_cxx = np.array([np.ravel(u) for u in cxx.control])
+            np.testing.assert_allclose(u_cxx, u_ref, atol=atol, err_msg=str(kind))
+            self.assertGreater(np.abs(u_ref).max(), 0.1)             # the loop was really closed
+
+    def test_a_controller_error_comes_back_as_itself(self):
+        from modules.framework.filter import KalmanFilter
+        def broken(x, P, t, nu=None):
+            raise KeyError("no gain table")
+        with self.assertRaises(KeyError):
+            KalmanFilter(DrivenPendulum()).forward(self._measurements(20), broken, record=False)
+
+    def test_a_command_of_the_wrong_size_is_refused(self):
+        from modules.framework.filter import KalmanFilter
+        with self.assertRaises(ValueError):
+            KalmanFilter(DrivenPendulum()).forward(self._measurements(20),
+                                                   lambda x, P, t, nu=None: np.zeros(3), record=False)
