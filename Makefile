@@ -363,6 +363,15 @@ docs: motd
 	@$(MAKE) -sC $(BUILD_DIR) sitesearch
 
 ## Replace the public/ symlink with a real directory (CI artifacts do not follow links)
+## Bring back the versions published earlier (GitLab CI), before building this
+## one: Pages serves a single deployment, so each must carry them all.
+pages-restore:
+	@$(PYTHON) tools/site_versions.py --restore "$(BUILD_DIR)/public/docs"
+
+## Keep the releases and the newest development build; drop the older ones.
+pages-prune:
+	@$(PYTHON) tools/site_versions.py --prune-dev "$(BUILD_DIR)/public/docs"
+
 pages-materialize:
 	@src="$(BUILD_DIR)/public/docs"; \
 	if [ -d "$$src" ]; then \

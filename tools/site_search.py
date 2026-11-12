@@ -281,10 +281,33 @@ def install(site: str) -> tuple[int, int]:
 
     with open(search_js, encoding="utf-8") as fh:
         source = fh.read()
-    source = source.split(MARKER)[0].rstrip() + "\n\n" + SCRIPT      # idempotent: replace an earlier copy
+    # Idempotent: replace an earlier copy, and keep what other tools appended after it.
+    before, found, after = source.partition(MARKER)
+    tail = after.split("\n/* kalman-framework", 1) if found else [""]
+    kept = "\n\n/* kalman-framework" + tail[1].rstrip() if len(tail) > 1 else ""
+    source = before.rstrip() + kept + "\n\n" + SCRIPT
     with open(search_js, "w", encoding="utf-8") as fh:
         fh.write(source)
+    tidy_navigation(site)
     return len(entries), len({e["p"] for e in entries}), len(payload.encode("utf-8"))
+
+
+def tidy_navigation(site: str, title: str = "Introduction"):
+    """Name the front page's entry in the side navigation.
+
+    Doxygen puts the project name at the root of the tree and the front page
+    under it, titled after the README's first heading: "Kalman Framework >
+    kalman-framework", the same thing twice. The entry becomes ``title``."""
+    path = os.path.join(site, "navtreedata.js")
+    if not os.path.isfile(path):
+        return
+    with open(path, encoding="utf-8") as fh:
+        source = fh.read()
+    fixed = re.sub(r'(\[\s*"[^"]*",\s*"index\.html",\s*\[\s*\[\s*")[^"]*(",\s*"index\.html")',
+                   lambda m: m.group(1) + title + m.group(2), source, count=1)
+    if fixed != source:
+        with open(path, "w", encoding="utf-8") as fh:
+            fh.write(fixed)
 
 
 def newest(root: str) -> str:

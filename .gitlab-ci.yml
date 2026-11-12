@@ -235,8 +235,15 @@ pages:
       when: always
     - when: never
   script:
+    # Pages serves one deployment per project. Bring back the versions earlier
+    # pipelines published, build this one beside them, and drop all but the
+    # newest of the builds made between releases.
+    - make -s pages-restore
     - make -j${CI_RUNNER_NPROC} pages
+    - make -s pages-prune
     - make -s pages-materialize
   artifacts:
+    # The next pipeline restores the earlier versions from this artifact.
+    expire_in: never
     paths:
       - public

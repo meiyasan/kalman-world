@@ -3,6 +3,13 @@
 Ten minutes, four steps: install, define a system, filter it, check that the
 filter is telling the truth.
 
+![A Kalman filter turning noisy position readings into an estimate of position and velocity](images/tracking.gif)
+
+A sensor reads the position of a cart with 1.5 m of noise and nothing measures
+its velocity. The filter's position (blue) is far closer to the truth than the
+readings, and it recovers the velocity (red) from how the position changes. The
+shaded bands are the filter's own statement of how wrong it may be.
+
 If you have not installed anything yet, `make setup` from the repository root
 does the whole job — see [Installation](2_Installation.md).
 

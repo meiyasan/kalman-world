@@ -158,6 +158,26 @@ So every push compiles the documentation and every branch gets a downloadable
 `public/` artifact; only the default branch and tags actually publish, because
 GitLab Pages serves one deployment per project.
 
+### Versions
+
+Each build lands in its own folder, named after the version: `1.0.2` for a
+release tag, `1.0.2-11-g64fefe7` for a build of the default branch between
+releases. The menu in the side bar switches between them and keeps you on the
+same page when the other version has it.
+
+Because Pages serves a single deployment, the `pages` job carries the earlier
+versions along: `make pages-restore` takes them from the artifacts of the
+previous `pages` jobs (the default branch and each release tag), `make pages`
+builds the current one beside them, and `make pages-prune` keeps every release
+and only the newest development build. A release is therefore listed from the
+day its tag is pushed, and stays.
+
+`tools/site_versions.py` does the listing, the ordering (by version number, so
+1.0.10 comes after 1.0.9) and the pruning. Locally, `make docs` lists whatever
+is in `var/build/public/docs`; serve that folder with
+`python -m http.server` to try the menu, since a page opened from `file://`
+cannot read the list.
+
 The site is Doxygen + [doxygen-awesome](https://git.ligo.org/kagra/libraries-addons/doxygen-awesome),
 driven by CMake, exactly as the sibling projects on this template do it. Two
 submodules, both fetched by CI through `GIT_SUBMODULE_PATHS`:

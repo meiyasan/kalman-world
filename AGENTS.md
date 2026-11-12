@@ -296,6 +296,23 @@ Three things about that build that are not obvious:
   writes `search/fulltext-index.js` and appends its script to `search/search.js`.
   It changes no template, so the theme submodule stays as it is.
   `tests/test_site_search.py` covers the index builder.
+- **The side navigation is grouped in `share/site/navigation.dox`**
+  (Applications, User guide, API access, C++, For developers). A new guide page
+  is listed there, or it appears alone at the top level. The same file is why
+  page names carry no local path: `STRIP_FROM_PATH` is appended to the Doxyfile.
+- **One page per application, in `docs/apps/`.** Each says what the system is,
+  the state and the measurement, how the model is built, how it steps in time
+  (an integrator, a solver, or its own step), and a snippet that runs. Do not
+  put two applications on one page. A new application gets a page, a row in
+  `docs/17_Applications.md`, and a line in `navigation.dox`.
+- **Animations are precomputed** by `tools/make_animations.py` and committed as
+  GIFs beside the page that shows them (`docs/images`, `docs/apps/images`). A
+  GIF plays on the repository page as well as on the site. The build does not
+  run the script.
+- **Versions.** Each build has its own folder; `tools/site_versions.py` lists
+  them for the menu, orders them by version number and, in CI, restores the
+  earlier ones and prunes old development builds (`make pages-restore`,
+  `make pages-prune`). docs/13 has the details.
 - **The notebooks are pages of the site** (`notebooks/`, linked from the menu),
   written by `tools/site_notebooks.py` in the same target. A notebook viewed on
   GitLab is shown without JavaScript, so its interactive players are blank

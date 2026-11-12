@@ -113,6 +113,12 @@ class RocketLandingModel(ExtendedKalmanModel):
         # additive `w` through, so without it the engine would difference f with
         # respect to w, find no sensitivity, and multiply Q by a zero matrix at
         # every prediction: the covariance then collapses to zero.
+        # Start fuelled. The base default is a state of zeros, which for this
+        # model means no mass at all: the engine would cut off in the first step.
+        if kw.get("x0") is None:
+            x0 = np.zeros((3, 1))
+            x0[2, 0] = self.m0
+            kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
     # --- atmosphere / guidance --------------------------------------------

@@ -38,6 +38,12 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 | 15 | [C++ Library](15_Cxx-Library.md) | `libKalmanFramework`: the core ported to C++, loadable in a ROOT+ analysis |
 | 16 | [C++ Models from Python](16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages; a worked toy example |
 
+## The applications
+
+| # | Page | What it answers |
+|---|------|-----------------|
+| 17 | [Applications](17_Applications.md) | One page per application: the model, how it is built, how it steps in time, how to run it |
+
 ## Also in this repository
 
 - [`../README.md`](../README.md) — notation, filter pipeline, composite models.

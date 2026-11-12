@@ -1,0 +1,60 @@
+/**
+\page applications_group Applications
+\brief One page per application: the model, how it is built, how it steps in time, how to run it.
+
+- \subpage md_docs_217___applications
+- \subpage md_docs_2apps_2ballistics
+- \subpage md_docs_2apps_2oscillators
+- \subpage md_docs_2apps_2powergrid
+- \subpage md_docs_2apps_2suspension
+- \subpage md_docs_2apps_2polarization
+- \subpage md_docs_2apps_2calorimeter
+- \subpage md_docs_2apps_2rocket
+- \subpage md_docs_2apps_2tracking
+- \subpage md_docs_2apps_2space
+- \subpage md_docs_2apps_2fusion
+- \subpage md_docs_2apps_2vision
+- \subpage md_docs_2apps_2gps
+- \subpage md_docs_2apps_2vehicles
+- \subpage md_docs_2apps_2flow
+- \subpage md_docs_2apps_2storms
+
+The notebooks, with their interactive players, are under **Notebooks** in the menu.
+
+\page guide User guide
+\brief Install the package, filter a first signal, and learn the pieces a filter is built from.
+
+Read these in order if you are new. The first three are enough to run a filter on your own data.
+
+- \subpage md_docs_21___getting-_started
+- \subpage md_docs_22___installation
+- \subpage md_docs_23___overview
+- \subpage md_docs_24___models
+- \subpage md_docs_25___filters-and-_diagnostics
+- \subpage md_docs_26___integrators-and-_solvers
+- \subpage md_docs_27___providers
+- \subpage md_docs_28___control-and-_routing
+
+\page access API access
+\brief Drive the framework from Python, over HTTP, or from an AI agent, and deploy it.
+
+- \subpage md_docs_29___python-_a_p_i
+- \subpage md_docs_210___r_e_s_t-_a_p_i
+- \subpage md_docs_211___m_c_p-_server
+- \subpage md_docs_212___authentication
+- \subpage md_docs_213___deployment
+- \subpage md_docs_214___troubleshooting
+
+\page cxx C++
+\brief The C++ library, and how a model written once in C++ is used from both languages.
+
+- \subpage md_docs_215___cxx-_library
+- \subpage md_docs_216___cxx-_models-from-_python
+- \subpage libkalman
+
+\page developers For developers
+\brief How the code is organised and what a change has to respect.
+
+- \subpage md__a_g_e_n_t_s
+- \subpage md__c_o_n_t_r_i_b_u_t_i_n_g
+*/

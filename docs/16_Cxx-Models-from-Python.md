@@ -78,6 +78,8 @@ make build && make examples
 python examples/python/toy_sensor.py --plot # reads them, compares, saves toy_sensor.png
 ```
 
+![The temperature of a cooling cup, and the cooling rate the filter learns](images/coffee.gif)
+
 ### The physics
 
 Coffee cools toward the room temperature at a rate nobody measured. The filter

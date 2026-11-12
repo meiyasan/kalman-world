@@ -278,6 +278,8 @@ set(DOXYGEN_INPUT
     "${CMAKE_SOURCE_DIR}/include/Kalman"
     "${CMAKE_SOURCE_DIR}/apps/include"
     "${CMAKE_SOURCE_DIR}/examples"
+    # The grouping of the guide pages in the side navigation.
+    "${CMAKE_SOURCE_DIR}/share/site"
 )
 set(DOXYGEN_MAINPAGE "${CMAKE_SOURCE_DIR}/README.md")
 
@@ -288,9 +290,19 @@ if(BUILD_DOCUMENTATION AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/share/doxygen/CMak
     # the rest; later versions leave class, namespace and file pages empty. Use
     # the complete layout kept in cmake/ (see the comment at its top). A later
     # assignment wins in a Doxyfile, so this is appended to the generated one.
+    # The other settings appended here:
+    # - STRIP_FROM_PATH: without it every page name carries the absolute path of
+    #   the checkout (md__2_users_2<you>_2...), so links change from machine to
+    #   machine and a local path is published.
+    # - IMAGE_PATH: the figures and animations the guide pages show.
+    # - DOT_GRAPH_MAX_NODES: Kalman.h includes 54 headers, over the default 50.
     if(EXISTS "${CMAKE_BINARY_DIR}/Doxyfile")
         file(APPEND "${CMAKE_BINARY_DIR}/Doxyfile"
-             "\nLAYOUT_FILE = ${CMAKE_SOURCE_DIR}/cmake/DoxygenLayout.xml\n")
+             "\nLAYOUT_FILE = ${CMAKE_SOURCE_DIR}/cmake/DoxygenLayout.xml\n"
+             "STRIP_FROM_PATH = ${CMAKE_SOURCE_DIR}\n"
+             "MARKDOWN_ID_STYLE = GITHUB\n"
+             "IMAGE_PATH += ${CMAKE_SOURCE_DIR}/docs/images ${CMAKE_SOURCE_DIR}/docs/apps/images\n"
+             "DOT_GRAPH_MAX_NODES = 80\n")
     endif()
 
     # Full-text search. Doxygen's search box finds names; tools/site_search.py
@@ -305,6 +317,8 @@ if(BUILD_DOCUMENTATION AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/share/doxygen/CMak
                     --newest "${CMAKE_BINARY_DIR}/public/docs"
             COMMAND ${KALMAN_SITE_PYTHON} "${CMAKE_SOURCE_DIR}/tools/site_notebooks.py"
                     --newest "${CMAKE_BINARY_DIR}/public/docs"
+            COMMAND ${KALMAN_SITE_PYTHON} "${CMAKE_SOURCE_DIR}/tools/site_versions.py"
+                    "${CMAKE_BINARY_DIR}/public/docs"
             DEPENDS doxygen
             COMMENT "Indexing the documentation and publishing the notebooks"
             VERBATIM)

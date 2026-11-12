@@ -6,6 +6,11 @@ interactive (IKF, the Interacting Multiple Model or IMM of
 the literature) — with composable multi-sensor models, 46 domain
 applications, and one JSON API exposed over REST and MCP.
 
+![A Kalman filter turning noisy position readings into an estimate of position and velocity](docs/images/tracking.gif)
+
+Each application has its own page, several with an animation: see
+[Applications](docs/17_Applications.md).
+
 ## Documentation
 
 Full documentation lives in [`docs/`](docs/README.md):
@@ -19,6 +24,7 @@ Full documentation lives in [`docs/`](docs/README.md):
 | [Troubleshooting](docs/14_Troubleshooting.md) | error messages, decoded |
 | [C++ Library](docs/15_Cxx-Library.md) | `libKalmanFramework`, for ROOT / ROOT+ analyses |
 | [C++ Models from Python](docs/16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages |
+| [Applications](docs/17_Applications.md) | One page per application: the model, how it is built, how to run it |
 
 `make setup` installs everything and self-checks; [`AGENTS.md`](AGENTS.md) has the
 conventions for changing the code. The rest of this file is the reference for
