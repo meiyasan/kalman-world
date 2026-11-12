@@ -406,6 +406,21 @@ def make_model(spec: dict) -> KalmanModel:
                            for p in inspect.signature(cls.__init__).parameters.values())
     except (TypeError, ValueError):
         takes_var_kw = False
+    is_native = hasattr(cls, "NATIVE_NAME")
+    if is_native:
+        # A C++ model has its own sample rate, noise and parameters: a spec that
+        # does not give fs keeps the model's, and its noise is pushed into the
+        # C++ instance (the catalogue's Python classes define their noise through
+        # their own parameters instead).
+        if "fs" in spec:
+            params["fs"] = fs
+        for k in ("Q", "R"):
+            if noise.get(k) is not None:
+                params[k] = _arr(noise[k])
+        try:
+            return cls(sensor, **{**kw, **params})
+        except KeyError as e:
+            raise ValueError(f"model {base!r}: {e.args[0] if e.args else e}") from None
     if "fs" in accepted and "fs" not in params:
         params["fs"] = fs
     for k, v in list(kw.items()):

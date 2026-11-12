@@ -92,6 +92,25 @@ class NativeModel(KalmanModel):
             if not np.any(P0):
                 P0 = None
 
+        # Noise and named parameters live in the C++ instance (Q(), R() and
+        # parameters() read them from there), so what is passed here is pushed
+        # down, not kept on the Python side where nothing would read it.
+        for key, setter, size in (("Q", L.kalman_model_set_Q, self.n), ("R", L.kalman_model_set_R, self.m)):
+            value = kwargs.pop(key, None)
+            if value is not None:
+                value = np.ascontiguousarray(np.asarray(value, dtype=float).reshape(size, size))
+                core.check(setter(self._handle, core.cdptr(value)), "set_" + key)
+                # A model that computes its noise from its own parameters does
+                # not take a matrix: say so instead of running with another one.
+                getter = L.kalman_model_Q if key == "Q" else L.kalman_model_R
+                if not np.allclose(self._mat(getter, (size, size), key, 0.0), value, rtol=1e-12, atol=0.0):
+                    raise ValueError(
+                        f"the C++ model {name!r} computes its own {key} and does not take one; "
+                        f"set its parameters instead ({', '.join(sorted(self.parameters())) or 'it declares none'}).")
+        declared = self.parameters()
+        for key in [k for k in kwargs if k in declared]:
+            self.set_parameter(key, kwargs.pop(key))
+
         self.DEFAULT_ENGINE = ENGINE_BY_INT.get(
             core.check(L.kalman_model_engine(self._handle), "engine"), KalmanEngineKind.EXTENDED)
         self._analytic = core.check(L.kalman_model_analytic_jacobian(self._handle), "analytic") == 1

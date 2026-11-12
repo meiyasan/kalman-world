@@ -383,3 +383,36 @@ class TestPublicNativeModule(unittest.TestCase):
         env = dict(os.environ, KALMAN_PURE_PYTHON="1")
         done = subprocess.run([sys.executable, "-c", code], cwd=REPO, env=env, capture_output=True, text=True)
         self.assertEqual(done.returncode, 0, done.stderr[-1500:])
+
+
+class TestApiBuildsNativeModels(unittest.TestCase):
+    """A spec naming a C++ model keeps the model's own sample rate unless it gives
+    one, and its noise and parameters reach the C++ instance."""
+
+    def setUp(self):
+        if not core.HAS_CXX_CORE:
+            self.skipTest("libKalman is not built")
+        try:
+            core.load_plugin(core.resolve_plugin(PLUGIN))
+        except (FileNotFoundError, PermissionError):
+            self.skipTest("the example plugin is not built")
+
+    def test_sample_rate_noise_and_parameters(self):
+        import modules.api as api
+        own = core.describe("constant-velocity")["fs"]
+        self.assertEqual(api.make_model({"base": "constant-velocity"}).fs, own)
+        self.assertEqual(api.make_model({"base": "constant-velocity", "fs": 50.0}).fs, 50.0)
+
+        # this model derives Q from its parameters: a Q in the spec is refused, not ignored
+        with self.assertRaises(ValueError) as raised:
+            api.make_model({"base": "constant-velocity", "noise": {"Q": [[7.0, 0.0], [0.0, 7.0]]}})
+        self.assertIn("computes its own Q", str(raised.exception))
+
+        from modules.framework.models.native import NativeModel
+        if "ballistic-order2" in core.names():            # a model that holds its Q and R as matrices
+            m = NativeModel("ballistic-order2", Q=7.0 * np.eye(6), R=3.0 * np.eye(3))
+            np.testing.assert_allclose(m.Q(), 7.0 * np.eye(6))
+            np.testing.assert_allclose(m.R(), 3.0 * np.eye(3))
+
+        if "ballistic" in core.names():
+            self.assertEqual(NativeModel("ballistic", c_drag=0.25).parameters()["c_drag"], 0.25)
