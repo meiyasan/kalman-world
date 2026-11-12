@@ -94,6 +94,19 @@ Two rules that bite here:
   physics as continuous; keep discrete for a step that has no derivative behind
   it. The filter sees a discrete step either way, and the Jacobian is taken on
   that step.
+- **A continuous model can state its noise in continuous time too.** Pass
+  `Qc=` (an intensity, per unit time) and optionally `Lc=` (where it enters)
+  instead of `Q=`. The per-step `Q` is decoded for the sample rate in use, so
+  the same model works at any `fs`:
+
+  ```python
+  model = PendulumModel(fs=50.0, Qc=np.diag([0.0, 0.5]))   # a random torque
+  ```
+
+  A linear model does the same with a generator matrix: `KalmanModel(A=..., Qc=..., Lc=...)`
+  gives `F = exp(A / fs)` and the matching `Q`. The decoding (the matrix
+  exponential and the Van Loan formula) runs in C++, `Kalman::Utils::VanLoan`.
+  `R` stays a per-reading covariance: a measurement is taken at an instant.
   `dt` is never passed into `f()` — only absolute `t` is. Derive
   `dt = 1/self.fs`.
 

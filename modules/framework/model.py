@@ -1,7 +1,6 @@
 from typing import Optional
 import numpy as np
-from scipy.linalg import expm
-from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize
+from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize, matrix_exponential
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
 from .constants import KalmanDynamicsKind
@@ -99,10 +98,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             if kwargs.get("F") is not None:
                 raise ValueError("Pass either F= or A=, not both.")
             if not self.fs:
-                raise ValueError("A= needs fs= (or sample_rate=) to discretize via expm(A/fs).")
+                raise ValueError("A= needs fs= (or sample_rate=) to decode F = exp(A / fs).")
             A = np.asarray(A, dtype=self.dtype)
             dt = 1.0 / self.fs
-            kwargs["F"] = expm(A * dt)
+            kwargs["F"] = matrix_exponential(A * dt)
             self._Ac = A
             if Qc is not None:
                 if kwargs.get("Q") is not None:
@@ -111,7 +110,19 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
                 _, kwargs["Q"] = van_loan_discretize(A, Lc, np.asarray(Qc, dtype=self.dtype), dt)
                 self._Qc, self._Lc = Qc, Lc
         elif Qc is not None:
-            raise ValueError("Qc= requires A= (Van Loan needs the continuous generator).")
+            # A continuous model with no generator matrix: its noise intensity is
+            # decoded in Q(), with the Jacobian of its derivative as generator.
+            if self.DYNAMICS is not KalmanDynamicsKind.CONTINUOUS:
+                raise ValueError("Qc= needs a continuous model: pass A=, or declare DYNAMICS = CONTINUOUS.")
+            if kwargs.get("Q") is not None:
+                raise ValueError("Pass either Q= or Qc=, not both.")
+            if not self.fs:
+                raise ValueError("Qc= needs fs= (or sample_rate=) to decode the per-step Q.")
+            self._Qc = np.asarray(Qc, dtype=self.dtype)
+            self._Lc = None if Lc is None else np.asarray(Lc, dtype=self.dtype)
+            kwargs["Q"] = self._decode_noise
+            kwargs.setdefault("L", np.eye(self.n, dtype=self.dtype))   # the coupling is inside the decoded Q
+        self._decoded_noise = None
 
         self._F = _store(kwargs.pop("F", None))
         self._H = _store(kwargs.pop("H", None))
@@ -355,6 +366,20 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     def Q(self, t: Optional[float] = None) -> np.ndarray:
         """Process noise covariance."""
         return self._Q(t) if callable(self._Q) else self._Q
+
+    def _decode_noise(self, t=None):
+        """Per-step Q of a continuous model that stated a noise intensity ``Qc``:
+        Van Loan over one sample, with the Jacobian of the derivative at the
+        initial state as generator. Decoded once per (sample rate, initial state)."""
+        x0 = np.zeros((self.n, 1)) if getattr(self, "x0", None) is None else np.asarray(self.x0, dtype=float).reshape(-1, 1)
+        key = (float(self.fs), x0.tobytes())
+        if self._decoded_noise is None or self._decoded_noise[0] != key:
+            u = np.zeros((self.l, 1)) if getattr(self, "l", 0) else None
+            A = numerical_jacobian(lambda xx: self.derivative(xx, u=u, t=t), x0)
+            Lc = np.eye(self.n) if self._Lc is None else self._Lc
+            _, Q = van_loan_discretize(np.asarray(A, dtype=float), Lc, self._Qc, 1.0 / self.fs)
+            self._decoded_noise = (key, Q.astype(self.dtype))
+        return self._decoded_noise[1]
 
     def R(self, t: Optional[float] = None) -> np.ndarray:
         """Measurement noise covariance."""

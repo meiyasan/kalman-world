@@ -21,6 +21,7 @@
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Controller.h"
 #include "Kalman/Filter.h"
+#include "Kalman/Utils.h"
 #include "Kalman/Integrators/DormandPrince.h"
 #include "Kalman/Integrator.h"
 #include "Kalman/Model.h"
@@ -790,6 +791,65 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
         if (!control) throw std::invalid_argument("null control function");
         return RunFilter(model, engine, N, zk, nullptr, control, user, smooth, x_prior, P_prior, x_post, P_post,
                          x_smooth, P_smooth, innovations, transitions, controls);
+    });
+}
+
+int kalman_matrix_exponential(int n, const double *A, double *out)
+{
+    return Guard([&] {
+        if (n <= 0 || !out) throw std::invalid_argument("bad arguments");
+        const std::size_t size = static_cast<std::size_t>(n);
+        Copy(Kalman::Utils::Exponential(Mat(A, size, size, "A")), out, size, size, "out");
+        return 0;
+    });
+}
+
+int kalman_van_loan(int n, const double *A, const double *G, double dt, double *F, double *Q)
+{
+    return Guard([&] {
+        if (n <= 0) throw std::invalid_argument("bad arguments");
+        const std::size_t size = static_cast<std::size_t>(n);
+        Kalman::Matrix Fd, Qd;
+        Kalman::Utils::VanLoan(Mat(A, size, size, "A"), Mat(G, size, size, "G"), dt, Fd, Qd);
+        if (F) Copy(Fd, F, size, size, "F");
+        if (Q) Copy(Qd, Q, size, size, "Q");
+        return 0;
+    });
+}
+
+int kalman_model_dynamics(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).Dynamics()); });
+}
+
+int kalman_model_set_generator(kalman_model_t *model, const double *A)
+{
+    return Guard([&] {
+        auto &M = Deref(model);
+        M.SetGenerator(Mat(A, M.NState(), M.NState(), "A"));
+        return 0;
+    });
+}
+
+int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc)
+{
+    return Guard([&] {
+        auto &M = Deref(model);
+        if (q <= 0) throw std::invalid_argument("q must be positive");
+        const std::size_t size = static_cast<std::size_t>(q);
+        M.SetNoiseIntensity(Mat(Qc, size, size, "Qc"), Lc ? Mat(Lc, M.NState(), size, "Lc") : Kalman::Matrix());
+        return 0;
+    });
+}
+
+int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q)
+{
+    return Guard([&] {
+        const auto &M = Deref(model);
+        const std::size_t n = M.NState();
+        if (F) Copy(M.F(M.T0()), F, n, n, "F");
+        if (Q) Copy(M.Q(M.T0()), Q, n, n, "Q");
+        return 0;
     });
 }
 

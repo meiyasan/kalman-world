@@ -162,6 +162,12 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
                                   double *x_prior, double *P_prior, double *x_post, double *P_post,
                                   double *x_smooth, double *P_smooth, double *innovations,
                                   double *transitions, double *controls);
+int kalman_matrix_exponential(int n, const double *A, double *out);
+int kalman_van_loan(int n, const double *A, const double *G, double dt, double *F, double *Q);
+int kalman_model_dynamics(const kalman_model_t *model);
+int kalman_model_set_generator(kalman_model_t *model, const double *A);
+int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc);
+int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
 typedef int (*kalman_derivative_fn)(void *user, const double *x, double t, double *dx);
 int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
                      kalman_derivative_fn f, void *user, int n,
@@ -465,6 +471,27 @@ def _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, con
         raise raised[0]
     check(rc, "kalman_filter_run_closed_loop")
     return out
+
+
+# --- continuous models: decoding ------------------------------------------------
+def matrix_exponential(A):
+    """``exp(A)`` in C++ (Kalman::Utils::Exponential)."""
+    L = require()
+    A = np.ascontiguousarray(np.asarray(A, dtype=np.float64))
+    out = np.empty_like(A)
+    check(L.kalman_matrix_exponential(A.shape[0], cdptr(A), dptr(out)), "kalman_matrix_exponential")
+    return out
+
+
+def van_loan(A, G, dt):
+    """``(F, Q)`` for one sample of ``dx/dt = A x + w`` with noise intensity ``G``
+    (Kalman::Utils::VanLoan)."""
+    L = require()
+    A = np.ascontiguousarray(np.asarray(A, dtype=np.float64))
+    G = np.ascontiguousarray(np.asarray(G, dtype=np.float64))
+    F, Q = np.empty_like(A), np.empty_like(A)
+    check(L.kalman_van_loan(A.shape[0], cdptr(A), cdptr(G), float(dt), dptr(F), dptr(Q)), "kalman_van_loan")
+    return F, Q
 
 
 # --- integrators ---------------------------------------------------------------

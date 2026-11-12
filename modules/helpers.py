@@ -316,15 +316,38 @@ def van_loan_discretize(A: np.ndarray, L: np.ndarray, Qc: np.ndarray, dt: float)
     ``expm([[-A, L·Qc·Lᵀ], [0, Aᵀ]]·dt) = [[M11, M12], [0, M22]]``,
     giving ``F = M22ᵀ`` and ``Q = F·M12``.
     """
-    n = A.shape[0]
+    A = np.asarray(A, dtype=float)
+    G = np.asarray(L, dtype=float) @ np.asarray(Qc, dtype=float) @ np.asarray(L, dtype=float).T
+    core = _native_core()
+    if core is not None:                       # the implementation: Kalman::Utils::VanLoan
+        return core.van_loan(A, G, dt)
+    n = A.shape[0]                             # reference, when libKalman is not there
     Z = np.zeros((2 * n, 2 * n), dtype=float)
     Z[:n, :n] = -A
-    Z[:n, n:] = L @ Qc @ L.T
+    Z[:n, n:] = G
     Z[n:, n:] = A.T
     M = expm(Z * dt)
     F = M[n:, n:].T
     Q = F @ M[:n, n:]
-    return F, Q
+    return F, 0.5 * (Q + Q.T)
+
+
+def matrix_exponential(A: np.ndarray) -> np.ndarray:
+    """``exp(A)``: in C++ (Kalman::Utils::Exponential), or scipy without the library."""
+    core = _native_core()
+    if core is not None:
+        return core.matrix_exponential(A)
+    return expm(np.asarray(A, dtype=float))
+
+
+def _native_core():
+    """libKalman's Python loader when the library is loaded and in use, else None."""
+    try:
+        from .framework.native import core
+        from .framework.models import native
+    except Exception:
+        return None
+    return core if native.native_loop_enabled() else None
 
 def symbolic_discretize(A: np.ndarray, t: str = "dt"):
     """Closed-form ``F(t) = exp(A·t)`` as a symbolic expression, for reading a

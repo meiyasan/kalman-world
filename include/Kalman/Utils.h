@@ -89,6 +89,19 @@ namespace Kalman::Utils
     /// Rows *and* columns of \p M restricted to \p keep (for the noise matrix R).
     Matrix CompressBoth(const Matrix &M, const std::vector<std::size_t> &keep);
 
+    /// The matrix exponential `exp(A)` (scaling and squaring).
+    Matrix Exponential(const Matrix &A);
+
+    /**
+     * \brief Decode a continuous linear system into one sample (Van Loan, 1978).
+     *
+     * For `dx/dt = A x + w`, with `w` white noise of intensity \p G (per unit
+     * time; `G = L Qc L^T`), gives the transition `F = exp(A dt)` and the
+     * covariance \p Q of the noise accumulated over \p dt, exactly, including
+     * the cross terms a plain `G dt` misses. Works for a singular \p A.
+     */
+    void VanLoan(const Matrix &A, const Matrix &G, double dt, Matrix &F, Matrix &Q);
+
     /**
      * \brief Central-difference Jacobian `df/dx` at \p x.
      *

@@ -95,6 +95,14 @@ namespace Kalman
             mutable std::shared_ptr<Integrator> fIntegrator;
             std::size_t fSubsteps = 1;
 
+            // A continuous model's own statement, kept so it can be decoded again
+            // when the sample rate changes: the generator A of a linear model,
+            // and the noise intensity (per unit time) with its coupling.
+            Matrix fGenerator;
+            Matrix fNoiseIntensity;
+            Matrix fNoiseCoupling;
+            void Decode();
+
             // Named scalar parameters (see DeclareParameter()).
             std::map<std::string, double> fParameters;
 
@@ -203,6 +211,28 @@ namespace Kalman
             /// Also switches the Jacobian to numerical: F(t) is not df/dx of an ODE step.
             void UseContinuousDynamics(bool on = true);
             bool HasContinuousDynamics() const { return fContinuous; }
+
+            /// Discrete (f() is the step) or Continuous (decoded from a derivative or a generator).
+            DynamicsKind Dynamics() const
+            { return (fContinuous || !fGenerator.Empty()) ? DynamicsKind::Continuous : DynamicsKind::Discrete; }
+
+            /**
+             * \brief State a linear model in continuous time: `dx/dt = A x`.
+             * The transition `F = exp(A dt)` is decoded for the sample rate, and
+             * again whenever the sample rate changes.
+             */
+            void SetGenerator(const Matrix &A);
+            const Matrix &Generator() const { return fGenerator; }
+
+            /**
+             * \brief State the process noise in continuous time: white noise of
+             * intensity \p Qc (per unit time), entering through \p Lc (identity
+             * when empty). The per-step covariance Q is decoded for the sample
+             * rate by Utils::VanLoan(), with the generator A of a linear model, or
+             * for a model with a Derivative() its Jacobian at the initial state.
+             */
+            void SetNoiseIntensity(const Matrix &Qc, const Matrix &Lc = Matrix());
+            const Matrix &NoiseIntensity() const { return fNoiseIntensity; }
 
             IntegratorKind DefaultIntegrator() const { return fDefaultIntegrator; }
             /// Declare the scheme; the instance is built on first use.

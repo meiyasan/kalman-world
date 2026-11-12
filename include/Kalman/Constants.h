@@ -34,6 +34,20 @@ namespace Kalman
     };
 
     /**
+     * \brief What a model states about time: its step, or its rate of change.
+     *
+     * Discrete: f() is the step, the state one sample later, used as written.
+     * Continuous: the model states the derivative (Derivative(), or a generator
+     * matrix A) and a noise intensity; the framework decodes them into the step
+     * and the per-step covariance, so engines always see a discrete model.
+     */
+    enum class DynamicsKind
+    {
+        Discrete = 0,
+        Continuous = 1
+    };
+
+    /**
      * \brief Time-stepping scheme of a Kalman::Integrator — advances `x(t) -> x(t + dt)`
      * for a continuous `xdot = f(x, u, t)`.
      *
@@ -80,6 +94,7 @@ namespace Kalman
     const char *ToString(StateFlavor flavor);
     /// Human-readable name of an integrator kind (never null).
     const char *ToString(IntegratorKind kind);
+    const char *ToString(DynamicsKind kind);
     /// Human-readable name of a solver kind (never null).
     const char *ToString(SolverKind kind);
 }

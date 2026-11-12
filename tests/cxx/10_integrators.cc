@@ -124,6 +124,35 @@ int main()
         { threw = std::string(e.what()).find("Derivative") != std::string::npos; }
         CHECK(threw, "model: a missing Derivative() override is named, not silently zero");
 
+        // A model states what it is: discrete, or continuous (to be decoded).
+        CHECK(hand.Dynamics() == DynamicsKind::Discrete, "model: a hand-stepped model is discrete");
+        CHECK(ode.Dynamics() == DynamicsKind::Continuous, "model: a model with a derivative is continuous");
+        {
+            // Linear, stated in continuous time: dx/dt = A x with white acceleration.
+            Fixture::ConstantVelocity stated(1, 4.);          // 4 Hz, so dt = 0.25
+            Matrix A(2, 2, 0.), Qc(1, 1, 0.), Lc(2, 1, 0.);
+            A(0, 1) = 1.;
+            Qc(0, 0) = 2.;
+            Lc(1, 0) = 1.;
+            stated.SetGenerator(A);
+            stated.SetNoiseIntensity(Qc, Lc);
+            CHECK(stated.Dynamics() == DynamicsKind::Continuous, "model: a generator makes the model continuous");
+            CHECK_CLOSE(stated.F(0.)(0, 1), 0.25, 1e-14, "model: F decoded from the generator");
+            CHECK_CLOSE(stated.Q(0.)(0, 0), 2. * 0.25 * 0.25 * 0.25 / 3., 1e-14, "model: Q decoded from the intensity");
+            stated.SetSampleRate(8.);                         // decoded again for the new rate
+            CHECK_CLOSE(stated.F(0.)(0, 1), 0.125, 1e-14, "model: F follows the sample rate");
+            CHECK_CLOSE(stated.Q(0.)(1, 1), 2. * 0.125, 1e-14, "model: Q follows the sample rate");
+
+            // Nonlinear: the intensity is decoded with the derivative's Jacobian.
+            Fixture::PendulumODE noisy(1.0, 0.15, 100.);
+            Matrix Qp(2, 2, 0.);
+            Qp(1, 1) = 0.5;
+            noisy.SetNoiseIntensity(Qp);
+            const Matrix Qd = noisy.Q(0.);
+            CHECK_CLOSE(Qd(1, 1), 0.5 * 0.01, 1e-4, "model: nonlinear, the leading term is intensity times dt");
+            CHECK(Qd(0, 0) > 0. && Qd(0, 0) < 1e-6, "model: nonlinear, the angle gets its dt^3 share through the Jacobian");
+        }
+
         // The whole filter runs on the ODE model exactly as on the hand-stepped one.
         Vector x0(2); x0(0) = 0.6; x0(1) = 0.;
         hand.SetNoise(1e-2, 5e-2); ode.SetNoise(1e-2, 5e-2);

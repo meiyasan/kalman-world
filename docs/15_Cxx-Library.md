@@ -641,6 +641,7 @@ linear filter. Both can be present in one process.
 | Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
+| Noise of a continuous model | `Qc=`, `Lc=` (with `A=` for a linear model) | `SetNoiseIntensity(Qc, Lc)`, `SetGenerator(A)`; decoded by `Utils::VanLoan`, which Python calls |
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | numpy, or `backend="torch"`, which runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |

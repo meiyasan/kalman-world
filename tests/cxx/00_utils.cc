@@ -181,5 +181,38 @@ int main()
         CHECK_CLOSE(out(0, 1), 0., 1e-12, "JosephForm: stays diagonal");
     }
 
+    // --- continuous to discrete -------------------------------------------------
+    {
+        // A rotation generator: exp([[0, -w], [w, 0]] t) is the rotation by w t.
+        const double w = 3., t = 0.7;
+        Matrix A(2, 2, 0.);
+        A(0, 1) = -w * t;
+        A(1, 0) = w * t;
+        const Matrix E = Utils::Exponential(A);
+        CHECK_CLOSE(E(0, 0), std::cos(w * t), 1e-13, "Exponential: rotation, cosine");
+        CHECK_CLOSE(E(1, 0), std::sin(w * t), 1e-13, "Exponential: rotation, sine");
+
+        // A large norm goes through the squarings: exp(diag(-30, 5)).
+        Matrix D(2, 2, 0.);
+        D(0, 0) = -30.;
+        D(1, 1) = 5.;
+        const Matrix ED = Utils::Exponential(D);
+        CHECK_CLOSE(ED(0, 0) / std::exp(-30.), 1., 1e-10, "Exponential: decaying mode");
+        CHECK_CLOSE(ED(1, 1) / std::exp(5.), 1., 1e-12, "Exponential: growing mode");
+
+        // Position and velocity driven by white acceleration of intensity q: the
+        // textbook result F = [[1, dt], [0, 1]], Q = q [[dt^3/3, dt^2/2], [dt^2/2, dt]].
+        const double dt = 0.25, q = 2.;
+        Matrix Ac(2, 2, 0.), G(2, 2, 0.), F, Q;
+        Ac(0, 1) = 1.;
+        G(1, 1) = q;
+        Utils::VanLoan(Ac, G, dt, F, Q);
+        CHECK_CLOSE(F(0, 1), dt, 1e-14, "VanLoan: F of a constant-velocity model");
+        CHECK_CLOSE(Q(0, 0), q * dt * dt * dt / 3., 1e-14, "VanLoan: position variance");
+        CHECK_CLOSE(Q(0, 1), q * dt * dt / 2., 1e-14, "VanLoan: cross term");
+        CHECK_CLOSE(Q(1, 1), q * dt, 1e-14, "VanLoan: velocity variance");
+        CHECK_CLOSE(Q(0, 1), Q(1, 0), 1e-16, "VanLoan: Q is symmetric");
+    }
+
     return Check::Summary("utils");
 }

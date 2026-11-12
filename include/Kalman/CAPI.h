@@ -307,6 +307,31 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
                                   double *x_smooth, double *P_smooth, double *innovations,
                                   double *transitions, double *controls);
 
+/* --- continuous models: decoding into one sample ------------------------------ */
+
+/// exp(A) for a square matrix A (n x n), written to `out` (n x n).
+int kalman_matrix_exponential(int n, const double *A, double *out);
+
+/**
+ * Decode dx/dt = A x + w, w white noise of intensity G (n x n, per unit time),
+ * over a step dt: the transition F = exp(A dt) and the accumulated noise
+ * covariance Q (Van Loan). Either output may be NULL.
+ */
+int kalman_van_loan(int n, const double *A, const double *G, double dt, double *F, double *Q);
+
+/// 0 for a discrete model, 1 for a continuous one (a derivative or a generator).
+int kalman_model_dynamics(const kalman_model_t *model);
+
+/// State a linear model as dx/dt = A x (n x n); F is decoded for the sample rate.
+int kalman_model_set_generator(kalman_model_t *model, const double *A);
+
+/// State the process noise as an intensity Qc (q x q) entering through Lc (n x q, or NULL
+/// for the identity, then q = n); Q is decoded for the sample rate.
+int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc);
+
+/// The model's current F (n x n) and Q (n x n), as decoded. Either may be NULL.
+int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
+
 /* --- integrators ------------------------------------------------------------ */
 
 /**

@@ -67,6 +67,7 @@ namespace Kalman
     {
         if (fs <= 0.) throw std::runtime_error("Kalman::Model: the sample rate must be positive.");
         fSampleRate = fs;
+        Decode();
     }
 
     // --- coefficients --------------------------------------------------------
@@ -135,6 +136,60 @@ namespace Kalman
     {
         fContinuous = on;
         if (on) fAnalyticJacobian = false;
+    }
+
+    void Model::SetGenerator(const Matrix &A)
+    {
+        if (A.Rows() != fNState || A.Cols() != fNState)
+            ShapeError("A", A.Rows(), A.Cols(), fNState, fNState);
+        fGenerator = A;
+        Decode();
+    }
+
+    void Model::SetNoiseIntensity(const Matrix &Qc, const Matrix &Lc)
+    {
+        const std::size_t q = Qc.Rows();
+        if (q == 0 || Qc.Cols() != q) throw std::runtime_error("Kalman::Model: the noise intensity must be square.");
+        if (Lc.Empty() ? q != fNState : (Lc.Rows() != fNState || Lc.Cols() != q))
+            throw std::runtime_error("Kalman::Model: the noise coupling must be (n, q).");
+        fNoiseIntensity = Qc;
+        fNoiseCoupling = Lc;
+        Decode();
+    }
+
+    // What a continuous model stated, turned into one sample: F from the
+    // generator, Q from the noise intensity.
+    void Model::Decode()
+    {
+        if (fGenerator.Empty() && fNoiseIntensity.Empty()) return;
+        const double dt = DeltaT();
+
+        Matrix A = fGenerator;
+        if (A.Empty())
+        {
+            // No generator: linearise the derivative at the initial state. The
+            // leading term of Q does not depend on A at all, so this only
+            // shapes the cross terms.
+            if (fContinuous)
+                A = Utils::NumericalJacobian(
+                    [this](const Vector &x) { return this->Derivative(x, Vector(fNControl, 0.), fT0); }, fX0, fEpsilon);
+            else
+                A = Matrix(fNState, fNState, 0.);
+        }
+
+        Matrix G(fNState, fNState, 0.);
+        if (!fNoiseIntensity.Empty())
+            G = fNoiseCoupling.Empty() ? fNoiseIntensity
+                                       : fNoiseCoupling * fNoiseIntensity * fNoiseCoupling.Transpose();
+
+        Matrix F, Q;
+        Utils::VanLoan(A, G, dt, F, Q);
+        if (!fGenerator.Empty()) fF = F;
+        if (!fNoiseIntensity.Empty())
+        {
+            fQ = Q;
+            fL = Matrix();                       // the coupling is inside Q now
+        }
     }
 
     void Model::SetIntegrator(IntegratorKind kind)
@@ -227,6 +282,7 @@ namespace Kalman
     {
         if (x0.Size() != fNState) ShapeError("x0", x0.Size(), 1, fNState, 1);
         fX0 = x0;
+        if (fGenerator.Empty() && !fNoiseIntensity.Empty()) Decode();   // linearised there
     }
 
     void Model::SetInitialCovariance(const Matrix &P0)
