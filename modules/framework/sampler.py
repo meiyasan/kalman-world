@@ -77,6 +77,11 @@ class KalmanSampler:
         ``Q``) while ``Pk`` still reflects the model's analytic uncertainty growth.
         '''
 
+        # seed=: the same run every time. It was accepted and ignored before.
+        seed = kwargs.pop("seed", None)
+        if seed is not None:
+            np.random.seed(int(seed))
+
         inprocess = kwargs.pop("inprocess", True)
         postprocess = kwargs.pop("postprocess", True)
         indexing = kwargs.pop("indexing", "xy")
