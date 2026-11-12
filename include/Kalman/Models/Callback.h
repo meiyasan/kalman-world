@@ -52,6 +52,10 @@ namespace Kalman::Models
             using ProcessNoiseFn = int (*)(void *user, const double *x, const double *u, double t, double *Q);
             /// The measurement-noise covariance at t, row-major (m x m).
             using MeasurementNoiseFn = int (*)(void *user, double t, double *R);
+            /// `x_next = f(x, u, w, t)`, the step with its process noise \p w (length n) inside.
+            using NoisyStepFn = int (*)(void *user, const double *x, const double *u, const double *w, double t, double *x_next);
+            /// `z = h(x, v, t)`, the observation with its noise \p v (length m) inside.
+            using NoisyMeasureFn = int (*)(void *user, const double *x, const double *v, double t, double *z);
 
         private:
             StepFn fStep;
@@ -62,6 +66,8 @@ namespace Kalman::Models
 
             ProcessNoiseFn fProcessNoise = nullptr;
             MeasurementNoiseFn fMeasurementNoise = nullptr;
+            NoisyStepFn fNoisyStep = nullptr;
+            NoisyMeasureFn fNoisyMeasure = nullptr;
             // The point of the last f() call. An engine asks for Q(t) right after
             // stepping from (x, u, t); a state-dependent noise needs that point.
             mutable Vector fLastX, fLastU;
@@ -96,6 +102,16 @@ namespace Kalman::Models
             Matrix Q(double t = 0.) const override;
             Matrix R(double t = 0.) const override;
             Matrix L(double t = 0.) const override;
+
+            /// Give the maps that take their noise as an argument (either may be
+            /// null). The sigma-point engine then augments the state with it.
+            void SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure);
+
+            using Extended::f;
+            bool HasProcessNoiseInput() const override { return fNoisyStep != nullptr; }
+            Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const override;
+            bool HasMeasurementNoiseInput() const override { return fNoisyMeasure != nullptr; }
+            Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const override;
     };
 }
 

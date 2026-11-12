@@ -260,14 +260,20 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if not native.native_loop_enabled():
             return False
         from .engines.extended import ExtendedKalmanEngine
-        if type(self.engine) is not ExtendedKalmanEngine:
+        from .engines.unscented import UnscentedKalmanEngine
+        if type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine):
             return False
         return native.callback_eligible(self._model)
 
     def _forward_callback(self, zk, uk):
         from .models.native import run_callback_filter
-        model = self._model
-        out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P)
+        from .engines.unscented import UnscentedKalmanEngine
+        model, engine = self._model, self.engine
+        if type(engine) is UnscentedKalmanEngine:
+            kind = {"engine": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
+        else:
+            kind = {"engine": "extended"}
+        out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P, **kind)
         self._store_pass(out, zk, uk)
 
     def _store_pass(self, out, zk, uk):

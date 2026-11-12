@@ -303,6 +303,17 @@ int kalman_model_callback_set_noise(kalman_model_t *model, kalman_process_noise_
     });
 }
 
+int kalman_model_callback_set_noise_inputs(kalman_model_t *model, kalman_noisy_step_fn f_with_noise,
+                                           kalman_noisy_measure_fn h_with_noise)
+{
+    return Guard([&] {
+        auto *callback = dynamic_cast<Kalman::Models::Callback *>(&Deref(model));
+        if (!callback) throw std::invalid_argument("not a callback model");
+        callback->SetNoiseInputs(f_with_noise, h_with_noise);
+        return 0;
+    });
+}
+
 void kalman_model_destroy(kalman_model_t *model) { delete model; }
 
 const char *kalman_model_name(const kalman_model_t *model)

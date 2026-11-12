@@ -80,6 +80,20 @@ namespace Kalman
 
     // --- maps ----------------------------------------------------------------
 
+    Vector Model::f(const Vector &x, const Vector &u, const Vector &w, double t) const
+    {
+        Vector out = f(x, u, t);
+        if (w.Size() == out.Size()) out += w;
+        return out;
+    }
+
+    Vector Model::MeasureWithNoise(const Vector &x, const Vector &v, double t) const
+    {
+        Vector out = h(x, t);
+        if (v.Size() == out.Size()) out += v;
+        return out;
+    }
+
     Vector Model::f(const Vector &x, const Vector &u, double t) const
     {
         if (fContinuous)

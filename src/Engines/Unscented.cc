@@ -56,6 +56,39 @@ namespace Kalman::Engines
             for (std::size_t i = 0; i < S.Rows(); ++i) S(i, i) += 1e-12;
         }
 
+        // [x; 0] and blockdiag(P, N): the state augmented with a zero-mean noise.
+        Vector Augmented(const Vector &x, std::size_t extra)
+        {
+            Vector out(x.Size() + extra, 0.);
+            for (std::size_t i = 0; i < x.Size(); ++i) out(i) = x(i);
+            return out;
+        }
+
+        Matrix Augmented(const Matrix &P, const Matrix &N)
+        {
+            const std::size_t n = P.Rows(), q = N.Rows();
+            Matrix out(n + q, n + q, 0.);
+            for (std::size_t i = 0; i < n; ++i)
+                for (std::size_t j = 0; j < n; ++j) out(i, j) = P(i, j);
+            for (std::size_t i = 0; i < q; ++i)
+                for (std::size_t j = 0; j < q; ++j) out(n + i, n + j) = N(i, j);
+            return out;
+        }
+
+        Vector Head(const Vector &v, std::size_t n)
+        {
+            Vector out(n);
+            for (std::size_t i = 0; i < n; ++i) out(i) = v(i);
+            return out;
+        }
+
+        Vector Tail(const Vector &v, std::size_t n)
+        {
+            Vector out(v.Size() - n);
+            for (std::size_t i = n; i < v.Size(); ++i) out(i - n) = v(i);
+            return out;
+        }
+
         Vector ControlOf(const Model &model, const Vector *u)
         {
             Vector uu(model.NControl(), 0.);
@@ -125,21 +158,39 @@ namespace Kalman::Engines
 
         double gamma;
         std::vector<double> wm, wc;
-        Weights(n, gamma, wm, wc);
-
-        const std::vector<Vector> sigma = SigmaPoints(x, P, gamma);
         std::vector<Vector> Y;
-        Y.reserve(sigma.size());
-        for (const Vector &s : sigma) Y.push_back(model.f(s, uu, t));
 
-        xk = WeightedMean(wm, Y);
-        Pk = WeightedOuter(wc, Y, xk, Y, xk);
+        if (model.HasProcessNoiseInput())
+        {
+            // The noise goes through f: sigma points over the state and the noise
+            // together, and nothing to add afterwards.
+            const Matrix Q = model.Q(t);
+            const std::size_t q = Q.Rows();
+            Weights(n + q, gamma, wm, wc);
+            const std::vector<Vector> sigma = SigmaPoints(Augmented(x, q), Augmented(P, Q), gamma);
+            Y.reserve(sigma.size());
+            for (const Vector &s : sigma) Y.push_back(model.f(Head(s, n), uu, Tail(s, n), t));
 
-        Matrix Q = model.Q(t);
-        const Matrix L = model.L(t);
-        if (!L.Empty()) Q = Utils::Similarity(L, Q);
-        Pk += Q;
-        Regularise(Pk);
+            xk = WeightedMean(wm, Y);
+            Pk = WeightedOuter(wc, Y, xk, Y, xk);
+            Regularise(Pk);
+        }
+        else
+        {
+            Weights(n, gamma, wm, wc);
+            const std::vector<Vector> sigma = SigmaPoints(x, P, gamma);
+            Y.reserve(sigma.size());
+            for (const Vector &s : sigma) Y.push_back(model.f(s, uu, t));
+
+            xk = WeightedMean(wm, Y);
+            Pk = WeightedOuter(wc, Y, xk, Y, xk);
+
+            Matrix Q = model.Q(t);
+            const Matrix L = model.L(t);
+            if (!L.Empty()) Q = Utils::Similarity(L, Q);
+            Pk += Q;
+            Regularise(Pk);
+        }
 
         F = Matrix::Identity(n);
     }
@@ -154,19 +205,42 @@ namespace Kalman::Engines
         const std::vector<std::size_t> keep = Utils::ValidChannels(z);
         if (keep.empty()) return 0;
 
+        const std::size_t n = model.NState();
         double gamma;
         std::vector<double> wm, wc;
-        Weights(model.NState(), gamma, wm, wc);
+        std::vector<Vector> Z, X;
+        Vector zpred;
+        Matrix S, Pxz;
 
-        const std::vector<Vector> sigma = SigmaPoints(x, P, gamma);
-        std::vector<Vector> Z;
-        Z.reserve(sigma.size());
-        for (const Vector &s : sigma) Z.push_back(model.h(s, t));
-
-        const Vector zpred = WeightedMean(wm, Z);
-        Matrix S = WeightedOuter(wc, Z, zpred, Z, zpred);
-        S += model.R(t);
-        const Matrix Pxz = WeightedOuter(wc, sigma, x, Z, zpred);
+        if (model.HasMeasurementNoiseInput())
+        {
+            // The noise goes through h: augment the state with it.
+            const Matrix R = model.R(t);
+            const std::size_t r = R.Rows();
+            Weights(n + r, gamma, wm, wc);
+            const std::vector<Vector> sigma = SigmaPoints(Augmented(x, r), Augmented(P, R), gamma);
+            Z.reserve(sigma.size());
+            X.reserve(sigma.size());
+            for (const Vector &s : sigma)
+            {
+                X.push_back(Head(s, n));
+                Z.push_back(model.MeasureWithNoise(X.back(), Tail(s, n), t));
+            }
+            zpred = WeightedMean(wm, Z);
+            S = WeightedOuter(wc, Z, zpred, Z, zpred);
+            Pxz = WeightedOuter(wc, X, x, Z, zpred);
+        }
+        else
+        {
+            Weights(n, gamma, wm, wc);
+            X = SigmaPoints(x, P, gamma);
+            Z.reserve(X.size());
+            for (const Vector &s : X) Z.push_back(model.h(s, t));
+            zpred = WeightedMean(wm, Z);
+            S = WeightedOuter(wc, Z, zpred, Z, zpred);
+            S += model.R(t);
+            Pxz = WeightedOuter(wc, X, x, Z, zpred);
+        }
 
         // Restrict to the channels that arrived.
         Matrix Sc = Utils::CompressBoth(S, keep);

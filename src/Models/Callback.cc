@@ -113,6 +113,32 @@ namespace Kalman::Models
         return fProcessNoise ? Matrix() : Extended::L(t);
     }
 
+    void Callback::SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure)
+    {
+        fNoisyStep = noisyStep;
+        fNoisyMeasure = noisyMeasure;
+    }
+
+    Vector Callback::f(const Vector &x, const Vector &u, const Vector &w, double t) const
+    {
+        if (!fNoisyStep) return Extended::f(x, u, w, t);
+        const std::vector<double> xin = Flat(x), uin = Flat(u), win = Flat(w);
+        std::vector<double> out(NState());
+        if (fProcessNoise) { fLastX = x; fLastU = u; }
+        Check(fNoisyStep(fUser, xin.data(), uin.size() == NControl() && NControl() > 0 ? uin.data() : nullptr,
+                         win.data(), t, out.data()), "f with noise");
+        return ToVector(out);
+    }
+
+    Vector Callback::MeasureWithNoise(const Vector &x, const Vector &v, double t) const
+    {
+        if (!fNoisyMeasure) return Extended::MeasureWithNoise(x, v, t);
+        const std::vector<double> xin = Flat(x), vin = Flat(v);
+        std::vector<double> out(NMeasure());
+        Check(fNoisyMeasure(fUser, xin.data(), vin.data(), t, out.data()), "h with noise");
+        return ToVector(out);
+    }
+
     Matrix Callback::JacobianH(const Vector &x, double t) const
     {
         if (!fMeasureJacobian) return Extended::JacobianH(x, t);

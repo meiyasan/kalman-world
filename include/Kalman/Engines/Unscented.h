@@ -59,7 +59,7 @@ namespace Kalman::Engines
             EngineKind Kind() const override { return EngineKind::Unscented; }
             const char *Title() const override { return "Unscented Kalman Engine"; }
             const char *Description() const override
-            { return "Sigma-point (unscented transform) step; no Jacobian, additive noise."; }
+            { return "Sigma-point (unscented transform) step; no Jacobian; noise added, or carried through the maps."; }
             const char *Version() const override { return "3.0"; }
 
             double Alpha() const { return fAlpha; }

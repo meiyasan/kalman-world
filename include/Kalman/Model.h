@@ -151,6 +151,23 @@ namespace Kalman
             /// The observation map. Default: `H x`.
             virtual Vector h(const Vector &x, double t = 0.) const;
 
+            // --- noise that enters the maps ------------------------------------
+            // By default the process noise is added after f and the measurement
+            // noise after h. A model in which the noise goes *through* the map
+            // (a noisy thrust, a multiplicative sensor error) says so here and
+            // gives the map with its noise argument. The sigma-point engine then
+            // draws its points over the state and the noise together.
+            /// True when f takes the process noise as an argument: see f(x, u, w, t).
+            virtual bool HasProcessNoiseInput() const { return false; }
+            /// The step with the process noise \p w (same size as Q) inside it.
+            /// Default: `f(x, u, t) + w`.
+            virtual Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const;
+            /// True when h takes the measurement noise as an argument: see h(x, v, t).
+            virtual bool HasMeasurementNoiseInput() const { return false; }
+            /// The observation with the measurement noise \p v inside it.
+            /// Default: `h(x, t) + v`.
+            virtual Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const;
+
             /**
              * \brief Actuator-limit hook: the command the plant can actually deliver.
              *

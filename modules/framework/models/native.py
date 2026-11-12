@@ -405,7 +405,7 @@ class NativeTwin:
 
 
 # --- a Python-written model on the C++ engines ----------------------------------
-def callback_handle(model):
+def callback_handle(model, engine="extended"):
     """A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call
     ``model``'s own Python methods, so the C++ filter can run a model written in
     Python. Returns ``(handle, keep)``: ``keep`` holds the callback objects and
@@ -460,7 +460,15 @@ def callback_handle(model):
     @ffi.callback("int(void *, const double *, double, double *)")
     @guard
     def measure_jacobian(user, x, t, out):
-        write(out, model.H(x=col(x, n), t=t), m * n)
+        try:
+            H = model.H(x=col(x, n), t=t)
+        except TypeError:
+            # A model whose h takes no noise argument: the base class cannot
+            # difference it (it passes v=). Only the sigma-point engines accept
+            # such a model, and they use H for the reported innovation alone.
+            from ...helpers import numerical_jacobian
+            H = numerical_jacobian(lambda xx: model.h(xx, t=t), col(x, n))
+        write(out, H, m * n)
 
     handle = lib.kalman_model_create_callback(type(model).__name__.encode(), n, m, l,
                                               step, measure, step_jacobian, measure_jacobian, ffi.NULL)
@@ -472,7 +480,9 @@ def callback_handle(model):
         core.check(lib.kalman_model_set_sample_rate(handle, float(model.fs)), "set_sample_rate")
 
     keep = [step, measure, step_jacobian, measure_jacobian]
-    if constant_noise(model):
+    if engine == "unscented":
+        keep += _unscented_noise(model, handle, guard, col, control, write)
+    elif constant_noise(model):
         Lm = np.asarray(model._L, dtype=np.float64)
         Q = Lm @ np.asarray(model.Q(), dtype=np.float64).reshape(n, n) @ Lm.T
         R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)
@@ -504,11 +514,59 @@ def callback_handle(model):
     return handle, (*keep, errors)
 
 
-def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False) -> dict:
-    """Filter ``zk`` with the C++ extended engine on a Python-written ``model``.
-    Returns the per-step arrays of :func:`core.run_filter`."""
+def _unscented_noise(model, handle, guard, col, control, write):
+    """The noise hooks of the unscented engine, as the Python engine applies
+    them: where ``f`` takes ``w`` (or ``h`` takes ``v``) the noise goes through
+    the map and the covariance is handed over as it is; otherwise it is added
+    afterwards, coupled by ``L`` (or ``M``)."""
+    from ..engine import KalmanEngine
+    from ..engines.unscented import UnscentedKalmanEngine as U
+    lib, ffi = core.lib, core.ffi
+    n, m = int(model.n), int(model.m)
+    through_f = KalmanEngine._accepts_param(model.f, "w")
+    through_h = KalmanEngine._accepts_param(model.h, "v")
+
+    @ffi.callback("int(void *, const double *, const double *, double, double *)")
+    @guard
+    def process_noise(user, x, u, t, out):
+        Q = U._Q(model, t)
+        if not through_f:
+            Lm = U._L(model, col(x, n), control(u), t)
+            Q = Lm @ Q @ Lm.T
+        write(out, Q, n * n)
+
+    @ffi.callback("int(void *, double, double *)")
+    @guard
+    def measurement_noise(user, t, out):
+        R = U._R(model, t)
+        if not through_h:
+            Mm = U._M(model, np.asarray(model.x0, dtype=np.float64).reshape(-1, 1), t)
+            R = Mm @ R @ Mm.T
+        write(out, R, m * m)
+
+    @ffi.callback("int(void *, const double *, const double *, const double *, double, double *)")
+    @guard
+    def noisy_step(user, x, u, w, t, out):
+        write(out, model.f(col(x, n), u=control(u), w=col(w, n), t=t), n)
+
+    @ffi.callback("int(void *, const double *, const double *, double, double *)")
+    @guard
+    def noisy_measure(user, x, v, t, out):
+        write(out, model.h(col(x, n), v=col(v, m), t=t), m)
+
+    core.check(lib.kalman_model_callback_set_noise(handle, process_noise, measurement_noise), "set_noise")
+    core.check(lib.kalman_model_callback_set_noise_inputs(
+        handle, noisy_step if through_f else ffi.NULL, noisy_measure if through_h else ffi.NULL), "set_noise_inputs")
+    return [process_noise, measurement_noise, noisy_step, noisy_measure]
+
+
+def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
+                        engine="extended", **engine_params) -> dict:
+    """Filter ``zk`` with a C++ engine (``"extended"`` or ``"unscented"``, with
+    its constructor parameters) on a Python-written ``model``. Returns the
+    per-step arrays of :func:`core.run_filter`."""
     lib = core.require()
-    handle, keep = callback_handle(model)
+    handle, keep = callback_handle(model, engine)
     n = int(model.n)
     x0 = np.ascontiguousarray(np.asarray(model.x0 if x0 is None else x0, dtype=np.float64).reshape(-1))
     P0 = np.ascontiguousarray(np.asarray(model.P0 if P0 is None else P0, dtype=np.float64).reshape(n, n))
@@ -516,8 +574,8 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False) -
     core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
     core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0), "set_t0")
     try:
-        return core.run_filter(handle, core.create_engine("extended"), n, int(model.m), int(model.l),
-                               zk, uk, smooth=smooth)
+        return core.run_filter(handle, core.create_engine(engine, **engine_params), n, int(model.m),
+                               int(model.l), zk, uk, smooth=smooth)
     except RuntimeError:
         if keep[-1]:
             raise keep[-1][0]                       # the Python exception, not its C++ shadow

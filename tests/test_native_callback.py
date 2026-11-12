@@ -158,8 +158,66 @@ class TestFilterTakesTheCxxLoop(unittest.TestCase):
         self.assertFalse(self.path(Pendulum(), controller=lambda *a, **k: None), "a controller callback")
         with native.python_reference():
             self.assertFalse(self.path(Pendulum()), "the reference switch")
+        from modules.framework.filters import ParticleFilter
+        self.assertFalse(ParticleFilter(Pendulum())._callback_eligible(None), "the particle engine")
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
+class TestUnscentedOnTheCxxEngine(unittest.TestCase):
+    """The unscented filter on a Python-written model runs in C++ and gives the
+    Python engine's result. A framework model's f takes w and its h takes v, so
+    the noise is carried through the maps: sigma points over state and noise."""
+
+    def both(self, make, z, **engine):
         from modules.framework.filters import UnscentedKalmanFilter
-        self.assertFalse(UnscentedKalmanFilter(Pendulum())._callback_eligible(None), "another engine")
+        with native.python_reference():
+            ref = UnscentedKalmanFilter(make(), **engine).forward(z)
+        flt = UnscentedKalmanFilter(make(), **engine)
+        self.assertTrue(flt._callback_eligible(None))
+        got = flt.forward(z)
+        return (np.asarray(ref.xk), np.asarray(ref.Pk)), (np.asarray(got.xk), np.asarray(got.Pk))
+
+    def close(self, a, b, rtol, what):
+        self.assertLess(np.nanmax(np.abs(a - b)) / max(1.0, np.nanmax(np.abs(a))), rtol, what)
+
+    def data(self):
+        rng = np.random.default_rng(5)
+        t = np.arange(300) / 50.0
+        z = (0.5 * np.cos(3.1 * t) + rng.normal(0, 0.1, 300)).reshape(-1, 1)
+        z[40:48] = np.nan
+        return z
+
+    def test_noise_carried_through_the_maps(self):
+        (x0, P0), (x1, P1) = self.both(_NoisyPendulum, self.data(), alpha=0.5)
+        self.close(x0, x1, 1e-7, "state")
+        self.close(P0, P1, 1e-7, "covariance")
+
+    def test_default_spread_on_application_models(self):
+        """alpha = 1e-3, the default, has weights of order 1e6, so the last digits
+        of f are amplified: agreement is to 1e-6 here, not to 1e-9."""
+        _, fixes = synthetic_track(n_steps=200, seed=1)
+        (x0, P0), (x1, P1) = self.both(lambda: StormModel("TC", omega=-0.022), fixes)
+        self.close(x0, x1, 1e-6, "storm state")
+        self.close(P0, P1, 1e-6, "storm covariance")
+
+
+class _NoisyPendulum(Pendulum):
+    """The pendulum with its noise inside the maps: a random torque, and a
+    sensor error that grows with the angle."""
+
+    def f(self, x, u=None, w=None, t=None):
+        out = Pendulum.f(self, x)
+        if w is not None:
+            w = np.asarray(w, float).reshape(-1)
+            out[1, 0] += w[1] * np.cos(float(np.asarray(x).reshape(-1)[0]))
+            out[0, 0] += w[0]
+        return out
+
+    def h(self, x, v=None, t=None):
+        out = Pendulum.h(self, x)
+        if v is not None:
+            out = out + float(np.asarray(v).reshape(-1)[0]) * (1.0 + 0.5 * out)
+        return out
 
 
 if __name__ == "__main__":

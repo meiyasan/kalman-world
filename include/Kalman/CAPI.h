@@ -136,6 +136,16 @@ typedef int (*kalman_measurement_noise_fn)(void *user, double t, double *R);
 int kalman_model_callback_set_noise(kalman_model_t *model, kalman_process_noise_fn process_noise,
                                     kalman_measurement_noise_fn measurement_noise);
 
+/// `x_next = f(x, u, w, t)`: the step with its process noise `w` (length n) inside. Return 0 on success.
+typedef int (*kalman_noisy_step_fn)(void *user, const double *x, const double *u, const double *w, double t, double *x_next);
+/// `z = h(x, v, t)`: the observation with its noise `v` (length m) inside. Return 0 on success.
+typedef int (*kalman_noisy_measure_fn)(void *user, const double *x, const double *v, double t, double *z);
+
+/// Give a callback model the maps that take their noise as an argument (either
+/// may be NULL). The unscented engine then augments the state with that noise.
+int kalman_model_callback_set_noise_inputs(kalman_model_t *model, kalman_noisy_step_fn f_with_noise,
+                                           kalman_noisy_measure_fn h_with_noise);
+
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);
 
