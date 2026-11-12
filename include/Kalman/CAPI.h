@@ -106,6 +106,25 @@ kalman_model_t *kalman_model_create(const char *name);
 /// Destroy an instance. NULL is accepted and ignored.
 void kalman_model_destroy(kalman_model_t *model);
 
+/* --- model: maps supplied by the caller ----------------------------------- */
+
+/// `x_next = f(x, u, t)`; `u` is NULL when the model has no control. Return 0 on success.
+typedef int (*kalman_step_fn)(void *user, const double *x, const double *u, double t, double *x_next);
+/// `z = h(x, t)`. Return 0 on success.
+typedef int (*kalman_measure_fn)(void *user, const double *x, double t, double *z);
+/// `J = df/dx`, row-major (n x n). Return 0 on success.
+typedef int (*kalman_step_jacobian_fn)(void *user, const double *x, const double *u, double t, double *J);
+/// `J = dh/dx`, row-major (m x n). Return 0 on success.
+typedef int (*kalman_measure_jacobian_fn)(void *user, const double *x, double t, double *J);
+
+/// A model whose f and h are the caller's functions (Kalman::Models::Callback).
+/// Either Jacobian may be NULL, in which case it is differenced numerically.
+/// The functions and `user` must outlive the model. NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int l,
+                                             kalman_step_fn f, kalman_measure_fn h,
+                                             kalman_step_jacobian_fn jacobian_f,
+                                             kalman_measure_jacobian_fn jacobian_h, void *user);
+
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);
 

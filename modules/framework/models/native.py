@@ -357,6 +357,103 @@ class NativeTwin:
         return handle
 
 
+# --- a Python-written model on the C++ engines ----------------------------------
+def callback_handle(model):
+    """A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call
+    ``model``'s own Python methods, so the C++ filter can run a model written in
+    Python. Returns ``(handle, keep)``: ``keep`` holds the callback objects and
+    must stay referenced for as long as the handle is used.
+
+    The Jacobians are the model's ``F(x, u, t)`` and ``H(x, t)``, analytic where
+    the model defines them and differenced by the Python framework otherwise, so
+    both sides linearise alike. ``Q`` and ``R`` are pushed as constants (``Q``
+    with the noise coupling ``L`` applied); the sample rate too. A Python
+    exception inside a callback stops the pass and is re-raised by the caller
+    (see :func:`run_callback_filter`).
+    """
+    lib = core.require()
+    ffi = core.ffi
+    n, m, l = int(model.n), int(model.m), int(model.l)
+    errors: list[BaseException] = []
+
+    def col(ptr, size):
+        return np.frombuffer(ffi.buffer(ptr, size * 8), dtype=np.float64).reshape(size, 1).copy()
+
+    def guard(fn):
+        def wrapped(*args):
+            try:
+                fn(*args)
+                return 0
+            except BaseException as exc:            # must not unwind through C++
+                errors.append(exc)
+                return 1
+        return wrapped
+
+    def write(out, values, size):
+        ffi.memmove(out, np.ascontiguousarray(np.asarray(values, dtype=np.float64).reshape(-1)), size * 8)
+
+    def control(u):
+        return None if (u == ffi.NULL or l == 0) else col(u, l)
+
+    @ffi.callback("int(void *, const double *, const double *, double, double *)")
+    @guard
+    def step(user, x, u, t, out):
+        write(out, model.f(col(x, n), u=control(u), t=t), n)
+
+    @ffi.callback("int(void *, const double *, double, double *)")
+    @guard
+    def measure(user, x, t, out):
+        write(out, model.h(col(x, n), t=t), m)
+
+    @ffi.callback("int(void *, const double *, const double *, double, double *)")
+    @guard
+    def step_jacobian(user, x, u, t, out):
+        write(out, model.F(x=col(x, n), u=control(u), t=t), n * n)
+
+    @ffi.callback("int(void *, const double *, double, double *)")
+    @guard
+    def measure_jacobian(user, x, t, out):
+        write(out, model.H(x=col(x, n), t=t), m * n)
+
+    handle = lib.kalman_model_create_callback(type(model).__name__.encode(), n, m, l,
+                                              step, measure, step_jacobian, measure_jacobian, ffi.NULL)
+    if handle == ffi.NULL:
+        raise RuntimeError(f"callback model: {core.last_error()}")
+    handle = ffi.gc(handle, lib.kalman_model_destroy)
+
+    if model.fs:
+        core.check(lib.kalman_model_set_sample_rate(handle, float(model.fs)), "set_sample_rate")
+    Q = np.asarray(model.Q(), dtype=np.float64).reshape(n, n)
+    L_ = model._L
+    if L_ is not None and not callable(L_):
+        Lm = np.asarray(L_, dtype=np.float64)
+        Q = Lm @ Q @ Lm.T
+    R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)
+    core.check(lib.kalman_model_set_Q(handle, core.cdptr(np.ascontiguousarray(Q))), "set_Q")
+    core.check(lib.kalman_model_set_R(handle, core.cdptr(np.ascontiguousarray(R))), "set_R")
+    return handle, (step, measure, step_jacobian, measure_jacobian, errors)
+
+
+def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False) -> dict:
+    """Filter ``zk`` with the C++ extended engine on a Python-written ``model``.
+    Returns the per-step arrays of :func:`core.run_filter`."""
+    lib = core.require()
+    handle, keep = callback_handle(model)
+    n = int(model.n)
+    x0 = np.ascontiguousarray(np.asarray(model.x0 if x0 is None else x0, dtype=np.float64).reshape(-1))
+    P0 = np.ascontiguousarray(np.asarray(model.P0 if P0 is None else P0, dtype=np.float64).reshape(n, n))
+    core.check(lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+    core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+    core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0), "set_t0")
+    try:
+        return core.run_filter(handle, core.create_engine("extended"), n, int(model.m), int(model.l),
+                               zk, uk, smooth=smooth)
+    except RuntimeError:
+        if keep[-1]:
+            raise keep[-1][0]                       # the Python exception, not its C++ shadow
+        raise
+
+
 # --- one class per registered name ---------------------------------------------
 _CLASSES: dict[str, type] = {}
 

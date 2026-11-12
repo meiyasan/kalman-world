@@ -18,6 +18,7 @@
 #include "Kalman/Engines/Particle.h"
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Factory.h"
+#include "Kalman/Models/Callback.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Model.h"
 
@@ -268,6 +269,24 @@ kalman_model_t *kalman_model_create(const char *name)
         if (!name) throw std::invalid_argument("null model name");
         auto *h = new kalman_model{Kalman::Factory::Instance().Create(name)};
         return h;
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int l,
+                                             kalman_step_fn f, kalman_measure_fn h,
+                                             kalman_step_jacobian_fn jacobian_f,
+                                             kalman_measure_jacobian_fn jacobian_h, void *user)
+{
+    try
+    {
+        Ok();
+        if (n <= 0 || m <= 0 || l < 0) throw std::invalid_argument("n and m must be positive, l not negative");
+        auto model = std::make_unique<Kalman::Models::Callback>(
+            name ? name : "callback", static_cast<std::size_t>(n), static_cast<std::size_t>(m),
+            static_cast<std::size_t>(l), f, h, jacobian_f, jacobian_h, user);
+        return new kalman_model{std::move(model)};
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }

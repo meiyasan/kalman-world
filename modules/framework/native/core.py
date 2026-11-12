@@ -71,6 +71,15 @@ const char *kalman_factory_plugin(int i);
 
 kalman_model_t *kalman_model_create(const char *name);
 void kalman_model_destroy(kalman_model_t *model);
+
+typedef int (*kalman_step_fn)(void *user, const double *x, const double *u, double t, double *x_next);
+typedef int (*kalman_measure_fn)(void *user, const double *x, double t, double *z);
+typedef int (*kalman_step_jacobian_fn)(void *user, const double *x, const double *u, double t, double *J);
+typedef int (*kalman_measure_jacobian_fn)(void *user, const double *x, double t, double *J);
+kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int l,
+                                             kalman_step_fn f, kalman_measure_fn h,
+                                             kalman_step_jacobian_fn jacobian_f,
+                                             kalman_measure_jacobian_fn jacobian_h, void *user);
 const char *kalman_model_name(const kalman_model_t *model);
 const char *kalman_model_title(const kalman_model_t *model);
 const char *kalman_model_description(const kalman_model_t *model);

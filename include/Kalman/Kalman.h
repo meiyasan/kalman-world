@@ -117,6 +117,7 @@
 #include "Kalman/Engines/Combinatorial.h"
 #include "Kalman/Models/Linear.h"
 #include "Kalman/Models/Extended.h"
+#include "Kalman/Models/Callback.h"
 #include "Kalman/Filters/KF.h"
 #include "Kalman/Filters/EKF.h"
 #include "Kalman/Filters/UKF.h"
