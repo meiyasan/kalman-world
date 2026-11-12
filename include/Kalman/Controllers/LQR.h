@@ -18,9 +18,10 @@ namespace Kalman::Controllers
     /**
      * \brief `u = -K (x_hat - x_ref)`, `K` from the DARE of the model's `F`, `B`, `Qcost`, `Rcost`.
      *
-     * The Riccati equation is solved by iterating it to a fixed point — the
-     * dependency-free route; scipy's `solve_discrete_are` is the Python one — and
-     * Fit() must be called before use. Mirrors `controllers/lqr.py`.
+     * The Riccati equation is solved by Algebra::SolveDARE (the recursion, then
+     * Newton steps; it agrees with scipy's `solve_discrete_are`, the Python
+     * reference, to rounding), and Fit() must be called before use. Mirrors
+     * `controllers/lqr.py`, which forwards to this class.
      */
     class LQR : public Controller
     {
@@ -42,10 +43,17 @@ namespace Kalman::Controllers
              *         iteration does not converge (an uncontrollable pair, typically).
              */
             LQR &Fit();
+            /**
+             * \brief Fit against a given linearisation `x_next = A x + B u` instead of the model's
+             * F() and B() at T0 — what the Python class does, with its own `model.F()`, `model.B()`.
+             */
+            LQR &Fit(const Matrix &A, const Matrix &B);
+            /// Use a gain computed elsewhere, (l, n).
+            void SetGain(const Matrix &K);
             bool IsFitted() const { return !fK.Empty(); }
             const Matrix &Gain() const { return fK; }
 
-            /// The DARE fixed point `P = Q + A^T P A - A^T P B (R + B^T P B)^-1 B^T P A`, by iteration.
+            /// The DARE solution `P = Q + A^T P A - A^T P B (R + B^T P B)^-1 B^T P A` (Algebra::SolveDARE).
             static Matrix SolveDARE(const Matrix &A, const Matrix &B, const Matrix &Q, const Matrix &R,
                                     double tolerance = 1e-10, std::size_t maxIterations = 100000);
 

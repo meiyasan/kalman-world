@@ -19,7 +19,16 @@
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Factory.h"
 #include "Kalman/Models/Callback.h"
+#include "Kalman/Algebra/Riccati.h"
 #include "Kalman/Controller.h"
+#include "Kalman/Controllers/Adaptive.h"
+#include "Kalman/Controllers/LQR.h"
+#include "Kalman/Controllers/MPPI.h"
+#include "Kalman/Controllers/PID.h"
+#include "Kalman/Controllers/Proportional.h"
+#include "Kalman/Routers/Bayesian.h"
+#include "Kalman/Routers/Hybrid.h"
+#include "Kalman/Routers/Threshold.h"
 #include "Kalman/Differentiator.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Solvers/FiniteDifference.h"
@@ -32,6 +41,7 @@
 
 #include <algorithm>
 #include <complex>
+#include <cstdint>
 #include <cstring>
 #include <exception>
 #include <memory>
@@ -1011,6 +1021,379 @@ int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
 }
 
 } // extern "C"
+
+/* --- controllers ------------------------------------------------------------ */
+
+struct kalman_controller
+{
+    std::unique_ptr<Kalman::Controller> controller;
+};
+
+namespace
+{
+    Kalman::Controller &Deref(kalman_controller_t *h)
+    {
+        if (!h || !h->controller) throw std::invalid_argument("null kalman_controller_t handle");
+        return *h->controller;
+    }
+
+    const Kalman::Controller &Deref(const kalman_controller_t *h)
+    {
+        if (!h || !h->controller) throw std::invalid_argument("null kalman_controller_t handle");
+        return *h->controller;
+    }
+
+    std::size_t CommandSize(const Kalman::Model &M) { return std::max<std::size_t>(M.NControl(), 1); }
+
+    // The set point and the two cost weights every constructor takes; NULL = the default.
+    struct Costs
+    {
+        Kalman::Vector xRef;
+        Kalman::Matrix Q, R;
+    };
+
+    Costs ReadCosts(const Kalman::Model &M, const double *x_ref, const double *Qcost, const double *Rcost)
+    {
+        const std::size_t n = M.NState(), L = CommandSize(M);
+        return {x_ref ? Vec(x_ref, n, "x_ref") : Kalman::Vector(), Qcost ? Mat(Qcost, n, n, "Qcost") : Kalman::Matrix(),
+                Rcost ? Mat(Rcost, L, L, "Rcost") : Kalman::Matrix()};
+    }
+
+    Kalman::Matrix Gain(const Kalman::Model &M, const double *K, const char *what)
+    {
+        return Mat(K, CommandSize(M), M.NState(), what);
+    }
+
+    template <typename Make>
+    kalman_controller_t *MakeController(Make &&make)
+    {
+        try
+        {
+            Ok();
+            return new kalman_controller{make()};
+        }
+        catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+        catch (...) { Fail("unknown C++ exception"); return nullptr; }
+    }
+
+    // The belief at this boundary: P may be NULL (a policy that ignores it), nu NULL on the first step.
+    struct Belief
+    {
+        Kalman::Vector x, nu;
+        Kalman::Matrix P;
+        bool hasNu = false;
+    };
+
+    Belief ReadBelief(const Kalman::Controller &C, const double *x, const double *P, const double *nu)
+    {
+        const Kalman::Model &M = *C.GetModel();
+        const std::size_t n = M.NState();
+        Belief b;
+        b.x = Vec(x, n, "x");
+        b.P = P ? Mat(P, n, n, "P") : Kalman::Matrix(n, n, 0.);
+        if (nu) { b.nu = Vec(nu, M.NMeasure(), "nu"); b.hasNu = true; }
+        return b;
+    }
+
+    // The scale log of an adapter, or null for a controller that adapts nothing.
+    const std::vector<std::pair<double, double>> *ScaleLog(const Kalman::Controller &C)
+    {
+        if (const auto *boost = dynamic_cast<const Kalman::Controllers::Boost *>(&C)) return &boost->ScaleLog();
+        if (const auto *aqr = dynamic_cast<const Kalman::Controllers::AdaptiveQR *>(&C)) return &aqr->ScaleLog();
+        return nullptr;
+    }
+
+    template <typename T>
+    T &As(kalman_controller_t *h, const char *what)
+    {
+        auto *c = dynamic_cast<T *>(&Deref(h));
+        if (!c) throw std::invalid_argument(std::string("not ") + what + " controller");
+        return *c;
+    }
+}
+
+int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip)
+{
+    return Guard([&] {
+        auto *callback = dynamic_cast<Kalman::Models::Callback *>(&Deref(model));
+        if (!callback) throw std::invalid_argument("not a callback model");
+        callback->SetClip(clip);
+        return 0;
+    });
+}
+
+kalman_controller_t *kalman_controller_create_proportional(kalman_model_t *model, const double *Kp,
+                                                           const double *x_ref, const double *Qcost,
+                                                           const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::Proportional>(&M, Gain(M, Kp, "Kp"), c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_pid(kalman_model_t *model, const double *Kp, const double *Ki,
+                                                  const double *Kd, const double *x_ref, const double *Qcost,
+                                                  const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::PID>(
+            &M, Gain(M, Kp, "Kp"), Ki ? Gain(M, Ki, "Ki") : Kalman::Matrix(), Kd ? Gain(M, Kd, "Kd") : Kalman::Matrix(),
+            c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_lqr(kalman_model_t *model, const double *x_ref,
+                                                  const double *Qcost, const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::LQR>(&M, c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_rollouts, int horizon,
+                                                   double noise_sigma, double lambda, int n_iters,
+                                                   unsigned long long seed, const double *x_ref,
+                                                   const double *Qcost, const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        if (n_rollouts <= 0 || horizon <= 0 || n_iters < 0)
+            throw std::invalid_argument("MPPI: n_rollouts and horizon must be positive, n_iters not negative");
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::MPPI>(
+            &M, static_cast<std::size_t>(n_rollouts), static_cast<std::size_t>(horizon), noise_sigma, lambda,
+            static_cast<std::size_t>(n_iters), static_cast<std::uint64_t>(seed), c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+                                                    double threshold, int window, const double *x_ref,
+                                                    const double *Qcost, const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        if (window <= 0) throw std::invalid_argument("Boost: the window must be positive");
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::Boost>(&M, boost_factor, threshold,
+                                                            static_cast<std::size_t>(window), c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+                                                          double q_max, const double *x_ref,
+                                                          const double *Qcost, const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        if (window <= 0) throw std::invalid_argument("AdaptiveQR: the window must be positive");
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        return std::make_unique<Kalman::Controllers::AdaptiveQR>(&M, static_cast<std::size_t>(window), q_min, q_max,
+                                                                 c.xRef, c.Q, c.R);
+    });
+}
+
+void kalman_controller_destroy(kalman_controller_t *controller) { delete controller; }
+
+int kalman_controller_n_control(const kalman_controller_t *controller)
+{
+    return Guard([&] { return static_cast<int>(Deref(controller).NControl()); });
+}
+
+int kalman_controller_policy(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *u)
+{
+    return Guard([&] {
+        Kalman::Controller &C = Deref(controller);
+        const Belief b = ReadBelief(C, x, P, nu);
+        const Kalman::Vector command = C.Policy(b.x, b.P, t, b.hasNu ? &b.nu : nullptr);
+        Copy(command, u, C.NControl(), "u");
+        return 0;
+    });
+}
+
+int kalman_controller_update(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *scale)
+{
+    return Guard([&] {
+        Kalman::Controller &C = Deref(controller);
+        const Belief b = ReadBelief(C, x, P, nu);
+        const auto *log = ScaleLog(C);
+        const std::size_t before = log ? log->size() : 0;
+        C.Update(b.x, b.P, t, b.hasNu ? &b.nu : nullptr);
+        if (!log || log->size() == before) return 0;
+        if (scale) *scale = log->back().second;
+        return 1;
+    });
+}
+
+int kalman_controller_command(kalman_controller_t *controller, const double *x, const double *P, double t,
+                              const double *nu, double *u, double *cost)
+{
+    return Guard([&] {
+        Kalman::Controller &C = Deref(controller);
+        const Belief b = ReadBelief(C, x, P, nu);
+        const Kalman::Vector command = C.Command(b.x, b.P, t, b.hasNu ? &b.nu : nullptr);
+        if (u) Copy(command, u, C.NControl(), "u");
+        if (cost) *cost = C.CostLog().back().second;
+        return 0;
+    });
+}
+
+int kalman_controller_reset(kalman_controller_t *controller)
+{
+    return Guard([&] { Deref(controller).Reset(); return 0; });
+}
+
+int kalman_controller_lqr_fit(kalman_controller_t *controller, const double *A, const double *B, double *K)
+{
+    return Guard([&] {
+        auto &lqr = As<Kalman::Controllers::LQR>(controller, "an LQR");
+        const Kalman::Model &M = *lqr.GetModel();
+        const std::size_t n = M.NState(), L = lqr.NControl();
+        if (!A != !B) throw std::invalid_argument("give both A and B, or neither");
+        if (A) lqr.Fit(Mat(A, n, n, "A"), Mat(B, n, L, "B"));
+        else lqr.Fit();
+        if (K) Copy(lqr.Gain(), K, L, n, "K");
+        return 0;
+    });
+}
+
+int kalman_controller_lqr_set_gain(kalman_controller_t *controller, const double *K)
+{
+    return Guard([&] {
+        auto &lqr = As<Kalman::Controllers::LQR>(controller, "an LQR");
+        lqr.SetGain(Gain(*lqr.GetModel(), K, "K"));
+        return 0;
+    });
+}
+
+int kalman_controller_mppi_set_draws(kalman_controller_t *controller, int count, const double *draws)
+{
+    return Guard([&] {
+        auto &mppi = As<Kalman::Controllers::MPPI>(controller, "an MPPI");
+        if (count < 0 || (count > 0 && !draws)) throw std::invalid_argument("bad draws");
+        mppi.SetDraws(std::vector<double>(draws, draws + count));
+        return 0;
+    });
+}
+
+int kalman_solve_dare(int n, int l, const double *A, const double *B, const double *Q, const double *R,
+                      double *P, double *K)
+{
+    return Guard([&] {
+        if (n <= 0 || l <= 0) throw std::invalid_argument("n and l must be positive");
+        const std::size_t nn = static_cast<std::size_t>(n), ll = static_cast<std::size_t>(l);
+        const Kalman::Matrix a = Mat(A, nn, nn, "A"), b = Mat(B, nn, ll, "B"), r = Mat(R, ll, ll, "R");
+        const Kalman::Matrix solution = Kalman::Algebra::SolveDARE(a, b, Mat(Q, nn, nn, "Q"), r);
+        if (P) Copy(solution, P, nn, nn, "P");
+        if (K) Copy(Kalman::Algebra::RiccatiGain(a, b, r, solution), K, ll, nn, "K");
+        return 0;
+    });
+}
+
+/* --- routers ---------------------------------------------------------------- */
+
+struct kalman_router
+{
+    std::unique_ptr<Kalman::Routers::Router> router;
+};
+
+namespace
+{
+    const Kalman::Routers::Router &Deref(const kalman_router_t *h)
+    {
+        if (!h || !h->router) throw std::invalid_argument("null kalman_router_t handle");
+        return *h->router;
+    }
+
+    /// A router whose decision is a function pointer (a router written in another language).
+    class FunctionRouter : public Kalman::Routers::Router
+    {
+            kalman_route_fn fRoute;
+            void *fUser;
+
+        public:
+            FunctionRouter(kalman_route_fn route, void *user) : fRoute(route), fUser(user) {}
+
+            const char *Title() const override { return "Function router"; }
+            const char *Description() const override { return "A router whose decision is the caller's function."; }
+
+            Kalman::Vector Route(const Kalman::Matrix &nis, const Kalman::Vector &c,
+                                 const Kalman::Vector &likelihoods) const override
+            {
+                const std::size_t M = c.Size();
+                Kalman::Vector mu(M, 0.);
+                if (fRoute(fUser, static_cast<int>(nis.Rows()), static_cast<int>(M), nis.Data(), c.Data(),
+                           likelihoods.Data(), mu.Data()) != 0)
+                    throw std::runtime_error("the route function failed");
+                return mu;
+            }
+    };
+
+    template <typename Make>
+    kalman_router_t *MakeRouter(Make &&make)
+    {
+        try
+        {
+            Ok();
+            return new kalman_router{make()};
+        }
+        catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+        catch (...) { Fail("unknown C++ exception"); return nullptr; }
+    }
+}
+
+kalman_router_t *kalman_router_create_bayesian(void)
+{
+    return MakeRouter([]() -> std::unique_ptr<Kalman::Routers::Router> {
+        return std::make_unique<Kalman::Routers::Bayesian>();
+    });
+}
+
+kalman_router_t *kalman_router_create_threshold(int m, int window, int soft)
+{
+    return MakeRouter([&]() -> std::unique_ptr<Kalman::Routers::Router> {
+        if (m < 0 || window < 0) throw std::invalid_argument("Threshold: m and window must not be negative");
+        return std::make_unique<Kalman::Routers::Threshold>(static_cast<std::size_t>(m),
+                                                            static_cast<std::size_t>(window), soft != 0);
+    });
+}
+
+kalman_router_t *kalman_router_create_hybrid(const kalman_router_t *a, const kalman_router_t *b, double alpha)
+{
+    return MakeRouter([&]() -> std::unique_ptr<Kalman::Routers::Router> {
+        return std::make_unique<Kalman::Routers::Hybrid>(&Deref(a), &Deref(b), alpha);
+    });
+}
+
+kalman_router_t *kalman_router_create_callback(kalman_route_fn route, void *user)
+{
+    return MakeRouter([&]() -> std::unique_ptr<Kalman::Routers::Router> {
+        if (!route) throw std::invalid_argument("null route function");
+        return std::make_unique<FunctionRouter>(route, user);
+    });
+}
+
+void kalman_router_destroy(kalman_router_t *router) { delete router; }
+
+int kalman_router_route(const kalman_router_t *router, int rows, int M, const double *nis, const double *c,
+                        const double *likelihoods, double *mu)
+{
+    return Guard([&] {
+        if (rows < 0 || M <= 0) throw std::invalid_argument("rows must not be negative and M must be positive");
+        const std::size_t r = static_cast<std::size_t>(rows), m = static_cast<std::size_t>(M);
+        const Kalman::Matrix history = r ? Mat(nis, r, m, "nis") : Kalman::Matrix(0, m, 0.);
+        const Kalman::Vector out = Deref(router).Route(history, Vec(c, m, "c"), Vec(likelihoods, m, "likelihoods"));
+        Copy(out, mu, m, "mu");
+        return 0;
+    });
+}
 
 /* --- track finding ------------------------------------------------------------ */
 

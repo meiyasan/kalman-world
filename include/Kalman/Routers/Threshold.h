@@ -43,7 +43,8 @@ namespace Kalman::Routers
         public:
             /**
              * \param m      measurement dimension; the NIS a correct model should show.
-             * \param window how many past NIS values to average.
+             * \param window how many past NIS values to average (all of them while fewer
+             *               have been seen; 0 = the whole history).
              * \param soft   inverse-distance weighting (true) or hard argmin (false).
              */
             explicit Threshold(std::size_t m = 1, std::size_t window = 5, bool soft = false)

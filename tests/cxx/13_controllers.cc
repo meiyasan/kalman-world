@@ -6,6 +6,7 @@
 #include "Check.h"
 #include "Fixtures.h"
 
+#include <algorithm>
 #include <cmath>
 #include <random>
 #include <stdexcept>
@@ -199,6 +200,17 @@ int main()
         CHECK(ra.first < 0.05, "LQR: the plant is held within 0.05 of the set point");
         CHECK(ra.first < rb.first && ra.second < rb.second, "LQR: closer and cheaper than a weak proportional gain");
 
+        // Fit(A, B) against a given linearisation is Fit() on the same matrices; SetGain() is obeyed.
+        Controllers::LQR given(&plant);
+        given.Fit(A, B);
+        CHECK_CLOSE(given.Gain()(0, 0), lqr.Gain()(0, 0), 1e-14, "LQR: Fit(A, B) on the model's F, B is Fit()");
+        Matrix K(1, 2, 0.); K(0, 0) = 2.; K(0, 1) = 3.;
+        given.SetGain(K);
+        CHECK_CLOSE(given(Vector{1., 1.}, Matrix::Identity(2), 0.)(0), -5., 1e-14, "LQR: SetGain() is the gain used");
+        threw = false;
+        try { given.SetGain(Matrix(2, 2, 1.)); } catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "LQR: a gain of the wrong shape is refused");
+
         Fixture::ConstantVelocity uncontrolled(1, fs);
         Controllers::LQR none(&uncontrolled);
         threw = false;
@@ -227,6 +239,24 @@ int main()
         CHECK(again(x0, Matrix::Identity(2), 0.)(0) == u(0), "MPPI: the same seed gives the same command");
         mppi.Reset();
         CHECK(mppi(x0, Matrix::Identity(2), 0.)(0) == u(0), "MPPI: Reset() restarts the stream and the nominal");
+
+        // The caller's draws stand in for the controller's own: two controllers with
+        // different seeds given the same draws make the same decision; a wrong count throws.
+        {
+            Controllers::MPPI p(&plant, 16, 5, 1., 1., 2, 1, Vector(), Matrix(), Rc), q(&plant, 16, 5, 1., 1., 2, 99, Vector(), Matrix(), Rc);
+            CHECK(p.NDraws() == 2 * 16 * 5, "MPPI: NDraws() is iterations x rollouts x horizon x l");
+            std::mt19937_64 g(3);
+            std::normal_distribution<double> n01(0., 1.);
+            std::vector<double> draws(p.NDraws());
+            for (double &d : draws) d = n01(g);
+            p.SetDraws(draws);
+            q.SetDraws(draws);
+            CHECK(p(x0, Matrix::Identity(2), 0.)(0) == q(x0, Matrix::Identity(2), 0.)(0),
+                  "MPPI: the same draws give the same command whatever the seed");
+            bool wrong = false;
+            try { p.SetDraws(std::vector<double>(7, 0.)); } catch (const std::invalid_argument &) { wrong = true; }
+            CHECK(wrong, "MPPI: a wrong number of draws is refused");
+        }
 
         // On a real plant it regulates.
         Fixture::ControlledVelocity plant2(fsSlow, 1.);
@@ -272,6 +302,68 @@ int main()
         CHECK(aqr.ScaleLog().back().second <= 10., "adaptive: ... and clipped to q_max");
         aqr.Reset();
         CHECK_CLOSE(plant2.Q()(1, 1), Q0(1, 1), 1e-15, "adaptive: Reset() restores the nominal Q");
+    }
+
+    // --- the Riccati and Stein solvers (Kalman/Algebra/Riccati.h) ----------------------
+    {
+        // Scalar DARE: p = q + a^2 p - a^2 b^2 p^2 / (r + b^2 p), a quadratic in p.
+        const double a = 1.1, b = 0.5, q = 2., r = 3.;
+        const double A2 = b * b, B2 = r - a * a * r - q * b * b, C2 = -q * r;   // A2 p^2 + B2 p + C2 = 0
+        const double p = (-B2 + std::sqrt(B2 * B2 - 4. * A2 * C2)) / (2. * A2);
+        const Matrix P = Algebra::SolveDARE(Matrix(1, 1, a), Matrix(1, 1, b), Matrix(1, 1, q), Matrix(1, 1, r));
+        CHECK_CLOSE(P(0, 0), p, 1e-12 * p, "Riccati: the scalar DARE's positive root");
+
+        // A pole at 0.999: the plain recursion stopped 6e-8 short; Newton reaches rounding.
+        Matrix As(2, 2, 0.); As(0, 0) = 0.999; As(0, 1) = 0.01; As(1, 1) = 0.999;
+        Matrix Bs(2, 1, 0.); Bs(1, 0) = 0.01;
+        const Matrix Rs(1, 1, 1e3);
+        const Matrix Ps = Algebra::SolveDARE(As, Bs, Matrix::Identity(2), Rs);
+        Matrix next = As.Transpose() * Ps * As;
+        next -= (As.Transpose() * Ps * Bs) * Algebra::RiccatiGain(As, Bs, Rs, Ps);
+        next += Matrix::Identity(2);
+        double resid = 0., size = 0.;
+        for (std::size_t i = 0; i < 4; ++i)
+        {
+            resid = std::max(resid, std::abs(next.Data()[i] - Ps.Data()[i]));
+            size = std::max(size, std::abs(Ps.Data()[i]));
+        }
+        CHECK(resid < 1e-14 * size, "Riccati: the residual is at rounding for a slow pole");
+
+        // Stein: X = A^T X A + W, checked by substitution; a divergent sum is refused.
+        Matrix W = Matrix::Identity(2);
+        const Matrix X = Algebra::SolveStein(As, W);
+        Matrix back = As.Transpose() * X * As;
+        back += W;
+        double e = 0.;
+        for (std::size_t i = 0; i < 4; ++i) e = std::max(e, std::abs(back.Data()[i] - X.Data()[i]));
+        CHECK(e < 1e-12 * X(0, 0), "Stein: the doubling sum solves the equation");
+        bool threw = false;
+        try { Algebra::SolveStein(Matrix(1, 1, 1.5), Matrix(1, 1, 1.)); } catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "Stein: an unstable A is refused");
+
+        Matrix Au(2, 2, 0.); Au(0, 0) = 1.2; Au(1, 1) = 0.5;
+        Matrix Bu(2, 1, 0.); Bu(1, 0) = 1.;
+        threw = false;
+        try { Algebra::SolveDARE(Au, Bu, Matrix::Identity(2), Matrix::Identity(1)); } catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "Riccati: an unstabilisable pair is refused, not returned as NaN");
+    }
+
+    // --- a callback model's actuator limit ---------------------------------------------
+    {
+        struct Plant
+        {
+            static int Step(void *, const double *x, const double *u, double, double *out)
+            { out[0] = x[0] + (u ? u[0] : 0.); return 0; }
+            static int Measure(void *, const double *x, double, double *z) { z[0] = x[0]; return 0; }
+            static int Clip(void *, const double *u, double *out) { out[0] = std::max(-0.5, std::min(0.5, u[0])); return 0; }
+        };
+        Models::Callback plant("clipped", 1, 1, 1, &Plant::Step, &Plant::Measure);
+        CHECK_CLOSE(plant.ClipControl(Vector(1, 3.))(0), 3., 0., "callback: no clip function, no limit");
+        plant.SetClip(&Plant::Clip);
+        CHECK_CLOSE(plant.ClipControl(Vector(1, 3.))(0), 0.5, 0., "callback: SetClip() is the actuator limit");
+        Controllers::Proportional p(&plant, Matrix(1, 1, 4.));
+        p(Vector(1, 1.), Matrix::Identity(1), 0.);
+        CHECK_CLOSE(p.CostLog().back().second, 1. + 0.25, 1e-15, "callback: the cost is charged on the clipped command");
     }
 
     return Check::Summary("13_controllers");

@@ -26,7 +26,12 @@ class ThresholdRouter(KalmanRouter):
         Number of past NIS values to average before comparing to m.
     soft : bool
         Hard argmin (False) vs inverse-distance softmax (True).
+
+    Decided by ``Kalman::Routers::Threshold`` when libKalman is installed;
+    :meth:`_reference_route` is the Python reference.
     """
+
+    NATIVE = "threshold"
 
     def __init__(self, m: int = 1, window: int = 5, soft: bool = False):
         self.m      = int(m)
@@ -34,6 +39,24 @@ class ThresholdRouter(KalmanRouter):
         self.soft   = bool(soft)
 
     def route(self, nis_arr, c, likelihoods):
+        mu = self._native_route(nis_arr, c, likelihoods)
+        return mu if mu is not None else self._reference_route(nis_arr, c, likelihoods)
+
+    def _native_key(self):
+        if self.m < 0 or self.window < 0:
+            return None
+        return (self.m, self.window, self.soft)
+
+    def _native_rows(self):
+        return self.window if self.window > 0 else None
+
+    def _native_create(self):
+        from ..native import core
+        return core.create_router("threshold", m=self.m, window=self.window, soft=self.soft), (), []
+
+    def _reference_route(self, nis_arr, c, likelihoods):
+        if len(nis_arr) == 0:                           # nothing observed yet
+            return np.full(len(c), 1.0 / len(c))
         block    = nis_arr[-self.window:]
         nis_mean = block.mean(axis=0)
         dist     = np.abs(nis_mean - self.m)

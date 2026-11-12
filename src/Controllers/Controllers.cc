@@ -13,6 +13,7 @@
 #include "Kalman/Controllers/MPPI.h"
 #include "Kalman/Controllers/PID.h"
 #include "Kalman/Controllers/Proportional.h"
+#include "Kalman/Algebra/Riccati.h"
 #include "Kalman/Utils.h"
 
 #include <algorithm>
@@ -104,47 +105,34 @@ namespace Kalman::Controllers
     Matrix LQR::SolveDARE(const Matrix &A, const Matrix &B, const Matrix &Q, const Matrix &R,
                           double tolerance, std::size_t maxIterations)
     {
-        // The value iteration P <- Q + A^T P A - A^T P B (R + B^T P B)^-1 B^T P A converges
-        // to the stabilising solution for a stabilisable pair; it is slower than a
-        // Schur-based solver but needs nothing beyond a small SPD inverse.
-        const Matrix At = A.Transpose(), Bt = B.Transpose();
-        Matrix P = Q;
-        for (std::size_t it = 0; it < maxIterations; ++it)
-        {
-            Matrix S = Bt * P * B;
-            S += R;
-            const Matrix G = Utils::Inverse(S) * (Bt * P * A);   // (R + B^T P B)^-1 B^T P A
-            Matrix next = At * P * A;
-            next -= (At * P * B) * G;
-            next += Q;
-            Utils::Symmetrize(next);
-
-            double delta = 0., scale = 1.;
-            for (std::size_t i = 0; i < next.Rows() * next.Cols(); ++i)
-            {
-                delta = std::max(delta, std::abs(next.Data()[i] - P.Data()[i]));
-                scale = std::max(scale, std::abs(next.Data()[i]));
-            }
-            P = next;
-            if (delta <= tolerance * scale) return P;
-        }
-        throw std::runtime_error("Controllers::LQR: the Riccati iteration did not converge "
-                                 "(is the pair (F, B) stabilisable?).");
+        return Algebra::SolveDARE(A, B, Q, R, tolerance, maxIterations);
     }
 
     LQR &LQR::Fit()
     {
         if (fModel->NControl() == 0)
             throw std::runtime_error("Controllers::LQR: the model has no control input (l = 0).");
-        const Matrix A = fModel->F(fModel->T0());
         Matrix B = fModel->B(fModel->T0());
         if (B.Empty()) B = Matrix::Identity(fModel->NState());   // the control enters directly
+        return Fit(fModel->F(fModel->T0()), B);
+    }
 
+    LQR &LQR::Fit(const Matrix &A, const Matrix &B)
+    {
+        if (fModel->NControl() == 0)
+            throw std::runtime_error("Controllers::LQR: the model has no control input (l = 0).");
+        const std::size_t n = fModel->NState();
+        if (A.Rows() != n || A.Cols() != n || B.Rows() != n || B.Cols() != fRCost.Rows())
+            throw std::runtime_error("Controllers::LQR: A must be (n, n) and B (n, l).");
         const Matrix P = SolveDARE(A, B, fQCost, fRCost, fTolerance, fMaxIterations);
-        Matrix S = B.Transpose() * P * B;
-        S += fRCost;
-        fK = Utils::Inverse(S) * (B.Transpose() * P * A);
+        fK = Algebra::RiccatiGain(A, B, fRCost, P);
         return *this;
+    }
+
+    void LQR::SetGain(const Matrix &K)
+    {
+        CheckGain(K, NControl(), fModel->NState(), "K");
+        fK = K;
     }
 
     Vector LQR::Policy(const Vector &xHat, const Matrix &, double, const Vector *)
@@ -175,6 +163,11 @@ namespace Kalman::Controllers
         const double dt = fModel->DeltaT();
         std::normal_distribution<double> gauss(0., fNoiseSigma);
 
+        // The caller's perturbations, when it gave some, are used once.
+        const std::vector<double> draws = std::move(fDraws);
+        fDraws.clear();
+        std::size_t cursor = 0;
+
         std::vector<Vector> nominal = fNominal;
         std::vector<std::vector<Vector>> trial(fNRollouts, std::vector<Vector>(fHorizon, Vector(l, 0.)));
         std::vector<double> costs(fNRollouts);
@@ -188,7 +181,7 @@ namespace Kalman::Controllers
                 for (std::size_t k = 0; k < fHorizon; ++k)
                 {
                     Vector uk = nominal[k];
-                    for (std::size_t j = 0; j < l; ++j) uk(j) += gauss(fRandom);
+                    for (std::size_t j = 0; j < l; ++j) uk(j) += draws.empty() ? gauss(fRandom) : draws[cursor++];
                     // Clip the candidate before rolling it out or costing it, so the
                     // averaged nominal stays inside what the actuator can deliver.
                     uk = fModel->ClipControl(uk);
@@ -230,9 +223,23 @@ namespace Kalman::Controllers
         return u0;
     }
 
+    std::size_t MPPI::NDraws() const
+    {
+        return fNIters * fNRollouts * fHorizon * NControl();
+    }
+
+    void MPPI::SetDraws(std::vector<double> draws)
+    {
+        if (!draws.empty() && draws.size() != NDraws())
+            throw std::invalid_argument("Controllers::MPPI: " + std::to_string(draws.size()) + " draws given, "
+                                        + std::to_string(NDraws()) + " expected.");
+        fDraws = std::move(draws);
+    }
+
     void MPPI::Reset()
     {
         Controller::Reset();
+        fDraws.clear();
         fNominal.assign(fHorizon, Vector(NControl(), 0.));
         fRandom.seed(fSeed);
     }

@@ -39,6 +39,7 @@ namespace Kalman::Controllers
             std::uint64_t fSeed = 0;
             std::mt19937_64 fRandom;
             std::vector<Vector> fNominal;   // (horizon) commands (l)
+            std::vector<double> fDraws;     // the caller's perturbations for the next Policy(), or empty
 
         public:
             MPPI(Model *model, std::size_t nRollouts = 200, std::size_t horizon = 30,
@@ -52,6 +53,19 @@ namespace Kalman::Controllers
             std::size_t NRollouts() const { return fNRollouts; }
             std::size_t Horizon() const { return fHorizon; }
             const std::vector<Vector> &Nominal() const { return fNominal; }
+            /// The number of perturbations one Policy() call draws, `nIters x nRollouts x horizon x l`.
+            std::size_t NDraws() const;
+
+            /**
+             * \brief Hand the next Policy() call its perturbations instead of drawing them.
+             *
+             * \p draws holds NDraws() values, already scaled by the noise sigma, in the
+             * order iteration, rollout, horizon step, command component — the order
+             * `controllers/mppi.py` draws them from its numpy generator, so a seeded
+             * Python controller makes the same decisions whoever runs the rollouts
+             * (as kalman_propagate takes its noise from the caller). Used once.
+             */
+            void SetDraws(std::vector<double> draws);
 
             Vector Policy(const Vector &xHat, const Matrix &, double t, const Vector *) override;
             void Reset() override;
