@@ -100,9 +100,7 @@ int main(int argc, char **argv)
     try
     {
         Kalman::Net::Api api(options);
-        for (const auto &p : plugins)
-            api.Call("load_plugin", "{\"name\": \"" + p + "\"}",
-                     std::getenv("KALMAN_MCP_TOKEN") ? std::getenv("KALMAN_MCP_TOKEN") : "");
+        for (const auto &p : plugins) api.Preload(p);
 
         if (mcp)
         {

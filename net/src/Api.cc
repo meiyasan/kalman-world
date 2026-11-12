@@ -865,7 +865,7 @@ namespace Kalman::Net
             std::string key = fs::path(name).filename().string();
             for (const auto &e : kExts)
                 if (EndsWith(key, e)) key = key.substr(0, key.size() - e.size());
-            const std::string who = auth.Identity(token);
+            const std::string who = token.empty() ? std::string() : auth.Identity(token);
             try { registry.PutPlugin(key, path, added, who.empty() ? json(nullptr) : json(who)); }
             catch (const std::exception &) {}       // no registry: loaded here only
             pluginErrors.erase(key);
@@ -978,6 +978,12 @@ namespace Kalman::Net
     }
 
     std::vector<std::pair<std::string, std::string>> Api::PythonOnly() { return kPythonOnly; }
+
+    std::string Api::Preload(const std::string &plugin)
+    {
+        std::lock_guard<std::mutex> lock(fImpl->mutex);
+        return fImpl->LoadPlugin(plugin, "").dump();
+    }
 
     const Auth &Api::GetAuth() const { return fImpl->auth; }
 

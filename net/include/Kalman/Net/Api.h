@@ -102,6 +102,11 @@ namespace Kalman::Net
             std::string Call(const std::string &verb, const std::string &arguments = "{}",
                              const std::string &token = "");
 
+            /// Load a plugin as the operator does at start (kalman-serve --plugin):
+            /// no token, but the same allow-list as load_plugin. \return the answer
+            /// of load_plugin, as JSON text.
+            std::string Preload(const std::string &plugin);
+
             /// The verbs served here.
             static std::vector<std::string> Verbs();
             /// The scope \p verb requires ("" for none). \throws Error 404 for an unknown verb.
