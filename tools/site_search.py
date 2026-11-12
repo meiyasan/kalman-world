@@ -32,6 +32,9 @@ MARKER = "/* kalman-framework full-text search */"
 # Pages that are listings, not text: the built-in search already covers them.
 SKIP = re.compile(r"(_source\.html|-members\.html|_dep\.html|_incl\.html|^dir_|^globals|^functions|^namespacemembers"
                   r"|^annotated|^classes|^files|^hierarchy|^inherits|^graph_legend|^namespaces|^pages|^search|^index_)")
+# File names Doxygen gives the pages it generates from code: classes, namespaces,
+# files ("_8" is the encoded dot of an extension), groups, examples.
+REFERENCE_PAGE = re.compile(r"^(class|struct|union|namespace|group__|dir_|concept)|_8[a-z]+(-example)?\.html$")
 HEADINGS = {"h1", "h2", "h3", "h4"}
 DROP = {"script", "style", "svg", "map"}                 # never text
 VOID = {"br", "img", "hr", "input", "meta", "link", "area", "col", "wbr"}
@@ -115,11 +118,15 @@ def build_index(site: str) -> list[dict]:
                 page.feed(fh.read())
             except Exception:                            # a malformed page is skipped, not fatal
                 continue
-        title = squeeze(page.title) or name
-        title = re.sub(r"\s*(Class|Struct|Namespace|File) Reference.*$", "", title)
+        raw_title = squeeze(page.title) or name
+        title = re.sub(r"\s*(Class|Struct|Namespace|File) Reference.*$", "", raw_title)
+        # A written page: a Markdown guide, the front page, or a \page in a source
+        # file (the libraries' pages). Everything else Doxygen generated from code.
+        written = (name.startswith(("md_", "index"))
+                   or (title == raw_title and not REFERENCE_PAGE.search(name)))
         # What kind of page: a guide (2) answers a question, a reference page (1)
         # documents one thing, a test (0) is rarely what a reader is looking for.
-        if name.startswith(("md_", "index")):
+        if written:
             kind = 2
         elif title.startswith(("tests.", "tests::")) or name.startswith("test") or "_1_1test__" in name:
             kind = 0
@@ -130,7 +137,7 @@ def build_index(site: str) -> list[dict]:
             heading = squeeze(section["heading"]).rstrip("¶").strip()
             if len(text) < 40 and not heading:
                 continue
-            limit = MAX_GUIDE if name.startswith(("md_", "index")) else MAX_REFERENCE
+            limit = MAX_GUIDE if written else MAX_REFERENCE
             entries.append({"p": name, "t": title, "h": heading, "a": section["anchor"],
                             "k": kind, "x": text[:limit]})
     return entries
@@ -295,9 +302,10 @@ def install(site: str) -> tuple[int, int]:
 def tidy_navigation(site: str, title: str = "Introduction"):
     """Name the front page's entry in the side navigation.
 
-    Doxygen puts the project name at the root of the tree and the front page
-    under it, titled after the README's first heading: "Kalman Framework >
-    kalman-framework", the same thing twice. The entry becomes ``title``."""
+    Doxygen puts the project name at the root of the tree and, when the README's
+    first heading differs from it, the front page under it as a second entry
+    saying nearly the same thing; that entry becomes ``title``. When the two are
+    the same ("Kalman World"), Doxygen makes no second entry and nothing changes."""
     path = os.path.join(site, "navtreedata.js")
     if not os.path.isfile(path):
         return

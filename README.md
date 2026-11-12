@@ -1,10 +1,22 @@
-# kalman-framework
+# Kalman World
 
-A modular Python framework for Kalman-family estimation — linear (KF), extended
-(EKF), unscented (UKF), particle (PF), ensemble (EnKF), combinatorial (CKF) and
-interactive (IKF, the Interacting Multiple Model or IMM of
-the literature) — with composable multi-sensor models, 46 domain
-applications, and one JSON API exposed over REST and MCP.
+A unified framework for state estimation, dynamical systems and predictive
+learning.
+
+Kalman-family estimation — linear (KF), extended (EKF), unscented (UKF),
+particle (PF), ensemble (EnKF), combinatorial (CKF) and interactive (IKF, the
+Interacting Multiple Model or IMM of the literature) — with composable
+multi-sensor models, 46 domain applications, and one JSON API exposed over REST
+and MCP. It is written in C++ and used from C++ or from Python.
+
+| Part | What it is |
+|---|---|
+| `libKalman` | the C++ core: models, engines, filters, integrators, solvers, controllers, routers. No required dependency |
+| `libKalmanApps` | application models in C++, each the twin of a Python class |
+| `libKalmanLearn` | learned components: policies trained in Python, run from C++ |
+| `kalman` (Python) | the interface: the same roles as classes, models written in Python, the notebooks, the JSON API |
+
+This repository is `kalman-framework`; the Python package is `kalman`.
 
 ![A Kalman filter turning noisy position readings into an estimate of position and velocity](docs/images/tracking.gif)
 

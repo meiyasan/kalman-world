@@ -37,6 +37,8 @@ class TestSiteSearchIndex(unittest.TestCase):
         self.write("classtests_1_1test__x.html", "tests.test_x.TestX Class Reference")
         self.write("thing_8py_source.html", "a source listing")
         self.write("globals.html", "a listing")
+        self.write("libkalmanapps.html", "libKalmanApps — the application models")
+        self.write("_storm_8h.html", "Storm.h File Reference")
 
     def tearDown(self):
         self.tmp.cleanup()
@@ -67,6 +69,8 @@ class TestSiteSearchIndex(unittest.TestCase):
         self.assertEqual(pages["class_kalman_1_1_model.html"]["k"], 1)    # a reference page
         self.assertEqual(pages["classtests_1_1test__x.html"]["k"], 0)     # a test
         self.assertEqual(pages["class_kalman_1_1_model.html"]["t"], "Kalman::Model")
+        self.assertEqual(pages["libkalmanapps.html"]["k"], 2)             # a \page written in a header
+        self.assertEqual(pages["_storm_8h.html"]["k"], 1)                 # a file page
 
     def test_install_writes_the_index_and_is_idempotent(self):
         first = site_search.install(self.site)

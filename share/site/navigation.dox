@@ -45,12 +45,20 @@ Read these in order if you are new. The first three are enough to run a filter o
 - \subpage md_docs_213___deployment
 - \subpage md_docs_214___troubleshooting
 
-\page cxx C++
-\brief The C++ library, and how a model written once in C++ is used from both languages.
+\page cxx C++ libraries
+\brief The three C++ libraries, and how a model written once in C++ is used from both languages.
+
+| Library | What it holds | Start here |
+|---|---|---|
+| libKalman | the core: models, engines, filters, integrators, solvers, controllers, routers | \ref libkalman |
+| libKalmanApps | the application models, each the twin of a Python class | \ref libkalmanapps |
+| libKalmanLearn | learned components: policies trained in Python, run from C++ | \ref libkalmanlearn |
 
 - \subpage md_docs_215___cxx-_library
 - \subpage md_docs_216___cxx-_models-from-_python
 - \subpage libkalman
+- \subpage libkalmanapps
+- \subpage libkalmanlearn
 
 \page developers For developers
 \brief How the code is organised and what a change has to respect.

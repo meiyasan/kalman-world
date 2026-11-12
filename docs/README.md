@@ -1,9 +1,9 @@
-# kalman-framework documentation
+# Kalman World documentation
 
-A modular Python framework for Kalman-family estimation: composable contracts in
-`kalman.framework`, domain applications in `kalman.apps`, and one JSON facade
-(`kalman.api`) exposed over REST and MCP so humans, scripts and agents all drive
-the same code.
+Kalman-family estimation in C++ and Python: composable contracts in
+`kalman.framework` and `libKalman`, domain applications in `kalman.apps` and
+`libKalmanApps`, and one JSON facade (`kalman.api`) exposed over REST and MCP so
+humans, scripts and agents all drive the same code.
 
 Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop.
 
