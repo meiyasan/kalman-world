@@ -162,10 +162,9 @@ class TestFiniteDifferenceSolver(unittest.TestCase):
         np.testing.assert_allclose(s.solve(w.copy(), 3), s.advance(w.copy(), 3))
 
     def test_torch_backend_matches_numpy(self):
-        try:
-            import torch  # noqa
-        except ImportError:
-            self.skipTest("torch not installed")
+        from modules.framework.native import learn
+        if not learn.has_torch():
+            self.skipTest("libKalmanLearn with libTorch is not built")
         from modules.apps.weather.flow import NS2D
         nps = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=2)
         ts = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=2, backend="torch", device="cpu")
@@ -191,9 +190,8 @@ class TestFiniteDifferenceSolver(unittest.TestCase):
             errs[kind] = np.abs(s.advance(w0.copy(), 1) - truth).max()
         self.assertLess(errs[KalmanIntegratorKind.RK4], errs[KalmanIntegratorKind.EULER])
         self.assertLess(errs[KalmanIntegratorKind.DORMAND_PRINCE], errs[KalmanIntegratorKind.EULER])
-        try:
-            import torch  # noqa
-        except ImportError:
+        from modules.framework.native import learn
+        if not learn.has_torch():
             return
         for kind in (KalmanIntegratorKind.EULER, KalmanIntegratorKind.DORMAND_PRINCE):
             a = NS2D(n=16, dt=0.01, seed=1, integrator=kind).advance(w0.copy(), 4)
@@ -202,19 +200,21 @@ class TestFiniteDifferenceSolver(unittest.TestCase):
             np.testing.assert_allclose(a, b, atol=1e-9)
 
     def test_device_cuda_mps_guarded(self):
-        try:
-            import torch
-        except ImportError:
-            self.skipTest("torch not installed")
+        from modules.framework.native import learn
+        if not learn.has_torch():
+            self.skipTest("libKalmanLearn with libTorch is not built")
         from modules.apps.weather.flow import NS2D
-        dev = "cuda" if torch.cuda.is_available() else (
-            "mps" if getattr(torch.backends, "mps", None) and torch.backends.mps.is_available() else None)
-        if dev is None:
+        # Ask for each GPU kind; the C++ solver falls back to the CPU when it is absent.
+        devices = {}
+        for asked in ("cuda", "mps"):
+            s = NS2D(n=16, dt=0.01, backend="torch", device=asked, seed=0)
+            out = s.advance(s.random_ic(), 2)
+            devices[asked] = s.device
+            self.assertIn(s.device, (asked, "cpu"))
+            self.assertEqual(out.shape, (16, 16))
+            self.assertTrue(np.all(np.isfinite(out)))
+        if all(d == "cpu" for d in devices.values()):
             self.skipTest("no GPU/MPS device")
-        s = NS2D(n=16, dt=0.01, backend="torch", device=dev, seed=0)
-        out = s.advance(s.random_ic(), 2)
-        self.assertEqual(out.shape, (16, 16))
-        self.assertTrue(np.all(np.isfinite(out)))
 
 
 # ── Model f_continuous delegation + aliases ──────────────────────────────────

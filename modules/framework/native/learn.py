@@ -9,8 +9,9 @@ The library is looked for like the core (see :mod:`.core`), under the name
 ``libKalmanLearn``; ``KALMAN_LEARN_LIBRARY`` names the file itself. It is loaded
 on first use, not at import: it brings libTorch with it.
 
-The library must be built against the Torch of this Python (CMake does that by
-default), because a process can hold one libTorch only.
+libTorch here is the C++ library; Python's torch package is not used. A process
+can hold one libTorch only, so where torch is also imported in Python it must be
+the same installation (in a conda environment, ``libtorch`` and ``pytorch`` are).
 """
 from __future__ import annotations
 

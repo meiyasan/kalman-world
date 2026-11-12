@@ -409,8 +409,8 @@ Conventions, most of which the build or the tests will enforce:
   `src/`) is the core; `libKalmanApps` (`apps/`) the application models;
   `libKalmanLearn` (`learn/`) the learned components. ONNX Runtime and libTorch
   are found and linked by `learn/CMakeLists.txt` only (`KALMAN_USE_ONNXRUNTIME`,
-  on when found; `KALMAN_USE_TORCH`, on when found, taken from the Torch of the
-  Python that will load the library, since a process holds one libTorch). Never add
+  on when found; `KALMAN_USE_TORCH`, on when found: the C++ libTorch, from `Torch_DIR`
+  or the conda environment's `libtorch` package, never through Python's `torch`). Never add
   `find_package(Torch)` or `find_package(ONNXRuntime)` to the core, and never
   include a runtime header outside `learn/src/`. The core's one optional backend
   is BLAS (`KALMAN_USE_BLAS`). Everything is complete and correct with all of
@@ -451,6 +451,7 @@ Conventions, most of which the build or the tests will enforce:
   from `learn/src/Routers/NN/Onnx.cc` and libTorch only from `Torch.cc` beside it and
   `learn/src/Solvers/Vorticity.cc` (the batched field solver behind Python's
   `SpectralSolver(backend="torch")`, through `Kalman/Learn/CAPI.h` and `native/learn.py`), all behind a pImpl.
+  `backend="torch"` means that C++ solver only: do not add a Python-`torch` implementation beside it.
   That is what makes them optional in fact and not just in name: `NN::MLP`
   needs nothing, so the routing layer works in a build with no optional
   dependency at all. Never `#include <onnxruntime...>` or `<torch/...>` in

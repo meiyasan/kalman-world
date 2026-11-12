@@ -60,34 +60,21 @@ else()
 endif()
 
 # --- optional: libTorch -------------------------------------------------------
-# For TorchScript policies and for the batched field solver
-# (Kalman::Learn::Solvers::Vorticity), which the Python package calls.
+# The C++ library, for TorchScript policies and for the batched field solver
+# (Kalman::Learn::Solvers::Vorticity). It is found like any C++ dependency:
+# Torch_DIR when given, else the conda environment's libtorch package
+# ($CONDA_PREFIX/share/cmake/Torch), else wherever CMake finds one.
 #
-# One process must hold one libTorch. This library is loaded into Python
-# processes that import torch, so it has to be built against *that* Torch: a
-# second copy breaks `import torch` with a missing-symbol error. Unless
-# Torch_DIR is given, the Torch of the Python that runs the package is used
-# (KALMAN_TORCH_PYTHON, default: python3 on the PATH), and only if that Python
-# has none does a system libTorch get a chance.
+# A process holds one libTorch. Where Python's torch is also imported, this
+# must be the same installation; in a conda environment `libtorch` and
+# `pytorch` are, which is why the environment is looked in first.
 option(KALMAN_USE_TORCH "Build libKalmanLearn with libTorch (policies, field solver)" ON)
 set(KALMAN_WITH_TORCH 0)
 if(KALMAN_USE_TORCH)
-    if(NOT Torch_DIR)
-        find_program(KALMAN_TORCH_PYTHON NAMES python3 python)
-        if(KALMAN_TORCH_PYTHON)
-            execute_process(
-                COMMAND ${KALMAN_TORCH_PYTHON} -c "import torch; print(torch.utils.cmake_prefix_path)"
-                OUTPUT_VARIABLE _kalman_torch_prefix OUTPUT_STRIP_TRAILING_WHITESPACE
-                ERROR_QUIET RESULT_VARIABLE _kalman_torch_status)
-            if(_kalman_torch_status EQUAL 0 AND EXISTS "${_kalman_torch_prefix}/Torch/TorchConfig.cmake")
-                set(Torch_DIR "${_kalman_torch_prefix}/Torch" CACHE PATH "The Torch of ${KALMAN_TORCH_PYTHON}")
-            endif()
-            unset(_kalman_torch_prefix)
-            unset(_kalman_torch_status)
-        endif()
+    if(NOT Torch_DIR AND DEFINED ENV{CONDA_PREFIX}
+       AND EXISTS "$ENV{CONDA_PREFIX}/share/cmake/Torch/TorchConfig.cmake")
+        set(Torch_DIR "$ENV{CONDA_PREFIX}/share/cmake/Torch" CACHE PATH "libTorch of the conda environment")
     endif()
-    # TorchConfig caches the libraries it finds; drop them so a changed Torch_DIR
-    # cannot leave the headers of one Torch with the libraries of another.
     get_cmake_property(_kalman_cache CACHE_VARIABLES)
     foreach(_kalman_torch_cached ${_kalman_cache})
         if(_kalman_torch_cached MATCHES "^(KALMAN_)?(TORCH|torch|C10|c10|kineto)[A-Za-z0-9_]*_LIBRARY$"

@@ -103,16 +103,6 @@ class BetaPlaneNS2D(SpectralSolver):
     def _vorticity_terms(self):
         return dict(nu=self.nu, beta=self.beta)
 
-    def _rhs_hat_torch(self, wh):                       # pragma: no cover - parity path
-        t, tt = self._torch, self._tt
-        psih = wh * tt["k2inv"]
-        u = t.fft.ifft2(1j * tt["ky"] * psih).real
-        v = t.fft.ifft2(-1j * tt["kx"] * psih).real
-        wx = t.fft.ifft2(1j * tt["kx"] * wh).real
-        wy = t.fft.ifft2(1j * tt["ky"] * wh).real
-        adv = t.fft.fft2((u * wx + v * wy + self.beta * v).to(self._cdtype)) * tt["dealias"]
-        return -adv - self.nu * tt["k2"] * wh
-
 
 class BarotropicFlowModel(KolmogorovFlowModel):
     """The Kalman model wrapper, with the beta-plane solver in place of Kolmogorov flow.

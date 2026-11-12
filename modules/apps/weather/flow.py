@@ -65,25 +65,11 @@ class NS2D(SpectralSolver):
     def _vorticity_terms(self):
         return dict(nu=self.nu, forcing_hat=self.Fh)
 
-    def _init_torch(self):
-        super()._init_torch()
-        self._Fh_t = self._torch.as_tensor(self.Fh, dtype=self._cdtype, device=self._dev)
-
     def rhs_hat(self, wh, t=None):
         u, v = self._vel_spectral(wh)
         wx, wy = self._grad_spectral(wh)
         adv = np.fft.fft2(u*wx + v*wy) * self.dealias
         return -adv - self.nu*self.k2*wh + self.Fh
-
-    def _rhs_hat_torch(self, wh):
-        t, tt = self._torch, self._tt
-        psih = wh * tt["k2inv"]
-        u = t.fft.ifft2(1j * tt["ky"] * psih).real
-        v = t.fft.ifft2(-1j * tt["kx"] * psih).real
-        wx = t.fft.ifft2(1j * tt["kx"] * wh).real
-        wy = t.fft.ifft2(1j * tt["ky"] * wh).real
-        adv = t.fft.fft2((u*wx + v*wy).to(self._cdtype)) * tt["dealias"]
-        return -adv - self.nu * tt["k2"] * wh + self._Fh_t
 
 
 class FlowObservable(KalmanObservable):

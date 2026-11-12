@@ -33,19 +33,11 @@ class TestHeaderContract(unittest.TestCase):
 @unittest.skipUnless(learn.has_torch(), "libKalmanLearn with libTorch is not built")
 class TestTorchSolver(unittest.TestCase):
 
-    def setUp(self):
-        self._env = os.environ.pop("KALMAN_NATIVE_TORCH", None)
-
-    def tearDown(self):
-        os.environ.pop("KALMAN_NATIVE_TORCH", None)
-        if self._env is not None:
-            os.environ["KALMAN_NATIVE_TORCH"] = self._env
-
     def test_torch_backend_runs_on_libtorch(self):
         from modules.apps.weather.flow import NS2D
         s = NS2D(n=16, dt=0.01, seed=0, backend="torch", device="cpu")
         s.advance(s.random_ic(), 1)
-        self.assertIsNotNone(s._torch_native())
+        self.assertEqual(s._libtorch().device, "cpu")
         self.assertEqual(s.device, "cpu")
 
     def test_every_layout_and_integrator_matches_numpy(self):
@@ -72,29 +64,25 @@ class TestTorchSolver(unittest.TestCase):
         want = ref.advance(w.copy(), 20)
         self.assertGreater(np.abs(want - w).max(), 1e-8)   # the field did move
         np.testing.assert_allclose(s.advance(w.copy(), 20), want, rtol=0, atol=1e-16)
-        self.assertIsNotNone(s._torch_native())
 
-    def test_python_torch_path_still_available(self):
-        try:
-            import torch  # noqa: F401
-        except ImportError:
-            self.skipTest("torch not installed")
-        from modules.apps.weather.flow import NS2D
-        w = NS2D(n=16, dt=0.01, seed=2).random_ic()
-        native = NS2D(n=16, dt=0.01, seed=2, backend="torch", device="cpu").advance(w.copy(), 4)
-        os.environ["KALMAN_NATIVE_TORCH"] = "0"
-        s = NS2D(n=16, dt=0.01, seed=2, backend="torch", device="cpu")
-        out = s.advance(w.copy(), 4)
-        self.assertIsNone(s._torch_native())
-        np.testing.assert_allclose(out, native, atol=1e-12)
+    def test_python_torch_is_not_imported(self):
+        """The torch backend is the C++ library: running it never imports Python's torch."""
+        import subprocess, sys
+        code = ("import sys, numpy as np\n"
+                "from modules.apps.weather.flow import NS2D\n"
+                "s = NS2D(n=16, dt=0.01, backend='torch', device='cpu')\n"
+                "s.advance(s.random_ic(), 2)\n"
+                "assert 'torch' not in sys.modules, 'torch was imported'\n")
+        done = subprocess.run([sys.executable, "-c", code], cwd=REPO, capture_output=True, text=True)
+        self.assertEqual(done.returncode, 0, done.stderr[-800:])
 
-    def test_other_physics_keeps_its_own_rhs(self):
-        """A solver that does not state vorticity terms is not sent to C++."""
+    def test_other_physics_is_refused_with_a_reason(self):
+        """A solver that does not state vorticity terms has no libTorch form."""
         from modules.framework.solvers.spectral import SpectralSolver
         s = SpectralSolver(n=8, backend="torch", device="cpu")
-        self.assertIsNone(s._torch_native())
-        with self.assertRaises(NotImplementedError):
+        with self.assertRaises(NotImplementedError) as raised:
             s.advance(np.zeros((8, 8)), 1)
+        self.assertIn("_vorticity_terms", str(raised.exception))
 
     def test_bad_shape_is_an_error_not_a_crash(self):
         from modules.apps.weather.flow import NS2D

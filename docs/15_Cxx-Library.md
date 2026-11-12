@@ -213,16 +213,15 @@ links one, whatever is installed on the build machine: a core linked to one
 libTorch, loaded into a Python process that had another, used to break
 `import torch`.
 
-`libKalmanLearn` is loaded into Python processes, so it must be built against
-the Torch that Python has: a process holds one libTorch. CMake therefore takes
-Torch from the Python interpreter (`KALMAN_TORCH_PYTHON`, by default the
-`python3` on the `PATH`, asked for `torch.utils.cmake_prefix_path`) unless
-`Torch_DIR` is given, and links that Torch's own three libraries by path,
-nothing else. Build with the environment you run in:
+libTorch is the C++ library, found like any C++ dependency: `Torch_DIR` when
+given, else the conda environment's `libtorch` package
+(`$CONDA_PREFIX/share/cmake/Torch`), else wherever CMake finds one. Only its
+own three libraries are linked, by path. Nothing here needs Python's `torch`
+package, so a conda package of `libKalmanLearn` depends on `libtorch` alone.
 
-```sh
-cmake -S . -B var/build -DKALMAN_TORCH_PYTHON=$CONDA_PREFIX/bin/python
-```
+A process holds one libTorch. Where Python's `torch` is imported in the same
+process (training a router, say), it must be the same installation; conda's
+`libtorch` and `pytorch` are.
 
 ### The field solver on libTorch
 
@@ -230,49 +229,21 @@ cmake -S . -B var/build -DKALMAN_TORCH_PYTHON=$CONDA_PREFIX/bin/python
 call: `dw/dt = -u.grad(w) - beta v + nu lap(w) + F`, pseudo-spectral, with any
 explicit Runge-Kutta tableau, on `cpu`, `cuda` or `mps` (single precision on
 `mps`, which has no double). It is what `SpectralSolver(backend="torch")` runs
-in Python: `NS2D` (Kolmogorov flow) and `BetaPlaneNS2D` state their terms and
-the steps happen in C++. The Python-Torch code it replaces remains for a
-subclass with other physics, and behind `KALMAN_NATIVE_TORCH=0` for comparison.
+in Python: `NS2D` (Kolmogorov flow) and `BetaPlaneNS2D` state their terms
+(`_vorticity_terms`) and the steps happen in C++. Python's `torch` is not
+imported; there is no Python-Torch implementation of the solver any more. A
+solver with other physics uses `backend="numpy"`.
 
-Measured on this machine, 32 members, against the Python-Torch path (same
-libTorch underneath, so the kernels are the same):
+Measured on this machine against the Python-Torch loop it replaced, 32 members:
 
-| Case | Python Torch | libTorch (C++) | Largest difference |
+| Case | Python Torch (removed) | libTorch (C++) | Largest difference |
 |---|---|---|---|
 | Kolmogorov 64×64, 50 steps, CPU | 1074 ms | 1109 ms | 0 |
 | Kolmogorov 128×128, 20 steps, CPU | 1797 ms | 1762 ms | 0 |
 | Kolmogorov 128×128, 20 steps, MPS | 60 ms | 54 ms | 0 |
 | Beta-plane 64×64, 50 steps, CPU | 1303 ms | 1257 ms | 0 |
 
-The results are bit-identical and the time is the FFTs', so moving the loop to
-C++ changes the speed by a few percent either way. What it buys is one
-implementation, usable from a C++ program.
-
-A program that uses `NN::Onnx` or `NN::Torch` includes `Kalman/Learn/Learn.h`
-and links `libKalmanLearn`. Both classes always exist; `HasRuntime()` says
-whether the runtime was built in.
-
-**Why BLAS and not Torch for the matrix type.** Measured, per n×n `double`
-product on Apple Silicon:
-
-| n | built-in `-O3` | BLAS (Accelerate) | libTorch |
-|---|---|---|---|
-| 2 | **8.6 ns** | 19.8 ns | 229.8 ns |
-| 4 | **21.6 ns** | 26.2 ns | 228.0 ns |
-| 6 | 67.8 ns | **53.8 ns** | 256.3 ns |
-| 16 | 795.9 ns | **202.0 ns** | 582.9 ns |
-| 32 | 5511.6 ns | **326.0 ns** | 730.0 ns |
-| 128 | 211841.7 ns | **9469.6 ns** | 12303.2 ns |
-
-A Torch op carries a ~230 ns dispatch floor — 10–25× an *entire* small matrix
-product — so routing the core through tensors would make every filter slower.
-BLAS is a plain function call and wins from n≈6 up, which is why the backend is
-chosen **per operation** at `KALMAN_BLAS_MIN_DIM` rather than once for the whole
-library: below the crossover the built-in kernel is genuinely faster.
-
-Torch earns its keep where the Python side already uses it — ensembles, field
-solvers, neural components — which is a future component, not a change to the
-core.
+Bit-identical, and the same speed: the time is the FFTs'.
 
 ## Using it
 
