@@ -42,6 +42,16 @@
  * in, and a backend without its runtime refuses to load a file instead of
  * failing to link.
  *
+ * The library also holds the field solver that runs on libTorch,
+ * Kalman::Learn::Solvers::Vorticity: many 2-D vorticity fields stepped in one
+ * call, on the CPU or a GPU. It is what `SpectralSolver(backend="torch")` runs
+ * in the Python package.
+ *
+ * \code{.cpp}
+ * Kalman::Learn::Solvers::Vorticity flow(grid, nu, beta, forcingRe, forcingIm, "mps");
+ * flow.Advance(members.data(), nMembers, nSteps, dt, rk4, members.data());
+ * \endcode
+ *
  * *********************************************
  */
 
@@ -53,5 +63,6 @@
 #include "Kalman/Routers/NN/Onnx.h"
 #include "Kalman/Routers/NN/Torch.h"
 #include "Kalman/Routers/Neural.h"
+#include "Kalman/Learn/Solvers/Vorticity.h"
 
 #endif // KALMAN_LEARN_LEARN_H

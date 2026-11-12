@@ -61,8 +61,13 @@ class NS2D(SpectralSolver):
         y = self.Ly * np.arange(ny) / ny                     # forcing varies with y
         self.F = chi * np.cos(kf * y)[:, None] * np.ones((1, nx))
         self.Fh = np.fft.fft2(self.F)
-        if self.backend == "torch":
-            self._Fh_t = self._torch.as_tensor(self.Fh, dtype=self._cdtype, device=self._dev)
+
+    def _vorticity_terms(self):
+        return dict(nu=self.nu, forcing_hat=self.Fh)
+
+    def _init_torch(self):
+        super()._init_torch()
+        self._Fh_t = self._torch.as_tensor(self.Fh, dtype=self._cdtype, device=self._dev)
 
     def rhs_hat(self, wh, t=None):
         u, v = self._vel_spectral(wh)

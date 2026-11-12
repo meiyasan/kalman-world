@@ -205,14 +205,48 @@ None is needed for correctness.
 |---|---|---|---|
 | `KALMAN_USE_BLAS` | `libKalman` | `cblas_dgemm` for matrix products at or above `KALMAN_BLAS_MIN_DIM` (`KALMAN_WITH_BLAS` in `Kalman/Config.h`) | on when a CBLAS is found |
 | `KALMAN_USE_ONNXRUNTIME` | `libKalmanLearn` | `NN::Onnx`: ONNX routing policies, the portable half of the seam | on when ONNX Runtime is found |
-| `KALMAN_USE_TORCH` | `libKalmanLearn` | `NN::Torch`: TorchScript routing policies | off; pass `-DKALMAN_USE_TORCH=ON` |
+| `KALMAN_USE_TORCH` | `libKalmanLearn` | `NN::Torch` (TorchScript routing policies) and `Learn::Solvers::Vorticity` (the batched field solver, CPU/CUDA/MPS) | on when a libTorch is found |
 | `KALMAN_BUILD_LEARN` | | build `libKalmanLearn` at all | on |
 
 The AI runtimes are looked for by `libKalmanLearn` only. `libKalman` never
 links one, whatever is installed on the build machine: a core linked to one
 libTorch, loaded into a Python process that had another, used to break
-`import torch`. libTorch is off by default for the same reason, since
-`libKalmanLearn` is what a Python process would load.
+`import torch`.
+
+`libKalmanLearn` is loaded into Python processes, so it must be built against
+the Torch that Python has: a process holds one libTorch. CMake therefore takes
+Torch from the Python interpreter (`KALMAN_TORCH_PYTHON`, by default the
+`python3` on the `PATH`, asked for `torch.utils.cmake_prefix_path`) unless
+`Torch_DIR` is given, and links that Torch's own three libraries by path,
+nothing else. Build with the environment you run in:
+
+```sh
+cmake -S . -B var/build -DKALMAN_TORCH_PYTHON=$CONDA_PREFIX/bin/python
+```
+
+### The field solver on libTorch
+
+`Kalman::Learn::Solvers::Vorticity` steps many 2-D vorticity fields in one
+call: `dw/dt = -u.grad(w) - beta v + nu lap(w) + F`, pseudo-spectral, with any
+explicit Runge-Kutta tableau, on `cpu`, `cuda` or `mps` (single precision on
+`mps`, which has no double). It is what `SpectralSolver(backend="torch")` runs
+in Python: `NS2D` (Kolmogorov flow) and `BetaPlaneNS2D` state their terms and
+the steps happen in C++. The Python-Torch code it replaces remains for a
+subclass with other physics, and behind `KALMAN_NATIVE_TORCH=0` for comparison.
+
+Measured on this machine, 32 members, against the Python-Torch path (same
+libTorch underneath, so the kernels are the same):
+
+| Case | Python Torch | libTorch (C++) | Largest difference |
+|---|---|---|---|
+| Kolmogorov 64×64, 50 steps, CPU | 1074 ms | 1109 ms | 0 |
+| Kolmogorov 128×128, 20 steps, CPU | 1797 ms | 1762 ms | 0 |
+| Kolmogorov 128×128, 20 steps, MPS | 60 ms | 54 ms | 0 |
+| Beta-plane 64×64, 50 steps, CPU | 1303 ms | 1257 ms | 0 |
+
+The results are bit-identical and the time is the FFTs', so moving the loop to
+C++ changes the speed by a few percent either way. What it buys is one
+implementation, usable from a C++ program.
 
 A program that uses `NN::Onnx` or `NN::Torch` includes `Kalman/Learn/Learn.h`
 and links `libKalmanLearn`. Both classes always exist; `HasRuntime()` says
@@ -637,7 +671,7 @@ linear filter. Both can be present in one process.
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
 | ODE models | override `f_continuous`, bind `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
-| Spectral solver backend | numpy, or torch on CUDA/MPS for batched ensembles | built-in FFT only (no torch); one field at a time |
+| Spectral solver backend | numpy, or `backend="torch"`, which runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
 | Controllers / routers | P, PID, LQR, MPPI, Neural, IKF | none yet — the ONNX seam is the plan |

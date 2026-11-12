@@ -60,34 +60,94 @@ else()
 endif()
 
 # --- optional: libTorch -------------------------------------------------------
-# For one thing: executing a TorchScript policy. Off unless asked for. A libTorch
-# loaded into a Python process that has its own Torch breaks `import torch`, and
-# this library is what Python would load to run a learned component.
-option(KALMAN_USE_TORCH "Let libKalmanLearn run TorchScript policies (links libTorch)" OFF)
+# For TorchScript policies and for the batched field solver
+# (Kalman::Learn::Solvers::Vorticity), which the Python package calls.
+#
+# One process must hold one libTorch. This library is loaded into Python
+# processes that import torch, so it has to be built against *that* Torch: a
+# second copy breaks `import torch` with a missing-symbol error. Unless
+# Torch_DIR is given, the Torch of the Python that runs the package is used
+# (KALMAN_TORCH_PYTHON, default: python3 on the PATH), and only if that Python
+# has none does a system libTorch get a chance.
+option(KALMAN_USE_TORCH "Build libKalmanLearn with libTorch (policies, field solver)" ON)
 set(KALMAN_WITH_TORCH 0)
 if(KALMAN_USE_TORCH)
+    if(NOT Torch_DIR)
+        find_program(KALMAN_TORCH_PYTHON NAMES python3 python)
+        if(KALMAN_TORCH_PYTHON)
+            execute_process(
+                COMMAND ${KALMAN_TORCH_PYTHON} -c "import torch; print(torch.utils.cmake_prefix_path)"
+                OUTPUT_VARIABLE _kalman_torch_prefix OUTPUT_STRIP_TRAILING_WHITESPACE
+                ERROR_QUIET RESULT_VARIABLE _kalman_torch_status)
+            if(_kalman_torch_status EQUAL 0 AND EXISTS "${_kalman_torch_prefix}/Torch/TorchConfig.cmake")
+                set(Torch_DIR "${_kalman_torch_prefix}/Torch" CACHE PATH "The Torch of ${KALMAN_TORCH_PYTHON}")
+            endif()
+            unset(_kalman_torch_prefix)
+            unset(_kalman_torch_status)
+        endif()
+    endif()
+    # TorchConfig caches the libraries it finds; drop them so a changed Torch_DIR
+    # cannot leave the headers of one Torch with the libraries of another.
+    get_cmake_property(_kalman_cache CACHE_VARIABLES)
+    foreach(_kalman_torch_cached ${_kalman_cache})
+        if(_kalman_torch_cached MATCHES "^(KALMAN_)?(TORCH|torch|C10|c10|kineto)[A-Za-z0-9_]*_LIBRARY$"
+           OR _kalman_torch_cached STREQUAL "Caffe2_DIR")
+            unset(${_kalman_torch_cached} CACHE)
+        endif()
+    endforeach()
+    unset(_kalman_cache)
+    # ... and pin them to Torch_DIR's own tree: TorchConfig searches
+    # CMAKE_PREFIX_PATH before its own prefix, where another libTorch may sit.
+    if(Torch_DIR)
+        get_filename_component(_kalman_torch_root "${Torch_DIR}/../../.." ABSOLUTE)
+        if(EXISTS "${Torch_DIR}/../Caffe2/Caffe2Config.cmake")
+            get_filename_component(_kalman_caffe2 "${Torch_DIR}/../Caffe2" ABSOLUTE)
+            set(Caffe2_DIR "${_kalman_caffe2}" CACHE PATH "Caffe2 of the chosen Torch" FORCE)
+            unset(_kalman_caffe2)
+        endif()
+        find_library(TORCH_LIBRARY torch PATHS "${_kalman_torch_root}/lib" NO_DEFAULT_PATH)
+        foreach(_kalman_torch_cached c10 torch_cpu kineto)
+            find_library(${_kalman_torch_cached}_LIBRARY ${_kalman_torch_cached}
+                         PATHS "${_kalman_torch_root}/lib" NO_DEFAULT_PATH)
+        endforeach()
+        unset(_kalman_torch_root)
+    endif()
     find_package(Torch QUIET)
     if(Torch_FOUND)
         set(KALMAN_WITH_TORCH 1)
-        message_color(STATUS GREEN "   libTorch found — TorchScript policies available")
-        # TORCH_LIBRARIES, not the imported target: the Torch config sets flags
-        # (notably -D_GLIBCXX_USE_CXX11_ABI) that must not leak to consumers.
-        target_link_libraries(${LEARN_LIBRARY} PRIVATE ${TORCH_LIBRARIES})
-        target_include_directories(${LEARN_LIBRARY} PRIVATE ${TORCH_INCLUDE_DIRS})
-        foreach(_torch_lib ${TORCH_LIBRARIES})
-            if(EXISTS "${_torch_lib}")
-                get_filename_component(_torch_dir "${_torch_lib}" DIRECTORY)
-                set_property(TARGET ${LEARN_LIBRARY} APPEND PROPERTY BUILD_RPATH "${_torch_dir}")
-                set_property(TARGET ${LEARN_LIBRARY} APPEND PROPERTY INSTALL_RPATH "${_torch_dir}")
+        message_color(STATUS GREEN "   libTorch found (${Torch_DIR}) — TorchScript policies and the field solver available")
+        # The three libraries themselves, by path, from Torch_DIR's own tree. Not
+        # ${TORCH_LIBRARIES}: that list carries whatever protobuf and abseil
+        # CMake found on this machine, which need not be the ones this Torch was
+        # built with, and two protobufs in one process crash at load.
+        get_filename_component(_torch_dir "${TORCH_LIBRARY}" DIRECTORY)
+        set(_kalman_torch_libs "${TORCH_LIBRARY}")
+        foreach(_torch_lib torch_cpu c10)
+            find_library(KALMAN_${_torch_lib}_LIBRARY ${_torch_lib} PATHS "${_torch_dir}" NO_DEFAULT_PATH)
+            if(KALMAN_${_torch_lib}_LIBRARY)
+                list(APPEND _kalman_torch_libs "${KALMAN_${_torch_lib}_LIBRARY}")
             endif()
         endforeach()
+        # GPU builds register their kernels from these; keep them linked although
+        # no symbol of theirs is referenced.
+        foreach(_torch_lib torch_cuda c10_cuda)
+            find_library(KALMAN_${_torch_lib}_LIBRARY ${_torch_lib} PATHS "${_torch_dir}" NO_DEFAULT_PATH)
+            if(KALMAN_${_torch_lib}_LIBRARY)
+                list(APPEND _kalman_torch_libs "-Wl,--no-as-needed" "${KALMAN_${_torch_lib}_LIBRARY}" "-Wl,--as-needed")
+            endif()
+        endforeach()
+        target_link_libraries(${LEARN_LIBRARY} PRIVATE ${_kalman_torch_libs})
+        target_include_directories(${LEARN_LIBRARY} SYSTEM PRIVATE ${TORCH_INCLUDE_DIRS})
+        set_property(TARGET ${LEARN_LIBRARY} APPEND PROPERTY BUILD_RPATH "${_torch_dir}")
+        set_property(TARGET ${LEARN_LIBRARY} APPEND PROPERTY INSTALL_RPATH "${_torch_dir}")
+        unset(_kalman_torch_libs)
         unset(_torch_lib)
         unset(_torch_dir)
     else()
         message_color(STATUS YELLOW "   libTorch not found — TorchScript policies unavailable")
     endif()
 else()
-    message_color(STATUS YELLOW "   libTorch not requested (-DKALMAN_USE_TORCH=ON) — TorchScript policies unavailable")
+    message_color(STATUS YELLOW "   libTorch switched off (-DKALMAN_USE_TORCH=OFF) — no TorchScript policies, no field solver")
 endif()
 
 target_compile_definitions(${LEARN_LIBRARY} PRIVATE

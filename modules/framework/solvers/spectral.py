@@ -8,11 +8,15 @@ applied to the **spectral** field.  Subclasses supply the physics via
 lives in ``apps.weather.flow.NS2D``, which subclasses this).
 
 **Backend.** ``backend="numpy"`` (default) or ``"torch"`` with ``device`` in
-``cpu/cuda/mps``.  The torch path runs ``solve`` on GPU/MPS and accepts a batched
-``(N, g, g)`` / ``(N, g²)`` ensemble as one tensor advance — the EnKF forecast's
-dominant cost — converting at the numpy boundary so callers are unchanged.
+``cpu/cuda/mps``.  The torch path accepts a batched ``(N, g, g)`` / ``(N, g²)``
+ensemble as one advance — the EnKF forecast's dominant cost — and returns numpy,
+so callers are unchanged.  It runs in C++ on libTorch
+(``Kalman::Learn::Solvers::Vorticity`` in ``libKalmanLearn``) for a solver that
+states its physics in ``_vorticity_terms``; Python's torch is the fallback.
 """
 from __future__ import annotations
+import os
+
 import numpy as np
 
 from ..solver import KalmanSolver
@@ -57,8 +61,7 @@ class SpectralSolver(KalmanSolver):
         self.dealias = (np.abs(self._ix) <= nx // 3) & (np.abs(self._iy) <= ny // 3)
         self.rng = np.random.default_rng(seed)
         self._tt = None
-        if self.backend == "torch":
-            self._init_torch()
+        self._native = None                    # the libTorch solver, made on first advance
 
     # ------------------------------------------------------------------
     def _as_grid(self, w):
@@ -148,7 +151,7 @@ class SpectralSolver(KalmanSolver):
         ``(ny·nx,)``, or a batched ensemble ``(N, ny, nx)`` / ``(N, ny·nx)``;
         returns the same layout.  Uses the torch backend when configured."""
         if self.backend == "torch":
-            return self._advance_torch(w, int(nsteps))
+            return self._advance_batched(w, int(nsteps))
         arr = np.asarray(w, dtype=float)
         flat = arr.ndim == 1
         wh = np.fft.fft2(self._as_grid(arr))
@@ -160,6 +163,16 @@ class SpectralSolver(KalmanSolver):
     def solve(self, field, steps=1, u=None, t=None):
         return self.advance(field, int(steps))
 
+    def _advance_torch(self, x, nsteps, tab):
+        """``(N, ny, nx)`` advanced with Python's torch and ``_rhs_hat_torch``."""
+        if self._tt is None:
+            self._init_torch()
+        t = self._torch
+        wt = t.fft.fft2(t.as_tensor(x, dtype=self._rdtype, device=self._dev))
+        for _ in range(int(nsteps)):
+            wt = self._rk_step(self._rhs_hat_torch, wt, self.dt, tab)
+        return t.fft.ifft2(wt).real.cpu().numpy()
+
     def random_ic(self, amp=1.0):
         """Random large-scale initial field, unit std (numpy RNG)."""
         wh = (self.rng.standard_normal(self.shape) +
@@ -170,8 +183,33 @@ class SpectralSolver(KalmanSolver):
         return amp * w / (w.std() + 1e-12)
 
     # ------------------------------------------------------------------
-    # torch backend (GPU/CUDA/MPS) — batched spectral RK4
+    # torch backend (CPU/CUDA/MPS) — batched spectral steps
+    #
+    # The steps run in C++ on libTorch (Kalman::Learn::Solvers::Vorticity in
+    # libKalmanLearn) for a solver that states its physics in
+    # ``_vorticity_terms``. Python's own torch is used only for a subclass with
+    # other physics (its ``_rhs_hat_torch``), when the library is missing, or
+    # with KALMAN_NATIVE_TORCH=0 in the environment (to compare the two).
     # ------------------------------------------------------------------
+    def _vorticity_terms(self):
+        """The physics as the terms of ``dw/dt = -u.grad(w) - beta v + nu lap(w) + F``:
+        a dict with ``nu`` and optionally ``beta`` and ``forcing_hat`` (the transform
+        of ``F``). ``None`` (the default) when the equation is not of that form."""
+        return None
+
+    def _torch_native(self):
+        """The libTorch solver for this grid and physics, or ``None``."""
+        if self._native is None:
+            terms = self._vorticity_terms()
+            self._native = False
+            if terms is not None and os.environ.get("KALMAN_NATIVE_TORCH", "1") != "0":
+                from ..native import learn
+                if learn.has_torch():
+                    self._native = learn.Vorticity(self.kx, self.ky, self.k2, self.k2inv, self.dealias,
+                                                   device=self.device or "cpu", **terms)
+                    self.device = self._native.device
+        return self._native or None
+
     def _init_torch(self):
         import torch
         dev = self.device
@@ -193,8 +231,7 @@ class SpectralSolver(KalmanSolver):
         raises so a torch-backed solver must provide it."""
         raise NotImplementedError("torch backend needs _rhs_hat_torch on the subclass.")
 
-    def _advance_torch(self, w, nsteps):
-        t = self._torch
+    def _advance_batched(self, w, nsteps):
         arr = np.asarray(w, dtype=float)
         ny, nx = self.shape
         squeeze = False
@@ -209,11 +246,12 @@ class SpectralSolver(KalmanSolver):
             x = arr.reshape(-1, ny, nx); flatten = "flat"
         else:                                               # (N, ny, nx) batch
             x = self._as_grid(arr); flatten = "grid"
-        wt = t.fft.fft2(t.as_tensor(x, dtype=self._rdtype, device=self._dev))
         tab = self._tableau()                       # same integrator as numpy path
-        for _ in range(int(nsteps)):
-            wt = self._rk_step(self._rhs_hat_torch, wt, self.dt, tab)
-        out = t.fft.ifft2(wt).real.cpu().numpy()
+        native = self._torch_native()
+        if native is not None:
+            out = native.advance(x, nsteps, self.dt, tab)
+        else:
+            out = self._advance_torch(x, nsteps, tab)
         if squeeze:
             return out[0]
         if arr.ndim == 1:

@@ -100,6 +100,9 @@ class BetaPlaneNS2D(SpectralSolver):
         adv = np.fft.fft2(u * wx + v * wy + self.beta * v) * self.dealias
         return -adv - self.nu * self.k2 * wh
 
+    def _vorticity_terms(self):
+        return dict(nu=self.nu, beta=self.beta)
+
     def _rhs_hat_torch(self, wh):                       # pragma: no cover - parity path
         t, tt = self._torch, self._tt
         psih = wh * tt["k2inv"]
