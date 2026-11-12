@@ -596,7 +596,7 @@ dependency of that component:
 ```
 root-plus/
   cmake/Packages/Kalman/FindKalmanFramework.cmake
-  include/ROOT/IOPlus/Signal/DSP/Filters/TKalmanRecord.h
+  include/ROOT/IOPlus/Signal/Kalman/TKalmanRecord.h
   include/libRIOPlus_Signal.Config.h.in      # #cmakedefine KALMANFRAMEWORK_FOUND
   include/libRIOPlus_Signal.LinkDef.h        # the dictionary entry, guarded
   src/Signal/TKalmanRecord.cc
