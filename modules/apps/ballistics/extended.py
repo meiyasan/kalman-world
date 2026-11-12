@@ -39,7 +39,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
                  process_noise_model=BallisticNoise.ACCELERATION,  # m/s^1.5 (accel; recommended) or m/s^2.5 (jerk; see Qd note)
                  drag_uncertainty=None,       # ε: if set, the FILTER's Q grows with speed as σ_a(v)=ε·(c_drag/m)|v|² (air-friction uncertainty); None → constant Q
                  measurement_uncertainty=0.5, # measurement noise std [m],
-                 substeps=1,                  # sub-steps per sample: 1 = one Taylor step (as before); N > 1 or "auto" = velocity-Verlet sub-steps
+                 substeps=1,                  # integrator steps per sample (each of 1/fs/substeps), or "auto" from the orbital period
                  f = None,                    # Transition function (optional, use default one if None)
                  h = None,                    # Measurement function (optional, use default one if None)
                  **kwargs):
@@ -47,12 +47,11 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         self.dtype = kwargs.pop("dtype", np.float64)
         self.fs = fs
         self.order = order
-        # Sub-steps per sample. One step of p += v·dt + ½a·dt², v += a·dt is first order in
-        # velocity: in orbital mode at a long sampling interval it is wrong by far more than
-        # any usable process noise covers (a 2.2 h orbit sampled every 86 s: ~10 m/s of
-        # velocity error per step, and the filter diverged by 1,900 km). N > 1 integrates the
-        # same forces in N velocity-Verlet sub-steps; "auto" takes enough that each turns the
-        # orbit by at most AUTO_SUBSTEP_RADIANS. 1 keeps the original single step exactly.
+        # The motion is integrated by the model's integrator (RK4 unless another is
+        # passed as integrator=), in `substeps` steps per sample. One step is enough
+        # near the surface. On an orbit sampled at long intervals take more, or
+        # "auto": enough that each step turns the orbit by at most
+        # AUTO_SUBSTEP_RADIANS.
         if substeps != "auto" and (int(substeps) < 1):
             raise ValueError(f"substeps must be >= 1 or 'auto', got {substeps!r}.")
         self.substeps = substeps if substeps == "auto" else int(substeps)
@@ -109,18 +108,39 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
 
     # ----------------------------------------------------------------------
     # C++ twin (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
-    # speed-dependent Q, a thrust control, a user-supplied f/h and sub-stepping
-    # (the twin takes one step per sample) stay in Python.
+    # speed-dependent Q, a thrust control, a user-supplied f/h, "auto" sub-steps
+    # and an integrator other than the built-in Euler, RK4 or default
+    # Dormand-Prince stay in Python.
     # ----------------------------------------------------------------------
+    _NATIVE_INTEGRATORS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
+
+    def _native_integrator(self):
+        from ...framework.integrator import KalmanIntegrator
+        """The C++ kind of this model's integrator, or None when it has no twin."""
+        from ...framework.integrator import _BUILTIN_STEPS
+        integrator = self.default_integrator()
+        name = getattr(integrator, "NATIVE", None)
+        kind = self._NATIVE_INTEGRATORS.get(name)
+        # A subclass that changed the scheme is not the C++ one.
+        if kind is None or type(integrator)._step is not _BUILTIN_STEPS.get(name) \
+                or type(integrator).step is not KalmanIntegrator.step:
+            return None
+        if kind == 2 and (integrator.rtol, integrator.atol, integrator.max_substeps) != (1e-6, 1e-9, 10_000):
+            return None
+        return kind
+
     def native_name(self):
-        if self._drag_uncertainty is not None or self.substeps != 1:
+        if self._drag_uncertainty is not None or self.substeps == "auto":
+            return None
+        if self._native_integrator() is None:
             return None
         return {3: "ballistic", 2: "ballistic-order2"}.get(self.order)
 
     def native_parameters(self):
         g = self["g"]
         return {"c_drag": self["c_drag"], "m": self["m"], "G": self["G"], "M": self["M"],
-                "g": 0.0 if g is None else g, "surface_gravity": 0.0 if g is None else 1.0}
+                "g": 0.0 if g is None else g, "surface_gravity": 0.0 if g is None else 1.0,
+                "substeps": float(self.substeps), "integrator": float(self._native_integrator())}
 
     # ----------------------------------------------------------------------
     # Process noise covariance generator (internal)
@@ -227,26 +247,18 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         a = (x[[self.order * i + 2 for i in range(3)], 0] if self.order >= 3
              else np.zeros(3, dtype=self.dtype))
 
+        # dp/dt = v, dv/dt = a(p, v, u): handed to the model's integrator as one
+        # 6-vector [p, v]. The control is held over the sample.
+        def derivative(y, uu, tt):
+            return np.concatenate([y[3:], self._acceleration(y[:3], y[3:], uu)])
+
         steps = self._substeps_for(p, dt)
-        if steps == 1:
-            # The original single Taylor step, unchanged.
-            a_total = self._acceleration(p, v, u)
-            if self.order >= 2:
-                p = p + dt * v
-            p += 0.5 * a_total * dt**2
-            v += a_total * dt
-            a = a_total if self.order >= 3 else np.zeros_like(a_total)
-        else:
-            # Velocity Verlet over `steps` sub-steps: second order in position AND velocity,
-            # the acceleration re-evaluated where each sub-step lands.
-            h = dt / steps
-            a_total = self._acceleration(p, v, u)
-            for _ in range(steps):
-                p = p + h * v + 0.5 * a_total * h**2
-                a_next = self._acceleration(p, v + a_total * h, u)
-                v = v + 0.5 * (a_total + a_next) * h
-                a_total = a_next
-            a = a_total if self.order >= 3 else np.zeros_like(a_total)
+        y = self.default_integrator().integrate(
+            derivative, np.concatenate([p, v]).astype(np.float64), u=u,
+            t=0.0 if t is None else float(t), dt=dt / steps, n=steps)
+        p, v = y[:3].astype(self.dtype), y[3:].astype(self.dtype)
+        # The acceleration slot is not integrated: it reports the forces where the step lands.
+        a = self._acceleration(p, v, u) if self.order >= 3 else np.zeros(3, dtype=self.dtype)
 
         # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
         x_next = np.zeros_like(x)

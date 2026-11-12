@@ -12,6 +12,7 @@
 
 #include <Kalman/Factory.h>
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
@@ -29,6 +30,8 @@ namespace Kalman::Apps::Ballistics
         DeclareParameter("surface_gravity", 1.);
         DeclareParameter("G", 6.674e-11);
         DeclareParameter("M", 5.972e24);
+        DeclareParameter("substeps", 1.);      // integrator steps per sample
+        DeclareParameter("integrator", 1.);    // IntegratorKind: 0 Euler, 1 RK4, 2 Dormand-Prince
         ParametersChanged();
         SetSampleRate(128.);
 
@@ -44,18 +47,13 @@ namespace Kalman::Apps::Ballistics
         fSurfaceGravity = Parameter("surface_gravity") != 0.;
         fGravConstant = Parameter("G");
         fCentralMass = Parameter("M");
+        SetSubsteps(static_cast<std::size_t>(std::max(1., Parameter("substeps"))));
+        const IntegratorKind kind = static_cast<IntegratorKind>(static_cast<int>(Parameter("integrator")));
+        if (kind != DefaultIntegrator()) SetIntegrator(kind);
     }
 
-    Vector Ballistic::f(const Vector &x, const Vector &, double) const
+    void Ballistic::Acceleration(const double *p, const double *v, double *a) const
     {
-        const double dt = DeltaT();
-        double p[3], v[3], a[3];
-        for (std::size_t i = 0; i < 3; ++i)
-        {
-            p[i] = x(fOrder * i);
-            v[i] = x(fOrder * i + 1);
-        }
-
         // Gravity: constant along z near the surface, G M / r^3 about the centre in orbit.
         double grav[3] = {0., 0., 0.};
         if (fSurfaceGravity)
@@ -72,12 +70,39 @@ namespace Kalman::Apps::Ballistics
         const double speed = std::sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
         for (std::size_t i = 0; i < 3; ++i)
             a[i] = grav[i] + (speed > 0. ? -fDragOverMass * speed * v[i] : 0.);
+    }
+
+    Vector Ballistic::f(const Vector &x, const Vector &, double t) const
+    {
+        // dp/dt = v, dv/dt = a(p, v): one 6-vector [p, v] for the model's integrator.
+        Vector y(6);
+        for (std::size_t i = 0; i < 3; ++i)
+        {
+            y(i) = x(fOrder * i);
+            y(3 + i) = x(fOrder * i + 1);
+        }
+
+        const Kalman::Derivative derivative = [this](const Vector &s, const Vector &, double) {
+            const double p[3] = {s(0), s(1), s(2)}, v[3] = {s(3), s(4), s(5)};
+            double a[3];
+            Acceleration(p, v, a);
+            Vector d(6);
+            for (std::size_t i = 0; i < 3; ++i) { d(i) = v[i]; d(3 + i) = a[i]; }
+            return d;
+        };
+        const std::size_t steps = Substeps();
+        y = GetIntegrator().Integrate(derivative, y, Vector(), t, DeltaT() / static_cast<double>(steps), steps);
+
+        // The acceleration slot is not integrated: it reports the forces where the step lands.
+        const double p[3] = {y(0), y(1), y(2)}, v[3] = {y(3), y(4), y(5)};
+        double a[3];
+        Acceleration(p, v, a);
 
         Vector out(NState());
         for (std::size_t i = 0; i < 3; ++i)
         {
-            out(fOrder * i) = (p[i] + dt * v[i]) + 0.5 * a[i] * (dt * dt);
-            out(fOrder * i + 1) = v[i] + a[i] * dt;
+            out(fOrder * i) = p[i];
+            out(fOrder * i + 1) = v[i];
             if (fOrder >= 3) out(fOrder * i + 2) = a[i];
         }
         return out;

@@ -208,11 +208,29 @@ class TestBallisticTwin(unittest.TestCase):
 
     def test_features_without_a_twin_keep_the_python_physics(self):
         self.assertIsNone(BallisticModel("b", drag_uncertainty=0.3, c_drag=0.01).native_handle())
-        self.assertIsNone(BallisticModel("b", substeps=4).native_handle())
+        from modules.framework.integrators import DormandPrinceIntegrator, RK4Integrator
+        self.assertIsNone(BallisticModel("b", integrator=DormandPrinceIntegrator(rtol=1e-9)).native_handle())
+        class Mine(RK4Integrator):
+            def _step(self, f, x, u=None, t=None, dt=1.0):
+                return super()._step(f, x, u=u, t=t, dt=dt)
+        self.assertIsNone(BallisticModel("b", integrator=Mine()).native_handle())
         self.assertIsNone(BallisticModel("b", g=None, substeps="auto").native_handle())
         custom = BallisticModel("b", f=lambda x, u=None, w=None, t=None: x)
         self.assertIsNone(custom.native_handle())
         self.assertIsNotNone(BallisticModel("b").native_handle())
+
+    def test_substeps_and_integrator_reach_the_twin(self):
+        from modules.framework.constants import KalmanIntegratorKind
+        for kw in (dict(substeps=4), dict(integrator=KalmanIntegratorKind.EULER),
+                   dict(integrator=KalmanIntegratorKind.DORMAND_PRINCE), dict(substeps=3, c_drag=0.02)):
+            def make():
+                model = BallisticModel("b", fs=20.0, **kw)
+                model.initial_state([0, 30, 0, 0, 20, 0, 100, 40, -9.81])
+                return model
+            self.assertIsNotNone(make().native_handle(), str(kw))
+            z = make().sample(200, seed=3).zk
+            py, cx = both(make, z)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state with {kw}")
 
 
 @needs_apps

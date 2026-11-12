@@ -47,6 +47,9 @@ namespace Kalman::Apps::Ballistics
             bool fSurfaceGravity = true;
             double fGravConstant = 6.674e-11, fCentralMass = 5.972e24;
 
+            /// Gravity and drag at position p and velocity v (3 each), written to a.
+            void Acceleration(const double *p, const double *v, double *a) const;
+
         public:
             /// \param order 3 = position, velocity, acceleration per axis; 2 = position, velocity.
             explicit Ballistic(std::size_t order = 3);
