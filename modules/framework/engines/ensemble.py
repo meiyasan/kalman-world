@@ -156,6 +156,10 @@ class EnsembleKalmanEngine(KalmanEngine):
             X = out
 
         Q = np.asarray(model.Q(t=t), dtype=np.float64)
+        # A declared noise coupling applies here as in every engine: w ~ N(0, L Q L^T).
+        L = getattr(model, "_L", None)
+        if L is not None and not callable(L) and not np.array_equal(L, np.eye(n)):
+            Q = np.asarray(L, dtype=np.float64) @ Q @ np.asarray(L, dtype=np.float64).T
         if Q.any():
             if np.allclose(Q, np.diag(np.diag(Q))):
                 X = X + np.sqrt(np.diag(Q))[:, None] * self.rng.standard_normal((n, N))

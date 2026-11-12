@@ -159,7 +159,12 @@ class TestFilterTakesTheCxxLoop(unittest.TestCase):
         with native.python_reference():
             self.assertFalse(self.path(Pendulum()), "the reference switch")
         from modules.framework.filters import EnsembleKalmanFilter
-        self.assertFalse(EnsembleKalmanFilter(Pendulum())._callback_eligible(None), "the ensemble engine")
+
+        class Field(Pendulum):
+            def forecast(self, X, t=None):
+                return X
+        self.assertFalse(EnsembleKalmanFilter(Field())._callback_eligible(None),
+                         "an ensemble model with a whole-ensemble hook")
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
@@ -316,6 +321,43 @@ class TestParticleOnTheCxxEngine(unittest.TestCase):
         _, z = _pendulum_run(0)
         np.random.seed(11); first = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk).copy()
         np.random.seed(11); again = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk)
+        np.testing.assert_array_equal(first, again)
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
+class TestEnsembleOnTheCxxEngine(unittest.TestCase):
+    """The ensemble filter on a Python model with per-member f and h runs in C++.
+    Different random generators, so the two engines are compared over many runs."""
+
+    def test_same_accuracy_and_spread_as_the_python_engine(self):
+        from modules.framework.filters import EnsembleKalmanFilter
+        errors = {True: [], False: []}
+        sigmas = {True: [], False: []}
+        for run in range(24):
+            truth, z = _pendulum_run(run)
+            for reference in (True, False):
+                if reference:
+                    with native.python_reference():
+                        record = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run).forward(z)
+                else:
+                    flt = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run)
+                    self.assertTrue(flt._callback_eligible(None))
+                    record = flt.forward(z)
+                x, P = np.asarray(record.xk), np.asarray(record.Pk)
+                errors[reference].append(np.sqrt(np.mean((x[40:, 0] - truth[40:, 0]) ** 2)))
+                sigmas[reference].append(np.sqrt(np.mean(P[40:, 0, 0])))
+        python, cxx = np.array(errors[True]), np.array(errors[False])
+        spread = np.sqrt((python.var() + cxx.var()) / len(python))
+        self.assertLess(abs(python.mean() - cxx.mean()), 4 * spread,
+                        f"RMS error: Python {python.mean():.4f}, C++ {cxx.mean():.4f}")
+        python, cxx = np.mean(sigmas[True]), np.mean(sigmas[False])
+        self.assertLess(abs(python - cxx) / python, 0.1, f"reported sigma: Python {python:.4f}, C++ {cxx:.4f}")
+
+    def test_a_seeded_run_repeats(self):
+        from modules.framework.filters import EnsembleKalmanFilter
+        _, z = _pendulum_run(0)
+        first = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk).copy()
+        again = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk)
         np.testing.assert_array_equal(first, again)
 
 
