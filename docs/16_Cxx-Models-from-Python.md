@@ -26,6 +26,8 @@ the two.
 | A nonlinear model written in Python | the loop and the filter arithmetic in C++; C++ calls the Python `f` and `h` | extended, unscented, particle and ensemble engines, when the library is found |
 | The integrators (Euler, RK4, Dormand-Prince): `step`, `integrate` | C++ (`Kalman::Integrators`), calling the Python derivative | real double-precision states; complex states and schemes written in Python stay in Python |
 | A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
+| The controllers: P, PID, LQR, MPPI, Boost, AdaptiveQR | C++ (`Kalman::Controllers`); a Python model's `f`, `h`, noise and `clip_u` are called back | real double-precision models; the neural controllers stay in Python |
+| The routers: Bayesian, Threshold, Hybrid | C++ (`Kalman::Routers`); a Hybrid's Python child is called back | when the library is found |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
 | The four application models with a C++ twin | C++, the whole pass in one call | when `libKalmanApps` is found |
 
@@ -43,6 +45,66 @@ the model declares no coupling (`L`, `M`) and the map really responds to the
 argument (it is tried once, at the initial state). Otherwise the noise is
 added, `L Q Lᵀ` and `M R Mᵀ`, as the extended engine does. A model that takes
 `v` and ignores it therefore keeps its `R` in every engine.
+
+## Controllers and routers
+
+The classes keep their names, constructors and logs; what moved is the
+arithmetic. Each one builds its C++ counterpart on first use and forwards
+`_policy` and `_update` (a controller) or `route` (a router) to it. The Python
+arithmetic stays as `_reference_policy`, `_reference_update`, `_reference_route`:
+it is what runs inside `native.python_reference()`, for a complex model, and
+without the library, and the tests compare the two
+(`tests/test_native_controllers.py`, `tests/test_native_routers.py`).
+
+| Class | C++ | What crosses | Agreement with the reference |
+|---|---|---|---|
+| `ProportionalKalmanController` | `Controllers::Proportional` | the belief, once per call | exact |
+| `PIDKalmanController` | `Controllers::PID` (holds the integral) | the belief | 1e-17 |
+| `LQRKalmanController` | `Controllers::LQR`, `Algebra::SolveDARE` | `model.F()`, `model.B()` once, at `fit()` | gain 1e-13 (scipy is the reference) |
+| `MPPIKalmanController` | `Controllers::MPPI` (holds the warm start) | the perturbations, drawn in Python from the seeded generator; `model.f` and `clip_u` are called back per rollout step | 1e-11 |
+| `BoostKalmanController` | `Controllers::Boost` | `H` and the current `R`, called back; the factor comes back and is applied to `model._R` here | the same boosts at the same steps |
+| `AdaptiveQRKalmanController` | `Controllers::AdaptiveQR` | `H` and `R`, called back; the factor is applied to `model._Q` here | 1e-13 per call, 2.5e-11 after 280 closed-loop steps |
+| `BayesianRouter` | `Routers::Bayesian` | `c` and the likelihoods (no NIS) | exact |
+| `ThresholdRouter` | `Routers::Threshold` | the last `window` NIS rows | exact |
+| `HybridRouter` | `Routers::Hybrid` | both children in C++, or a Python child (a `NeuralRouter`, a callable) called back | 1e-15 |
+
+Three things follow from where the line is drawn:
+
+- **The adapters retune the Python model.** Boost and AdaptiveQR decide in C++
+  but apply the factor to `model._R` / `model._Q` in Python, and their C++ side
+  reads `R` and `Q` from the Python model at every call. So the filter running
+  the model sees the retuning, on the C++ loop as on the Python one, as before.
+- **A seeded MPPI makes the same decisions** on both paths: the draws come from
+  the controller's numpy generator in the order the reference draws them.
+- **Changing a gain or a parameter rebuilds** the C++ object; for PID and MPPI
+  that restarts the integral or the warm start. `reset()` resets both sides.
+
+Two differences, both on innovations with a missing (NaN) channel: Boost scores
+the channels present (the reference's NIS is NaN and never boosts) and
+AdaptiveQR leaves the innovation out of its window (the reference's factor
+becomes NaN). An empty NIS history gives a ThresholdRouter uniform
+probabilities on both paths.
+
+How long one call takes (`tools/benchmark_controllers.py`, best of five; the
+Python column is the same class on its reference path, everything else as
+shipped):
+
+| Call | C++ | Python |
+|---|---|---|
+| Proportional, PID, LQR policy (one call with its logging) | 12 to 15 us | 6 to 9 us |
+| LQR `fit()` (the Riccati equation) | 420 us | 210 us (scipy) |
+| Boost, AdaptiveQR | 40 us | 37 to 40 us |
+| MPPI 100 x 40 x 3 on the car (a Python `f`) | 219 ms | 201 ms |
+| MPPI 100 x 40 x 3 on a C++ model (the example pendulum) | 18 ms | 70 ms |
+| Bayesian, Threshold route | 4.5 to 6 us | 1.7 to 4.5 us |
+| Hybrid(Bayes, Threshold) route | 13 us | 14 us |
+
+So the C++ path is slower where the work is a few numpy operations: the
+crossing (about 4 us) costs more than the arithmetic it replaces. It is level
+where Python callbacks dominate (the adapters, MPPI on a Python model: the
+model's `f` runs either way), and faster where nothing comes back to Python
+(MPPI on a C++ model, 3.9 times). The Riccati solve is 2 times slower than
+scipy's but more accurate (residual 1e-16 against 1e-14), and runs once.
 
 ## Install and check
 

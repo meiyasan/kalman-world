@@ -114,7 +114,7 @@ constant and a directory. A utility is arithmetic nobody chooses between.
 | Integrator (role) | how do I advance in time? | `Kalman/Integrators/` |
 | Solver (role) | how do I handle space, for a field? | `Kalman/Solvers/` |
 | Differentiator (role) | where do Jacobians come from? | `Kalman/Differentiators/` |
-| Algebra (utilities) | Cholesky, solves, eigenvalues, `exp(A)` | `Kalman/Algebra/` |
+| Algebra (utilities) | Cholesky, solves, eigenvalues, `exp(A)`, the Riccati equation | `Kalman/Algebra/` |
 
 "Solver" here always means a field solver. The linear solver of the framework
 is Cholesky, in `Kalman/Algebra/Cholesky.h`: a covariance is symmetric
@@ -148,9 +148,13 @@ per step with the belief, the time and the last innovation, and feeds the
 command to the prediction — `KalmanFilter.forward(zk, uk=controller)` in
 Python. The cost it logs is charged against `Model::ClipControl(u)`, what the
 actuator delivers, not the raw ask; MPPI's rollouts clip the same way, so a
-planner sees the limit it will hit. LQR solves the Riccati equation by
-iteration (no scipy); the two adapters scale `R` (a gain boost when the NIS
-says the filter is surprised) and `Q` (from the empirical innovation covariance).
+planner sees the limit it will hit. LQR solves the Riccati equation with
+`Algebra::SolveDARE` (the recursion, then Newton steps on a Stein equation
+summed by doubling: no scipy and no factorisation beyond Cholesky); the two
+adapters scale `R` (a gain boost when the NIS says the filter is surprised) and
+`Q` (from the empirical innovation covariance). The Python controllers and the
+rule-based routers forward to these classes; see
+[C++ models from Python](16_Cxx-Models-from-Python.md).
 
 Track *finding* is a different shape of problem — an event of many hits per
 layer in, a set of tracks out — so `Engines::Combinatorial` adds `Find()` and
@@ -660,7 +664,7 @@ linear filter. Both can be present in one process.
 |---|---|---|
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
 | Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
-| Controllers | P, PID, LQR (scipy DARE), MPPI, Boost, AdaptiveQR, Neural (Torch) | the same six; LQR by Riccati iteration; no Neural |
+| Controllers | P, PID, LQR, MPPI, Boost, AdaptiveQR forward to C++; Neural (Torch) stays Python; scipy's DARE is the reference | the same six; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
 | Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
@@ -669,7 +673,7 @@ linear filter. Both can be present in one process.
 | Spectral solver backend | numpy, or `backend="torch"`, which runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
-| Controllers / routers | P, PID, LQR, MPPI, Neural, IKF | none yet — the ONNX seam is the plan |
+| Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
 | Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel` so far; none in the core library |
 | Missing data | NaN channel skipped | NaN channel skipped (same) |
 | Covariance update | Joseph form | Joseph form (same) |
