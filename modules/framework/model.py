@@ -4,6 +4,7 @@ from scipy.linalg import expm
 from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
+from .constants import KalmanDynamicsKind
 from .constants import (KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable,
                         KalmanIntegratorKind, ALL_INTEGRATORS,
                         KalmanSolverKind, ALL_SOLVERS)
@@ -43,10 +44,11 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED      # safe universal default (falls back to linear on matrices)
     ALLOWED_ENGINES = ALL_ENGINES              # any engine
 
-    # Time-stepping binding (declared, not imported — same pattern as the engine).
-    # An ODE model overriding ``f_continuous`` gets its discrete ``f`` by having
-    # this integrator advance the derivative one filter step (``SOLVER_SUBSTEPS``
-    # substeps of ``1/fs``). A PDE model instead binds a solver and overrides f().
+    # What f returns (declared, like the engine): the step itself (DISCRETE),
+    # or the derivative dx/dt (CONTINUOUS), which the framework decodes into
+    # the step with the model's integrator, in SOLVER_SUBSTEPS steps per sample.
+    # A field model binds a solver instead and calls it from f.
+    DYNAMICS            = KalmanDynamicsKind.DISCRETE
     DEFAULT_INTEGRATOR  = KalmanIntegratorKind.RK4
     ALLOWED_INTEGRATORS = ALL_INTEGRATORS
     DEFAULT_SOLVER      = KalmanSolverKind.SPECTRAL
@@ -217,42 +219,53 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         return self._solver_inst
 
     # ------------------------------------------------------------------
-    # Continuous dynamics hook (opt-in): override ``f_continuous`` (the
-    # derivative ẋ=f_c(x,u,t)) and the base ``f`` below integrates it with the
-    # model's integrator — the ODE counterpart of binding a solver for a PDE.
+    # Continuous dynamics. A class with DYNAMICS = CONTINUOUS writes f as the
+    # derivative dx/dt. When the class is created, that f is kept as
+    # `derivative` and f becomes the decoded step below, so engines and
+    # filters only ever see a discrete step, and the Jacobian F = df/dx is the
+    # Jacobian of the integrated step.
     # ------------------------------------------------------------------
-    def f_continuous(self, x, u=None, t=None):
-        """Continuous-time derivative ẋ = f_continuous(x,u,t).  Override to opt in."""
-        raise NotImplementedError
+    def __init_subclass__(cls, **kwargs):
+        super().__init_subclass__(**kwargs)
+        written = cls.__dict__.get("f")
+        if (written is not None and cls.DYNAMICS is KalmanDynamicsKind.CONTINUOUS
+                and written is not _decoded_step):
+            cls.derivative = written
+            cls.f = _decoded_step
 
-    def _uses_continuous(self) -> bool:
-        return type(self).f_continuous is not KalmanModel.f_continuous
+    def derivative(self, x, u=None, w=None, t=None):
+        """dx/dt of a CONTINUOUS model: the ``f`` its class wrote."""
+        raise NotImplementedError(f"{type(self).__name__} is not a continuous model.")
 
-    def _integrate_continuous(self, x, u, t):
-        integ = self.default_integrator()
-        substeps = max(1, int(getattr(self, "SOLVER_SUBSTEPS", 1)))
-        dt = (1.0 / self.fs) if self.fs else 1.0
-        dt /= substeps
-        fc = lambda xx, uu, tt: np.asarray(self.f_continuous(xx, u=uu, t=tt), dtype=self.dtype)
-        return integ.integrate(fc, np.asarray(x, dtype=self.dtype), u=u,
-                               t=(0.0 if t is None else t), dt=dt, n=substeps)
+    def substeps(self, x=None) -> int:
+        """Integrator steps per sample when decoding a continuous model."""
+        return max(1, int(getattr(self, "SOLVER_SUBSTEPS", 1)))
+
+    def after_step(self, x, u=None, t=None):
+        """Hook: adjust the state a continuous model lands on after one sample
+        (a clamp, a slot that is not integrated). Returns the state."""
+        return x
+
+    def decode_step(self, x, u=None, t=None):
+        """One sample of a CONTINUOUS model: the derivative integrated over
+        ``1/fs`` by the model's integrator, then :meth:`after_step`. No noise."""
+        steps = self.substeps(x)
+        dt = ((1.0 / self.fs) if self.fs else 1.0) / steps
+        rate = lambda xx, uu, tt: np.asarray(self.derivative(xx, u=uu, t=tt), dtype=self.dtype)
+        xk = self.default_integrator().integrate(rate, np.asarray(x, dtype=self.dtype), u=u,
+                                                 t=(0.0 if t is None else t), dt=dt, n=steps)
+        return self.after_step(xk, u=u, t=t)
 
     # ============================================================
     # Core equations (matrix path; subclasses override for nonlinear f/h)
     # ============================================================
     def f(self, x, u=None, w=None, t=None):
-        """State transition. Uses constant matrices if provided; else a
-        continuous ``f_continuous`` integrated by the model's integrator; else
-        override me."""
+        """State transition, the discrete step. Uses constant matrices if
+        provided; otherwise a subclass writes it (the step, or with
+        ``DYNAMICS = CONTINUOUS`` the derivative, which is decoded)."""
         if self._F is None:
-            if self._uses_continuous():                 # ODE: integrate the derivative
-                xk = self._integrate_continuous(x, u, t)
-                if w is not None:
-                    L = self.L(t=t)
-                    xk = xk + (w if L is None else L @ w)
-                return xk
             raise NotImplementedError(
-                "Model must define f()/f_continuous or be constructed with matrices (F=, H=, ...).")
+                "Model must define f() or be constructed with matrices (F=, H=, ...).")
         x = self.F(t=t) @ x
         if u is not None:
             B = self.B(t=t)
@@ -446,3 +459,12 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if interactive:
             return self._plot_interactive(record, sample=sample, component=comps, error=error, **kwargs)
         return self._plot_static(record, sample=sample, component=comps, error=error, **kwargs)
+
+
+def _decoded_step(self, x, u=None, w=None, t=None):
+    """f of a CONTINUOUS model: the decoded step, with the process noise added."""
+    xk = self.decode_step(x, u, t)
+    if w is not None:
+        L = self.L(t=t)
+        xk = xk + (w if L is None else L @ w)
+    return xk

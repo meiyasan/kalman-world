@@ -115,7 +115,7 @@ Dependencies point one way only: **Filter → Engine → Model**.
 An ODE model overrides `Model::Derivative()` and calls `UseContinuousDynamics()`;
 the default `f()` then advances the derivative one sample with the model's
 declared integrator (RK4 unless `SetIntegrator()` says otherwise, in
-`Substeps()` pieces), exactly as `f_continuous` does in Python. A field solver
+`Substeps()` pieces), exactly as a `DYNAMICS = CONTINUOUS` model does in Python. A field solver
 composes an integrator the same way and marches a `Kalman::Field` through the
 integrator's Butcher tableau — one `RungeKuttaStep` template serves a
 `Kalman::Vector` and a spectral field alike.
@@ -641,7 +641,7 @@ linear filter. Both can be present in one process.
 | Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
-| ODE models | override `f_continuous`, bind `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
+| ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | numpy, or `backend="torch"`, which runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |

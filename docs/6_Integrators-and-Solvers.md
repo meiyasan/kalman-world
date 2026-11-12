@@ -60,7 +60,7 @@ inside it.
 > **The integrator only matters if `f()` is integrated.** The linear engine and
 > the native C fast path use `F()` matrices and never call `f()`. On a
 > matrices-only model, setting `integrator=` changes nothing at all. It takes
-> effect when the model overrides `f_continuous` (or a solver drives a field).
+> effect when the model is `DYNAMICS = CONTINUOUS` (or a solver drives a field).
 
 ### Verifying it took effect
 

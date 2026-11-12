@@ -74,27 +74,23 @@ namespace Kalman::Apps::Ballistics
 
     Vector Ballistic::f(const Vector &x, const Vector &, double t) const
     {
-        // dp/dt = v, dv/dt = a(p, v): one 6-vector [p, v] for the model's integrator.
-        Vector y(6);
-        for (std::size_t i = 0; i < 3; ++i)
-        {
-            y(i) = x(fOrder * i);
-            y(3 + i) = x(fOrder * i + 1);
-        }
-
-        const Kalman::Derivative derivative = [this](const Vector &s, const Vector &, double) {
-            const double p[3] = {s(0), s(1), s(2)}, v[3] = {s(3), s(4), s(5)};
+        // dp/dt = v, dv/dt = a(p, v), da/dt = 0: the whole state goes to the model's
+        // integrator; the acceleration slot is filled in where the step lands.
+        const std::size_t order = fOrder, size = NState();
+        const Kalman::Derivative derivative = [this, order, size](const Vector &s, const Vector &, double) {
+            const double p[3] = {s(0), s(order), s(2 * order)};
+            const double v[3] = {s(1), s(order + 1), s(2 * order + 1)};
             double a[3];
             Acceleration(p, v, a);
-            Vector d(6);
-            for (std::size_t i = 0; i < 3; ++i) { d(i) = v[i]; d(3 + i) = a[i]; }
+            Vector d(size, 0.);
+            for (std::size_t i = 0; i < 3; ++i) { d(order * i) = v[i]; d(order * i + 1) = a[i]; }
             return d;
         };
         const std::size_t steps = Substeps();
-        y = GetIntegrator().Integrate(derivative, y, Vector(), t, DeltaT() / static_cast<double>(steps), steps);
+        const Vector y = GetIntegrator().Integrate(derivative, x, Vector(), t, DeltaT() / static_cast<double>(steps), steps);
 
-        // The acceleration slot is not integrated: it reports the forces where the step lands.
-        const double p[3] = {y(0), y(1), y(2)}, v[3] = {y(3), y(4), y(5)};
+        const double p[3] = {y(0), y(order), y(2 * order)};
+        const double v[3] = {y(1), y(order + 1), y(2 * order + 1)};
         double a[3];
         Acceleration(p, v, a);
 

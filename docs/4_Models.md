@@ -60,7 +60,7 @@ Subclass and override the nonlinear maps. `F`/`H` then come from
 
 ```python
 from kalman.framework import KalmanModel
-from kalman.framework.constants import KalmanEngineKind
+from kalman.framework.constants import KalmanEngineKind, KalmanDynamicsKind
 
 class PendulumModel(KalmanModel):
     NAME = "Pendulum"
@@ -73,7 +73,9 @@ class PendulumModel(KalmanModel):
         self.g, self.L = g, L
         super().__init__(sensor_id, **kw)
 
-    def f_continuous(self, x, u=None, t=None):
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS     # f returns dx/dt
+
+    def f(self, x, u=None, w=None, t=None):
         theta, omega = x[0, 0], x[1, 0]
         return np.array([[omega], [-(self.g / self.L) * np.sin(theta)]])
 
@@ -85,9 +87,13 @@ Two rules that bite here:
 
 - **Set `self.n` before `super().__init__()`.** Construction runs
   `_check_shapes`, which evaluates `F(zeros)` and therefore `f` at `x = 0`.
-- **Prefer overriding `f_continuous` over `f`.** `f_continuous` returns the
-  derivative `ẋ`; the model's bound integrator turns it into the discrete step.
-  Override `f()` directly only when the discrete map is genuinely what you have.
+- **Say what `f` returns.** With `DYNAMICS = KalmanDynamicsKind.CONTINUOUS`,
+  `f` is the derivative dx/dt and the framework decodes it into the discrete
+  step with the model's integrator (RK4 unless you choose another). With
+  `DISCRETE`, the default, `f` is the step itself and is used as written. Write
+  physics as continuous; keep discrete for a step that has no derivative behind
+  it. The filter sees a discrete step either way, and the Jacobian is taken on
+  that step.
   `dt` is never passed into `f()` — only absolute `t` is. Derive
   `dt = 1/self.fs`.
 

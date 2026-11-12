@@ -27,8 +27,8 @@ measurement  z = offset                                    (a lane camera)
 
 ## How they are built
 
-- **Time stepping.** Both models give only the rate of change
-  (`f_continuous`) and leave the stepping to an integrator. `CarSpeedModel` uses
+- **Time stepping.** Both models are continuous: `f` gives only the rate of
+  change and the framework's integrator does the stepping. `CarSpeedModel` uses
   the framework default, RK4. `CarLaneModel` declares Euler, the scheme it was
   tuned with.
 - **Control.** The lane model takes a steering input. Its notebook compares

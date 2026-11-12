@@ -1,5 +1,5 @@
 """Tests for the KalmanIntegrator (time-stepping) and KalmanSolver (spatial
-discretization) concepts, the model f_continuous delegation, and the torch/GPU
+discretization) concepts, the decoding of a continuous model, and the torch/GPU
 SpectralSolver backend."""
 import sys
 import unittest
@@ -16,6 +16,7 @@ from modules.framework.integrators import (INTEGRATOR_BY_KIND, resolve_integrato
 from modules.framework.solvers import (SOLVER_BY_KIND, resolve_solver, register_solver,
                                        unregister_solver, available_solvers)
 from modules.framework.engines import resolve_engine
+from modules.framework.constants import KalmanDynamicsKind
 from modules.framework.constants import (KalmanIntegratorKind, ALL_INTEGRATORS,
                                          KalmanSolverKind, ALL_SOLVERS)
 
@@ -217,7 +218,7 @@ class TestFiniteDifferenceSolver(unittest.TestCase):
             self.skipTest("no GPU/MPS device")
 
 
-# ── Model f_continuous delegation + aliases ──────────────────────────────────
+# ── A continuous model is decoded by its integrator ──────────────────────────────────
 
 class _Decay(KalmanModel):
     NAME = "Decay"
@@ -225,7 +226,8 @@ class _Decay(KalmanModel):
         self.n = 1
         super().__init__("d", H=np.eye(1), Q=np.zeros((1, 1)), R=np.eye(1),
                          fs=10, x0=np.array([[2.0]]), **kw)
-    def f_continuous(self, x, u=None, t=None):
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS
+    def f(self, x, u=None, w=None, t=None):
         return -np.asarray(x, float)
 
 
@@ -236,6 +238,19 @@ class TestModelDelegation(unittest.TestCase):
         hand = RK4Integrator().step(lambda x, u, t: -x, m.x0.astype(float), dt=0.1)
         np.testing.assert_allclose(m.f(m.x0), hand)
         self.assertTrue(np.all(np.isfinite(m.F())))       # numerical Jacobian of f
+
+    def test_the_written_f_is_kept_as_the_derivative(self):
+        m = _Decay()
+        np.testing.assert_allclose(m.derivative(m.x0), -m.x0)
+        np.testing.assert_allclose(m.f(m.x0, w=np.array([[0.5]])), m.f(m.x0) + 0.5)   # noise is added to the step
+
+    def test_a_discrete_model_is_used_as_written(self):
+        class Halve(_Decay):
+            DYNAMICS = KalmanDynamicsKind.DISCRETE
+            def f(self, x, u=None, w=None, t=None):
+                return 0.5 * np.asarray(x, float)
+        m = Halve()
+        np.testing.assert_allclose(m.f(m.x0), 0.5 * m.x0)
 
     def test_check_shapes_passes_and_filters(self):
         from modules.framework.filters import ExtendedKalmanFilter

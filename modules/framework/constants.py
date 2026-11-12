@@ -145,6 +145,22 @@ ALL_SOLVERS = frozenset(KalmanSolverKind)
 
 
 # -----------------------------
+# ----- Dynamics kinds --------
+# -----------------------------
+class KalmanDynamicsKind(Enum):
+    """
+    What a model's ``f`` returns. A model declares it as ``DYNAMICS``.
+
+    ``DISCRETE``: ``f`` is the step, the state one sample later. Used as written.
+    ``CONTINUOUS``: ``f`` is the derivative dx/dt. The framework decodes it into
+    the step by integrating over one sample with the model's integrator, so
+    the filter always sees a discrete step.
+    """
+    DISCRETE   = auto()
+    CONTINUOUS = auto()
+
+
+# -----------------------------
 # ----- Provider kinds --------
 # -----------------------------
 class KalmanProviderKind(Enum):

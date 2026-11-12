@@ -111,9 +111,14 @@ the stable `kalman.apps` surface.
 **A new domain** — create the package with the layout above. If it clearly
 belongs to a family, put it there; otherwise leave it top-level.
 
-**A nonlinear model** — prefer overriding `f_continuous(x, u, t)` (the
-derivative) and let the bound integrator produce the discrete `f()`. Only
-override `f()` directly if the discrete map is what you genuinely have.
+**A nonlinear model** - there is one method, `f`. A physical model declares
+`DYNAMICS = KalmanDynamicsKind.CONTINUOUS` and writes `f` as the derivative
+dx/dt; the framework decodes it into the discrete step with the model's
+integrator, so engines only ever see a step. Leave `DYNAMICS` at `DISCRETE`
+(the default) and write the step itself only when a discrete map is what you
+genuinely have (a learned step, a layer-to-layer propagation, a rule). Never
+write an integration loop inside a model. `after_step()` is the hook for what
+must follow a decoded step (a clamp, a slot that is not integrated).
 Pre-set `self.n` **before** `super().__init__()` — construction runs
 `_check_shapes`, which evaluates `F(zeros)` and hence `f` at `x=0`.
 
@@ -246,8 +251,8 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
   become a learned `KalmanSolverKind.NEURAL` solver rather than a loose module.
 - `IMPLICIT_EULER` integrator and the finite-volume/finite-element solvers are
   reserved stubs that raise `NotImplementedError`.
-- Several `apps/` models still override `f()` directly and could move to
-  `f_continuous` (rocket, space, tracking, storms).
+- Several physical `apps/` models still write a discrete `f()` with their own
+  time stepping and should move to `DYNAMICS = CONTINUOUS` (rocket, space, storms).
 - `KalmanSolver` carries no mesh contract: `n`/`shape`/`length`/`dt` and the
   physics hook are re-declared per concrete solver, and the hook is named
   `rhs_hat` (spectral) vs `rhs` (finite-difference). A new discretization family

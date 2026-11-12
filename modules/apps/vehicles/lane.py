@@ -7,7 +7,7 @@ from __future__ import annotations
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind, KalmanDynamicsKind
 
 
 
@@ -102,8 +102,9 @@ class CarLaneModel(ExtendedKalmanModel):
 
     # Explicit Euler steps (RK4 would shift the trajectory).
     DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS
 
-    def f_continuous(self, x, u=None, t=None):
+    def f(self, x, u=None, w=None, t=None):
         """Bicycle-kinematic derivative ẋ = [v·sin ψ, v·tan δ / L, 0]."""
         x = np.asarray(x, float).reshape(-1)
         y, psi, v = x[0], x[1], x[2]

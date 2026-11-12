@@ -27,7 +27,8 @@ Two classes share this domain:
 
 ## How it is built
 
-- **Time stepping.** The model states its forces (gravity, drag, thrust) and
+- **Time stepping.** The model is continuous (`DYNAMICS = CONTINUOUS`): `f`
+  returns the rate of change from the forces (gravity, drag, thrust) and
   the framework's integrator steps them: RK4 by default, or any other through
   `integrator=` (`KalmanIntegratorKind.EULER`, a `DormandPrinceIntegrator(...)`,
   a scheme of your own). `substeps=N` takes N integrator steps per sample, and

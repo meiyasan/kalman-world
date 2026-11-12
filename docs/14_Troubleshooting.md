@@ -83,8 +83,8 @@ Reserved registry entries. Use `rk4`/`dormand_prince`, or
 
 **Changing the integrator made no difference.**
 Expected on a linear model. The linear engine and the native C fast path use
-`F()` and never call `f()`. The integrator applies when the model overrides
-`f_continuous`, or when a solver drives a field.
+`F()` and never call `f()`. The integrator applies when the model declares
+`DYNAMICS = CONTINUOUS`, or when a solver drives a field.
 
 **A mistyped kind used to run anyway.**
 No longer: `resolve_integrator`, `resolve_solver`, `resolve_engine` and

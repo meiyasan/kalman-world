@@ -18,7 +18,7 @@ import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.models.native import NativeTwin
-from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind, KalmanDynamicsKind
 
 
 
@@ -138,15 +138,16 @@ class CarSpeedModel(NativeTwin, ExtendedKalmanModel):
         f_grade = self.mass * self.g * np.sin(self.grade)
         return (f_drive - f_drag - f_roll - f_grade) / self.mass
 
-    def f_continuous(self, x, u=None, t=None):
-        """Longitudinal derivative ẋ = [v, accel(v)] (the force balance)."""
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS
+
+    def f(self, x, u=None, w=None, t=None):
+        """Longitudinal derivative dx/dt = [v, accel(v)] (the force balance)."""
         s = np.asarray(x, float).reshape(-1)
         return np.array([[s[1]], [self.accel(s[1])]])
 
-    def f(self, x, u=None, w=None, t=None):
-        # Integrate the continuous dynamics with the model's integrator (RK4),
-        # then clamp: the car does not roll backwards in a speed run.
-        s = np.asarray(self._integrate_continuous(x, u, t), float).reshape(-1)
+    def after_step(self, x, u=None, t=None):
+        # The car does not roll backwards in a speed run.
+        s = np.asarray(x, float).reshape(-1)
         s[1] = max(s[1], 0.0)
         return s.reshape(-1, 1)
 

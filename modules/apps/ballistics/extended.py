@@ -7,6 +7,7 @@ import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.models.native import NativeTwin
+from ...framework.constants import KalmanDynamicsKind
 from .base import BallisticState, BallisticObservable, BallisticNoise, ApexEstimate, ImpactEstimate
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
@@ -54,7 +55,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         # AUTO_SUBSTEP_RADIANS.
         if substeps != "auto" and (int(substeps) < 1):
             raise ValueError(f"substeps must be >= 1 or 'auto', got {substeps!r}.")
-        self.substeps = substeps if substeps == "auto" else int(substeps)
+        self._substeps = substeps if substeps == "auto" else int(substeps)
 
         self["c_drag"] = c_drag
         self["G"] = G
@@ -130,7 +131,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         return kind
 
     def native_name(self):
-        if self._drag_uncertainty is not None or self.substeps == "auto":
+        if self._drag_uncertainty is not None or self._substeps == "auto":
             return None
         if self._native_integrator() is None:
             return None
@@ -140,7 +141,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         g = self["g"]
         return {"c_drag": self["c_drag"], "m": self["m"], "G": self["G"], "M": self["M"],
                 "g": 0.0 if g is None else g, "surface_gravity": 0.0 if g is None else 1.0,
-                "substeps": float(self.substeps), "integrator": float(self._native_integrator())}
+                "substeps": float(self._substeps), "integrator": float(self._native_integrator())}
 
     # ----------------------------------------------------------------------
     # Process noise covariance generator (internal)
@@ -229,50 +230,40 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
     # ----------------------------------------------------------------------
     # Nonlinear dynamics
     # ----------------------------------------------------------------------
+    DYNAMICS = KalmanDynamicsKind.CONTINUOUS
+
     def f(self, x, u=None, w=None, t=None):
         """
-        Full nonlinear motion model:
-            ṗ = v
-            v̇ = a_grav(p) + a_drag(v) + a_ctrl(u)
+        The motion as a derivative, per axis [p, v] or [p, v, a]:
+            dp/dt = v
+            dv/dt = a_grav(p) + a_drag(v) + a_ctrl(u)
+            da/dt = 0   (the acceleration slot is not integrated, see after_step)
+        The framework integrates it over one sample with the model's integrator.
         """
         x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
-        dt = 1.0 / self.fs
-
-        # Extract from axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az] at order 3, or
-        # [px,vx, py,vy, pz,vz] at order 2. The stride is `order`, not a literal 3 -- see h().
+        # Axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az] at order 3, or
+        # [px,vx, py,vy, pz,vz] at order 2. The stride is `order`.
         pi = [self.order * i for i in range(3)]
         vi = [self.order * i + 1 for i in range(3)]
-        p = x[pi, 0]
-        v = x[vi, 0]
-        a = (x[[self.order * i + 2 for i in range(3)], 0] if self.order >= 3
-             else np.zeros(3, dtype=self.dtype))
+        rate = np.zeros_like(x)
+        rate[pi, 0] = x[vi, 0]
+        rate[vi, 0] = self._acceleration(x[pi, 0], x[vi, 0], u)
+        return rate
 
-        # dp/dt = v, dv/dt = a(p, v, u): handed to the model's integrator as one
-        # 6-vector [p, v]. The control is held over the sample.
-        def derivative(y, uu, tt):
-            return np.concatenate([y[3:], self._acceleration(y[:3], y[3:], uu)])
-
-        steps = self._substeps_for(p, dt)
-        y = self.default_integrator().integrate(
-            derivative, np.concatenate([p, v]).astype(np.float64), u=u,
-            t=0.0 if t is None else float(t), dt=dt / steps, n=steps)
-        p, v = y[:3].astype(self.dtype), y[3:].astype(self.dtype)
-        # The acceleration slot is not integrated: it reports the forces where the step lands.
-        a = self._acceleration(p, v, u) if self.order >= 3 else np.zeros(3, dtype=self.dtype)
-
-        # Compose next state in axis-major layout: [px,vx,ax, py,vy,ay, pz,vz,az]
-        x_next = np.zeros_like(x)
-        x_next[pi, 0] = p
-        x_next[vi, 0] = v
+    def after_step(self, x, u=None, t=None):
+        """The acceleration slot reports the forces where the step lands."""
+        x = np.asarray(x, dtype=self.dtype).reshape(-1, 1)
         if self.order >= 3:
-            x_next[[self.order * i + 2 for i in range(3)], 0] = a
+            pi = [self.order * i for i in range(3)]
+            vi = [self.order * i + 1 for i in range(3)]
+            x[[self.order * i + 2 for i in range(3)], 0] = self._acceleration(x[pi, 0], x[vi, 0], u)
+        return x
 
-        # Add process noise
-        if w is not None:
-            L = self.L(t)
-            x_next += w if L is None else (L @ w)
-
-        return x_next
+    def substeps(self, x=None):
+        if x is None:
+            return 1 if self._substeps == "auto" else self._substeps
+        p = np.asarray(x, dtype=float).reshape(-1)[[self.order * i for i in range(3)]]
+        return self._substeps_for(p, 1.0 / self.fs)
 
     #: "auto" sub-steps: each turns an orbit by at most this angle (ω = sqrt(GM/r³)).
     AUTO_SUBSTEP_RADIANS = 0.01
@@ -280,8 +271,8 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
     def _substeps_for(self, p, dt):
         """Sub-steps for one sample: the fixed count, or in orbital mode with "auto" enough
         that each covers at most AUTO_SUBSTEP_RADIANS of the local orbital motion."""
-        if self.substeps != "auto":
-            return self.substeps
+        if self._substeps != "auto":
+            return self._substeps
         if self["g"] is not None:
             return 1
         r = float(np.linalg.norm(p))
