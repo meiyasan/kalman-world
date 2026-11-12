@@ -118,7 +118,7 @@ def _model_catalog() -> dict:
             if inspect.isclass(obj) and issubclass(obj, KalmanModel):
                 out.setdefault(name, obj)
     out.setdefault("KalmanModel", KalmanModel)
-    # Models compiled into libKalmanFramework (or a plugin it has loaded), one
+    # Models compiled into libKalman (or a plugin it has loaded), one
     # class per registered name. They are keyed by that name — lowercase-hyphenated
     # by convention, so a clash with a CamelCase Python class does not happen; if
     # one did, the Python class keeps the name.

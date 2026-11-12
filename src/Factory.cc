@@ -172,7 +172,7 @@ namespace Kalman
         if (names.empty())
             throw std::runtime_error("Factory::LoadPlugin: '" + path + "' loaded but registered no model; "
                                      "did it forget KALMAN_REGISTER_MODEL, or was it linked against "
-                                     "a different libKalmanFramework?");
+                                     "a different libKalman?");
 
         fPlugins.push_back(path);   // the handle is kept open for the life of the process
         return names;

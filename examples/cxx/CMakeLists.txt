@@ -20,12 +20,12 @@ endif()
 message_title("Examples")
 
 # Each example defines its own model, because that is where a model belongs:
-# libKalmanFramework ships the contracts, applications ship the physics.
+# libKalman ships the contracts, applications ship the physics.
 #
 # `*_root.cc` examples demonstrate the integration with ROOT and are built only
 # when ROOT is present. This is the one place in the project allowed to mention
 # ROOT — and note the direction: the example links both ROOT and
-# libKalmanFramework, while the library itself knows about neither.
+# libKalman, while the library itself knows about neither.
 file(GLOB EXAMPLE_SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/*.cc")
 
 # `*_plugin.cc` examples are built as *shared libraries*: they define models and
@@ -55,7 +55,7 @@ if(NOT TARGET examples)
     add_custom_target(examples COMMENT "Compiling the examples")
 endif()
 
-# example_plugin.cc -> libKalmanPlugin_example, next to libKalmanFramework so a
+# example_plugin.cc -> libKalmanPlugin_example, next to libKalman so a
 # consumer of either tree (build or install) finds both with one search path.
 foreach(SRC ${PLUGIN_EXAMPLES})
     get_filename_component(PLUGIN_STEM ${SRC} NAME_WE)

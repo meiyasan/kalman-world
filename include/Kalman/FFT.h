@@ -7,7 +7,7 @@
  *
  * *********************************************
  *
- * \details libKalmanFramework has no required dependency, and the spectral
+ * \details libKalman has no required dependency, and the spectral
  * solver needs a 2-D FFT, so here is one: iterative radix-2 for power-of-two
  * lengths, Bluestein's chirp-z algorithm (which reduces any length to a
  * power-of-two convolution) otherwise. Correct for every grid size, fast

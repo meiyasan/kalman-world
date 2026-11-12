@@ -84,11 +84,11 @@ $ make conda
 
 The Python engines evaluate the *model* in Python and hand the *step* — the
 covariance prediction, the Joseph update, a whole linear pass, the RTS sweep,
-the sigma-point moments, particle weights, NIS/NEES — to `libKalmanFramework`,
+the sigma-point moments, particle weights, NIS/NEES — to `libKalman`,
 the same C++ classes a ROOT+ program runs (see [C++ Library](15_Cxx-Library.md)).
 
 ```bash
-$ make accel        # = make build install: builds libKalmanFramework into var/install
+$ make accel        # = make build install: builds libKalman into var/install
 ```
 
 Without the library (no cmake, or not built) the framework silently uses its

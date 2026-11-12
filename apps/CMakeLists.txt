@@ -1,7 +1,7 @@
 
 # libKalmanApps — the application models of `modules/apps/` in C++.
 #
-# libKalmanFramework ships the contracts and no physics; this library is where
+# libKalman ships the contracts and no physics; this library is where
 # the physics lives. It registers every model with Kalman::Factory, so it is
 # loaded like any plugin: by the Python package (which then runs a Python
 # model's filtering pass on its C++ twin), by the MCP server, or linked directly
@@ -29,6 +29,7 @@ set_target_properties(${APPS_LIBRARY} PROPERTIES
     BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
     INSTALL_RPATH "@loader_path;$ORIGIN")
 
-install(TARGETS ${APPS_LIBRARY} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+set_target_properties(${APPS_LIBRARY} PROPERTIES EXPORT_NAME Apps)
+install(TARGETS ${APPS_LIBRARY} EXPORT KalmanTargets LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
 install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/Kalman" DESTINATION include
         FILES_MATCHING PATTERN "*.h")

@@ -3,7 +3,7 @@
 # thislib.@LIBRARY@.sh — put an installed lib@LIBRARY@ on the environment.
 #
 #     source <prefix>/bin/thislib.@LIBRARY@.sh
-#     c++ demo.cc -lKalmanFramework -o demo && ./demo
+#     c++ demo.cc -lKalman -o demo && ./demo
 #
 # There is nothing ROOT-specific here: lib@LIBRARY@ is a plain shared library, so
 # this only needs to make the loader and the compiler able to find it.

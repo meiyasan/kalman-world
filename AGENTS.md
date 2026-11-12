@@ -83,9 +83,9 @@ modules/                        → the `kalman` package
     ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
   runtime/  helpers.py
 tests/                          mirrors concerns, not files (pytest)
-  cxx/                          the libKalmanFramework suite (plain binaries, ctest)
-include/Kalman/  src/           libKalmanFramework — the standalone C++ port (see §10)
-examples/cxx/                   standalone C++ programs using libKalmanFramework
+  cxx/                          the libKalman suite (plain binaries, ctest)
+include/Kalman/  src/           libKalman — the standalone C++ port (see §10)
+examples/cxx/                   standalone C++ programs using libKalman
 share/notebooks/                executed, output-bearing narrative docs
 ```
 
@@ -339,15 +339,15 @@ outside the two known docstring ones above.
 
 ---
 
-## 10. libKalmanFramework — the C++ port
+## 10. libKalman — the C++ port
 
-`include/Kalman/` + `src/` build `libKalmanFramework`: the same Model / Engine / Filter
+`include/Kalman/` + `src/` build `libKalman`: the same Model / Engine / Filter
 contracts in C++, as a **standalone library with no required dependency**. See
 [docs/15](docs/15_Cxx-Library.md) for using it; this section is about changing it.
 
 **The dependency direction is the rule everything else follows.** kalman-framework
 does not depend on ROOT — ROOT+ depends on *it*. A ROOT/ROOT+ component links
-libKalmanFramework, never the reverse. So: no `TObject`, no `ClassDef`, no LinkDef, no
+libKalman, never the reverse. So: no `TObject`, no `ClassDef`, no LinkDef, no
 dictionary, no `TMatrixD`, no `TGraph`, no `TFile`. `Kalman::Matrix` and
 `Kalman::Vector` exist precisely so the core owes nothing to anyone.
 
@@ -363,7 +363,7 @@ subdirectory for subdirectory — `Engines/`, `Models/`, `Filters/`, `IO/`,
 `Abstract/`. A new file on one side has an obvious home on the other. The mapping
 table is in docs/15; keep it accurate when you add to either side.
 
-**No applications in the core.** libKalmanFramework ships no physics. A pendulum,
+**No applications in the core.** libKalman ships no physics. A pendulum,
 a drift chamber, a suspension or a power grid subclasses `Models::Linear` /
 `Models::Extended` and lives at apps level, exactly as `modules/apps/` does for
 Python. The models in `tests/cxx/Fixtures.h` are test fixtures and must stay
@@ -405,11 +405,18 @@ Conventions, most of which the build or the tests will enforce:
   prefix: these are not ROOT classes, and the prefix would invite confusion with
   root-plus' own `ROOT::IOPlus::TKalmanFilter`, which is a separate and much
   smaller standalone filter. Both can live in one process.
-- **Optional backends stay optional.** `KALMAN_WITH_TORCH` and
-  `KALMAN_WITH_ONNXRUNTIME` are on only when the package is found, and
-  `KALMAN_WITH_BLAS` when a CBLAS is (`-DKALMAN_USE_BLAS=OFF` forces the built-in
-  kernel). The library is complete and correct with all three off. Never make
-  one load-bearing.
+- **Three libraries, and the core links no AI runtime.** `libKalman` (`include/`,
+  `src/`) is the core; `libKalmanApps` (`apps/`) the application models;
+  `libKalmanLearn` (`learn/`) the learned components. ONNX Runtime and libTorch
+  are found and linked by `learn/CMakeLists.txt` only (`KALMAN_USE_ONNXRUNTIME`,
+  on when found; `KALMAN_USE_TORCH`, off unless asked). Never add
+  `find_package(Torch)` or `find_package(ONNXRuntime)` to the core, and never
+  include a runtime header outside `learn/src/`. The core's one optional backend
+  is BLAS (`KALMAN_USE_BLAS`). Everything is complete and correct with all of
+  them off.
+- **The core was `libKalmanFramework` up to 1.0.** The build installs that name
+  as a link, and `native/core.py` still looks for it and reads the old
+  environment variables. Keep both until a release note says otherwise.
 - **Do not route `Kalman::Matrix` through Torch.** A Torch op has a ~230 ns
   dispatch floor — 10-25x an entire small matrix product. BLAS is used instead,
   and only at or above `KALMAN_BLAS_MIN_DIM`, because below the crossover the
@@ -440,7 +447,7 @@ Conventions, most of which the build or the tests will enforce:
 - **Keep the router/model split, and keep the runtimes out of the router.**
   `Kalman::Routers::Neural` owns features and normalisation and holds a
   `NN::Model`; the backends own the forward pass. ONNX Runtime is reached only
-  from `NN/Onnx.cc` and libTorch only from `NN/Torch.cc`, both behind a pImpl.
+  from `learn/src/Routers/NN/Onnx.cc` and libTorch only from `Torch.cc` beside it, both behind a pImpl.
   That is what makes them optional in fact and not just in name: `NN::MLP`
   needs nothing, so the routing layer works in a build with no optional
   dependency at all. Never `#include <onnxruntime...>` or `<torch/...>` in

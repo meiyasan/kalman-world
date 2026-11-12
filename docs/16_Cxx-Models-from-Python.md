@@ -21,7 +21,7 @@ the two.
 | Piece | Where it runs | When |
 |---|---|---|
 | Filter workflow, records, plots, notebooks, the JSON API | Python | always |
-| The Kalman update, the smoother, sigma-point and particle sums | C++ (`libKalmanFramework`) | when the library is found; numpy otherwise |
+| The Kalman update, the smoother, sigma-point and particle sums | C++ (`libKalman`) | when the library is found; numpy otherwise |
 | A linear model with fixed matrices | C++, the whole pass in one call | when the library is found |
 | A nonlinear model written in Python | Python computes `f` and `h` at every step | always |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
@@ -35,14 +35,13 @@ C++.
 ## Install and check
 
 ```bash
-make build                      # compiles libKalmanFramework and libKalmanApps
+make build                      # compiles libKalman and libKalmanApps
 cmake --install var/build       # copies them to var/install/lib
 python -c "import kalman.framework.native as n; print(n.HAS_C_ACCEL)"
 ```
 
 `True` means Python found the library. It looks, in this order, at the file
-named by `KALMAN_FRAMEWORK_LIBRARY`, the `lib` folder under `KALMANFRAMEWORK_ROOT`
-or `KALMAN_ROOT`, this checkout (`var/install/lib`, then `var/build/lib`), and
+named by `KALMAN_LIBRARY`, the `lib` folder under `KALMAN_ROOT`, this checkout (`var/install/lib`, then `var/build/lib`), and
 finally the system loader.
 
 `False` is not an error. Everything still works, on numpy.
@@ -240,7 +239,7 @@ native.USE_NATIVE_TWINS = False        # or KALMAN_NATIVE_TWINS=0 in the environ
 
 | Symptom | Cause | What to do |
 |---|---|---|
-| `HAS_C_ACCEL` is `False` | the library was not built or not found | `make build`, `cmake --install var/build`, or set `KALMANFRAMEWORK_ROOT` |
+| `HAS_C_ACCEL` is `False` | the library was not built or not found | `make build`, `cmake --install var/build`, or set `KALMAN_ROOT` |
 | `plugin: ... does not exist` | the plugin was not built | `make examples`; plugins are looked up in `var/install/lib` and `var/build/lib`, or in `KALMAN_PLUGIN_PATH` |
 | `loaded but registered no model` | the plugin was linked against another copy of the library | rebuild the plugin with the library it will run with |
 | A crash right after changing `Kalman/Model.h` | a library or plugin still compiled against the old header | rebuild everything together: the library, `libKalmanApps`, every plugin, and ROOT+ |

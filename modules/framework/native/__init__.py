@@ -2,7 +2,7 @@
 
 The Python engines evaluate the *model* themselves — ``f`` at the sigma points,
 ``F/H/Q/R`` at the current point, ``h`` at every particle — and hand the arrays to
-``libKalmanFramework`` for the *step*: the covariance prediction, the NaN-masked
+``libKalman`` for the *step*: the covariance prediction, the NaN-masked
 Joseph update, a whole linear pass, the RTS sweep, the sigma-point moments,
 particle weights and resampling, NIS and NEES. One crossing per step with
 arrays, never a callback per point. Those kernels are the same code as the C++

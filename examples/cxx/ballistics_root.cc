@@ -1,13 +1,13 @@
 /**
  * \file ballistics_root.cc
- * \brief libKalmanFramework driven from a ROOT program — the integration demonstrator.
+ * \brief libKalman driven from a ROOT program — the integration demonstrator.
  *
  * A projectile under gravity and quadratic drag, tracked by an extended Kalman
  * filter, with the result drawn through ROOT. It exists to show three things at
  * once:
  *
  *  1. **The dependency direction.** This translation unit includes both
- *     `<Kalman/Kalman.h>` and `<TGraph.h>`. libKalmanFramework itself includes
+ *     `<Kalman/Kalman.h>` and `<TGraph.h>`. libKalman itself includes
  *     neither ROOT nor anything else — ROOT links *it*, never the reverse. That
  *     is what lets the same library also serve a non-ROOT analysis.
  *  2. **Where physics lives.** `Ballistics` below is an *application*: it
@@ -18,7 +18,7 @@
  *     turns them into TGraphs. The library never grew a drawing dependency to
  *     make that possible.
  *
- *     source var/install/bin/thislib.KalmanFramework.sh   # or set the paths yourself
+ *     source var/install/bin/thislib.Kalman.sh   # or set the paths yourself
  *     ./var/build/bin/ballistics_root
  */
 #include <Kalman/Kalman.h>

@@ -1,6 +1,6 @@
-"""kalman/framework/native/core — the Python side of libKalmanFramework's C API.
+"""kalman/framework/native/core — the Python side of libKalman's C API.
 
-This module ``dlopen``s the standalone C++ library — the same ``libKalmanFramework`` that
+This module ``dlopen``s the standalone C++ library — the same ``libKalman`` that
 root-plus links — through the flat C surface declared in ``include/Kalman/CAPI.h``,
 using cffi in **ABI mode**, so no compiler is involved on the Python side.
 
@@ -15,8 +15,8 @@ thin helpers below. Everything is optional: an import never fails, it only repor
 
 Locating the library, in order:
 
-  1. ``KALMAN_FRAMEWORK_LIBRARY`` — the file itself;
-  2. ``KALMANFRAMEWORK_ROOT`` / ``KALMAN_ROOT`` — an install prefix (``<prefix>/lib``);
+  1. ``KALMAN_LIBRARY`` — the file itself;
+  2. ``KALMAN_ROOT`` — an install prefix (``<prefix>/lib``);
   3. this checkout's ``var/install/lib`` and ``var/build/lib``;
   4. the system loader (``ctypes.util.find_library``).
 
@@ -190,21 +190,30 @@ LOAD_ERROR: str | None = None
 
 
 # --- locating and loading ----------------------------------------------------
+#: The library's name, then the one it had up to release 1.0.
+LIBRARY_NAMES = ("Kalman", "KalmanFramework")
+
 def candidate_paths() -> list[str]:
     """Every place the library is looked for, in order; the first that exists wins."""
     out = []
-    explicit = os.environ.get("KALMAN_FRAMEWORK_LIBRARY")
-    if explicit:
-        out.append(explicit)
-    prefixes = [os.environ.get("KALMANFRAMEWORK_ROOT"), os.environ.get("KALMAN_ROOT"),
+    # KALMAN_LIBRARY / KALMAN_ROOT are the names; the *FRAMEWORK* ones are those
+    # of releases up to 1.0, when the library was libKalmanFramework, and are
+    # still read.
+    for variable in ("KALMAN_LIBRARY", "KALMAN_FRAMEWORK_LIBRARY"):
+        explicit = os.environ.get(variable)
+        if explicit:
+            out.append(explicit)
+    prefixes = [os.environ.get("KALMAN_ROOT"), os.environ.get("KALMANFRAMEWORK_ROOT"),
                 str(_REPO / "var" / "install"), str(_REPO / "var" / "build")]
     for prefix in prefixes:
         if prefix:
-            for ext in _EXTS:
-                out.append(os.path.join(prefix, "lib", "libKalmanFramework" + ext))
-    system = ctypes.util.find_library("KalmanFramework")
-    if system:
-        out.append(system)
+            for name in LIBRARY_NAMES:
+                for ext in _EXTS:
+                    out.append(os.path.join(prefix, "lib", "lib" + name + ext))
+    for name in LIBRARY_NAMES:
+        system = ctypes.util.find_library(name)
+        if system:
+            out.append(system)
     return out
 
 
@@ -223,8 +232,8 @@ def load(path: str | None = None):
     from cffi import FFI
     path = path or find_library()
     if not path:
-        raise OSError("libKalmanFramework not found; build it (make build install) or set "
-                      "KALMAN_FRAMEWORK_LIBRARY / KALMANFRAMEWORK_ROOT. Looked in: "
+        raise OSError("libKalman not found; build it (make build install) or set "
+                      "KALMAN_LIBRARY / KALMAN_ROOT. Looked in: "
                       + ", ".join(candidate_paths()))
     _ffi = FFI()
     _ffi.cdef(_CDEF)

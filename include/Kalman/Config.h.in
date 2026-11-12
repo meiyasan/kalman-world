@@ -9,9 +9,8 @@
  *
  * \details Configured by CMake into `Kalman/Config.h`.
  *
- * libKalman has **no required dependency**. Every flag below defaults to 0, and
- * the library is complete and correct with all of them off — they only select
- * faster or richer implementations of things that already work.
+ * libKalman has **no required dependency**. The flag below only selects a
+ * faster implementation of something that already works.
  *
  * *********************************************
  */
@@ -36,24 +35,7 @@
 /// Size at or above which matrix products are handed to BLAS. Measured, not guessed.
 #define KALMAN_BLAS_MIN_DIM @KALMAN_BLAS_MIN_DIM@
 
-/**
- * libTorch is available, for executing TorchScript routing policies — the direct
- * counterpart of `modules/framework/routers/nn/`, whose architectures are all
- * torch.nn modules.
- *
- * Deliberately *not* used for Kalman::Matrix. A Torch op carries a ~230 ns
- * dispatch floor, which is 10-25x an entire small matrix product, so routing the
- * core through tensors would make every filter slower.
- */
-#cmakedefine01 KALMAN_WITH_TORCH
-
-/**
- * ONNX Runtime is available, for loading trained decision / routing policies.
- *
- * This is the seam between the two implementations: a router or controller is
- * trained in the Python framework, exported to ONNX, and executed here — so the
- * learned policy is the portable artifact, not a language binding.
- */
-#cmakedefine01 KALMAN_WITH_ONNXRUNTIME
+// The AI runtimes (libTorch, ONNX Runtime) belong to libKalmanLearn: see
+// Kalman/Learn/Learn.h. libKalman never links them.
 
 #endif // KALMAN_CONFIG_H_IN

@@ -598,7 +598,7 @@ def _native():
         return False
 
 
-@unittest.skipUnless(_native(), "libKalmanFramework or the example plugin not built")
+@unittest.skipUnless(_native(), "libKalman or the example plugin not built")
 class TestPluginsAreShared(unittest.TestCase):
 
     def test_loaded_once_known_everywhere(self):

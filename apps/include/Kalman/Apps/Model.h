@@ -10,7 +10,7 @@
  * \class Kalman::Apps::Model
  * \brief Base of the application models in libKalmanApps.
  *
- * \details libKalmanFramework ships the contracts and no physics; libKalmanApps
+ * \details libKalman ships the contracts and no physics; libKalmanApps
  * is where the physics of `modules/apps/` lives in C++. Each model here is the
  * twin of one Python class: the Python class keeps its name, its constructor
  * and everything a notebook does with it, and hands the filtering pass to its

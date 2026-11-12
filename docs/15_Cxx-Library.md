@@ -1,6 +1,6 @@
-# libKalmanFramework — the C++ library
+# libKalman — the C++ library
 
-`libKalmanFramework` is the framework core in C++: **a standalone library with no required
+`libKalman` is the framework core in C++: **a standalone library with no required
 dependency**. Not ROOT, not Eigen, not Torch — a C++20 compiler and nothing else.
 
 It is a **port, not a binding**. It does not wrap the Python package, does not
@@ -15,14 +15,14 @@ every filter step.
 The dependency direction matters and runs one way:
 
 ```
-    root-plus (Signal component)  ──links──▶  libKalmanFramework  ──▶  (nothing required)
+    root-plus (Signal component)  ──links──▶  libKalman  ──▶  (nothing required)
 ```
 
-The artefact is `libKalmanFramework.so` — it names the *framework*, and cannot be
+The artefact is `libKalman.so` — it names the *framework*, and cannot be
 mistaken for root-plus' own much smaller `ROOT::IOPlus::TKalmanFilter`. Headers
 stay under `Kalman/` and the namespace stays `Kalman`.
 
-A ROOT or ROOT+ component links libKalmanFramework; libKalmanFramework never reaches for ROOT. That
+A ROOT or ROOT+ component links libKalman; libKalman never reaches for ROOT. That
 is what lets it also be linked by a plain C++ analysis, an embedded target, or a
 GPU pipeline that has never heard of CERN.
 
@@ -76,8 +76,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/routers/neural.py` | `Kalman/Routers/Neural.h` | `Routers::Neural` |
 | `framework/routers/nn/` | `Kalman/Routers/NN/Model.h` | `Routers::NN::Model` (the contract) |
 | `framework/routers/nn/mlp.py` | `Kalman/Routers/NN/MLP.h` | `Routers::NN::MLP` (no dependency) |
-| `framework/routers/nn/*.py` | `Kalman/Routers/NN/Torch.h` | `Routers::NN::Torch` (TorchScript) |
-| `framework/routers/nn/*.py` | `Kalman/Routers/NN/Onnx.h` | `Routers::NN::Onnx` (ONNX) |
+| `framework/routers/nn/*.py` | `Kalman/Routers/NN/Torch.h` | `Routers::NN::Torch` (TorchScript; in `libKalmanLearn`) |
+| `framework/routers/nn/*.py` | `Kalman/Routers/NN/Onnx.h` | `Routers::NN::Onnx` (ONNX; in `libKalmanLearn`) |
 | `framework/filters/ikf.py` | `Kalman/Filters/IKF.h` | `Filters::IKF` (aliased `IMM`) |
 | — (numpy) | `Kalman/Matrix.h` | `Kalman::Matrix`, `Kalman::Vector` |
 | `modules/helpers.py` | `Kalman/Utils.h` | `Kalman::Utils` |
@@ -155,7 +155,7 @@ Joseph form).
 **No physics.** A pendulum, a drift chamber, a suspension or a power grid is an
 *application*: it subclasses `Models::Linear` or `Models::Extended` and lives
 where the domain knowledge lives — the same split as `modules/framework/` versus
-`modules/apps/` on the Python side. libKalmanFramework ships the contract those
+`modules/apps/` on the Python side. libKalman ships the contract those
 applications are written against and nothing more. The models in
 `tests/cxx/Fixtures.h` are test fixtures, not a catalogue.
 
@@ -166,7 +166,7 @@ integrator's job, because that is where the plotting dependency belongs.
 ## Building
 
 ```bash
-make build         # configures + builds libKalmanFramework
+make build         # configures + builds libKalman
 make ctests        # the C++ suite, under ctest
 make install       # into var/install by default
 ```
@@ -174,16 +174,49 @@ make install       # into var/install by default
 `make tests` remains the **Python** suite; the C++ tests live in `tests/cxx/` and
 run under ctest, so the two never shadow each other.
 
+### The three libraries
+
+`make build` builds three libraries, installed side by side:
+
+| Library | CMake target | What it holds | Depends on |
+|---|---|---|---|
+| `libKalman` | `Kalman::Kalman` | the core: models, engines, filters, integrators, solvers, controllers, routers | nothing (BLAS when found) |
+| `libKalmanApps` | `Kalman::Apps` | the application models, each the twin of a Python class | `libKalman` |
+| `libKalmanLearn` | `Kalman::Learn` | learned components: the ONNX and TorchScript backends | `libKalman`; ONNX Runtime and libTorch, both optional |
+
+Up to release 1.0 the core was called `libKalmanFramework`. That name is still
+installed as a link to `libKalman`, and the Python package still reads the old
+`KALMANFRAMEWORK_ROOT` and `KALMAN_FRAMEWORK_LIBRARY` variables.
+
+From another CMake project:
+
+```cmake
+find_package(Kalman REQUIRED COMPONENTS Apps Learn)   # the components are optional
+target_link_libraries(my_program PRIVATE Kalman::Kalman Kalman::Apps Kalman::Learn)
+```
+
+with `-DCMAKE_PREFIX_PATH=<install prefix>`.
+
 ### Optional backends
 
-All three are detected quietly and none is needed for correctness. The flags land
-in `Kalman/Config.h`.
+None is needed for correctness.
 
-| Flag | What it buys | Notes |
-|---|---|---|
-| `KALMAN_WITH_BLAS` | `cblas_dgemm` for matrix products at or above `KALMAN_BLAS_MIN_DIM` | On by default when a CBLAS is found; `-DKALMAN_USE_BLAS=OFF` to force the built-in kernel |
-| `KALMAN_WITH_TORCH` | `NN::Torch` — TorchScript routing policies | Never used for `Kalman::Matrix` — see below |
-| `KALMAN_WITH_ONNXRUNTIME` | `NN::Onnx` — ONNX routing policies | The portable half of the seam |
+| Option | Library | What it buys | Default |
+|---|---|---|---|
+| `KALMAN_USE_BLAS` | `libKalman` | `cblas_dgemm` for matrix products at or above `KALMAN_BLAS_MIN_DIM` (`KALMAN_WITH_BLAS` in `Kalman/Config.h`) | on when a CBLAS is found |
+| `KALMAN_USE_ONNXRUNTIME` | `libKalmanLearn` | `NN::Onnx`: ONNX routing policies, the portable half of the seam | on when ONNX Runtime is found |
+| `KALMAN_USE_TORCH` | `libKalmanLearn` | `NN::Torch`: TorchScript routing policies | off; pass `-DKALMAN_USE_TORCH=ON` |
+| `KALMAN_BUILD_LEARN` | | build `libKalmanLearn` at all | on |
+
+The AI runtimes are looked for by `libKalmanLearn` only. `libKalman` never
+links one, whatever is installed on the build machine: a core linked to one
+libTorch, loaded into a Python process that had another, used to break
+`import torch`. libTorch is off by default for the same reason, since
+`libKalmanLearn` is what a Python process would load.
+
+A program that uses `NN::Onnx` or `NN::Torch` includes `Kalman/Learn/Learn.h`
+and links `libKalmanLearn`. Both classes always exist; `HasRuntime()` says
+whether the runtime was built in.
 
 **Why BLAS and not Torch for the matrix type.** Measured, per n×n `double`
 product on Apple Silicon:
@@ -212,7 +245,7 @@ core.
 ```cpp
 #include <Kalman/Kalman.h>
 
-// Your system. libKalmanFramework ships no physics, so the model is yours to write.
+// Your system. libKalman ships no physics, so the model is yours to write.
 class ConstantVelocity : public Kalman::Models::Linear
 {
     public:
@@ -350,7 +383,7 @@ filter.
 
 ## The factory: how a C++ model reaches Python
 
-libKalmanFramework ships no physics, so the question is how physics written
+libKalman ships no physics, so the question is how physics written
 *against* it — in an application, a ROOT+ analysis, a plugin — becomes visible
 to something that did not compile it. The answer is one line per model:
 
@@ -416,8 +449,8 @@ Python-defined `f`, by design.
 evaluation — cheap, and in the direction the measurements below say is
 affordable. What does *not* cross is a Python callback from inside a C++ loop;
 a Python-defined model keeps running on the Python engines, and a C++ model on
-either side. The library is found through `KALMAN_FRAMEWORK_LIBRARY`,
-`KALMANFRAMEWORK_ROOT`, or this checkout's `var/install/lib`; without it the
+either side. The library is found through `KALMAN_LIBRARY`,
+`KALMAN_ROOT`, or this checkout's `var/install/lib`; without it the
 Python package simply reports `catalog()["native"]["library"] = None`.
 
 **Loading a plugin runs code.** So `api.load_plugin` takes a plugin *name*, not
@@ -438,7 +471,7 @@ and Unity, agents and other users can then use it as a spec base.
 
 ## libKalmanApps: the application models in C++
 
-`libKalmanFramework` ships no physics. The physics of `modules/apps/` lives in a
+`libKalman` ships no physics. The physics of `modules/apps/` lives in a
 second library, `libKalmanApps` (`apps/include/Kalman/Apps/`, `apps/src/`), which
 links the first and registers each model with the factory. `make build` builds
 both and they install side by side.
@@ -514,7 +547,7 @@ only when ROOT is present (`find_package(ROOT QUIET)` in `examples/cxx`), so the
 ROOT-free build is unaffected, and it shows the whole integration in one file:
 
 ```
-$ source var/install/bin/thislib.KalmanFramework.sh
+$ source var/install/bin/thislib.Kalman.sh
 $ ballistics_root
 ballistics — n = 6, m = 3, l = 0, fs = 50 Hz, engine = Extended, Jacobian = numerical
 mean NIS  = 2.858   (consistent near m = 3)
@@ -529,7 +562,7 @@ through the gaps on prediction with no special case anywhere in the example.
 ### The ROOT+ side
 
 `root-plus` wraps results for ROOT users inside its **Signal** component, next
-to its own unrelated `TKalmanFilter`, with libKalmanFramework as an *optional*
+to its own unrelated `TKalmanFilter`, with libKalman as an *optional*
 dependency of that component:
 
 ```
@@ -543,7 +576,7 @@ root-plus/
 ```
 
 `ROOT::IOPlus::TKalmanRecord` takes a `Kalman::IO::Record` and adds the two
-things libKalmanFramework deliberately does not provide: a `TObject` with a
+things libKalman deliberately does not provide: a `TObject` with a
 `ClassDef` so a result goes into a `TFile`, and `TGraph` / `TGraphErrors` /
 `TMultiGraph` of the estimate with its band. It stores the covariance *diagonal*
 only — a plot and a stored summary want the per-component sigma, and keeping the
@@ -554,7 +587,7 @@ full `n × n` per step would dominate the file for no gain; use the
 It is only a source-level name: ROOT I/O stores the real class, so files written
 under either spelling are interchangeable.
 
-When libKalmanFramework is not found, `KALMANFRAMEWORK_FOUND` stays undefined
+When libKalman is not found, `KALMANFRAMEWORK_FOUND` stays undefined
 and header, source and dictionary entry compile to nothing — Signal builds
 unchanged, and its test reports itself skipped. Point CMake at a prefix with
 `-DKalmanFramework_ROOT=<prefix>`. The class stays `ROOT::IOPlus::TKalmanRecord`,
@@ -573,7 +606,7 @@ not a `Kalman::` sub-namespace: root-plus' namespace is flat, and a nested
 
 ### Linking it yourself
 
-libKalmanFramework is linked, not loaded. From a ROOT/ROOT+ translation unit:
+libKalman is linked, not loaded. From a ROOT/ROOT+ translation unit:
 
 ```cpp
 #include <Kalman/Kalman.h>

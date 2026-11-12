@@ -199,14 +199,14 @@ examples: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) examples
 
-## Build and install libKalmanFramework, whose kernels the Python engines call
+## Build and install libKalman, whose kernels the Python engines call
 ## (optional: without it the engines run their pure-Python path). Skips, with a
 ## notice, where cmake is missing so a bare CI image still runs the Python suite.
 accel: motd
 	@if command -v cmake >/dev/null 2>&1; then \
 		MOTD=0 $(MAKE) --no-print-directory build && MOTD=0 $(MAKE) --no-print-directory install; \
 	else \
-		echo "cmake not found: libKalmanFramework not built, the engines run in pure Python"; \
+		echo "cmake not found: libKalman not built, the engines run in pure Python"; \
 	fi
 
 ## One-command onboarding: dependencies, optional extras, C acceleration, self-check

@@ -7,7 +7,7 @@
  *
  * *********************************************
  *
- * ONNX Runtime is reached from this file and nowhere else in libKalmanFramework,
+ * ONNX Runtime is reached from this file and nowhere else in libKalman,
  * and only through the pImpl `Session`. That is what makes the dependency
  * genuinely optional: without it this one class is inert and everything else --
  * including Kalman::Routers::Neural -- carries on.
@@ -15,6 +15,11 @@
 
 #include "Kalman/Routers/NN/Onnx.h"
 #include "Kalman/Config.h"
+
+// Set by learn/CMakeLists.txt when the runtime was found.
+#ifndef KALMAN_WITH_ONNXRUNTIME
+#  define KALMAN_WITH_ONNXRUNTIME 0
+#endif
 
 #include <sstream>
 #include <stdexcept>
@@ -30,7 +35,7 @@ namespace Kalman::Routers::NN
     /// The live session, plus the input/output names and shapes it was built with.
     struct Onnx::Session
     {
-        Ort::Env env{ORT_LOGGING_LEVEL_WARNING, "libKalmanFramework"};
+        Ort::Env env{ORT_LOGGING_LEVEL_WARNING, "libKalman"};
         Ort::SessionOptions options;
         std::unique_ptr<Ort::Session> session;
         Ort::AllocatorWithDefaultOptions allocator;

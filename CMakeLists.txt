@@ -44,13 +44,13 @@ MESSAGE_TITLE("${PROJECT_TITLE}")
 update_build_options()
 
 # CMake has two jobs here. The first is the Doxygen + doxygen-awesome
-# documentation. The second is `libKalmanFramework` (include/Kalman, src/), the framework
+# documentation. The second is `libKalman` (include/Kalman, src/), the framework
 # core in C++ — a standalone library with no required dependency, which a ROOT+
 # component or any other C++ analysis links against.
 #
 # The Python package is *not* built here: it is installed with pip (`make
 # setup`) and its optional C fast path is built by CFFI (`make accel`). The two
-# implementations are peers — libKalmanFramework does not wrap the Python code and does
+# implementations are peers — libKalman does not wrap the Python code and does
 # not link against CPython.
 set(BUILD_TOOLS OFF CACHE BOOL "kalman has no CMake tool targets" FORCE)
 # pyproject.toml is maintained by hand here: it carries the optional-dependency
@@ -60,8 +60,8 @@ set(BUILD_TOOLS OFF CACHE BOOL "kalman has no CMake tool targets" FORCE)
 set(BUILD_PYPROJECT OFF CACHE BOOL "pyproject.toml is hand-maintained" FORCE)
 
 check_build_option(BUILD_DOCUMENTATION "Library documentation won't be built.")
-check_build_option(BUILD_LIBRARY "The C++ library `libKalmanFramework` will not be built.")
-check_build_option(BUILD_TESTS "C++ tests for `libKalmanFramework` won't be running (`make tests` is Python).")
+check_build_option(BUILD_LIBRARY "The C++ library `libKalman` will not be built.")
+check_build_option(BUILD_TESTS "C++ tests for `libKalman` won't be running (`make tests` is Python).")
 check_build_option(BUILD_EXAMPLES "C++ examples won't be compiled.")
 
 #
@@ -73,23 +73,24 @@ include(GitBranchWarning)
 DUMP_PROJECT()
 
 #
-# Create the C++ library — libKalmanFramework
+# Create the C++ libraries
 #
-# It is a **standalone** library: no ROOT, no Eigen, no Torch required. The
-# dependency runs the other way — a ROOT/ROOT+ component links libKalmanFramework,
-# not the reverse — so this build must never reach for ROOT. `Kalman::Matrix` and
-# `Kalman::Vector` are why: small dense types, sized for the matrices a filter
-# actually multiplies.
+#   libKalman       the core: models, engines, filters, integrators, solvers,
+#                   controllers, routers. No required dependency.
+#   libKalmanApps   the application models (apps/).
+#   libKalmanLearn  learned components and the AI runtimes they need (learn/).
 #
-# Three optional backends, all detected quietly and all inessential:
-#   BLAS         — faster matrix products above KALMAN_BLAS_MIN_DIM
-#   libTorch     — tensor-shaped work (ensembles, fields, learned components)
-#   ONNXRuntime  — executing decision/routing policies trained in Python
+# libKalman is a **standalone** library: no ROOT, no Eigen, no Torch, no ONNX
+# Runtime. The dependency runs the other way — a ROOT/ROOT+ component links
+# libKalman, not the reverse — so this build must never reach for ROOT.
+# `Kalman::Matrix` and `Kalman::Vector` are why: small dense types, sized for
+# the matrices a filter actually multiplies. Its one optional backend is BLAS,
+# for matrix products above KALMAN_BLAS_MIN_DIM. The AI runtimes are found and
+# linked by libKalmanLearn alone, so what happens to be installed on the build
+# machine never decides what the core depends on.
 #
-# The target is `KalmanFramework`, so the artefact is `libKalmanFramework.so`:
-# it names the *framework*, and cannot be mistaken for root-plus' own much
-# smaller `ROOT::IOPlus::TKalmanFilter`. Headers stay under `Kalman/` and the
-# namespace stays `Kalman`.
+# Up to release 1.0 the core was `libKalmanFramework`. That name is still
+# installed, as a link to libKalman, so what linked it keeps linking.
 if(BUILD_LIBRARY)
 
     include(StandardCompilerC)
@@ -97,7 +98,8 @@ if(BUILD_LIBRARY)
 
     message_title("Library")
 
-    set(LIBRARY "KalmanFramework")
+    set(LIBRARY "Kalman")
+    set(LIBRARY_FORMER "KalmanFramework")
     set(KALMAN_VERSION       ${PROJECT_VERSION})
     set(KALMAN_VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
     set(KALMAN_VERSION_MINOR ${PROJECT_VERSION_MINOR})
@@ -119,35 +121,6 @@ if(BUILD_LIBRARY)
             message_color(STATUS YELLOW "   BLAS not found — using the built-in kernel (correct, just slower at large n)")
         endif()
     endif()
-
-    # --- optional: libTorch ---------------------------------------------------
-    # Used for one thing: executing a TorchScript routing policy, the direct
-    # counterpart of `routers/nn/`, whose architectures are all torch.nn modules.
-    # Never for Kalman::Matrix — a Torch op carries a ~230 ns dispatch floor,
-    # which is 10-25x an entire small matrix product.
-    set(KALMAN_WITH_TORCH 0)
-    find_package(Torch QUIET)
-    if(Torch_FOUND)
-        set(KALMAN_WITH_TORCH 1)
-        message_color(STATUS GREEN "   libTorch found — TorchScript policies available")
-    else()
-        message_color(STATUS YELLOW "   libTorch not found — TorchScript policies unavailable")
-    endif()
-
-    # --- optional: ONNX Runtime ----------------------------------------------
-    # The seam between the two implementations: train a router/controller in the
-    # Python framework, export to ONNX, execute it here.
-    set(KALMAN_WITH_ONNXRUNTIME 0)
-    find_package(ONNXRuntime QUIET)
-    if(ONNXRuntime_FOUND)
-        set(KALMAN_WITH_ONNXRUNTIME 1)
-        message_color(STATUS GREEN "   ONNX Runtime found — ONNX policies available")
-    else()
-        message_color(STATUS YELLOW "   ONNX Runtime not found — ONNX policies unavailable")
-    endif()
-
-    # Neither is required: Kalman::Routers::NN::MLP evaluates a policy with no
-    # dependency at all, so the routing layer works in any build.
 
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/Kalman/Config.h.in"
                    "${CMAKE_BINARY_DIR}/include/Kalman/Config.h" @ONLY)
@@ -180,49 +153,22 @@ if(BUILD_LIBRARY)
         endif()
     endif()
 
-    # ONNX Runtime is reached only from src/Routers/Neural.cc, and only behind a
-    # pImpl, so it stays PRIVATE: a consumer of libKalmanFramework never needs ORT
-    # on its include path even when the learned router is compiled in.
-    if(KALMAN_WITH_ONNXRUNTIME)
-        target_link_libraries(${LIBRARY} PRIVATE ONNXRuntime::ONNXRuntime)
-
-        # ONNX Runtime usually lives outside the system loader path, and the
-        # *installed* library keeps only its INSTALL_RPATH -- so without this a
-        # consumer of the install tree fails at load with
-        # "Library not loaded: @rpath/libonnxruntime...", even though the build
-        # tree worked (CMake adds link-time paths to the build rpath).
-        get_filename_component(_ort_libdir "${ONNXRuntime_LIBRARY}" DIRECTORY)
-        set_property(TARGET ${LIBRARY} APPEND PROPERTY BUILD_RPATH "${_ort_libdir}")
-        set_property(TARGET ${LIBRARY} APPEND PROPERTY INSTALL_RPATH "${_ort_libdir}")
-        unset(_ort_libdir)
-    endif()
-
-    if(KALMAN_WITH_TORCH)
-        # TORCH_LIBRARIES rather than the imported target: the Torch config sets
-        # flags (notably -D_GLIBCXX_USE_CXX11_ABI) that must reach only the one
-        # translation unit that includes torch/script.h.
-        target_link_libraries(${LIBRARY} PRIVATE ${TORCH_LIBRARIES})
-
-        # Same install-rpath reasoning as ONNX Runtime above: libTorch lives
-        # outside the loader path, and the installed library keeps only its
-        # INSTALL_RPATH.
-        foreach(_torch_lib ${TORCH_LIBRARIES})
-            if(EXISTS "${_torch_lib}")
-                get_filename_component(_torch_dir "${_torch_lib}" DIRECTORY)
-                set_property(TARGET ${LIBRARY} APPEND PROPERTY BUILD_RPATH "${_torch_dir}")
-                set_property(TARGET ${LIBRARY} APPEND PROPERTY INSTALL_RPATH "${_torch_dir}")
-            endif()
-        endforeach()
-        unset(_torch_lib)
-        unset(_torch_dir)
-    endif()
-
     # An environment script, so a consumer can `source` one file and then compile
     # or run against the install tree.
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/thislib.sh.in"
                    "${CMAKE_BINARY_DIR}/bin/thislib.${LIBRARY}.sh" @ONLY)
 
-    install(TARGETS ${LIBRARY} LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+    set_target_properties(${LIBRARY} PROPERTIES EXPORT_NAME Kalman)
+    install(TARGETS ${LIBRARY} EXPORT KalmanTargets LIBRARY DESTINATION lib ARCHIVE DESTINATION lib)
+
+    # The former name, as a link beside the library in the build and install trees.
+    set(_kalman_file "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    set(_kalman_former "${CMAKE_SHARED_LIBRARY_PREFIX}${LIBRARY_FORMER}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+    add_custom_command(TARGET ${LIBRARY} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink "${_kalman_file}" "${CMAKE_BINARY_DIR}/lib/${_kalman_former}"
+        VERBATIM)
+    install(CODE "execute_process(COMMAND \${CMAKE_COMMAND} -E create_symlink
+        \"${_kalman_file}\" \"\$ENV{DESTDIR}\${CMAKE_INSTALL_PREFIX}/lib/${_kalman_former}\")")
     install(FILES "${CMAKE_BINARY_DIR}/bin/thislib.${LIBRARY}.sh" DESTINATION bin
             PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE
                         GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
@@ -236,11 +182,41 @@ if(BUILD_LIBRARY)
         add_subdirectory("apps")
     endif()
 
+    # libKalmanLearn: the learned components, and the only place an AI runtime
+    # is looked for.
+    option(KALMAN_BUILD_LEARN "Build libKalmanLearn (ONNX and TorchScript policies)" ON)
+    if(KALMAN_BUILD_LEARN AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/learn/CMakeLists.txt)
+        add_subdirectory("learn")
+    endif()
+
+    # The CMake package: `find_package(Kalman COMPONENTS Apps Learn)` gives the
+    # targets Kalman::Kalman, Kalman::Apps and Kalman::Learn. After the
+    # subdirectories, which add their targets to the same export set.
+    include(CMakePackageConfigHelpers)
+    set(KALMAN_COMPONENTS "")
+    foreach(_component Apps Learn)
+        if(TARGET Kalman${_component})
+            list(APPEND KALMAN_COMPONENTS ${_component})
+        endif()
+    endforeach()
+    configure_package_config_file("${CMAKE_CURRENT_SOURCE_DIR}/cmake/KalmanConfig.cmake.in"
+        "${CMAKE_BINARY_DIR}/cmake/KalmanConfig.cmake"
+        INSTALL_DESTINATION lib/cmake/Kalman)
+    write_basic_package_version_file("${CMAKE_BINARY_DIR}/cmake/KalmanConfigVersion.cmake"
+        VERSION ${PROJECT_VERSION} COMPATIBILITY SameMajorVersion)
+    install(EXPORT KalmanTargets NAMESPACE Kalman:: DESTINATION lib/cmake/Kalman)
+    install(FILES "${CMAKE_BINARY_DIR}/cmake/KalmanConfig.cmake"
+                  "${CMAKE_BINARY_DIR}/cmake/KalmanConfigVersion.cmake"
+            DESTINATION lib/cmake/Kalman)
+
     if(CMAKE_MAINPROJECT)
 
         add_custom_target(lib DEPENDS ${LIBRARY} COMMENT "Compiling library")
         if(TARGET KalmanApps)
             add_dependencies(lib KalmanApps)
+        endif()
+        if(TARGET KalmanLearn)
+            add_dependencies(lib KalmanLearn)
         endif()
 
         # The C++ tests live in tests/cxx so that `tests/` stays the pytest suite;
@@ -277,6 +253,7 @@ set(DOXYGEN_INPUT
     # so the site documents and searches both languages.
     "${CMAKE_SOURCE_DIR}/include/Kalman"
     "${CMAKE_SOURCE_DIR}/apps/include"
+    "${CMAKE_SOURCE_DIR}/learn/include"
     "${CMAKE_SOURCE_DIR}/examples"
     # The grouping of the guide pages in the side navigation.
     "${CMAKE_SOURCE_DIR}/share/site"

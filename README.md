@@ -22,7 +22,7 @@ Full documentation lives in [`docs/`](docs/README.md):
 | [Providers](docs/7_Providers.md) · [Control and Routing](docs/8_Control-and-Routing.md) | data in, action out |
 | [Python API](docs/9_Python-API.md) · [REST API](docs/10_REST-API.md) · [MCP Server](docs/11_MCP-Server.md) · [Authentication](docs/12_Authentication.md) · [Deployment](docs/13_Deployment.md) | API access |
 | [Troubleshooting](docs/14_Troubleshooting.md) | error messages, decoded |
-| [C++ Library](docs/15_Cxx-Library.md) | `libKalmanFramework`, for ROOT / ROOT+ analyses |
+| [C++ Library](docs/15_Cxx-Library.md) | `libKalman`, for ROOT / ROOT+ analyses |
 | [C++ Models from Python](docs/16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages |
 | [Applications](docs/17_Applications.md) | One page per application: the model, how it is built, how to run it |
 
@@ -30,7 +30,7 @@ Full documentation lives in [`docs/`](docs/README.md):
 conventions for changing the code. The rest of this file is the reference for
 notation, the filter pipeline and composite models.
 
-The framework core also exists in C++ as **`libKalmanFramework`** — the same Model /
+The framework core also exists in C++ as **`libKalman`** — the same Model /
 Engine / Filter contracts, packaged as a ROOT library with a dictionary so it
 loads into a ROOT+ analysis (`make build`). It is a port rather than a binding:
 it carries the linear and extended engines, the record with its covariance band,

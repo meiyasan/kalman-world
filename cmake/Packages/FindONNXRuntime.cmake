@@ -1,6 +1,6 @@
 # FindONNXRuntime.cmake — locate an ONNX Runtime installation.
 #
-# libKalmanFramework uses ONNX Runtime for one job: executing a decision or
+# libKalman uses ONNX Runtime for one job: executing a decision or
 # routing policy that was trained in the Python framework and exported to ONNX.
 # It is entirely optional, so this module never errors — it sets
 # ONNXRuntime_FOUND and the caller decides.

@@ -57,17 +57,16 @@
  *
  * \section libkalman_optional Optional backends
  *
- * Everything works with none of these; they only make some things faster or
- * richer. See `Kalman/Config.h`.
+ * Everything works without it. See `Kalman/Config.h`.
  *
  * - **BLAS** (`KALMAN_WITH_BLAS`) — matrix products at or above
  *   `KALMAN_BLAS_MIN_DIM` go through `cblas_dgemm`. Below it the hand-rolled
  *   kernel is measurably faster, so the choice is per operation.
- * - **libTorch** (`KALMAN_WITH_TORCH`) — for tensor-shaped work: ensembles,
- *   field states, learned components. Deliberately *not* used for
- *   Kalman::Matrix, where its per-op dispatch would dominate.
- * - **ONNX Runtime** (`KALMAN_WITH_ONNXRUNTIME`) — for executing decision and
- *   routing policies trained in the Python framework and exported to ONNX.
+ *
+ * libKalman links no AI runtime. Running a policy trained in the Python
+ * framework and exported to ONNX or TorchScript is libKalmanLearn's job: see
+ * \ref libkalmanlearn and `Kalman/Learn/Learn.h`. The application models are
+ * libKalmanApps, under `Kalman/Apps/`.
  *
  * *********************************************
  */
@@ -133,8 +132,6 @@
 #include "Kalman/Routers/Hybrid.h"
 #include "Kalman/Routers/NN/Model.h"
 #include "Kalman/Routers/NN/MLP.h"
-#include "Kalman/Routers/NN/Onnx.h"
-#include "Kalman/Routers/NN/Torch.h"
 #include "Kalman/Routers/Neural.h"
 
 #endif // KALMAN_KALMAN_H

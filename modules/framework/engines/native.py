@@ -2,7 +2,7 @@
 The C++ estimation step, driven by the Python filter.
 
 :class:`NativeEngine` is a :class:`~kalman.framework.engine.KalmanEngine` whose
-``_predict`` / ``_update`` / ``_smooth`` run in ``libKalmanFramework`` — the same
+``_predict`` / ``_update`` / ``_smooth`` run in ``libKalman`` — the same
 ``Engines::Linear`` / ``Extended`` / ``Unscented`` / ``Particle`` / ``Ensemble`` a
 C++ or ROOT+ program uses — through the C API. The Python
 :class:`~kalman.framework.filter.KalmanFilter` keeps the workflow, the records,
@@ -29,10 +29,10 @@ KIND_BY_NAME = {k.name.lower(): k for k in KalmanEngineKind}
 
 
 class NativeEngine(KalmanEngine):
-    """A libKalmanFramework engine behind the Python :class:`KalmanFilter`."""
+    """A libKalman engine behind the Python :class:`KalmanFilter`."""
 
     NAME = "Native Engine"
-    DESCRIPTION = "A libKalmanFramework (C++) estimation step driven by the Python filter."
+    DESCRIPTION = "A libKalman (C++) estimation step driven by the Python filter."
     VERSION = "1.0"
 
     def __init__(self, kind="extended", **params):

@@ -1,5 +1,5 @@
 """
-A libKalmanFramework model as a :class:`~kalman.framework.model.KalmanModel`.
+A libKalman model as a :class:`~kalman.framework.model.KalmanModel`.
 
 :class:`NativeModel` holds an instance built by the C++ factory and forwards the
 model contract — ``f/h``, ``F/H/B/L``, ``Q/R``, the initial state — to it through
@@ -41,7 +41,7 @@ class NativeModel(KalmanModel):
     """
 
     NAME = "Native Model"
-    DESCRIPTION = "A libKalmanFramework model (C++) exposed through the C API."
+    DESCRIPTION = "A libKalman model (C++) exposed through the C API."
     VERSION = "1.0"
 
     NATIVE_NAME: str | None = None      # set on the classes native_model_classes() builds

@@ -1,7 +1,7 @@
 """The C++ core seen from Python: the C API contract, the factory, plugins, and a
 C++ model driven by the Python engines, the API and its auth.
 
-Everything that needs ``libKalmanFramework`` is skipped when it is not built
+Everything that needs ``libKalman`` is skipped when it is not built
 (``make build install``); the header/cdef contract test always runs.
 """
 import os
@@ -87,7 +87,7 @@ class TestPluginPolicy(unittest.TestCase):
                 os.environ["KALMAN_PLUGIN_PATH"] = old
 
 
-@unittest.skipUnless(core.HAS_CXX_CORE, "libKalmanFramework not built — skipping C++ core tests")
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built — skipping C++ core tests")
 class TestFactory(unittest.TestCase):
 
     @classmethod
@@ -122,7 +122,7 @@ class TestFactory(unittest.TestCase):
         self.assertIn("library", str(cm.exception))
 
 
-@unittest.skipUnless(core.HAS_CXX_CORE, "libKalmanFramework not built — skipping C++ core tests")
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built — skipping C++ core tests")
 class TestNativeModel(unittest.TestCase):
 
     @classmethod
@@ -199,7 +199,7 @@ class TestNativeModel(unittest.TestCase):
         self.assertTrue(np.all(np.isfinite(np.asarray(rec.xk))))
 
 
-@unittest.skipUnless(core.HAS_CXX_CORE, "libKalmanFramework not built — skipping C++ core tests")
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built — skipping C++ core tests")
 class TestApiIntegration(unittest.TestCase):
 
     @classmethod
@@ -240,7 +240,7 @@ class TestApiIntegration(unittest.TestCase):
             api.load_plugin("not-a-plugin")
 
 
-@unittest.skipUnless(core.HAS_CXX_CORE, "libKalmanFramework not built — skipping C++ core tests")
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built — skipping C++ core tests")
 class TestNativeEngine(unittest.TestCase):
     """The C++ estimation step behind the Python filter, and the fused pass."""
 
@@ -330,7 +330,7 @@ class TestNativeEngine(unittest.TestCase):
         self.assertEqual(len(out["xk"]), 50)
 
 
-@unittest.skipUnless(core.HAS_CXX_CORE and importlib_available("jwt"), "needs libKalmanFramework + PyJWT")
+@unittest.skipUnless(core.HAS_CXX_CORE and importlib_available("jwt"), "needs libKalman + PyJWT")
 class TestLoadPluginAuth(unittest.TestCase):
     """Loading a plugin runs code, so it has its own scope."""
 

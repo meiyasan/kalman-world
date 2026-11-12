@@ -1,0 +1,27 @@
+# Kalman — CMake package.
+#
+#     find_package(Kalman REQUIRED)                      # Kalman::Kalman, the core
+#     find_package(Kalman REQUIRED COMPONENTS Apps)      # + Kalman::Apps, the application models
+#     find_package(Kalman REQUIRED COMPONENTS Learn)     # + Kalman::Learn, the learned components
+#
+#     target_link_libraries(my_program PRIVATE Kalman::Kalman Kalman::Apps)
+#
+# The core has no dependency to find. A component that was not built with this
+# installation is reported as missing, so REQUIRED fails with its name.
+@PACKAGE_INIT@
+
+include("${CMAKE_CURRENT_LIST_DIR}/KalmanTargets.cmake")
+
+set(Kalman_VERSION "@PROJECT_VERSION@")
+set(Kalman_COMPONENTS "@KALMAN_COMPONENTS@")
+
+foreach(_component ${Kalman_FIND_COMPONENTS})
+    if(TARGET Kalman::${_component})
+        set(Kalman_${_component}_FOUND TRUE)
+    else()
+        set(Kalman_${_component}_FOUND FALSE)
+    endif()
+endforeach()
+unset(_component)
+
+check_required_components(Kalman)

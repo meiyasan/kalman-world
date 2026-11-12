@@ -10,7 +10,7 @@
  * \class Kalman::Factory
  * \brief The registry of compiled models — how a C++ model becomes *nameable*.
  *
- * \details libKalmanFramework ships no physics: a model is written downstream, in
+ * \details libKalman ships no physics: a model is written downstream, in
  * an application, a ROOT+ analysis or a plugin. The factory is what lets such a
  * model be found **by name** by something that did not compile it — the Python
  * package's catalogue, the MCP server, a ROOT macro — and constructed without the

@@ -48,6 +48,15 @@ foreach(SRC ${TEST_SOURCES})
         endif()
         target_link_libraries(${TEST_NAME} PRIVATE KalmanApps)
     endif()
+    # Likewise the learned components: the tests named *_learn link libKalmanLearn,
+    # and are left out of a build that was configured without it.
+    if(TEST_NAME MATCHES "_learn$")
+        if(NOT TARGET KalmanLearn)
+            set_target_properties(${TEST_NAME} PROPERTIES EXCLUDE_FROM_ALL TRUE)
+            continue()
+        endif()
+        target_link_libraries(${TEST_NAME} PRIVATE KalmanLearn)
+    endif()
 
     # A Release build inherits CMAKE_BUILD_WITH_INSTALL_RPATH from
     # ProjectArchitecture, which points these binaries at the install prefix -- so

@@ -2,7 +2,7 @@
  * *********************************************
  *
  * \file CAPI.h
- * \brief The C interface of libKalmanFramework
+ * \brief The C interface of libKalman
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************

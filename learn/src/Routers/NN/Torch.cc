@@ -16,6 +16,11 @@
 #include "Kalman/Routers/NN/Torch.h"
 #include "Kalman/Config.h"
 
+// Set by learn/CMakeLists.txt when the runtime was found.
+#ifndef KALMAN_WITH_TORCH
+#  define KALMAN_WITH_TORCH 0
+#endif
+
 #include <sstream>
 #include <stdexcept>
 

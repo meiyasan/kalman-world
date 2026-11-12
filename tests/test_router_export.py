@@ -1,7 +1,7 @@
 """The ONNX export contract: a router trained here must reproduce itself elsewhere.
 
 ``NeuralRouter.export_onnx()`` is the seam between the Python framework and
-libKalmanFramework: Python owns training, C++ owns inference, and a *trained
+libKalman: Python owns training, C++ owns inference, and a *trained
 policy* — not a language binding — is what crosses between them. That only works
 if the exported graph computes exactly what ``router.route()`` computes, so this
 suite pins the three things that can silently break it:

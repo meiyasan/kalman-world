@@ -8,7 +8,7 @@ two results are apart, relative to the largest state / covariance entry.
     python tools/benchmark_twins.py            # from the repository root
     python tools/benchmark_twins.py --steps 5000 --repeat 5
 
-Needs ``libKalmanFramework`` and ``libKalmanApps`` (``make build`` then
+Needs ``libKalman`` and ``libKalmanApps`` (``make build`` then
 ``cmake --install var/build``).
 """
 from __future__ import annotations
