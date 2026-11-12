@@ -416,9 +416,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if N > 1 and self._native_backward_eligible():
             self._backward_native(N)
         else:
+            # transition[k + 1] is the one that took posterior[k] to prior[k + 1]:
+            # the F of the RTS gain P[k] F^T P_prior[k + 1]^-1.
             for k in reversed(range(N - 1)):
                 self.smooth[k] = self.engine._smooth(
-                    self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k]
+                    self.model, self.posterior[k], self.prior[k + 1], self.smooth[k + 1], self.transition[k + 1]
                 )
 
         kwargs.pop("smooth", None)

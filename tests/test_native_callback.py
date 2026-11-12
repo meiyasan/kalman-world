@@ -538,3 +538,25 @@ class TestLinearModelsOffTheFusedPass(unittest.TestCase):
         rng = np.random.default_rng(3)
         zk = (np.cos(0.3 * np.arange(80)) + 0.1 * rng.standard_normal(80)).reshape(-1, 1)
         self.compare(make, zk)
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
+class TestSmootherTransition(unittest.TestCase):
+    """The RTS gain at step k uses the transition from k to k + 1. The Python
+    backward pass used the one from k - 1 to k, which is the same matrix only for
+    a time-invariant linear model."""
+
+    def test_python_backward_matches_the_cxx_one_on_a_nonlinear_model(self):
+        from modules.framework.filter import KalmanFilter
+        _, z = _pendulum_run(5, steps=120)
+        out = run_callback_filter(Pendulum(), z, smooth=True)
+        with native.python_reference():
+            f = KalmanFilter(Pendulum())
+            f.forward(z, record=False)
+            f.backward(record=False)
+        x_py = np.array([x for x, _ in f.smooth]).reshape(len(z), -1)
+        np.testing.assert_allclose(x_py, out["x_smooth"], atol=1e-8)
+        # and smoothing does better than filtering against the truth
+        truth, _ = _pendulum_run(5, steps=120)
+        x_post = np.array([x for x, _ in f.posterior]).reshape(len(z), -1)
+        self.assertLess(np.abs(x_py - truth).mean(), np.abs(x_post - truth).mean())
