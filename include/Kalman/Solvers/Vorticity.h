@@ -45,9 +45,14 @@ namespace Kalman::Solvers
 
         public:
             /**
+             * \param ny,nx    the grid.
+             * \param dt       the time step.
+             * \param Ly,Lx    the size of the periodic box.
              * \param nu       viscosity.
              * \param beta     planetary-vorticity gradient (0 for none).
              * \param forcing  the transform of the forcing F (ny x nx), or an empty field.
+             * \param integrator the time-stepping scheme (RK4 when null).
+             * \param seed     for RandomIC().
              */
             Vorticity(std::size_t ny, std::size_t nx, double dt, double Ly, double Lx,
                       double nu, double beta = 0., const SpectralField &forcing = SpectralField(),

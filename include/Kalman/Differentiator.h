@@ -60,6 +60,8 @@ namespace Kalman
 
             /**
              * \brief `d fn / dx` at \p x, as a (rows of fn) x (size of x) matrix.
+             * \param fn  the map to differentiate.
+             * \param x   the point.
              * \param y0  `fn(x)` when the caller already has it (saves the forward
              *            scheme one evaluation); null to have it computed.
              */

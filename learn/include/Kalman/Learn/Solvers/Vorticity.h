@@ -91,6 +91,10 @@ namespace Kalman::Learn::Solvers
             /**
              * \brief Advance `batch` fields by `nsteps` steps of `dt`.
              * \param w    `batch * ny * nx` values, field after field.
+             * \param batch    the number of fields.
+             * \param nsteps   the number of steps.
+             * \param dt       the time step.
+             * \param tableau  the explicit Runge-Kutta scheme.
              * \param out  the same layout, written on return (may alias \p w).
              */
             void Advance(const double *w, std::size_t batch, std::size_t nsteps, double dt,
