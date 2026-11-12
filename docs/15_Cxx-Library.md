@@ -673,11 +673,14 @@ linear filter. Both can be present in one process.
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
 | Noise of a continuous model | `Qc=`, `Lc=` (with `A=` for a linear model) | `SetNoiseIntensity(Qc, Lc)`, `SetGenerator(A)`; decoded by `Utils::VanLoan`, which Python calls |
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
-| Spectral solver backend | numpy, or `backend="torch"`, which runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
-| Non-additive noise (UKF) | augmented-state sigma points | additive only — fold the noise into `f` |
-| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
+| Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
+| Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
+| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
 | Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel` so far; none in the core library |
+| Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |
+| Sampling | `model.sample()`: the C++ loop, numpy's draws | `Kalman::Sampler` (its own generator) |
+| JSON API, REST, MCP | `kalman.api`, `kalman.rest`, `kalman.mcp` (all verbs, Python-written models included) | `libKalmanNet`, `kalman-serve` (C++ models; see [Net](18_Net.md)) |
 | Missing data | NaN channel skipped | NaN channel skipped (same) |
 | Covariance update | Joseph form | Joseph form (same) |
 | Smoother | RTS | RTS (same) |
