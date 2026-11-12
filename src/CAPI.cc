@@ -292,6 +292,17 @@ kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
 }
 
+int kalman_model_callback_set_noise(kalman_model_t *model, kalman_process_noise_fn process_noise,
+                                    kalman_measurement_noise_fn measurement_noise)
+{
+    return Guard([&] {
+        auto *callback = dynamic_cast<Kalman::Models::Callback *>(&Deref(model));
+        if (!callback) throw std::invalid_argument("not a callback model");
+        callback->SetNoise(process_noise, measurement_noise);
+        return 0;
+    });
+}
+
 void kalman_model_destroy(kalman_model_t *model) { delete model; }
 
 const char *kalman_model_name(const kalman_model_t *model)

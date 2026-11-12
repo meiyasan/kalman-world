@@ -125,6 +125,17 @@ kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int
                                              kalman_step_jacobian_fn jacobian_f,
                                              kalman_measure_jacobian_fn jacobian_h, void *user);
 
+/// The process-noise covariance over the step from (x, u, t), row-major (n x n),
+/// with any noise coupling already applied. Return 0 on success.
+typedef int (*kalman_process_noise_fn)(void *user, const double *x, const double *u, double t, double *Q);
+/// The measurement-noise covariance at t, row-major (m x m). Return 0 on success.
+typedef int (*kalman_measurement_noise_fn)(void *user, double t, double *R);
+
+/// Give a callback model its noise covariances as functions (either may be NULL,
+/// which keeps the constant matrix). -1 when `model` is not a callback model.
+int kalman_model_callback_set_noise(kalman_model_t *model, kalman_process_noise_fn process_noise,
+                                    kalman_measurement_noise_fn measurement_noise);
+
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);
 

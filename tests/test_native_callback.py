@@ -118,22 +118,48 @@ class TestFilterTakesTheCxxLoop(unittest.TestCase):
         got = np.asarray(Pendulum().filter(z, smooth=True).xk)
         self.assertLess(np.max(np.abs(got - ref)), 1e-8)
 
-    def test_what_keeps_the_python_loop(self):
-        class StateDependentQ(Pendulum):
+    def test_noise_that_is_not_a_constant_matrix_is_asked_for_each_step(self):
+        """A state-dependent Q, a time-dependent R and a coupling left to be
+        differenced from f all run on the C++ loop, and give the Python result."""
+        class SpeedDependentQ(Pendulum):
             def Q(self, t=None, x=None):
-                return self._Q
+                if x is None:
+                    return self._Q
+                return self._Q * (1.0 + float(np.asarray(x).reshape(-1)[1]) ** 2)
+
+        class GrowingR(Pendulum):
+            def R(self, t=None):
+                return self._R * (1.0 + (t or 0.0))
+
         class NoCoupling(Pendulum):
             def __init__(self):
                 super().__init__()
                 self._L = None
-        self.assertFalse(self.path(StateDependentQ()), "an overridden Q")
-        self.assertFalse(self.path(NoCoupling()), "a noise coupling left to be differenced")
+
+            def f(self, x, u=None, w=None, t=None):
+                out = super().f(x)
+                return out if w is None else out + np.asarray(w, float).reshape(-1, 1)
+
+        rng = np.random.default_rng(4)
+        t = np.arange(300) / 50.0
+        z = (0.5 * np.cos(3.1 * t) + rng.normal(0, 0.1, 300)).reshape(-1, 1)
+        for make in (SpeedDependentQ, GrowingR, NoCoupling):
+            self.assertFalse(native.constant_noise(make()), make.__name__)
+            self.assertTrue(self.path(make()), make.__name__)
+            x_ref, P_ref = python_loop(make, z)
+            record = make().filter(z)
+            self.assertLess(np.max(np.abs(np.asarray(record.xk) - x_ref)), 1e-9, make.__name__)
+            self.assertLess(np.max(np.abs(np.asarray(record.Pk) - P_ref)), 1e-9, make.__name__)
+        self.assertGreater(np.max(np.abs(np.asarray(SpeedDependentQ().filter(z).Pk)
+                                         - np.asarray(Pendulum().filter(z).Pk))), 1e-6,
+                           "the state-dependent Q is really used")
+
+    def test_what_keeps_the_python_loop(self):
         self.assertFalse(self.path(Pendulum(), controller=lambda *a, **k: None), "a controller callback")
         with native.python_reference():
             self.assertFalse(self.path(Pendulum()), "the reference switch")
-        patched = Pendulum()
-        patched.h = lambda x, v=None, t=None: np.zeros((1, 1))
-        self.assertFalse(self.path(patched), "a method replaced on the instance")
+        from modules.framework.filters import UnscentedKalmanFilter
+        self.assertFalse(UnscentedKalmanFilter(Pendulum())._callback_eligible(None), "another engine")
 
 
 if __name__ == "__main__":

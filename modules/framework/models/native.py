@@ -280,24 +280,25 @@ class python_reference:
 
 
 def callback_eligible(model) -> bool:
-    """Whether the C++ extended engine reproduces the Python one on ``model``.
+    """Whether the C++ extended engine can run ``model`` through callbacks: any
+    model in double precision. What differs between models is only whether the
+    noise is handed over once or asked for at every step (:func:`constant_noise`)."""
+    return np.dtype(getattr(model, "dtype", np.float64)) == np.float64
 
-    It does when the noise is constant and additive: ``Q``, ``R`` and the noise
-    coupling ``L`` are the base class's and hold matrices. A model that
-    overrides ``Q``/``R``/``L`` (a state-dependent Q, say), or that leaves ``L``
-    to be differenced from ``f``, keeps the Python loop.
-    """
+
+def constant_noise(model) -> bool:
+    """Whether ``model``'s noise is constant and additive: ``Q``, ``R`` and the
+    noise coupling ``L`` are the base class's and hold matrices. Then they are
+    pushed to C++ once. Otherwise (an overridden or callable ``Q``/``R``/``L``,
+    a state-dependent ``Q``, a coupling left to be differenced from ``f``) the
+    C++ filter asks the Python model for them at every step."""
     from ..model import KalmanModel
     cls = type(model)
     if any(getattr(cls, name) is not getattr(KalmanModel, name) for name in ("Q", "R", "L")):
         return False
-    if any(name in model.__dict__ for name in ("Q", "R", "L", "f", "h", "F", "H")):
+    if any(name in model.__dict__ for name in ("Q", "R", "L")):
         return False
-    if callable(model._Q) or callable(model._R) or model._L is None or callable(model._L):
-        return False
-    if callable(model._F) or callable(model._H) or callable(getattr(model, "_B", None)):
-        return False
-    return np.dtype(getattr(model, "dtype", np.float64)) == np.float64
+    return not (callable(model._Q) or callable(model._R) or model._L is None or callable(model._L))
 _apps_names: set[str] | None = None
 
 
@@ -469,15 +470,38 @@ def callback_handle(model):
 
     if model.fs:
         core.check(lib.kalman_model_set_sample_rate(handle, float(model.fs)), "set_sample_rate")
-    Q = np.asarray(model.Q(), dtype=np.float64).reshape(n, n)
-    L_ = model._L
-    if L_ is not None and not callable(L_):
-        Lm = np.asarray(L_, dtype=np.float64)
-        Q = Lm @ Q @ Lm.T
-    R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)
-    core.check(lib.kalman_model_set_Q(handle, core.cdptr(np.ascontiguousarray(Q))), "set_Q")
-    core.check(lib.kalman_model_set_R(handle, core.cdptr(np.ascontiguousarray(R))), "set_R")
-    return handle, (step, measure, step_jacobian, measure_jacobian, errors)
+
+    keep = [step, measure, step_jacobian, measure_jacobian]
+    if constant_noise(model):
+        Lm = np.asarray(model._L, dtype=np.float64)
+        Q = Lm @ np.asarray(model.Q(), dtype=np.float64).reshape(n, n) @ Lm.T
+        R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)
+        core.check(lib.kalman_model_set_Q(handle, core.cdptr(np.ascontiguousarray(Q))), "set_Q")
+        core.check(lib.kalman_model_set_R(handle, core.cdptr(np.ascontiguousarray(R))), "set_R")
+    else:
+        # The noise as the Python engine works it out at each step: Q at the
+        # state the step starts from when Q takes one, then the coupling L.
+        from ..engine import KalmanEngine
+        takes_state = KalmanEngine._accepts_param(model.Q, "x")
+
+        @ffi.callback("int(void *, const double *, const double *, double, double *)")
+        @guard
+        def process_noise(user, x, u, t, out):
+            xc, uc = col(x, n), control(u)
+            Q = model.Q(t=t, x=xc) if takes_state else model.Q(t=t)
+            Lm = KalmanEngine._safe_L(model, xc, uc, t)
+            if Lm is not None:
+                Q = Lm @ Q @ Lm.T
+            write(out, Q, n * n)
+
+        @ffi.callback("int(void *, double, double *)")
+        @guard
+        def measurement_noise(user, t, out):
+            write(out, model.R(t=t), m * m)
+
+        core.check(lib.kalman_model_callback_set_noise(handle, process_noise, measurement_noise), "set_noise")
+        keep += [process_noise, measurement_noise]
+    return handle, (*keep, errors)
 
 
 def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False) -> dict:

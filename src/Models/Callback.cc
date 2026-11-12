@@ -60,6 +60,7 @@ namespace Kalman::Models
     {
         const std::vector<double> xin = Flat(x), uin = Flat(u);
         std::vector<double> out(NState());
+        if (fProcessNoise) { fLastX = x; fLastU = u; }
         Check(fStep(fUser, xin.data(), uin.size() == NControl() && NControl() > 0 ? uin.data() : nullptr, t, out.data()), "f");
         return ToVector(out);
     }
@@ -80,6 +81,36 @@ namespace Kalman::Models
         Check(fStepJacobian(fUser, xin.data(), uin.size() == NControl() && NControl() > 0 ? uin.data() : nullptr, t, out.data()),
               "Jacobian of f");
         return ToMatrix(out, NState(), NState());
+    }
+
+    void Callback::SetNoise(ProcessNoiseFn processNoise, MeasurementNoiseFn measurementNoise)
+    {
+        fProcessNoise = processNoise;
+        fMeasurementNoise = measurementNoise;
+    }
+
+    Matrix Callback::Q(double t) const
+    {
+        if (!fProcessNoise) return Extended::Q(t);
+        const Vector x = fLastX.Size() == NState() ? fLastX : X0();
+        const std::vector<double> xin = Flat(x), uin = Flat(fLastU);
+        std::vector<double> out(NState() * NState());
+        Check(fProcessNoise(fUser, xin.data(), uin.size() == NControl() && NControl() > 0 ? uin.data() : nullptr, t, out.data()),
+              "process noise");
+        return ToMatrix(out, NState(), NState());
+    }
+
+    Matrix Callback::R(double t) const
+    {
+        if (!fMeasurementNoise) return Extended::R(t);
+        std::vector<double> out(NMeasure() * NMeasure());
+        Check(fMeasurementNoise(fUser, t, out.data()), "measurement noise");
+        return ToMatrix(out, NMeasure(), NMeasure());
+    }
+
+    Matrix Callback::L(double t) const
+    {
+        return fProcessNoise ? Matrix() : Extended::L(t);
     }
 
     Matrix Callback::JacobianH(const Vector &x, double t) const

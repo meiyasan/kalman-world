@@ -47,6 +47,11 @@ namespace Kalman::Models
             using StepJacobianFn = int (*)(void *user, const double *x, const double *u, double t, double *J);
             /// `J = dh/dx` at (x, t), row-major (m x n).
             using MeasureJacobianFn = int (*)(void *user, const double *x, double t, double *J);
+            /// The process-noise covariance added over the step from (x, u, t),
+            /// row-major (n x n), with any noise coupling already applied.
+            using ProcessNoiseFn = int (*)(void *user, const double *x, const double *u, double t, double *Q);
+            /// The measurement-noise covariance at t, row-major (m x m).
+            using MeasurementNoiseFn = int (*)(void *user, double t, double *R);
 
         private:
             StepFn fStep;
@@ -54,6 +59,12 @@ namespace Kalman::Models
             StepJacobianFn fStepJacobian;
             MeasureJacobianFn fMeasureJacobian;
             void *fUser;
+
+            ProcessNoiseFn fProcessNoise = nullptr;
+            MeasurementNoiseFn fMeasurementNoise = nullptr;
+            // The point of the last f() call. An engine asks for Q(t) right after
+            // stepping from (x, u, t); a state-dependent noise needs that point.
+            mutable Vector fLastX, fLastU;
 
         public:
             Callback(std::string name, std::size_t n, std::size_t m, std::size_t l,
@@ -69,6 +80,22 @@ namespace Kalman::Models
             Vector h(const Vector &x, double t = 0.) const override;
             Matrix Jacobian(const Vector &x, const Vector &u, double t = 0.) const override;
             Matrix JacobianH(const Vector &x, double t = 0.) const override;
+
+            /**
+             * \brief Let the caller supply the noise covariances as functions.
+             *
+             * For a noise that depends on the state or on time, or whose coupling
+             * the caller works out itself. Either may be null, which keeps the
+             * constant SetQ() / SetR() matrix. With a process-noise function L()
+             * is empty: the function returns the covariance already coupled.
+             * One filter at a time per model: the state Q depends on is the one
+             * of the last f() call.
+             */
+            void SetNoise(ProcessNoiseFn processNoise, MeasurementNoiseFn measurementNoise);
+
+            Matrix Q(double t = 0.) const override;
+            Matrix R(double t = 0.) const override;
+            Matrix L(double t = 0.) const override;
     };
 }
 
