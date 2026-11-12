@@ -218,7 +218,10 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # engine kind keeps the Python loop.
     # ------------------------------------------------------------------
     def _native_twin(self, uk_fn):
-        if uk_fn is not None and not self._closed_loop_eligible():
+        # In closed loop the controller may retune the Python model as it runs
+        # (adaptive Q and R); a twin would not see it, so the C++ loop calls the
+        # Python model instead.
+        if uk_fn is not None:
             return None
         handle_of = getattr(self._model, "native_handle", None)
         if handle_of is None:

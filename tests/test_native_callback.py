@@ -454,6 +454,27 @@ class TestClosedLoopOnTheCxxLoop(unittest.TestCase):
             np.testing.assert_allclose(u_cxx, u_ref, atol=atol, err_msg=str(kind))
             self.assertGreater(np.abs(u_ref).max(), 0.1)             # the loop was really closed
 
+    def test_a_controller_that_retunes_the_model_is_obeyed(self):
+        """Adaptive controllers change the model's Q while the filter runs."""
+        from modules.framework.filter import KalmanFilter
+        zk = self._measurements(120)
+        def run(boost, reference):
+            model = DrivenPendulum()
+            base = model._Q.copy()
+            def policy(x, P, t, nu=None):
+                model._Q = base * (boost if t > 1.0 else 1.0)
+                return np.zeros((1, 1))
+            f = KalmanFilter(model)
+            if reference:
+                with native.python_reference():
+                    f.forward(zk, policy, record=False)
+            else:
+                f.forward(zk, policy, record=False)
+            return np.array([P for _, P in f.posterior])
+        plain, boosted = run(1.0, False), run(1e4, False)
+        self.assertGreater(boosted[-1][1, 1], 5 * plain[-1][1, 1], "the larger Q reached the filter")
+        np.testing.assert_allclose(boosted, run(1e4, True), rtol=1e-7, atol=1e-12)
+
     def test_a_controller_error_comes_back_as_itself(self):
         from modules.framework.filter import KalmanFilter
         def broken(x, P, t, nu=None):

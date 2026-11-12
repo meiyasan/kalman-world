@@ -405,7 +405,7 @@ class NativeTwin:
 
 
 # --- a Python-written model on the C++ engines ----------------------------------
-def callback_handle(model, engine="extended"):
+def callback_handle(model, engine="extended", live_noise=False):
     """A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call
     ``model``'s own Python methods, so the C++ filter can run a model written in
     Python. Returns ``(handle, keep)``: ``keep`` holds the callback objects and
@@ -482,7 +482,7 @@ def callback_handle(model, engine="extended"):
     keep = [step, measure, step_jacobian, measure_jacobian]
     if engine in ("unscented", "particle"):
         keep += _unscented_noise(model, handle, guard, col, control, write)
-    elif constant_noise(model):
+    elif constant_noise(model) and not live_noise:
         Lm = np.asarray(model._L, dtype=np.float64)
         Q = Lm @ np.asarray(model.Q(), dtype=np.float64).reshape(n, n) @ Lm.T
         R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)
@@ -566,7 +566,9 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
     its constructor parameters) on a Python-written ``model``. Returns the
     per-step arrays of :func:`core.run_filter`."""
     lib = core.require()
-    handle, keep = callback_handle(model, engine)
+    # A controller may retune the model while it runs (adaptive Q and R), so in
+    # closed loop the noise is asked for at every step, never handed over once.
+    handle, keep = callback_handle(model, engine, live_noise=control is not None)
     n = int(model.n)
     x0 = np.ascontiguousarray(np.asarray(model.x0 if x0 is None else x0, dtype=np.float64).reshape(-1))
     P0 = np.ascontiguousarray(np.asarray(model.P0 if P0 is None else P0, dtype=np.float64).reshape(n, n))
