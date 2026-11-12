@@ -178,6 +178,8 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             self._forward_twin(twin, zk, uk)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
+        elif self._callback_eligible(uk_fn):
+            self._forward_callback(zk, uk)
         else:
             t = float(self.model.t0) if self.model.t0 is not None else 0.0
             dt = 1.0 / self.sample_rate() if self.sample_rate() else 1.0
@@ -232,7 +234,6 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         model = self._model
         n, m = model.n, model.m
-        N = len(zk)
         lib = core.lib
 
         x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))
@@ -243,7 +244,37 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
                    "set_t0")
 
         out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
+        self._store_pass(out, zk, uk)
 
+    # ------------------------------------------------------------------
+    # A model written in Python, with no C++ twin: the loop and the EKF
+    # arithmetic still run in Kalman::Filter, which calls back into the
+    # model's own f/h/F/H. Same results as the Python loop below, which
+    # stays for the cases this path does not cover (a controller callback,
+    # another engine kind, state-dependent noise).
+    # ------------------------------------------------------------------
+    def _callback_eligible(self, uk_fn) -> bool:
+        if uk_fn is not None:
+            return False
+        from .models import native
+        if not native.native_loop_enabled():
+            return False
+        from .engines.extended import ExtendedKalmanEngine
+        if type(self.engine) is not ExtendedKalmanEngine:
+            return False
+        return native.callback_eligible(self._model)
+
+    def _forward_callback(self, zk, uk):
+        from .models.native import run_callback_filter
+        model = self._model
+        out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P)
+        self._store_pass(out, zk, uk)
+
+    def _store_pass(self, out, zk, uk):
+        """Record a whole pass returned by the C++ filter."""
+        from .native import as_contiguous
+        n, m = self._model.n, self._model.m
+        N = len(zk)
         self.measurement.extend(as_contiguous(zk))
         self.control.extend(as_contiguous(uk))
         self.prior.extend((out["x_prior"][k].reshape(n, 1), out["P_prior"][k]) for k in range(N))

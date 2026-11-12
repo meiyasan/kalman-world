@@ -40,11 +40,8 @@ class Pendulum(ExtendedKalmanModel):
 
 
 def python_loop(make, z):
-    was, native.USE_NATIVE_TWINS = native.USE_NATIVE_TWINS, False
-    try:
+    with native.python_reference():
         record = make().filter(z)
-    finally:
-        native.USE_NATIVE_TWINS = was
     return np.asarray(record.xk), np.asarray(record.Pk)
 
 
@@ -92,6 +89,51 @@ class TestPythonModelOnTheCxxEngine(unittest.TestCase):
         del model
         gc.collect()
         self.assertIsNone(ref(), "the callback closures were released with the handle")
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
+class TestFilterTakesTheCxxLoop(unittest.TestCase):
+    """``model.filter()`` itself: a Python-written model with constant, additive
+    noise runs its loop in C++; anything the C++ path does not reproduce keeps
+    the Python loop."""
+
+    def path(self, model, controller=None):
+        from modules.framework.filter import KalmanFilter
+        return KalmanFilter(model)._callback_eligible(controller)
+
+    def test_filter_gives_the_reference_result_through_the_cxx_loop(self):
+        rng = np.random.default_rng(1)
+        z = rng.normal(0, 0.2, (300, 1))
+        self.assertTrue(self.path(Pendulum()))
+        x_ref, P_ref = python_loop(Pendulum, z)
+        record = Pendulum().filter(z)
+        self.assertLess(np.max(np.abs(np.asarray(record.xk) - x_ref)), 1e-9)
+        self.assertLess(np.max(np.abs(np.asarray(record.Pk) - P_ref)), 1e-9)
+
+    def test_smoothing_after_the_cxx_loop(self):
+        rng = np.random.default_rng(2)
+        z = rng.normal(0, 0.2, (200, 1))
+        with native.python_reference():
+            ref = np.asarray(Pendulum().filter(z, smooth=True).xk)
+        got = np.asarray(Pendulum().filter(z, smooth=True).xk)
+        self.assertLess(np.max(np.abs(got - ref)), 1e-8)
+
+    def test_what_keeps_the_python_loop(self):
+        class StateDependentQ(Pendulum):
+            def Q(self, t=None, x=None):
+                return self._Q
+        class NoCoupling(Pendulum):
+            def __init__(self):
+                super().__init__()
+                self._L = None
+        self.assertFalse(self.path(StateDependentQ()), "an overridden Q")
+        self.assertFalse(self.path(NoCoupling()), "a noise coupling left to be differenced")
+        self.assertFalse(self.path(Pendulum(), controller=lambda *a, **k: None), "a controller callback")
+        with native.python_reference():
+            self.assertFalse(self.path(Pendulum()), "the reference switch")
+        patched = Pendulum()
+        patched.h = lambda x, v=None, t=None: np.zeros((1, 1))
+        self.assertFalse(self.path(patched), "a method replaced on the instance")
 
 
 if __name__ == "__main__":

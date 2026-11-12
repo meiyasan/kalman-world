@@ -30,11 +30,8 @@ needs_apps = unittest.skipUnless(HAVE_APPS, "libKalmanApps is not built")
 
 def both(make, z, **kw):
     """(record with the Python physics, record on the C++ twin)."""
-    native.USE_NATIVE_TWINS = False
-    try:
+    with native.python_reference():
         python = make().filter(z, **kw)
-    finally:
-        native.USE_NATIVE_TWINS = True
     model = make()
     assert model.native_handle() is not None, "the twin was expected to be used"
     return python, model.filter(z, **kw)
@@ -157,12 +154,12 @@ class TestSmootherUsesEachStepsTransition(unittest.TestCase):
 
     def smoothed(self, make, z, accel):
         import modules.framework.native as accelerated
-        was, native.USE_NATIVE_TWINS = native.USE_NATIVE_TWINS, False
         had, accelerated.HAS_C_ACCEL = accelerated.HAS_C_ACCEL, accel and accelerated.HAS_C_ACCEL
         try:
-            return np.asarray(make().filter(z, smooth=True).xk)
+            with native.python_reference():
+                return np.asarray(make().filter(z, smooth=True).xk)
         finally:
-            native.USE_NATIVE_TWINS, accelerated.HAS_C_ACCEL = was, had
+            accelerated.HAS_C_ACCEL = had
 
     def test_nonlinear_models_smooth_the_same_with_and_without_the_kernels(self):
         _, fixes = synthetic_track(n_steps=200, seed=6)

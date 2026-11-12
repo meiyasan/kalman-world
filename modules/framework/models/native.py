@@ -252,6 +252,52 @@ APPS_LIBRARY = "KalmanApps"
 #: Switch every twin off (``False``) to run the Python physics — how a before/after
 #: comparison is made. ``KALMAN_NATIVE_TWINS=0`` in the environment does the same.
 USE_NATIVE_TWINS = True
+#: Run the filter loop in C++ for a model written in Python (its f/h called back).
+#: ``False``, or ``KALMAN_NATIVE_LOOP=0``, keeps the Python reference loop.
+USE_NATIVE_LOOP = True
+
+
+def native_loop_enabled() -> bool:
+    import os
+    return USE_NATIVE_LOOP and os.environ.get("KALMAN_NATIVE_LOOP", "1") != "0" and core.HAS_CXX_CORE
+
+
+class python_reference:
+    """Context manager: inside it every model runs the Python reference path
+    (no C++ twin, no C++ loop). What the equivalence tests and the benchmarks
+    compare against."""
+
+    def __enter__(self):
+        global USE_NATIVE_TWINS, USE_NATIVE_LOOP
+        self._saved = (USE_NATIVE_TWINS, USE_NATIVE_LOOP)
+        USE_NATIVE_TWINS = USE_NATIVE_LOOP = False
+        return self
+
+    def __exit__(self, *exc):
+        global USE_NATIVE_TWINS, USE_NATIVE_LOOP
+        USE_NATIVE_TWINS, USE_NATIVE_LOOP = self._saved
+        return False
+
+
+def callback_eligible(model) -> bool:
+    """Whether the C++ extended engine reproduces the Python one on ``model``.
+
+    It does when the noise is constant and additive: ``Q``, ``R`` and the noise
+    coupling ``L`` are the base class's and hold matrices. A model that
+    overrides ``Q``/``R``/``L`` (a state-dependent Q, say), or that leaves ``L``
+    to be differenced from ``f``, keeps the Python loop.
+    """
+    from ..model import KalmanModel
+    cls = type(model)
+    if any(getattr(cls, name) is not getattr(KalmanModel, name) for name in ("Q", "R", "L")):
+        return False
+    if any(name in model.__dict__ for name in ("Q", "R", "L", "f", "h", "F", "H")):
+        return False
+    if callable(model._Q) or callable(model._R) or model._L is None or callable(model._L):
+        return False
+    if callable(model._F) or callable(model._H) or callable(getattr(model, "_B", None)):
+        return False
+    return np.dtype(getattr(model, "dtype", np.float64)) == np.float64
 _apps_names: set[str] | None = None
 
 

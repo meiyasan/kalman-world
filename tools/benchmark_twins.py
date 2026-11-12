@@ -31,22 +31,32 @@ from modules.apps.ballistics import BallisticModel                # noqa: E402
 from modules.apps.vehicles import CarSpeedModel                   # noqa: E402
 
 
+def timed(make, z, repeat):
+    best = float("inf")
+    for _ in range(repeat):
+        model = make()
+        start = time.perf_counter()
+        record = model.filter(z)
+        best = min(best, time.perf_counter() - start)
+    return best * 1e3, np.asarray(record.xk), np.asarray(record.Pk), model
+
+
 def compare(make, z, repeat):
-    out = {}
-    for twin in (False, True):
-        native.USE_NATIVE_TWINS = twin
-        best = float("inf")
-        for _ in range(repeat):
-            model = make()
-            start = time.perf_counter()
-            record = model.filter(z)
-            best = min(best, time.perf_counter() - start)
-        out[twin] = (best, np.asarray(record.xk), np.asarray(record.Pk), model.native_handle() is not None)
-    native.USE_NATIVE_TWINS = True
-    (t_py, x_py, P_py, _), (t_cx, x_cx, P_cx, used) = out[False], out[True]
-    dx = np.nanmax(np.abs(x_py - x_cx)) / max(1.0, np.nanmax(np.abs(x_py)))
+    """Three runs of one model: the Python reference loop, the C++ loop calling
+    the Python model, and the model's C++ twin when it has one."""
+    with native.python_reference():
+        t_py, x_py, P_py, _ = timed(make, z, repeat)
+    native.USE_NATIVE_TWINS = False
+    try:
+        t_loop, x_loop, _, _ = timed(make, z, repeat)
+    finally:
+        native.USE_NATIVE_TWINS = True
+    t_cx, x_cx, P_cx, model = timed(make, z, repeat)
+    used = model.native_handle() is not None if hasattr(model, "native_handle") else False
+    scale = max(1.0, np.nanmax(np.abs(x_py)))
+    dx = max(np.nanmax(np.abs(x_py - x_cx)), np.nanmax(np.abs(x_py - x_loop))) / scale
     dP = np.nanmax(np.abs(P_py - P_cx)) / max(1.0, np.nanmax(np.abs(P_py)))
-    return t_py * 1e3, t_cx * 1e3, dx, dP, used
+    return t_py, t_loop, t_cx, dx, dP, used
 
 
 def cases(steps):
@@ -94,12 +104,14 @@ def main():
         sys.exit("libKalmanApps was not found: build and install it first (see the module docstring).")
 
     print(f"{args.steps} steps per run, best of {args.repeat}\n")
-    print(f"{'model':34s} {'Python':>10s} {'C++ twin':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
+    print(f"{'model':32s} {'Python':>10s} {'C++ loop':>10s} {'C++ model':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
     for name, make, z in cases(args.steps):
-        t_py, t_cx, dx, dP, used = compare(make, z, args.repeat)
-        note = "" if used else "   (twin not used)"
-        print(f"{name:34s} {t_py:8.1f} ms {t_cx:8.1f} ms {t_py / t_cx:7.1f}x {dx:9.1e} {dP:11.1e}{note}")
-    print("\nstate / covariance: largest difference between the two runs, relative to the largest entry.")
+        t_py, t_loop, t_cx, dx, dP, used = compare(make, z, args.repeat)
+        twin = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
+        print(f"{name:32s} {t_py:8.1f} ms {t_loop:8.1f} ms {twin} {dx:9.1e} {dP:11.1e}")
+    print("\nPython: the reference loop. C++ loop: the C++ filter calling the Python model.")
+    print("C++ model: the model's C++ twin. faster: Python against the fastest of the two.")
+    print("state / covariance: largest difference from the Python run, relative to the largest entry.")
 
 
 if __name__ == "__main__":
