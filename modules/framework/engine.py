@@ -101,6 +101,34 @@ class KalmanEngine(KalmanEngineMetadata, KalmanEngineMixin):
         return L
 
     @staticmethod
+    def _noise_through_f(model) -> bool:
+        """Whether the process noise goes *through* ``model.f`` (passed as ``w``)
+        instead of being added after it.
+
+        A model that declares its noise coupling ``L`` (a matrix given to the
+        constructor, or an ``L`` method of its own) has said the noise is added,
+        as ``L w``; that is what the extended engine does, and every engine must
+        agree with it. Many models take ``w`` in ``f``'s signature and ignore
+        it: reading the signature alone made the sigma-point and particle
+        engines drop their process noise altogether. So the noise goes through
+        ``f`` only when ``f`` takes ``w`` *and* the model declares no coupling.
+        """
+        from .model import KalmanModel
+        if not KalmanEngine._accepts_param(model.f, "w"):
+            return False
+        declared = getattr(model, "_L", None) is not None or type(model).L is not KalmanModel.L
+        return not declared
+
+    @staticmethod
+    def _noise_through_h(model) -> bool:
+        """The same for the measurement noise, ``h(..., v)`` and the coupling ``M``."""
+        from .model import KalmanModel
+        if not KalmanEngine._accepts_param(model.h, "v"):
+            return False
+        declared = getattr(model, "_M", None) is not None or type(model).M is not KalmanModel.M
+        return not declared
+
+    @staticmethod
     def _accepts_param(fn, name: str) -> bool:
         """True if callable ``fn`` accepts a keyword/positional parameter ``name``
         (used to auto-detect non-additive noise: ``f(...,w)`` / ``h(...,v)``)."""

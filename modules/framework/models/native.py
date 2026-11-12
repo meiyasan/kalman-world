@@ -480,7 +480,7 @@ def callback_handle(model, engine="extended"):
         core.check(lib.kalman_model_set_sample_rate(handle, float(model.fs)), "set_sample_rate")
 
     keep = [step, measure, step_jacobian, measure_jacobian]
-    if engine == "unscented":
+    if engine in ("unscented", "particle"):
         keep += _unscented_noise(model, handle, guard, col, control, write)
     elif constant_noise(model):
         Lm = np.asarray(model._L, dtype=np.float64)
@@ -523,8 +523,8 @@ def _unscented_noise(model, handle, guard, col, control, write):
     from ..engines.unscented import UnscentedKalmanEngine as U
     lib, ffi = core.lib, core.ffi
     n, m = int(model.n), int(model.m)
-    through_f = KalmanEngine._accepts_param(model.f, "w")
-    through_h = KalmanEngine._accepts_param(model.h, "v")
+    through_f = KalmanEngine._noise_through_f(model)
+    through_h = KalmanEngine._noise_through_h(model)
 
     @ffi.callback("int(void *, const double *, const double *, double, double *)")
     @guard

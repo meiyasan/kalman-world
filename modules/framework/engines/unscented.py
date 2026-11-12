@@ -171,7 +171,7 @@ class UnscentedKalmanEngine(KalmanEngine):
         x_vec = self._to_vec(x)
         P = np.asarray(P, dtype=np.float64)
 
-        if self._accepts_param(model.f, "w"):
+        if self._noise_through_f(model):
             Qw = self._Q(model, t)
             n_a = n + Qw.shape[0]
             gamma, Wm, Wc = self._ut_weights(n_a)
@@ -202,7 +202,7 @@ class UnscentedKalmanEngine(KalmanEngine):
         if not keep.any():
             return np.asarray(x).reshape(-1, 1), P_pred
 
-        if self._accepts_param(model.h, "v"):
+        if self._noise_through_h(model):
             Rv = self._R(model, t)
             n_a = n + Rv.shape[0]
             gamma, Wm, Wc = self._ut_weights(n_a)

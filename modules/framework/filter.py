@@ -261,7 +261,8 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return False
         from .engines.extended import ExtendedKalmanEngine
         from .engines.unscented import UnscentedKalmanEngine
-        if type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine):
+        from .engines.particle import ParticleEngine
+        if type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
             return False
         return native.callback_eligible(self._model)
 
@@ -269,8 +270,14 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         from .models.native import run_callback_filter
         from .engines.unscented import UnscentedKalmanEngine
         model, engine = self._model, self.engine
+        from .engines.particle import ParticleEngine
         if type(engine) is UnscentedKalmanEngine:
             kind = {"engine": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
+        elif type(engine) is ParticleEngine:
+            # The C++ engine has its own random stream; seed it from numpy's, so
+            # np.random.seed() still makes a run repeatable.
+            kind = {"engine": "particle", "n_particles": engine.n_particles,
+                    "threshold": engine.resample_threshold, "seed": int(np.random.randint(0, 2**31 - 1))}
         else:
             kind = {"engine": "extended"}
         out = run_callback_filter(model, zk, uk if model.l > 0 else None, x0=self.x, P0=self.P, **kind)

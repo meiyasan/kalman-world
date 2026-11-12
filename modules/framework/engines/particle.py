@@ -75,8 +75,13 @@ class ParticleEngine(KalmanEngine):
         n = model.n
         u = (np.asarray(u).reshape(-1, 1) if (u is not None and model.l > 0) else None)
         Q = np.asarray(model.Q(t=t), dtype=np.float64)
+        accepts_w = self._noise_through_f(model)
+        if not accepts_w:
+            # Added after f, through the model's coupling: w ~ N(0, L Q L^T).
+            L = self._safe_L(model, np.asarray(model.x0, dtype=np.float64).reshape(-1, 1), u, t)
+            if L is not None:
+                Q = L @ Q @ L.T
         noise = np.random.multivariate_normal(np.zeros(n), Q, size=self.n_particles)
-        accepts_w = self._accepts_param(model.f, "w")
 
         prop = np.empty_like(self._particles)
         for i, xp in enumerate(self._particles):
@@ -84,12 +89,19 @@ class ParticleEngine(KalmanEngine):
             if accepts_w:
                 xi2 = model.f(xi, u=u, w=noise[i].reshape(-1, 1), t=t)
             else:
-                xi2 = np.asarray(model.f(xi, u=u, t=t)).reshape(-1, 1) + noise[i].reshape(-1, 1)
+                xi2 = np.asarray(self._f_plain(model, xi, u, t)).reshape(-1, 1) + noise[i].reshape(-1, 1)
             prop[i] = np.asarray(xi2, dtype=np.float64).reshape(-1)
         self._particles = prop
 
         x_mean, P_cov = self._estimate()
         return x_mean, P_cov, np.eye(n)
+
+    @staticmethod
+    def _f_plain(model, x, u, t):
+        try:
+            return model.f(x, u=u, w=None, t=t)
+        except TypeError:
+            return model.f(x, u=u, t=t)
 
     def _update(self, model, x, P, z, t=None, **kw):
         z = np.asarray(z, dtype=np.float64).reshape(-1)

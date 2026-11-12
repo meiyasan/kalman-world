@@ -114,8 +114,9 @@ namespace Kalman::Engines
         if (u && model.NControl() > 0 && u->Size() == model.NControl()) uu = *u;
 
         Matrix Q = model.Q(t);
+        const bool through = model.HasProcessNoiseInput();   // w goes into f, not after it
         const Matrix L = model.L(t);
-        if (!L.Empty()) Q = Utils::Similarity(L, Q);
+        if (!through && !L.Empty()) Q = Utils::Similarity(L, Q);
 
         bool noisy = false;
         for (std::size_t i = 0; i < Q.Rows() * Q.Cols() && !noisy; ++i) noisy = Q.Data()[i] != 0.;
@@ -123,8 +124,13 @@ namespace Kalman::Engines
 
         for (Vector &p : fParticles)
         {
-            p = model.f(p, uu, t);
-            if (!factor.Empty()) p += Draw(factor);
+            if (through)
+                p = model.f(p, uu, factor.Empty() ? Vector(Q.Rows(), 0.) : Draw(factor), t);
+            else
+            {
+                p = model.f(p, uu, t);
+                if (!factor.Empty()) p += Draw(factor);
+            }
         }
 
         Estimate(xk, Pk);
