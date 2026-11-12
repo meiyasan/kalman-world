@@ -168,6 +168,9 @@ int kalman_model_dynamics(const kalman_model_t *model);
 int kalman_model_set_generator(kalman_model_t *model, const double *A);
 int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc);
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
+int kalman_propagate(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                     const double *x0, const double *P0, double t0, double fs,
+                     const double *uk, const double *wk, double *xk, double *Pk);
 typedef int (*kalman_map_fn)(void *user, const double *x, double *y);
 int kalman_jacobian(int kind, double step, kalman_map_fn fn, void *user, int n, int m,
                     const double *x, const double *y0, double *J);
@@ -497,6 +500,25 @@ def van_loan(A, G, dt):
     F, Q = np.empty_like(A), np.empty_like(A)
     check(L.kalman_van_loan(A.shape[0], cdptr(A), cdptr(G), float(dt), dptr(F), dptr(Q)), "kalman_van_loan")
     return F, Q
+
+
+# --- sampling ------------------------------------------------------------------
+def propagate(model_handle, engine_handle, n, l, N, x0, P0, t0, fs, uk=None, wk=None):
+    """The state chain of a sampled run (kalman_propagate): ``(xk, Pk)`` of shapes
+    ``(N, n)`` and ``(N, n, n)``, with the caller's process-noise draws ``wk``."""
+    L = require()
+    x0 = np.ascontiguousarray(np.asarray(x0, dtype=np.float64).reshape(n))
+    P0 = np.ascontiguousarray(np.asarray(P0, dtype=np.float64).reshape(n, n))
+    if uk is not None and l > 0:
+        uk = np.ascontiguousarray(np.asarray(uk, dtype=np.float64).reshape(N, l))
+    if wk is not None:
+        wk = np.ascontiguousarray(np.asarray(wk, dtype=np.float64).reshape(N, n))
+    xk, Pk = np.empty((N, n)), np.empty((N, n, n))
+    rc = L.kalman_propagate(model_handle, engine_handle, int(N), cdptr(x0), cdptr(P0), float(t0), float(fs),
+                            cdptr(uk) if (uk is not None and l > 0) else ffi.NULL,
+                            cdptr(wk) if wk is not None else ffi.NULL, dptr(xk), dptr(Pk))
+    check(rc, "kalman_propagate")
+    return xk, Pk
 
 
 # --- differentiators -----------------------------------------------------------

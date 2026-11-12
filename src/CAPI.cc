@@ -854,6 +854,40 @@ int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q)
     });
 }
 
+int kalman_propagate(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                     const double *x0, const double *P0, double t0, double fs,
+                     const double *uk, const double *wk, double *xk, double *Pk)
+{
+    return Guard([&] {
+        if (N <= 0 || !xk) throw std::invalid_argument("bad arguments");
+        if (!(fs > 0.)) throw std::invalid_argument("the sample rate must be positive");
+        const Kalman::Model &M = Deref(model);
+        Kalman::Engine &E = Deref(engine);
+        const std::size_t n = M.NState(), l = M.NControl();
+
+        Kalman::Vector x = Vec(x0, n, "x0");
+        Kalman::Matrix P = Mat(P0, n, n, "P0");
+        for (int k = 0; k < N; ++k)
+        {
+            const double t = t0 + static_cast<double>(k) / fs;
+            Kalman::Vector u;
+            if (uk && l > 0) u = Vec(uk + static_cast<std::size_t>(k) * l, l, "uk");
+
+            Kalman::Vector xNext;
+            Kalman::Matrix PNext, F;
+            E.Predict(M, x, P, (uk && l > 0) ? &u : nullptr, t, xNext, PNext, F);
+            if (wk)
+                for (std::size_t i = 0; i < n; ++i) xNext(i) += wk[static_cast<std::size_t>(k) * n + i];
+
+            x = xNext;
+            P = PNext;
+            Copy(x, xk + static_cast<std::size_t>(k) * n, n, "xk");
+            if (Pk) Copy(P, Pk + static_cast<std::size_t>(k) * n * n, n, n, "Pk");
+        }
+        return 0;
+    });
+}
+
 int kalman_jacobian(int kind, double step, kalman_map_fn fn, void *user, int n, int m,
                     const double *x, const double *y0, double *J)
 {

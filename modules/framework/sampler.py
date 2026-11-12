@@ -112,14 +112,19 @@ class KalmanSampler:
         # with z[k], starting from x0) and the order Kalman::Sampler uses.
         # Recording before the step made every measurement, and every control,
         # one step late for the filter.
-        for i in range(n_samples):
-            t_i = t_start + i / self.fs                 # propagate time (for time-varying f/h)
-            u_i = np.asarray(uk[i]).reshape(-1, 1) if self.model.l > 0 else None
+        chain = self._native_chain(n_samples, x, P, t_start, uk, wk, kwargs)
+        if chain is not None:                           # the loop ran in C++
+            xk[:, :, 0], Pk[:] = chain
+            x, P = xk[-1].copy(), Pk[-1].copy()
+        else:
+            for i in range(n_samples):
+                t_i = t_start + i / self.fs             # propagate time (for time-varying f/h)
+                u_i = np.asarray(uk[i]).reshape(-1, 1) if self.model.l > 0 else None
 
-            x, P, _ = self.engine._predict(self.model, x, P, u=u_i, t=t_i, **kwargs)
-            x = x + wk[i]
-            xk[i] = x
-            Pk[i] = P
+                x, P, _ = self.engine._predict(self.model, x, P, u=u_i, t=t_i, **kwargs)
+                x = x + wk[i]
+                xk[i] = x
+                Pk[i] = P
 
         # advance the cursor so the next measurement() resumes at t+1 with the latest state
         self._t = t_start + n_samples / self.fs
@@ -137,6 +142,38 @@ class KalmanSampler:
 
         times = t_start + np.arange(n_samples) / self.fs
         return KalmanRecord(times, zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self.model)
+
+    def _native_chain(self, n_samples, x, P, t_start, uk, wk, kwargs):
+        """The state chain computed by the C++ loop (kalman_propagate), with the
+        noise drawn here by numpy so a seeded run does not change. ``None`` when
+        the Python loop must run: another engine than the extended one, extra
+        arguments for the prediction, a model that is not double precision, or
+        no library."""
+        from .models import native
+        from .engines.extended import ExtendedKalmanEngine
+        if kwargs or not native.native_loop_enabled() or type(self.engine) is not ExtendedKalmanEngine:
+            return None
+        model = self.model
+        if n_samples <= 0 or not native.callback_eligible(model):
+            return None
+        from .native import core
+        n, l = int(model.n), int(model.l)
+        try:
+            draws = np.asarray(wk, dtype=np.float64).reshape(n_samples, n)
+            controls = np.asarray(uk, dtype=np.float64).reshape(n_samples, l) if l > 0 else None
+        except (TypeError, ValueError):
+            return None
+        twin = getattr(model, "native_handle", None)
+        handle, keep = (twin() if twin is not None else None), None
+        if handle is None:
+            handle, keep = native.callback_handle(model, "extended", live_noise=True)
+        try:
+            return core.propagate(handle, core.create_engine("extended"), n, l, n_samples, x, P,
+                                  t_start, self.fs, uk=controls, wk=draws)
+        except RuntimeError:
+            if keep and keep[-1]:
+                raise keep[-1][0]                       # the Python exception, not its C++ shadow
+            raise
 
     def process_noise(self, duration: float, **_):
         """

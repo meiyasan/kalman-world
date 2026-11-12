@@ -332,6 +332,24 @@ int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double 
 /// The model's current F (n x n) and Q (n x n), as decoded. Either may be NULL.
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
 
+/* --- sampling ------------------------------------------------------------------ */
+
+/**
+ * The state chain of a sampled run: N times, predict with `engine` (the mean
+ * through the model, the covariance through its linearisation), then add the
+ * process-noise draw the caller supplies. Sample k is the state after the k-th
+ * step, at time t0 + k / fs.
+ *
+ *   x0: n            P0: n x n         uk: N x l or NULL     wk: N x n or NULL (no noise)
+ *   xk: N x n        Pk: N x n x n (may be NULL)
+ *
+ * The draws come from the caller so that a seeded run is the same run whoever
+ * executes the loop.
+ */
+int kalman_propagate(const kalman_model_t *model, kalman_engine_t *engine, int N,
+                     const double *x0, const double *P0, double t0, double fs,
+                     const double *uk, const double *wk, double *xk, double *Pk);
+
 /* --- differentiators ----------------------------------------------------------- */
 
 /// A map to differentiate: write y = fn(x) (m values) for x (n values). Return 0, or non-zero to stop.

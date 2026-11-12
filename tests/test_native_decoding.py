@@ -175,3 +175,70 @@ class TestSamplerSeed(unittest.TestCase):
         np.testing.assert_array_equal(np.asarray(a.xk), np.asarray(b.xk))
         c = BallisticModel("b", fs=20.0).sample(2.0, seed=5)
         self.assertGreater(np.abs(np.asarray(a.zk) - np.asarray(c.zk)).max(), 0.0)
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
+class TestSamplerInCxx(unittest.TestCase):
+    """The sampling loop runs in C++; the draws stay numpy's, so a seeded run is unchanged."""
+
+    def both(self, make, duration, **kw):
+        a = make().sample(duration, seed=7, **kw)
+        with native.python_reference():
+            b = make().sample(duration, seed=7, **kw)
+        return a, b
+
+    def check(self, a, b):
+        # The covariance goes through a differenced Jacobian, so it agrees as the
+        # filter's does (tests/test_native_twins.py), not to rounding.
+        for name, tol in (("xk", 1e-9), ("zk", 1e-9), ("Pk", 1e-6)):
+            x, y = np.asarray(getattr(a, name), float), np.asarray(getattr(b, name), float)
+            self.assertEqual(x.shape, y.shape, name)
+            scale = max(1.0, np.nanmax(np.abs(y)))
+            self.assertLess(np.nanmax(np.abs(x - y)) / scale, tol, name)
+
+    def test_a_twin_and_a_python_model(self):
+        from modules.apps.ballistics.extended import BallisticModel
+        from modules.apps.vehicles.lane import CarLaneModel
+
+        def ballistic():
+            m = BallisticModel("b", fs=20.0, c_drag=0.02)
+            m.initial_state([0, 30, 0, 0, 20, 0, 100, 40, -9.81])
+            return m
+        self.assertIsNotNone(ballistic().native_handle())
+        self.check(*self.both(ballistic, 5.0))
+        self.check(*self.both(lambda: BallisticModel("b", fs=20.0, drag_uncertainty=0.3, c_drag=0.01), 3.0))   # no twin
+        self.check(*self.both(lambda: CarLaneModel("lane"), 4.0))
+
+    def test_noise_switches_and_resuming(self):
+        from modules.apps.ballistics.extended import BallisticModel
+        from modules.framework.sampler import KalmanSampler
+        make = lambda: BallisticModel("b", fs=20.0)
+        self.check(*self.both(make, 2.0, process_noise=False))
+        self.check(*self.both(make, 2.0, measurement_noise=False))
+
+        np.random.seed(3)
+        s = KalmanSampler(make())
+        first, second = s.measurement(1.0), s.measurement(1.0)
+        np.random.seed(3)
+        with native.python_reference():
+            r = KalmanSampler(make())
+            first_r, second_r = r.measurement(1.0), r.measurement(1.0)
+        self.check(first, first_r)
+        self.check(second, second_r)
+        self.assertAlmostEqual(float(np.asarray(second.time)[0]), 1.0, places=9)        # it resumed where it stopped
+
+    def test_a_python_error_in_the_model_comes_back_as_itself(self):
+        from modules.framework.models.extended import ExtendedKalmanModel
+
+        class Breaks(ExtendedKalmanModel):
+            def __init__(self):
+                self.n, self.m, self.l = 1, 1, 0
+                super().__init__("x", Q=np.eye(1), R=np.eye(1), L=np.eye(1), fs=10.0, x0=np.ones((1, 1)))
+            def f(self, x, u=None, w=None, t=None):
+                if t is not None and t > 0.25:
+                    raise OverflowError("diverged")
+                return np.asarray(x, float)
+            def h(self, x, v=None, t=None):
+                return np.asarray(x, float)
+        with self.assertRaises(OverflowError):
+            Breaks().sample(1.0)
