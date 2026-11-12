@@ -353,3 +353,33 @@ class TestLoadPluginAuth(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestPublicNativeModule(unittest.TestCase):
+    """``kalman.native`` (modules/native.py) is the one public door to the C++ side."""
+
+    def test_status_and_models(self):
+        import modules.native as native
+        self.assertEqual(native.available(), core.HAS_CXX_CORE)
+        status = native.status()
+        self.assertEqual(set(status), {"core", "apps", "learn"})
+        self.assertEqual(status["core"]["loaded"], core.HAS_CXX_CORE)
+        for name in native.__all__:
+            self.assertTrue(hasattr(native, name), name)
+
+    def test_without_the_library_python_warns_and_still_works(self):
+        import subprocess, sys
+        code = ("import warnings, sys\n"
+                "with warnings.catch_warnings(record=True) as seen:\n"
+                "    warnings.simplefilter('always')\n"
+                "    from modules.framework.native import core\n"
+                "    import numpy as np\n"
+                "    from modules.framework.filter import KalmanFilter\n"
+                "    f = KalmanFilter(n=1, m=1, F=np.eye(1), H=np.eye(1), Q=np.eye(1) * 1e-3, R=np.eye(1), fs=1.0)\n"
+                "    rec = f.forward(np.ones((5, 1)))\n"
+                "assert not core.HAS_CXX_CORE\n"
+                "assert any(issubclass(w.category, core.PurePythonWarning) for w in seen), [str(w.message) for w in seen]\n"
+                "assert np.all(np.isfinite(np.asarray(rec.xk)))\n")
+        env = dict(os.environ, KALMAN_PURE_PYTHON="1")
+        done = subprocess.run([sys.executable, "-c", code], cwd=REPO, env=env, capture_output=True, text=True)
+        self.assertEqual(done.returncode, 0, done.stderr[-1500:])

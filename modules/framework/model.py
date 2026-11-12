@@ -279,8 +279,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         ``1/fs`` by the model's integrator, then :meth:`after_step`. No noise."""
         steps = self.substeps(x)
         dt = ((1.0 / self.fs) if self.fs else 1.0) / steps
-        rate = lambda xx, uu, tt: np.asarray(self.derivative(xx, u=uu, t=tt), dtype=self.dtype)
-        xk = self.default_integrator().integrate(rate, np.asarray(x, dtype=self.dtype), u=u,
+        # The state is a column throughout, whatever shape the caller passed: a
+        # flat state plus a column derivative would broadcast to a matrix.
+        rate = lambda xx, uu, tt: np.asarray(self.derivative(xx, u=uu, t=tt), dtype=self.dtype).reshape(-1, 1)
+        xk = self.default_integrator().integrate(rate, np.asarray(x, dtype=self.dtype).reshape(-1, 1), u=u,
                                                  t=(0.0 if t is None else t), dt=dt, n=steps)
         return self.after_step(xk, u=u, t=t)
 

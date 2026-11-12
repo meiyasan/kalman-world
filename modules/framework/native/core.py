@@ -299,10 +299,30 @@ def load(path: str | None = None):
     return lib
 
 
+class PurePythonWarning(FutureWarning):
+    """Raised once at import when libKalman is not loaded.
+
+    C++ is the implementation of the framework; the Python arithmetic is kept as
+    the reference the tests compare against and will stop being a way to run
+    it. Build the library (``make build`` then ``cmake --install var/build``),
+    install the conda package, or point ``KALMAN_LIBRARY`` at it. To silence::
+
+        warnings.filterwarnings("ignore", category=kalman.framework.native.core.PurePythonWarning)
+    """
+
+
 try:
+    # KALMAN_PURE_PYTHON=1 leaves the library out on purpose (comparisons, debugging).
+    if os.environ.get("KALMAN_PURE_PYTHON", "0") == "1":
+        raise OSError("libKalman left out on request (KALMAN_PURE_PYTHON=1)")
     load()
 except Exception as _e:                       # missing library, wrong arch, no cffi ...
     LOAD_ERROR = f"{type(_e).__name__}: {_e}"
+    import warnings as _warnings
+    _warnings.warn(
+        "libKalman is not loaded (" + LOAD_ERROR.split(". Looked in")[0] + "); the framework is running on its "
+        "Python reference code, which is deprecated as a way to run it and slower. Build or install the "
+        "library, or set KALMAN_LIBRARY.", PurePythonWarning, stacklevel=2)
 
 
 def require():
