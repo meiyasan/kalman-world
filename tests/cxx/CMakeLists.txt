@@ -57,6 +57,16 @@ foreach(SRC ${TEST_SOURCES})
         endif()
         target_link_libraries(${TEST_NAME} PRIVATE KalmanLearn)
     endif()
+    # The servers: the tests named *_net link libKalmanNet (and read its JSON
+    # answers with nlohmann_json), and are left out of a build without it.
+    if(TEST_NAME MATCHES "_net$")
+        if(NOT TARGET KalmanNet)
+            set_target_properties(${TEST_NAME} PROPERTIES EXCLUDE_FROM_ALL TRUE)
+            continue()
+        endif()
+        find_package(nlohmann_json QUIET)
+        target_link_libraries(${TEST_NAME} PRIVATE KalmanNet nlohmann_json::nlohmann_json)
+    endif()
 
     # A Release build inherits CMAKE_BUILD_WITH_INSTALL_RPATH from
     # ProjectArchitecture, which points these binaries at the install prefix -- so

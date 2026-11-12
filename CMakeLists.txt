@@ -79,6 +79,7 @@ DUMP_PROJECT()
 #                   controllers, routers. No required dependency.
 #   libKalmanApps   the application models (apps/).
 #   libKalmanLearn  learned components and the AI runtimes they need (learn/).
+#   libKalmanNet    the JSON API, the REST and MCP servers (net/).
 #
 # libKalman is a **standalone** library: no ROOT, no Eigen, no Torch, no ONNX
 # Runtime. The dependency runs the other way — a ROOT/ROOT+ component links
@@ -189,12 +190,19 @@ if(BUILD_LIBRARY)
         add_subdirectory("learn")
     endif()
 
-    # The CMake package: `find_package(Kalman COMPONENTS Apps Learn)` gives the
-    # targets Kalman::Kalman, Kalman::Apps and Kalman::Learn. After the
+    # libKalmanNet: the JSON API, the REST and MCP servers and `kalman-serve`.
+    # Skipped, with a notice, when nlohmann_json, cpp-httplib or OpenSSL is missing.
+    option(KALMAN_BUILD_NET "Build libKalmanNet (JSON API, REST and MCP servers)" ON)
+    if(KALMAN_BUILD_NET AND EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/net/CMakeLists.txt)
+        add_subdirectory("net")
+    endif()
+
+    # The CMake package: `find_package(Kalman COMPONENTS Apps Learn Net)` gives the
+    # targets Kalman::Kalman, Kalman::Apps, Kalman::Learn and Kalman::Net. After the
     # subdirectories, which add their targets to the same export set.
     include(CMakePackageConfigHelpers)
     set(KALMAN_COMPONENTS "")
-    foreach(_component Apps Learn)
+    foreach(_component Apps Learn Net)
         if(TARGET Kalman${_component})
             list(APPEND KALMAN_COMPONENTS ${_component})
         endif()
@@ -217,6 +225,9 @@ if(BUILD_LIBRARY)
         endif()
         if(TARGET KalmanLearn)
             add_dependencies(lib KalmanLearn)
+        endif()
+        if(TARGET KalmanNet)
+            add_dependencies(lib KalmanNet kalman-serve)
         endif()
 
         # The C++ tests live in tests/cxx so that `tests/` stays the pytest suite;
@@ -254,6 +265,7 @@ set(DOXYGEN_INPUT
     "${CMAKE_SOURCE_DIR}/include/Kalman"
     "${CMAKE_SOURCE_DIR}/apps/include"
     "${CMAKE_SOURCE_DIR}/learn/include"
+    "${CMAKE_SOURCE_DIR}/net/include"
     "${CMAKE_SOURCE_DIR}/examples"
     # The grouping of the guide pages in the side navigation.
     "${CMAKE_SOURCE_DIR}/share/site"
