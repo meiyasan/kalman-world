@@ -12,6 +12,7 @@
 #include "Kalman/Routers/Hybrid.h"
 #include "Kalman/Routers/Threshold.h"
 
+#include <algorithm>
 #include <cmath>
 #include <stdexcept>
 
@@ -70,14 +71,18 @@ namespace Kalman::Routers
         if (nis.Rows() == 0)
             return Vector(M, 1. / static_cast<double>(M));   // nothing observed yet
 
-        const Matrix block = NisWindow(nis, fWindow);
-
+        // The mean of the last `window` rows, or of all of them while there are
+        // fewer: a short history is averaged as it is, not padded (padding with the
+        // chi2(1) mean would pull every model toward 1 whatever m is). The same
+        // rule as routers/threshold.py, which forwards here; a window of 0 is the
+        // whole history, as `nis[-0:]` is in numpy.
+        const std::size_t rows = fWindow == 0 ? nis.Rows() : std::min(fWindow, nis.Rows());
         Vector dist(M);
         for (std::size_t j = 0; j < M; ++j)
         {
             double mean = 0.;
-            for (std::size_t r = 0; r < block.Rows(); ++r) mean += block(r, j);
-            mean /= static_cast<double>(block.Rows());
+            for (std::size_t r = nis.Rows() - rows; r < nis.Rows(); ++r) mean += nis(r, j);
+            mean /= static_cast<double>(rows);
             dist(j) = std::abs(mean - static_cast<double>(fM));
         }
 

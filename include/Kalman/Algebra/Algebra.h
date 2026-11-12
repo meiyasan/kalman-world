@@ -12,7 +12,8 @@
  *
  * - Cholesky.h: the factorisation `S = L L^T`, Solve() and Inverse();
  * - Symmetric.h: symmetrising, the symmetric eigen-decomposition, conditioning;
- * - Exponential.h: `exp(A)` and the Van Loan decoding of a continuous system.
+ * - Exponential.h: `exp(A)` and the Van Loan decoding of a continuous system;
+ * - Riccati.h: the discrete algebraic Riccati equation (LQR) and the Stein equation.
  *
  * These are utilities, not a role: nobody chooses between them. The roles a
  * user does choose are the Integrator (time), the Solver (space, for a field)
@@ -27,5 +28,6 @@
 #include "Kalman/Algebra/Cholesky.h"
 #include "Kalman/Algebra/Symmetric.h"
 #include "Kalman/Algebra/Exponential.h"
+#include "Kalman/Algebra/Riccati.h"
 
 #endif // KALMAN_ALGEBRA_ALGEBRA_H

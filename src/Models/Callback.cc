@@ -113,6 +113,15 @@ namespace Kalman::Models
         return fProcessNoise ? Matrix() : Extended::L(t);
     }
 
+    Vector Callback::ClipControl(const Vector &u) const
+    {
+        if (!fClip || u.Empty()) return u;
+        const std::vector<double> uin = Flat(u);
+        std::vector<double> out(u.Size());
+        Check(fClip(fUser, uin.data(), out.data()), "clip");
+        return ToVector(out);
+    }
+
     void Callback::SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure)
     {
         fNoisyStep = noisyStep;

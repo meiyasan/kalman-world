@@ -77,11 +77,25 @@ int main()
         CHECK(ms(1) > ms(0) && ms(1) > ms(2), "Threshold(soft): still prefers the best match");
         CHECK(ms(0) > 0., "Threshold(soft): keeps the others alive");
 
-        // A short history must not read as a wrong answer: front-padding keeps the
-        // most recent step in the last slot whatever the length.
+        // A short history is averaged as it is (as routers/threshold.py does), not
+        // padded: padding with the chi2(1) mean would drag every model toward 1.
         const Matrix shortNis = MakeNis(2, 3, 1, m);
         const Vector me = hard.Route(shortNis, c, L);
         CHECK_CLOSE(me(1) + me(0) + me(2), 1., 1e-12, "Threshold: normalised on a short history");
+        CHECK_CLOSE(me(1), 1., 0., "Threshold: a short history still picks the model at m");
+        Matrix two(2, 2, 0.);
+        two(0, 0) = 3.; two(1, 0) = 3.;                    // model 0 sits at 3 = m, model 1 at 0
+        Threshold three(3, 5, true);
+        const Vector ms3 = three.Route(two, Vector(2, 0.5), Vector(2, 1.));
+        CHECK_CLOSE(ms3(0), (1. / 1e-6) / (1. / 1e-6 + 1. / (3. + 1e-6)), 1e-12,
+                    "Threshold(soft): the mean of the rows there are, with m = 3");
+        // Window 0 is the whole history (numpy's nis[-0:]): model 0 averages 3 = m over
+        // all four rows, though its last row says 0.
+        Matrix grow(4, 2, 1.);
+        grow(0, 0) = 12.; grow(1, 0) = 0.; grow(2, 0) = 0.; grow(3, 0) = 0.;
+        Threshold all(3, 0, false), last(3, 1, false);
+        CHECK_CLOSE(all.Route(grow, Vector(2, 0.5), Vector(2, 1.))(0), 1., 0., "Threshold: window 0 averages every row");
+        CHECK_CLOSE(last.Route(grow, Vector(2, 0.5), Vector(2, 1.))(1), 1., 0., "Threshold: window 1 reads the last row");
 
         const Matrix empty(0, 3, 0.);
         const Vector mu0 = hard.Route(empty, c, L);

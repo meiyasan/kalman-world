@@ -56,6 +56,8 @@ namespace Kalman::Models
             using NoisyStepFn = int (*)(void *user, const double *x, const double *u, const double *w, double t, double *x_next);
             /// `z = h(x, v, t)`, the observation with its noise \p v (length m) inside.
             using NoisyMeasureFn = int (*)(void *user, const double *x, const double *v, double t, double *z);
+            /// `u_out = clip(u)`, both of length l: what the actuator delivers of a command.
+            using ClipFn = int (*)(void *user, const double *u, double *u_out);
 
         private:
             StepFn fStep;
@@ -68,6 +70,7 @@ namespace Kalman::Models
             MeasurementNoiseFn fMeasurementNoise = nullptr;
             NoisyStepFn fNoisyStep = nullptr;
             NoisyMeasureFn fNoisyMeasure = nullptr;
+            ClipFn fClip = nullptr;
             // The point of the last f() call. An engine asks for Q(t) right after
             // stepping from (x, u, t); a state-dependent noise needs that point.
             mutable Vector fLastX, fLastU;
@@ -106,6 +109,10 @@ namespace Kalman::Models
             /// Give the maps that take their noise as an argument (either may be
             /// null). The sigma-point engine then augments the state with it.
             void SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure);
+
+            /// Give the model its actuator limit (Model::ClipControl); null keeps the identity.
+            void SetClip(ClipFn clip) { fClip = clip; }
+            Vector ClipControl(const Vector &u) const override;
 
             using Extended::f;
             bool HasProcessNoiseInput() const override { return fNoisyStep != nullptr; }
