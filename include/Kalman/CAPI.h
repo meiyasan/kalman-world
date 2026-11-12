@@ -307,6 +307,25 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
                                   double *x_smooth, double *P_smooth, double *innovations,
                                   double *transitions, double *controls);
 
+/* --- integrators ------------------------------------------------------------ */
+
+/**
+ * The derivative of a state: write dx/dt (n) at state `x` (n) and time `t`.
+ * The control, if any, is the caller's to carry in `user`. Return 0, or non-zero
+ * to stop.
+ */
+typedef int (*kalman_derivative_fn)(void *user, const double *x, double t, double *dx);
+
+/**
+ * Advance `x` (n) by `nsteps` steps of `dt` from time `t` with a Kalman::Integrator:
+ * `kind` is 0 Euler, 1 RK4, 2 Dormand-Prince (adaptive; `rtol`, `atol` and
+ * `max_substeps` apply to it only, and a non-positive value means its default).
+ * Writes the result to `out` (n; may alias `x`).
+ */
+int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
+                     kalman_derivative_fn f, void *user, int n,
+                     const double *x, double t, double dt, int nsteps, double *out);
+
 /* --- kernels: the framework's arithmetic for a model that lives elsewhere ---
  *
  * The Python engines evaluate the model themselves -- f at the sigma points, F/H/Q/R

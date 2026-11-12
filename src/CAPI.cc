@@ -21,6 +21,8 @@
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Controller.h"
 #include "Kalman/Filter.h"
+#include "Kalman/Integrators/DormandPrince.h"
+#include "Kalman/Integrator.h"
 #include "Kalman/Model.h"
 #include "Kalman/Tracking.h"
 
@@ -788,6 +790,40 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
         if (!control) throw std::invalid_argument("null control function");
         return RunFilter(model, engine, N, zk, nullptr, control, user, smooth, x_prior, P_prior, x_post, P_post,
                          x_smooth, P_smooth, innovations, transitions, controls);
+    });
+}
+
+int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
+                     kalman_derivative_fn f, void *user, int n,
+                     const double *x, double t, double dt, int nsteps, double *out)
+{
+    return Guard([&] {
+        if (!f) throw std::invalid_argument("null derivative function");
+        if (n <= 0 || nsteps < 0 || !x || !out) throw std::invalid_argument("bad arguments");
+        const std::size_t size = static_cast<std::size_t>(n);
+
+        std::unique_ptr<Kalman::Integrator> integrator;
+        if (kind == static_cast<int>(Kalman::IntegratorKind::DormandPrince))
+            integrator = std::make_unique<Kalman::Integrators::DormandPrince>(
+                rtol > 0. ? rtol : 1e-6, atol > 0. ? atol : 1e-9,
+                max_substeps > 0 ? static_cast<std::size_t>(max_substeps) : 10000);
+        else
+            integrator = Kalman::Integrators::Make(static_cast<Kalman::IntegratorKind>(kind));
+
+        std::vector<double> in(size), dx(size);
+        const Kalman::Derivative derivative = [&](const Kalman::Vector &state, const Kalman::Vector &, double time) {
+            for (std::size_t i = 0; i < size; ++i) in[i] = state(i);
+            if (f(user, in.data(), time, dx.data()) != 0)
+                throw std::runtime_error("the derivative function failed");
+            Kalman::Vector d(size);
+            for (std::size_t i = 0; i < size; ++i) d(i) = dx[i];
+            return d;
+        };
+
+        const Kalman::Vector result = integrator->Integrate(derivative, Vec(x, size, "x"), Kalman::Vector(), t, dt,
+                                                            static_cast<std::size_t>(nsteps));
+        Copy(result, out, size, "out");
+        return 0;
     });
 }
 

@@ -162,6 +162,10 @@ int kalman_filter_run_closed_loop(const kalman_model_t *model, kalman_engine_t *
                                   double *x_prior, double *P_prior, double *x_post, double *P_post,
                                   double *x_smooth, double *P_smooth, double *innovations,
                                   double *transitions, double *controls);
+typedef int (*kalman_derivative_fn)(void *user, const double *x, double t, double *dx);
+int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
+                     kalman_derivative_fn f, void *user, int n,
+                     const double *x, double t, double dt, int nsteps, double *out);
 
 void kf_predict(int n, int l,
                 const double *F, const double *x, const double *P,
@@ -460,6 +464,56 @@ def _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, con
     if raised:
         raise raised[0]
     check(rc, "kalman_filter_run_closed_loop")
+    return out
+
+
+# --- integrators ---------------------------------------------------------------
+INTEGRATOR_KINDS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
+_derivatives: list = []          # the derivatives being integrated, innermost last
+_derivative_cb = None
+
+
+def _derivative_callback():
+    """One C callback for every integration: it serves the derivative on top of
+    the stack, so no callback is built per call."""
+    global _derivative_cb
+    if _derivative_cb is None:
+        @ffi.callback("int(void *, const double *, double, double *)")
+        def call(_user, x, t, dx):
+            frame = _derivatives[-1]
+            try:
+                n = frame["n"]
+                state = np.frombuffer(ffi.buffer(x, n * 8), dtype=np.float64).reshape(frame["shape"]).copy()
+                d = np.asarray(frame["f"](state, frame["u"], t), dtype=np.float64).reshape(-1)
+                if d.size != n:
+                    raise ValueError(f"the derivative returned {d.size} values for a state of {n}.")
+                ffi.buffer(dx, n * 8)[:] = d.tobytes()
+                return 0
+            except BaseException as e:           # must not cross the C boundary
+                frame["raised"] = e
+                return -1
+        _derivative_cb = call
+    return _derivative_cb
+
+
+def integrate(kind, f, x, u=None, t=0.0, dt=1.0, n=1, rtol=0.0, atol=0.0, max_substeps=0):
+    """``x`` advanced by ``n`` steps of ``dt`` with the C++ integrator ``kind``
+    (``"euler"``, ``"rk4"``, ``"dormand_prince"``); ``f(x, u, t)`` is the derivative,
+    called with ``x`` in the shape it was given in. Returns that shape."""
+    L = require()
+    state = np.ascontiguousarray(np.asarray(x, dtype=np.float64))
+    out = np.empty_like(state)
+    frame = {"f": f, "u": u, "n": state.size, "shape": state.shape, "raised": None}
+    _derivatives.append(frame)
+    try:
+        rc = L.kalman_integrate(INTEGRATOR_KINDS[kind], float(rtol), float(atol), int(max_substeps),
+                                _derivative_callback(), ffi.NULL, state.size, cdptr(state),
+                                float(t), float(dt), int(n), dptr(out))
+    finally:
+        _derivatives.pop()
+    if frame["raised"] is not None:
+        raise frame["raised"]
+    check(rc, "kalman_integrate")
     return out
 
 

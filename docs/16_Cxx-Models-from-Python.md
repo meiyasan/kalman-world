@@ -24,6 +24,7 @@ the two.
 | The Kalman update, the smoother, sigma-point and particle sums | C++ (`libKalman`) | when the library is found; numpy otherwise |
 | A linear model with fixed matrices | C++, the whole pass in one call | when the library is found |
 | A nonlinear model written in Python | the loop and the filter arithmetic in C++; C++ calls the Python `f` and `h` | extended, unscented, particle and ensemble engines, when the library is found |
+| The integrators (Euler, RK4, Dormand-Prince): `step`, `integrate` | C++ (`Kalman::Integrators`), calling the Python derivative | real double-precision states; complex states and schemes written in Python stay in Python |
 | A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
 | The four application models with a C++ twin | C++, the whole pass in one call | when `libKalmanApps` is found |

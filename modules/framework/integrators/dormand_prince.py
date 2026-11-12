@@ -41,7 +41,12 @@ class DormandPrinceIntegrator(KalmanIntegrator):
     def __init__(self, rtol: float = 1e-6, atol: float = 1e-9, max_substeps: int = 10_000):
         self.rtol, self.atol, self.max_substeps = float(rtol), float(atol), int(max_substeps)
 
-    def step(self, f, x, u=None, t=None, dt=1.0):
+    NATIVE = "dormand_prince"
+
+    def _native_options(self):
+        return dict(rtol=self.rtol, atol=self.atol, max_substeps=self.max_substeps)
+
+    def _step(self, f, x, u=None, t=None, dt=1.0):
         x = np.asarray(x, dtype=float)
         t0 = 0.0 if t is None else float(t)
         target = t0 + dt
@@ -55,8 +60,8 @@ class DormandPrinceIntegrator(KalmanIntegrator):
                 xi = x + h * sum(_A[i][j] * ks[j] for j in range(i)) if i else x
                 ks.append(np.asarray(f(xi, u, t + _C[i] * h), dtype=float))
             K = np.stack(ks)
-            x5 = x + h * (_B5 @ K)
-            x4 = x + h * (_B4 @ K)
+            x5 = x + h * np.tensordot(_B5, K, axes=1)
+            x4 = x + h * np.tensordot(_B4, K, axes=1)
             err = np.linalg.norm((x5 - x4) / (self.atol + self.rtol * np.maximum(np.abs(x), np.abs(x5))))
             err = err / max(np.sqrt(x.size), 1)
             if err <= 1.0 or abs(h) <= 1e-14 * abs(dt):
@@ -64,3 +69,7 @@ class DormandPrinceIntegrator(KalmanIntegrator):
             # PI-free step-size update (clamped)
             h *= min(5.0, max(0.2, 0.9 * (1.0 / max(err, 1e-12)) ** 0.2))
         return x
+
+
+from ..integrator import _BUILTIN_STEPS
+_BUILTIN_STEPS["dormand_prince"] = DormandPrinceIntegrator._step
