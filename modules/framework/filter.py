@@ -285,7 +285,13 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             if self.engine._rho_xy is not None or self.engine._rho_yy is not None:
                 return False
         elif type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
-            return False
+            # A linear model that the fused linear pass does not take (a controller
+            # function, matrices that change with time) runs on the C++ extended
+            # engine, which on a linear model with its own F and H is the same
+            # arithmetic.
+            from .engines.linear import LinearKalmanEngine
+            if type(self.engine) is not LinearKalmanEngine:
+                return False
         return native.callback_eligible(self._model)
 
     def _forward_callback(self, zk, uk, uk_fn=None):

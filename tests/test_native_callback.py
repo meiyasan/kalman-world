@@ -487,3 +487,54 @@ class TestClosedLoopOnTheCxxLoop(unittest.TestCase):
         with self.assertRaises(ValueError):
             KalmanFilter(DrivenPendulum()).forward(self._measurements(20),
                                                    lambda x, P, t, nu=None: np.zeros(3), record=False)
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
+class TestLinearModelsOffTheFusedPass(unittest.TestCase):
+    """Linear models the fused linear pass does not take still run in C++."""
+
+    def compare(self, make, zk, uk=None):
+        from modules.framework.filter import KalmanFilter
+        out = []
+        for reference in (True, False):
+            f = KalmanFilter(make())
+            if reference:
+                with native.python_reference():
+                    f.forward(zk, uk() if callable(uk) and uk.__name__ == "factory" else uk, record=False)
+            else:
+                self.assertTrue(f._callback_eligible(uk if callable(uk) else None) or uk is None)
+                f.forward(zk, uk() if callable(uk) and uk.__name__ == "factory" else uk, record=False)
+            out.append((np.array([x for x, _ in f.posterior]).reshape(len(zk), -1),
+                        np.array([P for _, P in f.posterior])))
+        (x_ref, P_ref), (x_cxx, P_cxx) = out
+        np.testing.assert_allclose(x_cxx, x_ref, atol=1e-10)
+        np.testing.assert_allclose(P_cxx, P_ref, atol=1e-10)
+        return x_ref
+
+    def test_a_linear_model_in_closed_loop(self):
+        from modules.framework.model import KalmanModel
+        dt = 0.1
+        def make():
+            return KalmanModel("cart", F=np.array([[1.0, dt], [0.0, 1.0]]), B=np.array([[0.5 * dt * dt], [dt]]),
+                               H=np.array([[1.0, 0.0]]), Q=np.diag([1e-5, 1e-3]), R=np.array([[0.04]]),
+                               L=np.eye(2), fs=1.0 / dt, x0=np.array([[1.0], [0.0]]), P0=np.eye(2))
+        rng = np.random.default_rng(2)
+        zk = (np.exp(-0.2 * np.arange(120) * dt) + 0.2 * rng.standard_normal(120)).reshape(-1, 1)
+        zk[40:46] = np.nan
+        def policy(x, P, t, nu=None):
+            return np.array([[-3.0 * x[0, 0] - 2.0 * x[1, 0]]])
+        x = self.compare(make, zk, policy)
+        self.assertLess(abs(x[-1, 0]), abs(x[0, 0]))               # the controller did pull it in
+
+    def test_matrices_that_change_with_time(self):
+        from modules.framework.model import KalmanModel
+        def make():
+            def rotation(t=None):                       # the framework also asks with t=None
+                angle = 0.2 + 0.1 * (t or 0.0)
+                return np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])
+            return KalmanModel("chirp", F=rotation,
+                               H=np.array([[1.0, 0.0]]), Q=np.eye(2) * 1e-4, R=np.array([[0.01]]), L=np.eye(2),
+                               fs=10.0, x0=np.array([[1.0], [0.0]]), P0=np.eye(2), n=2, m=1)
+        rng = np.random.default_rng(3)
+        zk = (np.cos(0.3 * np.arange(80)) + 0.1 * rng.standard_normal(80)).reshape(-1, 1)
+        self.compare(make, zk)
