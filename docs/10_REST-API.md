@@ -9,6 +9,9 @@ $ pip install "kalman[rest]"
 $ make rest                       # python -m kalman.rest
 ```
 
+The same routes, for the models that live in C++, are also served by a C++
+program, `kalman-serve --rest` ([libKalmanNet](18_Net.md)).
+
 ---
 
 ## Ports and addresses

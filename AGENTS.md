@@ -422,6 +422,19 @@ Conventions, most of which the build or the tests will enforce:
   include a runtime header outside `learn/src/`. The core's one optional backend
   is BLAS (`KALMAN_USE_BLAS`). Everything is complete and correct with all of
   them off.
+- **`libKalmanNet` (`net/`) is the servers, and its dependencies stay in `net/`.**
+  The JSON API, the REST and MCP servers and `kalman-serve` (docs/18). nlohmann_json,
+  cpp-httplib, OpenSSL and SQLite are found by `net/CMakeLists.txt` only and linked
+  PRIVATE; the public headers `Kalman/Net/*.h` use the standard library only, and the
+  core gains no dependency for it (never add one of them to `include/` or `src/`). A
+  verb keeps the name, arguments, answer shape and error message of its namesake in
+  `modules/api/__init__.py`, and its route and tool those of `modules/rest/app.py` and
+  `modules/mcp/server.py`; `tests/test_net_server.py` compares the answers with the
+  Python facade's, so a changed Python verb changes the C++ one in the same commit.
+  Models written in Python are served by the Python process only: the C++ server
+  answers 400 for them and 501 for the verbs that need a Python library, naming the
+  Python server, rather than half-serving them. Tokens are verified here (the rules
+  of `auth.py`, the revocation list in the shared registry) and issued in Python.
 - **The core was `libKalmanFramework` up to 1.0.** The build installs that name
   as a link, and `native/core.py` still looks for it and reads the old
   environment variables. Keep both until a release note says otherwise.

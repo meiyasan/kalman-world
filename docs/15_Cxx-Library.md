@@ -197,15 +197,16 @@ make install       # into var/install by default
 `make tests` remains the **Python** suite; the C++ tests live in `tests/cxx/` and
 run under ctest, so the two never shadow each other.
 
-### The three libraries
+### The four libraries
 
-`make build` builds three libraries, installed side by side:
+`make build` builds four libraries, installed side by side:
 
 | Library | CMake target | What it holds | Depends on |
 |---|---|---|---|
 | `libKalman` | `Kalman::Kalman` | the core: models, engines, filters, integrators, solvers, controllers, routers | nothing (BLAS when found) |
 | `libKalmanApps` | `Kalman::Apps` | the application models, each the twin of a Python class | `libKalman` |
 | `libKalmanLearn` | `Kalman::Learn` | learned components: the ONNX and TorchScript backends | `libKalman`; ONNX Runtime and libTorch, both optional |
+| `libKalmanNet` | `Kalman::Net` | the JSON API, the REST and MCP servers, `kalman-serve` ([docs/18](18_Net.md)) | `libKalman`; nlohmann_json, cpp-httplib, OpenSSL (SQLite optional), all private |
 
 Up to release 1.0 the core was called `libKalmanFramework`. That name is still
 installed as a link to `libKalman`, and the Python package still reads the old
@@ -230,6 +231,7 @@ None is needed for correctness.
 | `KALMAN_USE_ONNXRUNTIME` | `libKalmanLearn` | `NN::Onnx`: ONNX routing policies, the portable half of the seam | on when ONNX Runtime is found |
 | `KALMAN_USE_TORCH` | `libKalmanLearn` | `NN::Torch` (TorchScript routing policies) and `Learn::Solvers::Vorticity` (the batched field solver, CPU/CUDA/MPS) | on when a libTorch is found |
 | `KALMAN_BUILD_LEARN` | | build `libKalmanLearn` at all | on |
+| `KALMAN_BUILD_NET` | | build `libKalmanNet` and `kalman-serve` (skipped with a notice when a dependency is missing) | on |
 
 The AI runtimes are looked for by `libKalmanLearn` only. `libKalman` never
 links one, whatever is installed on the build machine: a core linked to one

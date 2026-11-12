@@ -14,6 +14,7 @@ and MCP. It is written in C++ and used from C++ or from Python.
 | `libKalman` | the C++ core: models, engines, filters, integrators, solvers, controllers, routers. No required dependency |
 | `libKalmanApps` | application models in C++, each the twin of a Python class |
 | `libKalmanLearn` | learned components: policies trained in Python, run from C++ |
+| `libKalmanNet` | the JSON API with its REST and MCP servers in C++ (`kalman-serve`), for the models that live in C++ |
 | `kalman` (Python) | the interface: the same roles as classes, models written in Python, the notebooks, the JSON API |
 
 This repository is `kalman-framework`; the Python package is `kalman`.
@@ -37,6 +38,7 @@ Full documentation lives in [`docs/`](docs/README.md):
 | [C++ Library](docs/15_Cxx-Library.md) | `libKalman`, for ROOT / ROOT+ analyses |
 | [C++ Models from Python](docs/16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages |
 | [Applications](docs/17_Applications.md) | One page per application: the model, how it is built, how to run it |
+| [libKalmanNet](docs/18_Net.md) | The JSON API, REST and MCP servers in C++: `kalman-serve` |
 
 `make setup` installs everything and self-checks; [`AGENTS.md`](AGENTS.md) has the
 conventions for changing the code. The rest of this file is the reference for
