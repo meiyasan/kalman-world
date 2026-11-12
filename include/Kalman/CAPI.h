@@ -332,6 +332,28 @@ int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double 
 /// The model's current F (n x n) and Q (n x n), as decoded. Either may be NULL.
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
 
+/* --- solvers (fields) ---------------------------------------------------------- */
+
+/**
+ * Advance `batch` vorticity fields (batch x ny x nx) by `nsteps` steps of `dt` with
+ * Kalman::Solvers::Vorticity: dw/dt = -u.grad(w) - beta v + nu lap(w) + F, on a
+ * periodic Ly x Lx box. `forcing_re` / `forcing_im` are the transform of F (ny x nx
+ * each) or both NULL. `integrator` is 0 Euler, 1 RK4, 2 Dormand-Prince (its
+ * tableau, at a fixed step). `out` has the layout of `w` and may alias it.
+ */
+int kalman_solve_vorticity(int ny, int nx, double dt, double Ly, double Lx,
+                           double nu, double beta, const double *forcing_re, const double *forcing_im,
+                           int integrator, const double *w, int batch, int nsteps, double *out);
+
+/**
+ * Advance one field (ny x nx) by `nsteps` steps of `dt` with
+ * Kalman::Solvers::FiniteDifference and its default physics, diffusion
+ * df/dt = nu lap(f). `boundary` is 0 periodic, 1 Dirichlet, 2 Neumann.
+ */
+int kalman_solve_diffusion(int ny, int nx, double dt, double Ly, double Lx,
+                           int boundary, double boundary_value, double nu,
+                           int integrator, const double *w, int nsteps, double *out);
+
 /* --- sampling ------------------------------------------------------------------ */
 
 /**

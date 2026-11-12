@@ -22,6 +22,8 @@
 #include "Kalman/Controller.h"
 #include "Kalman/Differentiator.h"
 #include "Kalman/Filter.h"
+#include "Kalman/Solvers/FiniteDifference.h"
+#include "Kalman/Solvers/Vorticity.h"
 #include "Kalman/Utils.h"
 #include "Kalman/Integrators/DormandPrince.h"
 #include "Kalman/Integrator.h"
@@ -29,6 +31,7 @@
 #include "Kalman/Tracking.h"
 
 #include <algorithm>
+#include <complex>
 #include <cstring>
 #include <exception>
 #include <memory>
@@ -850,6 +853,55 @@ int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q)
         const std::size_t n = M.NState();
         if (F) Copy(M.F(M.T0()), F, n, n, "F");
         if (Q) Copy(M.Q(M.T0()), Q, n, n, "Q");
+        return 0;
+    });
+}
+
+int kalman_solve_vorticity(int ny, int nx, double dt, double Ly, double Lx,
+                           double nu, double beta, const double *forcing_re, const double *forcing_im,
+                           int integrator, const double *w, int batch, int nsteps, double *out)
+{
+    return Guard([&] {
+        if (ny <= 0 || nx <= 0 || batch <= 0 || nsteps < 0 || !w || !out) throw std::invalid_argument("bad arguments");
+        const std::size_t rows = static_cast<std::size_t>(ny), cols = static_cast<std::size_t>(nx), size = rows * cols;
+
+        Kalman::SpectralField forcing;
+        if (forcing_re && forcing_im)
+        {
+            forcing = Kalman::SpectralField(rows, cols);
+            for (std::size_t i = 0; i < size; ++i) forcing.Data()[i] = std::complex<double>(forcing_re[i], forcing_im[i]);
+        }
+        const Kalman::Solvers::Vorticity solver(
+            rows, cols, dt, Ly, Lx, nu, beta, forcing,
+            std::shared_ptr<Kalman::Integrator>(Kalman::Integrators::Make(static_cast<Kalman::IntegratorKind>(integrator))));
+
+        Kalman::Field field(rows, cols);
+        for (int b = 0; b < batch; ++b)
+        {
+            const std::size_t offset = static_cast<std::size_t>(b) * size;
+            for (std::size_t i = 0; i < size; ++i) field.Data()[i] = w[offset + i];
+            const Kalman::Field next = solver.Advance(field, static_cast<std::size_t>(nsteps));
+            for (std::size_t i = 0; i < size; ++i) out[offset + i] = next.Data()[i];
+        }
+        return 0;
+    });
+}
+
+int kalman_solve_diffusion(int ny, int nx, double dt, double Ly, double Lx,
+                           int boundary, double boundary_value, double nu,
+                           int integrator, const double *w, int nsteps, double *out)
+{
+    return Guard([&] {
+        if (ny <= 0 || nx <= 0 || nsteps < 0 || !w || !out) throw std::invalid_argument("bad arguments");
+        if (boundary < 0 || boundary > 2) throw std::invalid_argument("boundary must be 0, 1 or 2");
+        const std::size_t rows = static_cast<std::size_t>(ny), cols = static_cast<std::size_t>(nx), size = rows * cols;
+        const Kalman::Solvers::FiniteDifference solver(
+            rows, cols, dt, Ly, Lx, static_cast<Kalman::Solvers::FiniteDifference::Boundary>(boundary), boundary_value, nu,
+            std::shared_ptr<Kalman::Integrator>(Kalman::Integrators::Make(static_cast<Kalman::IntegratorKind>(integrator))));
+        Kalman::Field field(rows, cols);
+        for (std::size_t i = 0; i < size; ++i) field.Data()[i] = w[i];
+        const Kalman::Field next = solver.Advance(field, static_cast<std::size_t>(nsteps));
+        for (std::size_t i = 0; i < size; ++i) out[i] = next.Data()[i];
         return 0;
     });
 }

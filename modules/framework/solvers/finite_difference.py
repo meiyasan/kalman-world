@@ -110,6 +110,21 @@ class FiniteDifferenceSolver(KalmanSolver):
                             f"needs an explicit RK integrator (Euler/RK4/Dormand-Prince).")
         return tab
 
+    def _native_scheme(self):
+        """The C++ integrator's name when this solver can run in C++: the default
+        physics (diffusion), a built-in integrator, ``step`` not overridden."""
+        from ..integrator import _BUILTIN_STEPS
+        from ..models import native
+        cls = type(self)
+        if (not native.native_loop_enabled() or cls.rhs is not FiniteDifferenceSolver.rhs
+                or cls.step is not FiniteDifferenceSolver.step or "rhs" in self.__dict__):
+            return None
+        integrator = self.integrator
+        name = getattr(integrator, "NATIVE", None)
+        if name is None or type(integrator)._step is not _BUILTIN_STEPS.get(name):
+            return None
+        return name
+
     def step(self, field):
         from .spectral import SpectralSolver
         return SpectralSolver._rk_step(lambda f: self.rhs(f), field, self.dt, self._tableau())
@@ -120,6 +135,12 @@ class FiniteDifferenceSolver(KalmanSolver):
         arr = np.asarray(w, dtype=float)
         flat = arr.ndim == 1
         f = self._as_grid(arr)
+        scheme = self._native_scheme()
+        if scheme is not None and f.ndim == 2:  # C++: Kalman::Solvers::FiniteDifference
+            from ..native import core
+            f = core.solve_diffusion(self.shape, self.dt, (self.Ly, self.Lx), self.bc, self.bc_value, self.nu,
+                                     scheme, f, int(nsteps))
+            return f.ravel() if flat else f
         for _ in range(int(nsteps)):
             f = self.step(f)
         return f.ravel() if flat else f

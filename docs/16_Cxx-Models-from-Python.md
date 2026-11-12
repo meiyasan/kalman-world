@@ -25,6 +25,8 @@ the two.
 | A linear model with fixed matrices | C++, the whole pass in one call | when the library is found |
 | A nonlinear model written in Python | the loop and the filter arithmetic in C++; C++ calls the Python `f` and `h` | extended, unscented, particle and ensemble engines, when the library is found |
 | The integrators (Euler, RK4, Dormand-Prince): `step`, `integrate` | C++ (`Kalman::Integrators`), calling the Python derivative | real double-precision states; complex states and schemes written in Python stay in Python |
+| The field solvers: `SpectralSolver.advance` (numpy backend) and `FiniteDifferenceSolver.advance` | C++ (`Kalman::Solvers::Vorticity`, `::FiniteDifference`) | a solver that states its physics (`NS2D`, `BetaPlaneNS2D`, diffusion); a subclass with other physics stays in Python |
+| Sampling: `model.sample(...)` | the C++ loop; the noise is still drawn by numpy, so a seeded run is unchanged | extended engine |
 | A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
 | The four application models with a C++ twin | C++, the whole pass in one call | when `libKalmanApps` is found |

@@ -168,6 +168,12 @@ int kalman_model_dynamics(const kalman_model_t *model);
 int kalman_model_set_generator(kalman_model_t *model, const double *A);
 int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc);
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
+int kalman_solve_vorticity(int ny, int nx, double dt, double Ly, double Lx,
+                           double nu, double beta, const double *forcing_re, const double *forcing_im,
+                           int integrator, const double *w, int batch, int nsteps, double *out);
+int kalman_solve_diffusion(int ny, int nx, double dt, double Ly, double Lx,
+                           int boundary, double boundary_value, double nu,
+                           int integrator, const double *w, int nsteps, double *out);
 int kalman_propagate(const kalman_model_t *model, kalman_engine_t *engine, int N,
                      const double *x0, const double *P0, double t0, double fs,
                      const double *uk, const double *wk, double *xk, double *Pk);
@@ -520,6 +526,41 @@ def van_loan(A, G, dt):
     F, Q = np.empty_like(A), np.empty_like(A)
     check(L.kalman_van_loan(A.shape[0], cdptr(A), cdptr(G), float(dt), dptr(F), dptr(Q)), "kalman_van_loan")
     return F, Q
+
+
+# --- solvers (fields) ------------------------------------------------------------
+BOUNDARY_KINDS = {"periodic": 0, "dirichlet": 1, "neumann": 2}
+
+
+def solve_vorticity(shape, dt, length, nu, beta, forcing_hat, integrator, w, nsteps):
+    """``w`` (batch, ny, nx) advanced by Kalman::Solvers::Vorticity; ``integrator``
+    is ``"euler"``, ``"rk4"`` or ``"dormand_prince"``."""
+    L = require()
+    ny, nx = int(shape[0]), int(shape[1])
+    x = np.ascontiguousarray(np.asarray(w, dtype=np.float64).reshape(-1, ny, nx))
+    out = np.empty_like(x)
+    fre = fim = ffi.NULL
+    if forcing_hat is not None:
+        f = np.asarray(forcing_hat, dtype=complex)
+        re, im = np.ascontiguousarray(f.real), np.ascontiguousarray(f.imag)
+        fre, fim = cdptr(re), cdptr(im)
+    rc = L.kalman_solve_vorticity(ny, nx, float(dt), float(length[0]), float(length[1]), float(nu), float(beta),
+                                  fre, fim, INTEGRATOR_KINDS[integrator], cdptr(x), x.shape[0], int(nsteps), dptr(out))
+    check(rc, "kalman_solve_vorticity")
+    return out
+
+
+def solve_diffusion(shape, dt, length, boundary, boundary_value, nu, integrator, w, nsteps):
+    """``w`` (ny, nx) advanced by Kalman::Solvers::FiniteDifference (diffusion)."""
+    L = require()
+    ny, nx = int(shape[0]), int(shape[1])
+    x = np.ascontiguousarray(np.asarray(w, dtype=np.float64).reshape(ny, nx))
+    out = np.empty_like(x)
+    rc = L.kalman_solve_diffusion(ny, nx, float(dt), float(length[0]), float(length[1]), BOUNDARY_KINDS[boundary],
+                                  float(boundary_value), float(nu), INTEGRATOR_KINDS[integrator], cdptr(x),
+                                  int(nsteps), dptr(out))
+    check(rc, "kalman_solve_diffusion")
+    return out
 
 
 # --- sampling ------------------------------------------------------------------

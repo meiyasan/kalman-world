@@ -152,6 +152,14 @@ class SpectralSolver(KalmanSolver):
             return self._advance_batched(w, int(nsteps))
         arr = np.asarray(w, dtype=float)
         flat = arr.ndim == 1
+        scheme = self._native_scheme()
+        if scheme is not None:                 # C++: Kalman::Solvers::Vorticity
+            from ..native import core
+            terms = self._vorticity_terms()
+            grid = self._as_grid(arr)
+            out = core.solve_vorticity(self.shape, self.dt, (self.Ly, self.Lx), terms["nu"], terms.get("beta", 0.0),
+                                       terms.get("forcing_hat"), scheme, grid, int(nsteps)).reshape(grid.shape)
+            return out.ravel() if flat else out
         wh = np.fft.fft2(self._as_grid(arr))
         for _ in range(int(nsteps)):
             wh = self.step(wh)
@@ -183,10 +191,34 @@ class SpectralSolver(KalmanSolver):
         of ``F``). ``None`` (the default) when the equation is not of that form."""
         return None
 
+    def _states_its_physics(self) -> bool:
+        """Whether ``_vorticity_terms`` describes what this object computes: the
+        class that gives the terms is also the one whose ``rhs_hat`` runs. A
+        subclass that changes ``rhs_hat`` without its terms is other physics."""
+        if self._vorticity_terms() is None:
+            return False
+        cls = type(self)
+        owner = next(k for k in cls.__mro__ if "_vorticity_terms" in k.__dict__)
+        return cls.rhs_hat is owner.rhs_hat and "rhs_hat" not in self.__dict__
+
+    def _native_scheme(self):
+        """The C++ integrator's name when this solver's numpy path can run in C++
+        (Kalman::Solvers::Vorticity): its physics is stated, its integrator is a
+        built-in scheme and its ``step`` is not overridden. Else ``None``."""
+        from ..integrator import _BUILTIN_STEPS
+        from ..models import native
+        if not native.native_loop_enabled() or type(self).step is not SpectralSolver.step:
+            return None
+        integrator = self.integrator
+        name = getattr(integrator, "NATIVE", None)
+        if name is None or type(integrator)._step is not _BUILTIN_STEPS.get(name):
+            return None
+        return name if self._states_its_physics() else None
+
     def _libtorch(self):
         """The libTorch solver for this grid and physics, made on first use."""
         if self._native is None:
-            terms = self._vorticity_terms()
+            terms = self._vorticity_terms() if self._states_its_physics() else None
             if terms is None:
                 raise NotImplementedError(
                     f"{type(self).__name__}: backend='torch' runs the C++ libTorch solver, which steps "

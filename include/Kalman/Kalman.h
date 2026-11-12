@@ -103,6 +103,7 @@
 #include "Kalman/Integrators/DormandPrince.h"
 #include "Kalman/Solvers/Spectral.h"
 #include "Kalman/Solvers/FiniteDifference.h"
+#include "Kalman/Solvers/Vorticity.h"
 #include "Kalman/Controllers/Proportional.h"
 #include "Kalman/Controllers/PID.h"
 #include "Kalman/Controllers/LQR.h"

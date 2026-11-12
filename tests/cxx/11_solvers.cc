@@ -4,6 +4,9 @@
  */
 #include "Kalman/Kalman.h"
 #include "Check.h"
+#include <algorithm>
+#include <vector>
+#include <complex>
 
 #include <cmath>
 #include <stdexcept>
@@ -60,6 +63,32 @@ namespace
 
 int main()
 {
+    // --- the transform itself, on every kind of length -------------------------
+    {
+        const double pi = 3.14159265358979323846;
+        for (std::size_t n : {8, 12, 15, 48, 100, 7, 22})     // 2^k, {2,3,5}-smooth, and neither
+        {
+            std::vector<std::complex<double>> x(n), direct(n);
+            for (std::size_t k = 0; k < n; ++k) x[k] = std::complex<double>(std::sin(0.7 * k) + 0.1 * k, std::cos(1.3 * k));
+            for (std::size_t k = 0; k < n; ++k)
+            {
+                std::complex<double> sum(0., 0.);
+                for (std::size_t j = 0; j < n; ++j)
+                    sum += x[j] * std::polar(1., -2. * pi * double(j * k % n) / double(n));
+                direct[k] = sum;
+            }
+            std::vector<std::complex<double>> y = x;
+            FFT::Transform(y, false);
+            double worst = 0.;
+            for (std::size_t k = 0; k < n; ++k) worst = std::max(worst, std::abs(y[k] - direct[k]));
+            CHECK(worst < 1e-10 * double(n), "FFT: matches the definition at this length");
+            FFT::Transform(y, true);
+            worst = 0.;
+            for (std::size_t k = 0; k < n; ++k) worst = std::max(worst, std::abs(y[k] - x[k]));
+            CHECK(worst < 1e-12 * double(n), "FFT: inverse of forward is the identity");
+        }
+    }
+
     // --- the transform ------------------------------------------------------------
     {
         for (std::size_t n : {8u, 16u, 12u, 15u, 30u, 33u})

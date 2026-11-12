@@ -44,11 +44,12 @@ included, so a change on one side has an obvious home on the other:
 | `framework/solver.py` | `Kalman/Solver.h` | `Kalman::Solver` |
 | `framework/solvers/spectral.py` | `Kalman/Solvers/Spectral.h` | `Solvers::Spectral` |
 | `framework/solvers/finite_difference.py` | `Kalman/Solvers/FiniteDifference.h` | `Solvers::FiniteDifference` |
+| `apps/weather/flow.py` (`NS2D`), `barotropic.py` | `Kalman/Solvers/Vorticity.h` | `Solvers::Vorticity` (the equation the flow models share) |
 | — (numpy, scipy) | `Kalman/Algebra/Cholesky.h` | `Algebra::Cholesky`, `CholeskyFactor`, `Solve`, `Inverse` |
 | — (numpy, scipy) | `Kalman/Algebra/Symmetric.h` | `Algebra::Symmetrize`, `SymmetricEigen`, `Similarity`, `ConditionNumber` |
 | `helpers.van_loan_discretize`, `matrix_exponential` | `Kalman/Algebra/Exponential.h` | `Algebra::Exponential`, `Algebra::VanLoan` |
 | — (numpy arrays) | `Kalman/Grid.h` | `Kalman::Field`, `Kalman::SpectralField` |
-| — (`numpy.fft`) | `Kalman/FFT.h` | `Kalman::FFT` (radix-2 + Bluestein, no dependency) |
+| — (`numpy.fft`) | `Kalman/FFT.h` | `Kalman::FFT` (radix 2, mixed radix for factors 3 and 5, Bluestein otherwise; cached plans; no dependency) |
 | `framework/engine.py` | `Kalman/Engine.h` | `Kalman::Engine` (aliased `Estimator`) |
 | `framework/filter.py` | `Kalman/Filter.h` | `Kalman::Filter` |
 | `framework/sampler.py` | `Kalman/Sampler.h` | `Kalman::Sampler` |
