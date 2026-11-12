@@ -285,12 +285,20 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             if self.engine._rho_xy is not None or self.engine._rho_yy is not None:
                 return False
         elif type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
-            # A linear model that the fused linear pass does not take (a controller
-            # function, matrices that change with time) runs on the C++ extended
-            # engine, which on a linear model with its own F and H is the same
-            # arithmetic.
+            # A linear model in closed loop (a controller function) runs on the
+            # C++ extended engine, which on a linear model with its own constant
+            # F and H is the same arithmetic. A linear model whose matrices or
+            # noise are functions stays on the Python loop: such a function may
+            # keep a counter (the calorimeter steps through its layers that
+            # way), and only the Python loop calls it once per step in order.
             from .engines.linear import LinearKalmanEngine
-            if type(self.engine) is not LinearKalmanEngine:
+            from .model import KalmanModel
+            model = self._model
+            if type(self.engine) is not LinearKalmanEngine or uk_fn is None:
+                return False
+            if any(callable(getattr(model, attr, None)) for attr in ("_F", "_H", "_B", "_L", "_Q", "_R")):
+                return False
+            if any(getattr(type(model), name) is not getattr(KalmanModel, name) for name in ("F", "H", "Q", "R", "f", "h")):
                 return False
         return native.callback_eligible(self._model)
 
