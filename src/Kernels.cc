@@ -327,4 +327,54 @@ void diag_nees_batch(int N, int n,
     }, {{nees, steps}});
 }
 
+int enkf_analysis(int n, int N, int p,
+                  const double *X, const double *Y, const double *R, const double *z, const double *eps,
+                  const double *rho_xy, const double *rho_yy, double *X_out)
+{
+    const std::size_t nn = static_cast<std::size_t>(n), NN = static_cast<std::size_t>(N), pp = static_cast<std::size_t>(p);
+    return Guard([&] {
+        if (n <= 0 || N < 2 || p <= 0) throw std::invalid_argument("enkf_analysis: need n, p > 0 and at least two members");
+        const double norm = 1. / static_cast<double>(NN - 1);
+
+        // Anomalies: X' (n x N) and Y'^T (N x p).
+        Matrix Xa(nn, NN), YaT(NN, pp);
+        for (std::size_t i = 0; i < nn; ++i)
+        {
+            double mean = 0.;
+            for (std::size_t s = 0; s < NN; ++s) mean += X[i * NN + s];
+            mean /= static_cast<double>(NN);
+            for (std::size_t s = 0; s < NN; ++s) Xa(i, s) = X[i * NN + s] - mean;
+        }
+        for (std::size_t j = 0; j < pp; ++j)
+        {
+            double mean = 0.;
+            for (std::size_t s = 0; s < NN; ++s) mean += Y[j * NN + s];
+            mean /= static_cast<double>(NN);
+            for (std::size_t s = 0; s < NN; ++s) YaT(s, j) = Y[j * NN + s] - mean;
+        }
+
+        Matrix PHt = Xa * YaT;                        // (n, p)
+        PHt *= norm;
+        Matrix S = YaT.Transpose() * YaT;             // (p, p)
+        S *= norm;
+        if (rho_xy)
+            for (std::size_t i = 0; i < nn; ++i)
+                for (std::size_t j = 0; j < pp; ++j) PHt(i, j) *= rho_xy[i * pp + j];
+        for (std::size_t i = 0; i < pp; ++i)
+            for (std::size_t j = 0; j < pp; ++j)
+                S(i, j) = S(i, j) * (rho_yy ? rho_yy[i * pp + j] : 1.) + R[i * pp + j];
+
+        const Matrix K = PHt * Kalman::Utils::Inverse(S);      // (n, p)
+
+        // D = z + eps - Y (p x N), then X + K D.
+        Matrix D(pp, NN);
+        for (std::size_t j = 0; j < pp; ++j)
+            for (std::size_t s = 0; s < NN; ++s) D(j, s) = z[j] + eps[j * NN + s] - Y[j * NN + s];
+        const Matrix KD = K * D;
+        for (std::size_t i = 0; i < nn; ++i)
+            for (std::size_t s = 0; s < NN; ++s) X_out[i * NN + s] = X[i * NN + s] + KD(i, s);
+        return 0;
+    }, {{X_out, nn * NN}});
+}
+
 } // extern "C"

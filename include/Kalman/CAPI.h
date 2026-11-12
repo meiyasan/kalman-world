@@ -489,6 +489,21 @@ void diag_nis_batch(int N, int m,
 void diag_nees_batch(int N, int n,
                       const double *e, const double *P, double *nees);
 
+/*
+ * The ensemble (perturbed-observation) analysis, for a caller that holds the
+ * ensemble and evaluates the model itself:
+ *
+ *   X: n x N members (already inflated)     Y: p x N, the members in observation space
+ *   R: p x p        z: p (the channels that arrived)       eps: p x N draws from N(0, R)
+ *   rho_xy: n x p and rho_yy: p x p localization tapers, or NULL for none
+ *
+ * Writes X + K (z + eps - Y) to X_out (n x N), K = (rho_xy . P H^T) (rho_yy . H P H^T + R)^-1,
+ * with the covariances taken from the ensemble. Returns 0, or -1 (X_out is then NaN).
+ */
+int enkf_analysis(int n, int N, int p,
+                  const double *X, const double *Y, const double *R, const double *z, const double *eps,
+                  const double *rho_xy, const double *rho_yy, double *X_out);
+
 /* --- track finding (the combinatorial engine) -------------------------------- */
 
 /// The tracks one search returned; destroy with kalman_tracks_destroy().

@@ -74,3 +74,55 @@ class TestSolversInCxx(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
+class TestEnsembleAnalysisInCxx(unittest.TestCase):
+    """A field model's ensemble filter keeps its hooks in Python; the analysis arithmetic is C++."""
+
+    def run_cycles(self, reference, obs_type="vorticity"):
+        from modules.apps.weather.flow import KolmogorovFlowModel
+        from modules.framework.engines.ensemble import EnsembleKalmanEngine
+        model = KolmogorovFlowModel("flow", grid=16, cycle=4, n_obs=24, obs_type=obs_type, seed=2)
+        engine = EnsembleKalmanEngine(n_members=12, inflation=1.05, seed=5)
+        rng = np.random.default_rng(9)
+        # A small ensemble drawn around a spun-up state (the model's own
+        # initial_ensemble would spin a 2500-step climatology first).
+        truth = model.solver.advance(model.solver.random_ic(), 200).ravel()
+        start = truth[:, None] + 0.3 * np.random.default_rng(1).standard_normal((model.n, 12))
+        model.initial_ensemble = lambda N, rng=None: start.copy()
+        def go():
+            engine.reset(model)
+            x = truth.copy()
+            means = []
+            for k in range(4):
+                x = np.asarray(model.forecast(x.reshape(-1, 1)), float).ravel()
+                z = np.asarray(model.h(x.reshape(-1, 1)), float).ravel() + 0.05 * rng.standard_normal(model.m)
+                if k == 2:
+                    z[::3] = np.nan                       # some probes silent
+                engine.forecast(model)
+                means.append(engine.analyze(model, z).copy())
+            return np.array(means), engine.members.copy()
+        if reference:
+            with native.python_reference():
+                return go()
+        return go()
+
+    def test_analysis_matches_the_python_engine(self):
+        for obs_type in ("vorticity", "gradient"):
+            self._compare(obs_type)
+
+    def _compare(self, obs_type):
+        (m_cxx, X_cxx), (m_py, X_py) = self.run_cycles(False, obs_type), self.run_cycles(True, obs_type)
+        self.assertTrue(np.all(np.isfinite(X_cxx)))
+        scale = np.abs(X_py).max()
+        self.assertLess(np.abs(X_cxx - X_py).max() / scale, 1e-9)
+        self.assertLess(np.abs(m_cxx - m_py).max() / scale, 1e-9)
+
+    def test_the_kernel_refuses_a_single_member(self):
+        out = np.empty((3, 1))
+        a = lambda *shape: np.ascontiguousarray(np.ones(shape))
+        rc = core.lib.enkf_analysis(3, 1, 2, core.cdptr(a(3, 1)), core.cdptr(a(2, 1)), core.cdptr(np.ascontiguousarray(np.eye(2))),
+                                    core.cdptr(a(2)), core.cdptr(a(2, 1)), core.ffi.NULL, core.ffi.NULL, core.dptr(out))
+        self.assertEqual(rc, -1)
+        self.assertTrue(np.all(np.isnan(out)))

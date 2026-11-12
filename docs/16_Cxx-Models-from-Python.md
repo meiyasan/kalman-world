@@ -26,6 +26,7 @@ the two.
 | A nonlinear model written in Python | the loop and the filter arithmetic in C++; C++ calls the Python `f` and `h` | extended, unscented, particle and ensemble engines, when the library is found |
 | The integrators (Euler, RK4, Dormand-Prince): `step`, `integrate` | C++ (`Kalman::Integrators`), calling the Python derivative | real double-precision states; complex states and schemes written in Python stay in Python |
 | The field solvers: `SpectralSolver.advance` (numpy backend) and `FiniteDifferenceSolver.advance` | C++ (`Kalman::Solvers::Vorticity`, `::FiniteDifference`) | a solver that states its physics (`NS2D`, `BetaPlaneNS2D`, diffusion); a subclass with other physics stays in Python |
+| The ensemble filter of a field model (its own `forecast`, `observe`, `localization`, `initial_ensemble`) | the hooks stay the model's, in Python; the analysis arithmetic is the C++ kernel `enkf_analysis`, with numpy's draws | always, when the library is found |
 | Sampling: `model.sample(...)` | the C++ loop; the noise is still drawn by numpy, so a seeded run is unchanged | extended engine |
 | A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |

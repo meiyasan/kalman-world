@@ -228,6 +228,9 @@ void diag_nis_batch(int N, int m,
                      const double *nu, const double *S, double *nis);
 void diag_nees_batch(int N, int n,
                       const double *e, const double *P, double *nees);
+int enkf_analysis(int n, int N, int p,
+                  const double *X, const double *Y, const double *R, const double *z, const double *eps,
+                  const double *rho_xy, const double *rho_yy, double *X_out);
 
 typedef struct kalman_tracks kalman_tracks_t;
 kalman_tracks_t *kalman_ckf_find(const kalman_model_t *model, int n_layers, const double *radii,

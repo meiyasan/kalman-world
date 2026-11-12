@@ -199,6 +199,17 @@ class EnsembleKalmanEngine(KalmanEngine):
                     model.h(X[:, i].reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
 
         R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]
+        # The draws come first and from numpy's generator in both paths, so a
+        # seeded run is the same run whoever does the arithmetic.
+        eps = (np.linalg.cholesky(R) @ self.rng.standard_normal((len(idx), N))
+               if not np.allclose(R, np.diag(np.diag(R)))
+               else np.sqrt(np.diag(R))[:, None] * self.rng.standard_normal((len(idx), N)))
+
+        analysed = self._native_analysis(X, Y, R, z[idx], eps, idx)
+        if analysed is not None:                    # the arithmetic ran in C++ (enkf_analysis)
+            self._members = analysed
+            return self.mean
+
         Xp = X - X.mean(axis=1, keepdims=True)
         Yp = Y - Y.mean(axis=1, keepdims=True)
 
@@ -210,11 +221,28 @@ class EnsembleKalmanEngine(KalmanEngine):
             HPHt *= self._rho_yy[np.ix_(idx, idx)]
 
         K = PHt @ np.linalg.pinv(HPHt + R)
-        eps = (np.linalg.cholesky(R) @ self.rng.standard_normal((len(idx), N))
-               if not np.allclose(R, np.diag(np.diag(R)))
-               else np.sqrt(np.diag(R))[:, None] * self.rng.standard_normal((len(idx), N)))
         self._members = X + K @ (z[idx][:, None] + eps - Y)
         return self.mean
+
+    def _native_analysis(self, X, Y, R, z, eps, idx):
+        """The analysis ``X + K (z + eps - Y)`` computed by the C++ kernel, or
+        ``None`` when the Python arithmetic must run (reference path, no library)."""
+        from ..models import native
+        if not native.native_loop_enabled():
+            return None
+        from ..native import core
+        c = lambda a: np.ascontiguousarray(a, dtype=np.float64)
+        n, N = X.shape
+        p = len(idx)
+        Xc, Yc, Rc, zc, ec = c(X), c(Y), c(R), c(z), c(eps)
+        rxy = None if self._rho_xy is None else c(np.asarray(self._rho_xy)[:, idx])
+        ryy = None if self._rho_yy is None else c(np.asarray(self._rho_yy)[np.ix_(idx, idx)])
+        out = np.empty((n, N))
+        rc = core.lib.enkf_analysis(n, N, p, core.cdptr(Xc), core.cdptr(Yc), core.cdptr(Rc), core.cdptr(zc),
+                                    core.cdptr(ec), core.ffi.NULL if rxy is None else core.cdptr(rxy),
+                                    core.ffi.NULL if ryy is None else core.cdptr(ryy), core.dptr(out))
+        core.check(rc, "enkf_analysis")
+        return out
 
     # ------------------------------------------------------------------
     # Standard engine interface (wraps the ensemble steps; adds mean/cov)
