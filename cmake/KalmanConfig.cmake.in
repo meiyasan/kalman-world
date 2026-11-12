@@ -3,6 +3,7 @@
 #     find_package(Kalman REQUIRED)                      # Kalman::Kalman, the core
 #     find_package(Kalman REQUIRED COMPONENTS Apps)      # + Kalman::Apps, the application models
 #     find_package(Kalman REQUIRED COMPONENTS Learn)     # + Kalman::Learn, the learned components
+#     find_package(Kalman REQUIRED COMPONENTS Net)       # + Kalman::Net, the JSON API, REST and MCP servers
 #
 #     target_link_libraries(my_program PRIVATE Kalman::Kalman Kalman::Apps)
 #

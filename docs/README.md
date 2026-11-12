@@ -37,6 +37,7 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 |---|------|-----------------|
 | 15 | [C++ Library](15_Cxx-Library.md) | `libKalman`: the core ported to C++, loadable in a ROOT+ analysis |
 | 16 | [C++ Models from Python](16_Cxx-Models-from-Python.md) | Write a model once in C++, use it from both languages; a worked toy example |
+| 18 | [libKalmanNet](18_Net.md) | The JSON API, REST and MCP servers in C++ (`kalman-serve`), and what stays Python |
 
 ## The applications
 

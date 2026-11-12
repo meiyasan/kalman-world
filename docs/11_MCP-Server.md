@@ -5,6 +5,9 @@ The Model Context Protocol server exposes the
 Desktop, Cursor, VS Code, Codex, Gemini CLI and others. It is a thin adapter:
 every tool is one facade call plus a scope check.
 
+A C++ server with the same tools, for the models that live in C++, is
+`kalman-serve --mcp` ([libKalmanNet](18_Net.md)).
+
 Server identifier: **`Kalman-AI`** — the config key, the tool-name prefix, and
 the name most clients show in their server list.
 
