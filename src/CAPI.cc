@@ -21,6 +21,7 @@
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Model.h"
+#include "Kalman/Tracking.h"
 
 #include <algorithm>
 #include <cstring>
@@ -33,6 +34,12 @@
 struct kalman_model
 {
     std::unique_ptr<Kalman::Model> model;
+};
+
+struct kalman_tracks
+{
+    std::vector<Kalman::Tracking::Candidate> tracks;
+    std::size_t n = 0, m = 0;
 };
 
 struct kalman_engine
@@ -720,3 +727,125 @@ int kalman_filter_run(const kalman_model_t *model, kalman_engine_t *engine, int 
 }
 
 } // extern "C"
+
+/* --- track finding ------------------------------------------------------------ */
+
+kalman_tracks_t *kalman_ckf_find(const kalman_model_t *model, int n_layers, const double *radii,
+                                 const int *hits_per_layer, const double *hits,
+                                 int n_seeds, const int *seed_layer, const int *seed_index,
+                                 const double *seed_x, const double *seed_P,
+                                 double chi2_cut, double hole_penalty, int max_candidates,
+                                 int max_holes, int min_hits, double shared_hit_frac)
+{
+    try
+    {
+        Ok();
+        const Kalman::Model &M = Deref(model);
+        const std::size_t n = M.NState(), m = M.NMeasure();
+        if (n_layers <= 0 || !radii || !hits_per_layer) throw std::invalid_argument("no layers given");
+        if (n_seeds < 0 || (n_seeds > 0 && (!seed_layer || !seed_index || !seed_x || !seed_P)))
+            throw std::invalid_argument("incomplete seeds");
+
+        Kalman::Tracking::Event event(static_cast<std::size_t>(n_layers));
+        std::vector<double> rr(radii, radii + n_layers);
+        const double *cursor = hits;
+        for (int l = 0; l < n_layers; ++l)
+            for (int j = 0; j < hits_per_layer[l]; ++j, cursor += m)
+                event[static_cast<std::size_t>(l)].push_back(Vec(cursor, m, "hits"));
+
+        const Kalman::Matrix I = Kalman::Matrix::Identity(n);
+        std::vector<Kalman::Tracking::Candidate> seeds(static_cast<std::size_t>(n_seeds));
+        for (int s = 0; s < n_seeds; ++s)
+        {
+            const int l = seed_layer[s], j = seed_index[s];
+            if (l < 0 || l >= n_layers || j < 0 || j >= hits_per_layer[l])
+                throw std::out_of_range("a seed points at a hit that does not exist");
+            Kalman::Tracking::Candidate &c = seeds[static_cast<std::size_t>(s)];
+            c.x = Vec(seed_x + static_cast<std::size_t>(s) * n, n, "seed_x");
+            c.P = Mat(seed_P + static_cast<std::size_t>(s) * n * n, n, n, "seed_P");
+            c.hitIds.push_back({static_cast<std::size_t>(l), static_cast<std::size_t>(j)});
+            c.radii.push_back(rr[static_cast<std::size_t>(l)]);
+            c.xk.push_back(c.x);
+            c.Pk.push_back(c.P);
+            c.zk.push_back(event[static_cast<std::size_t>(l)][static_cast<std::size_t>(j)]);
+            c.priorX.push_back(c.x);
+            c.priorP.push_back(c.P);
+            c.Fc.push_back(I);
+            c.Faccum = I;
+        }
+
+        const Kalman::Engines::Combinatorial engine(
+            chi2_cut, static_cast<std::size_t>(max_candidates), static_cast<std::size_t>(max_holes),
+            static_cast<std::size_t>(min_hits), shared_hit_frac, hole_penalty);
+        auto out = std::make_unique<kalman_tracks>();
+        out->n = n;
+        out->m = m;
+        out->tracks = engine.Find(M, event, rr, &seeds);
+        return out.release();
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+void kalman_tracks_destroy(kalman_tracks_t *tracks) { delete tracks; }
+
+namespace
+{
+    const Kalman::Tracking::Candidate &Track(const kalman_tracks_t *tracks, int i)
+    {
+        if (!tracks) throw std::invalid_argument("null kalman_tracks_t handle");
+        if (i < 0 || static_cast<std::size_t>(i) >= tracks->tracks.size()) throw std::out_of_range("no such track");
+        return tracks->tracks[static_cast<std::size_t>(i)];
+    }
+}
+
+int kalman_tracks_count(const kalman_tracks_t *tracks)
+{
+    return Guard([&] {
+        if (!tracks) throw std::invalid_argument("null kalman_tracks_t handle");
+        return static_cast<int>(tracks->tracks.size());
+    });
+}
+
+int kalman_track_hits(const kalman_tracks_t *tracks, int i)
+{
+    return Guard([&] { return static_cast<int>(Track(tracks, i).NHits()); });
+}
+
+int kalman_track_summary(const kalman_tracks_t *tracks, int i, double *chi2, double *score, int *holes,
+                         double *x, double *P, double *Faccum)
+{
+    return Guard([&] {
+        const Kalman::Tracking::Candidate &c = Track(tracks, i);
+        const std::size_t n = tracks->n;
+        if (chi2) *chi2 = c.chi2;
+        if (score) *score = c.score;
+        if (holes) *holes = static_cast<int>(c.holes);
+        if (x) Copy(c.x, x, n, "x");
+        if (P) Copy(c.P, P, n, n, "P");
+        if (Faccum) Copy(c.Faccum, Faccum, n, n, "Faccum");
+        return 0;
+    });
+}
+
+int kalman_track_copy(const kalman_tracks_t *tracks, int i, int *layers, int *indices, double *radii,
+                      double *xk, double *Pk, double *zk, double *prior_x, double *prior_P, double *Fc)
+{
+    return Guard([&] {
+        const Kalman::Tracking::Candidate &c = Track(tracks, i);
+        const std::size_t n = tracks->n, m = tracks->m;
+        for (std::size_t k = 0; k < c.NHits(); ++k)
+        {
+            if (layers) layers[k] = static_cast<int>(c.hitIds[k].layer);
+            if (indices) indices[k] = static_cast<int>(c.hitIds[k].index);
+            if (radii) radii[k] = c.radii[k];
+            if (xk) Copy(c.xk[k], xk + k * n, n, "xk");
+            if (Pk) Copy(c.Pk[k], Pk + k * n * n, n, n, "Pk");
+            if (zk) Copy(c.zk[k], zk + k * m, m, "zk");
+            if (prior_x) Copy(c.priorX[k], prior_x + k * n, n, "prior_x");
+            if (prior_P) Copy(c.priorP[k], prior_P + k * n * n, n, n, "prior_P");
+            if (Fc) Copy(c.Fc[k], Fc + k * n * n, n, n, "Fc");
+        }
+        return 0;
+    });
+}

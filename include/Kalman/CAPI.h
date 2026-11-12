@@ -368,6 +368,43 @@ void diag_nis_batch(int N, int m,
 void diag_nees_batch(int N, int n,
                       const double *e, const double *P, double *nees);
 
+/* --- track finding (the combinatorial engine) -------------------------------- */
+
+/// The tracks one search returned; destroy with kalman_tracks_destroy().
+typedef struct kalman_tracks kalman_tracks_t;
+
+/**
+ * Find tracks in one event with Kalman::Engines::Combinatorial.
+ *
+ * `radii` holds the n_layers layer radii, innermost first; `hits_per_layer` the
+ * number of hits on each; `hits` every hit, layer after layer, m values each (NaN
+ * marks a missing channel). The n_seeds seeds are given explicitly: the layer
+ * and index of the hit each starts from, its state `seed_x` (n each) and
+ * covariance `seed_P` (n x n each). `chi2_cut` and `hole_penalty` may be NaN to
+ * take the defaults (99% of a chi-square with m degrees of freedom; one gate).
+ * Returns the arbitrated tracks, best first, or NULL with kalman_last_error().
+ */
+kalman_tracks_t *kalman_ckf_find(const kalman_model_t *model, int n_layers, const double *radii,
+                                 const int *hits_per_layer, const double *hits,
+                                 int n_seeds, const int *seed_layer, const int *seed_index,
+                                 const double *seed_x, const double *seed_P,
+                                 double chi2_cut, double hole_penalty, int max_candidates,
+                                 int max_holes, int min_hits, double shared_hit_frac);
+
+void kalman_tracks_destroy(kalman_tracks_t *tracks);
+
+/// Number of tracks, or -1.
+int kalman_tracks_count(const kalman_tracks_t *tracks);
+/// Number of hits assigned to track i, or -1.
+int kalman_track_hits(const kalman_tracks_t *tracks, int i);
+/// Track i's totals and final state: x (n), P (n x n), Faccum (n x n).
+int kalman_track_summary(const kalman_tracks_t *tracks, int i, double *chi2, double *score, int *holes,
+                         double *x, double *P, double *Faccum);
+/// Track i hit by hit (H = kalman_track_hits): layers and indices (H each), radii (H),
+/// xk (H x n), Pk (H x n x n), zk (H x m), prior_x (H x n), prior_P (H x n x n), Fc (H x n x n).
+int kalman_track_copy(const kalman_tracks_t *tracks, int i, int *layers, int *indices, double *radii,
+                      double *xk, double *Pk, double *zk, double *prior_x, double *prior_P, double *Fc);
+
 #ifdef __cplusplus
 }
 #endif

@@ -139,3 +139,41 @@ class TestCKFSmooth(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestSearchRunsInCxx(unittest.TestCase):
+    """The track search of a Python-written detector model runs in the C++
+    combinatorial engine and finds the Python search's tracks, hit for hit."""
+
+    def test_same_tracks_as_the_python_search(self):
+        from modules.framework.native import core
+        import modules.framework.models.native as native
+        if not core.HAS_CXX_CORE:
+            self.skipTest("libKalman not built")
+        for seed, efficiency in ((0, 1.0), (1, 0.9), (2, 0.9)):
+            ev = DriftChamberModel().generate_event(n_tracks=3, n_background=10, efficiency=efficiency, seed=seed)
+            with native.python_reference():
+                ref = CombinatorialKalmanFilter(DriftChamberModel(), min_hits=6)
+                ref.forward(ev.hits, layer_radii=ev.radii)
+                ref_smooth = ref.backward()
+            flt = CombinatorialKalmanFilter(DriftChamberModel(), min_hits=6)
+            self.assertTrue(flt.engine._native_search(flt.model, flt.engine.seed(flt.model, ev.hits, ev.radii)))
+            flt.forward(ev.hits, layer_radii=ev.radii)
+            smooth = flt.backward()
+            self.assertEqual([t.hit_ids for t in flt.tracks_raw], [t.hit_ids for t in ref.tracks_raw])
+            self.assertEqual([t.holes for t in flt.tracks_raw], [t.holes for t in ref.tracks_raw])
+            self.assertEqual([t.hit_ids for t in flt.candidates], [t.hit_ids for t in ref.candidates])
+            for a, b in zip(flt.tracks_raw, ref.tracks_raw):
+                self.assertAlmostEqual(a.chi2, b.chi2, delta=1e-4 * max(1.0, b.chi2))
+            for a, b in zip(smooth, ref_smooth):
+                self.assertLess(float(np.max(np.abs(np.asarray(a.xk) - np.asarray(b.xk)))), 1e-4)
+
+    def test_a_subclass_with_its_own_gate_keeps_the_python_search(self):
+        from modules.framework.engines.combinatorial import CombinatorialKalmanEngine
+
+        class Loose(CombinatorialKalmanEngine):
+            def gate(self, model, xk, Pk, z, t=None):
+                return super().gate(model, xk, Pk, z, t=t)
+        m = DriftChamberModel()
+        ev = m.generate_event(n_tracks=1, n_background=0, seed=0)
+        self.assertFalse(Loose()._native_search(m, Loose().seed(m, ev.hits, ev.radii)))

@@ -267,6 +267,10 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         penalty = self.hole_cost(model)
         seeds = self.seed(model, hits, radii) if seeds is None else list(seeds)
 
+        if self._native_search(model, seeds):
+            self.candidates = self._find_native(model, hits, radii, seeds)
+            return self.arbitrate(self.candidates)
+
         seed_tracks = []
         for seed in seeds:
             cands = [seed]
@@ -323,6 +327,73 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         # decides which of them survive as tracks (CombinatorialKalmanFilter.candidates).
         self.candidates = seed_tracks
         return self.arbitrate(seed_tracks)
+
+    # ------------------------------------------------------------------
+    #  The search in C++ (Kalman::Engines::Combinatorial), on the Python
+    #  model through callbacks. The Python loop above is the reference, and
+    #  serves a subclass that changes the gate or the search.
+    # ------------------------------------------------------------------
+    def _native_search(self, model, seeds) -> bool:
+        from ..models import native
+        if type(self) is not CombinatorialKalmanEngine or not native.native_loop_enabled():
+            return False
+        # Seeds built by seed(): one assigned hit each, nothing accumulated yet.
+        if any(len(s.hit_ids) != 1 or s.holes or s.chi2 or s.score for s in seeds):
+            return False
+        return bool(seeds) and native.callback_eligible(model)
+
+    def _find_native(self, model, hits, radii, seeds):
+        """The best candidate of every seed, in seed order, found by the C++ engine."""
+        from ..models.native import callback_handle
+        from ..native import core
+        lib, ffi = core.lib, core.ffi
+        n, m = model.n, model.m
+        handle, keep = callback_handle(model)
+
+        def ints(values):
+            return ffi.new("int[]", [int(v) for v in values])
+
+        flat = np.ascontiguousarray(np.concatenate([h.reshape(-1) for h in hits]) if hits else np.zeros(0))
+        rr = np.ascontiguousarray(radii, dtype=np.float64)
+        sx = np.ascontiguousarray([np.asarray(s.x, float).reshape(-1) for s in seeds])
+        sP = np.ascontiguousarray([np.asarray(s.P, float).reshape(n, n) for s in seeds])
+        nan = float("nan")
+        # shared_hit_frac = 1 keeps every seed's best candidate: arbitration is
+        # done here afterwards, so that `candidates` holds them all.
+        found = lib.kalman_ckf_find(
+            handle, len(hits), core.cdptr(rr), ints(len(h) for h in hits), core.cdptr(flat),
+            len(seeds), ints(s.hit_ids[0][0] for s in seeds), ints(s.hit_ids[0][1] for s in seeds),
+            core.cdptr(sx), core.cdptr(sP),
+            nan if self.chi2_cut is None else self.chi2_cut,
+            nan if self.hole_penalty is None else self.hole_penalty,
+            self.max_candidates, self.max_holes, self.min_hits, 1.0)
+        if found == ffi.NULL:
+            if keep[-1]:
+                raise keep[-1][0]                    # an exception raised by the Python model
+            raise RuntimeError(f"track finding: {core.last_error()}")
+        found = ffi.gc(found, lib.kalman_tracks_destroy)
+
+        by_seed = {}
+        chi2, score, holes = ffi.new("double *"), ffi.new("double *"), ffi.new("int *")
+        for i in range(core.check(lib.kalman_tracks_count(found), "tracks_count")):
+            H = core.check(lib.kalman_track_hits(found, i), "track_hits")
+            x, P, Fa = np.empty(n), np.empty((n, n)), np.empty((n, n))
+            core.check(lib.kalman_track_summary(found, i, chi2, score, holes,
+                                                core.dptr(x), core.dptr(P), core.dptr(Fa)), "track_summary")
+            layers, idx = ffi.new("int[]", H), ffi.new("int[]", H)
+            rad = np.empty(H); xk = np.empty((H, n)); Pk = np.empty((H, n, n)); zk = np.empty((H, m))
+            px = np.empty((H, n)); pP = np.empty((H, n, n)); Fc = np.empty((H, n, n))
+            core.check(lib.kalman_track_copy(found, i, layers, idx, core.dptr(rad), core.dptr(xk), core.dptr(Pk),
+                                             core.dptr(zk), core.dptr(px), core.dptr(pP), core.dptr(Fc)), "track_copy")
+            track = TrackCandidate(
+                x=x.reshape(n, 1), P=P, chi2=float(chi2[0]), score=float(score[0]), holes=int(holes[0]),
+                hit_ids=[(int(layers[k]), int(idx[k])) for k in range(H)], radii=[float(r) for r in rad],
+                xk=[xk[k].reshape(n, 1) for k in range(H)], Pk=[Pk[k] for k in range(H)],
+                zk=[zk[k] for k in range(H)],
+                priors=[(px[k].reshape(n, 1), pP[k]) for k in range(H)], Fc=[Fc[k] for k in range(H)],
+                Faccum=Fa)
+            by_seed[track.hit_ids[0]] = track
+        return [by_seed[s.hit_ids[0]] for s in seeds if s.hit_ids[0] in by_seed]
 
     # ------------------------------------------------------------------
     #  Backward pass: RTS-smooth each accepted track

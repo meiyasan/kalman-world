@@ -197,6 +197,21 @@ void diag_nis_batch(int N, int m,
                      const double *nu, const double *S, double *nis);
 void diag_nees_batch(int N, int n,
                       const double *e, const double *P, double *nees);
+
+typedef struct kalman_tracks kalman_tracks_t;
+kalman_tracks_t *kalman_ckf_find(const kalman_model_t *model, int n_layers, const double *radii,
+                                 const int *hits_per_layer, const double *hits,
+                                 int n_seeds, const int *seed_layer, const int *seed_index,
+                                 const double *seed_x, const double *seed_P,
+                                 double chi2_cut, double hole_penalty, int max_candidates,
+                                 int max_holes, int min_hits, double shared_hit_frac);
+void kalman_tracks_destroy(kalman_tracks_t *tracks);
+int kalman_tracks_count(const kalman_tracks_t *tracks);
+int kalman_track_hits(const kalman_tracks_t *tracks, int i);
+int kalman_track_summary(const kalman_tracks_t *tracks, int i, double *chi2, double *score, int *holes,
+                         double *x, double *P, double *Faccum);
+int kalman_track_copy(const kalman_tracks_t *tracks, int i, int *layers, int *indices, double *radii,
+                      double *xk, double *Pk, double *zk, double *prior_x, double *prior_P, double *Fc);
 """
 
 ffi = None
