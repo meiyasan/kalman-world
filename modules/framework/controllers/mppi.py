@@ -30,7 +30,16 @@ class MPPIKalmanController(KalmanController):
     Warm-started receding horizon: the nominal sequence found at step *k* is shifted by one
     and reused as the starting point at step *k+1* (with the vacated last slot zeroed), so
     each step only has to refine an already-good guess rather than search from scratch.
+
+    With libKalman installed the rollouts run in ``Kalman::Controllers::MPPI``, which then
+    holds the warm-started sequence: ``model.f`` and ``model.clip_u`` are called back from
+    C++ for a model written in Python (and not at all for a model written in C++). The
+    perturbations are still drawn here, from the same seeded numpy generator in the same
+    order, so a seeded controller makes the same decisions on either path.
+    :meth:`_reference_policy` is the Python reference.
     """
+
+    NATIVE = "mppi"
 
     def __init__(self, model, n_rollouts=200, horizon=30, noise_sigma=0.2, lam=1.0,
                  n_iters=3, seed=None, **kw):
@@ -47,6 +56,17 @@ class MPPIKalmanController(KalmanController):
         super().__init__(model, **kw)
 
     def _policy(self, x_hat, P, t, *, nu=None):
+        handle = self._native_handle()
+        if handle is not None and self._native_belief(x_hat, P, nu) is not None:
+            from ..native import core
+            # The draws of the reference, one (n_rollouts, horizon, l) block per iteration.
+            draws = [self._rng.normal(0, self.noise_sigma, (self.n_rollouts, self.horizon, self._l))
+                     for _ in range(self.n_iters)]
+            core.mppi_set_draws(handle, np.concatenate([d.reshape(-1) for d in draws]) if draws else np.empty(0))
+            return self._native_policy(x_hat, P, t, nu)
+        return self._reference_policy(x_hat, P, t, nu=nu)
+
+    def _reference_policy(self, x_hat, P, t, *, nu=None):
         model = self.model
         dt = 1.0 / model.fs if model.fs else 1.0
         u_nom = self._u_nom
@@ -87,3 +107,19 @@ class MPPIKalmanController(KalmanController):
         super().reset()
         self._u_nom = np.zeros((self.horizon, self._l))
         self._rng = np.random.default_rng(self._seed)
+
+    def _native_key(self):
+        if self.n_rollouts <= 0 or self.horizon <= 0 or self.n_iters < 0 or not self.lam > 0:
+            return None
+        costs = self._cost_key()
+        if costs is None or self._l != max(int(self.model.l), 1):
+            return None
+        return (self.n_rollouts, self.horizon, self.noise_sigma, self.lam, self.n_iters) + costs
+
+    def _native_create(self, model_handle):
+        from ..native import core
+        # The C++ generator is never used (the draws come from self._rng); the seed is a formality.
+        return core.create_controller("mppi", model_handle, int(self.model.n), self._l,
+                                      n_rollouts=self.n_rollouts, horizon=self.horizon,
+                                      noise_sigma=self.noise_sigma, lam=self.lam, n_iters=self.n_iters,
+                                      seed=0, **self._cost_args())

@@ -18,7 +18,23 @@ class BayesianRouter(KalmanRouter):
     - training data is scarce;
     - transitions are genuinely Markov (no learned pattern adds value);
     - interpretability matters (every μ update follows Bayes' theorem).
+
+    Decided by ``Kalman::Routers::Bayesian`` when libKalman is installed;
+    :meth:`_reference_route` is the Python reference.
     """
 
+    NATIVE = "bayesian"
+
     def route(self, nis_arr, c, likelihoods):
+        mu = self._native_route(nis_arr, c, likelihoods)
+        return mu if mu is not None else self._reference_route(nis_arr, c, likelihoods)
+
+    def _reference_route(self, nis_arr, c, likelihoods):
         return self._normalise(c * likelihoods)
+
+    def _native_rows(self):
+        return 0                                      # Bayes reads no NIS
+
+    def _native_create(self):
+        from ..native import core
+        return core.create_router("bayesian"), (), []

@@ -26,7 +26,16 @@ class BoostKalmanController(KalmanController):
 
         boost = BoostKalmanController(model, boost_factor=3.0, threshold=2.0)
         record = filter.forward(zk, uk=boost)
+
+    With libKalman installed the NIS window and the decision are computed by
+    ``Kalman::Controllers::Boost`` (reading the model's ``H`` and its current ``R``
+    through callbacks); the factor it decides is applied here, to ``model._R``,
+    exactly as the Python reference (:meth:`_reference_update`) does. One
+    difference: an innovation with missing (NaN) channels is scored on the
+    channels present in C++, where the reference's NIS is NaN (and never boosts).
     """
+
+    NATIVE = "boost"
 
     def __init__(self, model, boost_factor=3.0, threshold=2.0, window=10, **kw):
         # Initialize before super().__init__() since that calls reset()
@@ -39,9 +48,26 @@ class BoostKalmanController(KalmanController):
         super().__init__(model, **kw)
 
     def _policy(self, x_hat, P, t, *, nu=None):
+        u = self._native_policy(x_hat, P, t, nu)
+        return u if u is not None else self._reference_policy(x_hat, P, t, nu=nu)
+
+    def _reference_policy(self, x_hat, P, t, *, nu=None):
         return np.zeros((max(self.model.l, 1), 1))
 
     def _update(self, x_hat, P, t, *, nu=None):
+        if nu is None:
+            return None
+        if self._native_handle() is not None and self._native_belief(x_hat, P, nu) is not None:
+            if self._R_nominal is None:
+                self._R_nominal = self.model.R(t=t).copy()
+            _, scale = self._native_update(x_hat, P, t, nu)
+            if scale is not None:
+                self.model._R = scale * self._R_nominal
+                self.scale_log.append((t, scale))
+            return None
+        return self._reference_update(x_hat, P, t, nu=nu)
+
+    def _reference_update(self, x_hat, P, t, *, nu=None):
         if nu is None:
             return None
         if self._R_nominal is None:
@@ -67,3 +93,18 @@ class BoostKalmanController(KalmanController):
             self.model._R = self._R_nominal.copy()
         self._nis_history.clear()
         self.scale_log.clear()
+
+    def _native_reads_noise(self):
+        return True
+
+    def _native_key(self):
+        if not (self.boost_factor > 0) or self.window <= 0:
+            return None
+        costs = self._cost_key()
+        return None if costs is None else (self.boost_factor, self.threshold, self.window) + costs
+
+    def _native_create(self, model_handle):
+        from ..native import core
+        return core.create_controller("boost", model_handle, int(self.model.n), max(int(self.model.l), 1),
+                                      boost_factor=self.boost_factor, threshold=self.threshold,
+                                      window=self.window, **self._cost_args())

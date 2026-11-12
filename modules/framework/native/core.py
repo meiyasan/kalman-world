@@ -181,6 +181,55 @@ int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
                      kalman_derivative_fn f, void *user, int n,
                      const double *x, double t, double dt, int nsteps, double *out);
 
+/* --- controllers --- */
+typedef struct kalman_controller kalman_controller_t;
+typedef int (*kalman_clip_fn)(void *user, const double *u, double *u_out);
+int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip);
+kalman_controller_t *kalman_controller_create_proportional(kalman_model_t *model, const double *Kp,
+                                                           const double *x_ref, const double *Qcost,
+                                                           const double *Rcost);
+kalman_controller_t *kalman_controller_create_pid(kalman_model_t *model, const double *Kp, const double *Ki,
+                                                  const double *Kd, const double *x_ref, const double *Qcost,
+                                                  const double *Rcost);
+kalman_controller_t *kalman_controller_create_lqr(kalman_model_t *model, const double *x_ref,
+                                                  const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_rollouts, int horizon,
+                                                   double noise_sigma, double lambda, int n_iters,
+                                                   unsigned long long seed, const double *x_ref,
+                                                   const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+                                                    double threshold, int window, const double *x_ref,
+                                                    const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+                                                          double q_max, const double *x_ref,
+                                                          const double *Qcost, const double *Rcost);
+void kalman_controller_destroy(kalman_controller_t *controller);
+int kalman_controller_n_control(const kalman_controller_t *controller);
+int kalman_controller_policy(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *u);
+int kalman_controller_update(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *scale);
+int kalman_controller_command(kalman_controller_t *controller, const double *x, const double *P, double t,
+                              const double *nu, double *u, double *cost);
+int kalman_controller_reset(kalman_controller_t *controller);
+int kalman_controller_lqr_fit(kalman_controller_t *controller, const double *A, const double *B, double *K);
+int kalman_controller_lqr_set_gain(kalman_controller_t *controller, const double *K);
+int kalman_controller_mppi_set_draws(kalman_controller_t *controller, int count, const double *draws);
+int kalman_solve_dare(int n, int l, const double *A, const double *B, const double *Q, const double *R,
+                      double *P, double *K);
+
+/* --- routers --- */
+typedef struct kalman_router kalman_router_t;
+kalman_router_t *kalman_router_create_bayesian(void);
+kalman_router_t *kalman_router_create_threshold(int m, int window, int soft);
+kalman_router_t *kalman_router_create_hybrid(const kalman_router_t *a, const kalman_router_t *b, double alpha);
+typedef int (*kalman_route_fn)(void *user, int rows, int M, const double *nis, const double *c,
+                               const double *likelihoods, double *mu);
+kalman_router_t *kalman_router_create_callback(kalman_route_fn route, void *user);
+void kalman_router_destroy(kalman_router_t *router);
+int kalman_router_route(const kalman_router_t *router, int rows, int M, const double *nis, const double *c,
+                        const double *likelihoods, double *mu);
+
 void kf_predict(int n, int l,
                 const double *F, const double *x, const double *P,
                 const double *B, const double *u,
@@ -616,6 +665,175 @@ def integrate(kind, f, x, u=None, t=0.0, dt=1.0, n=1, rtol=0.0, atol=0.0, max_su
         raise frame["raised"]
     check(rc, "kalman_integrate")
     return out
+
+
+# --- controllers ---------------------------------------------------------------
+# Kalman::Controllers by the name the Python classes use. Each Python controller
+# (framework/controllers/) holds one of these handles and forwards its policy
+# and its adaptation to it; see KalmanController._native_handle.
+def _optional(array, shape):
+    """``(const double *, keepalive)`` for an optional matrix, NULL for ``None``."""
+    if array is None:
+        return ffi.NULL, None
+    a = np.ascontiguousarray(np.asarray(array, dtype=np.float64).reshape(shape))
+    return cdptr(a), a
+
+
+def create_controller(kind, model_handle, n, L, *, x_ref=None, Qcost=None, Rcost=None, **params):
+    """A C++ controller (garbage-collected handle) of ``kind`` — ``"proportional"``,
+    ``"pid"``, ``"lqr"``, ``"mppi"``, ``"boost"``, ``"adaptive_qr"`` — on the model
+    ``model_handle`` (n states, command dimension ``L = max(l, 1)``), with the
+    parameters of the C++ constructor. ``model_handle`` must outlive it."""
+    lib_ = require()
+    keep = []
+
+    def opt(array, shape):
+        ptr, alive = _optional(array, shape)
+        keep.append(alive)
+        return ptr
+
+    costs = (opt(x_ref, (n,)), opt(Qcost, (n, n)), opt(Rcost, (L, L)))
+    if kind == "proportional":
+        h = lib_.kalman_controller_create_proportional(model_handle, opt(params["Kp"], (L, n)), *costs)
+    elif kind == "pid":
+        h = lib_.kalman_controller_create_pid(model_handle, opt(params["Kp"], (L, n)), opt(params.get("Ki"), (L, n)),
+                                              opt(params.get("Kd"), (L, n)), *costs)
+    elif kind == "lqr":
+        h = lib_.kalman_controller_create_lqr(model_handle, *costs)
+    elif kind == "mppi":
+        h = lib_.kalman_controller_create_mppi(model_handle, int(params["n_rollouts"]), int(params["horizon"]),
+                                               float(params["noise_sigma"]), float(params["lam"]),
+                                               int(params["n_iters"]), int(params.get("seed") or 0), *costs)
+    elif kind == "boost":
+        h = lib_.kalman_controller_create_boost(model_handle, float(params["boost_factor"]),
+                                                float(params["threshold"]), int(params["window"]), *costs)
+    elif kind == "adaptive_qr":
+        h = lib_.kalman_controller_create_adaptive_qr(model_handle, int(params["window"]), float(params["q_min"]),
+                                                      float(params["q_max"]), *costs)
+    else:
+        raise KeyError(f"no C++ controller {kind!r}")
+    if h == ffi.NULL:
+        raise RuntimeError(f"create_controller({kind!r}): {last_error()}")
+    return ffi.gc(h, lib_.kalman_controller_destroy)
+
+
+def _buf(a):
+    """A ``double[]`` view of a C-contiguous float64 array (cheaper than ``cdptr``,
+    which goes through ctypes: 0.15 against 0.5 us, and these run once per step)."""
+    return ffi.from_buffer("double[]", a)
+
+
+def _vector(a, size):
+    a = np.asarray(a, dtype=np.float64)
+    if a.size != size:
+        raise ValueError(f"expected {size} values, got {a.size}.")
+    return _buf(np.ascontiguousarray(a).reshape(-1))
+
+
+def _belief(x, P, nu, n, m):
+    return (_vector(x, n), ffi.NULL if P is None else _vector(P, n * n),
+            ffi.NULL if nu is None else _vector(nu, m))
+
+
+def controller_policy(handle, x, P, t, nu, n, m, L):
+    """Controller::Policy: the command (L, 1) for the belief ``x`` (n), ``P`` (n, n
+    or None) and the last innovation ``nu`` (m, or None on the first step)."""
+    u = np.empty((L, 1))
+    xs, Ps, nus = _belief(x, P, nu, n, m)
+    check(lib.kalman_controller_policy(handle, xs, Ps, float(t), nus, _buf(u)), "kalman_controller_policy")
+    return u
+
+
+def controller_update(handle, x, P, t, nu, n, m):
+    """Controller::Update: the factor the controller rescaled its model by in this
+    call (R's for a Boost, Q's for an AdaptiveQR), or ``None`` when it did not."""
+    xs, Ps, nus = _belief(x, P, nu, n, m)
+    scale = ffi.new("double *")
+    rc = check(lib.kalman_controller_update(handle, xs, Ps, float(t), nus, scale), "kalman_controller_update")
+    return float(scale[0]) if rc == 1 else None
+
+
+def controller_command(handle, x, P, t, nu, n, m, L):
+    """Controller::Command: ``(u (L, 1), cost)`` — the policy, the update and the
+    cost the C++ controller logs (charged on the clipped command)."""
+    xs, Ps, nus = _belief(x, P, nu, n, m)
+    u, cost = np.empty((L, 1)), ffi.new("double *")
+    check(lib.kalman_controller_command(handle, xs, Ps, float(t), nus, _buf(u), cost), "kalman_controller_command")
+    return u, float(cost[0])
+
+
+def controller_reset(handle):
+    check(lib.kalman_controller_reset(handle), "kalman_controller_reset")
+
+
+def lqr_fit(handle, A, B, n, L):
+    """Fit the C++ LQR to ``A`` (n, n), ``B`` (n, L); returns the gain (L, n)."""
+    A = np.ascontiguousarray(np.asarray(A, dtype=np.float64).reshape(n, n))
+    B = np.ascontiguousarray(np.asarray(B, dtype=np.float64).reshape(n, L))
+    K = np.empty((L, n))
+    check(lib.kalman_controller_lqr_fit(handle, cdptr(A), cdptr(B), dptr(K)), "kalman_controller_lqr_fit")
+    return K
+
+
+def lqr_set_gain(handle, K, n, L):
+    K = np.ascontiguousarray(np.asarray(K, dtype=np.float64).reshape(L, n))
+    check(lib.kalman_controller_lqr_set_gain(handle, cdptr(K)), "kalman_controller_lqr_set_gain")
+
+
+def mppi_set_draws(handle, draws):
+    """The perturbations the next MPPI policy call uses (iteration, rollout, step, command order)."""
+    d = np.ascontiguousarray(np.asarray(draws, dtype=np.float64).reshape(-1))
+    check(lib.kalman_controller_mppi_set_draws(handle, int(d.size), cdptr(d)), "kalman_controller_mppi_set_draws")
+
+
+def solve_dare(A, B, Q, R):
+    """``(P, K)``: the stabilising solution of the discrete algebraic Riccati equation
+    and its gain ``K = (R + B^T P B)^-1 B^T P A`` (Kalman::Algebra::SolveDARE)."""
+    L_ = require()
+    A = np.ascontiguousarray(np.asarray(A, dtype=np.float64))
+    B = np.ascontiguousarray(np.asarray(B, dtype=np.float64))
+    n, l = B.shape
+    Q = np.ascontiguousarray(np.asarray(Q, dtype=np.float64).reshape(n, n))
+    R = np.ascontiguousarray(np.asarray(R, dtype=np.float64).reshape(l, l))
+    P, K = np.empty((n, n)), np.empty((l, n))
+    check(L_.kalman_solve_dare(n, l, cdptr(A.reshape(n, n)), cdptr(B), cdptr(Q), cdptr(R), dptr(P), dptr(K)),
+          "kalman_solve_dare")
+    return P, K
+
+
+# --- routers -------------------------------------------------------------------
+def create_router(kind, *, a=None, b=None, route=None, **params):
+    """A C++ IKF router (garbage-collected handle): ``"bayesian"``, ``"threshold"``
+    (``m``, ``window``, ``soft``), ``"hybrid"`` (children handles ``a``, ``b`` and
+    ``alpha``; the caller keeps them alive) or ``"callback"`` (``route`` a
+    ``kalman_route_fn`` callback, kept alive by the caller)."""
+    L_ = require()
+    if kind == "bayesian":
+        h = L_.kalman_router_create_bayesian()
+    elif kind == "threshold":
+        h = L_.kalman_router_create_threshold(int(params["m"]), int(params["window"]), 1 if params["soft"] else 0)
+    elif kind == "hybrid":
+        h = L_.kalman_router_create_hybrid(a, b, float(params["alpha"]))
+    elif kind == "callback":
+        h = L_.kalman_router_create_callback(route, ffi.NULL)
+    else:
+        raise KeyError(f"no C++ router {kind!r}")
+    if h == ffi.NULL:
+        raise RuntimeError(f"create_router({kind!r}): {last_error()}")
+    return ffi.gc(h, L_.kalman_router_destroy)
+
+
+def route(handle, nis, c, likelihoods):
+    """Router::Route: the mode probabilities (M,) from the NIS history ``nis``
+    (rows, M; rows may be 0), ``c`` (M,) and ``likelihoods`` (M,)."""
+    c = np.asarray(c, dtype=np.float64)
+    M = c.size
+    nis = np.asarray(nis, dtype=np.float64)
+    rows = nis.size // M if M else 0
+    mu = np.empty(M)
+    check(lib.kalman_router_route(handle, rows, M, _vector(nis, rows * M) if rows else ffi.NULL, _vector(c, M),
+                                  _vector(likelihoods, M), _buf(mu)), "kalman_router_route")
+    return mu
 
 
 # --- plugin policy -----------------------------------------------------------

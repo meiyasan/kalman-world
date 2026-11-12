@@ -387,6 +387,116 @@ int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
                      kalman_derivative_fn f, void *user, int n,
                      const double *x, double t, double dt, int nsteps, double *out);
 
+/* --- controllers ------------------------------------------------------------ */
+
+/// A closed-loop controller (Kalman::Controller). Opaque; destroy it with kalman_controller_destroy().
+typedef struct kalman_controller kalman_controller_t;
+
+/// `u_out = clip(u)`, l values each: what the actuator of a callback model delivers. Return 0 on success.
+typedef int (*kalman_clip_fn)(void *user, const double *u, double *u_out);
+
+/// Give a callback model its actuator limit (Model::ClipControl); NULL restores the identity.
+/// -1 when `model` is not a callback model.
+int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip);
+
+/**
+ * The shipped controllers (Kalman::Controllers), with the parameters of their C++
+ * constructors. `model` is not owned and must outlive the controller. With L =
+ * max(l, 1) the command dimension: gains are L x n; `x_ref` (n), `Qcost` (n x n)
+ * and `Rcost` (L x L) may be NULL for the origin and the identities; `Ki`, `Kd`
+ * may be NULL for zero. NULL with kalman_last_error() on failure.
+ */
+kalman_controller_t *kalman_controller_create_proportional(kalman_model_t *model, const double *Kp,
+                                                           const double *x_ref, const double *Qcost,
+                                                           const double *Rcost);
+kalman_controller_t *kalman_controller_create_pid(kalman_model_t *model, const double *Kp, const double *Ki,
+                                                  const double *Kd, const double *x_ref, const double *Qcost,
+                                                  const double *Rcost);
+kalman_controller_t *kalman_controller_create_lqr(kalman_model_t *model, const double *x_ref,
+                                                  const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_rollouts, int horizon,
+                                                   double noise_sigma, double lambda, int n_iters,
+                                                   unsigned long long seed, const double *x_ref,
+                                                   const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+                                                    double threshold, int window, const double *x_ref,
+                                                    const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+                                                          double q_max, const double *x_ref,
+                                                          const double *Qcost, const double *Rcost);
+void kalman_controller_destroy(kalman_controller_t *controller);
+
+/// The command dimension L = max(l, 1), or -1.
+int kalman_controller_n_control(const kalman_controller_t *controller);
+
+/**
+ * Controller::Policy(): the command `u` (L) for the belief `x` (n), `P` (n x n; NULL
+ * for zeros, for a policy that does not read it), the time `t` and the last
+ * innovation `nu` (m; NULL on the first step).
+ */
+int kalman_controller_policy(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *u);
+
+/**
+ * Controller::Update(), the adaptation after the policy. Returns 1 when the
+ * controller rescaled its model in this call and writes the factor to `scale`
+ * (may be NULL): R's for a Boost, Q's for an AdaptiveQR. 0 when it did not, -1 on error.
+ */
+int kalman_controller_update(kalman_controller_t *controller, const double *x, const double *P, double t,
+                             const double *nu, double *scale);
+
+/// Controller::Command(): policy, update and the logged cost, charged on the clipped
+/// command. `u` (L) and `cost` may be NULL.
+int kalman_controller_command(kalman_controller_t *controller, const double *x, const double *P, double t,
+                              const double *nu, double *u, double *cost);
+
+/// Controller::Reset(): clear the logs and the internal state, restore what Update() changed.
+int kalman_controller_reset(kalman_controller_t *controller);
+
+/// LQR: fit the gain to `A` (n x n) and `B` (n x L), or to the model's F and B at T0
+/// when both are NULL, and write it to `K` (L x n; may be NULL). -1 for another controller.
+int kalman_controller_lqr_fit(kalman_controller_t *controller, const double *A, const double *B, double *K);
+
+/// LQR: use the gain `K` (L x n) computed elsewhere.
+int kalman_controller_lqr_set_gain(kalman_controller_t *controller, const double *K);
+
+/// MPPI: the `count` perturbations the next policy call uses instead of its own draws,
+/// in the order iteration, rollout, horizon step, command (count = n_iters x n_rollouts x horizon x L).
+int kalman_controller_mppi_set_draws(kalman_controller_t *controller, int count, const double *draws);
+
+/// The stabilising solution `P` (n x n) of the discrete algebraic Riccati equation for
+/// `A` (n x n), `B` (n x l), `Q` (n x n), `R` (l x l), and its gain `K` (l x n). Either output may be NULL.
+int kalman_solve_dare(int n, int l, const double *A, const double *B, const double *Q, const double *R,
+                      double *P, double *K);
+
+/* --- routers ---------------------------------------------------------------- */
+
+/// An IKF mode router (Kalman::Routers::Router). Opaque; destroy it with kalman_router_destroy().
+typedef struct kalman_router kalman_router_t;
+
+/// Routers::Bayesian: `mu_j` proportional to `c_j L_j`.
+kalman_router_t *kalman_router_create_bayesian(void);
+
+/// Routers::Threshold: the model whose NIS over the last `window` steps (0 = all) is closest to `m`;
+/// `soft` non-zero for inverse-distance weights.
+kalman_router_t *kalman_router_create_threshold(int m, int window, int soft);
+
+/// Routers::Hybrid: `mu_a^(1-alpha) mu_b^alpha`, normalised. `a` and `b` are not owned and must outlive it.
+kalman_router_t *kalman_router_create_hybrid(const kalman_router_t *a, const kalman_router_t *b, double alpha);
+
+/// A router written elsewhere: write `mu` (M) from `nis` (rows x M), `c` (M) and `likelihoods` (M). Return 0 on success.
+typedef int (*kalman_route_fn)(void *user, int rows, int M, const double *nis, const double *c,
+                               const double *likelihoods, double *mu);
+
+/// A router whose decision is the caller's function (to blend it in a Hybrid). `route` and `user` must outlive it.
+kalman_router_t *kalman_router_create_callback(kalman_route_fn route, void *user);
+
+void kalman_router_destroy(kalman_router_t *router);
+
+/// Router::Route(): `mu` (M) from the NIS history `nis` (rows x M, rows may be 0), `c` (M), `likelihoods` (M).
+int kalman_router_route(const kalman_router_t *router, int rows, int M, const double *nis, const double *c,
+                        const double *likelihoods, double *mu);
+
 /* --- kernels: the framework's arithmetic for a model that lives elsewhere ---
  *
  * The Python engines evaluate the model themselves -- f at the sigma points, F/H/Q/R
