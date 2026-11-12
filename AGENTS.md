@@ -430,6 +430,14 @@ Conventions, most of which the build or the tests will enforce:
   and only at or above `KALMAN_BLAS_MIN_DIM`, because below the crossover the
   built-in kernel is measurably faster. Both numbers are measurements; re-measure
   before changing them.
+- **Roles and utilities have their own directories.** Integrators
+  (`Kalman/Integrators/`, time), Solvers (`Kalman/Solvers/`, space, field
+  models only) and Differentiators (`Kalman/Differentiators/`, Jacobians) are
+  roles: a base class, a `Kind`, a model-level declaration. Linear algebra is
+  `Kalman/Algebra/` (`Cholesky.h`, `Symmetric.h`, `Exponential.h`), free
+  functions in `Kalman::Algebra`. Do not call a linear or nonlinear equation
+  solver a "Solver", and do not add LU: every matrix factored here is a
+  covariance. `Kalman::Utils` re-exports the algebra names for existing code.
 - **Covariance inverses go through `Utils::Inverse`**, which tries Cholesky and
   then falls back to an eigenvalue pseudo-inverse. There is deliberately **no**
   Tikhonov ladder there: ridging a singular innovation covariance makes the

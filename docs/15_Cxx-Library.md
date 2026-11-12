@@ -39,9 +39,14 @@ included, so a change on one side has an obvious home on the other:
 | `framework/integrators/euler.py` | `Kalman/Integrators/Euler.h` | `Integrators::Euler` |
 | `framework/integrators/rk4.py` | `Kalman/Integrators/RK4.h` | `Integrators::RK4` |
 | `framework/integrators/dormand_prince.py` | `Kalman/Integrators/DormandPrince.h` | `Integrators::DormandPrince` |
+| `framework/constants.py` (`KalmanDifferentiatorKind`) | `Kalman/Differentiator.h` | `Kalman::Differentiator`, `Differentiators::Jacobian` |
+| `helpers.numerical_jacobian` | `Kalman/Differentiators/Forward.h`, `Central.h` | `Differentiators::Forward`, `Differentiators::Central` |
 | `framework/solver.py` | `Kalman/Solver.h` | `Kalman::Solver` |
 | `framework/solvers/spectral.py` | `Kalman/Solvers/Spectral.h` | `Solvers::Spectral` |
 | `framework/solvers/finite_difference.py` | `Kalman/Solvers/FiniteDifference.h` | `Solvers::FiniteDifference` |
+| — (numpy, scipy) | `Kalman/Algebra/Cholesky.h` | `Algebra::Cholesky`, `CholeskyFactor`, `Solve`, `Inverse` |
+| — (numpy, scipy) | `Kalman/Algebra/Symmetric.h` | `Algebra::Symmetrize`, `SymmetricEigen`, `Similarity`, `ConditionNumber` |
+| `helpers.van_loan_discretize`, `matrix_exponential` | `Kalman/Algebra/Exponential.h` | `Algebra::Exponential`, `Algebra::VanLoan` |
 | — (numpy arrays) | `Kalman/Grid.h` | `Kalman::Field`, `Kalman::SpectralField` |
 | — (`numpy.fft`) | `Kalman/FFT.h` | `Kalman::FFT` (radix-2 + Bluestein, no dependency) |
 | `framework/engine.py` | `Kalman/Engine.h` | `Kalman::Engine` (aliased `Estimator`) |
@@ -98,6 +103,24 @@ design — `routers/nn/` is Torch, and the optimiser and data loaders belong
 there. What crosses is the finished policy, via `NN::Torch` or `NN::Onnx`.
 Every `EngineKind` now has a C++ engine; an integer that is not a kind still
 raises rather than silently becoming a linear step.
+
+### Roles and utilities
+
+A role is something a user chooses or writes; it has a base class, a `Kind`
+constant and a directory. A utility is arithmetic nobody chooses between.
+
+| | What it answers | Where |
+|---|---|---|
+| Integrator (role) | how do I advance in time? | `Kalman/Integrators/` |
+| Solver (role) | how do I handle space, for a field? | `Kalman/Solvers/` |
+| Differentiator (role) | where do Jacobians come from? | `Kalman/Differentiators/` |
+| Algebra (utilities) | Cholesky, solves, eigenvalues, `exp(A)` | `Kalman/Algebra/` |
+
+"Solver" here always means a field solver. The linear solver of the framework
+is Cholesky, in `Kalman/Algebra/Cholesky.h`: a covariance is symmetric
+positive-definite, so nothing needs LU. `Kalman::Utils` keeps the Kalman
+arithmetic (missing channels, the Joseph update, sigma-point sums) and still
+exports the algebra names, so existing code compiles unchanged.
 
 ## The three roles
 

@@ -3,7 +3,7 @@ import numpy as np
 from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize, matrix_exponential
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
-from .constants import KalmanDynamicsKind
+from .constants import KalmanDynamicsKind, KalmanDifferentiatorKind
 from .constants import (KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable,
                         KalmanIntegratorKind, ALL_INTEGRATORS,
                         KalmanSolverKind, ALL_SOLVERS)
@@ -48,6 +48,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # the step with the model's integrator, in SOLVER_SUBSTEPS steps per sample.
     # A field model binds a solver instead and calls it from f.
     DYNAMICS            = KalmanDynamicsKind.DISCRETE
+    # Where the Jacobians come from when the model gives no formula: forward
+    # differences (the default) or central ones. A model that overrides F()/H()
+    # or holds matrices is analytic whatever this says.
+    DIFFERENTIATOR      = KalmanDifferentiatorKind.FORWARD
     DEFAULT_INTEGRATOR  = KalmanIntegratorKind.RK4
     ALLOWED_INTEGRATORS = ALL_INTEGRATORS
     DEFAULT_SOLVER      = KalmanSolverKind.SPECTRAL
@@ -244,6 +248,19 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             cls.derivative = written
             cls.f = _decoded_step
 
+    def _jacobian(self, fn, x):
+        """``d fn / dx`` at ``x`` by the model's declared differentiator."""
+        kind = self.DIFFERENTIATOR
+        if kind is KalmanDifferentiatorKind.CENTRAL:
+            return numerical_jacobian(fn, x, scheme="central")
+        if kind is KalmanDifferentiatorKind.FORWARD:
+            return numerical_jacobian(fn, x, scheme="forward")
+        if kind is KalmanDifferentiatorKind.ANALYTIC:
+            raise NotImplementedError(
+                f"{type(self).__name__} declares DIFFERENTIATOR = ANALYTIC but gives no formula for this "
+                "Jacobian: override F()/H() (or pass matrices), or declare FORWARD or CENTRAL.")
+        raise NotImplementedError("DIFFERENTIATOR = AUTOMATIC is reserved for libKalmanLearn.")
+
     def derivative(self, x, u=None, w=None, t=None):
         """dx/dt of a CONTINUOUS model: the ``f`` its class wrote."""
         raise NotImplementedError(f"{type(self).__name__} is not a continuous model.")
@@ -305,14 +322,14 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if self._F is not None:
             return self._F(t) if callable(self._F) else self._F
         x = self.x0 if x is None else x
-        return numerical_jacobian(lambda xx: self.f(xx, u=u, w=None, t=t), as_col(x))
+        return self._jacobian(lambda xx: self.f(xx, u=u, w=None, t=t), as_col(x))
 
     def H(self, x: np.ndarray = None, t: Optional[float] = None) -> np.ndarray:
         """Observation Jacobian ∂h/∂x (constant matrix if provided)."""
         if self._H is not None:
             return self._H(t) if callable(self._H) else self._H
         x = self.x0 if x is None else x
-        return numerical_jacobian(lambda xx: self.h(xx, v=None, t=t), as_col(x))
+        return self._jacobian(lambda xx: self.h(xx, v=None, t=t), as_col(x))
 
     def B(self, x: Optional[np.ndarray] = None, u: Optional[np.ndarray] = None, t: Optional[float] = None) -> Optional[np.ndarray]:
         """Control-input map ∂f/∂u (constant matrix if provided, numerical if u given)."""
@@ -321,7 +338,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if u is None or self._F is not None:
             return None
         x = self.x0 if x is None else x
-        return numerical_jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
+        return self._jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
 
     def clip_u(self, u: np.ndarray) -> np.ndarray:
         """Actuator-limit hook: map a controller's raw command to what the plant can
@@ -339,7 +356,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if w is None or self._F is not None:
             return None
         x = self.x0 if x is None else x
-        return numerical_jacobian(lambda ww: self.f(as_col(x), u=u, w=ww, t=t), as_col(w))
+        return self._jacobian(lambda ww: self.f(as_col(x), u=u, w=ww, t=t), as_col(w))
 
     def M(self, x: Optional[np.ndarray] = None, v: Optional[np.ndarray] = None,
            t: Optional[float] = None) -> Optional[np.ndarray]:
@@ -349,7 +366,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if v is None or self._H is not None:
             return None
         x = self.x0 if x is None else x
-        return numerical_jacobian(lambda vv: self.h(as_col(x), v=vv, t=t), as_col(v))
+        return self._jacobian(lambda vv: self.h(as_col(x), v=vv, t=t), as_col(v))
 
     # Unified interface returning all Jacobians
     def jacobians(self, x: np.ndarray,
@@ -375,7 +392,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         key = (float(self.fs), x0.tobytes())
         if self._decoded_noise is None or self._decoded_noise[0] != key:
             u = np.zeros((self.l, 1)) if getattr(self, "l", 0) else None
-            A = numerical_jacobian(lambda xx: self.derivative(xx, u=u, t=t), x0)
+            A = self._jacobian(lambda xx: self.derivative(xx, u=u, t=t), x0)
             Lc = np.eye(self.n) if self._Lc is None else self._Lc
             _, Q = van_loan_discretize(np.asarray(A, dtype=float), Lc, self._Qc, 1.0 / self.fs)
             self._decoded_noise = (key, Q.astype(self.dtype))

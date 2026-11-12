@@ -289,17 +289,33 @@ def as_col(x, name = "array"):
         raise ValueError(f"{name} must be (d,1) or (d,), got {format_shape(x)}")
     return x
 
-def numerical_jacobian(func, x: np.ndarray, *args, eps: float = 1e-6) -> np.ndarray:
+def numerical_jacobian(func, x: np.ndarray, *args, eps: float = None, scheme: str = "forward") -> np.ndarray:
+    """``d func / dx`` at ``x`` by finite differences.
+
+    ``scheme``: ``"forward"`` (one-sided, first order; step ``1e-6``) or
+    ``"central"`` (two-sided, second order; step ``1e-5``). The step is relative:
+    ``eps * max(1, |x_j|)``. Computed in C++ (Kalman::Differentiators) when
+    libKalman is loaded and the values are real double precision.
+    """
+    if scheme not in ("forward", "central"):
+        raise ValueError(f"numerical_jacobian: unknown scheme {scheme!r} (forward or central).")
+    if eps is None:
+        eps = 1e-6 if scheme == "forward" else 1e-5
     x = as_col(x)
     y0 = as_col(func(x, *args))
-    m, n = y0.shape[0], x.shape[0]
+    core = _native_core()
+    if core is not None and x.dtype == np.float64 and y0.dtype == np.float64 and y0.size and x.size:
+        return core.jacobian(scheme, lambda point: func(point, *args), x, y0, step=eps)
+    m, n = y0.shape[0], x.shape[0]             # reference, and other dtypes
     J = np.zeros((m, n), dtype=float)
     for j in range(n):
         dx = np.zeros_like(x)
         step = eps * max(1.0, abs(x[j, 0]))
         dx[j, 0] = step
-        y1 = as_col(func(x + dx, *args))
-        J[:, j] = ((y1 - y0) / step).ravel()
+        if scheme == "forward":
+            J[:, j] = ((as_col(func(x + dx, *args)) - y0) / step).ravel()
+        else:
+            J[:, j] = ((as_col(func(x + dx, *args)) - as_col(func(x - dx, *args))) / (2.0 * step)).ravel()
     return J
 
 def van_loan_discretize(A: np.ndarray, L: np.ndarray, Qc: np.ndarray, dt: float):

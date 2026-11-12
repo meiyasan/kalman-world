@@ -1,6 +1,6 @@
-# Integrators and Solvers
+# Integrators, Solvers and Differentiators
 
-Two distinct roles, often confused:
+Three roles. The first two are often confused:
 
 - an **integrator** advances *time*: `x(t) → x(t+dt)` given a continuous
   derivative `ẋ = f(x, u, t)`;
@@ -152,6 +152,31 @@ the EnKF forecast's dominant cost — and converts at the NumPy boundary, so
 callers are unchanged.
 
 > **Torch/MPS has no float64.** Use float32 on `mps`, float64 elsewhere.
+
+## Differentiators
+
+A third role, next to the two above: where a model's Jacobians come from. The
+extended filter needs `df/dx` and `dh/dx`; a model declares how they are
+obtained, the same way it declares its integrator.
+
+```python
+from kalman.framework.constants import KalmanDifferentiatorKind
+
+class MyModel(KalmanModel):
+    DIFFERENTIATOR = KalmanDifferentiatorKind.CENTRAL
+```
+
+| Kind | What it does | Cost per Jacobian | Error |
+|---|---|---|---|
+| `ANALYTIC` | the model gives the formula (it overrides `F`/`H`, or holds matrices) | none | none |
+| `FORWARD` (default) | `(f(x + s) - f(x)) / s` | n evaluations | first order in the step |
+| `CENTRAL` | `(f(x + s) - f(x - s)) / 2s` | 2n evaluations | second order |
+| `AUTOMATIC` | automatic differentiation | - | reserved, for `libKalmanLearn` |
+
+The differences are computed in C++ (`Kalman::Differentiators`), also for a
+model written in Python, and a C++ twin linearises with the scheme its Python
+class declares. A model that overrides `F()` or holds matrices is analytic
+whatever it declares.
 
 ## Customization
 

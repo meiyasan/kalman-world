@@ -168,6 +168,11 @@ int kalman_model_dynamics(const kalman_model_t *model);
 int kalman_model_set_generator(kalman_model_t *model, const double *A);
 int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double *Qc, const double *Lc);
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
+typedef int (*kalman_map_fn)(void *user, const double *x, double *y);
+int kalman_jacobian(int kind, double step, kalman_map_fn fn, void *user, int n, int m,
+                    const double *x, const double *y0, double *J);
+int kalman_model_differentiator(const kalman_model_t *model);
+int kalman_model_set_differentiator(kalman_model_t *model, int kind, double step);
 typedef int (*kalman_derivative_fn)(void *user, const double *x, double t, double *dx);
 int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
                      kalman_derivative_fn f, void *user, int n,
@@ -492,6 +497,53 @@ def van_loan(A, G, dt):
     F, Q = np.empty_like(A), np.empty_like(A)
     check(L.kalman_van_loan(A.shape[0], cdptr(A), cdptr(G), float(dt), dptr(F), dptr(Q)), "kalman_van_loan")
     return F, Q
+
+
+# --- differentiators -----------------------------------------------------------
+DIFFERENTIATOR_KINDS = {"analytic": 0, "forward": 1, "central": 2}
+_maps: list = []                 # the maps being differentiated, innermost last
+_map_cb = None
+
+
+def _map_callback():
+    global _map_cb
+    if _map_cb is None:
+        @ffi.callback("int(void *, const double *, double *)")
+        def call(_user, x, y):
+            frame = _maps[-1]
+            try:
+                n, m = frame["n"], frame["m"]
+                point = np.frombuffer(ffi.buffer(x, n * 8), dtype=np.float64).reshape(n, 1).copy()
+                value = np.asarray(frame["fn"](point), dtype=np.float64).reshape(-1)
+                if value.size != m:
+                    raise ValueError(f"the map returned {value.size} values, expected {m}.")
+                ffi.buffer(y, m * 8)[:] = value.tobytes()
+                return 0
+            except BaseException as e:           # must not cross the C boundary
+                frame["raised"] = e
+                return -1
+        _map_cb = call
+    return _map_cb
+
+
+def jacobian(scheme, fn, x, y0, step=0.0):
+    """``d fn / dx`` at the column ``x`` by the C++ differentiator ``scheme``
+    (``"forward"`` or ``"central"``); ``y0 = fn(x)``, which also gives the number of rows."""
+    L = require()
+    point = np.ascontiguousarray(np.asarray(x, dtype=np.float64).reshape(-1))
+    base = np.ascontiguousarray(np.asarray(y0, dtype=np.float64).reshape(-1))
+    J = np.empty((base.size, point.size))
+    frame = {"fn": fn, "n": point.size, "m": base.size, "raised": None}
+    _maps.append(frame)
+    try:
+        rc = L.kalman_jacobian(DIFFERENTIATOR_KINDS[scheme], float(step), _map_callback(), ffi.NULL,
+                               point.size, base.size, cdptr(point), cdptr(base), dptr(J))
+    finally:
+        _maps.pop()
+    if frame["raised"] is not None:
+        raise frame["raised"]
+    check(rc, "kalman_jacobian")
+    return J
 
 
 # --- integrators ---------------------------------------------------------------

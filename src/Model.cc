@@ -138,6 +138,19 @@ namespace Kalman
         if (on) fAnalyticJacobian = false;
     }
 
+    void Model::SetDifferentiator(DifferentiatorKind kind, double step)
+    {
+        if (kind == DifferentiatorKind::Automatic)
+            throw std::runtime_error("Kalman::Model: automatic differentiation is reserved for libKalmanLearn; "
+                                     "use Analytic, Forward or Central.");
+        fAnalyticJacobian = (kind == DifferentiatorKind::Analytic);
+        if (!fAnalyticJacobian)
+        {
+            fNumericalScheme = kind;
+            fEpsilon = step > 0. ? step : Differentiators::DefaultStep(kind);
+        }
+    }
+
     void Model::SetGenerator(const Matrix &A)
     {
         if (A.Rows() != fNState || A.Cols() != fNState)
@@ -171,8 +184,9 @@ namespace Kalman
             // leading term of Q does not depend on A at all, so this only
             // shapes the cross terms.
             if (fContinuous)
-                A = Utils::NumericalJacobian(
-                    [this](const Vector &x) { return this->Derivative(x, Vector(fNControl, 0.), fT0); }, fX0, fEpsilon);
+                A = Differentiators::Jacobian(
+                    fNumericalScheme, [this](const Vector &x) { return this->Derivative(x, Vector(fNControl, 0.), fT0); },
+                    fX0, fEpsilon);
             else
                 A = Matrix(fNState, fNState, 0.);
         }
@@ -222,16 +236,16 @@ namespace Kalman
         if (fAnalyticJacobian) return F(t);
 
         const Vector uu(u);
-        return Utils::NumericalJacobian(
-            [this, &uu, t](const Vector &xx) { return this->f(xx, uu, t); }, x, fEpsilon);
+        return Differentiators::Jacobian(
+            fNumericalScheme, [this, &uu, t](const Vector &xx) { return this->f(xx, uu, t); }, x, fEpsilon);
     }
 
     Matrix Model::JacobianH(const Vector &x, double t) const
     {
         if (fAnalyticJacobian) return H(t);
 
-        return Utils::NumericalJacobian(
-            [this, t](const Vector &xx) { return this->h(xx, t); }, x, fEpsilon);
+        return Differentiators::Jacobian(
+            fNumericalScheme, [this, t](const Vector &xx) { return this->h(xx, t); }, x, fEpsilon);
     }
 
     // --- setters -------------------------------------------------------------
@@ -394,7 +408,7 @@ namespace Kalman
         os << fName << " — n = " << fNState << ", m = " << fNMeasure
            << ", l = " << fNControl << ", fs = " << fSampleRate << " Hz, engine = "
            << ToString(fDefaultEngine) << ", Jacobian = "
-           << (fAnalyticJacobian ? "analytic" : "numerical");
+           << ToString(Differentiator());
         if (fContinuous)
             os << ", integrator = " << ToString(fDefaultIntegrator)
                << (fSubsteps > 1 ? " x" + std::to_string(fSubsteps) : "");

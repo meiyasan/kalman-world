@@ -332,6 +332,24 @@ int kalman_model_set_noise_intensity(kalman_model_t *model, int q, const double 
 /// The model's current F (n x n) and Q (n x n), as decoded. Either may be NULL.
 int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q);
 
+/* --- differentiators ----------------------------------------------------------- */
+
+/// A map to differentiate: write y = fn(x) (m values) for x (n values). Return 0, or non-zero to stop.
+typedef int (*kalman_map_fn)(void *user, const double *x, double *y);
+
+/**
+ * The Jacobian d fn / dx at `x` (n), written to `J` (m x n), by a
+ * Kalman::Differentiator: `kind` 1 forward differences, 2 central differences;
+ * `step` is the relative step (<= 0: the scheme's default). `y0` is fn(x) (m) when
+ * the caller has it, which saves the forward scheme one evaluation; else NULL.
+ */
+int kalman_jacobian(int kind, double step, kalman_map_fn fn, void *user, int n, int m,
+                    const double *x, const double *y0, double *J);
+
+/// How a model's Jacobians are obtained: 0 analytic, 1 forward, 2 central.
+int kalman_model_differentiator(const kalman_model_t *model);
+int kalman_model_set_differentiator(kalman_model_t *model, int kind, double step);
+
 /* --- integrators ------------------------------------------------------------ */
 
 /**

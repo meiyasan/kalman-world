@@ -21,6 +21,22 @@ int main()
 
     CHECK(pendulum.DefaultEngine() == EngineKind::Extended, "pendulum: asks for the extended engine");
     CHECK(!pendulum.HasAnalyticJacobian(), "pendulum: declares a numerical Jacobian");
+    CHECK(pendulum.Differentiator() == DifferentiatorKind::Central, "pendulum: central differences by default");
+    {
+        Fixture::Pendulum other = pendulum;
+        Vector at(2);
+        at(0) = 0.4; at(1) = -0.3;
+        const Matrix central = other.Jacobian(at, Vector(), 0.);
+        other.SetDifferentiator(DifferentiatorKind::Forward);
+        CHECK(other.Differentiator() == DifferentiatorKind::Forward, "model: the scheme is a declared property");
+        const Matrix forward = other.Jacobian(at, Vector(), 0.);
+        CHECK_CLOSE(forward(1, 0), central(1, 0), 1e-4, "model: forward and central agree to first order");
+        CHECK(forward(1, 0) != central(1, 0), "model: and are not the same scheme");
+        bool refused = false;
+        try { other.SetDifferentiator(DifferentiatorKind::Automatic); }
+        catch (const std::runtime_error &) { refused = true; }
+        CHECK(refused, "model: automatic differentiation is refused in the core");
+    }
 
     Sampler sampler(&pendulum, 4242);
     sampler.Generate(1500, x0);

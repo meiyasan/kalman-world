@@ -54,6 +54,7 @@
 #include "Kalman/Abstract/Metadata.h"
 #include "Kalman/Constants.h"
 #include "Kalman/Integrator.h"
+#include "Kalman/Differentiator.h"
 
 #include <map>
 #include <memory>
@@ -85,7 +86,8 @@ namespace Kalman
 
             EngineKind fDefaultEngine = EngineKind::Linear;
             bool fAnalyticJacobian = true;  // false => differentiate f()/h() numerically
-            double fEpsilon = 1e-5;         // step for the numerical Jacobian
+            DifferentiatorKind fNumericalScheme = DifferentiatorKind::Central;   // used when not analytic
+            double fEpsilon = 1e-5;         // relative step of the numerical scheme
 
             // Time stepping, for a model that overrides Derivative(). Declared by
             // kind; the instance is built lazily so a model never imports a scheme.
@@ -253,6 +255,18 @@ namespace Kalman
 
             bool HasAnalyticJacobian() const { return fAnalyticJacobian; }
             void SetAnalyticJacobian(bool on) { fAnalyticJacobian = on; }
+
+            /// Where Jacobian() and JacobianH() come from: Analytic, or a numerical scheme.
+            DifferentiatorKind Differentiator() const
+            { return fAnalyticJacobian ? DifferentiatorKind::Analytic : fNumericalScheme; }
+
+            /**
+             * \brief Declare how this model's Jacobians are obtained.
+             * \param kind  Analytic (F() and H() are the Jacobians), Forward or Central.
+             * \param step  relative step of a numerical scheme; <= 0 keeps the scheme's default.
+             * \throws std::runtime_error for Automatic, which is reserved for libKalmanLearn.
+             */
+            void SetDifferentiator(DifferentiatorKind kind, double step = 0.);
 
             double Epsilon() const { return fEpsilon; }
             void SetEpsilon(double eps) { fEpsilon = eps; }

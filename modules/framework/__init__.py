@@ -12,7 +12,7 @@ Layers (dependency points downward only: Filter → Engine → Model):
 
 Domain applications live in ``kalman.apps``.
 """
-from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind, KalmanDynamicsKind,
+from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind, KalmanDynamicsKind, KalmanDifferentiatorKind,
                         KalmanProviderKind)
 from .model import KalmanModel
 from .engine import KalmanEngine, KalmanEstimator
@@ -71,6 +71,7 @@ __all__ = [
     "KalmanIntegratorKind",
     "KalmanSolverKind",
     "KalmanDynamicsKind",
+    "KalmanDifferentiatorKind",
     "KalmanProviderKind",
     "KalmanModel",
     "KalmanEngine",

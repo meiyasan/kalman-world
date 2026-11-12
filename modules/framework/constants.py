@@ -145,6 +145,24 @@ ALL_SOLVERS = frozenset(KalmanSolverKind)
 
 
 # -----------------------------
+# ----- Differentiator kinds --
+# -----------------------------
+class KalmanDifferentiatorKind(Enum):
+    """
+    Where a model's Jacobians come from. A model declares it as ``DIFFERENTIATOR``.
+
+    ``ANALYTIC``: the model gives the formulas (it overrides ``F``/``H``, or holds matrices).
+    ``FORWARD``: one-sided finite differences, first order (the default).
+    ``CENTRAL``: two-sided finite differences, second order, twice the evaluations.
+    ``AUTOMATIC``: automatic differentiation. Reserved: it belongs to libKalmanLearn.
+    """
+    ANALYTIC  = auto()
+    FORWARD   = auto()
+    CENTRAL   = auto()
+    AUTOMATIC = auto()
+
+
+# -----------------------------
 # ----- Dynamics kinds --------
 # -----------------------------
 class KalmanDynamicsKind(Enum):

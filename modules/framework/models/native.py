@@ -394,6 +394,12 @@ class NativeTwin:
 
         if self.fs:
             core.check(lib.kalman_model_set_sample_rate(handle, float(self.fs)), "set_sample_rate")
+        # The twin linearises with the scheme the Python model declares.
+        scheme = getattr(getattr(self, "DIFFERENTIATOR", None), "name", "FORWARD").lower()
+        if scheme not in ("forward", "central"):
+            return None
+        core.check(lib.kalman_model_set_differentiator(handle, core.DIFFERENTIATOR_KINDS[scheme], 0.0),
+                   "set_differentiator")
         for key, value in self.native_parameters().items():
             core.check(lib.kalman_model_set_parameter(handle, key.encode(), float(value)),
                        f"set_parameter({key!r})")

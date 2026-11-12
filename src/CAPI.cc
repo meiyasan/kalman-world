@@ -20,6 +20,7 @@
 #include "Kalman/Factory.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Controller.h"
+#include "Kalman/Differentiator.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Utils.h"
 #include "Kalman/Integrators/DormandPrince.h"
@@ -849,6 +850,42 @@ int kalman_model_get_F_Q(const kalman_model_t *model, double *F, double *Q)
         const std::size_t n = M.NState();
         if (F) Copy(M.F(M.T0()), F, n, n, "F");
         if (Q) Copy(M.Q(M.T0()), Q, n, n, "Q");
+        return 0;
+    });
+}
+
+int kalman_jacobian(int kind, double step, kalman_map_fn fn, void *user, int n, int m,
+                    const double *x, const double *y0, double *J)
+{
+    return Guard([&] {
+        if (!fn) throw std::invalid_argument("null map");
+        if (n <= 0 || m <= 0 || !J) throw std::invalid_argument("bad arguments");
+        const std::size_t nn = static_cast<std::size_t>(n), mm = static_cast<std::size_t>(m);
+        std::vector<double> in(nn), out(mm);
+        const Kalman::Map map = [&](const Kalman::Vector &point) {
+            for (std::size_t i = 0; i < nn; ++i) in[i] = point(i);
+            if (fn(user, in.data(), out.data()) != 0) throw std::runtime_error("the map failed");
+            Kalman::Vector y(mm);
+            for (std::size_t i = 0; i < mm; ++i) y(i) = out[i];
+            return y;
+        };
+        const Kalman::Vector base = y0 ? Vec(y0, mm, "y0") : Kalman::Vector();
+        const Kalman::Matrix jac = Kalman::Differentiators::Jacobian(
+            static_cast<Kalman::DifferentiatorKind>(kind), map, Vec(x, nn, "x"), step, y0 ? &base : nullptr);
+        Copy(jac, J, mm, nn, "J");
+        return 0;
+    });
+}
+
+int kalman_model_differentiator(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).Differentiator()); });
+}
+
+int kalman_model_set_differentiator(kalman_model_t *model, int kind, double step)
+{
+    return Guard([&] {
+        Deref(model).SetDifferentiator(static_cast<Kalman::DifferentiatorKind>(kind), step);
         return 0;
     });
 }

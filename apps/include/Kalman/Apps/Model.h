@@ -42,14 +42,16 @@ namespace Kalman::Apps
             static constexpr double kJacobianStep = 1e-6;
 
             Model(std::string name, std::size_t n, std::size_t m, std::size_t l = 0)
-                : Kalman::Models::Extended(std::move(name), n, m, l) {}
+                : Kalman::Models::Extended(std::move(name), n, m, l)
+            {
+                // Forward differences, as the Python framework takes them, so a twin
+                // and its Python class linearise alike.
+                SetDifferentiator(DifferentiatorKind::Forward, kJacobianStep);
+            }
 
             const char *Title() const override { return "Application Model"; }
             const char *Description() const override
             { return "Nonlinear application model; Jacobians differenced as the Python framework does."; }
-
-            Matrix Jacobian(const Vector &x, const Vector &u, double t = 0.) const override;
-            Matrix JacobianH(const Vector &x, double t = 0.) const override;
     };
 }
 

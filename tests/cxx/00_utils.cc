@@ -4,9 +4,13 @@
  */
 #include "Kalman/Matrix.h"
 #include "Kalman/Utils.h"
+#include "Kalman/Differentiators/Central.h"
+#include "Kalman/Differentiators/Forward.h"
+#include "Kalman/Algebra/Algebra.h"
 #include "Check.h"
 
 #include <cmath>
+#include <stdexcept>
 #include <limits>
 
 using namespace Kalman;
@@ -212,6 +216,54 @@ int main()
         CHECK_CLOSE(Q(0, 1), q * dt * dt / 2., 1e-14, "VanLoan: cross term");
         CHECK_CLOSE(Q(1, 1), q * dt, 1e-14, "VanLoan: velocity variance");
         CHECK_CLOSE(Q(0, 1), Q(1, 0), 1e-16, "VanLoan: Q is symmetric");
+    }
+
+    // --- the algebra and the differentiators, under their own names ------------
+    {
+        // Solve() by substitution agrees with the inverse, on a covariance-like matrix.
+        Matrix S(3, 3, 0.);
+        S(0, 0) = 4.; S(0, 1) = 1.; S(0, 2) = 0.5;
+        S(1, 0) = 1.; S(1, 1) = 3.; S(1, 2) = 0.2;
+        S(2, 0) = 0.5; S(2, 1) = 0.2; S(2, 2) = 2.;
+        Vector b(3);
+        b(0) = 1.; b(1) = -2.; b(2) = 0.5;
+        const Vector x = Algebra::Solve(S, b);
+        const Vector back = S * x;
+        CHECK_CLOSE(back(0), b(0), 1e-13, "Algebra::Solve: S x = b, first row");
+        CHECK_CLOSE(back(2), b(2), 1e-13, "Algebra::Solve: S x = b, last row");
+        const Matrix L = Algebra::Cholesky(S);
+        CHECK_CLOSE((L * L.Transpose())(1, 2), S(1, 2), 1e-14, "Algebra::Cholesky: L L^T = S");
+        CHECK(Algebra::Cholesky(Matrix(2, 2, 0.)).Empty(), "Algebra::Cholesky: a singular matrix has no factor");
+
+        // d/dx of [x0^2 x1, sin(x0)] at (1.3, -0.7): the two schemes against the formula.
+        const Map fn = [](const Vector &v) {
+            Vector y(2);
+            y(0) = v(0) * v(0) * v(1);
+            y(1) = std::sin(v(0));
+            return y;
+        };
+        Vector at(2);
+        at(0) = 1.3; at(1) = -0.7;
+        const double exact = 2. * 1.3 * -0.7;
+        const Matrix Jf = Differentiators::Jacobian(DifferentiatorKind::Forward, fn, at);
+        const Matrix Jc = Differentiators::Jacobian(DifferentiatorKind::Central, fn, at);
+        CHECK_CLOSE(Jf(0, 0), exact, 1e-5, "Forward: first order");
+        CHECK_CLOSE(Jc(0, 0), exact, 1e-9, "Central: second order");
+        CHECK(std::abs(Jc(0, 0) - exact) < std::abs(Jf(0, 0) - exact), "Central is closer than Forward");
+        CHECK_CLOSE(Jc(1, 1), 0., 1e-12, "Central: a variable the map ignores");
+
+        const Vector y0 = fn(at);
+        int calls = 0;
+        const Map counted = [&](const Vector &v) { ++calls; return fn(v); };
+        Differentiators::Forward().Jacobian(counted, at, &y0);
+        CHECK(calls == 2, "Forward: one evaluation per component when f(x) is given");
+
+        bool threw = false;
+        try { Differentiators::Make(DifferentiatorKind::Automatic); }
+        catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "Automatic differentiation is reserved, and says so");
+        CHECK(Differentiators::Make(DifferentiatorKind::Central)->Kind() == DifferentiatorKind::Central,
+              "Make: builds the scheme asked for");
     }
 
     return Check::Summary("utils");

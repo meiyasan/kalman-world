@@ -48,6 +48,17 @@ namespace Kalman
     };
 
     /**
+     * \brief Where a model's Jacobians come from (see Kalman::Differentiator).
+     */
+    enum class DifferentiatorKind
+    {
+        Analytic = 0,   ///< the model gives the formula
+        Forward = 1,    ///< one-sided differences (first order)
+        Central = 2,    ///< two-sided differences (second order)
+        Automatic = 3   ///< automatic differentiation: reserved, libKalmanLearn
+    };
+
+    /**
      * \brief Time-stepping scheme of a Kalman::Integrator — advances `x(t) -> x(t + dt)`
      * for a continuous `xdot = f(x, u, t)`.
      *
@@ -95,6 +106,7 @@ namespace Kalman
     /// Human-readable name of an integrator kind (never null).
     const char *ToString(IntegratorKind kind);
     const char *ToString(DynamicsKind kind);
+    const char *ToString(DifferentiatorKind kind);
     /// Human-readable name of a solver kind (never null).
     const char *ToString(SolverKind kind);
 }
