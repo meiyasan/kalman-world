@@ -10,12 +10,21 @@ from .abstract.metadata import KalmanFilterMetadata
 from .abstract.mixins import KalmanFilterMixin
 
 
-class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
+class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
     """
-    The Kalman **filter** — workflow (WHEN). Composes a ``model`` (WHAT) and an
-    ``engine`` (HOW), owns the run state (``x/P`` + prior/posterior/transition/smooth
-    logs) and drives ``forward`` / ``backward``. It implements no covariance math —
-    that lives in the engine.
+    A recursive Bayesian **filter**: the workflow (WHEN), whatever the belief looks
+    like. Composes a ``model`` (WHAT) and an ``engine`` (HOW), owns the run state
+    (``x/P`` + prior/posterior/transition/smooth logs) and drives ``forward`` /
+    ``backward``. It implements no arithmetic: that lives in the engine. The C++
+    counterpart is ``Kalman::Filter``.
+
+    Two families derive from it, by what the belief is taken to be:
+
+    - Gaussian (a mean and a covariance): :class:`KalmanFilter` and its leaves,
+      linear, extended, unscented, ensemble, combinatorial;
+    - not Gaussian (a cloud of weighted samples): ``ParticleFilter``. A particle
+      filter is not a Kalman filter; it reports the mean and covariance of its
+      cloud so that records and plots read alike.
 
     Engine resolution is declarative: if no engine is passed, one is built from
     ``self.KIND`` (set by public leaves like :class:`LinearKalmanFilter`) or, failing
@@ -23,10 +32,10 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
     against ``model.ALLOWED_ENGINES``.
     """
 
-    NAME = "Kalman Filter"
+    NAME = "Bayesian Filter"
     DESCRIPTION = "Forward/backward workflow over a composed model + engine."
     VERSION = "1.0"
-    KIND = None   # public leaves (LinearKalmanFilter, ...) set this
+    KIND = None   # public leaves (LinearKalmanFilter, ParticleFilter, ...) set this
 
     def __init__(self, model=None, engine=None, *, epsilon: float = 1e-5,
                  n=None, m=None, F=None, H=None, Q=None, R=None,
@@ -228,15 +237,46 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         handle_of = getattr(self._model, "native_handle", None)
         if handle_of is None:
             return None
-        if self._twin_engine() is None:
+        if self._twin_engine() is None and self._twin_sigma_engine() is None:
             return None
         return handle_of()
 
     def _twin_engine(self):
-        """The C++ engine that stands for this filter's engine on a C++ model, or None."""
+        """The C++ engine that stands for this filter's engine on a C++ model
+        (a name ``core.create_engine`` takes), or None."""
         from .engines.extended import ExtendedKalmanEngine
         from .engines.linear import LinearKalmanEngine
         return {ExtendedKalmanEngine: "extended", LinearKalmanEngine: "linear"}.get(type(self.engine))
+
+    def _twin_sigma_engine(self):
+        """The same for the engines that draw points over the state: the kind and
+        its settings, or None."""
+        from .engines.unscented import UnscentedKalmanEngine
+        from .engines.particle import ParticleEngine
+        engine = self.engine
+        if type(engine) not in (UnscentedKalmanEngine, ParticleEngine):
+            return None
+        if type(engine) is UnscentedKalmanEngine:
+            return {"kind": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
+        # The C++ engine has its own random stream; seed it from numpy's, so
+        # np.random.seed() still makes a run repeatable.
+        return {"kind": "particle", "n_particles": engine.n_particles, "threshold": engine.resample_threshold,
+                "seed": int(np.random.randint(0, 2**31 - 1))}
+
+    def _make_twin_engine(self, handle):
+        """The C++ engine for a pass on the twin ``handle``. For the engines that
+        draw points, the twin is told where the Python class takes its noise (as
+        an argument of f and h, or added after them), so both draw the same points."""
+        from .native import core
+        name = self._twin_engine()
+        if name is not None:
+            core.check(core.lib.kalman_model_set_noise_inputs(handle, 0, 0), "set_noise_inputs")
+            return core.create_engine(name)
+        engine, model = self.engine, self._model
+        core.check(core.lib.kalman_model_set_noise_inputs(
+            handle, int(bool(engine._noise_through_f(model))), int(bool(engine._noise_through_h(model)))),
+            "set_noise_inputs")
+        return core.create_engine(**self._twin_sigma_engine())
 
     # ------------------------------------------------------------------
     # A model written in Python that is its matrices, constant or functions
@@ -295,14 +335,14 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
                    "set_t0")
 
         if uk_fn is not None:
-            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, model.l, zk, control=uk_fn)
+            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, model.l, zk, control=uk_fn)
             uk = out["controls"]
         elif model.l > 0:
             # One command per measurement, as the Python loop reads them (a longer
             # program is cut, like the loop that stops at the last measurement).
-            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, model.l, zk, uk[:len(zk)])
+            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, model.l, zk, uk[:len(zk)])
         else:
-            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, 0, zk)
+            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, 0, zk)
         self._store_pass(out, zk, uk)
 
     # ------------------------------------------------------------------
@@ -602,3 +642,16 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         ground-truth ``sample`` is given). Delegates to
         :meth:`~kalman.framework.diagnostics.KalmanDiagnostics.plot`; returns the figure."""
         return self._diagnostics().plot(sample=sample, **kwargs)
+
+
+class KalmanFilter(BayesFilter):
+    """
+    The Kalman **filter**: the Bayesian filter of a Gaussian belief, a mean and a
+    covariance carried from step to step. Its leaves differ in how they carry
+    them through a model that is not linear (:class:`ExtendedKalmanFilter`,
+    ``UnscentedKalmanFilter``, ``EnsembleKalmanFilter``). The workflow is
+    :class:`BayesFilter`'s; ``KalmanFilter(model)`` picks the model's default
+    engine, as before.
+    """
+
+    NAME = "Kalman Filter"

@@ -17,7 +17,7 @@ sys.path.insert(0, ".")
 
 import modules.framework.models.native as native
 from modules.framework.native import core
-from modules.framework.filter import KalmanFilter
+from modules.framework.filter import BayesFilter, KalmanFilter
 from modules.framework.model import KalmanModel
 from modules.framework.constants import KalmanStructureKind
 
@@ -31,19 +31,19 @@ class path_taken:
     def __enter__(self):
         self.taken, self._orig = [], {}
         for name in PATHS:
-            self._orig[name] = getattr(KalmanFilter, name)
+            self._orig[name] = getattr(BayesFilter, name)
 
             def wrap(name=name):
                 def run(filt, *args, **kwargs):
                     self.taken.append(name)
                     return self._orig[name](filt, *args, **kwargs)
                 return run
-            setattr(KalmanFilter, name, wrap())
+            setattr(BayesFilter, name, wrap())
         return self
 
     def __exit__(self, *exc):
         for name, fn in self._orig.items():
-            setattr(KalmanFilter, name, fn)
+            setattr(BayesFilter, name, fn)
 
     @property
     def last(self):
@@ -200,3 +200,66 @@ class TestNativeModelPass(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless("ballistic" in native.apps_library_names(), "libKalmanApps is not built")
+class TestTwinsOnTheSigmaPointEngines(unittest.TestCase):
+    """A model with a C++ twin runs wholly in C++ on the unscented and particle
+    engines too. The Python classes take their noise as an argument of f and h,
+    so the points are drawn over the noise as well: the twin is told to do the same."""
+
+    def cases(self):
+        from modules.apps.ballistics import BallisticModel
+        from modules.apps.vehicles import CarSpeedModel
+        from modules.apps.gps import GPSModel
+        from modules.apps.weather.storms import StormModel
+        for make in (lambda: BallisticModel("s", fs=100.0), lambda: CarSpeedModel("s"), lambda: StormModel("s")):
+            yield make, np.asarray(make().sample(200 / make().fs, seed=1).zk)
+        yield (lambda: GPSModel("s")), GPSModel("s").simulate(120.0, seed=1)
+
+    def test_unscented(self):
+        from modules.framework.filters import UnscentedKalmanFilter
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for make, z in self.cases():
+                with native.python_reference():
+                    reference = UnscentedKalmanFilter(make()).forward(z)
+                with path_taken() as path:
+                    record = UnscentedKalmanFilter(make()).forward(z)
+                self.assertEqual(path.last, "_forward_twin", type(make()).__name__)
+                state, covariance = apart(reference, record)
+                self.assertLess(state, 1e-7, type(make()).__name__)
+                # With alpha = 1e-3 the points sit 1e-3 sigma from the mean and their
+                # weights are of order 1e6: the last digit of h comes back that much larger.
+                self.assertLess(covariance, 1e-4, type(make()).__name__)
+
+    def test_particle_runs_on_the_twin(self):
+        from modules.framework.filters import ParticleFilter
+        from modules.apps.vehicles import CarSpeedModel
+        z = np.asarray(CarSpeedModel("s").sample(5.0, seed=1).zk)
+        np.random.seed(3)
+        with path_taken() as path:
+            record = ParticleFilter(CarSpeedModel("s"), n_particles=400).forward(z)
+        self.assertEqual(path.last, "_forward_twin")
+        self.assertTrue(np.all(np.isfinite(np.asarray(record.xk, float))))
+
+    def test_the_extended_pass_after_a_sigma_pass_is_unchanged(self):
+        from modules.framework.filters import UnscentedKalmanFilter
+        from modules.apps.vehicles import CarSpeedModel
+        z = np.asarray(CarSpeedModel("s").sample(5.0, seed=1).zk)
+        model = CarSpeedModel("s")
+        before = np.asarray(model.filter(z).xk)
+        UnscentedKalmanFilter(model).forward(z)
+        np.testing.assert_array_equal(np.asarray(model.filter(z).xk), before)
+
+
+class TestFilterFamilies(unittest.TestCase):
+    """Gaussian beliefs are Kalman filters; a particle filter is not one."""
+
+    def test_hierarchy(self):
+        from modules.framework.filters import (ParticleFilter, LinearKalmanFilter, ExtendedKalmanFilter,
+                                               UnscentedKalmanFilter, EnsembleKalmanFilter)
+        for cls in (LinearKalmanFilter, ExtendedKalmanFilter, UnscentedKalmanFilter, EnsembleKalmanFilter):
+            self.assertTrue(issubclass(cls, KalmanFilter) and issubclass(cls, BayesFilter), cls.__name__)
+        self.assertTrue(issubclass(ParticleFilter, BayesFilter))
+        self.assertFalse(issubclass(ParticleFilter, KalmanFilter))

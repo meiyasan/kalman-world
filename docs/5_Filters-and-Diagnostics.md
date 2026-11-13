@@ -29,6 +29,18 @@ not silently at step 4000.
 | `CombinatorialKalmanFilter` | `combinatorial` | many hits per layer, tracks to *find* not just follow | yes |
 | `InteractiveKalmanFilter` | (routes M filters) | regime switching between several models | per-model |
 
+The classes fall in two families, by what the belief is taken to be:
+
+| Belief | Base class | Leaves |
+|---|---|---|
+| Gaussian: a mean and a covariance | `KalmanFilter` | linear, extended, unscented, ensemble, combinatorial |
+| not Gaussian: a cloud of weighted samples | `BayesFilter` directly | `ParticleFilter` |
+
+`BayesFilter` is the workflow both share (`forward`, `backward`, the records;
+`Kalman::Filter` in C++), and `KalmanFilter` derives from it. A particle
+filter is not a Kalman filter: `isinstance(pf, KalmanFilter)` is false. It
+reports the mean and covariance of its cloud, so records and plots read alike.
+
 Rules of thumb: start linear, move to EKF only when the dynamics are actually
 nonlinear, and to UKF when the EKF's linearisation visibly biases the estimate
 (NIS drifts, innovations go non-white). Reach for PF only when the posterior is

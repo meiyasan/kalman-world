@@ -37,7 +37,7 @@ from collections.abc import Mapping
 import numpy as np
 
 from ..framework.model import KalmanModel
-from ..framework.filter import KalmanFilter
+from ..framework.filter import BayesFilter, KalmanFilter  # noqa: F401  (KalmanFilter: the name callers import from here)
 from ..framework.constants import (KalmanEngineKind, KalmanIntegratorKind,
                                    KalmanSolverKind)
 
@@ -432,8 +432,8 @@ def make_model(spec: dict) -> KalmanModel:
     return cls(**params)
 
 
-def make_filter(spec: dict) -> KalmanFilter:
-    """Build a :class:`KalmanFilter` (model + resolved engine) from a spec."""
+def make_filter(spec: dict) -> BayesFilter:
+    """Build a filter (model + resolved engine, of whatever family) from a spec."""
     model = make_model(spec)
     binds = spec.get("bindings", {}) or {}
     engine_kind = _kind(KalmanEngineKind, binds.get("engine"))
@@ -442,11 +442,11 @@ def make_filter(spec: dict) -> KalmanFilter:
         # driven this way -- NativeEngine says so itself if the model is Python.
         from ..framework.engines import NativeEngine
         kind = engine_kind or getattr(model, "DEFAULT_ENGINE", KalmanEngineKind.EXTENDED)
-        return KalmanFilter(model, engine=NativeEngine(kind, **(binds.get("engine_params", {}) or {})))
+        return BayesFilter(model, engine=NativeEngine(kind, **(binds.get("engine_params", {}) or {})))
     if engine_kind is not None:
         from ..framework.engines import resolve_engine
-        return KalmanFilter(model, engine=resolve_engine(engine_kind))
-    return KalmanFilter(model)
+        return BayesFilter(model, engine=resolve_engine(engine_kind))
+    return BayesFilter(model)
 
 
 # ======================================================================
@@ -529,7 +529,7 @@ def run_control(model_spec: dict, controller_spec: dict, duration: float) -> dic
                x_ref=_arr(cost.get("x_ref")), **(cs.get("params", {}) or {}))
     if hasattr(ctrl, "fit"):          # LQR/Neural controllers train before use
         ctrl.fit()
-    filt = KalmanFilter(model)
+    filt = BayesFilter(model)
     truth = model.sample(duration)
     rec = filt.forward(truth.zk, uk=ctrl)
     rid = _stash(rec, model, model_spec)
@@ -576,7 +576,7 @@ def diagnostics(run_id: str) -> dict:
                 f"run {run_id!r} carries no stored measurements to diagnose; "
                 "re-run it through run_filter (which now keeps them) or pass a "
                 "sample() run.")
-    filt = KalmanFilter(r["model"])
+    filt = BayesFilter(r["model"])
     filt.forward(np.asarray(zk, dtype=float), record=False)
     nu, S = filt.innovations()
     return {"nis": jsonify(filt.nis()), "innovation": jsonify(nu),

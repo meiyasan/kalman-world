@@ -219,6 +219,9 @@ int kalman_model_set_matrix(kalman_model_t *model, const char *which, const doub
 int kalman_model_set_table(kalman_model_t *model, const char *which, int steps, const double *data);
 /// Name component i of the state (`state` != 0) or of the measurement. Same models as above. 0 or -1.
 int kalman_model_set_component(kalman_model_t *model, int state, int i, const char *name, const char *unit);
+/// Have the sigma-point and particle engines draw over the process and the measurement
+/// noise as well as the state (Kalman::Model::SetNoiseInputs). 0 or -1.
+int kalman_model_set_noise_inputs(kalman_model_t *model, int process, int measurement);
 /// Declare what the model is made of: 0 maps, 1 matrices, 2 time-varying matrices. 0 or -1.
 int kalman_model_set_structure(kalman_model_t *model, int kind);
 

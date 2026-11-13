@@ -1,13 +1,15 @@
 """Particle Filter (PF) — wraps a model with the sequential-importance-resampling engine."""
 from __future__ import annotations
 
-from ..filter import KalmanFilter
+from ..filter import BayesFilter
 from ..constants import KalmanEngineKind
 
 
-class ParticleFilter(KalmanFilter):
+class ParticleFilter(BayesFilter):
     """
-    Bootstrap / SIR particle filter. Forward-only (no RTS smoother)::
+    Bootstrap / SIR particle filter: the belief is a cloud of weighted samples,
+    not a Gaussian, so this is a Bayesian filter beside the Kalman family and not
+    a :class:`~kalman.framework.filter.KalmanFilter`. Forward-only (no RTS smoother)::
 
         pf  = ParticleFilter(my_model, n_particles=1000)
         rec = pf.forward(zk)

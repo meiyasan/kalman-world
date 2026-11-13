@@ -4,7 +4,7 @@ Kalman framework — the Model / Engine / Filter contracts and their concrete pi
 Layers (dependency points downward only: Filter → Engine → Model):
 - ``model.py``   : ``KalmanModel``  — the system (WHAT): f/h/F/H/B/L/M/Q/R.
 - ``engine.py``  : ``KalmanEngine`` — the algorithm (HOW): one predict/update/smooth step.
-- ``filter.py``  : ``KalmanFilter`` — the workflow (WHEN): forward/backward + run state.
+- ``filter.py``  : ``BayesFilter`` — the workflow (WHEN): forward/backward + run state; ``KalmanFilter`` is its Gaussian family, ``ParticleFilter`` stands beside it.
 - ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite``).
 - ``engines/``   : concrete engines (``LinearKalmanEngine`` / ``Extended`` / ``Unscented`` / ``Particle``).
 - ``filters/``   : the recognisable filter names (``LinearKalmanFilter`` / ``Extended`` / ``Unscented`` / ``Particle`` / ``Ensemble`` / ``Combinatorial`` / ``Interactive``).
@@ -24,7 +24,7 @@ from .solver import KalmanSolver
 from .solvers import (SpectralSolver, FiniteDifferenceSolver, resolve_solver,
                       register_solver, unregister_solver, available_solvers)
 from .provider import KalmanProvider
-from .filter import KalmanFilter
+from .filter import BayesFilter, KalmanFilter
 from .control import KalmanController
 from .models import (
     LinearKalmanModel,
@@ -92,6 +92,7 @@ __all__ = [
     "unregister_solver",
     "available_solvers",
     "KalmanProvider",
+    "BayesFilter",
     "KalmanFilter",
     "KalmanController",
     "LinearKalmanModel",

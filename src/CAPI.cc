@@ -577,6 +577,14 @@ int kalman_model_set_component(kalman_model_t *model, int state, int i, const ch
     });
 }
 
+int kalman_model_set_noise_inputs(kalman_model_t *model, int process, int measurement)
+{
+    return Guard([&] {
+        Deref(model).SetNoiseInputs(process != 0, measurement != 0);
+        return 0;
+    });
+}
+
 int kalman_model_set_structure(kalman_model_t *model, int kind)
 {
     return Guard([&] {

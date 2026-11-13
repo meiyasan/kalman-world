@@ -102,6 +102,8 @@ namespace Kalman
             // kind; the instance is built lazily so a model never imports a scheme.
             bool fContinuous = false;
             StructureKind fStructure = StructureKind::Maps;   // see SetStructure()
+            bool fProcessNoiseInput = false;                  // see SetNoiseInputs()
+            bool fMeasurementNoiseInput = false;
             IntegratorKind fDefaultIntegrator = IntegratorKind::RK4;
             SolverKind fDefaultSolver = SolverKind::Spectral;
             mutable std::shared_ptr<Integrator> fIntegrator;
@@ -185,12 +187,22 @@ namespace Kalman
             // gives the map with its noise argument. The sigma-point engine then
             // draws its points over the state and the noise together.
             /// True when f takes the process noise as an argument: see f(x, u, w, t).
-            virtual bool HasProcessNoiseInput() const { return false; }
+            virtual bool HasProcessNoiseInput() const { return fProcessNoiseInput; }
             /// The step with the process noise \p w (same size as Q) inside it.
             /// Default: `f(x, u, t) + w`.
             virtual Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const;
             /// True when h takes the measurement noise as an argument: see h(x, v, t).
-            virtual bool HasMeasurementNoiseInput() const { return false; }
+            virtual bool HasMeasurementNoiseInput() const { return fMeasurementNoiseInput; }
+            /**
+             * \brief Have the sigma-point and particle engines draw over the noise
+             * as well as the state, with the default maps `f + w` and `h + v`.
+             *
+             * The estimate is the same model either way; the points differ. This
+             * is how a C++ model is made to follow, point for point, a Python
+             * class whose f and h take their noise as an argument.
+             */
+            void SetNoiseInputs(bool process, bool measurement)
+            { fProcessNoiseInput = process; fMeasurementNoiseInput = measurement; }
             /// The observation with the measurement noise \p v inside it.
             /// Default: `h(x, t) + v`.
             virtual Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const;

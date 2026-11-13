@@ -126,12 +126,18 @@ class TestStormTwin(unittest.TestCase):
             NAME = "Renamed"
         self.assertIsNotNone(Renamed("TC").native_handle())
 
-    def test_another_engine_keeps_the_python_loop(self):
+    def test_the_unscented_engine_runs_on_the_twin_a_subclass_of_it_does_not(self):
+        from modules.framework.engines.unscented import UnscentedKalmanEngine
         _, fixes = synthetic_track(n_steps=60, seed=9)
-        model = StormModel("TC")
-        flt = UnscentedKalmanFilter(model)
-        self.assertIsNone(flt._native_twin(None))
+        flt = UnscentedKalmanFilter(StormModel("TC"))
+        self.assertIsNotNone(flt._native_twin(None))
         self.assertEqual(len(flt.forward(fixes).xk), 60)
+
+        class Tuned(UnscentedKalmanEngine):
+            pass
+        flt = UnscentedKalmanFilter(StormModel("TC"))
+        flt._engine = Tuned()
+        self.assertIsNone(flt._native_twin(None))
 
     def test_switch_and_environment_turn_twins_off(self):
         model = StormModel("TC")
