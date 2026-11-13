@@ -444,6 +444,28 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0)
     });
 }
 
+/* --- model: named components ------------------------------------------------ */
+
+namespace
+{
+    const char *ComponentField(const kalman_model_t *model, int i, bool state, bool unit)
+    {
+        return GuardStr([=]() -> const char * {
+            const auto all = state ? Deref(model).StateComponents() : Deref(model).MeasurementComponents();
+            if (i < 0 || static_cast<std::size_t>(i) >= all.size()) return nullptr;
+            const auto &c = all[static_cast<std::size_t>(i)];
+            return Keep(unit ? c.unit : c.name);
+        });
+    }
+}
+
+const char *kalman_model_state_name(const kalman_model_t *model, int i) { return ComponentField(model, i, true, false); }
+const char *kalman_model_state_unit(const kalman_model_t *model, int i) { return ComponentField(model, i, true, true); }
+const char *kalman_model_measurement_name(const kalman_model_t *model, int i)
+{ return ComponentField(model, i, false, false); }
+const char *kalman_model_measurement_unit(const kalman_model_t *model, int i)
+{ return ComponentField(model, i, false, true); }
+
 /* --- model: named parameters and noise covariances ------------------------- */
 
 int kalman_model_parameter_count(const kalman_model_t *model)

@@ -255,8 +255,33 @@ storm                discrete    Extended  5  3  0  0.166667  forward   additive
 | PROCESS NOISE | `HasProcessNoiseInput()`, `L()`, `NoiseIntensity()` | `additive`, `through L`, `in f`; `per unit time` when Q is stated as an intensity |
 | MEAS. NOISE | `HasMeasurementNoiseInput()` | `additive`, `in h` |
 
-`kalman model NAME` adds the integrator and its substeps, the diagonals of Q
-and R, the initial state and the named parameters with their defaults. A
+`kalman model NAME` gives one model in full: the sample rate and the step it
+implies, the integrator and its substeps, then the state vector and the
+measurement component by component, and the named parameters with their
+defaults.
+
+```
+$ kalman model car-speed
+  sample rate         20 Hz, one sample every 50 ms
+  dynamics            continuous
+  integrator          RK4
+  ...
+  state vector, n = 2 (process noise additive)
+         name      unit  x0            Q             sqrt(Q)
+    [0]  distance  m     0             0.001         0.0316228
+    [1]  speed     m/s   0             0.05          0.223607
+
+  measurement, m = 1 (noise additive)
+         name      unit  R             sqrt(R)
+    [0]  distance  m     0.25          0.5
+```
+
+The names and units are what the model declares in its constructor with
+`DeclareState({{"distance", "m"}, {"speed", "m/s"}})` and
+`DeclareMeasurement({{"distance", "m"}})`; a model that declares nothing shows
+`x0, x1, ...` and `z0, z1, ...` with no unit. They are read with
+`Model::StateComponents()` and `Model::MeasurementComponents()`, and from C
+with `kalman_model_state_name/_unit` and `kalman_model_measurement_name/_unit`. A
 plugin is given as a file, or as a name looked for in `KALMAN_PLUGIN_PATH`
 (beside `libKalman` when unset). Only compiled models are listed: the models
 written in Python are in `kalman.apps`.

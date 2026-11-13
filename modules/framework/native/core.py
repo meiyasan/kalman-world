@@ -108,6 +108,10 @@ int kalman_model_P0(const kalman_model_t *model, double *P0);
 int kalman_model_set_x0(kalman_model_t *model, const double *x0);
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);
 
+const char *kalman_model_state_name(const kalman_model_t *model, int i);
+const char *kalman_model_state_unit(const kalman_model_t *model, int i);
+const char *kalman_model_measurement_name(const kalman_model_t *model, int i);
+const char *kalman_model_measurement_unit(const kalman_model_t *model, int i);
 int kalman_model_parameter_count(const kalman_model_t *model);
 const char *kalman_model_parameter_name(const kalman_model_t *model, int i);
 int kalman_model_parameter(const kalman_model_t *model, const char *name, double *value);

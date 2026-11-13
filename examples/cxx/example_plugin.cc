@@ -93,6 +93,8 @@ namespace
                 : Kalman::Models::Extended("pendulum", 2, 1), fOmega2(9.81 / length), fGamma(gamma)
             {
                 SetSampleRate(fs);
+                DeclareState({{"angle", "rad"}, {"rate", "rad/s"}});
+                DeclareMeasurement({{"angle", "rad"}});
 
                 Kalman::Matrix H(1, 2, 0.);
                 H(0, 0) = 1.;

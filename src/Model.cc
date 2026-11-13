@@ -359,6 +359,46 @@ namespace Kalman
         if (hx.Size() != fNMeasure) ShapeError("h(x, t)", hx.Size(), 1, fNMeasure, 1);
     }
 
+    namespace
+    {
+        std::vector<Model::Component> Components(const std::vector<Model::Component> &declared, std::size_t count,
+                                                 const char *prefix)
+        {
+            if (declared.size() == count) return declared;
+            std::vector<Model::Component> out(count);
+            for (std::size_t i = 0; i < count; ++i) out[i].name = prefix + std::to_string(i);
+            return out;
+        }
+
+        void CheckComponents(const std::vector<Model::Component> &components, std::size_t count, const char *what)
+        {
+            if (components.size() != count)
+                throw std::invalid_argument(std::string("Kalman::Model: ") + what + " has " + std::to_string(count)
+                                            + " components, " + std::to_string(components.size()) + " were named.");
+            for (const auto &c : components)
+                if (c.name.empty())
+                    throw std::invalid_argument(std::string("Kalman::Model: a component of ") + what + " needs a name.");
+        }
+    }
+
+    std::vector<Model::Component> Model::StateComponents() const
+    { return Components(fStateComponents, fNState, "x"); }
+
+    std::vector<Model::Component> Model::MeasurementComponents() const
+    { return Components(fMeasurementComponents, fNMeasure, "z"); }
+
+    void Model::DeclareState(std::vector<Component> components)
+    {
+        CheckComponents(components, fNState, "the state");
+        fStateComponents = std::move(components);
+    }
+
+    void Model::DeclareMeasurement(std::vector<Component> components)
+    {
+        CheckComponents(components, fNMeasure, "the measurement");
+        fMeasurementComponents = std::move(components);
+    }
+
     void Model::DeclareParameter(const std::string &name, double value)
     {
         if (name.empty()) throw std::invalid_argument("Kalman::Model: a parameter needs a name.");

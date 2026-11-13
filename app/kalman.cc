@@ -4,7 +4,9 @@
  *
  *     kalman                      the models, one per line
  *     kalman models [PATTERN]     the same, names containing PATTERN only
- *     kalman model NAME           everything one model declares
+ *     kalman model NAME           everything one model declares: the state vector and
+ *                                 the measurement component by component (name, unit,
+ *                                 noise), the sample rate, dynamics, parameters
  *     kalman plugins              the libraries the models came from
  *     kalman version
  *
@@ -50,6 +52,7 @@ namespace
         std::vector<double> q, r, x0;   // diagonals of Q and R, and the initial state
         bool qFull = false, rFull = false;
         std::vector<std::pair<std::string, double>> parameters;
+        std::vector<Kalman::Model::Component> state, measurement;
     };
 
     std::vector<double> Diagonal(const Kalman::Matrix &M, bool &full)
@@ -105,6 +108,8 @@ namespace
             s.coupling = !L.Empty() && !IsIdentity(L);
             s.q = Diagonal(model->Q(model->T0()), s.qFull);
             s.r = Diagonal(model->R(model->T0()), s.rFull);
+            s.state = model->StateComponents();
+            s.measurement = model->MeasurementComponents();
             const Kalman::Vector &x0 = model->X0();
             for (std::size_t i = 0; i < x0.Size(); ++i) s.x0.push_back(x0(i));
             for (const auto &p : model->ParameterNames()) s.parameters.emplace_back(p, model->Parameter(p));
@@ -169,6 +174,15 @@ namespace
         return out + "]";
     }
 
+    std::string JsonComponents(const std::vector<Kalman::Model::Component> &components)
+    {
+        std::string out = "[";
+        for (std::size_t i = 0; i < components.size(); ++i)
+            out += std::string(i ? ", " : "") + "{\"name\": " + Quote(components[i].name) + ", \"unit\": "
+                 + Quote(components[i].unit) + "}";
+        return out + "]";
+    }
+
     std::string Json(const Sheet &s, bool detail)
     {
         std::ostringstream os;
@@ -196,7 +210,9 @@ namespace
                << ", \"version\": " << Quote(s.version)
                << ", \"Q_diagonal\": " << JsonList(s.q) << ", \"Q_is_diagonal\": " << (s.qFull ? "false" : "true")
                << ", \"R_diagonal\": " << JsonList(s.r) << ", \"R_is_diagonal\": " << (s.rFull ? "false" : "true")
-               << ", \"x0\": " << JsonList(s.x0) << ", \"parameters\": {";
+               << ", \"x0\": " << JsonList(s.x0) << ", \"dt\": " << JsonNumber(s.fs > 0. ? 1. / s.fs : 1.)
+               << ", \"state\": " << JsonComponents(s.state)
+               << ", \"measurement\": " << JsonComponents(s.measurement) << ", \"parameters\": {";
             for (std::size_t i = 0; i < s.parameters.size(); ++i)
                 os << (i ? ", " : "") << Quote(s.parameters[i].first) << ": " << JsonNumber(s.parameters[i].second);
             os << "}";
@@ -240,31 +256,90 @@ namespace
         for (const auto &r : rows) line(r);
     }
 
+    // "128 Hz, one sample every 7.8125 ms": the step in the unit that reads best.
+    std::string Rate(double fs)
+    {
+        if (!(fs > 0.)) return "not set";
+        const double dt = 1. / fs;
+        std::string step;
+        if (dt < 1e-3) step = Number(dt * 1e6) + " us";
+        else if (dt < 1.) step = Number(dt * 1e3) + " ms";
+        else if (dt < 120.) step = Number(dt) + " s";
+        else if (dt < 7200.) step = Number(dt / 60.) + " min";
+        else step = Number(dt / 3600.) + " h";
+        return Number(fs) + " Hz, one sample every " + step;
+    }
+
+    // One line per component: index, name, unit, then the columns given.
+    void Components(const std::vector<Kalman::Model::Component> &components,
+                    const std::vector<std::pair<std::string, const std::vector<double> *>> &columns)
+    {
+        std::size_t name = 4, unit = 4;
+        for (const auto &c : components)
+        {
+            name = std::max(name, c.name.size());
+            unit = std::max(unit, c.unit.size());
+        }
+        const std::size_t index = std::to_string(components.empty() ? 0 : components.size() - 1).size() + 2;
+        // Padded between columns only, so no line ends in spaces.
+        const auto tail = [&columns](const std::vector<std::string> &cells)
+        {
+            for (std::size_t c = 0; c < cells.size(); ++c)
+            {
+                if (c + 1 == cells.size()) std::cout << cells[c];
+                else std::cout << std::left << std::setw(14) << cells[c];
+            }
+            std::cout << '\n';
+        };
+        std::vector<std::string> cells;
+        for (const auto &col : columns) cells.push_back(col.first);
+        std::cout << "    " << std::left << std::setw(int(index) + 2) << "" << std::setw(int(name) + 2) << "name"
+                  << std::setw(int(unit) + 2) << "unit";
+        tail(cells);
+        for (std::size_t i = 0; i < components.size(); ++i)
+        {
+            std::cout << "    " << std::left << std::setw(int(index) + 2) << ("[" + std::to_string(i) + "]")
+                      << std::setw(int(name) + 2) << components[i].name
+                      << std::setw(int(unit) + 2) << (components[i].unit.empty() ? "-" : components[i].unit);
+            cells.clear();
+            for (const auto &col : columns) cells.push_back(i < col.second->size() ? Number((*col.second)[i]) : "-");
+            tail(cells);
+        }
+    }
+
     void Detail(const Sheet &s)
     {
         const auto row = [](const char *key, const std::string &value)
         { std::cout << "  " << std::left << std::setw(20) << key << value << '\n'; };
+        std::vector<double> qSigma, rSigma;
+        for (const double q : s.q) qSigma.push_back(q >= 0. ? std::sqrt(q) : std::nan(""));
+        for (const double r : s.r) rSigma.push_back(r >= 0. ? std::sqrt(r) : std::nan(""));
+
         std::cout << s.name << '\n';
         row("title", s.title + " (version " + s.version + ")");
         row("description", s.description);
         row("from", s.plugin.empty() ? "this program" : s.plugin);
-        row("state n", std::to_string(s.n));
-        row("measurement m", std::to_string(s.m));
-        row("control l", std::to_string(s.l));
-        row("sample rate", Number(s.fs) + " Hz");
+        row("sample rate", Rate(s.fs));
         row("dynamics", s.dynamics);
         if (!s.integrator.empty())
             row("integrator", s.integrator + (s.substeps > 1 ? ", " + std::to_string(s.substeps) + " substeps" : ""));
         row("engine", s.engine);
         row("Jacobian", s.differentiator);
-        row("process noise", ProcessNoise(s));
-        row(s.qFull ? "Q diagonal (full)" : "Q diagonal", List(s.q));
-        row("measurement noise", MeasurementNoise(s));
-        row(s.rFull ? "R diagonal (full)" : "R diagonal", List(s.r));
-        row("x0", List(s.x0));
-        if (s.parameters.empty()) row("parameters", "none");
-        for (std::size_t i = 0; i < s.parameters.size(); ++i)
-            row(i ? "" : "parameters", s.parameters[i].first + " = " + Number(s.parameters[i].second));
+        row("control l", std::to_string(s.l));
+
+        std::cout << "\n  state vector, n = " << s.n << " (process noise " << ProcessNoise(s)
+                  << (s.qFull ? "; Q has off-diagonal terms, its diagonal is shown" : "") << ")\n";
+        Components(s.state, {{"x0", &s.x0}, {"Q", &s.q}, {"sqrt(Q)", &qSigma}});
+
+        std::cout << "\n  measurement, m = " << s.m << " (noise " << MeasurementNoise(s)
+                  << (s.rFull ? "; R has off-diagonal terms, its diagonal is shown" : "") << ")\n";
+        Components(s.measurement, {{"R", &s.r}, {"sqrt(R)", &rSigma}});
+
+        std::cout << "\n  parameters" << (s.parameters.empty() ? ": none" : "") << '\n';
+        std::size_t width = 0;
+        for (const auto &p : s.parameters) width = std::max(width, p.first.size());
+        for (const auto &p : s.parameters)
+            std::cout << "    " << std::left << std::setw(int(width) + 2) << p.first << Number(p.second) << '\n';
     }
 
     // ---- plugins ----------------------------------------------------------

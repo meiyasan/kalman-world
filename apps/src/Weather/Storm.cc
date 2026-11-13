@@ -24,6 +24,10 @@ namespace Kalman::Apps::Weather
     Storm::Storm(bool observeIntensity)
         : Kalman::Apps::Model("storm", 5, observeIntensity ? 3 : 2), fObserveIntensity(observeIntensity)
     {
+        DeclareState({{"lon", "deg E"}, {"lat", "deg N"}, {"ve", "km/h east"}, {"vn", "km/h north"},
+                      {"intensity", "kt"}});
+        if (observeIntensity) DeclareMeasurement({{"lon", "deg E"}, {"lat", "deg N"}, {"intensity", "kt"}});
+        else                  DeclareMeasurement({{"lon", "deg E"}, {"lat", "deg N"}});
         DeclareParameter("omega", 0.);
         DeclareParameter("beta_drift", 5.);
         DeclareParameter("hemisphere", 1.);

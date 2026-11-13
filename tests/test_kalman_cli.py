@@ -70,8 +70,39 @@ def test_one_model_in_full():
     assert sheet["fs"] == 20 and sheet["process_noise"] == "additive"
     assert sheet["Q_diagonal"] == [1e-3, 5e-2] and sheet["R_diagonal"] == [0.25]
     assert sheet["parameters"]["mass"] == 1500
+    assert sheet["state"] == [{"name": "distance", "unit": "m"}, {"name": "speed", "unit": "m/s"}]
+    assert sheet["measurement"] == [{"name": "distance", "unit": "m"}]
+    assert sheet["dt"] == 0.05
     text = _run("model", "car-speed").stdout
-    assert "dynamics" in text and "continuous" in text and "mass = 1500" in text
+    assert "continuous" in text and "20 Hz, one sample every 50 ms" in text
+    assert "state vector, n = 2" in text and "measurement, m = 1" in text
+    assert "[1]  speed     m/s" in text
+    assert not any(line != line.rstrip() for line in text.split("\n"))
+
+
+def test_components_through_the_c_interface():
+    from kalman.framework.native import core
+    import kalman.native as native
+
+    if not core.HAS_CXX_CORE:
+        pytest.skip("libKalman is not built")
+    try:
+        native.load_plugin("KalmanApps")
+    except Exception:
+        pytest.skip("libKalmanApps is not beside libKalman")
+    ffi, lib = core.ffi, core.lib
+    model = lib.kalman_model_create(b"ballistic")
+    assert model != ffi.NULL
+    try:
+        names = [ffi.string(lib.kalman_model_state_name(model, i)).decode() for i in range(9)]
+        units = [ffi.string(lib.kalman_model_state_unit(model, i)).decode() for i in range(9)]
+        assert names == ["x", "vx", "ax", "y", "vy", "ay", "z", "vz", "az"]
+        assert units == ["m", "m/s", "m/s^2"] * 3
+        assert [ffi.string(lib.kalman_model_measurement_name(model, i)).decode() for i in range(3)] == ["x", "y", "z"]
+        assert ffi.string(lib.kalman_model_measurement_unit(model, 0)) == b"m"
+        assert lib.kalman_model_state_name(model, 9) == ffi.NULL
+    finally:
+        lib.kalman_model_destroy(model)
 
 
 def test_filter_table_and_errors():

@@ -29,6 +29,8 @@ namespace Kalman::Apps::Vehicles
         DeclareParameter("g", 9.81);
         DeclareParameter("v_eps", 0.5);
         UseContinuousDynamics();
+        DeclareState({{"distance", "m"}, {"speed", "m/s"}});
+        DeclareMeasurement({{"distance", "m"}});
         ParametersChanged();
         SetSampleRate(20.);
 

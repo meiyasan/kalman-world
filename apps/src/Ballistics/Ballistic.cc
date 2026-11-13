@@ -33,6 +33,17 @@ namespace Kalman::Apps::Ballistics
         DeclareParameter("substeps", 1.);      // integrator steps per sample
         DeclareParameter("integrator", 1.);    // IntegratorKind: 0 Euler, 1 RK4, 2 Dormand-Prince
         UseContinuousDynamics();
+
+        std::vector<Component> state, measurement;
+        for (const char *axis : {"x", "y", "z"})
+        {
+            state.push_back({axis, "m"});
+            state.push_back({std::string("v") + axis, "m/s"});
+            if (order >= 3) state.push_back({std::string("a") + axis, "m/s^2"});
+            measurement.push_back({axis, "m"});
+        }
+        DeclareState(state);
+        DeclareMeasurement(measurement);
         ParametersChanged();
         SetSampleRate(128.);
 

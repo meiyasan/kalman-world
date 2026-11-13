@@ -16,6 +16,8 @@ namespace Kalman::Apps::Weather
 {
     Tornado::Tornado() : Kalman::Apps::Model("tornado-environment", 1, 1)
     {
+        DeclareState({{"stp", ""}});          // significant-tornado-parameter proxy, dimensionless
+        DeclareMeasurement({{"stp", ""}});
         DeclareParameter("mu", 0.3);
         DeclareParameter("persistence", 0.85);
         ParametersChanged();

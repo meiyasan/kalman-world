@@ -184,6 +184,17 @@ int kalman_model_P0(const kalman_model_t *model, double *P0);          /* n x n 
 int kalman_model_set_x0(kalman_model_t *model, const double *x0);      /* n     */
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);      /* n x n */
 
+/* --- model: named components ------------------------------------------------ */
+
+/// Name of component i of the state (0 <= i < n), or NULL. "x<i>" when the model names nothing.
+const char *kalman_model_state_name(const kalman_model_t *model, int i);
+/// Unit of component i of the state ("" when not stated), or NULL.
+const char *kalman_model_state_unit(const kalman_model_t *model, int i);
+/// Name of component i of the measurement (0 <= i < m), or NULL. "z<i>" when the model names nothing.
+const char *kalman_model_measurement_name(const kalman_model_t *model, int i);
+/// Unit of component i of the measurement ("" when not stated), or NULL.
+const char *kalman_model_measurement_unit(const kalman_model_t *model, int i);
+
 /* --- model: named parameters and noise covariances ------------------------- */
 
 /// Number of named parameters the model declares, or -1.

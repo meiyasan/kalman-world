@@ -59,11 +59,20 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace Kalman
 {
     class Model : public Abstract::Metadata
     {
+        public:
+            /// One component of the state or of the measurement: what it is and its unit.
+            struct Component
+            {
+                std::string name;
+                std::string unit;   ///< "" when dimensionless or not stated
+            };
+
         protected:
             std::string fName = "model";
 
@@ -107,6 +116,11 @@ namespace Kalman
 
             // Named scalar parameters (see DeclareParameter()).
             std::map<std::string, double> fParameters;
+
+            // What each component of the state and of the measurement is
+            // (see DeclareState() and DeclareMeasurement()).
+            std::vector<Component> fStateComponents;
+            std::vector<Component> fMeasurementComponents;
 
         public:
             Model() = default;
@@ -297,7 +311,23 @@ namespace Kalman
             /// \throws std::out_of_range as Parameter().
             void SetParameter(const std::string &name, double value);
 
+            // --- named components ----------------------------------------------
+            // What a reader of a result needs to label it: which entry of the
+            // state is the position, in which unit. A model that states nothing
+            // gets x0, x1, ... and z0, z1, ... with no unit.
+            /// The n components of the state, in the order of the state vector.
+            std::vector<Component> StateComponents() const;
+            /// The m components of the measurement, in the order of z.
+            std::vector<Component> MeasurementComponents() const;
+
         protected:
+            /// Name the components of the state (constructor only).
+            /// \throws std::invalid_argument unless exactly n are given.
+            void DeclareState(std::vector<Component> components);
+            /// Name the components of the measurement (constructor only).
+            /// \throws std::invalid_argument unless exactly m are given.
+            void DeclareMeasurement(std::vector<Component> components);
+
             /// Size every coefficient to (n, m, l) and seed sane defaults.
             void Allocate(std::size_t n, std::size_t m, std::size_t l);
 
