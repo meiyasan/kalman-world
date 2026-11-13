@@ -36,6 +36,14 @@ longer the line rings and the narrower it is.
 - **Lines that share a window** are estimated together by one filter, which is
   what separates two lines closer than the window is wide.
 - **A bank** sends the same signal to every window.
+- **It runs in C++.** A window and a bank are composites of constant matrices:
+  block-diagonal `F` and `Q`, and an `H` that sums the lines of a window
+  (`[I I ...]`) or stacks the windows. The composite says so (its `structure`
+  is MATRICES), so `filter()` runs the linear Kalman pass and the smoother on
+  those matrices in C++ (`kf_forward_linear`, `kf_backward_rts`), and `sample()`
+  runs its state chain there too. The demodulation, the decimation and the
+  reconstruction (`preprocess`, `reconstruct`) are signal processing around the
+  filter and stay in numpy and scipy.
 
 ## Using it
 
