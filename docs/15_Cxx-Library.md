@@ -608,6 +608,17 @@ The GPS twin against the Python reference, 600 s at 1 Hz
 | 24 satellites rising and setting (10 degree mask) | 24, 9988 pseudoranges missing | 3.7e-9 m | 1.1e-16 | 138 ms | 49 ms |
 | 5 satellites at 2 Hz | 5 | 3.7e-9 m | 1.6e-16 | 247 ms | 64 ms |
 
+Track finding already ran in the C++ combinatorial engine, calling back into
+the Python model for each propagation and each Jacobian. With the
+drift-chamber twin it stays in C++ throughout. 12 layers, 6 tracks, 10
+background hits a layer, 10% of hits missing (`tests/test_native_tracking.py`):
+
+| | Time | Against the Python search |
+|---|---|---|
+| Python search | 1878 ms | |
+| C++ engine, Python model called back | 1884 ms | same hits on every track; states within 1.2e-6 cm |
+| C++ engine, C++ twin | 20 ms | same hits on every track; states within 1.0e-6 cm |
+
 ## Model files: `.kw`
 
 A model can be written to one file and read back, by the same code for every
@@ -820,6 +831,7 @@ the Python loop runs as before.
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
 | `GPSModel` | `Apps::GPS::Receiver` | `gps` | `preprocess()` (the relativistic corrections applied to the pseudoranges before the filter); a `dtype` other than float64 |
+| `DriftChamberModel` | `Apps::Tracking::DriftChamber` | `drift-chamber` | `generate_event()` (it draws with numpy's generator) |
 
 The ballistic and car twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
