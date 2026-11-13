@@ -33,6 +33,7 @@
 #include "Kalman/Routers/Threshold.h"
 #include "Kalman/Differentiator.h"
 #include "Kalman/Filter.h"
+#include "Kalman/Filters/EnKF.h"
 #include "Kalman/Solvers/FiniteDifference.h"
 #include "Kalman/Solvers/Vorticity.h"
 #include "Kalman/Utils.h"
@@ -820,6 +821,107 @@ kalman_engine_t *kalman_engine_create_ensemble(int n_members, double inflation, 
 }
 
 void kalman_engine_destroy(kalman_engine_t *engine) { delete engine; }
+
+extern "C++"
+{
+namespace
+{
+    Kalman::Engines::Ensemble &EnsembleOf(kalman_engine_t *h)
+    {
+        auto *e = dynamic_cast<Kalman::Engines::Ensemble *>(&Deref(h));
+        if (!e) throw std::invalid_argument("the engine is not an ensemble engine");
+        return *e;
+    }
+
+    const Kalman::Engines::Ensemble &EnsembleOf(const kalman_engine_t *h)
+    {
+        const auto *e = dynamic_cast<const Kalman::Engines::Ensemble *>(&Deref(h));
+        if (!e) throw std::invalid_argument("the engine is not an ensemble engine");
+        return *e;
+    }
+}
+}
+
+int kalman_engine_ensemble_set_members(kalman_engine_t *engine, int n, int N, const double *X)
+{
+    return Guard([&] {
+        auto &E = EnsembleOf(engine);
+        if (!X || N == 0) { E.SetMembers({}); return 0; }
+        if (n <= 0 || N < 0) throw std::invalid_argument("bad arguments");
+        const std::size_t rows = static_cast<std::size_t>(n), cols = static_cast<std::size_t>(N);
+        std::vector<Kalman::Vector> members(cols, Kalman::Vector(rows));
+        for (std::size_t i = 0; i < rows; ++i)
+            for (std::size_t s = 0; s < cols; ++s) members[s](i) = X[i * cols + s];
+        E.SetMembers(std::move(members));
+        return 0;
+    });
+}
+
+int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, double *X)
+{
+    return Guard([&] {
+        const auto &members = EnsembleOf(engine).Members();
+        if (!X || n <= 0 || N <= 0) throw std::invalid_argument("bad arguments");
+        if (members.size() != static_cast<std::size_t>(N) || members.front().Size() != static_cast<std::size_t>(n))
+            throw std::invalid_argument("the engine holds another number of members, or of states");
+        const std::size_t cols = static_cast<std::size_t>(N);
+        for (std::size_t s = 0; s < cols; ++s)
+            for (std::size_t i = 0; i < static_cast<std::size_t>(n); ++i) X[i * cols + s] = members[s](i);
+        return 0;
+    });
+}
+
+int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals)
+{
+    return Guard([&] {
+        if (count < 0 || (count > 0 && !normals)) throw std::invalid_argument("bad arguments");
+        EnsembleOf(engine).SetNormals(std::vector<double>(normals, normals + count));
+        return 0;
+    });
+}
+
+long long kalman_engine_ensemble_normals_left(const kalman_engine_t *engine)
+{
+    try { return static_cast<long long>(EnsembleOf(engine).NormalsLeft()); }
+    catch (const std::exception &e) { Kalman::CAPI::SetError(e.what()); return -1; }
+}
+
+int kalman_engine_ensemble_set_localization(kalman_engine_t *engine, int n, int m,
+                                            const double *rho_xy, const double *rho_yy)
+{
+    return Guard([&] {
+        auto &E = EnsembleOf(engine);
+        if (!rho_xy && !rho_yy) { E.SetLocalization(Kalman::Matrix(), Kalman::Matrix()); return 0; }
+        if (n <= 0 || m <= 0) throw std::invalid_argument("bad arguments");
+        const std::size_t rows = static_cast<std::size_t>(n), cols = static_cast<std::size_t>(m);
+        E.SetLocalization(rho_xy ? Mat(rho_xy, rows, cols, "rho_xy") : Kalman::Matrix(),
+                          rho_yy ? Mat(rho_yy, cols, cols, "rho_yy") : Kalman::Matrix());
+        return 0;
+    });
+}
+
+int kalman_ensemble_cycle(const kalman_model_t *model, kalman_engine_t *engine, int N, const double *zk,
+                          int analyse, double *forecast, double *analysis, double *spread)
+{
+    return Guard([&] {
+        if (N <= 0 || !zk) throw std::invalid_argument("bad arguments");
+        Kalman::Model &M = const_cast<Kalman::Model &>(Deref(model));
+        auto &E = EnsembleOf(engine);
+        const std::size_t n = M.NState(), m = M.NMeasure(), steps = static_cast<std::size_t>(N);
+        std::vector<Kalman::Vector> z(steps);
+        for (std::size_t k = 0; k < steps; ++k) z[k] = Vec(zk + k * m, m, "zk");
+
+        Kalman::Filters::EnKF filter(&M, &E);
+        const auto cycles = filter.Cycle(z, analyse != 0);
+        for (std::size_t k = 0; k < steps; ++k)
+        {
+            if (forecast) Copy(cycles.forecast[k], forecast + k * n, n, "forecast");
+            if (analysis) Copy(cycles.analysis[k], analysis + k * n, n, "analysis");
+            if (spread) spread[k] = cycles.spread[k];
+        }
+        return 0;
+    });
+}
 
 int kalman_engine_kind(const kalman_engine_t *engine)
 {

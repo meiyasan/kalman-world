@@ -165,6 +165,14 @@ int kalman_engine_predict(const kalman_engine_t *engine, const kalman_model_t *m
 int kalman_engine_update(const kalman_engine_t *engine, const kalman_model_t *model,
                          const double *x, const double *P, const double *z, double t,
                          double *x_out, double *P_out);
+int kalman_engine_ensemble_set_members(kalman_engine_t *engine, int n, int N, const double *X);
+int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, double *X);
+int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals);
+long long kalman_engine_ensemble_normals_left(const kalman_engine_t *engine);
+int kalman_engine_ensemble_set_localization(kalman_engine_t *engine, int n, int m,
+                                            const double *rho_xy, const double *rho_yy);
+int kalman_ensemble_cycle(const kalman_model_t *model, kalman_engine_t *engine, int N, const double *zk,
+                          int analyse, double *forecast, double *analysis, double *spread);
 int kalman_engine_innovation(const kalman_engine_t *engine, const kalman_model_t *model,
                              const double *x, const double *P, const double *z, double t,
                              double *nu, double *S);
@@ -542,6 +550,56 @@ def run_filter(model_handle, engine_handle, n, m, l, zk, uk=None, smooth=False, 
         dptr(out["x_smooth"]) if smooth else ffi.NULL, dptr(out["P_smooth"]) if smooth else ffi.NULL,
         dptr(out["innovations"]), dptr(out["transitions"]))
     check(rc, "kalman_filter_run")
+    return out
+
+
+def ensemble_engine(n_members, inflation, members, normals, localization=None):
+    """A C++ ensemble engine that starts from ``members`` ((n, N), numpy's layout),
+    draws from ``normals`` (numpy's standard normals, in the order of the Python
+    engine) and, when given, uses the ``localization`` tapers ``(rho_xy, rho_yy)``
+    instead of the model's own."""
+    L = require()
+    engine = create_engine("ensemble", n_members=int(n_members), inflation=float(inflation), seed=0)
+    X = np.ascontiguousarray(np.asarray(members, dtype=np.float64))
+    check(L.kalman_engine_ensemble_set_members(engine, X.shape[0], X.shape[1], cdptr(X)), "ensemble_set_members")
+    draws = np.ascontiguousarray(np.asarray(normals, dtype=np.float64).reshape(-1))
+    check(L.kalman_engine_ensemble_set_normals(engine, draws.size, cdptr(draws) if draws.size else ffi.NULL),
+          "ensemble_set_normals")
+    if localization is not None:
+        rho_xy, rho_yy = (None if a is None else np.ascontiguousarray(np.asarray(a, dtype=np.float64))
+                          for a in localization)
+        n, m = X.shape[0], (rho_yy.shape[0] if rho_yy is not None else rho_xy.shape[1])
+        check(L.kalman_engine_ensemble_set_localization(
+            engine, n, m, ffi.NULL if rho_xy is None else cdptr(rho_xy), ffi.NULL if rho_yy is None else cdptr(rho_yy)),
+            "ensemble_set_localization")
+    return engine
+
+
+def ensemble_members(engine, n, N):
+    """The members an ensemble engine holds, (n, N)."""
+    out = np.empty((int(n), int(N)))
+    check(require().kalman_engine_ensemble_members(engine, int(n), int(N), dptr(out)), "ensemble_members")
+    return out
+
+
+def ensemble_normals_left(engine):
+    """How many of the draws handed to an ensemble engine it has not used."""
+    left = int(require().kalman_engine_ensemble_normals_left(engine))
+    if left < 0:
+        raise RuntimeError(f"ensemble_normals_left: {last_error()}")
+    return left
+
+
+def ensemble_cycle(model_handle, engine_handle, n, m, zk, analyse=True):
+    """Kalman::Filters::EnKF::Cycle over ``zk`` (N x m, NaN = silent): the forecast
+    and analysis means ``(N, n)`` and the spread ``(N,)`` of each cycle."""
+    L = require()
+    zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(-1, m))
+    N = zk.shape[0]
+    out = {"forecast": np.empty((N, n)), "analysis": np.empty((N, n)), "spread": np.empty(N)}
+    check(L.kalman_ensemble_cycle(model_handle, engine_handle, N, cdptr(zk), 1 if analyse else 0,
+                                  dptr(out["forecast"]), dptr(out["analysis"]), dptr(out["spread"])),
+          "kalman_ensemble_cycle")
     return out
 
 

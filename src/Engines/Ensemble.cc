@@ -13,6 +13,7 @@
 
 #include <algorithm>
 #include <cmath>
+#include <sstream>
 #include <stdexcept>
 
 namespace Kalman::Engines
@@ -27,6 +28,42 @@ namespace Kalman::Engines
         }
     }
 
+    // --- the localization function --------------------------------------------
+
+    double GaspariCohn(double distance, double L)
+    {
+        // The same polynomials as engines/ensemble.py, term for term.
+        const double r = distance / L;
+        double c = 0.;
+        if (r <= 1.)
+            c = 1. - 5. / 3. * (r * r) + 5. / 8. * std::pow(r, 3) + 0.5 * std::pow(r, 4) - 0.25 * std::pow(r, 5);
+        else if (r <= 2.)
+            c = 4. - 5. * r + 5. / 3. * (r * r) + 5. / 8. * std::pow(r, 3) - 0.5 * std::pow(r, 4)
+                + 1. / 12. * std::pow(r, 5) - 2. / (3. * r);
+        return std::max(c, 0.);
+    }
+
+    // --- the hooks a model may offer -------------------------------------------
+
+    void EnsembleModel::Forecast(const Model &model, std::vector<Vector> &members, const Vector &u, double t) const
+    {
+        for (Vector &x : members) x = model.f(x, u, t);
+    }
+
+    void EnsembleModel::Observe(const Model &model, const std::vector<Vector> &members, double t,
+                                std::vector<Vector> &out) const
+    {
+        out.clear();
+        out.reserve(members.size());
+        for (const Vector &x : members) out.push_back(model.h(x, t));
+    }
+
+    bool EnsembleModel::Localization(Matrix &, Matrix &) const { return false; }
+
+    bool EnsembleModel::ProcessNoiseVariances(double, Vector &) const { return false; }
+
+    // --- the engine --------------------------------------------------------------
+
     Ensemble::Ensemble(std::size_t nMembers, double inflation, std::uint64_t seed)
         : fNMembers(nMembers), fInflation(inflation), fRandom(seed)
     {
@@ -40,6 +77,57 @@ namespace Kalman::Engines
         fRhoYY = rhoYY;
     }
 
+    void Ensemble::SetMembers(std::vector<Vector> members)
+    {
+        if (!members.empty())
+        {
+            if (members.size() != fNMembers)
+            {
+                std::ostringstream os;
+                os << "Engines::Ensemble: " << members.size() << " members handed in, the engine has " << fNMembers << '.';
+                throw std::invalid_argument(os.str());
+            }
+            for (const Vector &x : members)
+                if (x.Size() != members.front().Size())
+                    throw std::invalid_argument("Engines::Ensemble: the members handed in differ in size.");
+        }
+        fStart = std::move(members);
+    }
+
+    void Ensemble::SetNormals(std::vector<double> normals)
+    {
+        fNormals = std::move(normals);
+        fNormalsUsed = 0;
+        fHasNormals = true;
+    }
+
+    std::vector<Vector> Ensemble::Normals(std::size_t rows) const
+    {
+        const std::size_t N = fNMembers;
+        std::vector<Vector> w(N, Vector(rows));
+        if (!fHasNormals)
+        {
+            // The engine's own stream, one member after the other.
+            std::normal_distribution<double> gauss(0., 1.);
+            for (Vector &v : w)
+                for (std::size_t i = 0; i < rows; ++i) v(i) = gauss(fRandom);
+            return w;
+        }
+        if (fNormals.size() - fNormalsUsed < rows * N)
+        {
+            std::ostringstream os;
+            os << "Engines::Ensemble: the draws handed in are used up (" << rows * N << " more needed, "
+               << fNormals.size() - fNormalsUsed << " left).";
+            throw std::runtime_error(os.str());
+        }
+        // numpy's (rows, N) block, row-major: member s reads column s.
+        const double *block = fNormals.data() + fNormalsUsed;
+        for (std::size_t i = 0; i < rows; ++i)
+            for (std::size_t s = 0; s < N; ++s) w[s](i) = block[i * N + s];
+        fNormalsUsed += rows * N;
+        return w;
+    }
+
     Vector Ensemble::Draw(const Matrix &factor) const
     {
         std::normal_distribution<double> gauss(0., 1.);
@@ -50,6 +138,20 @@ namespace Kalman::Engines
 
     void Ensemble::Reset(const Model &model)
     {
+        fModelRhoXY = Matrix();
+        fModelRhoYY = Matrix();
+        if (const auto *hooks = dynamic_cast<const EnsembleModel *>(&model))
+            if (!hooks->Localization(fModelRhoXY, fModelRhoYY))
+                fModelRhoXY = fModelRhoYY = Matrix();
+
+        if (!fStart.empty())
+        {
+            if (fStart.front().Size() != model.NState())
+                throw std::runtime_error("Engines::Ensemble: the members handed in do not have the model's n.");
+            fMembers = fStart;
+            return;
+        }
+
         const Matrix factor = Utils::CholeskyFactor(model.P0(), true);
         if (factor.Empty())
             throw std::runtime_error("Engines::Ensemble: P0 has no Cholesky factor; cannot seed the members.");
@@ -71,15 +173,20 @@ namespace Kalman::Engines
     {
         mean = Mean();
         const std::size_t n = mean.Size();
-        const double norm = 1. / static_cast<double>(std::max<std::size_t>(fMembers.size() - 1, 1));
+        const std::size_t N = fMembers.size();
+        const double norm = 1. / static_cast<double>(std::max<std::size_t>(N - 1, 1));
 
-        cov = Matrix(n, n, 0.);
-        for (const Vector &x : fMembers)
+        // (A A^T) / (N - 1) with A the anomalies, as one product (BLAS when it pays).
+        Matrix A(n, N), AT(N, n);
+        for (std::size_t s = 0; s < N; ++s)
             for (std::size_t i = 0; i < n; ++i)
             {
-                const double di = (x(i) - mean(i)) * norm;
-                for (std::size_t j = 0; j < n; ++j) cov(i, j) += di * (x(j) - mean(j));
+                const double a = fMembers[s](i) - mean(i);
+                A(i, s) = a;
+                AT(s, i) = a;
             }
+        cov = A * AT;
+        cov *= norm;
         Utils::Symmetrize(cov);
         for (std::size_t i = 0; i < n; ++i) cov(i, i) += 1e-12;
     }
@@ -101,21 +208,105 @@ namespace Kalman::Engines
     Vector Ensemble::Forecast(const Model &model, const Vector *u, double t) const
     {
         if (fMembers.empty()) const_cast<Ensemble *>(this)->Reset(model);
+        const std::size_t n = model.NState();
 
         Vector uu(model.NControl(), 0.);
         if (u && model.NControl() > 0 && u->Size() == model.NControl()) uu = *u;
 
+        const auto *hooks = dynamic_cast<const EnsembleModel *>(&model);
+        if (hooks) hooks->Forecast(model, fMembers, uu, t);
+        else
+            for (Vector &x : fMembers) x = model.f(x, uu, t);
+
+        // The process noise, after every member has moved (the order of the draws
+        // is the Python engine's: one (n, N) block).
+        Vector variances;
+        if (hooks && hooks->ProcessNoiseVariances(t, variances) && model.L(t).Empty())
+        {
+            if (variances.Size() != n) throw std::runtime_error("Engines::Ensemble: the process-noise variances are not n long.");
+            bool any = false;
+            for (std::size_t i = 0; i < n; ++i) any = any || variances(i) != 0.;
+            if (any)
+            {
+                Vector sigma(n);
+                for (std::size_t i = 0; i < n; ++i) sigma(i) = std::sqrt(variances(i));
+                const std::vector<Vector> w = Normals(n);
+                for (std::size_t s = 0; s < fMembers.size(); ++s)
+                    for (std::size_t i = 0; i < n; ++i) fMembers[s](i) += sigma(i) * w[s](i);
+            }
+            return Mean();
+        }
+
         Matrix Q = model.Q(t);
         const Matrix L = model.L(t);
         if (!L.Empty()) Q = Utils::Similarity(L, Q);
-        const Matrix factor = AnyNonZero(Q) ? Utils::CholeskyFactor(Q, true) : Matrix();
-
-        for (Vector &x : fMembers)
+        if (AnyNonZero(Q))
         {
-            x = model.f(x, uu, t);
-            if (!factor.Empty()) x += Draw(factor);
+            const Matrix factor = Utils::CholeskyFactor(Q, true);
+            const std::vector<Vector> w = Normals(factor.Cols());
+            for (std::size_t s = 0; s < fMembers.size(); ++s) fMembers[s] += factor * w[s];
         }
         return Mean();
+    }
+
+    void Ensemble::Observations(const Model &model, double t, std::vector<Vector> &Y) const
+    {
+        if (const auto *hooks = dynamic_cast<const EnsembleModel *>(&model))
+            hooks->Observe(model, fMembers, t, Y);
+        else
+        {
+            Y.clear();
+            Y.reserve(fMembers.size());
+            for (const Vector &x : fMembers) Y.push_back(model.h(x, t));
+        }
+        if (Y.size() != fMembers.size()) throw std::runtime_error("Engines::Ensemble: Observe() must give one measurement per member.");
+    }
+
+    Matrix Ensemble::Analysis(const Matrix &X, const Matrix &Y, const Matrix &R, const Vector &z,
+                              const Matrix &eps, const Matrix *rhoXY, const Matrix *rhoYY)
+    {
+        const std::size_t n = X.Rows(), N = X.Cols(), p = Y.Rows();
+        if (N < 2 || Y.Cols() != N || eps.Rows() != p || eps.Cols() != N || R.Rows() != p || R.Cols() != p || z.Size() != p)
+            throw std::invalid_argument("Engines::Ensemble::Analysis: inconsistent shapes.");
+        const double norm = 1. / static_cast<double>(N - 1);
+
+        // Anomalies: X' (n x N) and Y'^T (N x p).
+        Matrix Xa(n, N), YaT(N, p);
+        for (std::size_t i = 0; i < n; ++i)
+        {
+            double mean = 0.;
+            for (std::size_t s = 0; s < N; ++s) mean += X(i, s);
+            mean /= static_cast<double>(N);
+            for (std::size_t s = 0; s < N; ++s) Xa(i, s) = X(i, s) - mean;
+        }
+        for (std::size_t j = 0; j < p; ++j)
+        {
+            double mean = 0.;
+            for (std::size_t s = 0; s < N; ++s) mean += Y(j, s);
+            mean /= static_cast<double>(N);
+            for (std::size_t s = 0; s < N; ++s) YaT(s, j) = Y(j, s) - mean;
+        }
+
+        Matrix PHt = Xa * YaT;                        // (n, p)
+        PHt *= norm;
+        Matrix S = YaT.Transpose() * YaT;             // (p, p)
+        S *= norm;
+        if (rhoXY)
+            for (std::size_t i = 0; i < n; ++i)
+                for (std::size_t j = 0; j < p; ++j) PHt(i, j) *= (*rhoXY)(i, j);
+        for (std::size_t i = 0; i < p; ++i)
+            for (std::size_t j = 0; j < p; ++j)
+                S(i, j) = S(i, j) * (rhoYY ? (*rhoYY)(i, j) : 1.) + R(i, j);
+
+        const Matrix K = PHt * Utils::Inverse(S);    // (n, p)
+
+        // D = z + eps - Y (p x N), then X + K D.
+        Matrix D(p, N);
+        for (std::size_t j = 0; j < p; ++j)
+            for (std::size_t s = 0; s < N; ++s) D(j, s) = z(j) + eps(j, s) - Y(j, s);
+        Matrix out = K * D;
+        out += X;
+        return out;
     }
 
     Vector Ensemble::Analyze(const Model &model, const Vector &z, double t) const
@@ -126,70 +317,67 @@ namespace Kalman::Engines
         if (keep.empty()) return Mean();
 
         const std::size_t n = model.NState();
+        const std::size_t m = model.NMeasure();
         const std::size_t p = keep.size();
         const std::size_t N = fMembers.size();
-        const double norm = 1. / static_cast<double>(N - 1);
 
         // Inflate the anomalies before the analysis.
-        Vector mean = Mean();
+        const Vector mean = Mean();
         if (fInflation != 1.)
             for (Vector &x : fMembers)
-            {
-                Vector a = x; a -= mean;
-                x = mean + fInflation * a;
-            }
+                for (std::size_t i = 0; i < n; ++i) x(i) = mean(i) + fInflation * (x(i) - mean(i));
 
         // Observation-space ensemble, restricted to the channels that arrived.
-        std::vector<Vector> Y;
-        Y.reserve(N);
-        for (const Vector &x : fMembers) Y.push_back(Utils::Compress(model.h(x, t), keep));
-        Vector ymean(p, 0.);
-        for (const Vector &y : Y) ymean += y;
-        ymean *= 1. / static_cast<double>(N);
+        std::vector<Vector> Yfull;
+        Observations(model, t, Yfull);
 
-        Matrix PHt(n, p, 0.), HPHt(p, p, 0.);
+        Matrix X(n, N), Y(p, N);
         for (std::size_t s = 0; s < N; ++s)
         {
-            for (std::size_t i = 0; i < n; ++i)
-            {
-                const double xa = (fMembers[s](i) - mean(i)) * norm;
-                for (std::size_t j = 0; j < p; ++j) PHt(i, j) += xa * (Y[s](j) - ymean(j));
-            }
-            for (std::size_t i = 0; i < p; ++i)
-            {
-                const double ya = (Y[s](i) - ymean(i)) * norm;
-                for (std::size_t j = 0; j < p; ++j) HPHt(i, j) += ya * (Y[s](j) - ymean(j));
-            }
+            for (std::size_t i = 0; i < n; ++i) X(i, s) = fMembers[s](i);
+            if (Yfull[s].Size() != m) throw std::runtime_error("Engines::Ensemble: a member's measurement is not m long.");
+            for (std::size_t j = 0; j < p; ++j) Y(j, s) = Yfull[s](keep[j]);
         }
 
-        if (!fRhoXY.Empty())
+        // The tapers: those set on the engine, else the model's.
+        const Matrix &rhoXY = fRhoXY.Empty() && fRhoYY.Empty() ? fModelRhoXY : fRhoXY;
+        const Matrix &rhoYY = fRhoXY.Empty() && fRhoYY.Empty() ? fModelRhoYY : fRhoYY;
+        Matrix rxy, ryy;
+        if (!rhoXY.Empty())
         {
-            if (fRhoXY.Rows() != n || fRhoXY.Cols() != model.NMeasure())
+            if (rhoXY.Rows() != n || rhoXY.Cols() != m)
                 throw std::runtime_error("Engines::Ensemble: rho_xy must be (n, m).");
+            rxy = Matrix(n, p);
             for (std::size_t i = 0; i < n; ++i)
-                for (std::size_t j = 0; j < p; ++j) PHt(i, j) *= fRhoXY(i, keep[j]);
+                for (std::size_t j = 0; j < p; ++j) rxy(i, j) = rhoXY(i, keep[j]);
         }
-        if (!fRhoYY.Empty())
+        if (!rhoYY.Empty())
         {
-            if (fRhoYY.Rows() != model.NMeasure() || fRhoYY.Cols() != model.NMeasure())
+            if (rhoYY.Rows() != m || rhoYY.Cols() != m)
                 throw std::runtime_error("Engines::Ensemble: rho_yy must be (m, m).");
+            ryy = Matrix(p, p);
             for (std::size_t i = 0; i < p; ++i)
-                for (std::size_t j = 0; j < p; ++j) HPHt(i, j) *= fRhoYY(keep[i], keep[j]);
+                for (std::size_t j = 0; j < p; ++j) ryy(i, j) = rhoYY(keep[i], keep[j]);
         }
 
+        // The perturbations: one (p, N) block of draws through the factor of R.
         const Matrix R = Utils::CompressBoth(model.R(t), keep);
-        Matrix S = HPHt; S += R;
-        const Matrix K = PHt * Utils::Inverse(S);
-
         const Matrix Rfac = Utils::CholeskyFactor(R, true);
-        const Vector zc = Utils::Compress(z, keep);
-        for (std::size_t s = 0; s < N; ++s)
+        Matrix eps(p, N, 0.);
+        if (!Rfac.Empty())
         {
-            Vector innovation = zc;                      // z + eps - h(x_s)
-            if (!Rfac.Empty()) innovation += Draw(Rfac);
-            innovation -= Y[s];
-            fMembers[s] += K * innovation;
+            const std::vector<Vector> w = Normals(Rfac.Cols());
+            for (std::size_t s = 0; s < N; ++s)
+            {
+                const Vector e = Rfac * w[s];
+                for (std::size_t j = 0; j < p; ++j) eps(j, s) = e(j);
+            }
         }
+
+        const Matrix Xa = Analysis(X, Y, R, Utils::Compress(z, keep), eps,
+                                   rxy.Empty() ? nullptr : &rxy, ryy.Empty() ? nullptr : &ryy);
+        for (std::size_t s = 0; s < N; ++s)
+            for (std::size_t i = 0; i < n; ++i) fMembers[s](i) = Xa(i, s);
         return Mean();
     }
 
