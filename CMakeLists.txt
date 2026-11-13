@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.20)
 # Project information
 set(PROJECT_TITLE "Kalman World")
 project(kalman
-    VERSION 1.0.2
+    VERSION 1.0.0
     DESCRIPTION "State estimation, dynamical systems and predictive learning 🛰️📈"
     HOMEPAGE_URL "https://github.com/meiyasan/kalman-world"
 )
