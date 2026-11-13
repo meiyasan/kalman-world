@@ -348,7 +348,7 @@ def test_python_models_export_and_open(tmp_path):
     path = str(tmp_path / "lane.kw")
     document = lane.export(path)
     assert document["kind"] == "reference" and document["spec"]["base"] == "CarLaneModel"
-    assert "parameters_not_recovered" in document["origin"]      # said, not hidden
+    assert document["spec"]["dynamics"]["params"]["wheelbase"] == 2.7       # the constructor's arguments
     assert type(native.open_model(path)).__name__ == "CarLaneModel"
     refused = _run("model", path) if KALMAN else None
     if refused is not None:
@@ -356,3 +356,70 @@ def test_python_models_export_and_open(tmp_path):
     tangent = lane.export(linearize=True)
     assert tangent["kind"] == "linearization" and np.asarray(tangent["spec"]["dynamics"]["F"]).shape == (3, 3)
     assert tangent["state"][0] == {"name": "lateral", "unit": "m"}
+
+
+def test_every_python_catalogue_model_goes_through_a_file():
+    """Each Python model that can be built with its defaults is written, read
+    back and filters the same. A reference carries the constructor's arguments."""
+    import inspect
+    import warnings
+    import numpy as np
+    import kalman.native as native
+    from kalman import api
+    from kalman.framework.native import core
+
+    if not core.HAS_CXX_CORE:
+        pytest.skip("libKalman is not built")
+    done = []
+    for name, cls in sorted(api._model_catalog().items()):
+        if hasattr(cls, "NATIVE_NAME"):
+            continue
+        first = list(inspect.signature(cls.__init__).parameters)[1:2]
+        try:
+            with warnings.catch_warnings():
+                warnings.simplefilter("ignore")
+                model = cls("s") if first in (["sensor_id"], ["name"]) else cls()
+                structure = model.structure
+        except Exception:
+            continue                    # needs arguments: not this test's business
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            if structure.name == "TIME_VARYING":
+                continue                # tables need a file: covered by test_python_models_export_and_open
+            document = model.export()
+            assert document["kind"] == ("complete" if structure.name == "MATRICES" else "reference"), name
+            back = api.make_model(document["spec"])
+            if document["kind"] == "reference":
+                assert type(back) is cls, name
+                written = document["spec"]["dynamics"]["params"]
+                left_out = set(document["origin"].get("parameters_not_written", []))
+                for key, value in written.items():
+                    again = back._init_arguments[key]
+                    again = getattr(again, "_name_", again)
+                    assert np.all(np.asarray(again) == np.asarray(value)), (name, key)
+                assert not left_out, (name, left_out)
+            assert np.allclose(np.asarray(back.x0, float), np.asarray(model.x0, float), equal_nan=True), name
+            assert np.allclose(back.Q(), model.Q(), equal_nan=True) and np.allclose(back.R(), model.R()), name
+        done.append(name)
+    assert len(done) >= 15, done
+    assert {"CarLaneModel", "RocketAscentModel", "InterplanetaryModel", "GPSModel"} <= set(done)
+
+
+def test_reference_to_a_python_class_keeps_its_arguments(tmp_path):
+    import numpy as np
+    import kalman.native as native
+    from kalman.framework.native import core
+    from kalman.apps.vehicles.lane import CarLaneModel
+
+    if not core.HAS_CXX_CORE:
+        pytest.skip("libKalman is not built")
+    lane = CarLaneModel("car", wheelbase=3.1, v0=22.0, q_lat=0.02)
+    path = str(tmp_path / "lane.kw")
+    document = lane.export(path)
+    assert document["spec"]["dynamics"]["params"]["wheelbase"] == 3.1
+    assert "parameters_not_written" not in document["origin"]
+    back = native.open_model(path)
+    assert back._init_arguments["v0"] == 22.0 and back._init_arguments["q_lat"] == 0.02
+    np.random.seed(4)
+    z = np.asarray(lane.sample(5.0).zk)
+    assert np.abs(np.asarray(lane.filter(z).xk) - np.asarray(back.filter(z).xk)).max() == 0.0

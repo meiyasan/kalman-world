@@ -748,13 +748,14 @@ below 1e-12.
 
 Limits that remain:
 
-- **A reference to a Python class is only as complete as the class allows.**
-  The settings are the constructor's arguments, and an argument can be written
-  only when the instance keeps it under the same name (`mass` as `model.mass`
-  or `model._mass`). Those that cannot be read back are listed in
-  `origin.parameters_not_recovered`; noise and initial state are always
-  written. `CarLaneModel` keeps 2 of its 8. The class must be in
-  `kalman.api`'s catalogue.
+- **A reference to a Python class carries the arguments it was constructed
+  with**, defaults included: every model records them when it is built
+  (`model._init_arguments`). Numbers, strings, kinds (by name) and arrays of
+  numbers are written. An argument that is code or an object (a callable, a
+  controller) cannot be; those are listed in `origin.parameters_not_written`
+  and the file gives the class's default for them. Every catalogue model that
+  builds with its defaults is checked through a file
+  (`tests/test_kalman_cli.py`). The class must be in `kalman.api`'s catalogue.
 - **`kalman model FILE` cannot build a reference to a Python class** (it says
   so and names the class); open it from Python.
 - **`api.make_model(spec)` reads a spec, not a file**: it takes neither tables

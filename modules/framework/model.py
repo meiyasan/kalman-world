@@ -8,6 +8,48 @@ from .constants import (KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObserv
                         KalmanIntegratorKind, ALL_INTEGRATORS,
                         KalmanSolverKind, ALL_SOLVERS)
 
+def _recording(init):
+    """``init`` wrapped so that the instance remembers the arguments it was
+    built with (``_init_arguments``, the outermost constructor's, defaults
+    included). That is what lets a model given by code be written to a file as
+    a reference to its class: the file carries those arguments, and reading it
+    calls the constructor with them again."""
+    import functools
+    import inspect
+    if getattr(init, "_kalman_recording", False):
+        return init
+    try:
+        signature = inspect.signature(init)
+    except (TypeError, ValueError):
+        return init
+
+    @functools.wraps(init)
+    def wrapper(self, *args, **kwargs):
+        if "_init_arguments" not in self.__dict__:
+            try:
+                bound = signature.bind(self, *args, **kwargs)
+                bound.apply_defaults()
+                recorded, first = {}, None
+                for position, (name, value) in enumerate(bound.arguments.items()):
+                    kind = signature.parameters[name].kind
+                    if position == 0 or kind is inspect.Parameter.VAR_POSITIONAL:
+                        continue
+                    if position == 1 and name in ("sensor_id", "sensor", "name"):
+                        first = name                    # the sensor id: the reader gives its own
+                    if kind is inspect.Parameter.VAR_KEYWORD:
+                        recorded.update(value)
+                    else:
+                        recorded[name] = value
+                self.__dict__["_init_arguments"] = recorded
+                self.__dict__["_init_first"] = first
+            except TypeError:
+                pass                                    # the call itself will say what is wrong
+        return init(self, *args, **kwargs)
+
+    wrapper._kalman_recording = True
+    return wrapper
+
+
 class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     """
     The single, flexible Kalman **model** contract (the *system*, WHAT).
@@ -244,6 +286,8 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # ------------------------------------------------------------------
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
+        if "__init__" in cls.__dict__:
+            cls.__init__ = _recording(cls.__dict__["__init__"])
         written = cls.__dict__.get("f")
         if (written is not None and cls.DYNAMICS is KalmanDynamicsKind.CONTINUOUS
                 and written is not _decoded_step):

@@ -198,6 +198,7 @@ namespace Kalman::IO
                 dynamics.Set("A", Json::From(model.Generator()));
                 dynamics.Set("H", Json::From(model.H(t0)));
                 dynamics.Set("Qc", Json::From(model.NoiseIntensity()));
+                if (!model.NoiseCoupling().Empty()) dynamics.Set("Lc", Json::From(model.NoiseCoupling()));
             }
             else
             {

@@ -262,6 +262,8 @@ namespace Kalman
              */
             void SetNoiseIntensity(const Matrix &Qc, const Matrix &Lc = Matrix());
             const Matrix &NoiseIntensity() const { return fNoiseIntensity; }
+            /// The coupling Lc given with the intensity (empty for the identity).
+            const Matrix &NoiseCoupling() const { return fNoiseCoupling; }
 
             IntegratorKind DefaultIntegrator() const { return fDefaultIntegrator; }
             /// Declare the scheme; the instance is built on first use.

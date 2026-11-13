@@ -184,23 +184,39 @@ def _fill_tables(model, handle, steps):
 
 
 def _constructor_values(model):
-    """The constructor arguments of ``model`` that can be read back from it: an
-    argument ``mass`` is looked for as ``model.mass`` or ``model._mass``. Returns
-    ``(found, not_found)``."""
-    import inspect
+    """The arguments ``model`` was constructed with, as a file can hold them:
+    ``(found, not_written)``. Numbers, strings, booleans and arrays of numbers
+    are written. An argument that is code or an object (a callable, a
+    controller) cannot be, and is listed in ``not_written`` when it was given.
+    The sample rate, noise and initial state are left out: the file has its own
+    places for them."""
+    import enum
     import numpy as np
     found, missing = {}, []
-    for name, parameter in inspect.signature(type(model).__init__).parameters.items():
-        if name in ("self", "sensor_id", "sensor", "fs", "x0", "P0", "Q", "R") or parameter.kind in (
-                inspect.Parameter.VAR_POSITIONAL, inspect.Parameter.VAR_KEYWORD):
+    arguments = getattr(model, "_init_arguments", None) or {}
+    skipped = {"fs", "sample_rate", "x0", "P0", "Q", "R", getattr(model, "_init_first", None)}
+    for name, value in arguments.items():
+        if name in skipped or value is None:
             continue
-        value = getattr(model, name, getattr(model, "_" + name, inspect.Parameter.empty))
-        if isinstance(value, (np.floating, np.integer)):
+        if isinstance(value, (np.floating, np.integer, np.bool_)):
             value = value.item()
+        if isinstance(value, enum.Enum):
+            value = value._name_            # the framework's constructors take a kind by its name
         if isinstance(value, (bool, int, float, str)):
             found[name] = value
-        else:
-            missing.append(name)
+            continue
+        if isinstance(value, (list, tuple)) and value and all(isinstance(v, str) for v in value):
+            found[name] = list(value)
+            continue
+        if isinstance(value, (list, tuple, np.ndarray)):
+            try:
+                array = np.asarray(value, dtype=float)
+            except (TypeError, ValueError):
+                array = None
+            if array is not None and np.all(np.isfinite(array)):
+                found[name] = array.tolist()
+                continue
+        missing.append(name)
     return found, missing
 
 
@@ -216,9 +232,10 @@ def export(model, path: str = None, *, linearize: bool = False, steps: int = 0) 
     - code (``f``, ``h``): a "reference" to the model by name with its settings,
       or, with ``linearize``, its Jacobians at the initial state as matrices.
 
-    A reference to a Python class carries the constructor arguments that could be
-    read back from the instance (``origin["parameters_not_recovered"]`` lists the
-    others) and needs that class in ``kalman.api``'s catalogue.
+    A reference to a Python class carries the arguments the instance was
+    constructed with. An argument that is code or an object cannot be written;
+    ``origin["parameters_not_written"]`` lists those, and such a file gives the
+    class's default for them. The class must be in ``kalman.api``'s catalogue.
 
     ``path`` ending in ``.kw`` gives one archive, another name ending in
     ``.json`` plain JSON; with no path nothing is written.
@@ -251,7 +268,7 @@ def export(model, path: str = None, *, linearize: bool = False, steps: int = 0) 
                                  "file cannot refer to it by name. Use linearize=True for its Jacobians at x0.")
             params, missing = _constructor_values(model)
             if missing:
-                origin["parameters_not_recovered"] = missing
+                origin["parameters_not_written"] = missing
         handle = _stand_in(model, structure, linearize)
         if structure is S.TIME_VARYING and not linearize:
             _fill_tables(model, handle, int(steps))
