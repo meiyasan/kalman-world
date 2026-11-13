@@ -19,6 +19,11 @@
  * | Kalman::Apps::Weather::Tornado | `tornado-environment` | `TornadoEnvironmentModel` |
  * | Kalman::Apps::Ballistics::Ballistic | `ballistic`, `ballistic-order2` | `BallisticModel` |
  * | Kalman::Apps::Vehicles::CarSpeed | `car-speed` | `CarSpeedModel` |
+ * | Kalman::Apps::Vehicles::CarLane | `car-lane` | `CarLaneModel` |
+ * | Kalman::Apps::Astro::RocketLiftoff | `rocket-liftoff` | `RocketLiftoffModel` |
+ * | Kalman::Apps::Astro::RocketAscent | `rocket-ascent` | `RocketAscentModel` |
+ * | Kalman::Apps::Astro::RocketDescent | `rocket-descent`, `rocket-descent-control` | `RocketDescentModel` |
+ * | Kalman::Apps::Astro::RocketLanding | `rocket-landing` | `RocketLandingModel` |
  *
  * From C++, include the header and use the class, or ask the factory by name:
  *
@@ -49,7 +54,12 @@
 #define KALMAN_APPS_APPS_H
 
 #include "Kalman/Apps/Model.h"
+#include "Kalman/Apps/Astro/RocketAscent.h"
+#include "Kalman/Apps/Astro/RocketDescent.h"
+#include "Kalman/Apps/Astro/RocketLanding.h"
+#include "Kalman/Apps/Astro/RocketLiftoff.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
 #include "Kalman/Apps/Weather/Tornado.h"

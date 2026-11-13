@@ -3,7 +3,12 @@
  * \brief libKalmanApps: the application models, their parameters and their filters.
  */
 #include "Kalman/Kalman.h"
+#include "Kalman/Apps/Astro/RocketAscent.h"
+#include "Kalman/Apps/Astro/RocketDescent.h"
+#include "Kalman/Apps/Astro/RocketLanding.h"
+#include "Kalman/Apps/Astro/RocketLiftoff.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
 #include "Kalman/Apps/Weather/Tornado.h"
@@ -11,6 +16,8 @@
 
 #include <cmath>
 #include <stdexcept>
+#include <string>
+#include <vector>
 
 using namespace Kalman;
 
@@ -173,6 +180,97 @@ int main()
         car.SetParameter("grade", 1.2);                              // a wall of a hill,
         car.SetParameter("mu", 0.2);                                 // and too little grip to climb it
         CHECK_CLOSE(car.f(back, Vector(), 0.)(1), 0., 0., "car: the speed is clamped at zero, never negative");
+    }
+
+    // --- car lane and the rocket family: registered, named, continuous, finite ---------
+    {
+        const Factory &factory = Factory::Instance();
+        struct Expected { const char *name; std::size_t n, m, l; std::vector<std::string> state, measured; };
+        const std::vector<Expected> expected = {
+            {"car-lane", 3, 1, 1, {"lateral", "heading", "speed"}, {"lateral"}},
+            {"rocket-liftoff", 3, 1, 0, {"altitude", "velocity", "mass"}, {"altitude"}},
+            {"rocket-ascent", 4, 2, 2, {"x", "y", "vx", "vy"}, {"x", "y"}},
+            {"rocket-descent", 7, 3, 0, {"x", "y", "vx", "vy", "theta", "omega", "mass"}, {"x", "y", "theta"}},
+            {"rocket-descent-control", 7, 3, 2, {"x", "y", "vx", "vy", "theta", "omega", "mass"}, {"x", "y", "theta"}},
+            {"rocket-landing", 3, 1, 0, {"altitude", "velocity", "mass"}, {"altitude"}},
+        };
+        for (const Expected &e : expected)
+        {
+            const std::string what = std::string(e.name) + ": ";
+            CHECK(factory.Has(e.name), (what + "registered").c_str());
+            if (!factory.Has(e.name)) continue;
+            const std::unique_ptr<Model> model = factory.Create(e.name);
+            CHECK(model->NState() == e.n && model->NMeasure() == e.m && model->NControl() == e.l,
+                  (what + "(n, m, l) as the Python class").c_str());
+            CHECK(model->Dynamics() == DynamicsKind::Continuous, (what + "continuous dynamics").c_str());
+            const auto state = model->StateComponents(), measured = model->MeasurementComponents();
+            bool names = state.size() == e.state.size() && measured.size() == e.measured.size();
+            for (std::size_t i = 0; names && i < state.size(); ++i) names = state[i].name == e.state[i];
+            for (std::size_t i = 0; names && i < measured.size(); ++i) names = measured[i].name == e.measured[i];
+            CHECK(names, (what + "component names as the Python enums").c_str());
+
+            const Vector x = model->X0();
+            Vector u(e.l, 0.);
+            const Vector next = model->f(x, u, 0.);
+            bool finite = next.Size() == e.n;
+            for (std::size_t i = 0; finite && i < e.n; ++i) finite = std::isfinite(next(i));
+            CHECK(finite, (what + "one step from the initial state is finite").c_str());
+        }
+    }
+
+    // --- car lane: the steering is clipped, Euler steps by default ---------------------
+    {
+        Apps::Vehicles::CarLane lane;
+        Vector x(3);
+        x(1) = 0.01; x(2) = 15.;
+        Vector u(1);
+        u(0) = 1.;                                                   // far past the 0.1 rad limit
+        const Vector d = lane.Derivative(x, u, 0.);
+        CHECK_CLOSE(d(1), 15. * std::tan(0.1) / 2.7, 1e-15, "lane: the steering command is clipped to steer_limit");
+        const Vector next = lane.f(x, u, 0.);
+        CHECK_CLOSE(next(0), 15. * std::sin(0.01) / 50., 1e-15, "lane: one explicit Euler step per sample");
+    }
+
+    // --- liftoff: thrust over weight, then burnout -----------------------------------
+    {
+        Apps::Astro::RocketLiftoff rocket;
+        Vector x = rocket.X0();
+        CHECK_CLOSE(rocket.Derivative(x, Vector(), 0.)(1), 2500. * 8. / 1000. - 9.80665, 1e-12,
+                    "liftoff: on the pad the acceleration is T / m - g");
+        for (int k = 0; k < 10 * 100; ++k) x = rocket.f(x, Vector(), 0.);   // 100 s at 10 Hz
+        CHECK_CLOSE(x(2), 400., 0., "liftoff: after the burn the mass is the dry mass");
+        CHECK(rocket.Derivative(x, Vector(), 0.)(1) < -9., "liftoff: after burnout the rocket coasts");
+    }
+
+    // --- landing: free fall above the profile, a burn below it, at rest on the pad --
+    {
+        Apps::Astro::RocketLanding stage;
+        Vector x(3);
+        x(0) = 3000.; x(1) = -10.; x(2) = 1000.;
+        CHECK_CLOSE(stage.Guidance(x), 0., 0., "landing: above the profile the engine is off");
+        x(1) = -300.;
+        CHECK(stage.Guidance(x) > 0., "landing: below the profile it fires");
+        Vector pad(3);
+        pad(0) = 0.; pad(1) = -3.; pad(2) = 800.;
+        const Vector landed = stage.f(pad, Vector(), 0.);
+        CHECK(landed(0) == 0. && landed(1) == 0., "landing: a stage on the pad stays there at rest");
+    }
+
+    // --- descent: the guidance and the control input fly the same booster ------------
+    {
+        Apps::Astro::RocketDescent guided;
+        Apps::Astro::RocketDescent driven(true);
+        Vector x(7);
+        x(0) = 120.; x(1) = 1500.; x(2) = -4.; x(3) = -50.; x(4) = 0.02; x(5) = 0.; x(6) = 1000.;
+        double T, delta;
+        guided.Guidance(x, T, delta);
+        Vector u(2);
+        u(0) = T / 40000.; u(1) = delta;
+        const Vector a = guided.Derivative(x, Vector(), 0.), b = driven.Derivative(x, u, 0.);
+        double diff = 0.;
+        for (std::size_t i = 0; i < 7; ++i) diff = std::max(diff, std::fabs(a(i) - b(i)));
+        CHECK(diff < 1e-12, "descent: u = [T / T_max, delta] reproduces the guidance");
+        CHECK(T > 0. && T <= 40000., "descent: the throttle is within the engine's range");
     }
 
     // --- the Jacobian is the forward difference the Python framework takes ----------
