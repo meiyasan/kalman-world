@@ -184,6 +184,22 @@ int kalman_model_P0(const kalman_model_t *model, double *P0);          /* n x n 
 int kalman_model_set_x0(kalman_model_t *model, const double *x0);      /* n     */
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);      /* n x n */
 
+/* --- model: files ------------------------------------------------------------ */
+
+/// The model.json text of the model written out (see Kalman::IO::ModelFile), or NULL.
+/// `registered` is the factory name a reference refers to and `plugin` the library it
+/// came from (either may be NULL); `linearize` != 0 writes the Jacobians at the initial
+/// state; `steps` is the number of samples tabulated for a time-varying model.
+const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
+                                     int linearize, int steps);
+/// Write the model to `path`: one archive (.kalman), or plain JSON when the path ends in .json. 0 or -1.
+int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
+                      int linearize, int steps);
+/// Build the model a file describes (archive or JSON), or NULL. Destroy it with kalman_model_destroy().
+kalman_model_t *kalman_model_load(const char *path);
+/// "maps", "matrices" or "time-varying matrices": what the model is made of. Never NULL for a valid handle.
+const char *kalman_model_structure(const kalman_model_t *model);
+
 /* --- model: named components ------------------------------------------------ */
 
 /// Name of component i of the state (0 <= i < n), or NULL. "x<i>" when the model names nothing.

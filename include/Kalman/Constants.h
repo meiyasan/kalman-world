@@ -48,6 +48,23 @@ namespace Kalman
     };
 
     /**
+     * \brief What a model is made of, which decides what a file can hold of it.
+     *
+     * Maps: f() and h() are code. A file can name the model and carry its
+     * settings, not the model itself. This is the default: a model that says
+     * nothing is never written out as if its matrices were all of it.
+     * Matrices: the model is its constant F, H, B, L, Q, R. A file holds all of it.
+     * TimeVarying: the model is its matrices, and they change with time. A
+     * file holds all of it over a stated range of samples, as tables.
+     */
+    enum class StructureKind
+    {
+        Maps = 0,
+        Matrices = 1,
+        TimeVarying = 2
+    };
+
+    /**
      * \brief Where a model's Jacobians come from (see Kalman::Differentiator).
      */
     enum class DifferentiatorKind
@@ -106,6 +123,7 @@ namespace Kalman
     /// Human-readable name of an integrator kind (never null).
     const char *ToString(IntegratorKind kind);
     const char *ToString(DynamicsKind kind);
+    const char *ToString(StructureKind kind);
     const char *ToString(DifferentiatorKind kind);
     /// Human-readable name of a solver kind (never null).
     const char *ToString(SolverKind kind);

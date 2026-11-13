@@ -7,8 +7,16 @@
  *     kalman model NAME           everything one model declares: the state vector and
  *                                 the measurement component by component (name, unit,
  *                                 noise), the sample rate, dynamics, parameters
+ *     kalman model FILE           the same for a model file
+ *     kalman export NAME|FILE     write a model out (see Kalman::IO::ModelFile): to -o FILE
+ *                                 (.kalman: one archive; .kalman.json: plain JSON), or
+ *                                 its model.json on the standard output
  *     kalman plugins              the libraries the models came from
  *     kalman version
+ *
+ * Export options: --linearize (the Jacobians at the initial state, as a
+ * matrices model), --steps N (samples to tabulate for a time-varying model),
+ * --set NAME=VALUE (a parameter, repeatable).
  *
  * Options: --json (machine-readable), --plugin FILE|NAME (load a plugin first,
  * repeatable), --no-apps (do not load libKalmanApps), --color auto|always|never
@@ -22,6 +30,7 @@
 #include "Kalman/CAPI.h"
 #include "Kalman/Config.h"
 #include "Kalman/Factory.h"
+#include "Kalman/IO/ModelFile.h"
 
 #include <dlfcn.h>
 #include <unistd.h>
@@ -46,7 +55,8 @@ namespace
         std::string name, title, description, version, plugin, error;
         std::size_t n = 0, m = 0, l = 0;
         double fs = 0.;
-        std::string dynamics, engine, differentiator, integrator;
+        std::string dynamics, structure, engine, differentiator, integrator;
+        std::string file, kind;         // the file it was read from and what that file holds, if any
         std::size_t substeps = 1;
         bool processThroughMap = false, measurementThroughMap = false;
         bool noiseIntensity = false;    // Q stated per unit time and decoded for the sample rate
@@ -78,15 +88,21 @@ namespace
         return true;
     }
 
-    Sheet Read(const std::string &name)
+    Sheet Read(const std::string &name, const Kalman::Model *given = nullptr)
     {
         Sheet s;
         s.name = name;
         try
         {
             auto &factory = Kalman::Factory::Instance();
-            s.plugin = factory.Describe(name).plugin;
-            const std::unique_ptr<Kalman::Model> model = factory.Create(name);
+            std::unique_ptr<Kalman::Model> created;
+            if (!given)
+            {
+                s.plugin = factory.Describe(name).plugin;
+                created = factory.Create(name);
+            }
+            const Kalman::Model *model = given ? given : created.get();
+            s.structure = Kalman::ToString(model->Structure());
             s.title = model->Title();
             s.description = model->Description();
             s.version = model->Version();
@@ -198,6 +214,7 @@ namespace
            << ", \"n\": " << s.n << ", \"m\": " << s.m << ", \"l\": " << s.l
            << ", \"fs\": " << JsonNumber(s.fs)
            << ", \"dynamics\": " << Quote(s.dynamics)
+           << ", \"structure\": " << Quote(s.structure)
            << ", \"engine\": " << Quote(s.engine)
            << ", \"differentiator\": " << Quote(s.differentiator)
            << ", \"integrator\": " << (s.integrator.empty() ? "null" : Quote(s.integrator))
@@ -246,7 +263,7 @@ namespace
     // ---- text ---------------------------------------------------------------
     void Table(const std::vector<Sheet> &sheets)
     {
-        const std::vector<std::string> head = {"MODEL", "DYNAMICS", "ENGINE", "n", "m", "l", "fs [Hz]", "JACOBIAN",
+        const std::vector<std::string> head = {"MODEL", "DYNAMICS", "STRUCTURE", "ENGINE", "n", "m", "l", "fs [Hz]", "JACOBIAN",
                                                "PROCESS NOISE", "MEAS. NOISE"};
         std::vector<std::vector<std::string>> rows;
         for (const auto &s : sheets)
@@ -256,7 +273,7 @@ namespace
                 rows.push_back({s.name, "error: " + s.error});
                 continue;
             }
-            rows.push_back({s.name, s.dynamics, s.engine, std::to_string(s.n), std::to_string(s.m),
+            rows.push_back({s.name, s.dynamics, s.structure, s.engine, std::to_string(s.n), std::to_string(s.m),
                             std::to_string(s.l), Number(s.fs), s.differentiator, ProcessNoise(s),
                             MeasurementNoise(s)});
         }
@@ -276,8 +293,8 @@ namespace
         for (const auto &r : rows)
         {
             if (r.size() != head.size()) line(r, {kTitle, kRed});
-            else line(r, {kTitle, DynamicsStyle(r[1]), kBlue, nullptr, nullptr, nullptr, nullptr, nullptr,
-                          NoiseStyle(r[8]), NoiseStyle(r[9])});
+            else line(r, {kTitle, DynamicsStyle(r[1]), nullptr, kBlue, nullptr, nullptr, nullptr, nullptr, nullptr,
+                          NoiseStyle(r[9]), NoiseStyle(r[10])});
         }
     }
 
@@ -340,9 +357,11 @@ namespace
         std::cout << Paint(s.name, kTitle) << '\n';
         row("title", s.title + " (version " + s.version + ")");
         row("description", s.description);
-        row("from", s.plugin.empty() ? "this program" : s.plugin);
+        if (!s.file.empty()) row("file", s.file + " (" + s.kind + ")");
+        else row("from", s.plugin.empty() ? "this program" : s.plugin);
         row("sample rate", Rate(s.fs));
         row("dynamics", s.dynamics, DynamicsStyle(s.dynamics));
+        row("structure", s.structure);
         if (!s.integrator.empty())
             row("integrator", s.integrator + (s.substeps > 1 ? ", " + std::to_string(s.substeps) + " substeps" : ""));
         row("engine", s.engine, kBlue);
@@ -405,10 +424,16 @@ namespace
     int Usage(int code)
     {
         (code ? std::cerr : std::cout)
-            << "usage: kalman [models [PATTERN] | model NAME | plugins | version] [--json]\n"
+            << "usage: kalman [models [PATTERN] | model NAME|FILE | plugins | version] [--json]\n"
                "              [--plugin FILE|NAME]... [--no-apps] [--color auto|always|never]\n"
+               "       kalman export NAME|FILE [-o FILE] [--linearize] [--steps N] [--set NAME=VALUE]...\n"
                "  models     the models this installation can run, one per line (the default)\n"
                "  model      everything one model declares: dimensions, dynamics, noise, parameters\n"
+               "  export     write a model out: -o m.kalman (one archive: model.json and its tables) or\n"
+               "             -o m.kalman.json (plain JSON); without -o, model.json on the standard output.\n"
+               "             A model of matrices is written whole; a model given by code is written as a\n"
+               "             reference to its name and settings, or with --linearize as its Jacobians at\n"
+               "             the initial state; a time-varying one needs --steps N\n"
                "  plugins    the libraries the models came from\n"
                "  version    the version of libKalman\n"
                "  --json     machine-readable output\n"
@@ -422,14 +447,48 @@ namespace
 
 int main(int argc, char **argv)
 {
-    bool json = false, apps = true;
-    std::string color = "auto";
+    bool json = false, apps = true, linearize = false;
+    std::size_t steps = 0;
+    std::string color = "auto", output;
+    std::vector<std::pair<std::string, double>> settings;
     std::vector<std::string> plugins, words;
     for (int i = 1; i < argc; ++i)
     {
         const std::string a = argv[i];
         if (a == "--json") json = true;
         else if (a == "--no-apps") apps = false;
+        else if (a == "--linearize") linearize = true;
+        else if (a == "-o" || a == "--output")
+        {
+            if (i + 1 >= argc) return Usage(2);
+            output = argv[++i];
+        }
+        else if (a == "--steps")
+        {
+            if (i + 1 >= argc) return Usage(2);
+            char *end = nullptr;
+            const long value = std::strtol(argv[++i], &end, 10);
+            if (!end || *end || value <= 0)
+            {
+                std::cerr << "kalman: --steps takes a positive number of samples\n";
+                return 2;
+            }
+            steps = static_cast<std::size_t>(value);
+        }
+        else if (a == "--set")
+        {
+            if (i + 1 >= argc) return Usage(2);
+            const std::string pair = argv[++i];
+            const std::size_t eq = pair.find('=');
+            char *end = nullptr;
+            const double value = eq == std::string::npos ? 0. : std::strtod(pair.c_str() + eq + 1, &end);
+            if (eq == std::string::npos || eq == 0 || !end || *end || end == pair.c_str() + eq + 1)
+            {
+                std::cerr << "kalman: --set takes NAME=VALUE with a number, not '" << pair << "'\n";
+                return 2;
+            }
+            settings.emplace_back(pair.substr(0, eq), value);
+        }
         else if (a == "--color" || a.rfind("--color=", 0) == 0)
         {
             if (a == "--color" && i + 1 >= argc) return Usage(2);
@@ -524,16 +583,87 @@ int main(int argc, char **argv)
     if (command == "model")
     {
         if (words.size() != 2) return Usage(2);
-        if (!factory.Has(words[1]))
+        Sheet s;
+        if (factory.Has(words[1])) s = Read(words[1]);
+        else if (fs::is_regular_file(words[1]))
         {
-            std::cerr << "kalman: no model '" << words[1] << "'. Run `kalman models` for the list.\n";
+            try
+            {
+                const Kalman::IO::ModelFile file = Kalman::IO::ModelFile::Load(words[1]);
+                const std::unique_ptr<Kalman::Model> model = file.Import();
+                s = Read(model->Name(), model.get());
+                s.file = words[1];
+                s.kind = file.Kind() + (file.HasTables() ? ", with tables" : "");
+            }
+            catch (const std::exception &e)
+            {
+                std::cerr << "kalman: " << words[1] << ": " << e.what() << '\n';
+                return 1;
+            }
+        }
+        else
+        {
+            std::cerr << "kalman: no model and no file '" << words[1] << "'. Run `kalman models` for the list.\n";
             return 1;
         }
-        const Sheet s = Read(words[1]);
         if (json) std::cout << Json(s, true) << '\n';
         else if (!s.error.empty()) std::cerr << "kalman: " << s.name << ": " << s.error << '\n';
         else Detail(s);
         return s.error.empty() ? 0 : 1;
+    }
+
+    if (command == "export")
+    {
+        if (words.size() != 2) return Usage(2);
+        try
+        {
+            Kalman::IO::ModelFile::Options options;
+            std::unique_ptr<Kalman::Model> model;
+            if (factory.Has(words[1]))
+            {
+                model = factory.Create(words[1]);
+                options.registered = words[1];
+                // The plugin by name ("KalmanApps"), not by the path it has on this machine.
+                std::string stem = fs::path(factory.Describe(words[1]).plugin).stem().string();
+                if (stem.rfind("lib", 0) == 0) stem = stem.substr(3);
+                options.plugin = stem.substr(0, stem.find('.'));
+            }
+            else if (fs::is_regular_file(words[1]))
+            {
+                const Kalman::IO::ModelFile file = Kalman::IO::ModelFile::Load(words[1]);
+                model = file.Import();
+                if (file.Kind() == "reference") options.registered = file.Spec()["base"].AsString("spec.base");
+                options.origin = file.Document()["origin"];     // where it first came from
+            }
+            else
+            {
+                std::cerr << "kalman: no model and no file '" << words[1] << "'. Run `kalman models` for the list.\n";
+                return 1;
+            }
+            for (const auto &setting : settings) model->SetParameter(setting.first, setting.second);
+            options.linearize = linearize;
+            options.steps = steps;
+            const Kalman::IO::ModelFile file = Kalman::IO::ModelFile::Export(*model, options);
+            if (!output.empty())
+            {
+                file.Save(output);
+                std::cerr << "kalman: wrote " << output << " (" << file.Kind()
+                          << (file.HasTables() ? ", with tables" : "") << ")\n";
+            }
+            else if (file.HasTables())
+            {
+                std::cerr << "kalman: this model has tables, so its JSON is not the whole model: give -o FILE"
+                          << Kalman::IO::ModelFile::kExtension << '\n';
+                return 1;
+            }
+            else std::cout << file.Text();
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "kalman: " << e.what() << '\n';
+            return 1;
+        }
+        return 0;
     }
 
     if (command == "plugins")

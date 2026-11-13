@@ -37,6 +37,17 @@ namespace Kalman
         return kind == DynamicsKind::Continuous ? "continuous" : "discrete";
     }
 
+    const char *ToString(StructureKind kind)
+    {
+        switch (kind)
+        {
+            case StructureKind::Maps:        return "maps";
+            case StructureKind::Matrices:    return "matrices";
+            case StructureKind::TimeVarying: return "time-varying matrices";
+        }
+        return "unknown";
+    }
+
     const char *ToString(DifferentiatorKind kind)
     {
         switch (kind)

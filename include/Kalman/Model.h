@@ -101,6 +101,7 @@ namespace Kalman
             // Time stepping, for a model that overrides Derivative(). Declared by
             // kind; the instance is built lazily so a model never imports a scheme.
             bool fContinuous = false;
+            StructureKind fStructure = StructureKind::Maps;   // see SetStructure()
             IntegratorKind fDefaultIntegrator = IntegratorKind::RK4;
             SolverKind fDefaultSolver = SolverKind::Spectral;
             mutable std::shared_ptr<Integrator> fIntegrator;
@@ -227,6 +228,18 @@ namespace Kalman
             /// Also switches the Jacobian to numerical: F(t) is not df/dx of an ODE step.
             void UseContinuousDynamics(bool on = true);
             bool HasContinuousDynamics() const { return fContinuous; }
+
+            /// What the model is made of: maps (code), constant matrices, or time-varying matrices.
+            StructureKind Structure() const { return fStructure; }
+            /**
+             * \brief Declare what the model is made of (see Kalman::StructureKind).
+             *
+             * Models::Linear declares Matrices and Models::Extended Maps. A
+             * linear model that overrides F(t), H(t), Q(t) or R(t) with something
+             * that depends on t declares TimeVarying; one that overrides f() or
+             * h() declares Maps.
+             */
+            void SetStructure(StructureKind kind) { fStructure = kind; }
 
             /// Discrete (f() is the step) or Continuous (decoded from a derivative or a generator).
             DynamicsKind Dynamics() const

@@ -237,19 +237,22 @@ kalman models ballistic              # names containing "ballistic"
 kalman model car-speed               # everything one model declares
 kalman plugins                       # the libraries the models came from
 kalman --plugin KalmanPlugin_example models
+kalman export car-speed -o car.kalman # write a model to a file (see "Model files")
+kalman model car.kalman              # what a file holds
 kalman models --json                 # the same, for a program
 ```
 
 ```
-MODEL                DYNAMICS    ENGINE    n  m  l  fs [Hz]   JACOBIAN  PROCESS NOISE  MEAS. NOISE
-ballistic            continuous  Extended  9  3  0  128       forward   additive       additive
-car-speed            continuous  Extended  2  1  0  20        forward   additive       additive
-storm                discrete    Extended  5  3  0  0.166667  forward   additive       additive
+MODEL      DYNAMICS    STRUCTURE  ENGINE    n  m  l  fs [Hz]   JACOBIAN  PROCESS NOISE  MEAS. NOISE
+ballistic  continuous  maps       Extended  9  3  0  128       forward   additive       additive
+car-speed  continuous  maps       Extended  2  1  0  20        forward   additive       additive
+storm      discrete    maps       Extended  5  3  0  0.166667  forward   additive       additive
 ```
 
 | Column | Read from | Values |
 |---|---|---|
 | DYNAMICS | `Model::Dynamics()` | `continuous` (a `Derivative()` or a generator, decoded for the sample rate) or `discrete` (`f` is the step) |
+| STRUCTURE | `Model::Structure()` | `maps` (code), `matrices`, `time-varying matrices`: what a file can hold of the model |
 | ENGINE | `Model::DefaultEngine()` | the engine a filter picks for the model |
 | JACOBIAN | `Model::Differentiator()` | `analytic`, `forward`, `central` |
 | PROCESS NOISE | `HasProcessNoiseInput()`, `L()`, `NoiseIntensity()` | `additive`, `through L`, `in f`; `per unit time` when Q is stated as an intensity |
@@ -568,6 +571,104 @@ also occurs after a restart. Subscribers get a `plugin.loaded` event that lists
 the new models. Thus a model written in C++ (in a ROOT+ analysis, for
 example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
 and Unity, agents and other users can then use it as a spec base.
+
+## Model files: `.kalman`
+
+A model can be written to one file and read back, by the same code for every
+model (`Kalman::IO::ModelFile`, through the `Kalman::Model` interface; nothing
+is written per model).
+
+```sh
+kalman export constant-velocity -o cv.kalman        # a model of matrices: written whole
+kalman export ballistic -o ballistic.kalman         # a model given by code: a reference
+kalman export ballistic --linearize -o tangent.kalman.json
+kalman export car-speed --set mass=1200             # model.json on the standard output
+kalman model cv.kalman                              # what a file holds
+```
+
+### What a file can hold
+
+Code cannot be put in a file, so what is written depends on what the model is
+made of. A model says so with `SetStructure()`; `Models::Linear` declares
+`Matrices`, `Models::Extended` `Maps`, and a model that says nothing is `Maps`,
+so it is never written out as if its matrices were all of it.
+
+| `Model::Structure()` | The file (`kind`) | Reads back |
+|---|---|---|
+| `Matrices`: constant F, H, B, L, Q, R | `complete`: all of it (A and Qc instead of F and Q when stated in continuous time) | anywhere, with no plugin |
+| `TimeVarying`: matrices that change with time | `complete` over `--steps N` samples: the matrices that change, as tables | anywhere, with no plugin |
+| `Maps`: `f` and `h` are code | `reference`: the registered name, its plugin, parameters, Q, R, x0, P0, fs | where that plugin is installed |
+| any, with `--linearize` | `linearization`: the Jacobians at the initial state, as a `Matrices` model | anywhere; valid near that state only |
+
+A linear model that overrides `F(t)`, `H(t)`, `Q(t)` or `R(t)` with something
+that depends on `t` declares `SetStructure(StructureKind::TimeVarying)`; one
+that overrides `f()` or `h()` declares `Maps`.
+
+### The format
+
+A `.kalman` file is one zip archive, so the parts of a model cannot be
+separated or mixed with another model's, and any zip tool opens it:
+
+| Entry | Holds |
+|---|---|
+| `model.json` | the readable part: `format` (`"kalman-model"`), `format_version`, `kind`, `origin` (name, plugin, title), `structure`, `dynamics`, the `state` and `measurement` components with their units, and `spec` |
+| `tables/<F,H,Q,R>.f64` | one matrix per sample for a matrix that changes with time: raw little-endian float64, row-major, of the shape `[steps, rows, columns]` given in `model.json` |
+
+`spec` is exactly what the JSON API takes (`kalman.api.make_model`, the REST
+and MCP servers): `base`, `fs`, `dynamics`, `noise`, `initial`, `labels`,
+`bindings`. Numbers are written so that a double reads back unchanged.
+
+The entries are stored, not compressed: the core links no compression library,
+and the files are small. Every entry carries a CRC-32, checked on reading.
+
+A file with no table may also be written as plain JSON, `model.kalman.json`
+(the `model.json` alone). A file with tables is refused that way, since its
+JSON would not be the whole model, and a `model.json` whose tables are missing
+is refused on reading.
+
+### What is checked
+
+`tests/cxx/17_modelfile.cc`, on 60 samples filtered by the model and by the
+model read back from its file:
+
+| Model | File | Largest difference in the estimates and their variances |
+|---|---|---|
+| constant matrices | archive, and plain JSON | 0 (to the bit) |
+| time-varying R | archive with a table | below 1e-12: the table is taken at `t0 + k dt`, the filter's clock adds `dt` k times |
+| pendulum (maps) | reference | 0 (to the bit) |
+
+A changed byte in the archive fails its checksum; a reference to a model that
+is not registered names the plugin to load; another format, or a later
+version, is refused.
+
+### From C++, C and Python
+
+```cpp
+#include "Kalman/IO/ModelFile.h"
+
+Kalman::IO::ModelFile::Options options;
+options.registered = "car-speed";                     // for a reference
+Kalman::IO::ModelFile::Export(model, options).Save("car.kalman");
+std::unique_ptr<Kalman::Model> back = Kalman::IO::ModelFile::Load("car.kalman").Import();
+```
+
+From C: `kalman_model_export_json`, `kalman_model_save`, `kalman_model_load`,
+`kalman_model_structure`. From Python:
+
+```python
+import kalman.native as native
+from kalman import api
+
+document = native.export_model("car-speed", "car.kalman", parameters={"mass": 1200})
+read = native.read_model_file("car.kalman")           # {"document": ..., "tables": {name: array}}
+model = api.make_model(read["document"]["spec"])      # a reference needs its plugin loaded
+```
+
+Not covered: models written in Python are not exported by this (only models
+registered with the C++ factory are), and `api.make_model` reads the spec, so
+for a file with tables it builds the model of the first sample; the tables
+are read by `Kalman::IO::ModelFile::Import()` and returned as arrays by
+`read_model_file`.
 
 ## libKalmanApps: the application models in C++
 

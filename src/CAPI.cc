@@ -18,6 +18,7 @@
 #include "Kalman/Engines/Particle.h"
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Factory.h"
+#include "Kalman/IO/ModelFile.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Algebra/Riccati.h"
 #include "Kalman/Controller.h"
@@ -442,6 +443,55 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0)
         M.SetInitialCovariance(Mat(P0, M.NState(), M.NState(), "P0"));
         return 0;
     });
+}
+
+/* --- model: files ------------------------------------------------------------ */
+
+extern "C++"
+{
+    static Kalman::IO::ModelFile ExportFile(const kalman_model_t *model, const char *registered, const char *plugin,
+                                     int linearize, int steps)
+    {
+        Kalman::IO::ModelFile::Options options;
+        if (registered) options.registered = registered;
+        if (plugin) options.plugin = plugin;
+        options.linearize = linearize != 0;
+        options.steps = steps > 0 ? static_cast<std::size_t>(steps) : 0;
+        return Kalman::IO::ModelFile::Export(Deref(model), options);
+    }
+}
+
+const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
+                                     int linearize, int steps)
+{
+    return GuardStr([=] { return Keep(ExportFile(model, registered, plugin, linearize, steps).Text()); });
+}
+
+int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
+                      int linearize, int steps)
+{
+    return Guard([=] {
+        if (!path) throw std::invalid_argument("null path");
+        ExportFile(model, registered, plugin, linearize, steps).Save(path);
+        return 0;
+    });
+}
+
+kalman_model_t *kalman_model_load(const char *path)
+{
+    try
+    {
+        Ok();
+        if (!path) throw std::invalid_argument("null path");
+        return new kalman_model{Kalman::IO::ModelFile::Load(path).Import()};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+const char *kalman_model_structure(const kalman_model_t *model)
+{
+    return GuardStr([model] { return Keep(Kalman::ToString(Deref(model).Structure())); });
 }
 
 /* --- model: named components ------------------------------------------------ */

@@ -43,6 +43,7 @@ namespace Kalman::Models
             {
                 SetDefaultEngine(EngineKind::Linear);
                 SetAnalyticJacobian(true);
+                SetStructure(StructureKind::Matrices);
             }
 
             const char *Title() const override { return "Linear Kalman Model"; }
