@@ -115,3 +115,18 @@ def test_filter_table_and_errors():
     assert _run("--no-apps", "models").returncode == 1
     assert _run("frobnicate").returncode == 2
     assert _run("version").stdout.startswith("kalman ")
+
+
+def test_colours_only_when_asked_or_on_a_terminal():
+    plain = _run("model", "car-speed")
+    if plain.returncode != 0:
+        pytest.skip("libKalmanApps is not beside libKalman")
+    assert "\033[" not in plain.stdout                       # a pipe gets plain text
+    coloured = _run("model", "car-speed", "--color", "always").stdout
+    assert "\033[" in coloured
+    import re
+    assert re.sub(r"\033\[[0-9;]*m", "", coloured) == plain.stdout   # same text, same alignment
+    table = _run("models", "--color=always").stdout
+    assert re.sub(r"\033\[[0-9;]*m", "", table) == _run("models").stdout
+    assert "\033[" not in _run("models", "--json", "--color", "always").stdout
+    assert _run("models", "--color", "purple").returncode == 2

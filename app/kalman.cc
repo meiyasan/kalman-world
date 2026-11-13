@@ -11,7 +11,8 @@
  *     kalman version
  *
  * Options: --json (machine-readable), --plugin FILE|NAME (load a plugin first,
- * repeatable), --no-apps (do not load libKalmanApps).
+ * repeatable), --no-apps (do not load libKalmanApps), --color auto|always|never
+ * (auto: colours on a terminal, none in a pipe or when NO_COLOR is set).
  *
  * The program links libKalman only. The application models are a plugin like
  * any other: libKalmanApps is looked for beside libKalman and loaded when it is
@@ -23,6 +24,7 @@
 #include "Kalman/Factory.h"
 
 #include <dlfcn.h>
+#include <unistd.h>
 
 #include <algorithm>
 #include <cmath>
@@ -221,6 +223,26 @@ namespace
         return os.str();
     }
 
+    // ---- colour -------------------------------------------------------------
+    // Off unless the output is a terminal: a pipe, a file and --json get plain text.
+    bool gColor = false;
+
+    const char *const kBold = "1", *const kDim = "2", *const kRed = "31", *const kGreen = "32",
+                *const kYellow = "33", *const kBlue = "34", *const kMagenta = "35", *const kCyan = "36",
+                *const kTitle = "1;36", *const kHead = "1;4";
+
+    /// \p text padded to \p width (counted on the text, not on the escape codes), in \p style.
+    std::string Paint(const std::string &text, const char *style, std::size_t width = 0)
+    {
+        const std::string pad(width > text.size() ? width - text.size() : 0, ' ');
+        if (!gColor || !style || text.empty()) return text + pad;
+        return std::string("\033[") + style + "m" + text + "\033[0m" + pad;
+    }
+
+    const char *DynamicsStyle(const std::string &dynamics) { return dynamics == "continuous" ? kGreen : kYellow; }
+    /// Additive noise is the plain case; noise that goes through a map stands out.
+    const char *NoiseStyle(const std::string &noise) { return noise.rfind("additive", 0) == 0 ? nullptr : kMagenta; }
+
     // ---- text ---------------------------------------------------------------
     void Table(const std::vector<Sheet> &sheets)
     {
@@ -243,17 +265,20 @@ namespace
         for (const auto &r : rows)
             if (r.size() == head.size())
                 for (std::size_t c = 0; c < r.size(); ++c) width[c] = std::max(width[c], r[c].size());
-        const auto line = [&width](const std::vector<std::string> &r)
+        // The last column is not padded, so no line ends in spaces.
+        const auto line = [&width](const std::vector<std::string> &r, const std::vector<const char *> &style)
         {
             for (std::size_t c = 0; c < r.size(); ++c)
-            {
-                if (c + 1 == r.size()) std::cout << r[c];
-                else std::cout << std::left << std::setw(int(width[c]) + 2) << r[c];
-            }
+                std::cout << Paint(r[c], c < style.size() ? style[c] : nullptr, c + 1 == r.size() ? 0 : width[c] + 2);
             std::cout << '\n';
         };
-        line(head);
-        for (const auto &r : rows) line(r);
+        line(head, std::vector<const char *>(head.size(), kBold));
+        for (const auto &r : rows)
+        {
+            if (r.size() != head.size()) line(r, {kTitle, kRed});
+            else line(r, {kTitle, DynamicsStyle(r[1]), kBlue, nullptr, nullptr, nullptr, nullptr, nullptr,
+                          NoiseStyle(r[8]), NoiseStyle(r[9])});
+        }
     }
 
     // "128 Hz, one sample every 7.8125 ms": the step in the unit that reads best.
@@ -282,64 +307,61 @@ namespace
         }
         const std::size_t index = std::to_string(components.empty() ? 0 : components.size() - 1).size() + 2;
         // Padded between columns only, so no line ends in spaces.
-        const auto tail = [&columns](const std::vector<std::string> &cells)
+        const auto tail = [](const std::vector<std::string> &cells, const char *style)
         {
             for (std::size_t c = 0; c < cells.size(); ++c)
-            {
-                if (c + 1 == cells.size()) std::cout << cells[c];
-                else std::cout << std::left << std::setw(14) << cells[c];
-            }
+                std::cout << Paint(cells[c], style, c + 1 == cells.size() ? 0 : 14);
             std::cout << '\n';
         };
         std::vector<std::string> cells;
         for (const auto &col : columns) cells.push_back(col.first);
-        std::cout << "    " << std::left << std::setw(int(index) + 2) << "" << std::setw(int(name) + 2) << "name"
-                  << std::setw(int(unit) + 2) << "unit";
-        tail(cells);
+        std::cout << "    " << Paint("", nullptr, index + 2) << Paint("name", kBold, name + 2)
+                  << Paint("unit", kBold, unit + 2);
+        tail(cells, kBold);
         for (std::size_t i = 0; i < components.size(); ++i)
         {
-            std::cout << "    " << std::left << std::setw(int(index) + 2) << ("[" + std::to_string(i) + "]")
-                      << std::setw(int(name) + 2) << components[i].name
-                      << std::setw(int(unit) + 2) << (components[i].unit.empty() ? "-" : components[i].unit);
+            std::cout << "    " << Paint("[" + std::to_string(i) + "]", kDim, index + 2)
+                      << Paint(components[i].name, kCyan, name + 2)
+                      << Paint(components[i].unit.empty() ? "-" : components[i].unit, kYellow, unit + 2);
             cells.clear();
             for (const auto &col : columns) cells.push_back(i < col.second->size() ? Number((*col.second)[i]) : "-");
-            tail(cells);
+            tail(cells, nullptr);
         }
     }
 
     void Detail(const Sheet &s)
     {
-        const auto row = [](const char *key, const std::string &value)
-        { std::cout << "  " << std::left << std::setw(20) << key << value << '\n'; };
+        const auto row = [](const char *key, const std::string &value, const char *style = nullptr)
+        { std::cout << "  " << Paint(key, kDim, 20) << Paint(value, style) << '\n'; };
         std::vector<double> qSigma, rSigma;
         for (const double q : s.q) qSigma.push_back(q >= 0. ? std::sqrt(q) : std::nan(""));
         for (const double r : s.r) rSigma.push_back(r >= 0. ? std::sqrt(r) : std::nan(""));
 
-        std::cout << s.name << '\n';
+        std::cout << Paint(s.name, kTitle) << '\n';
         row("title", s.title + " (version " + s.version + ")");
         row("description", s.description);
         row("from", s.plugin.empty() ? "this program" : s.plugin);
         row("sample rate", Rate(s.fs));
-        row("dynamics", s.dynamics);
+        row("dynamics", s.dynamics, DynamicsStyle(s.dynamics));
         if (!s.integrator.empty())
             row("integrator", s.integrator + (s.substeps > 1 ? ", " + std::to_string(s.substeps) + " substeps" : ""));
-        row("engine", s.engine);
+        row("engine", s.engine, kBlue);
         row("Jacobian", s.differentiator);
         row("control l", std::to_string(s.l));
 
-        std::cout << "\n  state vector, n = " << s.n << " (process noise " << ProcessNoise(s)
-                  << (s.qFull ? "; Q has off-diagonal terms, its diagonal is shown" : "") << ")\n";
+        std::cout << "\n  " << Paint("state vector, n = " + std::to_string(s.n), kHead) << " (process noise "
+                  << Paint(ProcessNoise(s), NoiseStyle(ProcessNoise(s))) << (s.qFull ? "; Q has off-diagonal terms, its diagonal is shown" : "") << ")\n";
         Components(s.state, {{"x0", &s.x0}, {"Q", &s.q}, {"sqrt(Q)", &qSigma}});
 
-        std::cout << "\n  measurement, m = " << s.m << " (noise " << MeasurementNoise(s)
-                  << (s.rFull ? "; R has off-diagonal terms, its diagonal is shown" : "") << ")\n";
+        std::cout << "\n  " << Paint("measurement, m = " + std::to_string(s.m), kHead) << " (noise "
+                  << Paint(MeasurementNoise(s), NoiseStyle(MeasurementNoise(s))) << (s.rFull ? "; R has off-diagonal terms, its diagonal is shown" : "") << ")\n";
         Components(s.measurement, {{"R", &s.r}, {"sqrt(R)", &rSigma}});
 
-        std::cout << "\n  parameters" << (s.parameters.empty() ? ": none" : "") << '\n';
+        std::cout << "\n  " << Paint("parameters", kHead) << (s.parameters.empty() ? ": none" : "") << '\n';
         std::size_t width = 0;
         for (const auto &p : s.parameters) width = std::max(width, p.first.size());
         for (const auto &p : s.parameters)
-            std::cout << "    " << std::left << std::setw(int(width) + 2) << p.first << Number(p.second) << '\n';
+            std::cout << "    " << Paint(p.first, kCyan, width + 2) << Number(p.second) << '\n';
     }
 
     // ---- plugins ----------------------------------------------------------
@@ -384,7 +406,7 @@ namespace
     {
         (code ? std::cerr : std::cout)
             << "usage: kalman [models [PATTERN] | model NAME | plugins | version] [--json]\n"
-               "              [--plugin FILE|NAME]... [--no-apps]\n"
+               "              [--plugin FILE|NAME]... [--no-apps] [--color auto|always|never]\n"
                "  models     the models this installation can run, one per line (the default)\n"
                "  model      everything one model declares: dimensions, dynamics, noise, parameters\n"
                "  plugins    the libraries the models came from\n"
@@ -392,7 +414,8 @@ namespace
                "  --json     machine-readable output\n"
                "  --plugin   load a plugin first: a file, or a name looked for in KALMAN_PLUGIN_PATH\n"
                "             (beside libKalman when unset)\n"
-               "  --no-apps  do not load libKalmanApps\n";
+               "  --no-apps  do not load libKalmanApps\n"
+               "  --color    auto (the default: on a terminal, unless NO_COLOR is set), always or never\n";
         return code;
     }
 }
@@ -400,12 +423,23 @@ namespace
 int main(int argc, char **argv)
 {
     bool json = false, apps = true;
+    std::string color = "auto";
     std::vector<std::string> plugins, words;
     for (int i = 1; i < argc; ++i)
     {
         const std::string a = argv[i];
         if (a == "--json") json = true;
         else if (a == "--no-apps") apps = false;
+        else if (a == "--color" || a.rfind("--color=", 0) == 0)
+        {
+            if (a == "--color" && i + 1 >= argc) return Usage(2);
+            color = a == "--color" ? argv[++i] : a.substr(8);
+            if (color != "auto" && color != "always" && color != "never")
+            {
+                std::cerr << "kalman: --color takes auto, always or never, not '" << color << "'\n";
+                return 2;
+            }
+        }
         else if (a == "--plugin")
         {
             if (i + 1 >= argc) return Usage(2);
@@ -421,6 +455,14 @@ int main(int argc, char **argv)
         else words.push_back(a);
     }
     const std::string command = words.empty() ? "models" : words[0];
+
+    // Colours on a terminal only, and never when the user said no (https://no-color.org).
+    if (color == "always") gColor = true;
+    else if (color == "auto")
+    {
+        const char *no = std::getenv("NO_COLOR"), *term = std::getenv("TERM");
+        gColor = isatty(STDOUT_FILENO) && !(no && *no) && !(term && std::string(term) == "dumb");
+    }
 
     if (command == "version")
     {

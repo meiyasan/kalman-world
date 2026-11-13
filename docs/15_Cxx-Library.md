@@ -276,6 +276,11 @@ $ kalman model car-speed
     [0]  distance  m     0.25          0.5
 ```
 
+On a terminal the output is coloured (continuous in green, discrete in yellow,
+noise that goes through a map in magenta); a pipe, a file and `--json` get
+plain text. `--color always|never` forces it either way and `NO_COLOR` is
+honoured.
+
 The names and units are what the model declares in its constructor with
 `DeclareState({{"distance", "m"}, {"speed", "m/s"}})` and
 `DeclareMeasurement({{"distance", "m"}})`; a model that declares nothing shows
