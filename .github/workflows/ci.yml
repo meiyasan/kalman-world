@@ -1,0 +1,139 @@
+# CI on GitHub (the project moved here from GitLab; .gitlab-ci.yml is the old one).
+#
+#   tests    libKalman built and installed (`make accel`), its C++ suite
+#            (`make ctests`) and the Python suite (`make tests`), on
+#            linux-64, linux-aarch64 and macOS arm64
+#   package  the sdist and wheel, kept as a build artifact
+#   docs     Doxygen site on every push; on main and on release tags it is also
+#            published to the gh-pages branch, beside the versions already there
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["*"]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+env:
+  PYTHON: python          # the Makefile's interpreter (no conda env here)
+  FORCE_COLOR: "1"
+
+jobs:
+  tests:
+    name: tests (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { name: linux-64,      os: ubuntu-24.04 }
+          - { name: linux-aarch64, os: ubuntu-24.04-arm }
+          - { name: osx-arm64,     os: macos-15 }
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive   # cmake/Modules and share/doxygen; bootstrap.sh needs both
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: System packages
+        run: |
+          if [ "$RUNNER_OS" = Linux ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq libopenblas-dev zlib1g-dev
+          fi   # macOS: BLAS is Accelerate, zlib is in the SDK
+      - name: Python packages
+        # CPU torch: the default Linux wheel pulls ~3 GB of CUDA libraries
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -e .   # the `kalman` package (modules/), which the tests import
+      - name: Configure (with the C++ tests and examples)
+        # The examples build libKalmanPlugin_example, which the Python tests of
+        # the plugin loader (tests/test_native_core.py) dlopen from var/build/lib.
+        run: |
+          BUILDTYPE=Release make configure
+          cmake -S . -B var/build -DBUILD_TESTS=ON -DBUILD_EXAMPLES=ON
+      - name: libKalman (build + install into var/install)
+        run: make accel
+      - name: Examples (and the example plugin)
+        run: make examples
+      - name: C++ tests
+        run: make ctests
+      - name: Python tests
+        run: make tests
+
+  package:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: |
+          python -m pip install --upgrade build
+          python -m build --outdir dist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: python-dist
+          path: dist/
+
+  docs:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write   # push to gh-pages
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive   # the doxygen-awesome theme has its own submodule
+          fetch-depth: 0          # tags: the site is versioned by `git describe`
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: System packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq doxygen graphviz
+      - name: Build the site
+        run: |
+          make -j4 docs
+          make -s pages-materialize
+
+      - name: Restore the versions already published
+        # Pages serves one tree, so every deployment must carry all versions.
+        # On GitLab this came from earlier `pages` artifacts (site_versions.py
+        # --restore); here it is the gh-pages branch. Versions built now win.
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        run: |
+          if git fetch --depth 1 origin gh-pages 2>/dev/null; then
+            mkdir -p var/build/public/docs
+            git archive FETCH_HEAD | tar -x -C var/build/public/docs --skip-old-files
+          else
+            echo "no gh-pages branch yet -- first publication"
+          fi
+      - name: Build the published site
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        run: |
+          make -j4 pages
+          make -s pages-prune
+          make -s pages-materialize
+      - name: Publish to gh-pages
+        if: github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/tags/')
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./public
+          keep_files: false       # the restore step above already carried the old versions
+          enable_jekyll: false    # Doxygen output has _-prefixed files Jekyll would drop
+          user_name: github-actions[bot]
+          user_email: 41898282+github-actions[bot]@users.noreply.github.com
