@@ -837,6 +837,8 @@ the Python loop runs as before.
 | `RocketAscentModel` | `Apps::Astro::RocketAscent` | `rocket-ascent` | a thrust computed by a controller function, an integrator the C++ side lacks |
 | `RocketDescentModel` | `Apps::Astro::RocketDescent` | `rocket-descent`, `rocket-descent-control` (`control=True`) | a command computed by a controller function, an integrator the C++ side lacks |
 | `RocketLandingModel` | `Apps::Astro::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
+| `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
+| `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
 
 The ballistic, car and rocket twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
@@ -850,6 +852,21 @@ A twin may take a control input (`CarLaneModel`, `RocketAscentModel`,
 `RocketDescentModel(control=True)`): `model.filter(z, uk)` hands the twin the
 command sequence with the measurements. A controller *function* (closed loop)
 is Python, so it keeps the Python model in the C++ loop instead.
+
+The space twins are continuous too, with `substeps` (the Python `n_sub`) and
+`integrator` as parameters. The trans-lunar coast needs only numbers: the
+gravitational parameters, and the Moon and the Sun on circles given by a
+radius, a rate and a phase (an `epoch` with `use_ephemeris=True` only sets the
+phases). The interplanetary cruise needs a table: the Python model samples the
+perturbing planets from the ephemeris every 2 days when it is built and
+interpolates it with `numpy.interp`. The table crosses as named scalars
+(`bodies`, `samples`, `grid_step`, then `body<i>_gm` and `body<i>_x<k>`,
+`_y<k>`, `_z<k>`), which the twin declares when `bodies` and `samples` are set
+and reads back once per change; for the Earth-Jupiter cruise of notebook 08
+that is 6,442 scalars, pushed in about 40 ms on each run. The twin
+interpolates the way `numpy.interp` does (end values outside the grid).
+Positions are in Mm, velocities in km/s and time in ks, as in Python, so
+`kalman model` prints the sample rate of these two per ks, not per second.
 
 Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
 silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two
@@ -871,6 +888,14 @@ runs, relative to the largest entry:
 | `RocketDescentModel`, guidance | 718.3 ms | 29.8 ms | 24.1x | 1.8e-09 | 2.7e-09 |
 | `RocketDescentModel`, throttle/gimbal program | 672.4 ms | 30.9 ms | 21.8x | 2.1e-11 | 2.6e-07 |
 | `RocketLandingModel` | 293.0 ms | 16.3 ms | 17.9x | 3.1e-11 | 4.8e-09 |
+| `TransLunarModel`, free return | 5738.1 ms | 548.1 ms | 10.5x | 2.7e-12 | 1.4e-12 |
+| `InterplanetaryModel`, Earth-Mars | 3183.8 ms | 309.2 ms | 10.3x | 6.7e-13 | 4.5e-10 |
+
+(The two space rows were measured later, on a loaded machine, with `--repeat 3`:
+in the same run the ballistic order-3 row read 2038.8 ms against 261.1 ms, 7.8x.
+They are the notebook's scenarios: the free return at 180 s samples with 4 RK4
+substeps, the Earth-Mars cruise of the 2026 window at 12 h samples with four
+tabulated perturbers.)
 
 The two runs are not bit-identical, and cannot be. One call of `f` agrees to the
 last digit or two, because numpy and the C math library round a cosine
@@ -1011,7 +1036,7 @@ linear filter. Both can be present in one process.
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
-| Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel` so far; none in the core library |
+| Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel`, `TransLunarModel`, `InterplanetaryModel` so far; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |
 | Sampling | `model.sample()`: the C++ loop, numpy's draws | `Kalman::Sampler` (its own generator) |
 | JSON API, REST, MCP | `kalman.api`, `kalman.rest`, `kalman.mcp` (all verbs, Python-written models included) | `libKalmanNet`, `kalman-serve` (C++ models; see [Net](18_Net.md)) |

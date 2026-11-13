@@ -143,6 +143,36 @@ def cases(steps):
         return model
     yield "RocketLandingModel", landing, np.asarray(landing().sample(40.0, seed=0).zk)
 
+    # The space models, on the scenarios of notebook 08: the free return (180 s
+    # samples, 4 RK4 substeps) and the Earth-Mars cruise of the 2026 window
+    # (12 h samples, Mercury, Venus, Jupiter and Saturn tabulated from the ephemeris).
+    from modules.apps.astro.space import TransLunarModel, InterplanetaryModel   # noqa: E402
+    from modules.apps.astro.space.transfers import lambert                      # noqa: E402
+    from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH, DAY, body_state   # noqa: E402
+    from astropy.time import Time, TimeDelta                                    # noqa: E402
+
+    rp = R_EARTH + 400 * KM
+    vt = np.sqrt(GM_EARTH * (2.0 / rp - 1.0 / (0.5 * (rp + D_MOON)))) + 0.034
+
+    def free_return():
+        model = TransLunarModel(moon_phase_deg=133.0, sun_phase_deg=60.0, dt_s=180.0, track_km=5.0, n_sub=4)
+        model.initial_state(np.array([[rp], [0], [0], [0], [vt], [0]]),
+                            P0=np.diag([(50 * KM) ** 2] * 3 + [0.01 ** 2] * 3))
+        return model
+    yield "TransLunarModel, free return", free_return, np.asarray(free_return().sample(steps * 0.18, seed=0).zk)
+
+    dep, tof = Time("2026-10-28"), 311.0
+    r1, _ = body_state("earth", dep)
+    r2, _ = body_state("mars", dep + TimeDelta(tof * 86400, format="sec"))
+    v1, _ = lambert(r1, r2, tof * DAY)
+
+    def cruise():
+        model = InterplanetaryModel("earth", "mars", epoch=dep, span_days=0.5 * steps + 20,
+                                    dt_s=43200.0, track_Mm=0.02)
+        model.initial_state(np.r_[r1, v1].reshape(-1, 1), P0=np.diag([1.0] * 3 + [1e-4] * 3))
+        return model
+    yield "InterplanetaryModel, Earth-Mars", cruise, np.asarray(cruise().sample(steps * 43.2, seed=0).zk)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])

@@ -58,6 +58,8 @@
 #include "Kalman/Apps/Astro/RocketDescent.h"
 #include "Kalman/Apps/Astro/RocketLanding.h"
 #include "Kalman/Apps/Astro/RocketLiftoff.h"
+#include "Kalman/Apps/Astro/Interplanetary.h"
+#include "Kalman/Apps/Astro/TransLunar.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
 #include "Kalman/Apps/GPS/Receiver.h"
 #include "Kalman/Apps/Tracking/DriftChamber.h"

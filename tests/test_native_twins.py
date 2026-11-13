@@ -23,6 +23,7 @@ from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_s
 from modules.apps.ballistics import BallisticModel
 from modules.apps.vehicles import CarSpeedModel
 from modules.framework.constants import KalmanIntegratorKind
+from modules.apps.astro.space import TransLunarModel, InterplanetaryModel
 
 HAVE_APPS = bool(apps_library_names())
 needs_apps = unittest.skipUnless(HAVE_APPS, "libKalmanApps is not built")
@@ -499,6 +500,106 @@ class TestTwinContract(unittest.TestCase):
         class Plain(NativeTwin):
             pass
         self.assertIsNone(Plain().native_name())
+
+
+# --- the space models (kalman.apps.astro.space) ----------------------------------
+def free_return(**kw):
+    """The notebook's Apollo-style free return: a 400 km parking orbit, then TLI."""
+    from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
+    r0 = R_EARTH + 400 * KM
+    v = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / (0.5 * (r0 + D_MOON)))) + 0.034
+    model = TransLunarModel(**{"moon_phase_deg": 133.0, "sun_phase_deg": 60.0, "dt_s": 180.0,
+                               "track_km": 5.0, "n_sub": 4, **kw})
+    model.initial_state(np.array([[r0], [0], [0], [0], [v], [0]]),
+                        P0=np.diag([(50 * KM) ** 2] * 3 + [0.01 ** 2] * 3))
+    return model
+
+
+def mars_cruise(**kw):
+    """The notebook's Earth-Mars cruise, seeded by a Lambert arc of the 2026 window."""
+    from astropy.time import Time, TimeDelta
+    from modules.apps.astro.space.transfers import lambert
+    from modules.runtime.astro import body_state, DAY
+    dep, tof = Time("2026-10-28"), 311.0
+    r1, _ = body_state("earth", dep)
+    r2, _ = body_state("mars", dep + TimeDelta(tof * 86400, format="sec"))
+    v1, _ = lambert(r1, r2, tof * DAY)
+    model = InterplanetaryModel(**{"departure": "earth", "target": "mars", "epoch": dep,
+                                   "span_days": tof + 20, "dt_s": 43200.0, "track_Mm": 0.02, **kw})
+    model.initial_state(np.r_[r1, v1].reshape(-1, 1), P0=np.diag([1.0] * 3 + [1e-4] * 3))
+    return model, tof * DAY
+
+
+@needs_apps
+class TestTransLunarTwin(unittest.TestCase):
+
+    def test_twin_matches_python_through_the_lunar_flyby(self):
+        from modules.runtime.astro import DAY
+        np.random.seed(8)
+        z = free_return().sample(4.5 * DAY, process_noise=False).zk      # out past the Moon
+        for kw in ({}, {"bodies": ("earth", "moon"), "n_sub": 1}):
+            py, cx = both(lambda: free_return(**kw), z)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
+
+    def test_ephemeris_phases_and_integrators_reach_the_twin(self):
+        from modules.runtime.astro import DAY
+        # (Dormand-Prince is left out of these runs for its time, not its result:
+        # the framework probes f at x = 0, where |r| = 0 makes it step to its limit.)
+        for kw in ({"use_ephemeris": True, "epoch": "2026-11-06"},
+                   {"integrator": KalmanIntegratorKind.EULER, "n_sub": 8}):
+            self.assertEqual(free_return(**kw).native_name(), "translunar", str(kw))
+            z = free_return(**kw).sample(1.0 * DAY, seed=2).zk
+            py, cx = both(lambda: free_return(**kw), z)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
+
+    def test_configurations_without_a_twin_keep_the_python_physics(self):
+        from modules.framework.integrators import RK4Integrator
+
+        class Mine(RK4Integrator):
+            def _step(self, f, x, u=None, t=None, dt=1.0):
+                return super()._step(f, x, u=u, t=t, dt=dt)
+        self.assertIsNone(free_return(integrator=Mine()).native_handle())
+
+        class Dragged(TransLunarModel):
+            def acceleration(self, r, t):
+                return super().acceleration(r, t) * 0.999
+        self.assertIsNone(Dragged().native_handle())
+        self.assertIsNotNone(free_return().native_handle())
+
+
+@needs_apps
+class TestInterplanetaryTwin(unittest.TestCase):
+
+    def test_twin_matches_python_on_the_mars_cruise(self):
+        for kw in ({}, {"perturbers": ("venus", "jupiter")}, {"epoch": None}, {"n_sub": 3}):
+            model, span = mars_cruise(**kw)
+            self.assertEqual(model.native_name(), "interplanetary", str(kw))
+            np.random.seed(8)
+            z = model.sample(span, process_noise=False).zk
+            py, cx = both(lambda: mars_cruise(**kw)[0], z)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
+
+    def test_the_table_is_held_at_its_ends(self):
+        # A cruise longer than the span the perturbers were tabulated over.
+        model, span = mars_cruise(span_days=100.0)
+        z = model.sample(span, seed=4).zk
+        py, cx = both(lambda: mars_cruise(span_days=100.0)[0], z)
+        close(self, py.xk, cx.xk, STATE_RTOL, "state past the table")
+
+    def test_configurations_without_a_twin_keep_the_python_physics(self):
+        self.assertIsNone(InterplanetaryModel("earth", "mars", control=True).native_handle())
+        model, _ = mars_cruise()
+        model._field.t_grid = model._field.t_grid * 1.0000001     # not numpy.arange's grid
+        self.assertIsNone(model.native_handle())
+
+        class Thrusting(InterplanetaryModel):
+            def acceleration(self, r, t):
+                return super().acceleration(r, t) + 1e-9
+        self.assertIsNone(Thrusting("earth", "mars").native_handle())
+        self.assertIsNotNone(InterplanetaryModel("earth", "mars").native_handle())
 
 
 if __name__ == "__main__":
