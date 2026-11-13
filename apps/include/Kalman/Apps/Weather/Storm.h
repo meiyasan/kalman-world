@@ -27,8 +27,20 @@
  * | `hemisphere` | +1 north, -1 south (direction of the beta drift) |
  * | `dt_hours`   | step length [h]                                  |
  *
- * Steering flows and intensity tendencies given as Python callables have no
- * C++ counterpart: with either set, the Python class keeps its own dynamics.
+ * The intensity persists, or follows a learned tendency: the ridge regression
+ * of `kalman.apps.weather.LearnedIntensityModel`, `dI/dt = c . [(f - mean) / scale, 1]`
+ * on the features `f = [sst_warmth, shear, I]` of the analytic environment
+ * (`analytic_environment`), taken at the centre before the step.
+ *
+ * | Array             | Meaning                                              |
+ * |-------------------|------------------------------------------------------|
+ * | `intensity_coef`  | the 4 coefficients (empty: persistence)              |
+ * | `intensity_mean`  | the 3 feature means of the standardisation            |
+ * | `intensity_scale` | the 3 feature standard deviations                     |
+ *
+ * A steering flow given as a Python callable, and any other intensity
+ * tendency, have no C++ counterpart: with either, the Python class keeps its
+ * own dynamics.
  *
  * *********************************************
  */
@@ -37,6 +49,8 @@
 #define KALMAN_APPS_WEATHER_STORM_H
 
 #include "Kalman/Apps/Model.h"
+
+#include <vector>
 
 namespace Kalman::Apps::Weather
 {
@@ -48,6 +62,7 @@ namespace Kalman::Apps::Weather
             double fDt = 6.;        // h
             double fBetaE = 0.;     // km/h
             double fBetaN = 0.;     // km/h
+            std::vector<double> fCoef, fMean, fScale;   // the learned intensity tendency, empty: none
 
         public:
             static constexpr double kKmPerDegLat = 110.574;
@@ -62,6 +77,10 @@ namespace Kalman::Apps::Weather
 
             Vector f(const Vector &x, const Vector &u, double t = 0.) const override;
             Vector h(const Vector &x, double t = 0.) const override;
+            void CheckShapes() const override;
+
+            /// The learned intensity tendency [kt/h] at a centre, or 0 without one.
+            double IntensityTendency(double lon, double lat, double intensity) const;
 
         protected:
             void ParametersChanged() override;

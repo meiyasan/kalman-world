@@ -18,7 +18,8 @@ from modules.framework.native import core
 import modules.framework.models.native as native
 from modules.framework.models.native import NativeTwin, apps_library_names, native_model_classes
 from modules.framework.filters import UnscentedKalmanFilter
-from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_steering,
+from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_steering, LearnedIntensityModel,
+                                         synthetic_steered_track,
                                          TornadoEnvironmentModel, synthetic_environment)
 from modules.apps.ballistics import BallisticModel
 from modules.apps.vehicles import CarSpeedModel
@@ -111,6 +112,36 @@ class TestStormTwin(unittest.TestCase):
         first = np.asarray(model.filter(fixes).xk).copy()
         second = np.asarray(model.filter(fixes).xk)
         np.testing.assert_array_equal(first, second)
+
+    def test_a_learned_intensity_tendency_runs_on_the_twin(self):
+        # notebook 14's regression, fitted on steered tracks, then used without steering
+        tracks = [synthetic_steered_track(n_steps=40, lon0=150 + 3 * k, lat0=8 + k, seed=k)[0] for k in range(6)]
+        learned = LearnedIntensityModel().fit(tracks)
+        _, fixes = synthetic_track(n_steps=200, seed=9)
+        fixes[60:70] = np.nan
+        make = lambda: StormModel("TC", intensity_fn=learned.as_intensity_fn())
+        self.assertEqual(make().native_name(), "storm")
+        py, cx = both(make, fixes)
+        close(self, py.xk, cx.xk, STATE_RTOL, "state with a learned intensity")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance with a learned intensity")
+        persistence = StormModel("TC").filter(fixes)
+        self.assertGreater(float(np.max(np.abs(np.asarray(persistence.xk)[:, 4] - np.asarray(cx.xk)[:, 4]))), 1.0)
+        model = make()                              # and the twin forgets it again
+        model.native_handle()
+        model.intensity_fn = None
+        close(self, np.asarray(model.filter(fixes).xk), np.asarray(persistence.xk), STATE_RTOL, "persistence again")
+
+    def test_another_intensity_environment_keeps_the_python_physics(self):
+        tracks = [synthetic_steered_track(n_steps=30, seed=k)[0] for k in range(3)]
+        learned = LearnedIntensityModel(env=lambda lon, lat, t=None: (1.0, 2.0)).fit(tracks)
+        self.assertIsNone(StormModel("TC", intensity_fn=learned.as_intensity_fn()).native_handle())
+
+        class Wider(LearnedIntensityModel):
+            @staticmethod
+            def _features(sst_warmth, shear, I):
+                return np.array([sst_warmth, shear, I ** 0.5])
+        wider = Wider().fit(tracks)
+        self.assertIsNone(StormModel("TC", intensity_fn=wider.as_intensity_fn()).native_handle())
 
     def test_python_callbacks_keep_the_python_physics(self):
         self.assertIsNone(StormModel("TC", steering=analytic_steering).native_handle())
