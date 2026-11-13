@@ -905,6 +905,50 @@ int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, 
     });
 }
 
+int kalman_engine_particle_set_draws(kalman_engine_t *engine, kalman_gaussian_fn gaussian,
+                                     kalman_uniform_fn uniform, void *user)
+{
+    return Guard([&] {
+        auto *P = dynamic_cast<Kalman::Engines::Particle *>(&Deref(engine));
+        if (!P) throw std::invalid_argument("the engine is not a particle engine");
+        Kalman::Engines::Particle::Draws draws;
+        if (gaussian)
+            draws.gaussian = [gaussian, user](const Kalman::Matrix &cov, std::size_t count,
+                                              std::vector<Kalman::Vector> &out) {
+                const std::size_t dim = cov.Rows();
+                std::vector<double> flat(count * dim);
+                if (gaussian(user, static_cast<int>(count), static_cast<int>(dim), cov.Data(), flat.data()) != 0)
+                    throw std::runtime_error("the noise source failed");
+                out.assign(count, Kalman::Vector(dim));
+                for (std::size_t s = 0; s < count; ++s)
+                    for (std::size_t i = 0; i < dim; ++i) out[s](i) = flat[s * dim + i];
+            };
+        if (uniform)
+            draws.uniform = [uniform, user]() {
+                double u = 0.;
+                if (uniform(user, &u) != 0) throw std::runtime_error("the uniform source failed");
+                return u;
+            };
+        P->SetDraws(std::move(draws));
+        return 0;
+    });
+}
+
+int kalman_engine_particle_set_cloud(kalman_engine_t *engine, int count, int n, const double *particles)
+{
+    return Guard([&] {
+        auto *P = dynamic_cast<Kalman::Engines::Particle *>(&Deref(engine));
+        if (!P) throw std::invalid_argument("the engine is not a particle engine");
+        if (count < 0 || n < 0 || (count > 0 && !particles)) throw std::invalid_argument("bad arguments");
+        const std::size_t rows = static_cast<std::size_t>(count), cols = static_cast<std::size_t>(n);
+        std::vector<Kalman::Vector> cloud(rows, Kalman::Vector(cols));
+        for (std::size_t s = 0; s < rows; ++s)
+            for (std::size_t i = 0; i < cols; ++i) cloud[s](i) = particles[s * cols + i];
+        P->SetCloud(std::move(cloud));
+        return 0;
+    });
+}
+
 int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals)
 {
     return Guard([&] {

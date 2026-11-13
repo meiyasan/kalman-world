@@ -341,6 +341,17 @@ int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, 
  * Standard normal draws in place of the engine's own stream, read as numpy's
  * `rng.standard_normal((rows, N))` blocks (see Engines::Ensemble::SetNormals).
  */
+/// Draws of N(0, cov): fill `out` with `count` rows of `dim` values. 0, or nonzero to stop.
+typedef int (*kalman_gaussian_fn)(void *user, int count, int dim, const double *cov, double *out);
+/// One draw of U(0, 1) into `out`. 0, or nonzero to stop.
+typedef int (*kalman_uniform_fn)(void *user, double *out);
+/// Have a particle engine take its random numbers from these functions instead of its own
+/// generator (both NULL: back to its own). 0 or -1.
+int kalman_engine_particle_set_draws(kalman_engine_t *engine, kalman_gaussian_fn gaussian,
+                                     kalman_uniform_fn uniform, void *user);
+/// Start the particle engine's runs from this cloud (count x n, row-major) instead of drawing
+/// one; count = 0 goes back to drawing. 0 or -1.
+int kalman_engine_particle_set_cloud(kalman_engine_t *engine, int count, int n, const double *particles);
 int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals);
 /// The draws handed in and not used yet, or -1.
 long long kalman_engine_ensemble_normals_left(const kalman_engine_t *engine);

@@ -258,10 +258,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return None
         if type(engine) is UnscentedKalmanEngine:
             return {"kind": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
-        # The C++ engine has its own random stream; seed it from numpy's, so
-        # np.random.seed() still makes a run repeatable.
-        return {"kind": "particle", "n_particles": engine.n_particles, "threshold": engine.resample_threshold,
-                "seed": int(np.random.randint(0, 2**31 - 1))}
+        return {"kind": "particle", "n_particles": engine.n_particles, "threshold": engine.resample_threshold}
 
     def _make_twin_engine(self, handle):
         """The C++ engine for a pass on the twin ``handle``. For the engines that
@@ -276,7 +273,19 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         core.check(core.lib.kalman_model_set_noise_inputs(
             handle, int(bool(engine._noise_through_f(model))), int(bool(engine._noise_through_h(model)))),
             "set_noise_inputs")
-        return core.create_engine(**self._twin_sigma_engine())
+        return self._sigma_engine_handle()
+
+    def _sigma_engine_handle(self):
+        """The C++ engine of a sigma-point or particle filter. The particle one starts
+        from the cloud the Python engine drew at reset and draws from numpy as it
+        would, so a seeded run gives the Python run's numbers."""
+        from .native import core
+        settings = self._twin_sigma_engine()
+        if settings["kind"] != "particle":
+            return core.create_engine(**settings)
+        handle, self._particle_draws = core.particle_engine_on_numpy(
+            settings["n_particles"], settings["threshold"], self.engine._particles)
+        return handle
 
     # ------------------------------------------------------------------
     # A model written in Python that is its matrices, constant or functions
@@ -397,10 +406,8 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if type(engine) is UnscentedKalmanEngine:
             kind = {"engine": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
         elif type(engine) is ParticleEngine:
-            # The C++ engine has its own random stream; seed it from numpy's, so
-            # np.random.seed() still makes a run repeatable.
-            kind = {"engine": "particle", "n_particles": engine.n_particles,
-                    "threshold": engine.resample_threshold, "seed": int(np.random.randint(0, 2**31 - 1))}
+            # The cloud the Python engine drew at reset, and numpy's draws after it.
+            kind = {"engine": self._sigma_engine_handle()}
         elif type(engine).__name__ == "EnsembleKalmanEngine":
             twin = engine._native_twin(model)
             if twin is not None:                    # a field model: its hooks run in C++ too

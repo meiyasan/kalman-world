@@ -325,3 +325,34 @@ class TestNoModelFallsBackToThePythonLoop(unittest.TestCase):
                     python_loop.append(name)
         self.assertEqual(python_loop, [])
         self.assertGreaterEqual(len(checked), 14, checked)
+
+
+@unittest.skipUnless("car-speed" in native.apps_library_names(), "libKalmanApps is not built")
+class TestParticleFilterOnNumpysDraws(unittest.TestCase):
+    """The C++ particle engine starts from the cloud the Python engine drew and takes
+    every later draw from numpy, in the Python engine's order: a seeded run is the
+    Python run, and numpy's generator ends in the same state."""
+
+    def run_pf(self, make, z, reference):
+        from modules.framework.filters import ParticleFilter
+        np.random.seed(7)
+        if reference:
+            with native.python_reference():
+                record = ParticleFilter(make(), n_particles=300).forward(z)
+        else:
+            with path_taken() as path:
+                record = ParticleFilter(make(), n_particles=300).forward(z)
+            self.assertIn(path.last, ("_forward_twin", "_forward_callback"))
+        return np.asarray(record.xk, float), np.random.uniform()
+
+    def test_twin_and_python_model(self):
+        from modules.apps.vehicles import CarSpeedModel
+        cases = [(lambda: CarSpeedModel("s"), np.asarray(CarSpeedModel("s").sample(5.0, seed=1).zk)),
+                 (lambda: KalmanModel("s", F=F0, Q=Q0, R=np.array([[0.04]]), **KW), Z[:60])]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for make, z in cases:
+                ref, after_ref = self.run_pf(make, z, True)
+                got, after = self.run_pf(make, z, False)
+                self.assertLess(np.nanmax(np.abs(got - ref)) / np.nanmax(np.abs(ref)), 1e-12)
+                self.assertEqual(after, after_ref, "numpy's generator is left where the Python run leaves it")

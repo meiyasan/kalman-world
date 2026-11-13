@@ -170,6 +170,11 @@ int kalman_engine_update(const kalman_engine_t *engine, const kalman_model_t *mo
                          double *x_out, double *P_out);
 int kalman_engine_ensemble_set_members(kalman_engine_t *engine, int n, int N, const double *X);
 int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, double *X);
+typedef int (*kalman_gaussian_fn)(void *user, int count, int dim, const double *cov, double *out);
+typedef int (*kalman_uniform_fn)(void *user, double *out);
+int kalman_engine_particle_set_draws(kalman_engine_t *engine, kalman_gaussian_fn gaussian,
+                                     kalman_uniform_fn uniform, void *user);
+int kalman_engine_particle_set_cloud(kalman_engine_t *engine, int count, int n, const double *particles);
 int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals);
 long long kalman_engine_ensemble_normals_left(const kalman_engine_t *engine);
 int kalman_engine_ensemble_set_localization(kalman_engine_t *engine, int n, int m,
@@ -503,6 +508,46 @@ def load_plugin(path: str) -> list[str]:
 # Kalman::EngineKind by name, the contract shared with Constants.h and models/native.py.
 ENGINE_KINDS = {"linear": 0, "extended": 1, "unscented": 2, "particle": 3,
                 "ensemble": 4, "combinatorial": 5}
+
+
+def particle_engine_on_numpy(n_particles, threshold, cloud):
+    """A C++ particle engine that starts from ``cloud`` (n_particles x n, the one
+    the Python engine drew when the filter was reset) and takes every later random
+    number from numpy's global generator, in the order the Python engine asks for
+    them: the process noise of all particles at each prediction, a uniform at each
+    resampling. The C++ pass is then the Python run, draw for draw.
+
+    Returns ``(engine, keep)``; ``keep`` holds the callbacks (keep it referenced
+    for as long as the engine runs) and, in ``keep[-1]``, an exception a callback
+    raised."""
+    L = require()
+    raised = []
+
+    @ffi.callback("int(void *, int, int, const double *, double *)")
+    def gaussian(_user, count, dim, cov, out):
+        try:
+            C = np.frombuffer(ffi.buffer(cov, dim * dim * 8), dtype=np.float64).reshape(dim, dim).copy()
+            draws = np.ascontiguousarray(np.random.multivariate_normal(np.zeros(dim), C, size=count), dtype=np.float64)
+            ffi.buffer(out, count * dim * 8)[:] = draws.tobytes()
+            return 0
+        except BaseException as e:               # must not cross the C boundary
+            raised.append(e)
+            return -1
+
+    @ffi.callback("int(void *, double *)")
+    def uniform(_user, out):
+        try:
+            out[0] = float(np.random.uniform())
+            return 0
+        except BaseException as e:
+            raised.append(e)
+            return -1
+
+    engine = create_engine("particle", n_particles=int(n_particles), threshold=float(threshold), seed=0)
+    cloud = np.ascontiguousarray(np.asarray(cloud, dtype=np.float64))
+    check(L.kalman_engine_particle_set_cloud(engine, cloud.shape[0], cloud.shape[1], cdptr(cloud)), "set_cloud")
+    check(L.kalman_engine_particle_set_draws(engine, gaussian, uniform, ffi.NULL), "set_draws")
+    return engine, (gaussian, uniform, raised)
 
 
 def create_engine(kind="extended", **params):

@@ -38,6 +38,7 @@
 #include "Kalman/Engine.h"
 
 #include <cstdint>
+#include <functional>
 #include <random>
 #include <vector>
 
@@ -52,6 +53,7 @@ namespace Kalman::Engines
             mutable std::vector<Vector> fParticles;   // (N) samples of the state
             mutable std::vector<double> fWeights;     // (N) normalised weights
             mutable std::size_t fResamples = 0;       // how often the cloud was resampled
+            std::vector<Vector> fGiven;               // a cloud to start from instead of drawing one
 
         public:
             /**
@@ -71,7 +73,24 @@ namespace Kalman::Engines
             std::size_t NParticles() const { return fNParticles; }
             double Threshold() const { return fThreshold; }
 
-            /// (Re)seed the cloud from the model's x0 / P0.
+            /**
+             * \brief Where the random numbers come from, when not from the engine's own
+             * generator: \p gaussian fills \p count draws of N(0, cov), \p uniform
+             * returns one draw of U(0, 1). The engine asks in a fixed order: the
+             * process noise of every particle at each prediction, then a uniform
+             * when it resamples. Handing it another program's generator (numpy's)
+             * makes the two runs the same run.
+             */
+            struct Draws
+            {
+                std::function<void(const Matrix &cov, std::size_t count, std::vector<Vector> &out)> gaussian;
+                std::function<double()> uniform;
+            };
+            void SetDraws(Draws draws) { fDraws = std::move(draws); }
+            /// Start every run from this cloud instead of drawing one from x0 and P0 (empty: draw).
+            void SetCloud(std::vector<Vector> cloud);
+
+            /// (Re)seed the cloud from the model's x0 / P0, or take the cloud given by SetCloud().
             void Reset(const Model &model) override;
             bool HasSmoother() const override { return false; }
 
@@ -110,6 +129,7 @@ namespace Kalman::Engines
         private:
             void Resample() const;
             Vector Draw(const Matrix &factor) const;
+            Draws fDraws;
     };
 }
 

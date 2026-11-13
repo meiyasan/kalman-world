@@ -33,8 +33,25 @@ namespace Kalman::Engines
         return factor * w;
     }
 
+    void Particle::SetCloud(std::vector<Vector> cloud)
+    {
+        if (!cloud.empty() && cloud.size() != fNParticles)
+            throw std::invalid_argument("Engines::Particle: the cloud must hold one state per particle.");
+        fGiven = std::move(cloud);
+    }
+
     void Particle::Reset(const Model &model)
     {
+        if (!fGiven.empty())
+        {
+            for (const Vector &p : fGiven)
+                if (p.Size() != model.NState())
+                    throw std::invalid_argument("Engines::Particle: the given cloud has states of the wrong size.");
+            fParticles = fGiven;
+            fWeights.assign(fNParticles, 1. / static_cast<double>(fNParticles));
+            fResamples = 0;
+            return;
+        }
         const Matrix factor = Utils::CholeskyFactor(model.P0(), true);
         if (factor.Empty())
             throw std::runtime_error("Engines::Particle: P0 has no Cholesky factor; cannot seed the cloud.");
@@ -78,7 +95,8 @@ namespace Kalman::Engines
         const std::size_t N = fParticles.size();
         std::uniform_real_distribution<double> uniform(0., 1.);
         std::vector<int> indices(N);
-        Utils::SystematicResample(N, fWeights.data(), uniform(fRandom), indices.data());
+        const double u = fDraws.uniform ? fDraws.uniform() : uniform(fRandom);
+        Utils::SystematicResample(N, fWeights.data(), u, indices.data());
 
         std::vector<Vector> next;
         next.reserve(N);
@@ -118,18 +136,40 @@ namespace Kalman::Engines
         const Matrix L = model.L(t);
         if (!through && !L.Empty()) Q = Utils::Similarity(L, Q);
 
-        bool noisy = false;
-        for (std::size_t i = 0; i < Q.Rows() * Q.Cols() && !noisy; ++i) noisy = Q.Data()[i] != 0.;
-        const Matrix factor = noisy ? Utils::CholeskyFactor(Q, true) : Matrix();
-
-        for (Vector &p : fParticles)
+        if (fDraws.gaussian)
         {
-            if (through)
-                p = model.f(p, uu, factor.Empty() ? Vector(Q.Rows(), 0.) : Draw(factor), t);
-            else
+            // The draws come from outside, all at once, in the order of the particles.
+            std::vector<Vector> noise;
+            fDraws.gaussian(Q, fParticles.size(), noise);
+            if (noise.size() != fParticles.size())
+                throw std::runtime_error("Engines::Particle: the noise source returned the wrong number of draws.");
+            for (std::size_t s = 0; s < fParticles.size(); ++s)
             {
-                p = model.f(p, uu, t);
-                if (!factor.Empty()) p += Draw(factor);
+                if (noise[s].Size() != Q.Rows())
+                    throw std::runtime_error("Engines::Particle: a noise draw has the wrong size.");
+                if (through) fParticles[s] = model.f(fParticles[s], uu, noise[s], t);
+                else
+                {
+                    fParticles[s] = model.f(fParticles[s], uu, t);
+                    fParticles[s] += noise[s];
+                }
+            }
+        }
+        else
+        {
+            bool noisy = false;
+            for (std::size_t i = 0; i < Q.Rows() * Q.Cols() && !noisy; ++i) noisy = Q.Data()[i] != 0.;
+            const Matrix factor = noisy ? Utils::CholeskyFactor(Q, true) : Matrix();
+
+            for (Vector &p : fParticles)
+            {
+                if (through)
+                    p = model.f(p, uu, factor.Empty() ? Vector(Q.Rows(), 0.) : Draw(factor), t);
+                else
+                {
+                    p = model.f(p, uu, t);
+                    if (!factor.Empty()) p += Draw(factor);
+                }
             }
         }
 

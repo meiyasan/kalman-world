@@ -689,7 +689,10 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
     lib = core.require()
     # A controller may retune the model while it runs (adaptive Q and R), so in
     # closed loop the noise is asked for at every step, never handed over once.
-    handle, keep = callback_handle(model, engine, live_noise=control is not None)
+    # The engine by name, or a C++ engine already made (the particle engine on numpy's draws).
+    kind = engine if isinstance(engine, str) else {v: k for k, v in core.ENGINE_KINDS.items()}.get(
+        int(core.lib.kalman_engine_kind(engine)), "extended")
+    handle, keep = callback_handle(model, kind, live_noise=control is not None)
     n = int(model.n)
     x0 = np.ascontiguousarray(np.asarray(model.x0 if x0 is None else x0, dtype=np.float64).reshape(-1))
     P0 = np.ascontiguousarray(np.asarray(model.P0 if P0 is None else P0, dtype=np.float64).reshape(n, n))
@@ -697,7 +700,8 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
     core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
     core.check(lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0), "set_t0")
     try:
-        return core.run_filter(handle, core.create_engine(engine, **engine_params), n, int(model.m),
+        made = engine if not isinstance(engine, (str, int)) else core.create_engine(engine, **engine_params)
+        return core.run_filter(handle, made, n, int(model.m),
                                int(model.l), zk, uk, smooth=smooth, control=control)
     except RuntimeError:
         if keep[-1]:
