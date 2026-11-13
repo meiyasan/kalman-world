@@ -6,7 +6,8 @@ by the same `authorize()` the MCP server uses.
 
 ```bash
 $ pip install "kalman[rest]"
-$ make rest                       # python -m kalman.rest
+$ make serve                      # in the background (make serve-status, serve-logs, serve-stop)
+$ make rest                       # or in the foreground
 ```
 
 The same routes, for the models that live in C++, are also served by a C++
@@ -28,7 +29,8 @@ override this, but only on a network you trust. See
 
 ```bash
 $ KALMAN_REST_PORT=9000 python -m kalman.rest
-$ make serve                      # docker compose: REST on 8000, MCP on 8765
+$ make serve PORT=9000            # the background service on another port
+$ make serve BACKEND=docker       # docker compose: REST on 8000, MCP on 8765
 ```
 
 `docker-compose.yml` publishes `8000:8000` and `8765:8765`. Full deployment

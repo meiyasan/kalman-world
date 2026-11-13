@@ -52,9 +52,9 @@ gitignored. That is where the secret belongs.
 ## Docker Compose
 
 ```bash
-$ make image                # build
-$ make serve                # docker compose up -d rest mcp
-$ make stop                 # down
+$ make image                    # build
+$ make serve BACKEND=docker    # docker compose up -d rest mcp
+$ make stop                    # down
 ```
 
 Three services are defined:
@@ -74,14 +74,14 @@ Three services are defined:
 ```bash
 $ export KALMAN_JWT_SECRET="$(openssl rand -hex 32)"
 $ export KALMAN_HTPASSWD="$HOME/.kalman/htpasswd"
-$ make serve
+$ make serve BACKEND=docker
 $ curl -s localhost:8000/healthz
 {"ok":true,"auth":true}
 ```
 
 Without `KALMAN_JWT_SECRET`, both services do not start, because they listen on
 `0.0.0.0` in the container. On a closed development network, set
-`KALMAN_ALLOW_ANONYMOUS=1` before `make serve`.
+`KALMAN_ALLOW_ANONYMOUS=1` before `make serve BACKEND=docker`.
 
 Both service containers mount the source read-only (`./:/mnt/local:ro`), so a
 running service cannot modify the repository — including via `write_scaffold`.
@@ -89,6 +89,35 @@ running service cannot modify the repository — including via `write_scaffold`.
 ---
 
 ## Running without Docker
+
+### As a background service: `make serve`
+
+```bash
+$ make serve                 # the REST API in the background, 127.0.0.1:8000
+REST API   http://127.0.0.1:8000   started (pid 42417, python, log var/log/rest.log)
+$ make serve-status          # running? answering /healthz?
+$ make serve-logs            # follow var/log/rest.log
+$ make serve-restart
+$ make serve-stop
+```
+
+| Given to `make serve` | Default | |
+|---|---|---|
+| `BACKEND` | `python` | `python`: `kalman.rest`, every model and every verb. `cxx`: `kalman-serve`, the C++ server ([Net](18_Net.md)). `docker`: the `rest` and `mcp` services above |
+| `HOST`, `PORT` | `127.0.0.1`, `8000` | where the REST API listens; another interface needs `KALMAN_JWT_SECRET` |
+| `MCP=1` | off | also start the MCP server over HTTP (`sse`, on `MCP_PORT`, 8765) as a client of that REST API. Without it, MCP clients start their own over stdio (`make mcp`) |
+| `PYTHON` | found | the interpreter: `.venv`, then a conda env named after this directory or `ENVNAME` |
+
+`make serve` waits until `/healthz` answers and says so; if the server does
+not come up it prints the end of its log and fails. It refuses a port that
+something else holds, naming the process, and a second `make serve` says the
+service already runs and where. The process ids are in `var/run`, the output
+in `var/log` (`tools/serve.sh` is the script behind the targets).
+
+The service is a plain background process: it outlives the terminal and the
+`make` call, not a reboot. `make rest` runs the same server in the foreground.
+
+### By hand
 
 ```bash
 $ python -m kalman.rest                                         # 127.0.0.1:8000

@@ -258,13 +258,35 @@ install: motd
 	@if [ ! -d "$(BUILD_DIR)" ]; then BUILDTYPE=Release MOTD=0 $(MAKE) -s configure; fi
 	@$(MAKE) -sC $(BUILD_DIR) install
 
-## Serve the REST API + MCP server via docker-compose
-serve: motd
-	@docker compose up -d rest mcp
+# The servers as a background service (tools/serve.sh). What is passed on:
+#   BACKEND=python (default: kalman.rest, every model) | cxx (kalman-serve) | docker (docker-compose.yml)
+#   HOST=127.0.0.1 PORT=8000, MCP=1 to start the MCP server over HTTP beside it (MCP_PORT=8765)
+SERVE = BACKEND="$(or $(BACKEND),python)" HOST="$(HOST)" PORT="$(PORT)" MCP="$(MCP)" MCP_PORT="$(MCP_PORT)" \
+        PYTHON="$(if $(filter command line environment,$(origin PYTHON)),$(PYTHON))" ENVNAME="$(ENVNAME)" tools/serve.sh
 
-## Run the REST API locally (uvicorn, default 0.0.0.0:8000)
+## Start the REST API in the background: make serve [PORT=8001] [MCP=1] [BACKEND=cxx|docker]
+serve: motd
+	@$(SERVE) start
+
+## Stop the background servers started by make serve
+serve-stop:
+	@$(SERVE) stop
+
+## Restart the background servers
+serve-restart:
+	@$(SERVE) restart
+
+## Say whether the background servers run and answer
+serve-status:
+	@$(SERVE) status || true
+
+## Follow the output of the background servers (var/log)
+serve-logs:
+	@$(SERVE) logs
+
+## Run the REST API in the foreground (127.0.0.1:8000; HOST= PORT= BACKEND=cxx)
 rest:
-	@$(PYTHON) -m kalman.rest
+	@$(SERVE) run
 
 ## Run the MCP server locally (stdio)
 mcp-serve:
