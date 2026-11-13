@@ -89,6 +89,14 @@ suits fields that are not periodic.
   replaces the solver with a trained network inside the same filter. On its own
   the network drifts; restarting it from the solver every few cycles keeps it
   accurate. Notebook 13 measures both.
+- **C++.** With the ensemble engine the whole pass runs in `libKalmanApps`
+  (`Kalman::Apps::Weather::KolmogorovFlow`, `kolmogorov-flow`, and
+  `BarotropicFlow`, `barotropic-flow`): the forecast of every member, in
+  parallel, the observation, the tapers, the analysis and the loop over the
+  cycles, for `model.filter` and for `TwinExperiment` alike. The draws are
+  still numpy's, so a seeded run gives the numbers it gave before. A surrogate,
+  a solver on libTorch (`backend="torch"`), a `Q` with off-diagonal terms or a
+  changed hook keeps the Python pass.
 
 ## Using it
 
