@@ -784,11 +784,24 @@ the Python loop runs as before.
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
+| `CarLaneModel` | `Apps::Vehicles::CarLane` | `car-lane` | a steering computed by a controller function (closed loop), an integrator the C++ side lacks, a subclass's own `clip_u` |
+| `RocketLiftoffModel` | `Apps::Astro::RocketLiftoff` | `rocket-liftoff` | an integrator the C++ side lacks |
+| `RocketAscentModel` | `Apps::Astro::RocketAscent` | `rocket-ascent` | a thrust computed by a controller function, an integrator the C++ side lacks |
+| `RocketDescentModel` | `Apps::Astro::RocketDescent` | `rocket-descent`, `rocket-descent-control` (`control=True`) | a command computed by a controller function, an integrator the C++ side lacks |
+| `RocketLandingModel` | `Apps::Astro::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
 
-The ballistic and car twins are continuous models: each overrides
+The ballistic, car and rocket twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
 framework's integration of that derivative followed by the model's own closing
-step (the acceleration slot, the speed kept non-negative).
+step (the acceleration slot, the speed kept non-negative, the mass kept at the
+dry mass, a landed stage held on the pad). Their `integrator` and `substeps`
+parameters carry the Python model's integrator (Euler, RK4, Dormand-Prince
+with the default tolerances: `native.native_integrator_kind`) and sub-steps.
+
+A twin may take a control input (`CarLaneModel`, `RocketAscentModel`,
+`RocketDescentModel(control=True)`): `model.filter(z, uk)` hands the twin the
+command sequence with the measurements. A controller *function* (closed loop)
+is Python, so it keeps the Python model in the C++ loop instead.
 
 Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
 silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two
@@ -804,6 +817,12 @@ runs, relative to the largest entry:
 | `BallisticModel`, orbital gravity | 1069.5 ms | 25.3 ms | 42.3x | 2.2e-10 | 2.8e-05 |
 | `TornadoEnvironmentModel` | 89.8 ms | 10.6 ms | 8.5x | 8.7e-11 | 2.5e-11 |
 | `CarSpeedModel` | 220.7 ms | 11.8 ms | 18.8x | 7.8e-12 | 3.2e-08 |
+| `CarLaneModel`, steering program | 143.7 ms | 10.2 ms | 14.1x | 4.3e-10 | 5.0e-10 |
+| `RocketLiftoffModel` | 212.2 ms | 16.3 ms | 13.0x | 9.1e-13 | 1.4e-09 |
+| `RocketAscentModel`, thrust program | 311.5 ms | 19.4 ms | 16.0x | 1.1e-10 | 2.6e-12 |
+| `RocketDescentModel`, guidance | 718.3 ms | 29.8 ms | 24.1x | 1.8e-09 | 2.7e-09 |
+| `RocketDescentModel`, throttle/gimbal program | 672.4 ms | 30.9 ms | 21.8x | 2.1e-11 | 2.6e-07 |
+| `RocketLandingModel` | 293.0 ms | 16.3 ms | 17.9x | 3.1e-11 | 4.8e-09 |
 
 The two runs are not bit-identical, and cannot be. One call of `f` agrees to the
 last digit or two, because numpy and the C math library round a cosine
@@ -826,7 +845,10 @@ on *both* sides. An analytic Jacobian would remove it from both.
   scheme, so the two sides linearise alike.
 - A subclass or an instance that redefines `f`, `h`, `F`, `H`, `B`, `L`, `Q` or
   `R` is a different model from the one that was ported, and keeps the Python
-  loop. So does any engine other than the plain extended one.
+  loop. For a continuous model `derivative`, `after_step` and `substeps` count
+  too (the class's `f` is kept as `derivative`), and a model adds the helpers
+  its dynamics call (`guidance`, `clip_u` ...) to its `_TWIN_CONTRACT`. So
+  does any engine other than the plain extended one.
 
 `kalman.framework.models.native.USE_NATIVE_TWINS = False`, or
 `KALMAN_NATIVE_TWINS=0` in the environment, switches every twin off. That is how

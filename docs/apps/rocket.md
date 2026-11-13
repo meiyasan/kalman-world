@@ -37,6 +37,13 @@ mass.
 - **Process noise.** Each model passes `L = I`, so the noise acts on every
   state. Without it the framework finds that the step does not respond to
   noise and applies none.
+- **C++.** All four have a twin in `libKalmanApps` (`rocket-liftoff`,
+  `rocket-ascent`, `rocket-descent` and `rocket-descent-control`,
+  `rocket-landing`): the derivative, the guidance and the closing step (mass
+  kept at the dry mass, a landed stage held on the pad) in C++, so
+  `model.filter(z)` and, with a thrust or throttle/gimbal program,
+  `model.filter(z, uk)` run wholly in `Kalman::Filter`. A custom integrator,
+  or a subclass that changes the dynamics, keeps the Python physics.
 
 ## Using it
 
