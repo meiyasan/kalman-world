@@ -24,6 +24,7 @@
  * | Kalman::Apps::Astro::RocketAscent | `rocket-ascent` | `RocketAscentModel` |
  * | Kalman::Apps::Astro::RocketDescent | `rocket-descent`, `rocket-descent-control` | `RocketDescentModel` |
  * | Kalman::Apps::Astro::RocketLanding | `rocket-landing` | `RocketLandingModel` |
+ * | Kalman::Apps::Gravitational::Polarization | `polarization` | `PolarizationModel` |
  *
  * From C++, include the header and use the class, or ask the factory by name:
  *
@@ -62,6 +63,7 @@
 #include "Kalman/Apps/Astro/TransLunar.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
 #include "Kalman/Apps/GPS/Receiver.h"
+#include "Kalman/Apps/Gravitational/Polarization.h"
 #include "Kalman/Apps/Tracking/DriftChamber.h"
 #include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"

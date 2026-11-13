@@ -2,6 +2,7 @@ import numpy as np
 
 from ....framework.constants import KalmanObservable, KalmanState
 from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.models.native import NativeTwin
 
 # ===== State / Observable enums =====
 
@@ -34,7 +35,7 @@ def jones_signal(a, psi, theta, phi):
 
 # ===== Model =====
 
-class PolarizationModel(ExtendedKalmanModel):
+class PolarizationModel(NativeTwin, ExtendedKalmanModel):
     """
     EKF for online estimation of gravitational-wave polarization parameters.
 
@@ -116,6 +117,9 @@ class PolarizationModel(ExtendedKalmanModel):
         self.n = 8
         self.m = 4
         self.l = 0
+        self.delta, self.sigma_n = float(delta), float(sigma_n)
+        self.sigma_a, self.sigma_psi = float(sigma_a), float(sigma_psi)
+        self.sigma_theta, self.sigma_phi = float(sigma_theta), float(sigma_phi)
 
         dt = 1.0 / fs
         self._dt = dt
@@ -139,6 +143,24 @@ class PolarizationModel(ExtendedKalmanModel):
         R = (sigma_n ** 2) * np.eye(4)
 
         super().__init__(sensor_id, Q=Q, R=R, fs=fs, **kwargs)
+
+    # ------------------------------------------------------------------
+    # The C++ twin (libKalmanApps: Kalman::Apps::Gravitational::Polarization):
+    # the filtering pass runs there. Q and R are pushed from this instance;
+    # the sample rate sets dt on both sides. preprocess() (complex signal to
+    # four real columns) stays here: it prepares the data.
+    # ------------------------------------------------------------------
+    def native_name(self):
+        # The twin steps with dt = 1/fs; a transition built for another rate
+        # (fs changed after construction, or _transition edited) is not it.
+        J = np.array([[1.0, 1.0 / self.fs], [0.0, 1.0]]) if self.fs else None
+        if J is None or not np.array_equal(self._transition, np.kron(np.eye(4), J)):
+            return None
+        return "polarization"
+
+    def native_parameters(self):
+        return {"delta": self.delta, "sigma_a": self.sigma_a, "sigma_psi": self.sigma_psi,
+                "sigma_theta": self.sigma_theta, "sigma_phi": self.sigma_phi, "sigma_n": self.sigma_n}
 
     # ── CRITICAL: prevent base class from zeroing Q via L=0 ──────
     def L(self, x=None, u=None, w=None, t=None):

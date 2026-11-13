@@ -8,8 +8,8 @@ amplitude, the phase and the polarization as the wave sweeps up in frequency.
 ## The model
 
 ```
-state        x = [log amplitude and its rate, the phase, the two polarization angles]
-                 (8 numbers: each angle is kept as a pair, cosine-like and sine-like)
+state        x = [log amplitude, the phase, the two polarization angles]
+                 (8 numbers: each one with its rate of change)
 measurement  z = the two channels, real and imaginary parts          (4 numbers)
 ```
 
@@ -23,6 +23,11 @@ and a filter free to choose between the two loses the phase.
 - **A nonlinear measurement.** The channels depend on the state through sines
   and cosines, so this is an extended Kalman filter. The model gives the
   derivative of the measurement in closed form.
+- **It runs in C++.** `filter()` hands the whole pass to the C++ twin
+  `Kalman::Apps::Gravitational::Polarization` (registered `polarization`; see
+  `kalman model polarization` for its components and units). The noise matrices
+  and the sample rate are pushed from the Python model; turning a complex
+  signal into four real columns (`preprocess`) stays in Python.
 - **The signals are in toy units**: an amplitude near 1 and a few hertz. A real
   wave has a strain near 1e-21 between ten hertz and a kilohertz.
 
