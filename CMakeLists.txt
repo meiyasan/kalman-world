@@ -6,7 +6,7 @@ set(PROJECT_TITLE "Kalman World")
 project(kalman
     VERSION 1.0.2
     DESCRIPTION "State estimation, dynamical systems and predictive learning 🛰️📈"
-    HOMEPAGE_URL "https://max-planck.sv.yc.tcu.ac.jp/kagra/sus/kalman-framework"
+    HOMEPAGE_URL "https://github.com/meiyasan/kalman-world"
 )
 
 set(LIBRARY ${PROJECT_NAME})
