@@ -25,6 +25,7 @@ import time
 import numpy as np
 
 from ...framework.model import KalmanModel
+from ...framework.models.native import NativeTwin
 from ...framework.constants import KalmanEngineKind, KalmanObservable
 from ...framework.engines.ensemble import EnsembleKalmanEngine, gaspari_cohn
 from ...framework.solvers.spectral import SpectralSolver
@@ -79,7 +80,7 @@ class FlowObservable(KalmanObservable):
 # ======================================================================
 # The Kalman model — full vorticity field, sparse point observations
 # ======================================================================
-class KolmogorovFlowModel(KalmanModel):
+class KolmogorovFlowModel(NativeTwin, KalmanModel):
     """
     Kolmogorov-flow vorticity field as a Kalman state (n = grid², chaotic).
 
@@ -163,6 +164,93 @@ class KolmogorovFlowModel(KalmanModel):
         kwargs.setdefault("x0", np.zeros((d, 1)))
         kwargs.setdefault("P0", np.eye(d))
         super().__init__(sensor_id, **kwargs)
+
+    # ------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Weather::KolmogorovFlow). With
+    # the ensemble engine the whole pass runs there: the forecast of every
+    # member, the observation, the tapers, the analysis and the cycles. A
+    # surrogate forecast is a Python callable and keeps the Python pass, as
+    # does a solver on libTorch (backend="torch"), which libKalmanApps does
+    # not link, and a solver other than the one this class builds.
+    # ------------------------------------------------------------------
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("forecast", "observe", "localization", "torus_distance",
+                                                  "vorticity_gradient")
+    _NATIVE_NAME = "kolmogorov-flow"
+    _NATIVE_SOLVER = NS2D
+
+    def native_name(self):
+        s = self.solver
+        if self.surrogate is not None or type(s) is not self._NATIVE_SOLVER or s.backend == "torch":
+            return None
+        if s.shape != (self.grid, self.grid) or s._native_scheme() is None:
+            return None
+        return self._NATIVE_NAME
+
+    def native_parameters(self):
+        from ...framework.models.native import NATIVE_INTEGRATORS
+        s = self.solver
+        terms = s._vorticity_terms()
+        return {"grid": self.grid, "cycle": self.cycle, "dt": s.dt, "nu": terms["nu"],
+                "beta": terms.get("beta", 0.0), "length_y": s.Ly, "length_x": s.Lx,
+                "integrator": NATIVE_INTEGRATORS[s._native_scheme()], "loc_radius": self.loc_radius,
+                "gradient": 1.0 if self.obs_type == "gradient" else 0.0}
+
+    def native_arrays(self):
+        forcing = self.solver._vorticity_terms().get("forcing_hat")
+        forcing = np.zeros(0, dtype=complex) if forcing is None else np.asarray(forcing, dtype=complex).ravel()
+        return {"probes": self.obs_idx.astype(float), "forcing_re": forcing.real, "forcing_im": forcing.imag,
+                "process_variance": np.diag(np.asarray(self._Q, dtype=float))}
+
+    def native_handle(self):
+        """The configured C++ twin, or ``None`` when the Python pass must run.
+
+        The twin's size follows from its ``grid`` parameter, so the parameters
+        are pushed before the arrays and the dimensions are checked after both;
+        ``Q`` crosses as its diagonal (``process_variance``), never as the dense
+        ``n x n`` it is here."""
+        import os
+        from ...framework.models import native
+        from ...framework.native import core
+        if not native.USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0" or not core.HAS_CXX_CORE:
+            return None
+        name = self.native_name()
+        if not name or name not in native.apps_library_names():
+            return None
+        owner = self._twin_owner()
+        for attr in self._TWIN_CONTRACT:
+            if attr in self.__dict__ or getattr(type(self), attr, None) is not getattr(owner, attr, None):
+                return None
+        if np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
+            return None
+        if self._F is not None or self._H is not None or callable(self._Q) or callable(self._R):
+            return None
+        if self._L is not None and (callable(self._L) or not np.array_equal(np.asarray(self._L), np.eye(self.n))):
+            return None
+        Q = np.asarray(self._Q, dtype=float)
+        if np.count_nonzero(Q) != np.count_nonzero(np.diag(Q)):
+            return None                                   # a full Q: the Python pass draws it
+
+        lib = core.lib
+        cached = self.__dict__.get("_native_twin")
+        if cached is None or cached[0] != name:
+            handle = lib.kalman_model_create(name.encode())
+            if handle == core.ffi.NULL:
+                raise KeyError(f"{type(self).__name__}: {core.last_error()}")
+            self._native_twin = cached = (name, core.ffi.gc(handle, lib.kalman_model_destroy))
+        handle = cached[1]
+        for key, value in self.native_parameters().items():
+            core.check(lib.kalman_model_set_parameter(handle, key.encode(), float(value)), f"set_parameter({key!r})")
+        self._push_arrays(handle)
+        n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
+        core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
+        if (int(n[0]), int(m[0]), int(l[0])) != (self.n, self.m, self.l):
+            raise RuntimeError(f"{type(self).__name__}: the C++ twin {name!r} has (n, m, l) = "
+                               f"({n[0]}, {m[0]}, {l[0]}), the Python model ({self.n}, {self.m}, {self.l}).")
+        if self.fs:
+            core.check(lib.kalman_model_set_sample_rate(handle, float(self.fs)), "set_sample_rate")
+        R = np.ascontiguousarray(np.asarray(self._R, dtype=np.float64).reshape(self.m, self.m))
+        core.check(lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
+        return handle
 
     # ------------------------------------------------------------------
     # Dynamics / observation
@@ -512,7 +600,25 @@ class TwinExperiment:
         """No-assimilation control — the baseline any filter must beat."""
         return self.add_method(name, assimilate=False)
 
+    def _native_twin(self, method, callback):
+        """The C++ twin a method's whole run can use, or ``None`` (Python loop): a
+        surrogate forecast, a callback watching every cycle, another engine, or a
+        model with no twin."""
+        if callback is not None or type(method["engine"]) is not EnsembleKalmanEngine:
+            return None
+        view = method["view"]
+        if view is not self.model and (not isinstance(view, self._MethodView) or view._fn is not None):
+            return None
+        return method["engine"]._native_twin(self.model, Q=view.Q(t=None))
+
     def run(self, verbose=True, every=15, callback=None, record_fields=False):
+        """Run every method over the cycles; see the class docstring.
+
+        A method whose model has a C++ twin runs its whole run in C++
+        (``Kalman::Filters::EnKF::Cycle``: the forecasts of its members in
+        parallel, the observations, the analyses), on the truth and the
+        measurements made here first; the others run the Python loop, cycle by
+        cycle, on the same truth and measurements."""
         model = self.model
         if self._truth_traj is not None:
             truth = self._truth_traj[0]
@@ -528,14 +634,46 @@ class TwinExperiment:
         self.fields = ({"truth": [], **{n: {"forecast": [], "analysis": []} for n in self.methods}}
                        if record_fields else None)
 
-        for c in range(self.n_cycles):
+        def observe(c, truth):
             truth = model.f(truth) if self._truth_traj is None else self._truth_traj[c]
             y = np.asarray(model.h(truth)).reshape(-1) + self.rng_obs.normal(0.0, sig)
             if self.obs_mask is not None:
                 y = np.where(self.obs_mask[c], y, np.nan)   # silent stations this cycle
+            return truth, y
+
+        twins = {name: self._native_twin(m, callback) for name, m in self.methods.items()}
+        twins = {name: handle for name, handle in twins.items() if handle is not None}
+        if self.n_cycles == 0:
+            twins = {}
+        cycles = None
+        if twins:
+            # The truth and the measurements first (the same draws of rng_obs, in
+            # the same order), then each method's whole run in one C++ call.
+            cycles = []
+            for c in range(self.n_cycles):
+                truth, y = observe(c, truth)
+                cycles.append((truth.copy(), y))
+            truths = [tr for tr, _ in cycles]
+            ys = np.asarray([y for _, y in cycles])
+            for name, handle in twins.items():
+                m, h = self.methods[name], hist[name]
+                t0 = time.time()
+                out = m["engine"]._cycle_native(m["view"], handle, ys, analyse=m["assimilate"], Q=m["view"].Q(t=None))
+                h["time"] += time.time() - t0
+                h["rmse_f"] = [float(np.sqrt(np.mean((mu - tr) ** 2))) for mu, tr in zip(out["forecast"], truths)]
+                h["rmse_a"] = [float(np.sqrt(np.mean((mu - tr) ** 2))) for mu, tr in zip(out["analysis"], truths)]
+                h["spread"] = [float(v) for v in out["spread"]]
+                if record_fields:
+                    self.fields[name]["forecast"] = [mu.copy() for mu in out["forecast"]]
+                    self.fields[name]["analysis"] = [mu.copy() for mu in out["analysis"]]
+
+        for c in range(self.n_cycles):
+            truth, y = cycles[c] if cycles is not None else observe(c, truth)
             if record_fields:
                 self.fields["truth"].append(truth.copy())
             for name, m in self.methods.items():
+                if name in twins:
+                    continue
                 eng, h = m["engine"], hist[name]
                 t0 = time.time()
                 mu_f = eng.forecast(m["view"]).ravel()
@@ -552,7 +690,7 @@ class TwinExperiment:
             if callback is not None:
                 callback(c, truth, hist)
             if verbose and (c + 1) % every == 0:
-                line = "  ".join(f"{k}={v['rmse_a'][-1]:.3f}" for k, v in hist.items())
+                line = "  ".join(f"{k}={v['rmse_a'][c]:.3f}" for k, v in hist.items())
                 print(f"cycle {c+1:3d}: RMSE_a  {line}")
 
         self.truth = truth

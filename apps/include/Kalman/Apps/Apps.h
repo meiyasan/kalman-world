@@ -25,6 +25,8 @@
  * | Kalman::Apps::Astro::RocketDescent | `rocket-descent`, `rocket-descent-control` | `RocketDescentModel` |
  * | Kalman::Apps::Astro::RocketLanding | `rocket-landing` | `RocketLandingModel` |
  * | Kalman::Apps::Gravitational::Polarization | `polarization` | `PolarizationModel` |
+ * | Kalman::Apps::Weather::KolmogorovFlow | `kolmogorov-flow` | `KolmogorovFlowModel` (ensemble engine) |
+ * | Kalman::Apps::Weather::BarotropicFlow | `barotropic-flow` | `BarotropicFlowModel` (ensemble engine) |
  *
  * From C++, include the header and use the class, or ask the factory by name:
  *
@@ -67,6 +69,8 @@
 #include "Kalman/Apps/Tracking/DriftChamber.h"
 #include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
+#include "Kalman/Apps/Weather/BarotropicFlow.h"
+#include "Kalman/Apps/Weather/KolmogorovFlow.h"
 #include "Kalman/Apps/Weather/Storm.h"
 #include "Kalman/Apps/Weather/Tornado.h"
 

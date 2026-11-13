@@ -12,7 +12,9 @@
 
 #include <Kalman/Factory.h>
 
+#include <algorithm>
 #include <cmath>
+#include <stdexcept>
 
 namespace Kalman::Apps::Weather
 {
@@ -32,6 +34,9 @@ namespace Kalman::Apps::Weather
         DeclareParameter("beta_drift", 5.);
         DeclareParameter("hemisphere", 1.);
         DeclareParameter("dt_hours", 6.);
+        DeclareArray("intensity_coef", {});
+        DeclareArray("intensity_mean", {});
+        DeclareArray("intensity_scale", {});
         ParametersChanged();
         SetSampleRate(1. / fDt);
 
@@ -55,6 +60,9 @@ namespace Kalman::Apps::Weather
     {
         fOmega = Parameter("omega");
         fDt = Parameter("dt_hours");
+        fCoef = Array("intensity_coef");
+        fMean = Array("intensity_mean");
+        fScale = Array("intensity_scale");
 
         // Beta drift: ~20 degrees off due west, toward the pole.
         const double beta = Parameter("beta_drift");
@@ -89,8 +97,28 @@ namespace Kalman::Apps::Weather
         out(1) = lat + dn / kKmPerDegLat;
         out(2) = veNext;
         out(3) = vnNext;
-        out(4) = x(4);                                         // intensity persists
+        out(4) = x(4) + IntensityTendency(lon, lat, x(4)) * fDt;   // persists without a tendency
         return out;
+    }
+
+    double Storm::IntensityTendency(double lon, double lat, double intensity) const
+    {
+        if (fCoef.empty()) return 0.;
+        // analytic_environment: a warm pool near 135 E, 10 N, and shear growing poleward of 15 degrees.
+        const double a = (lon - 135.) / 45., b = (lat - 10.) / 14.;
+        const double sst = 30. * std::exp(-(a * a) - b * b);
+        const double shear = 3. + 0.9 * std::max(std::abs(lat) - 15., 0.);
+        const double features[3] = {sst, shear, intensity};
+        double tendency = 0.;
+        for (std::size_t i = 0; i < 3; ++i) tendency += (features[i] - fMean[i]) / fScale[i] * fCoef[i];
+        return tendency + fCoef[3];
+    }
+
+    void Storm::CheckShapes() const
+    {
+        Kalman::Model::CheckShapes();
+        if (!fCoef.empty() && (fCoef.size() != 4 || fMean.size() != 3 || fScale.size() != 3))
+            throw std::runtime_error("Storm: a learned intensity tendency needs 4 coefficients, 3 means and 3 scales.");
     }
 
     Vector Storm::h(const Vector &x, double) const

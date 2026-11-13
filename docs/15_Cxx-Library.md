@@ -854,7 +854,7 @@ the Python loop runs as before.
 
 | Python class | C++ class | Registered name | Stays in Python |
 |---|---|---|---|
-| `StormModel` | `Apps::Weather::Storm` | `storm`, `storm-track-only` | a `steering` flow or an `intensity_fn` (Python callables) |
+| `StormModel` | `Apps::Weather::Storm` | `storm`, `storm-track-only` | a `steering` flow, an `intensity_fn` other than a fitted `LearnedIntensityModel` on `analytic_environment` (Python callables) |
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
@@ -868,6 +868,8 @@ the Python loop runs as before.
 | `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
 | `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
 | `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `preprocess()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
+| `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `forecast`/`observe`/`localization`, a callback in `TwinExperiment.run`; `sample()` |
+| `BarotropicFlowModel` (ensemble engine) | `Apps::Weather::BarotropicFlow` | `barotropic-flow` | as `KolmogorovFlowModel` |
 
 The ballistic, car and rocket twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
@@ -923,8 +925,11 @@ runs, relative to the largest entry:
 order-3 ballistic row read 2041.3 ms against 34.1 ms: the notebook's chirp,
 1 to 2 Hz at 100 Hz with the amplitude and both angles moving. Before the twin
 the pass ran the C++ loop calling the Python `f`, `h` and `H`: 103.3 ms.)
+| `StormModel`, learned intensity | 165.8 ms | 11.6 ms | 14.3x | 1.0e-08 | 2.4e-07 |
 
-(The two space rows were measured later, on a loaded machine, with `--repeat 3`:
+(The learned-intensity row was measured later still, `--repeat 3`, when the NH
+straight storm read 127.1 ms against 11.3 ms.
+The two space rows were measured later, on a loaded machine, with `--repeat 3`:
 in the same run the ballistic order-3 row read 2038.8 ms against 261.1 ms, 7.8x.
 They are the notebook's scenarios: the free return at 180 s samples with 4 RK4
 substeps, the Earth-Mars cruise of the 2026 window at 12 h samples with four
@@ -959,6 +964,72 @@ on *both* sides. An analytic Jacobian would remove it from both.
 `kalman.framework.models.native.USE_NATIVE_TWINS = False`, or
 `KALMAN_NATIVE_TWINS=0` in the environment, switches every twin off. That is how
 the "Python" column above is measured.
+
+### Field models on the ensemble engine
+
+`KolmogorovFlowModel` and `BarotropicFlowModel` are fields: the state is the
+vorticity on a periodic grid (n = 4096 at 64 x 64), filtered by the ensemble
+engine through the hooks `forecast`, `observe`, `localization` and
+`initial_ensemble`. Their twins (`Apps::Weather::KolmogorovFlow`,
+`kolmogorov-flow`, and `Apps::Weather::BarotropicFlow`, `barotropic-flow`)
+implement `Engines::EnsembleModel` beside `Kalman::Model`: the members are
+forecast in parallel (one thread each, up to the `threads` parameter, 0 for
+every core), observed together, tapered with Gaspari-Cohn from the torus
+distances, and `Q` is read as its diagonal, so a cycle forms nothing of size
+n x n. With the ensemble engine `model.filter` runs `Kalman::Filter` over the
+twin, and `TwinExperiment.run` runs each method in one call of
+`Filters::EnKF::Cycle`, which keeps the means and the spread and no covariance.
+
+| What crosses | How |
+|---|---|
+| `grid`, `nu`, `beta`, `dt`, `cycle`, `length_y`, `length_x`, `integrator`, `loc_radius`, `gradient` | named parameters, read from the Python model and its solver's `_vorticity_terms()` |
+| the probes, the forcing spectrum, the diagonal of `Q` | named arrays `probes`, `forcing_re` and `forcing_im`, `process_variance` |
+| `R`, the sample rate | pushed on every run |
+| the initial ensemble | the members `reset()` drew (from the climatology), `Engines::Ensemble::SetMembers` |
+| the draws | numpy's: the engine's generator takes the forecast `(n, N)` and analysis `(p, N)` blocks in the order of the Python steps and hands them over (`SetNormals`), so a seeded run is the same run |
+
+The components are named by grid cell: `w(i,j)` is row i (along y) and
+column j (along x) of the field, the measurement `w(i,j)` at a probe, or
+`dw/dx(i,j)` then `dw/dy(i,j)` for gradient probes. `kalman model
+kolmogorov-flow` lists the first ten and the last three of a long table.
+
+Measured with `python tools/benchmark_twins.py --fields --notebook` (16 cores,
+best of 3; the 64 x 64 run once). "C++ loop" is the pass before the twin: the
+Python loop calling the C++ solver for each member and the C++ analysis kernel.
+
+| Case | Python | C++ loop | C++ twin | Twin against loop | Mean | Spread or P |
+|---|---|---|---|---|---|---|
+| `KolmogorovFlowModel`, EnKF 16 x 16, 16 members, 25 cycles (notebook 13, step 5) | 1102.5 ms | 300.7 ms | 114.1 ms | 2.6x | 6.2e-15 | 2.4e-14 |
+| the same, gradient probes | 1281.4 ms | 346.8 ms | 115.1 ms | 3.0x | 1.2e-14 | 3.5e-14 |
+| `BarotropicFlowModel`, EnKF 16 x 16 | 749.3 ms | 254.0 ms | 121.7 ms | 2.1x | 9.8e-15 | 3.1e-14 |
+| `TwinExperiment` 64 x 64, EnKF and free run, 40 cycles (notebook 13, step 3) | 33894 ms | 34147 ms | 5354 ms | 6.4x | 7.5e-12 | 2.3e-12 |
+
+The last two columns are the largest difference from the Python reference,
+relative to the largest entry (for the twin experiment: the RMSE and the spread
+of every cycle). The reference steps the field with numpy's FFT and the twin
+with the library's; one solver step agrees to 1e-16, and the chaotic flow grows
+that to about 1e-13 over the 1,200 solver steps of the notebook. The twin agrees
+with the C++ loop to 4e-15. Notebook 13 prints the same numbers as before; its
+"wall time" of the solver EnKF went from 17.4 s to 1.9 s (the 64 x 64 run in the
+table also makes the truth, one field at a time). Where the analysis is badly
+conditioned (the barotropic model with sig_o = 1e-6 1/s and 10 members), numpy's
+`pinv` and the library's Cholesky inverse part by 6e-8; that was so already with
+the analysis kernel.
+
+Still in Python: a `surrogate` forecast (a Python callable), a solver on
+libTorch (`backend="torch"`: libKalmanApps does not link libKalmanLearn), a
+solver with other physics, a `Q` with off-diagonal terms, a subclass or an
+instance that changes `forecast`, `observe` or `localization`, a `callback` in
+`TwinExperiment.run`, and `model.sample()`, whose sampler steps the ensemble
+engine's prediction in Python.
+
+`StormModel` with a `LearnedIntensityModel` tendency (fitted on
+`analytic_environment`, no steering function) runs on the storm twin, which
+takes the regression's coefficients and standardisation as the arrays
+`intensity_coef`, `intensity_mean` and `intensity_scale`: 165.8 ms in Python,
+11.6 ms on the twin (14.3x), state within 1.0e-8 and covariance within 2.4e-7,
+as the other storm rows. Notebook 14 always passes a steering function, so it
+keeps the Python step and prints the same numbers.
 
 **Adding a twin.** Write the class under `apps/` deriving from
 `Kalman::Apps::Model`, declare its parameters, register it; then mix
@@ -1122,7 +1193,7 @@ linear filter. Both can be present in one process.
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
-| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis` | per-member `f`/`h`; `SetLocalization(rho_xy, rho_yy)` on the engine |
+| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Engines::EnsembleModel` (`Forecast`, `Observe`, `Localization`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
 | Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel`, `TransLunarModel`, `InterplanetaryModel` so far; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |

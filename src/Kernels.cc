@@ -20,11 +20,13 @@
 
 #include "Kalman/CAPI.h"
 
+#include "Kalman/Engines/Ensemble.h"
 #include "Kalman/Engines/Linear.h"
 #include "Kalman/Filter.h"
 #include "Kalman/Models/Linear.h"
 #include "Kalman/Utils.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstring>
 #include <exception>
@@ -363,45 +365,20 @@ int enkf_analysis(int n, int N, int p,
     const std::size_t nn = static_cast<std::size_t>(n), NN = static_cast<std::size_t>(N), pp = static_cast<std::size_t>(p);
     return Guard([&] {
         if (n <= 0 || N < 2 || p <= 0) throw std::invalid_argument("enkf_analysis: need n, p > 0 and at least two members");
-        const double norm = 1. / static_cast<double>(NN - 1);
-
-        // Anomalies: X' (n x N) and Y'^T (N x p).
-        Matrix Xa(nn, NN), YaT(NN, pp);
-        for (std::size_t i = 0; i < nn; ++i)
-        {
-            double mean = 0.;
-            for (std::size_t s = 0; s < NN; ++s) mean += X[i * NN + s];
-            mean /= static_cast<double>(NN);
-            for (std::size_t s = 0; s < NN; ++s) Xa(i, s) = X[i * NN + s] - mean;
-        }
-        for (std::size_t j = 0; j < pp; ++j)
-        {
-            double mean = 0.;
-            for (std::size_t s = 0; s < NN; ++s) mean += Y[j * NN + s];
-            mean /= static_cast<double>(NN);
-            for (std::size_t s = 0; s < NN; ++s) YaT(s, j) = Y[j * NN + s] - mean;
-        }
-
-        Matrix PHt = Xa * YaT;                        // (n, p)
-        PHt *= norm;
-        Matrix S = YaT.Transpose() * YaT;             // (p, p)
-        S *= norm;
-        if (rho_xy)
-            for (std::size_t i = 0; i < nn; ++i)
-                for (std::size_t j = 0; j < pp; ++j) PHt(i, j) *= rho_xy[i * pp + j];
-        for (std::size_t i = 0; i < pp; ++i)
-            for (std::size_t j = 0; j < pp; ++j)
-                S(i, j) = S(i, j) * (rho_yy ? rho_yy[i * pp + j] : 1.) + R[i * pp + j];
-
-        const Matrix K = PHt * Kalman::Utils::Inverse(S);      // (n, p)
-
-        // D = z + eps - Y (p x N), then X + K D.
-        Matrix D(pp, NN);
-        for (std::size_t j = 0; j < pp; ++j)
-            for (std::size_t s = 0; s < NN; ++s) D(j, s) = z[j] + eps[j * NN + s] - Y[j * NN + s];
-        const Matrix KD = K * D;
-        for (std::size_t i = 0; i < nn; ++i)
-            for (std::size_t s = 0; s < NN; ++s) X_out[i * NN + s] = X[i * NN + s] + KD(i, s);
+        // One implementation: the engine's (Engines::Ensemble::Analysis).
+        Matrix Xm(nn, NN), Ym(pp, NN), E(pp, NN), Rm(pp, pp);
+        Kalman::Vector zv(pp);
+        std::copy(X, X + nn * NN, Xm.Data());
+        std::copy(Y, Y + pp * NN, Ym.Data());
+        std::copy(eps, eps + pp * NN, E.Data());
+        std::copy(R, R + pp * pp, Rm.Data());
+        std::copy(z, z + pp, zv.Data());
+        Matrix rxy, ryy;
+        if (rho_xy) { rxy = Matrix(nn, pp); std::copy(rho_xy, rho_xy + nn * pp, rxy.Data()); }
+        if (rho_yy) { ryy = Matrix(pp, pp); std::copy(rho_yy, rho_yy + pp * pp, ryy.Data()); }
+        const Matrix out = Kalman::Engines::Ensemble::Analysis(Xm, Ym, Rm, zv, E, rho_xy ? &rxy : nullptr,
+                                                               rho_yy ? &ryy : nullptr);
+        std::copy(out.Data(), out.Data() + nn * NN, X_out);
         return 0;
     }, {{X_out, nn * NN}});
 }

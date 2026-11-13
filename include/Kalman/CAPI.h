@@ -326,6 +326,34 @@ int kalman_engine_update(const kalman_engine_t *engine, const kalman_model_t *mo
                          const double *x, const double *P, const double *z, double t,
                          double *x_out, double *P_out);
 
+/* --- the ensemble engine: what a caller that draws itself hands in ---------- */
+
+/**
+ * The initial ensemble of every run of an ensemble engine: `X` is n x N, row-major,
+ * the members as columns (numpy's `(n, N)`). NULL (or N = 0) draws from x0 / P0 again.
+ */
+int kalman_engine_ensemble_set_members(kalman_engine_t *engine, int n, int N, const double *X);
+/// The current members, n x N row-major, members as columns.
+int kalman_engine_ensemble_members(const kalman_engine_t *engine, int n, int N, double *X);
+/**
+ * Standard normal draws in place of the engine's own stream, read as numpy's
+ * `rng.standard_normal((rows, N))` blocks (see Engines::Ensemble::SetNormals).
+ */
+int kalman_engine_ensemble_set_normals(kalman_engine_t *engine, long long count, const double *normals);
+/// The draws handed in and not used yet, or -1.
+long long kalman_engine_ensemble_normals_left(const kalman_engine_t *engine);
+/// Localization tapers rho_xy (n x m) and rho_yy (m x m); both NULL to switch it off.
+int kalman_engine_ensemble_set_localization(kalman_engine_t *engine, int n, int m,
+                                            const double *rho_xy, const double *rho_yy);
+/**
+ * The data-assimilation cycles of Kalman::Filters::EnKF::Cycle(): from a fresh
+ * reset, one forecast per measurement `zk` (N x m, NaN = silent) and, when
+ * `analyse`, its analysis. Writes the forecast and the analysis means (N x n
+ * each) and the spread after each cycle (N); no covariance is formed.
+ */
+int kalman_ensemble_cycle(const kalman_model_t *model, kalman_engine_t *engine, int N, const double *zk,
+                          int analyse, double *forecast, double *analysis, double *spread);
+
 /// Innovation nu = z - h(x) (m) and its covariance S (m x m) at the prediction (x, P).
 int kalman_engine_innovation(const kalman_engine_t *engine, const kalman_model_t *model,
                              const double *x, const double *P, const double *z, double t,

@@ -161,11 +161,15 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
                          x0=x0, **kw)
 
     # ------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Storm). A steering flow or
-    # an intensity tendency is a Python callable, which has no C++ counterpart.
+    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Storm). A steering flow is
+    # a Python callable, which has no C++ counterpart, and so is an intensity
+    # tendency, except the one a LearnedIntensityModel fitted on the analytic
+    # environment: a ridge regression, whose coefficients cross as arrays.
     # ------------------------------------------------------------------
     def native_name(self):
-        if self.steering is not None or self.intensity_fn is not None:
+        if self.steering is not None:
+            return None
+        if self.intensity_fn is not None and LearnedIntensityModel._native_arrays(self.intensity_fn) is None:
             return None
         return "storm" if self.observe_intensity else "storm-track-only"
 
@@ -173,6 +177,10 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
         return {"omega": self.omega, "beta_drift": self.beta_drift,
                 "hemisphere": 1.0 if self.hemisphere == "N" else -1.0,
                 "dt_hours": self._dt}
+
+    def native_arrays(self):
+        learned = None if self.intensity_fn is None else LearnedIntensityModel._native_arrays(self.intensity_fn)
+        return learned or {"intensity_coef": [], "intensity_mean": [], "intensity_scale": []}
 
     # ------------------------------------------------------------------
     def f(self, x, u=None, w=None, t=None):
@@ -600,6 +608,26 @@ class LearnedIntensityModel:
         if self.coef_ is None:
             raise RuntimeError("fit() the LearnedIntensityModel first.")
         return self.tendency
+
+    @staticmethod
+    def _native_arrays(fn):
+        """The arrays of the C++ storm model (``Kalman::Apps::Weather::Storm``) for
+        an intensity tendency ``fn``, or ``None`` when it has no C++ counterpart.
+        Only this class's own ``tendency`` of a fitted model on
+        :func:`analytic_environment` has one: another environment, another
+        function, or a subclass that changes the regression stays in Python."""
+        owner = getattr(fn, "__self__", None)
+        if not isinstance(owner, LearnedIntensityModel) or getattr(fn, "__func__", None) is not LearnedIntensityModel.tendency:
+            return None
+        if owner.env is not analytic_environment or owner.coef_ is None:
+            return None
+        cls = type(owner)
+        if any(getattr(cls, name) is not getattr(LearnedIntensityModel, name) for name in ("tendency", "_features")):
+            return None
+        coef, mu, sd = (np.asarray(a, dtype=float).ravel() for a in (owner.coef_, owner._mu, owner._sd))
+        if (coef.size, mu.size, sd.size) != (4, 3, 3):
+            return None
+        return {"intensity_coef": coef, "intensity_mean": mu, "intensity_scale": sd}
 
 
 def synthetic_steered_track(n_steps=44, *, lon0=165.0, lat0=9.0, hemisphere="N",

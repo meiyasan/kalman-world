@@ -8,6 +8,8 @@ two results are apart, relative to the largest state / covariance entry.
 
     python tools/benchmark_twins.py            # from the repository root
     python tools/benchmark_twins.py --steps 5000 --repeat 5
+    python tools/benchmark_twins.py --fields   # the field models on the ensemble engine
+    python tools/benchmark_twins.py --fields --notebook   # and notebook 13's assimilation, 64 x 64
 
 Needs ``libKalman`` and ``libKalmanApps`` (``make build`` then
 ``cmake --install var/build``).
@@ -73,6 +75,10 @@ def cases(steps):
         yield (f"StormModel, {hemisphere}H {label}",
                lambda h=hemisphere, w=omega: StormModel("TC", hemisphere=h, omega=w), fixes)
     yield "StormModel, track only", lambda: StormModel("TC", observe_intensity=False), fixes[:, :2]
+    from modules.apps.weather.storms import LearnedIntensityModel, synthetic_steered_track
+    tracks = [synthetic_steered_track(n_steps=40, lon0=150 + 3 * k, lat0=8 + k, seed=k)[0] for k in range(6)]
+    learned = LearnedIntensityModel().fit(tracks).as_intensity_fn()
+    yield "StormModel, learned intensity", lambda: StormModel("TC", intensity_fn=learned), fixes
 
     t = np.arange(steps) / 100.0
     z = np.c_[30 * t, 10 * t, 120 * t - 0.5 * 9.81 * t**2] + rng.normal(0, 0.5, (steps, 3))
@@ -258,6 +264,106 @@ def compare_composite(make, z, repeat):
     return t_py, t_loop, t_cx, dx, dP, fused.call_count == repeat, model.n, len(x_cx)
 
 
+# --- the field models: the whole ensemble pass ----------------------------------
+def field_run(make, mode, repeat, run):
+    """Best time of ``run(model)`` (the model made outside the timing) in one mode:
+    the Python reference, the C++ solver and kernel in the Python loop (the pass
+    before the twin), or the twin."""
+    def once():
+        model = make()
+        start = time.perf_counter()
+        out = run(model)
+        return time.perf_counter() - start, out
+    best, out = float("inf"), None
+    for _ in range(repeat):
+        if mode == "reference":
+            with native.python_reference():
+                dt, out = once()
+        elif mode == "loop":
+            native.USE_NATIVE_TWINS = False
+            try:
+                dt, out = once()
+            finally:
+                native.USE_NATIVE_TWINS = True
+        else:
+            dt, out = once()
+        best = min(best, dt)
+    return best * 1e3, out
+
+
+def field_cases(notebook):
+    from modules.apps.weather.flow import KolmogorovFlowModel, TwinExperiment
+    from modules.apps.weather.barotropic import BarotropicFlowModel
+    from modules.framework.filters import EnsembleKalmanFilter
+
+    def step5(obs_type="vorticity", grid=16):
+        # notebook 13, step 5: 16 x 16, 40 probes, 25 cycles, 16 members
+        model = KolmogorovFlowModel("mini", grid=grid, cycle=10, dt=0.01, nu=1 / 40., n_obs=40, sig_o=0.30,
+                                    loc_radius=4.0, seed=7, obs_type=obs_type)
+        model.climatology(n_snapshots=60, spinup=600, stride=5)
+        return model
+
+    def measurements(model, steps=25):
+        rng = np.random.default_rng(21)
+        w, zs = model.equilibrium_state(decorrelate=100), []
+        for _ in range(steps):
+            w = model.f(w)
+            zs.append(np.asarray(model.h(w)).ravel() + rng.normal(0, model.sig_o, model.m))
+        return np.asarray(zs)
+
+    def enkf(z):
+        def run(model):
+            f = EnsembleKalmanFilter(model, n_members=16, inflation=1.05, seed=0)
+            record = f.forward(z)
+            return np.asarray(record.xk), np.asarray(record.Pk)
+        return run
+
+    z = measurements(step5())
+    yield "KolmogorovFlowModel, EnKF 16x16", step5, enkf(z)
+    zg = measurements(step5("gradient"))
+    yield "KolmogorovFlowModel, gradient probes", lambda: step5("gradient"), enkf(zg)
+
+    def barotropic():
+        model = BarotropicFlowModel("b", grid=16, cycle=6, n_obs=30, sig_o=1e-5, seed=7)
+        model.climatology(n_snapshots=40, spinup=60, stride=3)
+        return model
+    yield "BarotropicFlowModel, EnKF 16x16", barotropic, enkf(measurements(barotropic()))
+
+    if notebook:
+        # notebook 13, step 3: 64 x 64, 100 probes, 40 cycles, 16 members, an EnKF and a free run
+        def nb13():
+            model = KolmogorovFlowModel("probes", grid=64, nu=1 / 150., chi=2.0, kf=4, dt=0.005, cycle=30,
+                                        n_obs=100, sig_o=0.30, loc_radius=8.0, seed=7)
+            model.climatology(n_snapshots=150, spinup=2500, stride=10)
+            return model
+
+        def osse(model):
+            run = TwinExperiment(model, n_cycles=40, n_members=16, seed_obs=999, seed_setup=123, obs_periods=(2, 6))
+            run.add_method("enkf", inflation=1.06)
+            run.add_free_run()
+            hist = run.run(verbose=False)
+            return (np.asarray([hist["enkf"]["rmse_a"], hist["free"]["rmse_a"]]),
+                    np.asarray([hist["enkf"]["spread"], hist["free"]["spread"]]))
+        yield "TwinExperiment 64x64 (notebook 13)", nb13, osse
+
+
+def fields(repeat, notebook):
+    print(f"\n{'field model, ensemble pass':36s} {'Python':>10s} {'C++ loop':>10s} {'C++ twin':>10s} "
+          f"{'faster':>8s} {'mean':>9s} {'spread/P':>9s}")
+    for name, make, run in field_cases(notebook):
+        times, outs = {}, {}
+        for mode in ("reference", "loop", "twin"):
+            times[mode], outs[mode] = field_run(make, mode, 1 if "64x64" in name else repeat, run)
+        rel = lambda a, b: float(np.nanmax(np.abs(a - b)) / np.nanmax(np.abs(b)))
+        dx = max(rel(outs[m][0], outs["reference"][0]) for m in ("loop", "twin"))
+        dP = max(rel(outs[m][1], outs["reference"][1]) for m in ("loop", "twin"))
+        print(f"{name:36s} {times['reference']:8.1f} ms {times['loop']:8.1f} ms {times['twin']:8.1f} ms "
+              f"{times['loop'] / times['twin']:7.1f}x {dx:9.1e} {dP:9.1e}")
+    print("\nPython: the reference (numpy solver, numpy analysis). C++ loop: the Python loop calling the C++")
+    print("solver and analysis kernel (the pass before the twin). C++ twin: the whole pass in libKalmanApps.")
+    print("faster: C++ loop against the twin. mean, spread/P: largest difference from the reference, relative.")
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--steps", type=int, default=2000, help="measurements per run (default 2000)")
@@ -265,12 +371,17 @@ def main():
     parser.add_argument("--only", default="", help="run the cases whose name contains this text")
     parser.add_argument("--composite-steps", type=int, default=500,
                         help="filter steps per composite run (default 500; the 88-mode K1 bank has n = 176)")
+    parser.add_argument("--fields", action="store_true", help="the field models on the ensemble engine only")
+    parser.add_argument("--notebook", action="store_true", help="with --fields: notebook 13's 64 x 64 run (minutes)")
     args = parser.parse_args()
 
     kalman.set_debug(0)
     if not native.apps_library_names():
         sys.exit("libKalmanApps was not found: build and install it first (see the module docstring).")
 
+    if args.fields:
+        fields(args.repeat, args.notebook)
+        return
     print(f"{args.steps} steps per run, best of {args.repeat}\n")
     print(f"{'model':32s} {'Python':>10s} {'C++ loop':>10s} {'C++ model':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
     for name, make, z, *uk in cases(args.steps):
