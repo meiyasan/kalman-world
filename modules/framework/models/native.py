@@ -259,6 +259,30 @@ class NativeModel(KalmanModel):
             raise KeyError(core.last_error())
         return self
 
+    def arrays(self) -> dict:
+        """The model's named arrays (``{}`` when it declares none): what its C++
+        class exposes with ``DeclareArray``."""
+        lib = core.lib
+        out = {}
+        for i in range(core.check(lib.kalman_model_array_count(self._handle), "array_count")):
+            name = core._s(lib.kalman_model_array_name(self._handle, i))
+            values = np.empty(core.check(lib.kalman_model_array_size(self._handle, name.encode()), name))
+            if values.size:
+                core.check(lib.kalman_model_array(self._handle, name.encode(), core.dptr(values)), name)
+            out[name] = values
+        return out
+
+    def set_array(self, name: str, values):
+        """Set one named array of the C++ model. The model may resize itself (one
+        measurement per satellite, say): ``n``, ``m`` and ``l`` are read again."""
+        array = np.ascontiguousarray(np.asarray(values, dtype=np.float64).reshape(-1))
+        if core.lib.kalman_model_set_array(self._handle, name.encode(), array.size, core.cdptr(array)) < 0:
+            raise KeyError(core.last_error())
+        n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
+        core.check(core.lib.kalman_model_dims(self._handle, n, m, l), "kalman_model_dims")
+        self.n, self.m, self.l = int(n[0]), int(m[0]), int(l[0])
+        return self
+
     # --- introspection ----------------------------------------------------------
     @property
     def structure(self):
@@ -378,6 +402,15 @@ class NativeTwin:
     def native_parameters(self) -> dict:
         return {}
 
+    def native_arrays(self) -> dict:
+        """The named arrays to push (the C++ class's ``DeclareArray`` names). The
+        twin may size itself from them."""
+        return {}
+
+    #: Stored matrices the twin computes itself from what is pushed (``("_F",)``
+    #: for a model built with ``A=``): they do not keep the twin from standing in.
+    _TWIN_DECODES = ()
+
     def _twin_owner(self) -> type:
         for cls in type(self).__mro__:
             if "native_name" in cls.__dict__ and cls is not NativeTwin:
@@ -402,7 +435,9 @@ class NativeTwin:
                 return None
         if self.l or np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
             return None
-        if self._F is not None or self._H is not None or callable(self._Q) or callable(self._R):
+        if any(getattr(self, attr) is not None for attr in ("_F", "_H") if attr not in self._TWIN_DECODES):
+            return None
+        if callable(self._Q) or callable(self._R):
             return None
         L_ = self._L
         if L_ is not None and (callable(L_) or not np.array_equal(np.asarray(L_), np.eye(self.n))):
@@ -415,6 +450,7 @@ class NativeTwin:
             if handle == core.ffi.NULL:
                 raise KeyError(f"{type(self).__name__}: {core.last_error()}")
             handle = core.ffi.gc(handle, lib.kalman_model_destroy)
+            self._push_arrays(handle)             # a twin may size itself from them
             n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
             core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
             if (int(n[0]), int(m[0]), int(l[0])) != (self.n, self.m, self.l):
@@ -432,6 +468,7 @@ class NativeTwin:
             return None
         core.check(lib.kalman_model_set_differentiator(handle, core.DIFFERENTIATOR_KINDS[scheme], 0.0),
                    "set_differentiator")
+        self._push_arrays(handle)
         for key, value in self.native_parameters().items():
             core.check(lib.kalman_model_set_parameter(handle, key.encode(), float(value)),
                        f"set_parameter({key!r})")
@@ -440,6 +477,13 @@ class NativeTwin:
         core.check(lib.kalman_model_set_Q(handle, core.cdptr(Q)), "set_Q")
         core.check(lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
         return handle
+
+
+    def _push_arrays(self, handle):
+        for key, value in self.native_arrays().items():
+            array = np.ascontiguousarray(np.asarray(value, dtype=np.float64).reshape(-1))
+            core.check(core.lib.kalman_model_set_array(handle, key.encode(), array.size, core.cdptr(array)),
+                       f"set_array({key!r})")
 
 
 # --- a Python-written model on the C++ engines ----------------------------------

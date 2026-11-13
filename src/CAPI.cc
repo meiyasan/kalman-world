@@ -615,6 +615,47 @@ const char *kalman_model_measurement_unit(const kalman_model_t *model, int i)
 
 /* --- model: named parameters and noise covariances ------------------------- */
 
+int kalman_model_array_count(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).ArrayNames().size()); });
+}
+
+const char *kalman_model_array_name(const kalman_model_t *model, int i)
+{
+    return GuardStr([model, i]() -> const char * {
+        const std::vector<std::string> names = Deref(model).ArrayNames();
+        if (i < 0 || static_cast<std::size_t>(i) >= names.size()) return nullptr;
+        return Keep(names[static_cast<std::size_t>(i)]);
+    });
+}
+
+int kalman_model_array_size(const kalman_model_t *model, const char *name)
+{
+    return Guard([&] {
+        if (!name) throw std::invalid_argument("null name");
+        return static_cast<int>(Deref(model).Array(name).size());
+    });
+}
+
+int kalman_model_array(const kalman_model_t *model, const char *name, double *values)
+{
+    return Guard([&] {
+        if (!name || !values) throw std::invalid_argument("null name or values");
+        const std::vector<double> &array = Deref(model).Array(name);
+        std::copy(array.begin(), array.end(), values);
+        return 0;
+    });
+}
+
+int kalman_model_set_array(kalman_model_t *model, const char *name, int size, const double *values)
+{
+    return Guard([&] {
+        if (!name || size < 0 || (size > 0 && !values)) throw std::invalid_argument("null name or values");
+        Deref(model).SetArray(name, std::vector<double>(values, values + size));
+        return 0;
+    });
+}
+
 int kalman_model_parameter_count(const kalman_model_t *model)
 {
     return Guard([&] { return static_cast<int>(Deref(model).ParameterNames().size()); });

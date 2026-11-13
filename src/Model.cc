@@ -405,6 +405,48 @@ namespace Kalman
         fParameters[name] = value;
     }
 
+    void Model::DeclareArray(const std::string &name, std::vector<double> values)
+    {
+        if (name.empty()) throw std::invalid_argument("Kalman::Model: an array needs a name.");
+        if (fParameters.count(name))
+            throw std::invalid_argument("Kalman::Model: '" + name + "' is already a parameter.");
+        fArrays[name] = std::move(values);
+    }
+
+    std::vector<std::string> Model::ArrayNames() const
+    {
+        std::vector<std::string> names;
+        for (const auto &a : fArrays) names.push_back(a.first);
+        return names;
+    }
+
+    const std::vector<double> &Model::Array(const std::string &name) const
+    {
+        const auto it = fArrays.find(name);
+        if (it != fArrays.end()) return it->second;
+        std::string known;
+        for (const auto &a : fArrays) known += (known.empty() ? "" : ", ") + a.first;
+        throw std::out_of_range("Kalman::Model: '" + fName + "' has no array '" + name + "' (it declares: "
+                                + (known.empty() ? "none" : known) + ").");
+    }
+
+    void Model::SetArray(const std::string &name, std::vector<double> values)
+    {
+        Array(name);                              // throws for an unknown name
+        fArrays[name] = std::move(values);
+        ParametersChanged();
+    }
+
+    void Model::ResizeMeasurement(std::size_t m)
+    {
+        if (m == fNMeasure) return;
+        fNMeasure = m;
+        fH = Matrix(m, fNState, 0.);
+        for (std::size_t i = 0; i < std::min(m, fNState); ++i) fH(i, i) = 1.;
+        fR = Matrix::Identity(m);
+        fMeasurementComponents.clear();
+    }
+
     std::vector<std::string> Model::ParameterNames() const
     {
         std::vector<std::string> names;

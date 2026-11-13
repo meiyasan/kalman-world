@@ -235,6 +235,18 @@ const char *kalman_model_measurement_unit(const kalman_model_t *model, int i);
 
 /* --- model: named parameters and noise covariances ------------------------- */
 
+/// Number of named arrays the model declares, or -1.
+int kalman_model_array_count(const kalman_model_t *model);
+/// Name of array i (sorted order), or NULL.
+const char *kalman_model_array_name(const kalman_model_t *model, int i);
+/// Length of the array `name`, or -1 (and a message) when the name is unknown.
+int kalman_model_array_size(const kalman_model_t *model, const char *name);
+/// Copy the array `name` into `values` (kalman_model_array_size() doubles). 0 or -1.
+int kalman_model_array(const kalman_model_t *model, const char *name, double *values);
+/// Set the array `name` to `size` values. The model may resize itself: read
+/// kalman_model_dims() again afterwards. 0 or -1.
+int kalman_model_set_array(kalman_model_t *model, const char *name, int size, const double *values);
+
 /// Number of named parameters the model declares, or -1.
 int kalman_model_parameter_count(const kalman_model_t *model);
 /// Name of parameter i (sorted order), or NULL.

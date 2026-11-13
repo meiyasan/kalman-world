@@ -72,6 +72,7 @@ namespace
         std::vector<double> q, r, x0;   // diagonals of Q and R, and the initial state
         bool qFull = false, rFull = false;
         std::vector<std::pair<std::string, double>> parameters;
+        std::vector<std::pair<std::string, std::vector<double>>> arrays;
         std::vector<Kalman::Model::Component> state, measurement;
     };
 
@@ -139,6 +140,7 @@ namespace
             const Kalman::Vector &x0 = model->X0();
             for (std::size_t i = 0; i < x0.Size(); ++i) s.x0.push_back(x0(i));
             for (const auto &p : model->ParameterNames()) s.parameters.emplace_back(p, model->Parameter(p));
+            for (const auto &a : model->ArrayNames()) s.arrays.emplace_back(a, model->Array(a));
         }
         catch (const std::exception &e) { s.error = e.what(); }
         return s;
@@ -252,6 +254,10 @@ namespace
                << ", \"measurement\": " << JsonComponents(s.measurement) << ", \"parameters\": {";
             for (std::size_t i = 0; i < s.parameters.size(); ++i)
                 os << (i ? ", " : "") << Quote(s.parameters[i].first) << ": " << JsonNumber(s.parameters[i].second);
+            os << "}";
+            os << ", \"arrays\": {";
+            for (std::size_t i = 0; i < s.arrays.size(); ++i)
+                os << (i ? ", " : "") << Quote(s.arrays[i].first) << ": " << JsonList(s.arrays[i].second);
             os << "}";
         }
         os << "}";
@@ -401,11 +407,22 @@ namespace
                   << Paint(MeasurementNoise(s), NoiseStyle(MeasurementNoise(s))) << (s.rFull ? "; R has off-diagonal terms, its diagonal is shown" : "") << ")\n";
         Components(s.measurement, {{"R", &s.r}, {"sqrt(R)", &rSigma}});
 
-        std::cout << "\n  " << Paint("parameters", kHead) << (s.parameters.empty() ? ": none" : "") << '\n';
+        std::cout << "\n  " << Paint("parameters", kHead)
+                  << (s.parameters.empty() && s.arrays.empty() ? ": none" : "") << '\n';
         std::size_t width = 0;
         for (const auto &p : s.parameters) width = std::max(width, p.first.size());
+        for (const auto &a : s.arrays) width = std::max(width, a.first.size());
         for (const auto &p : s.parameters)
             std::cout << "    " << Paint(p.first, kCyan, width + 2) << Number(p.second) << '\n';
+        // An array: its length, then its first values.
+        for (const auto &a : s.arrays)
+        {
+            std::string values;
+            for (std::size_t i = 0; i < a.second.size() && i < 4; ++i) values += (i ? ", " : "") + Number(a.second[i]);
+            if (a.second.size() > 4) values += ", ...";
+            std::cout << "    " << Paint(a.first, kCyan, width + 2) << Paint("[" + std::to_string(a.second.size()) + "]", kDim)
+                      << "  " << values << '\n';
+        }
     }
 
     // ---- plugins ----------------------------------------------------------

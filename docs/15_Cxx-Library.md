@@ -574,6 +574,40 @@ the new models. Thus a model written in C++ (in a ROOT+ analysis, for
 example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
 and Unity, agents and other users can then use it as a spec base.
 
+### Named arrays
+
+A twin is configured through named scalars (`DeclareParameter`). What is not
+one number, such as the orbit of each satellite, goes through named arrays:
+
+```cpp
+DeclareArray("eccentricity", {0.01, 0.01, 0.01});   // constructor
+const std::vector<double> &e = Array("eccentricity");
+model.SetArray("eccentricity", {0.02, 0.02});       // calls ParametersChanged()
+```
+
+An array may change length when it is set. A model whose size follows from
+it resizes itself in `ParametersChanged()` with `ResizeMeasurement(m)`, and
+says in `CheckShapes()` when arrays that belong together disagree, so the
+filter refuses to run instead of reading past an end. The GPS receiver does
+both: it has one pseudorange per satellite and six arrays of orbital
+elements.
+
+On the Python side a twin gives them with `native_arrays()`, beside
+`native_parameters()`; a `NativeModel` has `arrays()` and `set_array()`. In C:
+`kalman_model_array_count`, `_array_name`, `_array_size`, `_array`,
+`_set_array`. In a model file and in a settings file an array is a list under
+the same key as the parameters, and `kalman model NAME` shows its length and
+first values.
+
+The GPS twin against the Python reference, 600 s at 1 Hz
+(`tests/test_native_gps.py`):
+
+| Configuration | Channels | State, largest difference | Covariance, relative | Python | Twin |
+|---|---|---|---|---|---|
+| 8 fixed satellites | 8 | 3.3e-9 m (of 6.4e6 m) | 2.1e-16 | 136 ms | 37 ms |
+| 24 satellites rising and setting (10 degree mask) | 24, 9988 pseudoranges missing | 3.7e-9 m | 1.1e-16 | 138 ms | 49 ms |
+| 5 satellites at 2 Hz | 5 | 3.7e-9 m | 1.6e-16 | 247 ms | 64 ms |
+
 ## Model files: `.kw`
 
 A model can be written to one file and read back, by the same code for every
@@ -785,6 +819,7 @@ the Python loop runs as before.
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
+| `GPSModel` | `Apps::GPS::Receiver` | `gps` | `preprocess()` (the relativistic corrections applied to the pseudoranges before the filter); a `dtype` other than float64 |
 
 The ballistic and car twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the

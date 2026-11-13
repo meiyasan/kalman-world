@@ -117,6 +117,8 @@ namespace Kalman
 
             // Named scalar parameters (see DeclareParameter()).
             std::map<std::string, double> fParameters;
+            // Named arrays of numbers (see DeclareArray()).
+            std::map<std::string, std::vector<double>> fArrays;
 
             // What each component of the state and of the measurement is
             // (see DeclareState() and DeclareMeasurement()).
@@ -326,6 +328,21 @@ namespace Kalman
             /// \throws std::out_of_range as Parameter().
             void SetParameter(const std::string &name, double value);
 
+            // --- named arrays ---------------------------------------------------
+            // The same for what is not one number: the orbital elements of each
+            // satellite, a table of masses. An array may change length when it
+            // is set; a model whose size follows from it resizes itself in
+            // ParametersChanged() and says in CheckShapes() when arrays that
+            // belong together disagree.
+            /// The declared names, sorted.
+            std::vector<std::string> ArrayNames() const;
+            bool HasArray(const std::string &name) const { return fArrays.count(name) > 0; }
+            /// \throws std::out_of_range naming the unknown array and the known ones.
+            const std::vector<double> &Array(const std::string &name) const;
+            /// Set a declared array, then call ParametersChanged().
+            /// \throws std::out_of_range as Array().
+            void SetArray(const std::string &name, std::vector<double> values);
+
             // --- named components ----------------------------------------------
             // What a reader of a result needs to label it: which entry of the
             // state is the position, in which unit. A model that states nothing
@@ -348,6 +365,15 @@ namespace Kalman
 
             /// Declare a named parameter with its default (constructor only).
             void DeclareParameter(const std::string &name, double value);
+            /// Declare a named array with its default (constructor only).
+            void DeclareArray(const std::string &name, std::vector<double> values);
+            /**
+             * \brief Change the measurement dimension, for a model whose number of
+             * channels follows from an array (one pseudorange per satellite).
+             * H and R are reset to their defaults for the new size and the names
+             * of the measurement components are forgotten: set them again.
+             */
+            void ResizeMeasurement(std::size_t m);
             /// Called after every SetParameter(): refresh whatever is derived from them.
             virtual void ParametersChanged() {}
     };

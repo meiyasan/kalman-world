@@ -125,6 +125,20 @@ namespace Kalman::IO
             return os.str();
         }
 
+        Json Numbers(const std::vector<double> &values)
+        {
+            Json out = Json::Array();
+            for (const double v : values) out.Add(v);
+            return out;
+        }
+
+        std::vector<double> Doubles(const Json &list, const std::string &what)
+        {
+            std::vector<double> out;
+            for (const auto &item : list.Items(what)) out.push_back(item.AsNumber(what));
+            return out;
+        }
+
         std::string TablePath(const std::string &which) { return "tables/" + which + ".f64"; }
     }
 
@@ -176,6 +190,7 @@ namespace Kalman::IO
             spec.Set("base", options.registered);
             Json parameters = Json::Object();
             for (const auto &name : model.ParameterNames()) parameters.Set(name, model.Parameter(name));
+            for (const auto &name : model.ArrayNames()) parameters.Set(name, Numbers(model.Array(name)));
             dynamics.Set("params", parameters);
         }
         else
@@ -350,8 +365,14 @@ namespace Kalman::IO
             }
             model = factory.Create(base);
             if (dynamics.Has("params"))
+            {
+                // Arrays first: a model may size itself from them.
                 for (const auto &p : dynamics["params"].Members("dynamics.params"))
-                    model->SetParameter(p.first, p.second.AsNumber("dynamics.params." + p.first));
+                    if (p.second.IsArray()) model->SetArray(p.first, Doubles(p.second, "dynamics.params." + p.first));
+                for (const auto &p : dynamics["params"].Members("dynamics.params"))
+                    if (!p.second.IsArray())
+                        model->SetParameter(p.first, p.second.AsNumber("dynamics.params." + p.first));
+            }
             if (spec.Has("fs"))
                 if (const double fs = spec["fs"].AsNumber("spec.fs"); fs != model->SampleRate()) model->SetSampleRate(fs);
         }
@@ -384,7 +405,8 @@ namespace Kalman::IO
         settings.Set("fs", model.SampleRate());
         Json parameters = Json::Object();
         for (const auto &name : model.ParameterNames()) parameters.Set(name, model.Parameter(name));
-        if (!model.ParameterNames().empty()) settings.Set("parameters", parameters);
+        for (const auto &name : model.ArrayNames()) parameters.Set(name, Numbers(model.Array(name)));
+        if (!model.ParameterNames().empty() || !model.ArrayNames().empty()) settings.Set("parameters", parameters);
         // A model whose noise is stated per unit time keeps Q derived from it: R only.
         Json noise = Json::Object();
         if (model.NoiseIntensity().Empty()) noise.Set("Q", Json::From(model.Q(model.T0())));
@@ -424,13 +446,24 @@ namespace Kalman::IO
         std::vector<std::string> changed;
         const auto differs = [](const Matrix &A, const Matrix &B) { return !Same(A, B); };
         if (settings.Has("parameters"))
+        {
             for (const auto &p : settings["parameters"].Members("parameters"))
             {
+                if (!p.second.IsArray()) continue;
+                const std::vector<double> values = Doubles(p.second, "parameters." + p.first);
+                if (model.Array(p.first) == values) continue;         // throws for an unknown name
+                model.SetArray(p.first, values);
+                changed.push_back(p.first);
+            }
+            for (const auto &p : settings["parameters"].Members("parameters"))
+            {
+                if (p.second.IsArray()) continue;
                 const double value = p.second.AsNumber("parameters." + p.first);
                 if (model.Parameter(p.first) == value) continue;     // throws for an unknown name
                 model.SetParameter(p.first, value);
                 changed.push_back(p.first + " = " + Plain(value));
             }
+        }
         if (settings.Has("fs"))
             if (const double fs = settings["fs"].AsNumber("fs"); fs != model.SampleRate())
             {

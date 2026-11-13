@@ -50,6 +50,7 @@
 
 #include "Kalman/Apps/Model.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/GPS/Receiver.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
 #include "Kalman/Apps/Weather/Tornado.h"

@@ -34,6 +34,7 @@ import numpy as np
 
 from ...framework.constants import KalmanObservable, KalmanState
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeTwin
 
 # ---- physical constants (SI) ----
 C_LIGHT = 299_792_458.0            # speed of light [m/s]
@@ -118,7 +119,7 @@ class GPSObservable(KalmanObservable):
     PSEUDORANGE = "m"
 
 
-class GPSModel(ExtendedKalmanModel):
+class GPSModel(NativeTwin, ExtendedKalmanModel):
     """EKF GPS positioning with togglable relativistic clock corrections.
 
     Parameters
@@ -173,6 +174,8 @@ class GPSModel(ExtendedKalmanModel):
         self.fs = float(fs)
         self.apply_relativistic = bool(apply_relativistic)
         self._sigma_rho = float(pseudorange_uncertainty)
+        self._sigma_process = float(process_uncertainty)
+        self._sigma_drift = float(clock_drift_uncertainty)
         self._secular_on = bool(secular)
         # Elevation-cutoff [deg] below which a satellite is "out of sight". When set, the model
         # tracks the FULL constellation and masks each satellite epoch-by-epoch as it rises/sets
@@ -226,6 +229,25 @@ class GPSModel(ExtendedKalmanModel):
                                     100.0 ** 2, 1.0 ** 2]).astype(self.dtype)
 
         super().__init__(sensor_id, A=A, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
+
+    # ------------------------------------------------------------------
+    # The C++ twin (Kalman::Apps::GPS::Receiver): the filtering pass runs
+    # there, on the constellation of this instance. preprocess() (the
+    # relativistic corrections) stays here: it prepares the data.
+    # ------------------------------------------------------------------
+    _TWIN_DECODES = ("_F",)                # F = exp(A / fs): the twin decodes the same generator
+
+    def native_name(self):
+        return "gps"
+
+    def native_parameters(self):
+        return {"pseudorange_uncertainty": self._sigma_rho, "process_uncertainty": self._sigma_process,
+                "clock_drift_uncertainty": self._sigma_drift}
+
+    def native_arrays(self):
+        c = self.constellation
+        return {"semi_major_axis": c.a, "eccentricity": c.e, "inclination": c.inc, "raan": c.raan,
+                "arg_perigee": c.argp, "mean_anomaly": c.M0}
 
     # ------------------------------------------------------------------
     # Constellation construction / visibility
