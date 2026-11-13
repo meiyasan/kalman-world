@@ -254,6 +254,10 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if uk_fn is not None:
             out = core.run_filter(handle, core.create_engine("extended"), n, m, model.l, zk, control=uk_fn)
             uk = out["controls"]
+        elif model.l > 0:
+            # One command per measurement, as the Python loop reads them (a longer
+            # program is cut, like the loop that stops at the last measurement).
+            out = core.run_filter(handle, core.create_engine("extended"), n, m, model.l, zk, uk[:len(zk)])
         else:
             out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
         self._store_pass(out, zk, uk)

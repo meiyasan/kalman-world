@@ -29,6 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.models.native import NativeTwin, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
@@ -146,7 +147,7 @@ class RocketDescentObservable(KalmanObservable):
     THETA = "rad"    # inertial-measurement-unit attitude
 
 
-class RocketDescentModel(ExtendedKalmanModel):
+class RocketDescentModel(NativeTwin, ExtendedKalmanModel):
     """
     Planar **powered descent & landing** of a rigid booster — the accurate, *steerable*
     cousin of :class:`RocketLandingModel` (which is 1-D vertical only).
@@ -234,6 +235,28 @@ class RocketDescentModel(ExtendedKalmanModel):
             x0[6, 0] = self.m0
             kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
+
+    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketDescent) ------
+    # Both configurations have one: the guidance flying the booster (l = 0,
+    # "rocket-descent") and the throttle/gimbal program as the control input
+    # (control=True, l = 2, "rocket-descent-control"). The atmosphere, the
+    # inertia, the guidance, the command mapping and _deriv are the dynamics:
+    # a subclass that changes one of them is another model.
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("_deriv", "_rho", "inertia", "guidance", "_control_from_u")
+
+    def native_name(self):
+        if native_integrator_kind(self) is None:
+            return None
+        return "rocket-descent-control" if self.l > 0 else "rocket-descent"
+
+    def native_parameters(self):
+        return {"m_dry": self.m_dry, "ve": self.ve, "thrust_max": self.thrust_max,
+                "length": self.length, "lever": self.lever, "drag_area": self.drag_area,
+                "drag": float(self.drag), "g": self.g, "decel": self.decel, "v_cruise": self.v_cruise,
+                "v_touch": self.v_touch, "theta_max": self.theta_max, "gimbal_max": self.gimbal_max,
+                "kp_v": self.kp_v, "kx": self.kx, "kvx": self.kvx, "kth": self.kth, "kom": self.kom,
+                "rho0": RHO0, "h_atm": H_ATM,
+                "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
     # --- atmosphere / inertia ---------------------------------------------
     def _rho(self, y):

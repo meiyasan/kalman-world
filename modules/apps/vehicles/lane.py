@@ -7,6 +7,7 @@ from __future__ import annotations
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeTwin, native_integrator_kind
 from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind, KalmanDynamicsKind
 
 
@@ -24,7 +25,7 @@ class CarLaneObservable(KalmanObservable):
     LATERAL = "m"
 
 
-class CarLaneModel(ExtendedKalmanModel):
+class CarLaneModel(NativeTwin, ExtendedKalmanModel):
     """Lateral lane-keeping with steering control (bicycle kinematics).
 
     State ``x = [y, ψ, v]``:
@@ -92,6 +93,21 @@ class CarLaneModel(ExtendedKalmanModel):
         kw.setdefault("x0", np.array([[0.0], [0.0], [v0]]))
         # L = I: the process noise is added to every state.
         super().__init__(name, Q=Q, R=R, B=B, L=np.eye(self.n), fs=fs, **kw)
+
+    # ----------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Vehicles::CarLane). The steering
+    # limit is part of the dynamics, so a subclass that changes clip_u is
+    # another model. A controller function (closed loop) keeps this Python
+    # model in the C++ loop; so does an integrator the C++ side does not have.
+    # ----------------------------------------------------------------------
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("clip_u",)
+
+    def native_name(self):
+        return "car-lane" if native_integrator_kind(self) is not None else None
+
+    def native_parameters(self):
+        return {"wheelbase": self.wheelbase, "steer_limit": self.steer_limit,
+                "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
     def clip_u(self, u):
         """Steering-angle actuator limit: ``|delta| <= steer_limit``."""
