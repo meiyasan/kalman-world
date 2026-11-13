@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['—_20add_20a_20kind_20to_20the_20framework_20itself_0',['5 — Add a kind to the framework itself',['../md_docs_26___integrators-and-_solvers.html#autotoc_md5--add-a-kind-to-the-framework-itself',1,'']]],
+  ['—_20apparent_20leakage_20outside_20the_20window_1',['2. &quot;Bad suppression range&quot; — apparent leakage outside the window',['../md_docs_2apps_2oscillators.html#autotoc_md2-bad-suppression-range--apparent-leakage-outside-the-window',1,'']]],
+  ['—_20continuous_2',['Path 2 — continuous',['../md_docs_24___models.html#path-2--continuous',1,'']]],
+  ['—_20describing_20a_20model_20as_20data_3',['&lt;tt&gt;KalmanSpec&lt;/tt&gt; — describing a model as data',['../md_docs_29___python-_a_p_i.html#kalmanspec--describing-a-model-as-data',1,'']]],
+  ['—_20functions_4',['Path 3 — functions',['../md_docs_24___models.html#path-3--functions',1,'']]],
+  ['—_20high_20dimensional_20assimilation_5',['EnKF — high-dimensional assimilation',['../md_docs_25___filters-and-_diagnostics.html#enkf--high-dimensional-assimilation',1,'']]],
+  ['—_20is_20the_20filter_20actually_20working_6',['Diagnostics — is the filter actually working?',['../md_docs_25___filters-and-_diagnostics.html#diagnostics--is-the-filter-actually-working',1,'']]],
+  ['—_20learned_20components_7',['libKalmanLearn — learned components',['../libkalmanlearn.html',1,'cxx']]],
+  ['—_20matrices_8',['Path 1 — matrices',['../md_docs_24___models.html#path-1--matrices',1,'']]],
+  ['—_20regime_20switching_9',['IKF — regime switching',['../md_docs_25___filters-and-_diagnostics.html#ikf--regime-switching',1,'']]],
+  ['—_20register_20it_20under_20a_20name_10',['4 — Register it under a name',['../md_docs_26___integrators-and-_solvers.html#autotoc_md4--register-it-under-a-name',1,'']]],
+  ['—_20required_20before_20claiming_20done_11',['6. Verification — required before claiming done',['../md__a_g_e_n_t_s.html#autotoc_md6-verification--required-before-claiming-done',1,'']]],
+  ['—_20subclass_20a_20shipped_20solver_20for_20your_20own_20physics_12',['2 — Subclass a shipped solver for your own physics',['../md_docs_26___integrators-and-_solvers.html#autotoc_md2--subclass-a-shipped-solver-for-your-own-physics',1,'']]],
+  ['—_20swap_20in_20a_20different_20shipped_20scheme_13',['1 — Swap in a different shipped scheme',['../md_docs_26___integrators-and-_solvers.html#autotoc_md1--swap-in-a-different-shipped-scheme',1,'']]],
+  ['—_20the_20application_20models_14',['libKalmanApps — the application models',['../libkalmanapps.html',1,'cxx']]],
+  ['—_20the_20c_20library_15',['libKalman — the C++ library',['../md_docs_215___cxx-_library.html',1,'cxx']]],
+  ['—_20the_20c_20port_16',['10. libKalman — the C++ port',['../md__a_g_e_n_t_s.html#autotoc_md10-libkalman--the-c-port',1,'']]],
+  ['—_20the_20kalman_20framework_20in_20c_17',['libKalman — the Kalman framework in C++',['../libkalman.html',1,'cxx']]],
+  ['—_20the_20tt_20kalman_20api_20tt_20facade_18',['Python API — the &lt;tt&gt;kalman.api&lt;/tt&gt; facade',['../md_docs_29___python-_a_p_i.html',1,'access']]],
+  ['—_20track_20finding_19',['CKF — track finding',['../md_docs_25___filters-and-_diagnostics.html#ckf--track-finding',1,'']]],
+  ['—_20working_20on_20this_20codebase_20with_20an_20llm_20',['AGENTS.md — working on this codebase with an LLM',['../md__a_g_e_n_t_s.html',1,'developers']]],
+  ['—_20write_20a_20scheme_20of_20your_20own_21',['3 — Write a scheme of your own',['../md_docs_26___integrators-and-_solvers.html#autotoc_md3--write-a-scheme-of-your-own',1,'']]]
+];

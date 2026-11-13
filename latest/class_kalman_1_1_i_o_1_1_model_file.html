@@ -1,0 +1,1453 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::IO::ModelFile Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::IO::ModelFile Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::IO::ModelFile Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_i_o_1_1_model_file.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_kalman_1_1_i_o_1_1_model_file-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::IO::ModelFile Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>A model written to one file, and read back.  
+ <a href="class_kalman_1_1_i_o_1_1_model_file.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_model_file_8h_source.html">ModelFile.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_opened.html">Opened</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">What <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac46a16e40dd6e947a982696868be5796" title="Load path, build its model, and apply the settings file beside it when there is one (and settings is ...">Open()</a> found and did.  <a href="struct_kalman_1_1_i_o_1_1_model_file_1_1_opened.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html">Options</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:afa8699b808d27691b373d1a32668148b" id="r_afa8699b808d27691b373d1a32668148b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#afa8699b808d27691b373d1a32668148b">ModelFile</a> ()=default</td></tr>
+<tr class="separator:afa8699b808d27691b373d1a32668148b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab286892f7c6ebf388eabbfbaae26a76b" id="r_ab286892f7c6ebf388eabbfbaae26a76b"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ab286892f7c6ebf388eabbfbaae26a76b">Import</a> () const</td></tr>
+<tr class="memdesc:ab286892f7c6ebf388eabbfbaae26a76b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the model the file describes.  <br /></td></tr>
+<tr class="separator:ab286892f7c6ebf388eabbfbaae26a76b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4c6cec17066cecbdd3d683dc76eda04" id="r_ae4c6cec17066cecbdd3d683dc76eda04"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ae4c6cec17066cecbdd3d683dc76eda04">Document</a> () const</td></tr>
+<tr class="memdesc:ae4c6cec17066cecbdd3d683dc76eda04"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>model.json</code>.  <br /></td></tr>
+<tr class="separator:ae4c6cec17066cecbdd3d683dc76eda04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac76753de1414b54085a3efeb21c73895" id="r_ac76753de1414b54085a3efeb21c73895"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac76753de1414b54085a3efeb21c73895">Kind</a> () const</td></tr>
+<tr class="memdesc:ac76753de1414b54085a3efeb21c73895"><td class="mdescLeft">&#160;</td><td class="mdescRight">"complete", "reference" or "linearization".  <br /></td></tr>
+<tr class="separator:ac76753de1414b54085a3efeb21c73895"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35ab16821907e6ceea40416a2d887443" id="r_a35ab16821907e6ceea40416a2d887443"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a35ab16821907e6ceea40416a2d887443">Spec</a> () const</td></tr>
+<tr class="memdesc:a35ab16821907e6ceea40416a2d887443"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <code>spec</code> member: what the JSON API takes.  <br /></td></tr>
+<tr class="separator:a35ab16821907e6ceea40416a2d887443"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9668402e9f58569af62babc7ea729412" id="r_a9668402e9f58569af62babc7ea729412"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a9668402e9f58569af62babc7ea729412">HasTables</a> () const</td></tr>
+<tr class="separator:a9668402e9f58569af62babc7ea729412"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a90b703830deae2279209d56dd5318a" id="r_a8a90b703830deae2279209d56dd5318a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a8a90b703830deae2279209d56dd5318a">Text</a> () const</td></tr>
+<tr class="memdesc:a8a90b703830deae2279209d56dd5318a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The text of <code>model.json</code>.  <br /></td></tr>
+<tr class="separator:a8a90b703830deae2279209d56dd5318a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d0a5e1a0a2f22f85a037a36324d0fb8" id="r_a4d0a5e1a0a2f22f85a037a36324d0fb8"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a4d0a5e1a0a2f22f85a037a36324d0fb8">Bytes</a> () const</td></tr>
+<tr class="memdesc:a4d0a5e1a0a2f22f85a037a36324d0fb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">The archive as bytes.  <br /></td></tr>
+<tr class="separator:a4d0a5e1a0a2f22f85a037a36324d0fb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f76ad4635eda3a76c57548e74d56462" id="r_a8f76ad4635eda3a76c57548e74d56462"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a8f76ad4635eda3a76c57548e74d56462">Save</a> (const std::string &amp;path) const</td></tr>
+<tr class="memdesc:a8f76ad4635eda3a76c57548e74d56462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the file: an archive, or plain JSON when <code>path</code> ends in <code>.json</code>.  <br /></td></tr>
+<tr class="separator:a8f76ad4635eda3a76c57548e74d56462"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7808feacf0c9f74c78989dbb04eda820" id="r_a7808feacf0c9f74c78989dbb04eda820"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a7808feacf0c9f74c78989dbb04eda820">Identity</a> () const</td></tr>
+<tr class="memdesc:a7808feacf0c9f74c78989dbb04eda820"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name a settings file must carry to be applied to this model.  <br /></td></tr>
+<tr class="separator:a7808feacf0c9f74c78989dbb04eda820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abee2ca6a5b46c1ecded6b18acf4d4357" id="r_abee2ca6a5b46c1ecded6b18acf4d4357"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#abee2ca6a5b46c1ecded6b18acf4d4357">Export</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html">Options</a> &amp;options)</td></tr>
+<tr class="memdesc:abee2ca6a5b46c1ecded6b18acf4d4357"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write <code>model</code> out.  <br /></td></tr>
+<tr class="separator:abee2ca6a5b46c1ecded6b18acf4d4357"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abfdf04f2c832dfe53fe3093df5c85af7" id="r_abfdf04f2c832dfe53fe3093df5c85af7"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#abfdf04f2c832dfe53fe3093df5c85af7">Export</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model)</td></tr>
+<tr class="memdesc:abfdf04f2c832dfe53fe3093df5c85af7"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same with the default options.  <br /></td></tr>
+<tr class="separator:abfdf04f2c832dfe53fe3093df5c85af7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1397a395f0d9725ed4fc688887b462c" id="r_ac1397a395f0d9725ed4fc688887b462c"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac1397a395f0d9725ed4fc688887b462c">SettingsPath</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:ac1397a395f0d9725ed4fc688887b462c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Where the settings of the model file <code>path</code> are looked for: <code>path + ".json"</code>.  <br /></td></tr>
+<tr class="separator:ac1397a395f0d9725ed4fc688887b462c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7bc557656fd54209b201b8737b581aa9" id="r_a7bc557656fd54209b201b8737b581aa9"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a7bc557656fd54209b201b8737b581aa9">Settings</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const std::string &amp;identity)</td></tr>
+<tr class="memdesc:a7bc557656fd54209b201b8737b581aa9"><td class="mdescLeft">&#160;</td><td class="mdescRight">A settings document holding the current values of <code>model:</code> the sample rate, every named parameter, Q, R, x0 and P0. Written beside a <code>.kw</code> it changes nothing; it is the file to edit.  <br /></td></tr>
+<tr class="separator:a7bc557656fd54209b201b8737b581aa9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb466932d19c9ba8196e7f43b146d397" id="r_abb466932d19c9ba8196e7f43b146d397"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#abb466932d19c9ba8196e7f43b146d397">Apply</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp;settings, const std::string &amp;identity)</td></tr>
+<tr class="memdesc:abb466932d19c9ba8196e7f43b146d397"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply a settings document to <code>model</code>.  <br /></td></tr>
+<tr class="separator:abb466932d19c9ba8196e7f43b146d397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac46a16e40dd6e947a982696868be5796" id="r_ac46a16e40dd6e947a982696868be5796"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_opened.html">Opened</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac46a16e40dd6e947a982696868be5796">Open</a> (const std::string &amp;path, bool settings=true)</td></tr>
+<tr class="memdesc:ac46a16e40dd6e947a982696868be5796"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load <code>path</code>, build its model, and apply the settings file beside it when there is one (and <code>settings</code> is true).  <br /></td></tr>
+<tr class="separator:ac46a16e40dd6e947a982696868be5796"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a281402c3c28e3dabc3347c2339db5a3f" id="r_a281402c3c28e3dabc3347c2339db5a3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a281402c3c28e3dabc3347c2339db5a3f">Load</a> (const std::string &amp;path)</td></tr>
+<tr class="memdesc:a281402c3c28e3dabc3347c2339db5a3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an archive or a plain JSON document (told apart by content, not by name).  <br /></td></tr>
+<tr class="separator:a281402c3c28e3dabc3347c2339db5a3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7d9e097453cde7237cfb0ddc8704c3f" id="r_ac7d9e097453cde7237cfb0ddc8704c3f"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac7d9e097453cde7237cfb0ddc8704c3f">FromBytes</a> (const std::string &amp;bytes)</td></tr>
+<tr class="memdesc:ac7d9e097453cde7237cfb0ddc8704c3f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same from bytes already read.  <br /></td></tr>
+<tr class="separator:ac7d9e097453cde7237cfb0ddc8704c3f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ab588e281c4ebfd85619fea8ed3737004" id="r_ab588e281c4ebfd85619fea8ed3737004"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ab588e281c4ebfd85619fea8ed3737004">kFormat</a> = &quot;kalman-model&quot;</td></tr>
+<tr class="separator:ab588e281c4ebfd85619fea8ed3737004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadee71234c7a5973c065746b69785361" id="r_aadee71234c7a5973c065746b69785361"><td class="memItemLeft" align="right" valign="top">static constexpr int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a> = 1</td></tr>
+<tr class="separator:aadee71234c7a5973c065746b69785361"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a931b0ec1ed9ff0029ff72653045f29cd" id="r_a931b0ec1ed9ff0029ff72653045f29cd"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a> = &quot;.kw&quot;</td></tr>
+<tr class="separator:a931b0ec1ed9ff0029ff72653045f29cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adea2968c339400d9e644cfc4e596d61b" id="r_adea2968c339400d9e644cfc4e596d61b"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">kSettingsFormat</a> = &quot;kalman-settings&quot;</td></tr>
+<tr class="separator:adea2968c339400d9e644cfc4e596d61b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc32b79e43e9802a5248057b902c8b8b" id="r_afc32b79e43e9802a5248057b902c8b8b"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#afc32b79e43e9802a5248057b902c8b8b">kSettingsSuffix</a> = &quot;.json&quot;</td></tr>
+<tr class="memdesc:afc32b79e43e9802a5248057b902c8b8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Added to the path of a <code>.kw</code> file: where its settings are looked for.  <br /></td></tr>
+<tr class="separator:afc32b79e43e9802a5248057b902c8b8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab5e0e98709b846665b563098a86c10e" id="r_aab5e0e98709b846665b563098a86c10e"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#aab5e0e98709b846665b563098a86c10e">kDocument</a> = &quot;model.json&quot;</td></tr>
+<tr class="separator:aab5e0e98709b846665b563098a86c10e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>A model written to one file, and read back. </p>
+<p>A <code>.kw</code> file ("Kalman World") is one archive (<a class="el" href="class_kalman_1_1_i_o_1_1_archive.html" title="Several named byte strings in one file: a zip archive, entries stored.">Kalman::IO::Archive</a>, a zip) that holds everything a model file is made of, so its parts cannot be separated or mixed with another model's:</p>
+<ul>
+<li><code>model.json</code>: the readable part. What the model is, its settings, and a <code>spec</code> in the form the JSON API takes (<code>kalman.api</code>, <code>kalman-serve</code>);</li>
+<li><code>tables/&lt;name&gt;.f64</code>: what does not belong in text, raw little-endian float64, described (shape, samples) in <code>model.json</code>.</li>
+</ul>
+<p>The same code writes any model, through the <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a> interface. What the file can hold depends on what the model is made of (<a class="el" href="class_kalman_1_1_model.html#a1f8d3128c4401f09681faf51d6033803" title="What the model is made of: maps (code), constant matrices, or time-varying matrices.">Model::Structure()</a>):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Structure   </th><th class="markdownTableHeadNone">File (<code>kind</code>)   </th><th class="markdownTableHeadNone">Reads back    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Matrices   </td><td class="markdownTableBodyNone"><code>complete</code>: F, H, B, L, Q, R, x0, P0, fs (or A and Qc when stated in continuous time)   </td><td class="markdownTableBodyNone">anywhere    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">TimeVarying   </td><td class="markdownTableBodyNone"><code>complete</code> over a stated number of samples: the matrices that change, as tables   </td><td class="markdownTableBodyNone">anywhere    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Maps   </td><td class="markdownTableBodyNone"><code>reference</code>: the registered name, its plugin, parameters, noise, initial state   </td><td class="markdownTableBodyNone">where the plugin is installed    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">any, on request   </td><td class="markdownTableBodyNone"><code>linearization</code>: the Jacobians at one state, as a Matrices model   </td><td class="markdownTableBodyNone">anywhere, valid near that state   </td></tr>
+</table>
+<p><code>model.json</code> alone (no tables) may also be saved as plain JSON, to a path ending in <code>.json</code>. A file with tables is refused that way: its JSON would not be the whole model.</p>
+<dl class="section user"><dt>Settings: <code>name.kw.json</code></dt><dd>A <code>.kw</code> file holds the model with the settings it was written with. To move away from them without touching it, a settings file sits beside it under the same name plus <code>.json</code>: <code>car.kw</code> and <code>car.kw.json</code>. It holds only what changes, among the sample rate, the named parameters, the noise (Q, R) and the initial state (x0, P0); what it does not mention keeps the value of the <code>.kw</code>. <a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac46a16e40dd6e947a982696868be5796" title="Load path, build its model, and apply the settings file beside it when there is one (and settings is ...">Open()</a> applies it. It is not a model: it cannot change the matrices or the code, a key it does not know is refused, and it carries the name of the model it was written for, so the settings of another model are refused instead of applied.</dd></dl>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00063">63</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="afa8699b808d27691b373d1a32668148b" name="afa8699b808d27691b373d1a32668148b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa8699b808d27691b373d1a32668148b">&#9670;&#160;</a></span>ModelFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::IO::ModelFile::ModelFile </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="abb466932d19c9ba8196e7f43b146d397" name="abb466932d19c9ba8196e7f43b146d397"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb466932d19c9ba8196e7f43b146d397">&#9670;&#160;</a></span>Apply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; Kalman::IO::ModelFile::Apply </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp;&#160;</td>
+          <td class="paramname"><em>settings</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Apply a settings document to <code>model</code>. </p>
+<dl class="section return"><dt>Returns</dt><dd>what was changed, one short phrase per value ("mass = 1200", "Q", ...). </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>for another format, a key that is not a setting, a parameter the model does not have, or settings written for a model other than <code>identity</code>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00419">419</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  420</span>    {</div>
+<div class="line"><span class="lineno">  421</span>        <span class="keywordflow">if</span> (!settings.IsObject() || !settings.Has(<span class="stringliteral">&quot;format&quot;</span>) || settings[<span class="stringliteral">&quot;format&quot;</span>].AsString(<span class="stringliteral">&quot;format&quot;</span>) != <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">kSettingsFormat</a>)</div>
+<div class="line"><span class="lineno">  422</span>            Bad(std::string(<span class="stringliteral">&quot;not a settings file: \&quot;format\&quot; is not \&quot;&quot;</span>) + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">kSettingsFormat</a> + <span class="stringliteral">&quot;\&quot;. A settings file &quot;</span></div>
+<div class="line"><span class="lineno">  423</span>                <span class="stringliteral">&quot;holds what changes from a model file (fs, parameters, noise, initial), not a model.&quot;</span>);</div>
+<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;format_version&quot;</span>) &amp;&amp; settings[<span class="stringliteral">&quot;format_version&quot;</span>].AsNumber(<span class="stringliteral">&quot;format_version&quot;</span>) &gt; <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a>)</div>
+<div class="line"><span class="lineno">  425</span>            Bad(<span class="stringliteral">&quot;the settings are of a later format version than this library reads.&quot;</span>);</div>
+<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;for&quot;</span>) &amp;&amp; settings[<span class="stringliteral">&quot;for&quot;</span>].AsString(<span class="stringliteral">&quot;for&quot;</span>) != identity)</div>
+<div class="line"><span class="lineno">  427</span>            Bad(<span class="stringliteral">&quot;these settings were written for the model &#39;&quot;</span> + settings[<span class="stringliteral">&quot;for&quot;</span>].AsString(<span class="stringliteral">&quot;for&quot;</span>) + <span class="stringliteral">&quot;&#39;, not for &#39;&quot;</span></div>
+<div class="line"><span class="lineno">  428</span>                + identity + <span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  429</span>        <span class="keyword">const</span> <span class="keyword">auto</span> allowed = [](<span class="keyword">const</span> Json &amp;object, std::initializer_list&lt;const char *&gt; keys, <span class="keyword">const</span> std::string &amp;where)</div>
+<div class="line"><span class="lineno">  430</span>        {</div>
+<div class="line"><span class="lineno">  431</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;member : object.Members(where))</div>
+<div class="line"><span class="lineno">  432</span>            {</div>
+<div class="line"><span class="lineno">  433</span>                <span class="keywordtype">bool</span> known = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  434</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">char</span> *k : keys) known = known || member.first == k;</div>
+<div class="line"><span class="lineno">  435</span>                <span class="keywordflow">if</span> (!known)</div>
+<div class="line"><span class="lineno">  436</span>                {</div>
+<div class="line"><span class="lineno">  437</span>                    std::string list;</div>
+<div class="line"><span class="lineno">  438</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">char</span> *k : keys) list += (list.empty() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, &quot;</span>) + std::string(k);</div>
+<div class="line"><span class="lineno">  439</span>                    Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + member.first + <span class="stringliteral">&quot;&#39; is not a setting&quot;</span> + (where.empty() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot; of &quot;</span> + where)</div>
+<div class="line"><span class="lineno">  440</span>                        + <span class="stringliteral">&quot; (settings are: &quot;</span> + list + <span class="stringliteral">&quot;). A settings file cannot change what the model is.&quot;</span>);</div>
+<div class="line"><span class="lineno">  441</span>                }</div>
+<div class="line"><span class="lineno">  442</span>            }</div>
+<div class="line"><span class="lineno">  443</span>        };</div>
+<div class="line"><span class="lineno">  444</span>        allowed(settings, {<span class="stringliteral">&quot;format&quot;</span>, <span class="stringliteral">&quot;format_version&quot;</span>, <span class="stringliteral">&quot;for&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;parameters&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>, <span class="stringliteral">&quot;initial&quot;</span>}, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><span class="lineno">  445</span> </div>
+<div class="line"><span class="lineno">  446</span>        std::vector&lt;std::string&gt; changed;</div>
+<div class="line"><span class="lineno">  447</span>        <span class="keyword">const</span> <span class="keyword">auto</span> differs = [](<span class="keyword">const</span> Matrix &amp;A, <span class="keyword">const</span> Matrix &amp;B) { <span class="keywordflow">return</span> !Same(A, B); };</div>
+<div class="line"><span class="lineno">  448</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;parameters&quot;</span>))</div>
+<div class="line"><span class="lineno">  449</span>        {</div>
+<div class="line"><span class="lineno">  450</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : settings[<span class="stringliteral">&quot;parameters&quot;</span>].Members(<span class="stringliteral">&quot;parameters&quot;</span>))</div>
+<div class="line"><span class="lineno">  451</span>            {</div>
+<div class="line"><span class="lineno">  452</span>                <span class="keywordflow">if</span> (!p.second.IsArray()) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  453</span>                <span class="keyword">const</span> std::vector&lt;double&gt; values = Doubles(p.second, <span class="stringliteral">&quot;parameters.&quot;</span> + p.first);</div>
+<div class="line"><span class="lineno">  454</span>                <span class="keywordflow">if</span> (model.Array(p.first) == values) <span class="keywordflow">continue</span>;         <span class="comment">// throws for an unknown name</span></div>
+<div class="line"><span class="lineno">  455</span>                model.SetArray(p.first, values);</div>
+<div class="line"><span class="lineno">  456</span>                changed.push_back(p.first);</div>
+<div class="line"><span class="lineno">  457</span>            }</div>
+<div class="line"><span class="lineno">  458</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : settings[<span class="stringliteral">&quot;parameters&quot;</span>].Members(<span class="stringliteral">&quot;parameters&quot;</span>))</div>
+<div class="line"><span class="lineno">  459</span>            {</div>
+<div class="line"><span class="lineno">  460</span>                <span class="keywordflow">if</span> (p.second.IsArray()) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  461</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> value = p.second.AsNumber(<span class="stringliteral">&quot;parameters.&quot;</span> + p.first);</div>
+<div class="line"><span class="lineno">  462</span>                <span class="keywordflow">if</span> (model.Parameter(p.first) == value) <span class="keywordflow">continue</span>;     <span class="comment">// throws for an unknown name</span></div>
+<div class="line"><span class="lineno">  463</span>                model.SetParameter(p.first, value);</div>
+<div class="line"><span class="lineno">  464</span>                changed.push_back(p.first + <span class="stringliteral">&quot; = &quot;</span> + Plain(value));</div>
+<div class="line"><span class="lineno">  465</span>            }</div>
+<div class="line"><span class="lineno">  466</span>        }</div>
+<div class="line"><span class="lineno">  467</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;fs&quot;</span>))</div>
+<div class="line"><span class="lineno">  468</span>            <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keywordtype">double</span> fs = settings[<span class="stringliteral">&quot;fs&quot;</span>].AsNumber(<span class="stringliteral">&quot;fs&quot;</span>); fs != model.SampleRate())</div>
+<div class="line"><span class="lineno">  469</span>            {</div>
+<div class="line"><span class="lineno">  470</span>                <span class="comment">// Matrices written for one step length are that step&#39;s: another rate needs</span></div>
+<div class="line"><span class="lineno">  471</span>                <span class="comment">// the model stated in continuous time (a generator), or the code itself.</span></div>
+<div class="line"><span class="lineno">  472</span>                <span class="keywordflow">if</span> (model.Structure() != <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">StructureKind::Maps</a> &amp;&amp; model.Generator().Empty())</div>
+<div class="line"><span class="lineno">  473</span>                    Bad(<span class="stringliteral">&quot;fs cannot change here: the matrices of this model were written for &quot;</span></div>
+<div class="line"><span class="lineno">  474</span>                        + Plain(model.SampleRate()) + <span class="stringliteral">&quot; Hz. Export it again at the rate you want.&quot;</span>);</div>
+<div class="line"><span class="lineno">  475</span>                model.SetSampleRate(fs);</div>
+<div class="line"><span class="lineno">  476</span>                changed.push_back(<span class="stringliteral">&quot;fs = &quot;</span> + Plain(fs));</div>
+<div class="line"><span class="lineno">  477</span>            }</div>
+<div class="line"><span class="lineno">  478</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;noise&quot;</span>))</div>
+<div class="line"><span class="lineno">  479</span>        {</div>
+<div class="line"><span class="lineno">  480</span>            <span class="keyword">const</span> Json &amp;noise = settings[<span class="stringliteral">&quot;noise&quot;</span>];</div>
+<div class="line"><span class="lineno">  481</span>            allowed(noise, {<span class="stringliteral">&quot;Q&quot;</span>, <span class="stringliteral">&quot;R&quot;</span>}, <span class="stringliteral">&quot;noise&quot;</span>);</div>
+<div class="line"><span class="lineno">  482</span>            <span class="keywordflow">if</span> (noise.Has(<span class="stringliteral">&quot;Q&quot;</span>))</div>
+<div class="line"><span class="lineno">  483</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> Matrix Q = noise[<span class="stringliteral">&quot;Q&quot;</span>].AsMatrix(<span class="stringliteral">&quot;noise.Q&quot;</span>); differs(Q, model.Q(model.T0())))</div>
+<div class="line"><span class="lineno">  484</span>                {</div>
+<div class="line"><span class="lineno">  485</span>                    model.SetQ(Q);</div>
+<div class="line"><span class="lineno">  486</span>                    changed.push_back(<span class="stringliteral">&quot;Q&quot;</span>);</div>
+<div class="line"><span class="lineno">  487</span>                }</div>
+<div class="line"><span class="lineno">  488</span>            <span class="keywordflow">if</span> (noise.Has(<span class="stringliteral">&quot;R&quot;</span>))</div>
+<div class="line"><span class="lineno">  489</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> Matrix R = noise[<span class="stringliteral">&quot;R&quot;</span>].AsMatrix(<span class="stringliteral">&quot;noise.R&quot;</span>); differs(R, model.R(model.T0())))</div>
+<div class="line"><span class="lineno">  490</span>                {</div>
+<div class="line"><span class="lineno">  491</span>                    model.SetR(R);</div>
+<div class="line"><span class="lineno">  492</span>                    changed.push_back(<span class="stringliteral">&quot;R&quot;</span>);</div>
+<div class="line"><span class="lineno">  493</span>                }</div>
+<div class="line"><span class="lineno">  494</span>        }</div>
+<div class="line"><span class="lineno">  495</span>        <span class="keywordflow">if</span> (settings.Has(<span class="stringliteral">&quot;initial&quot;</span>))</div>
+<div class="line"><span class="lineno">  496</span>        {</div>
+<div class="line"><span class="lineno">  497</span>            <span class="keyword">const</span> Json &amp;initial = settings[<span class="stringliteral">&quot;initial&quot;</span>];</div>
+<div class="line"><span class="lineno">  498</span>            allowed(initial, {<span class="stringliteral">&quot;x0&quot;</span>, <span class="stringliteral">&quot;P0&quot;</span>}, <span class="stringliteral">&quot;initial&quot;</span>);</div>
+<div class="line"><span class="lineno">  499</span>            <span class="keywordflow">if</span> (initial.Has(<span class="stringliteral">&quot;x0&quot;</span>))</div>
+<div class="line"><span class="lineno">  500</span>            {</div>
+<div class="line"><span class="lineno">  501</span>                <span class="keyword">const</span> Vector x0 = initial[<span class="stringliteral">&quot;x0&quot;</span>].AsVector(<span class="stringliteral">&quot;initial.x0&quot;</span>);</div>
+<div class="line"><span class="lineno">  502</span>                <span class="keywordtype">bool</span> same = x0.Size() == model.X0().Size();</div>
+<div class="line"><span class="lineno">  503</span>                <span class="keywordflow">for</span> (std::size_t i = 0; same &amp;&amp; i &lt; x0.Size(); ++i) same = x0(i) == model.X0()(i);</div>
+<div class="line"><span class="lineno">  504</span>                <span class="keywordflow">if</span> (!same)</div>
+<div class="line"><span class="lineno">  505</span>                {</div>
+<div class="line"><span class="lineno">  506</span>                    model.SetInitialState(x0);</div>
+<div class="line"><span class="lineno">  507</span>                    changed.push_back(<span class="stringliteral">&quot;x0&quot;</span>);</div>
+<div class="line"><span class="lineno">  508</span>                }</div>
+<div class="line"><span class="lineno">  509</span>            }</div>
+<div class="line"><span class="lineno">  510</span>            <span class="keywordflow">if</span> (initial.Has(<span class="stringliteral">&quot;P0&quot;</span>))</div>
+<div class="line"><span class="lineno">  511</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> Matrix P0 = initial[<span class="stringliteral">&quot;P0&quot;</span>].AsMatrix(<span class="stringliteral">&quot;initial.P0&quot;</span>); differs(P0, model.P0()))</div>
+<div class="line"><span class="lineno">  512</span>                {</div>
+<div class="line"><span class="lineno">  513</span>                    model.SetInitialCovariance(P0);</div>
+<div class="line"><span class="lineno">  514</span>                    changed.push_back(<span class="stringliteral">&quot;P0&quot;</span>);</div>
+<div class="line"><span class="lineno">  515</span>                }</div>
+<div class="line"><span class="lineno">  516</span>        }</div>
+<div class="line"><span class="lineno">  517</span>        model.CheckShapes();</div>
+<div class="line"><span class="lineno">  518</span>        <span class="keywordflow">return</span> changed;</div>
+<div class="line"><span class="lineno">  519</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_aadee71234c7a5973c065746b69785361"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">Kalman::IO::ModelFile::kVersion</a></div><div class="ttdeci">static constexpr int kVersion</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00067">ModelFile.h:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_adea2968c339400d9e644cfc4e596d61b"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">Kalman::IO::ModelFile::kSettingsFormat</a></div><div class="ttdeci">static constexpr const char * kSettingsFormat</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00069">ModelFile.h:69</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Kalman::StructureKind::Maps</a></div><div class="ttdeci">@ Maps</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4d0a5e1a0a2f22f85a037a36324d0fb8" name="a4d0a5e1a0a2f22f85a037a36324d0fb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4d0a5e1a0a2f22f85a037a36324d0fb8">&#9670;&#160;</a></span>Bytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::IO::ModelFile::Bytes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The archive as bytes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00553">553</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  554</span>    {</div>
+<div class="line"><span class="lineno">  555</span>        Archive archive;</div>
+<div class="line"><span class="lineno">  556</span>        archive.Set(<a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aab5e0e98709b846665b563098a86c10e">kDocument</a>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a8a90b703830deae2279209d56dd5318a">Text</a>());     <span class="comment">// first, so the readable part opens the file</span></div>
+<div class="line"><span class="lineno">  557</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : fTables.Entries()) archive.Set(e.first, e.second);</div>
+<div class="line"><span class="lineno">  558</span>        <span class="keywordflow">return</span> archive.Bytes();</div>
+<div class="line"><span class="lineno">  559</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a8a90b703830deae2279209d56dd5318a"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a8a90b703830deae2279209d56dd5318a">Kalman::IO::ModelFile::Text</a></div><div class="ttdeci">std::string Text() const</div><div class="ttdoc">The text of model.json.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00117">ModelFile.h:117</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_aab5e0e98709b846665b563098a86c10e"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#aab5e0e98709b846665b563098a86c10e">Kalman::IO::ModelFile::kDocument</a></div><div class="ttdeci">static constexpr const char * kDocument</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00072">ModelFile.h:72</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae4c6cec17066cecbdd3d683dc76eda04" name="ae4c6cec17066cecbdd3d683dc76eda04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4c6cec17066cecbdd3d683dc76eda04">&#9670;&#160;</a></span>Document()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp; Kalman::IO::ModelFile::Document </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><code>model.json</code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00109">109</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>{ <span class="keywordflow">return</span> fDocument; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abfdf04f2c832dfe53fe3093df5c85af7" name="abfdf04f2c832dfe53fe3093df5c85af7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abfdf04f2c832dfe53fe3093df5c85af7">&#9670;&#160;</a></span>Export() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a> Kalman::IO::ModelFile::Export </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The same with the default options. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00148">148</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  148</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#abee2ca6a5b46c1ecded6b18acf4d4357">Export</a>(model, Options()); }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_abee2ca6a5b46c1ecded6b18acf4d4357"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#abee2ca6a5b46c1ecded6b18acf4d4357">Kalman::IO::ModelFile::Export</a></div><div class="ttdeci">static ModelFile Export(const Model &amp;model, const Options &amp;options)</div><div class="ttdoc">Write model out.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00150">ModelFile.cc:150</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abee2ca6a5b46c1ecded6b18acf4d4357" name="abee2ca6a5b46c1ecded6b18acf4d4357"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abee2ca6a5b46c1ecded6b18acf4d4357">&#9670;&#160;</a></span>Export() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a> Kalman::IO::ModelFile::Export </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html">Options</a> &amp;&#160;</td>
+          <td class="paramname"><em>options</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Write <code>model</code> out. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>when the model is Maps and neither a registered name nor a linearization is given, or TimeVarying with no steps. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00150">150</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    {</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keyword">const</span> <a class="code hl_enumeration" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fc">StructureKind</a> structure = model.Structure();</div>
+<div class="line"><span class="lineno">  153</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> t0 = model.T0();</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keyword">const</span> std::size_t n = model.NState(), <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = model.NMeasure(), l = model.NControl();</div>
+<div class="line"><span class="lineno">  155</span> </div>
+<div class="line"><span class="lineno">  156</span>        std::string kind = <span class="stringliteral">&quot;complete&quot;</span>;</div>
+<div class="line"><span class="lineno">  157</span>        <span class="keywordflow">if</span> (options.linearize) kind = <span class="stringliteral">&quot;linearization&quot;</span>;</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (structure == <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">StructureKind::Maps</a>) kind = <span class="stringliteral">&quot;reference&quot;</span>;</div>
+<div class="line"><span class="lineno">  159</span> </div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">if</span> (kind == <span class="stringliteral">&quot;reference&quot;</span> &amp;&amp; options.registered.empty())</div>
+<div class="line"><span class="lineno">  161</span>            Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + model.Name() + <span class="stringliteral">&quot;&#39; is given by maps (code), which a file cannot hold. It can be written as a &quot;</span></div>
+<div class="line"><span class="lineno">  162</span>                <span class="stringliteral">&quot;reference to its registered name (give Options::registered), or as a linearization &quot;</span></div>
+<div class="line"><span class="lineno">  163</span>                <span class="stringliteral">&quot;(Options::linearize).&quot;</span>);</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">if</span> (kind == <span class="stringliteral">&quot;complete&quot;</span> &amp;&amp; structure == <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">StructureKind::TimeVarying</a> &amp;&amp; options.steps == 0)</div>
+<div class="line"><span class="lineno">  165</span>            Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + model.Name() + <span class="stringliteral">&quot;&#39; has matrices that change with time: say over how many samples to &quot;</span></div>
+<div class="line"><span class="lineno">  166</span>                <span class="stringliteral">&quot;tabulate them (Options::steps), or ask for the matrices at the first sample only &quot;</span></div>
+<div class="line"><span class="lineno">  167</span>                <span class="stringliteral">&quot;(Options::linearize).&quot;</span>);</div>
+<div class="line"><span class="lineno">  168</span> </div>
+<div class="line"><span class="lineno">  169</span>        Json document = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  170</span>        document.Set(<span class="stringliteral">&quot;format&quot;</span>, <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#ab588e281c4ebfd85619fea8ed3737004">kFormat</a>).Set(<span class="stringliteral">&quot;format_version&quot;</span>, <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a>).Set(<span class="stringliteral">&quot;kind&quot;</span>, kind)</div>
+<div class="line"><span class="lineno">  171</span>                .Set(<span class="stringliteral">&quot;generator&quot;</span>, std::string(<span class="stringliteral">&quot;libKalman &quot;</span>) + KALMAN_VERSION);</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>        Json origin = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">if</span> (!options.registered.empty()) origin.Set(<span class="stringliteral">&quot;model&quot;</span>, options.registered);</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">if</span> (!options.plugin.empty()) origin.Set(<span class="stringliteral">&quot;plugin&quot;</span>, options.plugin);</div>
+<div class="line"><span class="lineno">  176</span>        origin.Set(<span class="stringliteral">&quot;title&quot;</span>, model.Title()).Set(<span class="stringliteral">&quot;description&quot;</span>, model.Description()).Set(<span class="stringliteral">&quot;version&quot;</span>, model.Version());</div>
+<div class="line"><span class="lineno">  177</span>        document.Set(<span class="stringliteral">&quot;origin&quot;</span>, options.origin.IsObject() ? options.origin : origin);</div>
+<div class="line"><span class="lineno">  178</span> </div>
+<div class="line"><span class="lineno">  179</span>        document.Set(<span class="stringliteral">&quot;structure&quot;</span>, kind == <span class="stringliteral">&quot;linearization&quot;</span> ? <a class="code hl_function" href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">ToString</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a">StructureKind::Matrices</a>) : <a class="code hl_function" href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">ToString</a>(structure));</div>
+<div class="line"><span class="lineno">  180</span>        document.Set(<span class="stringliteral">&quot;dynamics&quot;</span>, <a class="code hl_function" href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">ToString</a>(model.Dynamics()));</div>
+<div class="line"><span class="lineno">  181</span>        document.Set(<span class="stringliteral">&quot;state&quot;</span>, Components(model.StateComponents()));</div>
+<div class="line"><span class="lineno">  182</span>        document.Set(<span class="stringliteral">&quot;measurement&quot;</span>, Components(model.MeasurementComponents()));</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>        <span class="comment">// ---- the spec, in the form the JSON API takes ----------------------</span></div>
+<div class="line"><span class="lineno">  185</span>        Json spec = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>(), dynamics = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>(), noise = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>(), initial = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  186</span>        <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#afa8699b808d27691b373d1a32668148b">ModelFile</a> file;</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>        <span class="keywordflow">if</span> (kind == <span class="stringliteral">&quot;reference&quot;</span>)</div>
+<div class="line"><span class="lineno">  189</span>        {</div>
+<div class="line"><span class="lineno">  190</span>            spec.Set(<span class="stringliteral">&quot;base&quot;</span>, options.registered);</div>
+<div class="line"><span class="lineno">  191</span>            Json parameters = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  192</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name : model.ParameterNames()) parameters.Set(name, model.Parameter(name));</div>
+<div class="line"><span class="lineno">  193</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name : model.ArrayNames()) parameters.Set(name, Numbers(model.Array(name)));</div>
+<div class="line"><span class="lineno">  194</span>            dynamics.Set(<span class="stringliteral">&quot;params&quot;</span>, parameters);</div>
+<div class="line"><span class="lineno">  195</span>        }</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  197</span>        {</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keyword">const</span> <span class="keywordtype">bool</span> continuous = kind == <span class="stringliteral">&quot;complete&quot;</span> &amp;&amp; !model.Generator().Empty() &amp;&amp; !model.NoiseIntensity().Empty();</div>
+<div class="line"><span class="lineno">  199</span>            spec.Set(<span class="stringliteral">&quot;base&quot;</span>, continuous ? <span class="stringliteral">&quot;continuous&quot;</span> : <span class="stringliteral">&quot;matrices&quot;</span>);</div>
+<div class="line"><span class="lineno">  200</span>            spec.Set(<span class="stringliteral">&quot;name&quot;</span>, options.registered.empty() ? model.Name() : options.registered);</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>            <span class="keywordflow">if</span> (kind == <span class="stringliteral">&quot;linearization&quot;</span>)</div>
+<div class="line"><span class="lineno">  203</span>            {</div>
+<div class="line"><span class="lineno">  204</span>                <span class="keyword">const</span> Vector x = options.at.Size() ? options.at : model.X0();</div>
+<div class="line"><span class="lineno">  205</span>                <span class="keywordflow">if</span> (x.Size() != n) Bad(<span class="stringliteral">&quot;the linearization state has &quot;</span> + std::to_string(x.Size()) + <span class="stringliteral">&quot; components, the &quot;</span></div>
+<div class="line"><span class="lineno">  206</span>                                       <span class="stringliteral">&quot;model has &quot;</span> + std::to_string(n) + <span class="stringliteral">&quot;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  207</span>                dynamics.Set(<span class="stringliteral">&quot;F&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.Jacobian(x, Vector(l, 0.), t0)));</div>
+<div class="line"><span class="lineno">  208</span>                dynamics.Set(<span class="stringliteral">&quot;H&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.JacobianH(x, t0)));</div>
+<div class="line"><span class="lineno">  209</span>                document.Set(<span class="stringliteral">&quot;linearized_at&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().Set(<span class="stringliteral">&quot;x&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(x)).Set(<span class="stringliteral">&quot;t&quot;</span>, t0));</div>
+<div class="line"><span class="lineno">  210</span>            }</div>
+<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (continuous)</div>
+<div class="line"><span class="lineno">  212</span>            {</div>
+<div class="line"><span class="lineno">  213</span>                dynamics.Set(<span class="stringliteral">&quot;A&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.Generator()));</div>
+<div class="line"><span class="lineno">  214</span>                dynamics.Set(<span class="stringliteral">&quot;H&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.H(t0)));</div>
+<div class="line"><span class="lineno">  215</span>                dynamics.Set(<span class="stringliteral">&quot;Qc&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.NoiseIntensity()));</div>
+<div class="line"><span class="lineno">  216</span>                <span class="keywordflow">if</span> (!model.NoiseCoupling().Empty()) dynamics.Set(<span class="stringliteral">&quot;Lc&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.NoiseCoupling()));</div>
+<div class="line"><span class="lineno">  217</span>            }</div>
+<div class="line"><span class="lineno">  218</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  219</span>            {</div>
+<div class="line"><span class="lineno">  220</span>                dynamics.Set(<span class="stringliteral">&quot;F&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.F(t0)));</div>
+<div class="line"><span class="lineno">  221</span>                dynamics.Set(<span class="stringliteral">&quot;H&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.H(t0)));</div>
+<div class="line"><span class="lineno">  222</span>            }</div>
+<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">if</span> (l &gt; 0)</div>
+<div class="line"><span class="lineno">  224</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> Matrix B = model.B(t0); !B.Empty()) dynamics.Set(<span class="stringliteral">&quot;B&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(B));</div>
+<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">if</span> (<span class="keyword">const</span> Matrix L = model.L(t0); !L.Empty() &amp;&amp; !IsIdentity(L)) dynamics.Set(<span class="stringliteral">&quot;L&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(L));</div>
+<div class="line"><span class="lineno">  226</span>        }</div>
+<div class="line"><span class="lineno">  227</span> </div>
+<div class="line"><span class="lineno">  228</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> continuousNoise = spec[<span class="stringliteral">&quot;base&quot;</span>].AsString() == <span class="stringliteral">&quot;continuous&quot;</span>;</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">if</span> (!continuousNoise) noise.Set(<span class="stringliteral">&quot;Q&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.Q(t0)));</div>
+<div class="line"><span class="lineno">  230</span>        noise.Set(<span class="stringliteral">&quot;R&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.R(t0)));</div>
+<div class="line"><span class="lineno">  231</span>        initial.Set(<span class="stringliteral">&quot;x0&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.X0())).Set(<span class="stringliteral">&quot;P0&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.P0()));</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>        spec.Set(<span class="stringliteral">&quot;fs&quot;</span>, model.SampleRate()).Set(<span class="stringliteral">&quot;dynamics&quot;</span>, dynamics).Set(<span class="stringliteral">&quot;noise&quot;</span>, noise).Set(<span class="stringliteral">&quot;initial&quot;</span>, initial);</div>
+<div class="line"><span class="lineno">  234</span>        spec.Set(<span class="stringliteral">&quot;labels&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;states&quot;</span>, Names(model.StateComponents()))</div>
+<div class="line"><span class="lineno">  235</span>                                         .<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;observables&quot;</span>, Names(model.MeasurementComponents())));</div>
+<div class="line"><span class="lineno">  236</span>        spec.Set(<span class="stringliteral">&quot;bindings&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;engine&quot;</span>, kind == <span class="stringliteral">&quot;reference&quot;</span> ? Lower(<a class="code hl_function" href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">ToString</a>(model.DefaultEngine()))</div>
+<div class="line"><span class="lineno">  237</span>                                                                               : std::string(<span class="stringliteral">&quot;linear&quot;</span>)));</div>
+<div class="line"><span class="lineno">  238</span>        document.Set(<span class="stringliteral">&quot;spec&quot;</span>, spec);</div>
+<div class="line"><span class="lineno">  239</span> </div>
+<div class="line"><span class="lineno">  240</span>        <span class="comment">// ---- the tables: the matrices that change with time ------------------</span></div>
+<div class="line"><span class="lineno">  241</span>        <span class="keywordflow">if</span> (kind == <span class="stringliteral">&quot;complete&quot;</span> &amp;&amp; structure == <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">StructureKind::TimeVarying</a>)</div>
+<div class="line"><span class="lineno">  242</span>        {</div>
+<div class="line"><span class="lineno">  243</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> dt = model.DeltaT();</div>
+<div class="line"><span class="lineno">  244</span>            Json entries = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  245</span>            <span class="keyword">const</span> <span class="keyword">auto</span> tabulate = [&amp;](<span class="keyword">const</span> <span class="keywordtype">char</span> *which, <span class="keyword">const</span> std::function&lt;Matrix(<span class="keywordtype">double</span>)&gt; &amp;<a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>)</div>
+<div class="line"><span class="lineno">  246</span>            {</div>
+<div class="line"><span class="lineno">  247</span>                std::vector&lt;Matrix&gt; table;</div>
+<div class="line"><span class="lineno">  248</span>                <span class="keywordtype">bool</span> varies = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  249</span>                <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; options.steps; ++k)</div>
+<div class="line"><span class="lineno">  250</span>                {</div>
+<div class="line"><span class="lineno">  251</span>                    table.push_back(<a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>(t0 + <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(k) * dt));</div>
+<div class="line"><span class="lineno">  252</span>                    varies = varies || !Same(table.back(), table.front());</div>
+<div class="line"><span class="lineno">  253</span>                }</div>
+<div class="line"><span class="lineno">  254</span>                <span class="keywordflow">if</span> (!varies) <span class="keywordflow">return</span>;   <span class="comment">// constant: the spec already holds it</span></div>
+<div class="line"><span class="lineno">  255</span>                Json shape = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ae76079207ac66922122e953ec3a69588">Json::Array</a>();</div>
+<div class="line"><span class="lineno">  256</span>                shape.Add(options.steps).Add(table.front().Rows()).Add(table.front().Cols());</div>
+<div class="line"><span class="lineno">  257</span>                entries.Set(which, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().Set(<span class="stringliteral">&quot;file&quot;</span>, TablePath(which)).Set(<span class="stringliteral">&quot;shape&quot;</span>, shape));</div>
+<div class="line"><span class="lineno">  258</span>                file.fTables.Set(TablePath(which), Pack(table));</div>
+<div class="line"><span class="lineno">  259</span>            };</div>
+<div class="line"><span class="lineno">  260</span>            tabulate(<span class="stringliteral">&quot;F&quot;</span>, [&amp;model](<span class="keywordtype">double</span> t) { <span class="keywordflow">return</span> model.F(t); });</div>
+<div class="line"><span class="lineno">  261</span>            tabulate(<span class="stringliteral">&quot;H&quot;</span>, [&amp;model](<span class="keywordtype">double</span> t) { <span class="keywordflow">return</span> model.H(t); });</div>
+<div class="line"><span class="lineno">  262</span>            tabulate(<span class="stringliteral">&quot;Q&quot;</span>, [&amp;model](<span class="keywordtype">double</span> t) { <span class="keywordflow">return</span> model.Q(t); });</div>
+<div class="line"><span class="lineno">  263</span>            tabulate(<span class="stringliteral">&quot;R&quot;</span>, [&amp;model](<span class="keywordtype">double</span> t) { <span class="keywordflow">return</span> model.R(t); });</div>
+<div class="line"><span class="lineno">  264</span>            document.Set(<span class="stringliteral">&quot;tables&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().Set(<span class="stringliteral">&quot;steps&quot;</span>, options.steps).<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;t0&quot;</span>, t0)</div>
+<div class="line"><span class="lineno">  265</span>                                                 .<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;dtype&quot;</span>, <span class="stringliteral">&quot;float64, little-endian, row-major&quot;</span>)</div>
+<div class="line"><span class="lineno">  266</span>                                                 .<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;entries&quot;</span>, entries));</div>
+<div class="line"><span class="lineno">  267</span>        }</div>
+<div class="line"><span class="lineno">  268</span>        (void) <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>;</div>
+<div class="line"><span class="lineno">  269</span> </div>
+<div class="line"><span class="lineno">  270</span>        file.fDocument = std::move(document);</div>
+<div class="line"><span class="lineno">  271</span>        <span class="keywordflow">return</span> file;</div>
+<div class="line"><span class="lineno">  272</span>    }</div>
+<div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
+<div class="ttc" id="a_json_8cc_html_af1f11291c39b6010d450a6cc8b755b99"><div class="ttname"><a href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a></div><div class="ttdeci">std::size_t at</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00082">Json.cc:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a2e582a7600a3d927c1663d811bde7ad8"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Kalman::IO::Json::From</a></div><div class="ttdeci">static Json From(const Vector &amp;v)</div><div class="ttdoc">A vector as an array of numbers.</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00213">Json.cc:213</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a4723f1e5510a5bdbb8d5d12d43a26760"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Kalman::IO::Json::Object</a></div><div class="ttdeci">static Json Object()</div><div class="ttdef"><b>Definition</b> <a href="_json_8h_source.html#l00060">Json.h:60</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_ad727b124870d1301f6ef771f438f7e35"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Kalman::IO::Json::Set</a></div><div class="ttdeci">Json &amp; Set(const std::string &amp;key, Json value)</div><div class="ttdoc">Set member key of an object (replacing it when present). Returns *this.</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00302">Json.cc:302</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_ae76079207ac66922122e953ec3a69588"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#ae76079207ac66922122e953ec3a69588">Kalman::IO::Json::Array</a></div><div class="ttdeci">static Json Array()</div><div class="ttdef"><b>Definition</b> <a href="_json_8h_source.html#l00059">Json.h:59</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_ab588e281c4ebfd85619fea8ed3737004"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#ab588e281c4ebfd85619fea8ed3737004">Kalman::IO::ModelFile::kFormat</a></div><div class="ttdeci">static constexpr const char * kFormat</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00066">ModelFile.h:66</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_afa8699b808d27691b373d1a32668148b"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#afa8699b808d27691b373d1a32668148b">Kalman::IO::ModelFile::ModelFile</a></div><div class="ttdeci">ModelFile()=default</div></div>
+<div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fc"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fc">Kalman::StructureKind</a></div><div class="ttdeci">StructureKind</div><div class="ttdoc">What a model is made of, which decides what a file can hold of it.</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00060">Constants.h:61</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">Kalman::StructureKind::TimeVarying</a></div><div class="ttdeci">@ TimeVarying</div></div>
+<div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a">Kalman::StructureKind::Matrices</a></div><div class="ttdeci">@ Matrices</div></div>
+<div class="ttc" id="anamespace_kalman_html_a803ae9038ef8df88ddddc4445a1c0088"><div class="ttname"><a href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">Kalman::ToString</a></div><div class="ttdeci">const char * ToString(EngineKind kind)</div><div class="ttdoc">Human-readable name of an engine kind (never null).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00021">Utils.cc:21</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac7d9e097453cde7237cfb0ddc8704c3f" name="ac7d9e097453cde7237cfb0ddc8704c3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7d9e097453cde7237cfb0ddc8704c3f">&#9670;&#160;</a></span>FromBytes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a> Kalman::IO::ModelFile::FromBytes </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bytes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The same from bytes already read. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00578">578</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  579</span>    {</div>
+<div class="line"><span class="lineno">  580</span>        <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#afa8699b808d27691b373d1a32668148b">ModelFile</a> file;</div>
+<div class="line"><span class="lineno">  581</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_archive.html#a99d8a2be8019c05da4541bec1f5dee8a">Archive::Looks</a>(bytes))</div>
+<div class="line"><span class="lineno">  582</span>        {</div>
+<div class="line"><span class="lineno">  583</span>            <span class="keyword">const</span> Archive archive = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_archive.html#a0ce04a6e351e7f054145eb1c35a22bda">Archive::FromBytes</a>(bytes);</div>
+<div class="line"><span class="lineno">  584</span>            file.fDocument = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a84efeb91516e11f6d30d0a7038b92c33">Json::Parse</a>(archive.Get(<a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aab5e0e98709b846665b563098a86c10e">kDocument</a>));</div>
+<div class="line"><span class="lineno">  585</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;e : archive.Entries())</div>
+<div class="line"><span class="lineno">  586</span>                if (e.first.rfind(<span class="stringliteral">&quot;tables/&quot;</span>, 0) == 0) file.fTables.Set(e.first, e.second);</div>
+<div class="line"><span class="lineno">  587</span>        }</div>
+<div class="line"><span class="lineno">  588</span>        <span class="keywordflow">else</span> file.fDocument = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a84efeb91516e11f6d30d0a7038b92c33">Json::Parse</a>(bytes);</div>
+<div class="line"><span class="lineno">  589</span>        <span class="keywordflow">if</span> (!file.fDocument.IsObject()) Bad(<span class="stringliteral">&quot;the document is not a JSON object.&quot;</span>);</div>
+<div class="line"><span class="lineno">  590</span>        <span class="keywordflow">return</span> file;</div>
+<div class="line"><span class="lineno">  591</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_archive_html_a0ce04a6e351e7f054145eb1c35a22bda"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_archive.html#a0ce04a6e351e7f054145eb1c35a22bda">Kalman::IO::Archive::FromBytes</a></div><div class="ttdeci">static Archive FromBytes(const std::string &amp;bytes)</div><div class="ttdef"><b>Definition</b> <a href="_archive_8cc_source.html#l00189">Archive.cc:189</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_archive_html_a99d8a2be8019c05da4541bec1f5dee8a"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_archive.html#a99d8a2be8019c05da4541bec1f5dee8a">Kalman::IO::Archive::Looks</a></div><div class="ttdeci">static bool Looks(const std::string &amp;bytes)</div><div class="ttdoc">True when bytes starts like a zip archive.</div><div class="ttdef"><b>Definition</b> <a href="_archive_8cc_source.html#l00186">Archive.cc:186</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a84efeb91516e11f6d30d0a7038b92c33"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a84efeb91516e11f6d30d0a7038b92c33">Kalman::IO::Json::Parse</a></div><div class="ttdeci">static Json Parse(const std::string &amp;text)</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00377">Json.cc:377</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9668402e9f58569af62babc7ea729412" name="a9668402e9f58569af62babc7ea729412"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9668402e9f58569af62babc7ea729412">&#9670;&#160;</a></span>HasTables()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Kalman::IO::ModelFile::HasTables </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00114">114</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>{ <span class="keywordflow">return</span> !fTables.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_archive.html#a3ec6f568108990034b9acd340243ae88">Entries</a>().empty(); }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_archive_html_a3ec6f568108990034b9acd340243ae88"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_archive.html#a3ec6f568108990034b9acd340243ae88">Kalman::IO::Archive::Entries</a></div><div class="ttdeci">const std::vector&lt; Entry &gt; &amp; Entries() const</div><div class="ttdef"><b>Definition</b> <a href="_archive_8h_source.html#l00049">Archive.h:49</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7808feacf0c9f74c78989dbb04eda820" name="a7808feacf0c9f74c78989dbb04eda820"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7808feacf0c9f74c78989dbb04eda820">&#9670;&#160;</a></span>Identity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::IO::ModelFile::Identity </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The name a settings file must carry to be applied to this model. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00391">391</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  392</span>    {</div>
+<div class="line"><span class="lineno">  393</span>        <span class="keyword">const</span> Json &amp;spec = fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;spec&quot;</span>) ? fDocument[<span class="stringliteral">&quot;spec&quot;</span>] : fDocument;</div>
+<div class="line"><span class="lineno">  394</span>        <span class="keyword">const</span> std::string base = spec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;base&quot;</span>) ? spec[<span class="stringliteral">&quot;base&quot;</span>].AsString(<span class="stringliteral">&quot;spec.base&quot;</span>) : std::string(<span class="stringliteral">&quot;matrices&quot;</span>);</div>
+<div class="line"><span class="lineno">  395</span>        <span class="keywordflow">if</span> (base != <span class="stringliteral">&quot;matrices&quot;</span> &amp;&amp; base != <span class="stringliteral">&quot;continuous&quot;</span>) <span class="keywordflow">return</span> base;</div>
+<div class="line"><span class="lineno">  396</span>        <span class="keywordflow">return</span> spec.Has(<span class="stringliteral">&quot;name&quot;</span>) ? spec[<span class="stringliteral">&quot;name&quot;</span>].AsString(<span class="stringliteral">&quot;spec.name&quot;</span>) : std::string(<span class="stringliteral">&quot;model&quot;</span>);</div>
+<div class="line"><span class="lineno">  397</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a0a6b930b41c81cc909c873deaed08928"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Kalman::IO::Json::Has</a></div><div class="ttdeci">bool Has(const std::string &amp;key) const</div><div class="ttdoc">True when this is an object with a non-null member key.</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00286">Json.cc:286</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab286892f7c6ebf388eabbfbaae26a76b" name="ab286892f7c6ebf388eabbfbaae26a76b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab286892f7c6ebf388eabbfbaae26a76b">&#9670;&#160;</a></span>Import()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; Kalman::IO::ModelFile::Import </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Build the model the file describes. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>for another format or a later version, a malformed document, or a reference to a model that is not registered here (the message names the plugin to load). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00280">280</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>    {</div>
+<div class="line"><span class="lineno">  282</span>        <span class="comment">// A bare spec (no envelope) is accepted: it is what the JSON API takes.</span></div>
+<div class="line"><span class="lineno">  283</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> envelope = fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;spec&quot;</span>);</div>
+<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">if</span> (envelope)</div>
+<div class="line"><span class="lineno">  285</span>        {</div>
+<div class="line"><span class="lineno">  286</span>            <span class="keywordflow">if</span> (!fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;format&quot;</span>) || fDocument[<span class="stringliteral">&quot;format&quot;</span>].AsString(<span class="stringliteral">&quot;format&quot;</span>) != <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#ab588e281c4ebfd85619fea8ed3737004">kFormat</a>)</div>
+<div class="line"><span class="lineno">  287</span>                Bad(std::string(<span class="stringliteral">&quot;not a model file: \&quot;format\&quot; is not \&quot;&quot;</span>) + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#ab588e281c4ebfd85619fea8ed3737004">kFormat</a> + <span class="stringliteral">&quot;\&quot;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  288</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="namespacemodules_1_1framework_1_1native_1_1core.html#ac9245546addd486c757747412ec9a930">version</a> = fDocument[<span class="stringliteral">&quot;format_version&quot;</span>].<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a744a8572db675c06ba3dbd61113af9dc">AsNumber</a>(<span class="stringliteral">&quot;format_version&quot;</span>);</div>
+<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">if</span> (version &gt; <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a>)</div>
+<div class="line"><span class="lineno">  290</span>                Bad(<span class="stringliteral">&quot;the file is of format version &quot;</span> + std::to_string(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(version)) + <span class="stringliteral">&quot;, this library &quot;</span></div>
+<div class="line"><span class="lineno">  291</span>                    <span class="stringliteral">&quot;reads up to &quot;</span> + std::to_string(<a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a>) + <span class="stringliteral">&quot;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  292</span>        }</div>
+<div class="line"><span class="lineno">  293</span>        <span class="keyword">const</span> Json &amp;spec = envelope ? fDocument[<span class="stringliteral">&quot;spec&quot;</span>] : fDocument;</div>
+<div class="line"><span class="lineno">  294</span>        <span class="keywordflow">if</span> (!spec.IsObject()) Bad(<span class="stringliteral">&quot;the document has no spec.&quot;</span>);</div>
+<div class="line"><span class="lineno">  295</span> </div>
+<div class="line"><span class="lineno">  296</span>        <span class="keyword">const</span> std::string base = spec.Has(<span class="stringliteral">&quot;base&quot;</span>) ? spec[<span class="stringliteral">&quot;base&quot;</span>].AsString(<span class="stringliteral">&quot;spec.base&quot;</span>) : std::string(<span class="stringliteral">&quot;matrices&quot;</span>);</div>
+<div class="line"><span class="lineno">  297</span>        <span class="keyword">const</span> Json &amp;dynamics = spec[<span class="stringliteral">&quot;dynamics&quot;</span>], &amp;noise = spec[<span class="stringliteral">&quot;noise&quot;</span>], &amp;initial = spec[<span class="stringliteral">&quot;initial&quot;</span>];</div>
+<div class="line"><span class="lineno">  298</span>        std::unique_ptr&lt;Model&gt; model;</div>
+<div class="line"><span class="lineno">  299</span> </div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">if</span> (base == <span class="stringliteral">&quot;matrices&quot;</span> || base == <span class="stringliteral">&quot;continuous&quot;</span>)</div>
+<div class="line"><span class="lineno">  301</span>        {</div>
+<div class="line"><span class="lineno">  302</span>            <span class="keyword">const</span> <span class="keywordtype">bool</span> continuous = dynamics.Has(<span class="stringliteral">&quot;A&quot;</span>);</div>
+<div class="line"><span class="lineno">  303</span>            <span class="keywordflow">if</span> (continuous &amp;&amp; dynamics.Has(<span class="stringliteral">&quot;F&quot;</span>)) Bad(<span class="stringliteral">&quot;the spec gives both dynamics.F and dynamics.A.&quot;</span>);</div>
+<div class="line"><span class="lineno">  304</span>            <span class="keywordflow">if</span> (!continuous &amp;&amp; !dynamics.Has(<span class="stringliteral">&quot;F&quot;</span>)) Bad(<span class="stringliteral">&quot;a matrices spec needs dynamics.F (or dynamics.A).&quot;</span>);</div>
+<div class="line"><span class="lineno">  305</span>            <span class="keywordflow">if</span> (!dynamics.Has(<span class="stringliteral">&quot;H&quot;</span>)) Bad(<span class="stringliteral">&quot;a matrices spec needs dynamics.H.&quot;</span>);</div>
+<div class="line"><span class="lineno">  306</span>            <span class="keyword">const</span> Matrix first = (continuous ? dynamics[<span class="stringliteral">&quot;A&quot;</span>] : dynamics[<span class="stringliteral">&quot;F&quot;</span>]).AsMatrix(continuous ? <span class="stringliteral">&quot;dynamics.A&quot;</span> : <span class="stringliteral">&quot;dynamics.F&quot;</span>);</div>
+<div class="line"><span class="lineno">  307</span>            <span class="keyword">const</span> Matrix H = dynamics[<span class="stringliteral">&quot;H&quot;</span>].AsMatrix(<span class="stringliteral">&quot;dynamics.H&quot;</span>);</div>
+<div class="line"><span class="lineno">  308</span>            <span class="keyword">const</span> Matrix B = dynamics.Has(<span class="stringliteral">&quot;B&quot;</span>) ? dynamics[<span class="stringliteral">&quot;B&quot;</span>].AsMatrix(<span class="stringliteral">&quot;dynamics.B&quot;</span>) : Matrix();</div>
+<div class="line"><span class="lineno">  309</span>            <span class="keyword">const</span> std::size_t n = first.Rows();</div>
+<div class="line"><span class="lineno">  310</span> </div>
+<div class="line"><span class="lineno">  311</span>            <span class="keyword">auto</span> tabulated = std::make_unique&lt;Models::Tabulated&gt;(</div>
+<div class="line"><span class="lineno">  312</span>                spec.Has(<span class="stringliteral">&quot;name&quot;</span>) ? spec[<span class="stringliteral">&quot;name&quot;</span>].AsString(<span class="stringliteral">&quot;spec.name&quot;</span>) : std::string(<span class="stringliteral">&quot;model&quot;</span>), n, H.Rows(), B.Cols());</div>
+<div class="line"><span class="lineno">  313</span>            <span class="keywordflow">if</span> (spec.Has(<span class="stringliteral">&quot;fs&quot;</span>)) tabulated-&gt;SetSampleRate(spec[<span class="stringliteral">&quot;fs&quot;</span>].AsNumber(<span class="stringliteral">&quot;spec.fs&quot;</span>));</div>
+<div class="line"><span class="lineno">  314</span>            tabulated-&gt;SetH(H);</div>
+<div class="line"><span class="lineno">  315</span>            <span class="keywordflow">if</span> (!B.Empty()) tabulated-&gt;SetB(B);</div>
+<div class="line"><span class="lineno">  316</span>            <span class="keywordflow">if</span> (dynamics.Has(<span class="stringliteral">&quot;L&quot;</span>)) tabulated-&gt;SetL(dynamics[<span class="stringliteral">&quot;L&quot;</span>].AsMatrix(<span class="stringliteral">&quot;dynamics.L&quot;</span>));</div>
+<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">if</span> (continuous)</div>
+<div class="line"><span class="lineno">  318</span>            {</div>
+<div class="line"><span class="lineno">  319</span>                tabulated-&gt;SetGenerator(first);</div>
+<div class="line"><span class="lineno">  320</span>                <span class="keywordflow">if</span> (dynamics.Has(<span class="stringliteral">&quot;Qc&quot;</span>))</div>
+<div class="line"><span class="lineno">  321</span>                    tabulated-&gt;SetNoiseIntensity(dynamics[<span class="stringliteral">&quot;Qc&quot;</span>].AsMatrix(<span class="stringliteral">&quot;dynamics.Qc&quot;</span>),</div>
+<div class="line"><span class="lineno">  322</span>                                                 dynamics.Has(<span class="stringliteral">&quot;Lc&quot;</span>) ? dynamics[<span class="stringliteral">&quot;Lc&quot;</span>].AsMatrix(<span class="stringliteral">&quot;dynamics.Lc&quot;</span>) : Matrix());</div>
+<div class="line"><span class="lineno">  323</span>            }</div>
+<div class="line"><span class="lineno">  324</span>            <span class="keywordflow">else</span> tabulated-&gt;SetF(first);</div>
+<div class="line"><span class="lineno">  325</span> </div>
+<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">if</span> (envelope)</div>
+<div class="line"><span class="lineno">  327</span>                tabulated-&gt;SetComponents(ReadComponents(fDocument[<span class="stringliteral">&quot;state&quot;</span>], <span class="stringliteral">&quot;state&quot;</span>),</div>
+<div class="line"><span class="lineno">  328</span>                                         ReadComponents(fDocument[<span class="stringliteral">&quot;measurement&quot;</span>], <span class="stringliteral">&quot;measurement&quot;</span>));</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span>            <span class="keywordflow">if</span> (envelope &amp;&amp; fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;tables&quot;</span>))</div>
+<div class="line"><span class="lineno">  331</span>            {</div>
+<div class="line"><span class="lineno">  332</span>                <span class="keyword">const</span> Json &amp;tables = fDocument[<span class="stringliteral">&quot;tables&quot;</span>];</div>
+<div class="line"><span class="lineno">  333</span>                <span class="keyword">const</span> std::size_t steps = <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(tables[<span class="stringliteral">&quot;steps&quot;</span>].AsNumber(<span class="stringliteral">&quot;tables.steps&quot;</span>));</div>
+<div class="line"><span class="lineno">  334</span>                <span class="keywordflow">if</span> (tables.Has(<span class="stringliteral">&quot;t0&quot;</span>)) tabulated-&gt;SetT0(tables[<span class="stringliteral">&quot;t0&quot;</span>].AsNumber(<span class="stringliteral">&quot;tables.t0&quot;</span>));</div>
+<div class="line"><span class="lineno">  335</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;entry : tables[<span class="stringliteral">&quot;entries&quot;</span>].Members(<span class="stringliteral">&quot;tables.entries&quot;</span>))</div>
+<div class="line"><span class="lineno">  336</span>                {</div>
+<div class="line"><span class="lineno">  337</span>                    <span class="keyword">const</span> std::string where = entry.second[<span class="stringliteral">&quot;file&quot;</span>].<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#afbb7d3d5f15a14298dda5fd970f7b904">AsString</a>(<span class="stringliteral">&quot;tables.entries.&quot;</span> + entry.first + <span class="stringliteral">&quot;.file&quot;</span>);</div>
+<div class="line"><span class="lineno">  338</span>                    <span class="keyword">const</span> <span class="keyword">auto</span> &amp;shape = entry.second[<span class="stringliteral">&quot;shape&quot;</span>].Items(<span class="stringliteral">&quot;tables.entries.&quot;</span> + entry.first + <span class="stringliteral">&quot;.shape&quot;</span>);</div>
+<div class="line"><span class="lineno">  339</span>                    <span class="keywordflow">if</span> (shape.size() != 3 || <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(shape[0].AsNumber(<span class="stringliteral">&quot;shape&quot;</span>)) != steps)</div>
+<div class="line"><span class="lineno">  340</span>                        Bad(<span class="stringliteral">&quot;the table of &quot;</span> + entry.first + <span class="stringliteral">&quot; does not have the shape [steps, rows, columns].&quot;</span>);</div>
+<div class="line"><span class="lineno">  341</span>                    <span class="keywordflow">if</span> (!fTables.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_archive.html#a959b55ad32c76b47ad8e22e5a9b76335">Has</a>(where))</div>
+<div class="line"><span class="lineno">  342</span>                        Bad(<span class="stringliteral">&quot;the document refers to &#39;&quot;</span> + where + <span class="stringliteral">&quot;&#39;, which is not in the file. A model with tables &quot;</span></div>
+<div class="line"><span class="lineno">  343</span>                            <span class="stringliteral">&quot;is one archive (&quot;</span> + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a> + <span class="stringliteral">&quot;); its JSON alone is not the whole model.&quot;</span>);</div>
+<div class="line"><span class="lineno">  344</span>                    tabulated-&gt;SetTable(entry.first, Unpack(fTables.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_archive.html#a9fbd4bfa87c2b5df39cdf5915f86a4eb">Get</a>(where), steps,</div>
+<div class="line"><span class="lineno">  345</span>                                                           <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(shape[1].AsNumber(<span class="stringliteral">&quot;shape&quot;</span>)),</div>
+<div class="line"><span class="lineno">  346</span>                                                           <span class="keyword">static_cast&lt;</span>std::size_t<span class="keyword">&gt;</span>(shape[2].AsNumber(<span class="stringliteral">&quot;shape&quot;</span>)), where));</div>
+<div class="line"><span class="lineno">  347</span>                }</div>
+<div class="line"><span class="lineno">  348</span>            }</div>
+<div class="line"><span class="lineno">  349</span>            model = std::move(tabulated);</div>
+<div class="line"><span class="lineno">  350</span>        }</div>
+<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  352</span>        {</div>
+<div class="line"><span class="lineno">  353</span>            <span class="keyword">auto</span> &amp;factory = <a class="code hl_function" href="class_kalman_1_1_factory.html#a925fbe85b85fc013fb26bdea74b0d7ca">Factory::Instance</a>();</div>
+<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">if</span> (!factory.Has(base))</div>
+<div class="line"><span class="lineno">  355</span>            {</div>
+<div class="line"><span class="lineno">  356</span>                std::string hint;</div>
+<div class="line"><span class="lineno">  357</span>                <span class="keywordflow">if</span> (envelope &amp;&amp; fDocument[<span class="stringliteral">&quot;origin&quot;</span>].Has(<span class="stringliteral">&quot;python&quot;</span>))</div>
+<div class="line"><span class="lineno">  358</span>                    hint = <span class="stringliteral">&quot; It refers to the Python class &quot;</span> + fDocument[<span class="stringliteral">&quot;origin&quot;</span>][<span class="stringliteral">&quot;python&quot;</span>].<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#afbb7d3d5f15a14298dda5fd970f7b904">AsString</a>(<span class="stringliteral">&quot;origin.python&quot;</span>)</div>
+<div class="line"><span class="lineno">  359</span>                         + <span class="stringliteral">&quot;: open it from Python (kalman.native.open_model).&quot;</span>;</div>
+<div class="line"><span class="lineno">  360</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (envelope &amp;&amp; fDocument[<span class="stringliteral">&quot;origin&quot;</span>].Has(<span class="stringliteral">&quot;plugin&quot;</span>))</div>
+<div class="line"><span class="lineno">  361</span>                    hint = <span class="stringliteral">&quot; It was written from the plugin &#39;&quot;</span> + fDocument[<span class="stringliteral">&quot;origin&quot;</span>][<span class="stringliteral">&quot;plugin&quot;</span>].<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#afbb7d3d5f15a14298dda5fd970f7b904">AsString</a>(<span class="stringliteral">&quot;origin.plugin&quot;</span>)</div>
+<div class="line"><span class="lineno">  362</span>                         + <span class="stringliteral">&quot;&#39;: load it first.&quot;</span>;</div>
+<div class="line"><span class="lineno">  363</span>                Bad(<span class="stringliteral">&quot;the file refers to the model &#39;&quot;</span> + base + <span class="stringliteral">&quot;&#39;, which is not registered here.&quot;</span> + hint</div>
+<div class="line"><span class="lineno">  364</span>                    + <span class="stringliteral">&quot; A reference holds a model&#39;s settings, not its code.&quot;</span>);</div>
+<div class="line"><span class="lineno">  365</span>            }</div>
+<div class="line"><span class="lineno">  366</span>            model = factory.Create(base);</div>
+<div class="line"><span class="lineno">  367</span>            <span class="keywordflow">if</span> (dynamics.Has(<span class="stringliteral">&quot;params&quot;</span>))</div>
+<div class="line"><span class="lineno">  368</span>            {</div>
+<div class="line"><span class="lineno">  369</span>                <span class="comment">// Arrays first: a model may size itself from them.</span></div>
+<div class="line"><span class="lineno">  370</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : dynamics[<span class="stringliteral">&quot;params&quot;</span>].Members(<span class="stringliteral">&quot;dynamics.params&quot;</span>))</div>
+<div class="line"><span class="lineno">  371</span>                    if (p.second.IsArray()) model-&gt;SetArray(p.first, Doubles(p.second, <span class="stringliteral">&quot;dynamics.params.&quot;</span> + p.first));</div>
+<div class="line"><span class="lineno">  372</span>                <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;p : dynamics[<span class="stringliteral">&quot;params&quot;</span>].Members(<span class="stringliteral">&quot;dynamics.params&quot;</span>))</div>
+<div class="line"><span class="lineno">  373</span>                    if (!p.second.IsArray())</div>
+<div class="line"><span class="lineno">  374</span>                        model-&gt;SetParameter(p.first, p.second.AsNumber(<span class="stringliteral">&quot;dynamics.params.&quot;</span> + p.first));</div>
+<div class="line"><span class="lineno">  375</span>            }</div>
+<div class="line"><span class="lineno">  376</span>            <span class="keywordflow">if</span> (spec.Has(<span class="stringliteral">&quot;fs&quot;</span>))</div>
+<div class="line"><span class="lineno">  377</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keywordtype">double</span> fs = spec[<span class="stringliteral">&quot;fs&quot;</span>].AsNumber(<span class="stringliteral">&quot;spec.fs&quot;</span>); fs != model-&gt;SampleRate()) model-&gt;SetSampleRate(fs);</div>
+<div class="line"><span class="lineno">  378</span>        }</div>
+<div class="line"><span class="lineno">  379</span> </div>
+<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">if</span> (noise.Has(<span class="stringliteral">&quot;Q&quot;</span>)) model-&gt;SetQ(noise[<span class="stringliteral">&quot;Q&quot;</span>].AsMatrix(<span class="stringliteral">&quot;noise.Q&quot;</span>));</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">if</span> (noise.Has(<span class="stringliteral">&quot;R&quot;</span>)) model-&gt;SetR(noise[<span class="stringliteral">&quot;R&quot;</span>].AsMatrix(<span class="stringliteral">&quot;noise.R&quot;</span>));</div>
+<div class="line"><span class="lineno">  382</span>        <span class="keywordflow">if</span> (initial.Has(<span class="stringliteral">&quot;x0&quot;</span>)) model-&gt;SetInitialState(initial[<span class="stringliteral">&quot;x0&quot;</span>].AsVector(<span class="stringliteral">&quot;initial.x0&quot;</span>));</div>
+<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">if</span> (initial.Has(<span class="stringliteral">&quot;P0&quot;</span>)) model-&gt;SetInitialCovariance(initial[<span class="stringliteral">&quot;P0&quot;</span>].AsMatrix(<span class="stringliteral">&quot;initial.P0&quot;</span>));</div>
+<div class="line"><span class="lineno">  384</span>        model-&gt;CheckShapes();</div>
+<div class="line"><span class="lineno">  385</span>        <span class="keywordflow">return</span> model;</div>
+<div class="line"><span class="lineno">  386</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_factory_html_a925fbe85b85fc013fb26bdea74b0d7ca"><div class="ttname"><a href="class_kalman_1_1_factory.html#a925fbe85b85fc013fb26bdea74b0d7ca">Kalman::Factory::Instance</a></div><div class="ttdeci">static Factory &amp; Instance()</div><div class="ttdoc">The process-wide registry.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8cc_source.html#l00020">Factory.cc:20</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_archive_html_a959b55ad32c76b47ad8e22e5a9b76335"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_archive.html#a959b55ad32c76b47ad8e22e5a9b76335">Kalman::IO::Archive::Has</a></div><div class="ttdeci">bool Has(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="_archive_8cc_source.html#l00121">Archive.cc:121</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_archive_html_a9fbd4bfa87c2b5df39cdf5915f86a4eb"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_archive.html#a9fbd4bfa87c2b5df39cdf5915f86a4eb">Kalman::IO::Archive::Get</a></div><div class="ttdeci">const std::string &amp; Get(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="_archive_8cc_source.html#l00128">Archive.cc:128</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a744a8572db675c06ba3dbd61113af9dc"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a744a8572db675c06ba3dbd61113af9dc">Kalman::IO::Json::AsNumber</a></div><div class="ttdeci">double AsNumber(const std::string &amp;what=&quot;value&quot;) const</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00232">Json.cc:232</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_afbb7d3d5f15a14298dda5fd970f7b904"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#afbb7d3d5f15a14298dda5fd970f7b904">Kalman::IO::Json::AsString</a></div><div class="ttdeci">const std::string &amp; AsString(const std::string &amp;what=&quot;value&quot;) const</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00244">Json.cc:244</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a931b0ec1ed9ff0029ff72653045f29cd"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">Kalman::IO::ModelFile::kExtension</a></div><div class="ttdeci">static constexpr const char * kExtension</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00068">ModelFile.h:68</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_1_1core_html_ac9245546addd486c757747412ec9a930"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native_1_1core.html#ac9245546addd486c757747412ec9a930">modules.framework.native.core.version</a></div><div class="ttdeci">str version()</div><div class="ttdef"><b>Definition</b> <a href="core_8py_source.html#l00462">core.py:462</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac76753de1414b54085a3efeb21c73895" name="ac76753de1414b54085a3efeb21c73895"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac76753de1414b54085a3efeb21c73895">&#9670;&#160;</a></span>Kind()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::IO::ModelFile::Kind </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>"complete", "reference" or "linearization". </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00277">277</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  278</span>    { <span class="keywordflow">return</span> fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a0a6b930b41c81cc909c873deaed08928">Has</a>(<span class="stringliteral">&quot;kind&quot;</span>) ? fDocument[<span class="stringliteral">&quot;kind&quot;</span>].<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#afbb7d3d5f15a14298dda5fd970f7b904">AsString</a>(<span class="stringliteral">&quot;kind&quot;</span>) : std::string(<span class="stringliteral">&quot;complete&quot;</span>); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a281402c3c28e3dabc3347c2339db5a3f" name="a281402c3c28e3dabc3347c2339db5a3f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a281402c3c28e3dabc3347c2339db5a3f">&#9670;&#160;</a></span>Load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a> Kalman::IO::ModelFile::Load </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read an archive or a plain JSON document (told apart by content, not by name). </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00593">593</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  594</span>    {</div>
+<div class="line"><span class="lineno">  595</span>        std::ifstream in(path, std::ios::binary);</div>
+<div class="line"><span class="lineno">  596</span>        <span class="keywordflow">if</span> (!in) Bad(<span class="stringliteral">&quot;cannot read &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  597</span>        std::ostringstream buffer;</div>
+<div class="line"><span class="lineno">  598</span>        buffer &lt;&lt; in.rdbuf();</div>
+<div class="line"><span class="lineno">  599</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#ac7d9e097453cde7237cfb0ddc8704c3f">FromBytes</a>(buffer.str());</div>
+<div class="line"><span class="lineno">  600</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_ac7d9e097453cde7237cfb0ddc8704c3f"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#ac7d9e097453cde7237cfb0ddc8704c3f">Kalman::IO::ModelFile::FromBytes</a></div><div class="ttdeci">static ModelFile FromBytes(const std::string &amp;bytes)</div><div class="ttdoc">The same from bytes already read.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00578">ModelFile.cc:578</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac46a16e40dd6e947a982696868be5796" name="ac46a16e40dd6e947a982696868be5796"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac46a16e40dd6e947a982696868be5796">&#9670;&#160;</a></span>Open()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_opened.html">ModelFile::Opened</a> Kalman::IO::ModelFile::Open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>settings</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Load <code>path</code>, build its model, and apply the settings file beside it when there is one (and <code>settings</code> is true). </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00521">521</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  522</span>    {</div>
+<div class="line"><span class="lineno">  523</span>        <span class="keyword">const</span> <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#afa8699b808d27691b373d1a32668148b">ModelFile</a> file = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a281402c3c28e3dabc3347c2339db5a3f">Load</a>(path);</div>
+<div class="line"><span class="lineno">  524</span>        <span class="keywordflow">if</span> (file.fDocument.Has(<span class="stringliteral">&quot;format&quot;</span>) &amp;&amp; file.fDocument[<span class="stringliteral">&quot;format&quot;</span>].AsString(<span class="stringliteral">&quot;format&quot;</span>) == <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">kSettingsFormat</a>)</div>
+<div class="line"><span class="lineno">  525</span>            Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39; is a settings file, not a model: open the model file it sits beside.&quot;</span>);</div>
+<div class="line"><span class="lineno">  526</span>        Opened opened;</div>
+<div class="line"><span class="lineno">  527</span>        opened.model = file.Import();</div>
+<div class="line"><span class="lineno">  528</span>        opened.kind = file.Kind();</div>
+<div class="line"><span class="lineno">  529</span>        opened.tables = file.HasTables();</div>
+<div class="line"><span class="lineno">  530</span>        <span class="keyword">const</span> std::string beside = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#ac1397a395f0d9725ed4fc688887b462c">SettingsPath</a>(path);</div>
+<div class="line"><span class="lineno">  531</span>        <span class="keywordflow">if</span> (settings)</div>
+<div class="line"><span class="lineno">  532</span>            <span class="keywordflow">if</span> (std::ifstream in(beside, std::ios::binary); in)</div>
+<div class="line"><span class="lineno">  533</span>            {</div>
+<div class="line"><span class="lineno">  534</span>                std::ostringstream buffer;</div>
+<div class="line"><span class="lineno">  535</span>                buffer &lt;&lt; in.rdbuf();</div>
+<div class="line"><span class="lineno">  536</span>                <span class="keywordflow">try</span> { opened.changed = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#abb466932d19c9ba8196e7f43b146d397">Apply</a>(*opened.model, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a84efeb91516e11f6d30d0a7038b92c33">Json::Parse</a>(buffer.str()), file.Identity()); }</div>
+<div class="line"><span class="lineno">  537</span>                <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;e) { Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + beside + <span class="stringliteral">&quot;&#39;: &quot;</span> + e.what()); }</div>
+<div class="line"><span class="lineno">  538</span>                <span class="comment">// A tabulated matrix is read from its table: a constant would be ignored without a word.</span></div>
+<div class="line"><span class="lineno">  539</span>                <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *tabulated = <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span>Models::Tabulated *<span class="keyword">&gt;</span>(opened.model.get()))</div>
+<div class="line"><span class="lineno">  540</span>                    <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keywordtype">char</span> *which : {<span class="stringliteral">&quot;Q&quot;</span>, <span class="stringliteral">&quot;R&quot;</span>})</div>
+<div class="line"><span class="lineno">  541</span>                        <span class="keywordflow">if</span> (!tabulated-&gt;Table(which).empty()</div>
+<div class="line"><span class="lineno">  542</span>                            &amp;&amp; std::find(opened.changed.begin(), opened.changed.end(), which) != opened.changed.end())</div>
+<div class="line"><span class="lineno">  543</span>                            Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + beside + <span class="stringliteral">&quot;&#39;: &quot;</span> + which + <span class="stringliteral">&quot; changes with time in &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39; (it is a table), &quot;</span></div>
+<div class="line"><span class="lineno">  544</span>                                <span class="stringliteral">&quot;so one constant cannot replace it.&quot;</span>);</div>
+<div class="line"><span class="lineno">  545</span>                opened.settings = beside;</div>
+<div class="line"><span class="lineno">  546</span>            }</div>
+<div class="line"><span class="lineno">  547</span>        <span class="keywordflow">return</span> opened;</div>
+<div class="line"><span class="lineno">  548</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a281402c3c28e3dabc3347c2339db5a3f"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a281402c3c28e3dabc3347c2339db5a3f">Kalman::IO::ModelFile::Load</a></div><div class="ttdeci">static ModelFile Load(const std::string &amp;path)</div><div class="ttdoc">Read an archive or a plain JSON document (told apart by content, not by name).</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00593">ModelFile.cc:593</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_abb466932d19c9ba8196e7f43b146d397"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#abb466932d19c9ba8196e7f43b146d397">Kalman::IO::ModelFile::Apply</a></div><div class="ttdeci">static std::vector&lt; std::string &gt; Apply(Model &amp;model, const Json &amp;settings, const std::string &amp;identity)</div><div class="ttdoc">Apply a settings document to model.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00419">ModelFile.cc:419</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_ac1397a395f0d9725ed4fc688887b462c"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#ac1397a395f0d9725ed4fc688887b462c">Kalman::IO::ModelFile::SettingsPath</a></div><div class="ttdeci">static std::string SettingsPath(const std::string &amp;path)</div><div class="ttdoc">Where the settings of the model file path are looked for: path + &quot;.json&quot;.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00399">ModelFile.cc:399</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8f76ad4635eda3a76c57548e74d56462" name="a8f76ad4635eda3a76c57548e74d56462"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f76ad4635eda3a76c57548e74d56462">&#9670;&#160;</a></span>Save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::IO::ModelFile::Save </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the file: an archive, or plain JSON when <code>path</code> ends in <code>.json</code>. </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>for plain JSON when the file has tables. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00561">561</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  562</span>    {</div>
+<div class="line"><span class="lineno">  563</span>        <span class="keyword">const</span> std::string <a class="code hl_typedef" href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a> = <span class="stringliteral">&quot;.json&quot;</span>;</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keyword">const</span> <span class="keywordtype">bool</span> plain = <a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.size() &gt;= <a class="code hl_typedef" href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a>.size() &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.compare(<a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.size() - <a class="code hl_typedef" href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a>.size(), <a class="code hl_typedef" href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a>.size(), <a class="code hl_typedef" href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a>) == 0;</div>
+<div class="line"><span class="lineno">  565</span>        <span class="keywordflow">if</span> (plain &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a9668402e9f58569af62babc7ea729412">HasTables</a>())</div>
+<div class="line"><span class="lineno">  566</span>            Bad(<span class="stringliteral">&quot;this model has tables, so its JSON is not the whole model: write it as one archive (&#39;&quot;</span></div>
+<div class="line"><span class="lineno">  567</span>                + std::string(<a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a>) + <span class="stringliteral">&quot;&#39;), not as &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  568</span>        <span class="keyword">const</span> std::string reserved = std::string(<a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a>) + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#afc32b79e43e9802a5248057b902c8b8b">kSettingsSuffix</a>;</div>
+<div class="line"><span class="lineno">  569</span>        <span class="keywordflow">if</span> (<a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.size() &gt;= reserved.size() &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.compare(<a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a>.size() - reserved.size(), reserved.size(), reserved) == 0)</div>
+<div class="line"><span class="lineno">  570</span>            Bad(<span class="stringliteral">&quot;&#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39; is the name of a settings file (what changes from a &#39;&quot;</span> + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a> + <span class="stringliteral">&quot;&#39; file), and &quot;</span></div>
+<div class="line"><span class="lineno">  571</span>                <span class="stringliteral">&quot;this is a whole model: write it as &#39;&quot;</span> + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#a931b0ec1ed9ff0029ff72653045f29cd">kExtension</a> + <span class="stringliteral">&quot;&#39;, or as plain JSON under another name.&quot;</span>);</div>
+<div class="line"><span class="lineno">  572</span>        <span class="keyword">const</span> std::string bytes = plain ? <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a8a90b703830deae2279209d56dd5318a">Text</a>() : <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a4d0a5e1a0a2f22f85a037a36324d0fb8">Bytes</a>();</div>
+<div class="line"><span class="lineno">  573</span>        std::ofstream out(path, std::ios::binary | std::ios::trunc);</div>
+<div class="line"><span class="lineno">  574</span>        out.write(bytes.data(), <span class="keyword">static_cast&lt;</span>std::streamsize<span class="keyword">&gt;</span>(bytes.size()));</div>
+<div class="line"><span class="lineno">  575</span>        <span class="keywordflow">if</span> (!out) Bad(<span class="stringliteral">&quot;cannot write &#39;&quot;</span> + path + <span class="stringliteral">&quot;&#39;.&quot;</span>);</div>
+<div class="line"><span class="lineno">  576</span>    }</div>
+<div class="ttc" id="a16__net_8cc_html_ab701e3ac61a85b337ec5c1abaad6742d"><div class="ttname"><a href="16__net_8cc.html#ab701e3ac61a85b337ec5c1abaad6742d">json</a></div><div class="ttdeci">nlohmann::json json</div><div class="ttdef"><b>Definition</b> <a href="16__net_8cc_source.html#l00019">16_net.cc:19</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a4d0a5e1a0a2f22f85a037a36324d0fb8"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a4d0a5e1a0a2f22f85a037a36324d0fb8">Kalman::IO::ModelFile::Bytes</a></div><div class="ttdeci">std::string Bytes() const</div><div class="ttdoc">The archive as bytes.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00553">ModelFile.cc:553</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a9668402e9f58569af62babc7ea729412"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a9668402e9f58569af62babc7ea729412">Kalman::IO::ModelFile::HasTables</a></div><div class="ttdeci">bool HasTables() const</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00114">ModelFile.h:114</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_afc32b79e43e9802a5248057b902c8b8b"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#afc32b79e43e9802a5248057b902c8b8b">Kalman::IO::ModelFile::kSettingsSuffix</a></div><div class="ttdeci">static constexpr const char * kSettingsSuffix</div><div class="ttdoc">Added to the path of a .kw file: where its settings are looked for.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00071">ModelFile.h:71</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1api_1_1store_html_ac519595302ba25754102619c3911c7bf"><div class="ttname"><a href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">modules.api.store.path</a></div><div class="ttdeci">str path()</div><div class="ttdef"><b>Definition</b> <a href="store_8py_source.html#l00114">store.py:114</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7bc557656fd54209b201b8737b581aa9" name="a7bc557656fd54209b201b8737b581aa9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7bc557656fd54209b201b8737b581aa9">&#9670;&#160;</a></span>Settings()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> Kalman::IO::ModelFile::Settings </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>identity</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A settings document holding the current values of <code>model:</code> the sample rate, every named parameter, Q, R, x0 and P0. Written beside a <code>.kw</code> it changes nothing; it is the file to edit. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00401">401</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  402</span>    {</div>
+<div class="line"><span class="lineno">  403</span>        Json settings = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  404</span>        settings.Set(<span class="stringliteral">&quot;format&quot;</span>, <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#adea2968c339400d9e644cfc4e596d61b">kSettingsFormat</a>).Set(<span class="stringliteral">&quot;format_version&quot;</span>, <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#aadee71234c7a5973c065746b69785361">kVersion</a>).Set(<span class="stringliteral">&quot;for&quot;</span>, identity);</div>
+<div class="line"><span class="lineno">  405</span>        settings.Set(<span class="stringliteral">&quot;fs&quot;</span>, model.SampleRate());</div>
+<div class="line"><span class="lineno">  406</span>        Json parameters = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  407</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name : model.ParameterNames()) parameters.Set(name, model.Parameter(name));</div>
+<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;name : model.ArrayNames()) parameters.Set(name, Numbers(model.Array(name)));</div>
+<div class="line"><span class="lineno">  409</span>        <span class="keywordflow">if</span> (!model.ParameterNames().empty() || !model.ArrayNames().empty()) settings.Set(<span class="stringliteral">&quot;parameters&quot;</span>, parameters);</div>
+<div class="line"><span class="lineno">  410</span>        <span class="comment">// A model whose noise is stated per unit time keeps Q derived from it: R only.</span></div>
+<div class="line"><span class="lineno">  411</span>        Json noise = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>();</div>
+<div class="line"><span class="lineno">  412</span>        <span class="keywordflow">if</span> (model.NoiseIntensity().Empty()) noise.Set(<span class="stringliteral">&quot;Q&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.Q(model.T0())));</div>
+<div class="line"><span class="lineno">  413</span>        noise.Set(<span class="stringliteral">&quot;R&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.R(model.T0())));</div>
+<div class="line"><span class="lineno">  414</span>        settings.Set(<span class="stringliteral">&quot;noise&quot;</span>, noise);</div>
+<div class="line"><span class="lineno">  415</span>        settings.Set(<span class="stringliteral">&quot;initial&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a4723f1e5510a5bdbb8d5d12d43a26760">Json::Object</a>().Set(<span class="stringliteral">&quot;x0&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.X0())).<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#ad727b124870d1301f6ef771f438f7e35">Set</a>(<span class="stringliteral">&quot;P0&quot;</span>, <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e582a7600a3d927c1663d811bde7ad8">Json::From</a>(model.P0())));</div>
+<div class="line"><span class="lineno">  416</span>        <span class="keywordflow">return</span> settings;</div>
+<div class="line"><span class="lineno">  417</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac1397a395f0d9725ed4fc688887b462c" name="ac1397a395f0d9725ed4fc688887b462c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac1397a395f0d9725ed4fc688887b462c">&#9670;&#160;</a></span>SettingsPath()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::IO::ModelFile::SettingsPath </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Where the settings of the model file <code>path</code> are looked for: <code>path + ".json"</code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8cc_source.html#l00399">399</a> of file <a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  399</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">path</a> + <a class="code hl_variable" href="class_kalman_1_1_i_o_1_1_model_file.html#afc32b79e43e9802a5248057b902c8b8b">kSettingsSuffix</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a35ab16821907e6ceea40416a2d887443" name="a35ab16821907e6ceea40416a2d887443"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35ab16821907e6ceea40416a2d887443">&#9670;&#160;</a></span>Spec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_kalman_1_1_i_o_1_1_json.html">Json</a> &amp; Kalman::IO::ModelFile::Spec </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The <code>spec</code> member: what the JSON API takes. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00113">113</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>{ <span class="keywordflow">return</span> fDocument[<span class="stringliteral">&quot;spec&quot;</span>]; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8a90b703830deae2279209d56dd5318a" name="a8a90b703830deae2279209d56dd5318a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a90b703830deae2279209d56dd5318a">&#9670;&#160;</a></span>Text()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::IO::ModelFile::Text </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The text of <code>model.json</code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00117">117</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>{ <span class="keywordflow">return</span> fDocument.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_json.html#a2e9ce3f3b8c046df3f99ed1a2199fe16">Dump</a>(2) + <span class="stringliteral">&quot;\n&quot;</span>; }</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_json_html_a2e9ce3f3b8c046df3f99ed1a2199fe16"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_json.html#a2e9ce3f3b8c046df3f99ed1a2199fe16">Kalman::IO::Json::Dump</a></div><div class="ttdeci">std::string Dump(int indent=2) const</div><div class="ttdoc">The text. indent &gt; 0 gives one member per line; short arrays of numbers stay on one line.</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00370">Json.cc:370</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="aab5e0e98709b846665b563098a86c10e" name="aab5e0e98709b846665b563098a86c10e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab5e0e98709b846665b563098a86c10e">&#9670;&#160;</a></span>kDocument</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::IO::ModelFile::kDocument = &quot;model.json&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00072">72</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<a id="a931b0ec1ed9ff0029ff72653045f29cd" name="a931b0ec1ed9ff0029ff72653045f29cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a931b0ec1ed9ff0029ff72653045f29cd">&#9670;&#160;</a></span>kExtension</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::IO::ModelFile::kExtension = &quot;.kw&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00068">68</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<a id="ab588e281c4ebfd85619fea8ed3737004" name="ab588e281c4ebfd85619fea8ed3737004"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab588e281c4ebfd85619fea8ed3737004">&#9670;&#160;</a></span>kFormat</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::IO::ModelFile::kFormat = &quot;kalman-model&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00066">66</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<a id="adea2968c339400d9e644cfc4e596d61b" name="adea2968c339400d9e644cfc4e596d61b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adea2968c339400d9e644cfc4e596d61b">&#9670;&#160;</a></span>kSettingsFormat</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::IO::ModelFile::kSettingsFormat = &quot;kalman-settings&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00069">69</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<a id="afc32b79e43e9802a5248057b902c8b8b" name="afc32b79e43e9802a5248057b902c8b8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afc32b79e43e9802a5248057b902c8b8b">&#9670;&#160;</a></span>kSettingsSuffix</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::IO::ModelFile::kSettingsSuffix = &quot;.json&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Added to the path of a <code>.kw</code> file: where its settings are looked for. </p>
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00071">71</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<a id="aadee71234c7a5973c065746b69785361" name="aadee71234c7a5973c065746b69785361"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadee71234c7a5973c065746b69785361">&#9670;&#160;</a></span>kVersion</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr int Kalman::IO::ModelFile::kVersion = 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_model_file_8h_source.html#l00067">67</a> of file <a class="el" href="_model_file_8h_source.html">ModelFile.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/Kalman/IO/<a class="el" href="_model_file_8h_source.html">ModelFile.h</a></li>
+<li>src/IO/<a class="el" href="_model_file_8cc_source.html">ModelFile.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_i_o.html">IO</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html">ModelFile</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_ikf Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_ikf Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_ikf Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacetests_1_1test__ikf.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_ikf Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html">TestIKFBasicAPI</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html">TestIKFFitAPI</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html">TestIKFWithControl</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html">TestRoutingAccuracy</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aea6b6cb0a8824cf3ba51a025110a9929" id="r_aea6b6cb0a8824cf3ba51a025110a9929"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a> (q_slow=0.1, q_fast=2.0)</td></tr>
+<tr class="separator:aea6b6cb0a8824cf3ba51a025110a9929"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13ea1334185fee4190bc8c085860553f" id="r_a13ea1334185fee4190bc8c085860553f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a> (regime_seq, q_slow=0.1, q_fast=2.0, obs_std=1.0, seed=0)</td></tr>
+<tr class="separator:a13ea1334185fee4190bc8c085860553f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a2cb9860682af93031046d675f635c9ed" id="r_a2cb9860682af93031046d675f635c9ed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__ikf.html#a2cb9860682af93031046d675f635c9ed">PI</a> = np.array([[0.95, 0.05], [0.05, 0.95]])</td></tr>
+<tr class="separator:a2cb9860682af93031046d675f635c9ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abecde54a35f03bfa53d32edc7b357495" id="r_abecde54a35f03bfa53d32edc7b357495"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__ikf.html#abecde54a35f03bfa53d32edc7b357495">REGIME_200</a> = np.r_[np.zeros(100, int), np.ones(100, int)]</td></tr>
+<tr class="separator:abecde54a35f03bfa53d32edc7b357495"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a46745eab03ad39dbec02ef176ab51f3a" id="r_a46745eab03ad39dbec02ef176ab51f3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__ikf.html#a46745eab03ad39dbec02ef176ab51f3a">REGIME_200_TEST</a> = np.r_[np.zeros(70, int), np.ones(60, int), np.zeros(70, int)]</td></tr>
+<tr class="separator:a46745eab03ad39dbec02ef176ab51f3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Tests for InteractiveKalmanFilter and the full IKF pipeline.</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a13ea1334185fee4190bc8c085860553f" name="a13ea1334185fee4190bc8c085860553f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13ea1334185fee4190bc8c085860553f">&#9670;&#160;</a></span>_sim()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_ikf._sim </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>regime_seq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>q_slow</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>q_fast</em> = <code>2.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>obs_std</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Simulate a 1-D switching process and noisy observations.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__ikf_8py_source.html#l00028">28</a> of file <a class="el" href="test__ikf_8py_source.html">test_ikf.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span><span class="keyword">def </span>_sim(regime_seq, q_slow=0.1, q_fast=2.0, obs_std=1.0, seed=0):</div>
+<div class="line"><span class="lineno">   29</span>    <span class="stringliteral">&quot;&quot;&quot;Simulate a 1-D switching process and noisy observations.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   30</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">   31</span>    x = 0.0</div>
+<div class="line"><span class="lineno">   32</span>    zk, labels = [], []</div>
+<div class="line"><span class="lineno">   33</span>    <span class="keywordflow">for</span> re <span class="keywordflow">in</span> regime_seq:</div>
+<div class="line"><span class="lineno">   34</span>        x += rng.normal(0, q_slow <span class="keywordflow">if</span> re == 0 <span class="keywordflow">else</span> q_fast)</div>
+<div class="line"><span class="lineno">   35</span>        zk.append([x + rng.normal(0, obs_std)])</div>
+<div class="line"><span class="lineno">   36</span>        labels.append(re)</div>
+<div class="line"><span class="lineno">   37</span>    <span class="keywordflow">return</span> np.array(zk), np.array(labels, dtype=int)</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aea6b6cb0a8824cf3ba51a025110a9929" name="aea6b6cb0a8824cf3ba51a025110a9929"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aea6b6cb0a8824cf3ba51a025110a9929">&#9670;&#160;</a></span>_two_models()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_ikf._two_models </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>q_slow</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>q_fast</em> = <code>2.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Two 1-D random-walk models with very different process noise.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__ikf_8py_source.html#l00016">16</a> of file <a class="el" href="test__ikf_8py_source.html">test_ikf.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   16</span><span class="keyword">def </span>_two_models(q_slow=0.1, q_fast=2.0):</div>
+<div class="line"><span class="lineno">   17</span>    <span class="stringliteral">&quot;&quot;&quot;Two 1-D random-walk models with very different process noise.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   18</span>    <span class="keyword">def </span>_m(name, q):</div>
+<div class="line"><span class="lineno">   19</span>        <span class="keywordflow">return</span> KalmanModel(name,</div>
+<div class="line"><span class="lineno">   20</span>                           F=np.eye(1), H=np.eye(1),</div>
+<div class="line"><span class="lineno">   21</span>                           Q=np.array([[q ** 2]]),</div>
+<div class="line"><span class="lineno">   22</span>                           R=np.array([[1.0 ** 2]]),</div>
+<div class="line"><span class="lineno">   23</span>                           fs=1.0,</div>
+<div class="line"><span class="lineno">   24</span>                           x0=np.array([[0.0]]))</div>
+<div class="line"><span class="lineno">   25</span>    <span class="keywordflow">return</span> _m(<span class="stringliteral">&quot;slow&quot;</span>, q_slow), _m(<span class="stringliteral">&quot;fast&quot;</span>, q_fast)</div>
+<div class="line"><span class="lineno">   26</span> </div>
+<div class="line"><span class="lineno">   27</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a2cb9860682af93031046d675f635c9ed" name="a2cb9860682af93031046d675f635c9ed"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2cb9860682af93031046d675f635c9ed">&#9670;&#160;</a></span>PI</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_ikf.PI = np.array([[0.95, 0.05], [0.05, 0.95]])</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__ikf_8py_source.html#l00040">40</a> of file <a class="el" href="test__ikf_8py_source.html">test_ikf.py</a>.</p>
+
+</div>
+</div>
+<a id="abecde54a35f03bfa53d32edc7b357495" name="abecde54a35f03bfa53d32edc7b357495"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abecde54a35f03bfa53d32edc7b357495">&#9670;&#160;</a></span>REGIME_200</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_ikf.REGIME_200 = np.r_[np.zeros(100, int), np.ones(100, int)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__ikf_8py_source.html#l00042">42</a> of file <a class="el" href="test__ikf_8py_source.html">test_ikf.py</a>.</p>
+
+</div>
+</div>
+<a id="a46745eab03ad39dbec02ef176ab51f3a" name="a46745eab03ad39dbec02ef176ab51f3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46745eab03ad39dbec02ef176ab51f3a">&#9670;&#160;</a></span>REGIME_200_TEST</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_ikf.REGIME_200_TEST = np.r_[np.zeros(70, int), np.ones(60, int), np.zeros(70, int)]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__ikf_8py_source.html#l00043">43</a> of file <a class="el" href="test__ikf_8py_source.html">test_ikf.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__ikf.html">test_ikf</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

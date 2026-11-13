@@ -1,0 +1,28 @@
+var classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment =
+[
+    [ "_MethodView", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view" ],
+    [ "__init__", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a14509adcce2752a3dbae385b7d90ba0a", null ],
+    [ "_native_twin", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#af17b205f3778603a9cef29ffd6830daa", null ],
+    [ "add_free_run", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a51e6012f2369376edf4bc9d9cf8d15a9", null ],
+    [ "add_method", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a06f71b2e963693b784da375d6e7078d6", null ],
+    [ "animate", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a96c8aee1b1db85977b0a70f8f6994536", null ],
+    [ "climatological_error", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a45451a93fb30af0e6dc18f9d87a86e34", null ],
+    [ "plot", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a4e43662e76411207f4296dcc845d972c", null ],
+    [ "run", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a2cf9c1672da66237e589d7877af1ee78", null ],
+    [ "skill", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#ab8f0a5073e24c33a5f545c8e91c8a92f", null ],
+    [ "_ens0", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#ae7e11e4447f16b6e24155213815480c1", null ],
+    [ "_MethodView", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#afb4a8e6a8dd4d5aa852f60218c3afe4c", null ],
+    [ "_seed_eps", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a1171abda343db27f85b20ee976b9ee09", null ],
+    [ "_truth0", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#ad432a7d6ff6e5abe9d29204effe5d709", null ],
+    [ "_truth_traj", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a0b229c0acff944cee3c1df1df205da14", null ],
+    [ "fields", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#af6631fcb8280b64d6792b860192dbca0", null ],
+    [ "hist", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#ad8248a79266b9a499390d84b069387b8", null ],
+    [ "methods", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#ada6bd74bf71d07af13a852b488584e3a", null ],
+    [ "model", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#afdb3d8594da86675c8e5acd9ab07f01a", null ],
+    [ "n_cycles", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#abb3ae0681ad93911125be5ad538d2383", null ],
+    [ "n_members", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#aa3e36172632f096b0d29848776f2fa70", null ],
+    [ "obs_mask", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#afa921cf6ac99ad845680e5bed7666550", null ],
+    [ "obs_periods", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#aadaf10b04bc53bc8e2142fea4e5f2abd", null ],
+    [ "rng_obs", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a220aef87155afe09f75571328a8b8a7c", null ],
+    [ "truth", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a40217c3f8feaad637c20ecfec4739b91", null ]
+];

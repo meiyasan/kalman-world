@@ -1,0 +1,916 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Grid&lt; T &gt; Class Template Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Grid&lt; T &gt; Class Template Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Grid&lt; T &gt; Class Template Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_grid.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#friends">Friends</a> &#124;
+<a href="class_kalman_1_1_grid-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Grid&lt; T &gt; Class Template Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><code>(rows, cols)</code> cells of <code>T</code>, row-major, with the arithmetic a Runge–Kutta step needs and nothing else.  
+ <a href="class_kalman_1_1_grid.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_grid_8h_source.html">Grid.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a766c0fc9086c6d08b1caeb9ea0156abf" id="r_a766c0fc9086c6d08b1caeb9ea0156abf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a766c0fc9086c6d08b1caeb9ea0156abf">Grid</a> ()=default</td></tr>
+<tr class="separator:a766c0fc9086c6d08b1caeb9ea0156abf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2bea0d70fdf6eec2319d579d3c5ea7f" id="r_ad2bea0d70fdf6eec2319d579d3c5ea7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#ad2bea0d70fdf6eec2319d579d3c5ea7f">Grid</a> (std::size_t rows, std::size_t cols, T fill=T())</td></tr>
+<tr class="separator:ad2bea0d70fdf6eec2319d579d3c5ea7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2feaca52da76d230732924988fec250a" id="r_a2feaca52da76d230732924988fec250a"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a2feaca52da76d230732924988fec250a">Rows</a> () const</td></tr>
+<tr class="separator:a2feaca52da76d230732924988fec250a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a890921e50ce1ff28bfc4de8b4726fb5a" id="r_a890921e50ce1ff28bfc4de8b4726fb5a"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a890921e50ce1ff28bfc4de8b4726fb5a">Cols</a> () const</td></tr>
+<tr class="separator:a890921e50ce1ff28bfc4de8b4726fb5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ac34beb11a08c322416901a5c898bbd" id="r_a1ac34beb11a08c322416901a5c898bbd"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a1ac34beb11a08c322416901a5c898bbd">Size</a> () const</td></tr>
+<tr class="separator:a1ac34beb11a08c322416901a5c898bbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fc7e32c640ff5ab704e90b2ac4d5e3a" id="r_a4fc7e32c640ff5ab704e90b2ac4d5e3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a4fc7e32c640ff5ab704e90b2ac4d5e3a">Empty</a> () const</td></tr>
+<tr class="separator:a4fc7e32c640ff5ab704e90b2ac4d5e3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc16346215413f5eaf5f431fb1f5261b" id="r_acc16346215413f5eaf5f431fb1f5261b"><td class="memItemLeft" align="right" valign="top">T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#acc16346215413f5eaf5f431fb1f5261b">operator()</a> (std::size_t i, std::size_t j)</td></tr>
+<tr class="separator:acc16346215413f5eaf5f431fb1f5261b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66b8bc3a1a4e850b206ca0221e8c6b75" id="r_a66b8bc3a1a4e850b206ca0221e8c6b75"><td class="memItemLeft" align="right" valign="top">const T &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a66b8bc3a1a4e850b206ca0221e8c6b75">operator()</a> (std::size_t i, std::size_t j) const</td></tr>
+<tr class="separator:a66b8bc3a1a4e850b206ca0221e8c6b75"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01a85d985946b4bbc356964d85c01a73" id="r_a01a85d985946b4bbc356964d85c01a73"><td class="memItemLeft" align="right" valign="top">T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a01a85d985946b4bbc356964d85c01a73">Data</a> ()</td></tr>
+<tr class="separator:a01a85d985946b4bbc356964d85c01a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c39f2c78f290e6cc753a3225596aba4" id="r_a5c39f2c78f290e6cc753a3225596aba4"><td class="memItemLeft" align="right" valign="top">const T *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a5c39f2c78f290e6cc753a3225596aba4">Data</a> () const</td></tr>
+<tr class="separator:a5c39f2c78f290e6cc753a3225596aba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a863c9df148835c0743c588d65f12624d" id="r_a863c9df148835c0743c588d65f12624d"><td class="memItemLeft" align="right" valign="top">std::vector&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a863c9df148835c0743c588d65f12624d">Raw</a> ()</td></tr>
+<tr class="separator:a863c9df148835c0743c588d65f12624d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e3a57ec0b2604ad5371366c2ecc90a5" id="r_a5e3a57ec0b2604ad5371366c2ecc90a5"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; T &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a5e3a57ec0b2604ad5371366c2ecc90a5">Raw</a> () const</td></tr>
+<tr class="separator:a5e3a57ec0b2604ad5371366c2ecc90a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a65ae1eac06bd29ab4a58058ab75ab579" id="r_a65ae1eac06bd29ab4a58058ab75ab579"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a65ae1eac06bd29ab4a58058ab75ab579">operator+=</a> (const <a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;o)</td></tr>
+<tr class="separator:a65ae1eac06bd29ab4a58058ab75ab579"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58795c1558a4cb498ea4eb7ce4e6d1dc" id="r_a58795c1558a4cb498ea4eb7ce4e6d1dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a58795c1558a4cb498ea4eb7ce4e6d1dc">operator-=</a> (const <a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;o)</td></tr>
+<tr class="separator:a58795c1558a4cb498ea4eb7ce4e6d1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12b084b7e2daa9a9b85da93fd101a8b6" id="r_a12b084b7e2daa9a9b85da93fd101a8b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a12b084b7e2daa9a9b85da93fd101a8b6">operator*=</a> (double s)</td></tr>
+<tr class="separator:a12b084b7e2daa9a9b85da93fd101a8b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a028d39cee8eab343987b2028b75d7ed5" id="r_a028d39cee8eab343987b2028b75d7ed5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a028d39cee8eab343987b2028b75d7ed5">Multiply</a> (const <a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;o)</td></tr>
+<tr class="memdesc:a028d39cee8eab343987b2028b75d7ed5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Elementwise product (a mask, a taper, a wavenumber array).  <br /></td></tr>
+<tr class="separator:a028d39cee8eab343987b2028b75d7ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="friends" name="friends"></a>
+Friends</h2></td></tr>
+<tr class="memitem:a261aa513ed6c101d8e52e0bfec04bf94" id="r_a261aa513ed6c101d8e52e0bfec04bf94"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a261aa513ed6c101d8e52e0bfec04bf94">operator+</a> (<a class="el" href="class_kalman_1_1_grid.html">Grid</a> a, const <a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;b)</td></tr>
+<tr class="separator:a261aa513ed6c101d8e52e0bfec04bf94"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb7263b92d73b761eaba974501a4db2c" id="r_afb7263b92d73b761eaba974501a4db2c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#afb7263b92d73b761eaba974501a4db2c">operator-</a> (<a class="el" href="class_kalman_1_1_grid.html">Grid</a> a, const <a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp;b)</td></tr>
+<tr class="separator:afb7263b92d73b761eaba974501a4db2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75630fa2c13a11868060e7501000a72c" id="r_a75630fa2c13a11868060e7501000a72c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#a75630fa2c13a11868060e7501000a72c">operator*</a> (double s, <a class="el" href="class_kalman_1_1_grid.html">Grid</a> g)</td></tr>
+<tr class="separator:a75630fa2c13a11868060e7501000a72c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae86a22388f2bb3724e2cf01a61653f4d" id="r_ae86a22388f2bb3724e2cf01a61653f4d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html#ae86a22388f2bb3724e2cf01a61653f4d">operator*</a> (<a class="el" href="class_kalman_1_1_grid.html">Grid</a> g, double s)</td></tr>
+<tr class="separator:ae86a22388f2bb3724e2cf01a61653f4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+class Kalman::Grid&lt; T &gt;</div><p><code>(rows, cols)</code> cells of <code>T</code>, row-major, with the arithmetic a Runge–Kutta step needs and nothing else. </p>
+<p><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a> is the small dense <em>algebra</em> type of the filters; this is the <em>field</em> type of the solvers, which never multiply two grids but add them, scale them and hand them to an <a class="el" href="namespace_kalman_1_1_f_f_t.html">FFT</a>. <code><a class="el" href="class_kalman_1_1_grid.html" title="(rows, cols) cells of T, row-major, with the arithmetic a Runge–Kutta step needs and nothing else.">Grid</a>&lt;double&gt;</code> is a real field (<code><a class="el" href="namespace_kalman.html#a94c1195d5dfabc598efba670169c258a">Kalman::Field</a></code>), <code><a class="el" href="class_kalman_1_1_grid.html" title="(rows, cols) cells of T, row-major, with the arithmetic a Runge–Kutta step needs and nothing else.">Grid</a>&lt;std::complex&lt;double&gt;&gt;</code> its spectrum (<code><a class="el" href="namespace_kalman.html#a4057603d141a3b62a377c298da798160">Kalman::SpectralField</a></code>). Both feed the same generic RK step in <a class="el" href="_integrator_8h.html" title="Header of the Kalman::Integrator class.">Kalman/Integrator.h</a>, so any explicit integrator drives any solver.</p>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00035">35</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a766c0fc9086c6d08b1caeb9ea0156abf" name="a766c0fc9086c6d08b1caeb9ea0156abf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a766c0fc9086c6d08b1caeb9ea0156abf">&#9670;&#160;</a></span>Grid() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Grid </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">default</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad2bea0d70fdf6eec2319d579d3c5ea7f" name="ad2bea0d70fdf6eec2319d579d3c5ea7f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2bea0d70fdf6eec2319d579d3c5ea7f">&#9670;&#160;</a></span>Grid() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Grid </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>cols</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>fill</em> = <code>T()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00050">50</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>                : fRows(rows), fCols(cols), fData(rows * cols, fill) {}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a890921e50ce1ff28bfc4de8b4726fb5a" name="a890921e50ce1ff28bfc4de8b4726fb5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a890921e50ce1ff28bfc4de8b4726fb5a">&#9670;&#160;</a></span>Cols()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Cols </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00054">54</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>{ <span class="keywordflow">return</span> fCols; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a01a85d985946b4bbc356964d85c01a73" name="a01a85d985946b4bbc356964d85c01a73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01a85d985946b4bbc356964d85c01a73">&#9670;&#160;</a></span>Data() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T * <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00061">61</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>{ <span class="keywordflow">return</span> fData.data(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5c39f2c78f290e6cc753a3225596aba4" name="a5c39f2c78f290e6cc753a3225596aba4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c39f2c78f290e6cc753a3225596aba4">&#9670;&#160;</a></span>Data() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T * <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Data </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00062">62</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>{ <span class="keywordflow">return</span> fData.data(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4fc7e32c640ff5ab704e90b2ac4d5e3a" name="a4fc7e32c640ff5ab704e90b2ac4d5e3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4fc7e32c640ff5ab704e90b2ac4d5e3a">&#9670;&#160;</a></span>Empty()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Empty </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00056">56</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>{ <span class="keywordflow">return</span> fData.empty(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a028d39cee8eab343987b2028b75d7ed5" name="a028d39cee8eab343987b2028b75d7ed5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a028d39cee8eab343987b2028b75d7ed5">&#9670;&#160;</a></span>Multiply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Multiply </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Elementwise product (a mask, a taper, a wavenumber array). </p>
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00071">71</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   71</span>{ CheckSame(o, <span class="stringliteral">&quot;Multiply&quot;</span>); <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fData.size(); ++i) fData[i] *= o.fData[i]; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acc16346215413f5eaf5f431fb1f5261b" name="acc16346215413f5eaf5f431fb1f5261b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc16346215413f5eaf5f431fb1f5261b">&#9670;&#160;</a></span>operator()() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">T &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00058">58</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   58</span>{ <span class="keywordflow">return</span> fData[i * fCols + j]; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a66b8bc3a1a4e850b206ca0221e8c6b75" name="a66b8bc3a1a4e850b206ca0221e8c6b75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66b8bc3a1a4e850b206ca0221e8c6b75">&#9670;&#160;</a></span>operator()() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const T &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::operator() </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00059">59</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{ <span class="keywordflow">return</span> fData[i * fCols + j]; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a12b084b7e2daa9a9b85da93fd101a8b6" name="a12b084b7e2daa9a9b85da93fd101a8b6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12b084b7e2daa9a9b85da93fd101a8b6">&#9670;&#160;</a></span>operator*=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::operator*= </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00068">68</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>{ <span class="keywordflow">for</span> (T &amp;v : fData) v *= s; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a65ae1eac06bd29ab4a58058ab75ab579" name="a65ae1eac06bd29ab4a58058ab75ab579"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65ae1eac06bd29ab4a58058ab75ab579">&#9670;&#160;</a></span>operator+=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::operator+= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00066">66</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>{ CheckSame(o, <span class="stringliteral">&quot;+=&quot;</span>); <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fData.size(); ++i) fData[i] += o.fData[i]; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a58795c1558a4cb498ea4eb7ce4e6d1dc" name="a58795c1558a4cb498ea4eb7ce4e6d1dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58795c1558a4cb498ea4eb7ce4e6d1dc">&#9670;&#160;</a></span>operator-=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::operator-= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>o</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00067">67</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>{ CheckSame(o, <span class="stringliteral">&quot;-=&quot;</span>); <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; fData.size(); ++i) fData[i] -= o.fData[i]; <span class="keywordflow">return</span> *<span class="keyword">this</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a863c9df148835c0743c588d65f12624d" name="a863c9df148835c0743c588d65f12624d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a863c9df148835c0743c588d65f12624d">&#9670;&#160;</a></span>Raw() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; T &gt; &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Raw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00063">63</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   63</span>{ <span class="keywordflow">return</span> fData; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5e3a57ec0b2604ad5371366c2ecc90a5" name="a5e3a57ec0b2604ad5371366c2ecc90a5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e3a57ec0b2604ad5371366c2ecc90a5">&#9670;&#160;</a></span>Raw() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; T &gt; &amp; <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Raw </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00064">64</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span>{ <span class="keywordflow">return</span> fData; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2feaca52da76d230732924988fec250a" name="a2feaca52da76d230732924988fec250a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2feaca52da76d230732924988fec250a">&#9670;&#160;</a></span>Rows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Rows </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00053">53</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>{ <span class="keywordflow">return</span> fRows; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1ac34beb11a08c322416901a5c898bbd" name="a1ac34beb11a08c322416901a5c898bbd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ac34beb11a08c322416901a5c898bbd">&#9670;&#160;</a></span>Size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t <a class="el" href="class_kalman_1_1_grid.html">Kalman::Grid</a>&lt; T &gt;::Size </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00055">55</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>{ <span class="keywordflow">return</span> fData.size(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Friends And Related Symbol Documentation</h2>
+<a id="a75630fa2c13a11868060e7501000a72c" name="a75630fa2c13a11868060e7501000a72c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75630fa2c13a11868060e7501000a72c">&#9670;&#160;</a></span>operator* <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> operator* </td>
+          <td>(</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>g</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00075">75</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   75</span>{ g *= s; <span class="keywordflow">return</span> g; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae86a22388f2bb3724e2cf01a61653f4d" name="ae86a22388f2bb3724e2cf01a61653f4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae86a22388f2bb3724e2cf01a61653f4d">&#9670;&#160;</a></span>operator* <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> operator* </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>g</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>s</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00076">76</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{ g *= s; <span class="keywordflow">return</span> g; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a261aa513ed6c101d8e52e0bfec04bf94" name="a261aa513ed6c101d8e52e0bfec04bf94"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a261aa513ed6c101d8e52e0bfec04bf94">&#9670;&#160;</a></span>operator+</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> operator+ </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00073">73</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>{ a += b; <span class="keywordflow">return</span> a; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afb7263b92d73b761eaba974501a4db2c" name="afb7263b92d73b761eaba974501a4db2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb7263b92d73b761eaba974501a4db2c">&#9670;&#160;</a></span>operator-</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_grid.html">Grid</a> operator- </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_grid.html">Grid</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">friend</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_grid_8h_source.html#l00074">74</a> of file <a class="el" href="_grid_8h_source.html">Grid.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>{ a -= b; <span class="keywordflow">return</span> a; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/Kalman/<a class="el" href="_grid_8h_source.html">Grid.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_grid.html">Grid</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

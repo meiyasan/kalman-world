@@ -1,0 +1,557 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.controllers.proportional.ProportionalKalmanController Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.controllers.proportional.ProportionalKalmanController Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.controllers.proportional.ProportionalKalmanController Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.controllers.proportional.ProportionalKalmanController Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.controllers.proportional.ProportionalKalmanController:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller__inherit__graph.svg" width="324" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ab297739dbd8381ed7f597dc0eee0d2a3" id="r_ab297739dbd8381ed7f597dc0eee0d2a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#ab297739dbd8381ed7f597dc0eee0d2a3">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#abc706491fa7e1571bb9bf4a04b756e6f">model</a>, <a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#a9e64a7a0e8cdb2adde5ada99f5e11cc5">Kp</a>, **kw)</td></tr>
+<tr class="separator:ab297739dbd8381ed7f597dc0eee0d2a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:ae5f8a3da72907b26a5d42656759f0ce3 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ae5f8a3da72907b26a5d42656759f0ce3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ae5f8a3da72907b26a5d42656759f0ce3">__call__</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:ae5f8a3da72907b26a5d42656759f0ce3 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6668a5d09950a73ebe4297874085c31 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ac6668a5d09950a73ebe4297874085c31"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ac6668a5d09950a73ebe4297874085c31">reset</a> (self)</td></tr>
+<tr class="separator:ac6668a5d09950a73ebe4297874085c31 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb0377af9b13e47497507c9f794837f inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_affb0377af9b13e47497507c9f794837f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#affb0377af9b13e47497507c9f794837f">__getstate__</a> (self)</td></tr>
+<tr class="separator:affb0377af9b13e47497507c9f794837f inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a9e64a7a0e8cdb2adde5ada99f5e11cc5" id="r_a9e64a7a0e8cdb2adde5ada99f5e11cc5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#a9e64a7a0e8cdb2adde5ada99f5e11cc5">Kp</a></td></tr>
+<tr class="separator:a9e64a7a0e8cdb2adde5ada99f5e11cc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:abc706491fa7e1571bb9bf4a04b756e6f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_abc706491fa7e1571bb9bf4a04b756e6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#abc706491fa7e1571bb9bf4a04b756e6f">model</a></td></tr>
+<tr class="separator:abc706491fa7e1571bb9bf4a04b756e6f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5e61daa3db52ea85486d5c5ba63d6dc inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ad5e61daa3db52ea85486d5c5ba63d6dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ad5e61daa3db52ea85486d5c5ba63d6dc">x_ref</a></td></tr>
+<tr class="separator:ad5e61daa3db52ea85486d5c5ba63d6dc inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4058d77fddd7f3e20300f3f40a44cbe9 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a4058d77fddd7f3e20300f3f40a44cbe9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a4058d77fddd7f3e20300f3f40a44cbe9">Qcost</a></td></tr>
+<tr class="separator:a4058d77fddd7f3e20300f3f40a44cbe9 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2bdb4ba02132f65dca6b51eff4207f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a1d2bdb4ba02132f65dca6b51eff4207f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a1d2bdb4ba02132f65dca6b51eff4207f">Rcost</a></td></tr>
+<tr class="separator:a1d2bdb4ba02132f65dca6b51eff4207f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722292c46d7634f485f0cfba6a308ac2 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a722292c46d7634f485f0cfba6a308ac2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a722292c46d7634f485f0cfba6a308ac2">cost_log</a></td></tr>
+<tr class="separator:a722292c46d7634f485f0cfba6a308ac2 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7beccfc91840e3587501f0921d78a176 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a7beccfc91840e3587501f0921d78a176"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a7beccfc91840e3587501f0921d78a176">u_log</a></td></tr>
+<tr class="separator:a7beccfc91840e3587501f0921d78a176 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada68493d339dd0308e347c28fc49d7d3 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ada68493d339dd0308e347c28fc49d7d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ada68493d339dd0308e347c28fc49d7d3">B_log</a></td></tr>
+<tr class="separator:ada68493d339dd0308e347c28fc49d7d3 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aedb7caaed6b97ee9eb9e795e69a4fb65" id="r_aedb7caaed6b97ee9eb9e795e69a4fb65"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#aedb7caaed6b97ee9eb9e795e69a4fb65">NATIVE</a> = &quot;proportional&quot;</td></tr>
+<tr class="separator:aedb7caaed6b97ee9eb9e795e69a4fb65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a2924eddb9dedf9fa1d235301745e7f86 inherit pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a2924eddb9dedf9fa1d235301745e7f86"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a2924eddb9dedf9fa1d235301745e7f86">NATIVE</a> = None</td></tr>
+<tr class="separator:a2924eddb9dedf9fa1d235301745e7f86 inherit pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a589a42ac2ff3e8706b4a265ba785b4a4" id="r_a589a42ac2ff3e8706b4a265ba785b4a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#a589a42ac2ff3e8706b4a265ba785b4a4">_policy</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:a589a42ac2ff3e8706b4a265ba785b4a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad785d323c70cbd949632ce557e84cb30" id="r_ad785d323c70cbd949632ce557e84cb30"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#ad785d323c70cbd949632ce557e84cb30">_reference_policy</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:ad785d323c70cbd949632ce557e84cb30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc6fd75f3420329521f5064e1bee96bf" id="r_abc6fd75f3420329521f5064e1bee96bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#abc6fd75f3420329521f5064e1bee96bf">_native_key</a> (self)</td></tr>
+<tr class="separator:abc6fd75f3420329521f5064e1bee96bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0c3fb073a213df9a19928811e502c54" id="r_ab0c3fb073a213df9a19928811e502c54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html#ab0c3fb073a213df9a19928811e502c54">_native_create</a> (self, model_handle)</td></tr>
+<tr class="separator:ab0c3fb073a213df9a19928811e502c54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a395117eb86431ed2d5cfdcc22eb8019d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a395117eb86431ed2d5cfdcc22eb8019d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a395117eb86431ed2d5cfdcc22eb8019d">_update</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:a395117eb86431ed2d5cfdcc22eb8019d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14b74e7549934e4bf8eb4ec8ce06aa0a inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a14b74e7549934e4bf8eb4ec8ce06aa0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a14b74e7549934e4bf8eb4ec8ce06aa0a">_native_reads_noise</a> (self)</td></tr>
+<tr class="separator:a14b74e7549934e4bf8eb4ec8ce06aa0a inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7dc36323ea735d878afd8bc62b2a061 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ad7dc36323ea735d878afd8bc62b2a061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ad7dc36323ea735d878afd8bc62b2a061">_native_handle</a> (self)</td></tr>
+<tr class="separator:ad7dc36323ea735d878afd8bc62b2a061 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6076136d3556765a460227d415fdd667 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a6076136d3556765a460227d415fdd667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a6076136d3556765a460227d415fdd667">_native_model</a> (self)</td></tr>
+<tr class="separator:a6076136d3556765a460227d415fdd667 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a141ebd748b0a7a579e6df9ca26655687 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a141ebd748b0a7a579e6df9ca26655687"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a141ebd748b0a7a579e6df9ca26655687">_clip_callback</a> (self, handle, errors)</td></tr>
+<tr class="separator:a141ebd748b0a7a579e6df9ca26655687 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00e3950d0950f253c853c2d4654655d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ae00e3950d0950f253c853c2d4654655d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ae00e3950d0950f253c853c2d4654655d">_native_call</a> (self, fn, *args)</td></tr>
+<tr class="separator:ae00e3950d0950f253c853c2d4654655d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e13eb424f97c7749f261507eb68d895 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a4e13eb424f97c7749f261507eb68d895"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a4e13eb424f97c7749f261507eb68d895">_native_belief</a> (self, x_hat, P, nu)</td></tr>
+<tr class="separator:a4e13eb424f97c7749f261507eb68d895 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac43b1d4ae2c9bfea5a5dec8b8f10f2dd inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ac43b1d4ae2c9bfea5a5dec8b8f10f2dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ac43b1d4ae2c9bfea5a5dec8b8f10f2dd">_native_policy</a> (self, x_hat, P, t, nu)</td></tr>
+<tr class="separator:ac43b1d4ae2c9bfea5a5dec8b8f10f2dd inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070f355824f8fa300f6cb58b036f9ad3 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a070f355824f8fa300f6cb58b036f9ad3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a070f355824f8fa300f6cb58b036f9ad3">_native_update</a> (self, x_hat, P, t, nu)</td></tr>
+<tr class="separator:a070f355824f8fa300f6cb58b036f9ad3 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98404342269aa9d1366c559075ff5bd9 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a98404342269aa9d1366c559075ff5bd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a98404342269aa9d1366c559075ff5bd9">_gains_key</a> (self, *gains)</td></tr>
+<tr class="separator:a98404342269aa9d1366c559075ff5bd9 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2fb826fd9b877e8d6983b5a82c2977c inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_aa2fb826fd9b877e8d6983b5a82c2977c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa2fb826fd9b877e8d6983b5a82c2977c">_cost_key</a> (self)</td></tr>
+<tr class="separator:aa2fb826fd9b877e8d6983b5a82c2977c inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc614b78bcb4f23cddaf1597cd80066 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a3fc614b78bcb4f23cddaf1597cd80066"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a3fc614b78bcb4f23cddaf1597cd80066">_cost_args</a> (self)</td></tr>
+<tr class="separator:a3fc614b78bcb4f23cddaf1597cd80066 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a5cd38120bac6ed142232a2005b242f2f inherit pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a5cd38120bac6ed142232a2005b242f2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a5cd38120bac6ed142232a2005b242f2f">_native_state</a></td></tr>
+<tr class="separator:a5cd38120bac6ed142232a2005b242f2f inherit pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Proportional controller: ``u = −Kp · (x̂ − x_ref)``.
+
+Computed by ``Kalman::Controllers::Proportional`` when libKalman is installed;
+:meth:`_reference_policy` is the Python reference.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00008">8</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab297739dbd8381ed7f597dc0eee0d2a3" name="ab297739dbd8381ed7f597dc0eee0d2a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab297739dbd8381ed7f597dc0eee0d2a3">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Kp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a8b0d6f6941256ff22585e182113a7237">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00017">17</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   17</span>    <span class="keyword">def </span>__init__(self, model, Kp, **kw):</div>
+<div class="line"><span class="lineno">   18</span>        super().__init__(model, **kw)</div>
+<div class="line"><span class="lineno">   19</span>        self.Kp = np.asarray(Kp, dtype=float)</div>
+<div class="line"><span class="lineno">   20</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab0c3fb073a213df9a19928811e502c54" name="ab0c3fb073a213df9a19928811e502c54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab0c3fb073a213df9a19928811e502c54">&#9670;&#160;</a></span>_native_create()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController._native_create </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model_handle</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Build the C++ controller on ``model_handle`` (core.create_controller).</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa2033e84a4f5ac1413f0ab57964999e2">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00033">33</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>    <span class="keyword">def </span>_native_create(self, model_handle):</div>
+<div class="line"><span class="lineno">   34</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">   35</span>        <span class="keywordflow">return</span> core.create_controller(<span class="stringliteral">&quot;proportional&quot;</span>, model_handle, int(self.model.n), max(int(self.model.l), 1),</div>
+<div class="line"><span class="lineno">   36</span>                                      Kp=self.Kp, **self._cost_args())</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abc6fd75f3420329521f5064e1bee96bf" name="abc6fd75f3420329521f5064e1bee96bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc6fd75f3420329521f5064e1bee96bf">&#9670;&#160;</a></span>_native_key()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController._native_key </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">What the C++ controller was built from: a change rebuilds it (and starts
+its internal state afresh). ``None`` when this configuration has no C++
+counterpart (shapes the C++ class does not take).</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa3ac0dfffdbda0997cf6b02f51d769e2">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00029">29</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   29</span>    <span class="keyword">def </span>_native_key(self):</div>
+<div class="line"><span class="lineno">   30</span>        gains, costs = self._gains_key(self.Kp), self._cost_key()</div>
+<div class="line"><span class="lineno">   31</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span> <span class="keywordflow">if</span> gains <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> costs <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> gains + costs</div>
+<div class="line"><span class="lineno">   32</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a589a42ac2ff3e8706b4a265ba785b4a4" name="a589a42ac2ff3e8706b4a265ba785b4a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a589a42ac2ff3e8706b4a265ba785b4a4">&#9670;&#160;</a></span>_policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController._policy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_hat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>nu</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a51cd38e3e057bf8332ab96f434a1de12">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00021">21</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   21</span>    <span class="keyword">def </span>_policy(self, x_hat, P, t, *, nu=None):</div>
+<div class="line"><span class="lineno">   22</span>        u = self._native_policy(x_hat, P, t, nu)</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keywordflow">return</span> u <span class="keywordflow">if</span> u <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self._reference_policy(x_hat, P, t, nu=nu)</div>
+<div class="line"><span class="lineno">   24</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad785d323c70cbd949632ce557e84cb30" name="ad785d323c70cbd949632ce557e84cb30"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad785d323c70cbd949632ce557e84cb30">&#9670;&#160;</a></span>_reference_policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController._reference_policy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_hat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>nu</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00025">25</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   25</span>    <span class="keyword">def </span>_reference_policy(self, x_hat, P, t, *, nu=None):</div>
+<div class="line"><span class="lineno">   26</span>        e = x_hat - self.x_ref</div>
+<div class="line"><span class="lineno">   27</span>        <span class="keywordflow">return</span> -self.Kp @ e</div>
+<div class="line"><span class="lineno">   28</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9e64a7a0e8cdb2adde5ada99f5e11cc5" name="a9e64a7a0e8cdb2adde5ada99f5e11cc5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9e64a7a0e8cdb2adde5ada99f5e11cc5">&#9670;&#160;</a></span>Kp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.controllers.proportional.ProportionalKalmanController.Kp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00019">19</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+
+</div>
+</div>
+<a id="aedb7caaed6b97ee9eb9e795e69a4fb65" name="aedb7caaed6b97ee9eb9e795e69a4fb65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedb7caaed6b97ee9eb9e795e69a4fb65">&#9670;&#160;</a></span>NATIVE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.controllers.proportional.ProportionalKalmanController.NATIVE = &quot;proportional&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="proportional_8py_source.html#l00015">15</a> of file <a class="el" href="proportional_8py_source.html">proportional.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/controllers/<a class="el" href="proportional_8py_source.html">proportional.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1controllers.html">controllers</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1controllers_1_1proportional.html">proportional</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html">ProportionalKalmanController</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

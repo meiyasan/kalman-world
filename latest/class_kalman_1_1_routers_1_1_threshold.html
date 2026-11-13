@@ -1,0 +1,518 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Routers::Threshold Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Routers::Threshold Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Routers::Threshold Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_routers_1_1_threshold.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="class_kalman_1_1_routers_1_1_threshold-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Routers::Threshold Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Routes to whichever model's recent NIS sits closest to <code>m</code>.  
+ <a href="class_kalman_1_1_routers_1_1_threshold.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_threshold_8h_source.html">Threshold.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Kalman::Routers::Threshold:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_routers_1_1_threshold__inherit__graph.svg" width="215" height="183"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ab8c8b8ca9a6d8afe51db73361dc6a5ec" id="r_ab8c8b8ca9a6d8afe51db73361dc6a5ec"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#ab8c8b8ca9a6d8afe51db73361dc6a5ec">Threshold</a> (std::size_t <a class="el" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>=1, std::size_t window=5, bool soft=false)</td></tr>
+<tr class="separator:ab8c8b8ca9a6d8afe51db73361dc6a5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab47b268c8bd1fd4545a66b034ae5ed1" id="r_aab47b268c8bd1fd4545a66b034ae5ed1"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#aab47b268c8bd1fd4545a66b034ae5ed1">Title</a> () const override</td></tr>
+<tr class="memdesc:aab47b268c8bd1fd4545a66b034ae5ed1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Human-readable name of the <em>kind</em> of thing this is.  <br /></td></tr>
+<tr class="separator:aab47b268c8bd1fd4545a66b034ae5ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41578623208ddb06c8307dae908e0003" id="r_a41578623208ddb06c8307dae908e0003"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#a41578623208ddb06c8307dae908e0003">Description</a> () const override</td></tr>
+<tr class="memdesc:a41578623208ddb06c8307dae908e0003"><td class="mdescLeft">&#160;</td><td class="mdescRight">One sentence on what it does.  <br /></td></tr>
+<tr class="separator:a41578623208ddb06c8307dae908e0003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6b83971458ab7dd96528001578598bf" id="r_ab6b83971458ab7dd96528001578598bf"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#ab6b83971458ab7dd96528001578598bf">MeasurementDim</a> () const</td></tr>
+<tr class="separator:ab6b83971458ab7dd96528001578598bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55f23dcfdd78bdceb6b418a5e1a9e411" id="r_a55f23dcfdd78bdceb6b418a5e1a9e411"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#a55f23dcfdd78bdceb6b418a5e1a9e411">Window</a> () const</td></tr>
+<tr class="separator:a55f23dcfdd78bdceb6b418a5e1a9e411"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40dc8eda6d50eec751d69900662265fc" id="r_a40dc8eda6d50eec751d69900662265fc"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#a40dc8eda6d50eec751d69900662265fc">IsSoft</a> () const</td></tr>
+<tr class="separator:a40dc8eda6d50eec751d69900662265fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95093a6fe2c62a864b99ae3e8f47e1ad" id="r_a95093a6fe2c62a864b99ae3e8f47e1ad"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html#a95093a6fe2c62a864b99ae3e8f47e1ad">Route</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;nis, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;c, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;likelihoods) const override</td></tr>
+<tr class="memdesc:a95093a6fe2c62a864b99ae3e8f47e1ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Updated mode probabilities — see the class documentation.  <br /></td></tr>
+<tr class="separator:a95093a6fe2c62a864b99ae3e8f47e1ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_kalman_1_1_routers_1_1_router"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_routers_1_1_router')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_routers_1_1_router.html">Kalman::Routers::Router</a></td></tr>
+<tr class="memitem:a5686bdc23e38228ffe6222c70485c19d inherit pub_methods_class_kalman_1_1_routers_1_1_router" id="r_a5686bdc23e38228ffe6222c70485c19d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_router.html#a5686bdc23e38228ffe6222c70485c19d">~Router</a> () override=default</td></tr>
+<tr class="separator:a5686bdc23e38228ffe6222c70485c19d inherit pub_methods_class_kalman_1_1_routers_1_1_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a44fae406b2529179124117407260faff inherit pub_methods_class_kalman_1_1_routers_1_1_router" id="r_a44fae406b2529179124117407260faff"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_router.html#a44fae406b2529179124117407260faff">operator()</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;nis, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;c, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;likelihoods) const</td></tr>
+<tr class="memdesc:a44fae406b2529179124117407260faff inherit pub_methods_class_kalman_1_1_routers_1_1_router"><td class="mdescLeft">&#160;</td><td class="mdescRight">Any router is callable.  <br /></td></tr>
+<tr class="separator:a44fae406b2529179124117407260faff inherit pub_methods_class_kalman_1_1_routers_1_1_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_abstract_1_1_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html">Kalman::Abstract::Metadata</a></td></tr>
+<tr class="memitem:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a4d2072d8053f1800062433de843a0320"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a4d2072d8053f1800062433de843a0320">~Metadata</a> ()=default</td></tr>
+<tr class="separator:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a794690cc8b1e23360b7ad7e8070caa36"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a794690cc8b1e23360b7ad7e8070caa36">Version</a> () const</td></tr>
+<tr class="memdesc:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation version, bumped when behaviour changes.  <br /></td></tr>
+<tr class="separator:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_class_kalman_1_1_routers_1_1_router"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_kalman_1_1_routers_1_1_router')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_kalman_1_1_routers_1_1_router.html">Kalman::Routers::Router</a></td></tr>
+<tr class="memitem:a75d5794536f09b2adcbac66213bc9b31 inherit pub_static_methods_class_kalman_1_1_routers_1_1_router" id="r_a75d5794536f09b2adcbac66213bc9b31"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a> (<a class="el" href="class_kalman_1_1_vector.html">Vector</a> mu)</td></tr>
+<tr class="memdesc:a75d5794536f09b2adcbac66213bc9b31 inherit pub_static_methods_class_kalman_1_1_routers_1_1_router"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clip to a positive floor and normalise to a probability vector.  <br /></td></tr>
+<tr class="separator:a75d5794536f09b2adcbac66213bc9b31 inherit pub_static_methods_class_kalman_1_1_routers_1_1_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_class_kalman_1_1_routers_1_1_router"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_class_kalman_1_1_routers_1_1_router')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="class_kalman_1_1_routers_1_1_router.html">Kalman::Routers::Router</a></td></tr>
+<tr class="memitem:a13e536ac3ef367956d932cba7a2b4d46 inherit pro_static_methods_class_kalman_1_1_routers_1_1_router" id="r_a13e536ac3ef367956d932cba7a2b4d46"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_router.html#a13e536ac3ef367956d932cba7a2b4d46">NisWindow</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;nis, std::size_t window)</td></tr>
+<tr class="separator:a13e536ac3ef367956d932cba7a2b4d46 inherit pro_static_methods_class_kalman_1_1_routers_1_1_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Routes to whichever model's recent NIS sits closest to <code>m</code>. </p>
+<p>Under the correct model <code>NIS ~ chi2(m)</code>, so <code>E[NIS] = m</code>; a model that does not fit produces a much larger NIS. Averaging over a short window and picking the closest to <code>m</code> is therefore a defensible rule that uses no likelihood at all — which makes it a useful cross-check on <a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html" title="The classical IKF update: mu_j ∝ c_j · L_j.">Kalman::Routers::Bayesian</a>, and a guard rail when blended into <a class="el" href="class_kalman_1_1_routers_1_1_hybrid.html" title="Geometric blend (log-linear opinion pool) of two routers.">Kalman::Routers::Hybrid</a>.</p>
+<p>Two modes:</p><ul>
+<li><b>hard</b> (default) — all the weight on the single best match. Decisive, and prone to chattering when two models fit about equally well.</li>
+<li><b>soft</b> — inverse-distance weighting across all models. Smoother, and it keeps a mode alive that the hard rule would zero out.</li>
+</ul>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00036">36</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="ab8c8b8ca9a6d8afe51db73361dc6a5ec" name="ab8c8b8ca9a6d8afe51db73361dc6a5ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8c8b8ca9a6d8afe51db73361dc6a5ec">&#9670;&#160;</a></span>Threshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Routers::Threshold::Threshold </td>
+          <td>(</td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>m</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>window</em> = <code>5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>soft</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">m</td><td>measurement dimension; the NIS a correct model should show. </td></tr>
+    <tr><td class="paramname">window</td><td>how many past NIS values to average (all of them while fewer have been seen; 0 = the whole history). </td></tr>
+    <tr><td class="paramname">soft</td><td>inverse-distance weighting (true) or hard argmin (false). </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00050">50</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>                : fM(<a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>), fWindow(window), fSoft(soft) {}</div>
+<div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a41578623208ddb06c8307dae908e0003" name="a41578623208ddb06c8307dae908e0003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a41578623208ddb06c8307dae908e0003">&#9670;&#160;</a></span>Description()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Routers::Threshold::Description </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>One sentence on what it does. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00054">54</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Routes by how close each model&#39;s windowed NIS is to its expected value m.&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a40dc8eda6d50eec751d69900662265fc" name="a40dc8eda6d50eec751d69900662265fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40dc8eda6d50eec751d69900662265fc">&#9670;&#160;</a></span>IsSoft()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Kalman::Routers::Threshold::IsSoft </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00059">59</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   59</span>{ <span class="keywordflow">return</span> fSoft; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab6b83971458ab7dd96528001578598bf" name="ab6b83971458ab7dd96528001578598bf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6b83971458ab7dd96528001578598bf">&#9670;&#160;</a></span>MeasurementDim()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Kalman::Routers::Threshold::MeasurementDim </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00057">57</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>{ <span class="keywordflow">return</span> fM; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a95093a6fe2c62a864b99ae3e8f47e1ad" name="a95093a6fe2c62a864b99ae3e8f47e1ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95093a6fe2c62a864b99ae3e8f47e1ad">&#9670;&#160;</a></span>Route()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_vector.html">Vector</a> Kalman::Routers::Threshold::Route </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>nis</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>likelihoods</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Updated mode probabilities — see the class documentation. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_routers_1_1_router.html#a97bc71430d06d942229da75d91815bd3">Kalman::Routers::Router</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_routers_8cc_source.html#l00068">68</a> of file <a class="el" href="_routers_8cc_source.html">Routers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>    {</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keyword">const</span> std::size_t M = nis.Cols() ? nis.Cols() : c.Size();</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">if</span> (nis.Rows() == 0)</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">return</span> Vector(M, 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(M));   <span class="comment">// nothing observed yet</span></div>
+<div class="line"><span class="lineno">   73</span> </div>
+<div class="line"><span class="lineno">   74</span>        <span class="comment">// The mean of the last `window` rows, or of all of them while there are</span></div>
+<div class="line"><span class="lineno">   75</span>        <span class="comment">// fewer: a short history is averaged as it is, not padded (padding with the</span></div>
+<div class="line"><span class="lineno">   76</span>        <span class="comment">// chi2(1) mean would pull every model toward 1 whatever m is). The same</span></div>
+<div class="line"><span class="lineno">   77</span>        <span class="comment">// rule as routers/threshold.py, which forwards here; a window of 0 is the</span></div>
+<div class="line"><span class="lineno">   78</span>        <span class="comment">// whole history, as `nis[-0:]` is in numpy.</span></div>
+<div class="line"><span class="lineno">   79</span>        <span class="keyword">const</span> std::size_t rows = fWindow == 0 ? nis.Rows() : std::min(fWindow, nis.Rows());</div>
+<div class="line"><span class="lineno">   80</span>        Vector dist(M);</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; M; ++j)</div>
+<div class="line"><span class="lineno">   82</span>        {</div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordtype">double</span> mean = 0.;</div>
+<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">for</span> (std::size_t r = nis.Rows() - rows; r &lt; nis.Rows(); ++r) mean += nis(r, j);</div>
+<div class="line"><span class="lineno">   85</span>            mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(rows);</div>
+<div class="line"><span class="lineno">   86</span>            dist(j) = std::abs(mean - <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(fM));</div>
+<div class="line"><span class="lineno">   87</span>        }</div>
+<div class="line"><span class="lineno">   88</span> </div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">if</span> (fSoft)</div>
+<div class="line"><span class="lineno">   90</span>        {</div>
+<div class="line"><span class="lineno">   91</span>            Vector mu(M);</div>
+<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; M; ++j) mu(j) = 1. / (dist(j) + 1e-6);</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a>(mu);</div>
+<div class="line"><span class="lineno">   94</span>        }</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>        std::size_t best = 0;</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">for</span> (std::size_t j = 1; j &lt; M; ++j)</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">if</span> (dist(j) &lt; dist(best)) best = j;</div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span>        Vector mu(M, 0.);</div>
+<div class="line"><span class="lineno">  101</span>        mu(best) = 1.;</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">return</span> mu;                              <span class="comment">// hard: deliberately not floored</span></div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html_a75d5794536f09b2adcbac66213bc9b31"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Kalman::Routers::Router::Normalise</a></div><div class="ttdeci">static Vector Normalise(Vector mu)</div><div class="ttdoc">Clip to a positive floor and normalise to a probability vector.</div><div class="ttdef"><b>Definition</b> <a href="_routers_8cc_source.html#l00023">Routers.cc:23</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aab47b268c8bd1fd4545a66b034ae5ed1" name="aab47b268c8bd1fd4545a66b034ae5ed1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab47b268c8bd1fd4545a66b034ae5ed1">&#9670;&#160;</a></span>Title()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Routers::Threshold::Title </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Human-readable name of the <em>kind</em> of thing this is. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00053">53</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Threshold Router&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a55f23dcfdd78bdceb6b418a5e1a9e411" name="a55f23dcfdd78bdceb6b418a5e1a9e411"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55f23dcfdd78bdceb6b418a5e1a9e411">&#9670;&#160;</a></span>Window()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Kalman::Routers::Threshold::Window </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_threshold_8h_source.html#l00058">58</a> of file <a class="el" href="_threshold_8h_source.html">Threshold.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   58</span>{ <span class="keywordflow">return</span> fWindow; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/Kalman/Routers/<a class="el" href="_threshold_8h_source.html">Threshold.h</a></li>
+<li>src/Routers/<a class="el" href="_routers_8cc_source.html">Routers.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_routers.html">Routers</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

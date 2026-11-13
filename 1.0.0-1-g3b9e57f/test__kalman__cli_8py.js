@@ -1,0 +1,25 @@
+var test__kalman__cli_8py =
+[
+    [ "_binary", "test__kalman__cli_8py.html#ac53895c93e25f1a2dfe6943801a4d3eb", null ],
+    [ "_example_plugin", "test__kalman__cli_8py.html#a6b03471dc0a0ae85b8c3427440d60958", null ],
+    [ "_models", "test__kalman__cli_8py.html#a41773140df1f89ab1bcd8813db10796e", null ],
+    [ "_run", "test__kalman__cli_8py.html#ace7f4d29baab9628835d3ece779fa7d0", null ],
+    [ "test_colours_only_when_asked_or_on_a_terminal", "test__kalman__cli_8py.html#a070e64c0c2f7992514e08ad3bdc34d26", null ],
+    [ "test_components_through_the_c_interface", "test__kalman__cli_8py.html#a0120d853e88bb9146895f202c1ddce06", null ],
+    [ "test_dynamics_agree_with_the_python_classes", "test__kalman__cli_8py.html#a4a6e48d75e75305ef020cc4fe4d46a8b", null ],
+    [ "test_every_python_catalogue_model_goes_through_a_file", "test__kalman__cli_8py.html#a76e2a81846341b01e08f66fcb6f5523a", null ],
+    [ "test_export_a_linearization_and_feed_it_to_the_api", "test__kalman__cli_8py.html#aa9ad51554ab4d5f08dc8023f6aa8cdc0", null ],
+    [ "test_export_a_model_given_by_code_as_a_reference", "test__kalman__cli_8py.html#a4ff158032f90d58be975b54540d142a3", null ],
+    [ "test_export_from_python", "test__kalman__cli_8py.html#a2a8d5ccd20cebf12b1be08b38c498676", null ],
+    [ "test_export_matrices_whole_and_round_trip", "test__kalman__cli_8py.html#adcdb2eb4458bbf49cffc7633966871b5", null ],
+    [ "test_filter_table_and_errors", "test__kalman__cli_8py.html#a5b41d8d18160bcb05cbd6bae186c6b2c", null ],
+    [ "test_lists_the_application_models", "test__kalman__cli_8py.html#aec252809787e87a1cd9f860c7e73ce8d", null ],
+    [ "test_one_model_in_full", "test__kalman__cli_8py.html#a68f88bad7ce1f9924dfcf2c434cdccbc", null ],
+    [ "test_python_models_export_and_open", "test__kalman__cli_8py.html#a911d080b30309ca82488dede4b03eb92", null ],
+    [ "test_reference_to_a_python_class_keeps_its_arguments", "test__kalman__cli_8py.html#a7b6f0fc84266d75a6aca6958c3a6a100", null ],
+    [ "test_settings_file_beside_a_model_file", "test__kalman__cli_8py.html#a7002f51c9791f8cc3274b0f1ee991612", null ],
+    [ "test_time_varying_model_through_the_program", "test__kalman__cli_8py.html#a3e06ebf492ac7a0e593760cea055715a", null ],
+    [ "KALMAN", "test__kalman__cli_8py.html#a2566ffd3eb1c60ea69edcec001162dcf", null ],
+    [ "pytestmark", "test__kalman__cli_8py.html#a1ab552dccc82f2612b2babae3bbaf5b6", null ],
+    [ "REPO", "test__kalman__cli_8py.html#a3e8828ad180e7f22b275c0430562030a", null ]
+];

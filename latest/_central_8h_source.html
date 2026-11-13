@@ -1,0 +1,210 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="include/Kalman/Differentiators/Central.h Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: include/Kalman/Differentiators/Central.h Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>include/Kalman/Differentiators/Central.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_central_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Central.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_central_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifndef KALMAN_DIFFERENTIATORS_CENTRAL_H</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define KALMAN_DIFFERENTIATORS_CENTRAL_H</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;<a class="code" href="_differentiator_8h.html">Kalman/Differentiator.h</a>&quot;</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_differentiators.html">Kalman::Differentiators</a></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>{</div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="class_kalman_1_1_differentiators_1_1_central.html">   19</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_kalman_1_1_differentiators_1_1_central.html">Central</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_differentiator.html">Differentiator</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_kalman_1_1_differentiators_1_1_central.html#a48f5d6f4e9ee2d75b8513e3aec15c43c">   22</a></span>            <span class="keyword">explicit</span> <a class="code hl_function" href="class_kalman_1_1_differentiators_1_1_central.html#a48f5d6f4e9ee2d75b8513e3aec15c43c">Central</a>(<span class="keywordtype">double</span> step = 0.)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                : <a class="code hl_class" href="class_kalman_1_1_differentiator.html">Differentiator</a>(step &gt; 0. ? step : <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#ab4e5668d487ebb64437b01b032f89449">DefaultStep</a>(<a class="code hl_enumeration" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">DifferentiatorKind</a>::<a class="code hl_class" href="class_kalman_1_1_differentiators_1_1_central.html">Central</a>)) {}</div>
+</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="class_kalman_1_1_differentiators_1_1_central.html#aa677af52b5c3f2959d3bc2cee3f1d2d2">   25</a></span>            <a class="code hl_enumeration" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">DifferentiatorKind</a> <a class="code hl_function" href="class_kalman_1_1_differentiators_1_1_central.html#aa677af52b5c3f2959d3bc2cee3f1d2d2">Kind</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">DifferentiatorKind::Central</a>; }</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="class_kalman_1_1_differentiators_1_1_central.html#aa1aca82922f8dc9988d3d760fa6d875c">   26</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_differentiators_1_1_central.html#aa1aca82922f8dc9988d3d760fa6d875c">Title</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Central Differentiator&quot;</span>; }</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="}">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_kalman_1_1_differentiators_1_1_central.html#ac2729dc355c8aafb6d58d532ebe59b9d">   27</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_differentiators_1_1_central.html#ac2729dc355c8aafb6d58d532ebe59b9d">Description</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">            </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Two-sided differences: (f(x + s e_j) - f(x - s e_j)) / 2s. Second order, two evaluations per component.&quot;</span>; }</div>
+</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_differentiators_1_1_central.html#ab403a9a45ae9953aa71a9017d1823cdf">Jacobian</a>(<span class="keyword">const</span> <a class="code hl_typedef" href="namespace_kalman.html#ab7c91e8735889d8daf33ac41ec1a4447">Map</a> &amp;fn, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> *y0 = <span class="keyword">nullptr</span>) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    };</div>
+</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>}</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_DIFFERENTIATORS_CENTRAL_H</span></div>
+<div class="ttc" id="a_differentiator_8h_html"><div class="ttname"><a href="_differentiator_8h.html">Differentiator.h</a></div><div class="ttdoc">Header of the Kalman::Differentiator class.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiator_html"><div class="ttname"><a href="class_kalman_1_1_differentiator.html">Kalman::Differentiator</a></div><div class="ttdoc">Where a Jacobian comes from.</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8h_source.html#l00047">Differentiator.h:48</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html">Kalman::Differentiators::Central</a></div><div class="ttdoc">Two-sided differences: (f(x + s e_j) - f(x - s e_j)) / 2s. Second order, two evaluations per componen...</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00019">Central.h:20</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_a48f5d6f4e9ee2d75b8513e3aec15c43c"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#a48f5d6f4e9ee2d75b8513e3aec15c43c">Kalman::Differentiators::Central::Central</a></div><div class="ttdeci">Central(double step=0.)</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00022">Central.h:22</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_aa1aca82922f8dc9988d3d760fa6d875c"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#aa1aca82922f8dc9988d3d760fa6d875c">Kalman::Differentiators::Central::Title</a></div><div class="ttdeci">const char * Title() const override</div><div class="ttdoc">Human-readable name of the kind of thing this is.</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00026">Central.h:26</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_aa677af52b5c3f2959d3bc2cee3f1d2d2"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#aa677af52b5c3f2959d3bc2cee3f1d2d2">Kalman::Differentiators::Central::Kind</a></div><div class="ttdeci">DifferentiatorKind Kind() const override</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00025">Central.h:25</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_ab403a9a45ae9953aa71a9017d1823cdf"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#ab403a9a45ae9953aa71a9017d1823cdf">Kalman::Differentiators::Central::Jacobian</a></div><div class="ttdeci">Matrix Jacobian(const Map &amp;fn, const Vector &amp;x, const Vector *y0=nullptr) const override</div><div class="ttdoc">d fn / dx at x, as a (rows of fn) x (size of x) matrix.</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00045">Differentiator.cc:45</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_ac2729dc355c8aafb6d58d532ebe59b9d"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#ac2729dc355c8aafb6d58d532ebe59b9d">Kalman::Differentiators::Central::Description</a></div><div class="ttdeci">const char * Description() const override</div><div class="ttdoc">One sentence on what it does.</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00027">Central.h:27</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_differentiators_html"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html">Kalman::Differentiators</a></div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8h_source.html#l00071">Differentiator.h:72</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_differentiators_html_ab4e5668d487ebb64437b01b032f89449"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html#ab4e5668d487ebb64437b01b032f89449">Kalman::Differentiators::DefaultStep</a></div><div class="ttdeci">double DefaultStep(DifferentiatorKind kind)</div><div class="ttdoc">The default relative step of each numerical scheme.</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00022">Differentiator.cc:22</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">Kalman::DifferentiatorKind</a></div><div class="ttdeci">DifferentiatorKind</div><div class="ttdoc">Where a model's Jacobians come from (see Kalman::Differentiator).</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00070">Constants.h:71</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Kalman::DifferentiatorKind::Central</a></div><div class="ttdeci">@ Central</div><div class="ttdoc">two-sided differences (second order)</div></div>
+<div class="ttc" id="anamespace_kalman_html_ab7c91e8735889d8daf33ac41ec1a4447"><div class="ttname"><a href="namespace_kalman.html#ab7c91e8735889d8daf33ac41ec1a4447">Kalman::Map</a></div><div class="ttdeci">std::function&lt; Vector(const Vector &amp;)&gt; Map</div><div class="ttdoc">A map y = fn(x) to differentiate.</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8h_source.html#l00045">Differentiator.h:45</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_d9fa44a06a4ca035d50cb10c69d63343.html">Differentiators</a></li><li class="navelem"><a class="el" href="_central_8h.html">Central.h</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

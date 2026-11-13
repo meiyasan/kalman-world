@@ -1,0 +1,1214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.solvers.finite_difference.FiniteDifferenceSolver Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.solvers.finite_difference.FiniteDifferenceSolver Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.solvers.finite_difference.FiniteDifferenceSolver Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.solvers.finite_difference.FiniteDifferenceSolver Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.solvers.finite_difference.FiniteDifferenceSolver:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver__inherit__graph.svg" width="1258" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a1961b45209c6372e2bede1d80e1fece7" id="r_a1961b45209c6372e2bede1d80e1fece7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a1961b45209c6372e2bede1d80e1fece7">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aeb66408c1a40a32fdff9c4dbf7a62597">n</a>=64, <a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a322c8cd8f10c215b9d85ff1cad513b6f">dt</a>=0.01, *length=2 *np.pi, <a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#abd4622126d1cf86976308e753b49c706">bc</a>=&quot;periodic&quot;, <a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a7dc04413c1beed7463b1ba46646c931b">bc_value</a>=0.0, <a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a3fbeaf34255656b83725e409e7053eef">nu</a>=0.01, <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a38f9f827e3f6b02909a8d55e7c6cec1a">integrator</a>=None, <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a1b086d52525581b6e3324d25bc4d46ac">backend</a>=None, <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#aba23fdb78b425ec75dbb6cdf1c7e5190">device</a>=None, seed=0)</td></tr>
+<tr class="separator:a1961b45209c6372e2bede1d80e1fece7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1b8edf25ac20d1c725e5f7850b88c97" id="r_ab1b8edf25ac20d1c725e5f7850b88c97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ab1b8edf25ac20d1c725e5f7850b88c97">discretize</a> (self, field)</td></tr>
+<tr class="separator:ab1b8edf25ac20d1c725e5f7850b88c97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeecdae667494ba3783b30950c8772184" id="r_aeecdae667494ba3783b30950c8772184"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aeecdae667494ba3783b30950c8772184">gradient</a> (self, w)</td></tr>
+<tr class="separator:aeecdae667494ba3783b30950c8772184"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb86432cc0477517056ee4a604810399" id="r_aeb86432cc0477517056ee4a604810399"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aeb86432cc0477517056ee4a604810399">laplacian</a> (self, w)</td></tr>
+<tr class="separator:aeb86432cc0477517056ee4a604810399"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abcc7b363c9f4906e3ecb0de66236af8d" id="r_abcc7b363c9f4906e3ecb0de66236af8d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#abcc7b363c9f4906e3ecb0de66236af8d">rhs</a> (self, field, t=None)</td></tr>
+<tr class="separator:abcc7b363c9f4906e3ecb0de66236af8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8250faf9b2dea845a3691bdd1c1eef8" id="r_ac8250faf9b2dea845a3691bdd1c1eef8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ac8250faf9b2dea845a3691bdd1c1eef8">step</a> (self, field)</td></tr>
+<tr class="separator:ac8250faf9b2dea845a3691bdd1c1eef8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82a5ec5efefa937b69a6bec4054a9b90" id="r_a82a5ec5efefa937b69a6bec4054a9b90"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a82a5ec5efefa937b69a6bec4054a9b90">advance</a> (self, w, nsteps)</td></tr>
+<tr class="separator:a82a5ec5efefa937b69a6bec4054a9b90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada2097ca3da1b075c9ac33dff477d678" id="r_ada2097ca3da1b075c9ac33dff477d678"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ada2097ca3da1b075c9ac33dff477d678">solve</a> (self, field, steps=1, u=None, t=None)</td></tr>
+<tr class="separator:ada2097ca3da1b075c9ac33dff477d678"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5b77bc84b00034cd0930c7e69a6f911" id="r_aa5b77bc84b00034cd0930c7e69a6f911"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aa5b77bc84b00034cd0930c7e69a6f911">random_ic</a> (self, amp=1.0)</td></tr>
+<tr class="separator:aa5b77bc84b00034cd0930c7e69a6f911"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html">modules.framework.solver.KalmanSolver</a></td></tr>
+<tr class="memitem:a38f9f827e3f6b02909a8d55e7c6cec1a inherit pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a38f9f827e3f6b02909a8d55e7c6cec1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a38f9f827e3f6b02909a8d55e7c6cec1a">integrator</a> (self)</td></tr>
+<tr class="separator:a38f9f827e3f6b02909a8d55e7c6cec1a inherit pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a502b9bdd3721e66c5adbc08eaa7688a0 inherit pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a502b9bdd3721e66c5adbc08eaa7688a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a502b9bdd3721e66c5adbc08eaa7688a0">integrate</a> (self, rhs, state, u=None, t=None, dt=1.0, n=1)</td></tr>
+<tr class="separator:a502b9bdd3721e66c5adbc08eaa7688a0 inherit pub_methods_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html">modules.framework.abstract.metadata.KalmanMetadata</a></td></tr>
+<tr class="memitem:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a14a4e351ed86dadadb83ab64e78f0236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a> (self)</td></tr>
+<tr class="separator:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4ad79eab0dcb89ded410f2c536759a3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4ad79eab0dcb89ded410f2c536759a3a">description</a> (self)</td></tr>
+<tr class="separator:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a95528fa2d5aaf13b2f4f12c48720c69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a95528fa2d5aaf13b2f4f12c48720c69e">version</a> (self)</td></tr>
+<tr class="separator:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4d420229416cbba37ebaa47a52baf5b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4d420229416cbba37ebaa47a52baf5b9">read</a> (cls, filename)</td></tr>
+<tr class="separator:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a0c0e9919afe47470788a45a0734e810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a0c0e9919afe47470788a45a0734e810d">write</a> (self, filename)</td></tr>
+<tr class="separator:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_add0c479d5879a49d4b6948ed57d951c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#add0c479d5879a49d4b6948ed57d951c5">print</a> (self, **kwargs)</td></tr>
+<tr class="separator:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:ab159e5c7d03a04b1cd8a011636f3c515" id="r_ab159e5c7d03a04b1cd8a011636f3c515"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ab159e5c7d03a04b1cd8a011636f3c515">ny</a></td></tr>
+<tr class="separator:ab159e5c7d03a04b1cd8a011636f3c515"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9edf6937d8a2003cc44469975925584e" id="r_a9edf6937d8a2003cc44469975925584e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a9edf6937d8a2003cc44469975925584e">nx</a></td></tr>
+<tr class="separator:a9edf6937d8a2003cc44469975925584e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72c79bc7a26323b17ee023d9999e3d5c" id="r_a72c79bc7a26323b17ee023d9999e3d5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a72c79bc7a26323b17ee023d9999e3d5c">shape</a></td></tr>
+<tr class="separator:a72c79bc7a26323b17ee023d9999e3d5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb66408c1a40a32fdff9c4dbf7a62597" id="r_aeb66408c1a40a32fdff9c4dbf7a62597"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aeb66408c1a40a32fdff9c4dbf7a62597">n</a></td></tr>
+<tr class="separator:aeb66408c1a40a32fdff9c4dbf7a62597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab1f6e6f91918811714604c91147d8ab" id="r_aab1f6e6f91918811714604c91147d8ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aab1f6e6f91918811714604c91147d8ab">Ly</a></td></tr>
+<tr class="separator:aab1f6e6f91918811714604c91147d8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f8fc0567e211b678ab72a57ec672cab" id="r_a6f8fc0567e211b678ab72a57ec672cab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a6f8fc0567e211b678ab72a57ec672cab">Lx</a></td></tr>
+<tr class="separator:a6f8fc0567e211b678ab72a57ec672cab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f23e586f7f0d389aa56cc5c92405e53" id="r_a6f23e586f7f0d389aa56cc5c92405e53"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a6f23e586f7f0d389aa56cc5c92405e53">dy</a></td></tr>
+<tr class="separator:a6f23e586f7f0d389aa56cc5c92405e53"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed048d64e8a4c6bd685ea8839d1ee16e" id="r_aed048d64e8a4c6bd685ea8839d1ee16e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aed048d64e8a4c6bd685ea8839d1ee16e">dx</a></td></tr>
+<tr class="separator:aed048d64e8a4c6bd685ea8839d1ee16e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a322c8cd8f10c215b9d85ff1cad513b6f" id="r_a322c8cd8f10c215b9d85ff1cad513b6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a322c8cd8f10c215b9d85ff1cad513b6f">dt</a></td></tr>
+<tr class="separator:a322c8cd8f10c215b9d85ff1cad513b6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abd4622126d1cf86976308e753b49c706" id="r_abd4622126d1cf86976308e753b49c706"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#abd4622126d1cf86976308e753b49c706">bc</a></td></tr>
+<tr class="separator:abd4622126d1cf86976308e753b49c706"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dc04413c1beed7463b1ba46646c931b" id="r_a7dc04413c1beed7463b1ba46646c931b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a7dc04413c1beed7463b1ba46646c931b">bc_value</a></td></tr>
+<tr class="separator:a7dc04413c1beed7463b1ba46646c931b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fbeaf34255656b83725e409e7053eef" id="r_a3fbeaf34255656b83725e409e7053eef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a3fbeaf34255656b83725e409e7053eef">nu</a></td></tr>
+<tr class="separator:a3fbeaf34255656b83725e409e7053eef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48c4beda3bc6d3f4f4e4d13d36b12670" id="r_a48c4beda3bc6d3f4f4e4d13d36b12670"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a48c4beda3bc6d3f4f4e4d13d36b12670">rng</a></td></tr>
+<tr class="separator:a48c4beda3bc6d3f4f4e4d13d36b12670"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html">modules.framework.solver.KalmanSolver</a></td></tr>
+<tr class="memitem:a1b086d52525581b6e3324d25bc4d46ac inherit pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a1b086d52525581b6e3324d25bc4d46ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a1b086d52525581b6e3324d25bc4d46ac">backend</a></td></tr>
+<tr class="separator:a1b086d52525581b6e3324d25bc4d46ac inherit pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba23fdb78b425ec75dbb6cdf1c7e5190 inherit pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_aba23fdb78b425ec75dbb6cdf1c7e5190"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#aba23fdb78b425ec75dbb6cdf1c7e5190">device</a></td></tr>
+<tr class="separator:aba23fdb78b425ec75dbb6cdf1c7e5190 inherit pub_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a79d8a026b752c021968626def4066492" id="r_a79d8a026b752c021968626def4066492"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a79d8a026b752c021968626def4066492">NAME</a> = &quot;Finite-Difference Solver&quot;</td></tr>
+<tr class="separator:a79d8a026b752c021968626def4066492"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4c004c2caef740bc0b712914cf4363f" id="r_ac4c004c2caef740bc0b712914cf4363f"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ac4c004c2caef740bc0b712914cf4363f">DESCRIPTION</a></td></tr>
+<tr class="separator:ac4c004c2caef740bc0b712914cf4363f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a48fd2e527f043dda3f25fe7e702a3311" id="r_a48fd2e527f043dda3f25fe7e702a3311"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a48fd2e527f043dda3f25fe7e702a3311">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a48fd2e527f043dda3f25fe7e702a3311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1436f06f234358c6ee86b546279cc59f" id="r_a1436f06f234358c6ee86b546279cc59f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a1436f06f234358c6ee86b546279cc59f">KIND</a> = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html#a35c2406fac72ff3faabe812595b535e0">KalmanSolverKind.FINITE_DIFFERENCE</a></td></tr>
+<tr class="separator:a1436f06f234358c6ee86b546279cc59f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html">modules.framework.solver.KalmanSolver</a></td></tr>
+<tr class="memitem:a60202a574b590f63f5dfc8afd5bdd8e3 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a60202a574b590f63f5dfc8afd5bdd8e3"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a60202a574b590f63f5dfc8afd5bdd8e3">NAME</a> = &quot;Kalman Solver&quot;</td></tr>
+<tr class="separator:a60202a574b590f63f5dfc8afd5bdd8e3 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8dcaa38509f0caf0bb51158eb85ddcb5 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a8dcaa38509f0caf0bb51158eb85ddcb5"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a8dcaa38509f0caf0bb51158eb85ddcb5">DESCRIPTION</a> = &quot;Abstract spatial-discretization solver: <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#ab00b7ef549cfd5c629131e62fcb7d70b">discretize</a> + <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a502b9bdd3721e66c5adbc08eaa7688a0">integrate</a> (composes an <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a38f9f827e3f6b02909a8d55e7c6cec1a">integrator</a>).&quot;</td></tr>
+<tr class="separator:a8dcaa38509f0caf0bb51158eb85ddcb5 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada1e037507a3566e130d8f923466552a inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_ada1e037507a3566e130d8f923466552a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#ada1e037507a3566e130d8f923466552a">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:ada1e037507a3566e130d8f923466552a inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a7b700a8696e6ce7692588449a9430b inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a3a7b700a8696e6ce7692588449a9430b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a3a7b700a8696e6ce7692588449a9430b">KIND</a> = None</td></tr>
+<tr class="separator:a3a7b700a8696e6ce7692588449a9430b inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2155675b979e1e05f253f07fab11011 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_ad2155675b979e1e05f253f07fab11011"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#ad2155675b979e1e05f253f07fab11011">DEFAULT_INTEGRATOR</a> = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_integrator_kind.html#afb1ad67212cce6591ca62cdf37b2e255">KalmanIntegratorKind.RK4</a></td></tr>
+<tr class="separator:ad2155675b979e1e05f253f07fab11011 inherit pub_static_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata.html">modules.framework.abstract.metadata.KalmanSolverMetadata</a></td></tr>
+<tr class="memitem:a0d54bcdc26774adb9c75388e2625316a inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata" id="r_a0d54bcdc26774adb9c75388e2625316a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata.html#a0d54bcdc26774adb9c75388e2625316a">NAME</a> = &quot;Kalman Solver&quot;</td></tr>
+<tr class="separator:a0d54bcdc26774adb9c75388e2625316a inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac15fa8127e1cceece34fae9fc34704ac inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata" id="r_ac15fa8127e1cceece34fae9fc34704ac"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata.html#ac15fa8127e1cceece34fae9fc34704ac">DESCRIPTION</a> = &quot;Base class for spatial-discretization solvers (discretize + integrate).&quot;</td></tr>
+<tr class="separator:ac15fa8127e1cceece34fae9fc34704ac inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea8926a9e3ea1810dd61efa05585bf5 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata" id="r_aeea8926a9e3ea1810dd61efa05585bf5"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata.html#aeea8926a9e3ea1810dd61efa05585bf5">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:aeea8926a9e3ea1810dd61efa05585bf5 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_solver_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aecc22d32d2730abf068e52d2aab9df00" id="r_aecc22d32d2730abf068e52d2aab9df00"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#aecc22d32d2730abf068e52d2aab9df00">_as_grid</a> (self, w)</td></tr>
+<tr class="separator:aecc22d32d2730abf068e52d2aab9df00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab606fc2698d3f9f2523bafc1bbe62906" id="r_ab606fc2698d3f9f2523bafc1bbe62906"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ab606fc2698d3f9f2523bafc1bbe62906">_pad</a> (self, f)</td></tr>
+<tr class="separator:ab606fc2698d3f9f2523bafc1bbe62906"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a064b263d07c4c04c90ff84380db35de4" id="r_a064b263d07c4c04c90ff84380db35de4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#a064b263d07c4c04c90ff84380db35de4">_tableau</a> (self)</td></tr>
+<tr class="separator:a064b263d07c4c04c90ff84380db35de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade62e42c0eaf2a2b6aa4c7361d57fb38" id="r_ade62e42c0eaf2a2b6aa4c7361d57fb38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html#ade62e42c0eaf2a2b6aa4c7361d57fb38">_native_scheme</a> (self)</td></tr>
+<tr class="separator:ade62e42c0eaf2a2b6aa4c7361d57fb38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html">modules.framework.solver.KalmanSolver</a></td></tr>
+<tr class="memitem:a382490b45a0303f234d61ab275c26f1a inherit pro_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver" id="r_a382490b45a0303f234d61ab275c26f1a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a382490b45a0303f234d61ab275c26f1a">_integrator</a></td></tr>
+<tr class="separator:a382490b45a0303f234d61ab275c26f1a inherit pro_attribs_classmodules_1_1framework_1_1solver_1_1_kalman_solver"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00026">26</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a1961b45209c6372e2bede1d80e1fece7" name="a1961b45209c6372e2bede1d80e1fece7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1961b45209c6372e2bede1d80e1fece7">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>64</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dt</em> = <code>0.01</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>length</em> = <code>2*np.pi</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>bc</em> = <code>&quot;periodic&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>bc_value</em> = <code>0.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>nu</em> = <code>0.01</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>integrator</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>backend</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>device</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a317ffe69c5b2b115b374fc8c6242bfd3">modules.framework.solver.KalmanSolver</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00034">34</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span>                 nu=0.01, integrator=<span class="keywordtype">None</span>, backend=<span class="keywordtype">None</span>, device=<span class="keywordtype">None</span>, seed=0):</div>
+<div class="line"><span class="lineno">   36</span>        super().__init__(integrator=integrator, backend=backend, device=device)</div>
+<div class="line"><span class="lineno">   37</span>        ny, nx = (int(n), int(n)) <span class="keywordflow">if</span> np.isscalar(n) <span class="keywordflow">else</span> (int(n[0]), int(n[1]))</div>
+<div class="line"><span class="lineno">   38</span>        Ly, Lx = ((float(length), float(length)) <span class="keywordflow">if</span> np.isscalar(length)</div>
+<div class="line"><span class="lineno">   39</span>                  <span class="keywordflow">else</span> (float(length[0]), float(length[1])))</div>
+<div class="line"><span class="lineno">   40</span>        self.ny, self.nx = ny, nx</div>
+<div class="line"><span class="lineno">   41</span>        self.shape = (ny, nx)</div>
+<div class="line"><span class="lineno">   42</span>        self.n = nx <span class="keywordflow">if</span> nx == ny <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   43</span>        self.Ly, self.Lx = Ly, Lx</div>
+<div class="line"><span class="lineno">   44</span>        self.dy, self.dx = Ly / ny, Lx / nx</div>
+<div class="line"><span class="lineno">   45</span>        self.dt = float(dt)</div>
+<div class="line"><span class="lineno">   46</span>        self.bc = str(bc).lower()</div>
+<div class="line"><span class="lineno">   47</span>        self.bc_value = float(bc_value)</div>
+<div class="line"><span class="lineno">   48</span>        self.nu = float(nu)</div>
+<div class="line"><span class="lineno">   49</span>        self.rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">if</span> self.bc <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="stringliteral">&quot;periodic&quot;</span>, <span class="stringliteral">&quot;dirichlet&quot;</span>, <span class="stringliteral">&quot;neumann&quot;</span>):</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;bc must be &#39;periodic&#39;, &#39;dirichlet&#39; or &#39;neumann&#39;.&quot;</span>)</div>
+<div class="line"><span class="lineno">   52</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aecc22d32d2730abf068e52d2aab9df00" name="aecc22d32d2730abf068e52d2aab9df00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecc22d32d2730abf068e52d2aab9df00">&#9670;&#160;</a></span>_as_grid()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver._as_grid </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00054">54</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>    <span class="keyword">def </span>_as_grid(self, w):</div>
+<div class="line"><span class="lineno">   55</span>        arr = np.asarray(w, dtype=float)</div>
+<div class="line"><span class="lineno">   56</span>        ny, nx = self.shape</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">if</span> arr.ndim == 1:</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">if</span> arr.size != ny * nx:</div>
+<div class="line"><span class="lineno">   59</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;field of size {arr.size} does not fit this solver&#39;s &quot;</span></div>
+<div class="line"><span class="lineno">   60</span>                                 f<span class="stringliteral">&quot;{ny}x{nx} grid ({ny*nx} cells).&quot;</span>)</div>
+<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">return</span> arr.reshape(ny, nx)</div>
+<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">if</span> arr.shape[-2:] != (ny, nx):</div>
+<div class="line"><span class="lineno">   63</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;field grid {arr.shape[-2:]} != solver grid {(ny, nx)}.&quot;</span>)</div>
+<div class="line"><span class="lineno">   64</span>        <span class="keywordflow">return</span> arr</div>
+<div class="line"><span class="lineno">   65</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ade62e42c0eaf2a2b6aa4c7361d57fb38" name="ade62e42c0eaf2a2b6aa4c7361d57fb38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade62e42c0eaf2a2b6aa4c7361d57fb38">&#9670;&#160;</a></span>_native_scheme()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver._native_scheme </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The C++ integrator's name when this solver can run in C++: the default
+physics (diffusion), a built-in integrator, ``step`` not overridden.</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00113">113</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>    <span class="keyword">def </span>_native_scheme(self):</div>
+<div class="line"><span class="lineno">  114</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ integrator&#39;s name when this solver can run in C++: the default</span></div>
+<div class="line"><span class="lineno">  115</span><span class="stringliteral">        physics (diffusion), a built-in integrator, ``step`` not overridden.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  116</span>        <span class="keyword">from</span> ..integrator <span class="keyword">import</span> _BUILTIN_STEPS</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  118</span>        cls = type(self)</div>
+<div class="line"><span class="lineno">  119</span>        <span class="keywordflow">if</span> (<span class="keywordflow">not</span> native.native_loop_enabled() <span class="keywordflow">or</span> cls.rhs <span class="keywordflow">is</span> <span class="keywordflow">not</span> FiniteDifferenceSolver.rhs</div>
+<div class="line"><span class="lineno">  120</span>                <span class="keywordflow">or</span> cls.step <span class="keywordflow">is</span> <span class="keywordflow">not</span> FiniteDifferenceSolver.step <span class="keywordflow">or</span> <span class="stringliteral">&quot;rhs&quot;</span> <span class="keywordflow">in</span> self.__dict__):</div>
+<div class="line"><span class="lineno">  121</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  122</span>        integrator = self.integrator</div>
+<div class="line"><span class="lineno">  123</span>        name = getattr(integrator, <span class="stringliteral">&quot;NATIVE&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">if</span> name <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> type(integrator)._step <span class="keywordflow">is</span> <span class="keywordflow">not</span> _BUILTIN_STEPS.get(name):</div>
+<div class="line"><span class="lineno">  125</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">return</span> name</div>
+<div class="line"><span class="lineno">  127</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab606fc2698d3f9f2523bafc1bbe62906" name="ab606fc2698d3f9f2523bafc1bbe62906"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab606fc2698d3f9f2523bafc1bbe62906">&#9670;&#160;</a></span>_pad()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver._pad </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>f</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">One ghost cell on each side, per the boundary condition.</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00066">66</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>    <span class="keyword">def </span>_pad(self, f):</div>
+<div class="line"><span class="lineno">   67</span>        <span class="stringliteral">&quot;&quot;&quot;One ghost cell on each side, per the boundary condition.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   68</span>        <span class="keywordflow">if</span> self.bc == <span class="stringliteral">&quot;periodic&quot;</span>:</div>
+<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">return</span> np.pad(f, 1, mode=<span class="stringliteral">&quot;wrap&quot;</span>)</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> self.bc == <span class="stringliteral">&quot;neumann&quot;</span>:</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">return</span> np.pad(f, 1, mode=<span class="stringliteral">&quot;edge&quot;</span>)               <span class="comment"># zero-gradient</span></div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">return</span> np.pad(f, 1, mode=<span class="stringliteral">&quot;constant&quot;</span>, constant_values=self.bc_value)</div>
+<div class="line"><span class="lineno">   73</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a064b263d07c4c04c90ff84380db35de4" name="a064b263d07c4c04c90ff84380db35de4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a064b263d07c4c04c90ff84380db35de4">&#9670;&#160;</a></span>_tableau()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver._tableau </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00106">106</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  106</span>    <span class="keyword">def </span>_tableau(self):</div>
+<div class="line"><span class="lineno">  107</span>        tab = self.integrator.tableau</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> tab <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  109</span>            <span class="keywordflow">raise</span> TypeError(f<span class="stringliteral">&quot;{self.integrator.name()} has no explicit tableau; this solver &quot;</span></div>
+<div class="line"><span class="lineno">  110</span>                            f<span class="stringliteral">&quot;needs an explicit RK integrator (Euler/RK4/Dormand-Prince).&quot;</span>)</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">return</span> tab</div>
+<div class="line"><span class="lineno">  112</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a82a5ec5efefa937b69a6bec4054a9b90" name="a82a5ec5efefa937b69a6bec4054a9b90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82a5ec5efefa937b69a6bec4054a9b90">&#9670;&#160;</a></span>advance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.advance </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>nsteps</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Advance a real field by ``nsteps``; accepts ``(ny,nx)`` or flat and
+returns the same layout.</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00132">132</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>    <span class="keyword">def </span>advance(self, w, nsteps):</div>
+<div class="line"><span class="lineno">  133</span>        <span class="stringliteral">&quot;&quot;&quot;Advance a real field by ``nsteps``; accepts ``(ny,nx)`` or flat and</span></div>
+<div class="line"><span class="lineno">  134</span><span class="stringliteral">        returns the same layout.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  135</span>        arr = np.asarray(w, dtype=float)</div>
+<div class="line"><span class="lineno">  136</span>        flat = arr.ndim == 1</div>
+<div class="line"><span class="lineno">  137</span>        f = self._as_grid(arr)</div>
+<div class="line"><span class="lineno">  138</span>        scheme = self._native_scheme()</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> scheme <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> f.ndim == 2:  <span class="comment"># C++: Kalman::Solvers::FiniteDifference</span></div>
+<div class="line"><span class="lineno">  140</span>            <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  141</span>            f = core.solve_diffusion(self.shape, self.dt, (self.Ly, self.Lx), self.bc, self.bc_value, self.nu,</div>
+<div class="line"><span class="lineno">  142</span>                                     scheme, f, int(nsteps))</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">return</span> f.ravel() <span class="keywordflow">if</span> flat <span class="keywordflow">else</span> f</div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(int(nsteps)):</div>
+<div class="line"><span class="lineno">  145</span>            f = self.step(f)</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">return</span> f.ravel() <span class="keywordflow">if</span> flat <span class="keywordflow">else</span> f</div>
+<div class="line"><span class="lineno">  147</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab1b8edf25ac20d1c725e5f7850b88c97" name="ab1b8edf25ac20d1c725e5f7850b88c97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1b8edf25ac20d1c725e5f7850b88c97">&#9670;&#160;</a></span>discretize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.discretize </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Spatial discretization: pad with ghost cells per the BC (this is the
+solver's own job; the integrator then marches it in time).</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#ab00b7ef549cfd5c629131e62fcb7d70b">modules.framework.solver.KalmanSolver</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00077">77</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>    <span class="keyword">def </span>discretize(self, field):</div>
+<div class="line"><span class="lineno">   78</span>        <span class="stringliteral">&quot;&quot;&quot;Spatial discretization: pad with ghost cells per the BC (this is the</span></div>
+<div class="line"><span class="lineno">   79</span><span class="stringliteral">        solver&#39;s own job; the integrator then marches it in time).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">return</span> self._pad(self._as_grid(field))</div>
+<div class="line"><span class="lineno">   81</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aeecdae667494ba3783b30950c8772184" name="aeecdae667494ba3783b30950c8772184"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeecdae667494ba3783b30950c8772184">&#9670;&#160;</a></span>gradient()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.gradient </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">∇f = (∂f/∂x, ∂f/∂y) by central differences (BC-aware).</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00082">82</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>    <span class="keyword">def </span>gradient(self, w):</div>
+<div class="line"><span class="lineno">   83</span>        <span class="stringliteral">&quot;&quot;&quot;∇f = (∂f/∂x, ∂f/∂y) by central differences (BC-aware).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   84</span>        p = self.discretize(w)</div>
+<div class="line"><span class="lineno">   85</span>        fx = (p[1:-1, 2:] - p[1:-1, :-2]) / (2 * self.dx)</div>
+<div class="line"><span class="lineno">   86</span>        fy = (p[2:, 1:-1] - p[:-2, 1:-1]) / (2 * self.dy)</div>
+<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">return</span> fx, fy</div>
+<div class="line"><span class="lineno">   88</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aeb86432cc0477517056ee4a604810399" name="aeb86432cc0477517056ee4a604810399"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb86432cc0477517056ee4a604810399">&#9670;&#160;</a></span>laplacian()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.laplacian </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">∇²f by the 5-point stencil (BC-aware).</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00089">89</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    <span class="keyword">def </span>laplacian(self, w):</div>
+<div class="line"><span class="lineno">   90</span>        <span class="stringliteral">&quot;&quot;&quot;∇²f by the 5-point stencil (BC-aware).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   91</span>        p = self.discretize(w)</div>
+<div class="line"><span class="lineno">   92</span>        c = p[1:-1, 1:-1]</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">return</span> ((p[1:-1, 2:] - 2 * c + p[1:-1, :-2]) / self.dx ** 2 +</div>
+<div class="line"><span class="lineno">   94</span>                (p[2:, 1:-1] - 2 * c + p[:-2, 1:-1]) / self.dy ** 2)</div>
+<div class="line"><span class="lineno">   95</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa5b77bc84b00034cd0930c7e69a6f911" name="aa5b77bc84b00034cd0930c7e69a6f911"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5b77bc84b00034cd0930c7e69a6f911">&#9670;&#160;</a></span>random_ic()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.random_ic </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>amp</em> = <code>1.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Smooth random initial field, unit std.</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00151">151</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    <span class="keyword">def </span>random_ic(self, amp=1.0):</div>
+<div class="line"><span class="lineno">  152</span>        <span class="stringliteral">&quot;&quot;&quot;Smooth random initial field, unit std.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  153</span>        f = self.rng.standard_normal(self.shape)</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(8):                                  <span class="comment"># smooth by diffusion sweeps</span></div>
+<div class="line"><span class="lineno">  155</span>            f = f + 0.2 * self.laplacian(f) * min(self.dx, self.dy) ** 2</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> amp * f / (f.std() + 1e-12)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abcc7b363c9f4906e3ecb0de66236af8d" name="abcc7b363c9f4906e3ecb0de66236af8d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abcc7b363c9f4906e3ecb0de66236af8d">&#9670;&#160;</a></span>rhs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.rhs </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``∂f/∂t``.  Default is diffusion ``ν∇²f``; subclasses override.</pre> 
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00099">99</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>    <span class="keyword">def </span>rhs(self, field, t=None):</div>
+<div class="line"><span class="lineno">  100</span>        <span class="stringliteral">&quot;&quot;&quot;``∂f/∂t``.  Default is diffusion ``ν∇²f``; subclasses override.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">return</span> self.nu * self.laplacian(field)</div>
+<div class="line"><span class="lineno">  102</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ada2097ca3da1b075c9ac33dff477d678" name="ada2097ca3da1b075c9ac33dff477d678"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada2097ca3da1b075c9ac33dff477d678">&#9670;&#160;</a></span>solve()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.solve </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Public entry: ``discretize`` → ``integrate`` → return the evolved field.
+Concrete field solvers override for their representation.</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#afc8d3c6d498d70c804260b5a0757869b">modules.framework.solver.KalmanSolver</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00148">148</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  148</span>    <span class="keyword">def </span>solve(self, field, steps=1, u=None, t=None):</div>
+<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">return</span> self.advance(field, int(steps))</div>
+<div class="line"><span class="lineno">  150</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac8250faf9b2dea845a3691bdd1c1eef8" name="ac8250faf9b2dea845a3691bdd1c1eef8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8250faf9b2dea845a3691bdd1c1eef8">&#9670;&#160;</a></span>step()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.step </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>field</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00128">128</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>    <span class="keyword">def </span>step(self, field):</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">from</span> .spectral <span class="keyword">import</span> SpectralSolver</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">return</span> SpectralSolver._rk_step(<span class="keyword">lambda</span> f: self.rhs(f), field, self.dt, self._tableau())</div>
+<div class="line"><span class="lineno">  131</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="abd4622126d1cf86976308e753b49c706" name="abd4622126d1cf86976308e753b49c706"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abd4622126d1cf86976308e753b49c706">&#9670;&#160;</a></span>bc</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.bc</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00046">46</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a7dc04413c1beed7463b1ba46646c931b" name="a7dc04413c1beed7463b1ba46646c931b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dc04413c1beed7463b1ba46646c931b">&#9670;&#160;</a></span>bc_value</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.bc_value</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00047">47</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="ac4c004c2caef740bc0b712914cf4363f" name="ac4c004c2caef740bc0b712914cf4363f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4c004c2caef740bc0b712914cf4363f">&#9670;&#160;</a></span>DESCRIPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.framework.solvers.finite_difference.FiniteDifferenceSolver.DESCRIPTION</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  (<span class="stringliteral">&quot;Second-order finite-difference 2D field solver (periodic / dirichlet / &quot;</span></div>
+<div class="line">                   <span class="stringliteral">&quot;neumann boundaries); time march via the composed integrator.&quot;</span>)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00029">29</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a322c8cd8f10c215b9d85ff1cad513b6f" name="a322c8cd8f10c215b9d85ff1cad513b6f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a322c8cd8f10c215b9d85ff1cad513b6f">&#9670;&#160;</a></span>dt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.dt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00045">45</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="aed048d64e8a4c6bd685ea8839d1ee16e" name="aed048d64e8a4c6bd685ea8839d1ee16e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed048d64e8a4c6bd685ea8839d1ee16e">&#9670;&#160;</a></span>dx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.dx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00044">44</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a6f23e586f7f0d389aa56cc5c92405e53" name="a6f23e586f7f0d389aa56cc5c92405e53"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f23e586f7f0d389aa56cc5c92405e53">&#9670;&#160;</a></span>dy</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.dy</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00044">44</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a1436f06f234358c6ee86b546279cc59f" name="a1436f06f234358c6ee86b546279cc59f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1436f06f234358c6ee86b546279cc59f">&#9670;&#160;</a></span>KIND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.KIND = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html#a35c2406fac72ff3faabe812595b535e0">KalmanSolverKind.FINITE_DIFFERENCE</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00032">32</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a6f8fc0567e211b678ab72a57ec672cab" name="a6f8fc0567e211b678ab72a57ec672cab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f8fc0567e211b678ab72a57ec672cab">&#9670;&#160;</a></span>Lx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.Lx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00043">43</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="aab1f6e6f91918811714604c91147d8ab" name="aab1f6e6f91918811714604c91147d8ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab1f6e6f91918811714604c91147d8ab">&#9670;&#160;</a></span>Ly</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.Ly</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00043">43</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="aeb66408c1a40a32fdff9c4dbf7a62597" name="aeb66408c1a40a32fdff9c4dbf7a62597"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb66408c1a40a32fdff9c4dbf7a62597">&#9670;&#160;</a></span>n</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.n</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00042">42</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a79d8a026b752c021968626def4066492" name="a79d8a026b752c021968626def4066492"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79d8a026b752c021968626def4066492">&#9670;&#160;</a></span>NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.solvers.finite_difference.FiniteDifferenceSolver.NAME = &quot;Finite-Difference Solver&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00028">28</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a3fbeaf34255656b83725e409e7053eef" name="a3fbeaf34255656b83725e409e7053eef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3fbeaf34255656b83725e409e7053eef">&#9670;&#160;</a></span>nu</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.nu</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00048">48</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a9edf6937d8a2003cc44469975925584e" name="a9edf6937d8a2003cc44469975925584e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9edf6937d8a2003cc44469975925584e">&#9670;&#160;</a></span>nx</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.nx</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00040">40</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="ab159e5c7d03a04b1cd8a011636f3c515" name="ab159e5c7d03a04b1cd8a011636f3c515"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab159e5c7d03a04b1cd8a011636f3c515">&#9670;&#160;</a></span>ny</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.ny</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00040">40</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a48c4beda3bc6d3f4f4e4d13d36b12670" name="a48c4beda3bc6d3f4f4e4d13d36b12670"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48c4beda3bc6d3f4f4e4d13d36b12670">&#9670;&#160;</a></span>rng</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.rng</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00049">49</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a72c79bc7a26323b17ee023d9999e3d5c" name="a72c79bc7a26323b17ee023d9999e3d5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72c79bc7a26323b17ee023d9999e3d5c">&#9670;&#160;</a></span>shape</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.solvers.finite_difference.FiniteDifferenceSolver.shape</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00041">41</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<a id="a48fd2e527f043dda3f25fe7e702a3311" name="a48fd2e527f043dda3f25fe7e702a3311"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a48fd2e527f043dda3f25fe7e702a3311">&#9670;&#160;</a></span>VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.solvers.finite_difference.FiniteDifferenceSolver.VERSION = &quot;1.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="finite__difference_8py_source.html#l00031">31</a> of file <a class="el" href="finite__difference_8py_source.html">finite_difference.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/solvers/<a class="el" href="finite__difference_8py_source.html">finite_difference.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1solvers.html">solvers</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1solvers_1_1finite__difference.html">finite_difference</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html">FiniteDifferenceSolver</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

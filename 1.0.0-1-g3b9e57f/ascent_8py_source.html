@@ -1,0 +1,602 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/apps/astro/rocket/ascent.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/apps/astro/rocket/ascent.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/apps/astro/rocket/ascent.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('ascent_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">ascent.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="ascent_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1rocket_1_1ascent.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Rocket ascent — powered gravity-turn climb to orbit.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">Rocket science — getting off the pad and back: **takeoff** and **landing**.</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">This module is the *near-surface, powered-flight* half of the rocketry models (no third</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">bodies). The space-travel half — flying to the Moon and interplanetary transfers — lives in</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">:mod:`kalman.apps.space`.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">The &quot;rocket equation&quot; family (powered flight where what differs is the **phase**):</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">* :class:`RocketAscentModel` — a planar **guided ascent**: gravity versus **thrust supplied</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">  as the control input** ``u`` (constant mass). Demonstrates control channels (``l&gt;0``).</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">  *Scaled units.* Legacy alias: ``RocketLaunchModel``.</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">* :class:`RocketLiftoffModel` — a 1-D **vertical liftoff** whose thrust is internal and whose</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">  **mass burns down** (Tsiolkovsky): acceleration rises until **burnout**. *SI units.*</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="stringliteral">  Legacy alias: ``RocketTakeoffModel``.</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral">* :class:`RocketLandingModel` — the same 1-D mass-burning dynamics run in reverse: a</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral">  SpaceX-style **hoverslam**, free-falling then firing a closed-loop landing burn to touch</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral">  down near zero velocity. *SI units.*</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">All are :class:`ExtendedKalmanModel` subclasses whose ``f()`` advances the state by one</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">4th-order Runge–Kutta step; the EKF linearises ``f`` with a numerical Jacobian.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">The ascent model uses *scaled units* (``length = 1 Mm = 1000 km``, ``time = 1 ks = 1000 s``)</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">to stay well-conditioned; the near-surface liftoff/landing models use plain **SI** (m, s, kg).</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where available).</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">from</span> ....framework.models.extended <span class="keyword">import</span> ExtendedKalmanModel</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">from</span> ....framework.models.native <span class="keyword">import</span> NativeTwin, native_integrator_kind</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> ....framework.constants <span class="keyword">import</span> KalmanState, KalmanObservable, KalmanDynamicsKind</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment"># The drawing helpers live with the descent model since apps/rocket.py was</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="comment"># split into this package; the interactive plots here draw the same rocket.</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="keyword">from</span> .descent <span class="keyword">import</span> _rocket_shape, _add_rocket, _make_reticle, _set_reticle</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">from</span> ....runtime.astro <span class="keyword">import</span> (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                             G0, RHO0, H_ATM, rk4 <span class="keyword">as</span> _rk4)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment">#  1) Guided ascent from Earth — thrust as the control input (2-D)</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment"># ===========================================================================</span></div>
+<div class="foldopen" id="foldopen00045" data-start="" data-end="">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html">   45</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html">RocketAscentState</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1constants_1_1_kalman_state.html">KalmanState</a>):</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html#a0f017e31e8c449a37f6cd9a7083f536e">   46</a></span>    X = <span class="stringliteral">&quot;Mm&quot;</span>; Y = <span class="stringliteral">&quot;Mm&quot;</span>; VX = <span class="stringliteral">&quot;km/s&quot;</span>; VY = <span class="stringliteral">&quot;km/s&quot;</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+</div>
+<div class="foldopen" id="foldopen00049" data-start="" data-end="">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html">   49</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html">RocketAscentObservable</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1constants_1_1_kalman_observable.html">KalmanObservable</a>):</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html#a999564d5de10277e6c8d65c81e5bc521">   50</a></span>    X = <span class="stringliteral">&quot;Mm&quot;</span>; Y = <span class="stringliteral">&quot;Mm&quot;</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+</div>
+<div class="foldopen" id="foldopen00053" data-start="" data-end="">
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html">   53</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html">RocketAscentModel</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html">NativeTwin</a>, <a class="code hl_class" href="classmodules_1_1framework_1_1models_1_1extended_1_1_extended_kalman_model.html">ExtendedKalmanModel</a>):</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="stringliteral">    Planar **guided** powered ascent from Earth&#39;s surface (the steering/guidance model).</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="stringliteral">    State ``x = [x, y, vx, vy]`` in Mm and km/s, in Earth-centred axes; **control**</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="stringliteral">    ``u = [ax, ay]`` is the thrust acceleration in Mm/ks², which is m/s², so this model has</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="stringliteral">    ``l = 2`` control channels. Dynamics: central gravity +</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="stringliteral">    thrust (+ optional exponential-atmosphere drag). A radar measures position only.</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="stringliteral">    The distinguishing trait is the **2-D control input**: the thrust program is fed in,</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="stringliteral">    constant mass. Contrast :class:`RocketLiftoffModel` (1-D vertical liftoff whose thrust</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral">    is internal and whose **mass burns down**). Importable as the legacy alias</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral">    ``RocketLaunchModel``.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a48f6fab27e91fddd88414b6c5209ad89">   68</a></span>    NAME = <span class="stringliteral">&quot;Rocket Ascent (guided, thrust as control)&quot;</span>; VERSION = <span class="stringliteral">&quot;1.0&quot;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="preprocessor">@property</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a10a244a1ed24cf16a08192f890a6b0f6">   71</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a10a244a1ed24cf16a08192f890a6b0f6">states</a>(self):      <span class="keywordflow">return</span> RocketAscentState</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    @property</div>
+<div class="foldopen" id="foldopen00073" data-start="" data-end="">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab990c0d07c01e08364cc7b22bfc3b65e">   73</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab990c0d07c01e08364cc7b22bfc3b65e">observables</a>(self): <span class="keywordflow">return</span> RocketAscentObservable</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+</div>
+<div class="foldopen" id="foldopen00075" data-start="" data-end="">
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ad879ce4dbc4d1479949a3fd45499e06f">   75</a></span>    <span class="keyword">def</span> __init__(self, dt_s=1.0, track_km=1.0, drag=<span class="keyword">False</span>, ballistic_coeff=2.0e-3,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                 length=40.0, width=3.7, q_pos=1e-9, q_vel=1e-9, **kw):</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a198248c104af81237be7dfa496383be1">   77</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a198248c104af81237be7dfa496383be1">dtype</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a85a34ba19953352d97764fb4a736da9f">dtype</a> = np.float64</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">   78</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">_dt</a>   = dt_s / TU</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a37323b666f8420c80cc5fa51d8b4d5d1">   79</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a37323b666f8420c80cc5fa51d8b4d5d1">drag</a>  = bool(drag)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a61fe764c5a93dea437a1b61aac1e1fee">   80</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a61fe764c5a93dea437a1b61aac1e1fee">Cb</a>    = float(ballistic_coeff)     <span class="comment"># lumped 0.5*Cd*A/m (scaled)</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a6345086937f59ff3828ffabd053dc2eb">   81</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a6345086937f59ff3828ffabd053dc2eb">length</a>, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a847ab4155586530b6c3b71ab61bc2443">width</a> = float(length), float(width)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a7808add3b25ba11e16a15faf705b2a49">   82</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2df09026bbaa1934eb7d7cc1099a1c2d">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#ac565ff73e714600b7f88addaaf029dce">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a0292fd239ee657f8a7130a0217b3ef08">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a98551e7b498bcf7349142d92806c8a10">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#a64fb255e9716f8b1b661ad8ed7324db4">n</a>, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a603c0cc17e77f8e2e5e9f52a2fede4ee">m</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a20e2803521f92792a59918a0c3b66326">m</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a329ba429cc2bc0b16c78f4ea28a3e016">m</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a85a489e95250d34c23c6342741cf23ca">m</a>, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a7808add3b25ba11e16a15faf705b2a49">l</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a4c9fcea5beea76314d7c2a8a63ddb631">l</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a34647894e9aa9e3f70e0b01cf30d29ec">l</a> = 4, 2, 2</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a747d253f647fa847e80673379264de70">   83</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a747d253f647fa847e80673379264de70">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a54702aa647740c1bc8a5c2c09ea2b194">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a7666fcfa6dfa4770442602420632bfde">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#add207accbe319fc1ede147f152248635">fs</a> = 1.0 / self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">_dt</a></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        Q = np.diag([q_pos, q_pos, q_vel, q_vel]).astype(float)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        R = (track_km * KM) ** 2 * np.eye(2)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment"># L = I: Q enters additively on every state. f() does not route an</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="comment"># additive `w` through, so without it the engine would difference f with</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="comment"># respect to w, find no sensitivity, and multiply Q by a zero matrix at</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="comment"># every prediction.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        super().__init__(<span class="stringliteral">&quot;LAUNCH&quot;</span>, Q=Q, R=R, L=np.eye(self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2df09026bbaa1934eb7d7cc1099a1c2d">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#ac565ff73e714600b7f88addaaf029dce">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a0292fd239ee657f8a7130a0217b3ef08">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a98551e7b498bcf7349142d92806c8a10">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#a64fb255e9716f8b1b661ad8ed7324db4">n</a>), fs=self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a747d253f647fa847e80673379264de70">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a54702aa647740c1bc8a5c2c09ea2b194">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a7666fcfa6dfa4770442602420632bfde">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#add207accbe319fc1ede147f152248635">fs</a>, **kw)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="comment"># --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketAscent) -------</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment"># The thrust program is the control input u (l = 2), handed to the twin</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment"># with the measurements; a controller function keeps the Python model.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab4016c78eb54611afdbe8cac8582c6dd">   95</a></span>    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + (<span class="stringliteral">&quot;acceleration&quot;</span>,)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+<div class="foldopen" id="foldopen00097" data-start="" data-end="">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab74fba702e9fd0603359d6af47c3e898">   97</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab74fba702e9fd0603359d6af47c3e898">native_name</a>(self):</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;rocket-ascent&quot;</span> <span class="keywordflow">if</span> native_integrator_kind(self) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+</div>
+<div class="foldopen" id="foldopen00100" data-start="" data-end="">
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aef6d09d2c9c35fa9c90e494394dd004a">  100</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aef6d09d2c9c35fa9c90e494394dd004a">native_parameters</a>(self):</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;GM&quot;</span>: float(GM_EARTH), <span class="stringliteral">&quot;R&quot;</span>: float(R_EARTH), <span class="stringliteral">&quot;H&quot;</span>: float(H_SCALE),</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                <span class="stringliteral">&quot;ballistic_coeff&quot;</span>: self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a61fe764c5a93dea437a1b61aac1e1fee">Cb</a>, <span class="stringliteral">&quot;drag&quot;</span>: float(self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a37323b666f8420c80cc5fa51d8b4d5d1">drag</a>),</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="stringliteral">&quot;substeps&quot;</span>: float(self.<a class="code hl_function" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ad121d8cbd083a1d84fb4e1d1f9a06a0c">substeps</a>()), <span class="stringliteral">&quot;integrator&quot;</span>: float(native_integrator_kind(self))}</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+</div>
+<div class="foldopen" id="foldopen00105" data-start="" data-end="">
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#adab1d292d54b73b7117bd8ef97abe50d">  105</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#adab1d292d54b73b7117bd8ef97abe50d">acceleration</a>(self, r, v, u):</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        a = -GM_EARTH * r / np.linalg.norm(r) ** 3            <span class="comment"># gravity</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">if</span> u <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            a = a + np.asarray(u, float).reshape(2)           <span class="comment"># thrust (control)</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a37323b666f8420c80cc5fa51d8b4d5d1">drag</a>:</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            alt = np.linalg.norm(r) - R_EARTH</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            rho = np.exp(-max(alt, 0.0) / H_SCALE)</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            a = a - self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a61fe764c5a93dea437a1b61aac1e1fee">Cb</a> * rho * np.linalg.norm(v) * v     <span class="comment"># quadratic drag</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">return</span> a</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#accb88a8ba3841376800f02269b201685">  115</a></span>    DYNAMICS = KalmanDynamicsKind.CONTINUOUS      <span class="comment"># f is ds/dt; the framework integrates it (RK4)</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="foldopen" id="foldopen00117" data-start="" data-end="">
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aad83b95c34a63e6fe7ba02f8707d4ea6">  117</a></span>    <span class="keyword">def </span><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a29d1b0082d40ad43a391213a8560b2e7">f</a>(self, x, u=None, w=None, t=None):</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        s = np.asarray(x, float).reshape(-1)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keywordflow">return</span> np.concatenate([s[2:], self.<a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#adab1d292d54b73b7117bd8ef97abe50d">acceleration</a>(s[:2], s[2:], u)]).reshape(np.shape(x))</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+</div>
+<div class="foldopen" id="foldopen00121" data-start="" data-end="">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae3e8a15892d531c586e7802a6b053bec">  121</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae3e8a15892d531c586e7802a6b053bec">h</a>(self, x, v=None, t=None):</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        z = np.asarray(x, float).reshape(-1)[:2].reshape(2, 1)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">return</span> z <span class="keywordflow">if</span> v <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> z + np.asarray(v, float).reshape(2, 1)</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="comment"># ==================================================================</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="comment"># Signature figure — powered ascent (override KalmanModel.plot).</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <span class="comment"># ``record`` is the EKF estimate; ``sample`` the sampled truth+measurements.</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="comment"># ==================================================================</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00130" data-start="" data-end="">
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">  130</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">_pitch</a>(vx, vy):</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="stringliteral">&quot;&quot;&quot;Flight-path tilt from vertical [rad] in the (downrange, altitude) plane.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keywordflow">return</span> np.arctan2(vy, vx)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+</div>
+<div class="foldopen" id="foldopen00134" data-start="" data-end="">
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ad924f4ff37aa05898036a573cd77e8fd">  134</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ad924f4ff37aa05898036a573cd77e8fd">_orbit_frac</a>(self, r, v):</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="stringliteral">&quot;&quot;&quot;Speed as a fraction of local circular-orbit speed (a &#39;to orbit&#39; gauge).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <span class="keywordflow">return</span> float(np.linalg.norm(v)) / np.sqrt(GM_EARTH / max(np.linalg.norm(r), 1e-9))</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+</div>
+<div class="foldopen" id="foldopen00138" data-start="" data-end="">
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2e2e4318c81f2f315b4dad87d8e65f61">  138</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2e2e4318c81f2f315b4dad87d8e65f61">_plot_static</a>(self, record, sample=None, *, component=None, error=True,</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                     n_pose=7, rocket_frac=0.05, figsize=(15, 5.6), uk=<span class="keywordtype">None</span>, **kwargs):</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="stringliteral">&quot;&quot;&quot;Signature figure — matches the interactive layout: the drawn rocket on the</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="stringliteral">        gravity-turn trajectory (left), altitude+speed / EKF error / thrust control</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="stringliteral">        time series (centre), and a small attitude reticle (right). Radar measurement</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="stringliteral">        positions are overlaid on the trajectory. Pass ``uk`` to show the thrust</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="stringliteral">        acceleration control programme.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        truth = np.asarray(sample.xk) <span class="keywordflow">if</span> sample <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(record.xk)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        estx  = np.asarray(record.xk)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        n     = min(len(truth), len(estx))</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        truth, estx = truth[:n], estx[:n]</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        t_s   = np.arange(n) * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">_dt</a> * TU</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        alt   = (np.linalg.norm(truth[:, :2], axis=1) - R_EARTH) * LU / 1e3</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        down  = truth[:, 1] * LU / 1e3</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        speed = np.linalg.norm(truth[:, 2:4], axis=1)</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        err   = np.linalg.norm(truth[:, :2] - estx[:, :2], axis=1) * LU / 1e3</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        uk_arr = np.asarray(uk)[:n] <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span>  <span class="comment"># (n,2) [ax,ay] in km/s²</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        n_rows = 3 <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 2</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        wr = [2.2, 1.8, 0.65]</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        fig = plt.figure(figsize=figsize)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        gs  = fig.add_gridspec(n_rows, 3, width_ratios=wr, wspace=0.35,</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                               hspace=0.50 <span class="keywordflow">if</span> n_rows == 3 <span class="keywordflow">else</span> 0.45)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        axT = fig.add_subplot(gs[:, 0])           <span class="comment"># trajectory (spans all rows)</span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        axA = fig.add_subplot(gs[0, 1])           <span class="comment"># altitude &amp; speed</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        axE = fig.add_subplot(gs[1, 1])           <span class="comment"># EKF tracking error</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        axC = fig.add_subplot(gs[2, 1]) <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span>  <span class="comment"># thrust control</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        axR = fig.add_subplot(gs[0, 2])           <span class="comment"># attitude reticle (final pose)</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        axGI = fig.add_subplot(gs[1:, 2]); axGI.axis(<span class="stringliteral">&quot;off&quot;</span>)</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        <span class="comment"># --- trajectory with radar measurements and drawn rockets ---</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="keywordflow">if</span> sample <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            meas = np.asarray(sample.zk)[:n]      <span class="comment"># (n, 2): [x_Mm, y_Mm]</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            axT.scatter(meas[:, 1] * LU / 1e3, (np.linalg.norm(meas, axis=1) - R_EARTH) * LU / 1e3,</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                        s=4, color=<span class="stringliteral">&quot;0.8&quot;</span>, label=<span class="stringliteral">&quot;radar&quot;</span>, zorder=2)</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        axT.plot(down, alt, color=<span class="stringliteral">&quot;crimson&quot;</span>, lw=1.5, label=<span class="stringliteral">&quot;truth&quot;</span>)</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        axT.plot(estx[:, 1] * LU / 1e3,</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                 (np.linalg.norm(estx[:, :2], axis=1) - R_EARTH) * LU / 1e3,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                 <span class="stringliteral">&quot;--&quot;</span>, color=<span class="stringliteral">&quot;navy&quot;</span>, lw=1.0, label=<span class="stringliteral">&quot;EKF&quot;</span>)</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        span = max(down.max() - down.min(), alt.max() - alt.min(), 1.0)</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        Ld = rocket_frac * span; Wd = 0.18 * Ld</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        pose_idx = np.linspace(0, n - 1, n_pose).astype(int)</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> pose_idx:</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            th = -self.<a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">_pitch</a>(truth[i, 2], truth[i, 3])</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            shp = _rocket_shape(down[i], alt[i], th, Ld, Wd, anchor=<span class="stringliteral">&quot;com&quot;</span>)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            _add_rocket(axT, shp)</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            <span class="comment"># thrust arrow from control vector</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                u = uk_arr[i]; mag = np.linalg.norm(u)</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>                <span class="keywordflow">if</span> mag &gt; 0:</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                    scale = 0.25 * Ld / mag</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                    <span class="comment"># thrust direction is along (ux, uy) in local frame → world (down,alt)</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>                    axT.annotate(<span class="stringliteral">&quot;&quot;</span>, xy=(down[i] + u[0] * scale * TU / 1e3,</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                                         alt[i] + u[1] * scale * TU / 1e3),</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>                                 xytext=(down[i], alt[i]),</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>                                 arrowprops=dict(arrowstyle=<span class="stringliteral">&quot;-|&gt;&quot;</span>, color=<span class="stringliteral">&quot;gold&quot;</span>, lw=1.2,</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                                                 shrinkA=0, shrinkB=0, mutation_scale=10))</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        axT.set_xlabel(<span class="stringliteral">&quot;downrange [km]&quot;</span>); axT.set_ylabel(<span class="stringliteral">&quot;altitude [km]&quot;</span>)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        axT.set_title(<span class="stringliteral">&quot;Powered ascent (gravity turn)&quot;</span>); axT.grid(alpha=0.3)</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        axT.legend(loc=<span class="stringliteral">&quot;upper left&quot;</span>, fontsize=8); axT.set_aspect(<span class="stringliteral">&quot;equal&quot;</span>, adjustable=<span class="stringliteral">&quot;datalim&quot;</span>)</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="comment"># --- time series ---</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        axA.plot(t_s, alt,   color=<span class="stringliteral">&quot;steelblue&quot;</span>,  lw=1.5, label=<span class="stringliteral">&quot;altitude [km]&quot;</span>)</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        axA.plot(t_s, speed, color=<span class="stringliteral">&quot;darkorange&quot;</span>,  lw=1.3, label=<span class="stringliteral">&quot;speed [km/s]&quot;</span>)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        axA.legend(fontsize=8); axA.grid(alpha=0.3); axA.set_title(<span class="stringliteral">&quot;Altitude &amp; speed&quot;</span>)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        axE.plot(t_s, err, color=<span class="stringliteral">&quot;seagreen&quot;</span>, lw=1.5)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        <span class="keywordflow">if</span> axC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            axE.set_xlabel(<span class="stringliteral">&quot;time [s]&quot;</span>)</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        axE.set_ylabel(<span class="stringliteral">&quot;|pos error| [km]&quot;</span>)</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        axE.set_title(<span class="stringliteral">&quot;EKF tracking error&quot;</span>); axE.grid(alpha=0.3)</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keywordflow">if</span> axC <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            thrust_mag = np.linalg.norm(uk_arr, axis=1)</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            pitch_deg  = np.degrees(np.arctan2(uk_arr[:, 1], uk_arr[:, 0]))</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            axC.plot(t_s, thrust_mag, color=<span class="stringliteral">&quot;gold&quot;</span>,   lw=1.4, label=<span class="stringliteral">&quot;thrust |u| [km/s²]&quot;</span>)</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            axC2 = axC.twinx()</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            axC2.plot(t_s, pitch_deg, color=<span class="stringliteral">&quot;0.5&quot;</span>, lw=1.0, ls=<span class="stringliteral">&quot;--&quot;</span>, label=<span class="stringliteral">&quot;pitch [°]&quot;</span>)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>            axC2.set_ylabel(<span class="stringliteral">&quot;pitch [°]&quot;</span>, fontsize=8)</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>            axC.set_xlabel(<span class="stringliteral">&quot;time [s]&quot;</span>); axC.set_ylabel(<span class="stringliteral">&quot;|u| [km/s²]&quot;</span>, fontsize=8)</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            axC.set_title(<span class="stringliteral">&quot;Thrust control&quot;</span>); axC.grid(alpha=0.3)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            lines = axC.get_lines() + axC2.get_lines()</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            axC.legend(lines, [l.get_label() <span class="keywordflow">for</span> l <span class="keywordflow">in</span> lines], fontsize=7)</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span> </div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="comment"># --- attitude reticle showing final rocket orientation ---</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        th_final = -self.<a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">_pitch</a>(truth[-1, 2], truth[-1, 3])</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        reticle = _make_reticle(axR)</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        _set_reticle(reticle, th_final)</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        fig.suptitle(f<span class="stringliteral">&quot;{self.name()} — powered ascent&quot;</span>, y=1.01)</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        fig.tight_layout()</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="keywordflow">return</span> fig</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+</div>
+<div class="foldopen" id="foldopen00232" data-start="" data-end="">
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aa720d2c79ed4fbb0aa7970328f16d06e">  232</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aa720d2c79ed4fbb0aa7970328f16d06e">_plot_interactive</a>(self, record, sample=None, *, nmax=None, rocket_frac=0.05,</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>                          frames=30, interval=70, figsize=(15, 5.6), uk=<span class="keywordtype">None</span>, **kwargs):</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="stringliteral">&quot;&quot;&quot;Interactive ascent — same 3-col layout as the static: animated rocket on the</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span><span class="stringliteral">        gravity-turn trajectory (left), growing altitude+speed / EKF error / optional thrust</span></div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span><span class="stringliteral">        control time series (centre), compact attitude reticle + live readout (narrow right).</span></div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="stringliteral">        Radar measurement positions are overlaid on the trajectory. Pass ``uk`` to show the</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="stringliteral">        thrust acceleration control programme.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keyword">from</span> matplotlib.patches <span class="keyword">import</span> Polygon</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        <span class="keyword">from</span> ....helpers <span class="keyword">import</span> animate</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span> </div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        truth = np.asarray(sample.xk) <span class="keywordflow">if</span> sample <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(record.xk)</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        estx  = np.asarray(record.xk)</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        n = min(len(truth), len(estx)) <span class="keywordflow">if</span> nmax <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> int(nmax)</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        truth, estx = truth[:n], estx[:n]</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        t_s   = np.arange(n) * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">_dt</a> * TU</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        alt   = (np.linalg.norm(truth[:, :2], axis=1) - R_EARTH) * LU / 1e3</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        down  = truth[:, 1] * LU / 1e3</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        speed = np.linalg.norm(truth[:, 2:4], axis=1)</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        err   = np.linalg.norm(truth[:, :2] - estx[:, :2], axis=1) * LU / 1e3</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        uk_arr = np.asarray(uk)[:n] <span class="keywordflow">if</span> uk <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        thrust_mag = np.linalg.norm(uk_arr, axis=1) <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        pitch_deg  = np.degrees(np.arctan2(uk_arr[:, 1], uk_arr[:, 0])) \</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>                     <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span> </div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        span = max(down.max() - down.min(), alt.max() - alt.min(), 1.0)</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        Ld = rocket_frac * span; Wd = 0.18 * Ld</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        n_rows = 3 <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 2</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        wr = [2.2, 1.8, 0.65]</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        fig = plt.figure(figsize=figsize)</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        gs  = fig.add_gridspec(n_rows, 3, width_ratios=wr, wspace=0.35,</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>                               hspace=0.50 <span class="keywordflow">if</span> n_rows == 3 <span class="keywordflow">else</span> 0.45)</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        ax  = fig.add_subplot(gs[:, 0])        <span class="comment"># trajectory</span></div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        axA = fig.add_subplot(gs[0, 1])        <span class="comment"># altitude &amp; speed</span></div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        axE = fig.add_subplot(gs[1, 1])        <span class="comment"># EKF error</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        axC = fig.add_subplot(gs[2, 1]) <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span>  <span class="comment"># control</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        axR = fig.add_subplot(gs[0, 2])        <span class="comment"># attitude reticle</span></div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        axI = fig.add_subplot(gs[1:, 2]); axI.axis(<span class="stringliteral">&quot;off&quot;</span>)  <span class="comment"># live readout</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="comment"># --- trajectory: full guide (faint) + animated rocket ---</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        ax.plot(down, alt, color=<span class="stringliteral">&quot;0.85&quot;</span>, lw=1.0, label=<span class="stringliteral">&quot;trajectory&quot;</span>)</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>        ax.plot(estx[:, 1] * LU / 1e3,</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>                (np.linalg.norm(estx[:, :2], axis=1) - R_EARTH) * LU / 1e3,</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                <span class="stringliteral">&quot;--&quot;</span>, color=<span class="stringliteral">&quot;navy&quot;</span>, lw=0.8, alpha=0.4, label=<span class="stringliteral">&quot;EKF&quot;</span>)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="comment"># measurements</span></div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        meas_xy = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        <span class="keywordflow">if</span> sample <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>            meas_raw = np.asarray(sample.zk)[:n]   <span class="comment"># (n, 2): [x_Mm, y_Mm]</span></div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>            meas_d = meas_raw[:, 1] * LU / 1e3</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>            meas_a = (np.linalg.norm(meas_raw, axis=1) - R_EARTH) * LU / 1e3</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>            meas_xy = np.column_stack([meas_d, meas_a])</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>            ax.scatter(meas_d, meas_a, s=4, color=<span class="stringliteral">&quot;0.8&quot;</span>, label=<span class="stringliteral">&quot;radar&quot;</span>, zorder=2)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        body  = Polygon(np.zeros((4, 2)), closed=<span class="keyword">True</span>, fc=<span class="stringliteral">&quot;0.25&quot;</span>, ec=<span class="stringliteral">&quot;k&quot;</span>, lw=0.8, zorder=4)</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        nose  = Polygon(np.zeros((3, 2)), closed=<span class="keyword">True</span>, fc=<span class="stringliteral">&quot;0.25&quot;</span>, ec=<span class="stringliteral">&quot;k&quot;</span>, lw=0.8, zorder=4)</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        flame = Polygon(np.zeros((3, 2)), closed=<span class="keyword">True</span>, fc=<span class="stringliteral">&quot;orange&quot;</span>, ec=<span class="stringliteral">&quot;orangered&quot;</span>, alpha=0.9, zorder=3)</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        thrust_arr = ax.annotate(<span class="stringliteral">&quot;&quot;</span>, xy=(0, 0), xytext=(0, 0),</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>                                  arrowprops=dict(arrowstyle=<span class="stringliteral">&quot;-|&gt;&quot;</span>, color=<span class="stringliteral">&quot;gold&quot;</span>, lw=1.4,</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>                                                  shrinkA=0, shrinkB=0, mutation_scale=10)) \</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>                     <span class="keywordflow">if</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        <span class="keywordflow">for</span> p <span class="keywordflow">in</span> (flame, body, nose):</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>            ax.add_patch(p)</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        mx = max(down.max(), 1.0); my = max(alt.max(), 1.0)</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        ax.set_xlim(-0.12 * mx, 1.15 * mx); ax.set_ylim(-0.05 * my, 1.12 * my)</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        ax.set_aspect(<span class="stringliteral">&quot;equal&quot;</span>, adjustable=<span class="stringliteral">&quot;box&quot;</span>)</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        ax.set_xlabel(<span class="stringliteral">&quot;downrange [km]&quot;</span>); ax.set_ylabel(<span class="stringliteral">&quot;altitude [km]&quot;</span>)</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        ax.grid(alpha=0.3); ax.legend(loc=<span class="stringliteral">&quot;upper left&quot;</span>, fontsize=8)</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span> </div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>        <span class="comment"># --- time-series: faint guide + growing lines ---</span></div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>        axA.plot(t_s, alt,   color=<span class="stringliteral">&quot;steelblue&quot;</span>,  lw=0.7, alpha=0.15)</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        axA.plot(t_s, speed, color=<span class="stringliteral">&quot;darkorange&quot;</span>,  lw=0.7, alpha=0.15)</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>        axE.plot(t_s, err,   color=<span class="stringliteral">&quot;seagreen&quot;</span>,    lw=0.7, alpha=0.15)</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        la_a, = axA.plot([], [], color=<span class="stringliteral">&quot;steelblue&quot;</span>,  lw=1.5, label=<span class="stringliteral">&quot;altitude [km]&quot;</span>)</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        la_s, = axA.plot([], [], color=<span class="stringliteral">&quot;darkorange&quot;</span>,  lw=1.3, label=<span class="stringliteral">&quot;speed [km/s]&quot;</span>)</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        le,   = axE.plot([], [], color=<span class="stringliteral">&quot;seagreen&quot;</span>,    lw=1.5)</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        cA = axA.axvline(0, color=<span class="stringliteral">&quot;0.5&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>)</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        cE = axE.axvline(0, color=<span class="stringliteral">&quot;0.5&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>)</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        axA.set_xlim(0, t_s[-1]); axA.set_ylim(0, max(alt.max(), speed.max()) * 1.12)</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        axA.legend(fontsize=7); axA.grid(alpha=0.3); axA.set_title(<span class="stringliteral">&quot;Altitude &amp; speed&quot;</span>)</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        axE.set_xlim(0, t_s[-1]); axE.set_ylim(0, err.max() * 1.12)</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        <span class="keywordflow">if</span> axC <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>            axE.set_xlabel(<span class="stringliteral">&quot;time [s]&quot;</span>)</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        axE.set_ylabel(<span class="stringliteral">&quot;|pos error| [km]&quot;</span>)</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>        axE.set_title(<span class="stringliteral">&quot;EKF tracking error&quot;</span>); axE.grid(alpha=0.3)</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span> </div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        lc_m = lc_p = cC = axC2 = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        <span class="keywordflow">if</span> axC <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>            axC.plot(t_s, thrust_mag, color=<span class="stringliteral">&quot;gold&quot;</span>,  lw=0.7, alpha=0.15)</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>            axC2 = axC.twinx()</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>            axC2.plot(t_s, pitch_deg, color=<span class="stringliteral">&quot;0.5&quot;</span>,  lw=0.7, alpha=0.15, ls=<span class="stringliteral">&quot;--&quot;</span>)</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>            lc_m, = axC.plot([], [], color=<span class="stringliteral">&quot;gold&quot;</span>,   lw=1.4, label=<span class="stringliteral">&quot;|u| [km/s²]&quot;</span>)</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>            lc_p, = axC2.plot([], [], color=<span class="stringliteral">&quot;0.5&quot;</span>,  lw=1.0, ls=<span class="stringliteral">&quot;--&quot;</span>, label=<span class="stringliteral">&quot;pitch [°]&quot;</span>)</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>            cC    = axC.axvline(0, color=<span class="stringliteral">&quot;0.5&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>)</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>            axC.set_xlim(0, t_s[-1]); axC2.set_xlim(0, t_s[-1])</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>            axC.set_xlabel(<span class="stringliteral">&quot;time [s]&quot;</span>); axC.set_ylabel(<span class="stringliteral">&quot;|u| [km/s²]&quot;</span>, fontsize=8)</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>            axC2.set_ylabel(<span class="stringliteral">&quot;pitch [°]&quot;</span>, fontsize=8)</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            axC.set_title(<span class="stringliteral">&quot;Thrust control&quot;</span>); axC.grid(alpha=0.3)</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>            lines = axC.get_lines() + axC2.get_lines()</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>            axC.legend(lines, [l.get_label() <span class="keywordflow">for</span> l <span class="keywordflow">in</span> lines], fontsize=7)</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        <span class="comment"># --- reticle showing current attitude ---</span></div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        reticle = _make_reticle(axR)</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span>        txt = axI.text(0.05, 0.95, <span class="stringliteral">&quot;&quot;</span>, transform=axI.transAxes, va=<span class="stringliteral">&quot;top&quot;</span>,</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>                       family=<span class="stringliteral">&quot;monospace&quot;</span>, fontsize=8.5)</div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span> </div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span>        step = max(1, n // frames); frame_idx = list(range(0, n, step)) + [n - 1]</div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span> </div>
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno">  339</span>        <span class="keyword">def </span>_draw(k):</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span>            th = -self.<a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">_pitch</a>(truth[k, 2], truth[k, 3])</div>
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno">  341</span>            shp = _rocket_shape(down[k], alt[k], th, Ld, Wd, flame=0.7 * Ld, anchor=<span class="stringliteral">&quot;com&quot;</span>)</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>            body.set_xy(shp[<span class="stringliteral">&quot;body&quot;</span>]); nose.set_xy(shp[<span class="stringliteral">&quot;nose&quot;</span>]); flame.set_xy(shp[<span class="stringliteral">&quot;flame&quot;</span>])</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>            <span class="keywordflow">if</span> thrust_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>                u = uk_arr[k]; mag = np.linalg.norm(u)</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>                scale = 0.25 * Ld / max(mag, 1e-9)</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>                thrust_arr.set_position((down[k], alt[k]))</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>                thrust_arr.xy = (down[k] + u[0] * scale * TU / 1e3,</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>                                 alt[k]  + u[1] * scale * TU / 1e3)</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>            la_a.set_data(t_s[:k+1], alt[:k+1])</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>            la_s.set_data(t_s[:k+1], speed[:k+1])</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>            le.set_data(t_s[:k+1], err[:k+1])</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span>            cA.set_xdata([t_s[k], t_s[k]]); cE.set_xdata([t_s[k], t_s[k]])</div>
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno">  353</span>            <span class="keywordflow">if</span> lc_m <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> uk_arr <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>                lc_m.set_data(t_s[:k+1], thrust_mag[:k+1])</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>                lc_p.set_data(t_s[:k+1], pitch_deg[:k+1])</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>                cC.set_xdata([t_s[k], t_s[k]])</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>            _set_reticle(reticle, th)</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>            spd = np.linalg.norm(truth[k, 2:4])</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>            ax.set_title(<span class="stringliteral">&quot;Powered ascent    t = %.0f s&quot;</span> % t_s[k])</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>            txt.set_text(<span class="stringliteral">&quot;alt   %6.1f km\ndown  %6.1f km\nspeed %5.2f km/s\npitch %5.0f°&quot;</span> %</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>                         (alt[k], down[k], spd, np.degrees(self.<a class="code hl_function" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">_pitch</a>(truth[k, 2], truth[k, 3]))))</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>            <span class="keywordflow">return</span> body, nose, flame, la_a, la_s, le, txt</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span> </div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        <span class="keywordflow">return</span> animate(fig, _draw, frames=frame_idx, interval=interval)</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span> </div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span> </div>
+</div>
+</div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html">modules.apps.astro.rocket.ascent.RocketAscentModel</a></div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00053">ascent.py:53</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a10a244a1ed24cf16a08192f890a6b0f6"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a10a244a1ed24cf16a08192f890a6b0f6">modules.apps.astro.rocket.ascent.RocketAscentModel.states</a></div><div class="ttdeci">states(self)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00071">ascent.py:71</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a198248c104af81237be7dfa496383be1"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a198248c104af81237be7dfa496383be1">modules.apps.astro.rocket.ascent.RocketAscentModel.dtype</a></div><div class="ttdeci">dtype</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00077">ascent.py:77</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a2df09026bbaa1934eb7d7cc1099a1c2d"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2df09026bbaa1934eb7d7cc1099a1c2d">modules.apps.astro.rocket.ascent.RocketAscentModel.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00082">ascent.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a2e2e4318c81f2f315b4dad87d8e65f61"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a2e2e4318c81f2f315b4dad87d8e65f61">modules.apps.astro.rocket.ascent.RocketAscentModel._plot_static</a></div><div class="ttdeci">_plot_static(self, record, sample=None, *component=None, error=True, n_pose=7, rocket_frac=0.05, figsize=(15, 5.6), uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00138">ascent.py:139</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a3228d2c02c9630b03a445741fb86821f"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a3228d2c02c9630b03a445741fb86821f">modules.apps.astro.rocket.ascent.RocketAscentModel._pitch</a></div><div class="ttdeci">_pitch(vx, vy)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00130">ascent.py:130</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a37323b666f8420c80cc5fa51d8b4d5d1"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a37323b666f8420c80cc5fa51d8b4d5d1">modules.apps.astro.rocket.ascent.RocketAscentModel.drag</a></div><div class="ttdeci">drag</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00079">ascent.py:79</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a603c0cc17e77f8e2e5e9f52a2fede4ee"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a603c0cc17e77f8e2e5e9f52a2fede4ee">modules.apps.astro.rocket.ascent.RocketAscentModel.m</a></div><div class="ttdeci">m</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00082">ascent.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a61fe764c5a93dea437a1b61aac1e1fee"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a61fe764c5a93dea437a1b61aac1e1fee">modules.apps.astro.rocket.ascent.RocketAscentModel.Cb</a></div><div class="ttdeci">Cb</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00080">ascent.py:80</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a6345086937f59ff3828ffabd053dc2eb"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a6345086937f59ff3828ffabd053dc2eb">modules.apps.astro.rocket.ascent.RocketAscentModel.length</a></div><div class="ttdeci">length</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00081">ascent.py:81</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a747d253f647fa847e80673379264de70"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a747d253f647fa847e80673379264de70">modules.apps.astro.rocket.ascent.RocketAscentModel.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00083">ascent.py:83</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a7808add3b25ba11e16a15faf705b2a49"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a7808add3b25ba11e16a15faf705b2a49">modules.apps.astro.rocket.ascent.RocketAscentModel.l</a></div><div class="ttdeci">l</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00082">ascent.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_a847ab4155586530b6c3b71ab61bc2443"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#a847ab4155586530b6c3b71ab61bc2443">modules.apps.astro.rocket.ascent.RocketAscentModel.width</a></div><div class="ttdeci">width</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00081">ascent.py:81</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_aa720d2c79ed4fbb0aa7970328f16d06e"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aa720d2c79ed4fbb0aa7970328f16d06e">modules.apps.astro.rocket.ascent.RocketAscentModel._plot_interactive</a></div><div class="ttdeci">_plot_interactive(self, record, sample=None, *nmax=None, rocket_frac=0.05, frames=30, interval=70, figsize=(15, 5.6), uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00232">ascent.py:233</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_ab74fba702e9fd0603359d6af47c3e898"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab74fba702e9fd0603359d6af47c3e898">modules.apps.astro.rocket.ascent.RocketAscentModel.native_name</a></div><div class="ttdeci">native_name(self)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00097">ascent.py:97</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_ab990c0d07c01e08364cc7b22bfc3b65e"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab990c0d07c01e08364cc7b22bfc3b65e">modules.apps.astro.rocket.ascent.RocketAscentModel.observables</a></div><div class="ttdeci">observables(self)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00073">ascent.py:73</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_ad924f4ff37aa05898036a573cd77e8fd"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ad924f4ff37aa05898036a573cd77e8fd">modules.apps.astro.rocket.ascent.RocketAscentModel._orbit_frac</a></div><div class="ttdeci">_orbit_frac(self, r, v)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00134">ascent.py:134</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_adab1d292d54b73b7117bd8ef97abe50d"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#adab1d292d54b73b7117bd8ef97abe50d">modules.apps.astro.rocket.ascent.RocketAscentModel.acceleration</a></div><div class="ttdeci">acceleration(self, r, v, u)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00105">ascent.py:105</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_ae0c3529b4eb0847248d6d8f1ce7e0a5b"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae0c3529b4eb0847248d6d8f1ce7e0a5b">modules.apps.astro.rocket.ascent.RocketAscentModel._dt</a></div><div class="ttdeci">_dt</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00078">ascent.py:78</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_ae3e8a15892d531c586e7802a6b053bec"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ae3e8a15892d531c586e7802a6b053bec">modules.apps.astro.rocket.ascent.RocketAscentModel.h</a></div><div class="ttdeci">h(self, x, v=None, t=None)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00121">ascent.py:121</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html_aef6d09d2c9c35fa9c90e494394dd004a"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#aef6d09d2c9c35fa9c90e494394dd004a">modules.apps.astro.rocket.ascent.RocketAscentModel.native_parameters</a></div><div class="ttdeci">native_parameters(self)</div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00100">ascent.py:100</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html">modules.apps.astro.rocket.ascent.RocketAscentObservable</a></div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00049">ascent.py:49</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html">modules.apps.astro.rocket.ascent.RocketAscentState</a></div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00045">ascent.py:45</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a20e2803521f92792a59918a0c3b66326"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a20e2803521f92792a59918a0c3b66326">modules.framework.abstract.metadata.KalmanModelMetadata.m</a></div><div class="ttdeci">m</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00085">metadata.py:85</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a4c9fcea5beea76314d7c2a8a63ddb631"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a4c9fcea5beea76314d7c2a8a63ddb631">modules.framework.abstract.metadata.KalmanModelMetadata.l</a></div><div class="ttdeci">l</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00086">metadata.py:86</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a54702aa647740c1bc8a5c2c09ea2b194"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a54702aa647740c1bc8a5c2c09ea2b194">modules.framework.abstract.metadata.KalmanModelMetadata.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00079">metadata.py:79</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a85a34ba19953352d97764fb4a736da9f"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a85a34ba19953352d97764fb4a736da9f">modules.framework.abstract.metadata.KalmanModelMetadata.dtype</a></div><div class="ttdeci">type dtype</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00076">metadata.py:76</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_ac565ff73e714600b7f88addaaf029dce"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#ac565ff73e714600b7f88addaaf029dce">modules.framework.abstract.metadata.KalmanModelMetadata.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00084">metadata.py:84</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin_html_a0292fd239ee657f8a7130a0217b3ef08"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a0292fd239ee657f8a7130a0217b3ef08">modules.framework.abstract.mixins.KalmanInferenceMixin.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00160">mixins.py:160</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin_html_a329ba429cc2bc0b16c78f4ea28a3e016"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a329ba429cc2bc0b16c78f4ea28a3e016">modules.framework.abstract.mixins.KalmanInferenceMixin.m</a></div><div class="ttdeci">m</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00173">mixins.py:173</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin_html_a7666fcfa6dfa4770442602420632bfde"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a7666fcfa6dfa4770442602420632bfde">modules.framework.abstract.mixins.KalmanModelMixin.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00282">mixins.py:282</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1constants_1_1_kalman_observable_html"><div class="ttname"><a href="classmodules_1_1framework_1_1constants_1_1_kalman_observable.html">modules.framework.constants.KalmanObservable</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00067">constants.py:67</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1constants_1_1_kalman_state_html"><div class="ttname"><a href="classmodules_1_1framework_1_1constants_1_1_kalman_state.html">modules.framework.constants.KalmanState</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00055">constants.py:55</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a29d1b0082d40ad43a391213a8560b2e7"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a29d1b0082d40ad43a391213a8560b2e7">modules.framework.model.KalmanModel.f</a></div><div class="ttdeci">f</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00295">model.py:295</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a34647894e9aa9e3f70e0b01cf30d29ec"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a34647894e9aa9e3f70e0b01cf30d29ec">modules.framework.model.KalmanModel.l</a></div><div class="ttdeci">l</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00186">model.py:186</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a420f835f3dafac5ea971bd25654b9a5f"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">modules.framework.model.KalmanModel.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00110">model.py:110</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a85a489e95250d34c23c6342741cf23ca"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a85a489e95250d34c23c6342741cf23ca">modules.framework.model.KalmanModel.m</a></div><div class="ttdeci">m</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00190">model.py:190</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a98551e7b498bcf7349142d92806c8a10"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a98551e7b498bcf7349142d92806c8a10">modules.framework.model.KalmanModel.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00172">model.py:172</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_ad121d8cbd083a1d84fb4e1d1f9a06a0c"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ad121d8cbd083a1d84fb4e1d1f9a06a0c">modules.framework.model.KalmanModel.substeps</a></div><div class="ttdeci">int substeps(self, x=None)</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00314">model.py:314</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1extended_1_1_extended_kalman_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1extended_1_1_extended_kalman_model.html">modules.framework.models.extended.ExtendedKalmanModel</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2extended_8py_source.html#l00008">extended.py:8</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1native_1_1_native_twin_html"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html">modules.framework.models.native.NativeTwin</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00387">native.py:387</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1native_1_1_native_twin_html_a64fb255e9716f8b1b661ad8ed7324db4"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#a64fb255e9716f8b1b661ad8ed7324db4">modules.framework.models.native.NativeTwin.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00462">native.py:462</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1native_1_1_native_twin_html_add207accbe319fc1ede147f152248635"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#add207accbe319fc1ede147f152248635">modules.framework.models.native.NativeTwin.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00483">native.py:483</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_17fc734a481c6056d78b62c3e8a9a199.html">astro</a></li><li class="navelem"><a class="el" href="dir_826a888f21fc1983113e48f12960563c.html">rocket</a></li><li class="navelem"><a class="el" href="ascent_8py.html">ascent.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

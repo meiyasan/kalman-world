@@ -1,0 +1,258 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Control and Routing" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Control and Routing" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Control and Routing</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_docs_28___control-and-_routing.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Control and Routing</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="control-and-routing"></a> Two ways to act on the estimation loop rather than just observe it:</p>
+<ul>
+<li>a <b>controller</b> computes <code>u</code> from the current estimate and feeds it back into the plant;</li>
+<li>a <b>router</b> chooses <em>which model</em> is currently right, for systems that switch regime.</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="controllers"></a>
+Controllers</h1>
+<h2><a class="anchor" id="the-contract-3"></a>
+The contract</h2>
+<p>A controller is a <b>callable</b>: <code>u = ctrl(x̂, P, t, nu=ν)</code>. The filter receives it through <code>uk=</code> and treats it exactly like a control sequence.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> KalmanFilter, LQRKalmanController</div>
+<div class="line"> </div>
+<div class="line">ctrl = LQRKalmanController(model, Qcost=np.diag([10., 1.]), Rcost=np.array([[0.1]]))</div>
+<div class="line">ctrl.fit()                                   <span class="comment"># LQR/neural controllers train first</span></div>
+<div class="line"> </div>
+<div class="line">kf = KalmanFilter(model)</div>
+<div class="line">truth = model.sample(5.0)</div>
+<div class="line">record = kf.forward(truth.zk, uk=ctrl)       <span class="comment"># closed loop</span></div>
+<div class="line"> </div>
+<div class="line">total = sum(c <span class="keywordflow">for</span> _, c <span class="keywordflow">in</span> ctrl.cost_log)</div>
+</div><!-- fragment --><p>Every call logs <code>(t, cost)</code>, <code>(t, u)</code> and, if the controller adapts the input matrix, <code>(t, B)</code>. <code>reset()</code> clears all three.</p>
+<p>Subclasses override <code>_policy</code> (required) and <code>_update</code> (optional — returning a new <code>B</code> rebinds the model's input matrix as a side effect).</p>
+<h2><a class="anchor" id="cost-accounting"></a>
+Cost accounting</h2>
+<p>Cost is charged against the command the actuator can <b>actually deliver</b> (<code>model.clip_u(u)</code>), not the controller's raw ask. A fixed-gain controller with no notion of an actuator limit can request far more effort than the plant ever receives; charging <code>Rcost</code> against that fictitious effort would unfairly inflate its cost relative to a controller whose raw output already respects the limit. <code>u_log</code> still keeps the raw command for diagnostics.</p>
+<h2><a class="anchor" id="shipped-controllers"></a>
+Shipped controllers</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Class   </th><th class="markdownTableHeadNone">Key parameters   </th><th class="markdownTableHeadNone">Character    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ProportionalKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Kp</code>   </td><td class="markdownTableBodyNone">simplest possible feedback    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>PIDKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Kp</code>, <code>Ki</code>, <code>Kd</code>   </td><td class="markdownTableBodyNone">classical three-term    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>LQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Qcost</code>, <code>Rcost</code> (+ <code>fit()</code>)   </td><td class="markdownTableBodyNone">optimal linear-quadratic gain    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>MPPIKalmanController</code>   </td><td class="markdownTableBodyNone"><code>n_rollouts</code>, <code>horizon</code>, <code>noise_sigma</code>, <code>lam</code>   </td><td class="markdownTableBodyNone">sampling-based MPC, honours actuator limits natively    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>NeuralKalmanController</code>   </td><td class="markdownTableBodyNone"><code>hidden</code>, <code>features</code> (+ <code>fit()</code> / <code>fit_mppi()</code>)   </td><td class="markdownTableBodyNone">learned policy, can distil MPPI    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>BoostKalmanController</code>   </td><td class="markdownTableBodyNone"><code>boost_factor</code>, <code>threshold</code>, <code>window</code>   </td><td class="markdownTableBodyNone">transient response boost on innovation spikes    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>AdaptiveQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">retunes <code>Q</code>/<code>R</code> online from innovation statistics    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>NeuralAdaptiveQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>hidden</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">learned <code>Q</code>/<code>R</code> adaptation across regimes   </td></tr>
+</table>
+<p>The last two are <em>not</em> control in the actuator sense — they act on the filter's own noise model. That is deliberate: the same callable hook is the natural place to adapt tuning online.</p>
+<p>All take <code>model</code> first and accept <code>x_ref</code>, <code>Qcost</code>, <code>Rcost</code>. Defaults come from <code>model.control_cost()</code> when the model defines it, else identity matrices.</p>
+<h2><a class="anchor" id="through-the-api-1"></a>
+Through the API</h2>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.api <span class="keyword">import</span> run_control</div>
+<div class="line"> </div>
+<div class="line">run_control(model_spec,</div>
+<div class="line">            {<span class="stringliteral">&quot;controller&quot;</span>: <span class="stringliteral">&quot;lqr&quot;</span>,</div>
+<div class="line">             <span class="stringliteral">&quot;cost&quot;</span>: {<span class="stringliteral">&quot;Qcost&quot;</span>: [[10, 0], [0, 1]], <span class="stringliteral">&quot;Rcost&quot;</span>: [[0.1]], <span class="stringliteral">&quot;x_ref&quot;</span>: [[0], [0]]},</div>
+<div class="line">             <span class="stringliteral">&quot;params&quot;</span>: {}},</div>
+<div class="line">            duration=5.0)</div>
+<div class="line"><span class="comment"># {&quot;run_id&quot;: …, &quot;xk&quot;: [...], &quot;cost&quot;: 2026.5, &quot;cost_log&quot;: [...]}</span></div>
+</div><!-- fragment --><p>The controller name is matched by prefix, so <code>"lqr"</code>, <code>"LQR"</code> and <code>"LQRKalmanController"</code> all resolve. <code>fit()</code> is called automatically when the controller defines it.</p>
+<hr  />
+<h1><a class="anchor" id="routers-ikf"></a>
+Routers (IKF)</h1>
+<p>A router decides how much weight each model in a bank deserves right now. <code>InteractiveKalmanFilter</code> runs M filters in parallel — one per regime — and each step: mixes their states, runs every model's <a class="el" href="namespace_kalman.html">Kalman</a> step, logs each model's NIS, asks the router for updated probabilities, and recombines <code>x̂ = Σ μⱼ x̂ⱼ</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.filters <span class="keyword">import</span> InteractiveKalmanFilter</div>
+<div class="line"><span class="keyword">from</span> kalman.framework.routers <span class="keyword">import</span> BayesianRouter, ThresholdRouter, NeuralRouter, HybridRouter</div>
+<div class="line"><span class="keyword">from</span> kalman.framework.routers.nn <span class="keyword">import</span> MLP</div>
+<div class="line"> </div>
+<div class="line">ikf = InteractiveKalmanFilter(models, Pi)                              <span class="comment"># Bayesian default</span></div>
+<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())</div>
+<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))</div>
+<div class="line">record = ikf.forward(zk)</div>
+</div><!-- fragment --><p><code>Pi</code> is the Markov transition matrix between regimes.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Router   </th><th class="markdownTableHeadNone">Decides from   </th><th class="markdownTableHeadNone">Needs training    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>BayesianRouter</code>   </td><td class="markdownTableBodyNone">model likelihoods (the textbook IKF update)   </td><td class="markdownTableBodyNone">no    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>ThresholdRouter</code>   </td><td class="markdownTableBodyNone">NIS crossing a threshold   </td><td class="markdownTableBodyNone">no    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>NeuralRouter</code>   </td><td class="markdownTableBodyNone">a learned function of the NIS/likelihood features   </td><td class="markdownTableBodyNone">yes    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>HybridRouter</code>   </td><td class="markdownTableBodyNone">Bayesian prior blended with a learned correction   </td><td class="markdownTableBodyNone">yes   </td></tr>
+</table>
+<p>Learning routers are trained on labelled regime sequences:</p>
+<div class="fragment"><div class="line">ikf.fit(training_zk_list, labels_list)     <span class="comment"># collects NIS features, trains the router</span></div>
+<div class="line">record = ikf.forward(test_zk)</div>
+</div><!-- fragment --><p>Swapping the router never touches the filter — that is the point of the split. Network architectures are pluggable through <code>kalman.framework.routers.nn</code>.</p>
+<hr  />
+<h1><a class="anchor" id="worked-examples"></a>
+Worked examples</h1>
+<ul>
+<li><a href="../share/notebooks/12_KalmanAI.ipynb"><code>12_KalmanAI.ipynb</code></a> — the control and routing layer end to end: P/PID/LQR/MPPI/neural comparison, adaptive <code>Q</code>/<code>R</code>, IKF routing.</li>
+<li><a href="../share/notebooks/14_StormTracking.ipynb"><code>14_StormTracking.ipynb</code></a> — IKF over storm recurvature regimes. </li>
+</ul>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="guide.html">User guide</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

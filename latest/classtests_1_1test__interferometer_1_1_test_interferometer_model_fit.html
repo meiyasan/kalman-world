@@ -1,0 +1,389 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_interferometer.TestInterferometerModelFit Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_interferometer.TestInterferometerModelFit Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_interferometer.TestInterferometerModelFit Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_interferometer.TestInterferometerModelFit Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_interferometer.TestInterferometerModelFit:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit__inherit__graph.svg" width="210" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a88ca0ec51c15639af3d2caef44738d1b" id="r_a88ca0ec51c15639af3d2caef44738d1b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#a88ca0ec51c15639af3d2caef44738d1b">test_fit_finds_windows</a> (self)</td></tr>
+<tr class="separator:a88ca0ec51c15639af3d2caef44738d1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d092ed59c7860dfc59a8d7f234f023e" id="r_a0d092ed59c7860dfc59a8d7f234f023e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#a0d092ed59c7860dfc59a8d7f234f023e">test_fit_peak_frequency_accuracy</a> (self)</td></tr>
+<tr class="separator:a0d092ed59c7860dfc59a8d7f234f023e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d0ebbaf982f7de87fd1b04455aa62ae" id="r_a8d0ebbaf982f7de87fd1b04455aa62ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#a8d0ebbaf982f7de87fd1b04455aa62ae">test_fit_two_bands</a> (self)</td></tr>
+<tr class="separator:a8d0ebbaf982f7de87fd1b04455aa62ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab74446f08385d450ac7180082b4d3679" id="r_ab74446f08385d450ac7180082b4d3679"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#ab74446f08385d450ac7180082b4d3679">test_fit_raises_on_empty_bands</a> (self)</td></tr>
+<tr class="separator:ab74446f08385d450ac7180082b4d3679"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ce8ff448a5d76f6fc80a5131c517544" id="r_a0ce8ff448a5d76f6fc80a5131c517544"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#a0ce8ff448a5d76f6fc80a5131c517544">test_peak_summary_populated</a> (self)</td></tr>
+<tr class="separator:a0ce8ff448a5d76f6fc80a5131c517544"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a365467bdd9b935145fd259f802d68362" id="r_a365467bdd9b935145fd259f802d68362"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html#a365467bdd9b935145fd259f802d68362">_strain</a> (self, freqs, fs=4096.0, duration=60.0)</td></tr>
+<tr class="separator:a365467bdd9b935145fd259f802d68362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00179">179</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a365467bdd9b935145fd259f802d68362" name="a365467bdd9b935145fd259f802d68362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a365467bdd9b935145fd259f802d68362">&#9670;&#160;</a></span>_strain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit._strain </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>freqs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fs</em> = <code>4096.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>duration</em> = <code>60.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00181">181</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  181</span>    <span class="keyword">def </span>_strain(self, freqs, fs=4096.0, duration=60.0):</div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">return</span> _sine_psd(freqs, [1.0] * len(freqs), fs=fs, noise_std=0.05,</div>
+<div class="line"><span class="lineno">  183</span>                         duration=duration)</div>
+<div class="line"><span class="lineno">  184</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a88ca0ec51c15639af3d2caef44738d1b" name="a88ca0ec51c15639af3d2caef44738d1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a88ca0ec51c15639af3d2caef44738d1b">&#9670;&#160;</a></span>test_fit_finds_windows()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit.test_fit_finds_windows </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00185">185</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  185</span>    <span class="keyword">def </span>test_fit_finds_windows(self):</div>
+<div class="line"><span class="lineno">  186</span>        fs, f0 = 4096.0, 175.0</div>
+<div class="line"><span class="lineno">  187</span>        x = self._strain([f0], fs=fs)</div>
+<div class="line"><span class="lineno">  188</span>        m = InterferometerModel.fit(<span class="stringliteral">&quot;K1&quot;</span>, x, fs=fs, bands=[(170.0, 186.0)])</div>
+<div class="line"><span class="lineno">  189</span>        self.assertGreater(len(m.windows), 0)</div>
+<div class="line"><span class="lineno">  190</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0d092ed59c7860dfc59a8d7f234f023e" name="a0d092ed59c7860dfc59a8d7f234f023e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d092ed59c7860dfc59a8d7f234f023e">&#9670;&#160;</a></span>test_fit_peak_frequency_accuracy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit.test_fit_peak_frequency_accuracy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00191">191</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  191</span>    <span class="keyword">def </span>test_fit_peak_frequency_accuracy(self):</div>
+<div class="line"><span class="lineno">  192</span>        fs, f0 = 4096.0, 178.0</div>
+<div class="line"><span class="lineno">  193</span>        x = self._strain([f0], fs=fs)</div>
+<div class="line"><span class="lineno">  194</span>        m = InterferometerModel.fit(<span class="stringliteral">&quot;K1&quot;</span>, x, fs=fs, bands=[(170.0, 186.0)])</div>
+<div class="line"><span class="lineno">  195</span>        fitted_freqs = [w.fc <span class="keywordflow">for</span> w <span class="keywordflow">in</span> m.windows]</div>
+<div class="line"><span class="lineno">  196</span>        closest = min(fitted_freqs, key=<span class="keyword">lambda</span> f: abs(f - f0))</div>
+<div class="line"><span class="lineno">  197</span>        self.assertAlmostEqual(closest, f0, delta=2.0)</div>
+<div class="line"><span class="lineno">  198</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab74446f08385d450ac7180082b4d3679" name="ab74446f08385d450ac7180082b4d3679"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab74446f08385d450ac7180082b4d3679">&#9670;&#160;</a></span>test_fit_raises_on_empty_bands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit.test_fit_raises_on_empty_bands </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00206">206</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  206</span>    <span class="keyword">def </span>test_fit_raises_on_empty_bands(self):</div>
+<div class="line"><span class="lineno">  207</span>        <span class="comment"># A band above Nyquist has no PSD points → find_peaks returns nothing →</span></div>
+<div class="line"><span class="lineno">  208</span>        <span class="comment"># all_fits stays empty → ValueError.</span></div>
+<div class="line"><span class="lineno">  209</span>        fs = 4096.0</div>
+<div class="line"><span class="lineno">  210</span>        x  = self._strain([175.0], fs=fs)</div>
+<div class="line"><span class="lineno">  211</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  212</span>            InterferometerModel.fit(<span class="stringliteral">&quot;K1&quot;</span>, x, fs=fs,</div>
+<div class="line"><span class="lineno">  213</span>                                    bands=[(fs / 2 + 10, fs / 2 + 100)])</div>
+<div class="line"><span class="lineno">  214</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8d0ebbaf982f7de87fd1b04455aa62ae" name="a8d0ebbaf982f7de87fd1b04455aa62ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d0ebbaf982f7de87fd1b04455aa62ae">&#9670;&#160;</a></span>test_fit_two_bands()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit.test_fit_two_bands </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00199">199</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  199</span>    <span class="keyword">def </span>test_fit_two_bands(self):</div>
+<div class="line"><span class="lineno">  200</span>        fs = 4096.0</div>
+<div class="line"><span class="lineno">  201</span>        x = self._strain([175.0, 412.0], fs=fs)</div>
+<div class="line"><span class="lineno">  202</span>        m = InterferometerModel.fit(<span class="stringliteral">&quot;K1&quot;</span>, x, fs=fs,</div>
+<div class="line"><span class="lineno">  203</span>                                    bands=[(170.0, 186.0), (402.0, 432.0)])</div>
+<div class="line"><span class="lineno">  204</span>        self.assertGreaterEqual(len(m.windows), 2)</div>
+<div class="line"><span class="lineno">  205</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0ce8ff448a5d76f6fc80a5131c517544" name="a0ce8ff448a5d76f6fc80a5131c517544"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0ce8ff448a5d76f6fc80a5131c517544">&#9670;&#160;</a></span>test_peak_summary_populated()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_interferometer.TestInterferometerModelFit.test_peak_summary_populated </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00215">215</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  215</span>    <span class="keyword">def </span>test_peak_summary_populated(self):</div>
+<div class="line"><span class="lineno">  216</span>        fs, f0 = 4096.0, 175.0</div>
+<div class="line"><span class="lineno">  217</span>        x = self._strain([f0], fs=fs)</div>
+<div class="line"><span class="lineno">  218</span>        m = InterferometerModel.fit(<span class="stringliteral">&quot;K1&quot;</span>, x, fs=fs, bands=[(170.0, 186.0)])</div>
+<div class="line"><span class="lineno">  219</span>        summary = m.peak_summary()</div>
+<div class="line"><span class="lineno">  220</span>        self.assertGreater(len(summary), 0)</div>
+<div class="line"><span class="lineno">  221</span>        self.assertIn(<span class="stringliteral">&quot;fc&quot;</span>, summary[0])</div>
+<div class="line"><span class="lineno">  222</span>        self.assertIn(<span class="stringliteral">&quot;peaks&quot;</span>, summary[0])</div>
+<div class="line"><span class="lineno">  223</span> </div>
+<div class="line"><span class="lineno">  224</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__interferometer.html">test_interferometer</a></li><li class="navelem"><a class="el" href="classtests_1_1test__interferometer_1_1_test_interferometer_model_fit.html">TestInterferometerModelFit</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

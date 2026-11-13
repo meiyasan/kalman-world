@@ -1,0 +1,578 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_barotropic Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_barotropic Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_barotropic Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacetests_1_1test__barotropic.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_barotropic Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a3f1d5e20a0b501b72e5b61f0c4b30afd" id="r_a3f1d5e20a0b501b72e5b61f0c4b30afd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a3f1d5e20a0b501b72e5b61f0c4b30afd">_solver</a> (n=64)</td></tr>
+<tr class="separator:a3f1d5e20a0b501b72e5b61f0c4b30afd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a17fc6e7d0548baf1f4f338a946f8a2" id="r_a6a17fc6e7d0548baf1f4f338a946f8a2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a6a17fc6e7d0548baf1f4f338a946f8a2">test_beta_and_coriolis_match_the_textbook_values</a> ()</td></tr>
+<tr class="separator:a6a17fc6e7d0548baf1f4f338a946f8a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad8be054a8da8f5ff728da7ef034104a0" id="r_ad8be054a8da8f5ff728da7ef034104a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#ad8be054a8da8f5ff728da7ef034104a0">test_a_lat_lon_window_is_not_square</a> ()</td></tr>
+<tr class="separator:ad8be054a8da8f5ff728da7ef034104a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a338282aad2870f36438205e2219910d8" id="r_a338282aad2870f36438205e2219910d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a338282aad2870f36438205e2219910d8">test_rossby_waves_propagate_westward_at_the_theoretical_speed</a> (mode)</td></tr>
+<tr class="separator:a338282aad2870f36438205e2219910d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aecbcb57923120b4bfb7de47c66c1a6" id="r_a1aecbcb57923120b4bfb7de47c66c1a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a1aecbcb57923120b4bfb7de47c66c1a6">test_longer_waves_travel_faster</a> ()</td></tr>
+<tr class="separator:a1aecbcb57923120b4bfb7de47c66c1a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6c2e0b56437bc622dae84c1db4e7f7e" id="r_ae6c2e0b56437bc622dae84c1db4e7f7e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#ae6c2e0b56437bc622dae84c1db4e7f7e">test_without_beta_it_is_ordinary_2d_turbulence</a> ()</td></tr>
+<tr class="separator:ae6c2e0b56437bc622dae84c1db4e7f7e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8410c3a0a8d49221b19b6c1054e2780" id="r_af8410c3a0a8d49221b19b6c1054e2780"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#af8410c3a0a8d49221b19b6c1054e2780">test_the_climatology_is_at_a_physical_vorticity_scale</a> ()</td></tr>
+<tr class="separator:af8410c3a0a8d49221b19b6c1054e2780"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75722bfaf42c3901b04e42c50f6f0f1f" id="r_a75722bfaf42c3901b04e42c50f6f0f1f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a75722bfaf42c3901b04e42c50f6f0f1f">test_a_data_seeded_climatology_replaces_the_synthetic_one</a> ()</td></tr>
+<tr class="separator:a75722bfaf42c3901b04e42c50f6f0f1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67a8f52d4f0c4a2519acb855d0198ed5" id="r_a67a8f52d4f0c4a2519acb855d0198ed5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a67a8f52d4f0c4a2519acb855d0198ed5">test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans</a> ()</td></tr>
+<tr class="separator:a67a8f52d4f0c4a2519acb855d0198ed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a81dc876308ca927f0dbd0207c34d1d" id="r_a2a81dc876308ca927f0dbd0207c34d1d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a2a81dc876308ca927f0dbd0207c34d1d">test_the_model_advances_a_physical_field_without_blowing_up</a> ()</td></tr>
+<tr class="separator:a2a81dc876308ca927f0dbd0207c34d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ac45be815b1c24a1cf640fcd06b97a03c" id="r_ac45be815b1c24a1cf640fcd06b97a03c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#ac45be815b1c24a1cf640fcd06b97a03c">LY</a></td></tr>
+<tr class="separator:ac45be815b1c24a1cf640fcd06b97a03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77863973bbf8cf8c7b1d9b34a45a34b0" id="r_a77863973bbf8cf8c7b1d9b34a45a34b0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__barotropic.html#a77863973bbf8cf8c7b1d9b34a45a34b0">LX</a></td></tr>
+<tr class="separator:a77863973bbf8cf8c7b1d9b34a45a34b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Barotropic beta-plane: the physics, checked against theory before anything trusts it.
+
+The reason this model exists is that KolmogorovFlowModel is not a model of the atmosphere —
+it has no rotation, and at 50N the beta term it omits is the same order as the ones it keeps.
+So the thing worth testing is not that the code runs; it is that the one new term produces the
+one behaviour it was added for: westward-propagating Rossby waves at c = -beta / k^2.
+
+That dispersion relation is also the sharpest available test of a sign error, which is the
+most likely way to get this wrong and the hardest to notice by eye — an eastward-propagating
+"Rossby wave" still looks like weather.
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a3f1d5e20a0b501b72e5b61f0c4b30afd" name="a3f1d5e20a0b501b72e5b61f0c4b30afd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f1d5e20a0b501b72e5b61f0c4b30afd">&#9670;&#160;</a></span>_solver()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic._solver </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>64</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00024">24</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   24</span><span class="keyword">def </span>_solver(n=64):</div>
+<div class="line"><span class="lineno">   25</span>    <span class="keywordflow">return</span> BetaPlaneNS2D(n=n, nu=2.0e4, latitude_deg=50.0, dt=60.0, length=(LY, LX))</div>
+<div class="line"><span class="lineno">   26</span> </div>
+<div class="line"><span class="lineno">   27</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a67a8f52d4f0c4a2519acb855d0198ed5" name="a67a8f52d4f0c4a2519acb855d0198ed5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67a8f52d4f0c4a2519acb855d0198ed5">&#9670;&#160;</a></span>test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00129">129</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  129</span><span class="keyword">def </span>test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans():</div>
+<div class="line"><span class="lineno">  130</span>    model = BarotropicFlowModel(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
+<div class="line"><span class="lineno">  131</span>    <span class="keyword">with</span> pytest.raises(ValueError):</div>
+<div class="line"><span class="lineno">  132</span>        model.climatology_from(np.zeros((5, 17)))</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>    bad = np.zeros((5, 32 * 32))</div>
+<div class="line"><span class="lineno">  135</span>    bad[0, 0] = np.nan</div>
+<div class="line"><span class="lineno">  136</span>    <span class="keyword">with</span> pytest.raises(ValueError):</div>
+<div class="line"><span class="lineno">  137</span>        model.climatology_from(bad)</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a75722bfaf42c3901b04e42c50f6f0f1f" name="a75722bfaf42c3901b04e42c50f6f0f1f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75722bfaf42c3901b04e42c50f6f0f1f">&#9670;&#160;</a></span>test_a_data_seeded_climatology_replaces_the_synthetic_one()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_a_data_seeded_climatology_replaces_the_synthetic_one </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Real fields as ensemble candidates — the standard climatological ensemble.
+
+An unforced barotropic model has no attractor worth sampling, so its own spin-up produces
+states that are dynamically fine and meteorologically unlike this week's weather.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00107">107</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span><span class="keyword">def </span>test_a_data_seeded_climatology_replaces_the_synthetic_one():</div>
+<div class="line"><span class="lineno">  108</span>    <span class="stringliteral">&quot;&quot;&quot;Real fields as ensemble candidates — the standard climatological ensemble.</span></div>
+<div class="line"><span class="lineno">  109</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  110</span><span class="stringliteral">    An unforced barotropic model has no attractor worth sampling, so its own spin-up produces</span></div>
+<div class="line"><span class="lineno">  111</span><span class="stringliteral">    states that are dynamically fine and meteorologically unlike this week&#39;s weather.</span></div>
+<div class="line"><span class="lineno">  112</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  113</span>    model = BarotropicFlowModel(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
+<div class="line"><span class="lineno">  114</span>    rng = np.random.default_rng(0)</div>
+<div class="line"><span class="lineno">  115</span>    fields = rng.standard_normal((12, 32 * 32)) * 4.5e-5</div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span>    clim = model.climatology_from(fields)</div>
+<div class="line"><span class="lineno">  118</span>    <span class="keyword">assert</span> clim.shape == (32 * 32, 12), <span class="stringliteral">&quot;columns should be candidate states&quot;</span></div>
+<div class="line"><span class="lineno">  119</span> </div>
+<div class="line"><span class="lineno">  120</span>    <span class="comment"># And it must actually be used, not just stored beside a spin-up.</span></div>
+<div class="line"><span class="lineno">  121</span>    <span class="keyword">assert</span> model.climatology() <span class="keywordflow">is</span> clim</div>
+<div class="line"><span class="lineno">  122</span>    ensemble = model.initial_ensemble(4)</div>
+<div class="line"><span class="lineno">  123</span>    <span class="keyword">assert</span> ensemble.shape == (32 * 32, 4)</div>
+<div class="line"><span class="lineno">  124</span>    <span class="keywordflow">for</span> col <span class="keywordflow">in</span> range(4):</div>
+<div class="line"><span class="lineno">  125</span>        <span class="keyword">assert</span> np.any(np.all(np.isclose(clim, ensemble[:, [col]]), axis=0)), \</div>
+<div class="line"><span class="lineno">  126</span>            <span class="stringliteral">&quot;every member should be one of the supplied fields&quot;</span></div>
+<div class="line"><span class="lineno">  127</span> </div>
+<div class="line"><span class="lineno">  128</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad8be054a8da8f5ff728da7ef034104a0" name="ad8be054a8da8f5ff728da7ef034104a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad8be054a8da8f5ff728da7ef034104a0">&#9670;&#160;</a></span>test_a_lat_lon_window_is_not_square()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_a_lat_lon_window_is_not_square </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00036">36</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   36</span><span class="keyword">def </span>test_a_lat_lon_window_is_not_square():</div>
+<div class="line"><span class="lineno">   37</span>    ly, lx = box_size(20.0, 20.0, 50.0)</div>
+<div class="line"><span class="lineno">   38</span>    <span class="keyword">assert</span> ly == pytest.approx(2.224e6, rel=1e-3)</div>
+<div class="line"><span class="lineno">   39</span>    <span class="keyword">assert</span> lx == pytest.approx(1.430e6, rel=1e-3)</div>
+<div class="line"><span class="lineno">   40</span>    <span class="keyword">assert</span> lx &lt; ly, <span class="stringliteral">&quot;longitude degrees shorten with cos(latitude)&quot;</span></div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span> </div>
+<div class="line"><span class="lineno">   43</span><span class="preprocessor">@pytest.mark.parametrize(&quot;mode&quot;, [1, 2])</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6a17fc6e7d0548baf1f4f338a946f8a2" name="a6a17fc6e7d0548baf1f4f338a946f8a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a17fc6e7d0548baf1f4f338a946f8a2">&#9670;&#160;</a></span>test_beta_and_coriolis_match_the_textbook_values()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_beta_and_coriolis_match_the_textbook_values </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00028">28</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   28</span><span class="keyword">def </span>test_beta_and_coriolis_match_the_textbook_values():</div>
+<div class="line"><span class="lineno">   29</span>    <span class="keyword">assert</span> beta_at(50.0) == pytest.approx(1.4714e-11, rel=1e-3)</div>
+<div class="line"><span class="lineno">   30</span>    <span class="keyword">assert</span> coriolis_at(50.0) == pytest.approx(1.117e-4, rel=1e-3)</div>
+<div class="line"><span class="lineno">   31</span>    <span class="comment"># beta falls to zero at the pole and is largest at the equator.</span></div>
+<div class="line"><span class="lineno">   32</span>    <span class="keyword">assert</span> beta_at(90.0) == pytest.approx(0.0, abs=1e-18)</div>
+<div class="line"><span class="lineno">   33</span>    <span class="keyword">assert</span> beta_at(0.0) &gt; beta_at(60.0)</div>
+<div class="line"><span class="lineno">   34</span> </div>
+<div class="line"><span class="lineno">   35</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1aecbcb57923120b4bfb7de47c66c1a6" name="a1aecbcb57923120b4bfb7de47c66c1a6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aecbcb57923120b4bfb7de47c66c1a6">&#9670;&#160;</a></span>test_longer_waves_travel_faster()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_longer_waves_travel_faster </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The 1/k^2 in the dispersion relation, stated as the behaviour it implies.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00069">69</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span><span class="keyword">def </span>test_longer_waves_travel_faster():</div>
+<div class="line"><span class="lineno">   70</span>    <span class="stringliteral">&quot;&quot;&quot;The 1/k^2 in the dispersion relation, stated as the behaviour it implies.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   71</span>    solver = _solver()</div>
+<div class="line"><span class="lineno">   72</span>    k1 = 2.0 * math.pi / LX</div>
+<div class="line"><span class="lineno">   73</span>    k2 = 2.0 * math.pi * 2 / LX</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keyword">assert</span> abs(-solver.beta / k1 ** 2) &gt; abs(-solver.beta / k2 ** 2)</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a338282aad2870f36438205e2219910d8" name="a338282aad2870f36438205e2219910d8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a338282aad2870f36438205e2219910d8">&#9670;&#160;</a></span>test_rossby_waves_propagate_westward_at_the_theoretical_speed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_rossby_waves_propagate_westward_at_the_theoretical_speed </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">c = -beta / k^2 for a zonal wave, measured by tracking the spectral phase.
+
+Amplitude is tiny on purpose: the dispersion relation is linear theory, so the test has to
+stay in the regime where advection is negligible beside the beta term.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00044">44</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   44</span><span class="keyword">def </span>test_rossby_waves_propagate_westward_at_the_theoretical_speed(mode):</div>
+<div class="line"><span class="lineno">   45</span>    <span class="stringliteral">&quot;&quot;&quot;c = -beta / k^2 for a zonal wave, measured by tracking the spectral phase.</span></div>
+<div class="line"><span class="lineno">   46</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   47</span><span class="stringliteral">    Amplitude is tiny on purpose: the dispersion relation is linear theory, so the test has to</span></div>
+<div class="line"><span class="lineno">   48</span><span class="stringliteral">    stay in the regime where advection is negligible beside the beta term.</span></div>
+<div class="line"><span class="lineno">   49</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   50</span>    solver = _solver()</div>
+<div class="line"><span class="lineno">   51</span>    n = 64</div>
+<div class="line"><span class="lineno">   52</span>    x = LX * np.arange(n) / n</div>
+<div class="line"><span class="lineno">   53</span>    k = 2.0 * math.pi * mode / LX</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="line"><span class="lineno">   55</span>    field = (1e-7 * np.cos(k * x))[<span class="keywordtype">None</span>, :] * np.ones((n, 1))</div>
+<div class="line"><span class="lineno">   56</span>    phase = <span class="keyword">lambda</span> w: np.angle(np.fft.fft2(w)[0, mode])</div>
+<div class="line"><span class="lineno">   57</span> </div>
+<div class="line"><span class="lineno">   58</span>    steps = 360                                   <span class="comment"># six hours at dt = 60 s</span></div>
+<div class="line"><span class="lineno">   59</span>    evolved = solver.advance(field.reshape(-1), steps).reshape(n, n)</div>
+<div class="line"><span class="lineno">   60</span> </div>
+<div class="line"><span class="lineno">   61</span>    delta = (phase(evolved) - phase(field) + math.pi) % (2 * math.pi) - math.pi</div>
+<div class="line"><span class="lineno">   62</span>    measured = -delta / (k * steps * 60.0)</div>
+<div class="line"><span class="lineno">   63</span>    theory = -solver.beta / (k * k)</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>    <span class="keyword">assert</span> measured &lt; 0.0, <span class="stringliteral">&quot;Rossby waves must travel WESTWARD; a positive speed is a sign error&quot;</span></div>
+<div class="line"><span class="lineno">   66</span>    <span class="keyword">assert</span> measured == pytest.approx(theory, rel=0.02)</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af8410c3a0a8d49221b19b6c1054e2780" name="af8410c3a0a8d49221b19b6c1054e2780"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8410c3a0a8d49221b19b6c1054e2780">&#9670;&#160;</a></span>test_the_climatology_is_at_a_physical_vorticity_scale()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_the_climatology_is_at_a_physical_vorticity_scale </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The trap this model walks into if the inherited climatology is used unchanged.
+
+``solver.random_ic()`` is O(1), which is right for a non-dimensional box and 1e5 times too
+large for SI vorticity. The spin-up then violates CFL, the climatology comes back all-NaN,
+and the failure only surfaces much later as "SVD did not converge" inside the analysis —
+far from its cause.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00092">92</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   92</span><span class="keyword">def </span>test_the_climatology_is_at_a_physical_vorticity_scale():</div>
+<div class="line"><span class="lineno">   93</span>    <span class="stringliteral">&quot;&quot;&quot;The trap this model walks into if the inherited climatology is used unchanged.</span></div>
+<div class="line"><span class="lineno">   94</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   95</span><span class="stringliteral">    ``solver.random_ic()`` is O(1), which is right for a non-dimensional box and 1e5 times too</span></div>
+<div class="line"><span class="lineno">   96</span><span class="stringliteral">    large for SI vorticity. The spin-up then violates CFL, the climatology comes back all-NaN,</span></div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">    and the failure only surfaces much later as &quot;SVD did not converge&quot; inside the analysis —</span></div>
+<div class="line"><span class="lineno">   98</span><span class="stringliteral">    far from its cause.</span></div>
+<div class="line"><span class="lineno">   99</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  100</span>    model = BarotropicFlowModel(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
+<div class="line"><span class="lineno">  101</span>    clim = model.climatology(n_snapshots=8, spinup=60, stride=5)</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>    <span class="keyword">assert</span> np.all(np.isfinite(clim)), <span class="stringliteral">&quot;climatology went non-finite; the IC scale is wrong&quot;</span></div>
+<div class="line"><span class="lineno">  104</span>    <span class="keyword">assert</span> 1e-6 &lt; clim.std() &lt; 1e-3, f<span class="stringliteral">&quot;climatology std {clim.std():.3e} is not a weather scale&quot;</span></div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2a81dc876308ca927f0dbd0207c34d1d" name="a2a81dc876308ca927f0dbd0207c34d1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a81dc876308ca927f0dbd0207c34d1d">&#9670;&#160;</a></span>test_the_model_advances_a_physical_field_without_blowing_up()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_the_model_advances_a_physical_field_without_blowing_up </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00140">140</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  140</span><span class="keyword">def </span>test_the_model_advances_a_physical_field_without_blowing_up():</div>
+<div class="line"><span class="lineno">  141</span>    model = BarotropicFlowModel(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
+<div class="line"><span class="lineno">  142</span>    model.climatology(n_snapshots=4, spinup=60, stride=5)</div>
+<div class="line"><span class="lineno">  143</span>    state = model.initial_ensemble(2)[:, 0]</div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(5):</div>
+<div class="line"><span class="lineno">  146</span>        state = model.f(state)</div>
+<div class="line"><span class="lineno">  147</span>        <span class="keyword">assert</span> np.all(np.isfinite(state))</div>
+<div class="line"><span class="lineno">  148</span>    <span class="keyword">assert</span> np.sqrt(np.mean(state ** 2)) &lt; 1e-3</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae6c2e0b56437bc622dae84c1db4e7f7e" name="ae6c2e0b56437bc622dae84c1db4e7f7e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c2e0b56437bc622dae84c1db4e7f7e">&#9670;&#160;</a></span>test_without_beta_it_is_ordinary_2d_turbulence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.test_without_beta_it_is_ordinary_2d_turbulence </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">beta=0 must remove the term entirely — the control for the test above.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00077">77</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span><span class="keyword">def </span>test_without_beta_it_is_ordinary_2d_turbulence():</div>
+<div class="line"><span class="lineno">   78</span>    <span class="stringliteral">&quot;&quot;&quot;beta=0 must remove the term entirely — the control for the test above.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   79</span>    solver = BetaPlaneNS2D(n=64, nu=2.0e4, beta=0.0, dt=60.0, length=(LY, LX))</div>
+<div class="line"><span class="lineno">   80</span>    n = 64</div>
+<div class="line"><span class="lineno">   81</span>    x = LX * np.arange(n) / n</div>
+<div class="line"><span class="lineno">   82</span>    mode = 1</div>
+<div class="line"><span class="lineno">   83</span>    k = 2.0 * math.pi * mode / LX</div>
+<div class="line"><span class="lineno">   84</span>    field = (1e-7 * np.cos(k * x))[<span class="keywordtype">None</span>, :] * np.ones((n, 1))</div>
+<div class="line"><span class="lineno">   85</span>    phase = <span class="keyword">lambda</span> w: np.angle(np.fft.fft2(w)[0, mode])</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>    evolved = solver.advance(field.reshape(-1), 360).reshape(n, n)</div>
+<div class="line"><span class="lineno">   88</span>    delta = (phase(evolved) - phase(field) + math.pi) % (2 * math.pi) - math.pi</div>
+<div class="line"><span class="lineno">   89</span>    <span class="keyword">assert</span> delta == pytest.approx(0.0, abs=1e-6), <span class="stringliteral">&quot;a wave should not propagate without beta&quot;</span></div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a77863973bbf8cf8c7b1d9b34a45a34b0" name="a77863973bbf8cf8c7b1d9b34a45a34b0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77863973bbf8cf8c7b1d9b34a45a34b0">&#9670;&#160;</a></span>LX</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.LX</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00021">21</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+
+</div>
+</div>
+<a id="ac45be815b1c24a1cf640fcd06b97a03c" name="ac45be815b1c24a1cf640fcd06b97a03c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac45be815b1c24a1cf640fcd06b97a03c">&#9670;&#160;</a></span>LY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_barotropic.LY</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__barotropic_8py_source.html#l00021">21</a> of file <a class="el" href="test__barotropic_8py_source.html">test_barotropic.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__barotropic.html">test_barotropic</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

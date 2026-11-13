@@ -1,0 +1,295 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/runtime/usage.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/runtime/usage.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/runtime/usage.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('usage_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">usage.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="usage_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1runtime_1_1usage.html">    1</a></span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">from</span> argparse <span class="keyword">import</span> ArgumentParser</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">from</span> string <span class="keyword">import</span> Template</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">from</span> typing <span class="keyword">import</span> IO, Union</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">from</span> .logging <span class="keyword">import</span> Logger</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="foldopen" id="foldopen00008" data-start="" data-end="">
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html">    8</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1runtime_1_1usage_1_1_usage.html">Usage</a>(ArgumentParser):</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a0b3006b0e9c7d8051283941961e6695a">   10</a></span>    verbose = <span class="keyword">False</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#ac9bbe398e766953f8be98c7864564a03">   11</a></span>    debug = <span class="keyword">False</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a619930041d9801a8a0e432b7f242e518">   12</a></span>    quiet = <span class="keyword">False</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="" data-end="">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#af4bdd7a0d48130a10eb607ed25392746">   14</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#af4bdd7a0d48130a10eb607ed25392746">__init__</a>(self, *args, **kwargs):</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="comment"># Get `motd` and check if it was explicitly set to `False`</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        motd = kwargs.pop(<span class="stringliteral">&quot;motd&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keywordflow">if</span> motd <span class="keywordflow">is</span> <span class="keyword">False</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">   19</a></span>            self.<a class="code hl_variable" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">motd</a> = []  <span class="comment"># Explicitly disabled</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">elif</span> isinstance(motd, str):</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            self.<a class="code hl_variable" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">motd</a> = [motd]  <span class="comment"># Convert single string to a list</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="comment"># Use MOTD environment variable if set, otherwise default paths</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            self.<a class="code hl_variable" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">motd</a> = [os.getenv(<span class="stringliteral">&quot;MOTD&quot;</span>)] <span class="keywordflow">if</span> os.getenv(<span class="stringliteral">&quot;MOTD&quot;</span>) <span class="keywordflow">else</span> [</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                os.path.join(os.path.dirname(__file__), <span class="stringliteral">&quot;share/motd&quot;</span>),</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                <span class="stringliteral">&quot;share/motd&quot;</span>,</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>                <span class="stringliteral">&quot;../share/motd&quot;</span>,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            ]</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        super().<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#af4bdd7a0d48130a10eb607ed25392746">__init__</a>(*args, **kwargs)</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        self.add_argument(<span class="stringliteral">&#39;--debug&#39;</span>, action=<span class="stringliteral">&#39;store_true&#39;</span>, help=<span class="stringliteral">&#39;Debug mode&#39;</span>)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        self.add_argument(<span class="stringliteral">&#39;--verbose&#39;</span>, help=<span class="stringliteral">&#39;Verbosity&#39;</span>)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        self.add_argument(<span class="stringliteral">&#39;--quiet&#39;</span>, action=<span class="stringliteral">&#39;store_true&#39;</span>, help=<span class="stringliteral">&#39;Quiet mode&#39;</span>)</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+</div>
+<div class="foldopen" id="foldopen00035" data-start="" data-end="">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a60e432e3d9315e1f05caa869f90bde7e">   35</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a60e432e3d9315e1f05caa869f90bde7e">parse_args</a>(self, *args, **kwargs):</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        args = super().<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a60e432e3d9315e1f05caa869f90bde7e">parse_args</a>(*args, **kwargs)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">if</span> Logger.verbose <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            Logger.verbose = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">if</span> args.verbose:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                Logger.verbose = args.verbose</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="keywordflow">if</span> args.debug:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                Logger.verbose = args.debug</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordflow">if</span> Logger.quiet <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            Logger.quiet = <span class="keyword">False</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="keywordflow">if</span> args.quiet:</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                Logger.quiet = args.quiet</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordflow">if</span> Usage.quiet:</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                Logger.quiet = Usage.quiet</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> Logger.quiet:</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">print_motd</a>()</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keywordflow">return</span> args</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+</div>
+<div class="foldopen" id="foldopen00058" data-start="" data-end="">
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a45002934174ba7e77b8f155a8ead5895">   58</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a45002934174ba7e77b8f155a8ead5895">substitute_with_template</a>(self, text):</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="stringliteral">&quot;&quot;&quot;Substitute environment variables in the text using string.Template.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        template = Template(text)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordflow">return</span> template.safe_substitute(os.environ)</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+</div>
+<div class="foldopen" id="foldopen00063" data-start="" data-end="">
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a3401a8019dc6e744ca3c87823ed4495b">   63</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a3401a8019dc6e744ca3c87823ed4495b">get_substituted_motd</a>(self, motd_file):</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="comment"># Read the MOTD content</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keyword">with</span> open(motd_file, <span class="stringliteral">&#39;r&#39;</span>) <span class="keyword">as</span> file:</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                motd_content = file.read()</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="comment"># Substitute environment variables</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            substituted_content = self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a45002934174ba7e77b8f155a8ead5895">substitute_with_template</a>(motd_content)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">return</span> substituted_content.replace(<span class="stringliteral">&quot;\\t&quot;</span>, <span class="stringliteral">&quot;\t&quot;</span>).replace(<span class="stringliteral">&quot;\\n&quot;</span>, <span class="stringliteral">&quot;\n&quot;</span>).replace(<span class="stringliteral">&quot;\\033&quot;</span>, <span class="stringliteral">&quot;\033&quot;</span>).replace(<span class="stringliteral">&quot;\\\\&quot;</span>, <span class="stringliteral">&quot;\\&quot;</span>)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">except</span> FileNotFoundError:</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;The file {motd_file} does not exist&quot;</span>)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;An error occurred: {e}&quot;</span>)</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+</div>
+<div class="foldopen" id="foldopen00078" data-start="" data-end="">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a6a5344c3af2651e997d3b0aeff00d1af">   78</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a6a5344c3af2651e997d3b0aeff00d1af">find_existing_motd</a>(self) -&gt; Union[str, None]:</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="stringliteral">&quot;&quot;&quot;Find the first existing MOTD file from the list.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">return</span> next((path <span class="keywordflow">for</span> path <span class="keywordflow">in</span> self.<a class="code hl_variable" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">motd</a> <span class="keywordflow">if</span> os.path.exists(path)), <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+</div>
+<div class="foldopen" id="foldopen00082" data-start="" data-end="">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">   82</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">print_motd</a>(self) -&gt; None:</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="stringliteral">&quot;&quot;&quot;Print the first found MOTD file.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        motd_path = self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a6a5344c3af2651e997d3b0aeff00d1af">find_existing_motd</a>()</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">if</span> motd_path <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> os.path.exists(motd_path):</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            motd = self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a3401a8019dc6e744ca3c87823ed4495b">get_substituted_motd</a>(motd_path)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            print(motd)</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            self.<a class="code hl_variable" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">motd</a> = []</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+</div>
+<div class="foldopen" id="foldopen00092" data-start="" data-end="">
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a5f2517bdcfac7d126e0a3782da6b72e0">   92</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a5f2517bdcfac7d126e0a3782da6b72e0">print_help</a>(self, file: IO[str] | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">print_motd</a>()</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">return</span> super().<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a5f2517bdcfac7d126e0a3782da6b72e0">print_help</a>(file)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+</div>
+<div class="foldopen" id="foldopen00096" data-start="" data-end="">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a8f15d1f48df13e6bd0293f0a69709e53">   96</a></span>    <span class="keyword">def </span>error(self, message):</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        self.<a class="code hl_function" href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">print_motd</a>()</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        super().error(message)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="comment"># Usage</span></div>
+</div>
+</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="namespacemodules_1_1runtime_1_1usage.html#a441185453cd13672c4a9110525fc41c0">  102</a></span>    parser = <a class="code hl_class" href="classmodules_1_1runtime_1_1usage_1_1_usage.html">Usage</a>(motd=<span class="stringliteral">&#39;test_motd.txt&#39;</span>, description=<span class="stringliteral">&#39;Test MOTD with ANSI colors&#39;</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    parser.print_help()</div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html">modules.runtime.usage.Usage</a></div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00008">usage.py:8</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a3401a8019dc6e744ca3c87823ed4495b"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a3401a8019dc6e744ca3c87823ed4495b">modules.runtime.usage.Usage.get_substituted_motd</a></div><div class="ttdeci">get_substituted_motd(self, motd_file)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00063">usage.py:63</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a45002934174ba7e77b8f155a8ead5895"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a45002934174ba7e77b8f155a8ead5895">modules.runtime.usage.Usage.substitute_with_template</a></div><div class="ttdeci">substitute_with_template(self, text)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00058">usage.py:58</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a5f2517bdcfac7d126e0a3782da6b72e0"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a5f2517bdcfac7d126e0a3782da6b72e0">modules.runtime.usage.Usage.print_help</a></div><div class="ttdeci">None print_help(self, IO[str]|None file=None)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00092">usage.py:92</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a60e432e3d9315e1f05caa869f90bde7e"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a60e432e3d9315e1f05caa869f90bde7e">modules.runtime.usage.Usage.parse_args</a></div><div class="ttdeci">parse_args(self, *args, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00035">usage.py:35</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a6a5344c3af2651e997d3b0aeff00d1af"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a6a5344c3af2651e997d3b0aeff00d1af">modules.runtime.usage.Usage.find_existing_motd</a></div><div class="ttdeci">Union[str, None] find_existing_motd(self)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00078">usage.py:78</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_a958ccb90f37e0c6aefa62c586752928a"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#a958ccb90f37e0c6aefa62c586752928a">modules.runtime.usage.Usage.print_motd</a></div><div class="ttdeci">None print_motd(self)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00082">usage.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_aa90acbd51f8fece8711d0faab896d26c"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#aa90acbd51f8fece8711d0faab896d26c">modules.runtime.usage.Usage.motd</a></div><div class="ttdeci">motd</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00019">usage.py:19</a></div></div>
+<div class="ttc" id="aclassmodules_1_1runtime_1_1usage_1_1_usage_html_af4bdd7a0d48130a10eb607ed25392746"><div class="ttname"><a href="classmodules_1_1runtime_1_1usage_1_1_usage.html#af4bdd7a0d48130a10eb607ed25392746">modules.runtime.usage.Usage.__init__</a></div><div class="ttdeci">__init__(self, *args, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="usage_8py_source.html#l00014">usage.py:14</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_74b8b60c01c6fac50059c51d46ffef1b.html">runtime</a></li><li class="navelem"><a class="el" href="usage_8py.html">usage.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

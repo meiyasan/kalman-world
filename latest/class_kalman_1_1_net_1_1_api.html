@@ -1,0 +1,610 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Net::Api Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Net::Api Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Net::Api Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_net_1_1_api.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="class_kalman_1_1_net_1_1_api-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Net::Api Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>The JSON verbs of the Python facade <code>kalman.api</code>, for models that live in C++.  
+ <a href="class_kalman_1_1_net_1_1_api.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_api_8h_source.html">Api.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_net_1_1_api_1_1_options.html">Options</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a8736b2d974c787ce4946f0f2d1da1c44" id="r_a8736b2d974c787ce4946f0f2d1da1c44"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a8736b2d974c787ce4946f0f2d1da1c44">Api</a> ()</td></tr>
+<tr class="separator:a8736b2d974c787ce4946f0f2d1da1c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9b5a90ba102ee6ee73eadf1e2a7b23ae" id="r_a9b5a90ba102ee6ee73eadf1e2a7b23ae"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a9b5a90ba102ee6ee73eadf1e2a7b23ae">Api</a> (const <a class="el" href="struct_kalman_1_1_net_1_1_api_1_1_options.html">Options</a> &amp;options)</td></tr>
+<tr class="separator:a9b5a90ba102ee6ee73eadf1e2a7b23ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d327ee21aeebee3029736cc5beb45e8" id="r_a8d327ee21aeebee3029736cc5beb45e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a8d327ee21aeebee3029736cc5beb45e8">~Api</a> ()</td></tr>
+<tr class="separator:a8d327ee21aeebee3029736cc5beb45e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58b1ab57f6944aa8becb220bf8336845" id="r_a58b1ab57f6944aa8becb220bf8336845"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a58b1ab57f6944aa8becb220bf8336845">Api</a> (const <a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;)=delete</td></tr>
+<tr class="separator:a58b1ab57f6944aa8becb220bf8336845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b34f9faef1a8605ca7e23d25945c91e" id="r_a7b34f9faef1a8605ca7e23d25945c91e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a7b34f9faef1a8605ca7e23d25945c91e">operator=</a> (const <a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;)=delete</td></tr>
+<tr class="separator:a7b34f9faef1a8605ca7e23d25945c91e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1380e9a57ec6eca8c43b5c22973aa395" id="r_a1380e9a57ec6eca8c43b5c22973aa395"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a1380e9a57ec6eca8c43b5c22973aa395">Call</a> (const std::string &amp;verb, const std::string &amp;arguments=&quot;{}&quot;, const std::string &amp;token=&quot;&quot;)</td></tr>
+<tr class="memdesc:a1380e9a57ec6eca8c43b5c22973aa395"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run <code>verb</code> with <code>arguments</code> (a JSON object as text, "" for none).  <br /></td></tr>
+<tr class="separator:a1380e9a57ec6eca8c43b5c22973aa395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad137c92007d4b56b98e7e7b7ac898d67" id="r_ad137c92007d4b56b98e7e7b7ac898d67"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#ad137c92007d4b56b98e7e7b7ac898d67">Preload</a> (const std::string &amp;plugin)</td></tr>
+<tr class="separator:ad137c92007d4b56b98e7e7b7ac898d67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac60df9c7f1aa547c66947112aadb66f6" id="r_ac60df9c7f1aa547c66947112aadb66f6"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_net_1_1_auth.html">Auth</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#ac60df9c7f1aa547c66947112aadb66f6">GetAuth</a> () const</td></tr>
+<tr class="separator:ac60df9c7f1aa547c66947112aadb66f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c72f2b3502f10366d8224f1cf919037" id="r_a7c72f2b3502f10366d8224f1cf919037"><td class="memItemLeft" align="right" valign="top">long long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a7c72f2b3502f10366d8224f1cf919037">LastEvent</a> () const</td></tr>
+<tr class="separator:a7c72f2b3502f10366d8224f1cf919037"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa97835d654d54fc2a5cefefb8c4ca1f8" id="r_aa97835d654d54fc2a5cefefb8c4ca1f8"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#aa97835d654d54fc2a5cefefb8c4ca1f8">PluginDirs</a> () const</td></tr>
+<tr class="separator:aa97835d654d54fc2a5cefefb8c4ca1f8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab92c2fd851226bd7afc84f96297740f0" id="r_ab92c2fd851226bd7afc84f96297740f0"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#ab92c2fd851226bd7afc84f96297740f0">ResolvePlugin</a> (const std::string &amp;nameOrPath) const</td></tr>
+<tr class="separator:ab92c2fd851226bd7afc84f96297740f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a29c9f595dd63e88e8c633b5ce0f8e3cf" id="r_a29c9f595dd63e88e8c633b5ce0f8e3cf"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a29c9f595dd63e88e8c633b5ce0f8e3cf">Verbs</a> ()</td></tr>
+<tr class="memdesc:a29c9f595dd63e88e8c633b5ce0f8e3cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">The verbs served here.  <br /></td></tr>
+<tr class="separator:a29c9f595dd63e88e8c633b5ce0f8e3cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a855d0270dbc14d85c6a0836df8799ac0" id="r_a855d0270dbc14d85c6a0836df8799ac0"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a855d0270dbc14d85c6a0836df8799ac0">Scope</a> (const std::string &amp;verb)</td></tr>
+<tr class="memdesc:a855d0270dbc14d85c6a0836df8799ac0"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scope <code>verb</code> requires ("" for none).  <br /></td></tr>
+<tr class="separator:a855d0270dbc14d85c6a0836df8799ac0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40ef1a9038bb2aa736809cd22ab6fb77" id="r_a40ef1a9038bb2aa736809cd22ab6fb77"><td class="memItemLeft" align="right" valign="top">static std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_api.html#a40ef1a9038bb2aa736809cd22ab6fb77">PythonOnly</a> ()</td></tr>
+<tr class="memdesc:a40ef1a9038bb2aa736809cd22ab6fb77"><td class="mdescLeft">&#160;</td><td class="mdescRight">The facade verbs that stay in Python, each with the reason.  <br /></td></tr>
+<tr class="separator:a40ef1a9038bb2aa736809cd22ab6fb77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The JSON verbs of the Python facade <code>kalman.api</code>, for models that live in C++. </p>
+<p>One entry point, <a class="el" href="class_kalman_1_1_net_1_1_api.html#a1380e9a57ec6eca8c43b5c22973aa395" title="Run verb with arguments (a JSON object as text, &quot;&quot; for none).">Call()</a>: a verb name, its arguments as a JSON object, the caller's token, and a JSON answer &ndash; the same verb names, argument names and answer shapes as <a class="el" href="modules_2api_2____init_____8py.html">modules/api/__init__.py</a>, so a client written against the Python REST or MCP server talks to this one unchanged.</p>
+<p>What it serves:</p>
+<ul>
+<li>every model <a class="el" href="class_kalman_1_1_factory.html" title="The registry of compiled models — how a C++ model becomes nameable.">Kalman::Factory</a> knows: libKalmanApps (loaded at start when it is found) and the plugins loaded since, by their registered names (<code>{"base": "constant-velocity"}</code>);</li>
+<li>authored specs of the shared registry whose base is <code>matrices</code> or <code>continuous</code>, and specs given inline with those bases;</li>
+<li>the registry itself, read from the same SQLite file as Python (<code>$KALMAN_STATE_DIR/registry.sqlite</code>): authored models, plugins, sources, events, the revocation list.</li>
+</ul>
+<p>What it does not: models written in Python (their code is in the Python process), and the verbs that need Python libraries (plots, providers, OSSE, control, authoring). Those answer 501 and name the Python server.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">verb   </th><th class="markdownTableHeadNone">scope   </th><th class="markdownTableHeadNone">arguments    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">catalog   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">describe   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">name    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">models   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">sources   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">describe_source   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">name    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">events   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">since, limit    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">plugins   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">native   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">diagnostics   </td><td class="markdownTableBodyNone">read   </td><td class="markdownTableBodyNone">run_id    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">whoami   </td><td class="markdownTableBodyNone">(none)   </td><td class="markdownTableBodyNone">&ndash;    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">sample   </td><td class="markdownTableBodyNone">send_measurement   </td><td class="markdownTableBodyNone">spec, duration, seed, process_noise, measurement_noise    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">run_filter   </td><td class="markdownTableBodyNone">send_measurement   </td><td class="markdownTableBodyNone">spec, data or source (+query), smooth    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">forecast   </td><td class="markdownTableBodyNone">send_measurement   </td><td class="markdownTableBodyNone">spec, x0, P0, steps    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">load_plugin   </td><td class="markdownTableBodyNone">load_plugins   </td><td class="markdownTableBodyNone">name   </td></tr>
+</table>
+<p>Calls are serialised: one runs at a time per <a class="el" href="class_kalman_1_1_net_1_1_api.html" title="The JSON verbs of the Python facade kalman.api, for models that live in C++.">Api</a>, so the servers may call it from any thread.</p>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_api_8h_source.html#l00069">69</a> of file <a class="el" href="_api_8h_source.html">Api.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a8736b2d974c787ce4946f0f2d1da1c44" name="a8736b2d974c787ce4946f0f2d1da1c44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8736b2d974c787ce4946f0f2d1da1c44">&#9670;&#160;</a></span>Api() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Api::Api </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a9b5a90ba102ee6ee73eadf1e2a7b23ae" name="a9b5a90ba102ee6ee73eadf1e2a7b23ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b5a90ba102ee6ee73eadf1e2a7b23ae">&#9670;&#160;</a></span>Api() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Api::Api </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_net_1_1_api_1_1_options.html">Options</a> &amp;&#160;</td>
+          <td class="paramname"><em>options</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a8d327ee21aeebee3029736cc5beb45e8" name="a8d327ee21aeebee3029736cc5beb45e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d327ee21aeebee3029736cc5beb45e8">&#9670;&#160;</a></span>~Api()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Api::~Api </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a58b1ab57f6944aa8becb220bf8336845" name="a58b1ab57f6944aa8becb220bf8336845"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a58b1ab57f6944aa8becb220bf8336845">&#9670;&#160;</a></span>Api() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Api::Api </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1380e9a57ec6eca8c43b5c22973aa395" name="a1380e9a57ec6eca8c43b5c22973aa395"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1380e9a57ec6eca8c43b5c22973aa395">&#9670;&#160;</a></span>Call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::Net::Api::Call </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>verb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>arguments</em> = <code>&quot;{}&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run <code>verb</code> with <code>arguments</code> (a JSON object as text, "" for none). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">token</td><td>the caller's bearer token ("" for none). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the answer, as JSON text. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_kalman_1_1_net_1_1_error.html" title="A refused request, with the HTTP status that says why.">Kalman::Net::Error</a></td><td>with the HTTP status of the refusal. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac60df9c7f1aa547c66947112aadb66f6" name="ac60df9c7f1aa547c66947112aadb66f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac60df9c7f1aa547c66947112aadb66f6">&#9670;&#160;</a></span>GetAuth()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_kalman_1_1_net_1_1_auth.html">Auth</a> &amp; Kalman::Net::Api::GetAuth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7c72f2b3502f10366d8224f1cf919037" name="a7c72f2b3502f10366d8224f1cf919037"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7c72f2b3502f10366d8224f1cf919037">&#9670;&#160;</a></span>LastEvent()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">long long Kalman::Net::Api::LastEvent </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The id of the newest registry event (0 for none): GET /events/cursor, which needs no token because it says only that something changed. </p>
+
+</div>
+</div>
+<a id="a7b34f9faef1a8605ca7e23d25945c91e" name="a7b34f9faef1a8605ca7e23d25945c91e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b34f9faef1a8605ca7e23d25945c91e">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp; Kalman::Net::Api::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="aa97835d654d54fc2a5cefefb8c4ca1f8" name="aa97835d654d54fc2a5cefefb8c4ca1f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa97835d654d54fc2a5cefefb8c4ca1f8">&#9670;&#160;</a></span>PluginDirs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; std::string &gt; Kalman::Net::Api::PluginDirs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The directories plugins may be loaded from: KALMAN_PLUGIN_PATH, or this build's install and build trees and libKalman's own directory. </p>
+
+</div>
+</div>
+<a id="ad137c92007d4b56b98e7e7b7ac898d67" name="ad137c92007d4b56b98e7e7b7ac898d67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad137c92007d4b56b98e7e7b7ac898d67">&#9670;&#160;</a></span>Preload()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::Net::Api::Preload </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>plugin</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Load a plugin as the operator does at start (kalman-serve &ndash;plugin): no token, but the same allow-list as load_plugin. </p><dl class="section return"><dt>Returns</dt><dd>the answer of load_plugin, as JSON text. </dd></dl>
+
+</div>
+</div>
+<a id="a40ef1a9038bb2aa736809cd22ab6fb77" name="a40ef1a9038bb2aa736809cd22ab6fb77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40ef1a9038bb2aa736809cd22ab6fb77">&#9670;&#160;</a></span>PythonOnly()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::vector&lt; std::pair&lt; std::string, std::string &gt; &gt; Kalman::Net::Api::PythonOnly </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The facade verbs that stay in Python, each with the reason. </p>
+
+</div>
+</div>
+<a id="ab92c2fd851226bd7afc84f96297740f0" name="ab92c2fd851226bd7afc84f96297740f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab92c2fd851226bd7afc84f96297740f0">&#9670;&#160;</a></span>ResolvePlugin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::Net::Api::ResolvePlugin </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>nameOrPath</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The file to load for a plugin name (or a path inside <a class="el" href="class_kalman_1_1_net_1_1_api.html#aa97835d654d54fc2a5cefefb8c4ca1f8">PluginDirs()</a>). </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_kalman_1_1_net_1_1_error.html" title="A refused request, with the HTTP status that says why.">Error</a></td><td>400 / 403 / 404 as resolve_plugin() in Python. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a855d0270dbc14d85c6a0836df8799ac0" name="a855d0270dbc14d85c6a0836df8799ac0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a855d0270dbc14d85c6a0836df8799ac0">&#9670;&#160;</a></span>Scope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string Kalman::Net::Api::Scope </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>verb</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The scope <code>verb</code> requires ("" for none). </p>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_kalman_1_1_net_1_1_error.html" title="A refused request, with the HTTP status that says why.">Error</a></td><td>404 for an unknown verb. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a29c9f595dd63e88e8c633b5ce0f8e3cf" name="a29c9f595dd63e88e8c633b5ce0f8e3cf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a29c9f595dd63e88e8c633b5ce0f8e3cf">&#9670;&#160;</a></span>Verbs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::vector&lt; std::string &gt; Kalman::Net::Api::Verbs </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The verbs served here. </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>net/include/Kalman/Net/<a class="el" href="_api_8h_source.html">Api.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_net.html">Net</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,596 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.providers.synthetic.SyntheticProvider Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.providers.synthetic.SyntheticProvider Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.providers.synthetic.SyntheticProvider Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.providers.synthetic.SyntheticProvider Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.providers.synthetic.SyntheticProvider:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider__inherit__graph.svg" width="1240" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a0f4b29819f362120d3a810931ff003c4" id="r_a0f4b29819f362120d3a810931ff003c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a0f4b29819f362120d3a810931ff003c4">__init__</a> (self, model=None, *spec=None, **kw)</td></tr>
+<tr class="separator:a0f4b29819f362120d3a810931ff003c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e8b23fb7b6848f6d555fa2cc4bce65b" id="r_a3e8b23fb7b6848f6d555fa2cc4bce65b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a3e8b23fb7b6848f6d555fa2cc4bce65b">fetch</a> (self, duration=1.0, **kw)</td></tr>
+<tr class="separator:a3e8b23fb7b6848f6d555fa2cc4bce65b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:ab1250874bc661c7ff846a6d241dca2e6 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_ab1250874bc661c7ff846a6d241dca2e6"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ab1250874bc661c7ff846a6d241dca2e6">describe</a> (cls)</td></tr>
+<tr class="separator:ab1250874bc661c7ff846a6d241dca2e6 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee348abacf7577fff754911a3c904097 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_aee348abacf7577fff754911a3c904097"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#aee348abacf7577fff754911a3c904097">stream</a> (self, **query)</td></tr>
+<tr class="separator:aee348abacf7577fff754911a3c904097 inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad12b0604e821e0b36e51a75a6299b43a inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_ad12b0604e821e0b36e51a75a6299b43a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ad12b0604e821e0b36e51a75a6299b43a">measurements</a> (self, **query)</td></tr>
+<tr class="separator:ad12b0604e821e0b36e51a75a6299b43a inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3de926789832095a440e9ada8e32752b inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a3de926789832095a440e9ada8e32752b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a3de926789832095a440e9ada8e32752b">truth</a> (self, **query)</td></tr>
+<tr class="separator:a3de926789832095a440e9ada8e32752b inherit pub_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html">modules.framework.abstract.metadata.KalmanMetadata</a></td></tr>
+<tr class="memitem:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a14a4e351ed86dadadb83ab64e78f0236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a> (self)</td></tr>
+<tr class="separator:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4ad79eab0dcb89ded410f2c536759a3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4ad79eab0dcb89ded410f2c536759a3a">description</a> (self)</td></tr>
+<tr class="separator:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a95528fa2d5aaf13b2f4f12c48720c69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a95528fa2d5aaf13b2f4f12c48720c69e">version</a> (self)</td></tr>
+<tr class="separator:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4d420229416cbba37ebaa47a52baf5b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4d420229416cbba37ebaa47a52baf5b9">read</a> (cls, filename)</td></tr>
+<tr class="separator:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a0c0e9919afe47470788a45a0734e810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a0c0e9919afe47470788a45a0734e810d">write</a> (self, filename)</td></tr>
+<tr class="separator:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_add0c479d5879a49d4b6948ed57d951c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#add0c479d5879a49d4b6948ed57d951c5">print</a> (self, **kwargs)</td></tr>
+<tr class="separator:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a5fedc5e8e47f725cedf4619d2ec8ec58" id="r_a5fedc5e8e47f725cedf4619d2ec8ec58"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a5fedc5e8e47f725cedf4619d2ec8ec58">NAME</a> = &quot;Synthetic Provider&quot;</td></tr>
+<tr class="separator:a5fedc5e8e47f725cedf4619d2ec8ec58"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08bb84796f2701314876868fe916152b" id="r_a08bb84796f2701314876868fe916152b"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a08bb84796f2701314876868fe916152b">DESCRIPTION</a> = &quot;Generate <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a3de926789832095a440e9ada8e32752b">truth</a> + <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ad12b0604e821e0b36e51a75a6299b43a">measurements</a> from a model via KalmanSampler.&quot;</td></tr>
+<tr class="separator:a08bb84796f2701314876868fe916152b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39fa5f307bcc3c99f6e43a4e06c69d1a" id="r_a39fa5f307bcc3c99f6e43a4e06c69d1a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a39fa5f307bcc3c99f6e43a4e06c69d1a">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a39fa5f307bcc3c99f6e43a4e06c69d1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a089ec1877a244c8c2afd3f1b9c496ead" id="r_a089ec1877a244c8c2afd3f1b9c496ead"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a089ec1877a244c8c2afd3f1b9c496ead">KIND</a> = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html#a5e58235e499d0dc6212064eb87e3ffaa">KalmanProviderKind.SYNTHETIC</a></td></tr>
+<tr class="separator:a089ec1877a244c8c2afd3f1b9c496ead"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ee74720f074f0cd214ed482f65b0fae" id="r_a5ee74720f074f0cd214ed482f65b0fae"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a5ee74720f074f0cd214ed482f65b0fae">MEASUREMENTS</a></td></tr>
+<tr class="separator:a5ee74720f074f0cd214ed482f65b0fae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a143f3e044dfac2d694c8151aaed15be7" id="r_a143f3e044dfac2d694c8151aaed15be7"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a143f3e044dfac2d694c8151aaed15be7">REQUIRES</a> = (&quot;a model or spec to sample (model= or spec=)&quot;,)</td></tr>
+<tr class="separator:a143f3e044dfac2d694c8151aaed15be7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a517d5c19a448c4db7a3c966658628348 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a517d5c19a448c4db7a3c966658628348"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a517d5c19a448c4db7a3c966658628348">NAME</a> = &quot;Kalman Provider&quot;</td></tr>
+<tr class="separator:a517d5c19a448c4db7a3c966658628348 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8165eed2f9c849d9b18a1a981e600bf0 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a8165eed2f9c849d9b18a1a981e600bf0"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a8165eed2f9c849d9b18a1a981e600bf0">DESCRIPTION</a> = &quot;Abstract data/knowledge provider (<a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a5c63744ff727db2bcd14bdf3b3ff5704">fetch</a> / <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#aee348abacf7577fff754911a3c904097">stream</a>).&quot;</td></tr>
+<tr class="separator:a8165eed2f9c849d9b18a1a981e600bf0 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0876be666ed44a2aa575d0b35bffcd9d inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a0876be666ed44a2aa575d0b35bffcd9d"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a0876be666ed44a2aa575d0b35bffcd9d">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a0876be666ed44a2aa575d0b35bffcd9d inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30c6fdc6f871e3594c22f7bde6070e6b inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a30c6fdc6f871e3594c22f7bde6070e6b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a30c6fdc6f871e3594c22f7bde6070e6b">KIND</a> = None</td></tr>
+<tr class="separator:a30c6fdc6f871e3594c22f7bde6070e6b inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2f5ec5e0c3cee31a0110e6cbcc1d11 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a0b2f5ec5e0c3cee31a0110e6cbcc1d11"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a0b2f5ec5e0c3cee31a0110e6cbcc1d11">MEASUREMENTS</a> = ()</td></tr>
+<tr class="separator:a0b2f5ec5e0c3cee31a0110e6cbcc1d11 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b172a0fa2031b3e207c1a8ed92ea235 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a4b172a0fa2031b3e207c1a8ed92ea235"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a4b172a0fa2031b3e207c1a8ed92ea235">REQUIRES</a> = ()</td></tr>
+<tr class="separator:a4b172a0fa2031b3e207c1a8ed92ea235 inherit pub_static_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html">modules.framework.abstract.metadata.KalmanProviderMetadata</a></td></tr>
+<tr class="memitem:ad842a3ee08d2a47bc89ec7c89ebcc345 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_ad842a3ee08d2a47bc89ec7c89ebcc345"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#ad842a3ee08d2a47bc89ec7c89ebcc345">NAME</a> = &quot;Kalman Provider&quot;</td></tr>
+<tr class="separator:ad842a3ee08d2a47bc89ec7c89ebcc345 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72d0ab0bcde8840ce130dad233700418 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_a72d0ab0bcde8840ce130dad233700418"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#a72d0ab0bcde8840ce130dad233700418">DESCRIPTION</a> = &quot;Base class for data/knowledge providers (<a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_provider_a_b_c.html#acb661806d4b391db4920f3d9ce016897">fetch</a> / stream).&quot;</td></tr>
+<tr class="separator:a72d0ab0bcde8840ce130dad233700418 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9500c3894a6a5642d7b69323c3b7dcd7 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata" id="r_a9500c3894a6a5642d7b69323c3b7dcd7"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html#a9500c3894a6a5642d7b69323c3b7dcd7">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a9500c3894a6a5642d7b69323c3b7dcd7 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:aec995c2a0623f25ada18c7ac407d16b5" id="r_aec995c2a0623f25ada18c7ac407d16b5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#aec995c2a0623f25ada18c7ac407d16b5">_resolve_model</a> (self)</td></tr>
+<tr class="separator:aec995c2a0623f25ada18c7ac407d16b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a10cad0ae2f6eec30a58620587fd832a6 inherit pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a10cad0ae2f6eec30a58620587fd832a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a10cad0ae2f6eec30a58620587fd832a6">_cached</a> (self, key, produce)</td></tr>
+<tr class="separator:a10cad0ae2f6eec30a58620587fd832a6 inherit pro_methods_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a18b511300a671090a051ed28d7222eeb" id="r_a18b511300a671090a051ed28d7222eeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#a18b511300a671090a051ed28d7222eeb">_model</a></td></tr>
+<tr class="separator:a18b511300a671090a051ed28d7222eeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af82ce6c0a5e63303941bb8e72e2a5d82" id="r_af82ce6c0a5e63303941bb8e72e2a5d82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html#af82ce6c0a5e63303941bb8e72e2a5d82">_spec</a></td></tr>
+<tr class="separator:af82ce6c0a5e63303941bb8e72e2a5d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html">modules.framework.provider.KalmanProvider</a></td></tr>
+<tr class="memitem:a6203617914814a6e9d8dcd593018af17 inherit pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider" id="r_a6203617914814a6e9d8dcd593018af17"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a6203617914814a6e9d8dcd593018af17">_cache</a></td></tr>
+<tr class="separator:a6203617914814a6e9d8dcd593018af17 inherit pro_attribs_classmodules_1_1framework_1_1provider_1_1_kalman_provider"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Wraps a model (or a ``KalmanSpec`` dict) and samples it on demand.</pre> 
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00009">9</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a0f4b29819f362120d3a810931ff003c4" name="a0f4b29819f362120d3a810931ff003c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0f4b29819f362120d3a810931ff003c4">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>spec</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a4d2260d67ccb20b4d6a936d448109948">modules.framework.provider.KalmanProvider</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00031">31</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>    <span class="keyword">def </span>__init__(self, model=None, *, spec=None, **kw):</div>
+<div class="line"><span class="lineno">   32</span>        super().__init__(**kw)</div>
+<div class="line"><span class="lineno">   33</span>        self._model = model</div>
+<div class="line"><span class="lineno">   34</span>        self._spec = spec</div>
+<div class="line"><span class="lineno">   35</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aec995c2a0623f25ada18c7ac407d16b5" name="aec995c2a0623f25ada18c7ac407d16b5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec995c2a0623f25ada18c7ac407d16b5">&#9670;&#160;</a></span>_resolve_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider._resolve_model </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00036">36</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   36</span>    <span class="keyword">def </span>_resolve_model(self):</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">if</span> self._model <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   38</span>            <span class="keywordflow">return</span> self._model</div>
+<div class="line"><span class="lineno">   39</span>        <span class="keyword">from</span> ..api <span class="keyword">import</span> make_model</div>
+<div class="line"><span class="lineno">   40</span>        self._model = make_model(self._spec)</div>
+<div class="line"><span class="lineno">   41</span>        <span class="keywordflow">return</span> self._model</div>
+<div class="line"><span class="lineno">   42</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3e8b23fb7b6848f6d555fa2cc4bce65b" name="a3e8b23fb7b6848f6d555fa2cc4bce65b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e8b23fb7b6848f6d555fa2cc4bce65b">&#9670;&#160;</a></span>fetch()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider.fetch </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>query</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Pull a dataset for ``query`` → payload dict.  Override.</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a5c63744ff727db2bcd14bdf3b3ff5704">modules.framework.provider.KalmanProvider</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00043">43</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>    <span class="keyword">def </span>fetch(self, duration=1.0, **kw):</div>
+<div class="line"><span class="lineno">   44</span>        model = self._resolve_model()</div>
+<div class="line"><span class="lineno">   45</span>        rec = model.sample(float(duration), **kw)</div>
+<div class="line"><span class="lineno">   46</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;zk&quot;</span>: np.asarray(rec.zk, dtype=float),</div>
+<div class="line"><span class="lineno">   47</span>                <span class="stringliteral">&quot;xk&quot;</span>: np.asarray(rec.xk, dtype=float),</div>
+<div class="line"><span class="lineno">   48</span>                <span class="stringliteral">&quot;truth&quot;</span>: np.asarray(rec.xk, dtype=float),</div>
+<div class="line"><span class="lineno">   49</span>                <span class="stringliteral">&quot;time&quot;</span>: np.asarray(rec.time, dtype=float),</div>
+<div class="line"><span class="lineno">   50</span>                <span class="stringliteral">&quot;meta&quot;</span>: {<span class="stringliteral">&quot;provider&quot;</span>: <span class="stringliteral">&quot;synthetic&quot;</span>, <span class="stringliteral">&quot;duration&quot;</span>: float(duration)}}</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a18b511300a671090a051ed28d7222eeb" name="a18b511300a671090a051ed28d7222eeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a18b511300a671090a051ed28d7222eeb">&#9670;&#160;</a></span>_model</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider._model</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00033">33</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="af82ce6c0a5e63303941bb8e72e2a5d82" name="af82ce6c0a5e63303941bb8e72e2a5d82"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af82ce6c0a5e63303941bb8e72e2a5d82">&#9670;&#160;</a></span>_spec</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider._spec</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00034">34</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a08bb84796f2701314876868fe916152b" name="a08bb84796f2701314876868fe916152b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08bb84796f2701314876868fe916152b">&#9670;&#160;</a></span>DESCRIPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.providers.synthetic.SyntheticProvider.DESCRIPTION = &quot;Generate <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a3de926789832095a440e9ada8e32752b">truth</a> + <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ad12b0604e821e0b36e51a75a6299b43a">measurements</a> from a model via KalmanSampler.&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00013">13</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a089ec1877a244c8c2afd3f1b9c496ead" name="a089ec1877a244c8c2afd3f1b9c496ead"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a089ec1877a244c8c2afd3f1b9c496ead">&#9670;&#160;</a></span>KIND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.providers.synthetic.SyntheticProvider.KIND = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html#a5e58235e499d0dc6212064eb87e3ffaa">KalmanProviderKind.SYNTHETIC</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00015">15</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a5ee74720f074f0cd214ed482f65b0fae" name="a5ee74720f074f0cd214ed482f65b0fae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ee74720f074f0cd214ed482f65b0fae">&#9670;&#160;</a></span>MEASUREMENTS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.providers.synthetic.SyntheticProvider.MEASUREMENTS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  (</div>
+<div class="line">        {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;zk&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;model observables&quot;</span>,</div>
+<div class="line">         <span class="stringliteral">&quot;description&quot;</span>: <span class="stringliteral">&quot;Simulated measurements, shape (T, m) — exactly the &quot;</span></div>
+<div class="line">                        <span class="stringliteral">&quot;observables the wrapped model declares.&quot;</span>},</div>
+<div class="line">        {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;xk&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;model states&quot;</span>,</div>
+<div class="line">         <span class="stringliteral">&quot;description&quot;</span>: <span class="stringliteral">&quot;The simulated state trajectory, shape (T, n).&quot;</span>},</div>
+<div class="line">        {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;truth&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;model states&quot;</span>,</div>
+<div class="line">         <span class="stringliteral">&quot;description&quot;</span>: <span class="stringliteral">&quot;Alias of xk, named for the OSSE verbs that consume it.&quot;</span>},</div>
+<div class="line">        {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;time&quot;</span>, <span class="stringliteral">&quot;units&quot;</span>: <span class="stringliteral">&quot;s&quot;</span>,</div>
+<div class="line">         <span class="stringliteral">&quot;description&quot;</span>: <span class="stringliteral">&quot;Sample times, shape (T,).&quot;</span>},</div>
+<div class="line">    )</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00017">17</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a5fedc5e8e47f725cedf4619d2ec8ec58" name="a5fedc5e8e47f725cedf4619d2ec8ec58"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5fedc5e8e47f725cedf4619d2ec8ec58">&#9670;&#160;</a></span>NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.providers.synthetic.SyntheticProvider.NAME = &quot;Synthetic Provider&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00012">12</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a143f3e044dfac2d694c8151aaed15be7" name="a143f3e044dfac2d694c8151aaed15be7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a143f3e044dfac2d694c8151aaed15be7">&#9670;&#160;</a></span>REQUIRES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.providers.synthetic.SyntheticProvider.REQUIRES = (&quot;a model or spec to sample (model= or spec=)&quot;,)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00029">29</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<a id="a39fa5f307bcc3c99f6e43a4e06c69d1a" name="a39fa5f307bcc3c99f6e43a4e06c69d1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39fa5f307bcc3c99f6e43a4e06c69d1a">&#9670;&#160;</a></span>VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.providers.synthetic.SyntheticProvider.VERSION = &quot;1.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="synthetic_8py_source.html#l00014">14</a> of file <a class="el" href="synthetic_8py_source.html">synthetic.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/providers/<a class="el" href="synthetic_8py_source.html">synthetic.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1providers.html">providers</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1providers_1_1synthetic.html">synthetic</a></li><li class="navelem"><a class="el" href="classmodules_1_1providers_1_1synthetic_1_1_synthetic_provider.html">SyntheticProvider</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

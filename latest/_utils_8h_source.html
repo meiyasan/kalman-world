@@ -1,0 +1,259 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="include/Kalman/Utils.h Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: include/Kalman/Utils.h Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>include/Kalman/Utils.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_utils_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Utils.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_utils_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#ifndef KALMAN_UTILS_H</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="preprocessor">#define KALMAN_UTILS_H</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &quot;<a class="code" href="_matrix_8h.html">Kalman/Matrix.h</a>&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &quot;<a class="code" href="_algebra_8h.html">Kalman/Algebra/Algebra.h</a>&quot;</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &quot;<a class="code" href="_differentiator_8h.html">Kalman/Differentiator.h</a>&quot;</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#include &lt;cstddef&gt;</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#include &lt;functional&gt;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="namespace_kalman_1_1_utils.html">   39</a></span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>{</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// The linear algebra lives in Kalman::Algebra and the Jacobians in</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="comment">// Kalman::Differentiators. These names are kept so that code written</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="comment">// against Kalman::Utils keeps compiling.</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#a5b52fe2fa20ff9887c08f8096afb5560">Algebra::Similarity</a>;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#ae107c06a0bd680a3800f860c319b6e8b">Algebra::Symmetrize</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#aced32b35f09cce32e1007fe054a22362">Algebra::SymmetricEigen</a>;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#ac21d6a0e94b1abb61780eb5786e16ff3">Algebra::ConditionNumber</a>;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#a230139221756add47bc79be3825ff002">Algebra::CholeskyFactor</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#a3a81e296adddb6b494fcbb2e7ed51728">Algebra::Inverse</a>;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#a5f2fb6f00c70ecf35abacff39e338c80">Algebra::Solve</a>;</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#adae9090a59f08f104b333c4c6d6c8e5e">Algebra::Exponential</a>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keyword">using </span><a class="code hl_function" href="namespace_kalman_1_1_algebra.html#a6321535702509d091e645ad3331f1246">Algebra::VanLoan</a>;</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="namespace_kalman_1_1_utils.html#aa1e58d86b83274597c5d98d494235a51">   55</a></span>    <span class="keyword">inline</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aa1e58d86b83274597c5d98d494235a51">NumericalJacobian</a>(<span class="keyword">const</span> std::function&lt;<a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;)&gt; &amp;fn,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                                    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> eps = 1e-5)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    { <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Differentiators::Jacobian</a>(<a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">DifferentiatorKind::Central</a>, fn, x, eps); }</div>
+</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    std::vector&lt;std::size_t&gt; <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">ValidChannels</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a4d45bdd974741aba005ca7629368afaa">IsComplete</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Compress</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;v, <span class="keyword">const</span> std::vector&lt;std::size_t&gt; &amp;keep);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">CompressRows</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;M, <span class="keyword">const</span> std::vector&lt;std::size_t&gt; &amp;keep);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">CompressBoth</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;M, <span class="keyword">const</span> std::vector&lt;std::size_t&gt; &amp;keep);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">double</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Mahalanobis</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;y, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Sinv);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aadfd8773dca2e68585c0215ff6ea1f9a">JosephForm</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;K, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;H, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;R);</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <span class="comment">// --- the steps themselves, on already-compressed channels ------------------</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <span class="comment">// These are the arithmetic behind Engine::Update, the sigma-point moments and</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="comment">// the particle resampler, exposed so the C kernels the Python engines call are</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="comment">// the same code and not a second implementation.</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Correct</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Hc, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Rc, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;yc,</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                 <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xOut, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;POut);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#acd9619e2b3f7bafd320f15dee9423244">WeightedOuterSum</a>(std::size_t nsigma, std::size_t na, std::size_t nb,</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                          <span class="keyword">const</span> <span class="keywordtype">double</span> *w, <span class="keyword">const</span> <span class="keywordtype">double</span> *A, <span class="keyword">const</span> <span class="keywordtype">double</span> *a,</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                          <span class="keyword">const</span> <span class="keywordtype">double</span> *B, <span class="keyword">const</span> <span class="keywordtype">double</span> *b, <span class="keywordtype">double</span> *out);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a5a5a21edf54cbd15fa67196587105ce5">SystematicResample</a>(std::size_t n, <span class="keyword">const</span> <span class="keywordtype">double</span> *weights, <span class="keywordtype">double</span> u0, <span class="keywordtype">int</span> *indices);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>}</div>
+</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_UTILS_H</span></div>
+<div class="ttc" id="a_algebra_8h_html"><div class="ttname"><a href="_algebra_8h.html">Algebra.h</a></div><div class="ttdoc">The linear algebra of the framework.</div></div>
+<div class="ttc" id="a_differentiator_8h_html"><div class="ttname"><a href="_differentiator_8h.html">Differentiator.h</a></div><div class="ttdoc">Header of the Kalman::Differentiator class.</div></div>
+<div class="ttc" id="a_matrix_8h_html"><div class="ttname"><a href="_matrix_8h.html">Matrix.h</a></div><div class="ttdoc">Minimal dense vector and matrix types.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_a230139221756add47bc79be3825ff002"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a230139221756add47bc79be3825ff002">Kalman::Algebra::CholeskyFactor</a></div><div class="ttdeci">Matrix CholeskyFactor(const Matrix &amp;S, bool jitter=true)</div><div class="ttdoc">Lower-triangular Cholesky factor L of a symmetric matrix, S = L L^T.</div><div class="ttdef"><b>Definition</b> <a href="_cholesky_8cc_source.html#l00138">Cholesky.cc:138</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_a3a81e296adddb6b494fcbb2e7ed51728"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a3a81e296adddb6b494fcbb2e7ed51728">Kalman::Algebra::Inverse</a></div><div class="ttdeci">Matrix Inverse(const Matrix &amp;S, bool *ok=nullptr)</div><div class="ttdoc">Inverse of a symmetric positive-definite matrix.</div><div class="ttdef"><b>Definition</b> <a href="_cholesky_8cc_source.html#l00070">Cholesky.cc:70</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_a5b52fe2fa20ff9887c08f8096afb5560"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a5b52fe2fa20ff9887c08f8096afb5560">Kalman::Algebra::Similarity</a></div><div class="ttdeci">Matrix Similarity(const Matrix &amp;A, const Matrix &amp;P)</div><div class="ttdoc">Congruence transform A P A^T (the covariance workhorse).</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00030">Symmetric.cc:30</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_a5f2fb6f00c70ecf35abacff39e338c80"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a5f2fb6f00c70ecf35abacff39e338c80">Kalman::Algebra::Solve</a></div><div class="ttdeci">Vector Solve(const Matrix &amp;S, const Vector &amp;b)</div><div class="ttdoc">Solve S x = b for symmetric positive-definite S (see Inverse()).</div><div class="ttdef"><b>Definition</b> <a href="_cholesky_8cc_source.html#l00114">Cholesky.cc:114</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_a6321535702509d091e645ad3331f1246"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a6321535702509d091e645ad3331f1246">Kalman::Algebra::VanLoan</a></div><div class="ttdeci">void VanLoan(const Matrix &amp;A, const Matrix &amp;G, double dt, Matrix &amp;F, Matrix &amp;Q)</div><div class="ttdoc">Decode a continuous linear system into one sample (Van Loan, 1978).</div><div class="ttdef"><b>Definition</b> <a href="_exponential_8cc_source.html#l00053">Exponential.cc:53</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_ac21d6a0e94b1abb61780eb5786e16ff3"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#ac21d6a0e94b1abb61780eb5786e16ff3">Kalman::Algebra::ConditionNumber</a></div><div class="ttdeci">double ConditionNumber(const Matrix &amp;M)</div><div class="ttdoc">Condition number from the symmetric eigenvalues; infinity when singular.</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00104">Symmetric.cc:104</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_aced32b35f09cce32e1007fe054a22362"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#aced32b35f09cce32e1007fe054a22362">Kalman::Algebra::SymmetricEigen</a></div><div class="ttdeci">bool SymmetricEigen(const Matrix &amp;S, Vector &amp;values, Matrix &amp;vectors)</div><div class="ttdoc">Eigendecomposition of a symmetric matrix, by cyclic Jacobi rotations.</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00047">Symmetric.cc:47</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_adae9090a59f08f104b333c4c6d6c8e5e"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#adae9090a59f08f104b333c4c6d6c8e5e">Kalman::Algebra::Exponential</a></div><div class="ttdeci">Matrix Exponential(const Matrix &amp;A)</div><div class="ttdoc">The matrix exponential exp(A) (scaling and squaring).</div><div class="ttdef"><b>Definition</b> <a href="_exponential_8cc_source.html#l00021">Exponential.cc:21</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_algebra_html_ae107c06a0bd680a3800f860c319b6e8b"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#ae107c06a0bd680a3800f860c319b6e8b">Kalman::Algebra::Symmetrize</a></div><div class="ttdeci">void Symmetrize(Matrix &amp;P)</div><div class="ttdoc">Average a matrix with its transpose, killing round-off asymmetry in place.</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00035">Symmetric.cc:35</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_differentiators_html_afbbd6ce846e557568df7bc6944fc1e20"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html#afbbd6ce846e557568df7bc6944fc1e20">Kalman::Differentiators::Jacobian</a></div><div class="ttdeci">Matrix Jacobian(DifferentiatorKind kind, const Map &amp;fn, const Vector &amp;x, double step=0., const Vector *y0=nullptr)</div><div class="ttdoc">d fn / dx at x with the scheme kind, without building an object (step &lt;= 0: the default).</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00085">Differentiator.cc:85</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html"><div class="ttname"><a href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></div><div class="ttdef"><b>Definition</b> <a href="_utils_8h_source.html#l00039">Utils.h:40</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a4d45bdd974741aba005ca7629368afaa"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a4d45bdd974741aba005ca7629368afaa">Kalman::Utils::IsComplete</a></div><div class="ttdeci">bool IsComplete(const Vector &amp;z)</div><div class="ttdoc">True when every channel of z is present.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00111">Utils.cc:111</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a5a5a21edf54cbd15fa67196587105ce5"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a5a5a21edf54cbd15fa67196587105ce5">Kalman::Utils::SystematicResample</a></div><div class="ttdeci">void SystematicResample(std::size_t n, const double *weights, double u0, int *indices)</div><div class="ttdoc">Systematic resampling: indices[i] is the particle at position (i + u0) / n on the cumulative weight; ...</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00185">Utils.cc:185</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aa1e58d86b83274597c5d98d494235a51"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aa1e58d86b83274597c5d98d494235a51">Kalman::Utils::NumericalJacobian</a></div><div class="ttdeci">Matrix NumericalJacobian(const std::function&lt; Vector(const Vector &amp;)&gt; &amp;fn, const Vector &amp;x, double eps=1e-5)</div><div class="ttdoc">Central-difference Jacobian df/dx at x (Differentiators::Central).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8h_source.html#l00055">Utils.h:55</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aadfd8773dca2e68585c0215ff6ea1f9a"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aadfd8773dca2e68585c0215ff6ea1f9a">Kalman::Utils::JosephForm</a></div><div class="ttdeci">Matrix JosephForm(const Matrix &amp;K, const Matrix &amp;H, const Matrix &amp;P, const Matrix &amp;R)</div><div class="ttdoc">Joseph-form covariance update (I-KH) P (I-KH)^T + K R K^T.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00149">Utils.cc:149</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_acd9619e2b3f7bafd320f15dee9423244"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#acd9619e2b3f7bafd320f15dee9423244">Kalman::Utils::WeightedOuterSum</a></div><div class="ttdeci">void WeightedOuterSum(std::size_t nsigma, std::size_t na, std::size_t nb, const double *w, const double *A, const double *a, const double *B, const double *b, double *out)</div><div class="ttdoc">out = sum_s w[s] (A[s] - a)(B[s] - b)^T over nsigma rows.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00171">Utils.cc:171</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_addf8edff6b099465eb8a9720e477a96b"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Kalman::Utils::Correct</a></div><div class="ttdeci">void Correct(const Matrix &amp;Hc, const Matrix &amp;Rc, const Vector &amp;yc, const Vector &amp;x, const Matrix &amp;P, Vector &amp;xOut, Matrix &amp;POut)</div><div class="ttdoc">The Kalman correction from a residual: gain, mean, Joseph-form covariance.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00160">Utils.cc:160</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aecfd9e403601d17e1f15968074161067"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Kalman::Utils::Mahalanobis</a></div><div class="ttdeci">double Mahalanobis(const Vector &amp;y, const Matrix &amp;Sinv)</div><div class="ttdoc">Quadratic form y^T S^-1 y, given an already-inverted Sinv.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00141">Utils.cc:141</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00123">Utils.cc:123</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Kalman::DifferentiatorKind::Central</a></div><div class="ttdeci">@ Central</div><div class="ttdoc">two-sided differences (second order)</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="_utils_8h.html">Utils.h</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_providers.TestProviderDiscovery Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_providers.TestProviderDiscovery Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_providers.TestProviderDiscovery Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__providers_1_1_test_provider_discovery.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__providers_1_1_test_provider_discovery-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_providers.TestProviderDiscovery Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_providers.TestProviderDiscovery:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__providers_1_1_test_provider_discovery__inherit__graph.svg" width="192" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a23f8dabba92422f2344c96927cd8fbcd" id="r_a23f8dabba92422f2344c96927cd8fbcd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html#a23f8dabba92422f2344c96927cd8fbcd">test_every_provider_declares_its_measurements</a> (self)</td></tr>
+<tr class="separator:a23f8dabba92422f2344c96927cd8fbcd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7c6c37ba6ebff5f8970c9f5e969f436" id="r_ac7c6c37ba6ebff5f8970c9f5e969f436"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html#ac7c6c37ba6ebff5f8970c9f5e969f436">test_era5_declares_the_ecmwf_variables_and_its_prerequisites</a> (self)</td></tr>
+<tr class="separator:ac7c6c37ba6ebff5f8970c9f5e969f436"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae718d49ef222ddf160cf0d845417b154" id="r_ae718d49ef222ddf160cf0d845417b154"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html#ae718d49ef222ddf160cf0d845417b154">test_query_keys_are_read_off_the_real_fetch_signature</a> (self)</td></tr>
+<tr class="separator:ae718d49ef222ddf160cf0d845417b154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38114a70741084f2553688e3569994fa" id="r_a38114a70741084f2553688e3569994fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html#a38114a70741084f2553688e3569994fa">test_streaming_providers_are_marked</a> (self)</td></tr>
+<tr class="separator:a38114a70741084f2553688e3569994fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6635f1bcf07da75c18208c8ca4b9d56b" id="r_a6635f1bcf07da75c18208c8ca4b9d56b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html#a6635f1bcf07da75c18208c8ca4b9d56b">test_unknown_provider_lists_the_known_ones</a> (self)</td></tr>
+<tr class="separator:a6635f1bcf07da75c18208c8ca4b9d56b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">A provider must advertise what it can supply, not only that it exists.
+
+``catalog()['providers']`` answers "which sources are there"; without the
+measurement declaration a caller still has to read the source to learn that
+ERA5 yields 500 hPa wind, which is exactly the question ``fetch`` needs
+answered before it can be written.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00164">164</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac7c6c37ba6ebff5f8970c9f5e969f436" name="ac7c6c37ba6ebff5f8970c9f5e969f436"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7c6c37ba6ebff5f8970c9f5e969f436">&#9670;&#160;</a></span>test_era5_declares_the_ecmwf_variables_and_its_prerequisites()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_providers.TestProviderDiscovery.test_era5_declares_the_ecmwf_variables_and_its_prerequisites </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00181">181</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  181</span>    <span class="keyword">def </span>test_era5_declares_the_ecmwf_variables_and_its_prerequisites(self):</div>
+<div class="line"><span class="lineno">  182</span>        era5 = api.describe_provider(<span class="stringliteral">&quot;era5&quot;</span>)</div>
+<div class="line"><span class="lineno">  183</span>        names = [m[<span class="stringliteral">&quot;name&quot;</span>] <span class="keywordflow">for</span> m <span class="keywordflow">in</span> era5[<span class="stringliteral">&quot;measurements&quot;</span>]]</div>
+<div class="line"><span class="lineno">  184</span>        self.assertIn(<span class="stringliteral">&quot;u_component_of_wind&quot;</span>, names)</div>
+<div class="line"><span class="lineno">  185</span>        self.assertIn(<span class="stringliteral">&quot;v_component_of_wind&quot;</span>, names)</div>
+<div class="line"><span class="lineno">  186</span>        self.assertIn(<span class="stringliteral">&quot;vorticity&quot;</span>, names)</div>
+<div class="line"><span class="lineno">  187</span>        <span class="comment"># The credentials/packages a fetch needs are stated up front rather than</span></div>
+<div class="line"><span class="lineno">  188</span>        <span class="comment"># surfacing as an ImportError mid-download.</span></div>
+<div class="line"><span class="lineno">  189</span>        requires = <span class="stringliteral">&quot; &quot;</span>.join(era5[<span class="stringliteral">&quot;requires&quot;</span>]).lower()</div>
+<div class="line"><span class="lineno">  190</span>        self.assertIn(<span class="stringliteral">&quot;cdsapi&quot;</span>, requires)</div>
+<div class="line"><span class="lineno">  191</span>        self.assertIn(<span class="stringliteral">&quot;cdsapirc&quot;</span>, requires)</div>
+<div class="line"><span class="lineno">  192</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a23f8dabba92422f2344c96927cd8fbcd" name="a23f8dabba92422f2344c96927cd8fbcd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23f8dabba92422f2344c96927cd8fbcd">&#9670;&#160;</a></span>test_every_provider_declares_its_measurements()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_providers.TestProviderDiscovery.test_every_provider_declares_its_measurements </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00173">173</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>    <span class="keyword">def </span>test_every_provider_declares_its_measurements(self):</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">for</span> name, record <span class="keywordflow">in</span> api.providers()[<span class="stringliteral">&quot;providers&quot;</span>].items():</div>
+<div class="line"><span class="lineno">  175</span>            self.assertTrue(record[<span class="stringliteral">&quot;measurements&quot;</span>],</div>
+<div class="line"><span class="lineno">  176</span>                            f<span class="stringliteral">&quot;provider {name!r} advertises no measurements&quot;</span>)</div>
+<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">for</span> measurement <span class="keywordflow">in</span> record[<span class="stringliteral">&quot;measurements&quot;</span>]:</div>
+<div class="line"><span class="lineno">  178</span>                self.assertIn(<span class="stringliteral">&quot;name&quot;</span>, measurement)</div>
+<div class="line"><span class="lineno">  179</span>                self.assertIn(<span class="stringliteral">&quot;description&quot;</span>, measurement)</div>
+<div class="line"><span class="lineno">  180</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae718d49ef222ddf160cf0d845417b154" name="ae718d49ef222ddf160cf0d845417b154"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae718d49ef222ddf160cf0d845417b154">&#9670;&#160;</a></span>test_query_keys_are_read_off_the_real_fetch_signature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_providers.TestProviderDiscovery.test_query_keys_are_read_off_the_real_fetch_signature </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00193">193</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  193</span>    <span class="keyword">def </span>test_query_keys_are_read_off_the_real_fetch_signature(self):</div>
+<div class="line"><span class="lineno">  194</span>        era5 = api.describe_provider(<span class="stringliteral">&quot;era5&quot;</span>)</div>
+<div class="line"><span class="lineno">  195</span>        keys = {q[<span class="stringliteral">&quot;name&quot;</span>] <span class="keywordflow">for</span> q <span class="keywordflow">in</span> era5[<span class="stringliteral">&quot;query&quot;</span>]}</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">for</span> expected <span class="keywordflow">in</span> (<span class="stringliteral">&quot;path&quot;</span>, <span class="stringliteral">&quot;dates&quot;</span>, <span class="stringliteral">&quot;area&quot;</span>, <span class="stringliteral">&quot;level&quot;</span>, <span class="stringliteral">&quot;stride&quot;</span>):</div>
+<div class="line"><span class="lineno">  197</span>            self.assertIn(expected, keys)</div>
+<div class="line"><span class="lineno">  198</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a38114a70741084f2553688e3569994fa" name="a38114a70741084f2553688e3569994fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38114a70741084f2553688e3569994fa">&#9670;&#160;</a></span>test_streaming_providers_are_marked()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_providers.TestProviderDiscovery.test_streaming_providers_are_marked </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00199">199</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  199</span>    <span class="keyword">def </span>test_streaming_providers_are_marked(self):</div>
+<div class="line"><span class="lineno">  200</span>        self.assertTrue(api.describe_provider(<span class="stringliteral">&quot;sensor&quot;</span>)[<span class="stringliteral">&quot;streams&quot;</span>])</div>
+<div class="line"><span class="lineno">  201</span>        self.assertFalse(api.describe_provider(<span class="stringliteral">&quot;era5&quot;</span>)[<span class="stringliteral">&quot;streams&quot;</span>])</div>
+<div class="line"><span class="lineno">  202</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6635f1bcf07da75c18208c8ca4b9d56b" name="a6635f1bcf07da75c18208c8ca4b9d56b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6635f1bcf07da75c18208c8ca4b9d56b">&#9670;&#160;</a></span>test_unknown_provider_lists_the_known_ones()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_providers.TestProviderDiscovery.test_unknown_provider_lists_the_known_ones </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__providers_8py_source.html#l00203">203</a> of file <a class="el" href="test__providers_8py_source.html">test_providers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  203</span>    <span class="keyword">def </span>test_unknown_provider_lists_the_known_ones(self):</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keyword">with</span> self.assertRaises(ValueError) <span class="keyword">as</span> ctx:</div>
+<div class="line"><span class="lineno">  205</span>            api.describe_provider(<span class="stringliteral">&quot;ecmwf&quot;</span>)</div>
+<div class="line"><span class="lineno">  206</span>        self.assertIn(<span class="stringliteral">&quot;era5&quot;</span>, str(ctx.exception))</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__providers_8py_source.html">test_providers.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__providers.html">test_providers</a></li><li class="navelem"><a class="el" href="classtests_1_1test__providers_1_1_test_provider_discovery.html">TestProviderDiscovery</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

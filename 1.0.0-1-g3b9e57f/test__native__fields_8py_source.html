@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/test_native_fields.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/test_native_fields.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/test_native_fields.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('test__native__fields_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">test_native_fields.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="test__native__fields_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;A field model&#39;s ensemble pass runs in C++ (libKalmanApps: Weather::KolmogorovFlow).</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">With the ensemble engine, ``KolmogorovFlowModel`` and ``BarotropicFlowModel``</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">hand the whole pass to their twin: the forecast of every member, the</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">observation of the ensemble, the localization tapers, the analysis and the</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">loop over the cycles. The draws stay numpy&#39;s (the engine&#39;s generator, in the</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">order the Python steps take them), so the C++ pass is compared here with the</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">Python reference on the same seed, member for member.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">How close: the reference steps the field with numpy&#39;s FFT and the twin with</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">the library&#39;s; one solver step agrees to ~1e-16 relative, and the chaotic flow</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">grows that to ~1e-13 over the 1,200 steps of notebook 13 (measured, then held</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">by the analysis). The tolerances below are 1e-9 relative to the largest entry.</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">Skipped when libKalmanApps is not built.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> unittest</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> core</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">import</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1models_1_1native.html">modules.framework.models.native</a> <span class="keyword">as</span> native</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1models_1_1native.html">modules.framework.models.native</a> <span class="keyword">import</span> apps_library_names</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1ensemble.html">modules.framework.engines.ensemble</a> <span class="keyword">import</span> EnsembleKalmanEngine</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> EnsembleKalmanFilter</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> KolmogorovFlowModel, TwinExperiment, NS2D</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html">modules.apps.weather.barotropic</a> <span class="keyword">import</span> BarotropicFlowModel</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#a618f7b8feba6da10ee88eda093f386d9">   32</a></span>needs_apps = unittest.skipUnless(bool(apps_library_names()), <span class="stringliteral">&quot;libKalmanApps is not built&quot;</span>)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#add3bff8fd3d0bd6beb58195cc7184d89">   33</a></span>RTOL = 1e-9</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="foldopen" id="foldopen00036" data-start="" data-end="">
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">   36</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(a, b):</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    a, b = np.asarray(a, float), np.asarray(b, float)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> float(np.nanmax(np.abs(a - b)) / max(1e-300, float(np.nanmax(np.abs(b)))))</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+</div>
+<div class="foldopen" id="foldopen00041" data-start="" data-end="">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">   41</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>(obs_type=&quot;vorticity&quot;, q_std=0.0, **kw):</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="stringliteral">&quot;&quot;&quot;Notebook 13&#39;s particle-filter comparison (step 5), at its size: 16 x 16.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    model = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">KolmogorovFlowModel</a>(<span class="stringliteral">&quot;mini&quot;</span>, grid=16, cycle=10, dt=0.01, nu=1 / 40., n_obs=40, sig_o=0.30,</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                                loc_radius=4.0, seed=7, obs_type=obs_type, q_std=q_std, **kw)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    model.climatology(n_snapshots=60, spinup=600, stride=5)</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+</div>
+<div class="foldopen" id="foldopen00049" data-start="" data-end="">
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#aa99223cda46427924afaa93a40c1ccc8">   49</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__native__fields.html#aa99223cda46427924afaa93a40c1ccc8">measurements</a>(model, steps=12, seed=21):</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    w = model.equilibrium_state(decorrelate=100)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    zs = []</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(steps):</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        w = model.f(w)</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        zs.append(np.asarray(model.h(w)).ravel() + rng.normal(0, model.sig_o, model.m))</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    zs = np.asarray(zs)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    zs[3, ::4] = np.nan                       <span class="comment"># some probes silent</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    zs[5, :] = np.nan                         <span class="comment"># and one cycle with none</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    <span class="keywordflow">return</span> zs</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+</div>
+<div class="foldopen" id="foldopen00062" data-start="" data-end="">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">   62</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a>(make, engine_kw, reference, expect_twin=True):</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">def </span>go():</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        model = make()</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        zs = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#aa99223cda46427924afaa93a40c1ccc8">measurements</a>(model)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        f = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter.html">EnsembleKalmanFilter</a>(model, **engine_kw)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> reference:</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keyword">assert</span> (f.engine._native_twin(model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>) == expect_twin</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        rec = f.forward(zs)</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">return</span> (np.asarray(rec.xk), np.asarray(rec.Pk), f.engine.members.copy(),</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                int(f.engine.rng.integers(0, 1 &lt;&lt; 62)), [np.asarray(nu).ravel() <span class="keywordflow">for</span> nu <span class="keywordflow">in</span> f.innovation])</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keywordflow">if</span> reference:</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">return</span> go()</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">return</span> go()</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="preprocessor">@needs_apps</span></div>
+</div>
+<div class="foldopen" id="foldopen00079" data-start="" data-end="">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html">   79</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html">TestFieldFilterPass</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="foldopen" id="foldopen00081" data-start="" data-end="">
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">   81</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">compare</a>(self, make, **engine_kw):</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        got, want = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a>(make, engine_kw, <span class="keyword">False</span>), <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a>(make, engine_kw, <span class="keyword">True</span>)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(got[0], want[0]), RTOL, <span class="stringliteral">&quot;posterior means&quot;</span>)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(got[1], want[1]), RTOL, <span class="stringliteral">&quot;posterior covariances&quot;</span>)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(got[2], want[2]), RTOL, <span class="stringliteral">&quot;final members&quot;</span>)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(np.concatenate(got[4]), np.concatenate(want[4])), RTOL, <span class="stringliteral">&quot;innovations&quot;</span>)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        self.assertEqual(got[3], want[3], <span class="stringliteral">&quot;the engine&#39;s generator is left where the Python pass leaves it&quot;</span>)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">return</span> got</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+</div>
+<div class="foldopen" id="foldopen00090" data-start="" data-end="">
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a6a9f10262ff3cd5a93a327e4fa879cc5">   90</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a6a9f10262ff3cd5a93a327e4fa879cc5">test_vorticity_probes</a>(self):</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        got = self.<a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">compare</a>(mini, n_members=16, inflation=1.05, seed=0)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        self.assertTrue(np.all(np.isfinite(got[0])))</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+</div>
+<div class="foldopen" id="foldopen00094" data-start="" data-end="">
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5525b2fca796189e0172de6478b601f0">   94</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5525b2fca796189e0172de6478b601f0">test_gradient_probes_with_process_noise</a>(self):</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        self.<a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">compare</a>(<span class="keyword">lambda</span>: <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>(<span class="stringliteral">&quot;gradient&quot;</span>, q_std=0.05), n_members=12, inflation=1.02, seed=3)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+</div>
+<div class="foldopen" id="foldopen00097" data-start="" data-end="">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a38c5aa6bf0ddb23779bf82834336a17a">   97</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a38c5aa6bf0ddb23779bf82834336a17a">test_tapers_given_to_the_engine</a>(self):</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        model = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>()</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        rho_xy, rho_yy = model.localization()</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        loc = (0.5 * rho_xy, rho_yy)              <span class="comment"># not the model&#39;s: the engine&#39;s win</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        self.<a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">compare</a>(mini, n_members=10, localization=loc, seed=4)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+</div>
+<div class="foldopen" id="foldopen00103" data-start="" data-end="">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a054d7d682f5c55e346a9f5774421e2e8">  103</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a054d7d682f5c55e346a9f5774421e2e8">test_barotropic_flow</a>(self):</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="comment"># sig_o = 1e-5 1/s against fields of ~4.5e-5. At 1e-6 the innovation covariance</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="comment"># of 10 members is so ill-conditioned that numpy&#39;s pinv and the library&#39;s</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="comment"># Cholesky inverse part at 6e-8 (the C++ kernel the Python loop already used</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="comment"># does too; the C++ pass agrees with that loop to 8e-15).</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keyword">def </span>make():</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            model = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">BarotropicFlowModel</a>(<span class="stringliteral">&quot;b&quot;</span>, grid=16, cycle=6, n_obs=30, sig_o=1e-5, seed=7)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            model.climatology(n_snapshots=40, spinup=60, stride=3)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="keywordflow">return</span> model</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        self.<a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">compare</a>(make, n_members=10, inflation=1.03, seed=1)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+</div>
+<div class="foldopen" id="foldopen00114" data-start="" data-end="">
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#aa73c88b12b411e70dcbd0d971ffb64a6">  114</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#aa73c88b12b411e70dcbd0d971ffb64a6">test_the_twin_declares_what_python_does</a>(self):</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        model = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>(<span class="stringliteral">&quot;gradient&quot;</span>)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        handle = model.native_handle()</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        x = model.climatology()[:, 3].copy()</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        h = np.empty(model.m)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        core.check(core.lib.kalman_model_h(handle, core.cdptr(np.ascontiguousarray(x)), 0.0, core.dptr(h)), <span class="stringliteral">&quot;h&quot;</span>)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        np.testing.assert_allclose(h, np.asarray(model.h(x)).ravel(), rtol=0, atol=1e-12)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        H = np.empty((model.m, model.n))</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        core.check(core.lib.kalman_model_H(handle, 0.0, core.dptr(H)), <span class="stringliteral">&quot;H&quot;</span>)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        np.testing.assert_allclose(H @ x, h, rtol=0, atol=1e-12)          <span class="comment"># H is the map h is</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        f = np.empty(model.n)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        core.check(core.lib.kalman_model_f(handle, core.cdptr(np.ascontiguousarray(x)), core.ffi.NULL, 0.0,</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                                           core.dptr(f)), <span class="stringliteral">&quot;f&quot;</span>)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        np.testing.assert_allclose(f, model.f(x), rtol=0, atol=1e-12)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="preprocessor">@needs_apps</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00131" data-start="" data-end="">
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html">  131</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html">TestFieldFallbacks</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="stringliteral">&quot;&quot;&quot;What has no C++ counterpart keeps the Python pass, and still gives its answer.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="foldopen" id="foldopen00134" data-start="" data-end="">
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#ada967877c66e1bf6562e64f94a4a3e25">  134</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#ada967877c66e1bf6562e64f94a4a3e25">test_python_callables_and_other_solvers</a>(self):</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        model = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>()</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        self.assertIsNotNone(model.native_handle())</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        model.surrogate = <span class="keyword">lambda</span> X: X</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        self.assertIsNone(model.native_name(), <span class="stringliteral">&quot;a surrogate forecast is Python&quot;</span>)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        model.surrogate = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        model.solver = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d.html">NS2D</a>(n=16, nu=1 / 40., kf=4, chi=2.0, dt=0.01, backend=<span class="stringliteral">&quot;torch&quot;</span>, device=<span class="stringliteral">&quot;cpu&quot;</span>)</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        self.assertIsNone(model.native_name(), <span class="stringliteral">&quot;libTorch is not linked by libKalmanApps&quot;</span>)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="keyword">class </span>Damped(<a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d.html">NS2D</a>):</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keyword">def </span>rhs_hat(self, wh, t=None):</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                <span class="keywordflow">return</span> super().rhs_hat(wh, t) - 0.1 * wh</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        model.solver = Damped(n=16, nu=1 / 40., kf=4, chi=2.0, dt=0.01)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        self.assertIsNone(model.native_name(), <span class="stringliteral">&quot;other physics&quot;</span>)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+</div>
+<div class="foldopen" id="foldopen00150" data-start="" data-end="">
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#af9367dee8ed18f60bfb872fc896a9d63">  150</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#af9367dee8ed18f60bfb872fc896a9d63">test_a_changed_hook_or_a_full_q</a>(self):</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keyword">class </span>Observed(<a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">KolmogorovFlowModel</a>):</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="keyword">def </span>observe(self, X, t=None):</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                <span class="keywordflow">return</span> super().observe(X, t) * 1.0</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        model = Observed(<span class="stringliteral">&quot;o&quot;</span>, grid=16, cycle=4, n_obs=10, seed=1)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        self.assertIsNone(model.native_handle(), <span class="stringliteral">&quot;an observe() of its own&quot;</span>)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        model = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">KolmogorovFlowModel</a>(<span class="stringliteral">&quot;q&quot;</span>, grid=8, cycle=4, n_obs=10, seed=1)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        Q = 0.01 * np.eye(model.n)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        Q[0, 1] = Q[1, 0] = 0.001</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        model._Q = Q</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        self.assertIsNone(model.native_handle(), <span class="stringliteral">&quot;a Q with off-diagonal terms&quot;</span>)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        self.assertIsNone(<a class="code hl_class" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html">EnsembleKalmanEngine</a>(n_members=4)._native_twin(model))</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+</div>
+<div class="foldopen" id="foldopen00164" data-start="" data-end="">
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#a79658b426e8069ab790c7cd8132f2caf">  164</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#a79658b426e8069ab790c7cd8132f2caf">test_a_python_pass_still_gives_the_reference</a>(self):</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keyword">def </span>make():</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            model = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">mini</a>()</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            model.surrogate = <span class="keyword">lambda</span> X: np.column_stack([model.solver.advance(x, model.cycle) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> X.T])</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <span class="keywordflow">return</span> model</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        got = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a>(make, dict(n_members=8, seed=2), <span class="keyword">False</span>, expect_twin=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        want = <a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a>(make, dict(n_members=8, seed=2), <span class="keyword">True</span>)</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(got[0], want[0]), RTOL)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="preprocessor">@needs_apps</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00175" data-start="" data-end="">
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html">  175</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html">TestTwinExperiment</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="stringliteral">&quot;&quot;&quot;Notebook 13&#39;s assimilation, reduced: 32 x 32, 8 cycles, the same seeds.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00179" data-start="" data-end="">
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a115444b03bbca1dbdd6cc2eadef5b737">  179</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a115444b03bbca1dbdd6cc2eadef5b737">experiment</a>(mode):</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="keyword">def </span>go():</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            model = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">KolmogorovFlowModel</a>(<span class="stringliteral">&quot;probes&quot;</span>, grid=32, nu=1 / 150., chi=2.0, kf=4, dt=0.005, cycle=10,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                                        n_obs=60, sig_o=0.30, loc_radius=6.0, seed=7)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            model.climatology(n_snapshots=40, spinup=300, stride=5)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            osse = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html">TwinExperiment</a>(model, n_cycles=8, n_members=12, seed_obs=999, seed_setup=123, obs_periods=(2, 6))</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            osse.add_method(<span class="stringliteral">&quot;enkf&quot;</span>, inflation=1.06)</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            osse.add_method(<span class="stringliteral">&quot;enkf+Q&quot;</span>, inflation=1.05, q_std=0.3)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            osse.add_free_run()</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            hist = osse.run(verbose=<span class="keyword">False</span>, record_fields=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <span class="keywordflow">return</span> hist, osse</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">if</span> mode == <span class="stringliteral">&quot;reference&quot;</span>:</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>                <span class="keywordflow">return</span> go()</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="keywordflow">if</span> mode == <span class="stringliteral">&quot;loop&quot;</span>:                       <span class="comment"># the C++ solver and kernel, the Python loop</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            saved, native.USE_NATIVE_TWINS = native.USE_NATIVE_TWINS, <span class="keyword">False</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>                <span class="keywordflow">return</span> go()</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            <span class="keywordflow">finally</span>:</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>                native.USE_NATIVE_TWINS = saved</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        <span class="keywordflow">return</span> go()</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    <span class="preprocessor">@classmethod</span></div>
+<div class="foldopen" id="foldopen00202" data-start="" data-end="">
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a73230e413b1eaf9539b0a31dc96adc55">  202</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a73230e413b1eaf9539b0a31dc96adc55">setUpClass</a>(cls):</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">  203</a></span>        cls.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a> = {}</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keywordflow">for</span> mode <span class="keywordflow">in</span> (<span class="stringliteral">&quot;cxx&quot;</span>, <span class="stringliteral">&quot;loop&quot;</span>, <span class="stringliteral">&quot;reference&quot;</span>):</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>            hist, osse = cls.<a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a115444b03bbca1dbdd6cc2eadef5b737">experiment</a>(mode)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>            members = {name: m[<span class="stringliteral">&quot;engine&quot;</span>].members.copy() <span class="keywordflow">for</span> name, m <span class="keywordflow">in</span> osse.methods.items()}</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>            cls.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a>[mode] = (hist, osse.fields, members, osse.truth.copy(), osse)</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span> </div>
+</div>
+<div class="foldopen" id="foldopen00209" data-start="" data-end="">
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#aefa5cea5d4aad15069416dc6ba1db6ac">  209</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#aefa5cea5d4aad15069416dc6ba1db6ac">test_every_method_agrees</a>(self):</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        got, fields, members, truth, _ = self.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a>[<span class="stringliteral">&quot;cxx&quot;</span>]</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        <span class="keywordflow">for</span> other <span class="keywordflow">in</span> (<span class="stringliteral">&quot;loop&quot;</span>, <span class="stringliteral">&quot;reference&quot;</span>):</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            want, ref_fields, ref_members, ref_truth, _ = self.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a>[other]</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;enkf&quot;</span>, <span class="stringliteral">&quot;enkf+Q&quot;</span>, <span class="stringliteral">&quot;free&quot;</span>):</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>                <span class="keywordflow">for</span> key <span class="keywordflow">in</span> (<span class="stringliteral">&quot;rmse_f&quot;</span>, <span class="stringliteral">&quot;rmse_a&quot;</span>, <span class="stringliteral">&quot;spread&quot;</span>):</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>                    self.assertEqual(len(got[name][key]), 8)</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>                    self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(got[name][key], want[name][key]), RTOL, f<span class="stringliteral">&quot;{other} {name} {key}&quot;</span>)</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>                <span class="keywordflow">for</span> key <span class="keywordflow">in</span> (<span class="stringliteral">&quot;forecast&quot;</span>, <span class="stringliteral">&quot;analysis&quot;</span>):</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>                    self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(fields[name][key], ref_fields[name][key]), RTOL, f<span class="stringliteral">&quot;{other} {name} {key}&quot;</span>)</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>                self.assertLess(<a class="code hl_function" href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">rel</a>(members[name], ref_members[name]), RTOL)</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            np.testing.assert_allclose(truth, ref_truth, rtol=0, atol=1e-9)</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span> </div>
+</div>
+<div class="foldopen" id="foldopen00222" data-start="" data-end="">
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a6bbaf96f1285e767b42cf5b0de9674ee">  222</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a6bbaf96f1285e767b42cf5b0de9674ee">test_a_free_run_is_its_forecasts</a>(self):</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        hist = self.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a>[<span class="stringliteral">&quot;cxx&quot;</span>][0][<span class="stringliteral">&quot;free&quot;</span>]</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        self.assertEqual(hist[<span class="stringliteral">&quot;rmse_f&quot;</span>], hist[<span class="stringliteral">&quot;rmse_a&quot;</span>])</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span> </div>
+</div>
+<div class="foldopen" id="foldopen00226" data-start="" data-end="">
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1debfd99e6f375a7eb6cd9765afa92f2">  226</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1debfd99e6f375a7eb6cd9765afa92f2">test_a_callback_keeps_the_python_loop</a>(self):</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        seen = []</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        osse = self.<a class="code hl_variable" href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">runs</a>[<span class="stringliteral">&quot;loop&quot;</span>][-1]</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        osse.run(verbose=<span class="keyword">False</span>, callback=<span class="keyword">lambda</span> c, truth, hist: seen.append(len(hist[<span class="stringliteral">&quot;enkf&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>])))</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        self.assertEqual(seen, list(range(1, 9)))       <span class="comment"># the history grows cycle by cycle</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    unittest.main()</div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">modules.apps.weather.barotropic.BarotropicFlowModel</a></div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00107">barotropic.py:107</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">modules.apps.weather.flow.KolmogorovFlowModel</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00083">flow.py:83</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d.html">modules.apps.weather.flow.NS2D</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00037">flow.py:37</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html">modules.apps.weather.flow.TwinExperiment</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00486">flow.py:486</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine_html"><div class="ttname"><a href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html">modules.framework.engines.ensemble.EnsembleKalmanEngine</a></div><div class="ttdef"><b>Definition</b> <a href="ensemble_8py_source.html#l00027">ensemble.py:27</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter_html"><div class="ttname"><a href="classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter.html">modules.framework.filters.enkf.EnsembleKalmanFilter</a></div><div class="ttdef"><b>Definition</b> <a href="enkf_8py_source.html#l00008">enkf.py:8</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_fallbacks_html"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html">tests.test_native_fields.TestFieldFallbacks</a></div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00131">test_native_fields.py:131</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_fallbacks_html_a79658b426e8069ab790c7cd8132f2caf"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#a79658b426e8069ab790c7cd8132f2caf">tests.test_native_fields.TestFieldFallbacks.test_a_python_pass_still_gives_the_reference</a></div><div class="ttdeci">test_a_python_pass_still_gives_the_reference(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00164">test_native_fields.py:164</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_fallbacks_html_ada967877c66e1bf6562e64f94a4a3e25"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#ada967877c66e1bf6562e64f94a4a3e25">tests.test_native_fields.TestFieldFallbacks.test_python_callables_and_other_solvers</a></div><div class="ttdeci">test_python_callables_and_other_solvers(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00134">test_native_fields.py:134</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_fallbacks_html_af9367dee8ed18f60bfb872fc896a9d63"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_fallbacks.html#af9367dee8ed18f60bfb872fc896a9d63">tests.test_native_fields.TestFieldFallbacks.test_a_changed_hook_or_a_full_q</a></div><div class="ttdeci">test_a_changed_hook_or_a_full_q(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00150">test_native_fields.py:150</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html">tests.test_native_fields.TestFieldFilterPass</a></div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00079">test_native_fields.py:79</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_a054d7d682f5c55e346a9f5774421e2e8"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a054d7d682f5c55e346a9f5774421e2e8">tests.test_native_fields.TestFieldFilterPass.test_barotropic_flow</a></div><div class="ttdeci">test_barotropic_flow(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00103">test_native_fields.py:103</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_a38c5aa6bf0ddb23779bf82834336a17a"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a38c5aa6bf0ddb23779bf82834336a17a">tests.test_native_fields.TestFieldFilterPass.test_tapers_given_to_the_engine</a></div><div class="ttdeci">test_tapers_given_to_the_engine(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00097">test_native_fields.py:97</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_a5525b2fca796189e0172de6478b601f0"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5525b2fca796189e0172de6478b601f0">tests.test_native_fields.TestFieldFilterPass.test_gradient_probes_with_process_noise</a></div><div class="ttdeci">test_gradient_probes_with_process_noise(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00094">test_native_fields.py:94</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_a5bef4865499b7edb4d5e1f64e708e84a"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a5bef4865499b7edb4d5e1f64e708e84a">tests.test_native_fields.TestFieldFilterPass.compare</a></div><div class="ttdeci">compare(self, make, **engine_kw)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00081">test_native_fields.py:81</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_a6a9f10262ff3cd5a93a327e4fa879cc5"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a6a9f10262ff3cd5a93a327e4fa879cc5">tests.test_native_fields.TestFieldFilterPass.test_vorticity_probes</a></div><div class="ttdeci">test_vorticity_probes(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00090">test_native_fields.py:90</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_field_filter_pass_html_aa73c88b12b411e70dcbd0d971ffb64a6"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#aa73c88b12b411e70dcbd0d971ffb64a6">tests.test_native_fields.TestFieldFilterPass.test_the_twin_declares_what_python_does</a></div><div class="ttdeci">test_the_twin_declares_what_python_does(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00114">test_native_fields.py:114</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html">tests.test_native_fields.TestTwinExperiment</a></div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00175">test_native_fields.py:175</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_a115444b03bbca1dbdd6cc2eadef5b737"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a115444b03bbca1dbdd6cc2eadef5b737">tests.test_native_fields.TestTwinExperiment.experiment</a></div><div class="ttdeci">experiment(mode)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00179">test_native_fields.py:179</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_a1b6abec6003543f74c651572ecbe5123"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1b6abec6003543f74c651572ecbe5123">tests.test_native_fields.TestTwinExperiment.runs</a></div><div class="ttdeci">runs</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00203">test_native_fields.py:203</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_a1debfd99e6f375a7eb6cd9765afa92f2"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a1debfd99e6f375a7eb6cd9765afa92f2">tests.test_native_fields.TestTwinExperiment.test_a_callback_keeps_the_python_loop</a></div><div class="ttdeci">test_a_callback_keeps_the_python_loop(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00226">test_native_fields.py:226</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_a6bbaf96f1285e767b42cf5b0de9674ee"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a6bbaf96f1285e767b42cf5b0de9674ee">tests.test_native_fields.TestTwinExperiment.test_a_free_run_is_its_forecasts</a></div><div class="ttdeci">test_a_free_run_is_its_forecasts(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00222">test_native_fields.py:222</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_a73230e413b1eaf9539b0a31dc96adc55"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#a73230e413b1eaf9539b0a31dc96adc55">tests.test_native_fields.TestTwinExperiment.setUpClass</a></div><div class="ttdeci">setUpClass(cls)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00202">test_native_fields.py:202</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__native__fields_1_1_test_twin_experiment_html_aefa5cea5d4aad15069416dc6ba1db6ac"><div class="ttname"><a href="classtests_1_1test__native__fields_1_1_test_twin_experiment.html#aefa5cea5d4aad15069416dc6ba1db6ac">tests.test_native_fields.TestTwinExperiment.test_every_method_agrees</a></div><div class="ttdeci">test_every_method_agrees(self)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00209">test_native_fields.py:209</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1barotropic_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html">modules.apps.weather.barotropic</a></div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00001">barotropic.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1flow_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00001">flow.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1engines_1_1ensemble_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1engines_1_1ensemble.html">modules.framework.engines.ensemble</a></div><div class="ttdef"><b>Definition</b> <a href="ensemble_8py_source.html#l00001">ensemble.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1models_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1models_1_1native.html">modules.framework.models.native</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00001">native.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2native_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__native__fields_html_a45316eea5eab2706852bd821d882a216"><div class="ttname"><a href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">tests.test_native_fields.filter_pass</a></div><div class="ttdeci">filter_pass(make, engine_kw, reference, expect_twin=True)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00062">test_native_fields.py:62</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__native__fields_html_a7f2542f2ac2775c987b69852738c7cc9"><div class="ttname"><a href="namespacetests_1_1test__native__fields.html#a7f2542f2ac2775c987b69852738c7cc9">tests.test_native_fields.mini</a></div><div class="ttdeci">mini(obs_type=&quot;vorticity&quot;, q_std=0.0, **kw)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00041">test_native_fields.py:41</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__native__fields_html_a886bd24b72b5ed346625543a835f5939"><div class="ttname"><a href="namespacetests_1_1test__native__fields.html#a886bd24b72b5ed346625543a835f5939">tests.test_native_fields.rel</a></div><div class="ttdeci">rel(a, b)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00036">test_native_fields.py:36</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__native__fields_html_aa99223cda46427924afaa93a40c1ccc8"><div class="ttname"><a href="namespacetests_1_1test__native__fields.html#aa99223cda46427924afaa93a40c1ccc8">tests.test_native_fields.measurements</a></div><div class="ttdeci">measurements(model, steps=12, seed=21)</div><div class="ttdef"><b>Definition</b> <a href="test__native__fields_8py_source.html#l00049">test_native_fields.py:49</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__native__fields_8py.html">test_native_fields.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

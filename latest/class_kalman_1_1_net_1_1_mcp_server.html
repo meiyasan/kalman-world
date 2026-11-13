@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Net::McpServer Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Net::McpServer Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Net::McpServer Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_net_1_1_mcp_server.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_kalman_1_1_net_1_1_mcp_server-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Net::McpServer Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>The <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Model</a> Context Protocol server of <a class="el" href="server_8py.html">modules/mcp/server.py</a>, for the verbs <a class="el" href="class_kalman_1_1_net_1_1_api.html" title="The JSON verbs of the Python facade kalman.api, for models that live in C++.">Kalman::Net::Api</a> serves.  
+ <a href="class_kalman_1_1_net_1_1_mcp_server.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_mcp_server_8h_source.html">McpServer.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:af5a56b292ced2c117a4c0932afffcde7" id="r_af5a56b292ced2c117a4c0932afffcde7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html#af5a56b292ced2c117a4c0932afffcde7">McpServer</a> (<a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;api)</td></tr>
+<tr class="memdesc:af5a56b292ced2c117a4c0932afffcde7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Serve <code>api</code> (not owned).  <br /></td></tr>
+<tr class="separator:af5a56b292ced2c117a4c0932afffcde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a353cfe60ce2f1bddfdb7c6f9903eb641" id="r_a353cfe60ce2f1bddfdb7c6f9903eb641"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html#a353cfe60ce2f1bddfdb7c6f9903eb641">Handle</a> (const std::string &amp;message, const std::string &amp;bearer=&quot;&quot;)</td></tr>
+<tr class="memdesc:a353cfe60ce2f1bddfdb7c6f9903eb641"><td class="mdescLeft">&#160;</td><td class="mdescRight">Answer one JSON-RPC message (or a batch).  <br /></td></tr>
+<tr class="separator:a353cfe60ce2f1bddfdb7c6f9903eb641"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a32e946f2f63a87f69a1bb80dfde78f6e" id="r_a32e946f2f63a87f69a1bb80dfde78f6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html#a32e946f2f63a87f69a1bb80dfde78f6e">RunStdio</a> (std::istream &amp;in, std::ostream &amp;out)</td></tr>
+<tr class="memdesc:a32e946f2f63a87f69a1bb80dfde78f6e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read messages from <code>in</code>, one per line, and write the answers to <code>out</code> until EOF.  <br /></td></tr>
+<tr class="separator:a32e946f2f63a87f69a1bb80dfde78f6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a95d12438c110dce25a59bb352af1f6f2" id="r_a95d12438c110dce25a59bb352af1f6f2"><td class="memItemLeft" align="right" valign="top">static constexpr const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html#a95d12438c110dce25a59bb352af1f6f2">kName</a> = &quot;Kalman-AI&quot;</td></tr>
+<tr class="separator:a95d12438c110dce25a59bb352af1f6f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Model</a> Context Protocol server of <a class="el" href="server_8py.html">modules/mcp/server.py</a>, for the verbs <a class="el" href="class_kalman_1_1_net_1_1_api.html" title="The JSON verbs of the Python facade kalman.api, for models that live in C++.">Kalman::Net::Api</a> serves. </p>
+<p>JSON-RPC 2.0: <code>initialize</code>, <code>ping</code>, <code>tools/list</code> and <code>tools/call</code>, over stdio (one message per line, <a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html#a32e946f2f63a87f69a1bb80dfde78f6e" title="Read messages from in, one per line, and write the answers to out until EOF.">RunStdio()</a>) or over HTTP (<code>POST /mcp</code> of <a class="el" href="class_kalman_1_1_net_1_1_rest_server.html" title="The REST API of modules/rest/app.py, for the verbs Kalman::Net::Api serves.">Kalman::Net::RestServer</a>). The tools have the names, arguments and results of the Python server's (<code>list_models</code>, <code>describe_model</code>, <code>run_filter</code>, ...); a tool result carries the answer both as <code>structuredContent</code> and as JSON text.</p>
+<p>The caller's token, first match wins, as in Python: the tool's <code>token</code> argument, the HTTP <code>Authorization: Bearer</code> header, and on stdio <code>KALMAN_MCP_TOKEN</code>.</p>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_mcp_server_8h_source.html#l00037">37</a> of file <a class="el" href="_mcp_server_8h_source.html">McpServer.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="af5a56b292ced2c117a4c0932afffcde7" name="af5a56b292ced2c117a4c0932afffcde7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af5a56b292ced2c117a4c0932afffcde7">&#9670;&#160;</a></span>McpServer()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::McpServer::McpServer </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_net_1_1_api.html">Api</a> &amp;&#160;</td>
+          <td class="paramname"><em>api</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Serve <code>api</code> (not owned). </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a353cfe60ce2f1bddfdb7c6f9903eb641" name="a353cfe60ce2f1bddfdb7c6f9903eb641"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a353cfe60ce2f1bddfdb7c6f9903eb641">&#9670;&#160;</a></span>Handle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::Net::McpServer::Handle </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>message</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>bearer</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Answer one JSON-RPC message (or a batch). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">message</td><td>the request, as JSON text. </td></tr>
+    <tr><td class="paramname">bearer</td><td>the transport's token ("" on stdio). </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the response as JSON text, or "" for a notification. </dd></dl>
+
+</div>
+</div>
+<a id="a32e946f2f63a87f69a1bb80dfde78f6e" name="a32e946f2f63a87f69a1bb80dfde78f6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a32e946f2f63a87f69a1bb80dfde78f6e">&#9670;&#160;</a></span>RunStdio()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Net::McpServer::RunStdio </td>
+          <td>(</td>
+          <td class="paramtype">std::istream &amp;&#160;</td>
+          <td class="paramname"><em>in</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>out</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read messages from <code>in</code>, one per line, and write the answers to <code>out</code> until EOF. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a95d12438c110dce25a59bb352af1f6f2" name="a95d12438c110dce25a59bb352af1f6f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d12438c110dce25a59bb352af1f6f2">&#9670;&#160;</a></span>kName</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr const char* Kalman::Net::McpServer::kName = &quot;Kalman-AI&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_mcp_server_8h_source.html#l00044">44</a> of file <a class="el" href="_mcp_server_8h_source.html">McpServer.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>net/include/Kalman/Net/<a class="el" href="_mcp_server_8h_source.html">McpServer.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_net.html">Net</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_net_1_1_mcp_server.html">McpServer</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

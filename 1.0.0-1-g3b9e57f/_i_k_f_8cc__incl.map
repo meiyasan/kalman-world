@@ -1,0 +1,121 @@
+<map id="src/Filters/IKF.cc" name="src/Filters/IKF.cc">
+<area shape="rect" id="Node000001" title="Implementation of the Kalman::Filters::IKF class." alt="" coords="1234,5,1361,31"/>
+<area shape="rect" id="Node000002" href="$_i_k_f_8h.html" title="Header of the Kalman::Filters::IKF class." alt="" coords="594,152,745,177"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="1234,25,933,44,788,61,738,70,709,81,697,93,688,108,676,139,671,137,683,105,693,89,707,76,736,65,787,55,933,39,1234,20"/>
+<area shape="rect" id="Node000020" href="$_engines_2_extended_8h.html" title="Header of the Kalman::Engines::Extended class." alt="" coords="831,152,1035,177"/>
+<area shape="poly" id="edge44_Node000001_Node000020" title=" " alt="" coords="1234,26,1163,33,1085,44,1015,60,989,70,970,81,958,93,950,108,939,140,934,138,945,106,954,90,966,77,986,65,1014,55,1084,39,1162,28,1233,21"/>
+<area shape="rect" id="Node000021" href="$_unscented_8h.html" title="Header of the Kalman::Engines::Unscented class." alt="" coords="1110,152,1322,177"/>
+<area shape="poly" id="edge46_Node000001_Node000021" title=" " alt="" coords="1287,33,1267,54,1248,80,1234,110,1224,140,1219,138,1229,108,1243,77,1263,50,1283,29"/>
+<area shape="rect" id="Node000022" href="$_combinatorial_8h.html" title="Header of the Kalman::Engines::Combinatorial class." alt="" coords="1257,79,1492,104"/>
+<area shape="poly" id="edge49_Node000001_Node000022" title=" " alt="" coords="1312,29,1354,67,1350,71,1308,33"/>
+<area shape="rect" id="Node000026" href="$_engines_2_linear_8h.html" title="Header of the Kalman::Engines::Linear class." alt="" coords="721,79,903,104"/>
+<area shape="poly" id="edge61_Node000001_Node000026" title=" " alt="" coords="1234,31,904,79,903,74,1234,26"/>
+<area shape="rect" id="Node000027" href="$_bayesian_8h.html" title="Header of the Kalman::Routers::Bayesian class." alt="" coords="980,79,1183,104"/>
+<area shape="poly" id="edge63_Node000001_Node000027" title=" " alt="" coords="1263,33,1130,77,1128,72,1262,28"/>
+<area shape="rect" id="Node000028" href="$_utils_8h.html" title="Small dense linear&#45;algebra helpers shared by the engines." alt="" coords="1585,225,1703,251"/>
+<area shape="poly" id="edge65_Node000001_Node000028" title=" " alt="" coords="1361,25,1433,44,1470,58,1505,76,1546,108,1582,145,1632,212,1628,215,1578,148,1542,112,1503,81,1468,63,1431,49,1360,31"/>
+<area shape="rect" id="Node000034" title=" " alt="" coords="1574,79,1637,104"/>
+<area shape="poly" id="edge81_Node000001_Node000034" title=" " alt="" coords="1347,28,1561,77,1560,82,1346,33"/>
+<area shape="rect" id="Node000035" title=" " alt="" coords="1661,79,1736,104"/>
+<area shape="poly" id="edge82_Node000001_Node000035" title=" " alt="" coords="1362,26,1648,76,1647,81,1361,32"/>
+<area shape="rect" id="Node000036" title=" " alt="" coords="1761,79,1847,104"/>
+<area shape="poly" id="edge83_Node000001_Node000036" title=" " alt="" coords="1361,24,1532,44,1748,76,1747,81,1531,50,1361,29"/>
+<area shape="rect" id="Node000003" href="$_metadata_8h.html" title="Self&#45;description shared by every framework role." alt="" coords="177,445,385,471"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="599,180,525,198,448,228,390,256,345,283,327,299,311,318,281,373,276,403,278,431,273,432,270,402,276,371,306,315,323,295,342,279,387,252,446,223,523,193,598,175"/>
+<area shape="rect" id="Node000004" href="$_engine_8h.html" title="Header of the Kalman::Engine class." alt="" coords="795,225,927,251"/>
+<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="701,175,818,218,816,223,699,180"/>
+<area shape="rect" id="Node000009" title=" " alt="" coords="1258,519,1321,544"/>
+<area shape="poly" id="edge43_Node000002_Node000009" title=" " alt="" coords="594,169,429,176,331,185,235,197,146,216,74,240,46,255,25,272,12,290,8,310,8,386,11,409,19,425,32,436,49,445,93,456,143,468,213,480,332,490,659,508,1244,526,1244,532,658,513,331,496,212,485,142,473,92,461,47,450,29,441,15,428,6,410,3,386,3,310,8,288,22,268,43,251,72,235,145,211,234,192,331,179,428,171,594,164"/>
+<area shape="rect" id="Node000010" href="$include_2_kalman_2_model_8h.html" title="Header of the Kalman::Model class." alt="" coords="541,299,669,324"/>
+<area shape="poly" id="edge38_Node000002_Node000010" title=" " alt="" coords="667,179,618,287,613,285,662,177"/>
+<area shape="rect" id="Node000014" title=" " alt="" coords="476,445,553,471"/>
+<area shape="poly" id="edge42_Node000002_Node000014" title=" " alt="" coords="624,180,553,204,469,242,426,268,387,298,352,333,324,373,318,392,323,406,336,419,355,429,408,444,463,451,462,456,407,449,353,434,332,423,318,409,313,391,319,371,348,330,383,294,423,264,466,238,551,199,622,175"/>
+<area shape="rect" id="Node000018" href="$_record_8h.html" title="Header of the Kalman::Record class." alt="" coords="1101,372,1251,397"/>
+<area shape="poly" id="edge32_Node000002_Node000018" title=" " alt="" coords="679,176,703,207,739,248,786,290,812,307,840,322,902,344,967,359,1087,376,1087,381,966,364,901,349,838,326,809,312,783,294,735,252,699,210,675,179"/>
+<area shape="rect" id="Node000019" href="$_base_8h.html" title="Header of the Kalman::Routers::Router contract." alt="" coords="850,299,1025,324"/>
+<area shape="poly" id="edge39_Node000002_Node000019" title=" " alt="" coords="684,175,727,210,784,248,836,273,887,292,886,297,834,278,781,253,724,215,680,180"/>
+<area shape="poly" id="edge30_Node000004_Node000003" title=" " alt="" coords="795,248,670,263,520,288,448,305,383,325,332,348,298,374,290,387,285,401,282,432,277,431,280,400,285,384,294,370,329,343,382,320,446,300,519,283,669,258,795,243"/>
+<area shape="rect" id="Node000005" href="$_matrix_8h.html" title="Minimal dense vector and matrix types." alt="" coords="1631,445,1761,471"/>
+<area shape="poly" id="edge4_Node000004_Node000005" title=" " alt="" coords="903,248,1032,282,1191,321,1313,344,1434,369,1553,404,1653,438,1651,443,1552,410,1433,375,1312,349,1190,327,1030,287,902,253"/>
+<area shape="poly" id="edge9_Node000004_Node000010" title=" " alt="" coords="821,253,660,298,659,292,819,248"/>
+<area shape="rect" id="Node000011" href="$_constants_8h.html" title="Enumerations shared across the Kalman framework." alt="" coords="869,445,1022,471"/>
+<area shape="poly" id="edge31_Node000004_Node000011" title=" " alt="" coords="856,252,842,285,839,304,841,323,875,370,928,433,924,436,871,373,836,325,833,304,837,283,851,250"/>
+<area shape="rect" id="Node000006" title=" " alt="" coords="2565,519,2635,544"/>
+<area shape="poly" id="edge5_Node000005_Node000006" title=" " alt="" coords="1762,462,2551,524,2551,529,1761,467"/>
+<area shape="rect" id="Node000007" title=" " alt="" coords="1641,519,1751,544"/>
+<area shape="poly" id="edge6_Node000005_Node000007" title=" " alt="" coords="1699,471,1699,505,1693,505,1693,471"/>
+<area shape="rect" id="Node000008" title=" " alt="" coords="1449,519,1513,544"/>
+<area shape="poly" id="edge7_Node000005_Node000008" title=" " alt="" coords="1662,473,1527,518,1526,513,1661,468"/>
+<area shape="poly" id="edge8_Node000005_Node000009" title=" " alt="" coords="1631,473,1335,525,1334,520,1630,468"/>
+<area shape="poly" id="edge11_Node000010_Node000003" title=" " alt="" coords="541,322,417,342,360,356,323,374,311,386,301,401,289,433,284,431,297,399,307,383,320,370,359,351,416,337,540,317"/>
+<area shape="poly" id="edge10_Node000010_Node000005" title=" " alt="" coords="670,314,978,338,1144,354,1264,369,1312,381,1359,395,1496,422,1618,442,1617,447,1495,427,1358,400,1311,387,1264,375,1143,359,977,343,669,320"/>
+<area shape="poly" id="edge29_Node000010_Node000009" title=" " alt="" coords="541,318,404,328,328,338,256,353,197,373,174,385,158,399,148,414,146,430,152,448,167,469,182,475,214,482,321,493,642,511,994,522,1244,527,1244,532,994,527,641,516,321,499,214,487,181,480,164,473,147,451,140,430,143,412,154,395,171,381,194,368,255,348,327,333,404,323,541,312"/>
+<area shape="poly" id="edge12_Node000010_Node000011" title=" " alt="" coords="670,320,751,338,794,352,836,370,886,401,925,434,922,438,882,405,833,374,792,357,749,343,669,325"/>
+<area shape="rect" id="Node000012" href="$_integrator_8h.html" title="Header of the Kalman::Integrator class." alt="" coords="473,372,623,397"/>
+<area shape="poly" id="edge13_Node000010_Node000012" title=" " alt="" coords="598,326,568,363,564,359,594,323"/>
+<area shape="poly" id="edge27_Node000010_Node000014" title=" " alt="" coords="541,320,482,327,421,338,369,354,349,363,337,374,329,389,332,402,343,413,361,423,410,439,463,448,462,454,409,444,358,428,339,418,327,404,324,388,333,370,346,359,367,349,420,333,482,322,541,315"/>
+<area shape="rect" id="Node000015" href="$_differentiator_8h.html" title="Header of the Kalman::Differentiator class." alt="" coords="647,372,822,397"/>
+<area shape="poly" id="edge20_Node000010_Node000015" title=" " alt="" coords="627,322,702,363,700,367,625,326"/>
+<area shape="rect" id="Node000016" title=" " alt="" coords="347,372,397,397"/>
+<area shape="poly" id="edge26_Node000010_Node000016" title=" " alt="" coords="569,327,412,374,410,369,567,321"/>
+<area shape="rect" id="Node000017" title=" " alt="" coords="1095,445,1153,471"/>
+<area shape="poly" id="edge28_Node000010_Node000017" title=" " alt="" coords="666,321,763,342,873,369,987,405,1082,438,1080,443,985,410,871,375,762,347,665,327"/>
+<area shape="poly" id="edge14_Node000012_Node000003" title=" " alt="" coords="506,400,339,444,337,439,504,395"/>
+<area shape="poly" id="edge16_Node000012_Node000005" title=" " alt="" coords="624,394,635,395,918,417,1197,434,1617,452,1617,457,1197,439,918,422,634,400,623,399"/>
+<area shape="poly" id="edge19_Node000012_Node000009" title=" " alt="" coords="563,395,612,433,645,453,680,468,729,481,794,492,955,509,1245,526,1244,531,955,514,794,497,727,486,678,473,642,457,609,437,559,400"/>
+<area shape="poly" id="edge15_Node000012_Node000011" title=" " alt="" coords="612,395,868,440,867,445,611,400"/>
+<area shape="rect" id="Node000013" title=" " alt="" coords="691,445,778,471"/>
+<area shape="poly" id="edge17_Node000012_Node000013" title=" " alt="" coords="579,395,692,438,691,443,577,400"/>
+<area shape="poly" id="edge18_Node000012_Node000014" title=" " alt="" coords="545,399,528,434,523,432,540,397"/>
+<area shape="poly" id="edge21_Node000015_Node000003" title=" " alt="" coords="662,400,368,446,367,441,661,395"/>
+<area shape="poly" id="edge23_Node000015_Node000005" title=" " alt="" coords="822,390,1617,448,1617,454,822,395"/>
+<area shape="poly" id="edge22_Node000015_Node000011" title=" " alt="" coords="769,395,899,438,898,443,768,400"/>
+<area shape="poly" id="edge24_Node000015_Node000013" title=" " alt="" coords="737,398,737,432,732,432,732,398"/>
+<area shape="poly" id="edge25_Node000015_Node000014" title=" " alt="" coords="700,400,564,444,562,439,699,395"/>
+<area shape="poly" id="edge33_Node000018_Node000005" title=" " alt="" coords="1252,394,1617,443,1617,449,1251,399"/>
+<area shape="poly" id="edge35_Node000018_Node000008" title=" " alt="" coords="1202,395,1446,510,1444,515,1199,400"/>
+<area shape="poly" id="edge37_Node000018_Node000009" title=" " alt="" coords="1187,396,1274,506,1270,510,1183,399"/>
+<area shape="poly" id="edge34_Node000018_Node000011" title=" " alt="" coords="1140,400,996,444,995,439,1138,395"/>
+<area shape="poly" id="edge36_Node000018_Node000017" title=" " alt="" coords="1170,399,1143,436,1138,433,1165,396"/>
+<area shape="poly" id="edge40_Node000019_Node000003" title=" " alt="" coords="850,317,767,322,668,333,563,349,461,375,435,386,411,400,320,442,317,437,408,395,433,381,459,369,562,344,668,327,766,317,850,312"/>
+<area shape="poly" id="edge41_Node000019_Node000005" title=" " alt="" coords="1025,320,1181,340,1359,369,1515,405,1644,439,1643,444,1514,410,1358,375,1181,345,1025,325"/>
+<area shape="poly" id="edge45_Node000020_Node000004" title=" " alt="" coords="923,180,885,218,881,214,920,176"/>
+<area shape="poly" id="edge47_Node000021_Node000004" title=" " alt="" coords="1160,180,933,225,932,220,1158,175"/>
+<area shape="poly" id="edge48_Node000021_Node000009" title=" " alt="" coords="1275,175,1315,193,1333,207,1348,224,1364,261,1371,300,1369,341,1361,381,1334,454,1306,508,1302,506,1330,452,1356,379,1364,340,1365,300,1359,262,1343,227,1329,210,1312,198,1272,180"/>
+<area shape="poly" id="edge60_Node000022_Node000009" title=" " alt="" coords="1396,102,1425,123,1458,154,1484,192,1492,214,1495,236,1495,386,1490,414,1478,438,1460,459,1437,477,1385,505,1335,522,1333,517,1383,500,1434,473,1456,456,1474,435,1485,412,1489,386,1489,237,1487,215,1479,194,1453,157,1422,127,1392,106"/>
+<area shape="poly" id="edge50_Node000022_Node000020" title=" " alt="" coords="1304,107,1018,152,1017,147,1303,101"/>
+<area shape="rect" id="Node000023" href="$_tracking_8h.html" title="The vocabulary of track finding: hits, layers, candidates, and the detector contract." alt="" coords="1190,225,1333,251"/>
+<area shape="poly" id="edge51_Node000022_Node000023" title=" " alt="" coords="1390,102,1404,118,1417,137,1424,158,1418,179,1404,195,1386,208,1347,226,1345,221,1384,204,1400,191,1414,176,1418,158,1412,139,1400,121,1386,106"/>
+<area shape="rect" id="Node000025" title=" " alt="" coords="1345,152,1404,177"/>
+<area shape="poly" id="edge59_Node000022_Node000025" title=" " alt="" coords="1377,104,1377,138,1372,138,1372,104"/>
+<area shape="poly" id="edge54_Node000023_Node000005" title=" " alt="" coords="1292,248,1412,298,1563,370,1670,435,1667,440,1560,374,1410,303,1290,253"/>
+<area shape="poly" id="edge56_Node000023_Node000006" title=" " alt="" coords="1333,240,1673,258,1894,274,2119,296,2192,300,2258,296,2374,285,2428,286,2479,298,2531,324,2585,370,2604,402,2612,439,2612,475,2608,506,2603,505,2607,475,2607,439,2599,404,2581,374,2528,329,2478,303,2427,291,2375,290,2259,301,2192,305,2118,301,1894,280,1672,263,1333,245"/>
+<area shape="poly" id="edge58_Node000023_Node000009" title=" " alt="" coords="1267,250,1277,298,1288,414,1292,505,1286,505,1283,414,1272,299,1262,252"/>
+<area shape="poly" id="edge55_Node000023_Node000010" title=" " alt="" coords="1190,250,683,304,683,299,1190,244"/>
+<area shape="poly" id="edge52_Node000023_Node000011" title=" " alt="" coords="1246,253,1176,301,975,439,972,435,1173,296,1243,248"/>
+<area shape="poly" id="edge53_Node000023_Node000018" title=" " alt="" coords="1243,253,1216,273,1193,300,1182,329,1179,358,1173,357,1177,328,1188,297,1212,269,1240,249"/>
+<area shape="rect" id="Node000024" title=" " alt="" coords="1202,299,1262,324"/>
+<area shape="poly" id="edge57_Node000023_Node000024" title=" " alt="" coords="1259,252,1244,287,1240,285,1254,250"/>
+<area shape="poly" id="edge62_Node000026_Node000004" title=" " alt="" coords="814,104,815,137,822,176,844,213,839,216,818,178,809,138,809,104"/>
+<area shape="poly" id="edge64_Node000027_Node000019" title=" " alt="" coords="1081,105,1069,139,1050,179,1005,242,961,291,957,287,1001,238,1046,176,1064,137,1076,103"/>
+<area shape="poly" id="edge66_Node000028_Node000005" title=" " alt="" coords="1704,241,1916,257,2196,285,2332,303,2449,323,2537,345,2567,357,2585,370,2591,385,2585,399,2568,410,2542,419,2463,434,2358,445,2236,452,1981,459,1775,460,1775,455,1981,454,2236,447,2358,440,2462,429,2540,414,2566,405,2581,396,2586,385,2581,374,2564,362,2536,350,2448,328,2331,308,2195,290,1916,262,1703,246"/>
+<area shape="poly" id="edge78_Node000028_Node000006" title=" " alt="" coords="1703,240,1936,253,2247,279,2398,297,2530,318,2628,342,2660,356,2679,370,2694,396,2697,420,2692,444,2680,472,2661,496,2638,514,2635,510,2658,492,2675,469,2687,443,2692,419,2689,397,2675,374,2657,360,2626,347,2529,323,2398,302,2246,285,1936,259,1703,245"/>
+<area shape="poly" id="edge80_Node000028_Node000009" title=" " alt="" coords="1643,252,1629,294,1603,354,1565,418,1540,447,1512,473,1469,498,1422,515,1375,525,1335,531,1334,525,1374,520,1420,510,1467,493,1509,469,1536,444,1560,415,1599,351,1624,292,1638,250"/>
+<area shape="poly" id="edge79_Node000028_Node000013" title=" " alt="" coords="1610,253,1497,288,1354,327,1222,352,1090,375,792,445,791,440,1089,369,1221,346,1353,321,1495,283,1609,248"/>
+<area shape="poly" id="edge77_Node000028_Node000015" title=" " alt="" coords="1602,253,1458,289,1275,327,1039,359,836,378,835,373,1039,353,1274,321,1457,284,1601,248"/>
+<area shape="rect" id="Node000029" href="$_algebra_8h.html" title="The linear algebra of the framework." alt="" coords="1915,299,2107,324"/>
+<area shape="poly" id="edge67_Node000028_Node000029" title=" " alt="" coords="1703,248,1938,293,1937,299,1702,253"/>
+<area shape="rect" id="Node000030" href="$_cholesky_8h.html" title="Cholesky factorisation, and the solves and inverses built on it." alt="" coords="1681,372,1879,397"/>
+<area shape="poly" id="edge68_Node000029_Node000030" title=" " alt="" coords="1974,327,1831,371,1829,365,1973,321"/>
+<area shape="rect" id="Node000031" href="$_symmetric_8h.html" title="Operations on symmetric matrices (covariances)" alt="" coords="1904,372,2117,397"/>
+<area shape="poly" id="edge70_Node000029_Node000031" title=" " alt="" coords="2013,324,2013,358,2008,358,2008,324"/>
+<area shape="rect" id="Node000032" href="$_exponential_8h.html" title="The matrix exponential, and decoding a continuous linear system." alt="" coords="2141,372,2360,397"/>
+<area shape="poly" id="edge72_Node000029_Node000032" title=" " alt="" coords="2050,321,2199,365,2198,371,2048,327"/>
+<area shape="rect" id="Node000033" href="$_riccati_8h.html" title="The discrete algebraic Riccati equation, and the Stein equation it is refined with." alt="" coords="2384,372,2571,397"/>
+<area shape="poly" id="edge74_Node000029_Node000033" title=" " alt="" coords="2086,321,2389,367,2388,373,2085,327"/>
+<area shape="poly" id="edge69_Node000030_Node000005" title=" " alt="" coords="1768,399,1722,438,1719,434,1765,395"/>
+<area shape="poly" id="edge71_Node000031_Node000005" title=" " alt="" coords="1961,400,1761,445,1760,440,1960,395"/>
+<area shape="poly" id="edge73_Node000032_Node000005" title=" " alt="" coords="2162,400,1775,449,1774,444,2161,395"/>
+<area shape="poly" id="edge75_Node000033_Node000005" title=" " alt="" coords="2384,399,2372,400,1776,453,1775,448,2372,395,2383,394"/>
+<area shape="poly" id="edge76_Node000033_Node000006" title=" " alt="" coords="2489,396,2583,506,2579,510,2485,400"/>
+</map>

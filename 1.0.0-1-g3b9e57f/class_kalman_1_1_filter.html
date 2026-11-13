@@ -1,0 +1,2170 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Filter Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Filter Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Filter Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_filter.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="class_kalman_1_1_filter-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Filter Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>The <b>workflow</b> — WHEN each step runs, and what is kept.  
+ <a href="class_kalman_1_1_filter.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_filter_8h_source.html">Filter.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Kalman::Filter:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_filter__inherit__graph.svg" width="586" height="234"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:adef9fb69f8861213a37c1f3ff9a4e5a3" id="r_adef9fb69f8861213a37c1f3ff9a4e5a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#adef9fb69f8861213a37c1f3ff9a4e5a3">Filter</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> *model, <a class="el" href="class_kalman_1_1_engine.html">Engine</a> *engine=nullptr)</td></tr>
+<tr class="separator:adef9fb69f8861213a37c1f3ff9a4e5a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ca656e7021e73e941a1b8979e205a22" id="r_a5ca656e7021e73e941a1b8979e205a22"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a5ca656e7021e73e941a1b8979e205a22">~Filter</a> ()</td></tr>
+<tr class="separator:a5ca656e7021e73e941a1b8979e205a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af16e29323d2d85fcb0d6c9e94d717a93" id="r_af16e29323d2d85fcb0d6c9e94d717a93"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af16e29323d2d85fcb0d6c9e94d717a93">Filter</a> (const <a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp;)=delete</td></tr>
+<tr class="separator:af16e29323d2d85fcb0d6c9e94d717a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3e7864b5c327fd606424796849ec0dc" id="r_af3e7864b5c327fd606424796849ec0dc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af3e7864b5c327fd606424796849ec0dc">operator=</a> (const <a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp;)=delete</td></tr>
+<tr class="separator:af3e7864b5c327fd606424796849ec0dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ea24a2ba9da04916d5abb971ab6e112" id="r_a6ea24a2ba9da04916d5abb971ab6e112"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a6ea24a2ba9da04916d5abb971ab6e112">Title</a> () const override</td></tr>
+<tr class="memdesc:a6ea24a2ba9da04916d5abb971ab6e112"><td class="mdescLeft">&#160;</td><td class="mdescRight">Human-readable name of the <em>kind</em> of thing this is.  <br /></td></tr>
+<tr class="separator:a6ea24a2ba9da04916d5abb971ab6e112"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abba844d337244396243fb15b90f63fd2" id="r_abba844d337244396243fb15b90f63fd2"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#abba844d337244396243fb15b90f63fd2">Description</a> () const override</td></tr>
+<tr class="memdesc:abba844d337244396243fb15b90f63fd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">One sentence on what it does.  <br /></td></tr>
+<tr class="separator:abba844d337244396243fb15b90f63fd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2fc0424c1e5e619bb89ceb8bc03656c" id="r_af2fc0424c1e5e619bb89ceb8bc03656c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af2fc0424c1e5e619bb89ceb8bc03656c">GetModel</a> () const</td></tr>
+<tr class="separator:af2fc0424c1e5e619bb89ceb8bc03656c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5075992adc7eb2832c37ab59ca78d907" id="r_a5075992adc7eb2832c37ab59ca78d907"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a5075992adc7eb2832c37ab59ca78d907">GetEngine</a> () const</td></tr>
+<tr class="separator:a5075992adc7eb2832c37ab59ca78d907"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae22773155311f1a535aeed79fa8b989" id="r_aae22773155311f1a535aeed79fa8b989"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aae22773155311f1a535aeed79fa8b989">SetEngine</a> (<a class="el" href="class_kalman_1_1_engine.html">Engine</a> *engine)</td></tr>
+<tr class="memdesc:aae22773155311f1a535aeed79fa8b989"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adopt a different engine; the filter never takes ownership here.  <br /></td></tr>
+<tr class="separator:aae22773155311f1a535aeed79fa8b989"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08536c9895eba292e4e60527da757d47" id="r_a08536c9895eba292e4e60527da757d47"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a08536c9895eba292e4e60527da757d47">State</a> () const</td></tr>
+<tr class="separator:a08536c9895eba292e4e60527da757d47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23bfaca3e7a827c511eff881737e59c4" id="r_a23bfaca3e7a827c511eff881737e59c4"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a23bfaca3e7a827c511eff881737e59c4">Covariance</a> () const</td></tr>
+<tr class="separator:a23bfaca3e7a827c511eff881737e59c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b8c3d76dcbb43bf1d25a06e79de40a2" id="r_a1b8c3d76dcbb43bf1d25a06e79de40a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a1b8c3d76dcbb43bf1d25a06e79de40a2">Reset</a> ()</td></tr>
+<tr class="memdesc:a1b8c3d76dcbb43bf1d25a06e79de40a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Drop the run and rewind the belief to the model's x0 / P0.  <br /></td></tr>
+<tr class="separator:a1b8c3d76dcbb43bf1d25a06e79de40a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a999187a77c615baa6e5a70f65257e6e2" id="r_a999187a77c615baa6e5a70f65257e6e2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a999187a77c615baa6e5a70f65257e6e2">Forward</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;zk, const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *uk=nullptr, bool reset=true)</td></tr>
+<tr class="memdesc:a999187a77c615baa6e5a70f65257e6e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the forward pass over <code>zk</code>.  <br /></td></tr>
+<tr class="separator:a999187a77c615baa6e5a70f65257e6e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a69c519e5ea23488b67d066f6fc568a32" id="r_a69c519e5ea23488b67d066f6fc568a32"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a69c519e5ea23488b67d066f6fc568a32">Forward</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;zk, <a class="el" href="class_kalman_1_1_controller.html">Controller</a> &amp;controller, bool reset=true)</td></tr>
+<tr class="memdesc:a69c519e5ea23488b67d066f6fc568a32"><td class="mdescLeft">&#160;</td><td class="mdescRight">The closed-loop forward pass: <code>controller</code> decides each step's command.  <br /></td></tr>
+<tr class="separator:a69c519e5ea23488b67d066f6fc568a32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac5754a5bb291df7fa6d7ebd30abf2748" id="r_ac5754a5bb291df7fa6d7ebd30abf2748"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ac5754a5bb291df7fa6d7ebd30abf2748">Backward</a> ()</td></tr>
+<tr class="memdesc:ac5754a5bb291df7fa6d7ebd30abf2748"><td class="mdescLeft">&#160;</td><td class="mdescRight">Rauch–Tung–Striebel smoother over the stored forward pass.  <br /></td></tr>
+<tr class="separator:ac5754a5bb291df7fa6d7ebd30abf2748"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a193c2523733e5a9420ec78be0d9e32fd" id="r_a193c2523733e5a9420ec78be0d9e32fd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a193c2523733e5a9420ec78be0d9e32fd">Filtering</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;zk, const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *uk=nullptr, bool smooth=false)</td></tr>
+<tr class="memdesc:a193c2523733e5a9420ec78be0d9e32fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forward, then optionally Backward — the one-call entry point.  <br /></td></tr>
+<tr class="separator:a193c2523733e5a9420ec78be0d9e32fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2167c41c4c5523acd9634fd65526d001" id="r_a2167c41c4c5523acd9634fd65526d001"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a2167c41c4c5523acd9634fd65526d001">PriorRecord</a> () const</td></tr>
+<tr class="memdesc:a2167c41c4c5523acd9634fd65526d001"><td class="mdescLeft">&#160;</td><td class="mdescRight">The prior (predicted) record of the last forward pass.  <br /></td></tr>
+<tr class="separator:a2167c41c4c5523acd9634fd65526d001"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0949a2f02f443d125bcad5309f98947" id="r_af0949a2f02f443d125bcad5309f98947"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af0949a2f02f443d125bcad5309f98947">NIS</a> () const</td></tr>
+<tr class="memdesc:af0949a2f02f443d125bcad5309f98947"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalised Innovation Squared, <code>nu^T S^-1 nu</code> per step.  <br /></td></tr>
+<tr class="separator:af0949a2f02f443d125bcad5309f98947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab6a93c1880e19a92a3c3455eb32c6425" id="r_ab6a93c1880e19a92a3c3455eb32c6425"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ab6a93c1880e19a92a3c3455eb32c6425">MeanNIS</a> () const</td></tr>
+<tr class="memdesc:ab6a93c1880e19a92a3c3455eb32c6425"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean of <a class="el" href="class_kalman_1_1_filter.html#af0949a2f02f443d125bcad5309f98947" title="Normalised Innovation Squared, nu^T S^-1 nu per step.">NIS()</a> over the run, ignoring the NaN (unmeasured) steps.  <br /></td></tr>
+<tr class="separator:ab6a93c1880e19a92a3c3455eb32c6425"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2a3af0fba0e1834eb573cef3eaf1cc" id="r_a0b2a3af0fba0e1834eb573cef3eaf1cc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a0b2a3af0fba0e1834eb573cef3eaf1cc">NEES</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;truth) const</td></tr>
+<tr class="memdesc:a0b2a3af0fba0e1834eb573cef3eaf1cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Normalised Estimation Error Squared against a known truth.  <br /></td></tr>
+<tr class="separator:a0b2a3af0fba0e1834eb573cef3eaf1cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8cfdc603de1d4bfc34f6c089a4c2440" id="r_af8cfdc603de1d4bfc34f6c089a4c2440"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af8cfdc603de1d4bfc34f6c089a4c2440">MeanNEES</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;truth) const</td></tr>
+<tr class="memdesc:af8cfdc603de1d4bfc34f6c089a4c2440"><td class="mdescLeft">&#160;</td><td class="mdescRight">Mean of <a class="el" href="class_kalman_1_1_filter.html#a0b2a3af0fba0e1834eb573cef3eaf1cc" title="Normalised Estimation Error Squared against a known truth.">NEES()</a> over the run.  <br /></td></tr>
+<tr class="separator:af8cfdc603de1d4bfc34f6c089a4c2440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4caf7ca408184c91f0e0b7b27b25061" id="r_aa4caf7ca408184c91f0e0b7b27b25061"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a> () const</td></tr>
+<tr class="separator:aa4caf7ca408184c91f0e0b7b27b25061"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7278f3b8425747cf682c5babb5bb145" id="r_ac7278f3b8425747cf682c5babb5bb145"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ac7278f3b8425747cf682c5babb5bb145">PriorStates</a> () const</td></tr>
+<tr class="separator:ac7278f3b8425747cf682c5babb5bb145"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad483afcef43450f8d968ff41c03bbe63" id="r_ad483afcef43450f8d968ff41c03bbe63"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ad483afcef43450f8d968ff41c03bbe63">PriorCovariances</a> () const</td></tr>
+<tr class="separator:ad483afcef43450f8d968ff41c03bbe63"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f39c3bf9552b5fa3ad6d6229605b36c" id="r_a4f39c3bf9552b5fa3ad6d6229605b36c"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a4f39c3bf9552b5fa3ad6d6229605b36c">PosteriorStates</a> () const</td></tr>
+<tr class="separator:a4f39c3bf9552b5fa3ad6d6229605b36c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab774f111fc579efcd5a4080ff22e3997" id="r_ab774f111fc579efcd5a4080ff22e3997"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ab774f111fc579efcd5a4080ff22e3997">PosteriorCovariances</a> () const</td></tr>
+<tr class="separator:ab774f111fc579efcd5a4080ff22e3997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a582500ea11e581dcf406a7d89107f05e" id="r_a582500ea11e581dcf406a7d89107f05e"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a582500ea11e581dcf406a7d89107f05e">Transitions</a> () const</td></tr>
+<tr class="separator:a582500ea11e581dcf406a7d89107f05e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adaea7da22f86e477cf4947f3918378b7" id="r_adaea7da22f86e477cf4947f3918378b7"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#adaea7da22f86e477cf4947f3918378b7">Measurements</a> () const</td></tr>
+<tr class="separator:adaea7da22f86e477cf4947f3918378b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92764aebac1b958dc8b724d4047b5731" id="r_a92764aebac1b958dc8b724d4047b5731"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a92764aebac1b958dc8b724d4047b5731">Controls</a> () const</td></tr>
+<tr class="memdesc:a92764aebac1b958dc8b724d4047b5731"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command applied at each step (from uk or the controller); empty vectors when none.  <br /></td></tr>
+<tr class="separator:a92764aebac1b958dc8b724d4047b5731"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ab61f1f12157a2951aa8a4be94af4e" id="r_aa3ab61f1f12157a2951aa8a4be94af4e"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aa3ab61f1f12157a2951aa8a4be94af4e">Innovations</a> () const</td></tr>
+<tr class="separator:aa3ab61f1f12157a2951aa8a4be94af4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94458702dffeee5ab0b30cca6b422c44" id="r_a94458702dffeee5ab0b30cca6b422c44"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; double &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a94458702dffeee5ab0b30cca6b422c44">Times</a> () const</td></tr>
+<tr class="separator:a94458702dffeee5ab0b30cca6b422c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0439baf46721513176f42e7a91e7186" id="r_ae0439baf46721513176f42e7a91e7186"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ae0439baf46721513176f42e7a91e7186">SmoothedStates</a> () const</td></tr>
+<tr class="separator:ae0439baf46721513176f42e7a91e7186"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af234c3a4d5ccd7b738f3574f8cf031cc" id="r_af234c3a4d5ccd7b738f3574f8cf031cc"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#af234c3a4d5ccd7b738f3574f8cf031cc">SmoothedCovariances</a> () const</td></tr>
+<tr class="separator:af234c3a4d5ccd7b738f3574f8cf031cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8af4a4feb7bdeef2d46ad9c2043d21" id="r_a7e8af4a4feb7bdeef2d46ad9c2043d21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_diagnostics.html">Diagnostics</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">GetDiagnostics</a> () const</td></tr>
+<tr class="memdesc:a7e8af4a4feb7bdeef2d46ad9c2043d21"><td class="mdescLeft">&#160;</td><td class="mdescRight">The consistency diagnostics for this run — see <a class="el" href="class_kalman_1_1_diagnostics.html" title="Is the filter consistent? — computed post-hoc from a finished run.">Kalman::Diagnostics</a>.  <br /></td></tr>
+<tr class="separator:a7e8af4a4feb7bdeef2d46ad9c2043d21"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6338ff5a4af2438343a79ba9035dfff" id="r_ad6338ff5a4af2438343a79ba9035dfff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ad6338ff5a4af2438343a79ba9035dfff">Print</a> (std::ostream &amp;os) const</td></tr>
+<tr class="separator:ad6338ff5a4af2438343a79ba9035dfff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_abstract_1_1_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html">Kalman::Abstract::Metadata</a></td></tr>
+<tr class="memitem:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a4d2072d8053f1800062433de843a0320"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a4d2072d8053f1800062433de843a0320">~Metadata</a> ()=default</td></tr>
+<tr class="separator:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a794690cc8b1e23360b7ad7e8070caa36"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a794690cc8b1e23360b7ad7e8070caa36">Version</a> () const</td></tr>
+<tr class="memdesc:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation version, bumped when behaviour changes.  <br /></td></tr>
+<tr class="separator:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a03a2da0864b624cf09f7f524e7e49eb8" id="r_a03a2da0864b624cf09f7f524e7e49eb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a03a2da0864b624cf09f7f524e7e49eb8">Filter</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> *model, <a class="el" href="class_kalman_1_1_engine.html">Engine</a> *engine, bool owns)</td></tr>
+<tr class="memdesc:a03a2da0864b624cf09f7f524e7e49eb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor for the named leaves, which supply their own engine.  <br /></td></tr>
+<tr class="separator:a03a2da0864b624cf09f7f524e7e49eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4ac7cb6fa2e90d19a0c9628b626a736" id="r_aa4ac7cb6fa2e90d19a0c9628b626a736"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aa4ac7cb6fa2e90d19a0c9628b626a736">MakeRecord</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;x, const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;P, <a class="el" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75caf">StateFlavor</a> flavor) const</td></tr>
+<tr class="memdesc:aa4ac7cb6fa2e90d19a0c9628b626a736"><td class="mdescLeft">&#160;</td><td class="mdescRight">Assemble a record from one of the stored logs.  <br /></td></tr>
+<tr class="separator:aa4ac7cb6fa2e90d19a0c9628b626a736"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5be8714e3cfac94749502526b79c7972" id="r_a5be8714e3cfac94749502526b79c7972"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a5be8714e3cfac94749502526b79c7972">Run</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;zk, const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *uk, <a class="el" href="class_kalman_1_1_controller.html">Controller</a> *controller, bool reset)</td></tr>
+<tr class="memdesc:a5be8714e3cfac94749502526b79c7972"><td class="mdescLeft">&#160;</td><td class="mdescRight">The one loop behind both <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481" title="one-sided differences (first order)">Forward()</a> overloads.  <br /></td></tr>
+<tr class="separator:a5be8714e3cfac94749502526b79c7972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a6701d30735b0385560cdd8d4d4c5c7f3" id="r_a6701d30735b0385560cdd8d4d4c5c7f3"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a6701d30735b0385560cdd8d4d4c5c7f3">MakeEngine</a> (<a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a> kind)</td></tr>
+<tr class="memdesc:a6701d30735b0385560cdd8d4d4c5c7f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build the engine the model asks for. Throws for kinds with no C++ engine.  <br /></td></tr>
+<tr class="separator:a6701d30735b0385560cdd8d4d4c5c7f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a9b84918084a01a7f3f6d3150795abc85" id="r_a9b84918084a01a7f3f6d3150795abc85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a> = nullptr</td></tr>
+<tr class="separator:a9b84918084a01a7f3f6d3150795abc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f83490ee2e91a2f4560226c98c7758f" id="r_a8f83490ee2e91a2f4560226c98c7758f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a> = nullptr</td></tr>
+<tr class="separator:a8f83490ee2e91a2f4560226c98c7758f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a55a62ea006f16e1231409e2c04e8f5b1" id="r_a55a62ea006f16e1231409e2c04e8f5b1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">fOwnsEngine</a> = false</td></tr>
+<tr class="separator:a55a62ea006f16e1231409e2c04e8f5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ddb4801a9eed8615c225f98d7a8be52" id="r_a6ddb4801a9eed8615c225f98d7a8be52"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a></td></tr>
+<tr class="separator:a6ddb4801a9eed8615c225f98d7a8be52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a304a97aa8db4c5992c2b9cab6aabdf3b" id="r_a304a97aa8db4c5992c2b9cab6aabdf3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a></td></tr>
+<tr class="separator:a304a97aa8db4c5992c2b9cab6aabdf3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa607d67063c80ceeae6432f142331df6" id="r_aa607d67063c80ceeae6432f142331df6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a></td></tr>
+<tr class="separator:aa607d67063c80ceeae6432f142331df6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac8c3e496e7cd276ad4d91961876c0c4c" id="r_ac8c3e496e7cd276ad4d91961876c0c4c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a></td></tr>
+<tr class="separator:ac8c3e496e7cd276ad4d91961876c0c4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb63b480a820fb37232e06f7a33a61ea" id="r_aeb63b480a820fb37232e06f7a33a61ea"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a></td></tr>
+<tr class="separator:aeb63b480a820fb37232e06f7a33a61ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94adcd967fc425d3a3096b9386459e74" id="r_a94adcd967fc425d3a3096b9386459e74"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a></td></tr>
+<tr class="separator:a94adcd967fc425d3a3096b9386459e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0eb90aa681612154922dd038d0b9642a" id="r_a0eb90aa681612154922dd038d0b9642a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">fTransition</a></td></tr>
+<tr class="separator:a0eb90aa681612154922dd038d0b9642a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d80c4a055f60db3caa36246677a7f79" id="r_a5d80c4a055f60db3caa36246677a7f79"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">fMeasure</a></td></tr>
+<tr class="separator:a5d80c4a055f60db3caa36246677a7f79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51398fd764c4f1e2082f3e7bcbb7fece" id="r_a51398fd764c4f1e2082f3e7bcbb7fece"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a51398fd764c4f1e2082f3e7bcbb7fece">fControl</a></td></tr>
+<tr class="separator:a51398fd764c4f1e2082f3e7bcbb7fece"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab5b8cd963a29e628de146a4a4302b73" id="r_aab5b8cd963a29e628de146a4a4302b73"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">fInnovation</a></td></tr>
+<tr class="separator:aab5b8cd963a29e628de146a4a4302b73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e07beaf6ec150dbb334ddb463e62493" id="r_a3e07beaf6ec150dbb334ddb463e62493"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">fTime</a></td></tr>
+<tr class="separator:a3e07beaf6ec150dbb334ddb463e62493"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac87f8b2fc5dd53c39c2fa70ca128b232" id="r_ac87f8b2fc5dd53c39c2fa70ca128b232"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a></td></tr>
+<tr class="separator:ac87f8b2fc5dd53c39c2fa70ca128b232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdbef3d5e30054aa75f0fc57d4dfdbc6" id="r_acdbef3d5e30054aa75f0fc57d4dfdbc6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a></td></tr>
+<tr class="separator:acdbef3d5e30054aa75f0fc57d4dfdbc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The <b>workflow</b> — WHEN each step runs, and what is kept. </p>
+<p>A filter composes a model (WHAT) with an engine (HOW) and owns the run: the current belief <code>(x, P)</code> and the prior / posterior / transition logs that the RTS backward pass and the consistency diagnostics need. It implements no covariance math of its own — every matrix operation happens in the engine.</p>
+<div class="fragment"><div class="line">MyModel model;                          <span class="comment">// your system; libKalman ships no physics</span></div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a> filter(&amp;model);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> forward  = filter.Forward(measurements);   <span class="comment">// filtered estimate</span></div>
+<div class="line"><span class="keyword">auto</span> smoothed = filter.Backward();              <span class="comment">// RTS over the same run</span></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
+</div><!-- fragment --><p>Missing data needs no special handling: a NaN channel in a measurement is skipped by the update, so a step with an entirely-NaN measurement is a pure prediction and the covariance grows accordingly.</p>
+<dl class="section note"><dt>Note</dt><dd>The filter does <b>not</b> own the model — it is passed by pointer and must outlive the filter. It <em>does</em> own the engine it creates for itself; an engine passed in explicitly stays the caller's.</dd></dl>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00054">54</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="adef9fb69f8861213a37c1f3ff9a4e5a3" name="adef9fb69f8861213a37c1f3ff9a4e5a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adef9fb69f8861213a37c1f3ff9a4e5a3">&#9670;&#160;</a></span>Filter() <span class="overload">[1/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Filter::Filter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td>
+          <td class="paramname"><em>engine</em> = <code>nullptr</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>the system; must outlive the filter. </td></tr>
+    <tr><td class="paramname">engine</td><td>the algorithm, or nullptr to build the one the model asks for through <a class="el" href="class_kalman_1_1_model.html#adc6242677158cd762647c011124fa264">Kalman::Model::DefaultEngine()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00029">29</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>        : <a class="code hl_function" href="class_kalman_1_1_filter.html#adef9fb69f8861213a37c1f3ff9a4e5a3">Filter</a>(model,</div>
+<div class="line"><span class="lineno">   31</span>                 engine ? engine : <a class="code hl_function" href="class_kalman_1_1_filter.html#a6701d30735b0385560cdd8d4d4c5c7f3">MakeEngine</a>(model ? model-&gt;DefaultEngine() : <a class="code hl_enumeration" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a>::<a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">Linear</a>),</div>
+<div class="line"><span class="lineno">   32</span>                 engine == nullptr)</div>
+<div class="line"><span class="lineno">   33</span>    {</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a6701d30735b0385560cdd8d4d4c5c7f3"><div class="ttname"><a href="class_kalman_1_1_filter.html#a6701d30735b0385560cdd8d4d4c5c7f3">Kalman::Filter::MakeEngine</a></div><div class="ttdeci">static Engine * MakeEngine(EngineKind kind)</div><div class="ttdoc">Build the engine the model asks for. Throws for kinds with no C++ engine.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00054">Filter.cc:54</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_adef9fb69f8861213a37c1f3ff9a4e5a3"><div class="ttname"><a href="class_kalman_1_1_filter.html#adef9fb69f8861213a37c1f3ff9a4e5a3">Kalman::Filter::Filter</a></div><div class="ttdeci">Filter(Model *model, Engine *engine=nullptr)</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00029">Filter.cc:29</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">Kalman::EngineKind</a></div><div class="ttdeci">EngineKind</div><div class="ttdoc">Which inference algorithm a model wants, and which one an engine provides.</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00026">Constants.h:27</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">Kalman::EngineKind::Linear</a></div><div class="ttdeci">@ Linear</div><div class="ttdoc">constant-matrix predict/update (KF)</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5ca656e7021e73e941a1b8979e205a22" name="a5ca656e7021e73e941a1b8979e205a22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ca656e7021e73e941a1b8979e205a22">&#9670;&#160;</a></span>~Filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Filter::~Filter </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00049">49</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>    {</div>
+<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">fOwnsEngine</a>) <span class="keyword">delete</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>;</div>
+<div class="line"><span class="lineno">   52</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a55a62ea006f16e1231409e2c04e8f5b1"><div class="ttname"><a href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">Kalman::Filter::fOwnsEngine</a></div><div class="ttdeci">bool fOwnsEngine</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00059">Filter.h:59</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a8f83490ee2e91a2f4560226c98c7758f"><div class="ttname"><a href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">Kalman::Filter::fEngine</a></div><div class="ttdeci">Engine * fEngine</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00058">Filter.h:58</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af16e29323d2d85fcb0d6c9e94d717a93" name="af16e29323d2d85fcb0d6c9e94d717a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af16e29323d2d85fcb0d6c9e94d717a93">&#9670;&#160;</a></span>Filter() <span class="overload">[2/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Filter::Filter </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a03a2da0864b624cf09f7f524e7e49eb8" name="a03a2da0864b624cf09f7f524e7e49eb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03a2da0864b624cf09f7f524e7e49eb8">&#9670;&#160;</a></span>Filter() <span class="overload">[3/3]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Filter::Filter </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td>
+          <td class="paramname"><em>engine</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>owns</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructor for the named leaves, which supply their own engine. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">model</td><td>the system; must outlive the filter. </td></tr>
+    <tr><td class="paramname">engine</td><td>the algorithm to drive it with. </td></tr>
+    <tr><td class="paramname">owns</td><td>when true the filter deletes <code>engine</code> in its destructor. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00036">36</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>        : <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>(model), <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>(engine), <a class="code hl_variable" href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">fOwnsEngine</a>(owns)</div>
+<div class="line"><span class="lineno">   38</span>    {</div>
+<div class="line"><span class="lineno">   39</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>)</div>
+<div class="line"><span class="lineno">   40</span>        {</div>
+<div class="line"><span class="lineno">   41</span>            <span class="keywordflow">if</span> (owns) <span class="keyword">delete</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>;</div>
+<div class="line"><span class="lineno">   42</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter: a model is required.&quot;</span>);</div>
+<div class="line"><span class="lineno">   43</span>        }</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">CheckShapes</a>();</div>
+<div class="line"><span class="lineno">   46</span>        <a class="code hl_function" href="class_kalman_1_1_filter.html#a1b8c3d76dcbb43bf1d25a06e79de40a2">Reset</a>();</div>
+<div class="line"><span class="lineno">   47</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a1b8c3d76dcbb43bf1d25a06e79de40a2"><div class="ttname"><a href="class_kalman_1_1_filter.html#a1b8c3d76dcbb43bf1d25a06e79de40a2">Kalman::Filter::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Drop the run and rewind the belief to the model's x0 / P0.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00086">Filter.cc:86</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a9b84918084a01a7f3f6d3150795abc85"><div class="ttname"><a href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">Kalman::Filter::fModel</a></div><div class="ttdeci">Model * fModel</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00057">Filter.h:57</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a53fd4ea5d51ce2663698cb96b5e0e26d"><div class="ttname"><a href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model::CheckShapes</a></div><div class="ttdeci">virtual void CheckShapes() const</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00317">Model.cc:317</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac5754a5bb291df7fa6d7ebd30abf2748" name="ac5754a5bb291df7fa6d7ebd30abf2748"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac5754a5bb291df7fa6d7ebd30abf2748">&#9670;&#160;</a></span>Backward()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::Backward </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Rauch–Tung–Striebel smoother over the stored forward pass. </p>
+<dl class="section return"><dt>Returns</dt><dd>the smoothed record. </dd></dl>
+<dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname">std::runtime_error</td><td>when <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481" title="one-sided differences (first order)">Forward()</a> has not been run. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00194">194</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  195</span>    {</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keyword">const</span> std::size_t N = <a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>();</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">if</span> (N == 0) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter::Backward: run Forward() first.&quot;</span>);</div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a501f7828ced04a0c514c820f8a79a8ef">HasSmoother</a>())</div>
+<div class="line"><span class="lineno">  199</span>            <span class="keywordflow">throw</span> std::runtime_error(std::string(<span class="stringliteral">&quot;Kalman::Filter::Backward: the &quot;</span>) + <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Title</a>()</div>
+<div class="line"><span class="lineno">  200</span>                                     + <span class="stringliteral">&quot; has no RTS smoother; use Forward() only.&quot;</span>);</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a> = <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>;</div>
+<div class="line"><span class="lineno">  203</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a> = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>;</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>        <span class="comment">// The last posterior is already the smoothed estimate; walk backwards from it.</span></div>
+<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">for</span> (std::size_t k = N - 1; k-- &gt; 0;)</div>
+<div class="line"><span class="lineno">  207</span>        {</div>
+<div class="line"><span class="lineno">  208</span>            Vector xs;</div>
+<div class="line"><span class="lineno">  209</span>            Matrix Ps;</div>
+<div class="line"><span class="lineno">  210</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">Smooth</a>(<a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>[k], <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>[k],</div>
+<div class="line"><span class="lineno">  211</span>                            <a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>[k + 1], <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a>[k + 1],</div>
+<div class="line"><span class="lineno">  212</span>                            <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>[k + 1], <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a>[k + 1],</div>
+<div class="line"><span class="lineno">  213</span>                            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">fTransition</a>[k + 1],</div>
+<div class="line"><span class="lineno">  214</span>                            xs, Ps);</div>
+<div class="line"><span class="lineno">  215</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>[k] = xs;</div>
+<div class="line"><span class="lineno">  216</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a>[k] = Ps;</div>
+<div class="line"><span class="lineno">  217</span>        }</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#aa4ac7cb6fa2e90d19a0c9628b626a736">MakeRecord</a>(<a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a>, <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97">StateFlavor::Smoothed</a>);</div>
+<div class="line"><span class="lineno">  220</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_abstract_1_1_metadata_html_a8e71ab37553782e05b6a62bb6bb239bf"><div class="ttname"><a href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata::Title</a></div><div class="ttdeci">virtual const char * Title() const =0</div><div class="ttdoc">Human-readable name of the kind of thing this is.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a501f7828ced04a0c514c820f8a79a8ef"><div class="ttname"><a href="class_kalman_1_1_engine.html#a501f7828ced04a0c514c820f8a79a8ef">Kalman::Engine::HasSmoother</a></div><div class="ttdeci">virtual bool HasSmoother() const</div><div class="ttdoc">False for engines whose belief is a sample set: Filter::Backward() then refuses.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8h_source.html#l00062">Engine.h:62</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_ad8f8f7a4a638bec696e482f6e16c9163"><div class="ttname"><a href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">Kalman::Engine::Smooth</a></div><div class="ttdeci">virtual void Smooth(const Vector &amp;xPost, const Matrix &amp;PPost, const Vector &amp;xPriorNext, const Matrix &amp;PPriorNext, const Vector &amp;xSmoothNext, const Matrix &amp;PSmoothNext, const Matrix &amp;F, Vector &amp;xSmooth, Matrix &amp;PSmooth) const</div><div class="ttdoc">One reverse Rauch–Tung–Striebel step.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00055">Engine.cc:55</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a0eb90aa681612154922dd038d0b9642a"><div class="ttname"><a href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">Kalman::Filter::fTransition</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; fTransition</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00068">Filter.h:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a94adcd967fc425d3a3096b9386459e74"><div class="ttname"><a href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">Kalman::Filter::fPostP</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; fPostP</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00067">Filter.h:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aa4ac7cb6fa2e90d19a0c9628b626a736"><div class="ttname"><a href="class_kalman_1_1_filter.html#aa4ac7cb6fa2e90d19a0c9628b626a736">Kalman::Filter::MakeRecord</a></div><div class="ttdeci">Record MakeRecord(const std::vector&lt; Vector &gt; &amp;x, const std::vector&lt; Matrix &gt; &amp;P, StateFlavor flavor) const</div><div class="ttdoc">Assemble a record from one of the stored logs.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00234">Filter.cc:234</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aa4caf7ca408184c91f0e0b7b27b25061"><div class="ttname"><a href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">Kalman::Filter::NSteps</a></div><div class="ttdeci">std::size_t NSteps() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00164">Filter.h:164</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aa607d67063c80ceeae6432f142331df6"><div class="ttname"><a href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">Kalman::Filter::fPriorX</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fPriorX</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00064">Filter.h:64</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ac87f8b2fc5dd53c39c2fa70ca128b232"><div class="ttname"><a href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">Kalman::Filter::fSmoothX</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fSmoothX</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00074">Filter.h:74</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ac8c3e496e7cd276ad4d91961876c0c4c"><div class="ttname"><a href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">Kalman::Filter::fPriorP</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; fPriorP</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00065">Filter.h:65</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_acdbef3d5e30054aa75f0fc57d4dfdbc6"><div class="ttname"><a href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">Kalman::Filter::fSmoothP</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; fSmoothP</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00075">Filter.h:75</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aeb63b480a820fb37232e06f7a33a61ea"><div class="ttname"><a href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">Kalman::Filter::fPostX</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fPostX</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00066">Filter.h:66</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97">Kalman::StateFlavor::Smoothed</a></div><div class="ttdeci">@ Smoothed</div><div class="ttdoc">corrected using the whole record (RTS backward pass)</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a92764aebac1b958dc8b724d4047b5731" name="a92764aebac1b958dc8b724d4047b5731"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92764aebac1b958dc8b724d4047b5731">&#9670;&#160;</a></span>Controls()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::Controls </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The command applied at each step (from uk or the controller); empty vectors when none. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00174">174</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  174</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a51398fd764c4f1e2082f3e7bcbb7fece">fControl</a>; }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a51398fd764c4f1e2082f3e7bcbb7fece"><div class="ttname"><a href="class_kalman_1_1_filter.html#a51398fd764c4f1e2082f3e7bcbb7fece">Kalman::Filter::fControl</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fControl</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00070">Filter.h:70</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a23bfaca3e7a827c511eff881737e59c4" name="a23bfaca3e7a827c511eff881737e59c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23bfaca3e7a827c511eff881737e59c4">&#9670;&#160;</a></span>Covariance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp; Kalman::Filter::Covariance </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00099">99</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a>; }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a304a97aa8db4c5992c2b9cab6aabdf3b"><div class="ttname"><a href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">Kalman::Filter::fP</a></div><div class="ttdeci">Matrix fP</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00062">Filter.h:62</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abba844d337244396243fb15b90f63fd2" name="abba844d337244396243fb15b90f63fd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abba844d337244396243fb15b90f63fd2">&#9670;&#160;</a></span>Description()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Filter::Description </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>One sentence on what it does. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_filters_1_1_k_f.html#a798ffdd5dfa114ed47cb161b49a67f39">Kalman::Filters::KF</a>, <a class="el" href="class_kalman_1_1_filters_1_1_p_f.html#a3ee0bf1c086c58e64014356b097060c6">Kalman::Filters::PF</a>, and <a class="el" href="class_kalman_1_1_filters_1_1_u_k_f.html#aff0f919adee676ab1b9f4e3c2c2e05c5">Kalman::Filters::UKF</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00090">90</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   91</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Forward/backward workflow over a composed model + engine.&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a193c2523733e5a9420ec78be0d9e32fd" name="a193c2523733e5a9420ec78be0d9e32fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a193c2523733e5a9420ec78be0d9e32fd">&#9670;&#160;</a></span>Filtering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::Filtering </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>zk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *&#160;</td>
+          <td class="paramname"><em>uk</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>smooth</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Forward, then optionally Backward — the one-call entry point. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00222">222</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  224</span>    {</div>
+<div class="line"><span class="lineno">  225</span>        <a class="code hl_typedef" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> forward = <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Forward</a>(zk, uk);</div>
+<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">return</span> smooth ? <a class="code hl_function" href="class_kalman_1_1_filter.html#ac5754a5bb291df7fa6d7ebd30abf2748">Backward</a>() : forward;</div>
+<div class="line"><span class="lineno">  227</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ac5754a5bb291df7fa6d7ebd30abf2748"><div class="ttname"><a href="class_kalman_1_1_filter.html#ac5754a5bb291df7fa6d7ebd30abf2748">Kalman::Filter::Backward</a></div><div class="ttdeci">Record Backward()</div><div class="ttdoc">Rauch–Tung–Striebel smoother over the stored forward pass.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00194">Filter.cc:194</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Kalman::DifferentiatorKind::Forward</a></div><div class="ttdeci">@ Forward</div><div class="ttdoc">one-sided differences (first order)</div></div>
+<div class="ttc" id="anamespace_kalman_html_ad84d0d33756c59c0234cb2fead54eff2"><div class="ttname"><a href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Kalman::Record</a></div><div class="ttdeci">IO::Record Record</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00095">Record.h:95</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a999187a77c615baa6e5a70f65257e6e2" name="a999187a77c615baa6e5a70f65257e6e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a999187a77c615baa6e5a70f65257e6e2">&#9670;&#160;</a></span>Forward() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::Forward </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>zk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *&#160;</td>
+          <td class="paramname"><em>uk</em> = <code>nullptr</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reset</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Run the forward pass over <code>zk</code>. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">zk</td><td>one measurement (m) per step; NaN marks a missing channel. </td></tr>
+    <tr><td class="paramname">uk</td><td>one control vector (l) per step, or nullptr. </td></tr>
+    <tr><td class="paramname">reset</td><td>start a clean run (default) rather than continuing. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the posterior record. </dd></dl>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00102">102</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  103</span>    {</div>
+<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a5be8714e3cfac94749502526b79c7972">Run</a>(zk, uk, <span class="keyword">nullptr</span>, reset);</div>
+<div class="line"><span class="lineno">  105</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a5be8714e3cfac94749502526b79c7972"><div class="ttname"><a href="class_kalman_1_1_filter.html#a5be8714e3cfac94749502526b79c7972">Kalman::Filter::Run</a></div><div class="ttdeci">Record Run(const std::vector&lt; Vector &gt; &amp;zk, const std::vector&lt; Vector &gt; *uk, Controller *controller, bool reset)</div><div class="ttdoc">The one loop behind both Forward() overloads.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8cc_source.html#l00115">Filter.cc:115</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a69c519e5ea23488b67d066f6fc568a32" name="a69c519e5ea23488b67d066f6fc568a32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a69c519e5ea23488b67d066f6fc568a32">&#9670;&#160;</a></span>Forward() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::Forward </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>zk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_controller.html">Controller</a> &amp;&#160;</td>
+          <td class="paramname"><em>controller</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reset</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The closed-loop forward pass: <code>controller</code> decides each step's command. </p>
+<p>Once per step, before the prediction, the controller is called with the current belief, the time and the previous innovation, exactly as <code>KalmanFilter.forward(zk, uk=controller)</code> does in Python. The commands are kept in <a class="el" href="class_kalman_1_1_filter.html#a92764aebac1b958dc8b724d4047b5731" title="The command applied at each step (from uk or the controller); empty vectors when none.">Controls()</a>; the controller keeps its own cost log. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00107">107</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  108</span>    {</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">if</span> (controller.GetModel() != <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>)</div>
+<div class="line"><span class="lineno">  110</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter::Forward: the controller was built for a different model.&quot;</span>);</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">if</span> (reset) controller.Reset();</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a5be8714e3cfac94749502526b79c7972">Run</a>(zk, <span class="keyword">nullptr</span>, &amp;controller, reset);</div>
+<div class="line"><span class="lineno">  113</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7e8af4a4feb7bdeef2d46ad9c2043d21" name="a7e8af4a4feb7bdeef2d46ad9c2043d21"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e8af4a4feb7bdeef2d46ad9c2043d21">&#9670;&#160;</a></span>GetDiagnostics()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_diagnostics.html">Diagnostics</a> Kalman::Filter::GetDiagnostics </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The consistency diagnostics for this run — see <a class="el" href="class_kalman_1_1_diagnostics.html" title="Is the filter consistent? — computed post-hoc from a finished run.">Kalman::Diagnostics</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00181">181</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  181</span>{ <span class="keywordflow">return</span> Diagnostics(*<span class="keyword">this</span>); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5075992adc7eb2832c37ab59ca78d907" name="a5075992adc7eb2832c37ab59ca78d907"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5075992adc7eb2832c37ab59ca78d907">&#9670;&#160;</a></span>GetEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> * Kalman::Filter::GetEngine </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00094">94</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af2fc0424c1e5e619bb89ceb8bc03656c" name="af2fc0424c1e5e619bb89ceb8bc03656c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af2fc0424c1e5e619bb89ceb8bc03656c">&#9670;&#160;</a></span>GetModel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_model.html">Model</a> * Kalman::Filter::GetModel </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00093">93</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa3ab61f1f12157a2951aa8a4be94af4e" name="aa3ab61f1f12157a2951aa8a4be94af4e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa3ab61f1f12157a2951aa8a4be94af4e">&#9670;&#160;</a></span>Innovations()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::Innovations </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00175">175</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">fInnovation</a>; }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aab5b8cd963a29e628de146a4a4302b73"><div class="ttname"><a href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">Kalman::Filter::fInnovation</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fInnovation</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00071">Filter.h:71</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6701d30735b0385560cdd8d4d4c5c7f3" name="a6701d30735b0385560cdd8d4d4c5c7f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6701d30735b0385560cdd8d4d4c5c7f3">&#9670;&#160;</a></span>MakeEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> * Kalman::Filter::MakeEngine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a>&#160;</td>
+          <td class="paramname"><em>kind</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Build the engine the model asks for. Throws for kinds with no C++ engine. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00054">54</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>    {</div>
+<div class="line"><span class="lineno">   56</span>        <span class="keywordflow">switch</span> (kind)</div>
+<div class="line"><span class="lineno">   57</span>        {</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">EngineKind::Linear</a>:    <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Linear();</div>
+<div class="line"><span class="lineno">   59</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">EngineKind::Extended</a>:  <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Extended();</div>
+<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e">EngineKind::Unscented</a>: <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Unscented();</div>
+<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4">EngineKind::Particle</a>:  <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Particle();</div>
+<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">EngineKind::Ensemble</a>:  <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Ensemble();</div>
+<div class="line"><span class="lineno">   63</span>            <span class="comment">// As a per-step engine the combinatorial one is an Extended step; the</span></div>
+<div class="line"><span class="lineno">   64</span>            <span class="comment">// track-finding pass itself is reached through Filters::CKF.</span></div>
+<div class="line"><span class="lineno">   65</span>            <span class="keywordflow">case</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">EngineKind::Combinatorial</a>: <span class="keywordflow">return</span> <span class="keyword">new</span> Engines::Combinatorial();</div>
+<div class="line"><span class="lineno">   66</span>        }</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span>        <span class="comment">// Fail loudly rather than silently substituting a different algorithm: an</span></div>
+<div class="line"><span class="lineno">   69</span>        <span class="comment">// integer that is not a kind (a corrupt spec, a version skew) must not</span></div>
+<div class="line"><span class="lineno">   70</span>        <span class="comment">// quietly become a linear step.</span></div>
+<div class="line"><span class="lineno">   71</span>        std::ostringstream os;</div>
+<div class="line"><span class="lineno">   72</span>        os &lt;&lt; <span class="stringliteral">&quot;Kalman::Filter: no engine implements kind &quot;</span> &lt;&lt; <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(kind)</div>
+<div class="line"><span class="lineno">   73</span>           &lt;&lt; <span class="stringliteral">&quot; (&#39;&quot;</span> &lt;&lt; <a class="code hl_function" href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">ToString</a>(kind) &lt;&lt; <span class="stringliteral">&quot;&#39;).&quot;</span>;</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">throw</span> std::runtime_error(os.str());</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="ttc" id="anamespace_kalman_html_a803ae9038ef8df88ddddc4445a1c0088"><div class="ttname"><a href="namespace_kalman.html#a803ae9038ef8df88ddddc4445a1c0088">Kalman::ToString</a></div><div class="ttdeci">const char * ToString(EngineKind kind)</div><div class="ttdoc">Human-readable name of an engine kind (never null).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00021">Utils.cc:21</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4">Kalman::EngineKind::Particle</a></div><div class="ttdeci">@ Particle</div><div class="ttdoc">sequential importance resampling (PF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e">Kalman::EngineKind::Unscented</a></div><div class="ttdeci">@ Unscented</div><div class="ttdoc">sigma points (UKF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Kalman::EngineKind::Combinatorial</a></div><div class="ttdeci">@ Combinatorial</div><div class="ttdoc">branch-on-ambiguous-hit track finding (CKF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Kalman::EngineKind::Ensemble</a></div><div class="ttdeci">@ Ensemble</div><div class="ttdoc">perturbed-observation ensemble (EnKF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">Kalman::EngineKind::Extended</a></div><div class="ttdeci">@ Extended</div><div class="ttdoc">Jacobian linearisation (EKF)</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa4ac7cb6fa2e90d19a0c9628b626a736" name="aa4ac7cb6fa2e90d19a0c9628b626a736"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4ac7cb6fa2e90d19a0c9628b626a736">&#9670;&#160;</a></span>MakeRecord()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::MakeRecord </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75caf">StateFlavor</a>&#160;</td>
+          <td class="paramname"><em>flavor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Assemble a record from one of the stored logs. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00234">234</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  236</span>    {</div>
+<div class="line"><span class="lineno">  237</span>        <a class="code hl_typedef" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> record(<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a67d81f63387e9ad424061507ac7eeeea">Name</a>(), flavor);</div>
+<div class="line"><span class="lineno">  238</span>        record.Reserve(x.size());</div>
+<div class="line"><span class="lineno">  239</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; x.size(); ++k)</div>
+<div class="line"><span class="lineno">  240</span>            record.Add(<a class="code hl_variable" href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">fTime</a>[k], x[k], P[k], <a class="code hl_variable" href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">fMeasure</a>[k]);</div>
+<div class="line"><span class="lineno">  241</span>        <span class="keywordflow">return</span> record;</div>
+<div class="line"><span class="lineno">  242</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a3e07beaf6ec150dbb334ddb463e62493"><div class="ttname"><a href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">Kalman::Filter::fTime</a></div><div class="ttdeci">std::vector&lt; double &gt; fTime</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00072">Filter.h:72</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a5d80c4a055f60db3caa36246677a7f79"><div class="ttname"><a href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">Kalman::Filter::fMeasure</a></div><div class="ttdeci">std::vector&lt; Vector &gt; fMeasure</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00069">Filter.h:69</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a67d81f63387e9ad424061507ac7eeeea"><div class="ttname"><a href="class_kalman_1_1_model.html#a67d81f63387e9ad424061507ac7eeeea">Kalman::Model::Name</a></div><div class="ttdeci">const std::string &amp; Name() const</div><div class="ttdoc">The instance name your application chose, distinct from Title().</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00141">Model.h:141</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af8cfdc603de1d4bfc34f6c089a4c2440" name="af8cfdc603de1d4bfc34f6c089a4c2440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8cfdc603de1d4bfc34f6c089a4c2440">&#9670;&#160;</a></span>MeanNEES()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Kalman::Filter::MeanNEES </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>truth</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mean of <a class="el" href="class_kalman_1_1_filter.html#a0b2a3af0fba0e1834eb573cef3eaf1cc" title="Normalised Estimation Error Squared against a known truth.">NEES()</a> over the run. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00258">258</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  259</span>    {</div>
+<div class="line"><span class="lineno">  260</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">GetDiagnostics</a>().<a class="code hl_function" href="class_kalman_1_1_diagnostics.html#ab592cff2f3444bd5cdf0ed767bf1f499">MeanNEES</a>(truth);</div>
+<div class="line"><span class="lineno">  261</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_ab592cff2f3444bd5cdf0ed767bf1f499"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#ab592cff2f3444bd5cdf0ed767bf1f499">Kalman::Diagnostics::MeanNEES</a></div><div class="ttdeci">double MeanNEES(const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Mean of NEES() over the run.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00093">Diagnostics.cc:93</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a7e8af4a4feb7bdeef2d46ad9c2043d21"><div class="ttname"><a href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">Kalman::Filter::GetDiagnostics</a></div><div class="ttdeci">Diagnostics GetDiagnostics() const</div><div class="ttdoc">The consistency diagnostics for this run — see Kalman::Diagnostics.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00181">Filter.h:181</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab6a93c1880e19a92a3c3455eb32c6425" name="ab6a93c1880e19a92a3c3455eb32c6425"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab6a93c1880e19a92a3c3455eb32c6425">&#9670;&#160;</a></span>MeanNIS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Kalman::Filter::MeanNIS </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Mean of <a class="el" href="class_kalman_1_1_filter.html#af0949a2f02f443d125bcad5309f98947" title="Normalised Innovation Squared, nu^T S^-1 nu per step.">NIS()</a> over the run, ignoring the NaN (unmeasured) steps. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00251">251</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  251</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">GetDiagnostics</a>().<a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a10a657d70c971fd2ac6a4c5433405535">MeanNIS</a>(); }</div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a10a657d70c971fd2ac6a4c5433405535"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a10a657d70c971fd2ac6a4c5433405535">Kalman::Diagnostics::MeanNIS</a></div><div class="ttdeci">double MeanNIS() const</div><div class="ttdoc">Mean of NIS() over the run, ignoring the unmeasured (NaN) steps.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00066">Diagnostics.cc:66</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adaea7da22f86e477cf4947f3918378b7" name="adaea7da22f86e477cf4947f3918378b7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adaea7da22f86e477cf4947f3918378b7">&#9670;&#160;</a></span>Measurements()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::Measurements </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00172">172</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">fMeasure</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0b2a3af0fba0e1834eb573cef3eaf1cc" name="a0b2a3af0fba0e1834eb573cef3eaf1cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b2a3af0fba0e1834eb573cef3eaf1cc">&#9670;&#160;</a></span>NEES()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; double &gt; Kalman::Filter::NEES </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>truth</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Normalised Estimation Error Squared against a known truth. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">truth</td><td>one true state (n) per step.</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Averages the state dimension for a consistent filter. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00253">253</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  254</span>    {</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">GetDiagnostics</a>().<a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">NEES</a>(truth);</div>
+<div class="line"><span class="lineno">  256</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a1efe134b45ccdb2ae9447fb924503f2d"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">Kalman::Diagnostics::NEES</a></div><div class="ttdeci">std::vector&lt; double &gt; NEES(const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Per-step e^T P^-1 e against a known truth.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00077">Diagnostics.cc:77</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af0949a2f02f443d125bcad5309f98947" name="af0949a2f02f443d125bcad5309f98947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0949a2f02f443d125bcad5309f98947">&#9670;&#160;</a></span>NIS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; double &gt; Kalman::Filter::NIS </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Normalised Innovation Squared, <code>nu^T S^-1 nu</code> per step. </p>
+<p>Needs no truth. For a consistent filter it averages the number of measurement channels; persistently larger means the filter trusts the model too much (Q too small), persistently smaller means Q is too big. Steps with no measurement at all are reported as NaN so they stay out of averages instead of biasing them toward zero. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00249">249</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  249</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#a7e8af4a4feb7bdeef2d46ad9c2043d21">GetDiagnostics</a>().<a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">NIS</a>(); }</div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a982d9210dda6af0c4de5d68a96181739"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">Kalman::Diagnostics::NIS</a></div><div class="ttdeci">std::vector&lt; double &gt; NIS() const</div><div class="ttdoc">Per-step nu^T S^-1 nu.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00043">Diagnostics.cc:43</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa4caf7ca408184c91f0e0b7b27b25061" name="aa4caf7ca408184c91f0e0b7b27b25061"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa4caf7ca408184c91f0e0b7b27b25061">&#9670;&#160;</a></span>NSteps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Kalman::Filter::NSteps </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00164">164</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  164</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>.size(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af3e7864b5c327fd606424796849ec0dc" name="af3e7864b5c327fd606424796849ec0dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3e7864b5c327fd606424796849ec0dc">&#9670;&#160;</a></span>operator=()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp; Kalman::Filter::operator= </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_filter.html">Filter</a> &amp;&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">delete</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ab774f111fc579efcd5a4080ff22e3997" name="ab774f111fc579efcd5a4080ff22e3997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab774f111fc579efcd5a4080ff22e3997">&#9670;&#160;</a></span>PosteriorCovariances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp; Kalman::Filter::PosteriorCovariances </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00170">170</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4f39c3bf9552b5fa3ad6d6229605b36c" name="a4f39c3bf9552b5fa3ad6d6229605b36c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f39c3bf9552b5fa3ad6d6229605b36c">&#9670;&#160;</a></span>PosteriorStates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::PosteriorStates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00169">169</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  169</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad6338ff5a4af2438343a79ba9035dfff" name="ad6338ff5a4af2438343a79ba9035dfff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6338ff5a4af2438343a79ba9035dfff">&#9670;&#160;</a></span>Print()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Filter::Print </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&#160;</td>
+          <td class="paramname"><em>os</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00263">263</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  264</span>    {</div>
+<div class="line"><span class="lineno">  265</span>        os &lt;&lt; (<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a> ? <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a67d81f63387e9ad424061507ac7eeeea">Name</a>() : <span class="stringliteral">&quot;filter&quot;</span>)</div>
+<div class="line"><span class="lineno">  266</span>           &lt;&lt; <span class="stringliteral">&quot; — engine = &quot;</span> &lt;&lt; (<a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a> ? <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Title</a>() : <span class="stringliteral">&quot;(none)&quot;</span>)</div>
+<div class="line"><span class="lineno">  267</span>           &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; <a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>() &lt;&lt; <span class="stringliteral">&quot; steps run&quot;</span></div>
+<div class="line"><span class="lineno">  268</span>           &lt;&lt; (<a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>.empty() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;, smoothed&quot;</span>);</div>
+<div class="line"><span class="lineno">  269</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad483afcef43450f8d968ff41c03bbe63" name="ad483afcef43450f8d968ff41c03bbe63"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad483afcef43450f8d968ff41c03bbe63">&#9670;&#160;</a></span>PriorCovariances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp; Kalman::Filter::PriorCovariances </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00168">168</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  168</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2167c41c4c5523acd9634fd65526d001" name="a2167c41c4c5523acd9634fd65526d001"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2167c41c4c5523acd9634fd65526d001">&#9670;&#160;</a></span>PriorRecord()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::PriorRecord </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The prior (predicted) record of the last forward pass. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00229">229</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  230</span>    {</div>
+<div class="line"><span class="lineno">  231</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#aa4ac7cb6fa2e90d19a0c9628b626a736">MakeRecord</a>(<a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a>, <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e">StateFlavor::Prior</a>);</div>
+<div class="line"><span class="lineno">  232</span>    }</div>
+<div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e">Kalman::StateFlavor::Prior</a></div><div class="ttdeci">@ Prior</div><div class="ttdoc">predicted, before the measurement was folded in</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac7278f3b8425747cf682c5babb5bb145" name="ac7278f3b8425747cf682c5babb5bb145"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7278f3b8425747cf682c5babb5bb145">&#9670;&#160;</a></span>PriorStates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::PriorStates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00167">167</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1b8c3d76dcbb43bf1d25a06e79de40a2" name="a1b8c3d76dcbb43bf1d25a06e79de40a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b8c3d76dcbb43bf1d25a06e79de40a2">&#9670;&#160;</a></span>Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Filter::Reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Drop the run and rewind the belief to the model's x0 / P0. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00086">86</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   87</span>    {</div>
+<div class="line"><span class="lineno">   88</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a> = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">X0</a>();</div>
+<div class="line"><span class="lineno">   89</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a> = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>();</div>
+<div class="line"><span class="lineno">   90</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>) <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a888afacb7c43444782a61755de745269">Reset</a>(*<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>);</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>.clear(); <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a>.clear();</div>
+<div class="line"><span class="lineno">   93</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>.clear();  <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>.clear();</div>
+<div class="line"><span class="lineno">   94</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">fTransition</a>.clear();</div>
+<div class="line"><span class="lineno">   95</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">fMeasure</a>.clear();</div>
+<div class="line"><span class="lineno">   96</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a51398fd764c4f1e2082f3e7bcbb7fece">fControl</a>.clear();</div>
+<div class="line"><span class="lineno">   97</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">fInnovation</a>.clear();</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">fTime</a>.clear();</div>
+<div class="line"><span class="lineno">   99</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>.clear(); <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a>.clear();</div>
+<div class="line"><span class="lineno">  100</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a888afacb7c43444782a61755de745269"><div class="ttname"><a href="class_kalman_1_1_engine.html#a888afacb7c43444782a61755de745269">Kalman::Engine::Reset</a></div><div class="ttdeci">virtual void Reset(const Model &amp;)</div><div class="ttdoc">Start a run: a stateless engine ignores it, a stateful one (particle cloud, ensemble) reseeds itself ...</div><div class="ttdef"><b>Definition</b> <a href="_engine_8h_source.html#l00059">Engine.h:59</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a6ddb4801a9eed8615c225f98d7a8be52"><div class="ttname"><a href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">Kalman::Filter::fX</a></div><div class="ttdeci">Vector fX</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00061">Filter.h:61</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a749aa3aba267917ce124ea0347e3afe6"><div class="ttname"><a href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">Kalman::Model::X0</a></div><div class="ttdeci">const Vector &amp; X0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00244">Model.h:244</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a9e7e28a8b10f0f522fc80a1daa880ac7"><div class="ttname"><a href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">Kalman::Model::P0</a></div><div class="ttdeci">const Matrix &amp; P0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00245">Model.h:245</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5be8714e3cfac94749502526b79c7972" name="a5be8714e3cfac94749502526b79c7972"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5be8714e3cfac94749502526b79c7972">&#9670;&#160;</a></span>Run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> Kalman::Filter::Run </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>zk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; *&#160;</td>
+          <td class="paramname"><em>uk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_controller.html">Controller</a> *&#160;</td>
+          <td class="paramname"><em>controller</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>reset</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The one loop behind both <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481" title="one-sided differences (first order)">Forward()</a> overloads. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00115">115</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>    {</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">if</span> (zk.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter::Forward: no measurements given.&quot;</span>);</div>
+<div class="line"><span class="lineno">  119</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">CheckShapes</a>();</div>
+<div class="line"><span class="lineno">  120</span> </div>
+<div class="line"><span class="lineno">  121</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>();</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> std::size_t l = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>();</div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">if</span> (uk &amp;&amp; l &gt; 0 &amp;&amp; uk-&gt;size() != zk.size())</div>
+<div class="line"><span class="lineno">  125</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter::Forward: uk and zk must have the same length.&quot;</span>);</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">if</span> (reset) <a class="code hl_function" href="class_kalman_1_1_filter.html#a1b8c3d76dcbb43bf1d25a06e79de40a2">Reset</a>();</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> std::size_t N = zk.size();</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> dt = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">DeltaT</a>();</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordtype">double</span> t = <a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a7352a3b4fa42b2b7b91b69e5482b09dc">T0</a>();</div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>.reserve(<a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>.size() + N);</div>
+<div class="line"><span class="lineno">  134</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>.reserve(<a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>.size() + N);</div>
+<div class="line"><span class="lineno">  135</span> </div>
+<div class="line"><span class="lineno">  136</span>        <span class="comment">// The closed loop hands the controller the previous innovation; on the first</span></div>
+<div class="line"><span class="lineno">  137</span>        <span class="comment">// step there is none yet.</span></div>
+<div class="line"><span class="lineno">  138</span>        Vector command;</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keyword">const</span> Vector *lastNu = <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  140</span> </div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; N; ++k)</div>
+<div class="line"><span class="lineno">  142</span>        {</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keyword">const</span> Vector &amp;z = zk[k];</div>
+<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">if</span> (z.Size() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</div>
+<div class="line"><span class="lineno">  145</span>            {</div>
+<div class="line"><span class="lineno">  146</span>                std::ostringstream os;</div>
+<div class="line"><span class="lineno">  147</span>                os &lt;&lt; <span class="stringliteral">&quot;Kalman::Filter::Forward: measurement &quot;</span> &lt;&lt; k &lt;&lt; <span class="stringliteral">&quot; has &quot;</span> &lt;&lt; z.Size()</div>
+<div class="line"><span class="lineno">  148</span>                   &lt;&lt; <span class="stringliteral">&quot; channels, expected &quot;</span> &lt;&lt; <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> &lt;&lt; <span class="stringliteral">&quot;.&quot;</span>;</div>
+<div class="line"><span class="lineno">  149</span>                <span class="keywordflow">throw</span> std::runtime_error(os.str());</div>
+<div class="line"><span class="lineno">  150</span>            }</div>
+<div class="line"><span class="lineno">  151</span> </div>
+<div class="line"><span class="lineno">  152</span>            <span class="keyword">const</span> Vector *u = (uk &amp;&amp; l &gt; 0) ? &amp;(*uk)[k] : <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  153</span>            <span class="keywordflow">if</span> (controller)</div>
+<div class="line"><span class="lineno">  154</span>            {</div>
+<div class="line"><span class="lineno">  155</span>                command = controller-&gt;Command(<a class="code hl_variable" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a>, t, lastNu);</div>
+<div class="line"><span class="lineno">  156</span>                u = l &gt; 0 ? &amp;command : <span class="keyword">nullptr</span>;</div>
+<div class="line"><span class="lineno">  157</span>            }</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>            <span class="comment">// --- predict --------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  160</span>            Vector xPrior;</div>
+<div class="line"><span class="lineno">  161</span>            Matrix PPrior, F;</div>
+<div class="line"><span class="lineno">  162</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">Predict</a>(*<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a>, u, t, xPrior, PPrior, F);</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>            <span class="comment">// --- innovation (kept for diagnostics, before the correction) --</span></div>
+<div class="line"><span class="lineno">  165</span>            Vector nu;</div>
+<div class="line"><span class="lineno">  166</span>            Matrix S;</div>
+<div class="line"><span class="lineno">  167</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a71c17fe1ef80100037538b5ed31462aa">Innovation</a>(*<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>, xPrior, PPrior, z, t, nu, S);</div>
+<div class="line"><span class="lineno">  168</span> </div>
+<div class="line"><span class="lineno">  169</span>            <span class="comment">// --- update ---------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  170</span>            Vector xPost;</div>
+<div class="line"><span class="lineno">  171</span>            Matrix PPost;</div>
+<div class="line"><span class="lineno">  172</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">Update</a>(*<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>, xPrior, PPrior, z, t, xPost, PPost);</div>
+<div class="line"><span class="lineno">  173</span> </div>
+<div class="line"><span class="lineno">  174</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#aa607d67063c80ceeae6432f142331df6">fPriorX</a>.push_back(xPrior);</div>
+<div class="line"><span class="lineno">  175</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac8c3e496e7cd276ad4d91961876c0c4c">fPriorP</a>.push_back(PPrior);</div>
+<div class="line"><span class="lineno">  176</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>.push_back(xPost);</div>
+<div class="line"><span class="lineno">  177</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>.push_back(PPost);</div>
+<div class="line"><span class="lineno">  178</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">fTransition</a>.push_back(F);</div>
+<div class="line"><span class="lineno">  179</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a5d80c4a055f60db3caa36246677a7f79">fMeasure</a>.push_back(z);</div>
+<div class="line"><span class="lineno">  180</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a51398fd764c4f1e2082f3e7bcbb7fece">fControl</a>.push_back(u ? *u : Vector());</div>
+<div class="line"><span class="lineno">  181</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">fInnovation</a>.push_back(nu);</div>
+<div class="line"><span class="lineno">  182</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">fTime</a>.push_back(t);</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a> = xPost;</div>
+<div class="line"><span class="lineno">  185</span>            <a class="code hl_variable" href="class_kalman_1_1_filter.html#a304a97aa8db4c5992c2b9cab6aabdf3b">fP</a> = PPost;</div>
+<div class="line"><span class="lineno">  186</span>            lastNu = &amp;<a class="code hl_variable" href="class_kalman_1_1_filter.html#aab5b8cd963a29e628de146a4a4302b73">fInnovation</a>.back();</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>            t += dt;</div>
+<div class="line"><span class="lineno">  189</span>        }</div>
+<div class="line"><span class="lineno">  190</span> </div>
+<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_filter.html#aa4ac7cb6fa2e90d19a0c9628b626a736">MakeRecord</a>(<a class="code hl_variable" href="class_kalman_1_1_filter.html#aeb63b480a820fb37232e06f7a33a61ea">fPostX</a>, <a class="code hl_variable" href="class_kalman_1_1_filter.html#a94adcd967fc425d3a3096b9386459e74">fPostP</a>, <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e">StateFlavor::Posterior</a>);</div>
+<div class="line"><span class="lineno">  192</span>    }</div>
+<div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a476a54a04b6596c0d517f69bcd18be64"><div class="ttname"><a href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">Kalman::Engine::Update</a></div><div class="ttdeci">virtual std::size_t Update(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector &amp;z, double t, Vector &amp;xOut, Matrix &amp;POut) const</div><div class="ttdoc">Measurement update in Joseph form; NaN channels of z are skipped.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00031">Engine.cc:31</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a71c17fe1ef80100037538b5ed31462aa"><div class="ttname"><a href="class_kalman_1_1_engine.html#a71c17fe1ef80100037538b5ed31462aa">Kalman::Engine::Innovation</a></div><div class="ttdeci">void Innovation(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector &amp;z, double t, Vector &amp;nu, Matrix &amp;S) const</div><div class="ttdoc">Innovation nu = z - h(x) and its covariance S.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00077">Engine.cc:77</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a9350b42e587bef994a2f79d98571278b"><div class="ttname"><a href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">Kalman::Engine::Predict</a></div><div class="ttdeci">virtual void Predict(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector *u, double t, Vector &amp;xk, Matrix &amp;Pk, Matrix &amp;F) const</div><div class="ttdoc">Prediction step: x = f(x, u), P = F P F^T + L Q L^T.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00016">Engine.cc:16</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1f662db87f8123e8ebc65e2e0f663740"><div class="ttname"><a href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">Kalman::Model::NMeasure</a></div><div class="ttdeci">std::size_t NMeasure() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00146">Model.h:146</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00152">Model.h:152</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a7352a3b4fa42b2b7b91b69e5482b09dc"><div class="ttname"><a href="class_kalman_1_1_model.html#a7352a3b4fa42b2b7b91b69e5482b09dc">Kalman::Model::T0</a></div><div class="ttdeci">double T0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00165">Model.h:165</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e">Kalman::StateFlavor::Posterior</a></div><div class="ttdeci">@ Posterior</div><div class="ttdoc">corrected, after the forward update</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aae22773155311f1a535aeed79fa8b989" name="aae22773155311f1a535aeed79fa8b989"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae22773155311f1a535aeed79fa8b989">&#9670;&#160;</a></span>SetEngine()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Filter::SetEngine </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_engine.html">Engine</a> *&#160;</td>
+          <td class="paramname"><em>engine</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Adopt a different engine; the filter never takes ownership here. </p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8cc_source.html#l00077">77</a> of file <a class="el" href="_filter_8cc_source.html">Filter.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   78</span>    {</div>
+<div class="line"><span class="lineno">   79</span>        <span class="keywordflow">if</span> (!engine) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Filter: the engine must not be null.&quot;</span>);</div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">fOwnsEngine</a>) <span class="keyword">delete</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>;</div>
+<div class="line"><span class="lineno">   81</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a> = engine;</div>
+<div class="line"><span class="lineno">   82</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a55a62ea006f16e1231409e2c04e8f5b1">fOwnsEngine</a> = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   83</span>        <a class="code hl_variable" href="class_kalman_1_1_filter.html#a8f83490ee2e91a2f4560226c98c7758f">fEngine</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a888afacb7c43444782a61755de745269">Reset</a>(*<a class="code hl_variable" href="class_kalman_1_1_filter.html#a9b84918084a01a7f3f6d3150795abc85">fModel</a>);</div>
+<div class="line"><span class="lineno">   84</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af234c3a4d5ccd7b738f3574f8cf031cc" name="af234c3a4d5ccd7b738f3574f8cf031cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af234c3a4d5ccd7b738f3574f8cf031cc">&#9670;&#160;</a></span>SmoothedCovariances()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp; Kalman::Filter::SmoothedCovariances </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00178">178</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#acdbef3d5e30054aa75f0fc57d4dfdbc6">fSmoothP</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae0439baf46721513176f42e7a91e7186" name="ae0439baf46721513176f42e7a91e7186"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae0439baf46721513176f42e7a91e7186">&#9670;&#160;</a></span>SmoothedStates()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp; Kalman::Filter::SmoothedStates </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00177">177</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#ac87f8b2fc5dd53c39c2fa70ca128b232">fSmoothX</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a08536c9895eba292e4e60527da757d47" name="a08536c9895eba292e4e60527da757d47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08536c9895eba292e4e60527da757d47">&#9670;&#160;</a></span>State()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp; Kalman::Filter::State </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00098">98</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   98</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a6ddb4801a9eed8615c225f98d7a8be52">fX</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a94458702dffeee5ab0b30cca6b422c44" name="a94458702dffeee5ab0b30cca6b422c44"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94458702dffeee5ab0b30cca6b422c44">&#9670;&#160;</a></span>Times()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; double &gt; &amp; Kalman::Filter::Times </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00176">176</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  176</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a3e07beaf6ec150dbb334ddb463e62493">fTime</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6ea24a2ba9da04916d5abb971ab6e112" name="a6ea24a2ba9da04916d5abb971ab6e112"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ea24a2ba9da04916d5abb971ab6e112">&#9670;&#160;</a></span>Title()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Filter::Title </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Human-readable name of the <em>kind</em> of thing this is. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
+
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_filters_1_1_k_f.html#a98b94183c5c5d72598ee069053e8976e">Kalman::Filters::KF</a>, <a class="el" href="class_kalman_1_1_filters_1_1_p_f.html#aea006aaf9e5401f18346612e49a829e8">Kalman::Filters::PF</a>, and <a class="el" href="class_kalman_1_1_filters_1_1_u_k_f.html#a5e1ddd6298e2503d6e36cb2f9f1deb15">Kalman::Filters::UKF</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00089">89</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Kalman Filter&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a582500ea11e581dcf406a7d89107f05e" name="a582500ea11e581dcf406a7d89107f05e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a582500ea11e581dcf406a7d89107f05e">&#9670;&#160;</a></span>Transitions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &gt; &amp; Kalman::Filter::Transitions </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00171">171</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  171</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_filter.html#a0eb90aa681612154922dd038d0b9642a">fTransition</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a51398fd764c4f1e2082f3e7bcbb7fece" name="a51398fd764c4f1e2082f3e7bcbb7fece"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51398fd764c4f1e2082f3e7bcbb7fece">&#9670;&#160;</a></span>fControl</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fControl</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00070">70</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a8f83490ee2e91a2f4560226c98c7758f" name="a8f83490ee2e91a2f4560226c98c7758f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f83490ee2e91a2f4560226c98c7758f">&#9670;&#160;</a></span>fEngine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_engine.html">Engine</a>* Kalman::Filter::fEngine = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00058">58</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="aab5b8cd963a29e628de146a4a4302b73" name="aab5b8cd963a29e628de146a4a4302b73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab5b8cd963a29e628de146a4a4302b73">&#9670;&#160;</a></span>fInnovation</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fInnovation</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00071">71</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a5d80c4a055f60db3caa36246677a7f79" name="a5d80c4a055f60db3caa36246677a7f79"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d80c4a055f60db3caa36246677a7f79">&#9670;&#160;</a></span>fMeasure</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fMeasure</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00069">69</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a9b84918084a01a7f3f6d3150795abc85" name="a9b84918084a01a7f3f6d3150795abc85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b84918084a01a7f3f6d3150795abc85">&#9670;&#160;</a></span>fModel</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_model.html">Model</a>* Kalman::Filter::fModel = nullptr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00057">57</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a55a62ea006f16e1231409e2c04e8f5b1" name="a55a62ea006f16e1231409e2c04e8f5b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a55a62ea006f16e1231409e2c04e8f5b1">&#9670;&#160;</a></span>fOwnsEngine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Kalman::Filter::fOwnsEngine = false</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00059">59</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a304a97aa8db4c5992c2b9cab6aabdf3b" name="a304a97aa8db4c5992c2b9cab6aabdf3b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a304a97aa8db4c5992c2b9cab6aabdf3b">&#9670;&#160;</a></span>fP</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> Kalman::Filter::fP</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00062">62</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a94adcd967fc425d3a3096b9386459e74" name="a94adcd967fc425d3a3096b9386459e74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94adcd967fc425d3a3096b9386459e74">&#9670;&#160;</a></span>fPostP</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&gt; Kalman::Filter::fPostP</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00067">67</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="aeb63b480a820fb37232e06f7a33a61ea" name="aeb63b480a820fb37232e06f7a33a61ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb63b480a820fb37232e06f7a33a61ea">&#9670;&#160;</a></span>fPostX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fPostX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00066">66</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="ac8c3e496e7cd276ad4d91961876c0c4c" name="ac8c3e496e7cd276ad4d91961876c0c4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac8c3e496e7cd276ad4d91961876c0c4c">&#9670;&#160;</a></span>fPriorP</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&gt; Kalman::Filter::fPriorP</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00065">65</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="aa607d67063c80ceeae6432f142331df6" name="aa607d67063c80ceeae6432f142331df6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa607d67063c80ceeae6432f142331df6">&#9670;&#160;</a></span>fPriorX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fPriorX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00064">64</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="acdbef3d5e30054aa75f0fc57d4dfdbc6" name="acdbef3d5e30054aa75f0fc57d4dfdbc6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdbef3d5e30054aa75f0fc57d4dfdbc6">&#9670;&#160;</a></span>fSmoothP</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&gt; Kalman::Filter::fSmoothP</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00075">75</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="ac87f8b2fc5dd53c39c2fa70ca128b232" name="ac87f8b2fc5dd53c39c2fa70ca128b232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac87f8b2fc5dd53c39c2fa70ca128b232">&#9670;&#160;</a></span>fSmoothX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_vector.html">Vector</a>&gt; Kalman::Filter::fSmoothX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00074">74</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a3e07beaf6ec150dbb334ddb463e62493" name="a3e07beaf6ec150dbb334ddb463e62493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3e07beaf6ec150dbb334ddb463e62493">&#9670;&#160;</a></span>fTime</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;double&gt; Kalman::Filter::fTime</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00072">72</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a0eb90aa681612154922dd038d0b9642a" name="a0eb90aa681612154922dd038d0b9642a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0eb90aa681612154922dd038d0b9642a">&#9670;&#160;</a></span>fTransition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&gt; Kalman::Filter::fTransition</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00068">68</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<a id="a6ddb4801a9eed8615c225f98d7a8be52" name="a6ddb4801a9eed8615c225f98d7a8be52"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6ddb4801a9eed8615c225f98d7a8be52">&#9670;&#160;</a></span>fX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_vector.html">Vector</a> Kalman::Filter::fX</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_filter_8h_source.html#l00061">61</a> of file <a class="el" href="_filter_8h_source.html">Filter.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/Kalman/<a class="el" href="_filter_8h_source.html">Filter.h</a></li>
+<li>src/<a class="el" href="_filter_8cc_source.html">Filter.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_filter.html">Filter</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

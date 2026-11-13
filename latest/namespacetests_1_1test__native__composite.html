@@ -1,0 +1,667 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_native_composite Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_native_composite Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_native_composite Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacetests_1_1test__native__composite.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_native_composite Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__composite_1_1_test_composite_of_matrices.html">TestCompositeOfMatrices</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__composite_1_1_test_composite_time_varying.html">TestCompositeTimeVarying</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__composite_1_1_test_composite_without_the_library.html">TestCompositeWithoutTheLibrary</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__composite_1_1_test_controlled_interferometer.html">TestControlledInterferometer</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__composite_1_1_test_sampling_matrices.html">TestSamplingMatrices</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a6047ccd30f38f688eeee183e16d95be4" id="r_a6047ccd30f38f688eeee183e16d95be4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a6047ccd30f38f688eeee183e16d95be4">close</a> (test, a, b, rtol, what)</td></tr>
+<tr class="separator:a6047ccd30f38f688eeee183e16d95be4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a10804ecef2d711623093f7a5618929c6" id="r_a10804ecef2d711623093f7a5618929c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a10804ecef2d711623093f7a5618929c6">strain</a> (freqs, amps, Qs, noise, T=4.0, seed=0)</td></tr>
+<tr class="separator:a10804ecef2d711623093f7a5618929c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab508a6ce85c7547a11e0b975df8337c6" id="r_ab508a6ce85c7547a11e0b975df8337c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#ab508a6ce85c7547a11e0b975df8337c6">reference</a> (make, z, smooth=False)</td></tr>
+<tr class="separator:ab508a6ce85c7547a11e0b975df8337c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae114b53ce7667ed9e757cfea326d81a0" id="r_ae114b53ce7667ed9e757cfea326d81a0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#ae114b53ce7667ed9e757cfea326d81a0">close_smoothed</a> (test, py, cx, model, what)</td></tr>
+<tr class="separator:ae114b53ce7667ed9e757cfea326d81a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a226f430fe652575bad589e908f60e80b" id="r_a226f430fe652575bad589e908f60e80b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a226f430fe652575bad589e908f60e80b">on_cpp</a> (test, make, z, smooth=False)</td></tr>
+<tr class="separator:a226f430fe652575bad589e908f60e80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09ecb80ec0062b81f6b0d7a058c49f19" id="r_a09ecb80ec0062b81f6b0d7a058c49f19"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a09ecb80ec0062b81f6b0d7a058c49f19">one_line</a> ()</td></tr>
+<tr class="separator:a09ecb80ec0062b81f6b0d7a058c49f19"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1c3d42b3bf478f6c82e5a5de9f77669" id="r_ad1c3d42b3bf478f6c82e5a5de9f77669"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#ad1c3d42b3bf478f6c82e5a5de9f77669">cluster</a> ()</td></tr>
+<tr class="separator:ad1c3d42b3bf478f6c82e5a5de9f77669"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83e4a78e1d1a124d48f2ca7ace1d03bd" id="r_a83e4a78e1d1a124d48f2ca7ace1d03bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a83e4a78e1d1a124d48f2ca7ace1d03bd">bank</a> ()</td></tr>
+<tr class="separator:a83e4a78e1d1a124d48f2ca7ace1d03bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a7d6fe90af758f93aa3a4ee14b1b2a3c1" id="r_a7d6fe90af758f93aa3a4ee14b1b2a3c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a7d6fe90af758f93aa3a4ee14b1b2a3c1">needs_kernels</a> = unittest.skipUnless(HAS_C_ACCEL, &quot;libKalman is not built&quot;)</td></tr>
+<tr class="separator:a7d6fe90af758f93aa3a4ee14b1b2a3c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad333853878e04aad35f4d7d1500c27be" id="r_ad333853878e04aad35f4d7d1500c27be"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#ad333853878e04aad35f4d7d1500c27be">STATE_RTOL</a> = 1e-7</td></tr>
+<tr class="separator:ad333853878e04aad35f4d7d1500c27be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64a6f8a938e8194786485a22719f7362" id="r_a64a6f8a938e8194786485a22719f7362"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a64a6f8a938e8194786485a22719f7362">COVARIANCE_RTOL</a> = 1e-6</td></tr>
+<tr class="separator:a64a6f8a938e8194786485a22719f7362"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add9d55f253f822093fa5a5dae5ba99f2" id="r_add9d55f253f822093fa5a5dae5ba99f2"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#add9d55f253f822093fa5a5dae5ba99f2">FS</a> = 4096.0</td></tr>
+<tr class="separator:add9d55f253f822093fa5a5dae5ba99f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4567951f2d2f54803e34dbf0f87db096" id="r_a4567951f2d2f54803e34dbf0f87db096"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__composite.html#a4567951f2d2f54803e34dbf0f87db096">PARTIALS</a> = partial_frequencies(170.0, 0.13, 3)</td></tr>
+<tr class="separator:a4567951f2d2f54803e34dbf0f87db096"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Composite models run as models of matrices, in C++.
+
+A :class:`CompositeKalmanModel` stacks its parts: block-diagonal F and Q, and an
+H that stacks (INDEPENDENT) or sums (FUSED) the parts' readouts. When every part
+is constant matrices the composite is too, and says so (``structure`` is
+MATRICES), so its filtering pass and its smoother run in C++ on those matrices
+(``kf_forward_linear`` / ``kf_backward_rts``) instead of the C++ loop calling the
+Python closures back at every step. These tests pin that the pass gives the
+Python answer, that it really is the C++ pass that runs, and that a composite
+which is not made of matrices keeps the path it had.
+
+The reference is the Python loop (``native.python_reference()`` with the fused
+linear pass switched off as well).
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a83e4a78e1d1a124d48f2ca7ace1d03bd" name="a83e4a78e1d1a124d48f2ca7ace1d03bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83e4a78e1d1a124d48f2ca7ace1d03bd">&#9670;&#160;</a></span>bank()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.bank </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00110">110</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span><span class="keyword">def </span>bank():</div>
+<div class="line"><span class="lineno">  111</span>    <span class="keywordflow">return</span> OscillatorBankModel(*[</div>
+<div class="line"><span class="lineno">  112</span>        InharmonicOscillatorModel(f<span class="stringliteral">&quot;ih_{k}&quot;</span>, f0=170.0, fc=fk, dfc=8.0, n_harmonics=3, B=0.13, Q=q, fs=FS,</div>
+<div class="line"><span class="lineno">  113</span>                                  measurement_uncertainty=0.05, process_uncertainty=1e-5)</div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">for</span> k, (fk, q) <span class="keywordflow">in</span> enumerate(zip(PARTIALS, [1.3e4, 1.8e4, 2.1e4]))])</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span><span class="preprocessor">@needs_kernels</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6047ccd30f38f688eeee183e16d95be4" name="a6047ccd30f38f688eeee183e16d95be4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6047ccd30f38f688eeee183e16d95be4">&#9670;&#160;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>test</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rtol</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00046">46</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   46</span><span class="keyword">def </span>close(test, a, b, rtol, what):</div>
+<div class="line"><span class="lineno">   47</span>    a, b = np.asarray(a, float), np.asarray(b, float)</div>
+<div class="line"><span class="lineno">   48</span>    scale = max(1.0, float(np.nanmax(np.abs(a))))</div>
+<div class="line"><span class="lineno">   49</span>    test.assertLess(float(np.nanmax(np.abs(a - b))) / scale, rtol, what)</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae114b53ce7667ed9e757cfea326d81a0" name="ae114b53ce7667ed9e757cfea326d81a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae114b53ce7667ed9e757cfea326d81a0">&#9670;&#160;</a></span>close_smoothed()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.close_smoothed </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>test</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>py</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A smoothed covariance, against the scale of the forward pass it comes from.
+
+The windows start from a loose prior ((1000 sigma)^2) and the RTS sweep takes
+differences of the forward covariances on its way back, down to a smoothed
+covariance thousands of times smaller: its rounding is that of the forward
+covariance it was subtracted from. Two Python RTS sweeps over forward passes
+that agree to 1e-14 differ there by 2e-4 of the smoothed value; measured
+against the forward scale both stay below 1e-7.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00068">68</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span><span class="keyword">def </span>close_smoothed(test, py, cx, model, what):</div>
+<div class="line"><span class="lineno">   69</span>    <span class="stringliteral">&quot;&quot;&quot;A smoothed covariance, against the scale of the forward pass it comes from.</span></div>
+<div class="line"><span class="lineno">   70</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   71</span><span class="stringliteral">    The windows start from a loose prior ((1000 sigma)^2) and the RTS sweep takes</span></div>
+<div class="line"><span class="lineno">   72</span><span class="stringliteral">    differences of the forward covariances on its way back, down to a smoothed</span></div>
+<div class="line"><span class="lineno">   73</span><span class="stringliteral">    covariance thousands of times smaller: its rounding is that of the forward</span></div>
+<div class="line"><span class="lineno">   74</span><span class="stringliteral">    covariance it was subtracted from. Two Python RTS sweeps over forward passes</span></div>
+<div class="line"><span class="lineno">   75</span><span class="stringliteral">    that agree to 1e-14 differ there by 2e-4 of the smoothed value; measured</span></div>
+<div class="line"><span class="lineno">   76</span><span class="stringliteral">    against the forward scale both stay below 1e-7.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   77</span>    scale = max(1.0, max(float(np.max(np.abs(P))) <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> model._filter.prior))</div>
+<div class="line"><span class="lineno">   78</span>    a, b = np.asarray(py.Pk, float), np.asarray(cx.Pk, float)</div>
+<div class="line"><span class="lineno">   79</span>    test.assertLess(float(np.max(np.abs(a - b))) / scale, COVARIANCE_RTOL, what)</div>
+<div class="line"><span class="lineno">   80</span> </div>
+<div class="line"><span class="lineno">   81</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad1c3d42b3bf478f6c82e5a5de9f77669" name="ad1c3d42b3bf478f6c82e5a5de9f77669"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1c3d42b3bf478f6c82e5a5de9f77669">&#9670;&#160;</a></span>cluster()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.cluster </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00102">102</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span><span class="keyword">def </span>cluster():</div>
+<div class="line"><span class="lineno">  103</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;cluster&quot;</span>, [178.0, 180.1, 182.5], fc=180.0, dfc=8.0, Q=[1.3e4] * 3, fs=FS,</div>
+<div class="line"><span class="lineno">  104</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a226f430fe652575bad589e908f60e80b" name="a226f430fe652575bad589e908f60e80b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a226f430fe652575bad589e908f60e80b">&#9670;&#160;</a></span>on_cpp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.on_cpp </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>test</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>make</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>smooth</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The default pass, asserting it is the fused C++ one.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00082">82</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span><span class="keyword">def </span>on_cpp(test, make, z, smooth=False):</div>
+<div class="line"><span class="lineno">   83</span>    <span class="stringliteral">&quot;&quot;&quot;The default pass, asserting it is the fused C++ one.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   84</span>    <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_native&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">   85</span>                           side_effect=KalmanFilter._forward_native) <span class="keyword">as</span> fused, \</div>
+<div class="line"><span class="lineno">   86</span>            mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_callback&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">   87</span>                              side_effect=KalmanFilter._forward_callback) <span class="keyword">as</span> callback:</div>
+<div class="line"><span class="lineno">   88</span>        model = make()</div>
+<div class="line"><span class="lineno">   89</span>        record = model.filter(z, smooth=smooth)</div>
+<div class="line"><span class="lineno">   90</span>    test.assertEqual(fused.call_count, 1, <span class="stringliteral">&quot;the pass ran in kf_forward_linear&quot;</span>)</div>
+<div class="line"><span class="lineno">   91</span>    test.assertEqual(callback.call_count, 0, <span class="stringliteral">&quot;no Python callbacks&quot;</span>)</div>
+<div class="line"><span class="lineno">   92</span>    test.assertIsInstance(model._filter.engine, LinearKalmanEngine)</div>
+<div class="line"><span class="lineno">   93</span>    test.last_model = model</div>
+<div class="line"><span class="lineno">   94</span>    <span class="keywordflow">return</span> record</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a09ecb80ec0062b81f6b0d7a058c49f19" name="a09ecb80ec0062b81f6b0d7a058c49f19"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09ecb80ec0062b81f6b0d7a058c49f19">&#9670;&#160;</a></span>one_line()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.one_line </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00097">97</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   97</span><span class="keyword">def </span>one_line():</div>
+<div class="line"><span class="lineno">   98</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;mode&quot;</span>, [180.1], fc=180.1, dfc=5.0, Q=1.3e4, fs=FS,</div>
+<div class="line"><span class="lineno">   99</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="line"><span class="lineno">  101</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab508a6ce85c7547a11e0b975df8337c6" name="ab508a6ce85c7547a11e0b975df8337c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab508a6ce85c7547a11e0b975df8337c6">&#9670;&#160;</a></span>reference()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.reference </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>make</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>smooth</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The Python loop: no C++ loop, no twin, no fused linear pass.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00061">61</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span><span class="keyword">def </span>reference(make, z, smooth=False):</div>
+<div class="line"><span class="lineno">   62</span>    <span class="stringliteral">&quot;&quot;&quot;The Python loop: no C++ loop, no twin, no fused linear pass.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   63</span>    <span class="keyword">with</span> native.python_reference(), \</div>
+<div class="line"><span class="lineno">   64</span>            mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_native_forward_eligible&quot;</span>, return_value=<span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> make().filter(z, smooth=smooth)</div>
+<div class="line"><span class="lineno">   66</span> </div>
+<div class="line"><span class="lineno">   67</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a10804ecef2d711623093f7a5618929c6" name="a10804ecef2d711623093f7a5618929c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10804ecef2d711623093f7a5618929c6">&#9670;&#160;</a></span>strain()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.strain </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>freqs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>amps</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Qs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>noise</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>T</em> = <code>4.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00052">52</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   52</span><span class="keyword">def </span>strain(freqs, amps, Qs, noise, T=4.0, seed=0):</div>
+<div class="line"><span class="lineno">   53</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">   54</span>    t = np.arange(int(T * FS)) / FS</div>
+<div class="line"><span class="lineno">   55</span>    x = noise * rng.standard_normal(t.size)</div>
+<div class="line"><span class="lineno">   56</span>    <span class="keywordflow">for</span> a, f, q <span class="keywordflow">in</span> zip(amps, freqs, Qs):</div>
+<div class="line"><span class="lineno">   57</span>        x += a * np.exp(-t / (q / (np.pi * f))) * np.cos(2 * np.pi * f * t)</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> x</div>
+<div class="line"><span class="lineno">   59</span> </div>
+<div class="line"><span class="lineno">   60</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a64a6f8a938e8194786485a22719f7362" name="a64a6f8a938e8194786485a22719f7362"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64a6f8a938e8194786485a22719f7362">&#9670;&#160;</a></span>COVARIANCE_RTOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tests.test_native_composite.COVARIANCE_RTOL = 1e-6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00041">41</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+
+</div>
+</div>
+<a id="add9d55f253f822093fa5a5dae5ba99f2" name="add9d55f253f822093fa5a5dae5ba99f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add9d55f253f822093fa5a5dae5ba99f2">&#9670;&#160;</a></span>FS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float tests.test_native_composite.FS = 4096.0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00043">43</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+
+</div>
+</div>
+<a id="a7d6fe90af758f93aa3a4ee14b1b2a3c1" name="a7d6fe90af758f93aa3a4ee14b1b2a3c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d6fe90af758f93aa3a4ee14b1b2a3c1">&#9670;&#160;</a></span>needs_kernels</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.needs_kernels = unittest.skipUnless(HAS_C_ACCEL, &quot;libKalman is not built&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00034">34</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+
+</div>
+</div>
+<a id="a4567951f2d2f54803e34dbf0f87db096" name="a4567951f2d2f54803e34dbf0f87db096"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4567951f2d2f54803e34dbf0f87db096">&#9670;&#160;</a></span>PARTIALS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_composite.PARTIALS = partial_frequencies(170.0, 0.13, 3)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00107">107</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+
+</div>
+</div>
+<a id="ad333853878e04aad35f4d7d1500c27be" name="ad333853878e04aad35f4d7d1500c27be"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad333853878e04aad35f4d7d1500c27be">&#9670;&#160;</a></span>STATE_RTOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tests.test_native_composite.STATE_RTOL = 1e-7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00040">40</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__native__composite.html">test_native_composite</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>
