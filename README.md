@@ -81,12 +81,12 @@ The same toy model, a cooling cup of coffee, is written in both languages in
 
 | | |
 |---|---|
-| [Getting Started](docs/1_Getting-Started.md) · [Installation](docs/2_Installation.md) · [Overview](docs/3_Overview.md) | first filter, setup, how it fits together |
-| [Models](docs/4_Models.md) · [Filters and Diagnostics](docs/5_Filters-and-Diagnostics.md) · [Integrators and Solvers](docs/6_Integrators-and-Solvers.md) | describing a system and estimating it |
-| [Providers](docs/7_Providers.md) · [Control and Routing](docs/8_Control-and-Routing.md) | data in, decisions out |
-| [Python API](docs/9_Python-API.md) · [REST API](docs/10_REST-API.md) · [MCP Server](docs/11_MCP-Server.md) · [Authentication](docs/12_Authentication.md) · [Deployment](docs/13_Deployment.md) | access from other programs |
-| [C++ Library](docs/15_Cxx-Library.md) · [C++ Models from Python](docs/16_Cxx-Models-from-Python.md) · [libKalmanNet](docs/18_Net.md) | the C++ side |
-| [Applications](docs/17_Applications.md) · [Troubleshooting](docs/14_Troubleshooting.md) | worked systems, error messages decoded |
+| [Getting Started](docs/1_Getting-Started.md), [Installation](docs/2_Installation.md), [Overview](docs/3_Overview.md) | first filter, setup, how it fits together |
+| [Models](docs/4_Models.md), [Filters and Diagnostics](docs/5_Filters-and-Diagnostics.md), [Integrators and Solvers](docs/6_Integrators-and-Solvers.md) | describing a system and estimating it |
+| [Providers](docs/7_Providers.md), [Control and Routing](docs/8_Control-and-Routing.md) | data in, decisions out |
+| [Python API](docs/9_Python-API.md), [REST API](docs/10_REST-API.md), [MCP Server](docs/11_MCP-Server.md), [Authentication](docs/12_Authentication.md), [Deployment](docs/13_Deployment.md) | access from other programs |
+| [C++ Library](docs/15_Cxx-Library.md), [C++ Models from Python](docs/16_Cxx-Models-from-Python.md), [libKalmanNet](docs/18_Net.md) | the C++ side |
+| [Applications](docs/17_Applications.md), [Troubleshooting](docs/14_Troubleshooting.md) | worked systems, error messages decoded |
 
 [`AGENTS.md`](AGENTS.md) holds the conventions for changing the code.
 
