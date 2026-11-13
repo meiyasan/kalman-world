@@ -394,7 +394,11 @@ class NativeTwin:
     """
 
     #: What must be exactly the declaring class's own for the twin to stand in.
-    _TWIN_CONTRACT = ("f", "h", "F", "H", "B", "L", "Q", "R")
+    #: A continuous model's class keeps what it wrote as ``f`` under
+    #: ``derivative`` (KalmanModel.__init_subclass__), so its ``f`` is the shared
+    #: decoded step: the derivative, the closing step and the sub-stepping are
+    #: what a subclass changes, and are checked too.
+    _TWIN_CONTRACT = ("f", "h", "F", "H", "B", "L", "Q", "R", "derivative", "after_step", "substeps")
 
     def native_name(self) -> str | None:
         return None
@@ -433,7 +437,10 @@ class NativeTwin:
         for attr in self._TWIN_CONTRACT:
             if attr in self.__dict__ or getattr(type(self), attr, None) is not getattr(owner, attr, None):
                 return None
-        if self.l or np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
+        # A control input is fine: the twin's f takes u, and the filter hands
+        # the twin the control sequence (a controller function keeps the Python
+        # model, see KalmanFilter._native_twin).
+        if np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
             return None
         if any(getattr(self, attr) is not None for attr in ("_F", "_H") if attr not in self._TWIN_DECODES):
             return None
@@ -478,12 +485,32 @@ class NativeTwin:
         core.check(lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
         return handle
 
-
     def _push_arrays(self, handle):
         for key, value in self.native_arrays().items():
             array = np.ascontiguousarray(np.asarray(value, dtype=np.float64).reshape(-1))
             core.check(core.lib.kalman_model_set_array(handle, key.encode(), array.size, core.cdptr(array)),
                        f"set_array({key!r})")
+
+
+#: Python integrator name -> Kalman::IntegratorKind, the "integrator" parameter of a twin.
+NATIVE_INTEGRATORS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
+
+
+def native_integrator_kind(model):
+    """The C++ ``IntegratorKind`` of ``model``'s integrator, for a continuous twin's
+    ``integrator`` parameter; ``None`` when the C++ side has no such scheme (a
+    custom integrator, a subclass of a built-in one, Dormand-Prince with other
+    tolerances than the C++ defaults)."""
+    from ..integrator import KalmanIntegrator, _BUILTIN_STEPS
+    integrator = model.default_integrator()
+    name = getattr(integrator, "NATIVE", None)
+    kind = NATIVE_INTEGRATORS.get(name)
+    if kind is None or type(integrator)._step is not _BUILTIN_STEPS.get(name) \
+            or type(integrator).step is not KalmanIntegrator.step:
+        return None
+    if kind == 2 and (integrator.rtol, integrator.atol, integrator.max_substeps) != (1e-6, 1e-9, 10_000):
+        return None
+    return kind
 
 
 # --- a Python-written model on the C++ engines ----------------------------------

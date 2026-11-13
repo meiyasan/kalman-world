@@ -29,6 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.models.native import NativeTwin, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
@@ -55,7 +56,7 @@ class RocketLiftoffObservable(KalmanObservable):
     ALTITUDE = "m"
 
 
-class RocketLiftoffModel(ExtendedKalmanModel):
+class RocketLiftoffModel(NativeTwin, ExtendedKalmanModel):
     """
     Vertical **liftoff** from the launch pad with a finite propellant load (1-D).
 
@@ -146,6 +147,18 @@ class RocketLiftoffModel(ExtendedKalmanModel):
         """Net vertical acceleration [m/s²] for state ``x = [h, v, m]``."""
         h, v, m = np.asarray(x, float).reshape(-1)[:3]
         return self._deriv(np.array([h, v, m]), 0.0)[1]
+
+    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketLiftoff) ------
+    # _deriv is the dynamics, so a subclass that changes it is another model.
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("_deriv",)
+
+    def native_name(self):
+        return "rocket-liftoff" if native_integrator_kind(self) is not None else None
+
+    def native_parameters(self):
+        return {"m_dry": self.m_dry, "ve": self.ve, "mdot": self.mdot, "drag_area": self.drag_area,
+                "drag": float(self.drag), "g": self.g, "rho0": RHO0, "h_atm": H_ATM,
+                "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
     # --- dynamics ----------------------------------------------------------
     def _deriv(self, s, t):

@@ -29,6 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.models.native import NativeTwin, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
@@ -49,7 +50,7 @@ class RocketAscentObservable(KalmanObservable):
     X = "Mm"; Y = "Mm"
 
 
-class RocketAscentModel(ExtendedKalmanModel):
+class RocketAscentModel(NativeTwin, ExtendedKalmanModel):
     """
     Planar **guided** powered ascent from Earth's surface (the steering/guidance model).
 
@@ -87,6 +88,19 @@ class RocketAscentModel(ExtendedKalmanModel):
         # respect to w, find no sensitivity, and multiply Q by a zero matrix at
         # every prediction.
         super().__init__("LAUNCH", Q=Q, R=R, L=np.eye(self.n), fs=self.fs, **kw)
+
+    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketAscent) -------
+    # The thrust program is the control input u (l = 2), handed to the twin
+    # with the measurements; a controller function keeps the Python model.
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("acceleration",)
+
+    def native_name(self):
+        return "rocket-ascent" if native_integrator_kind(self) is not None else None
+
+    def native_parameters(self):
+        return {"GM": float(GM_EARTH), "R": float(R_EARTH), "H": float(H_SCALE),
+                "ballistic_coeff": self.Cb, "drag": float(self.drag),
+                "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
     def acceleration(self, r, v, u):
         a = -GM_EARTH * r / np.linalg.norm(r) ** 3            # gravity

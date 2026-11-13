@@ -274,6 +274,201 @@ class TestCarSpeedTwin(unittest.TestCase):
         self.assertIsNotNone(CarSpeedModel("CAR").native_handle())
 
 
+# --- the lane-keeping car and the rocket family ----------------------------------
+from modules.apps.vehicles import CarLaneModel                          # noqa: E402
+from modules.apps.astro.rocket import (RocketLiftoffModel, RocketAscentModel,  # noqa: E402
+                                       RocketDescentModel, RocketLandingModel)
+from modules.runtime.astro import R_EARTH, KM                           # noqa: E402
+
+
+def steering(n, fs=50.0):
+    """A lane-change steering program, past the actuator limit for half a second."""
+    t = np.arange(n) / fs
+    u = 0.01 * np.sin(0.8 * t) + 0.15 * ((t > 3.0) & (t < 3.5)) - 0.15 * ((t > 3.5) & (t < 4.0))
+    return u.reshape(-1, 1)
+
+
+@needs_apps
+class TestCarLaneTwin(unittest.TestCase):
+
+    def make(self, **kw):
+        return lambda: CarLaneModel("camera", fs=50, x0=[[0.3], [0.0], [15.0]], lateral_uncertainty=0.05, **kw)
+
+    def test_twin_matches_python_with_the_steering_program(self):
+        uk = steering(500)
+        for kw in ({}, {"q_lat": 2.5e-3, "q_head": 1e-4}, {"wheelbase": 3.5, "steer_limit": 0.05}):
+            z = self.make(**kw)().sample(10.0, uk=uk, seed=1).zk
+            py, cx = both(self.make(**kw), z, uk=uk)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
+            close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
+            self.assertGreater(float(np.ptp(np.asarray(cx.xk)[:, 1])), 0.01, "the car steered")
+
+    def test_integrator_and_substeps_reach_the_twin(self):
+        uk = steering(300)
+        for kw in (dict(integrator=KalmanIntegratorKind.RK4), dict(substeps=4)):
+            def make():
+                model = self.make()()
+                if "integrator" in kw:
+                    model._integrator_override, model._integrator_inst = kw["integrator"], None
+                return model
+            if "substeps" in kw:
+                class Substepped(CarLaneModel):
+                    SOLVER_SUBSTEPS = 4
+                make = lambda: Substepped("camera", fs=50, x0=[[0.3], [0.0], [15.0]])
+            self.assertIsNotNone(make().native_handle(), str(kw))
+            z = make().sample(6.0, uk=uk, seed=2).zk
+            py, cx = both(make, z, uk=uk)
+            close(self, py.xk, cx.xk, STATE_RTOL, f"state with {kw}")
+
+    def test_what_stays_in_python(self):
+        class Wider(CarLaneModel):                      # another actuator limit
+            def clip_u(self, u):
+                return np.asarray(u, float).reshape(-1, 1)
+        self.assertIsNone(Wider("camera").native_handle())
+
+        class Drifting(CarLaneModel):                   # another derivative
+            def f(self, x, u=None, w=None, t=None):
+                return np.zeros((3, 1))
+        self.assertIsNone(Drifting("camera").native_handle())
+
+        from modules.framework.integrators import RK4Integrator
+        class Mine(RK4Integrator):
+            def _step(self, f, x, u=None, t=None, dt=1.0):
+                return super()._step(f, x, u=u, t=t, dt=dt)
+        model = CarLaneModel("camera")
+        model._integrator_override, model._integrator_inst = Mine(), None
+        self.assertIsNone(model.native_handle())
+        self.assertIsNotNone(CarLaneModel("camera").native_handle())
+
+    def test_a_controller_function_keeps_the_python_model(self):
+        from modules.framework.filters import ExtendedKalmanFilter
+        flt = ExtendedKalmanFilter(CarLaneModel("camera"))
+        self.assertIsNone(flt._native_twin(lambda x, P, t, nu=None: np.zeros((1, 1))))
+
+
+def liftoff_model():
+    model = RocketLiftoffModel("LIFTOFF", m0=549_000.0, m_dry=138_000.0, ve=2900.0, mdot=2600.0,
+                               drag_area=8.0, length=70.0, width=3.7, fs=10.0, track_m=50.0, q_mass=0.0)
+    model.initial_state([0.0, 0.0, model.m0], P0=np.diag([50.0**2, 10.0**2, 50.0**2]))
+    return model
+
+
+def ascent_program(n=240):
+    uk = np.zeros((n, 2))
+    for i in range(n):
+        pitch = np.deg2rad(89.0 - 111.0 * (i / (n - 1)) ** 0.57)
+        uk[i] = [19.4 * np.sin(pitch), 19.4 * np.cos(pitch)]
+    return uk
+
+
+def ascent_model(**kw):
+    model = RocketAscentModel(dt_s=2.0, track_km=1.0, **kw)
+    model.initial_state(np.array([[R_EARTH], [0], [0], [0]]),
+                        P0=np.diag([(1 * KM)**2, (1 * KM)**2, 0.01**2, 0.01**2]))
+    return model
+
+
+BOOSTER = dict(m0=30_000.0, m_dry=22_000.0, thrust_max=845e3, drag_area=10.0)
+BOOSTER_X0 = np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 30_000.0])
+
+
+def descent_model(**kw):
+    model = RocketDescentModel(fs=20.0, **BOOSTER, **kw)
+    model.initial_state(BOOSTER_X0)
+    return model
+
+
+def landing_model(**kw):
+    model = RocketLandingModel("LANDING", **kw)
+    model.initial_state([3000.0, -150.0, 1000.0], P0=np.diag([20.0**2, 5.0**2, 10.0**2]))
+    return model
+
+
+@needs_apps
+class TestRocketTwins(unittest.TestCase):
+    """The scenarios of share/notebooks/06_RocketScience.ipynb, seeded."""
+
+    def check(self, make, z, what, **kw):
+        py, cx = both(make, z, **kw)
+        close(self, py.xk, cx.xk, STATE_RTOL, f"state, {what}")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {what}")
+        return cx
+
+    def test_liftoff_through_burnout_and_coast(self):
+        z = liftoff_model().sample(420.0, seed=3).zk
+        cx = self.check(liftoff_model, z, "liftoff")
+        self.assertEqual(float(np.asarray(cx.xk)[-1, 2]), 138_000.0, "burnout: the dry mass")
+        z = RocketLiftoffModel("L", drag=False).sample(120.0, seed=4).zk
+        self.check(lambda: RocketLiftoffModel("L", drag=False), z, "liftoff without drag")
+
+    def test_ascent_with_the_thrust_program(self):
+        uk = ascent_program()
+        for kw in ({}, {"drag": True}):
+            z = ascent_model(**kw).sample(240 / 500.0, uk=uk, seed=3).zk
+            self.check(lambda: ascent_model(**kw), z, f"ascent {kw}", uk=uk)
+
+    def test_descent_guided_and_driven(self):
+        z = descent_model().sample(70.0, seed=3).zk
+        cx = self.check(descent_model, z, "descent, guidance")
+        self.assertLess(abs(float(np.asarray(cx.xk)[-1, 1])), 0.5, "the booster is on the pad")
+        ctl = lambda: descent_model(control=True)
+        uk, _ = ctl().autopilot(BOOSTER_X0, 1400)
+        z = ctl().sample(70.0, uk=uk, process_noise=False, seed=3).zk
+        self.assertEqual(ctl().native_name(), "rocket-descent-control")
+        self.check(ctl, z, "descent, throttle and gimbal as the control", uk=uk)
+
+    def test_landing_burn_to_the_pad(self):
+        for kw in ({}, {"drag": False, "kp": 2.0}):
+            z = landing_model(**kw).sample(40.0, seed=3).zk
+            cx = self.check(lambda: landing_model(**kw), z, f"landing {kw}")
+            self.assertLess(abs(float(np.asarray(cx.xk)[-1, 0])), 0.5, "landed")
+
+    def test_substeps_and_integrator_reach_the_twins(self):
+        class Fine(RocketLandingModel):
+            SOLVER_SUBSTEPS = 3
+        class Euler(RocketLiftoffModel):
+            DEFAULT_INTEGRATOR = KalmanIntegratorKind.EULER
+        for make in (lambda: Fine("LANDING", x0=[[3000.0], [-150.0], [1000.0]]), lambda: Euler("L")):
+            self.assertIsNotNone(make().native_handle())
+            z = make().sample(30.0, seed=5).zk
+            self.check(make, z, type(make()).__name__)
+
+    def test_what_stays_in_python(self):
+        from modules.framework.integrators import RK4Integrator
+        class Mine(RK4Integrator):
+            def _step(self, f, x, u=None, t=None, dt=1.0):
+                return super()._step(f, x, u=u, t=t, dt=dt)
+        for cls in (RocketLiftoffModel, RocketLandingModel, RocketDescentModel):
+            model = cls()
+            model._integrator_override, model._integrator_inst = Mine(), None
+            self.assertIsNone(model.native_handle(), cls.__name__)
+        ascent = RocketAscentModel()
+        ascent._integrator_override, ascent._integrator_inst = Mine(), None
+        self.assertIsNone(ascent.native_handle())
+
+        class Harder(RocketLandingModel):               # another guidance law
+            def guidance(self, x):
+                return 0.0
+        self.assertIsNone(Harder().native_handle())
+
+        class Stiff(RocketDescentModel):                # another inertia
+            def inertia(self, m):
+                return m
+        self.assertIsNone(Stiff().native_handle())
+
+        class Bounce(RocketLiftoffModel):               # another closing step
+            def after_step(self, x, u=None, t=None):
+                return x
+        self.assertIsNone(Bounce().native_handle())
+
+        class Drag(RocketAscentModel):                  # another acceleration
+            def acceleration(self, r, v, u):
+                return np.zeros(2)
+        self.assertIsNone(Drag().native_handle())
+        for cls in (RocketLiftoffModel, RocketLandingModel, RocketDescentModel, RocketAscentModel):
+            self.assertIsNotNone(cls().native_handle(), cls.__name__)
+
+
 @needs_apps
 class TestTwinContract(unittest.TestCase):
 
@@ -283,6 +478,8 @@ class TestTwinContract(unittest.TestCase):
         listed = set(native_model_classes())
         self.assertFalse(listed & apps_library_names(), listed & apps_library_names())
         self.assertTrue({"storm", "ballistic", "tornado-environment", "car-speed"} <= apps_library_names())
+        self.assertTrue({"car-lane", "rocket-liftoff", "rocket-ascent", "rocket-descent",
+                         "rocket-descent-control", "rocket-landing"} <= apps_library_names())
 
     def test_parameters_cross_by_name(self):
         model = StormModel("TC", omega=-0.02, beta_drift=4.0, hemisphere="S", dt_hours=3.0)

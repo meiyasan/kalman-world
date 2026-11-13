@@ -29,6 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
+from ....framework.models.native import NativeTwin, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
@@ -48,7 +49,7 @@ class RocketLandingObservable(KalmanObservable):
     ALTITUDE = "m"
 
 
-class RocketLandingModel(ExtendedKalmanModel):
+class RocketLandingModel(NativeTwin, ExtendedKalmanModel):
     """
     Vertical **propulsive landing** of a booster — the SpaceX "hoverslam" / suicide burn.
 
@@ -120,6 +121,20 @@ class RocketLandingModel(ExtendedKalmanModel):
             x0[2, 0] = self.m0
             kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
+
+    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketLanding) ------
+    # The atmosphere, the guidance and _deriv are the dynamics: a subclass that
+    # changes one of them is another model.
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("_deriv", "_rho", "guidance")
+
+    def native_name(self):
+        return "rocket-landing" if native_integrator_kind(self) is not None else None
+
+    def native_parameters(self):
+        return {"m_dry": self.m_dry, "ve": self.ve, "thrust_max": self.thrust_max,
+                "drag_area": self.drag_area, "drag": float(self.drag), "g": self.g,
+                "decel": self.decel, "v_touch": self.v_touch, "kp": self.kp, "rho0": RHO0, "h_atm": H_ATM,
+                "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
     # --- atmosphere / guidance --------------------------------------------
     def _rho(self, h):

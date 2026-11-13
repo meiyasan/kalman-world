@@ -388,8 +388,14 @@ library is present. Rules for a twin:
   sample rate and the initial state are pushed from the Python instance. Do not
   recompute a covariance in C++ that Python already built.
 - `native_name()` returns `None` for every configuration that was not ported
-  (a Python callable, a state-dependent `Q`, a control). Falling back is
-  correct; guessing is not.
+  (a Python callable, a state-dependent `Q`, an integrator the C++ side lacks).
+  Falling back is correct; guessing is not. A control input is ported when the
+  twin's `f` takes `u`: an open-loop command sequence goes to the twin, a
+  controller function keeps the Python model in the C++ loop.
+- A helper the dynamics call (`guidance`, `clip_u`, `_deriv` ...) joins the
+  class's `_TWIN_CONTRACT`, so a subclass that changes it is not the twin.
+  A continuous model's integrator and sub-steps cross as the `integrator` and
+  `substeps` parameters (`native.native_integrator_kind`).
 - Derive from `Kalman::Apps::Model`, which differences `f`/`h` as
   `helpers.numerical_jacobian` does. Do not use the library's central scheme in
   a twin: the two sides would linearise differently.

@@ -29,29 +29,34 @@ from modules.apps.weather.storms import StormModel, synthetic_track   # noqa: E4
 from modules.apps.weather.storms import TornadoEnvironmentModel, synthetic_environment   # noqa: E402
 from modules.apps.ballistics import BallisticModel                # noqa: E402
 from modules.apps.vehicles import CarSpeedModel                   # noqa: E402
+from modules.apps.vehicles import CarLaneModel                    # noqa: E402
+from modules.apps.astro.rocket import (RocketLiftoffModel, RocketAscentModel,   # noqa: E402
+                                       RocketDescentModel, RocketLandingModel)
+from modules.runtime.astro import R_EARTH, KM                     # noqa: E402
 
 
-def timed(make, z, repeat):
+def timed(make, z, repeat, uk=None):
     best = float("inf")
     for _ in range(repeat):
         model = make()
         start = time.perf_counter()
-        record = model.filter(z)
+        record = model.filter(z) if uk is None else model.filter(z, uk)
         best = min(best, time.perf_counter() - start)
     return best * 1e3, np.asarray(record.xk), np.asarray(record.Pk), model
 
 
-def compare(make, z, repeat):
+def compare(make, z, repeat, uk=None):
     """Three runs of one model: the Python reference loop, the C++ loop calling
-    the Python model, and the model's C++ twin when it has one."""
+    the Python model, and the model's C++ twin when it has one. ``uk`` is the
+    control sequence of a model that takes one."""
     with native.python_reference():
-        t_py, x_py, P_py, _ = timed(make, z, repeat)
+        t_py, x_py, P_py, _ = timed(make, z, repeat, uk)
     native.USE_NATIVE_TWINS = False
     try:
-        t_loop, x_loop, _, _ = timed(make, z, repeat)
+        t_loop, x_loop, _, _ = timed(make, z, repeat, uk)
     finally:
         native.USE_NATIVE_TWINS = True
-    t_cx, x_cx, P_cx, model = timed(make, z, repeat)
+    t_cx, x_cx, P_cx, model = timed(make, z, repeat, uk)
     used = model.native_handle() is not None if hasattr(model, "native_handle") else False
     scale = max(1.0, np.nanmax(np.abs(x_py)))
     dx = max(np.nanmax(np.abs(x_py - x_cx)), np.nanmax(np.abs(x_py - x_loop))) / scale
@@ -92,6 +97,52 @@ def cases(steps):
         return model
     yield "BallisticModel, orbital gravity", orbital, orbit
 
+    # The lane-keeping car and the rocket family (the scenarios of the notebooks
+    # 12_KalmanAI and 06_RocketScience). A fourth item is the control sequence.
+    lt = np.arange(steps) / 50.0
+    steer = (0.01 * np.sin(0.8 * lt) + 0.15 * ((lt % 20 > 3.0) & (lt % 20 < 3.5))
+             - 0.15 * ((lt % 20 > 3.5) & (lt % 20 < 4.0))).reshape(-1, 1)
+    lane = lambda: CarLaneModel("camera", fs=50, x0=[[0.3], [0.0], [15.0]], lateral_uncertainty=0.05)
+    yield "CarLaneModel", lane, np.asarray(lane().sample(steps / 50.0, uk=steer, seed=0).zk), steer
+
+    def liftoff():
+        model = RocketLiftoffModel("LIFTOFF", m0=549_000.0, m_dry=138_000.0, ve=2900.0, mdot=2600.0,
+                                   drag_area=8.0, fs=10.0, track_m=50.0, q_mass=0.0)
+        model.initial_state([0.0, 0.0, model.m0], P0=np.diag([50.0**2, 10.0**2, 50.0**2]))
+        return model
+    yield "RocketLiftoffModel", liftoff, np.asarray(liftoff().sample(steps / 10.0, seed=0).zk)
+
+    program = np.zeros((steps, 2))
+    for i in range(steps):
+        pitch = np.deg2rad(89.0 - 111.0 * (i / (steps - 1)) ** 0.57)
+        program[i] = [19.4 * np.sin(pitch), 19.4 * np.cos(pitch)]
+
+    def ascent():
+        model = RocketAscentModel(dt_s=2.0 * 240 / steps, track_km=1.0)
+        model.initial_state(np.array([[R_EARTH], [0], [0], [0]]),
+                            P0=np.diag([(1 * KM)**2, (1 * KM)**2, 0.01**2, 0.01**2]))
+        return model
+    yield ("RocketAscentModel", ascent,
+           np.asarray(ascent().sample(steps / ascent().fs, uk=program, seed=0).zk), program)
+
+    booster = dict(m0=30_000.0, m_dry=22_000.0, thrust_max=845e3, drag_area=10.0)
+    x0 = np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 30_000.0])
+
+    def descent(control=False):
+        model = RocketDescentModel(fs=steps / 70.0, control=control, **booster)
+        model.initial_state(x0)
+        return model
+    yield "RocketDescentModel", descent, np.asarray(descent().sample(70.0, seed=0).zk)
+    commands, _ = descent(True).autopilot(x0, steps)
+    yield ("RocketDescentModel, control", lambda: descent(True),
+           np.asarray(descent(True).sample(70.0, uk=commands, process_noise=False, seed=0).zk), commands)
+
+    def landing():
+        model = RocketLandingModel("LANDING", fs=steps / 40.0)
+        model.initial_state([3000.0, -150.0, 1000.0], P0=np.diag([20.0**2, 5.0**2, 10.0**2]))
+        return model
+    yield "RocketLandingModel", landing, np.asarray(landing().sample(40.0, seed=0).zk)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -105,8 +156,8 @@ def main():
 
     print(f"{args.steps} steps per run, best of {args.repeat}\n")
     print(f"{'model':32s} {'Python':>10s} {'C++ loop':>10s} {'C++ model':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
-    for name, make, z in cases(args.steps):
-        t_py, t_loop, t_cx, dx, dP, used = compare(make, z, args.repeat)
+    for name, make, z, *uk in cases(args.steps):
+        t_py, t_loop, t_cx, dx, dP, used = compare(make, z, args.repeat, *uk)
         twin = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
         print(f"{name:32s} {t_py:8.1f} ms {t_loop:8.1f} ms {twin} {dx:9.1e} {dP:11.1e}")
     print("\nPython: the reference loop. C++ loop: the C++ filter calling the Python model.")
