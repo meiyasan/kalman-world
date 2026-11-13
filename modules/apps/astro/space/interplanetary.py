@@ -31,6 +31,8 @@ import numpy as np
 from ....framework.models.extended import ExtendedKalmanModel
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....framework.control import KalmanController
+from ....framework.models.native import NativeTwin
+from .translunar import _native_integrator, _SPACE_TWIN_CONTRACT
 from .transfers import lambert          # the Lambert solver moved to transfers.py with the package split
 from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
@@ -147,7 +149,7 @@ class InterplanetaryObservable(KalmanObservable):
     X = "Mm"; Y = "Mm"; Z = "Mm"
 
 
-class InterplanetaryModel(ExtendedKalmanModel):
+class InterplanetaryModel(NativeTwin, ExtendedKalmanModel):
     """
     Heliocentric **N-body** interplanetary cruise, general over any *departure → target*
     planet (Mars is the worked example).
@@ -202,6 +204,54 @@ class InterplanetaryModel(ExtendedKalmanModel):
         Q = np.diag([q_pos, q_pos, q_pos, q_vel, q_vel, q_vel]).astype(float)
         R = (track_Mm) ** 2 * np.eye(3)
         super().__init__("PROBE", Q=Q, R=R, fs=self.fs, **kw)
+
+    # ------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Astro::Interplanetary). The
+    # perturbers' table is built from the ephemeris once, at construction, and
+    # crosses as named scalars (body<i>_gm, body<i>_x<k>, ...); the twin
+    # interpolates it as numpy.interp does. A mid-course burn (control=True, or a
+    # TrajectoryControlManeuver) and another integrator stay in Python.
+    # ------------------------------------------------------------------
+    _TWIN_CONTRACT = _SPACE_TWIN_CONTRACT
+
+    def _native_field(self):
+        """The perturber field as the twin reads it, or False when it cannot."""
+        field = self._field
+        if field is None:
+            return None
+        if type(field) is not _PerturberField or type(field).positions is not _PerturberField.positions:
+            return False
+        grid = np.asarray(field.t_grid, dtype=float)
+        step = float(grid[1] - grid[0]) if len(grid) > 1 else 0.0
+        # The twin rebuilds the grid as k * step (numpy.arange's own values).
+        if len(grid) == 0 or not np.array_equal(grid, np.arange(len(grid)) * step):
+            return False
+        return field
+
+    def native_name(self):
+        if _native_integrator(self) is None or self._native_field() is False:
+            return None
+        return "interplanetary"
+
+    def native_parameters(self):
+        field = self._native_field()
+        params = {"gm_sun": GM_SUN, "substeps": float(self.n_sub),
+                  "integrator": float(_native_integrator(self))}
+        if not field:
+            params.update(bodies=0.0, samples=0.0)
+            return params
+        grid = np.asarray(field.t_grid, dtype=float)
+        # bodies and samples first: setting them declares the per-body names.
+        params.update(bodies=float(len(field.bodies)), samples=float(len(grid)),
+                      grid_step=float(grid[1] - grid[0]) if len(grid) > 1 else 0.0)
+        for i, b in enumerate(field.bodies):
+            params[f"body{i}_gm"] = float(field.mu[b])
+            R = np.asarray(field.R[b], dtype=float)
+            for k in range(len(grid)):
+                params[f"body{i}_x{k}"] = R[k, 0]
+                params[f"body{i}_y{k}"] = R[k, 1]
+                params[f"body{i}_z{k}"] = R[k, 2]
+        return params
 
     # --- dynamics ---
     def acceleration(self, r, t):

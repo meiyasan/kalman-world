@@ -49,6 +49,8 @@
 #define KALMAN_APPS_APPS_H
 
 #include "Kalman/Apps/Model.h"
+#include "Kalman/Apps/Astro/Interplanetary.h"
+#include "Kalman/Apps/Astro/TransLunar.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"

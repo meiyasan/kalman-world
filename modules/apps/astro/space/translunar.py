@@ -31,6 +31,8 @@ import numpy as np
 from ....framework.models.extended import ExtendedKalmanModel
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....framework.control import KalmanController
+from ....framework.models.native import NativeTwin
+from ....runtime import astro as _astro
 from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
@@ -117,6 +119,30 @@ def gravity(r, t, moon_phase=0.0, sun_phase=0.0, bodies=("earth", "moon", "sun")
     return a
 
 
+# The C++ twins (libKalmanApps) integrate with the built-in Euler, RK4 or default
+# Dormand-Prince; any other scheme, or a subclass of one, keeps the Python physics.
+_NATIVE_INTEGRATORS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
+
+# What a continuous space model's twin stands in for: the framework's contract plus
+# the hooks its decoded step is made of.
+_SPACE_TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + (
+    "derivative", "acceleration", "substeps", "after_step", "decode_step")
+
+
+def _native_integrator(model):
+    """The C++ IntegratorKind of ``model``'s integrator, or None when it has no twin."""
+    from ....framework.integrator import KalmanIntegrator, _BUILTIN_STEPS
+    integrator = model.default_integrator()
+    name = getattr(integrator, "NATIVE", None)
+    kind = _NATIVE_INTEGRATORS.get(name)
+    if kind is None or type(integrator)._step is not _BUILTIN_STEPS.get(name) \
+            or type(integrator).step is not KalmanIntegrator.step:
+        return None
+    if kind == 2 and (integrator.rtol, integrator.atol, integrator.max_substeps) != (1e-6, 1e-9, 10_000):
+        return None
+    return kind
+
+
 # ===========================================================================
 #  1) Trans-lunar coast — the gravitational catapult (Earth + Moon + Sun)
 # ===========================================================================
@@ -129,7 +155,7 @@ class TransLunarObservable(KalmanObservable):
     X = "Mm"; Y = "Mm"; Z = "Mm"
 
 
-class TransLunarModel(ExtendedKalmanModel):
+class TransLunarModel(NativeTwin, ExtendedKalmanModel):
     """
     Restricted four-body trans-lunar model (Earth + Moon + Sun).
 
@@ -169,6 +195,27 @@ class TransLunarModel(ExtendedKalmanModel):
         Q = np.diag([q_pos, q_pos, q_pos, q_vel, q_vel, q_vel]).astype(float)
         R = (track_km * KM) ** 2 * np.eye(3)
         super().__init__("ROCKET", Q=Q, R=R, fs=self.fs, **kw)
+
+    # ------------------------------------------------------------------
+    # C++ twin (libKalmanApps: Kalman::Apps::Astro::TransLunar). The Moon and the
+    # Sun ride on circular orbits given by a formula, so every configuration has
+    # one, ephemeris-seeded phases included; another integrator stays in Python.
+    # ------------------------------------------------------------------
+    _TWIN_CONTRACT = _SPACE_TWIN_CONTRACT
+
+    def native_name(self):
+        if _native_integrator(self) is None:
+            return None
+        return "translunar"
+
+    def native_parameters(self):
+        return {"gm_earth": GM_EARTH, "gm_moon": GM_MOON, "gm_sun": GM_SUN,
+                "d_moon": D_MOON, "d_sun": D_SUN,
+                "omega_moon": _astro.OMEGA_MOON, "omega_sun": _astro.OMEGA_SUN,
+                "moon_phase": self.moon_phase, "sun_phase": self.sun_phase,
+                "earth": float("earth" in self.bodies), "moon": float("moon" in self.bodies),
+                "sun": float("sun" in self.bodies),
+                "substeps": float(self.n_sub), "integrator": float(_native_integrator(self))}
 
     # --- dynamics ---
     def acceleration(self, r, t):
