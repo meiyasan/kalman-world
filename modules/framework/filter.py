@@ -178,6 +178,8 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             self._forward_twin(twin, zk, uk, uk_fn)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
+        elif self._matrices_eligible(uk_fn):
+            self._forward_matrices(zk, uk)
         elif self._callback_eligible(uk_fn):
             self._forward_callback(zk, uk, uk_fn)
         else:
@@ -226,10 +228,51 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         handle_of = getattr(self._model, "native_handle", None)
         if handle_of is None:
             return None
-        from .engines.extended import ExtendedKalmanEngine
-        if type(self.engine) is not ExtendedKalmanEngine:
+        if self._twin_engine() is None:
             return None
         return handle_of()
+
+    def _twin_engine(self):
+        """The C++ engine that stands for this filter's engine on a C++ model, or None."""
+        from .engines.extended import ExtendedKalmanEngine
+        from .engines.linear import LinearKalmanEngine
+        return {ExtendedKalmanEngine: "extended", LinearKalmanEngine: "linear"}.get(type(self.engine))
+
+    # ------------------------------------------------------------------
+    # A model written in Python that is its matrices, constant or functions
+    # of time: the whole pass runs in Kalman::Filter on a C++ model holding
+    # them (Kalman::Models::Tabulated). Matrices that are functions of time
+    # are tabulated over the samples of the run: the Python model is asked
+    # for them once per sample, as the loop would, and for nothing else.
+    # ------------------------------------------------------------------
+    def _matrices_eligible(self, uk_fn) -> bool:
+        if uk_fn is not None:
+            return False
+        from .models import native
+        from .constants import KalmanStructureKind
+        model = self._model
+        # The linear engine, or the extended one: on a model of matrices the two
+        # are the same arithmetic (the Jacobian of F x is F).
+        if not native.native_loop_enabled() or self._twin_engine() is None:
+            return False
+        if isinstance(model, native.NativeModel) or np.dtype(getattr(model, "dtype", np.float64)) != np.float64:
+            return False
+        return model.structure in (KalmanStructureKind.TIME_VARYING, KalmanStructureKind.MATRICES)
+
+    def _forward_matrices(self, zk, uk):
+        from ..native import _stand_in
+        from .native import core, as_contiguous
+        from .constants import KalmanStructureKind
+        model = self._model
+        n, m, l = model.n, model.m, model.l
+        handle = _stand_in(model, model.structure, False, len(zk))
+        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))
+        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))
+        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+        out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, l, zk,
+                              uk[:len(zk)] if l > 0 else None)
+        self._store_pass(out, zk, uk)
 
     def _closed_loop_eligible(self) -> bool:
         """A controller function can drive the C++ loop when the model takes a control."""
@@ -252,14 +295,14 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
                    "set_t0")
 
         if uk_fn is not None:
-            out = core.run_filter(handle, core.create_engine("extended"), n, m, model.l, zk, control=uk_fn)
+            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, model.l, zk, control=uk_fn)
             uk = out["controls"]
         elif model.l > 0:
             # One command per measurement, as the Python loop reads them (a longer
             # program is cut, like the loop that stops at the last measurement).
-            out = core.run_filter(handle, core.create_engine("extended"), n, m, model.l, zk, uk[:len(zk)])
+            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, model.l, zk, uk[:len(zk)])
         else:
-            out = core.run_filter(handle, core.create_engine("extended"), n, m, 0, zk)
+            out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, 0, zk)
         self._store_pass(out, zk, uk)
 
     # ------------------------------------------------------------------

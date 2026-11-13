@@ -106,9 +106,32 @@ def _plugin_of(name: str) -> str:
     return (library[3:] if library.startswith("lib") else library).split(".")[0]
 
 
-def _stand_in(model, structure, linearize):
-    """A C++ model of matrices holding what the Python model ``model`` states, so
-    that the one exporter (Kalman::IO::ModelFile) writes it."""
+def _tabulate(model, steps):
+    """F, H, Q and R of a model whose matrices are functions of time, over
+    ``steps`` samples: ``{name: array (steps, rows, columns)}``.
+
+    Each function is called once per sample, sample after sample, in the order
+    the filter's loop asks for them (F, Q, H, R) and at the times it reaches by
+    adding dt. A function is meant to depend on t alone; one that keeps a count
+    of its calls still sees the sequence it would in the loop."""
+    import numpy as np
+    n, m = int(model.n), int(model.m)
+    t, dt = float(getattr(model, "t0", 0.0) or 0.0), 1.0 / float(model.fs or 1.0)
+    out = {k: [] for k in "FQHR"}
+    for _ in range(int(steps)):
+        out["F"].append(np.asarray(model.F(t=t), dtype=float).reshape(n, n))
+        out["Q"].append(np.asarray(model.Q(t=t), dtype=float).reshape(n, n))
+        out["H"].append(np.asarray(model.H(t=t), dtype=float).reshape(m, n))
+        out["R"].append(np.asarray(model.R(t=t), dtype=float).reshape(m, m))
+        t += dt
+    return {k: np.ascontiguousarray(np.stack(v)) for k, v in out.items()}
+
+
+def _stand_in(model, structure, linearize, steps=0):
+    """A C++ model of matrices (Kalman::Models::Tabulated) holding what the
+    Python model ``model`` states: what the exporter writes, and what the filter
+    runs for a model whose matrices change with time (``steps`` samples of them
+    are then tabulated)."""
     import numpy as np
     from .framework.constants import KalmanStructureKind as S
     L, ffi = _core.require(), _core.ffi
@@ -127,6 +150,8 @@ def _stand_in(model, structure, linearize):
         _core.check(fn(handle, *args, _core.cdptr(array)), f"export: {what}")
 
     t0 = float(getattr(model, "t0", 0.0) or 0.0)
+    tables = _tabulate(model, steps) if (structure is S.TIME_VARYING and steps and not linearize) else None
+    first = (lambda k, call: tables[k][0]) if tables is not None else (lambda k, call: call())
     if getattr(model, "fs", None):
         _core.check(L.kalman_model_set_sample_rate(handle, float(model.fs)), "export: fs")
     _core.check(L.kalman_model_set_t0(handle, t0), "export: t0")
@@ -134,8 +159,8 @@ def _stand_in(model, structure, linearize):
     put(L.kalman_model_set_x0, x0, "x0")
     if getattr(model, "P0", None) is not None:
         put(L.kalman_model_set_P0, flat(model.P0, (n, n)), "P0")
-    put(L.kalman_model_set_Q, flat(model.Q(t=t0), (n, n)), "Q")
-    put(L.kalman_model_set_R, flat(model.R(t=t0), (m, m)), "R")
+    put(L.kalman_model_set_Q, flat(first("Q", lambda: model.Q(t=t0)), (n, n)), "Q")
+    put(L.kalman_model_set_R, flat(first("R", lambda: model.R(t=t0)), (m, m)), "R")
 
     for state, enum, count in ((1, model.states, n), (0, model.observables, m)):
         members = list(enum)
@@ -150,12 +175,18 @@ def _stand_in(model, structure, linearize):
         return handle
 
     # The matrices: the model's own, or for a model given by code its Jacobians at x0.
-    put(L.kalman_model_set_matrix, flat(model.F(x=model.x0, t=t0) if structure is S.MAPS else model.F(t=t0), (n, n)),
-        "F", b"F")
-    put(L.kalman_model_set_matrix, flat(model.H(x=model.x0, t=t0) if structure is S.MAPS else model.H(t=t0), (m, n)),
-        "H", b"H")
+    put(L.kalman_model_set_matrix, flat(model.F(x=model.x0, t=t0) if structure is S.MAPS
+                                        else first("F", lambda: model.F(t=t0)), (n, n)), "F", b"F")
+    put(L.kalman_model_set_matrix, flat(model.H(x=model.x0, t=t0) if structure is S.MAPS
+                                        else first("H", lambda: model.H(t=t0)), (m, n)), "H", b"H")
     if structure is S.MAPS:
         return handle
+    if tables is not None:
+        # Only what the model gives as a function goes in as a table; the rest is constant.
+        for which, stored in (("F", model._F), ("H", model._H), ("Q", model._Q), ("R", model._R)):
+            if callable(stored):
+                _core.check(L.kalman_model_set_table(handle, which.encode(), int(steps), _core.cdptr(tables[which])),
+                            f"table of {which}")
     if l > 0 and model.B(t=t0) is not None:
         put(L.kalman_model_set_matrix, flat(model.B(t=t0), (n, l)), "B", b"B")
     if model.L(t=t0) is not None:
@@ -168,19 +199,6 @@ def _stand_in(model, structure, linearize):
         _core.check(L.kalman_model_set_noise_intensity(handle, Qc.shape[0], _core.cdptr(np.ascontiguousarray(Qc)),
                                                        _core.cdptr(Lc)), "export: Qc")
     return handle
-
-
-def _fill_tables(model, handle, steps):
-    """One matrix per sample for each of F, H, Q, R the Python model gives as a function of time."""
-    import numpy as np
-    L = _core.require()
-    t0, dt = float(getattr(model, "t0", 0.0) or 0.0), 1.0 / float(model.fs)
-    for which, stored, call in (("F", model._F, lambda t: model.F(t=t)), ("H", model._H, lambda t: model.H(t=t)),
-                                ("Q", model._Q, lambda t: model.Q(t=t)), ("R", model._R, lambda t: model.R(t=t))):
-        if callable(stored):
-            table = np.ascontiguousarray(np.stack([np.asarray(call(t0 + k * dt), dtype=float) for k in range(steps)]))
-            _core.check(L.kalman_model_set_table(handle, which.encode(), steps, _core.cdptr(table)),
-                        f"export: table of {which}")
 
 
 def _constructor_values(model):
@@ -269,9 +287,7 @@ def export(model, path: str = None, *, linearize: bool = False, steps: int = 0) 
             params, missing = _constructor_values(model)
             if missing:
                 origin["parameters_not_written"] = missing
-        handle = _stand_in(model, structure, linearize)
-        if structure is S.TIME_VARYING and not linearize:
-            _fill_tables(model, handle, int(steps))
+        handle = _stand_in(model, structure, linearize, int(steps))
 
     args = (registered.encode() if registered else ffi.NULL, plugin.encode() if plugin else ffi.NULL,
             int(bool(linearize)), int(steps),

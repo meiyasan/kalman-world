@@ -574,6 +574,34 @@ the new models. Thus a model written in C++ (in a ROOT+ analysis, for
 example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
 and Unity, agents and other users can then use it as a spec base.
 
+### Models that are their matrices
+
+A model written in Python that is nothing but its matrices needs no twin
+written for it: the framework builds the C++ model itself
+(`Kalman::Models::Tabulated`) and runs the whole pass on it.
+
+| Python model | Runs as |
+|---|---|
+| constant F, H, Q, R on the linear engine | the linear kernel, as before |
+| constant matrices on the extended engine (a plain `KalmanModel(F=, H=)`) | `Tabulated`, C++ extended engine |
+| F, H, Q or R given as functions of time | `Tabulated` with tables: each function is called once per sample of the run, in the loop's order, and the pass runs in C++ |
+| a C++ model used directly (`NativeModel`, a model opened from a `.kw` file) | its own C++ instance, the whole pass in one call |
+
+The calorimeter models run this way. Their matrices change from layer to
+layer; they used to read the layer from a count kept inside `R()`, and now read
+it from the time the filter passes, which is what makes them functions of time
+(and exportable to a `.kw` file with tables). Measured
+(`tests/test_native_matrices.py`): the electromagnetic and hadronic
+reconstructions of notebook 06 agree with the Python loop to 9e-17 relative;
+the power-grid model (a time-varying H) is identical to the bit, 60 ms to
+22 ms over 2000 samples. For the calorimeter the time barely changes (61 to
+56 ms for 26 reconstructions): building the per-layer matrices is the cost, and
+that is the model's own Python.
+
+A time-varying B or L, or a noise coupling M on the measurement, is not
+tabulated: such a model runs the C++ loop and is asked for its matrices at each
+step.
+
 ### Named arrays
 
 A twin is configured through named scalars (`DeclareParameter`). What is not

@@ -1,17 +1,21 @@
-"""The toy model in Python: the same C++ physics, on the same sensor readings.
+"""The toy model from Python: written in C++ and written in Python, on the same readings.
 
-The cooling-coffee model is written once, in C++ (``examples/cxx/toy_plugin.cc``).
-``examples/cxx/toy_sensor.cc`` simulates a test sensor with it, filters the
-readings and writes two CSV files. This script loads the *same compiled model*
-and filters the *same readings* from Python, three ways:
+The cooling-coffee model exists twice, stating the same physics:
+``examples/cxx/toy_plugin.cc`` in C++ and ``examples/python/toy_model.py`` in
+Python. ``examples/cxx/toy_sensor.cc`` simulates a test sensor with the C++
+one, filters the readings and writes two CSV files. This script filters the
+*same readings* three ways and compares each with what the C++ program wrote:
 
-1. ``model.filter(readings)`` — the ordinary Python workflow. The filter, the
-   record and the plots are Python; every evaluation of the model's physics is
-   a call into the C++ class.
-2. ``model.filter_native(readings)`` — the whole pass in C++, in one call.
-3. the estimate the C++ program wrote, read back from its CSV.
+1. the model written in C++, loaded by name: ``model.filter(readings)`` hands
+   the whole pass to C++, so this is the C++ program's own computation;
+2. the model written in Python: the same C++ filter runs the pass and calls
+   back into the Python ``f`` and ``h`` at each step;
+3. the model written in Python with the C++ library left aside
+   (``python_reference()``): the Python loop and the Python arithmetic, the
+   reference the framework's tests compare against.
 
-It prints how far apart the three are, and what the filter learned.
+It prints how far apart they are, how long each took, and what the filter
+learned.
 
     make build && make examples                    # builds the model and the C++ program
     ./var/build/bin/toy_sensor                     # writes toy_sensor.csv, toy_estimate.csv
@@ -31,8 +35,14 @@ except ImportError:                                # running from a checkout tha
     sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", ".."))
     import modules as kalman
 
+import time as clock
+
 native = sys.modules[kalman.__name__ + ".framework.native.core"]
-NativeModel = sys.modules[kalman.__name__ + ".framework.models.native"].NativeModel
+_models = sys.modules[kalman.__name__ + ".framework.models.native"]
+NativeModel, python_reference = _models.NativeModel, _models.python_reference
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from toy_model import CoolingCoffeeModel           # noqa: E402  the same model, written in Python
 
 
 def load_csv(path):
@@ -59,26 +69,45 @@ def main():
     time, true_T, true_k, readings = sensor.T
     cxx = load_csv(os.path.join(args.directory, "toy_estimate.csv"))
 
-    # --- 1. Python workflow, C++ physics ------------------------------------------
-    record = coffee.filter(readings.reshape(-1, 1))
-    python_x = np.asarray(record.xk)
+    readings = readings.reshape(-1, 1)
 
-    # --- 2. the whole pass in C++ -------------------------------------------------
-    fused_x = np.asarray(coffee.filter_native(readings.reshape(-1, 1)).xk)
+    def timed(run, repeat=3):
+        best = float("inf")                        # the best of a few runs: the first one loads and warms up
+        for _ in range(repeat):
+            start = clock.perf_counter()
+            record = run()
+            best = min(best, (clock.perf_counter() - start) * 1e3)
+        return record, np.asarray(record.xk).reshape(len(readings), 2), best
 
-    # --- 3. compare with what the C++ program computed -----------------------------
+    # --- 1. the model written in C++: the whole pass in C++ -------------------------
+    record, python_x, ms_cxx = timed(lambda: coffee.filter(readings))
+
+    # --- 2. the model written in Python, run by the C++ filter ----------------------
+    written = CoolingCoffeeModel("thermometer", room=21.0)
+    _, written_x, ms_written = timed(lambda: written.filter(readings))
+
+    # --- 3. the model written in Python, with the Python loop -----------------------
+    with python_reference():
+        _, reference_x, ms_reference = timed(lambda: CoolingCoffeeModel("thermometer", room=21.0).filter(readings))
+
+    # --- compare with what the C++ program computed ---------------------------------
     cxx_x = cxx[:, 1:3]
     scale = np.max(np.abs(cxx_x), axis=0)          # compare T and k each on its own scale
+    readings = readings.reshape(-1)
+
+    def apart(x):
+        return (f"T {np.max(np.abs(x[:, 0] - cxx_x[:, 0])) / scale[0]:.1e}"
+                f"   k {np.max(np.abs(x[:, 1] - cxx_x[:, 1])) / scale[1]:.1e}")
+
     print(f"sensor  : {len(readings)} readings, thermometer error "
           f"{np.sqrt(np.mean((readings - true_T) ** 2)):.3f} degC (RMS)")
     print(f"filter  : temperature error {np.sqrt(np.mean((python_x[:, 0] - true_T) ** 2)):.3f} degC (RMS)")
     sigma_k = float(np.sqrt(np.asarray(record.Pk)[-1, 1, 1]))
     print(f"learned : k = {python_x[-1, 1]:.6f} +/- {sigma_k:.6f} /s   (truth {true_k[-1]:.6f})")
     print("agreement with the C++ program (largest difference, relative to the largest value):")
-    print(f"    Python filter, C++ model : T {np.max(np.abs(python_x[:, 0] - cxx_x[:, 0])) / scale[0]:.1e}"
-          f"   k {np.max(np.abs(python_x[:, 1] - cxx_x[:, 1])) / scale[1]:.1e}")
-    print(f"    fused C++ pass           : T {np.max(np.abs(fused_x[:, 0] - cxx_x[:, 0])) / scale[0]:.1e}"
-          f"   k {np.max(np.abs(fused_x[:, 1] - cxx_x[:, 1])) / scale[1]:.1e}")
+    print(f"    model in C++                      : {apart(python_x)}   ({ms_cxx:.1f} ms)")
+    print(f"    model in Python, C++ filter       : {apart(written_x)}   ({ms_written:.1f} ms)")
+    print(f"    model in Python, Python filter    : {apart(reference_x)}   ({ms_reference:.1f} ms)")
 
     if args.plot:
         import matplotlib
@@ -94,7 +123,7 @@ def main():
         top.fill_between(minutes, python_x[:, 0] - 2 * sigma_T, python_x[:, 0] + 2 * sigma_T,
                          color="tab:blue", alpha=0.2, label="estimate ± 2σ")
         top.set_ylabel("temperature [°C]"); top.legend(fontsize=8); top.grid(alpha=0.3)
-        top.set_title("A cooling cup of coffee: one C++ model, filtered from Python")
+        top.set_title("A cooling cup of coffee: the model written in C++, filtered from Python")
         bottom.plot(minutes, true_k * 1e3, "k-", lw=1.5, label="true cooling rate")
         bottom.plot(minutes, python_x[:, 1] * 1e3, "-", color="tab:red", lw=1.2, label="learned by the filter")
         bottom.fill_between(minutes, (python_x[:, 1] - 2 * sig_k) * 1e3, (python_x[:, 1] + 2 * sig_k) * 1e3,

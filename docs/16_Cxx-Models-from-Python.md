@@ -138,13 +138,18 @@ the Python ones to about one part in a hundred million.
 
 ## The toy: one model, two languages
 
-The files:
+The same model is kept written twice, once in each language, as the worked
+example of both ways to write one:
 
 | File | What it is |
 |---|---|
-| `examples/cxx/toy_plugin.cc` | the model, written once, built as `libKalmanPlugin_toy` |
-| `examples/cxx/toy_sensor.cc` | a C++ program: simulates the sensor, filters, writes CSV |
-| `examples/python/toy_sensor.py` | a Python script: the same model on the same readings |
+| `examples/cxx/toy_plugin.cc` | the model written in C++, built as `libKalmanPlugin_toy` |
+| `examples/python/toy_model.py` | the same model written in Python, line for line |
+| `examples/cxx/toy_sensor.cc` | a C++ program: simulates the sensor with the C++ model, filters, writes CSV |
+| `examples/python/toy_sensor.py` | a Python script: both models on the same readings, compared |
+
+`tests/test_examples.py` checks that the two state the same thing (one step,
+the measurement, the noise, the initial state) and filter the readings alike.
 
 Run it:
 
@@ -240,13 +245,42 @@ coffee = NativeModel("toy-coffee", "thermometer")
 coffee.set_parameter("room", 21.0)
 print(coffee.parameters())                # {'room': 21.0}
 
-record = coffee.filter(readings)          # Python workflow, C++ physics
-record = coffee.filter_native(readings)   # the whole pass in C++
+record = coffee.filter(readings)          # the whole pass in C++
 coffee.plot(record)
 ```
 
 `coffee` is an ordinary model here. `filter`, `smooth`, `plot`, the diagnostics
 and the JSON API all work on it.
+
+### The model, in Python
+
+`examples/python/toy_model.py` is the same model as a Python class:
+
+```python
+class CoolingCoffeeModel(ExtendedKalmanModel):
+    DIFFERENTIATOR = KalmanDifferentiatorKind.CENTRAL      # as the C++ class linearises
+
+    def __init__(self, sensor_id="thermometer", room=21.0, fs=1.0, **kwargs):
+        self.room = float(room)
+        self.n, self.m, self.l = 2, 1, 0
+        kwargs.setdefault("Q", np.diag([1e-4, 1e-12]))
+        kwargs.setdefault("R", np.array([[0.5 ** 2]]))
+        kwargs.setdefault("x0", np.array([[80.0], [1e-3]]))
+        kwargs.setdefault("P0", np.diag([25.0, 1e-6]))
+        super().__init__(sensor_id, fs=fs, L=np.eye(2), **kwargs)
+
+    def f(self, x, u=None, w=None, t=None):
+        T, k = np.asarray(x, dtype=float).reshape(-1)
+        out = np.array([[self.room + (T - self.room) * np.exp(-k / self.fs)], [k]])
+        return out if w is None else out + np.asarray(w, dtype=float).reshape(2, 1)
+
+    def h(self, x, v=None, t=None):
+        z = np.asarray(x, dtype=float).reshape(-1)[:1].reshape(1, 1)
+        return z if v is None else z + np.asarray(v, dtype=float).reshape(1, 1)
+```
+
+Nothing is compiled. `CoolingCoffeeModel().filter(readings)` is run by the same
+C++ filter, which calls back into `f` and `h` at each step.
 
 ### What you should see
 
@@ -255,14 +289,18 @@ sensor  : 1800 readings, thermometer error 0.486 degC (RMS)
 filter  : temperature error 0.080 degC (RMS)
 learned : k = 0.001964 +/- 0.000035 /s   (truth 0.001977)
 agreement with the C++ program (largest difference, relative to the largest value):
-    Python filter, C++ model : T 0.0e+00   k 1.1e-16
-    fused C++ pass           : T 0.0e+00   k 0.0e+00
+    model in C++                      : T 0.0e+00   k 0.0e+00   (11.1 ms)
+    model in Python, C++ filter       : T 1.3e-13   k 4.7e-12   (90.5 ms)
+    model in Python, Python filter    : T 1.3e-13   k 4.7e-12   (82.5 ms)
 ```
 
-Three things to read from it. The filter is six times more accurate than the
+Four things to read from it. The filter is six times more accurate than the
 thermometer. It learned the cooling rate to within its own error bar, starting
-from a guess that was wrong by a factor of two. And the Python and C++ runs give
-the same numbers, because they are the same compiled model.
+from a guess that was wrong by a factor of two. The model written in C++ gives
+the C++ program's numbers exactly, because it is the same compiled model. And
+the model written in Python agrees to about one part in 1e11, at eight times
+the cost: the price of a model nobody had to compile. (The times were taken on
+a busy machine; the ratio is what to read.)
 
 ## Named parameters
 

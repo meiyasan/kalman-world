@@ -123,6 +123,18 @@ class NativeModel(KalmanModel):
         super().__init__(sensor_id if sensor_id is not None else name,
                          fs=fs, x0=x0.reshape(-1, 1), P0=P0, **kwargs)
 
+    def native_handle(self):
+        """The C++ model itself, so that a filtering pass runs wholly in
+        Kalman::Filter instead of asking for f, h and the matrices step by step.
+        ``None`` for a subclass that rewrites part of the model in Python."""
+        import os
+        if not USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0":
+            return None
+        for name in ("f", "h", "F", "H", "B", "L", "Q", "R"):
+            if name in self.__dict__ or getattr(type(self), name) is not getattr(NativeModel, name):
+                return None
+        return self._handle
+
     # --- plumbing ---------------------------------------------------------------
     def _vec(self, fn, what, *args):
         out = np.empty(self.n if what != "z" else self.m, dtype=np.float64)

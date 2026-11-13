@@ -38,7 +38,7 @@ from typing import List, Optional
 
 from ...framework.models.linear import LinearKalmanModel
 from ...helpers             import van_loan_discretize
-from ...framework.constants import KalmanState, KalmanObservable
+from ...framework.constants import KalmanState, KalmanObservable, KalmanStructureKind
 # The module-level builder went to sampler.py when apps/calorimeter.py was
 # split into this package; the static wrappers below still call the bare name.
 from .sampler import build_measurements, em_shower_profile, hadronic_shower_profile
@@ -67,9 +67,20 @@ def _straight_line_transition(A, dz):
 
 
 class _CaloBase(LinearKalmanModel):
+    # The matrices change from layer to layer, and a layer is a sample: each is a
+    # function of the time t the filter passes (fs = 1, so t is the layer index).
+    STRUCTURE = KalmanStructureKind.TIME_VARYING
+
     @property
     def engine(self):
         return self._engine
+
+    def _layer(self, t=None):
+        """The layer a matrix is asked for: the sample at time ``t``. A call with
+        no time reads the running count (``_step``), as before."""
+        if t is None:
+            return self._step
+        return int(round((float(t) - float(getattr(self, "t0", 0.0) or 0.0)) * float(getattr(self, "fs", 1.0) or 1.0)))
 
     @staticmethod
     def _add_floor(R_layers, sigma_cell):
@@ -118,16 +129,16 @@ class CalorimeterLinearModel(_CaloBase):
         return float(self._z_k[k + 1] - self._z_k[k])
 
     def _F(self, t=None, x=None, u=None):
-        return _straight_line_transition(self._Adz, self._dz(self._step))
+        return _straight_line_transition(self._Adz, self._dz(self._layer(t)))
 
     def _Q(self, t=None):
-        dz = self._dz(self._step)
+        dz = self._dz(self._layer(t))
         Qc = (self._sigma_t ** 2) * np.eye(2)
         _, Q = van_loan_discretize(self._Adz, self._Ldz, Qc, dz)
         return Q
 
     def _R(self, t=None):
-        k = min(self._step, len(self._R_k) - 1)
+        k = min(self._layer(t), len(self._R_k) - 1)
         Rk = self._R_k[k]; self._step += 1
         return Rk
 
@@ -220,22 +231,22 @@ class _CaloEnergyModel(_CaloBase):
                      - self._z_k[min(k, len(self._z_k) - 2)])
 
     def _F(self, t=None, x=None, u=None):
-        return _straight_line_transition(self._Adz, self._dz(self._step))
+        return _straight_line_transition(self._Adz, self._dz(self._layer(t)))
 
     def _Q(self, t=None):
-        dz = self._dz(self._step)
+        dz = self._dz(self._layer(t))
         Qc = (self._sigma_t ** 2) * np.eye(2)
         _, Q = van_loan_discretize(self._Adz, self._Ldz, Qc, dz)
         Q[4, 4] = self._sigma_E ** 2
         return Q
 
     def _H_cb(self, t=None, x=None):
-        fk = float(self._f_k[min(self._step, len(self._f_k) - 1)])
+        fk = float(self._f_k[min(self._layer(t), len(self._f_k) - 1)])
         return np.array([[1., 0., 0., 0., 0.], [0., 1., 0., 0., 0.],
                          [0., 0., 0., 0., fk]])
 
     def _R_cb(self, t=None):
-        k   = min(self._step, len(self._R_xy) - 1)
+        k   = min(self._layer(t), len(self._R_xy) - 1)
         fk  = float(self._f_k[k])
         sig = (self._sigma_s * np.sqrt(fk * self._E_seed) + self._sigma_n) ** 2
         R3  = np.zeros((3, 3)); R3[:2, :2] = self._R_xy[k]
