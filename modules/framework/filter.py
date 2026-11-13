@@ -281,11 +281,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         from .engines.ensemble import EnsembleKalmanEngine
         if type(self.engine) is EnsembleKalmanEngine:
             # Per-member f and h only. A field model's whole-ensemble hooks
-            # (a batched solver, localization, its own initial ensemble) have
-            # no C++ counterpart: with any of them the Python engine runs.
+            # (a batched solver, localization, its own initial ensemble) run in
+            # C++ when it has a twin (libKalmanApps); otherwise the Python engine runs.
             hooks = ("forecast", "observe", "localization", "initial_ensemble")
             if any(callable(getattr(self._model, hook, None)) for hook in hooks):
-                return False
+                return uk_fn is None and self.engine._native_twin(self._model) is not None
             if self.engine._rho_xy is not None or self.engine._rho_yy is not None:
                 return False
         elif type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
@@ -319,6 +319,10 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
             kind = {"engine": "particle", "n_particles": engine.n_particles,
                     "threshold": engine.resample_threshold, "seed": int(np.random.randint(0, 2**31 - 1))}
         elif type(engine).__name__ == "EnsembleKalmanEngine":
+            twin = engine._native_twin(model)
+            if twin is not None:                    # a field model: its hooks run in C++ too
+                self._store_pass(engine._forward_native(model, twin, zk), zk, uk)
+                return
             kind = {"engine": "ensemble", "n_members": engine.n_members, "inflation": engine.inflation,
                     "seed": int(engine.rng.integers(0, 2**31 - 1))}
         else:

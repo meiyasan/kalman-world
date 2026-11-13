@@ -336,7 +336,11 @@ namespace
         return Number(fs) + " Hz, one sample every " + step;
     }
 
-    // One line per component: index, name, unit, then the columns given.
+    // One line per component: index, name, unit, then the columns given. A field
+    // (thousands of cells) shows its first and last components around a count.
+    constexpr std::size_t kListedComponents = 40;
+    constexpr std::size_t kFirstListed = 10, kLastListed = 3;
+
     void Components(const std::vector<Kalman::Model::Component> &components,
                     const std::vector<std::pair<std::string, const std::vector<double> *>> &columns)
     {
@@ -359,8 +363,16 @@ namespace
         std::cout << "    " << Paint("", nullptr, index + 2) << Paint("name", kBold, name + 2)
                   << Paint("unit", kBold, unit + 2);
         tail(cells, kBold);
+        const bool elide = components.size() > kListedComponents;
         for (std::size_t i = 0; i < components.size(); ++i)
         {
+            if (elide && i == kFirstListed)
+            {
+                std::cout << "    " << Paint("...", kDim, index + 2)
+                          << Paint(std::to_string(components.size() - kFirstListed - kLastListed) + " more (--json lists them all)", kDim)
+                          << '\n';
+                i = components.size() - kLastListed;
+            }
             std::cout << "    " << Paint("[" + std::to_string(i) + "]", kDim, index + 2)
                       << Paint(components[i].name, kCyan, name + 2)
                       << Paint(components[i].unit.empty() ? "-" : components[i].unit, kYellow, unit + 2);

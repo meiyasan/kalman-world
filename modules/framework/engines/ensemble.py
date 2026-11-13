@@ -245,6 +245,95 @@ class EnsembleKalmanEngine(KalmanEngine):
         return out
 
     # ------------------------------------------------------------------
+    # The whole pass in C++, for a field model with a twin in libKalmanApps
+    # (Kalman::Apps::Weather::KolmogorovFlow): the forecast of the ensemble,
+    # its observation, the tapers, the analysis and the loop over the cycles
+    # run there. The draws are made here, by this engine's numpy generator,
+    # in the order the Python steps take them, so a seeded run is the same
+    # run whoever does the arithmetic. The initial ensemble is the one
+    # reset() drew (from the model's climatology).
+    # ------------------------------------------------------------------
+    def _native_twin(self, model, Q=None):
+        """The configured C++ twin of ``model`` when the pass can run in C++, else
+        ``None``: another engine class, the reference path, a model with no twin
+        for its configuration, or a ``Q`` that is not diagonal."""
+        from ..models import native
+        if type(self) is not EnsembleKalmanEngine or not native.native_loop_enabled():
+            return None
+        handle_of = getattr(model, "native_handle", None)
+        handle = handle_of() if callable(handle_of) else None
+        if handle is None:
+            return None
+        if self._process_variance(model, Q) is None:
+            return None
+        return handle
+
+    @staticmethod
+    def _process_variance(model, Q=None):
+        """The diagonal of ``Q`` (its value at the start), or ``None`` when ``Q``
+        has off-diagonal terms (the Python steps then run)."""
+        Q = np.asarray(model.Q(t=None) if Q is None else Q, dtype=np.float64)
+        variance = np.diag(Q)
+        if np.count_nonzero(Q) != np.count_nonzero(variance):
+            return None
+        return np.ascontiguousarray(variance)
+
+    def _native_engine(self, model, handle, zk, analyse=True, Q=None):
+        """The C++ engine for one pass over ``zk``: this engine's members, the
+        draws the Python steps would take, and the tapers given to this engine.
+        Pushes the process noise of ``Q`` (the model's by default) to the twin."""
+        from ..native import core
+        if self._members is None:
+            self.reset(model)
+        n, N = model.n, self.n_members
+        variance = self._process_variance(model, Q)
+        core.check(core.lib.kalman_model_set_array(handle, b"process_variance", variance.size, core.cdptr(variance)),
+                   "set_array('process_variance')")
+        # The order of the Python steps: the forecast takes (n, N) when Q is not
+        # zero, the analysis (p, N) for the p channels that arrived.
+        rows = []
+        for z in np.asarray(zk, dtype=np.float64).reshape(len(zk), -1):
+            if variance.any():
+                rows.append(n)
+            if analyse:
+                p = int(np.count_nonzero(~np.isnan(z)))
+                if p:
+                    rows.append(p)
+        normals = self.rng.standard_normal(sum(rows) * N)
+        loc = None if self._localization is None else tuple(self._localization)
+        return core.ensemble_engine(N, self.inflation, self._members, normals, loc)
+
+    def _finish_native(self, engine, model):
+        """Take the members back from the C++ engine; every draw must have been used."""
+        from ..native import core
+        self._members = core.ensemble_members(engine, model.n, self.n_members)
+        left = core.ensemble_normals_left(engine)
+        if left:
+            raise RuntimeError(f"EnsembleKalmanEngine: the C++ pass left {left} draws unused; "
+                               "the Python and C++ steps disagree on the draws they take.")
+
+    def _forward_native(self, model, handle, zk):
+        """The filter pass (``Kalman::Filter`` over the C++ engine and twin): the
+        per-step arrays of :func:`~kalman.framework.native.core.run_filter`."""
+        from ..native import core
+        zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(len(zk), model.m))
+        engine = self._native_engine(model, handle, zk)
+        core.check(core.lib.kalman_model_set_t0(handle, float(model.t0) if model.t0 is not None else 0.0), "set_t0")
+        out = core.run_filter(handle, engine, model.n, model.m, 0, zk)
+        self._finish_native(engine, model)
+        return out
+
+    def _cycle_native(self, model, handle, zk, analyse=True, Q=None):
+        """The data-assimilation cycles (``Kalman::Filters::EnKF::Cycle``): the
+        forecast and analysis means ``(T, n)`` and the spread after each cycle,
+        with no covariance formed."""
+        from ..native import core
+        engine = self._native_engine(model, handle, zk, analyse=analyse, Q=Q)
+        out = core.ensemble_cycle(handle, engine, model.n, model.m, zk, analyse=analyse)
+        self._finish_native(engine, model)
+        return out
+
+    # ------------------------------------------------------------------
     # Standard engine interface (wraps the ensemble steps; adds mean/cov)
     # ------------------------------------------------------------------
     def _predict(self, model, x, P, u=None, t=None, **kw):
