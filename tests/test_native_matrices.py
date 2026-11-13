@@ -263,3 +263,33 @@ class TestFilterFamilies(unittest.TestCase):
             self.assertTrue(issubclass(cls, KalmanFilter) and issubclass(cls, BayesFilter), cls.__name__)
         self.assertTrue(issubclass(ParticleFilter, BayesFilter))
         self.assertFalse(issubclass(ParticleFilter, KalmanFilter))
+
+
+@unittest.skipUnless("ballistic" in native.apps_library_names(), "libKalmanApps is not built")
+class TestSmootherInCxx(unittest.TestCase):
+    """The RTS sweep runs in C++ after an extended pass too (one Jacobian per step)."""
+
+    def test_after_a_twin_and_after_a_time_varying_model(self):
+        from modules.apps.ballistics import BallisticModel
+        from modules.apps.gravitational.gravwave.polarization import PolarizationModel
+        cases = [(lambda: BallisticModel("s", fs=100.0), None),
+                 (lambda: PolarizationModel("s"), None),
+                 (lambda: KalmanModel("s", F=F0, Q=Q0, R=lambda t: np.array([[0.04 * (1 + (t or 0))]]), **KW), Z)]
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for make, z in cases:
+                if z is None:
+                    z = np.asarray(make().sample(300 / make().fs, seed=2).zk)
+                with native.python_reference():
+                    reference = make().filter(z, smooth=True)
+                calls = []
+                original = BayesFilter._backward_native
+                BayesFilter._backward_native = lambda self, N: (calls.append(N), original(self, N))[1]
+                try:
+                    record = make().filter(z, smooth=True)
+                finally:
+                    BayesFilter._backward_native = original
+                self.assertEqual(calls, [len(z)], type(make()).__name__)
+                state, covariance = apart(reference, record)
+                self.assertLess(state, 1e-6, type(make()).__name__)
+                self.assertLess(covariance, 1e-5, type(make()).__name__)

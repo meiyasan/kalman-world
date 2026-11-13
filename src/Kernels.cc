@@ -247,6 +247,35 @@ void kf_backward_rts(int n, int N,
     }, {{x_smooth, steps * nn}, {P_smooth, steps * nn * nn}});
 }
 
+void kf_backward_rts_steps(int n, int N,
+                      const double *x_post, const double *P_post,
+                      const double *x_prior, const double *P_prior,
+                      const double *F,
+                      double *x_smooth, double *P_smooth)
+{
+    const std::size_t nn = static_cast<std::size_t>(n);
+    const std::size_t steps = N > 0 ? static_cast<std::size_t>(N) : 0;
+    Guard([&] {
+        if (N <= 0) throw std::invalid_argument("kf_backward_rts_steps: N must be positive");
+        const Kalman::Engines::Linear engine;
+        // The last posterior is already the smoothed estimate; walk backwards from it.
+        std::memcpy(x_smooth + (steps - 1) * nn, x_post + (steps - 1) * nn, nn * sizeof(double));
+        std::memcpy(P_smooth + (steps - 1) * nn * nn, P_post + (steps - 1) * nn * nn, nn * nn * sizeof(double));
+        for (std::size_t k = steps - 1; k-- > 0;)
+        {
+            Vector xs;
+            Matrix Ps;
+            engine.Smooth(Vec(x_post + k * nn, nn), Mat(P_post + k * nn * nn, nn, nn),
+                          Vec(x_prior + (k + 1) * nn, nn), Mat(P_prior + (k + 1) * nn * nn, nn, nn),
+                          Vec(x_smooth + (k + 1) * nn, nn), Mat(P_smooth + (k + 1) * nn * nn, nn, nn),
+                          Mat(F + (k + 1) * nn * nn, nn, nn), xs, Ps);
+            Out(xs, x_smooth + k * nn);
+            Out(Ps, P_smooth + k * nn * nn);
+        }
+        return 0;
+    }, {{x_smooth, steps * nn}, {P_smooth, steps * nn * nn}});
+}
+
 void pf_weight_update(int n_particles, int m,
                        const double *z, const double *zp,
                        const double *Rinv, double *logw)

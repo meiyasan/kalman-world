@@ -637,6 +637,15 @@ void kf_backward_rts(int n, int N,
                       const double *F,
                       double *x_smooth, double *P_smooth);
 
+/* The same with one transition per step: F holds N matrices, and F[k + 1] is
+   the one that took the posterior of step k to the prior of step k + 1 (the
+   Jacobians an extended pass recorded, the matrices of a time-varying model). */
+void kf_backward_rts_steps(int n, int N,
+                            const double *x_post, const double *P_post,
+                            const double *x_prior, const double *P_prior,
+                            const double *F,
+                            double *x_smooth, double *P_smooth);
+
 /* logw[i] += -0.5 (z - zp[i])^T Rinv (z - zp[i]); zp is n_particles x m. */
 void pf_weight_update(int n_particles, int m,
                        const double *z, const double *zp,

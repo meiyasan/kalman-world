@@ -444,6 +444,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if not isinstance(self.engine, LinearKalmanEngine):
             return False
         model = self._model
+        from .models import native
+        if not native.native_loop_enabled():
+            return False                        # the reference is the Python loop, for linear models too
         # A C++ model whose matrices change with time (one read from a file with
         # tables) holds no Python callable to give it away: it says so itself.
         from .constants import KalmanStructureKind
@@ -527,25 +530,31 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         return self.get_record(smooth=True, **kwargs)
 
     # ------------------------------------------------------------------
-    # C-accelerated RTS smoother: valid only when the transition matrix is
-    # constant across the run (so a single F applies to every step), which
-    # is the one assumption ``kf_backward_rts`` makes. That is checked on the
-    # transitions the forward pass recorded, not on how the model declares F:
-    # a nonlinear model has no stored F at all, and its Jacobian changes at
-    # every step.
+    # The RTS sweep in C++, over the transitions the forward pass recorded:
+    # ``kf_backward_rts`` when one F served the whole run, and
+    # ``kf_backward_rts_steps`` when each step had its own (a nonlinear
+    # model's Jacobians, a time-varying F).
     # ------------------------------------------------------------------
     def _native_backward_eligible(self) -> bool:
         from .native import HAS_C_ACCEL
-        if not HAS_C_ACCEL or not self.transition:
+        from .models import native
+        from .engine import KalmanEngine
+        if not HAS_C_ACCEL or not self.transition or not native.native_loop_enabled():
             return False
-        first = self.transition[0]
-        return all(F is first for F in self.transition)
+        # The sweep in C++ is the RTS step of KalmanEngine: an engine with a
+        # smoothing step of its own keeps it.
+        return type(self.engine)._smooth is KalmanEngine._smooth
 
     def _backward_native(self, N):
         from .native import lib, as_contiguous, dptr
 
         n = self.model.n
-        F = as_contiguous(self.transition[0])
+        # One transition for the whole run (a constant-matrix model), or one per
+        # step: the Jacobians an extended pass recorded, a time-varying F.
+        first = self.transition[0]
+        constant = all(F is first for F in self.transition)
+        F = as_contiguous(first if constant else np.array([np.asarray(F, dtype=float) for F in self.transition]))
+        sweep = lib.kf_backward_rts if constant else lib.kf_backward_rts_steps
         x_post  = as_contiguous(np.array([x.reshape(-1) for x, _ in self.posterior]))
         P_post  = as_contiguous(np.array([P for _, P in self.posterior]))
         x_prior = as_contiguous(np.array([x.reshape(-1) for x, _ in self.prior]))
@@ -554,7 +563,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         x_smooth = np.empty((N, n), dtype=np.float64)
         P_smooth = np.empty((N, n, n), dtype=np.float64)
 
-        lib.kf_backward_rts(
+        sweep(
             n, N,
             dptr(x_post), dptr(P_post),
             dptr(x_prior), dptr(P_prior),

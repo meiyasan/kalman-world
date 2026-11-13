@@ -281,6 +281,11 @@ void kf_forward_linear(int n, int m, int l, int N,
                         double *x_prior, double *P_prior,
                         double *x_post, double *P_post,
                         double *innovations);
+void kf_backward_rts_steps(int n, int N,
+                            const double *x_post, const double *P_post,
+                            const double *x_prior, const double *P_prior,
+                            const double *F,
+                            double *x_smooth, double *P_smooth);
 void kf_backward_rts(int n, int N,
                       const double *x_post, const double *P_post,
                       const double *x_prior, const double *P_prior,
