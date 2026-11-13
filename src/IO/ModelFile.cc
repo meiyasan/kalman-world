@@ -116,6 +116,15 @@ namespace Kalman::IO
             return table;
         }
 
+        // A number as a person writes it: "1200", not "1200.0".
+        std::string Plain(double v)
+        {
+            std::ostringstream os;
+            os.precision(12);
+            os << v;
+            return os.str();
+        }
+
         std::string TablePath(const std::string &which) { return "tables/" + which + ".f64"; }
     }
 
@@ -352,6 +361,151 @@ namespace Kalman::IO
     }
 
     // -------------------------------------------------------------------------
+    //  Settings
+    // -------------------------------------------------------------------------
+    std::string ModelFile::Identity() const
+    {
+        const Json &spec = fDocument.Has("spec") ? fDocument["spec"] : fDocument;
+        const std::string base = spec.Has("base") ? spec["base"].AsString("spec.base") : std::string("matrices");
+        if (base != "matrices" && base != "continuous") return base;
+        return spec.Has("name") ? spec["name"].AsString("spec.name") : std::string("model");
+    }
+
+    std::string ModelFile::SettingsPath(const std::string &path) { return path + kSettingsSuffix; }
+
+    Json ModelFile::Settings(const Model &model, const std::string &identity)
+    {
+        Json settings = Json::Object();
+        settings.Set("format", kSettingsFormat).Set("format_version", kVersion).Set("for", identity);
+        settings.Set("fs", model.SampleRate());
+        Json parameters = Json::Object();
+        for (const auto &name : model.ParameterNames()) parameters.Set(name, model.Parameter(name));
+        if (!model.ParameterNames().empty()) settings.Set("parameters", parameters);
+        // A model whose noise is stated per unit time keeps Q derived from it: R only.
+        Json noise = Json::Object();
+        if (model.NoiseIntensity().Empty()) noise.Set("Q", Json::From(model.Q(model.T0())));
+        noise.Set("R", Json::From(model.R(model.T0())));
+        settings.Set("noise", noise);
+        settings.Set("initial", Json::Object().Set("x0", Json::From(model.X0())).Set("P0", Json::From(model.P0())));
+        return settings;
+    }
+
+    std::vector<std::string> ModelFile::Apply(Model &model, const Json &settings, const std::string &identity)
+    {
+        if (!settings.IsObject() || !settings.Has("format") || settings["format"].AsString("format") != kSettingsFormat)
+            Bad(std::string("not a settings file: \"format\" is not \"") + kSettingsFormat + "\". A settings file "
+                "holds what changes from a model file (fs, parameters, noise, initial), not a model.");
+        if (settings.Has("format_version") && settings["format_version"].AsNumber("format_version") > kVersion)
+            Bad("the settings are of a later format version than this library reads.");
+        if (settings.Has("for") && settings["for"].AsString("for") != identity)
+            Bad("these settings were written for the model '" + settings["for"].AsString("for") + "', not for '"
+                + identity + "'.");
+        const auto allowed = [](const Json &object, std::initializer_list<const char *> keys, const std::string &where)
+        {
+            for (const auto &member : object.Members(where))
+            {
+                bool known = false;
+                for (const char *k : keys) known = known || member.first == k;
+                if (!known)
+                {
+                    std::string list;
+                    for (const char *k : keys) list += (list.empty() ? "" : ", ") + std::string(k);
+                    Bad("'" + member.first + "' is not a setting" + (where.empty() ? "" : " of " + where)
+                        + " (settings are: " + list + "). A settings file cannot change what the model is.");
+                }
+            }
+        };
+        allowed(settings, {"format", "format_version", "for", "fs", "parameters", "noise", "initial"}, "");
+
+        std::vector<std::string> changed;
+        const auto differs = [](const Matrix &A, const Matrix &B) { return !Same(A, B); };
+        if (settings.Has("parameters"))
+            for (const auto &p : settings["parameters"].Members("parameters"))
+            {
+                const double value = p.second.AsNumber("parameters." + p.first);
+                if (model.Parameter(p.first) == value) continue;     // throws for an unknown name
+                model.SetParameter(p.first, value);
+                changed.push_back(p.first + " = " + Plain(value));
+            }
+        if (settings.Has("fs"))
+            if (const double fs = settings["fs"].AsNumber("fs"); fs != model.SampleRate())
+            {
+                model.SetSampleRate(fs);
+                changed.push_back("fs = " + Plain(fs));
+            }
+        if (settings.Has("noise"))
+        {
+            const Json &noise = settings["noise"];
+            allowed(noise, {"Q", "R"}, "noise");
+            if (noise.Has("Q"))
+                if (const Matrix Q = noise["Q"].AsMatrix("noise.Q"); differs(Q, model.Q(model.T0())))
+                {
+                    model.SetQ(Q);
+                    changed.push_back("Q");
+                }
+            if (noise.Has("R"))
+                if (const Matrix R = noise["R"].AsMatrix("noise.R"); differs(R, model.R(model.T0())))
+                {
+                    model.SetR(R);
+                    changed.push_back("R");
+                }
+        }
+        if (settings.Has("initial"))
+        {
+            const Json &initial = settings["initial"];
+            allowed(initial, {"x0", "P0"}, "initial");
+            if (initial.Has("x0"))
+            {
+                const Vector x0 = initial["x0"].AsVector("initial.x0");
+                bool same = x0.Size() == model.X0().Size();
+                for (std::size_t i = 0; same && i < x0.Size(); ++i) same = x0(i) == model.X0()(i);
+                if (!same)
+                {
+                    model.SetInitialState(x0);
+                    changed.push_back("x0");
+                }
+            }
+            if (initial.Has("P0"))
+                if (const Matrix P0 = initial["P0"].AsMatrix("initial.P0"); differs(P0, model.P0()))
+                {
+                    model.SetInitialCovariance(P0);
+                    changed.push_back("P0");
+                }
+        }
+        model.CheckShapes();
+        return changed;
+    }
+
+    ModelFile::Opened ModelFile::Open(const std::string &path, bool settings)
+    {
+        const ModelFile file = Load(path);
+        if (file.fDocument.Has("format") && file.fDocument["format"].AsString("format") == kSettingsFormat)
+            Bad("'" + path + "' is a settings file, not a model: open the model file it sits beside.");
+        Opened opened;
+        opened.model = file.Import();
+        opened.kind = file.Kind();
+        opened.tables = file.HasTables();
+        const std::string beside = SettingsPath(path);
+        if (settings)
+            if (std::ifstream in(beside, std::ios::binary); in)
+            {
+                std::ostringstream buffer;
+                buffer << in.rdbuf();
+                try { opened.changed = Apply(*opened.model, Json::Parse(buffer.str()), file.Identity()); }
+                catch (const std::exception &e) { Bad("'" + beside + "': " + e.what()); }
+                // A tabulated matrix is read from its table: a constant would be ignored without a word.
+                if (const auto *tabulated = dynamic_cast<const Models::Tabulated *>(opened.model.get()))
+                    for (const char *which : {"Q", "R"})
+                        if (!tabulated->Table(which).empty()
+                            && std::find(opened.changed.begin(), opened.changed.end(), which) != opened.changed.end())
+                            Bad("'" + beside + "': " + which + " changes with time in '" + path + "' (it is a table), "
+                                "so one constant cannot replace it.");
+                opened.settings = beside;
+            }
+        return opened;
+    }
+
+    // -------------------------------------------------------------------------
     //  Files
     // -------------------------------------------------------------------------
     std::string ModelFile::Bytes() const
@@ -369,6 +523,10 @@ namespace Kalman::IO
         if (plain && HasTables())
             Bad("this model has tables, so its JSON is not the whole model: write it as one archive ('"
                 + std::string(kExtension) + "'), not as '" + path + "'.");
+        const std::string reserved = std::string(kExtension) + kSettingsSuffix;
+        if (path.size() >= reserved.size() && path.compare(path.size() - reserved.size(), reserved.size(), reserved) == 0)
+            Bad("'" + path + "' is the name of a settings file (what changes from a '" + kExtension + "' file), and "
+                "this is a whole model: write it as '" + kExtension + "', or as plain JSON under another name.");
         const std::string bytes = plain ? Text() : Bytes();
         std::ofstream out(path, std::ios::binary | std::ios::trunc);
         out.write(bytes.data(), static_cast<std::streamsize>(bytes.size()));

@@ -9,14 +9,19 @@
  *                                 noise), the sample rate, dynamics, parameters
  *     kalman model FILE           the same for a model file
  *     kalman export NAME|FILE     write a model out (see Kalman::IO::ModelFile): to -o FILE
- *                                 (.kalman: one archive; .kalman.json: plain JSON), or
- *                                 its model.json on the standard output
+ *                                 (.kw: one archive; another name ending in .json: plain
+ *                                 JSON), or its model.json on the standard output
+ *     kalman settings FILE.kw     write FILE.kw.json, the settings file beside a model
+ *                                 file (what is changed from it), or update it with --set
  *     kalman plugins              the libraries the models came from
  *     kalman version
  *
  * Export options: --linearize (the Jacobians at the initial state, as a
  * matrices model), --steps N (samples to tabulate for a time-varying model),
  * --set NAME=VALUE (a parameter, repeatable).
+ *
+ * A model file is opened with the settings file beside it (FILE.kw.json) when
+ * there is one; --no-settings leaves it out.
  *
  * Options: --json (machine-readable), --plugin FILE|NAME (load a plugin first,
  * repeatable), --no-apps (do not load libKalmanApps), --color auto|always|never
@@ -39,6 +44,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <filesystem>
+#include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -57,6 +63,8 @@ namespace
         double fs = 0.;
         std::string dynamics, structure, engine, differentiator, integrator;
         std::string file, kind;         // the file it was read from and what that file holds, if any
+        std::string settings;           // the settings file applied, and
+        std::vector<std::string> changed;   // what it changed
         std::size_t substeps = 1;
         bool processThroughMap = false, measurementThroughMap = false;
         bool noiseIntensity = false;    // Q stated per unit time and decoded for the sample rate
@@ -177,6 +185,13 @@ namespace
         return os.str();
     }
 
+    std::string QuoteList(const std::vector<std::string> &v)
+    {
+        std::string out = "[";
+        for (std::size_t i = 0; i < v.size(); ++i) out += (i ? ", " : "") + Quote(v[i]);
+        return out + "]";
+    }
+
     std::string JsonNumber(double v)
     {
         if (!std::isfinite(v)) return "null";
@@ -229,6 +244,9 @@ namespace
                << ", \"version\": " << Quote(s.version)
                << ", \"Q_diagonal\": " << JsonList(s.q) << ", \"Q_is_diagonal\": " << (s.qFull ? "false" : "true")
                << ", \"R_diagonal\": " << JsonList(s.r) << ", \"R_is_diagonal\": " << (s.rFull ? "false" : "true")
+               << ", \"file\": " << (s.file.empty() ? "null" : Quote(s.file))
+               << ", \"settings\": " << (s.settings.empty() ? "null" : Quote(s.settings))
+               << ", \"settings_changed\": " << QuoteList(s.changed)
                << ", \"x0\": " << JsonList(s.x0) << ", \"dt\": " << JsonNumber(s.fs > 0. ? 1. / s.fs : 1.)
                << ", \"state\": " << JsonComponents(s.state)
                << ", \"measurement\": " << JsonComponents(s.measurement) << ", \"parameters\": {";
@@ -358,6 +376,13 @@ namespace
         row("title", s.title + " (version " + s.version + ")");
         row("description", s.description);
         if (!s.file.empty()) row("file", s.file + " (" + s.kind + ")");
+        if (!s.settings.empty())
+        {
+            std::string what;
+            for (const auto &c : s.changed) what += (what.empty() ? "" : ", ") + c;
+            row("settings", s.settings + (what.empty() ? " (changes nothing)" : " (changes " + what + ")"),
+                what.empty() ? nullptr : kMagenta);
+        }
         else row("from", s.plugin.empty() ? "this program" : s.plugin);
         row("sample rate", Rate(s.fs));
         row("dynamics", s.dynamics, DynamicsStyle(s.dynamics));
@@ -427,19 +452,23 @@ namespace
             << "usage: kalman [models [PATTERN] | model NAME|FILE | plugins | version] [--json]\n"
                "              [--plugin FILE|NAME]... [--no-apps] [--color auto|always|never]\n"
                "       kalman export NAME|FILE [-o FILE] [--linearize] [--steps N] [--set NAME=VALUE]...\n"
+               "       kalman settings FILE.kw [--set NAME=VALUE]...\n"
                "  models     the models this installation can run, one per line (the default)\n"
                "  model      everything one model declares: dimensions, dynamics, noise, parameters\n"
-               "  export     write a model out: -o m.kalman (one archive: model.json and its tables) or\n"
-               "             -o m.kalman.json (plain JSON); without -o, model.json on the standard output.\n"
+               "  export     write a model out: -o m.kw (one archive: model.json and its tables) or\n"
+               "             -o m.json (plain JSON); without -o, model.json on the standard output.\n"
                "             A model of matrices is written whole; a model given by code is written as a\n"
                "             reference to its name and settings, or with --linearize as its Jacobians at\n"
                "             the initial state; a time-varying one needs --steps N\n"
+               "  settings   write m.kw.json beside m.kw: the sample rate, parameters, noise and initial\n"
+               "             state to edit, applied whenever m.kw is opened; --set changes a parameter in it\n"
                "  plugins    the libraries the models came from\n"
                "  version    the version of libKalman\n"
                "  --json     machine-readable output\n"
                "  --plugin   load a plugin first: a file, or a name looked for in KALMAN_PLUGIN_PATH\n"
                "             (beside libKalman when unset)\n"
                "  --no-apps  do not load libKalmanApps\n"
+               "  --no-settings  open a model file without the settings file beside it\n"
                "  --color    auto (the default: on a terminal, unless NO_COLOR is set), always or never\n";
         return code;
     }
@@ -447,7 +476,7 @@ namespace
 
 int main(int argc, char **argv)
 {
-    bool json = false, apps = true, linearize = false;
+    bool json = false, apps = true, linearize = false, useSettings = true;
     std::size_t steps = 0;
     std::string color = "auto", output;
     std::vector<std::pair<std::string, double>> settings;
@@ -458,6 +487,7 @@ int main(int argc, char **argv)
         if (a == "--json") json = true;
         else if (a == "--no-apps") apps = false;
         else if (a == "--linearize") linearize = true;
+        else if (a == "--no-settings") useSettings = false;
         else if (a == "-o" || a == "--output")
         {
             if (i + 1 >= argc) return Usage(2);
@@ -589,11 +619,12 @@ int main(int argc, char **argv)
         {
             try
             {
-                const Kalman::IO::ModelFile file = Kalman::IO::ModelFile::Load(words[1]);
-                const std::unique_ptr<Kalman::Model> model = file.Import();
-                s = Read(model->Name(), model.get());
+                const auto opened = Kalman::IO::ModelFile::Open(words[1], useSettings);
+                s = Read(opened.model->Name(), opened.model.get());
                 s.file = words[1];
-                s.kind = file.Kind() + (file.HasTables() ? ", with tables" : "");
+                s.kind = opened.kind + (opened.tables ? ", with tables" : "");
+                s.settings = opened.settings;
+                s.changed = opened.changed;
             }
             catch (const std::exception &e)
             {
@@ -631,7 +662,7 @@ int main(int argc, char **argv)
             else if (fs::is_regular_file(words[1]))
             {
                 const Kalman::IO::ModelFile file = Kalman::IO::ModelFile::Load(words[1]);
-                model = file.Import();
+                model = std::move(Kalman::IO::ModelFile::Open(words[1], useSettings).model);   // its settings go in
                 if (file.Kind() == "reference") options.registered = file.Spec()["base"].AsString("spec.base");
                 options.origin = file.Document()["origin"];     // where it first came from
             }
@@ -657,6 +688,38 @@ int main(int argc, char **argv)
                 return 1;
             }
             else std::cout << file.Text();
+        }
+        catch (const std::exception &e)
+        {
+            std::cerr << "kalman: " << e.what() << '\n';
+            return 1;
+        }
+        return 0;
+    }
+
+    if (command == "settings")
+    {
+        if (words.size() != 2) return Usage(2);
+        try
+        {
+            using Kalman::IO::ModelFile;
+            const std::string beside = ModelFile::SettingsPath(words[1]);
+            const bool existed = fs::is_regular_file(beside);
+            const ModelFile file = ModelFile::Load(words[1]);
+            // What is there is kept: the model is opened with it, then --set goes on top.
+            const auto opened = ModelFile::Open(words[1]);
+            for (const auto &setting : settings) opened.model->SetParameter(setting.first, setting.second);
+            const std::string text = ModelFile::Settings(*opened.model, file.Identity()).Dump(2) + "\n";
+            std::ofstream out(beside, std::ios::binary | std::ios::trunc);
+            out << text;
+            if (!out) throw std::runtime_error("cannot write '" + beside + "'.");
+            out.close();
+            const auto now = ModelFile::Open(words[1]);
+            std::string what;
+            for (const auto &c : now.changed) what += (what.empty() ? "" : ", ") + c;
+            std::cerr << "kalman: " << (existed ? "updated " : "wrote ") << beside
+                      << (what.empty() ? " (the values of the model file: edit it to change them)"
+                                       : " (changes " + what + ")") << '\n';
         }
         catch (const std::exception &e)
         {

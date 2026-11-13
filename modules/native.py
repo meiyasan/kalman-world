@@ -67,13 +67,14 @@ def export_model(name: str, path: str = None, *, linearize: bool = False, steps:
                  parameters: dict = None) -> dict:
     """Write the registered C++ model ``name`` out and return its ``model.json`` as a dict.
 
-    ``path`` ending in ``.kalman`` gives one archive (``model.json`` and the tables
-    it refers to), ``.kalman.json`` plain JSON; with no path nothing is written.
+    ``path`` ending in ``.kw`` gives one archive (``model.json`` and the tables
+    it refers to), another name ending in ``.json`` plain JSON; with no path nothing
+    is written. (``name.kw.json`` is the settings file of ``name.kw``, not a model.)
     A model of matrices is written whole (``kind`` "complete"). A model given by
     code is written as a "reference" to its name and settings, or, with
     ``linearize``, as its Jacobians at the initial state. A model whose matrices
     change with time needs ``steps``, the number of samples to tabulate, and a
-    ``.kalman`` path. ``parameters`` sets named parameters first.
+    ``.kw`` path. ``parameters`` sets named parameters first.
 
     ``result["spec"]`` is what :mod:`kalman.api` takes.
     """
@@ -102,10 +103,13 @@ def export_model(name: str, path: str = None, *, linearize: bool = False, steps:
 
 
 def read_model_file(path: str) -> dict:
-    """Read a model file: ``{"document": <model.json as a dict>, "tables": {name: array}}``.
+    """Read a model file: ``{"document": <model.json as a dict>, "tables": {name: array},
+    "settings": <the settings file beside it as a dict, or None>}``.
 
-    Takes the archive (``.kalman``) or plain JSON (``.kalman.json``), told apart
-    by content. A table has the shape ``(steps, rows, columns)``: one matrix per
+    Takes the archive (``.kw``) or plain JSON, told apart by content. The settings
+    file is ``path + ".json"``: what is changed from the model file (``fs``,
+    ``parameters``, ``noise``, ``initial``). It is returned, not applied: the C++
+    side applies it when it opens the file (``kalman model``, ``kalman_model_load``). A table has the shape ``(steps, rows, columns)``: one matrix per
     sample for a matrix that changes with time. Needs no C++ library.
     """
     import json
@@ -122,7 +126,14 @@ def read_model_file(path: str) -> dict:
             document = json.load(handle)
     if document.get("format") != "kalman-model":
         raise ValueError(f"{path}: not a model file (\"format\" is not \"kalman-model\").")
-    return {"document": document, "tables": tables}
+    settings = None
+    beside = os.fspath(path) + ".json"
+    if os.path.isfile(beside):
+        with open(beside, encoding="utf-8") as handle:
+            settings = json.load(handle)
+        if settings.get("format") != "kalman-settings":
+            raise ValueError(f"{beside}: not a settings file (\"format\" is not \"kalman-settings\").")
+    return {"document": document, "tables": tables, "settings": settings}
 
 
 def status() -> dict:

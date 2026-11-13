@@ -483,7 +483,7 @@ kalman_model_t *kalman_model_load(const char *path)
     {
         Ok();
         if (!path) throw std::invalid_argument("null path");
-        return new kalman_model{Kalman::IO::ModelFile::Load(path).Import()};
+        return new kalman_model{std::move(Kalman::IO::ModelFile::Open(path).model)};
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }

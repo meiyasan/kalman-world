@@ -192,10 +192,11 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0);      /* n x n 
 /// state; `steps` is the number of samples tabulated for a time-varying model.
 const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
                                      int linearize, int steps);
-/// Write the model to `path`: one archive (.kalman), or plain JSON when the path ends in .json. 0 or -1.
+/// Write the model to `path`: one archive (.kw), or plain JSON when the path ends in .json. 0 or -1.
 int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
                       int linearize, int steps);
-/// Build the model a file describes (archive or JSON), or NULL. Destroy it with kalman_model_destroy().
+/// Build the model a file describes (archive or JSON), or NULL. The settings file beside it
+/// (`path` + ".json"), when there is one, is applied. Destroy it with kalman_model_destroy().
 kalman_model_t *kalman_model_load(const char *path);
 /// "maps", "matrices" or "time-varying matrices": what the model is made of. Never NULL for a valid handle.
 const char *kalman_model_structure(const kalman_model_t *model);

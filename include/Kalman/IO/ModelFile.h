@@ -10,7 +10,7 @@
  * \class Kalman::IO::ModelFile
  * \brief A model written to one file, and read back.
  *
- * \details A `.kalman` file is one archive (Kalman::IO::Archive, a zip) that
+ * \details A `.kw` file ("Kalman World") is one archive (Kalman::IO::Archive, a zip) that
  * holds everything a model file is made of, so its parts cannot be separated
  * or mixed with another model's:
  *
@@ -29,9 +29,20 @@
  * | Maps | `reference`: the registered name, its plugin, parameters, noise, initial state | where the plugin is installed |
  * | any, on request | `linearization`: the Jacobians at one state, as a Matrices model | anywhere, valid near that state |
  *
- * `model.json` alone (no tables) may also be saved as plain JSON, with the
- * extension `.kalman.json`. A file with tables is refused that way: its JSON
- * would not be the whole model.
+ * `model.json` alone (no tables) may also be saved as plain JSON, to a path
+ * ending in `.json`. A file with tables is refused that way: its JSON would
+ * not be the whole model.
+ *
+ * \par Settings: `name.kw.json`
+ * A `.kw` file holds the model with the settings it was written with. To move
+ * away from them without touching it, a settings file sits beside it under the
+ * same name plus `.json`: `car.kw` and `car.kw.json`. It holds only what
+ * changes, among the sample rate, the named parameters, the noise (Q, R) and
+ * the initial state (x0, P0); what it does not mention keeps the value of the
+ * `.kw`. Open() applies it. It is not a model: it cannot change the matrices
+ * or the code, a key it does not know is refused, and it carries the name of
+ * the model it was written for, so the settings of another model are refused
+ * instead of applied.
  *
  * *********************************************
  */
@@ -45,6 +56,7 @@
 
 #include <memory>
 #include <string>
+#include <vector>
 
 namespace Kalman::IO
 {
@@ -53,8 +65,10 @@ namespace Kalman::IO
         public:
             static constexpr const char *kFormat = "kalman-model";
             static constexpr int kVersion = 1;
-            static constexpr const char *kExtension = ".kalman";
-            static constexpr const char *kJsonExtension = ".kalman.json";
+            static constexpr const char *kExtension = ".kw";
+            static constexpr const char *kSettingsFormat = "kalman-settings";
+            /// Added to the path of a `.kw` file: where its settings are looked for.
+            static constexpr const char *kSettingsSuffix = ".json";
             static constexpr const char *kDocument = "model.json";
 
             struct Options
@@ -109,6 +123,41 @@ namespace Kalman::IO
              * \throws std::runtime_error for plain JSON when the file has tables.
              */
             void Save(const std::string &path) const;
+
+            // --- settings: what is changed from the file, kept beside it ---------
+            /// The name a settings file must carry to be applied to this model.
+            std::string Identity() const;
+            /// Where the settings of the model file \p path are looked for: `path + ".json"`.
+            static std::string SettingsPath(const std::string &path);
+            /**
+             * \brief A settings document holding the current values of \p model:
+             * the sample rate, every named parameter, Q, R, x0 and P0. Written
+             * beside a `.kw` it changes nothing; it is the file to edit.
+             */
+            static Json Settings(const Model &model, const std::string &identity);
+            /**
+             * \brief Apply a settings document to \p model.
+             * \return what was changed, one short phrase per value ("mass = 1200", "Q", ...).
+             * \throws std::runtime_error for another format, a key that is not a
+             *         setting, a parameter the model does not have, or settings
+             *         written for a model other than \p identity.
+             */
+            static std::vector<std::string> Apply(Model &model, const Json &settings, const std::string &identity);
+
+            /// What Open() found and did.
+            struct Opened
+            {
+                std::unique_ptr<Model> model;
+                std::string kind;                    ///< of the model file
+                bool tables = false;
+                std::string settings;                ///< the settings file applied, "" when none
+                std::vector<std::string> changed;    ///< what it changed
+            };
+            /**
+             * \brief Load \p path, build its model, and apply the settings file
+             * beside it when there is one (and \p settings is true).
+             */
+            static Opened Open(const std::string &path, bool settings = true);
 
             /// Read an archive or a plain JSON document (told apart by content, not by name).
             static ModelFile Load(const std::string &path);

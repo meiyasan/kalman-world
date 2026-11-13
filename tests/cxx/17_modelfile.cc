@@ -76,6 +76,15 @@ namespace
         return "";
     }
 
+    bool Same(const Matrix &A, const Matrix &B)
+    {
+        if (A.Rows() != B.Rows() || A.Cols() != B.Cols()) return false;
+        for (std::size_t i = 0; i < A.Rows(); ++i)
+            for (std::size_t j = 0; j < A.Cols(); ++j)
+                if (A(i, j) != B(i, j)) return false;
+        return true;
+    }
+
     bool Mentions(const std::string &text, const char *word) { return text.find(word) != std::string::npos; }
 }
 
@@ -137,7 +146,7 @@ int main()
         CHECK(back->Structure() == StructureKind::TimeVarying, "time-varying: read back as time-varying");
         // Not to the bit: the table is taken at t0 + k dt, the filter's clock adds dt k times.
         CHECK_CLOSE(Apart(model, *back), 0., 1e-12, "time-varying: the same estimates, to rounding");
-        CHECK(Mentions(Thrown([&file] { file.Save("fading.kalman.json"); }), "not the whole model"),
+        CHECK(Mentions(Thrown([&file] { file.Save("fading.json"); }), "not the whole model"),
               "time-varying: refuses to be written as JSON alone");
         CHECK(Mentions(Thrown([&file] { ModelFile::FromBytes(file.Text()).Import(); }), "not in the file"),
               "time-varying: the JSON without its tables is refused");
@@ -173,10 +182,32 @@ int main()
     {
         Fixture::ConstantVelocity model(1, 100.);
         const ModelFile file = ModelFile::Export(model);
-        const std::string path = "17_modelfile_test.kalman";
+        const std::string path = "17_modelfile_test.kw";
         file.Save(path);
         const std::unique_ptr<Model> back = ModelFile::Load(path).Import();
         CHECK_CLOSE(Apart(model, *back), 0., 0., "file: saved and loaded");
+
+        // settings beside it: what they hold is changed, the rest is kept
+        const std::string beside = ModelFile::SettingsPath(path);
+        CHECK(beside == path + ".json", "settings: looked for beside the model file");
+        IO::Json settings = ModelFile::Settings(model, file.Identity());
+        CHECK(ModelFile::Apply(*back, settings, file.Identity()).empty(), "settings: the model's own values change nothing");
+        settings = IO::Json::Object();
+        settings.Set("format", ModelFile::kSettingsFormat).Set("for", file.Identity())
+                .Set("noise", IO::Json::Object().Set("R", IO::Json::From(Matrix(1, 1, 9.))));
+        { std::FILE *f = std::fopen(beside.c_str(), "w"); std::fputs(settings.Dump().c_str(), f); std::fclose(f); }
+        const auto opened = ModelFile::Open(path);
+        CHECK(opened.settings == beside && opened.changed == std::vector<std::string>{"R"}, "settings: applied on opening");
+        CHECK_CLOSE(opened.model->R(0.)(0, 0), 9., 0., "settings: R is the settings' R");
+        CHECK(Same(opened.model->Q(0.), model.Q(0.)), "settings: what they do not mention is kept");
+        CHECK(ModelFile::Open(path, false).changed.empty(), "settings: left out on request");
+        CHECK(Mentions(Thrown([&] { ModelFile::Apply(*back, settings, "another-model"); }), "written for the model"),
+              "settings: those of another model are refused");
+        settings.Set("spec", IO::Json::Object());
+        CHECK(Mentions(Thrown([&] { ModelFile::Apply(*back, settings, file.Identity()); }), "is not a setting"),
+              "settings: cannot change what the model is");
+        CHECK(Mentions(Thrown([&] { file.Save(beside); }), "settings file"), "settings: a model is not written under that name");
+        std::remove(beside.c_str());
         std::remove(path.c_str());
         CHECK(Mentions(Thrown([] { ModelFile::FromBytes("{\"format\": \"other\", \"spec\": {}}").Import(); }), "not a model file"),
               "file: another format is refused");

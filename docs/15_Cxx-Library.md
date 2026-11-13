@@ -237,8 +237,8 @@ kalman models ballistic              # names containing "ballistic"
 kalman model car-speed               # everything one model declares
 kalman plugins                       # the libraries the models came from
 kalman --plugin KalmanPlugin_example models
-kalman export car-speed -o car.kalman # write a model to a file (see "Model files")
-kalman model car.kalman              # what a file holds
+kalman export car-speed -o car.kw # write a model to a file (see "Model files")
+kalman model car.kw              # what a file holds
 kalman models --json                 # the same, for a program
 ```
 
@@ -572,18 +572,18 @@ the new models. Thus a model written in C++ (in a ROOT+ analysis, for
 example) is published with one call, `POST /plugins {"name": "KalmanPlugin_mine"}`,
 and Unity, agents and other users can then use it as a spec base.
 
-## Model files: `.kalman`
+## Model files: `.kw`
 
 A model can be written to one file and read back, by the same code for every
 model (`Kalman::IO::ModelFile`, through the `Kalman::Model` interface; nothing
 is written per model).
 
 ```sh
-kalman export constant-velocity -o cv.kalman        # a model of matrices: written whole
-kalman export ballistic -o ballistic.kalman         # a model given by code: a reference
-kalman export ballistic --linearize -o tangent.kalman.json
+kalman export constant-velocity -o cv.kw        # a model of matrices: written whole
+kalman export ballistic -o ballistic.kw         # a model given by code: a reference
+kalman export ballistic --linearize -o tangent.json
 kalman export car-speed --set mass=1200             # model.json on the standard output
-kalman model cv.kalman                              # what a file holds
+kalman model cv.kw                              # what a file holds
 ```
 
 ### What a file can hold
@@ -606,7 +606,7 @@ that overrides `f()` or `h()` declares `Maps`.
 
 ### The format
 
-A `.kalman` file is one zip archive, so the parts of a model cannot be
+A `.kw` file ("Kalman World") is one zip archive, so the parts of a model cannot be
 separated or mixed with another model's, and any zip tool opens it:
 
 | Entry | Holds |
@@ -621,10 +621,55 @@ and MCP servers): `base`, `fs`, `dynamics`, `noise`, `initial`, `labels`,
 The entries are stored, not compressed: the core links no compression library,
 and the files are small. Every entry carries a CRC-32, checked on reading.
 
-A file with no table may also be written as plain JSON, `model.kalman.json`
-(the `model.json` alone). A file with tables is refused that way, since its
-JSON would not be the whole model, and a `model.json` whose tables are missing
-is refused on reading.
+A file with no table may also be written as plain JSON, to a name ending in
+`.json` (the `model.json` alone). A file with tables is refused that way,
+since its JSON would not be the whole model, and a `model.json` whose tables
+are missing is refused on reading.
+
+`.kw` is meant as the one container of Kalman World: `format` in `model.json`
+says what a file holds, so other kinds (records, controllers) can use the same
+archive later without a new extension.
+
+### Settings: `name.kw.json`
+
+A `.kw` file holds the model with the settings it was written with. To move
+away from them without touching it, a settings file sits beside it under the
+same name plus `.json`:
+
+```sh
+kalman export car-speed -o car.kw
+kalman settings car.kw                    # writes car.kw.json: the values of car.kw, to edit
+kalman settings car.kw --set mass=1200    # or change a parameter in it from the command line
+kalman model car.kw                       # opened with its settings; says what they change
+kalman model car.kw --no-settings         # the model file alone
+```
+
+```json
+{
+  "format": "kalman-settings",
+  "format_version": 1,
+  "for": "car-speed",
+  "fs": 20.0,
+  "parameters": {"mass": 1200.0, "power": 150000.0},
+  "noise": {"R": [[4.0]]},
+  "initial": {"x0": [0.0, 0.0]}
+}
+```
+
+| Rule | Why |
+|---|---|
+| It holds only `fs`, `parameters`, `noise` (`Q`, `R`) and `initial` (`x0`, `P0`); what it leaves out keeps the value of the `.kw` | it is settings, not a model |
+| Any other key is refused, with the list of settings | it cannot change the matrices or the code, so it cannot turn one model into another |
+| `for` names the model it was written for; settings for another model are refused | a settings file copied beside the wrong `.kw` is noticed, not applied |
+| A parameter the model does not have is refused | a typo does not pass in silence |
+| A whole model is not written to a name ending in `.kw.json` | that name is the settings file's |
+| A constant `Q` or `R` for a matrix the `.kw` tabulates is refused | the table would be used and the constant ignored |
+
+`kalman model`, `kalman export FILE`, `Kalman::IO::ModelFile::Open()` and
+`kalman_model_load()` apply the settings file when there is one. Exporting an
+opened file writes the settings in, which is how to freeze them into a new
+`.kw`. `kalman.native.read_model_file` returns them under `"settings"` without
+applying them.
 
 ### What is checked
 
@@ -648,8 +693,8 @@ version, is refused.
 
 Kalman::IO::ModelFile::Options options;
 options.registered = "car-speed";                     // for a reference
-Kalman::IO::ModelFile::Export(model, options).Save("car.kalman");
-std::unique_ptr<Kalman::Model> back = Kalman::IO::ModelFile::Load("car.kalman").Import();
+Kalman::IO::ModelFile::Export(model, options).Save("car.kw");
+std::unique_ptr<Kalman::Model> back = Kalman::IO::ModelFile::Load("car.kw").Import();
 ```
 
 From C: `kalman_model_export_json`, `kalman_model_save`, `kalman_model_load`,
@@ -659,8 +704,8 @@ From C: `kalman_model_export_json`, `kalman_model_save`, `kalman_model_load`,
 import kalman.native as native
 from kalman import api
 
-document = native.export_model("car-speed", "car.kalman", parameters={"mass": 1200})
-read = native.read_model_file("car.kalman")           # {"document": ..., "tables": {name: array}}
+document = native.export_model("car-speed", "car.kw", parameters={"mass": 1200})
+read = native.read_model_file("car.kw")           # {"document": ..., "tables": {name: array}}
 model = api.make_model(read["document"]["spec"])      # a reference needs its plugin loaded
 ```
 
@@ -668,7 +713,9 @@ Not covered: models written in Python are not exported by this (only models
 registered with the C++ factory are), and `api.make_model` reads the spec, so
 for a file with tables it builds the model of the first sample; the tables
 are read by `Kalman::IO::ModelFile::Import()` and returned as arrays by
-`read_model_file`.
+`read_model_file`. Likewise `api.make_model` does not apply a settings file:
+export the opened file first (`kalman export car.kw`) to get a spec with the
+settings in.
 
 ## libKalmanApps: the application models in C++
 

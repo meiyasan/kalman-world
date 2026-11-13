@@ -153,7 +153,7 @@ def test_export_a_model_given_by_code_as_a_reference(tmp_path):
     assert document["state"][1] == {"name": "speed", "unit": "m/s"}
 
     # one archive, readable by any zip tool, and by the program itself
-    path = str(tmp_path / "car.kalman")
+    path = str(tmp_path / "car.kw")
     assert _run("export", "car-speed", "-o", path).returncode == 0
     import zipfile
     assert zipfile.ZipFile(path).namelist() == ["model.json"]
@@ -165,7 +165,7 @@ def test_export_a_model_given_by_code_as_a_reference(tmp_path):
 
 
 def test_export_a_linearization_and_feed_it_to_the_api(tmp_path):
-    path = str(tmp_path / "ballistic.kalman.json")
+    path = str(tmp_path / "ballistic.json")
     if _run("export", "ballistic", "--linearize", "-o", path).returncode != 0:
         pytest.skip("libKalmanApps is not beside libKalman")
     import numpy as np
@@ -192,7 +192,7 @@ def test_export_matrices_whole_and_round_trip(tmp_path):
     assert first.returncode == 0, first.stderr
     document = json.loads(first.stdout)
     assert document["kind"] == "complete" and document["spec"]["base"] == "matrices"
-    path = str(tmp_path / "cv.kalman")
+    path = str(tmp_path / "cv.kw")
     assert _run("--no-apps", "--plugin", plugin, "export", "constant-velocity", "-o", path).returncode == 0
     again = _run("--no-apps", "export", path)           # read with no plugin, written again
     assert again.returncode == 0 and again.stdout == first.stdout
@@ -210,8 +210,54 @@ def test_export_from_python(tmp_path):
         pytest.skip("libKalmanApps is not beside libKalman")
     document = native.export_model("storm", parameters={"beta_drift": 3.0})
     assert document["kind"] == "reference" and document["spec"]["dynamics"]["params"]["beta_drift"] == 3.0
-    path = str(tmp_path / "storm.kalman")
+    path = str(tmp_path / "storm.kw")
     assert native.export_model("storm", path, linearize=True)["kind"] == "linearization"
     assert native.read_model_file(path)["document"]["spec"]["base"] == "matrices"
     with pytest.raises(ValueError):
         native.export_model("no-such-model")
+
+
+def test_settings_file_beside_a_model_file(tmp_path):
+    path = str(tmp_path / "car.kw")
+    if _run("export", "car-speed", "-o", path).returncode != 0:
+        pytest.skip("libKalmanApps is not beside libKalman")
+    beside = path + ".json"
+
+    # written from the model file, it changes nothing; it is the file to edit
+    made = _run("settings", path)
+    assert made.returncode == 0 and os.path.isfile(beside)
+    settings = json.load(open(beside))
+    assert settings["format"] == "kalman-settings" and settings["for"] == "car-speed"
+    assert settings["parameters"]["mass"] == 1500 and settings["fs"] == 20
+    sheet = json.loads(_run("model", path, "--json").stdout)
+    assert sheet["settings"] == beside and sheet["settings_changed"] == []
+
+    # moved away from the defaults: a parameter by --set, the noise by hand
+    assert _run("settings", path, "--set", "mass=1200").returncode == 0
+    settings = json.load(open(beside))
+    settings["noise"]["R"] = [[4.0]]
+    json.dump(settings, open(beside, "w"))
+    sheet = json.loads(_run("model", path, "--json").stdout)
+    assert sheet["parameters"]["mass"] == 1200 and sheet["R_diagonal"] == [4.0]
+    assert sheet["settings_changed"] == ["mass = 1200", "R"]
+    assert "changes mass = 1200, R" in _run("model", path).stdout
+    # the model file itself is untouched, and can be opened without its settings
+    plain = json.loads(_run("model", path, "--json", "--no-settings").stdout)
+    assert plain["parameters"]["mass"] == 1500 and plain["R_diagonal"] == [0.25] and plain["settings"] is None
+
+    import kalman.native as native
+    read = native.read_model_file(path)
+    assert read["settings"]["parameters"]["mass"] == 1200
+    assert read["document"]["spec"]["dynamics"]["params"]["mass"] == 1500
+
+    # settings cannot change what the model is, and another model's settings are refused
+    json.dump({**settings, "dynamics": {"F": [[1]]}}, open(beside, "w"))
+    refused = _run("model", path)
+    assert refused.returncode == 1 and "is not a setting" in refused.stderr
+    json.dump({**settings, "for": "storm"}, open(beside, "w"))
+    refused = _run("model", path)
+    assert refused.returncode == 1 and "written for the model 'storm'" in refused.stderr
+    json.dump({**settings, "parameters": {"wings": 2}}, open(beside, "w"))
+    assert _run("model", path).returncode == 1
+    # a whole model is not written under the name of a settings file
+    assert _run("export", "car-speed", "-o", beside).returncode == 1
