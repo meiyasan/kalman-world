@@ -673,6 +673,8 @@ def _run_closed_loop(L, model_handle, engine_handle, n, m, l, zk, N, smooth, con
             Ps = np.frombuffer(ffi.buffer(P, n * n * 8), dtype=np.float64).reshape(n, n).copy()
             nus = np.frombuffer(ffi.buffer(nu, m * 8), dtype=np.float64).reshape(m, 1).copy()
             command = np.asarray(control(xs, Ps, t, nu=nus), dtype=np.float64).reshape(-1)
+            if l == 0:
+                return 0                         # it commands nothing: it only retunes the model
             if command.size != l:
                 raise ValueError(f"the controller returned {command.size} commands, the model takes {l}.")
             ffi.buffer(u, l * 8)[:] = command.tobytes()

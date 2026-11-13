@@ -326,3 +326,36 @@ class TestCompositeWithoutTheLibrary(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@needs_kernels
+class TestControlledInterferometer(unittest.TestCase):
+    """The violin-bank controller retunes the windows' Q as the run goes; the pass
+    still runs on the C++ model of the composite's matrices, with Q pushed at each
+    step, and the controller sees what it sees in the Python loop."""
+
+    def test_violin_bank_controller(self):
+        peaks = [f for band in InterferometerK1.preloaded_peaks("O3GK") for f, _ in band]
+        lines = peaks[::20]
+        z = strain(lines, [1.0] * len(lines), [1e5] * len(lines), 0.1, T=0.25).reshape(-1, 1)
+
+        def run(reference):
+            model = InterferometerK1.from_peaks("O3GK")
+            controller = model.make_controller()
+            if reference:
+                with native.python_reference():
+                    record = KalmanFilter(model).forward(z, uk=controller)
+            else:
+                with mock.patch.object(KalmanFilter, "_forward_matrices", autospec=True,
+                                       side_effect=KalmanFilter._forward_matrices) as spy:
+                    record = KalmanFilter(model).forward(z, uk=controller)
+                self.assertEqual(spy.call_count, 1)
+            log = sum(len(c.scale_log) for a in controller._window_aqrs for c in a._ctrls)
+            return record, log
+
+        (py, log_py), (cx, log_cx) = run(True), run(False)
+        self.assertEqual(log_py, log_cx)
+        self.assertGreater(log_cx, 0)
+        # As for the uncontrolled K1 bank above: a condition number of 8e9.
+        close(self, py.xk, cx.xk, 1e-5, "state")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance")

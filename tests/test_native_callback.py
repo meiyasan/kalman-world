@@ -155,7 +155,9 @@ class TestFilterTakesTheCxxLoop(unittest.TestCase):
                            "the state-dependent Q is really used")
 
     def test_what_keeps_the_python_loop(self):
-        self.assertFalse(self.path(Pendulum(), controller=lambda *a, **k: None), "a controller callback")
+        # A controller on a model with no control input runs in the C++ loop too
+        # (it commands nothing and only retunes the model).
+        self.assertTrue(self.path(Pendulum(), controller=lambda *a, **k: None), "a controller callback")
         with native.python_reference():
             self.assertFalse(self.path(Pendulum()), "the reference switch")
         from modules.framework.filters import EnsembleKalmanFilter

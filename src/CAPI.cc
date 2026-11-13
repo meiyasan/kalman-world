@@ -1139,7 +1139,8 @@ namespace
         Kalman::Engine &E = Deref(engine);
         const std::size_t n = M.NState(), m = M.NMeasure(), l = M.NControl();
         const std::size_t steps = static_cast<std::size_t>(N);
-        if (control && l == 0) throw std::invalid_argument("a closed loop needs a model that takes a control");
+        // A model with no control input (l = 0) may still run a closed loop: its
+        // controller commands nothing and only retunes the model (adaptive Q and R).
 
         std::vector<Kalman::Vector> z(steps), u;
         for (std::size_t k = 0; k < steps; ++k) z[k] = Vec(zk + k * m, m, "zk");
@@ -1168,7 +1169,7 @@ namespace
             if (transitions) Copy(filter.Transitions()[k], transitions + k * n * n, n, n, "transitions");
             if (smooth && x_smooth) Copy(filter.SmoothedStates()[k], x_smooth + k * n, n, "x_smooth");
             if (smooth && P_smooth) Copy(filter.SmoothedCovariances()[k], P_smooth + k * n * n, n, n, "P_smooth");
-            if (controls && control) Copy(filter.Controls()[k], controls + k * l, l, "controls");
+            if (controls && control && l > 0) Copy(filter.Controls()[k], controls + k * l, l, "controls");
         }
         return 0;
     }

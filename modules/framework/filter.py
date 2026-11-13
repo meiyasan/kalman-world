@@ -188,7 +188,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         elif self._matrices_eligible(uk_fn):
-            self._forward_matrices(zk, uk)
+            self._forward_matrices(zk, uk, uk_fn)
         elif self._callback_eligible(uk_fn):
             self._forward_callback(zk, uk, uk_fn)
         else:
@@ -295,11 +295,15 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # for them once per sample, as the loop would, and for nothing else.
     # ------------------------------------------------------------------
     def _matrices_eligible(self, uk_fn) -> bool:
-        if uk_fn is not None:
-            return False
         from .models import native
         from .constants import KalmanStructureKind
         model = self._model
+        # With a controller, only constant matrices: the controller may retune
+        # Q and R, which are pushed again at every step; a model whose matrices
+        # are functions of time would have to be asked for them in the loop.
+        if uk_fn is not None:
+            if getattr(model, "structure", None) is not KalmanStructureKind.MATRICES or model.l > 0:
+                return False
         # The linear engine, or the extended one: on a model of matrices the two
         # are the same arithmetic (the Jacobian of F x is F).
         if not native.native_loop_enabled() or self._twin_engine() is None:
@@ -308,7 +312,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return False
         return model.structure in (KalmanStructureKind.TIME_VARYING, KalmanStructureKind.MATRICES)
 
-    def _forward_matrices(self, zk, uk):
+    def _forward_matrices(self, zk, uk, uk_fn=None):
         from ..native import _stand_in
         from .native import core, as_contiguous
         from .constants import KalmanStructureKind
@@ -319,14 +323,33 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))
         core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
         core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
-        out = core.run_filter(handle, core.create_engine(self._twin_engine()), n, m, l, zk,
-                              uk[:len(zk)] if l > 0 else None)
-        self._store_pass(out, zk, uk)
+        engine = core.create_engine(self._twin_engine())
+        if uk_fn is None:
+            out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] if l > 0 else None)
+            self._store_pass(out, zk, uk)
+            return
+
+        # A controller that commands nothing and retunes the model (adaptive Q
+        # and R, the violin-bank controller): it runs at each step, before the
+        # prediction as in the Python loop, and the noise it leaves on the model
+        # is pushed into the C++ model at once.
+        def control(x, P, t, nu=None):
+            uk_fn(x, P, t, nu=nu)
+            Q = np.ascontiguousarray(np.asarray(model.Q(t=t), dtype=np.float64).reshape(n, n))
+            R = np.ascontiguousarray(np.asarray(model.R(t=t), dtype=np.float64).reshape(m, m))
+            core.check(core.lib.kalman_model_set_Q(handle, core.cdptr(Q)), "set_Q")
+            core.check(core.lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
+            return np.zeros(0)
+        out = core.run_filter(handle, engine, n, m, l, zk, control=control)
+        self._store_pass(out, zk, np.zeros((len(zk), 0)))
 
     def _closed_loop_eligible(self) -> bool:
-        """A controller function can drive the C++ loop when the model takes a control."""
+        """A controller function can drive the C++ loop. A model that takes no
+        control (l = 0) may have one too: a controller that commands nothing and
+        only retunes the model (adaptive Q and R), which the loop then asks for
+        at every step."""
         from .models import native
-        return native.native_loop_enabled() and self._model.l > 0
+        return native.native_loop_enabled()
 
     def _forward_twin(self, handle, zk, uk, uk_fn=None):
         from .native import core
@@ -382,19 +405,16 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
                 return False
         elif type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
             # A linear model in closed loop (a controller function) runs on the
-            # C++ extended engine, which on a linear model with its own constant
-            # F and H is the same arithmetic. A linear model whose matrices or
-            # noise are functions stays on the Python loop: such a function may
-            # keep a counter (the calorimeter steps through its layers that
-            # way), and only the Python loop calls it once per step in order.
+            # C++ extended engine, which on a model of matrices is the same
+            # arithmetic: the Jacobian of F x is F. The model must say it is its
+            # constant matrices. Matrices given as functions keep the Python loop
+            # in closed loop: the C++ loop would ask for F twice a step (the step
+            # and its Jacobian), and a function may count its calls.
             from .engines.linear import LinearKalmanEngine
-            from .model import KalmanModel
-            model = self._model
+            from .constants import KalmanStructureKind
             if type(self.engine) is not LinearKalmanEngine or uk_fn is None:
                 return False
-            if any(callable(getattr(model, attr, None)) for attr in ("_F", "_H", "_B", "_L", "_Q", "_R")):
-                return False
-            if any(getattr(type(model), name) is not getattr(KalmanModel, name) for name in ("F", "H", "Q", "R", "f", "h")):
+            if getattr(self._model, "structure", None) is not KalmanStructureKind.MATRICES:
                 return False
         return native.callback_eligible(self._model)
 
