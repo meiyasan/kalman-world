@@ -136,12 +136,41 @@ class KalmanSampler:
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk = KalmanRecord._normalize_out(xk)
 
-        zk = KalmanRecord._normalize_out([self.model.h(xx.reshape(-1, 1), v, t_start + k / self.fs) for xx, v, k in zip(xk, vk, range(n_samples))], indexing=indexing, dtype=self.model.dtype)
+        zk = self._native_measurements(xk, vk, t_start, chain is not None and not inprocess)
+        if zk is None:
+            zk = [self.model.h(xx.reshape(-1, 1), v, t_start + k / self.fs) for xx, v, k in zip(xk, vk, range(n_samples))]
+        zk = KalmanRecord._normalize_out(zk, indexing=indexing, dtype=self.model.dtype)
         if postprocess:
             zk = self.model.postprocess(zk, **kwargs)
 
         times = t_start + np.arange(n_samples) / self.fs
         return KalmanRecord(times, zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self.model)
+
+    def _native_measurements(self, xk, vk, t_start, eligible):
+        """``h`` over the whole run in one C++ call, for a model that is C++ (a twin,
+        a ``NativeModel``, a model of matrices); the noise drawn by numpy is added
+        after it, which is what those models' ``h`` does with its ``v``. ``None``
+        when the model's own Python ``h`` must be asked sample by sample."""
+        if not eligible:
+            return None
+        model = self.model
+        handle = self._matrices_handle()
+        if handle is None:
+            twin = getattr(model, "native_handle", None)
+            handle = twin() if twin is not None else None
+        if handle is None or self.engine._noise_through_h(model) is None:
+            return None
+        from .native import core
+        n, m, N = int(model.n), int(model.m), len(xk)
+        try:
+            states = np.ascontiguousarray(np.asarray(xk, dtype=np.float64).reshape(N, n))
+            noise = np.asarray(vk, dtype=np.float64).reshape(N, m)
+        except (TypeError, ValueError):
+            return None
+        zk = np.empty((N, m), dtype=np.float64)
+        core.check(core.lib.kalman_model_measure(handle, N, core.cdptr(states), float(t_start), float(self.fs),
+                                                 core.dptr(zk)), "kalman_model_measure")
+        return zk + noise
 
     def _native_chain(self, n_samples, x, P, t_start, uk, wk, kwargs):
         """The state chain computed by the C++ loop (kalman_propagate), with the

@@ -283,6 +283,10 @@ int kalman_model_L(const kalman_model_t *model, double t, double *L);
 /// x_next = f(x, u, t). `u` may be NULL when l == 0. Writes n values.
 int kalman_model_f(const kalman_model_t *model, const double *x, const double *u, double t, double *x_next);
 
+/// h over a whole run: z[k] = h(x[k], t0 + k / fs) for the N states of `xk` (N x n).
+/// Writes N x m values. 0 or -1.
+int kalman_model_measure(const kalman_model_t *model, int N, const double *xk, double t0, double fs, double *zk);
+
 /// z = h(x, t). Writes m values.
 int kalman_model_h(const kalman_model_t *model, const double *x, double t, double *z);
 

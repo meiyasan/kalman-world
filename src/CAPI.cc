@@ -770,6 +770,25 @@ int kalman_model_f(const kalman_model_t *model, const double *x, const double *u
     });
 }
 
+int kalman_model_measure(const kalman_model_t *model, int N, const double *xk, double t0, double fs, double *zk)
+{
+    return Guard([&] {
+        const auto &M = Deref(model);
+        if (N < 0 || !xk || !zk) throw std::invalid_argument("kalman_model_measure: null input");
+        const std::size_t n = M.NState(), m = M.NMeasure();
+        const double dt = fs > 0. ? 1. / fs : 1.;
+        for (std::size_t k = 0; k < static_cast<std::size_t>(N); ++k)
+        {
+            Kalman::Vector x(n);
+            for (std::size_t i = 0; i < n; ++i) x(i) = xk[k * n + i];
+            const Kalman::Vector z = M.h(x, t0 + static_cast<double>(k) * dt);
+            if (z.Size() != m) throw std::runtime_error("kalman_model_measure: h returned the wrong size");
+            for (std::size_t j = 0; j < m; ++j) zk[k * m + j] = z(j);
+        }
+        return 0;
+    });
+}
+
 int kalman_model_h(const kalman_model_t *model, const double *x, double t, double *z)
 {
     return Guard([&] {
