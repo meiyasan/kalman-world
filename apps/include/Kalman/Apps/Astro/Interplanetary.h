@@ -27,16 +27,13 @@
  * | Parameter              | Meaning                                              |
  * |------------------------|------------------------------------------------------|
  * | `gm_sun`               | the Sun's gravitational parameter [Mm^3/ks^2]        |
- * | `bodies`               | number of perturbing bodies B                        |
- * | `samples`              | number of table rows N per body                      |
  * | `grid_step`            | time between two rows [ks]                           |
- * | `body<i>_gm`           | gravitational parameter of body i [Mm^3/ks^2]        |
- * | `body<i>_x<k>`, `_y<k>`, `_z<k>` | heliocentric position of body i at row k [Mm] |
  * | `substeps`             | integrator steps per sample                          |
  * | `integrator`           | IntegratorKind: 0 Euler, 1 RK4, 2 Dormand-Prince     |
  *
- * The per-body parameters exist once `bodies` and `samples` are set: setting
- * them declares the names they call for (a table is a set of named scalars).
+ * and two named arrays: `body_gm`, the gravitational parameter of each
+ * perturbing body [Mm^3/ks^2], and `body_positions`, their heliocentric
+ * positions [Mm] as bodies x samples x 3 values, row-major.
  * The impulsive mid-course burn of the Python model (`control=True`) has no
  * counterpart here: with a control the Python class keeps its own dynamics.
  *
@@ -56,7 +53,6 @@ namespace Kalman::Apps::Astro
     {
         private:
             double fGMSun = 0.;
-            std::size_t fBodies = 0, fSamples = 0;
             double fGridStep = 0.;
 
             // The perturber table, read from the parameters when first needed after
@@ -67,6 +63,12 @@ namespace Kalman::Apps::Astro
             mutable std::vector<double> fTable;           // B x N x 3, row-major
 
             void Refresh() const;
+
+        public:
+            /// \throws std::runtime_error when the table is not bodies x samples x 3.
+            void CheckShapes() const override;
+
+        private:
             /// Position of body b at time t, interpolated as numpy.interp does.
             void Position(std::size_t b, double t, double *rb) const;
 

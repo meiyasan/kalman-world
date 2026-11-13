@@ -15,26 +15,17 @@
 
 #include <algorithm>
 #include <cmath>
+#include <stdexcept>
 #include <string>
 
 namespace Kalman::Apps::Astro
 {
-    namespace
-    {
-        std::string BodyName(std::size_t b, const char *what, std::size_t k = 0, bool row = false)
-        {
-            std::string name = "body" + std::to_string(b) + "_" + what;
-            if (row) name += std::to_string(k);
-            return name;
-        }
-    }
-
     Interplanetary::Interplanetary()
         : Kalman::Apps::Model("interplanetary", 6, 3)
     {
         DeclareParameter("gm_sun", 1.32712440018e20 * 1e-12);   // kalman.runtime.astro, scaled
-        DeclareParameter("bodies", 0.);
-        DeclareParameter("samples", 0.);
+        DeclareArray("body_gm", {});            // one per perturbing body
+        DeclareArray("body_positions", {});     // bodies x samples x 3, row-major
         DeclareParameter("grid_step", 172.8);                    // 2 days [ks]
         DeclareParameter("substeps", 1.);      // integrator steps per sample
         DeclareParameter("integrator", 1.);    // IntegratorKind: 0 Euler, 1 RK4, 2 Dormand-Prince
@@ -58,23 +49,6 @@ namespace Kalman::Apps::Astro
     {
         fGMSun = Parameter("gm_sun");
         fGridStep = Parameter("grid_step");
-        const std::size_t bodies = static_cast<std::size_t>(std::max(0., Parameter("bodies")));
-        const std::size_t samples = static_cast<std::size_t>(std::max(0., Parameter("samples")));
-        // A larger table declares the names it is filled through. Names stay
-        // declared when the table shrinks; only the first bodies x samples are read.
-        if (bodies > fBodies || samples > fSamples)
-        {
-            for (std::size_t b = 0; b < bodies; ++b)
-            {
-                if (!HasParameter(BodyName(b, "gm"))) DeclareParameter(BodyName(b, "gm"), 0.);
-                for (std::size_t k = 0; k < samples; ++k)
-                    for (const char *axis : {"x", "y", "z"})
-                        if (!HasParameter(BodyName(b, axis, k, true)))
-                            DeclareParameter(BodyName(b, axis, k, true), 0.);
-            }
-        }
-        fBodies = bodies;
-        fSamples = samples;
         fStale = true;
         SetSubsteps(static_cast<std::size_t>(std::max(1., Parameter("substeps"))));
         const IntegratorKind kind = static_cast<IntegratorKind>(static_cast<int>(Parameter("integrator")));
@@ -84,23 +58,26 @@ namespace Kalman::Apps::Astro
     void Interplanetary::Refresh() const
     {
         if (!fStale) return;
-        const std::size_t B = fSamples ? fBodies : 0, N = fSamples;
+        fGM = Array("body_gm");
+        fTable = Array("body_positions");
+        const std::size_t B = fGM.size();
+        // The table holds the same number of rows for every body; CheckShapes() says when it does not.
+        const std::size_t N = (B && fTable.size() % (3 * B) == 0) ? fTable.size() / (3 * B) : 0;
+        if (N == 0) { fGM.clear(); fTable.clear(); }
         fGrid.assign(N, 0.);
         // numpy.arange(0, stop, step): row k is at k * step.
         for (std::size_t k = 0; k < N; ++k) fGrid[k] = static_cast<double>(k) * fGridStep;
-        fGM.assign(B, 0.);
-        fTable.assign(B * N * 3, 0.);
-        for (std::size_t b = 0; b < B; ++b)
-        {
-            fGM[b] = Parameter(BodyName(b, "gm"));
-            for (std::size_t k = 0; k < N; ++k)
-            {
-                fTable[(b * N + k) * 3 + 0] = Parameter(BodyName(b, "x", k, true));
-                fTable[(b * N + k) * 3 + 1] = Parameter(BodyName(b, "y", k, true));
-                fTable[(b * N + k) * 3 + 2] = Parameter(BodyName(b, "z", k, true));
-            }
-        }
         fStale = false;
+    }
+
+    void Interplanetary::CheckShapes() const
+    {
+        const std::size_t B = Array("body_gm").size(), T = Array("body_positions").size();
+        if ((B == 0 && T != 0) || (B != 0 && (T == 0 || T % (3 * B) != 0)))
+            throw std::runtime_error("Kalman::Apps::Astro::Interplanetary: body_positions holds " + std::to_string(T)
+                                     + " values, which is not bodies x samples x 3 for the " + std::to_string(B)
+                                     + " bodies of body_gm.");
+        Kalman::Apps::Model::CheckShapes();
     }
 
     void Interplanetary::Position(std::size_t b, double t, double *rb) const

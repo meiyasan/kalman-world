@@ -333,23 +333,19 @@ int main()
         Apps::Astro::Interplanetary cruise;
         CHECK(cruise.HasContinuousDynamics() && cruise.StateComponents()[5].name == "vz",
               "interplanetary: continuous, components named");
-        // One perturber, two rows: declared by "bodies" and "samples", then interpolated.
-        cruise.SetParameter("bodies", 1.);
-        cruise.SetParameter("samples", 2.);
+        // One perturber, two rows of its table, then interpolated.
         cruise.SetParameter("grid_step", 10.);
-        CHECK(cruise.HasParameter("body0_gm") && cruise.HasParameter("body0_z1") && !cruise.HasParameter("body0_x2"),
-              "interplanetary: the table's names are declared by its size");
-        cruise.SetParameter("body0_gm", 1.);
-        cruise.SetParameter("body0_x0", 1000.);
-        cruise.SetParameter("body0_x1", 2000.);
+        cruise.SetArray("body_gm", {1.});
+        cruise.SetArray("body_positions", {1000., 0., 0., 2000., 0., 0.});
+        CHECK(cruise.ArrayNames().size() == 2, "interplanetary: the perturbers are two named arrays");
         const double au = 1.495978707e5;
         Vector p(6);
         p(0) = au; p(4) = 29.78;
         double sunOnly[3], mid[3];
-        cruise.SetParameter("body0_gm", 0.);
+        cruise.SetArray("body_gm", {0.});
         cruise.Acceleration(&p(0), 5., sunOnly);
         CHECK_CLOSE(sunOnly[0], -cruise.Parameter("gm_sun") / (au * au), 1e-12, "interplanetary: the Sun's pull");
-        cruise.SetParameter("body0_gm", 1.);
+        cruise.SetArray("body_gm", {1.});
         cruise.Acceleration(&p(0), 5., mid);
         // Halfway between the rows the body sits at x = 1500.
         const double d = 1500. - au;

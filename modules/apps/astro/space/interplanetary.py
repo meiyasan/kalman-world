@@ -239,21 +239,19 @@ class InterplanetaryModel(NativeTwin, ExtendedKalmanModel):
         field = self._native_field()
         params = {"gm_sun": GM_SUN, "substeps": float(self.n_sub),
                   "integrator": float(_native_integrator(self))}
-        if not field:
-            params.update(bodies=0.0, samples=0.0)
-            return params
-        grid = np.asarray(field.t_grid, dtype=float)
-        # bodies and samples first: setting them declares the per-body names.
-        params.update(bodies=float(len(field.bodies)), samples=float(len(grid)),
-                      grid_step=float(grid[1] - grid[0]) if len(grid) > 1 else 0.0)
-        for i, b in enumerate(field.bodies):
-            params[f"body{i}_gm"] = float(field.mu[b])
-            R = np.asarray(field.R[b], dtype=float)
-            for k in range(len(grid)):
-                params[f"body{i}_x{k}"] = R[k, 0]
-                params[f"body{i}_y{k}"] = R[k, 1]
-                params[f"body{i}_z{k}"] = R[k, 2]
+        if field:
+            grid = np.asarray(field.t_grid, dtype=float)
+            params["grid_step"] = float(grid[1] - grid[0]) if len(grid) > 1 else 0.0
         return params
+
+    def native_arrays(self):
+        """The perturbers as the twin reads them: one gravitational parameter per
+        body, and their positions as bodies x samples x 3."""
+        field = self._native_field()
+        if not field:
+            return {"body_gm": [], "body_positions": []}
+        return {"body_gm": [float(field.mu[b]) for b in field.bodies],
+                "body_positions": np.stack([np.asarray(field.R[b], dtype=float) for b in field.bodies])}
 
     # --- dynamics ---
     def acceleration(self, r, t):

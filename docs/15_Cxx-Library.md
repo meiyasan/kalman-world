@@ -887,12 +887,10 @@ gravitational parameters, and the Moon and the Sun on circles given by a
 radius, a rate and a phase (an `epoch` with `use_ephemeris=True` only sets the
 phases). The interplanetary cruise needs a table: the Python model samples the
 perturbing planets from the ephemeris every 2 days when it is built and
-interpolates it with `numpy.interp`. The table crosses as named scalars
-(`bodies`, `samples`, `grid_step`, then `body<i>_gm` and `body<i>_x<k>`,
-`_y<k>`, `_z<k>`), which the twin declares when `bodies` and `samples` are set
-and reads back once per change; for the Earth-Jupiter cruise of notebook 08
-that is 6,442 scalars, pushed in about 40 ms on each run. The twin
-interpolates the way `numpy.interp` does (end values outside the grid).
+interpolates it with `numpy.interp`. The table crosses as two named arrays,
+`body_gm` and `body_positions` (bodies x samples x 3), with `grid_step` as a
+parameter. The twin interpolates the way `numpy.interp` does (end values
+outside the grid).
 Positions are in Mm, velocities in km/s and time in ks, as in Python, so
 `kalman model` prints the sample rate of these two per ks, not per second.
 
