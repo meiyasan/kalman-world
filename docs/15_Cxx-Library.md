@@ -247,13 +247,14 @@ kalman models --json                 # the same, for a program
 MODEL      DYNAMICS    STRUCTURE  ENGINE    n  m  l  fs [Hz]   JACOBIAN  PROCESS NOISE  MEAS. NOISE
 ballistic  continuous  maps       Extended  9  3  0  128       forward   additive       additive
 car-speed  continuous  maps       Extended  2  1  0  20        forward   additive       additive
-storm      discrete    maps       Extended  5  3  0  0.166667  forward   additive       additive
+storm      discrete    maps       Extended  5  3  0  4.62963e-05  forward   additive       additive
 ```
 
 | Column | Read from | Values |
 |---|---|---|
 | DYNAMICS | `Model::Dynamics()` | `continuous` (a `Derivative()` or a generator, decoded for the sample rate) or `discrete` (`f` is the step) |
 | STRUCTURE | `Model::Structure()` | `maps` (code), `matrices`, `time-varying matrices`: what a file can hold of the model |
+| fs [Hz] | `Model::SampleRate()` and `Model::TimeUnit()` | in hertz, whatever unit the model counts time in (the storm in hours, the space models in ks; `SetTimeUnit`) |
 | ENGINE | `Model::DefaultEngine()` | the engine a filter picks for the model |
 | JACOBIAN | `Model::Differentiator()` | `analytic`, `forward`, `central` |
 | PROCESS NOISE | `HasProcessNoiseInput()`, `L()`, `NoiseIntensity()` | `additive`, `through L`, `in f`; `per unit time` when Q is stated as an intensity |
@@ -895,7 +896,7 @@ interpolates it with `numpy.interp`. The table crosses as two named arrays,
 parameter. The twin interpolates the way `numpy.interp` does (end values
 outside the grid).
 Positions are in Mm, velocities in km/s and time in ks, as in Python, so
-`kalman model` prints the sample rate of these two per ks, not per second.
+the twins state that unit (`SetTimeUnit(1000.)`), so `kalman model` prints their sample rate in hertz.
 
 Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
 silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two

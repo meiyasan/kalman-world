@@ -63,6 +63,12 @@ namespace Kalman
         fP0 = Matrix::Identity(n);
     }
 
+    void Model::SetTimeUnit(double seconds)
+    {
+        if (!(seconds > 0.)) throw std::invalid_argument("Kalman::Model: the time unit must be a positive number of seconds.");
+        fTimeUnit = seconds;
+    }
+
     void Model::SetSampleRate(double fs)
     {
         if (fs <= 0.) throw std::runtime_error("Kalman::Model: the sample rate must be positive.");

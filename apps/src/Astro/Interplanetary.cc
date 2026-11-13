@@ -35,6 +35,7 @@ namespace Kalman::Apps::Astro
                       {"vx", "km/s"}, {"vy", "km/s"}, {"vz", "km/s"}});
         DeclareMeasurement({{"x", "Mm"}, {"y", "Mm"}, {"z", "Mm"}});
         ParametersChanged();
+        SetTimeUnit(1000.);                    // time in ks
         SetSampleRate(1. / 43.2);              // dt_s = 12 h, in ks
 
         Matrix Q(6, 6, 0.);

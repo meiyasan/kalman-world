@@ -578,6 +578,13 @@ int kalman_model_set_component(kalman_model_t *model, int state, int i, const ch
     });
 }
 
+double kalman_model_time_unit(const kalman_model_t *model)
+{
+    double unit = -1.;
+    Guard([&] { unit = Deref(model).TimeUnit(); return 0; });
+    return unit;
+}
+
 int kalman_model_set_noise_inputs(kalman_model_t *model, int process, int measurement)
 {
     return Guard([&] {

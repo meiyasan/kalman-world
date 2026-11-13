@@ -60,7 +60,7 @@ namespace
     {
         std::string name, title, description, version, plugin, error;
         std::size_t n = 0, m = 0, l = 0;
-        double fs = 0.;
+        double fs = 0., unit = 1.;      // the sample rate per unit of the model's time, and that unit [s]
         std::string dynamics, structure, engine, differentiator, integrator;
         std::string file, kind;         // the file it was read from and what that file holds, if any
         std::string settings;           // the settings file applied, and
@@ -119,6 +119,7 @@ namespace
             s.m = model->NMeasure();
             s.l = model->NControl();
             s.fs = model->SampleRate();
+            s.unit = model->TimeUnit();
             s.dynamics = Kalman::ToString(model->Dynamics());
             s.engine = Kalman::ToString(model->DefaultEngine());
             s.differentiator = Kalman::ToString(model->Differentiator());
@@ -229,7 +230,8 @@ namespace
         }
         os << ", \"title\": " << Quote(s.title)
            << ", \"n\": " << s.n << ", \"m\": " << s.m << ", \"l\": " << s.l
-           << ", \"fs\": " << JsonNumber(s.fs)
+           << ", \"fs\": " << JsonNumber(s.fs) << ", \"time_unit_s\": " << JsonNumber(s.unit)
+           << ", \"fs_hz\": " << JsonNumber(s.fs / s.unit)
            << ", \"dynamics\": " << Quote(s.dynamics)
            << ", \"structure\": " << Quote(s.structure)
            << ", \"engine\": " << Quote(s.engine)
@@ -249,7 +251,7 @@ namespace
                << ", \"file\": " << (s.file.empty() ? "null" : Quote(s.file))
                << ", \"settings\": " << (s.settings.empty() ? "null" : Quote(s.settings))
                << ", \"settings_changed\": " << QuoteList(s.changed)
-               << ", \"x0\": " << JsonList(s.x0) << ", \"dt\": " << JsonNumber(s.fs > 0. ? 1. / s.fs : 1.)
+               << ", \"x0\": " << JsonList(s.x0) << ", \"dt\": " << JsonNumber(s.fs > 0. ? 1. / s.fs : 1.) << ", \"dt_s\": " << JsonNumber(s.fs > 0. ? s.unit / s.fs : s.unit)
                << ", \"state\": " << JsonComponents(s.state)
                << ", \"measurement\": " << JsonComponents(s.measurement) << ", \"parameters\": {";
             for (std::size_t i = 0; i < s.parameters.size(); ++i)
@@ -298,7 +300,7 @@ namespace
                 continue;
             }
             rows.push_back({s.name, s.dynamics, s.structure, s.engine, std::to_string(s.n), std::to_string(s.m),
-                            std::to_string(s.l), Number(s.fs), s.differentiator, ProcessNoise(s),
+                            std::to_string(s.l), Number(s.fs / s.unit), s.differentiator, ProcessNoise(s),
                             MeasurementNoise(s)});
         }
         std::vector<std::size_t> width(head.size());
@@ -323,17 +325,21 @@ namespace
     }
 
     // "128 Hz, one sample every 7.8125 ms": the step in the unit that reads best.
-    std::string Rate(double fs)
+    std::string Rate(double fs, double unit)
     {
         if (!(fs > 0.)) return "not set";
-        const double dt = 1. / fs;
+        const double dt = unit / fs;               // seconds
         std::string step;
         if (dt < 1e-3) step = Number(dt * 1e6) + " us";
         else if (dt < 1.) step = Number(dt * 1e3) + " ms";
         else if (dt < 120.) step = Number(dt) + " s";
         else if (dt < 7200.) step = Number(dt / 60.) + " min";
-        else step = Number(dt / 3600.) + " h";
-        return Number(fs) + " Hz, one sample every " + step;
+        else if (dt < 172800.) step = Number(dt / 3600.) + " h";
+        else step = Number(dt / 86400.) + " d";
+        std::string out = Number(1. / dt) + " Hz, one sample every " + step;
+        // A model that counts time in another unit: its own number, as set and as it is written to a file.
+        if (unit != 1.) out += " (" + Number(fs) + " per " + Number(unit) + " s, the model's unit of time)";
+        return out;
     }
 
     // One line per component: index, name, unit, then the columns given. A field
@@ -402,7 +408,7 @@ namespace
                 what.empty() ? nullptr : kMagenta);
         }
         else row("from", s.plugin.empty() ? "this program" : s.plugin);
-        row("sample rate", Rate(s.fs));
+        row("sample rate", Rate(s.fs, s.unit));
         row("dynamics", s.dynamics, DynamicsStyle(s.dynamics));
         row("structure", s.structure);
         if (!s.integrator.empty())

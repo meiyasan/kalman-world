@@ -26,6 +26,7 @@ namespace Kalman::Apps::Weather
     Storm::Storm(bool observeIntensity)
         : Kalman::Apps::Model("storm", 5, observeIntensity ? 3 : 2), fObserveIntensity(observeIntensity)
     {
+        SetTimeUnit(3600.);                    // the model steps in hours
         DeclareState({{"lon", "deg E"}, {"lat", "deg N"}, {"ve", "km/h east"}, {"vn", "km/h north"},
                       {"intensity", "kt"}});
         if (observeIntensity) DeclareMeasurement({{"lon", "deg E"}, {"lat", "deg N"}, {"intensity", "kt"}});

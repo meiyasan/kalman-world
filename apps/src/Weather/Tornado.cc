@@ -21,6 +21,7 @@ namespace Kalman::Apps::Weather
         DeclareParameter("mu", 0.3);
         DeclareParameter("persistence", 0.85);
         ParametersChanged();
+        SetTimeUnit(3600.);                    // one step an hour
         SetSampleRate(1.);
 
         // Defaults of the Python class; a Python instance pushes its own.

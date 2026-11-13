@@ -30,6 +30,7 @@ namespace Kalman::Apps::Astro
         DeclareState({{"x", "Mm"}, {"y", "Mm"}, {"vx", "km/s"}, {"vy", "km/s"}});
         DeclareMeasurement({{"x", "Mm"}, {"y", "Mm"}});
         ParametersChanged();
+        SetTimeUnit(1000.);                    // time in ks
         SetSampleRate(1000.);                   // one sample per second, in samples per ks
 
         // Defaults of the Python class; a Python instance pushes its own.

@@ -122,6 +122,7 @@ int kalman_model_set_table(kalman_model_t *model, const char *which, int steps, 
 int kalman_model_set_component(kalman_model_t *model, int state, int i, const char *name, const char *unit);
 int kalman_model_set_structure(kalman_model_t *model, int kind);
 int kalman_model_set_noise_inputs(kalman_model_t *model, int process, int measurement);
+double kalman_model_time_unit(const kalman_model_t *model);
 int kalman_model_measure(const kalman_model_t *model, int N, const double *xk, double t0, double fs, double *zk);
 const char *kalman_model_state_name(const kalman_model_t *model, int i);
 const char *kalman_model_state_unit(const kalman_model_t *model, int i);

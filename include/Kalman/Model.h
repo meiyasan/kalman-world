@@ -82,6 +82,7 @@ namespace Kalman
 
             double fSampleRate = 1.;    // fs [Hz] — sets the default dt
             double fT0 = 0.;            // time tag of the first step [s]
+            double fTimeUnit = 1.;      // seconds in one unit of this model's time
 
             Matrix fF;                  // (n,n) state transition
             Matrix fH;                  // (m,n) observation
@@ -149,6 +150,17 @@ namespace Kalman
             void SetSampleRate(double fs);
             /// Step length implied by the sample rate (1 when fs is unset).
             double DeltaT() const { return fSampleRate > 0. ? 1. / fSampleRate : 1.; }
+
+            /**
+             * \brief The unit this model counts time in, in seconds (1 by default).
+             *
+             * A storm model steps in hours and a space model in kiloseconds: their
+             * sample rate is per that unit, not per second. Stating the unit is
+             * what lets a reader (the `kalman` program) give the rate in hertz.
+             * It changes no arithmetic.
+             */
+            double TimeUnit() const { return fTimeUnit; }
+            void SetTimeUnit(double seconds);
 
             double T0() const { return fT0; }
             void SetT0(double t0) { fT0 = t0; }
