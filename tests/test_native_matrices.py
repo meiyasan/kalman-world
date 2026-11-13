@@ -293,3 +293,35 @@ class TestSmootherInCxx(unittest.TestCase):
                 state, covariance = apart(reference, record)
                 self.assertLess(state, 1e-6, type(make()).__name__)
                 self.assertLess(covariance, 1e-5, type(make()).__name__)
+
+
+@unittest.skipUnless("ballistic" in native.apps_library_names(), "libKalmanApps is not built")
+class TestNoModelFallsBackToThePythonLoop(unittest.TestCase):
+    """Every model of the catalogue that builds with its defaults filters in a C++
+    pass. A model added later without one fails here instead of running slowly
+    unnoticed."""
+
+    def test_catalogue(self):
+        import inspect
+        from modules import api
+        checked, python_loop = [], []
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            for name, cls in sorted(api._model_catalog().items()):
+                if hasattr(cls, "NATIVE_NAME"):
+                    continue
+                first = list(inspect.signature(cls.__init__).parameters)[1:2]
+                try:
+                    model = cls("s") if first in (["sensor_id"], ["name"]) else cls()
+                    z = np.asarray(model.sample(20 / (model.fs or 1.0), seed=1).zk, float)
+                except Exception:
+                    continue                    # needs arguments, or its default state cannot be sampled
+                if not np.all(np.isfinite(z)):
+                    continue
+                with path_taken() as path:
+                    model.filter(z)
+                checked.append(name)
+                if path.last is None and not model.engine.OWNS_PASS:
+                    python_loop.append(name)
+        self.assertEqual(python_loop, [])
+        self.assertGreaterEqual(len(checked), 14, checked)

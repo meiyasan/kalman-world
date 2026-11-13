@@ -1195,7 +1195,7 @@ linear filter. Both can be present in one process.
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
 | Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Engines::EnsembleModel` (`Forecast`, `Observe`, `Localization`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
-| Applications | `modules/apps/` | `libKalmanApps`: `StormModel`, `BallisticModel`, `TornadoEnvironmentModel`, `CarSpeedModel`, `TransLunarModel`, `InterplanetaryModel` so far; none in the core library |
+| Applications | `modules/apps/` | `libKalmanApps`: a twin for every model given by code (22 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no twin; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |
 | Sampling | `model.sample()`: the C++ loop, numpy's draws | `Kalman::Sampler` (its own generator) |
 | JSON API, REST, MCP | `kalman.api`, `kalman.rest`, `kalman.mcp` (all verbs, Python-written models included) | `libKalmanNet`, `kalman-serve` (C++ models; see [Net](18_Net.md)) |
@@ -1210,11 +1210,39 @@ rather than silently substituting a different algorithm.
 
 ## Where the Python boundary is, and why
 
-The framework *is* wrapped in Python — for **models**, through the factory and
-the C API above. What it deliberately does not do is the other obvious thing:
-wrap the C++ *engines* so the existing Python apps transparently get C++ speed.
-That would mean the C++ engine calling back into Python for `model.f/h/F/Q` at
-every step, and measured on `BallisticModel`:
+Every model of the catalogue filters, smooths and samples in C++
+(`tests/test_native_matrices.py::TestNoModelFallsBackToThePythonLoop` fails
+when one does not). Which pass a model takes:
+
+| The model is | The pass |
+|---|---|
+| given by code, with a twin in `libKalmanApps` | the twin, on the extended, unscented or particle engine; the ensemble engine for the field models; the combinatorial one for the drift chamber |
+| its matrices, constant | the linear kernel, or `Tabulated` on the extended engine |
+| its matrices, functions of time (calorimeter, power grid, phasor) | `Tabulated` with tables |
+| a composite of such models (oscillators, the interferometer) | as its parts: matrices |
+| C++ already (`NativeModel`, a `.kw` file) | itself |
+| written in Python with its own `f` and `h` and no twin (a user's model, `examples/python/toy_model.py`) | the C++ loop, calling back into `f` and `h` at each step |
+
+What still runs in Python, and why:
+
+- **A model written in Python by a user.** That is the point of the last row:
+  nothing to compile, at the cost below. Writing it in C++ (the toy shows both)
+  or giving it a twin removes the cost.
+- **Code handed in as an argument**: a steering flow or an intensity function
+  for the storm, a controller function in the loop, a custom integrator, a
+  surrogate forecast for the flow. A Python callable cannot run in C++; the
+  model then keeps its Python physics, or the C++ loop calls back.
+- **The interferometer with its violin-bank controller** (a controller on a
+  model that takes no control input): the Python loop.
+- **The libTorch backend of the field models** inside the assimilation loop
+  (`libKalmanApps` does not link `libKalmanLearn`); the solver itself is C++.
+- **Around the filter**: `preprocess` and `postprocess` (demodulation, the
+  relativistic corrections), event and hit generators that draw with numpy's
+  generator, spectra and peak fits, plots, the servers.
+- **Random draws** are made by numpy and handed to C++, on purpose: a seeded
+  run gives the same numbers on either side.
+
+The cost of the callback row, measured on `BallisticModel` before it had a twin:
 
 ```
 model.f  (Python/numpy/scipy)   :  20.74 µs per call
