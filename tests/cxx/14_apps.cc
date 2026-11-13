@@ -3,6 +3,8 @@
  * \brief libKalmanApps: the application models, their parameters and their filters.
  */
 #include "Kalman/Kalman.h"
+#include "Kalman/Apps/Astro/Interplanetary.h"
+#include "Kalman/Apps/Astro/TransLunar.h"
 #include "Kalman/Apps/Ballistics/Ballistic.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
@@ -192,6 +194,73 @@ int main()
         const Matrix H = storm.JacobianH(x, 0.);
         CHECK(H.Rows() == 3 && H.Cols() == 5, "jacobian: dh/dx is (m, n)");
         CHECK_CLOSE(H(2, 4), 1., 1e-9, "jacobian: the intensity is observed directly");
+    }
+
+    // --- space: the trans-lunar coast and the interplanetary cruise ---------------------
+    {
+        const Factory &factory = Factory::Instance();
+        CHECK(factory.Has("translunar") && factory.Has("interplanetary"), "space: both models are registered");
+        CHECK(factory.Describe("translunar").n == 6 && factory.Describe("translunar").m == 3,
+              "space: translunar is (n, m) = (6, 3)");
+
+        Apps::Astro::TransLunar moon;
+        CHECK(moon.HasContinuousDynamics(), "translunar: continuous dynamics");
+        const auto state = moon.StateComponents();
+        CHECK(state[0].name == "x" && state[0].unit == "Mm" && state[3].name == "vx" && state[3].unit == "km/s",
+              "translunar: components x [Mm] ... vx [km/s]");
+        CHECK(moon.MeasurementComponents().size() == 3, "translunar: the position is observed");
+
+        // A 400 km parking orbit, Earth alone: one step keeps the radius, gravity is GM / r^2.
+        moon.SetParameter("moon", 0.);
+        moon.SetParameter("sun", 0.);
+        const double gm = moon.Parameter("gm_earth"), r0 = 6.3781 + 0.4, v0 = std::sqrt(gm / r0);
+        Vector x(6);
+        x(0) = r0; x(4) = v0;
+        const Vector next = moon.f(x, Vector(), 0.);
+        bool finite = true;
+        for (std::size_t i = 0; i < 6; ++i) finite = finite && std::isfinite(next(i));
+        CHECK(finite, "translunar: one step is finite");
+        CHECK_CLOSE(std::hypot(next(0), next(1)), r0, 1e-5, "translunar: a 120 s step of a circular orbit keeps the radius to 10 m");
+        double a[3];
+        moon.Acceleration(&x(0), 0., a);
+        CHECK_CLOSE(a[0], -gm / (r0 * r0), 1e-15, "translunar: Earth's pull is GM / r^2 inward");
+
+        // The Moon pulls toward itself once it is switched on.
+        moon.SetParameter("moon", 1.);
+        moon.SetParameter("moon_phase", 0.);
+        double withMoon[3];
+        moon.Acceleration(&x(0), 0., withMoon);
+        CHECK(withMoon[0] > a[0], "translunar: the Moon on the +x axis pulls the craft outward");
+
+        Apps::Astro::Interplanetary cruise;
+        CHECK(cruise.HasContinuousDynamics() && cruise.StateComponents()[5].name == "vz",
+              "interplanetary: continuous, components named");
+        // One perturber, two rows: declared by "bodies" and "samples", then interpolated.
+        cruise.SetParameter("bodies", 1.);
+        cruise.SetParameter("samples", 2.);
+        cruise.SetParameter("grid_step", 10.);
+        CHECK(cruise.HasParameter("body0_gm") && cruise.HasParameter("body0_z1") && !cruise.HasParameter("body0_x2"),
+              "interplanetary: the table's names are declared by its size");
+        cruise.SetParameter("body0_gm", 1.);
+        cruise.SetParameter("body0_x0", 1000.);
+        cruise.SetParameter("body0_x1", 2000.);
+        const double au = 1.495978707e5;
+        Vector p(6);
+        p(0) = au; p(4) = 29.78;
+        double sunOnly[3], mid[3];
+        cruise.SetParameter("body0_gm", 0.);
+        cruise.Acceleration(&p(0), 5., sunOnly);
+        CHECK_CLOSE(sunOnly[0], -cruise.Parameter("gm_sun") / (au * au), 1e-12, "interplanetary: the Sun's pull");
+        cruise.SetParameter("body0_gm", 1.);
+        cruise.Acceleration(&p(0), 5., mid);
+        // Halfway between the rows the body sits at x = 1500.
+        const double d = 1500. - au;
+        const double expect = sunOnly[0] + (d / std::fabs(d * d * d) - 1500. / std::pow(1500., 3.));
+        CHECK_CLOSE(mid[0], expect, 1e-12, "interplanetary: the perturber is interpolated between rows");
+        const Vector moved = cruise.f(p, Vector(), 0.);
+        bool ok = true;
+        for (std::size_t i = 0; i < 6; ++i) ok = ok && std::isfinite(moved(i));
+        CHECK(ok, "interplanetary: one step is finite");
     }
 
     return Check::Summary("14_apps");
