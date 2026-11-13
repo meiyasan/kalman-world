@@ -32,6 +32,9 @@
  */
 #cmakedefine01 KALMAN_WITH_BLAS
 
+/// zlib is linked: the tables of model files are compressed, and compressed ones are read.
+#cmakedefine01 KALMAN_WITH_ZLIB
+
 /// Size at or above which matrix products are handed to BLAS. Measured, not guessed.
 #define KALMAN_BLAS_MIN_DIM @KALMAN_BLAS_MIN_DIM@
 

@@ -109,11 +109,18 @@ int kalman_model_set_x0(kalman_model_t *model, const double *x0);
 int kalman_model_set_P0(kalman_model_t *model, const double *P0);
 
 const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
-                                     int linearize, int steps);
+                                     int linearize, int steps, const char *origin);
 int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
-                      int linearize, int steps);
+                      int linearize, int steps, const char *origin);
 kalman_model_t *kalman_model_load(const char *path);
 const char *kalman_model_structure(const kalman_model_t *model);
+kalman_model_t *kalman_model_open(const char *path, int settings);
+int kalman_model_document_save(const char *document, const char *path);
+kalman_model_t *kalman_model_create_matrices(const char *name, int n, int m, int l);
+int kalman_model_set_matrix(kalman_model_t *model, const char *which, const double *data);
+int kalman_model_set_table(kalman_model_t *model, const char *which, int steps, const double *data);
+int kalman_model_set_component(kalman_model_t *model, int state, int i, const char *name, const char *unit);
+int kalman_model_set_structure(kalman_model_t *model, int kind);
 const char *kalman_model_state_name(const kalman_model_t *model, int i);
 const char *kalman_model_state_unit(const kalman_model_t *model, int i);
 const char *kalman_model_measurement_name(const kalman_model_t *model, int i);

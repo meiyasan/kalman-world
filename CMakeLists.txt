@@ -123,6 +123,22 @@ if(BUILD_LIBRARY)
         endif()
     endif()
 
+    # --- optional: zlib -------------------------------------------------------
+    # Compresses the tables of a model file (Kalman::IO::Archive). Without it
+    # they are stored as they are, and a file another build compressed cannot
+    # be read here: both are said plainly, nothing fails in silence.
+    option(KALMAN_USE_ZLIB "Compress the tables of model files with zlib" ON)
+    set(KALMAN_WITH_ZLIB 0)
+    if(KALMAN_USE_ZLIB)
+        find_package(ZLIB QUIET)
+        if(ZLIB_FOUND)
+            set(KALMAN_WITH_ZLIB 1)
+            message_color(STATUS GREEN "   zlib found — the tables of model files are compressed")
+        else()
+            message_color(STATUS YELLOW "   zlib not found — the tables of model files are stored uncompressed")
+        endif()
+    endif()
+
     configure_file("${CMAKE_CURRENT_SOURCE_DIR}/include/Kalman/Config.h.in"
                    "${CMAKE_BINARY_DIR}/include/Kalman/Config.h" @ONLY)
 
@@ -142,6 +158,10 @@ if(BUILD_LIBRARY)
 
     # Kalman::Factory::LoadPlugin dlopens; on glibc < 2.34 that lives in libdl.
     target_link_libraries(${LIBRARY} PRIVATE ${CMAKE_DL_LIBS})
+
+    if(KALMAN_WITH_ZLIB)
+        target_link_libraries(${LIBRARY} PRIVATE ZLIB::ZLIB)
+    endif()
 
     if(KALMAN_WITH_BLAS)
         if(APPLE)

@@ -56,6 +56,9 @@ namespace Kalman::Models
             /// Samples covered by the tables (0 when every matrix is constant).
             std::size_t Steps() const;
 
+            /// Name component \p i of the state (\p state true) or of the measurement.
+            /// \throws std::out_of_range when \p i is past the last component.
+            void SetComponent(bool state, std::size_t i, const std::string &name, const std::string &unit);
             /// Name the components (a model read from a file takes them from the file).
             void SetComponents(std::vector<Component> state, std::vector<Component> measurement);
 

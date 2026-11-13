@@ -49,13 +49,18 @@ class NativeModel(KalmanModel):
     ALLOWED_ENGINES = ALL_ENGINES
 
     def __init__(self, name: str | None = None, sensor_id=None, **kwargs):
-        name = name or self.NATIVE_NAME
-        if not name:
-            raise ValueError("NativeModel needs the registered name of a C++ model.")
         L = core.require()
-        handle = L.kalman_model_create(name.encode())
-        if handle == core.ffi.NULL:
-            raise KeyError(f"NativeModel: {core.last_error()}")
+        # A model that exists already (read from a file) is wrapped as it is.
+        handle = kwargs.pop("_handle", None)
+        if handle is not None:
+            name = name or core._s(L.kalman_model_name(handle))
+        else:
+            name = name or self.NATIVE_NAME
+            if not name:
+                raise ValueError("NativeModel needs the registered name of a C++ model.")
+            handle = L.kalman_model_create(name.encode())
+            if handle == core.ffi.NULL:
+                raise KeyError(f"NativeModel: {core.last_error()}")
         self._handle = core.ffi.gc(handle, L.kalman_model_destroy)
         self.native_name = name
 
@@ -255,6 +260,14 @@ class NativeModel(KalmanModel):
         return self
 
     # --- introspection ----------------------------------------------------------
+    @property
+    def structure(self):
+        """What the C++ model declares it is made of."""
+        from ..constants import KalmanStructureKind
+        text = core._s(core.lib.kalman_model_structure(self._handle))
+        return {"maps": KalmanStructureKind.MAPS, "matrices": KalmanStructureKind.MATRICES,
+                "time-varying matrices": KalmanStructureKind.TIME_VARYING}[text]
+
     def describe_native(self) -> dict:
         """The C++ side's own account of this model (title, plugin, dims ...)."""
         d = core.describe(self.native_name)

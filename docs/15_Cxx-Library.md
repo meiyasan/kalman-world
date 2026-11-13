@@ -237,6 +237,7 @@ kalman models ballistic              # names containing "ballistic"
 kalman model car-speed               # everything one model declares
 kalman plugins                       # the libraries the models came from
 kalman --plugin KalmanPlugin_example models
+kalman --plugin KalmanPlugin_example export fading-sensor --steps 200 -o fading.kw
 kalman export car-speed -o car.kw # write a model to a file (see "Model files")
 kalman model car.kw              # what a file holds
 kalman models --json                 # the same, for a program
@@ -305,6 +306,7 @@ None is needed for correctness.
 | `KALMAN_USE_TORCH` | `libKalmanLearn` | `NN::Torch` (TorchScript routing policies) and `Learn::Solvers::Vorticity` (the batched field solver, CPU/CUDA/MPS) | on when a libTorch is found |
 | `KALMAN_BUILD_LEARN` | | build `libKalmanLearn` at all | on |
 | `KALMAN_BUILD_NET` | | build `libKalmanNet` and `kalman-serve` (skipped with a notice when a dependency is missing) | on |
+| `KALMAN_USE_ZLIB` | | compress the tables of model files (`.kw`) with zlib when it is found | on |
 
 The AI runtimes are looked for by `libKalmanLearn` only. `libKalman` never
 links one, whatever is installed on the build machine: a core linked to one
@@ -618,8 +620,11 @@ separated or mixed with another model's, and any zip tool opens it:
 and MCP servers): `base`, `fs`, `dynamics`, `noise`, `initial`, `labels`,
 `bindings`. Numbers are written so that a double reads back unchanged.
 
-The entries are stored, not compressed: the core links no compression library,
-and the files are small. Every entry carries a CRC-32, checked on reading.
+`model.json` is always stored as it is, so the readable part stays readable.
+The tables are compressed with zlib when the library is built with it
+(`KALMAN_USE_ZLIB`, on by default; found on the system, optional) and stored
+otherwise. A build without zlib reads stored tables only and says so when it
+meets a compressed one. Every entry carries a CRC-32, checked on reading.
 
 A file with no table may also be written as plain JSON, to a name ending in
 `.json` (the `model.json` alone). A file with tables is refused that way,
@@ -698,24 +703,65 @@ std::unique_ptr<Kalman::Model> back = Kalman::IO::ModelFile::Load("car.kw").Impo
 ```
 
 From C: `kalman_model_export_json`, `kalman_model_save`, `kalman_model_load`,
-`kalman_model_structure`. From Python:
+`kalman_model_open`, `kalman_model_structure`, and to build a model of matrices
+by hand `kalman_model_create_matrices`, `kalman_model_set_matrix`,
+`kalman_model_set_table`, `kalman_model_set_component`.
+
+### From Python
+
+Every model has `export()` and a `structure`, whether it is written in C++ or
+in Python, and `kalman.native.open_model()` gives back a model to filter with:
 
 ```python
+import numpy as np
 import kalman.native as native
-from kalman import api
+from kalman.framework.model import KalmanModel
 
-document = native.export_model("car-speed", "car.kw", parameters={"mass": 1200})
-read = native.read_model_file("car.kw")           # {"document": ..., "tables": {name: array}}
-model = api.make_model(read["document"]["spec"])      # a reference needs its plugin loaded
+model = KalmanModel("cv", fs=10, F=F, H=H, Q=Q, R=lambda t: R0 * (1 + t))
+model.structure                          # KalmanStructureKind.TIME_VARYING
+model.export("cv.kw", steps=200)         # R goes in as a table
+back = native.open_model("cv.kw")        # tables and cv.kw.json (settings) applied
+record = back.filter(z)
 ```
 
-Not covered: models written in Python are not exported by this (only models
-registered with the C++ factory are), and `api.make_model` reads the spec, so
-for a file with tables it builds the model of the first sample; the tables
-are read by `Kalman::IO::ModelFile::Import()` and returned as arrays by
-`read_model_file`. Likewise `api.make_model` does not apply a settings file:
-export the opened file first (`kalman export car.kw`) to get a spec with the
-settings in.
+A Python model is not written by Python code: its matrices, tables and names
+are handed to C++, and the one exporter writes the file.
+
+| Python model | `structure` | `export()` writes |
+|---|---|---|
+| built from matrices (`F=`, `H=`), nothing overridden | `MATRICES` | `complete` |
+| the same with `F`, `H`, `Q` or `R` given as a function of time | `TIME_VARYING` | `complete` with tables; needs `steps=` and a `.kw` path |
+| a class with its own `f` / `h` (rockets, space, lane, ...) | `MAPS` | `reference` to the class by name, or `linearize=True` for its Jacobians at x0 |
+| a C++ model (`NativeModel`) | what the C++ class declares | as `kalman export` |
+
+A class may declare `STRUCTURE = KalmanStructureKind...` instead of having it
+read from the instance.
+
+`open_model` returns a C++ model (`NativeModel`) for a file of matrices or a
+reference to a C++ model, and the Python class itself for a reference to a
+Python class. `read_model_file` only reads: `{"document", "tables", "settings"}`.
+
+Measured (`tests/test_kalman_cli.py`, 80 samples, the Python model against the
+model opened from its file): constant matrices 0; a time-varying R below
+1e-12; the registered C++ `fading-sensor` of the example plugin, 50 samples,
+below 1e-12.
+
+Limits that remain:
+
+- **A reference to a Python class is only as complete as the class allows.**
+  The settings are the constructor's arguments, and an argument can be written
+  only when the instance keeps it under the same name (`mass` as `model.mass`
+  or `model._mass`). Those that cannot be read back are listed in
+  `origin.parameters_not_recovered`; noise and initial state are always
+  written. `CarLaneModel` keeps 2 of its 8. The class must be in
+  `kalman.api`'s catalogue.
+- **`kalman model FILE` cannot build a reference to a Python class** (it says
+  so and names the class); open it from Python.
+- **`api.make_model(spec)` reads a spec, not a file**: it takes neither tables
+  nor a settings file, and the servers do not open files named by a client.
+  Use `open_model`.
+- **A time-varying B or L is not tabulated** (tables are for F, H, Q, R); such
+  a model counts as `MAPS`.
 
 ## libKalmanApps: the application models in C++
 

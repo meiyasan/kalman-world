@@ -10,6 +10,12 @@
 
 #include "Kalman/IO/Archive.h"
 
+#include "Kalman/Config.h"
+
+#if KALMAN_WITH_ZLIB
+#include <zlib.h>
+#endif
+
 #include <array>
 #include <cstdint>
 #include <fstream>
@@ -59,6 +65,47 @@ namespace Kalman::IO
 
         std::uint32_t Get32(const std::string &in, std::size_t at) { return Get16(in, at) | (Get16(in, at + 2) << 16); }
 
+#if KALMAN_WITH_ZLIB
+        // Raw deflate, as a zip entry holds it. "" when it would not be smaller.
+        std::string Deflate(const std::string &bytes)
+        {
+            z_stream stream{};
+            if (deflateInit2(&stream, Z_BEST_COMPRESSION, Z_DEFLATED, -15, 8, Z_DEFAULT_STRATEGY) != Z_OK) return "";
+            std::string out(deflateBound(&stream, static_cast<uLong>(bytes.size())), '\0');
+            stream.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(bytes.data()));
+            stream.avail_in = static_cast<uInt>(bytes.size());
+            stream.next_out = reinterpret_cast<Bytef *>(out.data());
+            stream.avail_out = static_cast<uInt>(out.size());
+            const int status = deflate(&stream, Z_FINISH);
+            const std::size_t size = stream.total_out;
+            deflateEnd(&stream);
+            if (status != Z_STREAM_END || size >= bytes.size()) return "";
+            out.resize(size);
+            return out;
+        }
+
+        std::string Inflate(const std::string &packed, std::size_t size, const std::string &name)
+        {
+            std::string out(size, '\0');
+            z_stream stream{};
+            if (inflateInit2(&stream, -15) != Z_OK)
+                throw std::runtime_error("Kalman::IO::Archive: zlib could not start on '" + name + "'.");
+            stream.next_in = reinterpret_cast<Bytef *>(const_cast<char *>(packed.data()));
+            stream.avail_in = static_cast<uInt>(packed.size());
+            stream.next_out = reinterpret_cast<Bytef *>(out.data());
+            stream.avail_out = static_cast<uInt>(out.size());
+            const int status = inflate(&stream, Z_FINISH);
+            const std::size_t got = stream.total_out;
+            inflateEnd(&stream);
+            if (status != Z_STREAM_END || got != size)
+                throw std::runtime_error("Kalman::IO::Archive: entry '" + name + "' does not decompress; the file is damaged.");
+            return out;
+        }
+#endif
+
+        bool Readable(const std::string &name)
+        { return name.size() >= 5 && name.compare(name.size() - 5, 5, ".json") == 0; }
+
         const std::uint32_t kLocal = 0x04034b50U, kCentral = 0x02014b50U, kEnd = 0x06054b50U;
         const std::uint32_t kDosDate = (1U << 5) | 1U;   // 1980-01-01: the same model gives the same bytes
     }
@@ -98,18 +145,27 @@ namespace Kalman::IO
             const std::uint32_t crc = Crc32(e.second), size = static_cast<std::uint32_t>(e.second.size());
             const std::uint32_t offset = static_cast<std::uint32_t>(out.size());
 
+            // The readable part stays as it is; the rest is compressed when that helps.
+            std::string deflated;
+#if KALMAN_WITH_ZLIB
+            if (!Readable(e.first)) deflated = Deflate(e.second);
+#endif
+            const std::uint32_t method = deflated.empty() ? 0U : 8U;
+            const std::string &data = deflated.empty() ? e.second : deflated;
+            const std::uint32_t packed = static_cast<std::uint32_t>(data.size());
+
             Put32(out, kLocal);
-            Put16(out, 20); Put16(out, 0); Put16(out, 0);      // version needed, flags, method 0 = stored
+            Put16(out, 20); Put16(out, 0); Put16(out, method);  // version needed, flags, 0 stored / 8 deflated
             Put16(out, 0); Put16(out, kDosDate);                // time, date
-            Put32(out, crc); Put32(out, size); Put32(out, size);
+            Put32(out, crc); Put32(out, packed); Put32(out, size);
             Put16(out, static_cast<std::uint32_t>(e.first.size())); Put16(out, 0);
             out += e.first;
-            out += e.second;
+            out += data;
 
             Put32(central, kCentral);
-            Put16(central, 20); Put16(central, 20); Put16(central, 0); Put16(central, 0);
+            Put16(central, 20); Put16(central, 20); Put16(central, 0); Put16(central, method);
             Put16(central, 0); Put16(central, kDosDate);
-            Put32(central, crc); Put32(central, size); Put32(central, size);
+            Put32(central, crc); Put32(central, packed); Put32(central, size);
             Put16(central, static_cast<std::uint32_t>(e.first.size()));
             Put16(central, 0); Put16(central, 0); Put16(central, 0); Put16(central, 0);
             Put32(central, 0); Put32(central, offset);
@@ -124,6 +180,8 @@ namespace Kalman::IO
         Put16(out, 0);
         return out;
     }
+
+    bool Archive::Compresses() { return KALMAN_WITH_ZLIB != 0; }
 
     bool Archive::Looks(const std::string &bytes)
     { return bytes.size() >= 4 && bytes[0] == 'P' && bytes[1] == 'K' && (bytes[2] == 3 || bytes[2] == 5); }
@@ -153,14 +211,20 @@ namespace Kalman::IO
             at += 46 + nameLength + extra + comment;
 
             if (!name.empty() && name.back() == '/') continue;   // a folder
-            if (method != 0)
-                throw std::runtime_error("Kalman::IO::Archive: entry '" + name + "' is compressed; this reader takes "
-                                         "stored entries only. Repack the archive without compression (zip -0).");
+            if (method != 0 && (method != 8 || !Compresses()))
+                throw std::runtime_error("Kalman::IO::Archive: entry '" + name + "' is compressed"
+                                         + (method == 8 ? ", and this build of libKalman has no zlib (KALMAN_USE_ZLIB). "
+                                                          "Repack the archive without compression (zip -0), or use a "
+                                                          "build with zlib."
+                                                        : " with a method other than deflate."));
             if (Get32(bytes, local) != kLocal) throw std::runtime_error("Kalman::IO::Archive: damaged entry '" + name + "'.");
             const std::size_t data = local + 30 + Get16(bytes, local + 26) + Get16(bytes, local + 28);
-            if (packed != size || data + size > bytes.size())
+            if ((method == 0 && packed != size) || data + packed > bytes.size())
                 throw std::runtime_error("Kalman::IO::Archive: entry '" + name + "' is cut short.");
-            std::string content = bytes.substr(data, size);
+            std::string content = bytes.substr(data, packed);
+#if KALMAN_WITH_ZLIB
+            if (method == 8) content = Inflate(content, size, name);
+#endif
             if (Crc32(content) != crc)
                 throw std::runtime_error("Kalman::IO::Archive: entry '" + name + "' fails its checksum; the file is damaged.");
             archive.Set(name, std::move(content));

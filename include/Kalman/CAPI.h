@@ -189,17 +189,38 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0);      /* n x n 
 /// The model.json text of the model written out (see Kalman::IO::ModelFile), or NULL.
 /// `registered` is the factory name a reference refers to and `plugin` the library it
 /// came from (either may be NULL); `linearize` != 0 writes the Jacobians at the initial
-/// state; `steps` is the number of samples tabulated for a time-varying model.
+/// state; `steps` is the number of samples tabulated for a time-varying model; `origin`,
+/// a JSON object as text or NULL, replaces the "origin" member (where the model came from).
 const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
-                                     int linearize, int steps);
+                                     int linearize, int steps, const char *origin);
 /// Write the model to `path`: one archive (.kw), or plain JSON when the path ends in .json. 0 or -1.
 int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
-                      int linearize, int steps);
+                      int linearize, int steps, const char *origin);
 /// Build the model a file describes (archive or JSON), or NULL. The settings file beside it
 /// (`path` + ".json"), when there is one, is applied. Destroy it with kalman_model_destroy().
 kalman_model_t *kalman_model_load(const char *path);
 /// "maps", "matrices" or "time-varying matrices": what the model is made of. Never NULL for a valid handle.
 const char *kalman_model_structure(const kalman_model_t *model);
+
+/// Build the model a file describes; `settings` != 0 applies the settings file beside it. NULL on failure.
+kalman_model_t *kalman_model_open(const char *path, int settings);
+/// Write a model.json document (text) to `path` as a model file. For a document without tables. 0 or -1.
+int kalman_model_document_save(const char *document, const char *path);
+
+/* --- model: given by matrices ------------------------------------------------ */
+
+/// A linear model given by its matrices (Kalman::Models::Tabulated), to be filled with the
+/// setters below, kalman_model_set_Q/R/x0/P0 and kalman_model_set_generator. NULL on failure.
+kalman_model_t *kalman_model_create_matrices(const char *name, int n, int m, int l);
+/// Set "F" (n x n), "H" (m x n), "B" (n x l) or "L" (n x n), row-major. 0 or -1.
+int kalman_model_set_matrix(kalman_model_t *model, const char *which, const double *data);
+/// One matrix per sample for "F", "H", "Q" or "R": `steps` matrices, row-major, one after
+/// the other. Only for a model made by kalman_model_create_matrices or read from a file. 0 or -1.
+int kalman_model_set_table(kalman_model_t *model, const char *which, int steps, const double *data);
+/// Name component i of the state (`state` != 0) or of the measurement. Same models as above. 0 or -1.
+int kalman_model_set_component(kalman_model_t *model, int state, int i, const char *name, const char *unit);
+/// Declare what the model is made of: 0 maps, 1 matrices, 2 time-varying matrices. 0 or -1.
+int kalman_model_set_structure(kalman_model_t *model, int kind);
 
 /* --- model: named components ------------------------------------------------ */
 

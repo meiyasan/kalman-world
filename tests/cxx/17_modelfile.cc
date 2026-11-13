@@ -106,15 +106,18 @@ int main()
         CHECK(Mentions(Thrown([] { IO::Json::Parse("{\"a\": [1, 2}"); }), "line 1"), "json: an error gives its position");
     }
 
-    // --- archive: read back, and damage is noticed -----------------------------
+    // --- archive: read back, damage is noticed, tables are compressed ------------
     {
         IO::Archive archive;
-        archive.Set("model.json", "{}");
-        archive.Set("tables/R.f64", std::string(64, '\x01'));
+        archive.Set("model.json", "{\"readable\": true}");
+        archive.Set("tables/R.f64", std::string(4096, '\x01'));
         std::string bytes = archive.Bytes();
         const IO::Archive back = IO::Archive::FromBytes(bytes);
-        CHECK(back.Entries().size() == 2 && back.Get("tables/R.f64").size() == 64, "archive: entries read back");
-        bytes[bytes.find(std::string(8, '\x01'))] = '\x02';
+        CHECK(back.Entries().size() == 2 && back.Get("tables/R.f64") == std::string(4096, '\x01'), "archive: entries read back");
+        CHECK(bytes.find("{\"readable\": true}") != std::string::npos, "archive: the JSON entry is stored as it is");
+        if (IO::Archive::Compresses()) CHECK(bytes.size() < 1024, "archive: a table is compressed (zlib)");
+        else CHECK(bytes.size() > 4096, "archive: a table is stored (no zlib in this build)");
+        bytes[bytes.find("readable")] = 'R';
         CHECK(Mentions(Thrown([&bytes] { IO::Archive::FromBytes(bytes); }), "checksum"), "archive: a changed byte fails its checksum");
     }
 

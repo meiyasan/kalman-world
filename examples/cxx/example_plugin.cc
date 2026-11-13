@@ -81,6 +81,33 @@ namespace
             }
     };
 
+    /// Constant velocity seen by a sensor that degrades: its noise grows with time.
+    /// The matrices are all of the model, and one of them changes with time, which
+    /// the model says with SetStructure(): a file then holds R as a table.
+    class FadingSensor : public ConstantVelocity
+    {
+        private:
+            double fGrowth;   // relative growth of the measurement variance per second
+
+        public:
+            FadingSensor(double fs = 100., double growth = 0.5) : ConstantVelocity(fs), fGrowth(growth)
+            {
+                SetName("fading-sensor");
+                SetStructure(Kalman::StructureKind::TimeVarying);
+            }
+
+            const char *Title() const override { return "Constant Velocity, Fading Sensor"; }
+            const char *Description() const override
+            { return "Constant velocity with a measurement noise that grows with time."; }
+
+            Kalman::Matrix R(double t) const override
+            {
+                Kalman::Matrix R = ConstantVelocity::R(t);
+                R *= 1. + fGrowth * (t - T0());
+                return R;
+            }
+    };
+
     /// Damped pendulum: theta_ddot = -(g/l) sin(theta) - gamma theta_dot; only the angle is observed.
     class Pendulum : public Kalman::Models::Extended
     {
@@ -152,3 +179,4 @@ namespace
 KALMAN_REGISTER_MODEL(ConstantVelocity, "constant-velocity");
 KALMAN_REGISTER_MODEL(ConstantVelocity, "constant-velocity-slow", 10., 0.5, 0.2);
 KALMAN_REGISTER_MODEL(Pendulum, "pendulum");
+KALMAN_REGISTER_MODEL(FadingSensor, "fading-sensor");

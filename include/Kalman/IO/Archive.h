@@ -12,12 +12,13 @@
  *
  * \details What keeps the parts of a model file together. The file is a
  * standard zip archive, so `unzip -l`, Python's `zipfile` and any file manager
- * open it; the entries are stored, not compressed, which needs no library and
- * keeps the core free of dependencies. Every entry carries a CRC-32 that is
- * checked on reading.
+ * open it. Every entry carries a CRC-32 that is checked on reading.
  *
- * Read() understands stored entries only and says so when it meets a
- * compressed one (an archive rewritten by another tool with compression on).
+ * Entries whose name ends in `.json` are always stored as they are: they are
+ * the readable part. The others (tables) are compressed with zlib when the
+ * library was built with it (KALMAN_WITH_ZLIB) and it makes them smaller;
+ * otherwise they are stored. A build without zlib reads stored entries only,
+ * and says so when it meets a compressed one.
  *
  * *********************************************
  */
@@ -56,6 +57,9 @@ namespace Kalman::IO
             void Write(const std::string &path) const;
             /// \throws std::runtime_error when the file cannot be read, or as FromBytes().
             static Archive Read(const std::string &path);
+
+            /// True when this build compresses and reads compressed entries (zlib).
+            static bool Compresses();
 
             /// True when \p bytes starts like a zip archive.
             static bool Looks(const std::string &bytes);

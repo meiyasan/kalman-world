@@ -20,6 +20,7 @@
 #include "Kalman/Factory.h"
 #include "Kalman/IO/ModelFile.h"
 #include "Kalman/Models/Callback.h"
+#include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
 #include "Kalman/Controller.h"
 #include "Kalman/Controllers/Adaptive.h"
@@ -450,29 +451,30 @@ int kalman_model_set_P0(kalman_model_t *model, const double *P0)
 extern "C++"
 {
     static Kalman::IO::ModelFile ExportFile(const kalman_model_t *model, const char *registered, const char *plugin,
-                                     int linearize, int steps)
+                                            int linearize, int steps, const char *origin)
     {
         Kalman::IO::ModelFile::Options options;
         if (registered) options.registered = registered;
         if (plugin) options.plugin = plugin;
         options.linearize = linearize != 0;
         options.steps = steps > 0 ? static_cast<std::size_t>(steps) : 0;
+        if (origin) options.origin = Kalman::IO::Json::Parse(origin);
         return Kalman::IO::ModelFile::Export(Deref(model), options);
     }
 }
 
 const char *kalman_model_export_json(const kalman_model_t *model, const char *registered, const char *plugin,
-                                     int linearize, int steps)
+                                     int linearize, int steps, const char *origin)
 {
-    return GuardStr([=] { return Keep(ExportFile(model, registered, plugin, linearize, steps).Text()); });
+    return GuardStr([=] { return Keep(ExportFile(model, registered, plugin, linearize, steps, origin).Text()); });
 }
 
 int kalman_model_save(const kalman_model_t *model, const char *path, const char *registered, const char *plugin,
-                      int linearize, int steps)
+                      int linearize, int steps, const char *origin)
 {
     return Guard([=] {
         if (!path) throw std::invalid_argument("null path");
-        ExportFile(model, registered, plugin, linearize, steps).Save(path);
+        ExportFile(model, registered, plugin, linearize, steps, origin).Save(path);
         return 0;
     });
 }
@@ -487,6 +489,101 @@ kalman_model_t *kalman_model_load(const char *path)
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+kalman_model_t *kalman_model_open(const char *path, int settings)
+{
+    try
+    {
+        Ok();
+        if (!path) throw std::invalid_argument("null path");
+        return new kalman_model{std::move(Kalman::IO::ModelFile::Open(path, settings != 0).model)};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_document_save(const char *document, const char *path)
+{
+    return Guard([=] {
+        if (!document || !path) throw std::invalid_argument("null document or path");
+        Kalman::IO::ModelFile::FromBytes(document).Save(path);
+        return 0;
+    });
+}
+
+kalman_model_t *kalman_model_create_matrices(const char *name, int n, int m, int l)
+{
+    try
+    {
+        Ok();
+        if (!name) throw std::invalid_argument("null model name");
+        if (n <= 0 || m <= 0 || l < 0) throw std::invalid_argument("a model needs n > 0, m > 0 and l >= 0");
+        return new kalman_model{std::make_unique<Kalman::Models::Tabulated>(
+            name, static_cast<std::size_t>(n), static_cast<std::size_t>(m), static_cast<std::size_t>(l))};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+extern "C++"
+{
+    static Kalman::Models::Tabulated &Matrices(kalman_model_t *model)
+    {
+        auto *tabulated = dynamic_cast<Kalman::Models::Tabulated *>(&Deref(model));
+        if (!tabulated)
+            throw std::invalid_argument("this model is not given by matrices (kalman_model_create_matrices, or a file)");
+        return *tabulated;
+    }
+}
+
+int kalman_model_set_matrix(kalman_model_t *model, const char *which, const double *data)
+{
+    return Guard([&] {
+        auto &M = Deref(model);
+        const std::string w = which ? which : "";
+        const std::size_t n = M.NState(), m = M.NMeasure(), l = M.NControl();
+        if (w == "F") M.SetF(Mat(data, n, n, "F"));
+        else if (w == "H") M.SetH(Mat(data, m, n, "H"));
+        else if (w == "B") M.SetB(Mat(data, n, l, "B"));
+        else if (w == "L") M.SetL(Mat(data, n, n, "L"));
+        else throw std::invalid_argument("kalman_model_set_matrix takes F, H, B or L, not '" + w + "'");
+        return 0;
+    });
+}
+
+int kalman_model_set_table(kalman_model_t *model, const char *which, int steps, const double *data)
+{
+    return Guard([&] {
+        auto &M = Matrices(model);
+        const std::string w = which ? which : "";
+        if (steps <= 0 || !data) throw std::invalid_argument("a table needs at least one matrix");
+        const std::size_t rows = (w == "F" || w == "Q") ? M.NState() : M.NMeasure();
+        const std::size_t cols = (w == "R") ? M.NMeasure() : M.NState();
+        std::vector<Kalman::Matrix> table;
+        for (int k = 0; k < steps; ++k)
+            table.push_back(Mat(data + static_cast<std::size_t>(k) * rows * cols, rows, cols, w.c_str()));
+        M.SetTable(w, std::move(table));
+        return 0;
+    });
+}
+
+int kalman_model_set_component(kalman_model_t *model, int state, int i, const char *name, const char *unit)
+{
+    return Guard([&] {
+        if (i < 0 || !name) throw std::invalid_argument("a component needs an index and a name");
+        Matrices(model).SetComponent(state != 0, static_cast<std::size_t>(i), name, unit ? unit : "");
+        return 0;
+    });
+}
+
+int kalman_model_set_structure(kalman_model_t *model, int kind)
+{
+    return Guard([&] {
+        if (kind < 0 || kind > 2) throw std::invalid_argument("structure: 0 maps, 1 matrices, 2 time-varying matrices");
+        Deref(model).SetStructure(static_cast<Kalman::StructureKind>(kind));
+        return 0;
+    });
 }
 
 const char *kalman_model_structure(const kalman_model_t *model)

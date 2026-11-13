@@ -54,6 +54,16 @@ namespace Kalman::Models
         return steps;
     }
 
+    void Tabulated::SetComponent(bool state, std::size_t i, const std::string &name, const std::string &unit)
+    {
+        std::vector<Component> all = state ? StateComponents() : MeasurementComponents();
+        if (i >= all.size())
+            throw std::out_of_range("Kalman::Models::Tabulated: there is no component " + std::to_string(i) + ".");
+        all[i] = Component{name, unit};
+        if (state) DeclareState(std::move(all));
+        else DeclareMeasurement(std::move(all));
+    }
+
     void Tabulated::SetComponents(std::vector<Component> state, std::vector<Component> measurement)
     {
         if (!state.empty()) DeclareState(std::move(state));

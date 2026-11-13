@@ -357,6 +357,11 @@ class KalmanFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if not isinstance(self.engine, LinearKalmanEngine):
             return False
         model = self._model
+        # A C++ model whose matrices change with time (one read from a file with
+        # tables) holds no Python callable to give it away: it says so itself.
+        from .constants import KalmanStructureKind
+        if getattr(model, "structure", None) is KalmanStructureKind.TIME_VARYING:
+            return False
         return not any(callable(getattr(model, attr)) for attr in ("_F", "_H", "_B", "_L", "_Q", "_R"))
 
     def _forward_native(self, zk, uk):

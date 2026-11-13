@@ -261,3 +261,98 @@ def test_settings_file_beside_a_model_file(tmp_path):
     assert _run("model", path).returncode == 1
     # a whole model is not written under the name of a settings file
     assert _run("export", "car-speed", "-o", beside).returncode == 1
+
+
+def test_time_varying_model_through_the_program(tmp_path):
+    plugin = _example_plugin()
+    if plugin is None:
+        pytest.skip("the example plugin is not built (make examples)")
+    base = ("--no-apps", "--plugin", plugin)
+    listed = {m["name"]: m for m in json.loads(_run(*base, "models", "--json").stdout)}
+    assert listed["fading-sensor"]["structure"] == "time-varying matrices"
+    refused = _run(*base, "export", "fading-sensor")
+    assert refused.returncode == 1 and "how many samples" in refused.stderr
+    path = str(tmp_path / "fading.kw")
+    assert _run(*base, "export", "fading-sensor", "--steps", "50", "-o", path).returncode == 0
+    assert _run(*base, "export", "fading-sensor", "--steps", "50").returncode == 1      # tables need a file
+    import zipfile
+    assert zipfile.ZipFile(path).namelist() == ["model.json", "tables/R.f64"]
+    shown = _run("--no-apps", "model", path)                # read back with no plugin at all
+    assert shown.returncode == 0 and "complete, with tables" in shown.stdout
+
+    import numpy as np
+    import kalman.native as native
+    read = native.read_model_file(path)
+    R = read["tables"]["R"]
+    assert R.shape == (50, 1, 1) and abs(R[10, 0, 0] / R[0, 0, 0] - 1.05) < 1e-12     # +50 % per second at 100 Hz
+
+    # opened in Python, the tables are used: against the registered model, sample by sample
+    from kalman.framework.native import core
+    if not core.HAS_CXX_CORE:
+        return                                              # reading the file needed no library; opening does
+    native.load_plugin(plugin)
+    original, opened = native.NativeModel("fading-sensor"), native.open_model(path)
+    assert opened.structure.name == "TIME_VARYING"
+    z = np.cumsum(np.random.default_rng(3).normal(size=(50, 1)), axis=0)
+    a, b = original.filter_native(z, engine="linear"), opened.filter(z)
+    assert np.abs(np.asarray(a.xk).reshape(50, 2) - np.asarray(b.xk).reshape(50, 2)).max() < 1e-12
+
+
+def test_python_models_export_and_open(tmp_path):
+    import numpy as np
+    import kalman.native as native
+    from kalman.framework.native import core
+    from kalman.framework.model import KalmanModel
+    from kalman.framework.constants import KalmanStructureKind
+
+    if not core.HAS_CXX_CORE:
+        pytest.skip("libKalman is not built")
+    dt = 0.1
+    kw = dict(fs=10, F=np.array([[1, dt], [0, 1]]), H=np.array([[1.0, 0]]), Q=np.diag([1e-4, 1e-3]),
+              x0=np.zeros((2, 1)), P0=np.eye(2))
+    z = np.cumsum(np.random.default_rng(1).normal(size=(80, 1)), axis=0)
+
+    def apart(a, b):
+        return np.abs(np.asarray(a.filter(z).xk).reshape(80, 2) - np.asarray(b.filter(z).xk).reshape(80, 2)).max()
+
+    # constant matrices: written whole
+    model = KalmanModel("cv", R=np.array([[0.04]]), **kw)
+    assert model.structure is KalmanStructureKind.MATRICES
+    path = str(tmp_path / "cv.kw")
+    document = model.export(path)
+    assert document["kind"] == "complete" and document["origin"]["python"].endswith("KalmanModel")
+    opened = native.open_model(path)
+    assert opened.structure is KalmanStructureKind.MATRICES and apart(model, opened) == 0.0
+
+    # a matrix that is a function of time: tables, used when opened
+    varying = KalmanModel("tv", R=lambda t: np.array([[0.04 * (1 + (t or 0))]]), **kw)
+    assert varying.structure is KalmanStructureKind.TIME_VARYING
+    with pytest.raises(ValueError):
+        varying.export()
+    path = str(tmp_path / "tv.kw")
+    assert list(varying.export(path, steps=80)["tables"]["entries"]) == ["R"]
+    opened = native.open_model(path)
+    assert apart(varying, opened) < 1e-12
+    assert apart(model, opened) > 1e-3              # and it is not the constant model
+
+    # settings beside it are applied on opening
+    json.dump({"format": "kalman-settings", "for": "KalmanModel", "initial": {"x0": [5.0, 0.0]}},
+              open(str(tmp_path / "cv.kw.json"), "w"))
+    assert float(np.asarray(native.open_model(str(tmp_path / "cv.kw")).x0).reshape(-1)[0]) == 5.0
+    assert float(np.asarray(native.open_model(str(tmp_path / "cv.kw"), settings=False).x0).reshape(-1)[0]) == 0.0
+
+    # a model given by code: a reference to its class, or its Jacobians
+    from kalman.apps.vehicles.lane import CarLaneModel
+    lane = CarLaneModel("car")
+    assert lane.structure is KalmanStructureKind.MAPS
+    path = str(tmp_path / "lane.kw")
+    document = lane.export(path)
+    assert document["kind"] == "reference" and document["spec"]["base"] == "CarLaneModel"
+    assert "parameters_not_recovered" in document["origin"]      # said, not hidden
+    assert type(native.open_model(path)).__name__ == "CarLaneModel"
+    refused = _run("model", path) if KALMAN else None
+    if refused is not None:
+        assert refused.returncode == 1 and "Python class" in refused.stderr
+    tangent = lane.export(linearize=True)
+    assert tangent["kind"] == "linearization" and np.asarray(tangent["spec"]["dynamics"]["F"]).shape == (3, 3)
+    assert tangent["state"][0] == {"name": "lateral", "unit": "m"}

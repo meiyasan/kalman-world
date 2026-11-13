@@ -338,7 +338,10 @@ namespace Kalman::IO
             if (!factory.Has(base))
             {
                 std::string hint;
-                if (envelope && fDocument["origin"].Has("plugin"))
+                if (envelope && fDocument["origin"].Has("python"))
+                    hint = " It refers to the Python class " + fDocument["origin"]["python"].AsString("origin.python")
+                         + ": open it from Python (kalman.native.open_model).";
+                else if (envelope && fDocument["origin"].Has("plugin"))
                     hint = " It was written from the plugin '" + fDocument["origin"]["plugin"].AsString("origin.plugin")
                          + "': load it first.";
                 Bad("the file refers to the model '" + base + "', which is not registered here." + hint
@@ -430,6 +433,11 @@ namespace Kalman::IO
         if (settings.Has("fs"))
             if (const double fs = settings["fs"].AsNumber("fs"); fs != model.SampleRate())
             {
+                // Matrices written for one step length are that step's: another rate needs
+                // the model stated in continuous time (a generator), or the code itself.
+                if (model.Structure() != StructureKind::Maps && model.Generator().Empty())
+                    Bad("fs cannot change here: the matrices of this model were written for "
+                        + Plain(model.SampleRate()) + " Hz. Export it again at the rate you want.");
                 model.SetSampleRate(fs);
                 changed.push_back("fs = " + Plain(fs));
             }

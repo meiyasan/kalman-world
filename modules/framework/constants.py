@@ -163,6 +163,26 @@ class KalmanDifferentiatorKind(Enum):
 
 
 # -----------------------------
+# ----- Structure kinds -------
+# -----------------------------
+class KalmanStructureKind(Enum):
+    """
+    What a model is made of, which decides what a file can hold of it
+    (``model.export``). A model may declare it as ``STRUCTURE``; left at
+    ``None`` it is read from the model itself.
+
+    ``MAPS``: ``f`` and ``h`` are code. A file names the model and carries its
+    settings, or its Jacobians at one state.
+    ``MATRICES``: the model is its constant F, H, B, L, Q, R. A file holds all of it.
+    ``TIME_VARYING``: the model is its matrices and they change with time. A
+    file holds all of it over a stated number of samples, as tables.
+    """
+    MAPS         = 0
+    MATRICES     = 1
+    TIME_VARYING = 2
+
+
+# -----------------------------
 # ----- Dynamics kinds --------
 # -----------------------------
 class KalmanDynamicsKind(Enum):

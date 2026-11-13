@@ -3,7 +3,7 @@ import numpy as np
 from ..helpers import set_random_seed, as_col, numerical_jacobian, van_loan_discretize, matrix_exponential
 from .abstract.mixins import KalmanModelMixin
 from .abstract.metadata import KalmanModelMetadata
-from .constants import KalmanDynamicsKind, KalmanDifferentiatorKind
+from .constants import KalmanDynamicsKind, KalmanDifferentiatorKind, KalmanStructureKind
 from .constants import (KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable,
                         KalmanIntegratorKind, ALL_INTEGRATORS,
                         KalmanSolverKind, ALL_SOLVERS)
@@ -52,6 +52,8 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # differences (the default) or central ones. A model that overrides F()/H()
     # or holds matrices is analytic whatever this says.
     DIFFERENTIATOR      = KalmanDifferentiatorKind.FORWARD
+    #: What the model is made of (KalmanStructureKind), or None to read it from the model: see ``structure``.
+    STRUCTURE           = None
     DEFAULT_INTEGRATOR  = KalmanIntegratorKind.RK4
     ALLOWED_INTEGRATORS = ALL_INTEGRATORS
     DEFAULT_SOLVER      = KalmanSolverKind.SPECTRAL
@@ -440,6 +442,35 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # ============================================================
     # Generic, override-friendly defaults (so a bare model is usable)
     # ============================================================
+    # ============================================================
+    # Files
+    # ============================================================
+    @property
+    def structure(self) -> KalmanStructureKind:
+        """What the model is made of: ``STRUCTURE`` when the class declares it,
+        otherwise read from the model. It is matrices when it was built from them
+        (``F=``, ``H=``) and none of ``f``, ``h``, ``F``, ``H``, ``Q``, ``R`` is
+        overridden; time-varying when one of those matrices is a function of
+        time; code (``MAPS``) in every other case."""
+        if self.STRUCTURE is not None:
+            return self.STRUCTURE
+        cls = type(self)
+        untouched = all(getattr(cls, k) is getattr(KalmanModel, k) for k in ("f", "h", "F", "H", "Q", "R", "B", "L", "M"))
+        if not untouched or self._F is None or self._H is None or self._M is not None:
+            return KalmanStructureKind.MAPS
+        if callable(self._B) or callable(self._L):
+            return KalmanStructureKind.MAPS         # a file tabulates F, H, Q and R only
+        if any(callable(M) for M in (self._F, self._H, self._Q, self._R)):
+            return KalmanStructureKind.TIME_VARYING
+        return KalmanStructureKind.MATRICES
+
+    def export(self, path=None, *, linearize=False, steps=0) -> dict:
+        """Write the model to a file (``.kw``) and return its ``model.json`` as a
+        dict: see :func:`kalman.native.export`. Needs the C++ library, which
+        writes the file."""
+        from ..native import export
+        return export(self, path, linearize=linearize, steps=steps)
+
     @property
     def states(self) -> KalmanState:
         """State enum — a domain enum when declared, else one synthesized from

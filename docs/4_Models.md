@@ -206,3 +206,10 @@ describe("StormModel")
   ever *emits*; a human commits. See [Python API](9_Python-API.md).
 
 Full conventions for contributors are in [`../AGENTS.md`](../AGENTS.md).
+
+## Writing a model to a file
+
+`model.export("name.kw")` writes any model to one file and
+`kalman.native.open_model("name.kw")` reads it back; what the file can hold
+follows `model.structure` (matrices, matrices that change with time, or code).
+See [Model files](15_Cxx-Library.md).
