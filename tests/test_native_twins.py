@@ -608,5 +608,89 @@ class TestInterplanetaryTwin(unittest.TestCase):
         self.assertIsNotNone(InterplanetaryModel("earth", "mars").native_handle())
 
 
+# --- the gravitational-wave polarization (kalman.apps.gravitational.gravwave) ------
+def polarization_run(fs=100.0, T=40.0, seed=0):
+    """The notebook's synthetic chirp: amplitude, carrier 1 -> 2 Hz and the two
+    polarization angles all moving, sigma_n = 0.3 on each real component."""
+    from modules.apps.gravitational.gravwave import jones_signal
+    t = np.arange(int(T * fs)) / fs
+    rng = np.random.default_rng(seed)
+    a = 1.0 + 0.1 * np.cos(2 * np.pi * 0.2 * t)
+    psi = 2 * np.pi * (t + 0.5 * (1.0 / T) * t ** 2)
+    theta = (np.pi / 2) * (1.0 + 0.5 * np.sin(2 * np.pi * 0.05 * t))
+    phi = np.pi * (1.0 + 0.5 * np.sin(2 * np.pi * 0.10 * t + 1.0))
+    z = np.array([jones_signal(a[k], psi[k], theta[k], phi[k]) for k in range(len(t))])
+    z = z + 0.3 * (rng.standard_normal(z.shape) + 1j * rng.standard_normal(z.shape))
+    zk = np.column_stack([z[:, 0].real, z[:, 0].imag, z[:, 1].real, z[:, 1].imag])
+
+    def make(**kw):
+        from modules.apps.gravitational.gravwave import PolarizationModel
+        model = PolarizationModel("gw", **{"fs": fs, "delta": 0.5, "sigma_a": 0.05, "sigma_psi": 0.6,
+                                           "sigma_theta": 0.05, "sigma_phi": 0.05, "sigma_n": 0.3, **kw})
+        model.initial_state([np.log(a[0]), 0.0, psi[0] - 2 * np.pi / fs, 2 * np.pi, theta[0], 0.0, phi[0], 0.0])
+        return model
+    return make, zk
+
+
+@needs_apps
+class TestPolarizationTwin(unittest.TestCase):
+
+    def test_twin_matches_python_on_the_chirp(self):
+        from unittest import mock
+        from modules.framework.filter import KalmanFilter
+        make, zk = polarization_run()
+        with native.python_reference():
+            py = make().filter(zk)
+        with mock.patch.object(KalmanFilter, "_forward_twin", autospec=True,
+                               side_effect=KalmanFilter._forward_twin) as twin:
+            cx = make().filter(zk)
+        self.assertEqual(twin.call_count, 1, "the pass ran on the twin")
+        close(self, py.xk, cx.xk, STATE_RTOL, "state")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance")
+
+    def test_smoothing_and_missing_samples(self):
+        make, zk = polarization_run(T=10.0, seed=3)
+        zk = zk.copy()
+        zk[200:230] = np.nan                         # a gap
+        zk[400, 2:] = np.nan                         # one component missing
+        py, cx = both(make, zk, smooth=True)
+        close(self, py.xk, cx.xk, COVARIANCE_RTOL, "smoothed state through the gap")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "smoothed covariance through the gap")
+
+    def test_noise_and_rate_reach_the_twin(self):
+        make, zk = polarization_run(fs=50.0, T=10.0, seed=5)
+        py, cx = both(lambda: make(fs=50.0, delta=0.9, sigma_psi=2.0, sigma_n=0.5), zk)
+        close(self, py.xk, cx.xk, STATE_RTOL, "state at 50 Hz")
+        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance at 50 Hz")
+        handle = make(sigma_n=0.5).native_handle()
+        R = np.empty((4, 4))
+        core.check(core.lib.kalman_model_R(handle, 0.0, core.dptr(R)), "R")
+        np.testing.assert_allclose(R, 0.25 * np.eye(4), rtol=0, atol=1e-15)
+
+    def test_configurations_without_a_twin_keep_the_python_physics(self):
+        from modules.apps.gravitational.gravwave import PolarizationModel
+        make, _ = polarization_run()
+        model = make()
+        model.fs = 200.0                             # the transition was built for 100 Hz
+        self.assertIsNone(model.native_handle())
+
+        class Damped(PolarizationModel):             # another transition
+            def f(self, x, u=None, w=None, t=None):
+                return 0.99 * super().f(x, u, w, t)
+        self.assertIsNone(Damped("gw").native_handle())
+
+        class Linearised(PolarizationModel):         # another measurement Jacobian
+            def H(self, x=None, t=None):
+                return np.zeros((4, 8))
+        self.assertIsNone(Linearised("gw").native_handle())
+        self.assertIsNotNone(PolarizationModel("gw").native_handle())
+
+    def test_named_components(self):
+        handle = polarization_run()[0]().native_handle()
+        lib = core.lib
+        self.assertEqual(core._s(lib.kalman_model_structure(handle)), "maps")
+        self.assertEqual(polarization_run()[0]().native_name(), "polarization")
+
+
 if __name__ == "__main__":
     unittest.main()

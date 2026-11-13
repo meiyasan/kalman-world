@@ -867,6 +867,7 @@ the Python loop runs as before.
 | `RocketLandingModel` | `Apps::Astro::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
 | `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
 | `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
+| `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `preprocess()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
 
 The ballistic, car and rocket twins are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
@@ -916,6 +917,12 @@ runs, relative to the largest entry:
 | `RocketLandingModel` | 293.0 ms | 16.3 ms | 17.9x | 3.1e-11 | 4.8e-09 |
 | `TransLunarModel`, free return | 5738.1 ms | 548.1 ms | 10.5x | 2.7e-12 | 1.4e-12 |
 | `InterplanetaryModel`, Earth-Mars | 3183.8 ms | 309.2 ms | 10.3x | 6.7e-13 | 4.5e-10 |
+| `PolarizationModel`, chirp | 125.5 ms | 15.3 ms | 8.2x | 1.4e-10 | 4.0e-08 |
+
+(The polarization row was measured with `--repeat 3`, in a run where the
+order-3 ballistic row read 2041.3 ms against 34.1 ms: the notebook's chirp,
+1 to 2 Hz at 100 Hz with the amplitude and both angles moving. Before the twin
+the pass ran the C++ loop calling the Python `f`, `h` and `H`: 103.3 ms.)
 
 (The two space rows were measured later, on a loaded machine, with `--repeat 3`:
 in the same run the ballistic order-3 row read 2038.8 ms against 261.1 ms, 7.8x.
@@ -958,6 +965,61 @@ the "Python" column above is measured.
 `NativeTwin` into the Python class and give it `native_name()` (the registered
 name for this configuration, or `None`) and `native_parameters()`. Add its
 cases to `tests/test_native_twins.py` and to `tools/benchmark_twins.py`.
+
+### Composite models: matrices, no twin
+
+A `CompositeKalmanModel` stacks its parts: block-diagonal `F` and `Q`, and an
+`H` that stacks the parts' readouts (INDEPENDENT) or sums them on one shared
+channel (FUSED). The oscillator windows (`OscillatorModel` and its harmonic and
+inharmonic ladders), `OscillatorBankModel` and `InterferometerModel` with its
+detectors K1, H1, L1 and V1 are composites of `AnalyticOscillatorModel`s, each
+of them constant matrices. They need no twin: a composite reads its
+`structure` from its parts (MATRICES when all are constant matrices,
+TIME_VARYING when one of their matrices is a function of time, MAPS as soon as
+one part is code or a stacked map was replaced after construction), and an
+instance that is not code takes the linear engine (`DEFAULT_ENGINE` read on
+the class stays the extended engine, which serves any part). `filter()` then
+runs `kf_forward_linear` and the smoother `kf_backward_rts` on the stacked
+matrices, and `sample()` runs its state chain in C++ (`kalman_propagate` on a
+`Models::Tabulated` holding them, numpy's draws). A time-varying composite
+stores the stacked matrix that changes as a function of time (`_F`, `_H`,
+`_Q`, `_R`), as any model built from one does, so the pass over tables and the
+exporter tabulate it; it never takes the constant-matrix pass.
+
+Before, these models ran on the extended engine: the C++ loop calling the
+Python closures for `f`, `F`, `h`, `H`, `Q` and `R` at every step, and the
+smoother in Python. Measured with `tools/benchmark_twins.py --repeat 3`
+(500 filter steps at the decimated rate; the times include the demodulation
+and decimation of `preprocess`, which stay in numpy and scipy):
+
+| Model | n | Python loop | C++ loop, callbacks (before) | C++ linear pass | Faster | State | Covariance |
+|---|---|---|---|---|---|---|---|
+| `OscillatorModel`, one line | 2 | 37.8 ms | 43.7 ms | 11.8 ms | 3.2x | 0 | 0 |
+| `OscillatorModel`, three lines | 6 | 54.8 ms | 63.8 ms | 12.7 ms | 4.3x | 4.8e-10 | 1.3e-14 |
+| `OscillatorBankModel`, 3 windows | 6 | 143.4 ms | 192.9 ms | 19.5 ms | 7.3x | 0 | 0 |
+| `InterferometerK1`, 88 modes (O3GK catalogue) | 176 | 5143.0 ms | 3834.3 ms | 410.6 ms | 12.5x | 1.0e-05 | 8.6e-07 |
+
+The K1 row is limited by the model, not by either side: about thirty phasors
+share each window's 2-D envelope, the covariance reaches a condition number
+of 8e9, and a rounding of 1e-16 grows to 1e-6. The C++ loop it replaces was as
+far from the Python loop; against it the C++ linear pass agrees to 1.7e-12.
+In the notebook (02_Oscillators) the three filtering passes went from 16, 30
+and 76 ms to 3.9, 3.7 and 6.1 ms.
+
+Stays in Python: an `InterferometerModel` filtered with its
+`ViolinBankController` (`make_controller()`). The controller retunes each
+leaf's `Q` from the innovations at every step (the factor itself is computed
+by the C++ `Controllers::AdaptiveQR`, one per leaf), and running that loop in
+C++ needs three things that do not exist yet: a C entry that runs
+`Kalman::Filter` with a C++ controller (`kalman_filter_run_closed_loop` takes
+a function), a C++ composite whose `Q` follows its adapted leaves, and a
+controller that dispatches the bank's state and innovation to the leaves'
+controllers. The K1 catalogue with the controller runs at about 12 ms a step
+in the Python loop (1.5 s for 120 steps), most of it numpy's `F P F^T` at
+n = 176. The peak finding of `InterferometerModel.fit` (`spectral.py`: Welch,
+`find_peaks`, the Lorentzian `curve_fit`) builds the model before any filter
+runs, and `subtract`/`reconstruct` resample and remodulate its output: both are
+signal processing around the filter, in scipy.
 
 ## Integrating with root-plus
 

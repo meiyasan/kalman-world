@@ -146,14 +146,17 @@ class KalmanSampler:
     def _native_chain(self, n_samples, x, P, t_start, uk, wk, kwargs):
         """The state chain computed by the C++ loop (kalman_propagate), with the
         noise drawn here by numpy so a seeded run does not change. ``None`` when
-        the Python loop must run: another engine than the extended one, extra
-        arguments for the prediction, a model that is not double precision, or
-        no library."""
+        the Python loop must run: another engine than the extended one (or the
+        linear one on a model of constant matrices), extra arguments for the
+        prediction, a model that is not double precision, or no library."""
         from .models import native
         from .engines.extended import ExtendedKalmanEngine
-        if kwargs or not native.native_loop_enabled() or type(self.engine) is not ExtendedKalmanEngine:
+        if kwargs or not native.native_loop_enabled():
             return None
         model = self.model
+        matrices = self._matrices_handle()
+        if matrices is None and type(self.engine) is not ExtendedKalmanEngine:
+            return None
         if n_samples <= 0 or not native.callback_eligible(model):
             return None
         from .native import core
@@ -163,6 +166,11 @@ class KalmanSampler:
             controls = np.asarray(uk, dtype=np.float64).reshape(n_samples, l) if l > 0 else None
         except (TypeError, ValueError):
             return None
+        if matrices is not None:
+            # A model of constant matrices on the linear engine: the chain runs
+            # on those matrices in C++ (a Kalman::Models::Tabulated holding them).
+            return core.propagate(matrices, core.create_engine("linear"), n, l, n_samples, x, P,
+                                  t_start, self.fs, uk=controls, wk=draws)
         twin = getattr(model, "native_handle", None)
         handle, keep = (twin() if twin is not None else None), None
         if handle is None:
@@ -174,6 +182,23 @@ class KalmanSampler:
             if keep and keep[-1]:
                 raise keep[-1][0]                       # the Python exception, not its C++ shadow
             raise
+
+    def _matrices_handle(self):
+        """A C++ model of ``self.model``'s matrices when the linear engine samples a
+        Python model of constant matrices (``structure`` MATRICES), else ``None``."""
+        from .engines.linear import LinearKalmanEngine
+        from .constants import KalmanStructureKind
+        from .models.native import NativeModel
+        model = self.model
+        if type(self.engine) is not LinearKalmanEngine or isinstance(model, NativeModel):
+            return None
+        if getattr(model, "structure", None) is not KalmanStructureKind.MATRICES:
+            return None
+        from ..native import _stand_in
+        try:
+            return _stand_in(model, KalmanStructureKind.MATRICES, False)
+        except (TypeError, ValueError, AttributeError):
+            return None                                 # matrices the C++ model does not take
 
     def process_noise(self, duration: float, **_):
         """

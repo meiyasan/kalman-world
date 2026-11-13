@@ -1,4 +1,5 @@
-"""Before / after: each application model with a C++ twin, filtered twice.
+"""Before / after: each application model with a C++ twin, filtered twice, and the
+composite models of matrices, which run the C++ linear pass.
 
 "Before" is the Python physics (the twin switched off), "after" is the same
 Python model handing its pass to libKalmanApps. Both runs go through
@@ -148,7 +149,9 @@ def cases(steps):
     # (12 h samples, Mercury, Venus, Jupiter and Saturn tabulated from the ephemeris).
     from modules.apps.astro.space import TransLunarModel, InterplanetaryModel   # noqa: E402
     from modules.apps.astro.space.transfers import lambert                      # noqa: E402
-    from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH, DAY, body_state   # noqa: E402
+    # R_EARTH and KM come from the module's import: importing them here again made
+    # them locals of cases(), unbound in the ascent case above (a NameError).
+    from modules.runtime.astro import D_MOON, GM_EARTH, DAY, body_state   # noqa: E402
     from astropy.time import Time, TimeDelta                                    # noqa: E402
 
     rp = R_EARTH + 400 * KM
@@ -173,11 +176,95 @@ def cases(steps):
         return model
     yield "InterplanetaryModel, Earth-Mars", cruise, np.asarray(cruise().sample(steps * 43.2, seed=0).zk)
 
+    # The gravitational-wave polarization of notebook 05: a chirp from 1 to 2 Hz
+    # at 100 Hz with the amplitude and both angles moving, sigma_n = 0.3.
+    from modules.apps.gravitational.gravwave import PolarizationModel, jones_signal   # noqa: E402
+    pt = np.arange(steps) / 100.0
+    span = steps / 100.0
+    a = 1.0 + 0.1 * np.cos(2 * np.pi * 0.2 * pt)
+    psi = 2 * np.pi * (pt + 0.5 * pt ** 2 / span)
+    theta = (np.pi / 2) * (1.0 + 0.5 * np.sin(2 * np.pi * 0.05 * pt))
+    phi = np.pi * (1.0 + 0.5 * np.sin(2 * np.pi * 0.10 * pt + 1.0))
+    jones = np.array([jones_signal(a[k], psi[k], theta[k], phi[k]) for k in range(steps)])
+    jones = jones + 0.3 * (rng.standard_normal(jones.shape) + 1j * rng.standard_normal(jones.shape))
+
+    def polarization():
+        model = PolarizationModel("GW", fs=100.0, delta=0.5, sigma_a=0.05, sigma_psi=0.6,
+                                  sigma_theta=0.05, sigma_phi=0.05, sigma_n=0.3)
+        model.initial_state([0.0, 0.0, -2 * np.pi / 100.0, 2 * np.pi, theta[0], 0.0, phi[0], 0.0])
+        return model
+    yield ("PolarizationModel, chirp", polarization,
+           np.column_stack([jones[:, 0].real, jones[:, 0].imag, jones[:, 1].real, jones[:, 1].imag]))
+
+
+def composite_cases(steps):
+    """The composites of notebook 02 and the K1 catalogue: models of matrices,
+    with no twin. ``steps`` is the number of filter steps (decimated samples)."""
+    from modules.apps.resonators.oscillators import (OscillatorModel, OscillatorBankModel,   # noqa: E402
+                                                     InharmonicOscillatorModel, partial_frequencies)
+    from modules.apps.gravitational.interferometer import InterferometerK1                   # noqa: E402
+    fs = 4096.0
+    rng = np.random.default_rng(0)
+
+    def lines(freqs, amps, Qs, noise, rate):
+        N = int(steps / rate * fs)
+        t = np.arange(N) / fs
+        x = noise * rng.standard_normal(N)
+        for amp, f, q in zip(amps, freqs, Qs):
+            x += amp * np.exp(-t / (q / (np.pi * f))) * np.cos(2 * np.pi * f * t)
+        return x
+
+    yield ("OscillatorModel, one line",
+           lambda: OscillatorModel("m", [180.1], fc=180.1, dfc=5.0, Q=1.3e4, fs=fs,
+                                   measurement_uncertainty=0.1, process_uncertainty=1e-4),
+           lines([180.1], [1.0], [1.3e4], 0.1, 20.0))
+    yield ("OscillatorModel, three lines",
+           lambda: OscillatorModel("c", [178.0, 180.1, 182.5], fc=180.0, dfc=8.0, Q=[1.3e4] * 3, fs=fs,
+                                   measurement_uncertainty=0.1, process_uncertainty=1e-4),
+           lines([178.0, 180.1, 182.5], [1.0, 0.6, 0.4], [1.3e4] * 3, 0.1, 32.0))
+    fr = partial_frequencies(170.0, 0.13, 3)
+    yield ("OscillatorBankModel, 3 windows",
+           lambda: OscillatorBankModel(*[InharmonicOscillatorModel(
+               f"ih{k}", f0=170.0, fc=fk, dfc=8.0, n_harmonics=3, B=0.13, Q=q, fs=fs,
+               measurement_uncertainty=0.05, process_uncertainty=1e-5)
+               for k, (fk, q) in enumerate(zip(fr, [1.3e4, 1.8e4, 2.1e4]))]),
+           lines(fr, [1.0, 0.4, 0.15], [1.3e4, 1.8e4, 2.1e4], 0.05, 32.0))
+    k1 = InterferometerK1.from_peaks("O3GK")
+    peaks = [f for w in k1.windows for f in w.frequencies][::20]
+    yield ("InterferometerK1, 88 modes", lambda: InterferometerK1.from_peaks("O3GK"),
+           lines(peaks, [1.0] * len(peaks), [1e5] * len(peaks), 0.1, 4 * k1.windows[0].dfc))
+
+
+def compare_composite(make, z, repeat):
+    """The Python loop, the old default (the extended engine: the C++ loop calling
+    the Python closures) and the C++ linear pass a model of matrices takes now."""
+    from unittest import mock
+    from modules.framework.filter import KalmanFilter
+    from modules.framework.constants import KalmanEngineKind
+
+    def before():
+        model = make()
+        model.DEFAULT_ENGINE = KalmanEngineKind.EXTENDED
+        return model
+    with native.python_reference(), mock.patch.object(KalmanFilter, "_native_forward_eligible", return_value=False):
+        t_py, x_py, P_py, _ = timed(make, z, repeat)
+    t_loop, x_loop, _, _ = timed(before, z, repeat)
+    with mock.patch.object(KalmanFilter, "_forward_native", autospec=True,
+                           side_effect=KalmanFilter._forward_native) as fused:
+        t_cx, x_cx, P_cx, model = timed(make, z, repeat)
+    scale = max(1.0, np.nanmax(np.abs(x_py)))
+    dx = np.nanmax(np.abs(x_py - x_cx)) / scale
+    dP = np.nanmax(np.abs(P_py - P_cx)) / max(1.0, np.nanmax(np.abs(P_py)))
+    return t_py, t_loop, t_cx, dx, dP, fused.call_count == repeat, model.n, len(x_cx)
+
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--steps", type=int, default=2000, help="measurements per run (default 2000)")
     parser.add_argument("--repeat", type=int, default=3, help="runs per case, best kept (default 3)")
+    parser.add_argument("--only", default="", help="run the cases whose name contains this text")
+    parser.add_argument("--composite-steps", type=int, default=500,
+                        help="filter steps per composite run (default 500; the 88-mode K1 bank has n = 176)")
     args = parser.parse_args()
 
     kalman.set_debug(0)
@@ -187,9 +274,19 @@ def main():
     print(f"{args.steps} steps per run, best of {args.repeat}\n")
     print(f"{'model':32s} {'Python':>10s} {'C++ loop':>10s} {'C++ model':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
     for name, make, z, *uk in cases(args.steps):
+        if args.only not in name:
+            continue
         t_py, t_loop, t_cx, dx, dP, used = compare(make, z, args.repeat, *uk)
         twin = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
         print(f"{name:32s} {t_py:8.1f} ms {t_loop:8.1f} ms {twin} {dx:9.1e} {dP:11.1e}")
+    print(f"\nComposites (models of matrices, no twin), {args.composite_steps} filter steps, best of {args.repeat}\n")
+    print(f"{'model':32s} {'n':>4s} {'Python':>10s} {'C++ loop':>10s} {'C++ linear':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
+    for name, make, z in composite_cases(args.composite_steps):
+        if args.only not in name:
+            continue
+        t_py, t_loop, t_cx, dx, dP, used, n, N = compare_composite(make, z, args.repeat)
+        fused = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
+        print(f"{name:32s} {n:4d} {t_py:8.1f} ms {t_loop:8.1f} ms {fused} {dx:9.1e} {dP:11.1e}")
     print("\nPython: the reference loop. C++ loop: the C++ filter calling the Python model.")
     print("C++ model: the model's C++ twin. faster: Python against the fastest of the two.")
     print("state / covariance: largest difference from the Python run, relative to the largest entry.")

@@ -12,7 +12,8 @@ class CompositeKalmanModel(KalmanModel):
     DESCRIPTION = "Composite Kalman model combining multiple submodels (block-stacked F/H/Q/R)."
     VERSION = "1.0"
 
-    DEFAULT_ENGINE  = KalmanEngineKind.EXTENDED   # general; reduces per linear block automatically
+    # DEFAULT_ENGINE: the extended engine (general), or the linear one for an
+    # instance made of matrices -- see _EngineOfParts below.
     ALLOWED_ENGINES = ALL_ENGINES
 
     """
@@ -86,6 +87,56 @@ class CompositeKalmanModel(KalmanModel):
         for m in self.models:
             self._sensor.extend(m._sensor)
 
+        # What was bound here: a part of the contract replaced afterwards (an
+        # h of one's own, say) makes the composite code, whatever its parts are.
+        self._bound = {name: self.__dict__[name] for name in ("f", "h", "F", "H", "B", "L", "Q", "R")}
+        # A stacked matrix that changes with time is a function of time, as on
+        # any model built from matrices: the filter and the exporter tabulate
+        # what is stored as a function (``_F``, ``_H``, ``_Q``, ``_R``).
+        for stored, bound in (("_F", "F"), ("_H", "H"), ("_Q", "Q"), ("_R", "R")):
+            if any(callable(getattr(m, stored, None)) for m in self.models):
+                setattr(self, stored, self._bound[bound])
+
+    # ==========================================================
+    #  What the composite is made of, and the engine that follows
+    # ==========================================================
+    @property
+    def structure(self):
+        """The parts' structure: matrices when every part is constant matrices,
+        time-varying when every part is matrices and one of them changes with
+        time, code (``MAPS``) as soon as one part is code or one of the stacked
+        maps was replaced after construction. Both readouts (stacked or summed)
+        are linear in the parts' states, so they do not change it."""
+        from ..constants import KalmanStructureKind as S
+        if self.STRUCTURE is not None:
+            return self.STRUCTURE
+        bound = self.__dict__.get("_bound")
+        if bound is None or any(self.__dict__.get(name) is not fn for name, fn in bound.items()):
+            return S.MAPS
+        kinds = [m.structure for m in self.models]
+        if any(k is S.MAPS for k in kinds):
+            return S.MAPS
+        return S.TIME_VARYING if any(k is S.TIME_VARYING for k in kinds) else S.MATRICES
+
+    class _EngineOfParts:
+        """``DEFAULT_ENGINE`` of a composite. Read on the class it is the class's
+        declaration (the extended engine, which serves any part); read on an
+        instance made of matrices it is the linear engine, so the filter takes
+        the C++ linear pass (``kf_forward_linear``, or the tables of a
+        time-varying model) instead of differencing stacked matrices step by
+        step. On a model of matrices the two engines are the same arithmetic."""
+
+        def __init__(self, declared):
+            self.declared = declared
+
+        def __get__(self, obj, cls=None):
+            if obj is None or "_bound" not in obj.__dict__:
+                return self.declared
+            from ..constants import KalmanStructureKind as S
+            return KalmanEngineKind.LINEAR if obj.structure is not S.MAPS else self.declared
+
+    DEFAULT_ENGINE = _EngineOfParts(KalmanEngineKind.EXTENDED)
+
     # ==========================================================
     #  Core binding methods
     # ==========================================================
@@ -122,9 +173,21 @@ class CompositeKalmanModel(KalmanModel):
     def _bind_F(self):
         """Global state Jacobian: block-diagonal composition."""
         def F(x=None, u=None, t=None):
-            blocks = [m.F(x, u, t) for m in self.models]
+            # Each part is linearised at its own slice of the state (and of the
+            # control): a part that is code reads its x, not the stacked one.
+            xs, us = self._slices(x, "n"), self._slices(u, "l")
+            blocks = [m.F(xi, ui, t) for m, xi, ui in zip(self.models, xs, us)]
             return block_diag(*blocks)
         return F
+
+    def _slices(self, v, dim):
+        """``v`` cut into the parts' pieces along their ``n`` (or ``l``); a list
+        of ``None`` when ``v`` is ``None`` or has no such pieces."""
+        if v is None or (dim == "l" and self.l == 0):
+            return [None] * len(self.models)
+        v = np.asarray(v)
+        cuts = np.cumsum([getattr(m, dim) for m in self.models[:-1]])
+        return np.split(v, cuts, axis=0)
 
     # ---------- Observation ----------
     def _bind_h(self, mode):
@@ -164,17 +227,16 @@ class CompositeKalmanModel(KalmanModel):
                 n_splits = np.cumsum([m.n for m in self.models[:-1]])
                 parts_x = np.split(x, n_splits, axis=axis)
 
-                if v is not None:
-                    n_splits_v = np.cumsum([m.m for m in self.models[:-1]])
-                    parts_v = np.split(v, n_splits_v, axis=axis)
-                else:
-                    parts_v = [None] * len(self.models)
-
-                # Combine linearly (sum, not stack)
+                # Combine linearly (sum, not stack). The parts share one channel,
+                # so its noise v (one m-vector, R of that channel) is added once to
+                # the sum: split by part it left every part after the first with
+                # an empty piece, and sampling two in-band modes failed.
                 z_sum = None
-                for m, xi, vi in zip(self.models, parts_x, parts_v):
-                    zi = m.h(xi, vi, t=t)
+                for m, xi in zip(self.models, parts_x):
+                    zi = m.h(xi, None, t=t)
                     z_sum = zi if z_sum is None else z_sum + zi
+                if v is not None:
+                    z_sum = z_sum + np.asarray(v).reshape(np.shape(z_sum))
                 return z_sum
             return _h
 
@@ -184,14 +246,14 @@ class CompositeKalmanModel(KalmanModel):
         """Global observation Jacobian."""
         if mode == KalmanObservableReadout.INDEPENDENT:
             def H(x=None, t=None):
-                blocks = [m.H(x, t) for m in self.models]
+                blocks = [m.H(xi, t) for m, xi in zip(self.models, self._slices(x, "n"))]
                 return block_diag(*blocks)
             return H
 
         elif mode == KalmanObservableReadout.FUSED:
             def H(x=None, t=None):
                 """Horizontal stack over the block-stacked state: z = Σ_i H_i x_i."""
-                blocks = [m.H(x, t) for m in self.models]
+                blocks = [m.H(xi, t) for m, xi in zip(self.models, self._slices(x, "n"))]
                 return np.hstack(blocks)
             return H
 
