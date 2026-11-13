@@ -47,10 +47,17 @@ jobs:
           cache: pip
       - name: System packages
         run: |
+          # macOS: BLAS is Accelerate, zlib is in the SDK.
+          # linux-aarch64: no system OpenBLAS. The aarch64 torch wheel carries
+          # its own torch/lib/libopenblas.so.0 (with sbgemm_); a libKalman linked
+          # to Ubuntu's libopenblas.so.0 is loaded first, the loader then reuses
+          # that one for torch by its soname, and `import torch` fails on the
+          # missing sbgemm_. libKalman uses its built-in kernel instead there.
           if [ "$RUNNER_OS" = Linux ]; then
             sudo apt-get update -qq
-            sudo apt-get install -y -qq libopenblas-dev zlib1g-dev
-          fi   # macOS: BLAS is Accelerate, zlib is in the SDK
+            blas=libopenblas-dev; [ "$RUNNER_ARCH" = ARM64 ] && blas=
+            sudo apt-get install -y -qq $blas zlib1g-dev
+          fi
       - name: Python packages
         # CPU torch: the default Linux wheel pulls ~3 GB of CUDA libraries
         run: |
