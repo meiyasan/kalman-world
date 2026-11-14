@@ -1,0 +1,1039 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="libKalman — the C++ library" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: libKalman — the C++ library" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>libKalman — the C++ library</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_docs_215___cxx-_library.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">libKalman — the C++ library</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="libkalman--the-c-library"></a> <code>libKalman</code> is the framework core in C++: <b>a standalone library with no required dependency</b>. Not ROOT, not Eigen, not Torch — a C++20 compiler and nothing else.</p>
+<p>It is a <b>port, not a binding</b>. It does not wrap the Python package, does not link CPython, and is not generated from anything. The two implementations share a design — Model / Engine / Filter — and meet at exactly one, deliberate seam: <b>models</b>. A model compiled here registers itself with <code><a class="el" href="class_kalman_1_1_factory.html" title="The registry of compiled models — how a C++ model becomes nameable.">Kalman::Factory</a></code>, and the Python package reaches it through the C API (<code><a class="el" href="include_2_kalman_2_c_a_p_i_8h.html" title="The C interface of libKalman.">Kalman/CAPI.h</a></code>) as an ordinary <code>KalmanModel</code> — catalogue, API, MCP server and notebooks included. The last section of this page has the measurements that put the seam <em>there</em> and not at every filter step.</p>
+<p>The dependency direction matters and runs one way:</p>
+<div class="fragment"><div class="line">root-plus (Signal component)  ──links──▶  libKalman  ──▶  (nothing required)</div>
+</div><!-- fragment --><p>The artefact is <code>libKalman.so</code> — it names the <em>framework</em>, and cannot be mistaken for root-plus' own much smaller <code>ROOT::IOPlus::TKalmanFilter</code>. Headers stay under <code>Kalman/</code> and the namespace stays <code><a class="el" href="namespace_kalman.html">Kalman</a></code>.</p>
+<p>A ROOT or ROOT+ component links libKalman; libKalman never reaches for ROOT. That is what lets it also be linked by a plain C++ analysis, an embedded target, or a GPU pipeline that has never heard of CERN.</p>
+<h1><a class="anchor" id="layout"></a>
+Layout</h1>
+<p><code>include/</code> and <code>src/</code> mirror <code>modules/framework/</code> file for file, subdirectories included, so a change on one side has an obvious home on the other:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Python   </th><th class="markdownTableHeadNone">C++ header   </th><th class="markdownTableHeadNone">C++ class    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="constants_8py.html">framework/constants.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_constants_8h.html" title="Enumerations shared across the Kalman framework.">Kalman/Constants.h</a></code>   </td><td class="markdownTableBodyNone"><code>EngineKind</code>, <code>StateFlavor</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2model_8py.html">framework/model.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="include_2_kalman_2_model_8h.html" title="Header of the Kalman::Model class.">Kalman/Model.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="integrator_8py.html">framework/integrator.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_integrator_8h.html" title="Header of the Kalman::Integrator class.">Kalman/Integrator.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_integrator.html" title="The time-stepping scheme — WHEN, within one dt.">Kalman::Integrator</a></code>, <code>Tableau</code>, <code>RungeKuttaStep</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="euler_8py.html">framework/integrators/euler.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_euler_8h.html" title="Explicit forward Euler — first order, one derivative per step.">Kalman/Integrators/Euler.h</a></code>   </td><td class="markdownTableBodyNone"><code>Integrators::Euler</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="rk4_8py.html">framework/integrators/rk4.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_r_k4_8h.html" title="The classic four-stage Runge–Kutta scheme — fourth order.">Kalman/Integrators/RK4.h</a></code>   </td><td class="markdownTableBodyNone"><code>Integrators::RK4</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="dormand__prince_8py.html">framework/integrators/dormand_prince.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_dormand_prince_8h.html" title="Dormand–Prince 5(4): an embedded pair with error-controlled substeps.">Kalman/Integrators/DormandPrince.h</a></code>   </td><td class="markdownTableBodyNone"><code>Integrators::DormandPrince</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="constants_8py.html">framework/constants.py</a></code> (<code>KalmanDifferentiatorKind</code>)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_differentiator_8h.html" title="Header of the Kalman::Differentiator class.">Kalman/Differentiator.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_differentiator.html" title="Where a Jacobian comes from.">Kalman::Differentiator</a></code>, <code>Differentiators::Jacobian</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>helpers.numerical_jacobian</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_forward_8h.html" title="Header of the Kalman::Differentiators::Forward class.">Kalman/Differentiators/Forward.h</a></code>, <code><a class="el" href="_central_8h.html" title="Header of the Kalman::Differentiators::Central class.">Central.h</a></code>   </td><td class="markdownTableBodyNone"><code>Differentiators::Forward</code>, <code>Differentiators::Central</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="solver_8py.html">framework/solver.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_solver_8h.html" title="Header of the Kalman::Solver class.">Kalman/Solver.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_solver.html" title="The spatial discretization — HOW, in space.">Kalman::Solver</a></code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2solvers_2spectral_8py.html">framework/solvers/spectral.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_spectral_8h.html" title="Header of the Kalman::Solvers::Spectral class.">Kalman/Solvers/Spectral.h</a></code>   </td><td class="markdownTableBodyNone"><code>Solvers::Spectral</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="finite__difference_8py.html">framework/solvers/finite_difference.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_finite_difference_8h.html" title="Header of the Kalman::Solvers::FiniteDifference class.">Kalman/Solvers/FiniteDifference.h</a></code>   </td><td class="markdownTableBodyNone"><code>Solvers::FiniteDifference</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="flow_8py.html">apps/weather/flow.py</a></code> (<code>NS2D</code>), <code><a class="el" href="barotropic_8py.html">barotropic.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="include_2_kalman_2_solvers_2_vorticity_8h.html" title="Header of the Kalman::Solvers::Vorticity class.">Kalman/Solvers/Vorticity.h</a></code>   </td><td class="markdownTableBodyNone"><code>Solvers::Vorticity</code> (the equation the flow models share)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">— (numpy, scipy)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_cholesky_8h.html" title="Cholesky factorisation, and the solves and inverses built on it.">Kalman/Algebra/Cholesky.h</a></code>   </td><td class="markdownTableBodyNone"><code>Algebra::Cholesky</code>, <code>CholeskyFactor</code>, <code>Solve</code>, <code>Inverse</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">— (numpy, scipy)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_symmetric_8h.html" title="Operations on symmetric matrices (covariances)">Kalman/Algebra/Symmetric.h</a></code>   </td><td class="markdownTableBodyNone"><code>Algebra::Symmetrize</code>, <code>SymmetricEigen</code>, <code>Similarity</code>, <code>ConditionNumber</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>helpers.van_loan_discretize</code>, <code>matrix_exponential</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_exponential_8h.html" title="The matrix exponential, and decoding a continuous linear system.">Kalman/Algebra/Exponential.h</a></code>   </td><td class="markdownTableBodyNone"><code>Algebra::Exponential</code>, <code>Algebra::VanLoan</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">— (numpy arrays)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_grid_8h.html" title="A dense 2-D field of any scalar type — the state a solver marches.">Kalman/Grid.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman.html#a94c1195d5dfabc598efba670169c258a">Kalman::Field</a></code>, <code><a class="el" href="namespace_kalman.html#a4057603d141a3b62a377c298da798160">Kalman::SpectralField</a></code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">— (<code>numpy.fft</code>)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_f_f_t_8h.html" title="A dependency-free discrete Fourier transform for the spectral solver.">Kalman/FFT.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman_1_1_f_f_t.html">Kalman::FFT</a></code> (radix 2, mixed radix for factors 3 and 5, Bluestein otherwise; cached plans; no dependency)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="engine_8py.html">framework/engine.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_engine_8h.html" title="Header of the Kalman::Engine class.">Kalman/Engine.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_engine.html" title="The algorithm — HOW to infer under uncertainty, one step at a time.">Kalman::Engine</a></code> (aliased <code>Estimator</code>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="filter_8py.html">framework/filter.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_filter_8h.html" title="Header of the Kalman::Filter class.">Kalman/Filter.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2sampler_8py.html">framework/sampler.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_sampler_8h.html" title="Header of the Kalman::Sampler class.">Kalman/Sampler.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_sampler.html" title="Draws truth and measurements from a model, for tests and demos.">Kalman::Sampler</a></code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="diagnostics_8py.html">framework/diagnostics.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_diagnostics_8h.html" title="Header of the Kalman::Diagnostics class.">Kalman/Diagnostics.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_diagnostics.html" title="Is the filter consistent? — computed post-hoc from a finished run.">Kalman::Diagnostics</a></code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="metadata_8py.html">framework/abstract/metadata.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_metadata_8h.html" title="Self-description shared by every framework role.">Kalman/Abstract/Metadata.h</a></code>   </td><td class="markdownTableBodyNone"><code>Abstract::Metadata</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2engines_2linear_8py.html">framework/engines/linear.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_engines_2_linear_8h.html" title="Header of the Kalman::Engines::Linear class.">Kalman/Engines/Linear.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Linear</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2engines_2extended_8py.html">framework/engines/extended.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_engines_2_extended_8h.html" title="Header of the Kalman::Engines::Extended class.">Kalman/Engines/Extended.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Extended</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="engines_2unscented_8py.html">framework/engines/unscented.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_unscented_8h.html" title="Header of the Kalman::Engines::Unscented class.">Kalman/Engines/Unscented.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Unscented</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="particle_8py.html">framework/engines/particle.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_particle_8h.html" title="Header of the Kalman::Engines::Particle class.">Kalman/Engines/Particle.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Particle</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="ensemble_8py.html">framework/engines/ensemble.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_ensemble_8h.html" title="Header of the Kalman::Engines::Ensemble class.">Kalman/Engines/Ensemble.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Ensemble</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="combinatorial_8py.html">framework/engines/combinatorial.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_combinatorial_8h.html" title="Header of the Kalman::Engines::Combinatorial class.">Kalman/Engines/Combinatorial.h</a></code>   </td><td class="markdownTableBodyNone"><code>Engines::Combinatorial</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="combinatorial_8py.html">framework/engines/combinatorial.py</a></code> (<code>TrackCandidate</code>, <code>GateContext</code>)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_tracking_8h.html" title="The vocabulary of track finding: hits, layers, candidates, and the detector contract.">Kalman/Tracking.h</a></code>   </td><td class="markdownTableBodyNone"><code>Tracking::Candidate</code>, <code>Tracking::GateContext</code>, <code>Tracking::Detector</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2models_2linear_8py.html">framework/models/linear.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_models_2_linear_8h.html" title="Header of the Kalman::Models::Linear class.">Kalman/Models/Linear.h</a></code>   </td><td class="markdownTableBodyNone"><code>Models::Linear</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2models_2extended_8py.html">framework/models/extended.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_models_2_extended_8h.html" title="Header of the Kalman::Models::Extended class.">Kalman/Models/Extended.h</a></code>   </td><td class="markdownTableBodyNone"><code>Models::Extended</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="kf_8py.html">framework/filters/kf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_k_f_8h.html" title="Header of the Kalman::Filters::KF class.">Kalman/Filters/KF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::KF</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="ekf_8py.html">framework/filters/ekf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_e_k_f_8h.html" title="Header of the Kalman::Filters::EKF class.">Kalman/Filters/EKF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::EKF</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="ukf_8py.html">framework/filters/ukf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_u_k_f_8h.html" title="Header of the Kalman::Filters::UKF class.">Kalman/Filters/UKF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::UKF</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="pf_8py.html">framework/filters/pf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_p_f_8h.html" title="Header of the Kalman::Filters::PF class.">Kalman/Filters/PF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::PF</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="enkf_8py.html">framework/filters/enkf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_en_k_f_8h.html" title="Header of the Kalman::Filters::EnKF class.">Kalman/Filters/EnKF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::EnKF</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="ckf_8py.html">framework/filters/ckf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_c_k_f_8h.html" title="Header of the Kalman::Filters::CKF class.">Kalman/Filters/CKF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::CKF</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2control_8py.html">framework/control.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_controller_8h.html" title="Header of the Kalman::Controller class.">Kalman/Controller.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_controller.html" title="Closed-loop control over a Kalman filter — u = ctrl(x_hat, P, t, nu).">Kalman::Controller</a></code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="proportional_8py.html">framework/controllers/proportional.py</a></code>, <code><a class="el" href="pid_8py.html">pid.py</a></code>, <code><a class="el" href="lqr_8py.html">lqr.py</a></code>, <code><a class="el" href="mppi_8py.html">mppi.py</a></code>   </td><td class="markdownTableBodyNone"><code>Kalman/Controllers/*.h</code>   </td><td class="markdownTableBodyNone"><code>Controllers::Proportional</code>, <code>PID</code>, <code>LQR</code>, <code>MPPI</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="boost_8py.html">framework/controllers/boost.py</a></code>, <code><a class="el" href="adaptive__qr_8py.html">adaptive_qr.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_adaptive_8h.html" title="The two innovation-driven adapters: a gain boost on R, a Q scaling.">Kalman/Controllers/Adaptive.h</a></code>   </td><td class="markdownTableBodyNone"><code>Controllers::Boost</code>, <code>Controllers::AdaptiveQR</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="record_8py.html">framework/io/record.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_record_8h.html" title="Header of the Kalman::Record class.">Kalman/IO/Record.h</a></code>   </td><td class="markdownTableBodyNone"><code>IO::Record</code> (aliased <code><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Kalman::Record</a></code>)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="collection_8py.html">framework/io/collection.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_collection_8h.html" title="Header of the Kalman::IO::Collection class.">Kalman/IO/Collection.h</a></code>   </td><td class="markdownTableBodyNone"><code>IO::Collection</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2routers_2base_8py.html">framework/routers/base.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_base_8h.html" title="Header of the Kalman::Routers::Router contract.">Kalman/Routers/Base.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::Router</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="bayesian_8py.html">framework/routers/bayesian.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_bayesian_8h.html" title="Header of the Kalman::Routers::Bayesian class.">Kalman/Routers/Bayesian.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::Bayesian</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="threshold_8py.html">framework/routers/threshold.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_threshold_8h.html" title="Header of the Kalman::Routers::Threshold class.">Kalman/Routers/Threshold.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::Threshold</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="hybrid_8py.html">framework/routers/hybrid.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_hybrid_8h.html" title="Header of the Kalman::Routers::Hybrid class.">Kalman/Routers/Hybrid.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::Hybrid</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="routers_2neural_8py.html">framework/routers/neural.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_neural_8h.html" title="Header of the Kalman::Routers::Neural class.">Kalman/Routers/Neural.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::Neural</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>framework/routers/nn/</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="include_2_kalman_2_routers_2_n_n_2_model_8h.html" title="Header of the Kalman::Routers::NN::Model contract.">Kalman/Routers/NN/Model.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::NN::Model</code> (the contract)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="mlp_8py.html">framework/routers/nn/mlp.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_m_l_p_8h.html" title="Header of the Kalman::Routers::NN::MLP class.">Kalman/Routers/NN/MLP.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::NN::MLP</code> (no dependency)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>framework/routers/nn/*.py</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_torch_8h.html" title="Header of the Kalman::Routers::NN::Torch class.">Kalman/Routers/NN/Torch.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::NN::Torch</code> (TorchScript; in <code>libKalmanLearn</code>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>framework/routers/nn/*.py</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_onnx_8h.html" title="Header of the Kalman::Routers::NN::Onnx class.">Kalman/Routers/NN/Onnx.h</a></code>   </td><td class="markdownTableBodyNone"><code>Routers::NN::Onnx</code> (ONNX; in <code>libKalmanLearn</code>)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="ikf_8py.html">framework/filters/ikf.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_i_k_f_8h.html" title="Header of the Kalman::Filters::IKF class.">Kalman/Filters/IKF.h</a></code>   </td><td class="markdownTableBodyNone"><code>Filters::IKF</code> (aliased <code>IMM</code>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">— (numpy)   </td><td class="markdownTableBodyNone"><code><a class="el" href="_matrix_8h.html" title="Minimal dense vector and matrix types.">Kalman/Matrix.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a></code>, <code><a class="el" href="class_kalman_1_1_vector.html" title="A dense column vector of double.">Kalman::Vector</a></code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="helpers_8py.html">modules/helpers.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_utils_8h.html" title="Small dense linear-algebra helpers shared by the engines.">Kalman/Utils.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a class="el" href="framework_2models_2native_8py.html">framework/models/native.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="_factory_8h.html" title="Header of the Kalman::Factory class.">Kalman/Factory.h</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_factory.html" title="The registry of compiled models — how a C++ model becomes nameable.">Kalman::Factory</a></code> + <code>KALMAN_REGISTER_MODEL</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a class="el" href="core_8py.html">framework/native/core.py</a></code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="include_2_kalman_2_c_a_p_i_8h.html" title="The C interface of libKalman.">Kalman/CAPI.h</a></code>   </td><td class="markdownTableBodyNone">the <code>extern "C"</code> surface (<code>kalman_*</code>)   </td></tr>
+</table>
+<p><code>src/</code> follows the same tree wherever there is an implementation to hold; the purely declarative headers (<code>Abstract/</code>, <code>Models/</code>, <code>Filters/</code>) have no <code>.cc</code> because there is nothing to compile, not because they are missing.</p>
+<p><b>Not ported yet</b>, and deliberately absent rather than stubbed: the <em>learned</em> controllers (<code>NeuralKalmanController</code>, <code>NeuralAdaptiveQRKalmanController</code> — their training is Torch, and what would cross is a trained policy through the ONNX seam, as for the routers), the reserved integrator/solver kinds (<code>ImplicitEuler</code>, <code>FiniteVolume</code>, <code>FiniteElement</code> — <code>Make()</code> throws for them, as <code>resolve_*</code> does in Python). Of the routers, <em>training</em> stays Python-only by design — <code>routers/nn/</code> is Torch, and the optimiser and data loaders belong there. What crosses is the finished policy, via <code>NN::Torch</code> or <code>NN::Onnx</code>. Every <code>EngineKind</code> now has a C++ engine; an integer that is not a kind still raises rather than silently becoming a linear step.</p>
+<h2><a class="anchor" id="roles-and-utilities"></a>
+Roles and utilities</h2>
+<p>A role is something a user chooses or writes; it has a base class, a <code>Kind</code> constant and a directory. A utility is arithmetic nobody chooses between.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">What it answers   </th><th class="markdownTableHeadNone">Where    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Integrator (role)   </td><td class="markdownTableBodyNone">how do I advance in time?   </td><td class="markdownTableBodyNone"><code>Kalman/Integrators/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Solver (role)   </td><td class="markdownTableBodyNone">how do I handle space, for a field?   </td><td class="markdownTableBodyNone"><code>Kalman/Solvers/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Differentiator (role)   </td><td class="markdownTableBodyNone">where do Jacobians come from?   </td><td class="markdownTableBodyNone"><code>Kalman/Differentiators/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Algebra (utilities)   </td><td class="markdownTableBodyNone">Cholesky, solves, eigenvalues, <code>exp(A)</code>, the Riccati equation   </td><td class="markdownTableBodyNone"><code>Kalman/Algebra/</code>   </td></tr>
+</table>
+<p>"Solver" here always means a field solver. The linear solver of the framework is Cholesky, in <code><a class="el" href="_cholesky_8h.html" title="Cholesky factorisation, and the solves and inverses built on it.">Kalman/Algebra/Cholesky.h</a></code>: a covariance is symmetric positive-definite, so nothing needs LU. <code><a class="el" href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></code> keeps the <a class="el" href="namespace_kalman.html">Kalman</a> arithmetic (missing channels, the Joseph update, sigma-point sums) and still exports the algebra names, so existing code compiles unchanged.</p>
+<h1><a class="anchor" id="the-three-roles"></a>
+The three roles</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Role   </th><th class="markdownTableHeadNone">Question   </th><th class="markdownTableHeadNone">Class    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Model</b>   </td><td class="markdownTableBodyNone">WHAT is the system?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> → <code>Models::Linear</code>, <code>Models::Extended</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Engine</b> (alias <em>Estimator</em>)   </td><td class="markdownTableBodyNone">HOW to infer?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_engine.html" title="The algorithm — HOW to infer under uncertainty, one step at a time.">Kalman::Engine</a></code> → <code>Engines::Linear</code>, <code>Engines::Extended</code>, <code>Engines::Unscented</code>, <code>Engines::Particle</code>, <code>Engines::Ensemble</code>, <code>Engines::Combinatorial</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Filter</b>   </td><td class="markdownTableBodyNone">WHEN does it run?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> → <code>Filters::KF</code>, <code>Filters::EKF</code>, <code>Filters::UKF</code>, <code>Filters::PF</code>, <code>Filters::EnKF</code>; <code>Filters::IKF</code>, <code>Filters::CKF</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Controller</b>   </td><td class="markdownTableBodyNone">WHAT to command?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_controller.html" title="Closed-loop control over a Kalman filter — u = ctrl(x_hat, P, t, nu).">Kalman::Controller</a></code> → <code>Controllers::Proportional</code>, <code>PID</code>, <code>LQR</code>, <code>MPPI</code>; <code>Boost</code>, <code>AdaptiveQR</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Integrator</b>   </td><td class="markdownTableBodyNone">WHEN, within one dt?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_integrator.html" title="The time-stepping scheme — WHEN, within one dt.">Kalman::Integrator</a></code> → <code>Integrators::Euler</code>, <code>RK4</code>, <code>DormandPrince</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Solver</b>   </td><td class="markdownTableBodyNone">HOW, in space?   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_solver.html" title="The spatial discretization — HOW, in space.">Kalman::Solver</a></code> → <code>Solvers::Spectral</code>, <code>Solvers::FiniteDifference</code>   </td></tr>
+</table>
+<p>Dependencies point one way only: <b>Filter → Engine → Model</b>.</p>
+<p>An ODE model overrides <code>Model::Derivative()</code> and calls <code>UseContinuousDynamics()</code>; the default <code>f()</code> then advances the derivative one sample with the model's declared integrator (RK4 unless <code>SetIntegrator()</code> says otherwise, in <code>Substeps()</code> pieces), exactly as a <code>DYNAMICS = CONTINUOUS</code> model does in Python. A field solver composes an integrator the same way and marches a <code><a class="el" href="namespace_kalman.html#a94c1195d5dfabc598efba670169c258a">Kalman::Field</a></code> through the integrator's Butcher tableau — one <code>RungeKuttaStep</code> template serves a <code><a class="el" href="class_kalman_1_1_vector.html" title="A dense column vector of double.">Kalman::Vector</a></code> and a spectral field alike.</p>
+<p>A controller closes the loop: <code>Filter::Forward(zk, controller)</code> calls it once per step with the belief, the time and the last innovation, and feeds the command to the prediction — <code>KalmanFilter.forward(zk, uk=controller)</code> in Python. The cost it logs is charged against <code>Model::ClipControl(u)</code>, what the actuator delivers, not the raw ask; MPPI's rollouts clip the same way, so a planner sees the limit it will hit. LQR solves the Riccati equation with <code>Algebra::SolveDARE</code> (the recursion, then Newton steps on a Stein equation summed by doubling: no scipy and no factorisation beyond Cholesky); the two adapters scale <code>R</code> (a gain boost when the NIS says the filter is surprised) and <code>Q</code> (from the empirical innovation covariance). The Python controllers and the rule-based routers forward to these classes; see <a class="el" href="md_docs_216___cxx-_models-from-_python.html">C++ models from Python</a>.</p>
+<p>Track <em>finding</em> is a different shape of problem — an event of many hits per layer in, a set of tracks out — so <code>Engines::Combinatorial</code> adds <code>Find()</code> and <code>SmoothTracks()</code> over a whole event on top of the inherited Extended step, and <code>Filters::CKF</code> is its leaf rather than a <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>. A trackable model implements <code><a class="el" href="class_kalman_1_1_tracking_1_1_detector.html" title="The contract a trackable model adds to Kalman::Model.">Kalman::Tracking::Detector</a></code> (<code>Radii()</code>, <code>SeedState()</code>) next to <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>; <code><a class="el" href="tests_2cxx_2_drift_chamber_8h.html" title="A transverse charged-particle tracker on concentric layers — the CKF test fixture.">tests/cxx/DriftChamber.h</a></code> is the fixture, the counterpart of <code><a class="el" href="driftchamber_8py.html">apps/tracking/driftchamber.py</a></code>. On an identical event the two searches find the same tracks hit for hit — the test records one such case.</p>
+<p><code>Engine::Predict</code> / <code>Update</code> / <code>Smooth</code> have a shared Gaussian implementation that the Jacobian engines use as is; the sigma-point engine overrides the first two, and the two <em>sample-set</em> engines (particle cloud, ensemble) override all three — they are <b>stateful</b>, reseeded by <code>Engine::Reset()</code> when a run starts, and declare <code>HasSmoother() == false</code>, so <code>Filter::Backward()</code> refuses instead of pretending an RTS pass exists over a cloud.</p>
+<p>Plus <code><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Kalman::Record</a></code> (one pass, with its covariance band), <code><a class="el" href="class_kalman_1_1_diagnostics.html" title="Is the filter consistent? — computed post-hoc from a finished run.">Kalman::Diagnostics</a></code> (NIS / NEES / gains, asked <em>about</em> a run rather than being steps <em>of</em> one), <code><a class="el" href="class_kalman_1_1_sampler.html" title="Draws truth and measurements from a model, for tests and demos.">Kalman::Sampler</a></code> (truth and measurements drawn from a model), <code><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a></code> / <code><a class="el" href="class_kalman_1_1_vector.html" title="A dense column vector of double.">Kalman::Vector</a></code> (the small dense types), and <code><a class="el" href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></code> (Cholesky with a pseudo-inverse fallback, NaN channel masking, central-difference Jacobians, the Joseph form).</p>
+<p><b>No physics.</b> A pendulum, a drift chamber, a suspension or a power grid is an <em>application</em>: it subclasses <code>Models::Linear</code> or <code>Models::Extended</code> and lives where the domain knowledge lives — the same split as <code>modules/framework/</code> versus <code>modules/apps/</code> on the Python side. libKalman ships the contract those applications are written against and nothing more. The models in <code><a class="el" href="_fixtures_8h.html" title="Toy models used to exercise the engines.">tests/cxx/Fixtures.h</a></code> are test fixtures, not a catalogue.</p>
+<p><b>No plotting and no I/O.</b> <code>Record::Series()</code> / <code>Sigma()</code> hand back the arrays a plot needs; turning them into a <code>TGraphErrors</code>, a matplotlib axis or a CSV is the integrator's job, because that is where the plotting dependency belongs.</p>
+<h1><a class="anchor" id="building"></a>
+Building</h1>
+<div class="fragment"><div class="line">make build         # configures + builds libKalman</div>
+<div class="line">make ctests        # the C++ suite, under ctest</div>
+<div class="line">make install       # into var/install by default</div>
+</div><!-- fragment --><p><code>make tests</code> remains the <b>Python</b> suite; the C++ tests live in <code>tests/cxx/</code> and run under ctest, so the two never shadow each other.</p>
+<h2><a class="anchor" id="the-four-libraries"></a>
+The four libraries</h2>
+<p><code>make build</code> builds four libraries, installed side by side:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Library   </th><th class="markdownTableHeadNone">CMake target   </th><th class="markdownTableHeadNone">What it holds   </th><th class="markdownTableHeadNone">Depends on    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>libKalman</code>   </td><td class="markdownTableBodyNone"><code>Kalman::Kalman</code>   </td><td class="markdownTableBodyNone">the core: models, engines, filters, integrators, solvers, controllers, routers   </td><td class="markdownTableBodyNone">nothing (BLAS when found)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>libKalmanApps</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman_1_1_apps.html">Kalman::Apps</a></code>   </td><td class="markdownTableBodyNone">the application models, each the twin of a Python class   </td><td class="markdownTableBodyNone"><code>libKalman</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>libKalmanLearn</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman_1_1_learn.html">Kalman::Learn</a></code>   </td><td class="markdownTableBodyNone">learned components: the ONNX and TorchScript backends   </td><td class="markdownTableBodyNone"><code>libKalman</code>; ONNX Runtime and libTorch, both optional    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>libKalmanNet</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="namespace_kalman_1_1_net.html" title="The JSON API, the REST server and the MCP server of the framework, in C++.">Kalman::Net</a></code>   </td><td class="markdownTableBodyNone">the JSON API, the REST and MCP servers, <code>kalman-serve</code> (<a class="el" href="md_docs_218___net.html">docs/18</a>)   </td><td class="markdownTableBodyNone"><code>libKalman</code>; nlohmann_json, cpp-httplib, OpenSSL (SQLite optional), all private   </td></tr>
+</table>
+<p>Up to release 1.0 the core was called <code>libKalmanFramework</code>. That name is still installed as a link to <code>libKalman</code>, and the Python package still reads the old <code>KALMANFRAMEWORK_ROOT</code> and <code>KALMAN_FRAMEWORK_LIBRARY</code> variables.</p>
+<p>From another CMake project:</p>
+<div class="fragment"><div class="line">find_package(Kalman REQUIRED COMPONENTS Apps Learn)   # the components are optional</div>
+<div class="line">target_link_libraries(my_program PRIVATE Kalman::Kalman Kalman::Apps Kalman::Learn)</div>
+</div><!-- fragment --><p>with <code>-DCMAKE_PREFIX_PATH=&lt;install prefix&gt;</code>.</p>
+<h2><a class="anchor" id="the-kalman-program"></a>
+The &lt;tt&gt;kalman&lt;/tt&gt; program</h2>
+<p><code>bin/kalman</code> says what an installation can run. It links <code>libKalman</code> only and loads <code>libKalmanApps</code> as a plugin when it is beside the library:</p>
+<div class="fragment"><div class="line">kalman                               # the models, one per line</div>
+<div class="line">kalman models ballistic              # names containing &quot;ballistic&quot;</div>
+<div class="line">kalman model car-speed               # everything one model declares</div>
+<div class="line">kalman plugins                       # the libraries the models came from</div>
+<div class="line">kalman --plugin KalmanPlugin_example models</div>
+<div class="line">kalman --plugin KalmanPlugin_example export fading-sensor --steps 200 -o fading.kw</div>
+<div class="line">kalman export car-speed -o car.kw # write a model to a file (see &quot;Model files&quot;)</div>
+<div class="line">kalman model car.kw              # what a file holds</div>
+<div class="line">kalman models --json                 # the same, for a program</div>
+</div><!-- fragment --><div class="fragment"><div class="line">MODEL      DYNAMICS    STRUCTURE  ENGINE    n  m  l  fs [Hz]   JACOBIAN  PROCESS NOISE  MEAS. NOISE</div>
+<div class="line">ballistic  continuous  maps       Extended  9  3  0  128       forward   additive       additive</div>
+<div class="line">car-speed  continuous  maps       Extended  2  1  0  20        forward   additive       additive</div>
+<div class="line">storm      discrete    maps       Extended  5  3  0  4.62963e-05  forward   additive       additive</div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Column   </th><th class="markdownTableHeadNone">Read from   </th><th class="markdownTableHeadNone">Values    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">DYNAMICS   </td><td class="markdownTableBodyNone"><code>Model::Dynamics()</code>   </td><td class="markdownTableBodyNone"><code>continuous</code> (a <code>Derivative()</code> or a generator, decoded for the sample rate) or <code>discrete</code> (<code>f</code> is the step)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">STRUCTURE   </td><td class="markdownTableBodyNone"><code>Model::Structure()</code>   </td><td class="markdownTableBodyNone"><code>maps</code> (code), <code>matrices</code>, <code>time-varying matrices</code>: what a file can hold of the model    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">fs [Hz]   </td><td class="markdownTableBodyNone"><code>Model::SampleRate()</code> and <code>Model::TimeUnit()</code>   </td><td class="markdownTableBodyNone">in hertz, whatever unit the model counts time in (the storm in hours, the space models in ks; <code>SetTimeUnit</code>)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ENGINE   </td><td class="markdownTableBodyNone"><code>Model::DefaultEngine()</code>   </td><td class="markdownTableBodyNone">the engine a filter picks for the model    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">JACOBIAN   </td><td class="markdownTableBodyNone"><code>Model::Differentiator()</code>   </td><td class="markdownTableBodyNone"><code>analytic</code>, <code>forward</code>, <code>central</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">PROCESS NOISE   </td><td class="markdownTableBodyNone"><code>HasProcessNoiseInput()</code>, <code>L()</code>, <code>NoiseIntensity()</code>   </td><td class="markdownTableBodyNone"><code>additive</code>, <code>through L</code>, <code>in f</code>; <code>per unit time</code> when Q is stated as an intensity    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MEAS. NOISE   </td><td class="markdownTableBodyNone"><code>HasMeasurementNoiseInput()</code>   </td><td class="markdownTableBodyNone"><code>additive</code>, <code>in h</code>   </td></tr>
+</table>
+<p><code>kalman model NAME</code> gives one model in full: the sample rate and the step it implies, the integrator and its substeps, then the state vector and the measurement component by component, and the named parameters with their defaults.</p>
+<div class="fragment"><div class="line">$ kalman model car-speed</div>
+<div class="line">  sample rate         20 Hz, one sample every 50 ms</div>
+<div class="line">  dynamics            continuous</div>
+<div class="line">  integrator          RK4</div>
+<div class="line">  ...</div>
+<div class="line">  state vector, n = 2 (process noise additive)</div>
+<div class="line">         name      unit  x0            Q             sqrt(Q)</div>
+<div class="line">    [0]  distance  m     0             0.001         0.0316228</div>
+<div class="line">    [1]  speed     m/s   0             0.05          0.223607</div>
+<div class="line"> </div>
+<div class="line">  measurement, m = 1 (noise additive)</div>
+<div class="line">         name      unit  R             sqrt(R)</div>
+<div class="line">    [0]  distance  m     0.25          0.5</div>
+</div><!-- fragment --><p>On a terminal the output is coloured (continuous in green, discrete in yellow, noise that goes through a map in magenta); a pipe, a file and <code>--json</code> get plain text. <code>--color always|never</code> forces it either way and <code>NO_COLOR</code> is honoured.</p>
+<p>The names and units are what the model declares in its constructor with <code>DeclareState({{"distance", "m"}, {"speed", "m/s"}})</code> and <code>DeclareMeasurement({{"distance", "m"}})</code>; a model that declares nothing shows <code>x0, x1, ...</code> and <code>z0, z1, ...</code> with no unit. They are read with <code>Model::StateComponents()</code> and <code>Model::MeasurementComponents()</code>, and from C with <code>kalman_model_state_name/_unit</code> and <code>kalman_model_measurement_name/_unit</code>. A plugin is given as a file, or as a name looked for in <code>KALMAN_PLUGIN_PATH</code> (beside <code>libKalman</code> when unset). Only compiled models are listed: the models written in Python are in <code>kalman.apps</code>.</p>
+<h2><a class="anchor" id="optional-backends"></a>
+Optional backends</h2>
+<p>None is needed for correctness.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Option   </th><th class="markdownTableHeadNone">Library   </th><th class="markdownTableHeadNone">What it buys   </th><th class="markdownTableHeadNone">Default    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KALMAN_USE_BLAS</code>   </td><td class="markdownTableBodyNone"><code>libKalman</code>   </td><td class="markdownTableBodyNone"><code>cblas_dgemm</code> for matrix products at or above <code>KALMAN_BLAS_MIN_DIM</code> (<code>KALMAN_WITH_BLAS</code> in <code>Kalman/Config.h</code>)   </td><td class="markdownTableBodyNone">on when a CBLAS is found    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>KALMAN_USE_ONNXRUNTIME</code>   </td><td class="markdownTableBodyNone"><code>libKalmanLearn</code>   </td><td class="markdownTableBodyNone"><code>NN::Onnx</code>: ONNX routing policies, the portable half of the seam   </td><td class="markdownTableBodyNone">on when ONNX Runtime is found    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KALMAN_USE_TORCH</code>   </td><td class="markdownTableBodyNone"><code>libKalmanLearn</code>   </td><td class="markdownTableBodyNone"><code>NN::Torch</code> (TorchScript routing policies) and <code>Learn::Solvers::Vorticity</code> (the batched field solver, CPU/CUDA/MPS)   </td><td class="markdownTableBodyNone">on when a libTorch is found    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>KALMAN_BUILD_LEARN</code>   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">build <code>libKalmanLearn</code> at all   </td><td class="markdownTableBodyNone">on    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KALMAN_BUILD_NET</code>   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">build <code>libKalmanNet</code> and <code>kalman-serve</code> (skipped with a notice when a dependency is missing)   </td><td class="markdownTableBodyNone">on    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>KALMAN_USE_ZLIB</code>   </td><td class="markdownTableBodyNone"></td><td class="markdownTableBodyNone">compress the tables of model files (<code>.kw</code>) with zlib when it is found   </td><td class="markdownTableBodyNone">on   </td></tr>
+</table>
+<p>The AI runtimes are looked for by <code>libKalmanLearn</code> only. <code>libKalman</code> never links one, whatever is installed on the build machine: a core linked to one libTorch, loaded into a Python process that had another, used to break <code>import torch</code>.</p>
+<p>libTorch is the C++ library, found like any C++ dependency: <code>Torch_DIR</code> when given, else the conda environment's <code>libtorch</code> package (<code>$CONDA_PREFIX/share/cmake/Torch</code>), else wherever CMake finds one. Only its own three libraries are linked, by path. Nothing here needs Python's <code>torch</code> package, so a conda package of <code>libKalmanLearn</code> depends on <code>libtorch</code> alone.</p>
+<p>A process holds one libTorch. Where Python's <code>torch</code> is imported in the same process (training a router, say), it must be the same installation; conda's <code>libtorch</code> and <code>pytorch</code> are.</p>
+<h2><a class="anchor" id="the-field-solver-on-libtorch"></a>
+The field solver on libTorch</h2>
+<p><code><a class="el" href="class_kalman_1_1_learn_1_1_solvers_1_1_vorticity.html" title="Batched pseudo-spectral 2-D vorticity solver on libTorch (CPU, CUDA, MPS).">Kalman::Learn::Solvers::Vorticity</a></code> steps many 2-D vorticity fields in one call: <code>dw/dt = -u.grad(w) - beta v + nu lap(w) + F</code>, pseudo-spectral, with any explicit Runge-Kutta tableau, on <code>cpu</code>, <code>cuda</code> or <code>mps</code> (single precision on <code>mps</code>, which has no double). It is what <code>SpectralSolver(backend="torch")</code> runs in Python: <code>NS2D</code> (Kolmogorov flow) and <code>BetaPlaneNS2D</code> state their terms (<code>_vorticity_terms</code>) and the steps happen in C++. Python's <code>torch</code> is not imported; there is no Python-Torch implementation of the solver any more. A solver with other physics uses <code>backend="numpy"</code>.</p>
+<p>Measured on this machine against the Python-Torch loop it replaced, 32 members:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Case   </th><th class="markdownTableHeadNone">Python Torch (removed)   </th><th class="markdownTableHeadNone">libTorch (C++)   </th><th class="markdownTableHeadNone">Largest difference    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Kolmogorov 64×64, 50 steps, CPU   </td><td class="markdownTableBodyNone">1074 ms   </td><td class="markdownTableBodyNone">1109 ms   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Kolmogorov 128×128, 20 steps, CPU   </td><td class="markdownTableBodyNone">1797 ms   </td><td class="markdownTableBodyNone">1762 ms   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Kolmogorov 128×128, 20 steps, MPS   </td><td class="markdownTableBodyNone">60 ms   </td><td class="markdownTableBodyNone">54 ms   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Beta-plane 64×64, 50 steps, CPU   </td><td class="markdownTableBodyNone">1303 ms   </td><td class="markdownTableBodyNone">1257 ms   </td><td class="markdownTableBodyNone">0   </td></tr>
+</table>
+<p>Bit-identical, and the same speed: the time is the FFTs'.</p>
+<h1><a class="anchor" id="using-it"></a>
+Using it</h1>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_kalman_8h.html">Kalman/Kalman.h</a>&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Your system. libKalman ships no physics, so the model is yours to write.</span></div>
+<div class="line"><span class="keyword">class </span>ConstantVelocity : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_models_1_1_linear.html">Kalman::Models::Linear</a></div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">public</span>:</div>
+<div class="line">        ConstantVelocity(<span class="keywordtype">double</span> fs) : <a class="code hl_namespace" href="namespace_kalman.html">Kalman</a>::Models::Linear(<span class="stringliteral">&quot;cv&quot;</span>, 2, 1)</div>
+<div class="line">        {</div>
+<div class="line">            <a class="code hl_function" href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">SetSampleRate</a>(fs);</div>
+<div class="line">            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Kalman::Matrix</a> F = <a class="code hl_function" href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Kalman::Matrix::Identity</a>(2);</div>
+<div class="line">            <a class="code hl_function" href="class_kalman_1_1_model.html#a8e8a6b0f3ce0e9fb44ae8f1e4f08f839">F</a>(0, 1) = <a class="code hl_function" href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">DeltaT</a>();</div>
+<div class="line">            <a class="code hl_function" href="class_kalman_1_1_model.html#ad2d971c49db380cc3cdd82d830ac9fa8">SetF</a>(F);</div>
+<div class="line">            <span class="comment">// ... H, Q, R</span></div>
+<div class="line">        }</div>
+<div class="line">};</div>
+<div class="line"> </div>
+<div class="line">ConstantVelocity model(100.);</div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a> filter(&amp;model);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> forward  = filter.Forward(measurements);   <span class="comment">// NaN channels are skipped</span></div>
+<div class="line"><span class="keyword">auto</span> smoothed = filter.Backward();              <span class="comment">// RTS over the same run</span></div>
+<div class="line"> </div>
+<div class="line">printf(<span class="stringliteral">&quot;mean NIS = %.3f (expect ~%zu)\n&quot;</span>, filter.MeanNIS(), model.NMeasure());</div>
+<div class="ttc" id="a_kalman_8h_html"><div class="ttname"><a href="_kalman_8h.html">Kalman.h</a></div><div class="ttdoc">Umbrella header for libKalman.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_aa3b71cb2be4e62cc662717b9b822c408"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Kalman::Matrix::Identity</a></div><div class="ttdeci">static Matrix Identity(std::size_t n)</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00100">Matrix.cc:100</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a31b4fd602e88d38b51ff86ae05e6ac1d"><div class="ttname"><a href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">Kalman::Model::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(double fs)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00072">Model.cc:72</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00152">Model.h:152</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a8e8a6b0f3ce0e9fb44ae8f1e4f08f839"><div class="ttname"><a href="class_kalman_1_1_model.html#a8e8a6b0f3ce0e9fb44ae8f1e4f08f839">Kalman::Model::F</a></div><div class="ttdeci">virtual Matrix F(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00081">Model.cc:81</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ad2d971c49db380cc3cdd82d830ac9fa8"><div class="ttname"><a href="class_kalman_1_1_model.html#ad2d971c49db380cc3cdd82d830ac9fa8">Kalman::Model::SetF</a></div><div class="ttdeci">void SetF(const Matrix &amp;F)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00259">Model.cc:259</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_linear_html"><div class="ttname"><a href="class_kalman_1_1_models_1_1_linear.html">Kalman::Models::Linear</a></div><div class="ttdoc">A model that is linear by declaration — matrices only, no f()/h().</div><div class="ttdef"><b>Definition</b> <a href="_models_2_linear_8h_source.html#l00038">Linear.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_html"><div class="ttname"><a href="namespace_kalman.html">Kalman</a></div><div class="ttdef"><b>Definition</b> <a href="_metadata_8h_source.html#l00026">Metadata.h:27</a></div></div>
+</div><!-- fragment --><p><code><a class="el" href="kalman101_8cc.html" title="The whole library in one program: simulate, filter, smooth, check.">examples/cxx/kalman101.cc</a></code> is this, finished: it defines its model, samples a track, filters, smooths, prints the diagnostics and writes a plottable table.</p>
+<p>For a <b>nonlinear</b> system, override <code>f()</code> and/or <code>h()</code> and tell the base that <code>F(t)</code> is no longer the Jacobian:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyModel : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_models_1_1_extended.html">Kalman::Models::Extended</a></div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">public</span>:</div>
+<div class="line">        MyModel() : Extended(<span class="stringliteral">&quot;mine&quot;</span>, 2, 1) {}</div>
+<div class="line">        <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> <a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">f</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> &amp;u,</div>
+<div class="line">                         <span class="keywordtype">double</span> t) <span class="keyword">const override</span>;</div>
+<div class="line">};</div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_extended_html"><div class="ttname"><a href="class_kalman_1_1_models_1_1_extended.html">Kalman::Models::Extended</a></div><div class="ttdoc">A model that is nonlinear by declaration — override f() and/or h().</div><div class="ttdef"><b>Definition</b> <a href="_models_2_extended_8h_source.html#l00045">Extended.h:46</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+</div><!-- fragment --><p>Deriving from <code>Models::Extended</code> is what switches <code>Jacobian()</code> / <code>JacobianH()</code> to central differences — on a plain <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> you would have to call <code>SetAnalyticJacobian(false)</code> yourself, and forgetting it means <code>F(t)</code> is used as a Jacobian it is not. Override <code>Jacobian()</code> directly if you have the analytic form: faster and more accurate.</p>
+<p>Shape mistakes are reported by <code>CheckShapes()</code>, which the filter runs before every pass, as an exception naming the matrix and both shapes.</p>
+<h1><a class="anchor" id="the-decision-layer"></a>
+The decision layer</h1>
+<p>When no single model covers a system's whole behaviour, run several and carry a probability on each. <code><a class="el" href="class_kalman_1_1_filters_1_1_i_k_f.html" title="Interactive Kalman Filter — several models, one estimate.">Kalman::Filters::IKF</a></code> does the mixing, prediction and combination; the <em>decision</em> — which model is right now — is delegated to a <code><a class="el" href="class_kalman_1_1_routers_1_1_router.html" title="Decides which model is right now — the IKF decision layer.">Kalman::Routers::Router</a></code> and is the only pluggable part of the step.</p>
+<div class="fragment"><div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a> router;                 <span class="comment">// the classical mu ∝ c · L</span></div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a> ikf({&amp;cruise, &amp;manoeuvre}, Pi, &amp;router);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> record = ikf.<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a24ace79f9aaa5c2530534dc2aff2977e">Forward</a>(measurements);</div>
+<div class="line"><span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Kalman::Matrix</a> &amp;modes = ikf.ModeHistory();  <span class="comment">// (T, M): which regime, when</span></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a></div><div class="ttdoc">Interactive Kalman Filter — several models, one estimate.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00067">IKF.h:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a24ace79f9aaa5c2530534dc2aff2977e"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a24ace79f9aaa5c2530534dc2aff2977e">Kalman::Filters::IKF::Forward</a></div><div class="ttdeci">Record Forward(const std::vector&lt; Vector &gt; &amp;zk)</div><div class="ttdoc">Run the forward pass.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00174">IKF.cc:174</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_bayesian_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a></div><div class="ttdoc">The classical IKF update: mu_j ∝ c_j · L_j.</div><div class="ttdef"><b>Definition</b> <a href="_bayesian_8h_source.html#l00032">Bayesian.h:33</a></div></div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Router   </th><th class="markdownTableHeadNone">Decides on   </th><th class="markdownTableHeadNone">Needs    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Routers::Bayesian</code>   </td><td class="markdownTableBodyNone"><code>mu_j ∝ c_j · L_j</code> — Bayes, and the right default   </td><td class="markdownTableBodyNone">nothing    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Routers::Threshold</code>   </td><td class="markdownTableBodyNone">whichever model's windowed NIS sits closest to <code>m</code>   </td><td class="markdownTableBodyNone">nothing    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Routers::Hybrid</code>   </td><td class="markdownTableBodyNone">a geometric blend of two routers, e.g. a learned one on a Bayesian leash   </td><td class="markdownTableBodyNone">nothing    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>Routers::Neural</code>   </td><td class="markdownTableBodyNone">a policy trained in Python   </td><td class="markdownTableBodyNone">a <code>NN::Model</code> (see below)   </td></tr>
+</table>
+<p>Each mode contributes its own declared engine, so a linear and a nonlinear mode can sit in one bank. Every mode must share <code>n</code> and <code>m</code> — that is what makes mixing meaningful, and it is checked at construction.</p>
+<h2><a class="anchor" id="training-in-python-deciding-in-c"></a>
+Training in Python, deciding in C++</h2>
+<p><code>Routers::Neural</code> is the seam between the two implementations, and it keeps the division of labour that <code><a class="el" href="routers_2neural_8py.html">routers/neural.py</a></code> states in its opening lines:</p>
+<ul>
+<li><b>the router</b> owns feature extraction and normalisation — the NIS window, the front-padding, the standardisation;</li>
+<li><b>the model</b> owns the architecture and the forward pass.</li>
+</ul>
+<p>So <code>Routers::Neural</code> holds a <code>NN::Model</code> and contains no inference runtime at all. That is what makes the runtimes genuinely optional rather than nominally so:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Backend   </th><th class="markdownTableHeadNone">Executes   </th><th class="markdownTableHeadNone">Needs   </th><th class="markdownTableHeadNone">When    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>NN::MLP</code>   </td><td class="markdownTableBodyNone">a tanh MLP from its weights   </td><td class="markdownTableBodyNone"><b>nothing</b>   </td><td class="markdownTableBodyNone">the architecture is the MLP; you want zero dependencies    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>NN::Torch</code>   </td><td class="markdownTableBodyNone">a TorchScript module   </td><td class="markdownTableBodyNone">libTorch   </td><td class="markdownTableBodyNone">highest fidelity — the <em>same</em> <code>torch.nn</code> module, traced    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>NN::Onnx</code>   </td><td class="markdownTableBodyNone">an ONNX graph   </td><td class="markdownTableBodyNone">ONNX Runtime   </td><td class="markdownTableBodyNone">deployment — a 10 MB runtime, not tied to a Torch version   </td></tr>
+</table>
+<p>Python owns training; C++ owns inference; a <b>trained policy</b> is what crosses, not a language binding — once at load time, rather than once per step.</p>
+<div class="fragment"><div class="line">router = NeuralRouter(model=MLP(hidden=32), window=5)</div>
+<div class="line">ikf.fit(training_zk, labels)                  <span class="comment"># train where the data loaders are</span></div>
+<div class="line">router.export_onnx(<span class="stringliteral">&quot;router.onnx&quot;</span>)             <span class="comment"># for NN::Onnx</span></div>
+<div class="line">router.export_torchscript(<span class="stringliteral">&quot;router.pt&quot;</span>)        <span class="comment"># for NN::Torch</span></div>
+</div><!-- fragment --><div class="fragment"><div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_onnx.html">Kalman::Routers::NN::Onnx</a> policy(<span class="stringliteral">&quot;router.onnx&quot;</span>);   <span class="comment">// or NN::Torch, or NN::MLP</span></div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a>   router(&amp;policy, <span class="comment">/* window */</span> 5);</div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a>      ikf({&amp;cruise, &amp;manoeuvre}, Pi, &amp;router);</div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_onnx_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_onnx.html">Kalman::Routers::NN::Onnx</a></div><div class="ttdoc">Executes a policy exported from the Python framework.</div><div class="ttdef"><b>Definition</b> <a href="_onnx_8h_source.html#l00053">Onnx.h:54</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00061">Neural.h:62</a></div></div>
+</div><!-- fragment --><p>Both exports produce the same probabilities as the Python router; measured agreement is <code>2e-13</code> for ONNX and <code>1.8e-13</code> for TorchScript. Neither runtime is required: with neither present the routing layer still works through <code>NN::MLP</code>, and a <code>Routers::Neural</code> with no model falls back to the Bayesian update rather than failing.</p>
+<p>The export bakes the feature standardisation <em>and</em> the softmax head into the graph, so a raw NIS window maps straight to probabilities and there is no second file to keep in step — a normalisation shipped apart from its weights still produces a valid-looking probability vector, which is the worst kind of bug. <code><a class="el" href="test__router__export_8py.html">tests/test_router_export.py</a></code> pins the equivalence; measured agreement between the Python router and the C++ one is <code>2e-13</code>.</p>
+<p>Two things that bite:</p>
+<ul>
+<li><b>The IR version.</b> Torch emits the newest ONNX IR it knows, and deployed runtimes reject it — ONNX Runtime 1.16 refuses anything above 9 with *"Unsupported model IR version: 10"*. <code>export_onnx(..., ir_version=9)</code> is the default for that reason.</li>
+<li><b>The window must match.</b> A policy trained at <code>window=5</code> fed a <code>window=7</code> history is a shape error, and <code>Routers::Neural</code> raises rather than guessing.</li>
+</ul>
+<p>The rule for both optional backends: constructing one asks for a <em>specific</em> artifact, so a missing file or a missing runtime throws. The graceful degradation lives one level up, in <code>Routers::Neural</code>, which routes by Bayes when it has no usable model. A missing optional dependency costs you the <em>policy</em>, never the filter.</p>
+<h1><a class="anchor" id="the-factory-how-a-c-model-reaches-python"></a>
+The factory: how a C++ model reaches Python</h1>
+<p>libKalman ships no physics, so the question is how physics written <em>against</em> it — in an application, a ROOT+ analysis, a plugin — becomes visible to something that did not compile it. The answer is one line per model:</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>ConstantVelocity : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_models_1_1_linear.html">Kalman::Models::Linear</a> { <span class="comment">/* F, H, Q, R ... */</span> };</div>
+<div class="line"><a class="code hl_define" href="_factory_8h.html#aee81ac1ca420e4426c406cd4ad986ae6">KALMAN_REGISTER_MODEL</a>(ConstantVelocity, <span class="stringliteral">&quot;constant-velocity&quot;</span>);</div>
+<div class="line"><a class="code hl_define" href="_factory_8h.html#aee81ac1ca420e4426c406cd4ad986ae6">KALMAN_REGISTER_MODEL</a>(ConstantVelocity, <span class="stringliteral">&quot;constant-velocity-slow&quot;</span>, 10., 0.5, 0.2);  <span class="comment">// configured</span></div>
+<div class="ttc" id="a_factory_8h_html_aee81ac1ca420e4426c406cd4ad986ae6"><div class="ttname"><a href="_factory_8h.html#aee81ac1ca420e4426c406cd4ad986ae6">KALMAN_REGISTER_MODEL</a></div><div class="ttdeci">#define KALMAN_REGISTER_MODEL(Class, Name,...)</div><div class="ttdoc">Register Class under Name at static-initialisation time.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00178">Factory.h:178</a></div></div>
+</div><!-- fragment --><p>The registrar runs at static-initialisation time and <code><a class="el" href="class_kalman_1_1_factory.html#a925fbe85b85fc013fb26bdea74b0d7ca" title="The process-wide registry.">Kalman::Factory::Instance()</a></code> then knows the name: <code>Names()</code>, <code>Has()</code>, <code>Describe()</code> (title, dimensions, engine, origin) and <code>Create()</code> — a fresh <code>std::unique_ptr&lt;Model&gt;</code> with no knowledge of the type. Names are lowercase-hyphenated by convention so they can never be mistaken for the CamelCase Python classes they sit beside. Every failure is loud: a duplicate name, an unknown name, a library that registers nothing.</p>
+<p><b>Plugins.</b> A translation unit like <code><a class="el" href="example__plugin_8cc.html" title="Two models compiled into a plugin — how C++ physics reaches the Python side.">examples/cxx/example_plugin.cc</a></code> compiled as a shared library (<code>libKalmanPlugin_example</code>) is a plugin: <code>Factory::LoadPlugin(path)</code> dlopens it, the registrars run, and its models are in the catalogue. The plugin may link anything it likes — ROOT, RooFit, a detector library — because the framework only ever sees <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>. That is the one code path by which a model written for ROOT+ reaches the Python side, and ROOT stays inside the plugin.</p>
+<p><b>The C API.</b> <code><a class="el" href="include_2_kalman_2_c_a_p_i_8h.html" title="The C interface of libKalman.">Kalman/CAPI.h</a></code> is the flat <code>extern "C"</code> view of the factory, of a model, and of the engines — <code>kalman_factory_*</code> to discover and load, <code>kalman_model_*</code> to construct one and evaluate <code>F/H/B/L/Q/R</code>, <code>f/h</code>, the Jacobians and the initial state, <code>kalman_engine_*</code> to build a C++ engine and run its predict / update / innovation / smooth steps, and <code>kalman_filter_run</code> for a whole <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> pass (forward, optionally RTS) in one call. All row-major <code>double</code> arrays, <code>0</code>/<code>-1</code> returns and <code><a class="el" href="include_2_kalman_2_c_a_p_i_8h.html#a13ce4bd1cadfa0c316e26d05b05f6e93" title="Message of the last failure on this thread; &quot;&quot; when the last call succeeded.">kalman_last_error()</a></code>; no exception crosses it. <code><a class="el" href="06__factory_8cc.html" title="The model registry, the plugin loader, and the C surface over both.">tests/cxx/06_factory.cc</a></code> covers the registry, the loader and the model surface.</p>
+<p><b>The Python side.</b> <code><a class="el" href="core_8py.html">modules/framework/native/core.py</a></code> dlopens the library through cffi in <em>ABI mode</em> (no compiler) and <code>NativeModel</code> in <code><a class="el" href="framework_2models_2native_8py.html">modules/framework/models/native.py</a></code> wraps a factory instance as a <code>KalmanModel</code>:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> NativeModel</div>
+<div class="line"><span class="keyword">import</span> kalman.api <span class="keyword">as</span> api</div>
+<div class="line"> </div>
+<div class="line">api.load_plugin(<span class="stringliteral">&quot;KalmanPlugin_example&quot;</span>)           <span class="comment"># by name, from the allow-listed dirs</span></div>
+<div class="line">m = NativeModel(<span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;sensor-1&quot;</span>)           <span class="comment"># a C++ model ...</span></div>
+<div class="line">rec = m.filter(m.sample(5.0).zk)                  <span class="comment"># ... driven by the Python EKF</span></div>
+<div class="line">api.run_filter({<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;constant-velocity&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;cv&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 20}, zk)</div>
+</div><!-- fragment --><p>Every registered name becomes a class in <code>api.catalog()["models"]</code>, <code>describe()</code> reports <code>"backend": "native"</code> with its plugin, and the MCP <code>list_models</code> / <code>run_filter</code> / <code>forecast</code> tools need no change. <code>fs=</code>, <code>x0=</code>, <code>P0=</code> given from Python are pushed <em>into</em> the C++ instance, so both sides agree on every step.</p>
+<p>The <em>engines</em> cross too, in the same direction. <code>NativeEngine("extended")</code> is a <code>KalmanEngine</code> whose predict / update / smooth run in C++ behind the ordinary Python <code>KalmanFilter</code> (records, diagnostics and plots unchanged), and <code>NativeModel.filter_native(zk, engine=..., smooth=...)</code> runs the whole <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> pass fused in one call and hands back a <code>KalmanRecord</code>. In a spec, <code>"bindings": {"engine": "extended", "backend": "native"}</code> selects it. Both need a native model: there is no route from a C++ engine back into a Python-defined <code>f</code>, by design.</p>
+<p><b>What crosses, and what does not.</b> One C call per <code>f</code>, <code>h</code> or coefficient evaluation — cheap, and in the direction the measurements below say is affordable. What does <em>not</em> cross is a Python callback from inside a C++ loop; a Python-defined model keeps running on the Python engines, and a C++ model on either side. The library is found through <code>KALMAN_LIBRARY</code>, <code>KALMAN_ROOT</code>, or this checkout's <code>var/install/lib</code>; without it the Python package simply reports <code>catalog()["native"]["library"] = None</code>.</p>
+<p><b>Loading a plugin runs code.</b> So <code>api.load_plugin</code> takes a plugin <em>name</em>, not a path, resolved only inside allow-listed directories (<code>KALMAN_PLUGIN_PATH</code>, default: this checkout's <code>var/install/lib</code> and <code>var/build/lib</code>); a path is accepted only when it already lies inside one of them, after <code>realpath</code>. It is gated by its own scope, <code>load_plugins</code> — never by <code>write_models</code>, which only ever writes data — and the MCP tool of the same name exposes exactly that.</p>
+<p><b>Load once, known everywhere.</b> <code>load_plugin</code> also records the plugin name in the shared registry (see <a href="10_REST-API.md#the-shared-registry">REST API</a>). The REST server, the MCP server and every other process on the same state directory load it again by name, from their own allow-listed directories. This also occurs after a restart. Subscribers get a <code>plugin.loaded</code> event that lists the new models. Thus a model written in C++ (in a ROOT+ analysis, for example) is published with one call, <code>POST /plugins {"name": "KalmanPlugin_mine"}</code>, and Unity, agents and other users can then use it as a spec base.</p>
+<h2><a class="anchor" id="models-that-are-their-matrices"></a>
+Models that are their matrices</h2>
+<p>A model written in Python that is nothing but its matrices needs no twin written for it: the framework builds the C++ model itself (<code><a class="el" href="class_kalman_1_1_models_1_1_tabulated.html" title="A linear model given by its matrices, constant or one per sample.">Kalman::Models::Tabulated</a></code>) and runs the whole pass on it.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Python model   </th><th class="markdownTableHeadNone">Runs as    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">constant F, H, Q, R on the linear engine   </td><td class="markdownTableBodyNone">the linear kernel, as before    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">constant matrices on the extended engine (a plain <code>KalmanModel(F=, H=)</code>)   </td><td class="markdownTableBodyNone"><code>Tabulated</code>, C++ extended engine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">F, H, Q or R given as functions of time   </td><td class="markdownTableBodyNone"><code>Tabulated</code> with tables: each function is called once per sample of the run, in the loop's order, and the pass runs in C++    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">a C++ model used directly (<code>NativeModel</code>, a model opened from a <code>.kw</code> file)   </td><td class="markdownTableBodyNone">its own C++ instance, the whole pass in one call   </td></tr>
+</table>
+<p>The calorimeter models run this way. Their matrices change from layer to layer; they used to read the layer from a count kept inside <code>R()</code>, and now read it from the time the filter passes, which is what makes them functions of time (and exportable to a <code>.kw</code> file with tables). Measured (<code><a class="el" href="test__native__matrices_8py.html">tests/test_native_matrices.py</a></code>): the electromagnetic and hadronic reconstructions of notebook 06 agree with the Python loop to 9e-17 relative; the power-grid model (a time-varying H) is identical to the bit, 60 ms to 22 ms over 2000 samples. For the calorimeter the time barely changes (61 to 56 ms for 26 reconstructions): building the per-layer matrices is the cost, and that is the model's own Python.</p>
+<p>A time-varying B or L, or a noise coupling M on the measurement, is not tabulated: such a model runs the C++ loop and is asked for its matrices at each step.</p>
+<h2><a class="anchor" id="named-arrays"></a>
+Named arrays</h2>
+<p>A twin is configured through named scalars (<code>DeclareParameter</code>). What is not one number, such as the orbit of each satellite, goes through named arrays:</p>
+<div class="fragment"><div class="line">DeclareArray(<span class="stringliteral">&quot;eccentricity&quot;</span>, {0.01, 0.01, 0.01});   <span class="comment">// constructor</span></div>
+<div class="line"><span class="keyword">const</span> std::vector&lt;double&gt; &amp;e = Array(<span class="stringliteral">&quot;eccentricity&quot;</span>);</div>
+<div class="line">model.SetArray(<span class="stringliteral">&quot;eccentricity&quot;</span>, {0.02, 0.02});       <span class="comment">// calls ParametersChanged()</span></div>
+</div><!-- fragment --><p>An array may change length when it is set. A model whose size follows from it resizes itself in <code>ParametersChanged()</code> with <code>ResizeMeasurement(m)</code>, and says in <code>CheckShapes()</code> when arrays that belong together disagree, so the filter refuses to run instead of reading past an end. The GPS receiver does both: it has one pseudorange per satellite and six arrays of orbital elements.</p>
+<p>On the Python side a twin gives them with <code>native_arrays()</code>, beside <code>native_parameters()</code>; a <code>NativeModel</code> has <code>arrays()</code> and <code>set_array()</code>. In C: <code>kalman_model_array_count</code>, <code>_array_name</code>, <code>_array_size</code>, <code>_array</code>, <code>_set_array</code>. In a model file and in a settings file an array is a list under the same key as the parameters, and <code>kalman model NAME</code> shows its length and first values.</p>
+<p>The GPS twin against the Python reference, 600 s at 1 Hz (<code><a class="el" href="test__native__gps_8py.html">tests/test_native_gps.py</a></code>):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Configuration   </th><th class="markdownTableHeadNone">Channels   </th><th class="markdownTableHeadNone">State, largest difference   </th><th class="markdownTableHeadNone">Covariance, relative   </th><th class="markdownTableHeadNone">Python   </th><th class="markdownTableHeadNone">Twin    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">8 fixed satellites   </td><td class="markdownTableBodyNone">8   </td><td class="markdownTableBodyNone">3.3e-9 m (of 6.4e6 m)   </td><td class="markdownTableBodyNone">2.1e-16   </td><td class="markdownTableBodyNone">136 ms   </td><td class="markdownTableBodyNone">37 ms    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">24 satellites rising and setting (10 degree mask)   </td><td class="markdownTableBodyNone">24, 9988 pseudoranges missing   </td><td class="markdownTableBodyNone">3.7e-9 m   </td><td class="markdownTableBodyNone">1.1e-16   </td><td class="markdownTableBodyNone">138 ms   </td><td class="markdownTableBodyNone">49 ms    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">5 satellites at 2 Hz   </td><td class="markdownTableBodyNone">5   </td><td class="markdownTableBodyNone">3.7e-9 m   </td><td class="markdownTableBodyNone">1.6e-16   </td><td class="markdownTableBodyNone">247 ms   </td><td class="markdownTableBodyNone">64 ms   </td></tr>
+</table>
+<p>Track finding already ran in the C++ combinatorial engine, calling back into the Python model for each propagation and each Jacobian. With the drift-chamber twin it stays in C++ throughout. 12 layers, 6 tracks, 10 background hits a layer, 10% of hits missing (<code><a class="el" href="test__native__tracking_8py.html">tests/test_native_tracking.py</a></code>):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">Time   </th><th class="markdownTableHeadNone">Against the Python search    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Python search   </td><td class="markdownTableBodyNone">1878 ms   </td><td class="markdownTableBodyNone"></td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">C++ engine, Python model called back   </td><td class="markdownTableBodyNone">1884 ms   </td><td class="markdownTableBodyNone">same hits on every track; states within 1.2e-6 cm    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">C++ engine, C++ twin   </td><td class="markdownTableBodyNone">20 ms   </td><td class="markdownTableBodyNone">same hits on every track; states within 1.0e-6 cm   </td></tr>
+</table>
+<h1><a class="anchor" id="model-files-kw"></a>
+Model files: &lt;tt&gt;.kw&lt;/tt&gt;</h1>
+<p>A model can be written to one file and read back, by the same code for every model (<code><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html" title="A model written to one file, and read back.">Kalman::IO::ModelFile</a></code>, through the <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> interface; nothing is written per model).</p>
+<div class="fragment"><div class="line">kalman export constant-velocity -o cv.kw        # a model of matrices: written whole</div>
+<div class="line">kalman export ballistic -o ballistic.kw         # a model given by code: a reference</div>
+<div class="line">kalman export ballistic --linearize -o tangent.json</div>
+<div class="line">kalman export car-speed --set mass=1200             # model.json on the standard output</div>
+<div class="line">kalman model cv.kw                              # what a file holds</div>
+</div><!-- fragment --><h2><a class="anchor" id="what-a-file-can-hold"></a>
+What a file can hold</h2>
+<p>Code cannot be put in a file, so what is written depends on what the model is made of. A model says so with <code>SetStructure()</code>; <code>Models::Linear</code> declares <code>Matrices</code>, <code>Models::Extended</code> <code>Maps</code>, and a model that says nothing is <code>Maps</code>, so it is never written out as if its matrices were all of it.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"><code>Model::Structure()</code>   </th><th class="markdownTableHeadNone">The file (<code>kind</code>)   </th><th class="markdownTableHeadNone">Reads back    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Matrices</code>: constant F, H, B, L, Q, R   </td><td class="markdownTableBodyNone"><code>complete</code>: all of it (A and Qc instead of F and Q when stated in continuous time)   </td><td class="markdownTableBodyNone">anywhere, with no plugin    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>TimeVarying</code>: matrices that change with time   </td><td class="markdownTableBodyNone"><code>complete</code> over <code>--steps N</code> samples: the matrices that change, as tables   </td><td class="markdownTableBodyNone">anywhere, with no plugin    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>Maps</code>: <code>f</code> and <code>h</code> are code   </td><td class="markdownTableBodyNone"><code>reference</code>: the registered name, its plugin, parameters, Q, R, x0, P0, fs   </td><td class="markdownTableBodyNone">where that plugin is installed    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">any, with <code>--linearize</code>   </td><td class="markdownTableBodyNone"><code>linearization</code>: the Jacobians at the initial state, as a <code>Matrices</code> model   </td><td class="markdownTableBodyNone">anywhere; valid near that state only   </td></tr>
+</table>
+<p>A linear model that overrides <code>F(t)</code>, <code>H(t)</code>, <code>Q(t)</code> or <code>R(t)</code> with something that depends on <code>t</code> declares <code>SetStructure(StructureKind::TimeVarying)</code>; one that overrides <code>f()</code> or <code>h()</code> declares <code>Maps</code>.</p>
+<h2><a class="anchor" id="the-format"></a>
+The format</h2>
+<p>A <code>.kw</code> file ("Kalman World") is one zip archive, so the parts of a model cannot be separated or mixed with another model's, and any zip tool opens it:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Entry   </th><th class="markdownTableHeadNone">Holds    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>model.json</code>   </td><td class="markdownTableBodyNone">the readable part: <code>format</code> (<code>"kalman-model"</code>), <code>format_version</code>, <code>kind</code>, <code>origin</code> (name, plugin, title), <code>structure</code>, <code>dynamics</code>, the <code>state</code> and <code>measurement</code> components with their units, and <code>spec</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>tables/&lt;F,H,Q,R&gt;.f64</code>   </td><td class="markdownTableBodyNone">one matrix per sample for a matrix that changes with time: raw little-endian float64, row-major, of the shape <code>[steps, rows, columns]</code> given in <code>model.json</code>   </td></tr>
+</table>
+<p><code>spec</code> is exactly what the JSON API takes (<code>kalman.api.make_model</code>, the REST and MCP servers): <code>base</code>, <code>fs</code>, <code>dynamics</code>, <code>noise</code>, <code>initial</code>, <code>labels</code>, <code>bindings</code>. Numbers are written so that a double reads back unchanged.</p>
+<p><code>model.json</code> is always stored as it is, so the readable part stays readable. The tables are compressed with zlib when the library is built with it (<code>KALMAN_USE_ZLIB</code>, on by default; found on the system, optional) and stored otherwise. A build without zlib reads stored tables only and says so when it meets a compressed one. Every entry carries a CRC-32, checked on reading.</p>
+<p>A file with no table may also be written as plain JSON, to a name ending in <code>.json</code> (the <code>model.json</code> alone). A file with tables is refused that way, since its JSON would not be the whole model, and a <code>model.json</code> whose tables are missing is refused on reading.</p>
+<p><code>.kw</code> is meant as the one container of <a class="el" href="namespace_kalman.html">Kalman</a> World: <code>format</code> in <code>model.json</code> says what a file holds, so other kinds (records, controllers) can use the same archive later without a new extension.</p>
+<h2><a class="anchor" id="settings-namekwjson"></a>
+Settings: &lt;tt&gt;name.kw.json&lt;/tt&gt;</h2>
+<p>A <code>.kw</code> file holds the model with the settings it was written with. To move away from them without touching it, a settings file sits beside it under the same name plus <code>.json</code>:</p>
+<div class="fragment"><div class="line">kalman export car-speed -o car.kw</div>
+<div class="line">kalman settings car.kw                    # writes car.kw.json: the values of car.kw, to edit</div>
+<div class="line">kalman settings car.kw --set mass=1200    # or change a parameter in it from the command line</div>
+<div class="line">kalman model car.kw                       # opened with its settings; says what they change</div>
+<div class="line">kalman model car.kw --no-settings         # the model file alone</div>
+</div><!-- fragment --><div class="fragment"><div class="line">{</div>
+<div class="line">  &quot;format&quot;: &quot;kalman-settings&quot;,</div>
+<div class="line">  &quot;format_version&quot;: 1,</div>
+<div class="line">  &quot;for&quot;: &quot;car-speed&quot;,</div>
+<div class="line">  &quot;fs&quot;: 20.0,</div>
+<div class="line">  &quot;parameters&quot;: {&quot;mass&quot;: 1200.0, &quot;power&quot;: 150000.0},</div>
+<div class="line">  &quot;noise&quot;: {&quot;R&quot;: [[4.0]]},</div>
+<div class="line">  &quot;initial&quot;: {&quot;x0&quot;: [0.0, 0.0]}</div>
+<div class="line">}</div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Rule   </th><th class="markdownTableHeadNone">Why    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">It holds only <code>fs</code>, <code>parameters</code>, <code>noise</code> (<code>Q</code>, <code>R</code>) and <code>initial</code> (<code>x0</code>, <code>P0</code>); what it leaves out keeps the value of the <code>.kw</code>   </td><td class="markdownTableBodyNone">it is settings, not a model    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Any other key is refused, with the list of settings   </td><td class="markdownTableBodyNone">it cannot change the matrices or the code, so it cannot turn one model into another    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>for</code> names the model it was written for; settings for another model are refused   </td><td class="markdownTableBodyNone">a settings file copied beside the wrong <code>.kw</code> is noticed, not applied    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">A parameter the model does not have is refused   </td><td class="markdownTableBodyNone">a typo does not pass in silence    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">A whole model is not written to a name ending in <code>.kw.json</code>   </td><td class="markdownTableBodyNone">that name is the settings file's    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">A constant <code>Q</code> or <code>R</code> for a matrix the <code>.kw</code> tabulates is refused   </td><td class="markdownTableBodyNone">the table would be used and the constant ignored   </td></tr>
+</table>
+<p><code>kalman model</code>, <code>kalman export FILE</code>, <code><a class="el" href="class_kalman_1_1_i_o_1_1_model_file.html#ac46a16e40dd6e947a982696868be5796" title="Load path, build its model, and apply the settings file beside it when there is one (and settings is ...">Kalman::IO::ModelFile::Open()</a></code> and <code><a class="el" href="include_2_kalman_2_c_a_p_i_8h.html#a94dbeaff47e13e52790ae27d2bc3994f">kalman_model_load()</a></code> apply the settings file when there is one. Exporting an opened file writes the settings in, which is how to freeze them into a new <code>.kw</code>. <code>kalman.native.read_model_file</code> returns them under <code>"settings"</code> without applying them.</p>
+<h2><a class="anchor" id="what-is-checked"></a>
+What is checked</h2>
+<p><code><a class="el" href="17__modelfile_8cc.html" title="Kalman::IO::ModelFile: a model written to one file and read back.">tests/cxx/17_modelfile.cc</a></code>, on 60 samples filtered by the model and by the model read back from its file:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Model   </th><th class="markdownTableHeadNone">File   </th><th class="markdownTableHeadNone">Largest difference in the estimates and their variances    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">constant matrices   </td><td class="markdownTableBodyNone">archive, and plain JSON   </td><td class="markdownTableBodyNone">0 (to the bit)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">time-varying R   </td><td class="markdownTableBodyNone">archive with a table   </td><td class="markdownTableBodyNone">below 1e-12: the table is taken at <code>t0 + k dt</code>, the filter's clock adds <code>dt</code> k times    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">pendulum (maps)   </td><td class="markdownTableBodyNone">reference   </td><td class="markdownTableBodyNone">0 (to the bit)   </td></tr>
+</table>
+<p>A changed byte in the archive fails its checksum; a reference to a model that is not registered names the plugin to load; another format, or a later version, is refused.</p>
+<h2><a class="anchor" id="from-c-c-and-python"></a>
+From C++, C and Python</h2>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;<a class="code" href="_model_file_8h.html">Kalman/IO/ModelFile.h</a>&quot;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_struct" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html">Kalman::IO::ModelFile::Options</a> options;</div>
+<div class="line">options.<a class="code hl_variable" href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html#a53a35926ce2ee42936514146d3f64838">registered</a> = <span class="stringliteral">&quot;car-speed&quot;</span>;                     <span class="comment">// for a reference</span></div>
+<div class="line"><a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#abee2ca6a5b46c1ecded6b18acf4d4357">Kalman::IO::ModelFile::Export</a>(model, options).<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a8f76ad4635eda3a76c57548e74d56462">Save</a>(<span class="stringliteral">&quot;car.kw&quot;</span>);</div>
+<div class="line">std::unique_ptr&lt;Kalman::Model&gt; back = <a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#a281402c3c28e3dabc3347c2339db5a3f">Kalman::IO::ModelFile::Load</a>(<span class="stringliteral">&quot;car.kw&quot;</span>).<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_model_file.html#ab286892f7c6ebf388eabbfbaae26a76b">Import</a>();</div>
+<div class="ttc" id="a_model_file_8h_html"><div class="ttname"><a href="_model_file_8h.html">ModelFile.h</a></div><div class="ttdoc">Header of the Kalman::IO::ModelFile class.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a281402c3c28e3dabc3347c2339db5a3f"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a281402c3c28e3dabc3347c2339db5a3f">Kalman::IO::ModelFile::Load</a></div><div class="ttdeci">static ModelFile Load(const std::string &amp;path)</div><div class="ttdoc">Read an archive or a plain JSON document (told apart by content, not by name).</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00593">ModelFile.cc:593</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_a8f76ad4635eda3a76c57548e74d56462"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#a8f76ad4635eda3a76c57548e74d56462">Kalman::IO::ModelFile::Save</a></div><div class="ttdeci">void Save(const std::string &amp;path) const</div><div class="ttdoc">Write the file: an archive, or plain JSON when path ends in .json.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00561">ModelFile.cc:561</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_ab286892f7c6ebf388eabbfbaae26a76b"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#ab286892f7c6ebf388eabbfbaae26a76b">Kalman::IO::ModelFile::Import</a></div><div class="ttdeci">std::unique_ptr&lt; Model &gt; Import() const</div><div class="ttdoc">Build the model the file describes.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00280">ModelFile.cc:280</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_model_file_html_abee2ca6a5b46c1ecded6b18acf4d4357"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_model_file.html#abee2ca6a5b46c1ecded6b18acf4d4357">Kalman::IO::ModelFile::Export</a></div><div class="ttdeci">static ModelFile Export(const Model &amp;model, const Options &amp;options)</div><div class="ttdoc">Write model out.</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8cc_source.html#l00150">ModelFile.cc:150</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_i_o_1_1_model_file_1_1_options_html"><div class="ttname"><a href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html">Kalman::IO::ModelFile::Options</a></div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00074">ModelFile.h:75</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_i_o_1_1_model_file_1_1_options_html_a53a35926ce2ee42936514146d3f64838"><div class="ttname"><a href="struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html#a53a35926ce2ee42936514146d3f64838">Kalman::IO::ModelFile::Options::registered</a></div><div class="ttdeci">std::string registered</div><div class="ttdoc">the factory name: what a reference refers to</div><div class="ttdef"><b>Definition</b> <a href="_model_file_8h_source.html#l00076">ModelFile.h:76</a></div></div>
+</div><!-- fragment --><p>From C: <code>kalman_model_export_json</code>, <code>kalman_model_save</code>, <code>kalman_model_load</code>, <code>kalman_model_open</code>, <code>kalman_model_structure</code>, and to build a model of matrices by hand <code>kalman_model_create_matrices</code>, <code>kalman_model_set_matrix</code>, <code>kalman_model_set_table</code>, <code>kalman_model_set_component</code>.</p>
+<h2><a class="anchor" id="from-python"></a>
+From Python</h2>
+<p>Every model has <code>export()</code> and a <code>structure</code>, whether it is written in C++ or in Python, and <code>kalman.native.open_model()</code> gives back a model to filter with:</p>
+<div class="fragment"><div class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="keyword">import</span> kalman.native <span class="keyword">as</span> native</div>
+<div class="line"><span class="keyword">from</span> kalman.framework.model <span class="keyword">import</span> KalmanModel</div>
+<div class="line"> </div>
+<div class="line">model = KalmanModel(<span class="stringliteral">&quot;cv&quot;</span>, fs=10, F=F, H=H, Q=Q, R=<span class="keyword">lambda</span> t: R0 * (1 + t))</div>
+<div class="line">model.structure                          <span class="comment"># KalmanStructureKind.TIME_VARYING</span></div>
+<div class="line">model.export(<span class="stringliteral">&quot;cv.kw&quot;</span>, steps=200)         <span class="comment"># R goes in as a table</span></div>
+<div class="line">back = native.open_model(<span class="stringliteral">&quot;cv.kw&quot;</span>)        <span class="comment"># tables and cv.kw.json (settings) applied</span></div>
+<div class="line">record = back.filter(z)</div>
+</div><!-- fragment --><p>A Python model is not written by Python code: its matrices, tables and names are handed to C++, and the one exporter writes the file.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Python model   </th><th class="markdownTableHeadNone"><code>structure</code>   </th><th class="markdownTableHeadNone"><code>export()</code> writes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">built from matrices (<code>F=</code>, <code>H=</code>), nothing overridden   </td><td class="markdownTableBodyNone"><code>MATRICES</code>   </td><td class="markdownTableBodyNone"><code>complete</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">the same with <code>F</code>, <code>H</code>, <code>Q</code> or <code>R</code> given as a function of time   </td><td class="markdownTableBodyNone"><code>TIME_VARYING</code>   </td><td class="markdownTableBodyNone"><code>complete</code> with tables; needs <code>steps=</code> and a <code>.kw</code> path    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">a class with its own <code>f</code> / <code>h</code> (rockets, space, lane, ...)   </td><td class="markdownTableBodyNone"><code>MAPS</code>   </td><td class="markdownTableBodyNone"><code>reference</code> to the class by name, or <code>linearize=True</code> for its Jacobians at x0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">a C++ model (<code>NativeModel</code>)   </td><td class="markdownTableBodyNone">what the C++ class declares   </td><td class="markdownTableBodyNone">as <code>kalman export</code>   </td></tr>
+</table>
+<p>A class may declare <code>STRUCTURE = KalmanStructureKind...</code> instead of having it read from the instance.</p>
+<p><code>open_model</code> returns a C++ model (<code>NativeModel</code>) for a file of matrices or a reference to a C++ model, and the Python class itself for a reference to a Python class. <code>read_model_file</code> only reads: <code>{"document", "tables", "settings"}</code>.</p>
+<p>Measured (<code><a class="el" href="test__kalman__cli_8py.html">tests/test_kalman_cli.py</a></code>, 80 samples, the Python model against the model opened from its file): constant matrices 0; a time-varying R below 1e-12; the registered C++ <code>fading-sensor</code> of the example plugin, 50 samples, below 1e-12.</p>
+<p>Limits that remain:</p>
+<ul>
+<li><b>A reference to a Python class carries the arguments it was constructed with</b>, defaults included: every model records them when it is built (<code>model._init_arguments</code>). Numbers, strings, kinds (by name) and arrays of numbers are written. An argument that is code or an object (a callable, a controller) cannot be; those are listed in <code>origin.parameters_not_written</code> and the file gives the class's default for them. Every catalogue model that builds with its defaults is checked through a file (<code><a class="el" href="test__kalman__cli_8py.html">tests/test_kalman_cli.py</a></code>). The class must be in <code>kalman.api</code>'s catalogue.</li>
+<li>**<code>kalman model FILE</code> cannot build a reference to a Python class** (it says so and names the class); open it from Python.</li>
+<li>**<code>api.make_model(spec)</code> reads a spec, not a file**: it takes neither tables nor a settings file, and the servers do not open files named by a client. Use <code>open_model</code>.</li>
+<li><b>A time-varying B or L is not tabulated</b> (tables are for F, H, Q, R); such a model counts as <code>MAPS</code>.</li>
+</ul>
+<h1><a class="anchor" id="libkalmanapps-the-application-models-in-c"></a>
+libKalmanApps: the application models in C++</h1>
+<p><code>libKalman</code> ships no physics. The physics of <code>modules/apps/</code> lives in a second library, <code>libKalmanApps</code> (<code>apps/include/Kalman/Apps/</code>, <code>apps/src/</code>), which links the first and registers each model with the factory. <code>make build</code> builds both and they install side by side.</p>
+<p>Each model there is the <b>twin</b> of one Python class. The Python class stays the model: its name, its constructor, <code>plot</code>, the catalogue entry and the notebooks are unchanged. What changes is who runs the filtering pass. When the library is present and the configuration has a C++ counterpart, <code>model.filter(z)</code> hands the whole pass to the twin: the model's <code>f</code>/<code>h</code>, the Jacobians and the EKF steps run inside <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>, in one call. Otherwise the Python loop runs as before.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Python class   </th><th class="markdownTableHeadNone">C++ class   </th><th class="markdownTableHeadNone">Registered name   </th><th class="markdownTableHeadNone">Stays in Python    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>StormModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Weather::Storm</code>   </td><td class="markdownTableBodyNone"><code>storm</code>, <code>storm-track-only</code>   </td><td class="markdownTableBodyNone">a <code>steering</code> flow, an <code>intensity_fn</code> other than a fitted <code>LearnedIntensityModel</code> on <code>analytic_environment</code> (Python callables)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>BallisticModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Ballistics::Ballistic</code>   </td><td class="markdownTableBodyNone"><code>ballistic</code>, <code>ballistic-order2</code>   </td><td class="markdownTableBodyNone"><code>drag_uncertainty</code> (speed-dependent Q), <code>substeps</code> other than 1, thrust controls, a user <code>f</code>/<code>h</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>TornadoEnvironmentModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Weather::Tornado</code>   </td><td class="markdownTableBodyNone"><code>tornado-environment</code>   </td><td class="markdownTableBodyNone">nothing    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>CarSpeedModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Vehicles::CarSpeed</code>   </td><td class="markdownTableBodyNone"><code>car-speed</code>   </td><td class="markdownTableBodyNone">an integrator other than RK4, sub-stepping    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GPSModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::GPS::Receiver</code>   </td><td class="markdownTableBodyNone"><code>gps</code>   </td><td class="markdownTableBodyNone"><code>preprocess()</code> (the relativistic corrections applied to the pseudoranges before the filter); a <code>dtype</code> other than float64    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>DriftChamberModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Tracking::DriftChamber</code>   </td><td class="markdownTableBodyNone"><code>drift-chamber</code>   </td><td class="markdownTableBodyNone"><code>generate_event()</code> (it draws with numpy's generator)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>CarLaneModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Vehicles::CarLane</code>   </td><td class="markdownTableBodyNone"><code>car-lane</code>   </td><td class="markdownTableBodyNone">a steering computed by a controller function (closed loop), an integrator the C++ side lacks, a subclass's own <code>clip_u</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RocketLiftoffModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::RocketLiftoff</code>   </td><td class="markdownTableBodyNone"><code>rocket-liftoff</code>   </td><td class="markdownTableBodyNone">an integrator the C++ side lacks    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>RocketAscentModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::RocketAscent</code>   </td><td class="markdownTableBodyNone"><code>rocket-ascent</code>   </td><td class="markdownTableBodyNone">a thrust computed by a controller function, an integrator the C++ side lacks    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RocketDescentModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::RocketDescent</code>   </td><td class="markdownTableBodyNone"><code>rocket-descent</code>, <code>rocket-descent-control</code> (<code>control=True</code>)   </td><td class="markdownTableBodyNone">a command computed by a controller function, an integrator the C++ side lacks    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>RocketLandingModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::RocketLanding</code>   </td><td class="markdownTableBodyNone"><code>rocket-landing</code>   </td><td class="markdownTableBodyNone">an integrator the C++ side lacks    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>TransLunarModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::TransLunar</code>   </td><td class="markdownTableBodyNone"><code>translunar</code>   </td><td class="markdownTableBodyNone">an integrator other than the built-in Euler, RK4 or default Dormand-Prince    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>InterplanetaryModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Astro::Interplanetary</code>   </td><td class="markdownTableBodyNone"><code>interplanetary</code>   </td><td class="markdownTableBodyNone">a mid-course burn (<code>control=True</code>, a <code>TrajectoryControlManeuver</code>), another integrator, a perturber field not tabulated on <code>numpy.arange</code>'s grid    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>PolarizationModel</code>   </td><td class="markdownTableBodyNone"><code>Apps::Gravitational::Polarization</code>   </td><td class="markdownTableBodyNone"><code>polarization</code>   </td><td class="markdownTableBodyNone"><code>preprocess()</code> (a complex signal turned into four real columns); a transition built for another rate than <code>fs</code> (fs changed after construction)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KolmogorovFlowModel</code> (ensemble engine)   </td><td class="markdownTableBodyNone"><code>Apps::Weather::KolmogorovFlow</code>   </td><td class="markdownTableBodyNone"><code>kolmogorov-flow</code>   </td><td class="markdownTableBodyNone">a <code>surrogate</code> forecast, a solver on libTorch (<code>backend="torch"</code>) or with other physics, a <code>Q</code> with off-diagonal terms, a changed <code>forecast</code>/<code>observe</code>/<code>localization</code>, a callback in <code>TwinExperiment.run</code>; <code>sample()</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>BarotropicFlowModel</code> (ensemble engine)   </td><td class="markdownTableBodyNone"><code>Apps::Weather::BarotropicFlow</code>   </td><td class="markdownTableBodyNone"><code>barotropic-flow</code>   </td><td class="markdownTableBodyNone">as <code>KolmogorovFlowModel</code>   </td></tr>
+</table>
+<p>The ballistic, car and rocket twins are continuous models: each overrides <code>Derivative()</code> and calls <code>UseContinuousDynamics()</code>, and its <code>f</code> is the framework's integration of that derivative followed by the model's own closing step (the acceleration slot, the speed kept non-negative, the mass kept at the dry mass, a landed stage held on the pad). Their <code>integrator</code> and <code>substeps</code> parameters carry the Python model's integrator (Euler, RK4, Dormand-Prince with the default tolerances: <code>native.native_integrator_kind</code>) and sub-steps.</p>
+<p>A twin may take a control input (<code>CarLaneModel</code>, <code>RocketAscentModel</code>, <code>RocketDescentModel(control=True)</code>): <code>model.filter(z, uk)</code> hands the twin the command sequence with the measurements. A controller <em>function</em> (closed loop) is Python, so it keeps the Python model in the C++ loop instead.</p>
+<p>The space twins are continuous too, with <code>substeps</code> (the Python <code>n_sub</code>) and <code>integrator</code> as parameters. The trans-lunar coast needs only numbers: the gravitational parameters, and the Moon and the Sun on circles given by a radius, a rate and a phase (an <code>epoch</code> with <code>use_ephemeris=True</code> only sets the phases). The interplanetary cruise needs a table: the Python model samples the perturbing planets from the ephemeris every 2 days when it is built and interpolates it with <code>numpy.interp</code>. The table crosses as two named arrays, <code>body_gm</code> and <code>body_positions</code> (bodies x samples x 3), with <code>grid_step</code> as a parameter. The twin interpolates the way <code>numpy.interp</code> does (end values outside the grid). Positions are in Mm, velocities in km/s and time in ks, as in Python, so the twins state that unit (<code>SetTimeUnit(1000.)</code>), so <code>kalman model</code> prints their sample rate in hertz.</p>
+<p>Measured with <code>python tools/benchmark_twins.py --repeat 5</code> (2000 steps, Apple silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two runs, relative to the largest entry:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Model   </th><th class="markdownTableHeadNone">Python   </th><th class="markdownTableHeadNone">C++ twin   </th><th class="markdownTableHeadNone">Faster   </th><th class="markdownTableHeadNone">State   </th><th class="markdownTableHeadNone">Covariance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>StormModel</code>, NH straight   </td><td class="markdownTableBodyNone">183.2 ms   </td><td class="markdownTableBodyNone">17.2 ms   </td><td class="markdownTableBodyNone">10.7x   </td><td class="markdownTableBodyNone">5.7e-09   </td><td class="markdownTableBodyNone">1.9e-07    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>StormModel</code>, NH recurving   </td><td class="markdownTableBodyNone">193.6 ms   </td><td class="markdownTableBodyNone">17.0 ms   </td><td class="markdownTableBodyNone">11.4x   </td><td class="markdownTableBodyNone">1.4e-08   </td><td class="markdownTableBodyNone">2.2e-07    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>StormModel</code>, track only   </td><td class="markdownTableBodyNone">177.1 ms   </td><td class="markdownTableBodyNone">16.2 ms   </td><td class="markdownTableBodyNone">10.9x   </td><td class="markdownTableBodyNone">1.1e-08   </td><td class="markdownTableBodyNone">1.1e-10    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>BallisticModel</code>, order 3, drag   </td><td class="markdownTableBodyNone">985.1 ms   </td><td class="markdownTableBodyNone">24.6 ms   </td><td class="markdownTableBodyNone">40.0x   </td><td class="markdownTableBodyNone">1.4e-09   </td><td class="markdownTableBodyNone">5.0e-08    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>BallisticModel</code>, order 2   </td><td class="markdownTableBodyNone">682.6 ms   </td><td class="markdownTableBodyNone">20.7 ms   </td><td class="markdownTableBodyNone">33.0x   </td><td class="markdownTableBodyNone">3.1e-10   </td><td class="markdownTableBodyNone">2.8e-08    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>BallisticModel</code>, orbital gravity   </td><td class="markdownTableBodyNone">1069.5 ms   </td><td class="markdownTableBodyNone">25.3 ms   </td><td class="markdownTableBodyNone">42.3x   </td><td class="markdownTableBodyNone">2.2e-10   </td><td class="markdownTableBodyNone">2.8e-05    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>TornadoEnvironmentModel</code>   </td><td class="markdownTableBodyNone">89.8 ms   </td><td class="markdownTableBodyNone">10.6 ms   </td><td class="markdownTableBodyNone">8.5x   </td><td class="markdownTableBodyNone">8.7e-11   </td><td class="markdownTableBodyNone">2.5e-11    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>CarSpeedModel</code>   </td><td class="markdownTableBodyNone">220.7 ms   </td><td class="markdownTableBodyNone">11.8 ms   </td><td class="markdownTableBodyNone">18.8x   </td><td class="markdownTableBodyNone">7.8e-12   </td><td class="markdownTableBodyNone">3.2e-08    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>CarLaneModel</code>, steering program   </td><td class="markdownTableBodyNone">143.7 ms   </td><td class="markdownTableBodyNone">10.2 ms   </td><td class="markdownTableBodyNone">14.1x   </td><td class="markdownTableBodyNone">4.3e-10   </td><td class="markdownTableBodyNone">5.0e-10    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RocketLiftoffModel</code>   </td><td class="markdownTableBodyNone">212.2 ms   </td><td class="markdownTableBodyNone">16.3 ms   </td><td class="markdownTableBodyNone">13.0x   </td><td class="markdownTableBodyNone">9.1e-13   </td><td class="markdownTableBodyNone">1.4e-09    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>RocketAscentModel</code>, thrust program   </td><td class="markdownTableBodyNone">311.5 ms   </td><td class="markdownTableBodyNone">19.4 ms   </td><td class="markdownTableBodyNone">16.0x   </td><td class="markdownTableBodyNone">1.1e-10   </td><td class="markdownTableBodyNone">2.6e-12    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RocketDescentModel</code>, guidance   </td><td class="markdownTableBodyNone">718.3 ms   </td><td class="markdownTableBodyNone">29.8 ms   </td><td class="markdownTableBodyNone">24.1x   </td><td class="markdownTableBodyNone">1.8e-09   </td><td class="markdownTableBodyNone">2.7e-09    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>RocketDescentModel</code>, throttle/gimbal program   </td><td class="markdownTableBodyNone">672.4 ms   </td><td class="markdownTableBodyNone">30.9 ms   </td><td class="markdownTableBodyNone">21.8x   </td><td class="markdownTableBodyNone">2.1e-11   </td><td class="markdownTableBodyNone">2.6e-07    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>RocketLandingModel</code>   </td><td class="markdownTableBodyNone">293.0 ms   </td><td class="markdownTableBodyNone">16.3 ms   </td><td class="markdownTableBodyNone">17.9x   </td><td class="markdownTableBodyNone">3.1e-11   </td><td class="markdownTableBodyNone">4.8e-09    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>TransLunarModel</code>, free return   </td><td class="markdownTableBodyNone">5738.1 ms   </td><td class="markdownTableBodyNone">548.1 ms   </td><td class="markdownTableBodyNone">10.5x   </td><td class="markdownTableBodyNone">2.7e-12   </td><td class="markdownTableBodyNone">1.4e-12    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>InterplanetaryModel</code>, Earth-Mars   </td><td class="markdownTableBodyNone">3183.8 ms   </td><td class="markdownTableBodyNone">309.2 ms   </td><td class="markdownTableBodyNone">10.3x   </td><td class="markdownTableBodyNone">6.7e-13   </td><td class="markdownTableBodyNone">4.5e-10    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>PolarizationModel</code>, chirp   </td><td class="markdownTableBodyNone">125.5 ms   </td><td class="markdownTableBodyNone">15.3 ms   </td><td class="markdownTableBodyNone">8.2x   </td><td class="markdownTableBodyNone">1.4e-10   </td><td class="markdownTableBodyNone">4.0e-08   </td></tr>
+</table>
+<p>(The polarization row was measured with <code>--repeat 3</code>, in a run where the order-3 ballistic row read 2041.3 ms against 34.1 ms: the notebook's chirp, 1 to 2 Hz at 100 Hz with the amplitude and both angles moving. Before the twin the pass ran the C++ loop calling the Python <code>f</code>, <code>h</code> and <code>H</code>: 103.3 ms.) | <code>StormModel</code>, learned intensity | 165.8 ms | 11.6 ms | 14.3x | 1.0e-08 | 2.4e-07 |</p>
+<p>(The learned-intensity row was measured later still, <code>--repeat 3</code>, when the NH straight storm read 127.1 ms against 11.3 ms. The two space rows were measured later, on a loaded machine, with <code>--repeat 3</code>: in the same run the ballistic order-3 row read 2038.8 ms against 261.1 ms, 7.8x. They are the notebook's scenarios: the free return at 180 s samples with 4 RK4 substeps, the Earth-Mars cruise of the 2026 window at 12 h samples with four tabulated perturbers.)</p>
+<p>The two runs are not bit-identical, and cannot be. One call of <code>f</code> agrees to the last digit or two, because numpy and the C math library round a cosine differently. Both sides then difference <code>f</code> with a step of <code>1e-6</code>, which turns that last digit into about <code>1e-9</code> of noise in each Jacobian. The orbital row shows the same effect at its worst: a position of <code>6.7e6</code> m differenced against an acceleration step of <code>1e-6</code> leaves <code>1e-3</code> of noise in that Jacobian column on <em>both</em> sides. An analytic Jacobian would remove it from both.</p>
+<p><b>How a twin stays the same model.</b> Nothing is defined twice:</p>
+<ul>
+<li>The twin's scalars are the <em>named parameters</em> of <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> (<code>DeclareParameter</code>, <code>SetParameter</code>, <code>ParametersChanged</code>), pushed from the Python instance by name: <code>omega</code>, <code>beta_drift</code>, <code>c_drag</code> and so on.</li>
+<li>The sample rate, <code>Q</code> and <code>R</code> are pushed from the Python instance on every run, and the initial state by the filter. A change made to the Python model after construction therefore reaches the twin.</li>
+<li><code>Apps::Model</code> differences <code>f</code> and <code>h</code> the way <code>helpers.numerical_jacobian</code> does (forward, step <code>1e-6 max(1, |x_j|)</code>), not with the library's central scheme, so the two sides linearise alike.</li>
+<li>A subclass or an instance that redefines <code>f</code>, <code>h</code>, <code>F</code>, <code>H</code>, <code>B</code>, <code>L</code>, <code>Q</code> or <code>R</code> is a different model from the one that was ported, and keeps the Python loop. For a continuous model <code>derivative</code>, <code>after_step</code> and <code>substeps</code> count too (the class's <code>f</code> is kept as <code>derivative</code>), and a model adds the helpers its dynamics call (<code>guidance</code>, <code>clip_u</code> ...) to its <code>_TWIN_CONTRACT</code>. So does any engine other than the plain extended one.</li>
+</ul>
+<p><code>kalman.framework.models.native.USE_NATIVE_TWINS = False</code>, or <code>KALMAN_NATIVE_TWINS=0</code> in the environment, switches every twin off. That is how the "Python" column above is measured.</p>
+<h2><a class="anchor" id="field-models-on-the-ensemble-engine"></a>
+Field models on the ensemble engine</h2>
+<p><code>KolmogorovFlowModel</code> and <code>BarotropicFlowModel</code> are fields: the state is the vorticity on a periodic grid (n = 4096 at 64 x 64), filtered by the ensemble engine through the hooks <code>forecast</code>, <code>observe</code>, <code>localization</code> and <code>initial_ensemble</code>. Their twins (<code>Apps::Weather::KolmogorovFlow</code>, <code>kolmogorov-flow</code>, and <code>Apps::Weather::BarotropicFlow</code>, <code>barotropic-flow</code>) implement <code>Engines::EnsembleModel</code> beside <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>: the members are forecast in parallel (one thread each, up to the <code>threads</code> parameter, 0 for every core), observed together, tapered with Gaspari-Cohn from the torus distances, and <code>Q</code> is read as its diagonal, so a cycle forms nothing of size n x n. With the ensemble engine <code>model.filter</code> runs <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> over the twin, and <code>TwinExperiment.run</code> runs each method in one call of <code>Filters::EnKF::Cycle</code>, which keeps the means and the spread and no covariance.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">What crosses   </th><th class="markdownTableHeadNone">How    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>grid</code>, <code>nu</code>, <code>beta</code>, <code>dt</code>, <code>cycle</code>, <code>length_y</code>, <code>length_x</code>, <code>integrator</code>, <code>loc_radius</code>, <code>gradient</code>   </td><td class="markdownTableBodyNone">named parameters, read from the Python model and its solver's <code>_vorticity_terms()</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">the probes, the forcing spectrum, the diagonal of <code>Q</code>   </td><td class="markdownTableBodyNone">named arrays <code>probes</code>, <code>forcing_re</code> and <code>forcing_im</code>, <code>process_variance</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>R</code>, the sample rate   </td><td class="markdownTableBodyNone">pushed on every run    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">the initial ensemble   </td><td class="markdownTableBodyNone">the members <code>reset()</code> drew (from the climatology), <code>Engines::Ensemble::SetMembers</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">the draws   </td><td class="markdownTableBodyNone">numpy's: the engine's generator takes the forecast <code>(n, N)</code> and analysis <code>(p, N)</code> blocks in the order of the Python steps and hands them over (<code>SetNormals</code>), so a seeded run is the same run   </td></tr>
+</table>
+<p>The components are named by grid cell: <code>w(i,j)</code> is row i (along y) and column j (along x) of the field, the measurement <code>w(i,j)</code> at a probe, or <code>dw/dx(i,j)</code> then <code>dw/dy(i,j)</code> for gradient probes. <code>kalman model kolmogorov-flow</code> lists the first ten and the last three of a long table.</p>
+<p>Measured with <code>python tools/benchmark_twins.py --fields --notebook</code> (16 cores, best of 3; the 64 x 64 run once). "C++ loop" is the pass before the twin: the Python loop calling the C++ solver for each member and the C++ analysis kernel.</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Case   </th><th class="markdownTableHeadNone">Python   </th><th class="markdownTableHeadNone">C++ loop   </th><th class="markdownTableHeadNone">C++ twin   </th><th class="markdownTableHeadNone">Twin against loop   </th><th class="markdownTableHeadNone">Mean   </th><th class="markdownTableHeadNone">Spread or P    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KolmogorovFlowModel</code>, EnKF 16 x 16, 16 members, 25 cycles (notebook 13, step 5)   </td><td class="markdownTableBodyNone">1102.5 ms   </td><td class="markdownTableBodyNone">300.7 ms   </td><td class="markdownTableBodyNone">114.1 ms   </td><td class="markdownTableBodyNone">2.6x   </td><td class="markdownTableBodyNone">6.2e-15   </td><td class="markdownTableBodyNone">2.4e-14    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">the same, gradient probes   </td><td class="markdownTableBodyNone">1281.4 ms   </td><td class="markdownTableBodyNone">346.8 ms   </td><td class="markdownTableBodyNone">115.1 ms   </td><td class="markdownTableBodyNone">3.0x   </td><td class="markdownTableBodyNone">1.2e-14   </td><td class="markdownTableBodyNone">3.5e-14    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>BarotropicFlowModel</code>, EnKF 16 x 16   </td><td class="markdownTableBodyNone">749.3 ms   </td><td class="markdownTableBodyNone">254.0 ms   </td><td class="markdownTableBodyNone">121.7 ms   </td><td class="markdownTableBodyNone">2.1x   </td><td class="markdownTableBodyNone">9.8e-15   </td><td class="markdownTableBodyNone">3.1e-14    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>TwinExperiment</code> 64 x 64, EnKF and free run, 40 cycles (notebook 13, step 3)   </td><td class="markdownTableBodyNone">33894 ms   </td><td class="markdownTableBodyNone">34147 ms   </td><td class="markdownTableBodyNone">5354 ms   </td><td class="markdownTableBodyNone">6.4x   </td><td class="markdownTableBodyNone">7.5e-12   </td><td class="markdownTableBodyNone">2.3e-12   </td></tr>
+</table>
+<p>The last two columns are the largest difference from the Python reference, relative to the largest entry (for the twin experiment: the RMSE and the spread of every cycle). The reference steps the field with numpy's FFT and the twin with the library's; one solver step agrees to 1e-16, and the chaotic flow grows that to about 1e-13 over the 1,200 solver steps of the notebook. The twin agrees with the C++ loop to 4e-15. Notebook 13 prints the same numbers as before; its "wall time" of the solver EnKF went from 17.4 s to 1.9 s (the 64 x 64 run in the table also makes the truth, one field at a time). Where the analysis is badly conditioned (the barotropic model with sig_o = 1e-6 1/s and 10 members), numpy's <code>pinv</code> and the library's Cholesky inverse part by 6e-8; that was so already with the analysis kernel.</p>
+<p>Still in Python: a <code>surrogate</code> forecast (a Python callable), a solver on libTorch (<code>backend="torch"</code>: libKalmanApps does not link libKalmanLearn), a solver with other physics, a <code>Q</code> with off-diagonal terms, a subclass or an instance that changes <code>forecast</code>, <code>observe</code> or <code>localization</code>, a <code>callback</code> in <code>TwinExperiment.run</code>, and <code>model.sample()</code>, whose sampler steps the ensemble engine's prediction in Python.</p>
+<p><code>StormModel</code> with a <code>LearnedIntensityModel</code> tendency (fitted on <code>analytic_environment</code>, no steering function) runs on the storm twin, which takes the regression's coefficients and standardisation as the arrays <code>intensity_coef</code>, <code>intensity_mean</code> and <code>intensity_scale</code>: 165.8 ms in Python, 11.6 ms on the twin (14.3x), state within 1.0e-8 and covariance within 2.4e-7, as the other storm rows. Notebook 14 always passes a steering function, so it keeps the Python step and prints the same numbers.</p>
+<p><b>Adding a twin.</b> Write the class under <code>apps/</code> deriving from <code><a class="el" href="class_kalman_1_1_apps_1_1_model.html" title="Base of the application models in libKalmanApps.">Kalman::Apps::Model</a></code>, declare its parameters, register it; then mix <code>NativeTwin</code> into the Python class and give it <code>native_name()</code> (the registered name for this configuration, or <code>None</code>) and <code>native_parameters()</code>. Add its cases to <code><a class="el" href="test__native__twins_8py.html">tests/test_native_twins.py</a></code> and to <code>tools/benchmark_twins.py</code>.</p>
+<h2><a class="anchor" id="composite-models-matrices-no-twin"></a>
+Composite models: matrices, no twin</h2>
+<p>A <code>CompositeKalmanModel</code> stacks its parts: block-diagonal <code>F</code> and <code>Q</code>, and an <code>H</code> that stacks the parts' readouts (INDEPENDENT) or sums them on one shared channel (FUSED). The oscillator windows (<code>OscillatorModel</code> and its harmonic and inharmonic ladders), <code>OscillatorBankModel</code> and <code>InterferometerModel</code> with its detectors K1, H1, L1 and V1 are composites of <code>AnalyticOscillatorModel</code>s, each of them constant matrices. They need no twin: a composite reads its <code>structure</code> from its parts (MATRICES when all are constant matrices, TIME_VARYING when one of their matrices is a function of time, MAPS as soon as one part is code or a stacked map was replaced after construction), and an instance that is not code takes the linear engine (<code>DEFAULT_ENGINE</code> read on the class stays the extended engine, which serves any part). <code>filter()</code> then runs <code>kf_forward_linear</code> and the smoother <code>kf_backward_rts</code> on the stacked matrices, and <code>sample()</code> runs its state chain in C++ (<code>kalman_propagate</code> on a <code>Models::Tabulated</code> holding them, numpy's draws). A time-varying composite stores the stacked matrix that changes as a function of time (<code>_F</code>, <code>_H</code>, <code>_Q</code>, <code>_R</code>), as any model built from one does, so the pass over tables and the exporter tabulate it; it never takes the constant-matrix pass.</p>
+<p>Before, these models ran on the extended engine: the C++ loop calling the Python closures for <code>f</code>, <code>F</code>, <code>h</code>, <code>H</code>, <code>Q</code> and <code>R</code> at every step, and the smoother in Python. Measured with <code>tools/benchmark_twins.py --repeat 3</code> (500 filter steps at the decimated rate; the times include the demodulation and decimation of <code>preprocess</code>, which stay in numpy and scipy):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Model   </th><th class="markdownTableHeadNone">n   </th><th class="markdownTableHeadNone">Python loop   </th><th class="markdownTableHeadNone">C++ loop, callbacks (before)   </th><th class="markdownTableHeadNone">C++ linear pass   </th><th class="markdownTableHeadNone">Faster   </th><th class="markdownTableHeadNone">State   </th><th class="markdownTableHeadNone">Covariance    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OscillatorModel</code>, one line   </td><td class="markdownTableBodyNone">2   </td><td class="markdownTableBodyNone">37.8 ms   </td><td class="markdownTableBodyNone">43.7 ms   </td><td class="markdownTableBodyNone">11.8 ms   </td><td class="markdownTableBodyNone">3.2x   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>OscillatorModel</code>, three lines   </td><td class="markdownTableBodyNone">6   </td><td class="markdownTableBodyNone">54.8 ms   </td><td class="markdownTableBodyNone">63.8 ms   </td><td class="markdownTableBodyNone">12.7 ms   </td><td class="markdownTableBodyNone">4.3x   </td><td class="markdownTableBodyNone">4.8e-10   </td><td class="markdownTableBodyNone">1.3e-14    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>OscillatorBankModel</code>, 3 windows   </td><td class="markdownTableBodyNone">6   </td><td class="markdownTableBodyNone">143.4 ms   </td><td class="markdownTableBodyNone">192.9 ms   </td><td class="markdownTableBodyNone">19.5 ms   </td><td class="markdownTableBodyNone">7.3x   </td><td class="markdownTableBodyNone">0   </td><td class="markdownTableBodyNone">0    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>InterferometerK1</code>, 88 modes (O3GK catalogue)   </td><td class="markdownTableBodyNone">176   </td><td class="markdownTableBodyNone">5143.0 ms   </td><td class="markdownTableBodyNone">3834.3 ms   </td><td class="markdownTableBodyNone">410.6 ms   </td><td class="markdownTableBodyNone">12.5x   </td><td class="markdownTableBodyNone">1.0e-05   </td><td class="markdownTableBodyNone">8.6e-07   </td></tr>
+</table>
+<p>The K1 row is limited by the model, not by either side: about thirty phasors share each window's 2-D envelope, the covariance reaches a condition number of 8e9, and a rounding of 1e-16 grows to 1e-6. The C++ loop it replaces was as far from the Python loop; against it the C++ linear pass agrees to 1.7e-12. In the notebook (02_Oscillators) the three filtering passes went from 16, 30 and 76 ms to 3.9, 3.7 and 6.1 ms.</p>
+<p>Stays in Python: an <code>InterferometerModel</code> filtered with its <code>ViolinBankController</code> (<code>make_controller()</code>). The controller retunes each leaf's <code>Q</code> from the innovations at every step (the factor itself is computed by the C++ <code>Controllers::AdaptiveQR</code>, one per leaf), and running that loop in C++ needs three things that do not exist yet: a C entry that runs <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> with a C++ controller (<code>kalman_filter_run_closed_loop</code> takes a function), a C++ composite whose <code>Q</code> follows its adapted leaves, and a controller that dispatches the bank's state and innovation to the leaves' controllers. The K1 catalogue with the controller runs at about 12 ms a step in the Python loop (1.5 s for 120 steps), most of it numpy's <code>F P F^T</code> at n = 176. The peak finding of <code>InterferometerModel.fit</code> (<code>spectral.py</code>: Welch, <code>find_peaks</code>, the Lorentzian <code>curve_fit</code>) builds the model before any filter runs, and <code>subtract</code>/<code>reconstruct</code> resample and remodulate its output: both are signal processing around the filter, in scipy.</p>
+<h1><a class="anchor" id="integrating-with-root-plus"></a>
+Integrating with root-plus</h1>
+<p><code><a class="el" href="ballistics__root_8cc.html" title="libKalman driven from a ROOT program — the integration demonstrator.">examples/cxx/ballistics_root.cc</a></code> is the worked demonstrator — a projectile under gravity and quadratic drag, tracked by an EKF, drawn through ROOT. It is built only when ROOT is present (<code>find_package(ROOT QUIET)</code> in <code>examples/cxx</code>), so the ROOT-free build is unaffected, and it shows the whole integration in one file:</p>
+<div class="fragment"><div class="line">$ source var/install/bin/thislib.Kalman.sh</div>
+<div class="line">$ ballistics_root</div>
+<div class="line">ballistics — n = 6, m = 3, l = 0, fs = 50 Hz, engine = Extended, Jacobian = numerical</div>
+<div class="line">mean NIS  = 2.858   (consistent near m = 3)</div>
+<div class="line">mean NEES = 3.865   (consistent near n = 6)</div>
+<div class="line">altitude RMSE : filtered = 0.465 m, smoothed = 0.130 m</div>
+<div class="line">wrote ballistics_root.pdf, .png and .root</div>
+</div><!-- fragment --><p>15% of the altitude fixes are dropped at random (NaN), and the filter coasts through the gaps on prediction with no special case anywhere in the example.</p>
+<h2><a class="anchor" id="the-root-side"></a>
+The ROOT+ side</h2>
+<p><code>root-plus</code> wraps results for ROOT users inside its <b>Signal</b> component, next to its own unrelated <code>TKalmanFilter</code>, with libKalman as an <em>optional</em> dependency of that component:</p>
+<div class="fragment"><div class="line">root-plus/</div>
+<div class="line">  cmake/Packages/Kalman/FindKalmanFramework.cmake</div>
+<div class="line">  include/ROOT/IOPlus/Signal/Kalman/TKalmanRecord.h</div>
+<div class="line">  include/libRIOPlus_Signal.Config.h.in      # #cmakedefine KALMANFRAMEWORK_FOUND</div>
+<div class="line">  include/libRIOPlus_Signal.LinkDef.h        # the dictionary entry, guarded</div>
+<div class="line">  src/Signal/TKalmanRecord.cc</div>
+<div class="line">  tests/Signal/17_kalmanrecord.cc</div>
+</div><!-- fragment --><p><code>ROOT::IOPlus::TKalmanRecord</code> takes a <code><a class="el" href="class_kalman_1_1_i_o_1_1_record.html" title="One filtered (or smoothed) pass: time, state, covariance, measurement.">Kalman::IO::Record</a></code> and adds the two things libKalman deliberately does not provide: a <code>TObject</code> with a <code>ClassDef</code> so a result goes into a <code>TFile</code>, and <code>TGraph</code> / <code>TGraphErrors</code> / <code>TMultiGraph</code> of the estimate with its band. It stores the covariance <em>diagonal</em> only — a plot and a stored summary want the per-component sigma, and keeping the full <code>n × n</code> per step would dominate the file for no gain; use the <code><a class="el" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Kalman::Record</a></code> itself when the correlations matter.</p>
+<p><code>ROOT::IOPlus::TKalmanEstimate</code> is an alias of it, so either spelling compiles. It is only a source-level name: ROOT I/O stores the real class, so files written under either spelling are interchangeable.</p>
+<p>When libKalman is not found, <code>KALMANFRAMEWORK_FOUND</code> stays undefined and header, source and dictionary entry compile to nothing — Signal builds unchanged, and its test reports itself skipped. Point CMake at a prefix with <code>-DKalmanFramework_ROOT=&lt;prefix&gt;</code>. The class stays <code>ROOT::IOPlus::TKalmanRecord</code>, not a <code><a class="el" href="namespace_kalman.html">Kalman</a>::</code> sub-namespace: root-plus' namespace is flat, and a nested <code><a class="el" href="namespace_kalman.html">Kalman</a></code> would shadow the framework's own <code><a class="el" href="namespace_kalman.html">Kalman</a>::</code> in every lookup.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Not</b> <code>ROOT::IOPlus::TKalmanFilter</code>. That is root-plus' own small self-contained linear filter, now its neighbour in the same directory and unrelated to this framework. They share a word, not an implementation, and both can be loaded in one process — which is exactly why the framework's own classes carry no <code>T</code> prefix and no <code>TObject</code> base.</p>
+<p>A ROOT+ <em>model</em> — physics that wants <code>TF1</code> or RooFit inside <code>f()</code> — does not go here either. It is a plugin (previous section): it links ROOT, registers with <code><a class="el" href="class_kalman_1_1_factory.html" title="The registry of compiled models — how a C++ model becomes nameable.">Kalman::Factory</a></code>, and the Python side loads it by name. </p>
+</blockquote>
+<h2><a class="anchor" id="linking-it-yourself"></a>
+Linking it yourself</h2>
+<p>libKalman is linked, not loaded. From a ROOT/ROOT+ translation unit:</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_kalman_8h.html">Kalman/Kalman.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;TGraphErrors.h&gt;</span></div>
+<div class="line"> </div>
+<div class="line"><a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Kalman::Record</a> rec = filter.Forward(measurements);</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">auto</span> y  = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a29abf206739b1aed5061cdee8e5600d9">Series</a>(0);</div>
+<div class="line"><span class="keyword">auto</span> ey = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
+<div class="line"><span class="keyword">auto</span> t  = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a2bae6c53229155f959a1c1997063f935">Times</a>();</div>
+<div class="line">std::vector&lt;double&gt; ex(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>(), 0.0);</div>
+<div class="line">TGraphErrors g(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>(), t.data(), y.data(), ex.data(), ey.data());</div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a29abf206739b1aed5061cdee8e5600d9"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a29abf206739b1aed5061cdee8e5600d9">Kalman::IO::Record::Series</a></div><div class="ttdeci">std::vector&lt; double &gt; Series(std::size_t i) const</div><div class="ttdoc">Component i of the state across the whole run.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00086">Record.cc:86</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a2bae6c53229155f959a1c1997063f935"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a2bae6c53229155f959a1c1997063f935">Kalman::IO::Record::Times</a></div><div class="ttdeci">const std::vector&lt; double &gt; &amp; Times() const</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00073">Record.h:73</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a665355072cd1a113780559c56079ca7f"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Kalman::IO::Record::Sigma</a></div><div class="ttdeci">std::vector&lt; double &gt; Sigma(std::size_t i) const</div><div class="ttdoc">Standard deviation sqrt(P_ii) of component i across the run.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00093">Record.cc:93</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a6a63684cdccc0f1341ab7d4979891510"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">Kalman::IO::Record::NSteps</a></div><div class="ttdeci">std::size_t NSteps() const</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00061">Record.h:61</a></div></div>
+</div><!-- fragment --><p>Because the classes are <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>, <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> and so on — no <code>T</code> prefix, no <code>TObject</code> base — they cannot be confused with root-plus' own <code>ROOT::IOPlus::TKalmanFilter</code>, which is a separate and much smaller standalone linear filter. Both can be present in one process.</p>
+<h1><a class="anchor" id="differences-from-the-python-framework"></a>
+Differences from the Python framework</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone">Python   </th><th class="markdownTableHeadNone">C++    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Engines   </td><td class="markdownTableBodyNone">Linear, Extended, Unscented, Particle, Ensemble, Combinatorial   </td><td class="markdownTableBodyNone">the same six    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Track finding   </td><td class="markdownTableBodyNone"><code>CombinatorialKalmanFilter.forward(hits, layer_radii=)</code>, model <code>radii</code> / <code>seed_state</code>   </td><td class="markdownTableBodyNone"><code>Filters::CKF::Find(hits)</code>, model implements <code>Tracking::Detector</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Controllers   </td><td class="markdownTableBodyNone">P, PID, LQR, MPPI, Boost, AdaptiveQR forward to C++; Neural (Torch) stays Python; scipy's DARE is the reference   </td><td class="markdownTableBodyNone">the same six; LQR by <code>Algebra::SolveDARE</code>, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Closed loop   </td><td class="markdownTableBodyNone"><code>forward(zk, uk=controller)</code>; <code>model.clip_u</code>   </td><td class="markdownTableBodyNone"><code>Forward(zk, controller)</code>; <code>Model::ClipControl</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Engines from Python   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone"><code>NativeEngine</code> behind <code>KalmanFilter</code>; <code>filter_native()</code> fused    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Integrators / solvers   </td><td class="markdownTableBodyNone">Euler, RK4, Dormand–Prince / spectral, finite-difference; <code>register_*</code> by name   </td><td class="markdownTableBodyNone">the same four + two; a custom scheme is an <code>Integrator</code> subclass handed to <code>Model::SetIntegrator</code> or a <code>Solver</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Noise of a continuous model   </td><td class="markdownTableBodyNone"><code>Qc=</code>, <code>Lc=</code> (with <code>A=</code> for a linear model)   </td><td class="markdownTableBodyNone"><code>SetNoiseIntensity(Qc, Lc)</code>, <code>SetGenerator(A)</code>; decoded by <code>Utils::VanLoan</code>, which Python calls    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">ODE models   </td><td class="markdownTableBodyNone"><code>DYNAMICS = CONTINUOUS</code>, <code>f</code> returns dx/dt; <code>DEFAULT_INTEGRATOR</code>, <code>SOLVER_SUBSTEPS</code>   </td><td class="markdownTableBodyNone">override <code>Derivative()</code>, call <code>UseContinuousDynamics()</code>, <code>SetIntegrator()</code>, <code>SetSubsteps()</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Spectral solver backend   </td><td class="markdownTableBodyNone">the numpy backend forwards to <code>Solvers::Vorticity</code> when the solver states its physics; <code>backend="torch"</code> runs the C++ libTorch solver below   </td><td class="markdownTableBodyNone">built-in FFT, one field at a time (<code>Solvers::Spectral</code>, <code>Solvers::Vorticity</code>); libTorch, batched, CPU/CUDA/MPS (<code>Learn::Solvers::Vorticity</code>)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Non-additive noise (UKF)   </td><td class="markdownTableBodyNone">augmented-state sigma points, when the map really uses the noise argument   </td><td class="markdownTableBodyNone">the same (<code>HasProcessNoiseInput</code>, <code>HasMeasurementNoiseInput</code>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Ensemble hooks   </td><td class="markdownTableBodyNone"><code>model.forecast(X)</code>, <code>model.observe(X)</code>, <code>model.localization()</code>, <code>model.initial_ensemble()</code>; the analysis arithmetic is the C++ kernel <code>enkf_analysis</code>; a field model with a twin hands the whole pass to C++   </td><td class="markdownTableBodyNone"><code>Engines::EnsembleModel</code> (<code>Forecast</code>, <code>Observe</code>, <code>Localization</code>, <code>ProcessNoiseVariances</code>) beside <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code>; <code>SetLocalization</code>, <code>SetMembers</code>, <code>SetNormals</code> on the engine; <code>Filters::EnKF::Cycle</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Routers   </td><td class="markdownTableBodyNone">Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch   </td><td class="markdownTableBodyNone">Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: <code>NN::MLP</code>, ONNX, TorchScript); IKF    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Applications   </td><td class="markdownTableBodyNone"><code>modules/apps/</code>   </td><td class="markdownTableBodyNone"><code>libKalmanApps</code>: a twin for every model given by code (19 registered names, <code>kalman models</code>); models that are their matrices run on <code><a class="el" href="class_kalman_1_1_models_1_1_tabulated.html" title="A linear model given by its matrices, constant or one per sample.">Kalman::Models::Tabulated</a></code> with no twin; none in the core library    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Jacobians   </td><td class="markdownTableBodyNone"><code>DIFFERENTIATOR</code>: analytic, forward (default) or central differences, computed in C++   </td><td class="markdownTableBodyNone"><code>Model::SetDifferentiator</code>; <code>Differentiators::Forward</code>, <code>::Central</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Sampling   </td><td class="markdownTableBodyNone"><code>model.sample()</code>: the C++ loop, numpy's draws   </td><td class="markdownTableBodyNone"><code><a class="el" href="class_kalman_1_1_sampler.html" title="Draws truth and measurements from a model, for tests and demos.">Kalman::Sampler</a></code> (its own generator)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">JSON API, REST, MCP   </td><td class="markdownTableBodyNone"><code>kalman.api</code>, <code>kalman.rest</code>, <code>kalman.mcp</code> (all verbs, Python-written models included)   </td><td class="markdownTableBodyNone"><code>libKalmanNet</code>, <code>kalman-serve</code> (C++ models; see <a class="el" href="md_docs_218___net.html">Net</a>)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Missing data   </td><td class="markdownTableBodyNone">NaN channel skipped   </td><td class="markdownTableBodyNone">NaN channel skipped (same)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Covariance update   </td><td class="markdownTableBodyNone">Joseph form   </td><td class="markdownTableBodyNone">Joseph form (same)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Smoother   </td><td class="markdownTableBodyNone">RTS   </td><td class="markdownTableBodyNone">RTS (same)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Singular <code>S</code>   </td><td class="markdownTableBodyNone"><code>np.linalg.pinv</code> drops null directions   </td><td class="markdownTableBodyNone">eigenvalue pseudo-inverse, same semantics    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Diagnostics   </td><td class="markdownTableBodyNone">innovations, gains, NIS, NEES   </td><td class="markdownTableBodyNone">NIS, NEES   </td></tr>
+</table>
+<p>Every engine kind resolves on both sides; a value that is not a kind raises rather than silently substituting a different algorithm.</p>
+<h1><a class="anchor" id="where-the-python-boundary-is-and-why"></a>
+Where the Python boundary is, and why</h1>
+<p>Every model of the catalogue filters, smooths and samples in C++ (<code><a class="el" href="test__native__matrices_8py.html">tests/test_native_matrices.py</a>::TestNoModelFallsBackToThePythonLoop</code> fails when one does not). Which pass a model takes:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">The model is   </th><th class="markdownTableHeadNone">The pass    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">given by code, with a twin in <code>libKalmanApps</code>   </td><td class="markdownTableBodyNone">the twin, on the extended, unscented or particle engine; the ensemble engine for the field models; the combinatorial one for the drift chamber    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">its matrices, constant   </td><td class="markdownTableBodyNone">the linear kernel, or <code>Tabulated</code> on the extended engine    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">its matrices, functions of time (calorimeter, power grid, phasor)   </td><td class="markdownTableBodyNone"><code>Tabulated</code> with tables    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">a composite of such models (oscillators, the interferometer)   </td><td class="markdownTableBodyNone">as its parts: matrices    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">C++ already (<code>NativeModel</code>, a <code>.kw</code> file)   </td><td class="markdownTableBodyNone">itself    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">written in Python with its own <code>f</code> and <code>h</code> and no twin (a user's model, <code><a class="el" href="toy__model_8py.html">examples/python/toy_model.py</a></code>)   </td><td class="markdownTableBodyNone">the C++ loop, calling back into <code>f</code> and <code>h</code> at each step   </td></tr>
+</table>
+<p>What still runs in Python, and why:</p>
+<ul>
+<li><b>A model written in Python by a user.</b> That is the point of the last row: nothing to compile, at the cost below. Writing it in C++ (the toy shows both) or giving it a twin removes the cost.</li>
+<li><b>Code handed in as an argument</b>: a steering flow or an intensity function for the storm, a controller function in the loop, a custom integrator, a surrogate forecast for the flow. A Python callable cannot run in C++; the model then keeps its Python physics, or the C++ loop calls back.</li>
+<li><b>The interferometer with its violin-bank controller</b> (a controller on a model that takes no control input): the Python loop.</li>
+<li><b>The libTorch backend of the field models</b> inside the assimilation loop (<code>libKalmanApps</code> does not link <code>libKalmanLearn</code>); the solver itself is C++.</li>
+<li><b>Around the filter</b>: <code>preprocess</code> and <code>postprocess</code> (demodulation, the relativistic corrections), event and hit generators that draw with numpy's generator, spectra and peak fits, plots, the servers.</li>
+<li><b>Random draws</b> are made by numpy and handed to C++, on purpose: a seeded run gives the same numbers on either side.</li>
+</ul>
+<p>The cost of the callback row, measured on <code>BallisticModel</code> before it had a twin:</p>
+<div class="fragment"><div class="line">model.f  (Python/numpy/scipy)   :  20.74 µs per call</div>
+<div class="line">whole native predict + crossing :   3.75 µs per call</div>
+</div><!-- fragment --><p>One callback costs ~6× the entire native step it would sit inside, and an EKF needs ~21 of them per step for the Jacobian. Profiling agrees: of 5.74 s for a 6000-step EKF, <b>88% is <code>numerical_jacobian</code> + <code>model.f</code></b>. Amdahl caps the win at ~1.1× even if the covariance algebra became free.</p>
+<p>That is exactly why the Python package's native path (<code>modules/framework/native/</code>) engages <em>only</em> where it can eliminate callbacks entirely — the arithmetic of a step once the model has been evaluated, and, for constant matrices with no control callable, all N steps fused into one call. The limit is the language boundary, not the language.</p>
+<p>Those kernels are now this library's own <code>kf_*</code> / <code>ukf_*</code> / <code>pf_*</code> / <code>diag_*</code> entry points (<code><a class="el" href="_kernels_8cc.html" title="The C kernels behind the Python engines, implemented by the C++ classes.">src/Kernels.cc</a></code>): a fused linear pass <em>is</em> a <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code> over <code>Engines::Linear</code>, an update <em>is</em> <code>Utils::Correct</code>, so a Python model here and a C++ model in ROOT+ run one implementation. The Python package used to carry a hand-rolled C copy of the same arithmetic on stack arrays, which was faster — 21× on the linear forward pass against numpy, where the C++ classes with their heap-allocated <code>Matrix</code>/<code>Vector</code> temporaries measure 2.4× (2.6× geometric mean over the kernels, <code><a class="el" href="bench__native_8py.html">tests/bench_native.py</a></code>). One implementation was chosen over the second copy; the speed is recoverable inside the C++ types (small-buffer storage for the n ≤ 16 case) without touching either side of the seam, and that is the next performance step, not a design limit.</p>
+<p>So the seam sits where a crossing is paid once per evaluation <em>into</em> C++ — a compiled model evaluated by a Python engine — and never once per step <em>out</em> of it. The portable artifacts between the two sides are a <b>registered model</b> (through the factory), <b>data</b> (a record) and a <b>trained ONNX policy</b>. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="cxx.html">C++ libraries</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

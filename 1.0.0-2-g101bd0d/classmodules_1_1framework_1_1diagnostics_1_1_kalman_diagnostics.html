@@ -1,0 +1,616 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.diagnostics.KalmanDiagnostics Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.diagnostics.KalmanDiagnostics Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.diagnostics.KalmanDiagnostics Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.diagnostics.KalmanDiagnostics Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a535fe560d8c83514567d3006d180248a" id="r_a535fe560d8c83514567d3006d180248a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a535fe560d8c83514567d3006d180248a">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a84d8d2f3dd5fde3b32f3a55ab9f43d0f">filter</a>)</td></tr>
+<tr class="separator:a535fe560d8c83514567d3006d180248a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b33bce621f5c21885d97055ebfd1e54" id="r_a0b33bce621f5c21885d97055ebfd1e54"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a0b33bce621f5c21885d97055ebfd1e54">innovations</a> (self)</td></tr>
+<tr class="separator:a0b33bce621f5c21885d97055ebfd1e54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a00dfbd45449fefb0e9c8673867e8914e" id="r_a00dfbd45449fefb0e9c8673867e8914e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a00dfbd45449fefb0e9c8673867e8914e">gains</a> (self)</td></tr>
+<tr class="separator:a00dfbd45449fefb0e9c8673867e8914e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01997743c136e24ce06d46b335c5f4e8" id="r_a01997743c136e24ce06d46b335c5f4e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a01997743c136e24ce06d46b335c5f4e8">nis</a> (self)</td></tr>
+<tr class="separator:a01997743c136e24ce06d46b335c5f4e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06070319b40b3e8342f8796a85e491ba" id="r_a06070319b40b3e8342f8796a85e491ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a06070319b40b3e8342f8796a85e491ba">nees</a> (self, truth)</td></tr>
+<tr class="separator:a06070319b40b3e8342f8796a85e491ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad64e168ee87f243edefe798a9c806475" id="r_ad64e168ee87f243edefe798a9c806475"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#ad64e168ee87f243edefe798a9c806475">plot</a> (self, sample=None, *sigma=3, figsize=(14, 9), **kwargs)</td></tr>
+<tr class="separator:ad64e168ee87f243edefe798a9c806475"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a84d8d2f3dd5fde3b32f3a55ab9f43d0f" id="r_a84d8d2f3dd5fde3b32f3a55ab9f43d0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a84d8d2f3dd5fde3b32f3a55ab9f43d0f">filter</a></td></tr>
+<tr class="separator:a84d8d2f3dd5fde3b32f3a55ab9f43d0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a4389473963b8f2db6f95d786c960082d" id="r_a4389473963b8f2db6f95d786c960082d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#a4389473963b8f2db6f95d786c960082d">_arrays</a> (self)</td></tr>
+<tr class="separator:a4389473963b8f2db6f95d786c960082d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Post-hoc consistency diagnostics for one Kalman forward pass.
+
+Construct from a filter that has already run ``forward()``/``filter()``::
+
+    KalmanDiagnostics(kf).nis()
+    KalmanDiagnostics(kf).plot(sample=truth)
+</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00028">28</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a535fe560d8c83514567d3006d180248a" name="a535fe560d8c83514567d3006d180248a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a535fe560d8c83514567d3006d180248a">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>filter</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00037">37</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    <span class="keyword">def </span>__init__(self, filter):</div>
+<div class="line"><span class="lineno">   38</span>        self.filter = filter</div>
+<div class="line"><span class="lineno">   39</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4389473963b8f2db6f95d786c960082d" name="a4389473963b8f2db6f95d786c960082d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4389473963b8f2db6f95d786c960082d">&#9670;&#160;</a></span>_arrays()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics._arrays </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Stack the stored forward-pass quantities into plain arrays.
+
+Returns (N, n, m, z, x_prior, P_prior, x_post, P_post).</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00043">43</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>    <span class="keyword">def </span>_arrays(self):</div>
+<div class="line"><span class="lineno">   44</span>        <span class="stringliteral">&quot;&quot;&quot;Stack the stored forward-pass quantities into plain arrays.</span></div>
+<div class="line"><span class="lineno">   45</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   46</span><span class="stringliteral">        Returns (N, n, m, z, x_prior, P_prior, x_post, P_post).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   47</span>        f = self.filter</div>
+<div class="line"><span class="lineno">   48</span>        N = len(f.posterior)</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keywordflow">if</span> N == 0:</div>
+<div class="line"><span class="lineno">   50</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;No forward pass to diagnose — run forward()/filter() first.&quot;</span>)</div>
+<div class="line"><span class="lineno">   51</span>        n, m = f.n, f.m</div>
+<div class="line"><span class="lineno">   52</span>        z    = np.array([np.reshape(zz, (m, 1)) <span class="keywordflow">for</span> zz <span class="keywordflow">in</span> f.measurement[:N]])</div>
+<div class="line"><span class="lineno">   53</span>        xpr  = np.array([np.reshape(p[0], (n, 1)) <span class="keywordflow">for</span> p <span class="keywordflow">in</span> f.prior])</div>
+<div class="line"><span class="lineno">   54</span>        Ppr  = np.array([np.asarray(p[1]).reshape(n, n) <span class="keywordflow">for</span> p <span class="keywordflow">in</span> f.prior])</div>
+<div class="line"><span class="lineno">   55</span>        xpo  = np.array([np.reshape(p[0], (n, 1)) <span class="keywordflow">for</span> p <span class="keywordflow">in</span> f.posterior])</div>
+<div class="line"><span class="lineno">   56</span>        Ppo  = np.array([np.asarray(p[1]).reshape(n, n) <span class="keywordflow">for</span> p <span class="keywordflow">in</span> f.posterior])</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">return</span> N, n, m, z, xpr, Ppr, xpo, Ppo</div>
+<div class="line"><span class="lineno">   58</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a00dfbd45449fefb0e9c8673867e8914e" name="a00dfbd45449fefb0e9c8673867e8914e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a00dfbd45449fefb0e9c8673867e8914e">&#9670;&#160;</a></span>gains()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.gains </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Per-step Kalman gain K_k = P⁻_k H_kᵀ S_k⁻¹. Shape (N, n, m).
+
+K[k, i, j] = how strongly measurement channel j moves state i at step k.</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00079">79</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>    <span class="keyword">def </span>gains(self):</div>
+<div class="line"><span class="lineno">   80</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step Kalman gain K_k = P⁻_k H_kᵀ S_k⁻¹. Shape (N, n, m).</span></div>
+<div class="line"><span class="lineno">   81</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   82</span><span class="stringliteral">        K[k, i, j] = how strongly measurement channel j moves state i at step k.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   83</span>        model = self.filter.model</div>
+<div class="line"><span class="lineno">   84</span>        N, n, m, z, xpr, Ppr, _, _ = self._arrays()</div>
+<div class="line"><span class="lineno">   85</span>        R = np.asarray(model.R()).reshape(m, m)</div>
+<div class="line"><span class="lineno">   86</span>        K = np.zeros((N, n, m))</div>
+<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N):</div>
+<div class="line"><span class="lineno">   88</span>            Hk = np.asarray(model.H(xpr[k])).reshape(m, n)</div>
+<div class="line"><span class="lineno">   89</span>            S  = Hk @ Ppr[k] @ Hk.T + R</div>
+<div class="line"><span class="lineno">   90</span>            K[k] = Ppr[k] @ Hk.T @ np.linalg.inv(S)</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">return</span> K</div>
+<div class="line"><span class="lineno">   92</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0b33bce621f5c21885d97055ebfd1e54" name="a0b33bce621f5c21885d97055ebfd1e54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b33bce621f5c21885d97055ebfd1e54">&#9670;&#160;</a></span>innovations()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.innovations </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Per-step innovation (measurement residual) and its covariance.
+
+ν_k = z_k − h(x⁻_k),   S_k = H_k P⁻_k H_kᵀ + R   (H_k = ∂h/∂x at the prior).
+A well-tuned filter has ν zero-mean and white, ~95% inside ±2·√diag(S).
+
+Returns (nu, S): shapes (N, m) and (N, m, m).</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00062">62</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    <span class="keyword">def </span>innovations(self):</div>
+<div class="line"><span class="lineno">   63</span>        <span class="stringliteral">&quot;&quot;&quot;Per-step innovation (measurement residual) and its covariance.</span></div>
+<div class="line"><span class="lineno">   64</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   65</span><span class="stringliteral">        ν_k = z_k − h(x⁻_k),   S_k = H_k P⁻_k H_kᵀ + R   (H_k = ∂h/∂x at the prior).</span></div>
+<div class="line"><span class="lineno">   66</span><span class="stringliteral">        A well-tuned filter has ν zero-mean and white, ~95% inside ±2·√diag(S).</span></div>
+<div class="line"><span class="lineno">   67</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   68</span><span class="stringliteral">        Returns (nu, S): shapes (N, m) and (N, m, m).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   69</span>        model = self.filter.model</div>
+<div class="line"><span class="lineno">   70</span>        N, n, m, z, xpr, Ppr, _, _ = self._arrays()</div>
+<div class="line"><span class="lineno">   71</span>        R = np.asarray(model.R()).reshape(m, m)</div>
+<div class="line"><span class="lineno">   72</span>        nu = np.zeros((N, m)); S = np.zeros((N, m, m))</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N):</div>
+<div class="line"><span class="lineno">   74</span>            Hk = np.asarray(model.H(xpr[k])).reshape(m, n)</div>
+<div class="line"><span class="lineno">   75</span>            nu[k] = (z[k] - np.asarray(model.h(xpr[k])).reshape(m, 1)).ravel()</div>
+<div class="line"><span class="lineno">   76</span>            S[k]  = Hk @ Ppr[k] @ Hk.T + R</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">return</span> nu, S</div>
+<div class="line"><span class="lineno">   78</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a06070319b40b3e8342f8796a85e491ba" name="a06070319b40b3e8342f8796a85e491ba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06070319b40b3e8342f8796a85e491ba">&#9670;&#160;</a></span>nees()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.nees </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>truth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Normalized Estimation Error Squared (needs ground truth, e.g. ``sample.xk``):
+(x_k − x̂_k)ᵀ P_k⁻¹ (x_k − x̂_k)  (≈ χ²(n)). Shape (N,).
+
+Checks whether P is honest: time-mean ≈ n means well-calibrated, ≫ n means
+the filter is over-confident, ≪ n means over-conservative.</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00107">107</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    <span class="keyword">def </span>nees(self, truth):</div>
+<div class="line"><span class="lineno">  108</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Estimation Error Squared (needs ground truth, e.g. ``sample.xk``):</span></div>
+<div class="line"><span class="lineno">  109</span><span class="stringliteral">        (x_k − x̂_k)ᵀ P_k⁻¹ (x_k − x̂_k)  (≈ χ²(n)). Shape (N,).</span></div>
+<div class="line"><span class="lineno">  110</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  111</span><span class="stringliteral">        Checks whether P is honest: time-mean ≈ n means well-calibrated, ≫ n means</span></div>
+<div class="line"><span class="lineno">  112</span><span class="stringliteral">        the filter is over-confident, ≪ n means over-conservative.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  113</span>        N, n, m, z, xpr, Ppr, xpo, Ppo = self._arrays()</div>
+<div class="line"><span class="lineno">  114</span>        truth = np.asarray(truth)</div>
+<div class="line"><span class="lineno">  115</span>        truth = truth.reshape(truth.shape[0], -1)</div>
+<div class="line"><span class="lineno">  116</span>        e = truth[:N] - xpo.reshape(N, n)</div>
+<div class="line"><span class="lineno">  117</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  119</span>            <span class="keyword">from</span> .native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  120</span>            nees = np.empty(N, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  121</span>            lib.diag_nees_batch(N, n, dptr(as_contiguous(e)), dptr(as_contiguous(Ppo)), dptr(nees))</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">return</span> nees</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> np.array([float(e[k] @ np.linalg.pinv(Ppo[k]) @ e[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N)])</div>
+<div class="line"><span class="lineno">  124</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a01997743c136e24ce06d46b335c5f4e8" name="a01997743c136e24ce06d46b335c5f4e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01997743c136e24ce06d46b335c5f4e8">&#9670;&#160;</a></span>nis()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.nis </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Normalized Innovation Squared  ε_k = ν_kᵀ S_k⁻¹ ν_k  (≈ χ²(m)). Shape (N,).
+
+Consistency check that needs NO ground truth — usable on real data.</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00093">93</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>nis(self):</div>
+<div class="line"><span class="lineno">   94</span>        <span class="stringliteral">&quot;&quot;&quot;Normalized Innovation Squared  ε_k = ν_kᵀ S_k⁻¹ ν_k  (≈ χ²(m)). Shape (N,).</span></div>
+<div class="line"><span class="lineno">   95</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   96</span><span class="stringliteral">        Consistency check that needs NO ground truth — usable on real data.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   97</span>        nu, S = self.innovations()</div>
+<div class="line"><span class="lineno">   98</span>        N, m = nu.shape</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keyword">from</span> .native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  101</span>            <span class="keyword">from</span> .native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  102</span>            nis = np.empty(N, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  103</span>            lib.diag_nis_batch(N, m, dptr(as_contiguous(nu)), dptr(as_contiguous(S)), dptr(nis))</div>
+<div class="line"><span class="lineno">  104</span>            <span class="keywordflow">return</span> nis</div>
+<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> np.array([float(nu[k] @ np.linalg.solve(S[k], nu[k])) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N)])</div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad64e168ee87f243edefe798a9c806475" name="ad64e168ee87f243edefe798a9c806475"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad64e168ee87f243edefe798a9c806475">&#9670;&#160;</a></span>plot()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.plot </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sample</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>sigma</em> = <code>3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>figsize</em> = <code>(14,&#160;9)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Filter-consistency dashboard computed from the forward pass:
+
+  1. **Innovation** ν per measurement channel, shaded ±``sigma``·√S — should
+     be zero-mean and stay (mostly) inside the band.
+  2. **Kalman gain** K(t) for measurement channel 0 across states — shows how
+     strongly a measurement moves each state, converging to steady state.
+  3. **NIS** with a χ²(m) 95% band (no truth needed).
+  4. **NEES** with a χ²(n) 95% band — only if ``sample`` (ground truth) given.
+
+``sample`` may be a ``KalmanRecord`` (uses ``sample.xk``) or a truth array.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00128">128</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  128</span>    <span class="keyword">def </span>plot(self, sample=None, *, sigma=3, figsize=(14, 9), **kwargs):</div>
+<div class="line"><span class="lineno">  129</span>        <span class="stringliteral">&quot;&quot;&quot;Filter-consistency dashboard computed from the forward pass:</span></div>
+<div class="line"><span class="lineno">  130</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  131</span><span class="stringliteral">          1. **Innovation** ν per measurement channel, shaded ±``sigma``·√S — should</span></div>
+<div class="line"><span class="lineno">  132</span><span class="stringliteral">             be zero-mean and stay (mostly) inside the band.</span></div>
+<div class="line"><span class="lineno">  133</span><span class="stringliteral">          2. **Kalman gain** K(t) for measurement channel 0 across states — shows how</span></div>
+<div class="line"><span class="lineno">  134</span><span class="stringliteral">             strongly a measurement moves each state, converging to steady state.</span></div>
+<div class="line"><span class="lineno">  135</span><span class="stringliteral">          3. **NIS** with a χ²(m) 95% band (no truth needed).</span></div>
+<div class="line"><span class="lineno">  136</span><span class="stringliteral">          4. **NEES** with a χ²(n) 95% band — only if ``sample`` (ground truth) given.</span></div>
+<div class="line"><span class="lineno">  137</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  138</span><span class="stringliteral">        ``sample`` may be a ``KalmanRecord`` (uses ``sample.xk``) or a truth array.</span></div>
+<div class="line"><span class="lineno">  139</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  140</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
+<div class="line"><span class="lineno">  141</span>        f = self.filter</div>
+<div class="line"><span class="lineno">  142</span>        N = len(f.posterior)</div>
+<div class="line"><span class="lineno">  143</span>        n = f.n; m = f.m</div>
+<div class="line"><span class="lineno">  144</span>        fs = f.sample_rate() <span class="keywordflow">or</span> 1.0</div>
+<div class="line"><span class="lineno">  145</span>        t0 = float(f.model.t0) <span class="keywordflow">if</span> f.model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0</div>
+<div class="line"><span class="lineno">  146</span>        t  = t0 + np.arange(N) / fs</div>
+<div class="line"><span class="lineno">  147</span> </div>
+<div class="line"><span class="lineno">  148</span>        nu, S = self.innovations()</div>
+<div class="line"><span class="lineno">  149</span>        K     = self.gains()</div>
+<div class="line"><span class="lineno">  150</span>        nis   = self.nis()</div>
+<div class="line"><span class="lineno">  151</span>        truth = sample.xk <span class="keywordflow">if</span> isinstance(sample, KalmanRecord) <span class="keywordflow">else</span> sample</div>
+<div class="line"><span class="lineno">  152</span>        has_nees = truth <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  153</span>        nees  = self.nees(truth) <span class="keywordflow">if</span> has_nees <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  154</span> </div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  156</span>            <span class="keyword">from</span> scipy.stats <span class="keyword">import</span> chi2</div>
+<div class="line"><span class="lineno">  157</span>            band = <span class="keyword">lambda</span> df: (chi2.ppf(0.025, df), df, chi2.ppf(0.975, df))</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  159</span>            band = <span class="keyword">lambda</span> df: (<span class="keywordtype">None</span>, df, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  160</span> </div>
+<div class="line"><span class="lineno">  161</span>        <span class="comment"># state labels (use the model&#39;s state enum when it lines up with n)</span></div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  163</span>            names = [str(s).lower() <span class="keywordflow">for</span> s <span class="keywordflow">in</span> list(f.model.states)]</div>
+<div class="line"><span class="lineno">  164</span>            labels = names <span class="keywordflow">if</span> len(names) == n <span class="keywordflow">else</span> [f<span class="stringliteral">&quot;x{i}&quot;</span> <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n)]</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  166</span>            labels = [f<span class="stringliteral">&quot;x{i}&quot;</span> <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n)]</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>        npan = 4 <span class="keywordflow">if</span> has_nees <span class="keywordflow">else</span> 3</div>
+<div class="line"><span class="lineno">  169</span>        fig, ax = plt.subplots(2, 2, figsize=figsize) <span class="keywordflow">if</span> npan == 4 <span class="keywordflow">else</span> plt.subplots(1, 3, figsize=(figsize[0], figsize[1] / 2.2))</div>
+<div class="line"><span class="lineno">  170</span>        ax = np.atleast_1d(ax).ravel()</div>
+<div class="line"><span class="lineno">  171</span>        fig.suptitle(<span class="stringliteral">&quot;Kalman filter consistency diagnostics&quot;</span>, fontweight=<span class="stringliteral">&quot;bold&quot;</span>)</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>        <span class="comment"># 1) Innovations + ±sigma·sqrt(S)</span></div>
+<div class="line"><span class="lineno">  174</span>        a0 = ax[0]</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(m):</div>
+<div class="line"><span class="lineno">  176</span>            sd = np.sqrt(np.clip(S[:, j, j], 0, <span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  177</span>            line, = a0.plot(t, nu[:, j], lw=1.0, label=f<span class="stringliteral">&quot;ν[{j}]&quot;</span>)</div>
+<div class="line"><span class="lineno">  178</span>            a0.fill_between(t, -sigma * sd, sigma * sd, color=line.get_color(), alpha=0.15, lw=0,</div>
+<div class="line"><span class="lineno">  179</span>                            label=(f<span class="stringliteral">&quot;±{sigma:g}σ&quot;</span> <span class="keywordflow">if</span> j == 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  180</span>        a0.axhline(0, color=<span class="stringliteral">&quot;gray&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;--&quot;</span>)</div>
+<div class="line"><span class="lineno">  181</span>        a0.set_title(<span class="stringliteral">&quot;Innovation (measurement residual)  ν = z − H·x⁻&quot;</span>); a0.set_xlabel(<span class="stringliteral">&quot;Time [s]&quot;</span>); a0.set_ylabel(<span class="stringliteral">&quot;residual&quot;</span>)</div>
+<div class="line"><span class="lineno">  182</span>        a0.legend(fontsize=8); a0.grid(<span class="keyword">True</span>, ls=<span class="stringliteral">&quot;:&quot;</span>, alpha=0.6)</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>        <span class="comment"># 2) Kalman gain for measurement channel 0  (log y-scale)</span></div>
+<div class="line"><span class="lineno">  185</span>        a1 = ax[1]</div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n):</div>
+<div class="line"><span class="lineno">  187</span>            a1.plot(t, K[:, i, 0], lw=1.0, label=labels[i])</div>
+<div class="line"><span class="lineno">  188</span>        <span class="comment"># symlog: log-like compression so gains spanning orders of magnitude are all</span></div>
+<div class="line"><span class="lineno">  189</span>        <span class="comment"># visible, while still handling zero / negative (off-diagonal) gains.</span></div>
+<div class="line"><span class="lineno">  190</span>        kmax = float(np.max(np.abs(K[:, :, 0]))) <span class="keywordflow">if</span> K.size <span class="keywordflow">else</span> 1.0</div>
+<div class="line"><span class="lineno">  191</span>        linthresh = max(kmax * 1e-3, 1e-12)</div>
+<div class="line"><span class="lineno">  192</span>        a1.set_yscale(<span class="stringliteral">&quot;symlog&quot;</span>, linthresh=linthresh)</div>
+<div class="line"><span class="lineno">  193</span>        a1.set_title(<span class="stringliteral">&quot;Kalman gain  |K(t)|  (meas. channel 0, log scale)&quot;</span>); a1.set_xlabel(<span class="stringliteral">&quot;Time [s]&quot;</span>); a1.set_ylabel(<span class="stringliteral">&quot;gain (symlog)&quot;</span>)</div>
+<div class="line"><span class="lineno">  194</span>        a1.legend(fontsize=8); a1.grid(<span class="keyword">True</span>, ls=<span class="stringliteral">&quot;:&quot;</span>, alpha=0.6, which=<span class="stringliteral">&quot;both&quot;</span>)</div>
+<div class="line"><span class="lineno">  195</span> </div>
+<div class="line"><span class="lineno">  196</span>        <span class="comment"># 3) NIS + chi2(m) band</span></div>
+<div class="line"><span class="lineno">  197</span>        a2 = ax[2]</div>
+<div class="line"><span class="lineno">  198</span>        a2.plot(t, nis, lw=0.8, color=<span class="stringliteral">&quot;steelblue&quot;</span>, label=<span class="stringliteral">&quot;NIS&quot;</span>)</div>
+<div class="line"><span class="lineno">  199</span>        lo, mid, hi = band(m)</div>
+<div class="line"><span class="lineno">  200</span>        a2.axhline(mid, color=<span class="stringliteral">&quot;gray&quot;</span>, lw=1.0, ls=<span class="stringliteral">&quot;--&quot;</span>, label=f<span class="stringliteral">&quot;E=m={m}&quot;</span>)</div>
+<div class="line"><span class="lineno">  201</span>        <span class="keywordflow">if</span> lo <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  202</span>            a2.axhline(lo, color=<span class="stringliteral">&quot;crimson&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>); a2.axhline(hi, color=<span class="stringliteral">&quot;crimson&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>, label=<span class="stringliteral">&quot;95% χ²&quot;</span>)</div>
+<div class="line"><span class="lineno">  203</span>        a2.set_title(f<span class="stringliteral">&quot;Normalized Innovation Squared\ntime-mean ⟨NIS⟩ = {nis.mean():.2f}  ≈  m = {m}  (meas. dim)&quot;</span>); a2.set_xlabel(<span class="stringliteral">&quot;Time [s]&quot;</span>); a2.set_ylabel(<span class="stringliteral">&quot;νᵀS⁻¹ν&quot;</span>)</div>
+<div class="line"><span class="lineno">  204</span>        a2.legend(fontsize=8); a2.grid(<span class="keyword">True</span>, ls=<span class="stringliteral">&quot;:&quot;</span>, alpha=0.6)</div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>        <span class="comment"># 4) NEES + chi2(n) band</span></div>
+<div class="line"><span class="lineno">  207</span>        <span class="keywordflow">if</span> has_nees:</div>
+<div class="line"><span class="lineno">  208</span>            a3 = ax[3]</div>
+<div class="line"><span class="lineno">  209</span>            a3.plot(t, nees, lw=0.8, color=<span class="stringliteral">&quot;darkorange&quot;</span>, label=<span class="stringliteral">&quot;NEES&quot;</span>)</div>
+<div class="line"><span class="lineno">  210</span>            lo, mid, hi = band(n)</div>
+<div class="line"><span class="lineno">  211</span>            a3.axhline(mid, color=<span class="stringliteral">&quot;gray&quot;</span>, lw=1.0, ls=<span class="stringliteral">&quot;--&quot;</span>, label=f<span class="stringliteral">&quot;E=n={n}&quot;</span>)</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keywordflow">if</span> lo <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  213</span>                a3.axhline(lo, color=<span class="stringliteral">&quot;crimson&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>); a3.axhline(hi, color=<span class="stringliteral">&quot;crimson&quot;</span>, lw=0.8, ls=<span class="stringliteral">&quot;:&quot;</span>, label=<span class="stringliteral">&quot;95% χ²&quot;</span>)</div>
+<div class="line"><span class="lineno">  214</span>            a3.set_title(f<span class="stringliteral">&quot;Normalized Estimation Error Squared\ntime-mean ⟨NEES⟩ = {nees.mean():.2f}  ≈  n = {n}  (state dim)&quot;</span>); a3.set_xlabel(<span class="stringliteral">&quot;Time [s]&quot;</span>); a3.set_ylabel(<span class="stringliteral">&quot;eᵀP⁻¹e&quot;</span>)</div>
+<div class="line"><span class="lineno">  215</span>            a3.legend(fontsize=8); a3.grid(<span class="keyword">True</span>, ls=<span class="stringliteral">&quot;:&quot;</span>, alpha=0.6)</div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>        fig.tight_layout()</div>
+<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">return</span> fig</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a84d8d2f3dd5fde3b32f3a55ab9f43d0f" name="a84d8d2f3dd5fde3b32f3a55ab9f43d0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a84d8d2f3dd5fde3b32f3a55ab9f43d0f">&#9670;&#160;</a></span>filter</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.diagnostics.KalmanDiagnostics.filter</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="diagnostics_8py_source.html#l00038">38</a> of file <a class="el" href="diagnostics_8py_source.html">diagnostics.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/<a class="el" href="diagnostics_8py_source.html">diagnostics.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1diagnostics.html">diagnostics</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html">KalmanDiagnostics</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,1538 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.api.auth Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.api.auth Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.api.auth Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1api_1_1auth.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">modules.api.auth Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_auth_error.html">AuthError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_bad_credentials.html">BadCredentials</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_invalid_token.html">InvalidToken</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_rate_limited.html">RateLimited</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aef3c78b0cc0dcd31accb328dae03df59" id="r_aef3c78b0cc0dcd31accb328dae03df59"><td class="memItemLeft" align="right" valign="top">str|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aef3c78b0cc0dcd31accb328dae03df59">_secret</a> ()</td></tr>
+<tr class="separator:aef3c78b0cc0dcd31accb328dae03df59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd67a550ffcf7dc4d2290d4430dec3a" id="r_a4dd67a550ffcf7dc4d2290d4430dec3a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a4dd67a550ffcf7dc4d2290d4430dec3a">_htpasswd_path</a> ()</td></tr>
+<tr class="separator:a4dd67a550ffcf7dc4d2290d4430dec3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0d9beb6cbb78ab01f90f118d8a0f41" id="r_a4a0d9beb6cbb78ab01f90f118d8a0f41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a4a0d9beb6cbb78ab01f90f118d8a0f41">enabled</a> ()</td></tr>
+<tr class="separator:a4a0d9beb6cbb78ab01f90f118d8a0f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34bdcbbb137f6a04efca0558c9332ce3" id="r_a34bdcbbb137f6a04efca0558c9332ce3"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a34bdcbbb137f6a04efca0558c9332ce3">_decode</a> (str credential)</td></tr>
+<tr class="separator:a34bdcbbb137f6a04efca0558c9332ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95157e094f3812fa9dbde037c7d710e5" id="r_a95157e094f3812fa9dbde037c7d710e5"><td class="memItemLeft" align="right" valign="top">dict|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a95157e094f3812fa9dbde037c7d710e5">claims</a> (str|None credential)</td></tr>
+<tr class="separator:a95157e094f3812fa9dbde037c7d710e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc591445fb4135d19169bc3984e47a1b" id="r_acc591445fb4135d19169bc3984e47a1b"><td class="memItemLeft" align="right" valign="top">str|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acc591445fb4135d19169bc3984e47a1b">identity</a> (str|None credential)</td></tr>
+<tr class="separator:acc591445fb4135d19169bc3984e47a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b77c36adfd0d0ff1f449989586ee31" id="r_a42b77c36adfd0d0ff1f449989586ee31"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a42b77c36adfd0d0ff1f449989586ee31">has_scope</a> (str|None credential, str scope)</td></tr>
+<tr class="separator:a42b77c36adfd0d0ff1f449989586ee31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf26602441f97f224aba5fab22855ac3" id="r_abf26602441f97f224aba5fab22855ac3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#abf26602441f97f224aba5fab22855ac3">require_owner</a> (dict record, str|None credential, str what)</td></tr>
+<tr class="separator:abf26602441f97f224aba5fab22855ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98dae25c80b7b8ca0d0b1e3b8404148a" id="r_a98dae25c80b7b8ca0d0b1e3b8404148a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a98dae25c80b7b8ca0d0b1e3b8404148a">check_server</a> (str host, *str service, bool verified_elsewhere=False)</td></tr>
+<tr class="separator:a98dae25c80b7b8ca0d0b1e3b8404148a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e1961b73b2317a1652d653f6795080" id="r_a62e1961b73b2317a1652d653f6795080"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a62e1961b73b2317a1652d653f6795080">authorize</a> (str|None credential, str scope)</td></tr>
+<tr class="separator:a62e1961b73b2317a1652d653f6795080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd47b5e61aef44e8a5234598fffd6385" id="r_acd47b5e61aef44e8a5234598fffd6385"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acd47b5e61aef44e8a5234598fffd6385">mint_token</a> (str user, scopes, *str|None secret=None, float exp_hours=24.0)</td></tr>
+<tr class="separator:acd47b5e61aef44e8a5234598fffd6385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7917e8de3dc861702a64e2ea5bca5a6a" id="r_a7917e8de3dc861702a64e2ea5bca5a6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a7917e8de3dc861702a64e2ea5bca5a6a">_bcrypt</a> ()</td></tr>
+<tr class="separator:a7917e8de3dc861702a64e2ea5bca5a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d52f6f01108222fa9182f6cb04d4086" id="r_a2d52f6f01108222fa9182f6cb04d4086"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a2d52f6f01108222fa9182f6cb04d4086">_clean_scopes</a> (scopes)</td></tr>
+<tr class="separator:a2d52f6f01108222fa9182f6cb04d4086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade66b7fb327eb22befc5a5d359d6dd14" id="r_ade66b7fb327eb22befc5a5d359d6dd14"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ade66b7fb327eb22befc5a5d359d6dd14">_accounts</a> (str|None path=None)</td></tr>
+<tr class="separator:ade66b7fb327eb22befc5a5d359d6dd14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff7783e713ae2c4832ad834b3fcd1c8f" id="r_aff7783e713ae2c4832ad834b3fcd1c8f"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aff7783e713ae2c4832ad834b3fcd1c8f">add_user</a> (str user, str password, str|None path=None, scopes=None)</td></tr>
+<tr class="separator:aff7783e713ae2c4832ad834b3fcd1c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab250802b58f2431cb8e45626e0217f4" id="r_aab250802b58f2431cb8e45626e0217f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aab250802b58f2431cb8e45626e0217f4">verify_user</a> (str user, str password, str|None path=None)</td></tr>
+<tr class="separator:aab250802b58f2431cb8e45626e0217f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a430b1ab53051092fd48f2363fadf16e4" id="r_a430b1ab53051092fd48f2363fadf16e4"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a430b1ab53051092fd48f2363fadf16e4">user_scopes</a> (str user, str|None path=None)</td></tr>
+<tr class="separator:a430b1ab53051092fd48f2363fadf16e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d0a9980dc299d35db424d5add46997" id="r_a70d0a9980dc299d35db424d5add46997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a70d0a9980dc299d35db424d5add46997">_throttle</a> (str user, str client)</td></tr>
+<tr class="separator:a70d0a9980dc299d35db424d5add46997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d94780fc5f951afcc41f8311c4e1dc" id="r_a43d94780fc5f951afcc41f8311c4e1dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a43d94780fc5f951afcc41f8311c4e1dc">unlock</a> (str user)</td></tr>
+<tr class="separator:a43d94780fc5f951afcc41f8311c4e1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5b1f7ffd12ad7351e615de8e24fd9b1" id="r_ab5b1f7ffd12ad7351e615de8e24fd9b1"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ab5b1f7ffd12ad7351e615de8e24fd9b1">login</a> (str user, str password, scopes=None, *float|None exp_hours=None, str client=&quot;&quot;)</td></tr>
+<tr class="separator:ab5b1f7ffd12ad7351e615de8e24fd9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab396be7b849f933a502009cd4e6e34c0" id="r_ab396be7b849f933a502009cd4e6e34c0"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ab396be7b849f933a502009cd4e6e34c0">revoke</a> (str|None credential=None, *str|None user=None)</td></tr>
+<tr class="separator:ab396be7b849f933a502009cd4e6e34c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f3d69c9adbc31a4dc823259f97f003" id="r_a60f3d69c9adbc31a4dc823259f97f003"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a60f3d69c9adbc31a4dc823259f97f003">_api_post</a> (str base_url, str path, str token, dict body)</td></tr>
+<tr class="separator:a60f3d69c9adbc31a4dc823259f97f003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43a21a49d8efe7ded719262025b8ca3" id="r_ad43a21a49d8efe7ded719262025b8ca3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ad43a21a49d8efe7ded719262025b8ca3">_main</a> (argv=None)</td></tr>
+<tr class="separator:ad43a21a49d8efe7ded719262025b8ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a540e36ab48d632f88bc304c58a30be8f" id="r_a540e36ab48d632f88bc304c58a30be8f"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a540e36ab48d632f88bc304c58a30be8f">SCOPES</a> = (&quot;read&quot;, &quot;send_measurement&quot;, &quot;write_models&quot;, &quot;load_plugins&quot;, &quot;admin&quot;)</td></tr>
+<tr class="separator:a540e36ab48d632f88bc304c58a30be8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1583bb6090bbd250fda14699801c152" id="r_ad1583bb6090bbd250fda14699801c152"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ad1583bb6090bbd250fda14699801c152">MIN_SECRET_BYTES</a> = 32</td></tr>
+<tr class="separator:ad1583bb6090bbd250fda14699801c152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0831f33986166fbdb3122d24cae31a93" id="r_a0831f33986166fbdb3122d24cae31a93"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a0831f33986166fbdb3122d24cae31a93">_LOOPBACK</a> = (&quot;127.0.0.1&quot;, &quot;localhost&quot;, &quot;::1&quot;)</td></tr>
+<tr class="separator:a0831f33986166fbdb3122d24cae31a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc6d135ec8d72b12fb0802c7618c8d37" id="r_acc6d135ec8d72b12fb0802c7618c8d37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acc6d135ec8d72b12fb0802c7618c8d37">_BCRYPT_MAX</a> = 72</td></tr>
+<tr class="separator:acc6d135ec8d72b12fb0802c7618c8d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Scoped-token auth for the API facade / MCP / REST — fail-closed.
+
+Two layers: a ``.htpasswd`` **account store** (Apache ``name:bcrypt``, with the
+scopes an account may hold in the optional third field that Apache and nginx
+treat as a comment) that authenticates users to *mint* tokens — on the admin's
+machine with the CLI, or by the user over HTTP with :func:`login` — and
+**signed JWT bearer tokens** callers present at runtime carrying fine-grained
+**scopes**:
+
+  - ``read``            — introspection (catalog/describe/diagnostics/plots)
+  - ``send_measurement``— execution (run_filter/forecast/osse/control, fetch)
+  - ``write_models``    — authoring (register_model/save_spec/scaffold)
+  - ``load_plugins``    — loading compiled model libraries (load_plugin); this
+                          one runs code, which is why it is not ``write_models``
+  - ``admin``           — everything + account management
+
+Each verb declares its required scope; :func:`authorize` verifies the JWT
+(HS256, ``KALMAN_JWT_SECRET``) and the scope.  **Auth disabled** (no secret
+configured) allows in-process Python use (the local user already has the box);
+when a secret *is* set, a valid token is required and anything missing/invalid/
+expired is denied.  Optional deps ``pyjwt`` + ``bcrypt`` (``kalman[auth]``),
+lazily imported; secrets are never logged.
+
+Tokens carry ``sub`` (the user), ``scopes``, ``iat``, ``exp`` and ``jti`` (the
+token's own id).  A token can be revoked before it expires — one token by its
+``jti``, or every token of a user issued so far (:func:`revoke`); the list is
+in the shared registry, so every server on it refuses the token at once.  Set
+``KALMAN_JWT_ISSUER`` and/or ``KALMAN_JWT_AUDIENCE`` to also stamp and require
+``iss``/``aud``, so a token minted for one deployment is refused by another
+that shares the secret.  A server that listens on a network interface refuses
+to start without auth (:func:`check_server`).
+
+CLI (``python -m kalman.api.auth``): ``adduser`` / ``token`` / ``verify`` /
+``revoke`` / ``unlock``.
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ade66b7fb327eb22befc5a5d359d6dd14" name="ade66b7fb327eb22befc5a5d359d6dd14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade66b7fb327eb22befc5a5d359d6dd14">&#9670;&#160;</a></span>_accounts()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.api.auth._accounts </td>
+          <td>(</td>
+          <td class="paramtype">str | None &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">``{user: (digest, granted scopes or None)}`` from the account store.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00236">236</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  236</span><span class="keyword">def </span>_accounts(path: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  237</span>    <span class="stringliteral">&quot;&quot;&quot;``{user: (digest, granted scopes or None)}`` from the account store.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  238</span>    path = path <span class="keywordflow">or</span> _htpasswd_path()</div>
+<div class="line"><span class="lineno">  239</span>    out = {}</div>
+<div class="line"><span class="lineno">  240</span>    <span class="keywordflow">if</span> os.path.exists(path):</div>
+<div class="line"><span class="lineno">  241</span>        <span class="keyword">with</span> open(path) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  242</span>            <span class="keywordflow">for</span> line <span class="keywordflow">in</span> fh.read().splitlines():</div>
+<div class="line"><span class="lineno">  243</span>                <span class="keywordflow">if</span> <span class="stringliteral">&quot;:&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> line <span class="keywordflow">or</span> line.lstrip().startswith(<span class="stringliteral">&quot;#&quot;</span>):</div>
+<div class="line"><span class="lineno">  244</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  245</span>                name, digest, *rest = line.split(<span class="stringliteral">&quot;:&quot;</span>, 2)</div>
+<div class="line"><span class="lineno">  246</span>                granted = [s <span class="keywordflow">for</span> s <span class="keywordflow">in</span> rest[0].split(<span class="stringliteral">&quot;,&quot;</span>) <span class="keywordflow">if</span> s] <span class="keywordflow">if</span> rest <span class="keywordflow">and</span> rest[0].strip() <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  247</span>                out[name] = (digest, granted)</div>
+<div class="line"><span class="lineno">  248</span>    <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  249</span> </div>
+<div class="line"><span class="lineno">  250</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a60f3d69c9adbc31a4dc823259f97f003" name="a60f3d69c9adbc31a4dc823259f97f003"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a60f3d69c9adbc31a4dc823259f97f003">&#9670;&#160;</a></span>_api_post()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.api.auth._api_post </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>base_url</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">dict&#160;</td>
+          <td class="paramname"><em>body</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">POST JSON to the REST API with a bearer token (stdlib only: the CLI must
+work where httpx is not installed).</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00413">413</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  413</span><span class="keyword">def </span>_api_post(base_url: str, path: str, token: str, body: dict) -&gt; dict:</div>
+<div class="line"><span class="lineno">  414</span>    <span class="stringliteral">&quot;&quot;&quot;POST JSON to the REST API with a bearer token (stdlib only: the CLI must</span></div>
+<div class="line"><span class="lineno">  415</span><span class="stringliteral">    work where httpx is not installed).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  416</span>    <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">  417</span>    <span class="keyword">import</span> urllib.error</div>
+<div class="line"><span class="lineno">  418</span>    <span class="keyword">import</span> urllib.request</div>
+<div class="line"><span class="lineno">  419</span>    req = urllib.request.Request(</div>
+<div class="line"><span class="lineno">  420</span>        base_url.rstrip(<span class="stringliteral">&quot;/&quot;</span>) + path, data=json.dumps(body).encode(), method=<span class="stringliteral">&quot;POST&quot;</span>,</div>
+<div class="line"><span class="lineno">  421</span>        headers={<span class="stringliteral">&quot;Content-Type&quot;</span>: <span class="stringliteral">&quot;application/json&quot;</span>, <span class="stringliteral">&quot;Authorization&quot;</span>: f<span class="stringliteral">&quot;Bearer {token}&quot;</span>})</div>
+<div class="line"><span class="lineno">  422</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  423</span>        <span class="keyword">with</span> urllib.request.urlopen(req, timeout=30) <span class="keyword">as</span> resp:</div>
+<div class="line"><span class="lineno">  424</span>            <span class="keywordflow">return</span> json.loads(resp.read().decode())</div>
+<div class="line"><span class="lineno">  425</span>    <span class="keywordflow">except</span> urllib.error.HTTPError <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  426</span>        detail = e.read().decode(errors=<span class="stringliteral">&quot;replace&quot;</span>)</div>
+<div class="line"><span class="lineno">  427</span>        <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;HTTP {e.code}: {detail}&quot;</span>) <span class="keyword">from</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  428</span> </div>
+<div class="line"><span class="lineno">  429</span> </div>
+<div class="line"><span class="lineno">  430</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  431</span><span class="comment"># CLI  (python -m kalman.api.auth ...)</span></div>
+<div class="line"><span class="lineno">  432</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7917e8de3dc861702a64e2ea5bca5a6a" name="a7917e8de3dc861702a64e2ea5bca5a6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7917e8de3dc861702a64e2ea5bca5a6a">&#9670;&#160;</a></span>_bcrypt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth._bcrypt </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00218">218</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  218</span><span class="keyword">def </span>_bcrypt():</div>
+<div class="line"><span class="lineno">  219</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  220</span>        <span class="keyword">import</span> bcrypt</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">return</span> bcrypt</div>
+<div class="line"><span class="lineno">  222</span>    <span class="keywordflow">except</span> ImportError <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">raise</span> AuthError(<span class="stringliteral">&quot;account management needs bcrypt &quot;</span></div>
+<div class="line"><span class="lineno">  224</span>                        <span class="stringliteral">&quot;(pip install &#39;kalman[auth]&#39;).&quot;</span>) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">  225</span> </div>
+<div class="line"><span class="lineno">  226</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2d52f6f01108222fa9182f6cb04d4086" name="a2d52f6f01108222fa9182f6cb04d4086"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d52f6f01108222fa9182f6cb04d4086">&#9670;&#160;</a></span>_clean_scopes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> list[str] modules.api.auth._clean_scopes </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>scopes</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00227">227</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span><span class="keyword">def </span>_clean_scopes(scopes) -&gt; list[str]:</div>
+<div class="line"><span class="lineno">  228</span>    scopes = [s.strip() <span class="keywordflow">for</span> s <span class="keywordflow">in</span> (scopes.split(<span class="stringliteral">&quot;,&quot;</span>) <span class="keywordflow">if</span> isinstance(scopes, str) <span class="keywordflow">else</span> scopes)</div>
+<div class="line"><span class="lineno">  229</span>              <span class="keywordflow">if</span> s <span class="keywordflow">and</span> s.strip()]</div>
+<div class="line"><span class="lineno">  230</span>    bad = [s <span class="keywordflow">for</span> s <span class="keywordflow">in</span> scopes <span class="keywordflow">if</span> s <span class="keywordflow">not</span> <span class="keywordflow">in</span> SCOPES]</div>
+<div class="line"><span class="lineno">  231</span>    <span class="keywordflow">if</span> bad:</div>
+<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;unknown scopes {bad}; choose from {SCOPES}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  233</span>    <span class="keywordflow">return</span> scopes</div>
+<div class="line"><span class="lineno">  234</span> </div>
+<div class="line"><span class="lineno">  235</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a34bdcbbb137f6a04efca0558c9332ce3" name="a34bdcbbb137f6a04efca0558c9332ce3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34bdcbbb137f6a04efca0558c9332ce3">&#9670;&#160;</a></span>_decode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.api.auth._decode </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>credential</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Verify signature, expiry and (when configured) issuer/audience.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00070">70</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span><span class="keyword">def </span>_decode(credential: str) -&gt; dict:</div>
+<div class="line"><span class="lineno">   71</span>    <span class="stringliteral">&quot;&quot;&quot;Verify signature, expiry and (when configured) issuer/audience.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   72</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keyword">import</span> jwt</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">except</span> ImportError <span class="keyword">as</span> e:                     <span class="comment"># fail-closed</span></div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">raise</span> AuthError(<span class="stringliteral">&quot;auth is enabled but PyJWT is not installed &quot;</span></div>
+<div class="line"><span class="lineno">   76</span>                        <span class="stringliteral">&quot;(pip install &#39;kalman[auth]&#39;).&quot;</span>) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">   77</span>    iss = os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_ISSUER&quot;</span>) <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   78</span>    aud = os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_AUDIENCE&quot;</span>) <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   79</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   80</span>        payload = jwt.decode(credential, _secret(), algorithms=[<span class="stringliteral">&quot;HS256&quot;</span>],</div>
+<div class="line"><span class="lineno">   81</span>                             issuer=iss, audience=aud,</div>
+<div class="line"><span class="lineno">   82</span>                             options={<span class="stringliteral">&quot;require&quot;</span>: [<span class="stringliteral">&quot;exp&quot;</span>, <span class="stringliteral">&quot;sub&quot;</span>]})</div>
+<div class="line"><span class="lineno">   83</span>    <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:                       <span class="comment"># invalid signature / expired / malformed</span></div>
+<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">raise</span> InvalidToken(f<span class="stringliteral">&quot;invalid or expired token: {type(e).__name__}.&quot;</span>) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">   85</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   86</span>        <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">   87</span>        revoked = store.is_revoked(payload.get(<span class="stringliteral">&quot;jti&quot;</span>), payload.get(<span class="stringliteral">&quot;sub&quot;</span>), payload.get(<span class="stringliteral">&quot;iat&quot;</span>))</div>
+<div class="line"><span class="lineno">   88</span>    <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:                       <span class="comment"># fail-closed: no list, no entry</span></div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">raise</span> InvalidToken(f<span class="stringliteral">&quot;cannot read the revocation list: {type(e).__name__}.&quot;</span>) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">   90</span>    <span class="keywordflow">if</span> revoked:</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">raise</span> InvalidToken(<span class="stringliteral">&quot;this token was revoked.&quot;</span>)</div>
+<div class="line"><span class="lineno">   92</span>    <span class="keywordflow">return</span> payload</div>
+<div class="line"><span class="lineno">   93</span> </div>
+<div class="line"><span class="lineno">   94</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4dd67a550ffcf7dc4d2290d4430dec3a" name="a4dd67a550ffcf7dc4d2290d4430dec3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4dd67a550ffcf7dc4d2290d4430dec3a">&#9670;&#160;</a></span>_htpasswd_path()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str modules.api.auth._htpasswd_path </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00057">57</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span><span class="keyword">def </span>_htpasswd_path() -&gt; str:</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordflow">return</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_HTPASSWD&quot;</span>, os.path.expanduser(<span class="stringliteral">&quot;~/.kalman/htpasswd&quot;</span>))</div>
+<div class="line"><span class="lineno">   59</span> </div>
+<div class="line"><span class="lineno">   60</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad43a21a49d8efe7ded719262025b8ca3" name="ad43a21a49d8efe7ded719262025b8ca3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad43a21a49d8efe7ded719262025b8ca3">&#9670;&#160;</a></span>_main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth._main </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>argv</em> = <code>None</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00433">433</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  433</span><span class="keyword">def </span>_main(argv=None):</div>
+<div class="line"><span class="lineno">  434</span>    <span class="keyword">import</span> argparse, getpass, sys</div>
+<div class="line"><span class="lineno">  435</span>    p = argparse.ArgumentParser(prog=<span class="stringliteral">&quot;kalman.api.auth&quot;</span>, description=<span class="stringliteral">&quot;Kalman API auth&quot;</span>)</div>
+<div class="line"><span class="lineno">  436</span>    sub = p.add_subparsers(dest=<span class="stringliteral">&quot;cmd&quot;</span>, required=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  437</span>    a = sub.add_parser(<span class="stringliteral">&quot;adduser&quot;</span>); a.add_argument(<span class="stringliteral">&quot;--user&quot;</span>, required=<span class="keyword">True</span>); a.add_argument(<span class="stringliteral">&quot;--htpasswd&quot;</span>)</div>
+<div class="line"><span class="lineno">  438</span>    a.add_argument(<span class="stringliteral">&quot;--scopes&quot;</span>, help=<span class="stringliteral">&quot;what the account may ask for at login, e.g. read,send_measurement&quot;</span>)</div>
+<div class="line"><span class="lineno">  439</span>    r = sub.add_parser(<span class="stringliteral">&quot;revoke&quot;</span>, help=<span class="stringliteral">&quot;revoke one token, or every token of a user issued so far&quot;</span>)</div>
+<div class="line"><span class="lineno">  440</span>    r.add_argument(<span class="stringliteral">&quot;--token&quot;</span>); r.add_argument(<span class="stringliteral">&quot;--user&quot;</span>)</div>
+<div class="line"><span class="lineno">  441</span>    r.add_argument(<span class="stringliteral">&quot;--api&quot;</span>, default=os.environ.get(<span class="stringliteral">&quot;KALMAN_API_URL&quot;</span>),</div>
+<div class="line"><span class="lineno">  442</span>                   help=<span class="stringliteral">&quot;the REST API whose registry holds the list (default: $KALMAN_API_URL; &quot;</span></div>
+<div class="line"><span class="lineno">  443</span>                        <span class="stringliteral">&quot;without it, the registry in $KALMAN_STATE_DIR on this machine)&quot;</span>)</div>
+<div class="line"><span class="lineno">  444</span>    u = sub.add_parser(<span class="stringliteral">&quot;unlock&quot;</span>, help=<span class="stringliteral">&quot;forget an account&#39;s failed logins&quot;</span>); u.add_argument(<span class="stringliteral">&quot;--user&quot;</span>, required=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  445</span>    u.add_argument(<span class="stringliteral">&quot;--api&quot;</span>, default=os.environ.get(<span class="stringliteral">&quot;KALMAN_API_URL&quot;</span>), help=<span class="stringliteral">&quot;as for revoke&quot;</span>)</div>
+<div class="line"><span class="lineno">  446</span>    t = sub.add_parser(<span class="stringliteral">&quot;token&quot;</span>); t.add_argument(<span class="stringliteral">&quot;--user&quot;</span>, required=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  447</span>    t.add_argument(<span class="stringliteral">&quot;--scopes&quot;</span>, default=<span class="stringliteral">&quot;read&quot;</span>); t.add_argument(<span class="stringliteral">&quot;--exp&quot;</span>, type=float, default=24.0)</div>
+<div class="line"><span class="lineno">  448</span>    t.add_argument(<span class="stringliteral">&quot;--no-verify&quot;</span>, action=<span class="stringliteral">&quot;store_true&quot;</span>, help=<span class="stringliteral">&quot;mint without checking the htpasswd account&quot;</span>)</div>
+<div class="line"><span class="lineno">  449</span>    v = sub.add_parser(<span class="stringliteral">&quot;verify&quot;</span>); v.add_argument(<span class="stringliteral">&quot;--token&quot;</span>, required=<span class="keyword">True</span>); v.add_argument(<span class="stringliteral">&quot;--scope&quot;</span>, default=<span class="stringliteral">&quot;read&quot;</span>)</div>
+<div class="line"><span class="lineno">  450</span>    args = p.parse_args(argv)</div>
+<div class="line"><span class="lineno">  451</span> </div>
+<div class="line"><span class="lineno">  452</span>    <span class="keywordflow">if</span> args.cmd == <span class="stringliteral">&quot;adduser&quot;</span>:</div>
+<div class="line"><span class="lineno">  453</span>        pw = getpass.getpass(f<span class="stringliteral">&quot;password for {args.user}: &quot;</span>)</div>
+<div class="line"><span class="lineno">  454</span>        path = add_user(args.user, pw, args.htpasswd, scopes=args.scopes <span class="keywordflow">or</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  455</span>        print(f<span class="stringliteral">&quot;account &#39;{args.user}&#39; written to {path} &quot;</span></div>
+<div class="line"><span class="lineno">  456</span>              f<span class="stringliteral">&quot;(login scopes: {&#39;,&#39;.join(user_scopes(args.user, path))})&quot;</span>)</div>
+<div class="line"><span class="lineno">  457</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;unlock&quot;</span> <span class="keywordflow">and</span> args.api:</div>
+<div class="line"><span class="lineno">  458</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  459</span>            _api_post(args.api, <span class="stringliteral">&quot;/token/unlock&quot;</span>, mint_token(<span class="stringliteral">&quot;cli&quot;</span>, [<span class="stringliteral">&quot;admin&quot;</span>], exp_hours=1 / 60),</div>
+<div class="line"><span class="lineno">  460</span>                      {<span class="stringliteral">&quot;user&quot;</span>: args.user})</div>
+<div class="line"><span class="lineno">  461</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  462</span>            print(f<span class="stringliteral">&quot;unlock through {args.api} failed: {e}&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  463</span>        print(f<span class="stringliteral">&quot;failed logins of &#39;{args.user}&#39; forgotten through {args.api}&quot;</span>)</div>
+<div class="line"><span class="lineno">  464</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;unlock&quot;</span>:</div>
+<div class="line"><span class="lineno">  465</span>        unlock(args.user)</div>
+<div class="line"><span class="lineno">  466</span>        print(f<span class="stringliteral">&quot;failed logins of &#39;{args.user}&#39; forgotten&quot;</span>)</div>
+<div class="line"><span class="lineno">  467</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;revoke&quot;</span> <span class="keywordflow">and</span> args.api:</div>
+<div class="line"><span class="lineno">  468</span>        <span class="comment"># The servers&#39; registry is not on this machine (a container volume, another</span></div>
+<div class="line"><span class="lineno">  469</span>        <span class="comment"># host): ask the API. A user&#39;s tokens need an admin, so mint one that lives</span></div>
+<div class="line"><span class="lineno">  470</span>        <span class="comment"># a minute with the secret this machine has; one token revokes itself.</span></div>
+<div class="line"><span class="lineno">  471</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> (args.user <span class="keywordflow">or</span> args.token):</div>
+<div class="line"><span class="lineno">  472</span>            print(<span class="stringliteral">&quot;give --token or --user&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  473</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  474</span>            bearer = args.token <span class="keywordflow">if</span> <span class="keywordflow">not</span> args.user <span class="keywordflow">else</span> mint_token(<span class="stringliteral">&quot;cli&quot;</span>, [<span class="stringliteral">&quot;admin&quot;</span>], exp_hours=1 / 60)</div>
+<div class="line"><span class="lineno">  475</span>            out = _api_post(args.api, <span class="stringliteral">&quot;/token/revoke&quot;</span>, bearer, {<span class="stringliteral">&quot;user&quot;</span>: args.user} <span class="keywordflow">if</span> args.user <span class="keywordflow">else</span> {})</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  477</span>            print(f<span class="stringliteral">&quot;revoke through {args.api} failed: {e}&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  478</span>        print(f<span class="stringliteral">&quot;revoked through {args.api}: {out}&quot;</span>)</div>
+<div class="line"><span class="lineno">  479</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;revoke&quot;</span>:</div>
+<div class="line"><span class="lineno">  480</span>        <span class="comment"># The list is in the registry: this writes $KALMAN_STATE_DIR on this machine.</span></div>
+<div class="line"><span class="lineno">  481</span>        <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">  482</span>        <span class="keywordflow">if</span> args.user:</div>
+<div class="line"><span class="lineno">  483</span>            store.revoke_user(args.user, <span class="stringliteral">&quot;cli&quot;</span>)</div>
+<div class="line"><span class="lineno">  484</span>            print(f<span class="stringliteral">&quot;every token of &#39;{args.user}&#39; issued until now is revoked&quot;</span>)</div>
+<div class="line"><span class="lineno">  485</span>        <span class="keywordflow">elif</span> args.token:</div>
+<div class="line"><span class="lineno">  486</span>            c = claims(args.token)</div>
+<div class="line"><span class="lineno">  487</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> c <span class="keywordflow">or</span> <span class="keywordflow">not</span> c.get(<span class="stringliteral">&quot;jti&quot;</span>):</div>
+<div class="line"><span class="lineno">  488</span>                print(<span class="stringliteral">&quot;this token has no id (jti); use --user&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  489</span>            store.revoke_token(c[<span class="stringliteral">&quot;jti&quot;</span>], c.get(<span class="stringliteral">&quot;sub&quot;</span>), c.get(<span class="stringliteral">&quot;exp&quot;</span>), <span class="stringliteral">&quot;cli&quot;</span>)</div>
+<div class="line"><span class="lineno">  490</span>            print(f<span class="stringliteral">&quot;token {c[&#39;jti&#39;]} of &#39;{c.get(&#39;sub&#39;)}&#39; is revoked&quot;</span>)</div>
+<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  492</span>            print(<span class="stringliteral">&quot;give --token or --user&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  493</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;token&quot;</span>:</div>
+<div class="line"><span class="lineno">  494</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> args.no_verify:</div>
+<div class="line"><span class="lineno">  495</span>            pw = getpass.getpass(f<span class="stringliteral">&quot;password for {args.user}: &quot;</span>)</div>
+<div class="line"><span class="lineno">  496</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> verify_user(args.user, pw):</div>
+<div class="line"><span class="lineno">  497</span>                print(<span class="stringliteral">&quot;authentication failed&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  498</span>        print(mint_token(args.user, args.scopes, exp_hours=args.exp))</div>
+<div class="line"><span class="lineno">  499</span>    <span class="keywordflow">elif</span> args.cmd == <span class="stringliteral">&quot;verify&quot;</span>:</div>
+<div class="line"><span class="lineno">  500</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  501</span>            authorize(args.token, args.scope); print(<span class="stringliteral">&quot;OK&quot;</span>)</div>
+<div class="line"><span class="lineno">  502</span>        <span class="keywordflow">except</span> AuthError <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  503</span>            print(f<span class="stringliteral">&quot;DENIED: {e}&quot;</span>, file=sys.stderr); <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  504</span>    <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  505</span> </div>
+<div class="line"><span class="lineno">  506</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aef3c78b0cc0dcd31accb328dae03df59" name="aef3c78b0cc0dcd31accb328dae03df59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef3c78b0cc0dcd31accb328dae03df59">&#9670;&#160;</a></span>_secret()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str | None modules.api.auth._secret </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00053">53</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span><span class="keyword">def </span>_secret() -&gt; str | None:</div>
+<div class="line"><span class="lineno">   54</span>    <span class="keywordflow">return</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>) <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a70d0a9980dc299d35db424d5add46997" name="a70d0a9980dc299d35db424d5add46997"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d0a9980dc299d35db424d5add46997">&#9670;&#160;</a></span>_throttle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth._throttle </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>client</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Refuse when the pair is locked out. The count is in the shared registry,
+so it holds across uvicorn workers, across the REST and MCP processes and
+across a restart -- a counter in memory would give every worker its own
+five tries and forget them all on a restart.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00331">331</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  331</span><span class="keyword">def </span>_throttle(user: str, client: str):</div>
+<div class="line"><span class="lineno">  332</span>    <span class="stringliteral">&quot;&quot;&quot;Refuse when the pair is locked out. The count is in the shared registry,</span></div>
+<div class="line"><span class="lineno">  333</span><span class="stringliteral">    so it holds across uvicorn workers, across the REST and MCP processes and</span></div>
+<div class="line"><span class="lineno">  334</span><span class="stringliteral">    across a restart -- a counter in memory would give every worker its own</span></div>
+<div class="line"><span class="lineno">  335</span><span class="stringliteral">    five tries and forget them all on a restart.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  336</span>    <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">  337</span>    fails = store.login_failures(user, client, LOGIN_WINDOW)</div>
+<div class="line"><span class="lineno">  338</span>    <span class="keywordflow">if</span> len(fails) &gt;= LOGIN_ATTEMPTS:</div>
+<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">raise</span> RateLimited(LOGIN_WINDOW - (time.time() - fails[0]))</div>
+<div class="line"><span class="lineno">  340</span> </div>
+<div class="line"><span class="lineno">  341</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aff7783e713ae2c4832ad834b3fcd1c8f" name="aff7783e713ae2c4832ad834b3fcd1c8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aff7783e713ae2c4832ad834b3fcd1c8f">&#9670;&#160;</a></span>add_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str modules.api.auth.add_user </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>password</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str | None &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>scopes</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Add/update a bcrypt ``.htpasswd`` account; returns the file path.
+
+Written in the Apache ``user:$2b$…`` format that httpd, nginx and every
+htpasswd tool understand.  Uses the maintained ``bcrypt`` package directly
+— ``passlib`` is unmaintained and breaks against bcrypt &gt;= 5.
+
+``scopes`` is what the account may ask for when it logs in
+(:func:`login`), kept in the third field, which those tools read as a
+comment.  ``None`` keeps the account's present grant.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00251">251</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  251</span><span class="keyword">def </span>add_user(user: str, password: str, path: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>, scopes=<span class="keywordtype">None</span>) -&gt; str:</div>
+<div class="line"><span class="lineno">  252</span>    <span class="stringliteral">&quot;&quot;&quot;Add/update a bcrypt ``.htpasswd`` account; returns the file path.</span></div>
+<div class="line"><span class="lineno">  253</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  254</span><span class="stringliteral">    Written in the Apache ``user:$2b$…`` format that httpd, nginx and every</span></div>
+<div class="line"><span class="lineno">  255</span><span class="stringliteral">    htpasswd tool understand.  Uses the maintained ``bcrypt`` package directly</span></div>
+<div class="line"><span class="lineno">  256</span><span class="stringliteral">    — ``passlib`` is unmaintained and breaks against bcrypt &gt;= 5.</span></div>
+<div class="line"><span class="lineno">  257</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  258</span><span class="stringliteral">    ``scopes`` is what the account may ask for when it logs in</span></div>
+<div class="line"><span class="lineno">  259</span><span class="stringliteral">    (:func:`login`), kept in the third field, which those tools read as a</span></div>
+<div class="line"><span class="lineno">  260</span><span class="stringliteral">    comment.  ``None`` keeps the account&#39;s present grant.</span></div>
+<div class="line"><span class="lineno">  261</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  262</span>    bc = _bcrypt()</div>
+<div class="line"><span class="lineno">  263</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;:&quot;</span> <span class="keywordflow">in</span> user <span class="keywordflow">or</span> <span class="stringliteral">&quot;\n&quot;</span> <span class="keywordflow">in</span> user <span class="keywordflow">or</span> <span class="keywordflow">not</span> user:</div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;username must be non-empty and must not contain &#39;:&#39; or a newline&quot;</span>)</div>
+<div class="line"><span class="lineno">  265</span>    path = path <span class="keywordflow">or</span> _htpasswd_path()</div>
+<div class="line"><span class="lineno">  266</span>    parent = os.path.dirname(path)</div>
+<div class="line"><span class="lineno">  267</span>    <span class="keywordflow">if</span> parent:</div>
+<div class="line"><span class="lineno">  268</span>        os.makedirs(parent, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  269</span>    digest = bc.hashpw(password.encode()[:_BCRYPT_MAX], bc.gensalt()).decode()</div>
+<div class="line"><span class="lineno">  270</span>    granted = _clean_scopes(scopes) <span class="keywordflow">if</span> scopes <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> _accounts(path).get(user, (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>))[1]</div>
+<div class="line"><span class="lineno">  271</span> </div>
+<div class="line"><span class="lineno">  272</span>    lines = []</div>
+<div class="line"><span class="lineno">  273</span>    <span class="keywordflow">if</span> os.path.exists(path):</div>
+<div class="line"><span class="lineno">  274</span>        <span class="keyword">with</span> open(path) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  275</span>            lines = [ln <span class="keywordflow">for</span> ln <span class="keywordflow">in</span> fh.read().splitlines()</div>
+<div class="line"><span class="lineno">  276</span>                     <span class="keywordflow">if</span> ln.strip() <span class="keywordflow">and</span> ln.split(<span class="stringliteral">&quot;:&quot;</span>, 1)[0] != user]</div>
+<div class="line"><span class="lineno">  277</span>    lines.append(f<span class="stringliteral">&quot;{user}:{digest}&quot;</span> + (f<span class="stringliteral">&quot;:{&#39;,&#39;.join(granted)}&quot;</span> <span class="keywordflow">if</span> granted <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span>))</div>
+<div class="line"><span class="lineno">  278</span>    <span class="keyword">with</span> open(path, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  279</span>        fh.write(<span class="stringliteral">&quot;\n&quot;</span>.join(lines) + <span class="stringliteral">&quot;\n&quot;</span>)</div>
+<div class="line"><span class="lineno">  280</span>    os.chmod(path, 0o600)                       <span class="comment"># credentials file: owner-only</span></div>
+<div class="line"><span class="lineno">  281</span>    <span class="keywordflow">return</span> path</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a62e1961b73b2317a1652d653f6795080" name="a62e1961b73b2317a1652d653f6795080"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a62e1961b73b2317a1652d653f6795080">&#9670;&#160;</a></span>authorize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.api.auth.authorize </td>
+          <td>(</td>
+          <td class="paramtype">str | None&#160;</td>
+          <td class="paramname"><em>credential</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>scope</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Authorize ``credential`` (a JWT) for ``scope``; raise :class:`AuthError`
+if denied.  No-op (returns True) when auth is disabled.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00168">168</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  168</span><span class="keyword">def </span>authorize(credential: str | <span class="keywordtype">None</span>, scope: str) -&gt; bool:</div>
+<div class="line"><span class="lineno">  169</span>    <span class="stringliteral">&quot;&quot;&quot;Authorize ``credential`` (a JWT) for ``scope``; raise :class:`AuthError`</span></div>
+<div class="line"><span class="lineno">  170</span><span class="stringliteral">    if denied.  No-op (returns True) when auth is disabled.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  171</span>    <span class="keywordflow">if</span> scope <span class="keywordflow">not</span> <span class="keywordflow">in</span> SCOPES:</div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;unknown scope {scope!r} (choose from {SCOPES}).&quot;</span>)</div>
+<div class="line"><span class="lineno">  173</span>    secret = _secret()</div>
+<div class="line"><span class="lineno">  174</span>    <span class="keywordflow">if</span> secret <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">return</span> <span class="keyword">True</span>                              <span class="comment"># auth disabled — local dev</span></div>
+<div class="line"><span class="lineno">  176</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> credential:</div>
+<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">raise</span> InvalidToken(f<span class="stringliteral">&quot;a bearer token with scope &#39;{scope}&#39; is required.&quot;</span>)</div>
+<div class="line"><span class="lineno">  178</span>    payload = _decode(credential)</div>
+<div class="line"><span class="lineno">  179</span>    scopes = set(payload.get(<span class="stringliteral">&quot;scopes&quot;</span>, []))</div>
+<div class="line"><span class="lineno">  180</span>    <span class="keywordflow">if</span> scope <span class="keywordflow">in</span> scopes <span class="keywordflow">or</span> <span class="stringliteral">&quot;admin&quot;</span> <span class="keywordflow">in</span> scopes:</div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  182</span>    <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;token lacks required scope &#39;{scope}&#39;.&quot;</span>)</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span> </div>
+<div class="line"><span class="lineno">  185</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  186</span><span class="comment"># Token minting (outbound, admin-side) + account store</span></div>
+<div class="line"><span class="lineno">  187</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a98dae25c80b7b8ca0d0b1e3b8404148a" name="a98dae25c80b7b8ca0d0b1e3b8404148a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98dae25c80b7b8ca0d0b1e3b8404148a">&#9670;&#160;</a></span>check_server()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth.check_server </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*str&#160;</td>
+          <td class="paramname"><em>service</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>verified_elsewhere</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Refuse to serve an open API on a network interface.
+
+A server bound to loopback is the local user's own; one bound to anything
+else (``0.0.0.0``, a LAN address, a container port) must authenticate,
+unless ``KALMAN_ALLOW_ANONYMOUS=1`` says the network itself is trusted.
+``verified_elsewhere`` is for the MCP server in front of the REST API: the
+REST API checks the tokens, so the MCP server needs no secret of its own.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00137">137</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  137</span><span class="keyword">def </span>check_server(host: str, *, service: str, verified_elsewhere: bool = <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  138</span>    <span class="stringliteral">&quot;&quot;&quot;Refuse to serve an open API on a network interface.</span></div>
+<div class="line"><span class="lineno">  139</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  140</span><span class="stringliteral">    A server bound to loopback is the local user&#39;s own; one bound to anything</span></div>
+<div class="line"><span class="lineno">  141</span><span class="stringliteral">    else (``0.0.0.0``, a LAN address, a container port) must authenticate,</span></div>
+<div class="line"><span class="lineno">  142</span><span class="stringliteral">    unless ``KALMAN_ALLOW_ANONYMOUS=1`` says the network itself is trusted.</span></div>
+<div class="line"><span class="lineno">  143</span><span class="stringliteral">    ``verified_elsewhere`` is for the MCP server in front of the REST API: the</span></div>
+<div class="line"><span class="lineno">  144</span><span class="stringliteral">    REST API checks the tokens, so the MCP server needs no secret of its own.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">if</span> enabled():</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">if</span> len(_secret().encode()) &lt; MIN_SECRET_BYTES:</div>
+<div class="line"><span class="lineno">  147</span>            <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;{service}: KALMAN_JWT_SECRET is shorter than &quot;</span></div>
+<div class="line"><span class="lineno">  148</span>                            f<span class="stringliteral">&quot;{MIN_SECRET_BYTES} bytes; HS256 needs at least that &quot;</span></div>
+<div class="line"><span class="lineno">  149</span>                            <span class="stringliteral">&quot;(python -c &#39;import secrets; print(secrets.token_urlsafe(48))&#39;).&quot;</span>)</div>
+<div class="line"><span class="lineno">  150</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  151</span>    <span class="keywordflow">if</span> verified_elsewhere <span class="keywordflow">or</span> host <span class="keywordflow">in</span> _LOOPBACK:</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  153</span>    <span class="keywordflow">if</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_ALLOW_ANONYMOUS&quot;</span>) == <span class="stringliteral">&quot;1&quot;</span>:</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keyword">import</span> sys</div>
+<div class="line"><span class="lineno">  155</span>        print(f<span class="stringliteral">&quot;WARNING: {service} listens on {host} WITHOUT authentication &quot;</span></div>
+<div class="line"><span class="lineno">  156</span>              <span class="stringliteral">&quot;(KALMAN_ALLOW_ANONYMOUS=1). Anybody who can reach it can register &quot;</span></div>
+<div class="line"><span class="lineno">  157</span>              <span class="stringliteral">&quot;models and load plugins.&quot;</span>, file=sys.stderr)</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  159</span>    <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;{service}: refusing to listen on {host} without authentication. &quot;</span></div>
+<div class="line"><span class="lineno">  160</span>                    <span class="stringliteral">&quot;Set KALMAN_JWT_SECRET (&gt;= 32 bytes) and give clients a token from &quot;</span></div>
+<div class="line"><span class="lineno">  161</span>                    <span class="stringliteral">&quot;`make api-token`, bind to 127.0.0.1, or set KALMAN_ALLOW_ANONYMOUS=1 &quot;</span></div>
+<div class="line"><span class="lineno">  162</span>                    <span class="stringliteral">&quot;on a network you trust.&quot;</span>)</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span> </div>
+<div class="line"><span class="lineno">  165</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  166</span><span class="comment"># Runtime authorization (inbound)</span></div>
+<div class="line"><span class="lineno">  167</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a95157e094f3812fa9dbde037c7d710e5" name="a95157e094f3812fa9dbde037c7d710e5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95157e094f3812fa9dbde037c7d710e5">&#9670;&#160;</a></span>claims()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict | None modules.api.auth.claims </td>
+          <td>(</td>
+          <td class="paramtype">str | None&#160;</td>
+          <td class="paramname"><em>credential</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The verified claims of ``credential`` with no scope check, or ``None``
+when auth is disabled. Raises :class:`AuthError` on a bad token.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00095">95</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span><span class="keyword">def </span>claims(credential: str | <span class="keywordtype">None</span>) -&gt; dict | <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   96</span>    <span class="stringliteral">&quot;&quot;&quot;The verified claims of ``credential`` with no scope check, or ``None``</span></div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">    when auth is disabled. Raises :class:`AuthError` on a bad token.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   98</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> enabled():</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  100</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> credential:</div>
+<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">raise</span> InvalidToken(<span class="stringliteral">&quot;a bearer token is required.&quot;</span>)</div>
+<div class="line"><span class="lineno">  102</span>    <span class="keywordflow">return</span> _decode(credential)</div>
+<div class="line"><span class="lineno">  103</span> </div>
+<div class="line"><span class="lineno">  104</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4a0d9beb6cbb78ab01f90f118d8a0f41" name="a4a0d9beb6cbb78ab01f90f118d8a0f41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a0d9beb6cbb78ab01f90f118d8a0f41">&#9670;&#160;</a></span>enabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.api.auth.enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">True when auth is configured (a JWT secret is present).</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00061">61</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span><span class="keyword">def </span>enabled() -&gt; bool:</div>
+<div class="line"><span class="lineno">   62</span>    <span class="stringliteral">&quot;&quot;&quot;True when auth is configured (a JWT secret is present).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   63</span>    <span class="keywordflow">return</span> _secret() <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span><span class="comment">#: HS256 needs a key at least as long as its output (RFC 7518 §3.2).</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a42b77c36adfd0d0ff1f449989586ee31" name="a42b77c36adfd0d0ff1f449989586ee31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a42b77c36adfd0d0ff1f449989586ee31">&#9670;&#160;</a></span>has_scope()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.api.auth.has_scope </td>
+          <td>(</td>
+          <td class="paramtype">str | None&#160;</td>
+          <td class="paramname"><em>credential</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>scope</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00111">111</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span><span class="keyword">def </span>has_scope(credential: str | <span class="keywordtype">None</span>, scope: str) -&gt; bool:</div>
+<div class="line"><span class="lineno">  112</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keywordflow">return</span> authorize(credential, scope)</div>
+<div class="line"><span class="lineno">  114</span>    <span class="keywordflow">except</span> AuthError:</div>
+<div class="line"><span class="lineno">  115</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acc591445fb4135d19169bc3984e47a1b" name="acc591445fb4135d19169bc3984e47a1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc591445fb4135d19169bc3984e47a1b">&#9670;&#160;</a></span>identity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str | None modules.api.auth.identity </td>
+          <td>(</td>
+          <td class="paramtype">str | None&#160;</td>
+          <td class="paramname"><em>credential</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Who is calling: the token's ``sub``, or ``None`` when auth is disabled.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00105">105</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  105</span><span class="keyword">def </span>identity(credential: str | <span class="keywordtype">None</span>) -&gt; str | <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  106</span>    <span class="stringliteral">&quot;&quot;&quot;Who is calling: the token&#39;s ``sub``, or ``None`` when auth is disabled.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  107</span>    c = claims(credential)</div>
+<div class="line"><span class="lineno">  108</span>    <span class="keywordflow">return</span> <span class="keywordtype">None</span> <span class="keywordflow">if</span> c <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> c.get(<span class="stringliteral">&quot;sub&quot;</span>)</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab5b1f7ffd12ad7351e615de8e24fd9b1" name="ab5b1f7ffd12ad7351e615de8e24fd9b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5b1f7ffd12ad7351e615de8e24fd9b1">&#9670;&#160;</a></span>login()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.api.auth.login </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>password</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>scopes</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*float | None &#160;</td>
+          <td class="paramname"><em>exp_hours</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>client</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Exchange an account's password for a scoped JWT.
+
+The token carries the scopes asked for, which must all be in the account's
+grant (an ``admin`` grant covers any); with ``scopes=None`` it carries the
+whole grant.  Its lifetime is at most ``KALMAN_TOKEN_MAX_HOURS`` (default
+24).  Five failed tries per user and client lock that pair out for five
+minutes -- counted in the shared registry, so on every worker and across a
+restart -- and an unknown user costs the same bcrypt check as a wrong
+password, so the answer's timing does not say which accounts exist.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00348">348</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  349</span>          client: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  350</span>    <span class="stringliteral">&quot;&quot;&quot;Exchange an account&#39;s password for a scoped JWT.</span></div>
+<div class="line"><span class="lineno">  351</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  352</span><span class="stringliteral">    The token carries the scopes asked for, which must all be in the account&#39;s</span></div>
+<div class="line"><span class="lineno">  353</span><span class="stringliteral">    grant (an ``admin`` grant covers any); with ``scopes=None`` it carries the</span></div>
+<div class="line"><span class="lineno">  354</span><span class="stringliteral">    whole grant.  Its lifetime is at most ``KALMAN_TOKEN_MAX_HOURS`` (default</span></div>
+<div class="line"><span class="lineno">  355</span><span class="stringliteral">    24).  Five failed tries per user and client lock that pair out for five</span></div>
+<div class="line"><span class="lineno">  356</span><span class="stringliteral">    minutes -- counted in the shared registry, so on every worker and across a</span></div>
+<div class="line"><span class="lineno">  357</span><span class="stringliteral">    restart -- and an unknown user costs the same bcrypt check as a wrong</span></div>
+<div class="line"><span class="lineno">  358</span><span class="stringliteral">    password, so the answer&#39;s timing does not say which accounts exist.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  359</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> enabled():</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;authentication is off (no KALMAN_JWT_SECRET); no token is needed.&quot;</span>)</div>
+<div class="line"><span class="lineno">  361</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(user, str) <span class="keywordflow">or</span> <span class="keywordflow">not</span> isinstance(password, str) <span class="keywordflow">or</span> <span class="keywordflow">not</span> user:</div>
+<div class="line"><span class="lineno">  362</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;login needs a user and a password.&quot;</span>)</div>
+<div class="line"><span class="lineno">  363</span>    <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">  364</span>    _throttle(user, client)</div>
+<div class="line"><span class="lineno">  365</span>    ok = verify_user(user, password)</div>
+<div class="line"><span class="lineno">  366</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> ok <span class="keywordflow">and</span> user <span class="keywordflow">not</span> <span class="keywordflow">in</span> _accounts():</div>
+<div class="line"><span class="lineno">  367</span>        bc = _bcrypt()</div>
+<div class="line"><span class="lineno">  368</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> _DUMMY:</div>
+<div class="line"><span class="lineno">  369</span>            _DUMMY.append(bc.hashpw(b<span class="stringliteral">&quot;no-such-account&quot;</span>, bc.gensalt()))</div>
+<div class="line"><span class="lineno">  370</span>        bc.checkpw(password.encode()[:_BCRYPT_MAX], _DUMMY[0])</div>
+<div class="line"><span class="lineno">  371</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> ok:</div>
+<div class="line"><span class="lineno">  372</span>        store.add_login_failure(user, client, LOGIN_WINDOW)</div>
+<div class="line"><span class="lineno">  373</span>        <span class="keywordflow">raise</span> BadCredentials(<span class="stringliteral">&quot;wrong user or password.&quot;</span>)</div>
+<div class="line"><span class="lineno">  374</span>    store.clear_login_failures(user, client)</div>
+<div class="line"><span class="lineno">  375</span> </div>
+<div class="line"><span class="lineno">  376</span>    granted = user_scopes(user)</div>
+<div class="line"><span class="lineno">  377</span>    asked = _clean_scopes(scopes) <span class="keywordflow">if</span> scopes <span class="keywordflow">else</span> granted</div>
+<div class="line"><span class="lineno">  378</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;admin&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> granted:</div>
+<div class="line"><span class="lineno">  379</span>        denied = [s <span class="keywordflow">for</span> s <span class="keywordflow">in</span> asked <span class="keywordflow">if</span> s <span class="keywordflow">not</span> <span class="keywordflow">in</span> granted]</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keywordflow">if</span> denied:</div>
+<div class="line"><span class="lineno">  381</span>            <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;account {user!r} is not granted {denied}; it has {granted}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  382</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> asked:</div>
+<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;account {user!r} has no scopes.&quot;</span>)</div>
+<div class="line"><span class="lineno">  384</span>    cap = float(os.environ.get(<span class="stringliteral">&quot;KALMAN_TOKEN_MAX_HOURS&quot;</span>, <span class="stringliteral">&quot;24&quot;</span>))</div>
+<div class="line"><span class="lineno">  385</span>    hours = cap <span class="keywordflow">if</span> exp_hours <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> max(min(float(exp_hours), cap), 1.0 / 60.0)</div>
+<div class="line"><span class="lineno">  386</span>    token = mint_token(user, asked, exp_hours=hours)</div>
+<div class="line"><span class="lineno">  387</span>    <span class="keywordflow">return</span> {<span class="stringliteral">&quot;access_token&quot;</span>: token, <span class="stringliteral">&quot;token_type&quot;</span>: <span class="stringliteral">&quot;bearer&quot;</span>, <span class="stringliteral">&quot;expires_in&quot;</span>: int(hours * 3600),</div>
+<div class="line"><span class="lineno">  388</span>            <span class="stringliteral">&quot;scopes&quot;</span>: asked, <span class="stringliteral">&quot;user&quot;</span>: user}</div>
+<div class="line"><span class="lineno">  389</span> </div>
+<div class="line"><span class="lineno">  390</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acd47b5e61aef44e8a5234598fffd6385" name="acd47b5e61aef44e8a5234598fffd6385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd47b5e61aef44e8a5234598fffd6385">&#9670;&#160;</a></span>mint_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str modules.api.auth.mint_token </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>scopes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*str | None &#160;</td>
+          <td class="paramname"><em>secret</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float &#160;</td>
+          <td class="paramname"><em>exp_hours</em> = <code>24.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Sign a scoped JWT for ``user``.  ``secret`` defaults to ``KALMAN_JWT_SECRET``.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00188">188</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span><span class="keyword">def </span>mint_token(user: str, scopes, *, secret: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>, exp_hours: float = 24.0) -&gt; str:</div>
+<div class="line"><span class="lineno">  189</span>    <span class="stringliteral">&quot;&quot;&quot;Sign a scoped JWT for ``user``.  ``secret`` defaults to ``KALMAN_JWT_SECRET``.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  190</span>    <span class="keyword">import</span> jwt</div>
+<div class="line"><span class="lineno">  191</span>    secret = secret <span class="keywordflow">or</span> _secret()</div>
+<div class="line"><span class="lineno">  192</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> secret:</div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">raise</span> AuthError(<span class="stringliteral">&quot;set KALMAN_JWT_SECRET to mint tokens.&quot;</span>)</div>
+<div class="line"><span class="lineno">  194</span>    scopes = [s.strip() <span class="keywordflow">for</span> s <span class="keywordflow">in</span> (scopes.split(<span class="stringliteral">&quot;,&quot;</span>) <span class="keywordflow">if</span> isinstance(scopes, str) <span class="keywordflow">else</span> scopes) <span class="keywordflow">if</span> s]</div>
+<div class="line"><span class="lineno">  195</span>    bad = [s <span class="keywordflow">for</span> s <span class="keywordflow">in</span> scopes <span class="keywordflow">if</span> s <span class="keywordflow">not</span> <span class="keywordflow">in</span> SCOPES]</div>
+<div class="line"><span class="lineno">  196</span>    <span class="keywordflow">if</span> bad:</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;unknown scopes {bad}; choose from {SCOPES}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  198</span>    <span class="keyword">import</span> math, uuid</div>
+<div class="line"><span class="lineno">  199</span>    t = time.time()</div>
+<div class="line"><span class="lineno">  200</span>    now = int(t)</div>
+<div class="line"><span class="lineno">  201</span>    <span class="comment"># iat to the millisecond (rounded down, so it is never in the future): a</span></div>
+<div class="line"><span class="lineno">  202</span>    <span class="comment"># &quot;revoke everything until now&quot; must not catch the token of the login that</span></div>
+<div class="line"><span class="lineno">  203</span>    <span class="comment"># follows it in the same second.</span></div>
+<div class="line"><span class="lineno">  204</span>    payload = {<span class="stringliteral">&quot;sub&quot;</span>: user, <span class="stringliteral">&quot;scopes&quot;</span>: scopes, <span class="stringliteral">&quot;iat&quot;</span>: math.floor(t * 1000) / 1000,</div>
+<div class="line"><span class="lineno">  205</span>               <span class="stringliteral">&quot;exp&quot;</span>: now + int(exp_hours * 3600), <span class="stringliteral">&quot;jti&quot;</span>: uuid.uuid4().hex}</div>
+<div class="line"><span class="lineno">  206</span>    <span class="keywordflow">if</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_ISSUER&quot;</span>):</div>
+<div class="line"><span class="lineno">  207</span>        payload[<span class="stringliteral">&quot;iss&quot;</span>] = os.environ[<span class="stringliteral">&quot;KALMAN_JWT_ISSUER&quot;</span>]</div>
+<div class="line"><span class="lineno">  208</span>    <span class="keywordflow">if</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_AUDIENCE&quot;</span>):</div>
+<div class="line"><span class="lineno">  209</span>        payload[<span class="stringliteral">&quot;aud&quot;</span>] = os.environ[<span class="stringliteral">&quot;KALMAN_JWT_AUDIENCE&quot;</span>]</div>
+<div class="line"><span class="lineno">  210</span>    <span class="keywordflow">return</span> jwt.encode(payload, secret, algorithm=<span class="stringliteral">&quot;HS256&quot;</span>)</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span> </div>
+<div class="line"><span class="lineno">  213</span><span class="comment"># bcrypt caps the password at 72 bytes and (since 5.0) refuses longer input</span></div>
+<div class="line"><span class="lineno">  214</span><span class="comment"># outright, so truncate explicitly rather than let it raise.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abf26602441f97f224aba5fab22855ac3" name="abf26602441f97f224aba5fab22855ac3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf26602441f97f224aba5fab22855ac3">&#9670;&#160;</a></span>require_owner()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth.require_owner </td>
+          <td>(</td>
+          <td class="paramtype">dict&#160;</td>
+          <td class="paramname"><em>record</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str | None&#160;</td>
+          <td class="paramname"><em>credential</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Allow a change to a shared record only for its owner or an admin.
+
+With auth disabled everybody is the local user, so anything goes. A record
+created while auth was off has no owner; only an admin may then change it.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00118">118</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  118</span><span class="keyword">def </span>require_owner(record: dict, credential: str | <span class="keywordtype">None</span>, what: str):</div>
+<div class="line"><span class="lineno">  119</span>    <span class="stringliteral">&quot;&quot;&quot;Allow a change to a shared record only for its owner or an admin.</span></div>
+<div class="line"><span class="lineno">  120</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  121</span><span class="stringliteral">    With auth disabled everybody is the local user, so anything goes. A record</span></div>
+<div class="line"><span class="lineno">  122</span><span class="stringliteral">    created while auth was off has no owner; only an admin may then change it.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  123</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> enabled():</div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  125</span>    who = identity(credential)</div>
+<div class="line"><span class="lineno">  126</span>    <span class="keywordflow">if</span> has_scope(credential, <span class="stringliteral">&quot;admin&quot;</span>):</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  128</span>    <span class="keywordflow">if</span> record.get(<span class="stringliteral">&quot;owner&quot;</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> record.get(<span class="stringliteral">&quot;owner&quot;</span>) == who:</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  130</span>    <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;{what} belongs to {record.get(&#39;owner&#39;) or &#39;nobody&#39;}; &quot;</span></div>
+<div class="line"><span class="lineno">  131</span>                    <span class="stringliteral">&quot;only its owner or an admin may change it.&quot;</span>)</div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab396be7b849f933a502009cd4e6e34c0" name="ab396be7b849f933a502009cd4e6e34c0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab396be7b849f933a502009cd4e6e34c0">&#9670;&#160;</a></span>revoke()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.api.auth.revoke </td>
+          <td>(</td>
+          <td class="paramtype">str | None &#160;</td>
+          <td class="paramname"><em>credential</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*str | None &#160;</td>
+          <td class="paramname"><em>user</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Stop a token from working before it expires.
+
+With no ``user``: the presented token itself (a logout; any valid token may
+do this).  With ``user``: every token of that user issued until now — the
+user's own, or anybody's for an ``admin``.  The list is in the shared
+registry, so every server on it refuses the token from the next request.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00391">391</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  391</span><span class="keyword">def </span>revoke(credential: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>, *, user: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  392</span>    <span class="stringliteral">&quot;&quot;&quot;Stop a token from working before it expires.</span></div>
+<div class="line"><span class="lineno">  393</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  394</span><span class="stringliteral">    With no ``user``: the presented token itself (a logout; any valid token may</span></div>
+<div class="line"><span class="lineno">  395</span><span class="stringliteral">    do this).  With ``user``: every token of that user issued until now — the</span></div>
+<div class="line"><span class="lineno">  396</span><span class="stringliteral">    user&#39;s own, or anybody&#39;s for an ``admin``.  The list is in the shared</span></div>
+<div class="line"><span class="lineno">  397</span><span class="stringliteral">    registry, so every server on it refuses the token from the next request.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  398</span>    <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">  399</span>    c = claims(credential)</div>
+<div class="line"><span class="lineno">  400</span>    <span class="keywordflow">if</span> c <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;authentication is off; there are no tokens to revoke.&quot;</span>)</div>
+<div class="line"><span class="lineno">  402</span>    <span class="keywordflow">if</span> user <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  403</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> c.get(<span class="stringliteral">&quot;jti&quot;</span>):</div>
+<div class="line"><span class="lineno">  404</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;this token has no id (jti); revoke by user instead.&quot;</span>)</div>
+<div class="line"><span class="lineno">  405</span>        store.revoke_token(c[<span class="stringliteral">&quot;jti&quot;</span>], c.get(<span class="stringliteral">&quot;sub&quot;</span>), c.get(<span class="stringliteral">&quot;exp&quot;</span>), c.get(<span class="stringliteral">&quot;sub&quot;</span>))</div>
+<div class="line"><span class="lineno">  406</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;revoked&quot;</span>: <span class="stringliteral">&quot;token&quot;</span>, <span class="stringliteral">&quot;user&quot;</span>: c.get(<span class="stringliteral">&quot;sub&quot;</span>)}</div>
+<div class="line"><span class="lineno">  407</span>    <span class="keywordflow">if</span> user != c.get(<span class="stringliteral">&quot;sub&quot;</span>) <span class="keywordflow">and</span> <span class="stringliteral">&quot;admin&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> c.get(<span class="stringliteral">&quot;scopes&quot;</span>, []):</div>
+<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">raise</span> AuthError(<span class="stringliteral">&quot;only an admin may revoke another user&#39;s tokens.&quot;</span>)</div>
+<div class="line"><span class="lineno">  409</span>    cutoff = store.revoke_user(user, c.get(<span class="stringliteral">&quot;sub&quot;</span>))</div>
+<div class="line"><span class="lineno">  410</span>    <span class="keywordflow">return</span> {<span class="stringliteral">&quot;revoked&quot;</span>: <span class="stringliteral">&quot;user&quot;</span>, <span class="stringliteral">&quot;user&quot;</span>: user, <span class="stringliteral">&quot;before&quot;</span>: cutoff}</div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a43d94780fc5f951afcc41f8311c4e1dc" name="a43d94780fc5f951afcc41f8311c4e1dc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43d94780fc5f951afcc41f8311c4e1dc">&#9670;&#160;</a></span>unlock()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.api.auth.unlock </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Forget the failed logins of ``user`` (every client address).</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00342">342</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span><span class="keyword">def </span>unlock(user: str):</div>
+<div class="line"><span class="lineno">  343</span>    <span class="stringliteral">&quot;&quot;&quot;Forget the failed logins of ``user`` (every client address).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  344</span>    <span class="keyword">from</span> . <span class="keyword">import</span> store</div>
+<div class="line"><span class="lineno">  345</span>    store.clear_login_failures(user)</div>
+<div class="line"><span class="lineno">  346</span> </div>
+<div class="line"><span class="lineno">  347</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a430b1ab53051092fd48f2363fadf16e4" name="a430b1ab53051092fd48f2363fadf16e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a430b1ab53051092fd48f2363fadf16e4">&#9670;&#160;</a></span>user_scopes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> list[str] modules.api.auth.user_scopes </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str | None &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">What ``user`` may ask for at login: the account's grant, or
+``KALMAN_DEFAULT_SCOPES`` (default ``read``) for an account without one.</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00302">302</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  302</span><span class="keyword">def </span>user_scopes(user: str, path: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>) -&gt; list[str]:</div>
+<div class="line"><span class="lineno">  303</span>    <span class="stringliteral">&quot;&quot;&quot;What ``user`` may ask for at login: the account&#39;s grant, or</span></div>
+<div class="line"><span class="lineno">  304</span><span class="stringliteral">    ``KALMAN_DEFAULT_SCOPES`` (default ``read``) for an account without one.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  305</span>    granted = _accounts(path).get(user, (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>))[1]</div>
+<div class="line"><span class="lineno">  306</span>    <span class="keywordflow">if</span> granted <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  307</span>        granted = _clean_scopes(os.environ.get(<span class="stringliteral">&quot;KALMAN_DEFAULT_SCOPES&quot;</span>, <span class="stringliteral">&quot;read&quot;</span>))</div>
+<div class="line"><span class="lineno">  308</span>    <span class="keywordflow">return</span> [s <span class="keywordflow">for</span> s <span class="keywordflow">in</span> granted <span class="keywordflow">if</span> s <span class="keywordflow">in</span> SCOPES]</div>
+<div class="line"><span class="lineno">  309</span> </div>
+<div class="line"><span class="lineno">  310</span> </div>
+<div class="line"><span class="lineno">  311</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  312</span><span class="comment"># Login over the API, and revocation</span></div>
+<div class="line"><span class="lineno">  313</span><span class="comment"># ---------------------------------------------------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aab250802b58f2431cb8e45626e0217f4" name="aab250802b58f2431cb8e45626e0217f4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab250802b58f2431cb8e45626e0217f4">&#9670;&#160;</a></span>verify_user()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.api.auth.verify_user </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>user</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>password</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str | None &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Check ``password`` against the account store (constant-time via bcrypt).</pre> 
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00284">284</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  284</span><span class="keyword">def </span>verify_user(user: str, password: str, path: str | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>) -&gt; bool:</div>
+<div class="line"><span class="lineno">  285</span>    <span class="stringliteral">&quot;&quot;&quot;Check ``password`` against the account store (constant-time via bcrypt).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  286</span>    bc = _bcrypt()</div>
+<div class="line"><span class="lineno">  287</span>    digest = _accounts(path).get(user, (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>))[0]</div>
+<div class="line"><span class="lineno">  288</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> digest:</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  290</span>    <span class="comment"># Apache writes $2y$; it is bit-identical to $2b$ for verification.</span></div>
+<div class="line"><span class="lineno">  291</span>    <span class="keywordflow">if</span> digest.startswith(<span class="stringliteral">&quot;$2y$&quot;</span>):</div>
+<div class="line"><span class="lineno">  292</span>        digest = <span class="stringliteral">&quot;$2b$&quot;</span> + digest[4:]</div>
+<div class="line"><span class="lineno">  293</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> digest.startswith(<span class="stringliteral">&quot;$2&quot;</span>):</div>
+<div class="line"><span class="lineno">  294</span>        <span class="keywordflow">raise</span> AuthError(f<span class="stringliteral">&quot;account {user!r} uses a non-bcrypt hash; &quot;</span></div>
+<div class="line"><span class="lineno">  295</span>                        f<span class="stringliteral">&quot;re-add it with `make api-user USER={user}`.&quot;</span>)</div>
+<div class="line"><span class="lineno">  296</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  297</span>        <span class="keywordflow">return</span> bc.checkpw(password.encode()[:_BCRYPT_MAX], digest.encode())</div>
+<div class="line"><span class="lineno">  298</span>    <span class="keywordflow">except</span> ValueError:</div>
+<div class="line"><span class="lineno">  299</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  300</span> </div>
+<div class="line"><span class="lineno">  301</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="acc6d135ec8d72b12fb0802c7618c8d37" name="acc6d135ec8d72b12fb0802c7618c8d37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc6d135ec8d72b12fb0802c7618c8d37">&#9670;&#160;</a></span>_BCRYPT_MAX</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int modules.api.auth._BCRYPT_MAX = 72</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00215">215</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+
+</div>
+</div>
+<a id="a0831f33986166fbdb3122d24cae31a93" name="a0831f33986166fbdb3122d24cae31a93"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0831f33986166fbdb3122d24cae31a93">&#9670;&#160;</a></span>_LOOPBACK</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.api.auth._LOOPBACK = (&quot;127.0.0.1&quot;, &quot;localhost&quot;, &quot;::1&quot;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00134">134</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+
+</div>
+</div>
+<a id="ad1583bb6090bbd250fda14699801c152" name="ad1583bb6090bbd250fda14699801c152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad1583bb6090bbd250fda14699801c152">&#9670;&#160;</a></span>MIN_SECRET_BYTES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int modules.api.auth.MIN_SECRET_BYTES = 32</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00067">67</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+
+</div>
+</div>
+<a id="a540e36ab48d632f88bc304c58a30be8f" name="a540e36ab48d632f88bc304c58a30be8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a540e36ab48d632f88bc304c58a30be8f">&#9670;&#160;</a></span>SCOPES</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.api.auth.SCOPES = (&quot;read&quot;, &quot;send_measurement&quot;, &quot;write_models&quot;, &quot;load_plugins&quot;, &quot;admin&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="auth_8py_source.html#l00041">41</a> of file <a class="el" href="auth_8py_source.html">auth.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1api.html">api</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1api_1_1auth.html">auth</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

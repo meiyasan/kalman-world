@@ -1,0 +1,246 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/mcp/__main__.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/mcp/__main__.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/mcp/__main__.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('mcp_2____main_____8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">__main__.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="mcp_2____main_____8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1mcp_1_1____main____.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Run the Kalman MCP server.  ``python -m kalman.mcp`` / ``kalman-mcp``.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">stdio locally; set ``KALMAN_MCP_TRANSPORT=sse`` or ``streamable-http`` (+</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">``KALMAN_MCP_HOST/PORT``, default ``127.0.0.1:8765``) to serve over HTTP. Set</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">``KALMAN_API_URL`` to make this server a client of the REST API, which then</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">owns the registry, the runs and the token checks.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">Over HTTP, clients send ``Authorization: Bearer &lt;JWT&gt;``. That is required</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">whenever tokens can be checked — ``KALMAN_JWT_SECRET`` here, or a REST API that</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">reports auth on — and a server on a network interface refuses to start with</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">neither (see :func:`kalman.api.auth.check_server`).</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">The ``mcp`` SDK is optional — absent, we print an install hint and exit 0 so</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">the core is never blocked.</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00021" data-start="" data-end="">
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="namespacemodules_1_1mcp_1_1____main____.html#a831cc6ed9509bf431475065e72548cf0">   21</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1mcp_1_1____main____.html#a831cc6ed9509bf431475065e72548cf0">_auth_for_http</a>(backend, host: str, port: int):</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="stringliteral">&quot;&quot;&quot;``(auth_settings, verifier)`` when tokens can be checked, else ``(None, None)``.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="keyword">from</span> ..api.auth <span class="keyword">import</span> enabled</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    remote_auth = <span class="keyword">False</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">if</span> backend.kind == <span class="stringliteral">&quot;remote&quot;</span>:</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            remote_auth = bool(backend.health().get(<span class="stringliteral">&quot;auth&quot;</span>))</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:      <span class="comment"># fail closed: no API, no server</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;KALMAN_API_URL={backend.base_url} is not reachable: {e}&quot;</span>)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> (enabled() <span class="keywordflow">or</span> remote_auth):</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span>, <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">from</span> mcp.server.auth.settings <span class="keyword">import</span> AuthSettings</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">from</span> .server <span class="keyword">import</span> JwtVerifier</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    public = os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_PUBLIC_URL&quot;</span>) <span class="keywordflow">or</span> f<span class="stringliteral">&quot;http://{host}:{port}&quot;</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    issuer = os.environ.get(<span class="stringliteral">&quot;KALMAN_JWT_ISSUER&quot;</span>, <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> issuer.startswith((<span class="stringliteral">&quot;http://&quot;</span>, <span class="stringliteral">&quot;https://&quot;</span>)):</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        issuer = os.environ.get(<span class="stringliteral">&quot;KALMAN_API_URL&quot;</span>) <span class="keywordflow">or</span> public</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordflow">return</span> AuthSettings(issuer_url=issuer, resource_server_url=public), JwtVerifier(backend)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+</div>
+<div class="foldopen" id="foldopen00041" data-start="" data-end="">
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="namespacemodules_1_1mcp_1_1____main____.html#a84ea9e2676fbaf6c93534f040f2bbdd3">   41</a></span><span class="keyword">def </span><a class="code hl_function" href="ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>(argv=None):</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">import</span> mcp  <span class="comment"># noqa</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">from</span> .server <span class="keyword">import</span> build_server</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">from</span> .backend <span class="keyword">import</span> from_env</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        print(<span class="stringliteral">&quot;The MCP server needs the MCP SDK:\n    pip install &#39;kalman[mcp]&#39;&quot;</span>, file=sys.stderr)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordflow">return</span> 0</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keyword">from</span> ..api.auth <span class="keyword">import</span> check_server, AuthError</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    transport = os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_TRANSPORT&quot;</span>, <span class="stringliteral">&quot;stdio&quot;</span>)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    backend = from_env()</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">if</span> transport == <span class="stringliteral">&quot;stdio&quot;</span>:</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        build_server(backend, transport=<span class="stringliteral">&quot;stdio&quot;</span>).run(transport=<span class="stringliteral">&quot;stdio&quot;</span>)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> 0</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    host = os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_HOST&quot;</span>, <span class="stringliteral">&quot;127.0.0.1&quot;</span>)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    port = int(os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_PORT&quot;</span>, <span class="stringliteral">&quot;8765&quot;</span>))</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        auth_settings, verifier = <a class="code hl_function" href="namespacemodules_1_1mcp_1_1____main____.html#a831cc6ed9509bf431475065e72548cf0">_auth_for_http</a>(backend, host, port)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        check_server(host, service=<span class="stringliteral">&quot;MCP server&quot;</span>, verified_elsewhere=verifier <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">except</span> (AuthError, RuntimeError) <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        print(f<span class="stringliteral">&quot;ERROR: {e}&quot;</span>, file=sys.stderr)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> 2</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    server = build_server(backend, transport=transport, auth_settings=auth_settings,</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                          token_verifier=verifier)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        server.run(transport=transport, host=host, port=port)       <span class="comment"># SDK &gt;= 2.0</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordflow">except</span> TypeError:                                              <span class="comment"># SDK 1.x: settings</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        server.settings.host, server.settings.port = host, port</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        server.run(transport=transport)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">return</span> 0</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keywordflow">raise</span> SystemExit(<a class="code hl_function" href="ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>())</div>
+<div class="ttc" id="aballistics__root_8cc_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="ballistics__root_8cc_source.html#l00126">ballistics_root.cc:126</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1mcp_1_1____main_____html_a831cc6ed9509bf431475065e72548cf0"><div class="ttname"><a href="namespacemodules_1_1mcp_1_1____main____.html#a831cc6ed9509bf431475065e72548cf0">modules.mcp.__main__._auth_for_http</a></div><div class="ttdeci">_auth_for_http(backend, str host, int port)</div><div class="ttdef"><b>Definition</b> <a href="mcp_2____main_____8py_source.html#l00021">__main__.py:21</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_3ed9eac2589a4399c89087c34c1312dc.html">mcp</a></li><li class="navelem"><a class="el" href="mcp_2____main_____8py.html">__main__.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

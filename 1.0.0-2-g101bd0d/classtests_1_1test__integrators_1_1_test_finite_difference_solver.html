@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_integrators.TestFiniteDifferenceSolver Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_integrators.TestFiniteDifferenceSolver Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_integrators.TestFiniteDifferenceSolver Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__integrators_1_1_test_finite_difference_solver.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__integrators_1_1_test_finite_difference_solver-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_integrators.TestFiniteDifferenceSolver Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_integrators.TestFiniteDifferenceSolver:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__integrators_1_1_test_finite_difference_solver__inherit__graph.svg" width="202" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:ae6c3475331745c99133f26406238848e" id="r_ae6c3475331745c99133f26406238848e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#ae6c3475331745c99133f26406238848e">test_second_order_operators</a> (self)</td></tr>
+<tr class="separator:ae6c3475331745c99133f26406238848e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a586c0881374f30485ce729649e64f5a7" id="r_a586c0881374f30485ce729649e64f5a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a586c0881374f30485ce729649e64f5a7">test_diffusion_matches_analytic_decay</a> (self)</td></tr>
+<tr class="separator:a586c0881374f30485ce729649e64f5a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b22e8e760dab5ce57150947381e6bca" id="r_a4b22e8e760dab5ce57150947381e6bca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a4b22e8e760dab5ce57150947381e6bca">test_boundary_conditions</a> (self)</td></tr>
+<tr class="separator:a4b22e8e760dab5ce57150947381e6bca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a149db4cf4286dfa7d3c590a92ca5a8da" id="r_a149db4cf4286dfa7d3c590a92ca5a8da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a149db4cf4286dfa7d3c590a92ca5a8da">test_rectangular_and_integrator_swap</a> (self)</td></tr>
+<tr class="separator:a149db4cf4286dfa7d3c590a92ca5a8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34c2ed0b3f39d6e352898daeace80863" id="r_a34c2ed0b3f39d6e352898daeace80863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a34c2ed0b3f39d6e352898daeace80863">test_spectral_composes_integrator</a> (self)</td></tr>
+<tr class="separator:a34c2ed0b3f39d6e352898daeace80863"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a21b7fcfc62e25cec4c12b94762b3ab" id="r_a2a21b7fcfc62e25cec4c12b94762b3ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a2a21b7fcfc62e25cec4c12b94762b3ab">test_torch_backend_matches_numpy</a> (self)</td></tr>
+<tr class="separator:a2a21b7fcfc62e25cec4c12b94762b3ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a887965b855fa1f9e6f6389cfb53d3e28" id="r_a887965b855fa1f9e6f6389cfb53d3e28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a887965b855fa1f9e6f6389cfb53d3e28">test_spectral_integrator_is_swappable</a> (self)</td></tr>
+<tr class="separator:a887965b855fa1f9e6f6389cfb53d3e28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f0a533262501ea6d4061d83221ce232" id="r_a3f0a533262501ea6d4061d83221ce232"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a3f0a533262501ea6d4061d83221ce232">test_device_cuda_mps_guarded</a> (self)</td></tr>
+<tr class="separator:a3f0a533262501ea6d4061d83221ce232"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">The first non-spectral solver — arbitrary/bounded grids via stencils.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00112">112</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a4b22e8e760dab5ce57150947381e6bca" name="a4b22e8e760dab5ce57150947381e6bca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4b22e8e760dab5ce57150947381e6bca">&#9670;&#160;</a></span>test_boundary_conditions()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_boundary_conditions </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00136">136</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  136</span>    <span class="keyword">def </span>test_boundary_conditions(self):</div>
+<div class="line"><span class="lineno">  137</span>        f = np.ones((16, 16))</div>
+<div class="line"><span class="lineno">  138</span>        per = FiniteDifferenceSolver(n=16, bc=<span class="stringliteral">&quot;periodic&quot;</span>, dt=1e-3, nu=0.5).advance(f.copy(), 20)</div>
+<div class="line"><span class="lineno">  139</span>        neu = FiniteDifferenceSolver(n=16, bc=<span class="stringliteral">&quot;neumann&quot;</span>, dt=1e-3, nu=0.5).advance(f.copy(), 20)</div>
+<div class="line"><span class="lineno">  140</span>        dir_ = FiniteDifferenceSolver(n=16, bc=<span class="stringliteral">&quot;dirichlet&quot;</span>, bc_value=0.0,</div>
+<div class="line"><span class="lineno">  141</span>                                      dt=1e-3, nu=0.5).advance(f.copy(), 20)</div>
+<div class="line"><span class="lineno">  142</span>        np.testing.assert_allclose(per, f, atol=1e-9)        <span class="comment"># uniform field is stationary</span></div>
+<div class="line"><span class="lineno">  143</span>        np.testing.assert_allclose(neu, f, atol=1e-9)</div>
+<div class="line"><span class="lineno">  144</span>        self.assertLess(dir_[0, 0], 0.99)                    <span class="comment"># boundary pulled toward 0</span></div>
+<div class="line"><span class="lineno">  145</span>        self.assertAlmostEqual(dir_[8, 8], 1.0, places=6)    <span class="comment"># interior still untouched</span></div>
+<div class="line"><span class="lineno">  146</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  147</span>            FiniteDifferenceSolver(n=8, bc=<span class="stringliteral">&quot;nope&quot;</span>)</div>
+<div class="line"><span class="lineno">  148</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3f0a533262501ea6d4061d83221ce232" name="a3f0a533262501ea6d4061d83221ce232"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f0a533262501ea6d4061d83221ce232">&#9670;&#160;</a></span>test_device_cuda_mps_guarded()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_device_cuda_mps_guarded </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00203">203</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  203</span>    <span class="keyword">def </span>test_device_cuda_mps_guarded(self):</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> learn</div>
+<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> learn.has_torch():</div>
+<div class="line"><span class="lineno">  206</span>            self.skipTest(<span class="stringliteral">&quot;libKalmanLearn with libTorch is not built&quot;</span>)</div>
+<div class="line"><span class="lineno">  207</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
+<div class="line"><span class="lineno">  208</span>        <span class="comment"># Ask for each GPU kind; the C++ solver falls back to the CPU when it is absent.</span></div>
+<div class="line"><span class="lineno">  209</span>        devices = {}</div>
+<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">for</span> asked <span class="keywordflow">in</span> (<span class="stringliteral">&quot;cuda&quot;</span>, <span class="stringliteral">&quot;mps&quot;</span>):</div>
+<div class="line"><span class="lineno">  211</span>            s = NS2D(n=16, dt=0.01, backend=<span class="stringliteral">&quot;torch&quot;</span>, device=asked, seed=0)</div>
+<div class="line"><span class="lineno">  212</span>            out = s.advance(s.random_ic(), 2)</div>
+<div class="line"><span class="lineno">  213</span>            devices[asked] = s.device</div>
+<div class="line"><span class="lineno">  214</span>            self.assertIn(s.device, (asked, <span class="stringliteral">&quot;cpu&quot;</span>))</div>
+<div class="line"><span class="lineno">  215</span>            self.assertEqual(out.shape, (16, 16))</div>
+<div class="line"><span class="lineno">  216</span>            self.assertTrue(np.all(np.isfinite(out)))</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">if</span> all(d == <span class="stringliteral">&quot;cpu&quot;</span> <span class="keywordflow">for</span> d <span class="keywordflow">in</span> devices.values()):</div>
+<div class="line"><span class="lineno">  218</span>            self.skipTest(<span class="stringliteral">&quot;no GPU/MPS device&quot;</span>)</div>
+<div class="line"><span class="lineno">  219</span> </div>
+<div class="line"><span class="lineno">  220</span> </div>
+<div class="line"><span class="lineno">  221</span><span class="comment"># ── A continuous model is decoded by its integrator ──────────────────────────────────</span></div>
+<div class="line"><span class="lineno">  222</span> </div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1flow_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00001">flow.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2native_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a586c0881374f30485ce729649e64f5a7" name="a586c0881374f30485ce729649e64f5a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a586c0881374f30485ce729649e64f5a7">&#9670;&#160;</a></span>test_diffusion_matches_analytic_decay()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_diffusion_matches_analytic_decay </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00126">126</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>    <span class="keyword">def </span>test_diffusion_matches_analytic_decay(self):</div>
+<div class="line"><span class="lineno">  127</span>        n, L, nu = 64, 2 * np.pi, 0.1</div>
+<div class="line"><span class="lineno">  128</span>        s = FiniteDifferenceSolver(n=n, length=L, dt=1e-4, nu=nu, bc=<span class="stringliteral">&quot;periodic&quot;</span>)</div>
+<div class="line"><span class="lineno">  129</span>        x = L * np.arange(n) / n</div>
+<div class="line"><span class="lineno">  130</span>        X, Y = np.meshgrid(x, x)</div>
+<div class="line"><span class="lineno">  131</span>        f = np.sin(X) * np.cos(Y)                            <span class="comment"># eigenfunction: decays e^{-2νt}</span></div>
+<div class="line"><span class="lineno">  132</span>        t_end = 0.5</div>
+<div class="line"><span class="lineno">  133</span>        out = s.advance(f.copy(), int(t_end / s.dt))</div>
+<div class="line"><span class="lineno">  134</span>        np.testing.assert_allclose(out, np.exp(-2 * nu * t_end) * f, atol=1e-3)</div>
+<div class="line"><span class="lineno">  135</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a149db4cf4286dfa7d3c590a92ca5a8da" name="a149db4cf4286dfa7d3c590a92ca5a8da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a149db4cf4286dfa7d3c590a92ca5a8da">&#9670;&#160;</a></span>test_rectangular_and_integrator_swap()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_rectangular_and_integrator_swap </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00149">149</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>    <span class="keyword">def </span>test_rectangular_and_integrator_swap(self):</div>
+<div class="line"><span class="lineno">  150</span>        r = FiniteDifferenceSolver(n=(8, 16), dt=1e-3)</div>
+<div class="line"><span class="lineno">  151</span>        self.assertEqual(r.shape, (8, 16))</div>
+<div class="line"><span class="lineno">  152</span>        self.assertEqual(r.advance(r.random_ic(), 3).shape, (8, 16))</div>
+<div class="line"><span class="lineno">  153</span>        e = FiniteDifferenceSolver(n=16, dt=1e-3, integrator=KalmanIntegratorKind.EULER)</div>
+<div class="line"><span class="lineno">  154</span>        self.assertIsInstance(e.integrator, EulerIntegrator)</div>
+<div class="line"><span class="lineno">  155</span>        self.assertEqual(e.solve(np.zeros((16, 16)), 2).shape, (16, 16))</div>
+<div class="line"><span class="lineno">  156</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae6c3475331745c99133f26406238848e" name="ae6c3475331745c99133f26406238848e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6c3475331745c99133f26406238848e">&#9670;&#160;</a></span>test_second_order_operators()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_second_order_operators </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00115">115</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  115</span>    <span class="keyword">def </span>test_second_order_operators(self):</div>
+<div class="line"><span class="lineno">  116</span>        n, L = 64, 2 * np.pi</div>
+<div class="line"><span class="lineno">  117</span>        s = FiniteDifferenceSolver(n=n, length=L, bc=<span class="stringliteral">&quot;periodic&quot;</span>)</div>
+<div class="line"><span class="lineno">  118</span>        x = L * np.arange(n) / n</div>
+<div class="line"><span class="lineno">  119</span>        X, Y = np.meshgrid(x, x)</div>
+<div class="line"><span class="lineno">  120</span>        f = np.sin(X) * np.cos(Y)</div>
+<div class="line"><span class="lineno">  121</span>        fx, fy = s.gradient(f)</div>
+<div class="line"><span class="lineno">  122</span>        np.testing.assert_allclose(fx, np.cos(X) * np.cos(Y), atol=5e-3)</div>
+<div class="line"><span class="lineno">  123</span>        np.testing.assert_allclose(fy, -np.sin(X) * np.sin(Y), atol=5e-3)</div>
+<div class="line"><span class="lineno">  124</span>        np.testing.assert_allclose(s.laplacian(f), -2 * f, atol=5e-3)</div>
+<div class="line"><span class="lineno">  125</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a34c2ed0b3f39d6e352898daeace80863" name="a34c2ed0b3f39d6e352898daeace80863"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a34c2ed0b3f39d6e352898daeace80863">&#9670;&#160;</a></span>test_spectral_composes_integrator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_spectral_composes_integrator </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00157">157</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>    <span class="keyword">def </span>test_spectral_composes_integrator(self):</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
+<div class="line"><span class="lineno">  159</span>        s = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=1)</div>
+<div class="line"><span class="lineno">  160</span>        self.assertIsInstance(s, SpectralSolver)</div>
+<div class="line"><span class="lineno">  161</span>        self.assertIsInstance(s.integrator, RK4Integrator)</div>
+<div class="line"><span class="lineno">  162</span>        w = s.random_ic()</div>
+<div class="line"><span class="lineno">  163</span>        np.testing.assert_allclose(s.solve(w.copy(), 3), s.advance(w.copy(), 3))</div>
+<div class="line"><span class="lineno">  164</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a887965b855fa1f9e6f6389cfb53d3e28" name="a887965b855fa1f9e6f6389cfb53d3e28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a887965b855fa1f9e6f6389cfb53d3e28">&#9670;&#160;</a></span>test_spectral_integrator_is_swappable()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_spectral_integrator_is_swappable </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Any explicit integrator drives the spectral solver — uniformly on
+numpy and torch (the composed integrator, via its Butcher tableau).</pre> 
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00179">179</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  179</span>    <span class="keyword">def </span>test_spectral_integrator_is_swappable(self):</div>
+<div class="line"><span class="lineno">  180</span>        <span class="stringliteral">&quot;&quot;&quot;Any explicit integrator drives the spectral solver — uniformly on</span></div>
+<div class="line"><span class="lineno">  181</span><span class="stringliteral">        numpy and torch (the composed integrator, via its Butcher tableau).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  182</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
+<div class="line"><span class="lineno">  183</span>        w0 = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=1).random_ic()</div>
+<div class="line"><span class="lineno">  184</span>        fine = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=5e-4, seed=1)</div>
+<div class="line"><span class="lineno">  185</span>        truth = fine.advance(w0.copy(), 20)                <span class="comment"># 0.01 total</span></div>
+<div class="line"><span class="lineno">  186</span>        errs = {}</div>
+<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">for</span> kind <span class="keywordflow">in</span> (KalmanIntegratorKind.EULER, KalmanIntegratorKind.RK4,</div>
+<div class="line"><span class="lineno">  188</span>                     KalmanIntegratorKind.DORMAND_PRINCE):</div>
+<div class="line"><span class="lineno">  189</span>            s = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=1, integrator=kind)</div>
+<div class="line"><span class="lineno">  190</span>            self.assertEqual(s.integrator.KIND, kind)</div>
+<div class="line"><span class="lineno">  191</span>            errs[kind] = np.abs(s.advance(w0.copy(), 1) - truth).max()</div>
+<div class="line"><span class="lineno">  192</span>        self.assertLess(errs[KalmanIntegratorKind.RK4], errs[KalmanIntegratorKind.EULER])</div>
+<div class="line"><span class="lineno">  193</span>        self.assertLess(errs[KalmanIntegratorKind.DORMAND_PRINCE], errs[KalmanIntegratorKind.EULER])</div>
+<div class="line"><span class="lineno">  194</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> learn</div>
+<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> learn.has_torch():</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">for</span> kind <span class="keywordflow">in</span> (KalmanIntegratorKind.EULER, KalmanIntegratorKind.DORMAND_PRINCE):</div>
+<div class="line"><span class="lineno">  198</span>            a = NS2D(n=16, dt=0.01, seed=1, integrator=kind).advance(w0.copy(), 4)</div>
+<div class="line"><span class="lineno">  199</span>            b = NS2D(n=16, dt=0.01, seed=1, integrator=kind, backend=<span class="stringliteral">&quot;torch&quot;</span>,</div>
+<div class="line"><span class="lineno">  200</span>                     device=<span class="stringliteral">&quot;cpu&quot;</span>).advance(w0.copy(), 4)</div>
+<div class="line"><span class="lineno">  201</span>            np.testing.assert_allclose(a, b, atol=1e-9)</div>
+<div class="line"><span class="lineno">  202</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2a21b7fcfc62e25cec4c12b94762b3ab" name="a2a21b7fcfc62e25cec4c12b94762b3ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a21b7fcfc62e25cec4c12b94762b3ab">&#9670;&#160;</a></span>test_torch_backend_matches_numpy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_integrators.TestFiniteDifferenceSolver.test_torch_backend_matches_numpy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__integrators_8py_source.html#l00165">165</a> of file <a class="el" href="test__integrators_8py_source.html">test_integrators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  165</span>    <span class="keyword">def </span>test_torch_backend_matches_numpy(self):</div>
+<div class="line"><span class="lineno">  166</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> learn</div>
+<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> learn.has_torch():</div>
+<div class="line"><span class="lineno">  168</span>            self.skipTest(<span class="stringliteral">&quot;libKalmanLearn with libTorch is not built&quot;</span>)</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
+<div class="line"><span class="lineno">  170</span>        nps = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=2)</div>
+<div class="line"><span class="lineno">  171</span>        ts = NS2D(n=16, nu=1/40., kf=4, chi=2.0, dt=0.01, seed=2, backend=<span class="stringliteral">&quot;torch&quot;</span>, device=<span class="stringliteral">&quot;cpu&quot;</span>)</div>
+<div class="line"><span class="lineno">  172</span>        w = nps.random_ic()</div>
+<div class="line"><span class="lineno">  173</span>        np.testing.assert_allclose(nps.advance(w.copy(), 4), ts.advance(w.copy(), 4), atol=1e-9)</div>
+<div class="line"><span class="lineno">  174</span>        <span class="comment"># batched (N,g,g) ensemble advance equals per-member</span></div>
+<div class="line"><span class="lineno">  175</span>        ens = np.stack([nps.random_ic() <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3)])</div>
+<div class="line"><span class="lineno">  176</span>        per = np.stack([nps.advance(ens[i].copy(), 4) <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(3)])</div>
+<div class="line"><span class="lineno">  177</span>        np.testing.assert_allclose(per, ts.advance(ens.copy(), 4), atol=1e-9)</div>
+<div class="line"><span class="lineno">  178</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__integrators_8py_source.html">test_integrators.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__integrators.html">test_integrators</a></li><li class="navelem"><a class="el" href="classtests_1_1test__integrators_1_1_test_finite_difference_solver.html">TestFiniteDifferenceSolver</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

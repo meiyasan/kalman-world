@@ -1,0 +1,270 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/runtime/astro.py File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/runtime/astro.py File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/runtime/astro.py File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('astro_8py.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">astro.py File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="astro_8py_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacemodules" id="r_namespacemodules"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules.html">modules</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1runtime" id="r_namespacemodules_1_1runtime"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime.html">modules.runtime</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1runtime_1_1astro" id="r_namespacemodules_1_1runtime_1_1astro"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a80f1909922f4c5cb677886dca8207652" id="r_a80f1909922f4c5cb677886dca8207652"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a80f1909922f4c5cb677886dca8207652">modules.runtime.astro.gm</a> (str body)</td></tr>
+<tr class="separator:a80f1909922f4c5cb677886dca8207652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abef348eec5371d761cda3e79bbf9433c" id="r_abef348eec5371d761cda3e79bbf9433c"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#abef348eec5371d761cda3e79bbf9433c">modules.runtime.astro.radius</a> (str body)</td></tr>
+<tr class="separator:abef348eec5371d761cda3e79bbf9433c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab255160c6bec9f204dae16e8641f0494" id="r_ab255160c6bec9f204dae16e8641f0494"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ab255160c6bec9f204dae16e8641f0494">modules.runtime.astro.rk4</a> (s, t, dt, deriv)</td></tr>
+<tr class="separator:ab255160c6bec9f204dae16e8641f0494"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3be0fac268d66d106d9a3c016fa42b8a" id="r_a3be0fac268d66d106d9a3c016fa42b8a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a3be0fac268d66d106d9a3c016fa42b8a">modules.runtime.astro._as_time</a> (time)</td></tr>
+<tr class="separator:a3be0fac268d66d106d9a3c016fa42b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f26d76484e429b46d495cbdbad2b862" id="r_a8f26d76484e429b46d495cbdbad2b862"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a8f26d76484e429b46d495cbdbad2b862">modules.runtime.astro.moon_position</a> (t, phase=0.0)</td></tr>
+<tr class="separator:a8f26d76484e429b46d495cbdbad2b862"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa977d5a55b267ee64e0abb952aa07efd" id="r_aa977d5a55b267ee64e0abb952aa07efd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aa977d5a55b267ee64e0abb952aa07efd">modules.runtime.astro.sun_position</a> (t, phase=0.0)</td></tr>
+<tr class="separator:aa977d5a55b267ee64e0abb952aa07efd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a24f1140ab34ec82ac85f37135afc4336" id="r_a24f1140ab34ec82ac85f37135afc4336"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a24f1140ab34ec82ac85f37135afc4336">modules.runtime.astro.body_state</a> (name, time=None, *origin=&quot;heliocentric&quot;)</td></tr>
+<tr class="separator:a24f1140ab34ec82ac85f37135afc4336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8b5f3b526d01a0e560b836633586579e" id="r_a8b5f3b526d01a0e560b836633586579e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a8b5f3b526d01a0e560b836633586579e">modules.runtime.astro.planet_positions</a> (time=None, bodies=None, *origin=&quot;heliocentric&quot;)</td></tr>
+<tr class="separator:a8b5f3b526d01a0e560b836633586579e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a2f4ec198eed6a8ce0e8f94c7a6e98a" id="r_a8a2f4ec198eed6a8ce0e8f94c7a6e98a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a8a2f4ec198eed6a8ce0e8f94c7a6e98a">modules.runtime.astro.ephemeris_samples</a> (bodies, times, *origin=&quot;heliocentric&quot;)</td></tr>
+<tr class="separator:a8a2f4ec198eed6a8ce0e8f94c7a6e98a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a437590757cdbfd23bda8ee3e4ef5342b" id="r_a437590757cdbfd23bda8ee3e4ef5342b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a437590757cdbfd23bda8ee3e4ef5342b">modules.runtime.astro.times_from_epoch</a> (epoch, t_scaled)</td></tr>
+<tr class="separator:a437590757cdbfd23bda8ee3e4ef5342b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7e39cf99946288fe550375aa779d88f" id="r_af7e39cf99946288fe550375aa779d88f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#af7e39cf99946288fe550375aa779d88f">modules.runtime.astro.launch_site</a> (name)</td></tr>
+<tr class="separator:af7e39cf99946288fe550375aa779d88f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af36824da50f01dd7e431467dfac2af0f" id="r_af36824da50f01dd7e431467dfac2af0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#af36824da50f01dd7e431467dfac2af0f">modules.runtime.astro.launch_site_state</a> (name, time=None)</td></tr>
+<tr class="separator:af36824da50f01dd7e431467dfac2af0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a33afa6f16ed1f3ff75de512374a2840b" id="r_a33afa6f16ed1f3ff75de512374a2840b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a33afa6f16ed1f3ff75de512374a2840b">modules.runtime.astro._G_SI</a> = _const.G.value</td></tr>
+<tr class="separator:a33afa6f16ed1f3ff75de512374a2840b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85d5ef50f867face40ed0e2a94d0f6f5" id="r_a85d5ef50f867face40ed0e2a94d0f6f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a85d5ef50f867face40ed0e2a94d0f6f5">modules.runtime.astro._GM_EARTH_SI</a> = _const.GM_earth.value</td></tr>
+<tr class="separator:a85d5ef50f867face40ed0e2a94d0f6f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a124cac7753ab661a7f5babdc018264d8" id="r_a124cac7753ab661a7f5babdc018264d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a124cac7753ab661a7f5babdc018264d8">modules.runtime.astro._GM_SUN_SI</a> = _const.GM_sun.value</td></tr>
+<tr class="separator:a124cac7753ab661a7f5babdc018264d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51ca7832baa8226a9b7d9133e233be66" id="r_a51ca7832baa8226a9b7d9133e233be66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a51ca7832baa8226a9b7d9133e233be66">modules.runtime.astro._GM_JUP_SI</a> = _const.GM_jup.value</td></tr>
+<tr class="separator:a51ca7832baa8226a9b7d9133e233be66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa966b7e4d6acc4dcf35a47ce3533520f" id="r_aa966b7e4d6acc4dcf35a47ce3533520f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aa966b7e4d6acc4dcf35a47ce3533520f">modules.runtime.astro._R_EARTH_SI</a> = _const.R_earth.value</td></tr>
+<tr class="separator:aa966b7e4d6acc4dcf35a47ce3533520f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95b1b535a6be1aa893f15da50663d67d" id="r_a95b1b535a6be1aa893f15da50663d67d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a95b1b535a6be1aa893f15da50663d67d">modules.runtime.astro._R_SUN_SI</a> = _const.R_sun.value</td></tr>
+<tr class="separator:a95b1b535a6be1aa893f15da50663d67d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd90077746d3ab3b123dd5a3db5f29ba" id="r_afd90077746d3ab3b123dd5a3db5f29ba"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#afd90077746d3ab3b123dd5a3db5f29ba">modules.runtime.astro._AU_SI</a> = _const.au.value</td></tr>
+<tr class="separator:afd90077746d3ab3b123dd5a3db5f29ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb529c9110e4ed524b15d6861d515de4" id="r_afb529c9110e4ed524b15d6861d515de4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#afb529c9110e4ed524b15d6861d515de4">modules.runtime.astro._G0_SI</a> = _const.g0.value</td></tr>
+<tr class="separator:afb529c9110e4ed524b15d6861d515de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff8fe9337c3761919b9c51c56ff17bac" id="r_aff8fe9337c3761919b9c51c56ff17bac"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aff8fe9337c3761919b9c51c56ff17bac">modules.runtime.astro.HAVE_ASTROPY</a> = True</td></tr>
+<tr class="separator:aff8fe9337c3761919b9c51c56ff17bac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17aac539729435453f3c0143a978059d" id="r_a17aac539729435453f3c0143a978059d"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a17aac539729435453f3c0143a978059d">modules.runtime.astro._GM_SI</a></td></tr>
+<tr class="separator:a17aac539729435453f3c0143a978059d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3733230dd0fae269b2b93060ad0e43fc" id="r_a3733230dd0fae269b2b93060ad0e43fc"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a3733230dd0fae269b2b93060ad0e43fc">modules.runtime.astro._R_SI</a></td></tr>
+<tr class="separator:a3733230dd0fae269b2b93060ad0e43fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee190e21680ba515cbcd247a2dd0213d" id="r_aee190e21680ba515cbcd247a2dd0213d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">modules.runtime.astro.LU</a></td></tr>
+<tr class="separator:aee190e21680ba515cbcd247a2dd0213d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae9b97ea3fdfee0d6681fdfaa52c20c05" id="r_ae9b97ea3fdfee0d6681fdfaa52c20c05"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ae9b97ea3fdfee0d6681fdfaa52c20c05">modules.runtime.astro.TU</a></td></tr>
+<tr class="separator:ae9b97ea3fdfee0d6681fdfaa52c20c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef8538f06e4627f4d5420d131c434652" id="r_aef8538f06e4627f4d5420d131c434652"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aef8538f06e4627f4d5420d131c434652">modules.runtime.astro.KM</a> = 1.0e3 / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">LU</a></td></tr>
+<tr class="separator:aef8538f06e4627f4d5420d131c434652"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a321033c3ccdd5c86abcc264367100604" id="r_a321033c3ccdd5c86abcc264367100604"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a321033c3ccdd5c86abcc264367100604">modules.runtime.astro.DAY</a> = 86400.0 / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ae9b97ea3fdfee0d6681fdfaa52c20c05">TU</a></td></tr>
+<tr class="separator:a321033c3ccdd5c86abcc264367100604"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4be2d14656b3dbbd8da30ea4344b92e9" id="r_a4be2d14656b3dbbd8da30ea4344b92e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a4be2d14656b3dbbd8da30ea4344b92e9">modules.runtime.astro.VU</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">LU</a> / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ae9b97ea3fdfee0d6681fdfaa52c20c05">TU</a></td></tr>
+<tr class="separator:a4be2d14656b3dbbd8da30ea4344b92e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d29181963520625b09483868007bea7" id="r_a7d29181963520625b09483868007bea7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a7d29181963520625b09483868007bea7">modules.runtime.astro._GM_SCALE</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ae9b97ea3fdfee0d6681fdfaa52c20c05">TU</a>**2 / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">LU</a>**3</td></tr>
+<tr class="separator:a7d29181963520625b09483868007bea7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a929d4e0e1b19f289e0cbe27e8158c320" id="r_a929d4e0e1b19f289e0cbe27e8158c320"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a929d4e0e1b19f289e0cbe27e8158c320">modules.runtime.astro.GM_EARTH</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a80f1909922f4c5cb677886dca8207652">gm</a>(&quot;sun&quot;)</td></tr>
+<tr class="separator:a929d4e0e1b19f289e0cbe27e8158c320"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e3930646b0c26709f72da99e30a18d3" id="r_a2e3930646b0c26709f72da99e30a18d3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a2e3930646b0c26709f72da99e30a18d3">modules.runtime.astro.R_EARTH</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#abef348eec5371d761cda3e79bbf9433c">radius</a>(&quot;sun&quot;)</td></tr>
+<tr class="separator:a2e3930646b0c26709f72da99e30a18d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a138154376d3de42fe6290176191a8d82" id="r_a138154376d3de42fe6290176191a8d82"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a138154376d3de42fe6290176191a8d82">modules.runtime.astro.D_SUN</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#afd90077746d3ab3b123dd5a3db5f29ba">_AU_SI</a> / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">LU</a></td></tr>
+<tr class="separator:a138154376d3de42fe6290176191a8d82"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b80c61fbc1a86c1a5f40f8f26f50849" id="r_a4b80c61fbc1a86c1a5f40f8f26f50849"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a4b80c61fbc1a86c1a5f40f8f26f50849">modules.runtime.astro.D_MOON</a> = 3.844e8 / <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aee190e21680ba515cbcd247a2dd0213d">LU</a></td></tr>
+<tr class="separator:a4b80c61fbc1a86c1a5f40f8f26f50849"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebb3f8fc0c51f1363240c91f1c28f3f4" id="r_aebb3f8fc0c51f1363240c91f1c28f3f4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aebb3f8fc0c51f1363240c91f1c28f3f4">modules.runtime.astro.OMEGA_MOON</a> = 2 * np.pi / (27.321661 * <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a321033c3ccdd5c86abcc264367100604">DAY</a>)</td></tr>
+<tr class="separator:aebb3f8fc0c51f1363240c91f1c28f3f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb74009ac5230d6b52d777f2842bf8fc" id="r_acb74009ac5230d6b52d777f2842bf8fc"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#acb74009ac5230d6b52d777f2842bf8fc">modules.runtime.astro.OMEGA_SUN</a> = 2 * np.pi / (365.256363 * <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a321033c3ccdd5c86abcc264367100604">DAY</a>)</td></tr>
+<tr class="separator:acb74009ac5230d6b52d777f2842bf8fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9afdd17d147c4d7b454b3153abcf20b2" id="r_a9afdd17d147c4d7b454b3153abcf20b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a9afdd17d147c4d7b454b3153abcf20b2">modules.runtime.astro.G0</a> = <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#afb529c9110e4ed524b15d6861d515de4">_G0_SI</a></td></tr>
+<tr class="separator:a9afdd17d147c4d7b454b3153abcf20b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae765862ae9141bc48ee6eacc2c040e2d" id="r_ae765862ae9141bc48ee6eacc2c040e2d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#ae765862ae9141bc48ee6eacc2c040e2d">modules.runtime.astro.RHO0</a> = 1.225</td></tr>
+<tr class="separator:ae765862ae9141bc48ee6eacc2c040e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86e1261e12bf9853fcdb34f69a3636af" id="r_a86e1261e12bf9853fcdb34f69a3636af"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a86e1261e12bf9853fcdb34f69a3636af">modules.runtime.astro.H_ATM</a> = 8500.0</td></tr>
+<tr class="separator:a86e1261e12bf9853fcdb34f69a3636af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4345a73441dfbf740128e6b4053b1fd9" id="r_a4345a73441dfbf740128e6b4053b1fd9"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a4345a73441dfbf740128e6b4053b1fd9">modules.runtime.astro.H_SCALE</a> = 8.5 * <a class="el" href="namespacemodules_1_1runtime_1_1astro.html#aef8538f06e4627f4d5420d131c434652">KM</a></td></tr>
+<tr class="separator:a4345a73441dfbf740128e6b4053b1fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a769490cb95165ed96e341eadc2891012" id="r_a769490cb95165ed96e341eadc2891012"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a769490cb95165ed96e341eadc2891012">modules.runtime.astro._RK4</a> = None</td></tr>
+<tr class="separator:a769490cb95165ed96e341eadc2891012"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c577d503de8a15a2a08d8266f7cbec8" id="r_a6c577d503de8a15a2a08d8266f7cbec8"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a6c577d503de8a15a2a08d8266f7cbec8">modules.runtime.astro.EPHEMERIS</a> = &quot;builtin&quot;</td></tr>
+<tr class="separator:a6c577d503de8a15a2a08d8266f7cbec8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4543195aa0b1dba835f55caae6fb0bd7" id="r_a4543195aa0b1dba835f55caae6fb0bd7"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a4543195aa0b1dba835f55caae6fb0bd7">modules.runtime.astro.LAUNCH_SITES</a></td></tr>
+<tr class="separator:a4543195aa0b1dba835f55caae6fb0bd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a19a8e38ad0779ce6f0164cd1eb272e06" id="r_a19a8e38ad0779ce6f0164cd1eb272e06"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a19a8e38ad0779ce6f0164cd1eb272e06">modules.runtime.astro._SITE_FALLBACK</a></td></tr>
+<tr class="separator:a19a8e38ad0779ce6f0164cd1eb272e06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d43c3fa233d45724b009a01235d9305" id="r_a5d43c3fa233d45724b009a01235d9305"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1runtime_1_1astro.html#a5d43c3fa233d45724b009a01235d9305">modules.runtime.astro._site_cache</a> = {}</td></tr>
+<tr class="separator:a5d43c3fa233d45724b009a01235d9305"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_74b8b60c01c6fac50059c51d46ffef1b.html">runtime</a></li><li class="navelem"><a class="el" href="astro_8py.html">astro.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

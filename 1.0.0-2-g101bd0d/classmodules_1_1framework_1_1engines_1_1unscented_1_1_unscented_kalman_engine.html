@@ -1,0 +1,1414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.engines.unscented.UnscentedKalmanEngine Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.engines.unscented.UnscentedKalmanEngine Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.engines.unscented.UnscentedKalmanEngine Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.engines.unscented.UnscentedKalmanEngine Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.engines.unscented.UnscentedKalmanEngine:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine__inherit__graph.svg" width="1303" height="115"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a2d5dc6556beff8084ab1dd2df4fa4172" id="r_a2d5dc6556beff8084ab1dd2df4fa4172"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a2d5dc6556beff8084ab1dd2df4fa4172">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#adcc36c77e717ea3ddf55136b04caf289">alpha</a>=1e-3, <a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a47927a1aa813c0711a20c826e23c967e">beta</a>=2.0, <a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a069af838360c41d1dc69ad67f78def37">kappa</a>=0.0)</td></tr>
+<tr class="separator:a2d5dc6556beff8084ab1dd2df4fa4172"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
+<tr class="memitem:ae6c717dfde2240abbc5bc9e0cee582dd inherit pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_ae6c717dfde2240abbc5bc9e0cee582dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#ae6c717dfde2240abbc5bc9e0cee582dd">forward</a> (self, model, data, **kwargs)</td></tr>
+<tr class="separator:ae6c717dfde2240abbc5bc9e0cee582dd inherit pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a339facb5a6c7f14fca1b6a74ac8fbf98 inherit pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a339facb5a6c7f14fca1b6a74ac8fbf98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a339facb5a6c7f14fca1b6a74ac8fbf98">backward</a> (self, model, result, **kwargs)</td></tr>
+<tr class="separator:a339facb5a6c7f14fca1b6a74ac8fbf98 inherit pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html">modules.framework.abstract.metadata.KalmanEngineMetadata</a></td></tr>
+<tr class="memitem:a399ef102842c09acc20ead84ddd3a6b2 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata" id="r_a399ef102842c09acc20ead84ddd3a6b2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html#a399ef102842c09acc20ead84ddd3a6b2">__str__</a> (self)</td></tr>
+<tr class="separator:a399ef102842c09acc20ead84ddd3a6b2 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html">modules.framework.abstract.metadata.KalmanMetadata</a></td></tr>
+<tr class="memitem:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a14a4e351ed86dadadb83ab64e78f0236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a> (self)</td></tr>
+<tr class="separator:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4ad79eab0dcb89ded410f2c536759a3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4ad79eab0dcb89ded410f2c536759a3a">description</a> (self)</td></tr>
+<tr class="separator:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a95528fa2d5aaf13b2f4f12c48720c69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a95528fa2d5aaf13b2f4f12c48720c69e">version</a> (self)</td></tr>
+<tr class="separator:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4d420229416cbba37ebaa47a52baf5b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4d420229416cbba37ebaa47a52baf5b9">read</a> (cls, filename)</td></tr>
+<tr class="separator:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a0c0e9919afe47470788a45a0734e810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a0c0e9919afe47470788a45a0734e810d">write</a> (self, filename)</td></tr>
+<tr class="separator:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_add0c479d5879a49d4b6948ed57d951c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#add0c479d5879a49d4b6948ed57d951c5">print</a> (self, **kwargs)</td></tr>
+<tr class="separator:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html">modules.framework.abstract.mixins.KalmanEngineMixin</a></td></tr>
+<tr class="memitem:aa6b677acc0a62cf82ed1e66d953bc743 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin" id="r_aa6b677acc0a62cf82ed1e66d953bc743"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html#aa6b677acc0a62cf82ed1e66d953bc743">reset</a> (self, model)</td></tr>
+<tr class="separator:aa6b677acc0a62cf82ed1e66d953bc743 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fda55509d1cd996238350ea5b05fd57 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin" id="r_a3fda55509d1cd996238350ea5b05fd57"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html#a3fda55509d1cd996238350ea5b05fd57">infer</a> (self, model, x, P, z, u=None, t=None, **kwargs)</td></tr>
+<tr class="separator:a3fda55509d1cd996238350ea5b05fd57 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:adcc36c77e717ea3ddf55136b04caf289" id="r_adcc36c77e717ea3ddf55136b04caf289"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#adcc36c77e717ea3ddf55136b04caf289">alpha</a></td></tr>
+<tr class="separator:adcc36c77e717ea3ddf55136b04caf289"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a47927a1aa813c0711a20c826e23c967e" id="r_a47927a1aa813c0711a20c826e23c967e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a47927a1aa813c0711a20c826e23c967e">beta</a></td></tr>
+<tr class="separator:a47927a1aa813c0711a20c826e23c967e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a069af838360c41d1dc69ad67f78def37" id="r_a069af838360c41d1dc69ad67f78def37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a069af838360c41d1dc69ad67f78def37">kappa</a></td></tr>
+<tr class="separator:a069af838360c41d1dc69ad67f78def37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a390a5b0aa689b32f87e3d48eb82fb952" id="r_a390a5b0aa689b32f87e3d48eb82fb952"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a390a5b0aa689b32f87e3d48eb82fb952">NAME</a> = &quot;Unscented Kalman Engine&quot;</td></tr>
+<tr class="separator:a390a5b0aa689b32f87e3d48eb82fb952"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abda6eaad3ab47ad740c2a846ea0e559f" id="r_abda6eaad3ab47ad740c2a846ea0e559f"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#abda6eaad3ab47ad740c2a846ea0e559f">DESCRIPTION</a> = &quot;UKF engine with automatic augmented-state for non-additive noise.&quot;</td></tr>
+<tr class="separator:abda6eaad3ab47ad740c2a846ea0e559f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7673b045a94d56abfa4425d2f630f815" id="r_a7673b045a94d56abfa4425d2f630f815"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a7673b045a94d56abfa4425d2f630f815">VERSION</a> = &quot;3.0&quot;</td></tr>
+<tr class="separator:a7673b045a94d56abfa4425d2f630f815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b10a866d320d0e0e0d7883e61bbd487" id="r_a3b10a866d320d0e0e0d7883e61bbd487"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a3b10a866d320d0e0e0d7883e61bbd487">KIND</a> = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html#a3ae1ad9a1157519a21a4aebded323df5">KalmanEngineKind.UNSCENTED</a></td></tr>
+<tr class="separator:a3b10a866d320d0e0e0d7883e61bbd487"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
+<tr class="memitem:a0a14297061358b406017005e3f541aff inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a0a14297061358b406017005e3f541aff"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a0a14297061358b406017005e3f541aff">NAME</a> = &quot;Kalman Engine&quot;</td></tr>
+<tr class="separator:a0a14297061358b406017005e3f541aff inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae5bb71c0d1c665251640281c34d6bc99 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_ae5bb71c0d1c665251640281c34d6bc99"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#ae5bb71c0d1c665251640281c34d6bc99">DESCRIPTION</a> = &quot;Abstract engine base: shared masked update + RTS smoother; per-algorithm hooks.&quot;</td></tr>
+<tr class="separator:ae5bb71c0d1c665251640281c34d6bc99 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab06506736a224eda88a2ad49078e54e6 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_ab06506736a224eda88a2ad49078e54e6"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#ab06506736a224eda88a2ad49078e54e6">VERSION</a> = &quot;2.0&quot;</td></tr>
+<tr class="separator:ab06506736a224eda88a2ad49078e54e6 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8bb235da19e7d57bd21557262b77e935 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a8bb235da19e7d57bd21557262b77e935"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a8bb235da19e7d57bd21557262b77e935">KIND</a> = None</td></tr>
+<tr class="separator:a8bb235da19e7d57bd21557262b77e935 inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7c8be4155fa1d939089c9be4123a4b8b inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a7c8be4155fa1d939089c9be4123a4b8b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a7c8be4155fa1d939089c9be4123a4b8b">OWNS_PASS</a> = False</td></tr>
+<tr class="separator:a7c8be4155fa1d939089c9be4123a4b8b inherit pub_static_attribs_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html">modules.framework.abstract.metadata.KalmanEngineMetadata</a></td></tr>
+<tr class="memitem:a22d6f9f93efa556a2921e3c91db0526b inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata" id="r_a22d6f9f93efa556a2921e3c91db0526b"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html#a22d6f9f93efa556a2921e3c91db0526b">NAME</a> = &quot;Kalman Engine&quot;</td></tr>
+<tr class="separator:a22d6f9f93efa556a2921e3c91db0526b inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac71f3b5b2c167ddd5dfd0e3b95323075 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata" id="r_ac71f3b5b2c167ddd5dfd0e3b95323075"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html#ac71f3b5b2c167ddd5dfd0e3b95323075">DESCRIPTION</a> = &quot;Base class for Kalman engines (one estimation step: predict / update / smooth).&quot;</td></tr>
+<tr class="separator:ac71f3b5b2c167ddd5dfd0e3b95323075 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40beb0c5af184605a632c144762003f6 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata" id="r_a40beb0c5af184605a632c144762003f6"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html#a40beb0c5af184605a632c144762003f6">VERSION</a> = &quot;2.0&quot;</td></tr>
+<tr class="separator:a40beb0c5af184605a632c144762003f6 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5275b2997e50dfd8183f81edc38deade inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata" id="r_a5275b2997e50dfd8183f81edc38deade"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata.html#a5275b2997e50dfd8183f81edc38deade">epsilon</a> = sys.float_info.epsilon</td></tr>
+<tr class="separator:a5275b2997e50dfd8183f81edc38deade inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html">modules.framework.abstract.mixins.KalmanEngineMixin</a></td></tr>
+<tr class="memitem:ae8395118887ce3c6ddfeee696cc0d604 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin" id="r_ae8395118887ce3c6ddfeee696cc0d604"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html#ae8395118887ce3c6ddfeee696cc0d604">KIND</a> = None</td></tr>
+<tr class="separator:ae8395118887ce3c6ddfeee696cc0d604 inherit pub_static_attribs_classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a266edafe31d87f61edd595ca25a92782" id="r_a266edafe31d87f61edd595ca25a92782"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a266edafe31d87f61edd595ca25a92782">_ut_weights</a> (self, n_eff)</td></tr>
+<tr class="separator:a266edafe31d87f61edd595ca25a92782"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5974d86da4f8be614761cfa1065a7385" id="r_a5974d86da4f8be614761cfa1065a7385"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a5974d86da4f8be614761cfa1065a7385">_sigmas</a> (self, mean, cov, gamma)</td></tr>
+<tr class="separator:a5974d86da4f8be614761cfa1065a7385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa20c407177c1c3a027a24fcdabdb5cc9" id="r_aa20c407177c1c3a027a24fcdabdb5cc9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#aa20c407177c1c3a027a24fcdabdb5cc9">_f_call</a> (self, model, x, u=None, t=None, w=None)</td></tr>
+<tr class="separator:aa20c407177c1c3a027a24fcdabdb5cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a4d0038b0257f7e0ba32960351a5575" id="r_a3a4d0038b0257f7e0ba32960351a5575"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a3a4d0038b0257f7e0ba32960351a5575">_h_call</a> (self, model, x, t=None, v=None)</td></tr>
+<tr class="separator:a3a4d0038b0257f7e0ba32960351a5575"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6010e817015065987abb457b413606d9" id="r_a6010e817015065987abb457b413606d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a6010e817015065987abb457b413606d9">_predict</a> (self, model, x, P, u=None, t=None, **kw)</td></tr>
+<tr class="separator:a6010e817015065987abb457b413606d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abb5f31b7d5f385d41eb6d7086cdcc356" id="r_abb5f31b7d5f385d41eb6d7086cdcc356"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#abb5f31b7d5f385d41eb6d7086cdcc356">_update</a> (self, model, x, P, z, t=None, **kw)</td></tr>
+<tr class="separator:abb5f31b7d5f385d41eb6d7086cdcc356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
+<tr class="memitem:adbdd7963922461a5594d00c93492c304 inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_adbdd7963922461a5594d00c93492c304"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#adbdd7963922461a5594d00c93492c304">_propagate</a> (self, model, x, u, t)</td></tr>
+<tr class="separator:adbdd7963922461a5594d00c93492c304 inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af33e8d8cbdbf4b0dd88c167cdc3fe8b9 inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_af33e8d8cbdbf4b0dd88c167cdc3fe8b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#af33e8d8cbdbf4b0dd88c167cdc3fe8b9">_measure</a> (self, model, x, t)</td></tr>
+<tr class="separator:af33e8d8cbdbf4b0dd88c167cdc3fe8b9 inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adae1de090b011a815fb9790b8bcbc96b inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_adae1de090b011a815fb9790b8bcbc96b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#adae1de090b011a815fb9790b8bcbc96b">_smooth</a> (self, model, post_k, prior_next, smooth_next, F_k)</td></tr>
+<tr class="separator:adae1de090b011a815fb9790b8bcbc96b inherit pro_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a1ff93491f2dbdd6975a482b469765b56" id="r_a1ff93491f2dbdd6975a482b469765b56"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a1ff93491f2dbdd6975a482b469765b56">_to_vec</a> (a)</td></tr>
+<tr class="separator:a1ff93491f2dbdd6975a482b469765b56"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1f165fc251a9096181815588161841e" id="r_ae1f165fc251a9096181815588161841e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#ae1f165fc251a9096181815588161841e">_sym_psd</a> (S)</td></tr>
+<tr class="separator:ae1f165fc251a9096181815588161841e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93dccad6f6f60d399aacdeb2ff1531d6" id="r_a93dccad6f6f60d399aacdeb2ff1531d6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a93dccad6f6f60d399aacdeb2ff1531d6">_chol</a> (S)</td></tr>
+<tr class="separator:a93dccad6f6f60d399aacdeb2ff1531d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af394f7ea1543211384ff55e73d568ec9" id="r_af394f7ea1543211384ff55e73d568ec9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#af394f7ea1543211384ff55e73d568ec9">_Q</a> (model, t=None)</td></tr>
+<tr class="separator:af394f7ea1543211384ff55e73d568ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37d6f8362aa331b56cbee1edcdfc1874" id="r_a37d6f8362aa331b56cbee1edcdfc1874"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a37d6f8362aa331b56cbee1edcdfc1874">_R</a> (model, t=None)</td></tr>
+<tr class="separator:a37d6f8362aa331b56cbee1edcdfc1874"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a2d0244cf55a739e24c6790bcf756f9" id="r_a5a2d0244cf55a739e24c6790bcf756f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a5a2d0244cf55a739e24c6790bcf756f9">_L</a> (model, x=None, u=None, t=None)</td></tr>
+<tr class="separator:a5a2d0244cf55a739e24c6790bcf756f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a102f46ae5538e90fc2ee01e98f16a12a" id="r_a102f46ae5538e90fc2ee01e98f16a12a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a102f46ae5538e90fc2ee01e98f16a12a">_M</a> (model, x=None, t=None)</td></tr>
+<tr class="separator:a102f46ae5538e90fc2ee01e98f16a12a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aafc378ace9635f4f1d2241b46865467d" id="r_aafc378ace9635f4f1d2241b46865467d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#aafc378ace9635f4f1d2241b46865467d">_weighted_outer_sum</a> (Wc, Y, mean)</td></tr>
+<tr class="separator:aafc378ace9635f4f1d2241b46865467d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89c5e623101bd59d9a764dfd837011af" id="r_a89c5e623101bd59d9a764dfd837011af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a89c5e623101bd59d9a764dfd837011af">_weighted_cross_sum</a> (Wc, A, B)</td></tr>
+<tr class="separator:a89c5e623101bd59d9a764dfd837011af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
+<tr class="memitem:a5ad6ecb2cdc682449d7ffb3e70183db5 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a5ad6ecb2cdc682449d7ffb3e70183db5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a5ad6ecb2cdc682449d7ffb3e70183db5">_safe_L</a> (model, x, u, t)</td></tr>
+<tr class="separator:a5ad6ecb2cdc682449d7ffb3e70183db5 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62212b704589197daa378c0032d59842 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a62212b704589197daa378c0032d59842"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a62212b704589197daa378c0032d59842">_noise_through_f</a> (model)</td></tr>
+<tr class="separator:a62212b704589197daa378c0032d59842 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a364df3eefe3a504dcb35a81d79d5dce1 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a364df3eefe3a504dcb35a81d79d5dce1"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a364df3eefe3a504dcb35a81d79d5dce1">_noise_through_h</a> (model)</td></tr>
+<tr class="separator:a364df3eefe3a504dcb35a81d79d5dce1 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f8e5399f7b925b5685c3420f979bfa6 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a2f8e5399f7b925b5685c3420f979bfa6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a2f8e5399f7b925b5685c3420f979bfa6">_responds_to_noise</a> (model, str which)</td></tr>
+<tr class="separator:a2f8e5399f7b925b5685c3420f979bfa6 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9691d1c0d22456cc8419a0e1f77b0aff inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a9691d1c0d22456cc8419a0e1f77b0aff"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a9691d1c0d22456cc8419a0e1f77b0aff">_accepts_param</a> (fn, str <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a>)</td></tr>
+<tr class="separator:a9691d1c0d22456cc8419a0e1f77b0aff inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Sigma-point engine. Uses ``model.f`` / ``model.h`` directly (no Jacobians).
+
+Noise handling is automatic per call:
+  - non-additive (``model.f(...,w)`` / ``model.h(...,v)``) → augmented-state sigma points;
+  - otherwise additive with ``L Q Lᵀ`` / ``M R Mᵀ`` coupling.
+
+Returns an identity transition for the generic RTS step (``_smooth`` inherited).
+The measurement update is missing-measurement aware (NaN channels dropped).
+</pre> 
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00009">9</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a2d5dc6556beff8084ab1dd2df4fa4172" name="a2d5dc6556beff8084ab1dd2df4fa4172"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d5dc6556beff8084ab1dd2df4fa4172">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>1e-3</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>beta</em> = <code>2.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>kappa</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00026">26</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span>    <span class="keyword">def </span>__init__(self, alpha=1e-3, beta=2.0, kappa=0.0):</div>
+<div class="line"><span class="lineno">   27</span>        self.alpha = float(alpha)</div>
+<div class="line"><span class="lineno">   28</span>        self.beta = float(beta)</div>
+<div class="line"><span class="lineno">   29</span>        self.kappa = float(kappa)</div>
+<div class="line"><span class="lineno">   30</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a93dccad6f6f60d399aacdeb2ff1531d6" name="a93dccad6f6f60d399aacdeb2ff1531d6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93dccad6f6f60d399aacdeb2ff1531d6">&#9670;&#160;</a></span>_chol()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._chol </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>S</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00045">45</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   45</span>    <span class="keyword">def </span>_chol(S):</div>
+<div class="line"><span class="lineno">   46</span>        S = UnscentedKalmanEngine._sym_psd(S)</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   48</span>            <span class="keywordflow">return</span> np.linalg.cholesky(S)</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keywordflow">except</span> np.linalg.LinAlgError:</div>
+<div class="line"><span class="lineno">   50</span>            d = S.shape[0]</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(6):</div>
+<div class="line"><span class="lineno">   52</span>                <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   53</span>                    <span class="keywordflow">return</span> np.linalg.cholesky(S + (10.0 ** k) * 1e-12 * np.eye(d))</div>
+<div class="line"><span class="lineno">   54</span>                <span class="keywordflow">except</span> np.linalg.LinAlgError:</div>
+<div class="line"><span class="lineno">   55</span>                    <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">   57</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa20c407177c1c3a027a24fcdabdb5cc9" name="aa20c407177c1c3a027a24fcdabdb5cc9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa20c407177c1c3a027a24fcdabdb5cc9">&#9670;&#160;</a></span>_f_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._f_call </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00110">110</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>    <span class="keyword">def </span>_f_call(self, model, x, u=None, t=None, w=None):</div>
+<div class="line"><span class="lineno">  111</span>        x = np.asarray(x, dtype=np.float64).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">if</span> w <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  113</span>            w = np.asarray(w, dtype=np.float64).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">return</span> self._to_vec(model.f(x, u=u, w=w, t=t))</div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">return</span> self._to_vec(model.f(x, u=u, t=t))</div>
+<div class="line"><span class="lineno">  118</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3a4d0038b0257f7e0ba32960351a5575" name="a3a4d0038b0257f7e0ba32960351a5575"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a4d0038b0257f7e0ba32960351a5575">&#9670;&#160;</a></span>_h_call()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._h_call </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>v</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00119">119</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>    <span class="keyword">def </span>_h_call(self, model, x, t=None, v=None):</div>
+<div class="line"><span class="lineno">  120</span>        x = np.asarray(x, dtype=np.float64).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">if</span> v <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  122</span>            v = np.asarray(v, dtype=np.float64).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  124</span>            <span class="keywordflow">return</span> self._to_vec(model.h(x, v=v, t=t))</div>
+<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">  126</span>            <span class="keywordflow">return</span> self._to_vec(model.h(x, t=t))</div>
+<div class="line"><span class="lineno">  127</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5a2d0244cf55a739e24c6790bcf756f9" name="a5a2d0244cf55a739e24c6790bcf756f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5a2d0244cf55a739e24c6790bcf756f9">&#9670;&#160;</a></span>_L()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._L </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00089">89</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    <span class="keyword">def </span>_L(model, x=None, u=None, t=None):</div>
+<div class="line"><span class="lineno">   90</span>        L = getattr(model, <span class="stringliteral">&quot;L&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keywordflow">if</span> callable(L):</div>
+<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   93</span>                res = L(x=x, u=u, w=<span class="keywordtype">None</span>, t=t)</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">   95</span>                res = L(t=t)</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">return</span> res <span class="keywordflow">if</span> res <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.eye(model.n, dtype=np.float64)</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> np.eye(model.n, dtype=np.float64)</div>
+<div class="line"><span class="lineno">   98</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a102f46ae5538e90fc2ee01e98f16a12a" name="a102f46ae5538e90fc2ee01e98f16a12a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a102f46ae5538e90fc2ee01e98f16a12a">&#9670;&#160;</a></span>_M()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._M </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00100">100</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>    <span class="keyword">def </span>_M(model, x=None, t=None):</div>
+<div class="line"><span class="lineno">  101</span>        M = getattr(model, <span class="stringliteral">&quot;M&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">if</span> callable(M):</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  104</span>                res = M(x=x, v=<span class="keywordtype">None</span>, t=t)</div>
+<div class="line"><span class="lineno">  105</span>            <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">  106</span>                res = M(t=t)</div>
+<div class="line"><span class="lineno">  107</span>            <span class="keywordflow">return</span> res <span class="keywordflow">if</span> res <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.eye(model.m, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">return</span> np.eye(model.m, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  109</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6010e817015065987abb457b413606d9" name="a6010e817015065987abb457b413606d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6010e817015065987abb457b413606d9">&#9670;&#160;</a></span>_predict()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._predict </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Prediction step → ``(xk, Pk, F)``.
+
+Propagates the prior belief one step forward using the motion model:
+
+.. code-block:: text
+
+    xk  = F · x  + B · u          (mean prediction)
+    Pk  = F · P · Fᵀ + Q          (covariance prediction)
+
+where ``F`` is the state-transition matrix (``∂f/∂x`` for nonlinear models)
+and ``Q`` is the process-noise covariance.  Returns the predicted mean
+``xk``, the predicted covariance ``Pk``, and the transition matrix
+``F`` used (needed later by the RTS smoother).
+</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a7c797464919fd52fbd5772f851ea8093">modules.framework.engine.KalmanEngine</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00165">165</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  165</span>    <span class="keyword">def </span>_predict(self, model, x, P, u=None, t=None, **kw):</div>
+<div class="line"><span class="lineno">  166</span>        <span class="keywordflow">if</span> u <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  167</span>            u = np.asarray(u).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  168</span>        u = u <span class="keywordflow">if</span> model.l &gt; 0 <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>        n = model.n</div>
+<div class="line"><span class="lineno">  171</span>        x_vec = self._to_vec(x)</div>
+<div class="line"><span class="lineno">  172</span>        P = np.asarray(P, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  173</span> </div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">if</span> self._noise_through_f(model):</div>
+<div class="line"><span class="lineno">  175</span>            Qw = self._Q(model, t)</div>
+<div class="line"><span class="lineno">  176</span>            n_a = n + Qw.shape[0]</div>
+<div class="line"><span class="lineno">  177</span>            gamma, Wm, Wc = self._ut_weights(n_a)</div>
+<div class="line"><span class="lineno">  178</span>            mean_a = np.zeros(n_a); mean_a[:n] = x_vec</div>
+<div class="line"><span class="lineno">  179</span>            P_a = np.zeros((n_a, n_a)); P_a[:n, :n] = P; P_a[n:, n:] = Qw</div>
+<div class="line"><span class="lineno">  180</span>            sig_a = self._sigmas(mean_a, P_a, gamma)</div>
+<div class="line"><span class="lineno">  181</span>            Y = np.array([self._f_call(model, sp[:n], u=u, t=t, w=sp[n:]) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig_a])</div>
+<div class="line"><span class="lineno">  182</span>            x_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Y)</div>
+<div class="line"><span class="lineno">  183</span>            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)</div>
+<div class="line"><span class="lineno">  184</span>            P_pred = self._sym_psd(P_pred)</div>
+<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  186</span>            gamma, Wm, Wc = self._ut_weights(n)</div>
+<div class="line"><span class="lineno">  187</span>            sig = self._sigmas(x_vec, P, gamma)</div>
+<div class="line"><span class="lineno">  188</span>            Y = np.array([self._f_call(model, sp, u=u, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
+<div class="line"><span class="lineno">  189</span>            x_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Y)</div>
+<div class="line"><span class="lineno">  190</span>            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)</div>
+<div class="line"><span class="lineno">  191</span>            L = self._L(model, x_vec.reshape(-1, 1), u, t)</div>
+<div class="line"><span class="lineno">  192</span>            P_pred = self._sym_psd(P_pred + self._sym_psd(L @ self._Q(model, t) @ L.T))</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">return</span> x_pred.reshape(-1, 1), P_pred, np.eye(n)</div>
+<div class="line"><span class="lineno">  195</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af394f7ea1543211384ff55e73d568ec9" name="af394f7ea1543211384ff55e73d568ec9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af394f7ea1543211384ff55e73d568ec9">&#9670;&#160;</a></span>_Q()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._Q </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00081">81</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>    <span class="keyword">def </span>_Q(model, t=None):</div>
+<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">return</span> np.asarray(model.Q(t=t), dtype=np.float64)</div>
+<div class="line"><span class="lineno">   83</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a37d6f8362aa331b56cbee1edcdfc1874" name="a37d6f8362aa331b56cbee1edcdfc1874"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a37d6f8362aa331b56cbee1edcdfc1874">&#9670;&#160;</a></span>_R()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._R </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00085">85</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>    <span class="keyword">def </span>_R(model, t=None):</div>
+<div class="line"><span class="lineno">   86</span>        <span class="keywordflow">return</span> np.asarray(model.R(t=t), dtype=np.float64)</div>
+<div class="line"><span class="lineno">   87</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5974d86da4f8be614761cfa1065a7385" name="a5974d86da4f8be614761cfa1065a7385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5974d86da4f8be614761cfa1065a7385">&#9670;&#160;</a></span>_sigmas()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._sigmas </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>cov</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gamma</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00067">67</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>    <span class="keyword">def </span>_sigmas(self, mean, cov, gamma):</div>
+<div class="line"><span class="lineno">   68</span>        mean = self._to_vec(mean)</div>
+<div class="line"><span class="lineno">   69</span>        S = self._chol(cov)</div>
+<div class="line"><span class="lineno">   70</span>        n = mean.shape[0]</div>
+<div class="line"><span class="lineno">   71</span>        sig = np.zeros((2 * n + 1, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">   72</span>        sig[0] = mean</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n):</div>
+<div class="line"><span class="lineno">   74</span>            col = gamma * S[:, i]</div>
+<div class="line"><span class="lineno">   75</span>            sig[i + 1] = mean + col</div>
+<div class="line"><span class="lineno">   76</span>            sig[n + i + 1] = mean - col</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">return</span> sig</div>
+<div class="line"><span class="lineno">   78</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae1f165fc251a9096181815588161841e" name="ae1f165fc251a9096181815588161841e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1f165fc251a9096181815588161841e">&#9670;&#160;</a></span>_sym_psd()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._sym_psd </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>S</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00040">40</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span>    <span class="keyword">def </span>_sym_psd(S):</div>
+<div class="line"><span class="lineno">   41</span>        S = 0.5 * (S + S.T)</div>
+<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> S + 1e-12 * np.eye(S.shape[0], dtype=S.dtype)</div>
+<div class="line"><span class="lineno">   43</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1ff93491f2dbdd6975a482b469765b56" name="a1ff93491f2dbdd6975a482b469765b56"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ff93491f2dbdd6975a482b469765b56">&#9670;&#160;</a></span>_to_vec()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._to_vec </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>a</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00035">35</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span>    <span class="keyword">def </span>_to_vec(a):</div>
+<div class="line"><span class="lineno">   36</span>        a = np.asarray(a, dtype=np.float64)</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">return</span> a.reshape(-1) <span class="keywordflow">if</span> a.ndim &gt; 1 <span class="keywordflow">else</span> a</div>
+<div class="line"><span class="lineno">   38</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abb5f31b7d5f385d41eb6d7086cdcc356" name="abb5f31b7d5f385d41eb6d7086cdcc356"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abb5f31b7d5f385d41eb6d7086cdcc356">&#9670;&#160;</a></span>_update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._update </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Update step → ``(x, P)``.  Missing channels (NaN in ``z``) are skipped.
+
+Fuses the predicted belief with the measurement using the standard equations:
+
+.. code-block:: text
+
+    S  = H · P · Hᵀ + R              (innovation covariance)
+    K  = P · Hᵀ · S⁻¹               (Kalman gain)
+    x  = x + K · (z − H · x)        (corrected mean, overwrites prior)
+    P  = (I − KH) · P · (I − KH)ᵀ + K · R · Kᵀ   (Joseph form, overwrites prior)
+
+The Joseph form is used for ``P`` to preserve symmetry and positive-definiteness
+even under numerical round-off.
+</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a626868626195a67c30107b9ba868e2e3">modules.framework.engine.KalmanEngine</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00196">196</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  196</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
+<div class="line"><span class="lineno">  197</span>        n = model.n</div>
+<div class="line"><span class="lineno">  198</span>        x_pred = self._to_vec(x)</div>
+<div class="line"><span class="lineno">  199</span>        P_pred = np.asarray(P, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  200</span>        z = self._to_vec(z)</div>
+<div class="line"><span class="lineno">  201</span>        keep = ~np.isnan(z)</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">return</span> np.asarray(x).reshape(-1, 1), P_pred</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">if</span> self._noise_through_h(model):</div>
+<div class="line"><span class="lineno">  206</span>            Rv = self._R(model, t)</div>
+<div class="line"><span class="lineno">  207</span>            n_a = n + Rv.shape[0]</div>
+<div class="line"><span class="lineno">  208</span>            gamma, Wm, Wc = self._ut_weights(n_a)</div>
+<div class="line"><span class="lineno">  209</span>            mean_a = np.zeros(n_a); mean_a[:n] = x_pred</div>
+<div class="line"><span class="lineno">  210</span>            P_a = np.zeros((n_a, n_a)); P_a[:n, :n] = P_pred; P_a[n:, n:] = Rv</div>
+<div class="line"><span class="lineno">  211</span>            sig_a = self._sigmas(mean_a, P_a, gamma)</div>
+<div class="line"><span class="lineno">  212</span>            Z = np.array([self._h_call(model, sp[:n], t=t, v=sp[n:]) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig_a])</div>
+<div class="line"><span class="lineno">  213</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
+<div class="line"><span class="lineno">  214</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
+<div class="line"><span class="lineno">  215</span>            Pxz = self._weighted_cross_sum(Wc, sig_a[:, :n] - x_pred, Z - z_pred)</div>
+<div class="line"><span class="lineno">  216</span>            S = self._sym_psd(S)</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  218</span>            gamma, Wm, Wc = self._ut_weights(n)</div>
+<div class="line"><span class="lineno">  219</span>            sig = self._sigmas(x_pred, P_pred, gamma)</div>
+<div class="line"><span class="lineno">  220</span>            Z = np.array([self._h_call(model, sp, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
+<div class="line"><span class="lineno">  221</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
+<div class="line"><span class="lineno">  222</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
+<div class="line"><span class="lineno">  223</span>            Pxz = self._weighted_cross_sum(Wc, sig - x_pred, Z - z_pred)</div>
+<div class="line"><span class="lineno">  224</span>            M = self._M(model, x_pred.reshape(-1, 1), t)</div>
+<div class="line"><span class="lineno">  225</span>            S = self._sym_psd(S + self._sym_psd(M @ self._R(model, t) @ M.T))</div>
+<div class="line"><span class="lineno">  226</span> </div>
+<div class="line"><span class="lineno">  227</span>        <span class="comment"># Multi-rate: restrict the update to the available measurement channels.</span></div>
+<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.all():</div>
+<div class="line"><span class="lineno">  229</span>            idx = np.where(keep)[0]</div>
+<div class="line"><span class="lineno">  230</span>            S = S[np.ix_(idx, idx)]</div>
+<div class="line"><span class="lineno">  231</span>            Pxz = Pxz[:, idx]</div>
+<div class="line"><span class="lineno">  232</span>            z = z[idx]</div>
+<div class="line"><span class="lineno">  233</span>            z_pred = z_pred[idx]</div>
+<div class="line"><span class="lineno">  234</span> </div>
+<div class="line"><span class="lineno">  235</span>        K = Pxz @ np.linalg.pinv(S)</div>
+<div class="line"><span class="lineno">  236</span>        x_new = (x_pred + K @ (z - z_pred)).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  237</span>        P_new = self._sym_psd(P_pred - K @ S @ K.T)</div>
+<div class="line"><span class="lineno">  238</span>        <span class="keywordflow">return</span> x_new, P_new</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a266edafe31d87f61edd595ca25a92782" name="a266edafe31d87f61edd595ca25a92782"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a266edafe31d87f61edd595ca25a92782">&#9670;&#160;</a></span>_ut_weights()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._ut_weights </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n_eff</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00058">58</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   58</span>    <span class="keyword">def </span>_ut_weights(self, n_eff):</div>
+<div class="line"><span class="lineno">   59</span>        lam = self.alpha ** 2 * (n_eff + self.kappa) - n_eff</div>
+<div class="line"><span class="lineno">   60</span>        gamma = np.sqrt(n_eff + lam)</div>
+<div class="line"><span class="lineno">   61</span>        Wm = np.full(2 * n_eff + 1, 0.5 / (n_eff + lam), dtype=np.float64)</div>
+<div class="line"><span class="lineno">   62</span>        Wc = Wm.copy()</div>
+<div class="line"><span class="lineno">   63</span>        Wm[0] = lam / (n_eff + lam)</div>
+<div class="line"><span class="lineno">   64</span>        Wc[0] = lam / (n_eff + lam) + (1.0 - self.alpha ** 2 + self.beta)</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> gamma, Wm, Wc</div>
+<div class="line"><span class="lineno">   66</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a89c5e623101bd59d9a764dfd837011af" name="a89c5e623101bd59d9a764dfd837011af"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a89c5e623101bd59d9a764dfd837011af">&#9670;&#160;</a></span>_weighted_cross_sum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._weighted_cross_sum </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Wc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>A</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>B</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">``sum(Wc[i] * outer(A[i], B[i]))`` for already-centered deviations A, B.</pre> 
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00146">146</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>    <span class="keyword">def </span>_weighted_cross_sum(Wc, A, B):</div>
+<div class="line"><span class="lineno">  147</span>        <span class="stringliteral">&quot;&quot;&quot;``sum(Wc[i] * outer(A[i], B[i]))`` for already-centered deviations A, B.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  148</span>        n_sigma, na = A.shape</div>
+<div class="line"><span class="lineno">  149</span>        nb = B.shape[1]</div>
+<div class="line"><span class="lineno">  150</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keyword">from</span> ..native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  153</span>            C_out = np.empty((na, nb), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  154</span>            lib.ukf_weighted_cross_sum(</div>
+<div class="line"><span class="lineno">  155</span>                n_sigma, na, nb,</div>
+<div class="line"><span class="lineno">  156</span>                dptr(as_contiguous(Wc)), dptr(as_contiguous(A)), dptr(as_contiguous(B)),</div>
+<div class="line"><span class="lineno">  157</span>                dptr(C_out),</div>
+<div class="line"><span class="lineno">  158</span>            )</div>
+<div class="line"><span class="lineno">  159</span>            <span class="keywordflow">return</span> C_out</div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">return</span> sum(Wc[i] * np.outer(A[i], B[i]) <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n_sigma))</div>
+<div class="line"><span class="lineno">  161</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aafc378ace9635f4f1d2241b46865467d" name="aafc378ace9635f4f1d2241b46865467d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aafc378ace9635f4f1d2241b46865467d">&#9670;&#160;</a></span>_weighted_outer_sum()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine._weighted_outer_sum </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Wc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Y</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">``sum(Wc[i] * outer(Y[i]-mean, Y[i]-mean))`` over sigma points.</pre> 
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00130">130</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span>    <span class="keyword">def </span>_weighted_outer_sum(Wc, Y, mean):</div>
+<div class="line"><span class="lineno">  131</span>        <span class="stringliteral">&quot;&quot;&quot;``sum(Wc[i] * outer(Y[i]-mean, Y[i]-mean))`` over sigma points.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  132</span>        n_sigma, n = Y.shape</div>
+<div class="line"><span class="lineno">  133</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  134</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  135</span>            <span class="keyword">from</span> ..native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  136</span>            P_out = np.empty((n, n), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  137</span>            lib.ukf_weighted_outer_sum(</div>
+<div class="line"><span class="lineno">  138</span>                n_sigma, n,</div>
+<div class="line"><span class="lineno">  139</span>                dptr(as_contiguous(Wc)), dptr(as_contiguous(Y)), dptr(as_contiguous(mean)),</div>
+<div class="line"><span class="lineno">  140</span>                dptr(P_out),</div>
+<div class="line"><span class="lineno">  141</span>            )</div>
+<div class="line"><span class="lineno">  142</span>            <span class="keywordflow">return</span> P_out</div>
+<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">return</span> sum(Wc[i] * np.outer(Y[i] - mean, Y[i] - mean) <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n_sigma))</div>
+<div class="line"><span class="lineno">  144</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="adcc36c77e717ea3ddf55136b04caf289" name="adcc36c77e717ea3ddf55136b04caf289"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adcc36c77e717ea3ddf55136b04caf289">&#9670;&#160;</a></span>alpha</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine.alpha</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00027">27</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="a47927a1aa813c0711a20c826e23c967e" name="a47927a1aa813c0711a20c826e23c967e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a47927a1aa813c0711a20c826e23c967e">&#9670;&#160;</a></span>beta</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine.beta</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00028">28</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="abda6eaad3ab47ad740c2a846ea0e559f" name="abda6eaad3ab47ad740c2a846ea0e559f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abda6eaad3ab47ad740c2a846ea0e559f">&#9670;&#160;</a></span>DESCRIPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.engines.unscented.UnscentedKalmanEngine.DESCRIPTION = &quot;UKF engine with automatic augmented-state for non-additive noise.&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00022">22</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="a069af838360c41d1dc69ad67f78def37" name="a069af838360c41d1dc69ad67f78def37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a069af838360c41d1dc69ad67f78def37">&#9670;&#160;</a></span>kappa</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine.kappa</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00029">29</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="a3b10a866d320d0e0e0d7883e61bbd487" name="a3b10a866d320d0e0e0d7883e61bbd487"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b10a866d320d0e0e0d7883e61bbd487">&#9670;&#160;</a></span>KIND</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.unscented.UnscentedKalmanEngine.KIND = <a class="el" href="classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html#a3ae1ad9a1157519a21a4aebded323df5">KalmanEngineKind.UNSCENTED</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00024">24</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="a390a5b0aa689b32f87e3d48eb82fb952" name="a390a5b0aa689b32f87e3d48eb82fb952"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a390a5b0aa689b32f87e3d48eb82fb952">&#9670;&#160;</a></span>NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.engines.unscented.UnscentedKalmanEngine.NAME = &quot;Unscented Kalman Engine&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00021">21</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<a id="a7673b045a94d56abfa4425d2f630f815" name="a7673b045a94d56abfa4425d2f630f815"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7673b045a94d56abfa4425d2f630f815">&#9670;&#160;</a></span>VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.engines.unscented.UnscentedKalmanEngine.VERSION = &quot;3.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00023">23</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/engines/<a class="el" href="engines_2unscented_8py_source.html">unscented.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1engines.html">engines</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1engines_1_1unscented.html">unscented</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html">UnscentedKalmanEngine</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

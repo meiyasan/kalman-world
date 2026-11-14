@@ -1,0 +1,254 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/api/store.py File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/api/store.py File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/api/store.py File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('store_8py.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">store.py File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="store_8py_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1store_1_1_conflict_error.html">modules.api.store.ConflictError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacemodules" id="r_namespacemodules"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules.html">modules</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1api" id="r_namespacemodules_1_1api"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api.html">modules.api</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1api_1_1store" id="r_namespacemodules_1_1api_1_1store"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html">modules.api.store</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a60511d5d2c6ae396261d74dbac16ce10" id="r_a60511d5d2c6ae396261d74dbac16ce10"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a60511d5d2c6ae396261d74dbac16ce10">modules.api.store.state_dir</a> ()</td></tr>
+<tr class="separator:a60511d5d2c6ae396261d74dbac16ce10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac519595302ba25754102619c3911c7bf" id="r_ac519595302ba25754102619c3911c7bf"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">modules.api.store.path</a> ()</td></tr>
+<tr class="separator:ac519595302ba25754102619c3911c7bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aacd29cbbb3b41fb42e7647708c95b65a" id="r_aacd29cbbb3b41fb42e7647708c95b65a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#aacd29cbbb3b41fb42e7647708c95b65a">modules.api.store._db</a> ()</td></tr>
+<tr class="separator:aacd29cbbb3b41fb42e7647708c95b65a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7676fa21454565ef64b5cecfc8a95b0" id="r_af7676fa21454565ef64b5cecfc8a95b0"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#af7676fa21454565ef64b5cecfc8a95b0">modules.api.store._same</a> (a, b)</td></tr>
+<tr class="separator:af7676fa21454565ef64b5cecfc8a95b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79f82d35ac65299a40347c9c5a619faa" id="r_a79f82d35ac65299a40347c9c5a619faa"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a79f82d35ac65299a40347c9c5a619faa">modules.api.store._emit</a> (con, str type_, dict payload)</td></tr>
+<tr class="separator:a79f82d35ac65299a40347c9c5a619faa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d161c95575de3227bb8a6f6b6b8554c" id="r_a2d161c95575de3227bb8a6f6b6b8554c"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a2d161c95575de3227bb8a6f6b6b8554c">modules.api.store.emit</a> (str type_, dict payload)</td></tr>
+<tr class="separator:a2d161c95575de3227bb8a6f6b6b8554c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab982c0cf3192d613b05327e808cda053" id="r_ab982c0cf3192d613b05327e808cda053"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ab982c0cf3192d613b05327e808cda053">modules.api.store._model</a> (row)</td></tr>
+<tr class="separator:ab982c0cf3192d613b05327e808cda053"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf7f922877afcdd45fc0c1a774534143" id="r_abf7f922877afcdd45fc0c1a774534143"><td class="memItemLeft" align="right" valign="top">dict|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#abf7f922877afcdd45fc0c1a774534143">modules.api.store.get_model</a> (str name)</td></tr>
+<tr class="separator:abf7f922877afcdd45fc0c1a774534143"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af30c1a043505a5dca13fc1796610ad7c" id="r_af30c1a043505a5dca13fc1796610ad7c"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#af30c1a043505a5dca13fc1796610ad7c">modules.api.store.model_names</a> ()</td></tr>
+<tr class="separator:af30c1a043505a5dca13fc1796610ad7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac169bec3a1852be22710cb228061fc08" id="r_ac169bec3a1852be22710cb228061fc08"><td class="memItemLeft" align="right" valign="top">list[dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ac169bec3a1852be22710cb228061fc08">modules.api.store.list_models</a> ()</td></tr>
+<tr class="separator:ac169bec3a1852be22710cb228061fc08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92c90e0080dbf7f1fa1173a15d2bc5ee" id="r_a92c90e0080dbf7f1fa1173a15d2bc5ee"><td class="memItemLeft" align="right" valign="top">tuple[dict, str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a92c90e0080dbf7f1fa1173a15d2bc5ee">modules.api.store.put_model</a> (str name, dict spec, dict info, str|None owner, *bool replace=False, may_replace=lambda rec:True)</td></tr>
+<tr class="separator:a92c90e0080dbf7f1fa1173a15d2bc5ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab58af261b1ec0ecb7d521f796386ccbd" id="r_ab58af261b1ec0ecb7d521f796386ccbd"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ab58af261b1ec0ecb7d521f796386ccbd">modules.api.store.delete_model</a> (str name, *may_delete=lambda rec:True, str|None by=None)</td></tr>
+<tr class="separator:ab58af261b1ec0ecb7d521f796386ccbd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7c4f438aa37fc3bd2ee7ee9997c0544" id="r_ad7c4f438aa37fc3bd2ee7ee9997c0544"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ad7c4f438aa37fc3bd2ee7ee9997c0544">modules.api.store.put_plugin</a> (str name, str plugin_path, list <a class="el" href="namespacemodules_1_1api.html#ab6c425df0dd53f0d789698f646696103">models</a>, str|None owner)</td></tr>
+<tr class="separator:ad7c4f438aa37fc3bd2ee7ee9997c0544"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd9e4a4c33ef8ac28f502e50b7e59b09" id="r_acd9e4a4c33ef8ac28f502e50b7e59b09"><td class="memItemLeft" align="right" valign="top">list[dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#acd9e4a4c33ef8ac28f502e50b7e59b09">modules.api.store.list_plugins</a> ()</td></tr>
+<tr class="separator:acd9e4a4c33ef8ac28f502e50b7e59b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a825f2eee6343e7e03fbaf7104618b251" id="r_a825f2eee6343e7e03fbaf7104618b251"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a825f2eee6343e7e03fbaf7104618b251">modules.api.store._source</a> (row)</td></tr>
+<tr class="separator:a825f2eee6343e7e03fbaf7104618b251"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dd82cfddf02a28890e57ac867ac38c6" id="r_a1dd82cfddf02a28890e57ac867ac38c6"><td class="memItemLeft" align="right" valign="top">dict|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a1dd82cfddf02a28890e57ac867ac38c6">modules.api.store.get_source</a> (str name)</td></tr>
+<tr class="separator:a1dd82cfddf02a28890e57ac867ac38c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad398c9a386ddd4efdd0d13fec7a6e117" id="r_ad398c9a386ddd4efdd0d13fec7a6e117"><td class="memItemLeft" align="right" valign="top">list[dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ad398c9a386ddd4efdd0d13fec7a6e117">modules.api.store.list_sources</a> ()</td></tr>
+<tr class="separator:ad398c9a386ddd4efdd0d13fec7a6e117"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a355ad80bbf715242cf058f96aa449daf" id="r_a355ad80bbf715242cf058f96aa449daf"><td class="memItemLeft" align="right" valign="top">tuple[dict, str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a355ad80bbf715242cf058f96aa449daf">modules.api.store.put_source</a> (str name, dict spec, str|None owner, *bool replace=False, may_replace=lambda rec:True)</td></tr>
+<tr class="separator:a355ad80bbf715242cf058f96aa449daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a52899c5c454d80b72ea2da16127cae80" id="r_a52899c5c454d80b72ea2da16127cae80"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a52899c5c454d80b72ea2da16127cae80">modules.api.store.delete_source</a> (str name, *may_delete=lambda rec:True, str|None by=None)</td></tr>
+<tr class="separator:a52899c5c454d80b72ea2da16127cae80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab9e5c254c1608f6ec7546c7fae30156a" id="r_ab9e5c254c1608f6ec7546c7fae30156a"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ab9e5c254c1608f6ec7546c7fae30156a">modules.api.store.append_measurements</a> (str source, list rows, list|None times, str|None owner)</td></tr>
+<tr class="separator:ab9e5c254c1608f6ec7546c7fae30156a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad181dea0b5696489bdb9c5633afb6972" id="r_ad181dea0b5696489bdb9c5633afb6972"><td class="memItemLeft" align="right" valign="top">list[dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ad181dea0b5696489bdb9c5633afb6972">modules.api.store.read_measurements</a> (str source, int since=0, int limit=10000)</td></tr>
+<tr class="separator:ad181dea0b5696489bdb9c5633afb6972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2e6db6eccd4f7130ea8c518e0876c054" id="r_a2e6db6eccd4f7130ea8c518e0876c054"><td class="memItemLeft" align="right" valign="top">list[dict]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a2e6db6eccd4f7130ea8c518e0876c054">modules.api.store.events</a> (int since=0, int limit=100)</td></tr>
+<tr class="separator:a2e6db6eccd4f7130ea8c518e0876c054"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4079520b2eaee490c03a58ed5dedb24" id="r_af4079520b2eaee490c03a58ed5dedb24"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#af4079520b2eaee490c03a58ed5dedb24">modules.api.store.last_event</a> ()</td></tr>
+<tr class="separator:af4079520b2eaee490c03a58ed5dedb24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e9526c92a0b9af5e4c29aca667f9b52" id="r_a0e9526c92a0b9af5e4c29aca667f9b52"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a0e9526c92a0b9af5e4c29aca667f9b52">modules.api.store.revoke_token</a> (str jti, str|None sub, float|None exp, str|None by)</td></tr>
+<tr class="separator:a0e9526c92a0b9af5e4c29aca667f9b52"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6b1127de73d91dc39b5a48047d233b3" id="r_af6b1127de73d91dc39b5a48047d233b3"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#af6b1127de73d91dc39b5a48047d233b3">modules.api.store.revoke_user</a> (str sub, str|None by)</td></tr>
+<tr class="separator:af6b1127de73d91dc39b5a48047d233b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7582f7d56c5aa9a8d36cd7735a31d0c" id="r_ac7582f7d56c5aa9a8d36cd7735a31d0c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#ac7582f7d56c5aa9a8d36cd7735a31d0c">modules.api.store.is_revoked</a> (str|None jti, str|None sub, float|None iat)</td></tr>
+<tr class="separator:ac7582f7d56c5aa9a8d36cd7735a31d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a638b673c96ceb967c1c903408c79243b" id="r_a638b673c96ceb967c1c903408c79243b"><td class="memItemLeft" align="right" valign="top">list[float]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a638b673c96ceb967c1c903408c79243b">modules.api.store.login_failures</a> (str user, str client, float window)</td></tr>
+<tr class="separator:a638b673c96ceb967c1c903408c79243b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3e23de0444e436ed31893b575f7d7528" id="r_a3e23de0444e436ed31893b575f7d7528"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a3e23de0444e436ed31893b575f7d7528">modules.api.store.add_login_failure</a> (str user, str client, float window)</td></tr>
+<tr class="separator:a3e23de0444e436ed31893b575f7d7528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a443cf20cfc937c98c9cc4b372ea65815" id="r_a443cf20cfc937c98c9cc4b372ea65815"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a443cf20cfc937c98c9cc4b372ea65815">modules.api.store.clear_login_failures</a> (str|None user=None, str|None client=None)</td></tr>
+<tr class="separator:a443cf20cfc937c98c9cc4b372ea65815"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a049a45c42c51e7a45a179e768b068d4a" id="r_a049a45c42c51e7a45a179e768b068d4a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a049a45c42c51e7a45a179e768b068d4a">modules.api.store._SCHEMA</a></td></tr>
+<tr class="separator:a049a45c42c51e7a45a179e768b068d4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7a2b488fb37ae55da65362779c5ab397" id="r_a7a2b488fb37ae55da65362779c5ab397"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a7a2b488fb37ae55da65362779c5ab397">modules.api.store.MAX_ROWS</a> = int(os.environ.get(&quot;KALMAN_SOURCE_MAX_ROWS&quot;, &quot;100000&quot;))</td></tr>
+<tr class="separator:a7a2b488fb37ae55da65362779c5ab397"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58c9b2f407d911d427861a8822119676" id="r_a58c9b2f407d911d427861a8822119676"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#a58c9b2f407d911d427861a8822119676">modules.api.store.MAX_EVENTS</a> = int(os.environ.get(&quot;KALMAN_MAX_EVENTS&quot;, &quot;10000&quot;))</td></tr>
+<tr class="separator:a58c9b2f407d911d427861a8822119676"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee2d482880a0ecb1108a762f2853ac66" id="r_aee2d482880a0ecb1108a762f2853ac66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1store.html#aee2d482880a0ecb1108a762f2853ac66">modules.api.store._ready_lock</a> = threading.Lock()</td></tr>
+<tr class="separator:aee2d482880a0ecb1108a762f2853ac66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_cd57d34d9ddb895ce8faa79f2b7a4929.html">api</a></li><li class="navelem"><a class="el" href="store_8py.html">store.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

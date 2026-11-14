@@ -1,0 +1,445 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_rest.TestRest Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_rest.TestRest Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_rest.TestRest Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__rest_1_1_test_rest.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classtests_1_1test__rest_1_1_test_rest-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_rest.TestRest Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_rest.TestRest:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__rest_1_1_test_rest__inherit__graph.svg" width="186" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a10b9ad9ad830e2ee5196f2f2b28e5288" id="r_a10b9ad9ad830e2ee5196f2f2b28e5288"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a10b9ad9ad830e2ee5196f2f2b28e5288">setUp</a> (self)</td></tr>
+<tr class="separator:a10b9ad9ad830e2ee5196f2f2b28e5288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa0d037e72f28432a1ca0a7fa627f909" id="r_aaa0d037e72f28432a1ca0a7fa627f909"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#aaa0d037e72f28432a1ca0a7fa627f909">test_health_and_catalog</a> (self)</td></tr>
+<tr class="separator:aaa0d037e72f28432a1ca0a7fa627f909"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb2ccedc5da59fd5bdb276ce78f1b4fb" id="r_aeb2ccedc5da59fd5bdb276ce78f1b4fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#aeb2ccedc5da59fd5bdb276ce78f1b4fb">test_describe_404</a> (self)</td></tr>
+<tr class="separator:aeb2ccedc5da59fd5bdb276ce78f1b4fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a409dbf36ebeee0a62b75f78e20f44a37" id="r_a409dbf36ebeee0a62b75f78e20f44a37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a409dbf36ebeee0a62b75f78e20f44a37">test_filter_roundtrip</a> (self)</td></tr>
+<tr class="separator:a409dbf36ebeee0a62b75f78e20f44a37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83ae312a66b33d0ab4472af93084458e" id="r_a83ae312a66b33d0ab4472af93084458e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a83ae312a66b33d0ab4472af93084458e">test_openapi_served</a> (self)</td></tr>
+<tr class="separator:a83ae312a66b33d0ab4472af93084458e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f71d17e1280fd69670918f4360e4288" id="r_a8f71d17e1280fd69670918f4360e4288"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a8f71d17e1280fd69670918f4360e4288">test_plot_and_diagnostics_of_a_run</a> (self)</td></tr>
+<tr class="separator:a8f71d17e1280fd69670918f4360e4288"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ed39d56265497d65b3ff93fc5f16c37" id="r_a1ed39d56265497d65b3ff93fc5f16c37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a1ed39d56265497d65b3ff93fc5f16c37">test_forecast</a> (self)</td></tr>
+<tr class="separator:a1ed39d56265497d65b3ff93fc5f16c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae8af9805baafd328a98f796d22d69e5e" id="r_ae8af9805baafd328a98f796d22d69e5e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#ae8af9805baafd328a98f796d22d69e5e">test_auth_scopes</a> (self)</td></tr>
+<tr class="separator:ae8af9805baafd328a98f796d22d69e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a65e118049f84975a97b12d5b789c9c64" id="r_a65e118049f84975a97b12d5b789c9c64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html#a65e118049f84975a97b12d5b789c9c64">client</a></td></tr>
+<tr class="separator:a65e118049f84975a97b12d5b789c9c64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00025">25</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a10b9ad9ad830e2ee5196f2f2b28e5288" name="a10b9ad9ad830e2ee5196f2f2b28e5288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a10b9ad9ad830e2ee5196f2f2b28e5288">&#9670;&#160;</a></span>setUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.setUp </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00027">27</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>    <span class="keyword">def </span>setUp(self):</div>
+<div class="line"><span class="lineno">   28</span>        <span class="keyword">from</span> fastapi.testclient <span class="keyword">import</span> TestClient</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1rest_1_1app.html">modules.rest.app</a> <span class="keyword">import</span> create_app</div>
+<div class="line"><span class="lineno">   30</span>        os.environ.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)   <span class="comment"># auth disabled -&gt; open</span></div>
+<div class="line"><span class="lineno">   31</span>        self.client = TestClient(create_app())</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="ttc" id="anamespacemodules_1_1rest_1_1app_html"><div class="ttname"><a href="namespacemodules_1_1rest_1_1app.html">modules.rest.app</a></div><div class="ttdef"><b>Definition</b> <a href="app_8py_source.html#l00001">app.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae8af9805baafd328a98f796d22d69e5e" name="ae8af9805baafd328a98f796d22d69e5e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae8af9805baafd328a98f796d22d69e5e">&#9670;&#160;</a></span>test_auth_scopes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_auth_scopes </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00068">68</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>test_auth_scopes(self):</div>
+<div class="line"><span class="lineno">   69</span>        <span class="keyword">import</span> jwt  <span class="comment"># noqa</span></div>
+<div class="line"><span class="lineno">   70</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1api.html">modules.api</a> <span class="keyword">import</span> auth</div>
+<div class="line"><span class="lineno">   71</span>        os.environ[<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>] = <span class="stringliteral">&quot;a-secret-key-that-is-long-enough-32&quot;</span></div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keyword">from</span> fastapi.testclient <span class="keyword">import</span> TestClient</div>
+<div class="line"><span class="lineno">   74</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1rest_1_1app.html">modules.rest.app</a> <span class="keyword">import</span> create_app</div>
+<div class="line"><span class="lineno">   75</span>            c = TestClient(create_app())</div>
+<div class="line"><span class="lineno">   76</span>            <span class="comment"># no token -&gt; 401 on a gated route</span></div>
+<div class="line"><span class="lineno">   77</span>            self.assertEqual(c.get(<span class="stringliteral">&quot;/catalog&quot;</span>).status_code, 401)</div>
+<div class="line"><span class="lineno">   78</span>            reader = auth.mint_token(<span class="stringliteral">&quot;bob&quot;</span>, [<span class="stringliteral">&quot;read&quot;</span>])</div>
+<div class="line"><span class="lineno">   79</span>            self.assertEqual(c.get(<span class="stringliteral">&quot;/catalog&quot;</span>, headers={<span class="stringliteral">&quot;Authorization&quot;</span>: f<span class="stringliteral">&quot;Bearer {reader}&quot;</span>}).status_code, 200)</div>
+<div class="line"><span class="lineno">   80</span>            <span class="comment"># read token cannot register a model -&gt; 403</span></div>
+<div class="line"><span class="lineno">   81</span>            r = c.post(<span class="stringliteral">&quot;/models&quot;</span>, json={<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;x&quot;</span>},</div>
+<div class="line"><span class="lineno">   82</span>                       headers={<span class="stringliteral">&quot;Authorization&quot;</span>: f<span class="stringliteral">&quot;Bearer {reader}&quot;</span>})</div>
+<div class="line"><span class="lineno">   83</span>            self.assertEqual(r.status_code, 403)</div>
+<div class="line"><span class="lineno">   84</span>            writer = auth.mint_token(<span class="stringliteral">&quot;al&quot;</span>, [<span class="stringliteral">&quot;write_models&quot;</span>])</div>
+<div class="line"><span class="lineno">   85</span>            r2 = c.post(<span class="stringliteral">&quot;/models&quot;</span>, json={<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;ok&quot;</span>},</div>
+<div class="line"><span class="lineno">   86</span>                        headers={<span class="stringliteral">&quot;Authorization&quot;</span>: f<span class="stringliteral">&quot;Bearer {writer}&quot;</span>})</div>
+<div class="line"><span class="lineno">   87</span>            self.assertEqual(r2.status_code, 200)</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">finally</span>:</div>
+<div class="line"><span class="lineno">   89</span>            os.environ.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">   90</span> </div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="ttc" id="anamespacemodules_1_1api_html"><div class="ttname"><a href="namespacemodules_1_1api.html">modules.api</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2api_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aeb2ccedc5da59fd5bdb276ce78f1b4fb" name="aeb2ccedc5da59fd5bdb276ce78f1b4fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb2ccedc5da59fd5bdb276ce78f1b4fb">&#9670;&#160;</a></span>test_describe_404()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_describe_404 </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00038">38</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   38</span>    <span class="keyword">def </span>test_describe_404(self):</div>
+<div class="line"><span class="lineno">   39</span>        self.assertEqual(self.client.get(<span class="stringliteral">&quot;/describe/Nope&quot;</span>).status_code, 404)</div>
+<div class="line"><span class="lineno">   40</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a409dbf36ebeee0a62b75f78e20f44a37" name="a409dbf36ebeee0a62b75f78e20f44a37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a409dbf36ebeee0a62b75f78e20f44a37">&#9670;&#160;</a></span>test_filter_roundtrip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_filter_roundtrip </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00041">41</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>    <span class="keyword">def </span>test_filter_roundtrip(self):</div>
+<div class="line"><span class="lineno">   42</span>        zk = [[float(i) * 0.1] <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(20)]</div>
+<div class="line"><span class="lineno">   43</span>        r = self.client.post(<span class="stringliteral">&quot;/filter&quot;</span>, json={<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;data&quot;</span>: zk})</div>
+<div class="line"><span class="lineno">   44</span>        self.assertEqual(r.status_code, 200)</div>
+<div class="line"><span class="lineno">   45</span>        self.assertEqual(np.array(r.json()[<span class="stringliteral">&quot;xk&quot;</span>]).shape, (20, 2))</div>
+<div class="line"><span class="lineno">   46</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1ed39d56265497d65b3ff93fc5f16c37" name="a1ed39d56265497d65b3ff93fc5f16c37"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ed39d56265497d65b3ff93fc5f16c37">&#9670;&#160;</a></span>test_forecast()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_forecast </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00063">63</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   63</span>    <span class="keyword">def </span>test_forecast(self):</div>
+<div class="line"><span class="lineno">   64</span>        r = self.client.post(<span class="stringliteral">&quot;/forecast&quot;</span>, json={<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;x0&quot;</span>: [[0.0], [1.0]], <span class="stringliteral">&quot;steps&quot;</span>: 3})</div>
+<div class="line"><span class="lineno">   65</span>        self.assertEqual(r.status_code, 200)</div>
+<div class="line"><span class="lineno">   66</span>        self.assertEqual(np.array(r.json()[<span class="stringliteral">&quot;xk&quot;</span>]).shape, (3, 2, 1))</div>
+<div class="line"><span class="lineno">   67</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aaa0d037e72f28432a1ca0a7fa627f909" name="aaa0d037e72f28432a1ca0a7fa627f909"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa0d037e72f28432a1ca0a7fa627f909">&#9670;&#160;</a></span>test_health_and_catalog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_health_and_catalog </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00033">33</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>    <span class="keyword">def </span>test_health_and_catalog(self):</div>
+<div class="line"><span class="lineno">   34</span>        self.assertEqual(self.client.get(<span class="stringliteral">&quot;/healthz&quot;</span>).json(), {<span class="stringliteral">&quot;ok&quot;</span>: <span class="keyword">True</span>, <span class="stringliteral">&quot;auth&quot;</span>: <span class="keyword">False</span>})</div>
+<div class="line"><span class="lineno">   35</span>        cat = self.client.get(<span class="stringliteral">&quot;/catalog&quot;</span>).json()</div>
+<div class="line"><span class="lineno">   36</span>        self.assertIn(<span class="stringliteral">&quot;OscillatorModel&quot;</span>, cat[<span class="stringliteral">&quot;models&quot;</span>])</div>
+<div class="line"><span class="lineno">   37</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a83ae312a66b33d0ab4472af93084458e" name="a83ae312a66b33d0ab4472af93084458e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83ae312a66b33d0ab4472af93084458e">&#9670;&#160;</a></span>test_openapi_served()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_openapi_served </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00047">47</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>    <span class="keyword">def </span>test_openapi_served(self):</div>
+<div class="line"><span class="lineno">   48</span>        self.assertEqual(self.client.get(<span class="stringliteral">&quot;/openapi.json&quot;</span>).status_code, 200)</div>
+<div class="line"><span class="lineno">   49</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8f71d17e1280fd69670918f4360e4288" name="a8f71d17e1280fd69670918f4360e4288"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8f71d17e1280fd69670918f4360e4288">&#9670;&#160;</a></span>test_plot_and_diagnostics_of_a_run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.test_plot_and_diagnostics_of_a_run </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A run made from a declarative spec must be plottable, not a 500.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00050">50</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>    <span class="keyword">def </span>test_plot_and_diagnostics_of_a_run(self):</div>
+<div class="line"><span class="lineno">   51</span>        <span class="stringliteral">&quot;&quot;&quot;A run made from a declarative spec must be plottable, not a 500.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   52</span>        <span class="keyword">import</span> matplotlib</div>
+<div class="line"><span class="lineno">   53</span>        matplotlib.use(<span class="stringliteral">&quot;Agg&quot;</span>, force=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">   54</span>        run = self.client.post(<span class="stringliteral">&quot;/filter&quot;</span>, json={<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;data&quot;</span>: [[0.1 * i] <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(10)]})</div>
+<div class="line"><span class="lineno">   55</span>        rid = run.json()[<span class="stringliteral">&quot;run_id&quot;</span>]</div>
+<div class="line"><span class="lineno">   56</span>        self.assertEqual(self.client.get(f<span class="stringliteral">&quot;/diagnostics/{rid}&quot;</span>).status_code, 200)</div>
+<div class="line"><span class="lineno">   57</span>        png = self.client.get(f<span class="stringliteral">&quot;/plot/{rid}&quot;</span>)</div>
+<div class="line"><span class="lineno">   58</span>        self.assertEqual(png.status_code, 200)</div>
+<div class="line"><span class="lineno">   59</span>        self.assertEqual(png.headers[<span class="stringliteral">&quot;content-type&quot;</span>], <span class="stringliteral">&quot;image/png&quot;</span>)</div>
+<div class="line"><span class="lineno">   60</span>        self.assertEqual(png.content[:4], b<span class="stringliteral">&quot;\x89PNG&quot;</span>)</div>
+<div class="line"><span class="lineno">   61</span>        self.assertEqual(self.client.get(<span class="stringliteral">&quot;/plot/no-such-run&quot;</span>).status_code, 404)</div>
+<div class="line"><span class="lineno">   62</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a65e118049f84975a97b12d5b789c9c64" name="a65e118049f84975a97b12d5b789c9c64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a65e118049f84975a97b12d5b789c9c64">&#9670;&#160;</a></span>client</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestRest.client</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00031">31</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__rest_8py_source.html">test_rest.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__rest.html">test_rest</a></li><li class="navelem"><a class="el" href="classtests_1_1test__rest_1_1_test_rest.html">TestRest</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

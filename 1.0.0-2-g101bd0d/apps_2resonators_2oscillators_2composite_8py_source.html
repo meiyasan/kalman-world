@@ -1,0 +1,505 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/apps/resonators/oscillators/composite.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/apps/resonators/oscillators/composite.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/apps/resonators/oscillators/composite.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('apps_2resonators_2oscillators_2composite_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">composite.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="apps_2resonators_2oscillators_2composite_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1resonators_1_1oscillators_1_1composite.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Windowed rotating-frame composite oscillator — the KAGRA violin-mode variant.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">from</span> scipy.linalg <span class="keyword">import</span> expm</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">from</span> scipy.optimize <span class="keyword">import</span> curve_fit</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">from</span> ....framework.models.linear <span class="keyword">import</span> LinearKalmanModel</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">from</span> ....framework.models.composite <span class="keyword">import</span> CompositeKalmanModel</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">from</span> ....framework.constants <span class="keyword">import</span> KalmanState, KalmanObservable, KalmanObservableReadout</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">from</span> .analytic <span class="keyword">import</span> AnalyticOscillatorModel</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">from</span> .base <span class="keyword">import</span> (OscillatorState, OscillatorObservable, wire_inharmonicity,</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>                   wire_fundamental, partial_frequencies)</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"># One analysis window  [fc ± dfc]  — the atomic windowed model</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment"># ======================================================================</span></div>
+<div class="foldopen" id="foldopen00016" data-start="" data-end="">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html">   16</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html">OscillatorModel</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html">CompositeKalmanModel</a>):</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral">    One analysis window ``[fc ± dfc]`` over a **real** signal — the generic rotating-frame</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral">    oscillator tracker.</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">    ``frequencies`` is the full candidate mode list (already expanded, e.g. from</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    :func:`partial_frequencies`).  The window acts as a **mask**: only modes with</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">    ``|f − fc| ≤ dfc`` are kept and tracked; the rest are silently dropped from the</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">    state.  This is the key property: even if :class:`HarmonicOscillatorModel` or</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">    :class:`InharmonicOscillatorModel` generates a full ladder ``[f0, 2f0, 3f0, …]``,</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">    only those partials inside ``[fc ± dfc]`` are tracked by *this* window.  To track</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">    the whole ladder, stack one window per partial inside an</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="stringliteral">    :class:`OscillatorBankModel`.</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="stringliteral">    The in-band modes share the single demodulated band channel in **FUSED** mode</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="stringliteral">    (``H = [I₂ … I₂]``, ``z = Σ_i ψ_i``) — the joint Kalman filter of Moisset et al.</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">    (2025) / Mukherjee &amp; Finn (1999).  A single in-band mode is the trivial (degenerate)</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="stringliteral">    case.</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">    **Signal flow:**</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="stringliteral">    * ``preprocess`` — real strain → Hilbert → demodulate at ``fc`` → ``[Re, Im]``</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="stringliteral">    * Filter runs in rotating frame on the ``[Re, Im]`` envelope</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="stringliteral">    * ``postprocess`` — ``[Re, Im]`` → remodulate at ``fc`` → **real band reconstruction**</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="stringliteral">    The postprocess remodulation ensures that ``sample().zk`` is a real signal in the</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="stringliteral">    same space as the model&#39;s input, so ``model.filter(sample.zk)`` works directly.</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="stringliteral">    Parameters</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="stringliteral">    ----------</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="stringliteral">    sensor_id : str</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="stringliteral">    frequencies : float | array-like</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span><span class="stringliteral">        Candidate mode frequencies [Hz]; masked to those inside ``[fc ± dfc]``.</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span><span class="stringliteral">    fc : float</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="stringliteral">        Window center frequency [Hz] — the demodulation carrier.</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="stringliteral">    dfc : float</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="stringliteral">        Window half-width [Hz].</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral">    Q : float | list</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="stringliteral">        Quality factor (scalar, or one per kept mode).</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="stringliteral">    fs : float</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="stringliteral">    measurement_uncertainty : float</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="stringliteral">        Standard deviation of the white noise of the real input signal, per sample</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="stringliteral">        at ``fs``.  The model converts it to the noise of the demodulated,</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="stringliteral">        decimated envelope (see ``__init__``).</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="stringliteral">    process_uncertainty : float</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="stringliteral">        Standard deviation of the random change of each envelope component per</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="stringliteral">        filter step (the filter runs at the decimated rate ``4·dfc``).</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="stringliteral">    p0 : float, optional</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral">        Initial variance of each envelope component.  Default: ``(1000·σ)²``, a</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral">        prior loose enough that the first measurements set the amplitude.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af9d57a826b1ca643b38fee7cf887a9b2">   68</a></span>    NAME = <span class="stringliteral">&quot;Windowed Oscillator (one fc ± dfc band)&quot;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a663595d01191f29cede22dd186e98b96">   69</a></span>    DESCRIPTION = (<span class="stringliteral">&quot;One demodulated analysis window; in-band modes combined FUSED &quot;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                   <span class="stringliteral">&quot;(z = Σ ψ_i). Real in → filter → real band out.&quot;</span>)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a69b175bb3fc97bc0ddc6d27a8b7f48c5">   71</a></span>    VERSION = <span class="stringliteral">&quot;3.1&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a727cefa7eadba1fa75c75b2b6c0db558">   73</a></span>    partial_frequencies = staticmethod(partial_frequencies)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="preprocessor">@property</span></div>
+<div class="foldopen" id="foldopen00076" data-start="" data-end="">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a4f51def540d914e75cb849ddb4c7b6e9">   76</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a4f51def540d914e75cb849ddb4c7b6e9">states</a>(self):</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">return</span> OscillatorState</div>
+</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="preprocessor">@property</span></div>
+<div class="foldopen" id="foldopen00079" data-start="" data-end="">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a0ec9feee650acfc1a2de34b9c46eae6f">   79</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a0ec9feee650acfc1a2de34b9c46eae6f">observables</a>(self):</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">return</span> OscillatorObservable</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+</div>
+<div class="foldopen" id="foldopen00082" data-start="" data-end="">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a1f71c63307295d9f6f9e3dfeaf27542d">   82</a></span>    <span class="keyword">def </span>__init__(self, sensor_id, frequencies, fc, dfc, *,</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                 Q=1e4, fs=4096.0, measurement_uncertainty=1.0,</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                 process_uncertainty=1e-3, p0=None, **kwargs):</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        freqs = np.atleast_1d(np.asarray(frequencies, dtype=float))</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        in_band = freqs[np.abs(freqs - fc) &lt;= dfc]                <span class="comment"># ← the window mask</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> in_band.size == 0:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                f<span class="stringliteral">&quot;OscillatorModel: no frequency within window {fc}±{dfc} Hz &quot;</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                f<span class="stringliteral">&quot;(candidates: {np.round(freqs, 3)})&quot;</span>)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        Qs = [float(Q)] * len(in_band) <span class="keywordflow">if</span> np.isscalar(Q) <span class="keywordflow">else</span> list(Q)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ab83570d5f531b4d57931001aff74d7">   94</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ab83570d5f531b4d57931001aff74d7">fc</a> = float(fc)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ac333ea0d72c7d3f593b82de774ef5e16">   95</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ac333ea0d72c7d3f593b82de774ef5e16">dfc</a> = float(dfc)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#afd68537bd8663783582d837418cbfed2">   96</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#afd68537bd8663783582d837418cbfed2">frequencies</a> = in_band</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8">   97</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8">_wc</a> = 2.0 * np.pi * float(fc)                        <span class="comment"># angular carrier ω_c = 2π f_c</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="comment"># Decimated sample rate: 4× dfc gives 2× oversampling above Nyquist</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">  100</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a> = float(fs)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">  101</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a> = 4.0 * float(dfc)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a97ac9efc3a391f8a4b04ca7a2ec3d442">  102</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a97ac9efc3a391f8a4b04ca7a2ec3d442">_preprocess_N</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="comment"># Noise of the envelope the filter sees.  Demodulation (ψ = 2·x·e^{-jωc·t})</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="comment"># turns white noise of std σ into 2σ² of variance per component; the</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="comment"># anti-alias filter of the decimation keeps the fraction fs_dec/fs of it.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        sigma_envelope = float(measurement_uncertainty) * np.sqrt(2.0 * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a> / self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a>)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        p0_var = float(p0) <span class="keywordflow">if</span> p0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> (1e3 * float(measurement_uncertainty)) ** 2</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        blocks = [<a class="code hl_class" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1analytic_1_1_analytic_oscillator_model.html">AnalyticOscillatorModel</a>(</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                      f<span class="stringliteral">&quot;{sensor_id}@{f:.3f}Hz&quot;</span>, fs=self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a>,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                      f0=f, fc=fc, Q=q,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                      measurement_uncertainty=sigma_envelope,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                      process_uncertainty=process_uncertainty,</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>                      P0=p0_var * np.eye(2))</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>                  <span class="keywordflow">for</span> f, q <span class="keywordflow">in</span> zip(in_band, Qs)]</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        super().__init__(*blocks, obs_mode=KalmanObservableReadout.FUSED, **kwargs)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ab4cd752986a57689a245a6915234aa33">  119</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ab4cd752986a57689a245a6915234aa33">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a54702aa647740c1bc8a5c2c09ea2b194">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a7666fcfa6dfa4770442602420632bfde">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">fs</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a25d7baea17c2ccdc57e1d875948ade3d">fs</a> = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a50cfe08d4122bbc43dcd26ac93e1f7cc">  121</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a50cfe08d4122bbc43dcd26ac93e1f7cc">preprocess</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#aa849cc67c113f584b821b7e064e19379">preprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c.html#ad282eabfaa2bd1d09017e5b832721951">preprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a33548322b8febddbd88a6e455af7e28b">preprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a5137d081091123893c28ea397f65d91a">preprocess</a> = self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeecb405e44783370b59e75a084ba0606">_demod_preprocess</a></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a6aebe82bc5ce19a016aef47d5f962861">  122</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a6aebe82bc5ce19a016aef47d5f962861">postprocess</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a64aa2d4aecc1412a86e5d4bc4d0ca653">postprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c.html#a96b5424a9af4e81f39898fde66775ab7">postprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a73ac97cd22463335dac56a99513d7f54">postprocess</a><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a2fa043c6b4fd3db5d74ca4120706a202">postprocess</a> = self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a12963e8047978cf8596b4bcf9cde5d8e">_identity_postprocess</a></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="comment"># --- resample_poly helper (handles float sample rates) ---</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00126" data-start="" data-end="">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ae88fcc74d49697d5af7d94b1715a9c4c">  126</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ae88fcc74d49697d5af7d94b1715a9c4c">_resample</a>(y, fs_old, fs_new, tolerance=1e2, kaiser_beta=12.0):</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="stringliteral">&quot;&quot;&quot;Rational resample with **edge-replicate padding** and a **sharp Kaiser</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="stringliteral">        anti-alias/anti-image filter**.</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span><span class="stringliteral">        Two boundary effects of a plain ``resample_poly`` are corrected here:</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="stringliteral">        * **Edge transient** — ``resample_poly`` implicitly zero-pads beyond the</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="stringliteral">          data, so its FIR runs into zeros at the edges; on **upsampling** the</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="stringliteral">          trailing ~half-filter of output ramps linearly to zero (an asymmetric</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="stringliteral">          tail decay — the start recovers, the end collapses).  We pad both ends</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="stringliteral">          with the edge sample, resample, then trim the padding back out, so the</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="stringliteral">          FIR always sees real data across the original span.  Output length</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="stringliteral">          matches the unpadded ``resample_poly(y, up, down)`` exactly.  The pad is</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="stringliteral">          a **multiple of ``down``** so the trim offset ``pad·up/down`` is an exact</span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span><span class="stringliteral">          integer — otherwise the rounded trim leaves a fractional-sample group</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="stringliteral">          delay (here ~2 ms) that rotates every off-carrier phasor by ``2π·Δf·δt``,</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="stringliteral">          silently capping the subtraction of detuned modes at ~30 dB.</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="stringliteral">        * **Upsampling images** — the decimated phasor&#39;s spectral copies sit at</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="stringliteral">          ``±k·fs_dec`` and re-appear around ``fc ± k·fs_dec`` after remodulation.</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="stringliteral">          The default Kaiser window (``β=5``) only suppresses the first image to</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="stringliteral">          ≈ −73 dB.  Because the carried signal lives in ``[fc ± dfc]`` while the</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="stringliteral">          decimated Nyquist is ``2·dfc`` (a full octave of guard band), a steeper</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="stringliteral">          stopband is essentially free: ``β=12`` pushes the first image below</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="stringliteral">          −120 dB without touching in-band content.</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keyword">from</span> scipy.signal <span class="keyword">import</span> resample_poly</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keyword">from</span> math <span class="keyword">import</span> gcd</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        y = np.asarray(y)</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        fs_old_int = int(round(float(fs_old) * tolerance))</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        fs_new_int = int(round(float(fs_new) * tolerance))</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        g = gcd(fs_old_int, fs_new_int)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        up = fs_new_int // g</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        down = fs_old_int // g</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        window = (<span class="stringliteral">&quot;kaiser&quot;</span>, float(kaiser_beta))</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        n_in = len(y)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="keywordflow">if</span> n_in == 0:</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="keywordflow">return</span> resample_poly(y, up, down, window=window)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        out_len = -(-n_in * up // down)                  <span class="comment"># ceil(n_in*up/down), scipy&#39;s length</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="comment"># Transient ≈ 2×(10·max(up,down)/up) input samples; round the pad up to a</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="comment"># whole number of ``down``-blocks so the trim offset is an exact integer.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        base = int(np.ceil(10.0 * max(up, down) / up)) * 2 + 8</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        reps = max(1, -(-base // down))                   <span class="comment"># ceil(base/down), ≥ 1 block</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        pad = reps * down</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        yp = np.concatenate([np.full(pad, y[0], dtype=y.dtype), y,</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                             np.full(pad, y[-1], dtype=y.dtype)])</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        yr = resample_poly(yp, up, down, window=window)</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        off = reps * up                                  <span class="comment"># = pad·up/down, exact (zero delay)</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">return</span> yr[off:off + out_len]</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    <span class="comment"># --- real strain → heterodyne rotation → resample_poly downsample ---</span></div>
+<div class="foldopen" id="foldopen00178" data-start="" data-end="">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeecb405e44783370b59e75a084ba0606">  178</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeecb405e44783370b59e75a084ba0606">_demod_preprocess</a>(self, zk, uk=None, **kwargs):</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="stringliteral">&quot;&quot;&quot;Preprocess: real strain → complex baseband phasor at decimated rate.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="stringliteral">        Heterodyne rotation ``ψ = 2·x·e^{-jωc·t}`` followed by anti-aliased</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span><span class="stringliteral">        downsampling to ``fs_dec = 4·dfc``.  Returns ``(N_dec, 2)`` = ``[Re(ψ), Im(ψ)]``.</span></div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span><span class="stringliteral">        Symmetric counterpart: ``_reconstruct_postprocess``.</span></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        x = np.asarray(zk, dtype=float).reshape(np.shape(zk)[0], -1)[:, 0]   <span class="comment"># real strain (T,)</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        N = len(x)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a97ac9efc3a391f8a4b04ca7a2ec3d442">_preprocess_N</a> = N</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        t = self.<a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#abca4d35fe41b62881e4239cc32cec266">t0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ada357b39a315aed4196882cfe5d02b91">t0</a> + np.arange(N) / self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        psi = 2.0 * x * np.exp(-1j * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8">_wc</a> * t)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        psi_dec = self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ae88fcc74d49697d5af7d94b1715a9c4c">_resample</a>(psi, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a>, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a>)</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keywordflow">return</span> np.column_stack([psi_dec.real, psi_dec.imag]), uk              <span class="comment"># (N_dec, 2)</span></div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="comment"># --- optional band-limit: kill the residual upsampling images ---</span></div>
+<div class="foldopen" id="foldopen00194" data-start="" data-end="">
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a5c57aad7ad41a4264e411b9377896658">  194</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a5c57aad7ad41a4264e411b9377896658">_band_limit_phasor</a>(self, psi, cutoff_hz):</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="stringliteral">&quot;&quot;&quot;Zero-phase low-pass a complex baseband phasor at ``cutoff_hz``.</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span><span class="stringliteral">        Upsampling the decimated phasor leaves residual spectral images at</span></div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span><span class="stringliteral">        ``±fs_dec`` baseband (i.e. ``fc ± fs_dec`` after remodulation, well</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="stringliteral">        outside the reconstruction band ``[fc ± 2·dfc]``).  Low-passing the</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="stringliteral">        upsampled phasor at ``cutoff_hz = 2·dfc`` removes them, confining the</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="stringliteral">        reconstruction to exactly ``[fc ± cutoff_hz]``.  In-band content is</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span><span class="stringliteral">        untouched (the carried envelope lives within ``±dfc``).</span></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        <span class="keyword">from</span> scipy.signal <span class="keyword">import</span> firwin, filtfilt</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        psi = np.asarray(psi)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        n = len(psi)</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keywordflow">if</span> n &lt; 9 <span class="keywordflow">or</span> cutoff_hz &lt;= 0:</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>            <span class="keywordflow">return</span> psi</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        fnyq = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a> / 2.0</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        <span class="comment"># Transition band ~ the (2·dfc → fs_dec) guard; size taps to resolve it.</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>        ntaps = int(round(3.3 * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a> / cutoff_hz)) | 1</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        ntaps = min(ntaps, ((n - 1) // 3) | 1)</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        <span class="keywordflow">if</span> ntaps &lt; 3:</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            <span class="keywordflow">return</span> psi</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        taps = firwin(ntaps, cutoff_hz / fnyq)</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        <span class="keywordflow">return</span> filtfilt(taps, 1.0, psi, padlen=min(3 * ntaps, n - 1))</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    <span class="comment"># --- postprocess: filtered phasor sum → real band signal at original rate ---</span></div>
+<div class="foldopen" id="foldopen00219" data-start="" data-end="">
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa83e5367a38f5f484e96b66fa13ec0a0">  219</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa83e5367a38f5f484e96b66fa13ec0a0">_reconstruct_postprocess</a>(self, zk_hat, band_limit=False, **kwargs):</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="stringliteral">&quot;&quot;&quot;Postprocess: FUSED phasor sum (decimated) → real band signal at original rate.</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span><span class="stringliteral">        ``zk_hat`` = ``h(xk)`` from the FUSED composite = ``Σψ̂_i``, shape ``(N_dec, 2)``.</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span><span class="stringliteral">        Upsamples to ``fs_original`` then remodulates: ``Re[Σψ̂ · e^{jωc·t}]``.</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span><span class="stringliteral">        Symmetric counterpart: ``_demod_preprocess``.</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="stringliteral">        Returns ``(N, 1)`` real.</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span><span class="stringliteral">        ``band_limit`` (default ``False``) — when ``True``, low-pass the upsampled</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="stringliteral">        phasor at ``2·dfc`` to erase the residual ``fc ± fs_dec`` upsampling images.</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        z = np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        psi = z[:, 0] + 1j * z[:, 1]</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        psi_up = self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ae88fcc74d49697d5af7d94b1715a9c4c">_resample</a>(psi, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">_fs_dec</a>, self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a>)</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        N = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a97ac9efc3a391f8a4b04ca7a2ec3d442">_preprocess_N</a></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">if</span> len(psi_up) &gt; N:</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>            psi_up = psi_up[:N]</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keywordflow">elif</span> len(psi_up) &lt; N:</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>            psi_up = np.concatenate([psi_up, np.zeros(N - len(psi_up))])</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keywordflow">if</span> band_limit:</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>            psi_up = self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a5c57aad7ad41a4264e411b9377896658">_band_limit_phasor</a>(psi_up, 2.0 * self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ac333ea0d72c7d3f593b82de774ef5e16">dfc</a>)</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        t = self.<a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#abca4d35fe41b62881e4239cc32cec266">t0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ada357b39a315aed4196882cfe5d02b91">t0</a> + np.arange(N) / self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">_fs_original</a></div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        arg = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8">_wc</a> * t</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        <span class="keywordflow">return</span> (psi_up.real * np.cos(arg) - psi_up.imag * np.sin(arg)).reshape(-1, 1)</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="comment"># --- identity postprocess (kept for backward compat / standalone use) ---</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00246" data-start="" data-end="">
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a12963e8047978cf8596b4bcf9cde5d8e">  246</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a12963e8047978cf8596b4bcf9cde5d8e">_identity_postprocess</a>(zk_hat, **kwargs):</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="stringliteral">&quot;&quot;&quot;Identity postprocess: pass ``h(xk)`` through unchanged as ``[Re, Im]`` phasors.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="keywordflow">return</span> np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+</div>
+<div class="foldopen" id="foldopen00250" data-start="" data-end="">
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a8aa63e43fe35b4c8a0c35d7ce18088f2">  250</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a8aa63e43fe35b4c8a0c35d7ce18088f2">reconstruct</a>(self, record, *, band_limit=False):</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        <span class="stringliteral">&quot;&quot;&quot;Upsample the decimated phasors in ``record.zk`` and remodulate to the</span></div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span><span class="stringliteral">        original sample rate — returns a real 1-D array of length ``N_original``.</span></div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="stringliteral">        ``band_limit`` (default ``False``) clips the output to ``[fc ± 2·dfc]``,</span></div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span><span class="stringliteral">        removing the residual ``fc ± fs_dec`` upsampling images (~−125 dB).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa83e5367a38f5f484e96b66fa13ec0a0">_reconstruct_postprocess</a>(record.zk, band_limit=band_limit).ravel()</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
+</div>
+<div class="foldopen" id="foldopen00258" data-start="" data-end="">
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ad667899dcc2ad3ac476d4912d92c86a2">  258</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ad667899dcc2ad3ac476d4912d92c86a2">amplitudes</a>(self, record):</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="stringliteral">&quot;&quot;&quot;Per-mode amplitude ``|ψ_i| = √(Re²+Im²)`` for the in-band modes — shape ``(T, n)``.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        xk = np.asarray(record.xk)</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>        <span class="keywordflow">return</span> np.column_stack([np.hypot(xk[:, 2 * k], xk[:, 2 * k + 1])</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>                                <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(self.<a class="code hl_variable" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#afd68537bd8663783582d837418cbfed2">frequencies</a>))])</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="comment"># ------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="preprocessor">@classmethod</span></div>
+<div class="foldopen" id="foldopen00266" data-start="" data-end="">
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ec7354db0f77cb9d7aeadb146702467">  266</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ec7354db0f77cb9d7aeadb146702467">fit_inharmonicity</a>(cls, peak_freqs, partial_numbers=None):</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="stringliteral">&quot;&quot;&quot;Least-squares fit of ``(f0, B)`` from measured partial frequencies.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        peak_freqs = np.asarray(peak_freqs, dtype=float)</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        ns = (np.arange(1, len(peak_freqs) + 1, dtype=float)</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>              <span class="keywordflow">if</span> partial_numbers <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> np.asarray(partial_numbers, dtype=float))</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span> </div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        <span class="keyword">def </span>model_fn(n, f0, B):</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>            <span class="keywordflow">return</span> n * f0 * np.sqrt(1.0 + B * n ** 2)</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>        popt, _ = curve_fit(model_fn, ns, peak_freqs, p0=[peak_freqs[0], 0.0],</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>                            bounds=([0.0, 0.0], [np.inf, 1.0]), maxfev=10000)</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>        <span class="keywordflow">return</span> float(popt[0]), float(popt[1])</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
+</div>
+</div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1analytic_1_1_analytic_oscillator_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1analytic_1_1_analytic_oscillator_model.html">modules.apps.resonators.oscillators.analytic.AnalyticOscillatorModel</a></div><div class="ttdef"><b>Definition</b> <a href="analytic_8py_source.html#l00015">analytic.py:15</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html">modules.apps.resonators.oscillators.composite.OscillatorModel</a></div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00016">composite.py:16</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a0ec9feee650acfc1a2de34b9c46eae6f"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a0ec9feee650acfc1a2de34b9c46eae6f">modules.apps.resonators.oscillators.composite.OscillatorModel.observables</a></div><div class="ttdeci">observables(self)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00079">composite.py:79</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a12963e8047978cf8596b4bcf9cde5d8e"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a12963e8047978cf8596b4bcf9cde5d8e">modules.apps.resonators.oscillators.composite.OscillatorModel._identity_postprocess</a></div><div class="ttdeci">_identity_postprocess(zk_hat, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00246">composite.py:246</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a17aae898e569330f6a9d84387ab27c54"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a17aae898e569330f6a9d84387ab27c54">modules.apps.resonators.oscillators.composite.OscillatorModel._fs_dec</a></div><div class="ttdeci">_fs_dec</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00101">composite.py:101</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a3ab83570d5f531b4d57931001aff74d7"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ab83570d5f531b4d57931001aff74d7">modules.apps.resonators.oscillators.composite.OscillatorModel.fc</a></div><div class="ttdeci">fc</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00094">composite.py:94</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a3ec7354db0f77cb9d7aeadb146702467"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ec7354db0f77cb9d7aeadb146702467">modules.apps.resonators.oscillators.composite.OscillatorModel.fit_inharmonicity</a></div><div class="ttdeci">fit_inharmonicity(cls, peak_freqs, partial_numbers=None)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00266">composite.py:266</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a4f51def540d914e75cb849ddb4c7b6e9"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a4f51def540d914e75cb849ddb4c7b6e9">modules.apps.resonators.oscillators.composite.OscillatorModel.states</a></div><div class="ttdeci">states(self)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00076">composite.py:76</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a50cfe08d4122bbc43dcd26ac93e1f7cc"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a50cfe08d4122bbc43dcd26ac93e1f7cc">modules.apps.resonators.oscillators.composite.OscillatorModel.preprocess</a></div><div class="ttdeci">preprocess</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00121">composite.py:121</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a5c57aad7ad41a4264e411b9377896658"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a5c57aad7ad41a4264e411b9377896658">modules.apps.resonators.oscillators.composite.OscillatorModel._band_limit_phasor</a></div><div class="ttdeci">_band_limit_phasor(self, psi, cutoff_hz)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00194">composite.py:194</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a6aebe82bc5ce19a016aef47d5f962861"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a6aebe82bc5ce19a016aef47d5f962861">modules.apps.resonators.oscillators.composite.OscillatorModel.postprocess</a></div><div class="ttdeci">postprocess</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00122">composite.py:122</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a8aa63e43fe35b4c8a0c35d7ce18088f2"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a8aa63e43fe35b4c8a0c35d7ce18088f2">modules.apps.resonators.oscillators.composite.OscillatorModel.reconstruct</a></div><div class="ttdeci">reconstruct(self, record, *band_limit=False)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00250">composite.py:250</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_a97ac9efc3a391f8a4b04ca7a2ec3d442"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a97ac9efc3a391f8a4b04ca7a2ec3d442">modules.apps.resonators.oscillators.composite.OscillatorModel._preprocess_N</a></div><div class="ttdeci">_preprocess_N</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00102">composite.py:102</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_aa83e5367a38f5f484e96b66fa13ec0a0"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa83e5367a38f5f484e96b66fa13ec0a0">modules.apps.resonators.oscillators.composite.OscillatorModel._reconstruct_postprocess</a></div><div class="ttdeci">_reconstruct_postprocess(self, zk_hat, band_limit=False, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00219">composite.py:219</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_ab4cd752986a57689a245a6915234aa33"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ab4cd752986a57689a245a6915234aa33">modules.apps.resonators.oscillators.composite.OscillatorModel.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00119">composite.py:119</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_ac333ea0d72c7d3f593b82de774ef5e16"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ac333ea0d72c7d3f593b82de774ef5e16">modules.apps.resonators.oscillators.composite.OscillatorModel.dfc</a></div><div class="ttdeci">dfc</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00095">composite.py:95</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_ad667899dcc2ad3ac476d4912d92c86a2"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ad667899dcc2ad3ac476d4912d92c86a2">modules.apps.resonators.oscillators.composite.OscillatorModel.amplitudes</a></div><div class="ttdeci">amplitudes(self, record)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00258">composite.py:258</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_ae88fcc74d49697d5af7d94b1715a9c4c"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ae88fcc74d49697d5af7d94b1715a9c4c">modules.apps.resonators.oscillators.composite.OscillatorModel._resample</a></div><div class="ttdeci">_resample(y, fs_old, fs_new, tolerance=1e2, kaiser_beta=12.0)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00126">composite.py:126</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_aeb191907279a631d42682d6c47f6e452"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeb191907279a631d42682d6c47f6e452">modules.apps.resonators.oscillators.composite.OscillatorModel._fs_original</a></div><div class="ttdeci">_fs_original</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00100">composite.py:100</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_aeecb405e44783370b59e75a084ba0606"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeecb405e44783370b59e75a084ba0606">modules.apps.resonators.oscillators.composite.OscillatorModel._demod_preprocess</a></div><div class="ttdeci">_demod_preprocess(self, zk, uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00178">composite.py:178</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_af09fb1961be18783606e7cc93163aca8"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8">modules.apps.resonators.oscillators.composite.OscillatorModel._wc</a></div><div class="ttdeci">_wc</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00097">composite.py:97</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model_html_afd68537bd8663783582d837418cbfed2"><div class="ttname"><a href="classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#afd68537bd8663783582d837418cbfed2">modules.apps.resonators.oscillators.composite.OscillatorModel.frequencies</a></div><div class="ttdeci">frequencies</div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2oscillators_2composite_8py_source.html#l00096">composite.py:96</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c_html_a96b5424a9af4e81f39898fde66775ab7"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c.html#a96b5424a9af4e81f39898fde66775ab7">modules.framework.abstract.contracts.KalmanModelABC.postprocess</a></div><div class="ttdeci">postprocess(self, zk_hat, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="contracts_8py_source.html#l00032">contracts.py:32</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c_html_ad282eabfaa2bd1d09017e5b832721951"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_model_a_b_c.html#ad282eabfaa2bd1d09017e5b832721951">modules.framework.abstract.contracts.KalmanModelABC.preprocess</a></div><div class="ttdeci">preprocess(self, zk, Optional[np.ndarray] uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="contracts_8py_source.html#l00022">contracts.py:22</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a54702aa647740c1bc8a5c2c09ea2b194"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a54702aa647740c1bc8a5c2c09ea2b194">modules.framework.abstract.metadata.KalmanModelMetadata.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00079">metadata.py:79</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_abca4d35fe41b62881e4239cc32cec266"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#abca4d35fe41b62881e4239cc32cec266">modules.framework.abstract.metadata.KalmanModelMetadata.t0</a></div><div class="ttdeci">t0</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00078">metadata.py:78</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin_html_a7666fcfa6dfa4770442602420632bfde"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a7666fcfa6dfa4770442602420632bfde">modules.framework.abstract.mixins.KalmanModelMixin.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00282">mixins.py:282</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a33548322b8febddbd88a6e455af7e28b"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a33548322b8febddbd88a6e455af7e28b">modules.framework.model.KalmanModel.preprocess</a></div><div class="ttdeci">preprocess(self, zk, uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00550">model.py:550</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a420f835f3dafac5ea971bd25654b9a5f"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a420f835f3dafac5ea971bd25654b9a5f">modules.framework.model.KalmanModel.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00110">model.py:110</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a73ac97cd22463335dac56a99513d7f54"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a73ac97cd22463335dac56a99513d7f54">modules.framework.model.KalmanModel.postprocess</a></div><div class="ttdeci">postprocess(self, zk_hat, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00556">model.py:556</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_ada357b39a315aed4196882cfe5d02b91"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#ada357b39a315aed4196882cfe5d02b91">modules.framework.model.KalmanModel.t0</a></div><div class="ttdeci">t0</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00129">model.py:129</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html">modules.framework.models.composite.CompositeKalmanModel</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00009">composite.py:9</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html_a25d7baea17c2ccdc57e1d875948ade3d"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a25d7baea17c2ccdc57e1d875948ade3d">modules.framework.models.composite.CompositeKalmanModel.fs</a></div><div class="ttdeci">fs</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00043">composite.py:43</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html_a2fa043c6b4fd3db5d74ca4120706a202"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a2fa043c6b4fd3db5d74ca4120706a202">modules.framework.models.composite.CompositeKalmanModel.postprocess</a></div><div class="ttdeci">postprocess(self, zk_hat, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00362">composite.py:362</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html_a5137d081091123893c28ea397f65d91a"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a5137d081091123893c28ea397f65d91a">modules.framework.models.composite.CompositeKalmanModel.preprocess</a></div><div class="ttdeci">preprocess(self, zk, uk=None, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00358">composite.py:358</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html_a64aa2d4aecc1412a86e5d4bc4d0ca653"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#a64aa2d4aecc1412a86e5d4bc4d0ca653">modules.framework.models.composite.CompositeKalmanModel.postprocess</a></div><div class="ttdeci">postprocess</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00083">composite.py:83</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_html_aa849cc67c113f584b821b7e064e19379"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html#aa849cc67c113f584b821b7e064e19379">modules.framework.models.composite.CompositeKalmanModel.preprocess</a></div><div class="ttdeci">preprocess</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2composite_8py_source.html#l00081">composite.py:81</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_0de21104e87ec680ae0aca013a9e4a6f.html">resonators</a></li><li class="navelem"><a class="el" href="dir_371f15e6abc31b99be73114670b4da54.html">oscillators</a></li><li class="navelem"><a class="el" href="apps_2resonators_2oscillators_2composite_8py.html">composite.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

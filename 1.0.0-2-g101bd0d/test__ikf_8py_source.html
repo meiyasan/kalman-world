@@ -1,0 +1,468 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/test_ikf.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/test_ikf.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/test_ikf.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('test__ikf_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">test_ikf.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="test__ikf_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Tests for InteractiveKalmanFilter and the full IKF pipeline.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">import</span> unittest</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a> <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters_1_1ikf.html">modules.framework.filters.ikf</a> <span class="keyword">import</span> InteractiveKalmanFilter</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers.html">modules.framework.routers</a>          <span class="keyword">import</span> (BayesianRouter, ThresholdRouter,</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span>                                                 NeuralRouter, HybridRouter)</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers_1_1nn_1_1mlp.html">modules.framework.routers.nn.mlp</a>  <span class="keyword">import</span> MLP</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment"># ── shared fixtures ───────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="foldopen" id="foldopen00016" data-start="" data-end="">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">   16</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>(q_slow=0.1, q_fast=2.0):</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="stringliteral">&quot;&quot;&quot;Two 1-D random-walk models with very different process noise.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">def </span>_m(name, q):</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">KalmanModel</a>(name,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                           F=np.eye(1), H=np.eye(1),</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                           Q=np.array([[q ** 2]]),</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                           R=np.array([[1.0 ** 2]]),</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                           fs=1.0,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                           x0=np.array([[0.0]]))</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordflow">return</span> _m(<span class="stringliteral">&quot;slow&quot;</span>, q_slow), _m(<span class="stringliteral">&quot;fast&quot;</span>, q_fast)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+</div>
+<div class="foldopen" id="foldopen00028" data-start="" data-end="">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">   28</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(regime_seq, q_slow=0.1, q_fast=2.0, obs_std=1.0, seed=0):</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="stringliteral">&quot;&quot;&quot;Simulate a 1-D switching process and noisy observations.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    x = 0.0</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    zk, labels = [], []</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordflow">for</span> re <span class="keywordflow">in</span> regime_seq:</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        x += rng.normal(0, q_slow <span class="keywordflow">if</span> re == 0 <span class="keywordflow">else</span> q_fast)</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        zk.append([x + rng.normal(0, obs_std)])</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        labels.append(re)</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">return</span> np.array(zk), np.array(labels, dtype=int)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html#a2cb9860682af93031046d675f635c9ed">   40</a></span>PI = np.array([[0.95, 0.05], [0.05, 0.95]])</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html#abecde54a35f03bfa53d32edc7b357495">   42</a></span>REGIME_200 = np.r_[np.zeros(100, int), np.ones(100, int)]</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__ikf.html#a46745eab03ad39dbec02ef176ab51f3a">   43</a></span>REGIME_200_TEST = np.r_[np.zeros(70, int), np.ones(60, int), np.zeros(70, int)]</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment"># ── basic API ─────────────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="foldopen" id="foldopen00048" data-start="" data-end="">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html">   48</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html">TestIKFBasicAPI</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="foldopen" id="foldopen00050" data-start="" data-end="">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">   50</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>(self, **kw):</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI, **kw)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+</div>
+<div class="foldopen" id="foldopen00054" data-start="" data-end="">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a8ca53afa0b2191dbe8a84374e18360c9">   54</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a8ca53afa0b2191dbe8a84374e18360c9">test_forward_returns_record</a>(self):</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1io_1_1record.html">modules.framework.io.record</a> <span class="keyword">import</span> KalmanRecord</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        rec = ikf.forward(zk)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        self.assertIsInstance(rec, KalmanRecord)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+</div>
+<div class="foldopen" id="foldopen00061" data-start="" data-end="">
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a73f21ed7417724161fb548fbded1f271">   61</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a73f21ed7417724161fb548fbded1f271">test_record_shape</a>(self):</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        T   = 60</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(np.zeros(T, int))</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        rec   = ikf.forward(zk)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        self.assertEqual(rec.xk.shape, (T, 1))</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
+</div>
+<div class="foldopen" id="foldopen00068" data-start="" data-end="">
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a011606c94ebeed599c53a5746fcf7328">   68</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a011606c94ebeed599c53a5746fcf7328">test_mode_probs_shape_and_sum</a>(self):</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        T   = 50</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(np.zeros(T, int))</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        ikf.forward(zk)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        mu = ikf.mode_probabilities</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        self.assertEqual(mu.shape, (T, 2))</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        np.testing.assert_allclose(mu.sum(axis=1), 1.0, atol=1e-9)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+</div>
+<div class="foldopen" id="foldopen00077" data-start="" data-end="">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a4a501671ee57e79678ee774330cd5e14">   77</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a4a501671ee57e79678ee774330cd5e14">test_mode_probs_non_negative</a>(self):</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        ikf.forward(zk)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        self.assertTrue(np.all(ikf.mode_probabilities &gt;= 0))</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+</div>
+<div class="foldopen" id="foldopen00083" data-start="" data-end="">
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad834db9ee7268cf8100a6ccbd2dbca42">   83</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad834db9ee7268cf8100a6ccbd2dbca42">test_default_router_is_bayesian</a>(self):</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        self.assertIsInstance(ikf.router, BayesianRouter)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+</div>
+<div class="foldopen" id="foldopen00087" data-start="" data-end="">
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ab51b999d36a77ec3ed961e55fbe5ae98">   87</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ab51b999d36a77ec3ed961e55fbe5ae98">test_reset_clears_state</a>(self):</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        ikf.forward(zk)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        self.assertGreater(len(ikf.mu_log), 0)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        ikf.reset()</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        self.assertEqual(len(ikf.mu_log), 0)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        self.assertEqual(len(ikf.nis_log), 0)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        self.assertEqual(len(ikf.combined_posterior), 0)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
+</div>
+<div class="foldopen" id="foldopen00097" data-start="" data-end="">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a146e5769f026efe355899b73bdae799c">   97</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a146e5769f026efe355899b73bdae799c">test_mode_probs_empty_before_forward</a>(self):</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        mu = ikf.mode_probabilities</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        self.assertEqual(mu.shape, (0, 2))</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+</div>
+<div class="foldopen" id="foldopen00102" data-start="" data-end="">
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a90a08e9c577252ccb3a9069eee8576eb">  102</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a90a08e9c577252ccb3a9069eee8576eb">test_filter_alias_works</a>(self):</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(np.zeros(20, int))</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        rec = ikf.filter(zk)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1io_1_1record.html">modules.framework.io.record</a> <span class="keyword">import</span> KalmanRecord</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        self.assertIsInstance(rec, KalmanRecord)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+</div>
+<div class="foldopen" id="foldopen00109" data-start="" data-end="">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#add332d44e992ce4b76e060d963646b52">  109</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#add332d44e992ce4b76e060d963646b52">test_no_nan_inf_in_estimates</a>(self):</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        ikf = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">_ikf</a>()</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200)</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        rec = ikf.forward(zk)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        self.assertFalse(np.any(np.isnan(rec.xk)))</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        self.assertFalse(np.any(np.isinf(rec.xk)))</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="comment"># ── router fit API ────────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00119" data-start="" data-end="">
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html">  119</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html">TestIKFFitAPI</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="foldopen" id="foldopen00121" data-start="" data-end="">
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">  121</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">_data</a>(self, n_sequences=3, seed_start=0):</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        train_zk, train_lbl = [], []</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> range(n_sequences):</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            zk, lbl = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200, seed=seed_start + s)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            train_zk.append(zk)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            train_lbl.append(lbl)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordflow">return</span> train_zk, train_lbl</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+</div>
+<div class="foldopen" id="foldopen00129" data-start="" data-end="">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#adcd03ac4f346206639d79128e2c2f8cf">  129</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#adcd03ac4f346206639d79128e2c2f8cf">test_fit_returns_self</a>(self):</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        ikf = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI,</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                                      router=<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">NeuralRouter</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p.html">MLP</a>(4), window=3))</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        train_zk, train_lbl = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">_data</a>()</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        result = ikf.fit(train_zk, train_lbl, epochs=20)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        self.assertIs(result, ikf)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+</div>
+<div class="foldopen" id="foldopen00137" data-start="" data-end="">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#aaac23323b8354a971245920dcc47cd9f">  137</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#aaac23323b8354a971245920dcc47cd9f">test_fit_trains_neural_router</a>(self):</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        router  = <a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">NeuralRouter</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p.html">MLP</a>(4), window=3)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        ikf     = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI, router=router)</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        train_zk, train_lbl = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">_data</a>()</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        ikf.fit(train_zk, train_lbl, epochs=30)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        self.assertTrue(router._is_trained)</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+</div>
+<div class="foldopen" id="foldopen00145" data-start="" data-end="">
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#ae94038a369867c0a0a178f06cfe6aa91">  145</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#ae94038a369867c0a0a178f06cfe6aa91">test_fit_noop_for_bayesian</a>(self):</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        router  = <a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1bayesian_1_1_bayesian_router.html">BayesianRouter</a>()</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        ikf     = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI, router=router)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        train_zk, train_lbl = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">_data</a>()</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        ikf.fit(train_zk, train_lbl)</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="comment"># No error; BayesianRouter.fit is a no-op</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        self.assertIsInstance(router, BayesianRouter)</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="comment"># ── routing accuracy ──────────────────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00157" data-start="" data-end="">
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html">  157</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html">TestRoutingAccuracy</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    <span class="stringliteral">&quot;&quot;&quot;Routing accuracy on the 2-model Gaussian benchmark.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="foldopen" id="foldopen00160" data-start="" data-end="">
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">  160</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">_run</a>(self, router, epochs=200, n_train=3, seed=42):</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        ikf = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI, router=router)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span> </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        train_zk, train_lbl = [], []</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">for</span> s <span class="keywordflow">in</span> range(n_train):</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            zk, lbl = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200, seed=s)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            train_zk.append(zk); train_lbl.append(lbl)</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        ikf.fit(train_zk, train_lbl, epochs=epochs, seed=seed)</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        zk_test, lbl_test = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(REGIME_200_TEST, seed=99)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        ikf.forward(zk_test)</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        mu = ikf.mode_probabilities</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        acc = float((np.argmax(mu, axis=1) == lbl_test).mean())</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="keywordflow">return</span> acc</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+</div>
+<div class="foldopen" id="foldopen00177" data-start="" data-end="">
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a273505615a71962307ef2504b8152f3e">  177</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a273505615a71962307ef2504b8152f3e">test_bayesian_accuracy_high</a>(self):</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="comment"># Classical IKF should reach ≥85% on clean Gaussian data</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        acc = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">_run</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1bayesian_1_1_bayesian_router.html">BayesianRouter</a>())</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        self.assertGreater(acc, 0.85, f<span class="stringliteral">&quot;Bayesian accuracy {acc:.1%} too low&quot;</span>)</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span> </div>
+</div>
+<div class="foldopen" id="foldopen00182" data-start="" data-end="">
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#adb17aef5227688969a4b7f3eaf6d70fa">  182</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#adb17aef5227688969a4b7f3eaf6d70fa">test_threshold_accuracy_reasonable</a>(self):</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        acc = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">_run</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1threshold_1_1_threshold_router.html">ThresholdRouter</a>(m=1, window=5, soft=<span class="keyword">True</span>))</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        self.assertGreater(acc, 0.70, f<span class="stringliteral">&quot;Threshold accuracy {acc:.1%} too low&quot;</span>)</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
+</div>
+<div class="foldopen" id="foldopen00186" data-start="" data-end="">
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a3d96f66e76699c4887ecccf1af1003c7">  186</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a3d96f66e76699c4887ecccf1af1003c7">test_neural_accuracy_reasonable</a>(self):</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="comment"># After 3 training sequences, MLP should reach ≥70%</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        acc = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">_run</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">NeuralRouter</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p.html">MLP</a>(hidden=16), window=5), epochs=300)</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        self.assertGreater(acc, 0.70, f<span class="stringliteral">&quot;Neural accuracy {acc:.1%} too low&quot;</span>)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+</div>
+<div class="foldopen" id="foldopen00191" data-start="" data-end="">
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#affe20d3656863902ada99a051544dc3c">  191</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#affe20d3656863902ada99a051544dc3c">test_hybrid_close_to_bayesian</a>(self):</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        r_bay = <a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1bayesian_1_1_bayesian_router.html">BayesianRouter</a>()</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        r_mlp = <a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">NeuralRouter</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p.html">MLP</a>(hidden=8), window=5)</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        acc = self.<a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">_run</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1routers_1_1hybrid_1_1_hybrid_router.html">HybridRouter</a>(r_bay, r_mlp, alpha=0.3), epochs=200)</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment"># Bayesian anchor keeps accuracy high</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        self.assertGreater(acc, 0.80, f<span class="stringliteral">&quot;Hybrid accuracy {acc:.1%} too low&quot;</span>)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"># ── control input (uk= callable) ──────────────────────────────────────────────</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00201" data-start="" data-end="">
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html">  201</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html">TestIKFWithControl</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="foldopen" id="foldopen00203" data-start="" data-end="">
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno"><a class="line" href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html#aa4f1a81ead8093b7d738f4ac25622c00">  203</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html#aa4f1a81ead8093b7d738f4ac25622c00">test_uk_callable_accepted</a>(self):</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        m0, m1 = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">_two_models</a>()</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        ikf = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">InteractiveKalmanFilter</a>([m0, m1], PI)</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>        zk, _ = <a class="code hl_function" href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">_sim</a>(np.zeros(20, int))</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        zero_ctrl = <span class="keyword">lambda</span> x, P, t, nu=<span class="keywordtype">None</span>: np.zeros((1, 1))</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        rec = ikf.forward(zk, uk=zero_ctrl)</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        self.assertFalse(np.any(np.isnan(rec.xk)))</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    unittest.main()</div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter_html"><div class="ttname"><a href="classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html">modules.framework.filters.ikf.InteractiveKalmanFilter</a></div><div class="ttdef"><b>Definition</b> <a href="ikf_8py_source.html#l00028">ikf.py:28</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00053">model.py:53</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1routers_1_1bayesian_1_1_bayesian_router_html"><div class="ttname"><a href="classmodules_1_1framework_1_1routers_1_1bayesian_1_1_bayesian_router.html">modules.framework.routers.bayesian.BayesianRouter</a></div><div class="ttdef"><b>Definition</b> <a href="bayesian_8py_source.html#l00007">bayesian.py:7</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1routers_1_1hybrid_1_1_hybrid_router_html"><div class="ttname"><a href="classmodules_1_1framework_1_1routers_1_1hybrid_1_1_hybrid_router.html">modules.framework.routers.hybrid.HybridRouter</a></div><div class="ttdef"><b>Definition</b> <a href="hybrid_8py_source.html#l00007">hybrid.py:7</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router_html"><div class="ttname"><a href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">modules.framework.routers.neural.NeuralRouter</a></div><div class="ttdef"><b>Definition</b> <a href="routers_2neural_8py_source.html#l00046">neural.py:46</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p_html"><div class="ttname"><a href="classmodules_1_1framework_1_1routers_1_1nn_1_1mlp_1_1_m_l_p.html">modules.framework.routers.nn.mlp.MLP</a></div><div class="ttdef"><b>Definition</b> <a href="mlp_8py_source.html#l00020">mlp.py:20</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1routers_1_1threshold_1_1_threshold_router_html"><div class="ttname"><a href="classmodules_1_1framework_1_1routers_1_1threshold_1_1_threshold_router.html">modules.framework.routers.threshold.ThresholdRouter</a></div><div class="ttdef"><b>Definition</b> <a href="threshold_8py_source.html#l00007">threshold.py:7</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html">tests.test_ikf.TestIKFBasicAPI</a></div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00048">test_ikf.py:48</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a011606c94ebeed599c53a5746fcf7328"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a011606c94ebeed599c53a5746fcf7328">tests.test_ikf.TestIKFBasicAPI.test_mode_probs_shape_and_sum</a></div><div class="ttdeci">test_mode_probs_shape_and_sum(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00068">test_ikf.py:68</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a146e5769f026efe355899b73bdae799c"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a146e5769f026efe355899b73bdae799c">tests.test_ikf.TestIKFBasicAPI.test_mode_probs_empty_before_forward</a></div><div class="ttdeci">test_mode_probs_empty_before_forward(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00097">test_ikf.py:97</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a4a501671ee57e79678ee774330cd5e14"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a4a501671ee57e79678ee774330cd5e14">tests.test_ikf.TestIKFBasicAPI.test_mode_probs_non_negative</a></div><div class="ttdeci">test_mode_probs_non_negative(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00077">test_ikf.py:77</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a73f21ed7417724161fb548fbded1f271"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a73f21ed7417724161fb548fbded1f271">tests.test_ikf.TestIKFBasicAPI.test_record_shape</a></div><div class="ttdeci">test_record_shape(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00061">test_ikf.py:61</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a8ca53afa0b2191dbe8a84374e18360c9"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a8ca53afa0b2191dbe8a84374e18360c9">tests.test_ikf.TestIKFBasicAPI.test_forward_returns_record</a></div><div class="ttdeci">test_forward_returns_record(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00054">test_ikf.py:54</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_a90a08e9c577252ccb3a9069eee8576eb"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#a90a08e9c577252ccb3a9069eee8576eb">tests.test_ikf.TestIKFBasicAPI.test_filter_alias_works</a></div><div class="ttdeci">test_filter_alias_works(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00102">test_ikf.py:102</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_ab51b999d36a77ec3ed961e55fbe5ae98"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ab51b999d36a77ec3ed961e55fbe5ae98">tests.test_ikf.TestIKFBasicAPI.test_reset_clears_state</a></div><div class="ttdeci">test_reset_clears_state(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00087">test_ikf.py:87</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_ad7f4a32c245c1b29ea118eb6d63738a3"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad7f4a32c245c1b29ea118eb6d63738a3">tests.test_ikf.TestIKFBasicAPI._ikf</a></div><div class="ttdeci">_ikf(self, **kw)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00050">test_ikf.py:50</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_ad834db9ee7268cf8100a6ccbd2dbca42"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#ad834db9ee7268cf8100a6ccbd2dbca42">tests.test_ikf.TestIKFBasicAPI.test_default_router_is_bayesian</a></div><div class="ttdeci">test_default_router_is_bayesian(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00083">test_ikf.py:83</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i_html_add332d44e992ce4b76e060d963646b52"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html#add332d44e992ce4b76e060d963646b52">tests.test_ikf.TestIKFBasicAPI.test_no_nan_inf_in_estimates</a></div><div class="ttdeci">test_no_nan_inf_in_estimates(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00109">test_ikf.py:109</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i_html"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html">tests.test_ikf.TestIKFFitAPI</a></div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00119">test_ikf.py:119</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i_html_a3f96d95efdb0f93ec36efcd6410e56fb"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#a3f96d95efdb0f93ec36efcd6410e56fb">tests.test_ikf.TestIKFFitAPI._data</a></div><div class="ttdeci">_data(self, n_sequences=3, seed_start=0)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00121">test_ikf.py:121</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i_html_aaac23323b8354a971245920dcc47cd9f"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#aaac23323b8354a971245920dcc47cd9f">tests.test_ikf.TestIKFFitAPI.test_fit_trains_neural_router</a></div><div class="ttdeci">test_fit_trains_neural_router(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00137">test_ikf.py:137</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i_html_adcd03ac4f346206639d79128e2c2f8cf"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#adcd03ac4f346206639d79128e2c2f8cf">tests.test_ikf.TestIKFFitAPI.test_fit_returns_self</a></div><div class="ttdeci">test_fit_returns_self(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00129">test_ikf.py:129</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i_html_ae94038a369867c0a0a178f06cfe6aa91"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html#ae94038a369867c0a0a178f06cfe6aa91">tests.test_ikf.TestIKFFitAPI.test_fit_noop_for_bayesian</a></div><div class="ttdeci">test_fit_noop_for_bayesian(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00145">test_ikf.py:145</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_with_control_html"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html">tests.test_ikf.TestIKFWithControl</a></div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00201">test_ikf.py:201</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_i_k_f_with_control_html_aa4f1a81ead8093b7d738f4ac25622c00"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html#aa4f1a81ead8093b7d738f4ac25622c00">tests.test_ikf.TestIKFWithControl.test_uk_callable_accepted</a></div><div class="ttdeci">test_uk_callable_accepted(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00203">test_ikf.py:203</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html">tests.test_ikf.TestRoutingAccuracy</a></div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00157">test_ikf.py:157</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html_a273505615a71962307ef2504b8152f3e"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a273505615a71962307ef2504b8152f3e">tests.test_ikf.TestRoutingAccuracy.test_bayesian_accuracy_high</a></div><div class="ttdeci">test_bayesian_accuracy_high(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00177">test_ikf.py:177</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html_a3d96f66e76699c4887ecccf1af1003c7"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a3d96f66e76699c4887ecccf1af1003c7">tests.test_ikf.TestRoutingAccuracy.test_neural_accuracy_reasonable</a></div><div class="ttdeci">test_neural_accuracy_reasonable(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00186">test_ikf.py:186</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html_a4ce583ddffe1b18607616a58a3548e2e"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#a4ce583ddffe1b18607616a58a3548e2e">tests.test_ikf.TestRoutingAccuracy._run</a></div><div class="ttdeci">_run(self, router, epochs=200, n_train=3, seed=42)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00160">test_ikf.py:160</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html_adb17aef5227688969a4b7f3eaf6d70fa"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#adb17aef5227688969a4b7f3eaf6d70fa">tests.test_ikf.TestRoutingAccuracy.test_threshold_accuracy_reasonable</a></div><div class="ttdeci">test_threshold_accuracy_reasonable(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00182">test_ikf.py:182</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__ikf_1_1_test_routing_accuracy_html_affe20d3656863902ada99a051544dc3c"><div class="ttname"><a href="classtests_1_1test__ikf_1_1_test_routing_accuracy.html#affe20d3656863902ada99a051544dc3c">tests.test_ikf.TestRoutingAccuracy.test_hybrid_close_to_bayesian</a></div><div class="ttdeci">test_hybrid_close_to_bayesian(self)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00191">test_ikf.py:191</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1filters_1_1ikf_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters_1_1ikf.html">modules.framework.filters.ikf</a></div><div class="ttdef"><b>Definition</b> <a href="ikf_8py_source.html#l00001">ikf.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1io_1_1record_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1io_1_1record.html">modules.framework.io.record</a></div><div class="ttdef"><b>Definition</b> <a href="record_8py_source.html#l00001">record.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1model_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00001">model.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1routers_1_1nn_1_1mlp_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1routers_1_1nn_1_1mlp.html">modules.framework.routers.nn.mlp</a></div><div class="ttdef"><b>Definition</b> <a href="mlp_8py_source.html#l00001">mlp.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1routers_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1routers.html">modules.framework.routers</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2routers_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__ikf_html_a13ea1334185fee4190bc8c085860553f"><div class="ttname"><a href="namespacetests_1_1test__ikf.html#a13ea1334185fee4190bc8c085860553f">tests.test_ikf._sim</a></div><div class="ttdeci">_sim(regime_seq, q_slow=0.1, q_fast=2.0, obs_std=1.0, seed=0)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00028">test_ikf.py:28</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__ikf_html_aea6b6cb0a8824cf3ba51a025110a9929"><div class="ttname"><a href="namespacetests_1_1test__ikf.html#aea6b6cb0a8824cf3ba51a025110a9929">tests.test_ikf._two_models</a></div><div class="ttdeci">_two_models(q_slow=0.1, q_fast=2.0)</div><div class="ttdef"><b>Definition</b> <a href="test__ikf_8py_source.html#l00016">test_ikf.py:16</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__ikf_8py.html">test_ikf.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

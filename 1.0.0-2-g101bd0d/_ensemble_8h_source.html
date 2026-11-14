@@ -1,0 +1,317 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="include/Kalman/Engines/Ensemble.h Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: include/Kalman/Engines/Ensemble.h Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>include/Kalman/Engines/Ensemble.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_ensemble_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Ensemble.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_ensemble_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#ifndef KALMAN_ENSEMBLEENGINE_H</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="preprocessor">#define KALMAN_ENSEMBLEENGINE_H</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_8h.html">Kalman/Engine.h</a>&quot;</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &lt;cstdint&gt;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &lt;random&gt;</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_engines.html">Kalman::Engines</a></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>{</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keywordtype">double</span> <a class="code hl_function" href="namespace_kalman_1_1_engines.html#a613a239aa2d6d9d5ac519f8e11775fe6">GaspariCohn</a>(<span class="keywordtype">double</span> distance, <span class="keywordtype">double</span> L);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="foldopen" id="foldopen00079" data-start="{" data-end="};">
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble_model.html">   79</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_kalman_1_1_engines_1_1_ensemble_model.html">EnsembleModel</a></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a85179a6232bd831e2d17f31806bb38d1">   82</a></span>            <span class="keyword">virtual</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a85179a6232bd831e2d17f31806bb38d1">~EnsembleModel</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a43b1ef2182a7d79535787fdb5ef3a923">Forecast</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, std::vector&lt;Vector&gt; &amp;members,</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                                  <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, <span class="keywordtype">double</span> t) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a9414b99418176b7eab83b478d5bfb8e6">Observe</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> std::vector&lt;Vector&gt; &amp;members, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                                 std::vector&lt;Vector&gt; &amp;out) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a51433dbf1a74d424a9ea78c63142b88e">Localization</a>(<a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoXY, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoYY) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble_model.html#ab49b20efc7fbbedc7c54aed666d95371">ProcessNoiseVariances</a>(<span class="keywordtype">double</span> t, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;variances) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    };</div>
+</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="foldopen" id="foldopen00096" data-start="{" data-end="};">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html">   96</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_kalman_1_1_engines_1_1_ensemble.html">Ensemble</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_engine.html">Engine</a></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            std::size_t fNMembers = 50;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordtype">double</span> fInflation = 1.;</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="keyword">mutable</span> std::mt19937_64 fRandom;</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keyword">mutable</span> std::vector&lt;Vector&gt; fMembers;   <span class="comment">// (N) state vectors</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            std::vector&lt;Vector&gt; fStart;             <span class="comment">// the initial ensemble handed in; empty = draw it</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fRhoXY;                          <span class="comment">// (n, m) taper on P H^T, empty = none</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fRhoYY;                          <span class="comment">// (m, m) taper on H P H^T, empty = none</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fModelRhoXY;                     <span class="comment">// the model&#39;s own tapers, taken at Reset()</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fModelRhoYY;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordtype">bool</span> fHasNormals = <span class="keyword">false</span>;               <span class="comment">// draws handed in (SetNormals)</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            std::vector&lt;double&gt; fNormals;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="keyword">mutable</span> std::size_t fNormalsUsed = 0;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keyword">explicit</span> <a class="code hl_class" href="class_kalman_1_1_engines_1_1_ensemble.html">Ensemble</a>(std::size_t nMembers = 50, <span class="keywordtype">double</span> inflation = 1., std::uint64_t seed = 0);</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d30dab2a14e0165e2ba3a60e48c59ce">  119</a></span>            <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d30dab2a14e0165e2ba3a60e48c59ce">~Ensemble</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#adf04fe46752d5e78696ba260113b0bcb">  121</a></span>            <a class="code hl_enumeration" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#adf04fe46752d5e78696ba260113b0bcb">Kind</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">EngineKind::Ensemble</a>; }</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#aeacd838599b94c3269ddd6496217f632">  122</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#aeacd838599b94c3269ddd6496217f632">Title</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Ensemble Engine&quot;</span>; }</div>
+<div class="foldopen" id="foldopen00123" data-start="{" data-end="}">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a1adf21df09e4bd62c8175f672be499e6">  123</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a1adf21df09e4bd62c8175f672be499e6">Description</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="keyword">            </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Perturbed-observation EnKF: localized, inflated ensemble analysis (forward-only).&quot;</span>; }</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a25565483030e1ac2b11b57f110e5090e">  126</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a25565483030e1ac2b11b57f110e5090e">NMembers</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fNMembers; }</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#afb7d72415ab338d64f27737f175b0c91">  127</a></span>            <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#afb7d72415ab338d64f27737f175b0c91">Inflation</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fInflation; }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a2db2d483e25319ce8f0771cc649b93e2">  128</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a2db2d483e25319ce8f0771cc649b93e2">SetInflation</a>(<span class="keywordtype">double</span> a) { fInflation = a; }</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#ac55b27e856f361ee2c9235859906ab25">SetLocalization</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoXY, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoYY);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a23e87bbca2dbd43abb44f6d3842635b0">SetMembers</a>(std::vector&lt;Vector&gt; members);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a916f154ac780663f3eab1f69368afc80">SetNormals</a>(std::vector&lt;double&gt; normals);</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a5779e12800146668560607cab27ebe28">  159</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a5779e12800146668560607cab27ebe28">NormalsLeft</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fHasNormals ? fNormals.size() - fNormalsUsed : 0; }</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Reset</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a54d920872b1fd7440b666b706eef7e61">  163</a></span>            <span class="keywordtype">bool</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a54d920872b1fd7440b666b706eef7e61">HasSmoother</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8b1ed4dba5ef2e2c8d9a8aa1d39ee6e3">Propagate</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> *u,</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                           <span class="keywordtype">double</span> t, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xk, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a3bfe4d602f11eea0f0339767738fb7d3">Measure</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                         <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;zpred, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;H) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb">Predict</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P,</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                         <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> *u, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                         <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xk, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pk, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e">Update</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P,</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                               <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                               <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xOut, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;POut) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a2494ec24c21ebf25945f73748c19f51f">Smooth</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPost, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPost,</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPriorNext, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPriorNext,</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmoothNext, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmoothNext,</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F,</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmooth, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmooth) <span class="keyword">const override</span>;</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            <span class="comment">// --- the ensemble-native steps, for DA workflows -------------------------</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Forecast</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> *u, <span class="keywordtype">double</span> t) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Analyze</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, <span class="keywordtype">double</span> t) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span> </div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engines_1_1_ensemble.html#a6d16a79234fcc348b1d96e59a0125a3a">  193</a></span>            <span class="keyword">const</span> std::vector&lt;Vector&gt; &amp;<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a6d16a79234fcc348b1d96e59a0125a3a">Members</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fMembers; }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a84390e9677e92193b4fad33b6f5dd696">Spread</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Estimate</a>(<a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;mean, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;cov) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            <span class="keyword">static</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Analysis</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;X, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Y, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;R, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z,</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>                                   <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;eps, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> *rhoXY, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> *rhoYY);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            std::vector&lt;Vector&gt; Normals(std::size_t rows) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> Draw(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;factor) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>            <span class="keywordtype">void</span> Observations(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keywordtype">double</span> t, std::vector&lt;Vector&gt; &amp;Y) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    };</div>
+</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>}</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span> </div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_ENSEMBLEENGINE_H</span></div>
+<div class="ttc" id="a_engine_8h_html"><div class="ttname"><a href="_engine_8h.html">Engine.h</a></div><div class="ttdoc">Header of the Kalman::Engine class.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html"><div class="ttname"><a href="class_kalman_1_1_engine.html">Kalman::Engine</a></div><div class="ttdoc">The algorithm — HOW to infer under uncertainty, one step at a time.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8h_source.html#l00046">Engine.h:47</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html">Kalman::Engines::Ensemble</a></div><div class="ttdoc">Perturbed-observation ensemble Kalman filter (Evensen).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00096">Ensemble.h:97</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a06db3e0df8074d18bf426beeefececfb"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb">Kalman::Engines::Ensemble::Predict</a></div><div class="ttdeci">void Predict(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector *u, double t, Vector &amp;xk, Matrix &amp;Pk, Matrix &amp;F) const override</div><div class="ttdoc">Forecast(): every member through f plus a Q draw; returns the moments.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00400">Ensemble.cc:400</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a1adf21df09e4bd62c8175f672be499e6"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a1adf21df09e4bd62c8175f672be499e6">Kalman::Engines::Ensemble::Description</a></div><div class="ttdeci">const char * Description() const override</div><div class="ttdoc">One sentence on what it does.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00123">Ensemble.h:123</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a23e87bbca2dbd43abb44f6d3842635b0"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a23e87bbca2dbd43abb44f6d3842635b0">Kalman::Engines::Ensemble::SetMembers</a></div><div class="ttdeci">void SetMembers(std::vector&lt; Vector &gt; members)</div><div class="ttdoc">The initial ensemble of every run from now on, instead of a draw from x0 / P0 (a climatology,...</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00080">Ensemble.cc:80</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a2494ec24c21ebf25945f73748c19f51f"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a2494ec24c21ebf25945f73748c19f51f">Kalman::Engines::Ensemble::Smooth</a></div><div class="ttdeci">void Smooth(const Vector &amp;xPost, const Matrix &amp;PPost, const Vector &amp;xPriorNext, const Matrix &amp;PPriorNext, const Vector &amp;xSmoothNext, const Matrix &amp;PSmoothNext, const Matrix &amp;F, Vector &amp;xSmooth, Matrix &amp;PSmooth) const override</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00418">Ensemble.cc:418</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a25565483030e1ac2b11b57f110e5090e"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a25565483030e1ac2b11b57f110e5090e">Kalman::Engines::Ensemble::NMembers</a></div><div class="ttdeci">std::size_t NMembers() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00126">Ensemble.h:126</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a2db2d483e25319ce8f0771cc649b93e2"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a2db2d483e25319ce8f0771cc649b93e2">Kalman::Engines::Ensemble::SetInflation</a></div><div class="ttdeci">void SetInflation(double a)</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00128">Ensemble.h:128</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a34a1b54a3b5df170771d7b0eddcd3fad"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Kalman::Engines::Ensemble::Analysis</a></div><div class="ttdeci">static Matrix Analysis(const Matrix &amp;X, const Matrix &amp;Y, const Matrix &amp;R, const Vector &amp;z, const Matrix &amp;eps, const Matrix *rhoXY, const Matrix *rhoYY)</div><div class="ttdoc">The analysis arithmetic, X + K (z + eps - Y).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00265">Ensemble.cc:265</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a3bfe4d602f11eea0f0339767738fb7d3"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a3bfe4d602f11eea0f0339767738fb7d3">Kalman::Engines::Ensemble::Measure</a></div><div class="ttdeci">void Measure(const Model &amp;model, const Vector &amp;x, double t, Vector &amp;zpred, Matrix &amp;H) const override</div><div class="ttdoc">Predict the measurement and report the observation matrix.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00393">Ensemble.cc:393</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a4de9e496676833e6cf3dd015a0704f74"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Kalman::Engines::Ensemble::Reset</a></div><div class="ttdeci">void Reset(const Model &amp;model) override</div><div class="ttdoc">(Re)seed the members: the ensemble handed in, else a draw from the model's x0 / P0.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00139">Ensemble.cc:139</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a54d920872b1fd7440b666b706eef7e61"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a54d920872b1fd7440b666b706eef7e61">Kalman::Engines::Ensemble::HasSmoother</a></div><div class="ttdeci">bool HasSmoother() const override</div><div class="ttdoc">False for engines whose belief is a sample set: Filter::Backward() then refuses.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00163">Ensemble.h:163</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a5779e12800146668560607cab27ebe28"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a5779e12800146668560607cab27ebe28">Kalman::Engines::Ensemble::NormalsLeft</a></div><div class="ttdeci">std::size_t NormalsLeft() const</div><div class="ttdoc">Draws handed in and not yet used.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00159">Ensemble.h:159</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a6d16a79234fcc348b1d96e59a0125a3a"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a6d16a79234fcc348b1d96e59a0125a3a">Kalman::Engines::Ensemble::Members</a></div><div class="ttdeci">const std::vector&lt; Vector &gt; &amp; Members() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00193">Ensemble.h:193</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a84390e9677e92193b4fad33b6f5dd696"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a84390e9677e92193b4fad33b6f5dd696">Kalman::Engines::Ensemble::Spread</a></div><div class="ttdeci">double Spread() const</div><div class="ttdoc">Mean per-state ensemble standard deviation (compare against the RMSE).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00194">Ensemble.cc:194</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a8b1ed4dba5ef2e2c8d9a8aa1d39ee6e3"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a8b1ed4dba5ef2e2c8d9a8aa1d39ee6e3">Kalman::Engines::Ensemble::Propagate</a></div><div class="ttdeci">void Propagate(const Model &amp;model, const Vector &amp;x, const Vector *u, double t, Vector &amp;xk, Matrix &amp;F) const override</div><div class="ttdoc">Advance the mean one step and report the transition matrix.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00384">Ensemble.cc:384</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a8d169a34a249f1965e50c7079d934f6b"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Kalman::Engines::Ensemble::Estimate</a></div><div class="ttdeci">void Estimate(Vector &amp;mean, Matrix &amp;cov) const</div><div class="ttdoc">Ensemble mean and sample covariance.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00172">Ensemble.cc:172</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a8d30dab2a14e0165e2ba3a60e48c59ce"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a8d30dab2a14e0165e2ba3a60e48c59ce">Kalman::Engines::Ensemble::~Ensemble</a></div><div class="ttdeci">~Ensemble() override=default</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a916f154ac780663f3eab1f69368afc80"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a916f154ac780663f3eab1f69368afc80">Kalman::Engines::Ensemble::SetNormals</a></div><div class="ttdeci">void SetNormals(std::vector&lt; double &gt; normals)</div><div class="ttdoc">Standard normal draws to use in place of the engine's own stream.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00097">Ensemble.cc:97</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a940348d3da4d80ab9e325d2ed21a8077"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Kalman::Engines::Ensemble::Forecast</a></div><div class="ttdeci">Vector Forecast(const Model &amp;model, const Vector *u, double t) const</div><div class="ttdoc">Propagate every member; returns the new mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00208">Ensemble.cc:208</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_ab0943c875d1e36b9e7e621c8189675f1"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Kalman::Engines::Ensemble::Analyze</a></div><div class="ttdeci">Vector Analyze(const Model &amp;model, const Vector &amp;z, double t) const</div><div class="ttdoc">Perturbed-observation analysis; NaN channels skipped; returns the mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00312">Ensemble.cc:312</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_ac55b27e856f361ee2c9235859906ab25"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#ac55b27e856f361ee2c9235859906ab25">Kalman::Engines::Ensemble::SetLocalization</a></div><div class="ttdeci">void SetLocalization(const Matrix &amp;rhoXY, const Matrix &amp;rhoYY)</div><div class="ttdoc">Covariance localization tapers.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00074">Ensemble.cc:74</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_adf04fe46752d5e78696ba260113b0bcb"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#adf04fe46752d5e78696ba260113b0bcb">Kalman::Engines::Ensemble::Kind</a></div><div class="ttdeci">EngineKind Kind() const override</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00121">Ensemble.h:121</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_ae864eeb9b4cebb9d6db8601a1a91938e"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e">Kalman::Engines::Ensemble::Update</a></div><div class="ttdeci">std::size_t Update(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector &amp;z, double t, Vector &amp;xOut, Matrix &amp;POut) const override</div><div class="ttdoc">Analyze(): the perturbed-observation update; returns the moments.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00409">Ensemble.cc:409</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_aeacd838599b94c3269ddd6496217f632"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#aeacd838599b94c3269ddd6496217f632">Kalman::Engines::Ensemble::Title</a></div><div class="ttdeci">const char * Title() const override</div><div class="ttdoc">Human-readable name of the kind of thing this is.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00122">Ensemble.h:122</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_af0ad80298c85abe40e4447f033faa451"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Kalman::Engines::Ensemble::Mean</a></div><div class="ttdeci">Vector Mean() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00163">Ensemble.cc:163</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_afb7d72415ab338d64f27737f175b0c91"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#afb7d72415ab338d64f27737f175b0c91">Kalman::Engines::Ensemble::Inflation</a></div><div class="ttdeci">double Inflation() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00127">Ensemble.h:127</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html">Kalman::Engines::EnsembleModel</a></div><div class="ttdoc">What a model offers the ensemble engine beyond f and h.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8h_source.html#l00079">Ensemble.h:80</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html_a43b1ef2182a7d79535787fdb5ef3a923"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html#a43b1ef2182a7d79535787fdb5ef3a923">Kalman::Engines::EnsembleModel::Forecast</a></div><div class="ttdeci">virtual void Forecast(const Model &amp;model, std::vector&lt; Vector &gt; &amp;members, const Vector &amp;u, double t) const</div><div class="ttdoc">Advance every member one step, in place (model.forecast(X)).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00048">Ensemble.cc:48</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html_a51433dbf1a74d424a9ea78c63142b88e"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html#a51433dbf1a74d424a9ea78c63142b88e">Kalman::Engines::EnsembleModel::Localization</a></div><div class="ttdeci">virtual bool Localization(Matrix &amp;rhoXY, Matrix &amp;rhoYY) const</div><div class="ttdoc">The tapers on P H^T (n x m) and H P H^T (m x m); false for none.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00061">Ensemble.cc:61</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html_a85179a6232bd831e2d17f31806bb38d1"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html#a85179a6232bd831e2d17f31806bb38d1">Kalman::Engines::EnsembleModel::~EnsembleModel</a></div><div class="ttdeci">virtual ~EnsembleModel()=default</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html_a9414b99418176b7eab83b478d5bfb8e6"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html#a9414b99418176b7eab83b478d5bfb8e6">Kalman::Engines::EnsembleModel::Observe</a></div><div class="ttdeci">virtual void Observe(const Model &amp;model, const std::vector&lt; Vector &gt; &amp;members, double t, std::vector&lt; Vector &gt; &amp;out) const</div><div class="ttdoc">The measurement of every member (model.observe(X)): out[s] = h(members[s]).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00053">Ensemble.cc:53</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_model_html_ab49b20efc7fbbedc7c54aed666d95371"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble_model.html#ab49b20efc7fbbedc7c54aed666d95371">Kalman::Engines::EnsembleModel::ProcessNoiseVariances</a></div><div class="ttdeci">virtual bool ProcessNoiseVariances(double t, Vector &amp;variances) const</div><div class="ttdoc">The variances of a diagonal Q, without forming it; false to use Q(t).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00063">Ensemble.cc:63</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html"><div class="ttname"><a href="class_kalman_1_1_model.html">Kalman::Model</a></div><div class="ttdoc">The system — WHAT is being estimated.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00066">Model.h:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_engines_html"><div class="ttname"><a href="namespace_kalman_1_1_engines.html">Kalman::Engines</a></div><div class="ttdef"><b>Definition</b> <a href="_combinatorial_8h_source.html#l00053">Combinatorial.h:54</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_engines_html_a613a239aa2d6d9d5ac519f8e11775fe6"><div class="ttname"><a href="namespace_kalman_1_1_engines.html#a613a239aa2d6d9d5ac519f8e11775fe6">Kalman::Engines::GaspariCohn</a></div><div class="ttdeci">double GaspariCohn(double distance, double L)</div><div class="ttdoc">The Gaspari-Cohn taper: fifth order, close to a Gaussian of scale L, and exactly zero beyond 2 L.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00033">Ensemble.cc:33</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">Kalman::EngineKind</a></div><div class="ttdeci">EngineKind</div><div class="ttdoc">Which inference algorithm a model wants, and which one an engine provides.</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00026">Constants.h:27</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Kalman::EngineKind::Ensemble</a></div><div class="ttdeci">@ Ensemble</div><div class="ttdoc">perturbed-observation ensemble (EnKF)</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_0cd6411c127178ba34307d5d8e7fbe14.html">Engines</a></li><li class="navelem"><a class="el" href="_ensemble_8h.html">Ensemble.h</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

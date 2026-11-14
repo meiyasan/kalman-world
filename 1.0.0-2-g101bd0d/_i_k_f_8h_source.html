@@ -1,0 +1,272 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="include/Kalman/Filters/IKF.h Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: include/Kalman/Filters/IKF.h Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>include/Kalman/Filters/IKF.h Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_i_k_f_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">IKF.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_i_k_f_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="preprocessor">#ifndef KALMAN_FILTERS_IKF_H</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#define KALMAN_FILTERS_IKF_H</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#include &quot;<a class="code" href="_metadata_8h.html">Kalman/Abstract/Metadata.h</a>&quot;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_8h.html">Kalman/Engine.h</a>&quot;</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#include &quot;<a class="code" href="_record_8h.html">Kalman/IO/Record.h</a>&quot;</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#include &quot;<a class="code" href="include_2_kalman_2_model_8h.html">Kalman/Model.h</a>&quot;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &quot;<a class="code" href="_base_8h.html">Kalman/Routers/Base.h</a>&quot;</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &lt;memory&gt;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman_1_1_filters.html">Kalman::Filters</a></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>{</div>
+<div class="foldopen" id="foldopen00067" data-start="{" data-end="};">
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html">   67</a></span>    <span class="keyword">class </span><a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a> : <span class="keyword">public</span> <a class="code hl_class" href="class_kalman_1_1_abstract_1_1_metadata.html">Abstract::Metadata</a></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            std::vector&lt;Model *&gt; fModels;                    <span class="comment">// not owned</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            std::vector&lt;std::unique_ptr&lt;Engine&gt;&gt; fEngines;   <span class="comment">// one per model, built here</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_routers_1_1_router.html">Routers::Router</a> *fRouter = <span class="keyword">nullptr</span>;        <span class="comment">// not owned</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            std::unique_ptr&lt;Routers::Router&gt; fOwnRouter;     <span class="comment">// the Bayesian default</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fPi;                     <span class="comment">// (M,M) Markov transition</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> fMu;                     <span class="comment">// (M) current mode probabilities</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            std::vector&lt;Vector&gt; fX;         <span class="comment">// (M) per-mode mean</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            std::vector&lt;Matrix&gt; fP;         <span class="comment">// (M) per-mode covariance</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fNis;                    <span class="comment">// (T,M) NIS history</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> fModeHistory;            <span class="comment">// (T,M) mode probabilities per step</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            std::vector&lt;Vector&gt; fCombined;  <span class="comment">// (T) combined mean</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            std::vector&lt;Matrix&gt; fCombinedP; <span class="comment">// (T) combined covariance</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            std::vector&lt;double&gt; fTime;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a>(<span class="keyword">const</span> std::vector&lt;Model *&gt; &amp;models, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pi,</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_routers_1_1_router.html">Routers::Router</a> *router = <span class="keyword">nullptr</span>);</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab08af653c687a73b6cefdd20f197501a">   96</a></span>            <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab08af653c687a73b6cefdd20f197501a">~IKF</a>() <span class="keyword">override</span> = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#a61604bae2c6582e385c9846ab1f7dc31">   98</a></span>            <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a61604bae2c6582e385c9846ab1f7dc31">IKF</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab1aac9cbea3080240856ff79a8c4f88e">   99</a></span>            <a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a> &amp;<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab1aac9cbea3080240856ff79a8c4f88e">operator=</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a> &amp;) = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#af6193fba2f14ac5747555f474268db91">  101</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#af6193fba2f14ac5747555f474268db91">Title</a>()<span class="keyword"> const override </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Interactive Kalman Filter&quot;</span>; }</div>
+<div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#ac0635e33b8479ea350719be73e600dfe">  102</a></span>            <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#ac0635e33b8479ea350719be73e600dfe">Description</a>()<span class="keyword"> const override</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span><span class="keyword">            </span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Runs M models in parallel, mixing their states and routing between them.&quot;</span>; }</div>
+</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#adcb942beb86e6661b420c9812bbb06db">  105</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#adcb942beb86e6661b420c9812bbb06db">NModes</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fModels.size(); }</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab0625e8964fce7782a0ba8b8dc9a7da6">  106</a></span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#ab0625e8964fce7782a0ba8b8dc9a7da6">NState</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fModels.empty() ? 0 : fModels.front()-&gt;NState(); }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a0761890a8e9e9a6cc56d339c9c317d91">Reset</a>();</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a97673fcaead6de8c81c2ae4c12d1be67">SetModeProbabilities</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;mu);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#a65feefa97894c350dbe579a0bfd2c600">  114</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_routers_1_1_router.html">Routers::Router</a> *<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a65feefa97894c350dbe579a0bfd2c600">GetRouter</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fRouter; }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a2b122df9ded7de01c762790920bdaa0b">SetRouter</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_routers_1_1_router.html">Routers::Router</a> *router);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Forward</a>(<span class="keyword">const</span> std::vector&lt;Vector&gt; &amp;zk);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#a849e48275a2fea1f0a17a780c4a7534f">  126</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a849e48275a2fea1f0a17a780c4a7534f">ModeProbabilities</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fMu; }</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#a09cf01d5df6e8e11d8f6270e75f43572">  128</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a09cf01d5df6e8e11d8f6270e75f43572">ModeHistory</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fModeHistory; }</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="class_kalman_1_1_filters_1_1_i_k_f.html#a2fb410913202e6c2ae2540fde7255ab1">  130</a></span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a2fb410913202e6c2ae2540fde7255ab1">NisHistory</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> fNis; }</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            std::size_t <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a72622802c9116c64cde7f0b2aed954a9">DominantMode</a>(std::size_t k) <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_filters_1_1_i_k_f.html#a1acdecdb01a15532e6342f9a8ac32ae5">Likelihood</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;nu, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;S);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    };</div>
+</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="namespace_kalman_1_1_filters.html#a35dee2c65b449937b07e5772e581dfb1">  141</a></span>    <span class="keyword">using </span><a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IMM</a> = <a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>}</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_FILTERS_IKF_H</span></div>
+<div class="ttc" id="a_base_8h_html"><div class="ttname"><a href="_base_8h.html">Base.h</a></div><div class="ttdoc">Header of the Kalman::Routers::Router contract.</div></div>
+<div class="ttc" id="a_engine_8h_html"><div class="ttname"><a href="_engine_8h.html">Engine.h</a></div><div class="ttdoc">Header of the Kalman::Engine class.</div></div>
+<div class="ttc" id="a_metadata_8h_html"><div class="ttname"><a href="_metadata_8h.html">Metadata.h</a></div><div class="ttdoc">Self-description shared by every framework role.</div></div>
+<div class="ttc" id="a_record_8h_html"><div class="ttname"><a href="_record_8h.html">Record.h</a></div><div class="ttdoc">Header of the Kalman::Record class.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_abstract_1_1_metadata_html"><div class="ttname"><a href="class_kalman_1_1_abstract_1_1_metadata.html">Kalman::Abstract::Metadata</a></div><div class="ttdoc">What a model, engine or filter says about itself.</div><div class="ttdef"><b>Definition</b> <a href="_metadata_8h_source.html#l00028">Metadata.h:29</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a></div><div class="ttdoc">Interactive Kalman Filter — several models, one estimate.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00067">IKF.h:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a0761890a8e9e9a6cc56d339c9c317d91"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a0761890a8e9e9a6cc56d339c9c317d91">Kalman::Filters::IKF::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Reset the modes to a uniform prior and each model's own x0 / P0.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00117">IKF.cc:117</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a09cf01d5df6e8e11d8f6270e75f43572"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a09cf01d5df6e8e11d8f6270e75f43572">Kalman::Filters::IKF::ModeHistory</a></div><div class="ttdeci">const Matrix &amp; ModeHistory() const</div><div class="ttdoc">(T, M) mode probability per step — the answer to &quot;which regime, when&quot;.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00128">IKF.h:128</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a1acdecdb01a15532e6342f9a8ac32ae5"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a1acdecdb01a15532e6342f9a8ac32ae5">Kalman::Filters::IKF::Likelihood</a></div><div class="ttdeci">static double Likelihood(const Vector &amp;nu, const Matrix &amp;S)</div><div class="ttdoc">Gaussian innovation likelihood N(nu; 0, S).</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00144">IKF.cc:144</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a2b122df9ded7de01c762790920bdaa0b"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a2b122df9ded7de01c762790920bdaa0b">Kalman::Filters::IKF::SetRouter</a></div><div class="ttdeci">void SetRouter(const Routers::Router *router)</div><div class="ttdoc">Swap the decision layer; not owned, must outlive the filter.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00111">IKF.cc:111</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a2fb410913202e6c2ae2540fde7255ab1"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a2fb410913202e6c2ae2540fde7255ab1">Kalman::Filters::IKF::NisHistory</a></div><div class="ttdeci">const Matrix &amp; NisHistory() const</div><div class="ttdoc">(T, M) NIS per mode per step, the feature the routers consume.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00130">IKF.h:130</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a61604bae2c6582e385c9846ab1f7dc31"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a61604bae2c6582e385c9846ab1f7dc31">Kalman::Filters::IKF::IKF</a></div><div class="ttdeci">IKF(const IKF &amp;)=delete</div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a65feefa97894c350dbe579a0bfd2c600"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a65feefa97894c350dbe579a0bfd2c600">Kalman::Filters::IKF::GetRouter</a></div><div class="ttdeci">const Routers::Router * GetRouter() const</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00114">IKF.h:114</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a72622802c9116c64cde7f0b2aed954a9"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a72622802c9116c64cde7f0b2aed954a9">Kalman::Filters::IKF::DominantMode</a></div><div class="ttdeci">std::size_t DominantMode(std::size_t k) const</div><div class="ttdoc">Index of the most probable mode at step k.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00322">IKF.cc:322</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a849e48275a2fea1f0a17a780c4a7534f"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a849e48275a2fea1f0a17a780c4a7534f">Kalman::Filters::IKF::ModeProbabilities</a></div><div class="ttdeci">const Vector &amp; ModeProbabilities() const</div><div class="ttdoc">Current mode probabilities.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00126">IKF.h:126</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_a97673fcaead6de8c81c2ae4c12d1be67"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#a97673fcaead6de8c81c2ae4c12d1be67">Kalman::Filters::IKF::SetModeProbabilities</a></div><div class="ttdeci">void SetModeProbabilities(const Vector &amp;mu)</div><div class="ttdoc">Set the initial mode probabilities (normalised on the way in).</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8cc_source.html#l00137">IKF.cc:137</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_ab0625e8964fce7782a0ba8b8dc9a7da6"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#ab0625e8964fce7782a0ba8b8dc9a7da6">Kalman::Filters::IKF::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00106">IKF.h:106</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_ab08af653c687a73b6cefdd20f197501a"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#ab08af653c687a73b6cefdd20f197501a">Kalman::Filters::IKF::~IKF</a></div><div class="ttdeci">~IKF() override=default</div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_ab1aac9cbea3080240856ff79a8c4f88e"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#ab1aac9cbea3080240856ff79a8c4f88e">Kalman::Filters::IKF::operator=</a></div><div class="ttdeci">IKF &amp; operator=(const IKF &amp;)=delete</div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_ac0635e33b8479ea350719be73e600dfe"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#ac0635e33b8479ea350719be73e600dfe">Kalman::Filters::IKF::Description</a></div><div class="ttdeci">const char * Description() const override</div><div class="ttdoc">One sentence on what it does.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00102">IKF.h:102</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_adcb942beb86e6661b420c9812bbb06db"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#adcb942beb86e6661b420c9812bbb06db">Kalman::Filters::IKF::NModes</a></div><div class="ttdeci">std::size_t NModes() const</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00105">IKF.h:105</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html_af6193fba2f14ac5747555f474268db91"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html#af6193fba2f14ac5747555f474268db91">Kalman::Filters::IKF::Title</a></div><div class="ttdeci">const char * Title() const override</div><div class="ttdoc">Human-readable name of the kind of thing this is.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00101">IKF.h:101</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html">Kalman::Routers::Router</a></div><div class="ttdoc">Decides which model is right now — the IKF decision layer.</div><div class="ttdef"><b>Definition</b> <a href="_base_8h_source.html#l00058">Base.h:59</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="ainclude_2_kalman_2_model_8h_html"><div class="ttname"><a href="include_2_kalman_2_model_8h.html">Model.h</a></div><div class="ttdoc">Header of the Kalman::Model class.</div></div>
+<div class="ttc" id="anamespace_kalman_1_1_filters_html"><div class="ttname"><a href="namespace_kalman_1_1_filters.html">Kalman::Filters</a></div><div class="ttdef"><b>Definition</b> <a href="_c_k_f_8h_source.html#l00046">CKF.h:47</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Kalman::DifferentiatorKind::Forward</a></div><div class="ttdeci">@ Forward</div><div class="ttdoc">one-sided differences (first order)</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_c99dac5e0b763ff7094d082c9fff9373.html">Filters</a></li><li class="navelem"><a class="el" href="_i_k_f_8h.html">IKF.h</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

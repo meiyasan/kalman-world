@@ -1,0 +1,350 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_apps_extra.TestInterplanetary Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_apps_extra.TestInterplanetary Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_apps_extra.TestInterplanetary Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__apps__extra_1_1_test_interplanetary.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__apps__extra_1_1_test_interplanetary-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_apps_extra.TestInterplanetary Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_apps_extra.TestInterplanetary:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__apps__extra_1_1_test_interplanetary__inherit__graph.svg" width="203" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a661817d06b53bfe75bca417630637440" id="r_a661817d06b53bfe75bca417630637440"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a661817d06b53bfe75bca417630637440">test_lambert_round_trip</a> (self)</td></tr>
+<tr class="separator:a661817d06b53bfe75bca417630637440"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2bbdd165e42beda5d3fc5ce94a787da" id="r_ac2bbdd165e42beda5d3fc5ce94a787da"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#ac2bbdd165e42beda5d3fc5ce94a787da">test_hohmann_earth_mars</a> (self)</td></tr>
+<tr class="separator:ac2bbdd165e42beda5d3fc5ce94a787da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf2630420409ef10d6a4e2dbd82f9f59" id="r_acf2630420409ef10d6a4e2dbd82f9f59"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#acf2630420409ef10d6a4e2dbd82f9f59">test_hohmann_uses_semi_major_axes</a> (self)</td></tr>
+<tr class="separator:acf2630420409ef10d6a4e2dbd82f9f59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c387fb924155031642c489aad8dad2a" id="r_a2c387fb924155031642c489aad8dad2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a2c387fb924155031642c489aad8dad2a">test_chain_lambert_separates_gravity_from_burn</a> (self)</td></tr>
+<tr class="separator:a2c387fb924155031642c489aad8dad2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30df6b605dd6700b8a6c613d7e3e74e4" id="r_a30df6b605dd6700b8a6c613d7e3e74e4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a30df6b605dd6700b8a6c613d7e3e74e4">test_two_body_cruise_ekf</a> (self)</td></tr>
+<tr class="separator:a30df6b605dd6700b8a6c613d7e3e74e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00240">240</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a2c387fb924155031642c489aad8dad2a" name="a2c387fb924155031642c489aad8dad2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2c387fb924155031642c489aad8dad2a">&#9670;&#160;</a></span>test_chain_lambert_separates_gravity_from_burn()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_apps_extra.TestInterplanetary.test_chain_lambert_separates_gravity_from_burn </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00265">265</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  265</span>    <span class="keyword">def </span>test_chain_lambert_separates_gravity_from_burn(self):</div>
+<div class="line"><span class="lineno">  266</span>        <span class="keyword">from</span> astropy.time <span class="keyword">import</span> Time</div>
+<div class="line"><span class="lineno">  267</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a> <span class="keyword">import</span> chain_lambert</div>
+<div class="line"><span class="lineno">  268</span>        sequence = [<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>]</div>
+<div class="line"><span class="lineno">  269</span>        dates = [Time(t) <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (<span class="stringliteral">&quot;1997-10-15 08:43&quot;</span>, <span class="stringliteral">&quot;1998-04-26 13:52&quot;</span>,</div>
+<div class="line"><span class="lineno">  270</span>                                   <span class="stringliteral">&quot;1999-06-24 20:30&quot;</span>, <span class="stringliteral">&quot;1999-08-18 03:28&quot;</span>)]</div>
+<div class="line"><span class="lineno">  271</span>        single = chain_lambert(sequence, dates)</div>
+<div class="line"><span class="lineno">  272</span>        self.assertEqual(single[0][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 0.0)            <span class="comment"># the launch is not a flyby</span></div>
+<div class="line"><span class="lineno">  273</span>        <span class="keywordflow">for</span> before, leg <span class="keywordflow">in</span> zip(single, single[1:]):</div>
+<div class="line"><span class="lineno">  274</span>            <span class="comment"># the planet turns the velocity for free; the burn is only the speed mismatch</span></div>
+<div class="line"><span class="lineno">  275</span>            self.assertGreater(leg[<span class="stringliteral">&quot;dv_gravity_kms&quot;</span>], leg[<span class="stringliteral">&quot;dv_burn_kms&quot;</span>])</div>
+<div class="line"><span class="lineno">  276</span>            self.assertAlmostEqual(leg[<span class="stringliteral">&quot;dv_burn_kms&quot;</span>],</div>
+<div class="line"><span class="lineno">  277</span>                                   abs(leg[<span class="stringliteral">&quot;v_inf_dep_kms&quot;</span>] - before[<span class="stringliteral">&quot;v_inf_arr_kms&quot;</span>]), places=9)</div>
+<div class="line"><span class="lineno">  278</span>        <span class="comment"># A deep-space manoeuvre on the Venus-Venus leg makes both Venus flybys free.</span></div>
+<div class="line"><span class="lineno">  279</span>        legs = chain_lambert(sequence, dates, dsm={1: Time(<span class="stringliteral">&quot;1998-12-03 06:45&quot;</span>)})</div>
+<div class="line"><span class="lineno">  280</span>        self.assertLess(legs[1][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 1e-5)</div>
+<div class="line"><span class="lineno">  281</span>        self.assertLess(legs[2][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 1e-5)</div>
+<div class="line"><span class="lineno">  282</span>        self.assertTrue(0.3 &lt; legs[1][<span class="stringliteral">&quot;dv_dsm_kms&quot;</span>] &lt; 0.8)         <span class="comment"># Cassini&#39;s was about 0.45 km/s</span></div>
+<div class="line"><span class="lineno">  283</span>        self.assertTrue(100.0 &lt; legs[1][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
+<div class="line"><span class="lineno">  284</span>        self.assertTrue(100.0 &lt; legs[2][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
+<div class="line"><span class="lineno">  285</span> </div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astro_2space_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac2bbdd165e42beda5d3fc5ce94a787da" name="ac2bbdd165e42beda5d3fc5ce94a787da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac2bbdd165e42beda5d3fc5ce94a787da">&#9670;&#160;</a></span>test_hohmann_earth_mars()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_apps_extra.TestInterplanetary.test_hohmann_earth_mars </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00250">250</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  250</span>    <span class="keyword">def </span>test_hohmann_earth_mars(self):</div>
+<div class="line"><span class="lineno">  251</span>        h = hohmann_transfer(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=<span class="stringliteral">&quot;2027-01-01&quot;</span>)</div>
+<div class="line"><span class="lineno">  252</span>        self.assertTrue(np.isfinite(h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>]) <span class="keywordflow">and</span> h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>] &gt; 0)</div>
+<div class="line"><span class="lineno">  253</span>        self.assertTrue(150.0 &lt; h[<span class="stringliteral">&quot;tof_days&quot;</span>] &lt; 400.0)             <span class="comment"># Earth→Mars ballpark</span></div>
+<div class="line"><span class="lineno">  254</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="acf2630420409ef10d6a4e2dbd82f9f59" name="acf2630420409ef10d6a4e2dbd82f9f59"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf2630420409ef10d6a4e2dbd82f9f59">&#9670;&#160;</a></span>test_hohmann_uses_semi_major_axes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_apps_extra.TestInterplanetary.test_hohmann_uses_semi_major_axes </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00255">255</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  255</span>    <span class="keyword">def </span>test_hohmann_uses_semi_major_axes(self):</div>
+<div class="line"><span class="lineno">  256</span>        <span class="comment"># The estimate must not depend on where the planets are on the day: the orbit</span></div>
+<div class="line"><span class="lineno">  257</span>        <span class="comment"># radii are semi-major axes, so the textbook figures come out at any epoch.</span></div>
+<div class="line"><span class="lineno">  258</span>        <span class="keywordflow">for</span> epoch <span class="keywordflow">in</span> (<span class="stringliteral">&quot;2026-11-11&quot;</span>, <span class="stringliteral">&quot;2027-08-01&quot;</span>):</div>
+<div class="line"><span class="lineno">  259</span>            h = hohmann_transfer(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=epoch)</div>
+<div class="line"><span class="lineno">  260</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;a2_AU&quot;</span>], 1.524, delta=0.005)</div>
+<div class="line"><span class="lineno">  261</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>], 5.6, delta=0.1)</div>
+<div class="line"><span class="lineno">  262</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;tof_days&quot;</span>], 259.0, delta=3.0)</div>
+<div class="line"><span class="lineno">  263</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;synodic_period_days&quot;</span>], 780.0, delta=5.0)</div>
+<div class="line"><span class="lineno">  264</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a661817d06b53bfe75bca417630637440" name="a661817d06b53bfe75bca417630637440"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a661817d06b53bfe75bca417630637440">&#9670;&#160;</a></span>test_lambert_round_trip()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_apps_extra.TestInterplanetary.test_lambert_round_trip </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00242">242</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  242</span>    <span class="keyword">def </span>test_lambert_round_trip(self):</div>
+<div class="line"><span class="lineno">  243</span>        <span class="comment"># A known transfer: solve Lambert, then check the arc reproduces the geometry.</span></div>
+<div class="line"><span class="lineno">  244</span>        r1, _ = body_state(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;2027-01-01&quot;</span>)</div>
+<div class="line"><span class="lineno">  245</span>        r2, _ = body_state(<span class="stringliteral">&quot;mars&quot;</span>,  <span class="stringliteral">&quot;2027-09-01&quot;</span>)</div>
+<div class="line"><span class="lineno">  246</span>        v1, v2 = lambert(r1, r2, 243 * DAY, mu=GM_SUN)</div>
+<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">for</span> v <span class="keywordflow">in</span> (v1, v2):                                          <span class="comment"># heliocentric speeds are sane</span></div>
+<div class="line"><span class="lineno">  248</span>            self.assertTrue(5.0 &lt; np.linalg.norm(v) &lt; 60.0)</div>
+<div class="line"><span class="lineno">  249</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a30df6b605dd6700b8a6c613d7e3e74e4" name="a30df6b605dd6700b8a6c613d7e3e74e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30df6b605dd6700b8a6c613d7e3e74e4">&#9670;&#160;</a></span>test_two_body_cruise_ekf()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_apps_extra.TestInterplanetary.test_two_body_cruise_ekf </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00286">286</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>    <span class="keyword">def </span>test_two_body_cruise_ekf(self):</div>
+<div class="line"><span class="lineno">  287</span>        <span class="comment"># No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.</span></div>
+<div class="line"><span class="lineno">  288</span>        m = InterplanetaryModel(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=<span class="keywordtype">None</span>, dt_s=43200.0, track_Mm=0.02)</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> D_SUN</div>
+<div class="line"><span class="lineno">  290</span>        x0 = np.array([[D_SUN], [0], [0], [0], [np.sqrt(GM_SUN / D_SUN)], [0]])</div>
+<div class="line"><span class="lineno">  291</span>        m.initial_state(x0)</div>
+<div class="line"><span class="lineno">  292</span>        s = m.sample(80 * DAY, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  293</span>        est = m.filter(s.zk)</div>
+<div class="line"><span class="lineno">  294</span>        _no_nan_inf(est.xk, <span class="stringliteral">&quot;interplanetary EKF xk&quot;</span>)</div>
+<div class="line"><span class="lineno">  295</span>        self.assertEqual(np.asarray(s.xk).shape[1], 6)</div>
+<div class="line"><span class="lineno">  296</span> </div>
+<div class="line"><span class="lineno">  297</span> </div>
+<div class="line"><span class="lineno">  298</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">  299</span><span class="comment"># Car straight-line speed test</span></div>
+<div class="line"><span class="lineno">  300</span><span class="comment"># ===========================================================================</span></div>
+<div class="ttc" id="anamespacemodules_1_1runtime_1_1astro_html"><div class="ttname"><a href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></div><div class="ttdef"><b>Definition</b> <a href="astro_8py_source.html#l00001">astro.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__apps__extra.html">test_apps_extra</a></li><li class="navelem"><a class="el" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html">TestInterplanetary</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

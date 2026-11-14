@@ -1,0 +1,467 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_plots.TestSignatureFigures Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_plots.TestSignatureFigures Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_plots.TestSignatureFigures Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__plots_1_1_test_signature_figures.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classtests_1_1test__plots_1_1_test_signature_figures-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_plots.TestSignatureFigures Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_plots.TestSignatureFigures:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__plots_1_1_test_signature_figures__inherit__graph.svg" width="226" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a14abff62b36e91f5bdaa94bf9ea85fe3" id="r_a14abff62b36e91f5bdaa94bf9ea85fe3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a14abff62b36e91f5bdaa94bf9ea85fe3">setUp</a> (self)</td></tr>
+<tr class="separator:a14abff62b36e91f5bdaa94bf9ea85fe3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a33556b67f1b2145e121c9ba3a849fb" id="r_a3a33556b67f1b2145e121c9ba3a849fb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a3a33556b67f1b2145e121c9ba3a849fb">tearDown</a> (self)</td></tr>
+<tr class="separator:a3a33556b67f1b2145e121c9ba3a849fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a697b7d78565f69b396c18e9b2373b5a9" id="r_a697b7d78565f69b396c18e9b2373b5a9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a697b7d78565f69b396c18e9b2373b5a9">test_ballistic_signature_figure</a> (self)</td></tr>
+<tr class="separator:a697b7d78565f69b396c18e9b2373b5a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebf073f2e14d304728b1bed284c1ff2c" id="r_aebf073f2e14d304728b1bed284c1ff2c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#aebf073f2e14d304728b1bed284c1ff2c">test_suspension_signature_figure</a> (self)</td></tr>
+<tr class="separator:aebf073f2e14d304728b1bed284c1ff2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc18bc0f45f532e86e356557989b66ce" id="r_abc18bc0f45f532e86e356557989b66ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#abc18bc0f45f532e86e356557989b66ce">test_powergrid_signature_figure</a> (self)</td></tr>
+<tr class="separator:abc18bc0f45f532e86e356557989b66ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7f1a851190d952308a2aba8cc975d12" id="r_ad7f1a851190d952308a2aba8cc975d12"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#ad7f1a851190d952308a2aba8cc975d12">test_gravwave_signature_figure</a> (self)</td></tr>
+<tr class="separator:ad7f1a851190d952308a2aba8cc975d12"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a118354dc58ab5ca9e2f857703f4dfbdc" id="r_a118354dc58ab5ca9e2f857703f4dfbdc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a118354dc58ab5ca9e2f857703f4dfbdc">test_rocket_trajectory_figure</a> (self)</td></tr>
+<tr class="separator:a118354dc58ab5ca9e2f857703f4dfbdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a0394ac263e5c59f581eff596e2361239" id="r_a0394ac263e5c59f581eff596e2361239"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a0394ac263e5c59f581eff596e2361239">_assert_figure</a> (self, fig)</td></tr>
+<tr class="separator:a0394ac263e5c59f581eff596e2361239"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a751e4cad894db874187e5880ccafd087" id="r_a751e4cad894db874187e5880ccafd087"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a751e4cad894db874187e5880ccafd087">_errstate</a></td></tr>
+<tr class="separator:a751e4cad894db874187e5880ccafd087"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00025">25</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0394ac263e5c59f581eff596e2361239" name="a0394ac263e5c59f581eff596e2361239"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0394ac263e5c59f581eff596e2361239">&#9670;&#160;</a></span>_assert_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures._assert_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fig</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00037">37</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    <span class="keyword">def </span>_assert_figure(self, fig):</div>
+<div class="line"><span class="lineno">   38</span>        <span class="comment"># apps return a Figure (or (fig, ax)); just confirm something renderable came back</span></div>
+<div class="line"><span class="lineno">   39</span>        <span class="keywordflow">if</span> isinstance(fig, tuple):</div>
+<div class="line"><span class="lineno">   40</span>            fig = fig[0]</div>
+<div class="line"><span class="lineno">   41</span>        self.assertIsInstance(fig, plt.Figure)</div>
+<div class="line"><span class="lineno">   42</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a14abff62b36e91f5bdaa94bf9ea85fe3" name="a14abff62b36e91f5bdaa94bf9ea85fe3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a14abff62b36e91f5bdaa94bf9ea85fe3">&#9670;&#160;</a></span>setUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.setUp </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00027">27</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>    <span class="keyword">def </span>setUp(self):</div>
+<div class="line"><span class="lineno">   28</span>        np.random.seed(0)</div>
+<div class="line"><span class="lineno">   29</span>        <span class="comment"># The rocket gravity divides by |r| (0 at the default zero-state probe) — benign.</span></div>
+<div class="line"><span class="lineno">   30</span>        self._errstate = np.errstate(invalid=<span class="stringliteral">&quot;ignore&quot;</span>, divide=<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><span class="lineno">   31</span>        self._errstate.__enter__()</div>
+<div class="line"><span class="lineno">   32</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3a33556b67f1b2145e121c9ba3a849fb" name="a3a33556b67f1b2145e121c9ba3a849fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3a33556b67f1b2145e121c9ba3a849fb">&#9670;&#160;</a></span>tearDown()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.tearDown </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00033">33</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span>    <span class="keyword">def </span>tearDown(self):</div>
+<div class="line"><span class="lineno">   34</span>        self._errstate.__exit__(<span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">   35</span>        plt.close(<span class="stringliteral">&quot;all&quot;</span>)</div>
+<div class="line"><span class="lineno">   36</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a697b7d78565f69b396c18e9b2373b5a9" name="a697b7d78565f69b396c18e9b2373b5a9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a697b7d78565f69b396c18e9b2373b5a9">&#9670;&#160;</a></span>test_ballistic_signature_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.test_ballistic_signature_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00043">43</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   43</span>    <span class="keyword">def </span>test_ballistic_signature_figure(self):</div>
+<div class="line"><span class="lineno">   44</span>        b = BallisticLinearModel(<span class="stringliteral">&quot;gps&quot;</span>, fs=20)</div>
+<div class="line"><span class="lineno">   45</span>        truth = b.sample(1.0)</div>
+<div class="line"><span class="lineno">   46</span>        self._assert_figure(b.plot(b.filter(truth.zk), sample=truth))</div>
+<div class="line"><span class="lineno">   47</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad7f1a851190d952308a2aba8cc975d12" name="ad7f1a851190d952308a2aba8cc975d12"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad7f1a851190d952308a2aba8cc975d12">&#9670;&#160;</a></span>test_gravwave_signature_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.test_gravwave_signature_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00060">60</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   60</span>    <span class="keyword">def </span>test_gravwave_signature_figure(self):</div>
+<div class="line"><span class="lineno">   61</span>        fs = 100.0</div>
+<div class="line"><span class="lineno">   62</span>        t = np.arange(int(8 * fs)) / fs</div>
+<div class="line"><span class="lineno">   63</span>        a = 1 + 0.1 * np.cos(2 * np.pi * 0.2 * t)</div>
+<div class="line"><span class="lineno">   64</span>        psi = 2 * np.pi * 1.0 * t</div>
+<div class="line"><span class="lineno">   65</span>        theta = (np.pi / 2) * np.ones_like(t)</div>
+<div class="line"><span class="lineno">   66</span>        phi = np.pi * np.ones_like(t)</div>
+<div class="line"><span class="lineno">   67</span>        z = np.array([jones_signal(a[k], psi[k], theta[k], phi[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(t))])</div>
+<div class="line"><span class="lineno">   68</span>        zk = np.column_stack([z[:, 0].real, z[:, 0].imag, z[:, 1].real, z[:, 1].imag])</div>
+<div class="line"><span class="lineno">   69</span>        zk = zk + 0.05 * np.random.randn(*zk.shape)</div>
+<div class="line"><span class="lineno">   70</span>        gw = PolarizationModel(<span class="stringliteral">&quot;gw&quot;</span>, fs=fs, sigma_n=0.5)</div>
+<div class="line"><span class="lineno">   71</span>        gw.initial_state([np.log(a[0]), 0.0, psi[0], 2 * np.pi, theta[0], 0.0, phi[0], 0.0])</div>
+<div class="line"><span class="lineno">   72</span>        self._assert_figure(gw.plot(gw.filter(zk, smooth=<span class="keyword">False</span>)))</div>
+<div class="line"><span class="lineno">   73</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abc18bc0f45f532e86e356557989b66ce" name="abc18bc0f45f532e86e356557989b66ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc18bc0f45f532e86e356557989b66ce">&#9670;&#160;</a></span>test_powergrid_signature_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.test_powergrid_signature_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00053">53</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>    <span class="keyword">def </span>test_powergrid_signature_figure(self):</div>
+<div class="line"><span class="lineno">   54</span>        fs = 1024</div>
+<div class="line"><span class="lineno">   55</span>        t = np.arange(fs) / fs</div>
+<div class="line"><span class="lineno">   56</span>        v = 230 * np.sqrt(2) * np.sin(2 * np.pi * 50 * t) + 0.5 * np.random.randn(fs)</div>
+<div class="line"><span class="lineno">   57</span>        pg = PowerGridStateModel(<span class="stringliteral">&quot;L1&quot;</span>, f0=50, harmonics=3, fs=fs)</div>
+<div class="line"><span class="lineno">   58</span>        self._assert_figure(pg.plot(pg.filter(v, smooth=<span class="keyword">True</span>)))</div>
+<div class="line"><span class="lineno">   59</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a118354dc58ab5ca9e2f857703f4dfbdc" name="a118354dc58ab5ca9e2f857703f4dfbdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a118354dc58ab5ca9e2f857703f4dfbdc">&#9670;&#160;</a></span>test_rocket_trajectory_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.test_rocket_trajectory_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00074">74</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>test_rocket_trajectory_figure(self):</div>
+<div class="line"><span class="lineno">   75</span>        tl = TransLunarModel(dt_s=120.0, track_km=5.0)</div>
+<div class="line"><span class="lineno">   76</span>        r0 = R_EARTH + 400 * KM</div>
+<div class="line"><span class="lineno">   77</span>        a_tx = 0.5 * (r0 + D_MOON)</div>
+<div class="line"><span class="lineno">   78</span>        v_tli = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / a_tx)) + 0.034</div>
+<div class="line"><span class="lineno">   79</span>        tl.initial_state(np.array([[r0], [0], [0], [0], [v_tli], [0]]),</div>
+<div class="line"><span class="lineno">   80</span>                         P0=np.diag([(50 * KM) ** 2] * 3 + [0.01 ** 2] * 3))</div>
+<div class="line"><span class="lineno">   81</span>        full = tl.sample(40 * 0.12, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">   82</span>        est = ExtendedKalmanFilter(tl).forward(full.zk)</div>
+<div class="line"><span class="lineno">   83</span>        self._assert_figure(tl.plot(est, sample=full))</div>
+<div class="line"><span class="lineno">   84</span> </div>
+<div class="line"><span class="lineno">   85</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aebf073f2e14d304728b1bed284c1ff2c" name="aebf073f2e14d304728b1bed284c1ff2c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aebf073f2e14d304728b1bed284c1ff2c">&#9670;&#160;</a></span>test_suspension_signature_figure()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures.test_suspension_signature_figure </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00048">48</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>    <span class="keyword">def </span>test_suspension_signature_figure(self):</div>
+<div class="line"><span class="lineno">   49</span>        s = SuspensionModel(<span class="stringliteral">&quot;road&quot;</span>, fs=256)</div>
+<div class="line"><span class="lineno">   50</span>        rec = s.filter(0.001 * np.random.randn(256, 1), np.zeros((256, 1)))</div>
+<div class="line"><span class="lineno">   51</span>        self._assert_figure(s.plot(rec))</div>
+<div class="line"><span class="lineno">   52</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a751e4cad894db874187e5880ccafd087" name="a751e4cad894db874187e5880ccafd087"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a751e4cad894db874187e5880ccafd087">&#9670;&#160;</a></span>_errstate</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_plots.TestSignatureFigures._errstate</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__plots_8py_source.html#l00030">30</a> of file <a class="el" href="test__plots_8py_source.html">test_plots.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__plots_8py_source.html">test_plots.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__plots.html">test_plots</a></li><li class="navelem"><a class="el" href="classtests_1_1test__plots_1_1_test_signature_figures.html">TestSignatureFigures</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

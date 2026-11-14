@@ -1,0 +1,406 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/apps/weather/barotropic.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/apps/weather/barotropic.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/apps/weather/barotropic.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('barotropic_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">barotropic.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="barotropic_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Barotropic vorticity on a mid-latitude beta-plane — a model of the atmosphere.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">Why this exists</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">---------------</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">:class:`~.flow.KolmogorovFlowModel` is a superb data-assimilation testbed and a poor model of</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">the atmosphere. Assimilating measured ERA5 500 hPa vorticity into it is *worse than</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">persistence* — worse, in fact, than the window&#39;s own time mean — and no inflation setting</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">repairs that, because the failure is not tuning. Kolmogorov flow is forced 2D turbulence on a</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">doubly-periodic torus with no rotation; mid-latitude flow is rotation-dominated. Measured at</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">50°N, relative vorticity is ~0.40 of the planetary value, so the term the Kolmogorov model</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">omits is the same size as the ones it keeps.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">The barotropic vorticity equation is the smallest correction that is still *about the right</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">system*:</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">.. code-block:: text</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral">    ∂ζ/∂t = −u·∇ζ − β v + ν ∇²ζ</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral">The one new term, ``−β v``, is advection of planetary vorticity: move north and f increases, so</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">ζ must fall. That term alone is what makes the flow support **Rossby waves**, the westward-</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">propagating structures that organise mid-latitude weather, and it is the physics the</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">Kolmogorov model cannot express at any parameter setting.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">This is still not a sphere. It is a beta-plane: f linearised about a reference latitude on a</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">doubly-periodic Cartesian box. For a 20°×20° window in the mid-latitudes — which is exactly</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">what the ERA5 slice is — that is the approximation the beta-plane was invented for, and it</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="stringliteral">buys the dominant missing physics without spherical harmonics. Anything global needs real</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="stringliteral">spherical geometry and this class should not be stretched to pretend otherwise.</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="stringliteral">Units</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">-----</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="stringliteral">Deliberately **physical** (SI), unlike the non-dimensional Kolmogorov testbed: β is a real</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="stringliteral">number about the real planet and the model is worthless if the field it acts on has had its</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">amplitude rescaled to something else. Feed it ``reanalysis_truth(..., rescale=False)``.</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">from</span> ...framework.solvers.spectral <span class="keyword">import</span> SpectralSolver</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="keyword">from</span> .flow <span class="keyword">import</span> KolmogorovFlowModel</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment">#: Earth&#39;s rotation rate, rad/s.</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html#a22286238b7469292982b84c5383e244b">   45</a></span>OMEGA = 7.292e-5</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span><span class="comment">#: Earth&#39;s mean radius, m.</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html#a2f928d9c345c4b5f28b9870daf036dae">   48</a></span>EARTH_RADIUS = 6.371e6</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="foldopen" id="foldopen00051" data-start="" data-end="">
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html#a3b8ad4af266999e5fb1b7bfad24788fa">   51</a></span><span class="keyword">def </span>beta_at(latitude_deg: float) -&gt; float:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="stringliteral">&quot;&quot;&quot;Rossby parameter β = df/dy = 2Ω cos(φ) / a, in 1/(m·s).</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="stringliteral">    About 1.47e-11 in the mid-latitudes. It is small in absolute terms and dominant in</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span><span class="stringliteral">    practice, because it multiplies a velocity rather than a vorticity.</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    <span class="keywordflow">return</span> 2.0 * OMEGA * np.cos(np.radians(latitude_deg)) / EARTH_RADIUS</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+</div>
+<div class="foldopen" id="foldopen00060" data-start="" data-end="">
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html#ab13e0edb98b9e60548df1dfca4e6edb4">   60</a></span><span class="keyword">def </span>coriolis_at(latitude_deg: float) -&gt; float:</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="stringliteral">&quot;&quot;&quot;Planetary vorticity f = 2Ω sin(φ), 1/s — the scale ζ is measured against.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">return</span> 2.0 * OMEGA * np.sin(np.radians(latitude_deg))</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
+</div>
+<div class="foldopen" id="foldopen00065" data-start="" data-end="">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1weather_1_1barotropic.html#a07dc24d49ac399d0bb3c4bef68cc0777">   65</a></span><span class="keyword">def </span>box_size(lat_span_deg: float, lon_span_deg: float, latitude_deg: float):</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    <span class="stringliteral">&quot;&quot;&quot;Physical ``(Ly, Lx)`` in metres for a lat/lon window at a reference latitude.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="stringliteral">    Longitude degrees shorten with cos(φ), which is why a 20°×20° window at 50°N is not</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="stringliteral">    square: about 2,224 km north-south against 1,430 km east-west.</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    ly = np.radians(lat_span_deg) * EARTH_RADIUS</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    lx = np.radians(lon_span_deg) * EARTH_RADIUS * np.cos(np.radians(latitude_deg))</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="keywordflow">return</span> float(ly), float(lx)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+</div>
+<div class="foldopen" id="foldopen00076" data-start="" data-end="">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html">   76</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html">BetaPlaneNS2D</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html">SpectralSolver</a>):</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="stringliteral">&quot;&quot;&quot;Barotropic vorticity on a beta-plane, pseudo-spectral, in SI units.</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="stringliteral">    A sibling of :class:`~.flow.NS2D` rather than a subclass: that one hard-codes a</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span><span class="stringliteral">    non-dimensional ``[0, 2π]²`` box and its Kolmogorov forcing, and this needs a physical</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="stringliteral">    rectangular domain and no forcing at all. Real mid-latitude flow is not stirred at one</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="stringliteral">    wavenumber — it is driven baroclinically from below, which a barotropic model does not</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="stringliteral">    carry — so leaving it unforced is the honest omission. It decays.</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a88128b8d623bf043a078b918c6935f0b">   86</a></span>    NAME = <span class="stringliteral">&quot;Barotropic beta-plane&quot;</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a203a14d83680f3de854e36cba311a187">   87</a></span>    DESCRIPTION = <span class="stringliteral">&quot;2D barotropic vorticity with the beta effect — mid-latitude flow, SI units.&quot;</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="foldopen" id="foldopen00089" data-start="" data-end="">
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9dd2a21d94f364d1e52ba6cda8c9f504">   89</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9dd2a21d94f364d1e52ba6cda8c9f504">__init__</a>(self, n=64, nu=2.0e4, beta=None, latitude_deg=50.0, dt=60.0,</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                 length=(2.224e6, 1.430e6), seed=0, **kw):</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        super().<a class="code hl_function" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9dd2a21d94f364d1e52ba6cda8c9f504">__init__</a>(n=n, dt=dt, length=length, seed=seed, **kw)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529">   92</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529">nu</a> = float(nu)</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#af685ebcb9ff692e0c4491bf15e21280b">   93</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#af685ebcb9ff692e0c4491bf15e21280b">beta</a> = beta_at(latitude_deg) <span class="keywordflow">if</span> beta <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> float(beta)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9c021a60273f019189a713255818988f">   94</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9c021a60273f019189a713255818988f">latitude_deg</a> = float(latitude_deg)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+</div>
+<div class="foldopen" id="foldopen00096" data-start="" data-end="">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a0901d0da2b111743d169fb9e64628235">   96</a></span>    <span class="keyword">def </span><a class="code hl_variable" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a57df557ca1e54fa6b36620a72abe2b77">rhs_hat</a>(self, wh, t=None):</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        u, v = self.<a class="code hl_function" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ac8b59ce8c3b722bab6d9427e7e8ac0dd">_vel_spectral</a>(wh)</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        wx, wy = self.<a class="code hl_function" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ac7918178628de9a52a9843cd9d9c4853">_grad_spectral</a>(wh)</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="comment"># −u·∇ζ − βv, dealiased together since both are products evaluated on the grid.</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        adv = np.fft.fft2(u * wx + v * wy + self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#af685ebcb9ff692e0c4491bf15e21280b">beta</a> * v) * self.<a class="code hl_variable" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ad1b9b75e04120793278b3407a1385bf1">dealias</a></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">return</span> -adv - self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529">nu</a> * self.<a class="code hl_variable" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a7c6cdcb013c578f730f6b55afbf04bcd">k2</a> * wh</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+</div>
+<div class="foldopen" id="foldopen00103" data-start="" data-end="">
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a500a0eec7a208fa88f01d48d283c7e96">  103</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a500a0eec7a208fa88f01d48d283c7e96">_vorticity_terms</a>(self):</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordflow">return</span> dict(nu=self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529">nu</a>, beta=self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#af685ebcb9ff692e0c4491bf15e21280b">beta</a>)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00107" data-start="" data-end="">
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">  107</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">BarotropicFlowModel</a>(<a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">KolmogorovFlowModel</a>):</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="stringliteral">&quot;&quot;&quot;The Kalman model wrapper, with the beta-plane solver in place of Kolmogorov flow.</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="stringliteral">    Everything the testbed already provides — sparse probes, Gaspari–Cohn localization,</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="stringliteral">    batched ensemble forecasts, the surrogate plug-in point — is inherited unchanged. Only the</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="stringliteral">    dynamics differ, which is the whole point of the comparison this class exists for.</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a42afee39a65441eb3af7bf585dde0b80">  115</a></span>    NAME = <span class="stringliteral">&quot;Barotropic beta-plane flow&quot;</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a320bc6629bf0fe832b5ff9b9591532b6">  116</a></span>    DESCRIPTION = (<span class="stringliteral">&quot;2D barotropic vorticity with the beta effect and sparse point probes — &quot;</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                   <span class="stringliteral">&quot;a mid-latitude model for assimilating measured reanalysis.&quot;</span>)</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a976701c9d813ffcec4e97871ab68d056">  118</a></span>    VERSION = <span class="stringliteral">&quot;1.0&quot;</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="foldopen" id="foldopen00120" data-start="" data-end="">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a34c94163012b5bedd47d3854699ec784">  120</a></span>    <span class="keyword">def </span>__init__(self, sensor_id: str, *, grid: int = 64, nu: float = 2.0e4,</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                 latitude_deg: float = 50.0, beta: float | <span class="keywordtype">None</span> = <span class="keywordtype">None</span>,</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                 dt: float = 60.0, cycle: int = 60,</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                 lat_span_deg: float = 20.0, lon_span_deg: float = 20.0,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                 clim_vorticity_rms: float = 4.5e-5, seed: int = 7, **kw):</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        super().__init__(sensor_id, grid=grid, nu=nu, dt=dt, cycle=cycle, seed=seed, **kw)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="comment"># Replace the solver the parent built, and drop any climatology cached from it.</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">  127</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">solver</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#abbc184752af6c82ee073036d1f39595a">solver</a> = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html">BetaPlaneNS2D</a>(</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            n=int(grid), nu=nu, beta=beta, latitude_deg=latitude_deg, dt=dt,</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            length=box_size(lat_span_deg, lon_span_deg, latitude_deg), seed=seed)</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">  130</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a> = <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#ac46d28932e2229c1eb534cc40163ffd0">  131</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#ac46d28932e2229c1eb534cc40163ffd0">latitude_deg</a> = float(latitude_deg)</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a36a3c5dc4c18775ed2964e0678edf0e9">  132</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a36a3c5dc4c18775ed2964e0678edf0e9">clim_vorticity_rms</a> = float(clim_vorticity_rms)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="comment"># The C++ twin: Kalman::Apps::Weather::BarotropicFlow, the same field model</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="comment"># stepping the beta-plane solver.</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#adadb336f22371c2fe520c854f65f2789">  136</a></span>    _NATIVE_NAME = <span class="stringliteral">&quot;barotropic-flow&quot;</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#afdcbbad0d6bc017c1424b53f1d0e1798">  137</a></span>    _NATIVE_SOLVER = BetaPlaneNS2D</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+<div class="foldopen" id="foldopen00139" data-start="" data-end="">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a314b49a54c18443a70f6e84c280c21ac">  139</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a314b49a54c18443a70f6e84c280c21ac">climatology_from</a>(self, fields):</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="stringliteral">&quot;&quot;&quot;Use MEASURED fields as the climatology, instead of a synthetic spin-up.</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span><span class="stringliteral">        An unforced barotropic model has no attractor worth sampling — it decays — so its own</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="stringliteral">        spin-up produces states that are dynamically self-consistent and meteorologically</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="stringliteral">        unlike anything the atmosphere is doing this week. An ensemble drawn from those starts</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span><span class="stringliteral">        far from the truth in a way no number of assimilation cycles can repair on a short</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span><span class="stringliteral">        window. Drawing from real fields instead is standard practice (a climatological</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span><span class="stringliteral">        ensemble) and is the honest fix.</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span><span class="stringliteral">        **The caller must pass a period DISJOINT from the one being scored.** Seeding from the</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span><span class="stringliteral">        scoring window would put the answer in the initial ensemble and every score after it</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="stringliteral">        would be circular — the same failure as tuning process noise on truth. This method</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="stringliteral">        cannot check that for you; it is the caller&#39;s contract, and the OSSE script splits the</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="stringliteral">        window explicitly.</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span><span class="stringliteral">        ``fields`` is ``(T, n)`` or ``(T, grid, grid)``; columns become ensemble candidates.</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        arr = np.asarray(fields, dtype=float)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        arr = arr.reshape(arr.shape[0], -1)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">if</span> arr.shape[1] != self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a145641a3193b953c1b5069bbe2c0d5bc">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#ac565ff73e714600b7f88addaaf029dce">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a0292fd239ee657f8a7130a0217b3ef08">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a98551e7b498bcf7349142d92806c8a10">n</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#a64fb255e9716f8b1b661ad8ed7324db4">n</a>:</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;climatology fields have {arr.shape[1]} states, model has {self.n}&quot;</span>)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.all(np.isfinite(arr)):</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;climatology fields contain non-finite values&quot;</span>)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a> = arr.T.copy()</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+</div>
+<div class="foldopen" id="foldopen00166" data-start="" data-end="">
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a627ece2fdcdcca8c4479bd06629d3b65">  166</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a627ece2fdcdcca8c4479bd06629d3b65">climatology</a>(self, n_snapshots=150, spinup=600, stride=10):</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="stringliteral">&quot;&quot;&quot;Snapshots at a **physical** vorticity amplitude.</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span><span class="stringliteral">        The inherited version spins up from ``solver.random_ic()``, whose amplitude is O(1) —</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="stringliteral">        correct for the non-dimensional Kolmogorov box and catastrophic here, where vorticity</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="stringliteral">        is O(1e-5) 1/s. An O(1) field on this grid violates CFL on the first step and the</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="stringliteral">        climatology comes back all-NaN, which then propagates silently into the initial</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="stringliteral">        ensemble and surfaces much later as ``SVD did not converge`` inside the analysis.</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="stringliteral">        So the initial condition is rescaled to ``clim_vorticity_rms`` (4.5e-5 1/s by default,</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="stringliteral">        which is what the ERA5 slice actually measures at 500 hPa) before the spin-up, and the</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="stringliteral">        spin-up is shorter because this model is unforced: it decays on the viscous timescale</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span><span class="stringliteral">        (~30 days at nu = 2e4), so a long spin-up would quietly deflate the very scale being</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span><span class="stringliteral">        set here.</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">if</span> self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a> <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            w0 = np.asarray(self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">solver</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#abbc184752af6c82ee073036d1f39595a">solver</a>.random_ic(), dtype=float).ravel()</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            scale = np.sqrt(np.mean(w0 ** 2))</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            <span class="keywordflow">if</span> scale &gt; 0:</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>                w0 = w0 * (self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a36a3c5dc4c18775ed2964e0678edf0e9">clim_vorticity_rms</a> / scale)</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>            w = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">solver</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#abbc184752af6c82ee073036d1f39595a">solver</a>.advance(w0, spinup)</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>            snaps = []</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(n_snapshots):</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>                w = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">solver</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#abbc184752af6c82ee073036d1f39595a">solver</a>.advance(w, stride)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>                snaps.append(np.asarray(w).ravel().copy())</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a> = np.array(snaps).T</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">_clim</a><a class="code hl_variable" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">_clim</a></div>
+</div>
+</div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">modules.apps.weather.barotropic.BarotropicFlowModel</a></div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00107">barotropic.py:107</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_a314b49a54c18443a70f6e84c280c21ac"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a314b49a54c18443a70f6e84c280c21ac">modules.apps.weather.barotropic.BarotropicFlowModel.climatology_from</a></div><div class="ttdeci">climatology_from(self, fields)</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00139">barotropic.py:139</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_a36a3c5dc4c18775ed2964e0678edf0e9"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a36a3c5dc4c18775ed2964e0678edf0e9">modules.apps.weather.barotropic.BarotropicFlowModel.clim_vorticity_rms</a></div><div class="ttdeci">clim_vorticity_rms</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00132">barotropic.py:132</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_a49b639201fe7bf895dba1d3c58db1b04"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04">modules.apps.weather.barotropic.BarotropicFlowModel._clim</a></div><div class="ttdeci">_clim</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00130">barotropic.py:130</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_a627ece2fdcdcca8c4479bd06629d3b65"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a627ece2fdcdcca8c4479bd06629d3b65">modules.apps.weather.barotropic.BarotropicFlowModel.climatology</a></div><div class="ttdeci">climatology(self, n_snapshots=150, spinup=600, stride=10)</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00166">barotropic.py:166</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_a84efd904419a3978292bfc187614fd86"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a84efd904419a3978292bfc187614fd86">modules.apps.weather.barotropic.BarotropicFlowModel.solver</a></div><div class="ttdeci">solver</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00127">barotropic.py:127</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model_html_ac46d28932e2229c1eb534cc40163ffd0"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#ac46d28932e2229c1eb534cc40163ffd0">modules.apps.weather.barotropic.BarotropicFlowModel.latitude_deg</a></div><div class="ttdeci">latitude_deg</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00131">barotropic.py:131</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html">modules.apps.weather.barotropic.BetaPlaneNS2D</a></div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00076">barotropic.py:76</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html_a1db07f64995e2ecd4c78584bcc999529"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529">modules.apps.weather.barotropic.BetaPlaneNS2D.nu</a></div><div class="ttdeci">nu</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00092">barotropic.py:92</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html_a500a0eec7a208fa88f01d48d283c7e96"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a500a0eec7a208fa88f01d48d283c7e96">modules.apps.weather.barotropic.BetaPlaneNS2D._vorticity_terms</a></div><div class="ttdeci">_vorticity_terms(self)</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00103">barotropic.py:103</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html_a9c021a60273f019189a713255818988f"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9c021a60273f019189a713255818988f">modules.apps.weather.barotropic.BetaPlaneNS2D.latitude_deg</a></div><div class="ttdeci">latitude_deg</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00094">barotropic.py:94</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html_a9dd2a21d94f364d1e52ba6cda8c9f504"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a9dd2a21d94f364d1e52ba6cda8c9f504">modules.apps.weather.barotropic.BetaPlaneNS2D.__init__</a></div><div class="ttdeci">__init__(self, n=64, nu=2.0e4, beta=None, latitude_deg=50.0, dt=60.0, length=(2.224e6, 1.430e6), seed=0, **kw)</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00089">barotropic.py:90</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html_af685ebcb9ff692e0c4491bf15e21280b"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#af685ebcb9ff692e0c4491bf15e21280b">modules.apps.weather.barotropic.BetaPlaneNS2D.beta</a></div><div class="ttdeci">beta</div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00093">barotropic.py:93</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html">modules.apps.weather.flow.KolmogorovFlowModel</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00083">flow.py:83</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model_html_a145641a3193b953c1b5069bbe2c0d5bc"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a145641a3193b953c1b5069bbe2c0d5bc">modules.apps.weather.flow.KolmogorovFlowModel.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00152">flow.py:152</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model_html_a920f5805948c7c28b620dd9f07361796"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#a920f5805948c7c28b620dd9f07361796">modules.apps.weather.flow.KolmogorovFlowModel._clim</a></div><div class="ttdeci">_clim</div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00142">flow.py:142</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model_html_abbc184752af6c82ee073036d1f39595a"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html#abbc184752af6c82ee073036d1f39595a">modules.apps.weather.flow.KolmogorovFlowModel.solver</a></div><div class="ttdeci">solver</div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00140">flow.py:140</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_ac565ff73e714600b7f88addaaf029dce"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#ac565ff73e714600b7f88addaaf029dce">modules.framework.abstract.metadata.KalmanModelMetadata.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00084">metadata.py:84</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin_html_a0292fd239ee657f8a7130a0217b3ef08"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html#a0292fd239ee657f8a7130a0217b3ef08">modules.framework.abstract.mixins.KalmanInferenceMixin.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00160">mixins.py:160</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a98551e7b498bcf7349142d92806c8a10"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a98551e7b498bcf7349142d92806c8a10">modules.framework.model.KalmanModel.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00172">model.py:172</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1native_1_1_native_twin_html_a64fb255e9716f8b1b661ad8ed7324db4"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html#a64fb255e9716f8b1b661ad8ed7324db4">modules.framework.models.native.NativeTwin.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00462">native.py:462</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html">modules.framework.solvers.spectral.SpectralSolver</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00025">spectral.py:25</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html_a57df557ca1e54fa6b36620a72abe2b77"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a57df557ca1e54fa6b36620a72abe2b77">modules.framework.solvers.spectral.SpectralSolver.rhs_hat</a></div><div class="ttdeci">rhs_hat</div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00145">spectral.py:145</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html_a7c6cdcb013c578f730f6b55afbf04bcd"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a7c6cdcb013c578f730f6b55afbf04bcd">modules.framework.solvers.spectral.SpectralSolver.k2</a></div><div class="ttdeci">k2</div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00058">spectral.py:58</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html_ac7918178628de9a52a9843cd9d9c4853"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ac7918178628de9a52a9843cd9d9c4853">modules.framework.solvers.spectral.SpectralSolver._grad_spectral</a></div><div class="ttdeci">_grad_spectral(self, wh)</div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00093">spectral.py:93</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html_ac8b59ce8c3b722bab6d9427e7e8ac0dd"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ac8b59ce8c3b722bab6d9427e7e8ac0dd">modules.framework.solvers.spectral.SpectralSolver._vel_spectral</a></div><div class="ttdeci">_vel_spectral(self, wh)</div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00098">spectral.py:98</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html_ad1b9b75e04120793278b3407a1385bf1"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#ad1b9b75e04120793278b3407a1385bf1">modules.framework.solvers.spectral.SpectralSolver.dealias</a></div><div class="ttdeci">dealias</div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00060">spectral.py:60</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_18b13ac1c37f3c13ea657716eb361c8b.html">weather</a></li><li class="navelem"><a class="el" href="barotropic_8py.html">barotropic.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

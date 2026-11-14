@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,13 +140,13 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2polarization.html','');
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="gravitational-wave-polarization"></a> A gravitational wave stretches space in two directions at once, and two detector channels record it. The way the two channels combine, the <b>polarization</b>, tells how the source is oriented. The filter follows the amplitude, the phase and the polarization as the wave sweeps up in frequency.</p>
-<h1><a class="anchor" id="the-model-5"></a>
+<h1><a class="anchor" id="the-model-6"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [log amplitude, the phase, the two polarization angles]</div>
 <div class="line">                 (8 numbers: each one with its rate of change)</div>
 <div class="line">measurement  z = the two channels, real and imaginary parts          (4 numbers)</div>
 </div><!-- fragment --><p>The amplitude is kept as its logarithm so that it cannot turn negative. A negative amplitude with the phase shifted by half a turn is the same signal, and a filter free to choose between the two loses the phase.</p>
-<h1><a class="anchor" id="how-it-is-built-5"></a>
+<h1><a class="anchor" id="how-it-is-built-6"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The state moves linearly: one fixed matrix per step.</li>
@@ -154,7 +154,7 @@ How it is built</h1>
 <li><b>It runs in C++.</b> <code>filter()</code> hands the whole pass to the C++ twin <code><a class="el" href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational-wave polarization (Jones formalism, Amblard and Michel) – the tw...">Kalman::Apps::Gravitational::Polarization</a></code> (registered <code>polarization</code>; see <code>kalman model polarization</code> for its components and units). The noise matrices and the sample rate are pushed from the Python model; turning a complex signal into four real columns (<code>preprocess</code>) stays in Python.</li>
 <li><b>The signals are in toy units</b>: an amplitude near 1 and a few hertz. A real wave has a strain near 1e-21 between ten hertz and a kilohertz.</li>
 </ul>
-<h1><a class="anchor" id="using-it-6"></a>
+<h1><a class="anchor" id="using-it-7"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> PolarizationModel</div>
 <div class="line"> </div>

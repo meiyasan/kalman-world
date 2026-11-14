@@ -1,0 +1,1163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.apps.astro.space.interplanetary.TrajectoryControlManeuver Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.apps.astro.space.interplanetary.TrajectoryControlManeuver Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.apps.astro.space.interplanetary.TrajectoryControlManeuver Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.apps.astro.space.interplanetary.TrajectoryControlManeuver:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver__inherit__graph.svg" width="302" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aaa4294af87e941b93ded525a29e6a0dd" id="r_aaa4294af87e941b93ded525a29e6a0dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#aaa4294af87e941b93ded525a29e6a0dd">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#abc706491fa7e1571bb9bf4a04b756e6f">model</a>, <a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a0d7e8955c7f1814b93d960251dedc2bd">r_target</a>, t_arrival_ks, *tcm_days=None, dry_mass_kg=None, wet_mass_kg=None, Isp_s=None, thrust_N=None, max_dv_kms=None, <a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a83be2aa08f9fc406294f407fac88ab9b">mu</a>=None)</td></tr>
+<tr class="separator:aaa4294af87e941b93ded525a29e6a0dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0801a10cdfa79fa23a0f051897c87b09" id="r_a0801a10cdfa79fa23a0f051897c87b09"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a0801a10cdfa79fa23a0f051897c87b09">propellant_remaining_kg</a> (self)</td></tr>
+<tr class="separator:a0801a10cdfa79fa23a0f051897c87b09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c31b791b1ddb2f34b5568f65ab1f10c" id="r_a9c31b791b1ddb2f34b5568f65ab1f10c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a9c31b791b1ddb2f34b5568f65ab1f10c">propellant_consumed_kg</a> (self)</td></tr>
+<tr class="separator:a9c31b791b1ddb2f34b5568f65ab1f10c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a62cc463c58fff7b84e4026ac579005" id="r_a8a62cc463c58fff7b84e4026ac579005"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a8a62cc463c58fff7b84e4026ac579005">reset</a> (self)</td></tr>
+<tr class="separator:a8a62cc463c58fff7b84e4026ac579005"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f5cf580795a5e3c469f6f479d98736b" id="r_a4f5cf580795a5e3c469f6f479d98736b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a4f5cf580795a5e3c469f6f479d98736b">summary</a> (self)</td></tr>
+<tr class="separator:a4f5cf580795a5e3c469f6f479d98736b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:ae5f8a3da72907b26a5d42656759f0ce3 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ae5f8a3da72907b26a5d42656759f0ce3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ae5f8a3da72907b26a5d42656759f0ce3">__call__</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:ae5f8a3da72907b26a5d42656759f0ce3 inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:affb0377af9b13e47497507c9f794837f inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_affb0377af9b13e47497507c9f794837f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#affb0377af9b13e47497507c9f794837f">__getstate__</a> (self)</td></tr>
+<tr class="separator:affb0377af9b13e47497507c9f794837f inherit pub_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a0d7e8955c7f1814b93d960251dedc2bd" id="r_a0d7e8955c7f1814b93d960251dedc2bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a0d7e8955c7f1814b93d960251dedc2bd">r_target</a></td></tr>
+<tr class="separator:a0d7e8955c7f1814b93d960251dedc2bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c1a025cd9533ed39825421a52419d38" id="r_a9c1a025cd9533ed39825421a52419d38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a9c1a025cd9533ed39825421a52419d38">t_arrival</a></td></tr>
+<tr class="separator:a9c1a025cd9533ed39825421a52419d38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a078539920fe6d44978f4bb65aae82dca" id="r_a078539920fe6d44978f4bb65aae82dca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a078539920fe6d44978f4bb65aae82dca">dry_mass</a></td></tr>
+<tr class="separator:a078539920fe6d44978f4bb65aae82dca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a063c7b4ceb7732f3008eddf7c4f059d1" id="r_a063c7b4ceb7732f3008eddf7c4f059d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a063c7b4ceb7732f3008eddf7c4f059d1">current_mass</a></td></tr>
+<tr class="separator:a063c7b4ceb7732f3008eddf7c4f059d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a798b3f0c229acf61aae9cab82e931bf4" id="r_a798b3f0c229acf61aae9cab82e931bf4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a798b3f0c229acf61aae9cab82e931bf4">Isp</a></td></tr>
+<tr class="separator:a798b3f0c229acf61aae9cab82e931bf4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7dca4a4c416b61d0469d2a5684a36e5c" id="r_a7dca4a4c416b61d0469d2a5684a36e5c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a7dca4a4c416b61d0469d2a5684a36e5c">thrust</a></td></tr>
+<tr class="separator:a7dca4a4c416b61d0469d2a5684a36e5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54077203392f2ff257126c90fb1cdc2a" id="r_a54077203392f2ff257126c90fb1cdc2a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a54077203392f2ff257126c90fb1cdc2a">max_dv</a></td></tr>
+<tr class="separator:a54077203392f2ff257126c90fb1cdc2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a83be2aa08f9fc406294f407fac88ab9b" id="r_a83be2aa08f9fc406294f407fac88ab9b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a83be2aa08f9fc406294f407fac88ab9b">mu</a></td></tr>
+<tr class="separator:a83be2aa08f9fc406294f407fac88ab9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02ad0bd40ca94398b8be70f1b9486040" id="r_a02ad0bd40ca94398b8be70f1b9486040"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a02ad0bd40ca94398b8be70f1b9486040">burns</a></td></tr>
+<tr class="separator:a02ad0bd40ca94398b8be70f1b9486040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3cfa92afe614c046c872f13d3d6f3fda" id="r_a3cfa92afe614c046c872f13d3d6f3fda"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a3cfa92afe614c046c872f13d3d6f3fda">propellant_remaining_kg</a></td></tr>
+<tr class="separator:a3cfa92afe614c046c872f13d3d6f3fda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:abc706491fa7e1571bb9bf4a04b756e6f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_abc706491fa7e1571bb9bf4a04b756e6f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#abc706491fa7e1571bb9bf4a04b756e6f">model</a></td></tr>
+<tr class="separator:abc706491fa7e1571bb9bf4a04b756e6f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5e61daa3db52ea85486d5c5ba63d6dc inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ad5e61daa3db52ea85486d5c5ba63d6dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ad5e61daa3db52ea85486d5c5ba63d6dc">x_ref</a></td></tr>
+<tr class="separator:ad5e61daa3db52ea85486d5c5ba63d6dc inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4058d77fddd7f3e20300f3f40a44cbe9 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a4058d77fddd7f3e20300f3f40a44cbe9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a4058d77fddd7f3e20300f3f40a44cbe9">Qcost</a></td></tr>
+<tr class="separator:a4058d77fddd7f3e20300f3f40a44cbe9 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2bdb4ba02132f65dca6b51eff4207f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a1d2bdb4ba02132f65dca6b51eff4207f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a1d2bdb4ba02132f65dca6b51eff4207f">Rcost</a></td></tr>
+<tr class="separator:a1d2bdb4ba02132f65dca6b51eff4207f inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a722292c46d7634f485f0cfba6a308ac2 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a722292c46d7634f485f0cfba6a308ac2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a722292c46d7634f485f0cfba6a308ac2">cost_log</a></td></tr>
+<tr class="separator:a722292c46d7634f485f0cfba6a308ac2 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7beccfc91840e3587501f0921d78a176 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a7beccfc91840e3587501f0921d78a176"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a7beccfc91840e3587501f0921d78a176">u_log</a></td></tr>
+<tr class="separator:a7beccfc91840e3587501f0921d78a176 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada68493d339dd0308e347c28fc49d7d3 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ada68493d339dd0308e347c28fc49d7d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ada68493d339dd0308e347c28fc49d7d3">B_log</a></td></tr>
+<tr class="separator:ada68493d339dd0308e347c28fc49d7d3 inherit pub_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ad5374bb2c1299bb27ea93f2c4ac94506" id="r_ad5374bb2c1299bb27ea93f2c4ac94506"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#ad5374bb2c1299bb27ea93f2c4ac94506">DRY_MASS_KG</a> = 600.0</td></tr>
+<tr class="separator:ad5374bb2c1299bb27ea93f2c4ac94506"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a584a22902d928b975d242c6fa9e346e4" id="r_a584a22902d928b975d242c6fa9e346e4"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a584a22902d928b975d242c6fa9e346e4">WET_MASS_KG</a> = 1200.0</td></tr>
+<tr class="separator:a584a22902d928b975d242c6fa9e346e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a12e4c779621f627193ff592ebce4752d" id="r_a12e4c779621f627193ff592ebce4752d"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a12e4c779621f627193ff592ebce4752d">ISP_S</a> = 220.0</td></tr>
+<tr class="separator:a12e4c779621f627193ff592ebce4752d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95d5218c8e05645b0d56215b1352a123" id="r_a95d5218c8e05645b0d56215b1352a123"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a95d5218c8e05645b0d56215b1352a123">THRUST_N</a> = 22.0</td></tr>
+<tr class="separator:a95d5218c8e05645b0d56215b1352a123"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae02446a105f59eb335eaf4453cdec068" id="r_ae02446a105f59eb335eaf4453cdec068"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#ae02446a105f59eb335eaf4453cdec068">MAX_DV_KMS</a> = 0.050</td></tr>
+<tr class="separator:ae02446a105f59eb335eaf4453cdec068"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a66b695922faf1a21b016d09b61b4336a" id="r_a66b695922faf1a21b016d09b61b4336a"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a66b695922faf1a21b016d09b61b4336a">TCM_DAYS_DEFAULT</a> = [5.0, 30.0, 90.0]</td></tr>
+<tr class="separator:a66b695922faf1a21b016d09b61b4336a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a2924eddb9dedf9fa1d235301745e7f86 inherit pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a2924eddb9dedf9fa1d235301745e7f86"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a2924eddb9dedf9fa1d235301745e7f86">NATIVE</a> = None</td></tr>
+<tr class="separator:a2924eddb9dedf9fa1d235301745e7f86 inherit pub_static_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:af7d203247571a422a856608a94c2888e" id="r_af7d203247571a422a856608a94c2888e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#af7d203247571a422a856608a94c2888e">_policy</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:af7d203247571a422a856608a94c2888e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aae05735ec36e774332127f1f30d4a1c1" id="r_aae05735ec36e774332127f1f30d4a1c1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#aae05735ec36e774332127f1f30d4a1c1">_execute_tcm</a> (self, idx, x_hat, t)</td></tr>
+<tr class="separator:aae05735ec36e774332127f1f30d4a1c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a395117eb86431ed2d5cfdcc22eb8019d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a395117eb86431ed2d5cfdcc22eb8019d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a395117eb86431ed2d5cfdcc22eb8019d">_update</a> (self, x_hat, P, t, *nu=None)</td></tr>
+<tr class="separator:a395117eb86431ed2d5cfdcc22eb8019d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3ac0dfffdbda0997cf6b02f51d769e2 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_aa3ac0dfffdbda0997cf6b02f51d769e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa3ac0dfffdbda0997cf6b02f51d769e2">_native_key</a> (self)</td></tr>
+<tr class="separator:aa3ac0dfffdbda0997cf6b02f51d769e2 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2033e84a4f5ac1413f0ab57964999e2 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_aa2033e84a4f5ac1413f0ab57964999e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa2033e84a4f5ac1413f0ab57964999e2">_native_create</a> (self, model_handle)</td></tr>
+<tr class="separator:aa2033e84a4f5ac1413f0ab57964999e2 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a14b74e7549934e4bf8eb4ec8ce06aa0a inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a14b74e7549934e4bf8eb4ec8ce06aa0a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a14b74e7549934e4bf8eb4ec8ce06aa0a">_native_reads_noise</a> (self)</td></tr>
+<tr class="separator:a14b74e7549934e4bf8eb4ec8ce06aa0a inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7dc36323ea735d878afd8bc62b2a061 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ad7dc36323ea735d878afd8bc62b2a061"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ad7dc36323ea735d878afd8bc62b2a061">_native_handle</a> (self)</td></tr>
+<tr class="separator:ad7dc36323ea735d878afd8bc62b2a061 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6076136d3556765a460227d415fdd667 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a6076136d3556765a460227d415fdd667"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a6076136d3556765a460227d415fdd667">_native_model</a> (self)</td></tr>
+<tr class="separator:a6076136d3556765a460227d415fdd667 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a141ebd748b0a7a579e6df9ca26655687 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a141ebd748b0a7a579e6df9ca26655687"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a141ebd748b0a7a579e6df9ca26655687">_clip_callback</a> (self, handle, errors)</td></tr>
+<tr class="separator:a141ebd748b0a7a579e6df9ca26655687 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00e3950d0950f253c853c2d4654655d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ae00e3950d0950f253c853c2d4654655d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ae00e3950d0950f253c853c2d4654655d">_native_call</a> (self, fn, *args)</td></tr>
+<tr class="separator:ae00e3950d0950f253c853c2d4654655d inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e13eb424f97c7749f261507eb68d895 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a4e13eb424f97c7749f261507eb68d895"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a4e13eb424f97c7749f261507eb68d895">_native_belief</a> (self, x_hat, P, nu)</td></tr>
+<tr class="separator:a4e13eb424f97c7749f261507eb68d895 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac43b1d4ae2c9bfea5a5dec8b8f10f2dd inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_ac43b1d4ae2c9bfea5a5dec8b8f10f2dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ac43b1d4ae2c9bfea5a5dec8b8f10f2dd">_native_policy</a> (self, x_hat, P, t, nu)</td></tr>
+<tr class="separator:ac43b1d4ae2c9bfea5a5dec8b8f10f2dd inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a070f355824f8fa300f6cb58b036f9ad3 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a070f355824f8fa300f6cb58b036f9ad3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a070f355824f8fa300f6cb58b036f9ad3">_native_update</a> (self, x_hat, P, t, nu)</td></tr>
+<tr class="separator:a070f355824f8fa300f6cb58b036f9ad3 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98404342269aa9d1366c559075ff5bd9 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a98404342269aa9d1366c559075ff5bd9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a98404342269aa9d1366c559075ff5bd9">_gains_key</a> (self, *gains)</td></tr>
+<tr class="separator:a98404342269aa9d1366c559075ff5bd9 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa2fb826fd9b877e8d6983b5a82c2977c inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_aa2fb826fd9b877e8d6983b5a82c2977c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#aa2fb826fd9b877e8d6983b5a82c2977c">_cost_key</a> (self)</td></tr>
+<tr class="separator:aa2fb826fd9b877e8d6983b5a82c2977c inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fc614b78bcb4f23cddaf1597cd80066 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a3fc614b78bcb4f23cddaf1597cd80066"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a3fc614b78bcb4f23cddaf1597cd80066">_cost_args</a> (self)</td></tr>
+<tr class="separator:a3fc614b78bcb4f23cddaf1597cd80066 inherit pro_methods_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a2e63a5f3fdad6490c15396b024da5c15" id="r_a2e63a5f3fdad6490c15396b024da5c15"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a2e63a5f3fdad6490c15396b024da5c15">_tcm_times</a></td></tr>
+<tr class="separator:a2e63a5f3fdad6490c15396b024da5c15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace6b3bbba5af01546020c08898f4f6a4" id="r_ace6b3bbba5af01546020c08898f4f6a4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#ace6b3bbba5af01546020c08898f4f6a4">_wet_mass_init</a></td></tr>
+<tr class="separator:ace6b3bbba5af01546020c08898f4f6a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ff45c37153f9f1b2fb6c0dc3042d79a" id="r_a4ff45c37153f9f1b2fb6c0dc3042d79a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#a4ff45c37153f9f1b2fb6c0dc3042d79a">_fired</a></td></tr>
+<tr class="separator:a4ff45c37153f9f1b2fb6c0dc3042d79a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4b8846452927fa7e47ec4cc9d862b80" id="r_ac4b8846452927fa7e47ec4cc9d862b80"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html#ac4b8846452927fa7e47ec4cc9d862b80">_dt_half</a></td></tr>
+<tr class="separator:ac4b8846452927fa7e47ec4cc9d862b80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></td></tr>
+<tr class="memitem:a5cd38120bac6ed142232a2005b242f2f inherit pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller" id="r_a5cd38120bac6ed142232a2005b242f2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a5cd38120bac6ed142232a2005b242f2f">_native_state</a></td></tr>
+<tr class="separator:a5cd38120bac6ed142232a2005b242f2f inherit pro_attribs_classmodules_1_1framework_1_1control_1_1_kalman_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Realistic finite-burn Trajectory Correction Manoeuvre (TCM) controller.
+
+Inherits from :class:`~kalman.framework.KalmanController`.  At each
+scheduled epoch the controller:
+
+1. Solves **Lambert's problem** from the current EKF position to the
+   target arrival position to find the velocity vector needed.
+2. Computes **Δv** = v_needed − v_current.
+3. Applies the **Tsiolkovsky rocket equation** to derive propellant
+   consumed and **burn duration** (seconds to minutes, not an instant).
+4. Returns the velocity impulse; the EKF applies it as a state update.
+
+**Early TCMs have the most leverage.**  A 1 m/s Δv fired
+175 days before Mars arrival shifts the arrival point by ≈ 15 000 km,
+whereas the same burn fired 5 days out moves it only ≈ 430 km.  The
+default schedule (day 5, 30, 90) uses this: an early burn for the
+launch-injection error, then two trims.
+
+Lambert targeting assumes the Sun's gravity alone, so the planets' pull
+after the last burn leaves a residual miss; a further burn close to
+arrival removes it, at a higher Δv per kilometre.
+
+Default spacecraft: a generic small probe (600 kg dry, 1200 kg wet,
+one 22 N hydrazine thruster, Isp 220 s).  Pass ``dry_mass_kg`` /
+``wet_mass_kg`` / ``Isp_s`` / ``thrust_N`` to override.
+
+Parameters
+----------
+model : InterplanetaryModel
+    Cruise model.  ``control=True`` is enforced automatically.
+r_target : (3,) array_like
+    Heliocentric arrival position [Mm] (e.g. ``best["x0"][:3]`` for
+    the Lambert best solution at the *target* date, or compute via
+    ``body_state(target, arrival_date)[0]``).
+t_arrival_ks : float
+    Mission-elapsed arrival time [ks]  (``tof_days * DAY``).
+tcm_days : list of float, optional
+    Mission-elapsed days at which TCMs fire.  Default: [5, 30, 90].
+dry_mass_kg, wet_mass_kg : float
+    Spacecraft dry / wet mass [kg].
+Isp_s : float
+    Specific impulse [s].
+thrust_N : float
+    Total thruster thrust [N].
+max_dv_kms : float
+    Per-TCM Δv cap [km/s] (default 0.05 = 50 m/s).  Guards against
+    overburn when the Lambert solution diverges from the current state
+    by more than a realistic injection error.
+mu : float, optional
+    Gravitational parameter for Lambert solve [Mm³/ks²].  Defaults to
+    ``GM_SUN`` (heliocentric cruise).
+</pre> 
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00628">628</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aaa4294af87e941b93ded525a29e6a0dd" name="aaa4294af87e941b93ded525a29e6a0dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4294af87e941b93ded525a29e6a0dd">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r_target</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t_arrival_ks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>tcm_days</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>dry_mass_kg</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>wet_mass_kg</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Isp_s</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>thrust_N</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>max_dv_kms</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mu</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a8b0d6f6941256ff22585e182113a7237">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00689">689</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  691</span>                 Isp_s=<span class="keywordtype">None</span>, thrust_N=<span class="keywordtype">None</span>, max_dv_kms=<span class="keywordtype">None</span>, mu=<span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">  692</span>        model.l = 3                              <span class="comment"># ensure model accepts control input</span></div>
+<div class="line"><span class="lineno">  693</span>        super().__init__(model, Rcost=np.eye(3))</div>
+<div class="line"><span class="lineno">  694</span>        self.r_target      = np.asarray(r_target, float).reshape(3)</div>
+<div class="line"><span class="lineno">  695</span>        self.t_arrival     = float(t_arrival_ks)</div>
+<div class="line"><span class="lineno">  696</span>        tcm_days           = list(tcm_days <span class="keywordflow">or</span> self.TCM_DAYS_DEFAULT)</div>
+<div class="line"><span class="lineno">  697</span>        self._tcm_times    = sorted(float(d) * DAY <span class="keywordflow">for</span> d <span class="keywordflow">in</span> tcm_days)   <span class="comment"># [TU = ks]</span></div>
+<div class="line"><span class="lineno">  698</span>        self.dry_mass      = float(dry_mass_kg  <span class="keywordflow">if</span> dry_mass_kg  <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.DRY_MASS_KG)</div>
+<div class="line"><span class="lineno">  699</span>        self._wet_mass_init = float(wet_mass_kg <span class="keywordflow">if</span> wet_mass_kg  <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.WET_MASS_KG)</div>
+<div class="line"><span class="lineno">  700</span>        self.current_mass  = self._wet_mass_init</div>
+<div class="line"><span class="lineno">  701</span>        self.Isp           = float(Isp_s        <span class="keywordflow">if</span> Isp_s        <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.ISP_S)</div>
+<div class="line"><span class="lineno">  702</span>        self.thrust        = float(thrust_N     <span class="keywordflow">if</span> thrust_N     <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.THRUST_N)</div>
+<div class="line"><span class="lineno">  703</span>        self.max_dv        = float(max_dv_kms   <span class="keywordflow">if</span> max_dv_kms   <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.MAX_DV_KMS)</div>
+<div class="line"><span class="lineno">  704</span>        self.mu            = float(mu <span class="keywordflow">if</span> mu <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> GM_SUN)</div>
+<div class="line"><span class="lineno">  705</span>        self.burns         = []       <span class="comment"># list of burn metadata dicts (populated at each TCM)</span></div>
+<div class="line"><span class="lineno">  706</span>        self._fired        = set()    <span class="comment"># indices of TCMs already executed</span></div>
+<div class="line"><span class="lineno">  707</span>        self._dt_half      = 0.5 * model._dt   <span class="comment"># match tolerance: half an EKF step</span></div>
+<div class="line"><span class="lineno">  708</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aae05735ec36e774332127f1f30d4a1c1" name="aae05735ec36e774332127f1f30d4a1c1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aae05735ec36e774332127f1f30d4a1c1">&#9670;&#160;</a></span>_execute_tcm()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._execute_tcm </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>idx</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_hat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Compute and log the burn for scheduled TCM *idx*.</pre> 
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00728">728</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  728</span>    <span class="keyword">def </span>_execute_tcm(self, idx, x_hat, t):</div>
+<div class="line"><span class="lineno">  729</span>        <span class="stringliteral">&quot;&quot;&quot;Compute and log the burn for scheduled TCM *idx*.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  730</span>        self._fired.add(idx)</div>
+<div class="line"><span class="lineno">  731</span>        r_now = x_hat[:3].flatten()</div>
+<div class="line"><span class="lineno">  732</span>        v_now = x_hat[3:6].flatten()</div>
+<div class="line"><span class="lineno">  733</span>        tof   = self.t_arrival - t          <span class="comment"># remaining time-of-flight [ks]</span></div>
+<div class="line"><span class="lineno">  734</span> </div>
+<div class="line"><span class="lineno">  735</span>        <span class="keywordflow">if</span> tof &lt;= 0.0 <span class="keywordflow">or</span> self.propellant_remaining_kg &lt;= 0.0:</div>
+<div class="line"><span class="lineno">  736</span>            <span class="keywordflow">return</span> np.zeros(3)</div>
+<div class="line"><span class="lineno">  737</span> </div>
+<div class="line"><span class="lineno">  738</span>        <span class="comment"># Lambert targeting: what velocity do we need NOW to reach r_target in tof?</span></div>
+<div class="line"><span class="lineno">  739</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  740</span>            v_needed, _ = lambert(r_now, self.r_target, tof, mu=self.mu)</div>
+<div class="line"><span class="lineno">  741</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  742</span>            <span class="keywordflow">return</span> np.zeros(3)</div>
+<div class="line"><span class="lineno">  743</span> </div>
+<div class="line"><span class="lineno">  744</span>        dv_vec = v_needed - v_now           <span class="comment"># required Δv [km/s]</span></div>
+<div class="line"><span class="lineno">  745</span>        dv_mag = float(np.linalg.norm(dv_vec))</div>
+<div class="line"><span class="lineno">  746</span> </div>
+<div class="line"><span class="lineno">  747</span>        <span class="comment"># Cap: prevent overburn if injection error is unrealistically large</span></div>
+<div class="line"><span class="lineno">  748</span>        <span class="keywordflow">if</span> dv_mag &gt; self.max_dv:</div>
+<div class="line"><span class="lineno">  749</span>            dv_vec = dv_vec * (self.max_dv / dv_mag)</div>
+<div class="line"><span class="lineno">  750</span>            dv_mag = self.max_dv</div>
+<div class="line"><span class="lineno">  751</span> </div>
+<div class="line"><span class="lineno">  752</span>        <span class="comment"># Tsiolkovsky rocket equation (SI: Isp in s, g0 in m/s², Δv in m/s)</span></div>
+<div class="line"><span class="lineno">  753</span>        dv_ms       = dv_mag * 1e3          <span class="comment"># km/s → m/s</span></div>
+<div class="line"><span class="lineno">  754</span>        max_dv_ms   = self.Isp * G0 * np.log(self.current_mass / max(self.dry_mass, 1.0))</div>
+<div class="line"><span class="lineno">  755</span>        <span class="keywordflow">if</span> dv_ms &gt; max_dv_ms &gt; 0.0:        <span class="comment"># out of propellant — burn what&#39;s left</span></div>
+<div class="line"><span class="lineno">  756</span>            dv_ms   = max_dv_ms</div>
+<div class="line"><span class="lineno">  757</span>            dv_vec  = dv_vec * (dv_ms / max(dv_mag * 1e3, 1e-10))</div>
+<div class="line"><span class="lineno">  758</span>            dv_mag  = dv_ms * 1e-3</div>
+<div class="line"><span class="lineno">  759</span> </div>
+<div class="line"><span class="lineno">  760</span>        prop_kg = self.current_mass * (1.0 - np.exp(-dv_ms / (self.Isp * G0)))</div>
+<div class="line"><span class="lineno">  761</span>        prop_kg = min(prop_kg, self.propellant_remaining_kg)</div>
+<div class="line"><span class="lineno">  762</span> </div>
+<div class="line"><span class="lineno">  763</span>        <span class="comment"># Burn duration: Δm × Isp × g0 / F  (constant-thrust, isentropic approximation)</span></div>
+<div class="line"><span class="lineno">  764</span>        burn_s  = prop_kg * self.Isp * G0 / max(self.thrust, 1e-6)</div>
+<div class="line"><span class="lineno">  765</span> </div>
+<div class="line"><span class="lineno">  766</span>        m_before          = self.current_mass</div>
+<div class="line"><span class="lineno">  767</span>        self.current_mass -= prop_kg</div>
+<div class="line"><span class="lineno">  768</span> </div>
+<div class="line"><span class="lineno">  769</span>        self.burns.append({</div>
+<div class="line"><span class="lineno">  770</span>            <span class="stringliteral">&quot;tcm_idx&quot;</span>:        idx + 1,</div>
+<div class="line"><span class="lineno">  771</span>            <span class="stringliteral">&quot;t_ks&quot;</span>:           t,</div>
+<div class="line"><span class="lineno">  772</span>            <span class="stringliteral">&quot;t_days&quot;</span>:         t / DAY,</div>
+<div class="line"><span class="lineno">  773</span>            <span class="stringliteral">&quot;dv_kms&quot;</span>:         float(dv_mag),</div>
+<div class="line"><span class="lineno">  774</span>            <span class="stringliteral">&quot;dv_ms&quot;</span>:          float(dv_ms),</div>
+<div class="line"><span class="lineno">  775</span>            <span class="stringliteral">&quot;dv_vec_kms&quot;</span>:     dv_vec.copy(),</div>
+<div class="line"><span class="lineno">  776</span>            <span class="stringliteral">&quot;prop_kg&quot;</span>:        float(prop_kg),</div>
+<div class="line"><span class="lineno">  777</span>            <span class="stringliteral">&quot;mass_before_kg&quot;</span>: float(m_before),</div>
+<div class="line"><span class="lineno">  778</span>            <span class="stringliteral">&quot;mass_after_kg&quot;</span>:  float(self.current_mass),</div>
+<div class="line"><span class="lineno">  779</span>            <span class="stringliteral">&quot;burn_s&quot;</span>:         float(burn_s),</div>
+<div class="line"><span class="lineno">  780</span>            <span class="stringliteral">&quot;tof_rem_days&quot;</span>:   float(tof / DAY),</div>
+<div class="line"><span class="lineno">  781</span>        })</div>
+<div class="line"><span class="lineno">  782</span>        <span class="keywordflow">return</span> dv_vec.reshape(3)</div>
+<div class="line"><span class="lineno">  783</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af7d203247571a422a856608a94c2888e" name="af7d203247571a422a856608a94c2888e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af7d203247571a422a856608a94c2888e">&#9670;&#160;</a></span>_policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._policy </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_hat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>nu</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a51cd38e3e057bf8332ab96f434a1de12">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00719">719</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  719</span>    <span class="keyword">def </span>_policy(self, x_hat, P, t, *, nu=None):</div>
+<div class="line"><span class="lineno">  720</span>        t = float(t)</div>
+<div class="line"><span class="lineno">  721</span>        <span class="keywordflow">for</span> i, t_tcm <span class="keywordflow">in</span> enumerate(self._tcm_times):</div>
+<div class="line"><span class="lineno">  722</span>            <span class="keywordflow">if</span> i <span class="keywordflow">in</span> self._fired:</div>
+<div class="line"><span class="lineno">  723</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  724</span>            <span class="keywordflow">if</span> abs(t - t_tcm) &lt;= self._dt_half:</div>
+<div class="line"><span class="lineno">  725</span>                <span class="keywordflow">return</span> self._execute_tcm(i, x_hat, t)</div>
+<div class="line"><span class="lineno">  726</span>        <span class="keywordflow">return</span> np.zeros(3)</div>
+<div class="line"><span class="lineno">  727</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9c31b791b1ddb2f34b5568f65ab1f10c" name="a9c31b791b1ddb2f34b5568f65ab1f10c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c31b791b1ddb2f34b5568f65ab1f10c">&#9670;&#160;</a></span>propellant_consumed_kg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.propellant_consumed_kg </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Total propellant consumed across all TCMs [kg].</pre> 
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00715">715</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  715</span>    <span class="keyword">def </span>propellant_consumed_kg(self):</div>
+<div class="line"><span class="lineno">  716</span>        <span class="stringliteral">&quot;&quot;&quot;Total propellant consumed across all TCMs [kg].&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  717</span>        <span class="keywordflow">return</span> sum(b[<span class="stringliteral">&quot;prop_kg&quot;</span>] <span class="keywordflow">for</span> b <span class="keywordflow">in</span> self.burns)</div>
+<div class="line"><span class="lineno">  718</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0801a10cdfa79fa23a0f051897c87b09" name="a0801a10cdfa79fa23a0f051897c87b09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0801a10cdfa79fa23a0f051897c87b09">&#9670;&#160;</a></span>propellant_remaining_kg()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.propellant_remaining_kg </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Propellant left in the tanks [kg].</pre> 
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00710">710</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  710</span>    <span class="keyword">def </span>propellant_remaining_kg(self):</div>
+<div class="line"><span class="lineno">  711</span>        <span class="stringliteral">&quot;&quot;&quot;Propellant left in the tanks [kg].&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  712</span>        <span class="keywordflow">return</span> max(self.current_mass - self.dry_mass, 0.0)</div>
+<div class="line"><span class="lineno">  713</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a8a62cc463c58fff7b84e4026ac579005" name="a8a62cc463c58fff7b84e4026ac579005"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a62cc463c58fff7b84e4026ac579005">&#9670;&#160;</a></span>reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.reset </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Reset to the pre-launch state (full tanks, no burns fired).
+
+Call this between a truth-propagation pass and the EKF filter pass so
+the controller can re-fire the same TCM schedule on the filter estimate.
+</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#ac6668a5d09950a73ebe4297874085c31">modules.framework.control.KalmanController</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00784">784</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  784</span>    <span class="keyword">def </span>reset(self):</div>
+<div class="line"><span class="lineno">  785</span>        <span class="stringliteral">&quot;&quot;&quot;Reset to the pre-launch state (full tanks, no burns fired).</span></div>
+<div class="line"><span class="lineno">  786</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  787</span><span class="stringliteral">        Call this between a truth-propagation pass and the EKF filter pass so</span></div>
+<div class="line"><span class="lineno">  788</span><span class="stringliteral">        the controller can re-fire the same TCM schedule on the filter estimate.</span></div>
+<div class="line"><span class="lineno">  789</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  790</span>        super().reset()</div>
+<div class="line"><span class="lineno">  791</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> hasattr(self, <span class="stringliteral">&quot;_wet_mass_init&quot;</span>):</div>
+<div class="line"><span class="lineno">  792</span>            <span class="keywordflow">return</span>   <span class="comment"># called by KalmanController.__init__ before our attrs exist</span></div>
+<div class="line"><span class="lineno">  793</span>        self.current_mass = self._wet_mass_init</div>
+<div class="line"><span class="lineno">  794</span>        self.burns        = []</div>
+<div class="line"><span class="lineno">  795</span>        self._fired       = set()</div>
+<div class="line"><span class="lineno">  796</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4f5cf580795a5e3c469f6f479d98736b" name="a4f5cf580795a5e3c469f6f479d98736b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4f5cf580795a5e3c469f6f479d98736b">&#9670;&#160;</a></span>summary()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.summary </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Print a formatted table of all TCMs executed so far.</pre> 
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00797">797</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  797</span>    <span class="keyword">def </span>summary(self):</div>
+<div class="line"><span class="lineno">  798</span>        <span class="stringliteral">&quot;&quot;&quot;Print a formatted table of all TCMs executed so far.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  799</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.burns:</div>
+<div class="line"><span class="lineno">  800</span>            print(<span class="stringliteral">&quot;No TCMs executed.&quot;</span>)</div>
+<div class="line"><span class="lineno">  801</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  802</span>        print(<span class="stringliteral">&quot;TCM Summary&quot;</span>)</div>
+<div class="line"><span class="lineno">  803</span>        print(<span class="stringliteral">&quot;─&quot;</span> * 76)</div>
+<div class="line"><span class="lineno">  804</span>        <span class="keywordflow">for</span> b <span class="keywordflow">in</span> self.burns:</div>
+<div class="line"><span class="lineno">  805</span>            print(<span class="stringliteral">&quot;  TCM-%-2d  t=%6.1f d  Δv=%8.2f m/s  burn=%6.1f s  &quot;</span></div>
+<div class="line"><span class="lineno">  806</span>                  <span class="stringliteral">&quot;Δm=%6.2f kg  m_after=%7.2f kg  TOF_rem=%5.0f d&quot;</span></div>
+<div class="line"><span class="lineno">  807</span>                  % (b[<span class="stringliteral">&quot;tcm_idx&quot;</span>], b[<span class="stringliteral">&quot;t_days&quot;</span>], b[<span class="stringliteral">&quot;dv_ms&quot;</span>], b[<span class="stringliteral">&quot;burn_s&quot;</span>],</div>
+<div class="line"><span class="lineno">  808</span>                     b[<span class="stringliteral">&quot;prop_kg&quot;</span>], b[<span class="stringliteral">&quot;mass_after_kg&quot;</span>], b[<span class="stringliteral">&quot;tof_rem_days&quot;</span>]))</div>
+<div class="line"><span class="lineno">  809</span>        print(<span class="stringliteral">&quot;─&quot;</span> * 76)</div>
+<div class="line"><span class="lineno">  810</span>        total_dv   = sum(b[<span class="stringliteral">&quot;dv_ms&quot;</span>]   <span class="keywordflow">for</span> b <span class="keywordflow">in</span> self.burns)</div>
+<div class="line"><span class="lineno">  811</span>        total_prop = sum(b[<span class="stringliteral">&quot;prop_kg&quot;</span>] <span class="keywordflow">for</span> b <span class="keywordflow">in</span> self.burns)</div>
+<div class="line"><span class="lineno">  812</span>        print(<span class="stringliteral">&quot;  TOTAL   Δv=%8.2f m/s   Δm=%6.2f kg   propellant left: %.2f kg&quot;</span></div>
+<div class="line"><span class="lineno">  813</span>              % (total_dv, total_prop, self.propellant_remaining_kg))</div>
+<div class="line"><span class="lineno">  814</span> </div>
+<div class="line"><span class="lineno">  815</span> </div>
+<div class="line"><span class="lineno">  816</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">  817</span><span class="comment">#  Plotting helpers (module-level): solar-system map + porkchop</span></div>
+<div class="line"><span class="lineno">  818</span><span class="comment"># ===========================================================================</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac4b8846452927fa7e47ec4cc9d862b80" name="ac4b8846452927fa7e47ec4cc9d862b80"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4b8846452927fa7e47ec4cc9d862b80">&#9670;&#160;</a></span>_dt_half</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._dt_half</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00707">707</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a4ff45c37153f9f1b2fb6c0dc3042d79a" name="a4ff45c37153f9f1b2fb6c0dc3042d79a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4ff45c37153f9f1b2fb6c0dc3042d79a">&#9670;&#160;</a></span>_fired</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._fired</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00706">706</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a2e63a5f3fdad6490c15396b024da5c15" name="a2e63a5f3fdad6490c15396b024da5c15"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e63a5f3fdad6490c15396b024da5c15">&#9670;&#160;</a></span>_tcm_times</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._tcm_times</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00697">697</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="ace6b3bbba5af01546020c08898f4f6a4" name="ace6b3bbba5af01546020c08898f4f6a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace6b3bbba5af01546020c08898f4f6a4">&#9670;&#160;</a></span>_wet_mass_init</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver._wet_mass_init</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00699">699</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a02ad0bd40ca94398b8be70f1b9486040" name="a02ad0bd40ca94398b8be70f1b9486040"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02ad0bd40ca94398b8be70f1b9486040">&#9670;&#160;</a></span>burns</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.burns</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00705">705</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a063c7b4ceb7732f3008eddf7c4f059d1" name="a063c7b4ceb7732f3008eddf7c4f059d1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a063c7b4ceb7732f3008eddf7c4f059d1">&#9670;&#160;</a></span>current_mass</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.current_mass</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00700">700</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a078539920fe6d44978f4bb65aae82dca" name="a078539920fe6d44978f4bb65aae82dca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a078539920fe6d44978f4bb65aae82dca">&#9670;&#160;</a></span>dry_mass</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.dry_mass</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00698">698</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="ad5374bb2c1299bb27ea93f2c4ac94506" name="ad5374bb2c1299bb27ea93f2c4ac94506"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5374bb2c1299bb27ea93f2c4ac94506">&#9670;&#160;</a></span>DRY_MASS_KG</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.DRY_MASS_KG = 600.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00682">682</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a798b3f0c229acf61aae9cab82e931bf4" name="a798b3f0c229acf61aae9cab82e931bf4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a798b3f0c229acf61aae9cab82e931bf4">&#9670;&#160;</a></span>Isp</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.Isp</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00701">701</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a12e4c779621f627193ff592ebce4752d" name="a12e4c779621f627193ff592ebce4752d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a12e4c779621f627193ff592ebce4752d">&#9670;&#160;</a></span>ISP_S</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.ISP_S = 220.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00684">684</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a54077203392f2ff257126c90fb1cdc2a" name="a54077203392f2ff257126c90fb1cdc2a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a54077203392f2ff257126c90fb1cdc2a">&#9670;&#160;</a></span>max_dv</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.max_dv</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00703">703</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="ae02446a105f59eb335eaf4453cdec068" name="ae02446a105f59eb335eaf4453cdec068"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae02446a105f59eb335eaf4453cdec068">&#9670;&#160;</a></span>MAX_DV_KMS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.MAX_DV_KMS = 0.050</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00686">686</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a83be2aa08f9fc406294f407fac88ab9b" name="a83be2aa08f9fc406294f407fac88ab9b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a83be2aa08f9fc406294f407fac88ab9b">&#9670;&#160;</a></span>mu</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.mu</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00704">704</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a3cfa92afe614c046c872f13d3d6f3fda" name="a3cfa92afe614c046c872f13d3d6f3fda"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3cfa92afe614c046c872f13d3d6f3fda">&#9670;&#160;</a></span>propellant_remaining_kg</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.propellant_remaining_kg</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00813">813</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a0d7e8955c7f1814b93d960251dedc2bd" name="a0d7e8955c7f1814b93d960251dedc2bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d7e8955c7f1814b93d960251dedc2bd">&#9670;&#160;</a></span>r_target</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.r_target</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00694">694</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a9c1a025cd9533ed39825421a52419d38" name="a9c1a025cd9533ed39825421a52419d38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9c1a025cd9533ed39825421a52419d38">&#9670;&#160;</a></span>t_arrival</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.t_arrival</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00695">695</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a66b695922faf1a21b016d09b61b4336a" name="a66b695922faf1a21b016d09b61b4336a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a66b695922faf1a21b016d09b61b4336a">&#9670;&#160;</a></span>TCM_DAYS_DEFAULT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">list modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.TCM_DAYS_DEFAULT = [5.0, 30.0, 90.0]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00687">687</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a7dca4a4c416b61d0469d2a5684a36e5c" name="a7dca4a4c416b61d0469d2a5684a36e5c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7dca4a4c416b61d0469d2a5684a36e5c">&#9670;&#160;</a></span>thrust</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.thrust</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00702">702</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a95d5218c8e05645b0d56215b1352a123" name="a95d5218c8e05645b0d56215b1352a123"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a95d5218c8e05645b0d56215b1352a123">&#9670;&#160;</a></span>THRUST_N</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.THRUST_N = 22.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00685">685</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<a id="a584a22902d928b975d242c6fa9e346e4" name="a584a22902d928b975d242c6fa9e346e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a584a22902d928b975d242c6fa9e346e4">&#9670;&#160;</a></span>WET_MASS_KG</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">float modules.apps.astro.space.interplanetary.TrajectoryControlManeuver.WET_MASS_KG = 1200.0</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="interplanetary_8py_source.html#l00683">683</a> of file <a class="el" href="interplanetary_8py_source.html">interplanetary.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/apps/astro/space/<a class="el" href="interplanetary_8py_source.html">interplanetary.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps.html">apps</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro.html">astro</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space.html">space</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1interplanetary.html">interplanetary</a></li><li class="navelem"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html">TrajectoryControlManeuver</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

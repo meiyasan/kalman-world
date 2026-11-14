@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/apps/astro/space/transfers.py File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/apps/astro/space/transfers.py File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/apps/astro/space/transfers.py File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('transfers_8py.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">transfers.py File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="transfers_8py_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacemodules" id="r_namespacemodules"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules.html">modules</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1apps" id="r_namespacemodules_1_1apps"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps.html">modules.apps</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1apps_1_1astro" id="r_namespacemodules_1_1apps_1_1astro"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro.html">modules.apps.astro</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1apps_1_1astro_1_1space" id="r_namespacemodules_1_1apps_1_1astro_1_1space"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers" id="r_namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html">modules.apps.astro.space.transfers</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae525b8f53fd5593b0d9536c0bc341aed" id="r_ae525b8f53fd5593b0d9536c0bc341aed"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">modules.apps.astro.space.transfers._kep_arc</a> (r0, v0, tof_ks, n=200, mu=None)</td></tr>
+<tr class="separator:ae525b8f53fd5593b0d9536c0bc341aed"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dbd89e1ad22f572807eb90c178353fe" id="r_a5dbd89e1ad22f572807eb90c178353fe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">modules.apps.astro.space.transfers._orbit_ellipse</a> (body, t_ref=None, n=300)</td></tr>
+<tr class="separator:a5dbd89e1ad22f572807eb90c178353fe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abce2e48d1dd25512bc83e5acf8c76f06" id="r_abce2e48d1dd25512bc83e5acf8c76f06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">modules.apps.astro.space.transfers._third_body</a> (r, r_body, GM)</td></tr>
+<tr class="separator:abce2e48d1dd25512bc83e5acf8c76f06"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6efa0573c6e1d8b47c0f893a4a1d278" id="r_ac6efa0573c6e1d8b47c0f893a4a1d278"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ac6efa0573c6e1d8b47c0f893a4a1d278">modules.apps.astro.space.transfers.gravity</a> (r, t, moon_phase=0.0, sun_phase=0.0, bodies=(&quot;earth&quot;, &quot;moon&quot;, &quot;sun&quot;))</td></tr>
+<tr class="separator:ac6efa0573c6e1d8b47c0f893a4a1d278"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6d393b21b430188b72b3caa413d2fd" id="r_a5f6d393b21b430188b72b3caa413d2fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5f6d393b21b430188b72b3caa413d2fd">modules.apps.astro.space.transfers.lambert</a> (r1, r2, tof, mu=GM_SUN, prograde=True)</td></tr>
+<tr class="separator:a5f6d393b21b430188b72b3caa413d2fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f45fa247f0d50949041a063b26553cd" id="r_a5f45fa247f0d50949041a063b26553cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5f45fa247f0d50949041a063b26553cd">modules.apps.astro.space.transfers.hohmann_transfer</a> (departure=&quot;earth&quot;, target=&quot;mars&quot;, epoch=None, mu=GM_SUN)</td></tr>
+<tr class="separator:a5f45fa247f0d50949041a063b26553cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af375c822b7d7402d5c9c884e79ece11e" id="r_af375c822b7d7402d5c9c884e79ece11e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#af375c822b7d7402d5c9c884e79ece11e">modules.apps.astro.space.transfers.porkchop</a> (departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *n_dep=40, tof_days=(150.0, 300.0), n_tof=40, mu=GM_SUN, prograde=True)</td></tr>
+<tr class="separator:af375c822b7d7402d5c9c884e79ece11e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a63bd4940a777679273eb7aea51131e26" id="r_a63bd4940a777679273eb7aea51131e26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a63bd4940a777679273eb7aea51131e26">modules.apps.astro.space.transfers.best_departure</a> (departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *site=None, **kw)</td></tr>
+<tr class="separator:a63bd4940a777679273eb7aea51131e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca49c2116622aa01ae04055fca9a43f5" id="r_aca49c2116622aa01ae04055fca9a43f5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aca49c2116622aa01ae04055fca9a43f5">modules.apps.astro.space.transfers.gravity_assist</a> (v_in_helio, v_planet_helio, planet, h_periapsis_km=300.0)</td></tr>
+<tr class="separator:aca49c2116622aa01ae04055fca9a43f5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71297fd74fe3a485f43641dbee292661" id="r_a71297fd74fe3a485f43641dbee292661"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a71297fd74fe3a485f43641dbee292661">modules.apps.astro.space.transfers.hohmann_sequence</a> (planets, epoch=None, mu=GM_SUN)</td></tr>
+<tr class="separator:a71297fd74fe3a485f43641dbee292661"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c65c5d4e23dce81402e0a0f86e6f5a" id="r_a03c65c5d4e23dce81402e0a0f86e6f5a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a03c65c5d4e23dce81402e0a0f86e6f5a">modules.apps.astro.space.transfers.flyby_porkchop</a> (departure, flyby, target, dep_date, *tof1_range=(80.0, 300.0), tof2_range=(300.0, 1200.0), n_tof1=30, n_tof2=30, h_min_km=300.0, mu=GM_SUN)</td></tr>
+<tr class="separator:a03c65c5d4e23dce81402e0a0f86e6f5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3c1d51e5ec9677438f8afd1e7bd4eec6" id="r_a3c1d51e5ec9677438f8afd1e7bd4eec6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a3c1d51e5ec9677438f8afd1e7bd4eec6">modules.apps.astro.space.transfers.plot_flyby_porkchop</a> (grid, *ax=None, dv_max=None, figsize=(9.5, 5.8))</td></tr>
+<tr class="separator:a3c1d51e5ec9677438f8afd1e7bd4eec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad89b2429617df566ee8af88bf7fee86b" id="r_ad89b2429617df566ee8af88bf7fee86b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ad89b2429617df566ee8af88bf7fee86b">modules.apps.astro.space.transfers.plot_gravity_assist</a> (ga, planet=&quot;jupiter&quot;, *n_pts=200, figsize=(8, 7), frames=30, interval=90)</td></tr>
+<tr class="separator:ad89b2429617df566ee8af88bf7fee86b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0629bb5c05a77946a1e8a431b61622f7" id="r_a0629bb5c05a77946a1e8a431b61622f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a0629bb5c05a77946a1e8a431b61622f7">modules.apps.astro.space.transfers.plot_two_leg</a> (best, *planets=(&quot;earth&quot;, &quot;mars&quot;, &quot;venus&quot;), n_arc=200, figsize=(7.5, 7.5), frames=30, interval=90)</td></tr>
+<tr class="separator:a0629bb5c05a77946a1e8a431b61622f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae886478ec195445b8bb4965fd108ec8e" id="r_ae886478ec195445b8bb4965fd108ec8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae886478ec195445b8bb4965fd108ec8e">modules.apps.astro.space.transfers._flyby_geometry</a> (body, v_inf_in, v_inf_out)</td></tr>
+<tr class="separator:ae886478ec195445b8bb4965fd108ec8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eb8b650047552bcfdceffc0b2ab91ef" id="r_a8eb8b650047552bcfdceffc0b2ab91ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a8eb8b650047552bcfdceffc0b2ab91ef">modules.apps.astro.space.transfers._solve_dsm</a> (r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu)</td></tr>
+<tr class="separator:a8eb8b650047552bcfdceffc0b2ab91ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa31e305995e68f0349651eb6bcc743e1" id="r_aa31e305995e68f0349651eb6bcc743e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aa31e305995e68f0349651eb6bcc743e1">modules.apps.astro.space.transfers.chain_lambert</a> (sequence, dates, *dsm=None, mu=GM_SUN)</td></tr>
+<tr class="separator:aa31e305995e68f0349651eb6bcc743e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5483521459298695f8e612946f594e7f" id="r_a5483521459298695f8e612946f594e7f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5483521459298695f8e612946f594e7f">modules.apps.astro.space.transfers.plot_multi_leg</a> (legs, *title=None, extra_planets=(&quot;mars&quot;,), n_arc=150, figsize=(8.5, 8.5), frames=30, interval=80, zoom_lim=None)</td></tr>
+<tr class="separator:a5483521459298695f8e612946f594e7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a767d798b2b43c8f5583a5db948764b2e" id="r_a767d798b2b43c8f5583a5db948764b2e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a767d798b2b43c8f5583a5db948764b2e">modules.apps.astro.space.transfers.lunar_porkchop</a> (start=None, end=None, *n_dep=40, tof_days=(3.0, 6.0), n_tof=30, r_park_km=400.0)</td></tr>
+<tr class="separator:a767d798b2b43c8f5583a5db948764b2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:acdea35cb4a406fb2b684d4b8a530ce1d" id="r_acdea35cb4a406fb2b684d4b8a530ce1d"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#acdea35cb4a406fb2b684d4b8a530ce1d">modules.apps.astro.space.transfers._PLANETS</a> = (&quot;mercury&quot;, &quot;venus&quot;, &quot;earth&quot;, &quot;mars&quot;, &quot;jupiter&quot;, &quot;saturn&quot;, &quot;uranus&quot;, &quot;neptune&quot;)</td></tr>
+<tr class="separator:acdea35cb4a406fb2b684d4b8a530ce1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3a576231e66093a7015803defe260be" id="r_af3a576231e66093a7015803defe260be"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#af3a576231e66093a7015803defe260be">modules.apps.astro.space.transfers._PLANET_STYLE</a></td></tr>
+<tr class="separator:af3a576231e66093a7015803defe260be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abccfddd8c75b04124e71bc72fe3ef6b0" id="r_abccfddd8c75b04124e71bc72fe3ef6b0"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abccfddd8c75b04124e71bc72fe3ef6b0">modules.apps.astro.space.transfers._BODY_COLOR</a></td></tr>
+<tr class="separator:abccfddd8c75b04124e71bc72fe3ef6b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef9349acaa50e704f90dd83af82a01b3" id="r_aef9349acaa50e704f90dd83af82a01b3"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aef9349acaa50e704f90dd83af82a01b3">modules.apps.astro.space.transfers._BODY_MS</a></td></tr>
+<tr class="separator:aef9349acaa50e704f90dd83af82a01b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35bbab4d475562c506de1bb719c36602" id="r_a35bbab4d475562c506de1bb719c36602"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a35bbab4d475562c506de1bb719c36602">modules.apps.astro.space.transfers._LEG_COLORS</a> = [&quot;royalblue&quot;, &quot;darkorange&quot;, &quot;limegreen&quot;, &quot;crimson&quot;, &quot;violet&quot;, &quot;gold&quot;]</td></tr>
+<tr class="separator:a35bbab4d475562c506de1bb719c36602"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_17fc734a481c6056d78b62c3e8a9a199.html">astro</a></li><li class="navelem"><a class="el" href="dir_825c94542d7d2888ccac1252d55cd9b3.html">space</a></li><li class="navelem"><a class="el" href="transfers_8py.html">transfers.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

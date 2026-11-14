@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -160,7 +160,7 @@ The model</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>BallisticModel</code>   </td><td class="markdownTableBodyNone">gravity and drag: the drag term is nonlinear in the velocity   </td><td class="markdownTableBodyNone">extended <a class="el" href="namespace_kalman.html">Kalman</a> filter   </td></tr>
 </table>
-<h1><a class="anchor" id="how-it-is-built"></a>
+<h1><a class="anchor" id="how-it-is-built-1"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The model is continuous (<code>DYNAMICS = CONTINUOUS</code>): <code>f</code> returns the rate of change from the forces (gravity, drag, thrust) and the framework's integrator steps them: RK4 by default, or any other through <code>integrator=</code> (<code>KalmanIntegratorKind.EULER</code>, a <code>DormandPrinceIntegrator(...)</code>, a scheme of your own). <code>substeps=N</code> takes N integrator steps per sample, and <code>substeps="auto"</code> picks N from the orbital period. On a 2.2 h orbit sampled every 86 s, one RK4 step is 0.06 m off the exact circle; the hand-written step this replaced was 283 m off.</li>
@@ -168,7 +168,7 @@ How it is built</h1>
 <li><b>Process noise.</b> <code>process_uncertainty</code> is <code>q</code> in m/s^1.5: left alone, the velocity wanders by <code>q √t</code>. It stands for what the model leaves out, such as wind.</li>
 <li><b>C++.</b> <code>BallisticModel</code> has a twin in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_ballistics_1_1_ballistic.html" title="Nonlinear 3-D ballistic model — the twin of kalman.apps.ballistics.BallisticModel.">Kalman::Apps::Ballistics::Ballistic</a></code>). With the default single step the whole filter runs there, about 30 to 40 times faster. Sub-stepping, a speed-dependent process noise and a thrust input keep the Python step.</li>
 </ul>
-<h1><a class="anchor" id="using-it-1"></a>
+<h1><a class="anchor" id="using-it-2"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> BallisticModel</div>
 <div class="line"> </div>

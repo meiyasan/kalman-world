@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-1-g3b9e57f</span>
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,12 +140,12 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2fusion.html',''); initR
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="sensor-fusion"></a> Several sensors measure the same moving object, each with its own noise and its own rate. One filter combines them into an estimate better than any sensor gives alone.</p>
-<h1><a class="anchor" id="the-model-3"></a>
+<h1><a class="anchor" id="the-model-2"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [position, velocity]</div>
 <div class="line">dynamics     constant velocity, disturbed by a random acceleration</div>
 <div class="line">measurement  one row per sensor: a position sensor reads x₁, a velocity sensor reads x₂</div>
-</div><!-- fragment --><h1><a class="anchor" id="how-it-is-built-3"></a>
+</div><!-- fragment --><h1><a class="anchor" id="how-it-is-built-2"></a>
 How it is built</h1>
 <ul>
 <li><b>Sensors are data.</b> A model is built from a list of <code>SensorSpec</code>: a name, what it observes, its noise, and its rate. Adding a sensor adds a row to <code>H</code> and an entry to <code>R</code>.</li>
@@ -153,7 +153,7 @@ How it is built</h1>
 <li><b>Weights.</b> Each sensor counts in proportion to one over its variance. A sensor ten times noisier counts a hundred times less.</li>
 <li><b>Time stepping.</b> Linear and exact.</li>
 </ul>
-<h1><a class="anchor" id="using-it-4"></a>
+<h1><a class="anchor" id="using-it-3"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> SensorFusionModel, SensorSpec</div>
 <div class="line"> </div>

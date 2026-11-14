@@ -1,0 +1,1021 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.models.native Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.models.native Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.models.native Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1framework_1_1models_1_1native.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.models.native Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_model.html">NativeModel</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html">NativeTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1models_1_1native_1_1python__reference.html">python_reference</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a1e5f93bbc2cd4493810969c3549333ae" id="r_a1e5f93bbc2cd4493810969c3549333ae"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a1e5f93bbc2cd4493810969c3549333ae">native_loop_enabled</a> ()</td></tr>
+<tr class="separator:a1e5f93bbc2cd4493810969c3549333ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02e0994c4f10512effe10641ee7918a4" id="r_a02e0994c4f10512effe10641ee7918a4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a02e0994c4f10512effe10641ee7918a4">callback_eligible</a> (model)</td></tr>
+<tr class="separator:a02e0994c4f10512effe10641ee7918a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aba2523e85e5c1f760d90214d598acd3a" id="r_aba2523e85e5c1f760d90214d598acd3a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#aba2523e85e5c1f760d90214d598acd3a">constant_noise</a> (model)</td></tr>
+<tr class="separator:aba2523e85e5c1f760d90214d598acd3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c9a96c7904f7bc53f2a56bb15308dd1" id="r_a4c9a96c7904f7bc53f2a56bb15308dd1"><td class="memItemLeft" align="right" valign="top">set[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a4c9a96c7904f7bc53f2a56bb15308dd1">apps_library_names</a> ()</td></tr>
+<tr class="separator:a4c9a96c7904f7bc53f2a56bb15308dd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3f19d769b559e6c0ef67f3ab520ce98" id="r_ab3f19d769b559e6c0ef67f3ab520ce98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#ab3f19d769b559e6c0ef67f3ab520ce98">native_integrator_kind</a> (model)</td></tr>
+<tr class="separator:ab3f19d769b559e6c0ef67f3ab520ce98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e676fcd5324bcd0d4635db444dc95b8" id="r_a5e676fcd5324bcd0d4635db444dc95b8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a5e676fcd5324bcd0d4635db444dc95b8">callback_handle</a> (model, engine=&quot;extended&quot;, live_noise=False)</td></tr>
+<tr class="separator:a5e676fcd5324bcd0d4635db444dc95b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3c2131f633cc637ddd4819e1ca9ad87" id="r_af3c2131f633cc637ddd4819e1ca9ad87"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#af3c2131f633cc637ddd4819e1ca9ad87">_unscented_noise</a> (model, handle, guard, col, control, write)</td></tr>
+<tr class="separator:af3c2131f633cc637ddd4819e1ca9ad87"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac05cbc6c7cc18ebdc44eb72545b23cac" id="r_ac05cbc6c7cc18ebdc44eb72545b23cac"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#ac05cbc6c7cc18ebdc44eb72545b23cac">run_callback_filter</a> (model, zk, uk=None, *x0=None, P0=None, smooth=False, engine=&quot;extended&quot;, control=None, **engine_params)</td></tr>
+<tr class="separator:ac05cbc6c7cc18ebdc44eb72545b23cac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad047ceae7aeec9f7acdd9f8ea9ffc6e7" id="r_ad047ceae7aeec9f7acdd9f8ea9ffc6e7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#ad047ceae7aeec9f7acdd9f8ea9ffc6e7">_init</a> (self, sensor_id=None, fs=None, **kwargs)</td></tr>
+<tr class="separator:ad047ceae7aeec9f7acdd9f8ea9ffc6e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3314e663c3b822e311c2966e0962d02a" id="r_a3314e663c3b822e311c2966e0962d02a"><td class="memItemLeft" align="right" valign="top">dict[str, type]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a3314e663c3b822e311c2966e0962d02a">native_model_classes</a> ()</td></tr>
+<tr class="separator:a3314e663c3b822e311c2966e0962d02a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a5f036bbf77412eac8bbfa04f1ae43e74" id="r_a5f036bbf77412eac8bbfa04f1ae43e74"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a5f036bbf77412eac8bbfa04f1ae43e74">ENGINE_BY_INT</a></td></tr>
+<tr class="separator:a5f036bbf77412eac8bbfa04f1ae43e74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a738e1b1b47a5058950dce03e32a9ae43" id="r_a738e1b1b47a5058950dce03e32a9ae43"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a738e1b1b47a5058950dce03e32a9ae43">APPS_LIBRARY</a> = &quot;KalmanApps&quot;</td></tr>
+<tr class="separator:a738e1b1b47a5058950dce03e32a9ae43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa34106db67df7587328971529482ce81" id="r_aa34106db67df7587328971529482ce81"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#aa34106db67df7587328971529482ce81">USE_NATIVE_TWINS</a> = True</td></tr>
+<tr class="separator:aa34106db67df7587328971529482ce81"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6dd7137a8f49b71c1f4e5f893a8c08dd" id="r_a6dd7137a8f49b71c1f4e5f893a8c08dd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a6dd7137a8f49b71c1f4e5f893a8c08dd">USE_NATIVE_LOOP</a> = True</td></tr>
+<tr class="separator:a6dd7137a8f49b71c1f4e5f893a8c08dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a23967df5f42640fd51e23d875a76622d" id="r_a23967df5f42640fd51e23d875a76622d"><td class="memItemLeft" align="right" valign="top">set&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a23967df5f42640fd51e23d875a76622d">_apps_names</a> = None</td></tr>
+<tr class="separator:a23967df5f42640fd51e23d875a76622d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fbe0d61a6f3b84d3bb80b5c19de818f" id="r_a7fbe0d61a6f3b84d3bb80b5c19de818f"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a7fbe0d61a6f3b84d3bb80b5c19de818f">NATIVE_INTEGRATORS</a> = {&quot;euler&quot;: 0, &quot;rk4&quot;: 1, &quot;dormand_prince&quot;: 2}</td></tr>
+<tr class="separator:a7fbe0d61a6f3b84d3bb80b5c19de818f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0415adba8584d990c24e91789ab955" id="r_add0415adba8584d990c24e91789ab955"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#add0415adba8584d990c24e91789ab955">_CLASSES</a> = {}</td></tr>
+<tr class="separator:add0415adba8584d990c24e91789ab955"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6118f7c75668278dad0319c10da585a8" id="r_a6118f7c75668278dad0319c10da585a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html#a6118f7c75668278dad0319c10da585a8">NATIVE_NAME</a></td></tr>
+<tr class="separator:a6118f7c75668278dad0319c10da585a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">A libKalman model as a :class:`~kalman.framework.model.KalmanModel`.
+
+:class:`NativeModel` holds an instance built by the C++ factory and forwards the
+model contract — ``f/h``, ``F/H/B/L``, ``Q/R``, the initial state — to it through
+the C API (:mod:`kalman.framework.native.core`). Everything above the contract is
+the ordinary Python framework: the engines, the filters, the sampler, the record,
+``plot``, the API verbs and the MCP tools all see just another ``KalmanModel``.
+
+That is the one crossing between the two implementations for *models*: the C++
+side owns the physics, the Python side owns everything a notebook does with it.
+A crossing costs one C call per ``f``/``h``/coefficient evaluation, which is what
+the measured numbers in ``docs/15_Cxx-Library.md`` say is affordable in this
+direction (a C call is cheap; it is a *Python* callback from C++ that is not).
+
+:func:`native_model_classes` turns every registered name into a class — ``NAME``,
+``DESCRIPTION``, ``VERSION`` and ``DEFAULT_ENGINE`` filled from the C++ metadata —
+so the catalogue, ``describe()`` and ``make_model()`` treat a plugin model exactly
+like a class in ``apps/``: ``{"base": "constant-velocity", "sensor_id": "cv"}``.
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ad047ceae7aeec9f7acdd9f8ea9ffc6e7" name="ad047ceae7aeec9f7acdd9f8ea9ffc6e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad047ceae7aeec9f7acdd9f8ea9ffc6e7">&#9670;&#160;</a></span>_init()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.models.native._init </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sensor_id</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fs</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00716">716</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  716</span><span class="keyword">def </span>_init(self, sensor_id=None, fs=None, **kwargs):</div>
+<div class="line"><span class="lineno">  717</span>    <span class="comment"># `fs` is named (not swallowed by **kwargs) so make_model() binds the spec&#39;s</span></div>
+<div class="line"><span class="lineno">  718</span>    <span class="comment"># sample rate to it the way it does for every other catalogue class; None</span></div>
+<div class="line"><span class="lineno">  719</span>    <span class="comment"># means &quot;keep the C++ model&#39;s own&quot;.</span></div>
+<div class="line"><span class="lineno">  720</span>    <span class="keywordflow">if</span> fs <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  721</span>        kwargs[<span class="stringliteral">&quot;fs&quot;</span>] = fs</div>
+<div class="line"><span class="lineno">  722</span>    NativeModel.__init__(self, self.NATIVE_NAME, sensor_id, **kwargs)</div>
+<div class="line"><span class="lineno">  723</span> </div>
+<div class="line"><span class="lineno">  724</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af3c2131f633cc637ddd4819e1ca9ad87" name="af3c2131f633cc637ddd4819e1ca9ad87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af3c2131f633cc637ddd4819e1ca9ad87">&#9670;&#160;</a></span>_unscented_noise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.models.native._unscented_noise </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>guard</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>col</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>control</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>write</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The noise hooks of the unscented engine, as the Python engine applies
+them: where ``f`` takes ``w`` (or ``h`` takes ``v``) the noise goes through
+the map and the covariance is handed over as it is; otherwise it is added
+afterwards, coupled by ``L`` (or ``M``).</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00638">638</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  638</span><span class="keyword">def </span>_unscented_noise(model, handle, guard, col, control, write):</div>
+<div class="line"><span class="lineno">  639</span>    <span class="stringliteral">&quot;&quot;&quot;The noise hooks of the unscented engine, as the Python engine applies</span></div>
+<div class="line"><span class="lineno">  640</span><span class="stringliteral">    them: where ``f`` takes ``w`` (or ``h`` takes ``v``) the noise goes through</span></div>
+<div class="line"><span class="lineno">  641</span><span class="stringliteral">    the map and the covariance is handed over as it is; otherwise it is added</span></div>
+<div class="line"><span class="lineno">  642</span><span class="stringliteral">    afterwards, coupled by ``L`` (or ``M``).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  643</span>    <span class="keyword">from</span> ..engine <span class="keyword">import</span> KalmanEngine</div>
+<div class="line"><span class="lineno">  644</span>    <span class="keyword">from</span> ..engines.unscented <span class="keyword">import</span> UnscentedKalmanEngine <span class="keyword">as</span> U</div>
+<div class="line"><span class="lineno">  645</span>    lib, ffi = core.lib, core.ffi</div>
+<div class="line"><span class="lineno">  646</span>    n, m = int(model.n), int(model.m)</div>
+<div class="line"><span class="lineno">  647</span>    through_f = KalmanEngine._noise_through_f(model)</div>
+<div class="line"><span class="lineno">  648</span>    through_h = KalmanEngine._noise_through_h(model)</div>
+<div class="line"><span class="lineno">  649</span> </div>
+<div class="line"><span class="lineno">  650</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  651</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  652</span>    <span class="keyword">def </span>process_noise(user, x, u, t, out):</div>
+<div class="line"><span class="lineno">  653</span>        Q = U._Q(model, t)</div>
+<div class="line"><span class="lineno">  654</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> through_f:</div>
+<div class="line"><span class="lineno">  655</span>            Lm = U._L(model, col(x, n), control(u), t)</div>
+<div class="line"><span class="lineno">  656</span>            Q = Lm @ Q @ Lm.T</div>
+<div class="line"><span class="lineno">  657</span>        write(out, Q, n * n)</div>
+<div class="line"><span class="lineno">  658</span> </div>
+<div class="line"><span class="lineno">  659</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  660</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  661</span>    <span class="keyword">def </span>measurement_noise(user, t, out):</div>
+<div class="line"><span class="lineno">  662</span>        R = U._R(model, t)</div>
+<div class="line"><span class="lineno">  663</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> through_h:</div>
+<div class="line"><span class="lineno">  664</span>            Mm = U._M(model, np.asarray(model.x0, dtype=np.float64).reshape(-1, 1), t)</div>
+<div class="line"><span class="lineno">  665</span>            R = Mm @ R @ Mm.T</div>
+<div class="line"><span class="lineno">  666</span>        write(out, R, m * m)</div>
+<div class="line"><span class="lineno">  667</span> </div>
+<div class="line"><span class="lineno">  668</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  669</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  670</span>    <span class="keyword">def </span>noisy_step(user, x, u, w, t, out):</div>
+<div class="line"><span class="lineno">  671</span>        write(out, model.f(col(x, n), u=control(u), w=col(w, n), t=t), n)</div>
+<div class="line"><span class="lineno">  672</span> </div>
+<div class="line"><span class="lineno">  673</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  674</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  675</span>    <span class="keyword">def </span>noisy_measure(user, x, v, t, out):</div>
+<div class="line"><span class="lineno">  676</span>        write(out, model.h(col(x, n), v=col(v, m), t=t), m)</div>
+<div class="line"><span class="lineno">  677</span> </div>
+<div class="line"><span class="lineno">  678</span>    core.check(lib.kalman_model_callback_set_noise(handle, process_noise, measurement_noise), <span class="stringliteral">&quot;set_noise&quot;</span>)</div>
+<div class="line"><span class="lineno">  679</span>    core.check(lib.kalman_model_callback_set_noise_inputs(</div>
+<div class="line"><span class="lineno">  680</span>        handle, noisy_step <span class="keywordflow">if</span> through_f <span class="keywordflow">else</span> ffi.NULL, noisy_measure <span class="keywordflow">if</span> through_h <span class="keywordflow">else</span> ffi.NULL), <span class="stringliteral">&quot;set_noise_inputs&quot;</span>)</div>
+<div class="line"><span class="lineno">  681</span>    <span class="keywordflow">return</span> [process_noise, measurement_noise, noisy_step, noisy_measure]</div>
+<div class="line"><span class="lineno">  682</span> </div>
+<div class="line"><span class="lineno">  683</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a4c9a96c7904f7bc53f2a56bb15308dd1" name="a4c9a96c7904f7bc53f2a56bb15308dd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c9a96c7904f7bc53f2a56bb15308dd1">&#9670;&#160;</a></span>apps_library_names()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> set[str] modules.framework.models.native.apps_library_names </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Names registered by libKalmanApps, loading it on first use; empty when the
+C++ core or that library is not installed.</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00373">373</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  373</span><span class="keyword">def </span>apps_library_names() -&gt; set[str]:</div>
+<div class="line"><span class="lineno">  374</span>    <span class="stringliteral">&quot;&quot;&quot;Names registered by libKalmanApps, loading it on first use; empty when the</span></div>
+<div class="line"><span class="lineno">  375</span><span class="stringliteral">    C++ core or that library is not installed.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  376</span>    <span class="keyword">global</span> _apps_names</div>
+<div class="line"><span class="lineno">  377</span>    <span class="keywordflow">if</span> _apps_names <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  378</span>        _apps_names = set()</div>
+<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">if</span> core.HAS_CXX_CORE:</div>
+<div class="line"><span class="lineno">  380</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  381</span>                _apps_names = set(core.load_plugin(core.resolve_plugin(APPS_LIBRARY)))</div>
+<div class="line"><span class="lineno">  382</span>            <span class="keywordflow">except</span> (FileNotFoundError, PermissionError):</div>
+<div class="line"><span class="lineno">  383</span>                <span class="keywordflow">pass</span>                                  <span class="comment"># not built: the Python physics runs</span></div>
+<div class="line"><span class="lineno">  384</span>    <span class="keywordflow">return</span> _apps_names</div>
+<div class="line"><span class="lineno">  385</span> </div>
+<div class="line"><span class="lineno">  386</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a02e0994c4f10512effe10641ee7918a4" name="a02e0994c4f10512effe10641ee7918a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02e0994c4f10512effe10641ee7918a4">&#9670;&#160;</a></span>callback_eligible()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.framework.models.native.callback_eligible </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Whether the C++ extended engine can run ``model`` through callbacks: any
+model in double precision. What differs between models is only whether the
+noise is handed over once or asked for at every step (:func:`constant_noise`).</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00350">350</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  350</span><span class="keyword">def </span>callback_eligible(model) -&gt; bool:</div>
+<div class="line"><span class="lineno">  351</span>    <span class="stringliteral">&quot;&quot;&quot;Whether the C++ extended engine can run ``model`` through callbacks: any</span></div>
+<div class="line"><span class="lineno">  352</span><span class="stringliteral">    model in double precision. What differs between models is only whether the</span></div>
+<div class="line"><span class="lineno">  353</span><span class="stringliteral">    noise is handed over once or asked for at every step (:func:`constant_noise`).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  354</span>    <span class="keywordflow">return</span> np.dtype(getattr(model, <span class="stringliteral">&quot;dtype&quot;</span>, np.float64)) == np.float64</div>
+<div class="line"><span class="lineno">  355</span> </div>
+<div class="line"><span class="lineno">  356</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5e676fcd5324bcd0d4635db444dc95b8" name="a5e676fcd5324bcd0d4635db444dc95b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e676fcd5324bcd0d4635db444dc95b8">&#9670;&#160;</a></span>callback_handle()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.models.native.callback_handle </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>engine</em> = <code>&quot;extended&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>live_noise</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call
+``model``'s own Python methods, so the C++ filter can run a model written in
+Python. Returns ``(handle, keep)``: ``keep`` holds the callback objects and
+must stay referenced for as long as the handle is used.
+
+The Jacobians are the model's ``F(x, u, t)`` and ``H(x, t)``, analytic where
+the model defines them and differenced by the Python framework otherwise, so
+both sides linearise alike. ``Q`` and ``R`` are pushed as constants (``Q``
+with the noise coupling ``L`` applied); the sample rate too. A Python
+exception inside a callback stops the pass and is re-raised by the caller
+(see :func:`run_callback_filter`).
+</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00529">529</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  529</span><span class="keyword">def </span>callback_handle(model, engine=&quot;extended&quot;, live_noise=False):</div>
+<div class="line"><span class="lineno">  530</span>    <span class="stringliteral">&quot;&quot;&quot;A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call</span></div>
+<div class="line"><span class="lineno">  531</span><span class="stringliteral">    ``model``&#39;s own Python methods, so the C++ filter can run a model written in</span></div>
+<div class="line"><span class="lineno">  532</span><span class="stringliteral">    Python. Returns ``(handle, keep)``: ``keep`` holds the callback objects and</span></div>
+<div class="line"><span class="lineno">  533</span><span class="stringliteral">    must stay referenced for as long as the handle is used.</span></div>
+<div class="line"><span class="lineno">  534</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  535</span><span class="stringliteral">    The Jacobians are the model&#39;s ``F(x, u, t)`` and ``H(x, t)``, analytic where</span></div>
+<div class="line"><span class="lineno">  536</span><span class="stringliteral">    the model defines them and differenced by the Python framework otherwise, so</span></div>
+<div class="line"><span class="lineno">  537</span><span class="stringliteral">    both sides linearise alike. ``Q`` and ``R`` are pushed as constants (``Q``</span></div>
+<div class="line"><span class="lineno">  538</span><span class="stringliteral">    with the noise coupling ``L`` applied); the sample rate too. A Python</span></div>
+<div class="line"><span class="lineno">  539</span><span class="stringliteral">    exception inside a callback stops the pass and is re-raised by the caller</span></div>
+<div class="line"><span class="lineno">  540</span><span class="stringliteral">    (see :func:`run_callback_filter`).</span></div>
+<div class="line"><span class="lineno">  541</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  542</span>    lib = core.require()</div>
+<div class="line"><span class="lineno">  543</span>    ffi = core.ffi</div>
+<div class="line"><span class="lineno">  544</span>    n, m, l = int(model.n), int(model.m), int(model.l)</div>
+<div class="line"><span class="lineno">  545</span>    errors: list[BaseException] = []</div>
+<div class="line"><span class="lineno">  546</span> </div>
+<div class="line"><span class="lineno">  547</span>    <span class="keyword">def </span>col(ptr, size):</div>
+<div class="line"><span class="lineno">  548</span>        <span class="keywordflow">return</span> np.frombuffer(ffi.buffer(ptr, size * 8), dtype=np.float64).reshape(size, 1).copy()</div>
+<div class="line"><span class="lineno">  549</span> </div>
+<div class="line"><span class="lineno">  550</span>    <span class="keyword">def </span>guard(fn):</div>
+<div class="line"><span class="lineno">  551</span>        <span class="keyword">def </span>wrapped(*args):</div>
+<div class="line"><span class="lineno">  552</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  553</span>                fn(*args)</div>
+<div class="line"><span class="lineno">  554</span>                <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  555</span>            <span class="keywordflow">except</span> BaseException <span class="keyword">as</span> exc:            <span class="comment"># must not unwind through C++</span></div>
+<div class="line"><span class="lineno">  556</span>                errors.append(exc)</div>
+<div class="line"><span class="lineno">  557</span>                <span class="keywordflow">return</span> 1</div>
+<div class="line"><span class="lineno">  558</span>        <span class="keywordflow">return</span> wrapped</div>
+<div class="line"><span class="lineno">  559</span> </div>
+<div class="line"><span class="lineno">  560</span>    <span class="keyword">def </span>write(out, values, size):</div>
+<div class="line"><span class="lineno">  561</span>        ffi.memmove(out, np.ascontiguousarray(np.asarray(values, dtype=np.float64).reshape(-1)), size * 8)</div>
+<div class="line"><span class="lineno">  562</span> </div>
+<div class="line"><span class="lineno">  563</span>    <span class="keyword">def </span>control(u):</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span> <span class="keywordflow">if</span> (u == ffi.NULL <span class="keywordflow">or</span> l == 0) <span class="keywordflow">else</span> col(u, l)</div>
+<div class="line"><span class="lineno">  565</span> </div>
+<div class="line"><span class="lineno">  566</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  567</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  568</span>    <span class="keyword">def </span>step(user, x, u, t, out):</div>
+<div class="line"><span class="lineno">  569</span>        write(out, model.f(col(x, n), u=control(u), t=t), n)</div>
+<div class="line"><span class="lineno">  570</span> </div>
+<div class="line"><span class="lineno">  571</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  572</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  573</span>    <span class="keyword">def </span>measure(user, x, t, out):</div>
+<div class="line"><span class="lineno">  574</span>        write(out, model.h(col(x, n), t=t), m)</div>
+<div class="line"><span class="lineno">  575</span> </div>
+<div class="line"><span class="lineno">  576</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  577</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  578</span>    <span class="keyword">def </span>step_jacobian(user, x, u, t, out):</div>
+<div class="line"><span class="lineno">  579</span>        write(out, model.F(x=col(x, n), u=control(u), t=t), n * n)</div>
+<div class="line"><span class="lineno">  580</span> </div>
+<div class="line"><span class="lineno">  581</span>    <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  582</span><span class="stringliteral">    </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  583</span>    <span class="keyword">def </span>measure_jacobian(user, x, t, out):</div>
+<div class="line"><span class="lineno">  584</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  585</span>            H = model.H(x=col(x, n), t=t)</div>
+<div class="line"><span class="lineno">  586</span>        <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">  587</span>            <span class="comment"># A model whose h takes no noise argument: the base class cannot</span></div>
+<div class="line"><span class="lineno">  588</span>            <span class="comment"># difference it (it passes v=). Only the sigma-point engines accept</span></div>
+<div class="line"><span class="lineno">  589</span>            <span class="comment"># such a model, and they use H for the reported innovation alone.</span></div>
+<div class="line"><span class="lineno">  590</span>            <span class="keyword">from</span> ...helpers <span class="keyword">import</span> numerical_jacobian</div>
+<div class="line"><span class="lineno">  591</span>            H = numerical_jacobian(<span class="keyword">lambda</span> xx: model.h(xx, t=t), col(x, n))</div>
+<div class="line"><span class="lineno">  592</span>        write(out, H, m * n)</div>
+<div class="line"><span class="lineno">  593</span> </div>
+<div class="line"><span class="lineno">  594</span>    handle = lib.kalman_model_create_callback(type(model).__name__.encode(), n, m, l,</div>
+<div class="line"><span class="lineno">  595</span>                                              step, measure, step_jacobian, measure_jacobian, ffi.NULL)</div>
+<div class="line"><span class="lineno">  596</span>    <span class="keywordflow">if</span> handle == ffi.NULL:</div>
+<div class="line"><span class="lineno">  597</span>        <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;callback model: {core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  598</span>    handle = ffi.gc(handle, lib.kalman_model_destroy)</div>
+<div class="line"><span class="lineno">  599</span> </div>
+<div class="line"><span class="lineno">  600</span>    <span class="keywordflow">if</span> model.fs:</div>
+<div class="line"><span class="lineno">  601</span>        core.check(lib.kalman_model_set_sample_rate(handle, float(model.fs)), <span class="stringliteral">&quot;set_sample_rate&quot;</span>)</div>
+<div class="line"><span class="lineno">  602</span> </div>
+<div class="line"><span class="lineno">  603</span>    keep = [step, measure, step_jacobian, measure_jacobian]</div>
+<div class="line"><span class="lineno">  604</span>    <span class="keywordflow">if</span> engine <span class="keywordflow">in</span> (<span class="stringliteral">&quot;unscented&quot;</span>, <span class="stringliteral">&quot;particle&quot;</span>):</div>
+<div class="line"><span class="lineno">  605</span>        keep += _unscented_noise(model, handle, guard, col, control, write)</div>
+<div class="line"><span class="lineno">  606</span>    <span class="keywordflow">elif</span> constant_noise(model) <span class="keywordflow">and</span> <span class="keywordflow">not</span> live_noise:</div>
+<div class="line"><span class="lineno">  607</span>        Lm = np.asarray(model._L, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  608</span>        Q = Lm @ np.asarray(model.Q(), dtype=np.float64).reshape(n, n) @ Lm.T</div>
+<div class="line"><span class="lineno">  609</span>        R = np.asarray(model.R(), dtype=np.float64).reshape(m, m)</div>
+<div class="line"><span class="lineno">  610</span>        core.check(lib.kalman_model_set_Q(handle, core.cdptr(np.ascontiguousarray(Q))), <span class="stringliteral">&quot;set_Q&quot;</span>)</div>
+<div class="line"><span class="lineno">  611</span>        core.check(lib.kalman_model_set_R(handle, core.cdptr(np.ascontiguousarray(R))), <span class="stringliteral">&quot;set_R&quot;</span>)</div>
+<div class="line"><span class="lineno">  612</span>    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  613</span>        <span class="comment"># The noise as the Python engine works it out at each step: Q at the</span></div>
+<div class="line"><span class="lineno">  614</span>        <span class="comment"># state the step starts from when Q takes one, then the coupling L.</span></div>
+<div class="line"><span class="lineno">  615</span>        <span class="keyword">from</span> ..engine <span class="keyword">import</span> KalmanEngine</div>
+<div class="line"><span class="lineno">  616</span>        takes_state = KalmanEngine._accepts_param(model.Q, <span class="stringliteral">&quot;x&quot;</span>)</div>
+<div class="line"><span class="lineno">  617</span> </div>
+<div class="line"><span class="lineno">  618</span>        <span class="preprocessor">@ffi.callback(&quot;int(void *, const double *, const double *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  619</span><span class="stringliteral">        </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  620</span>        <span class="keyword">def </span>process_noise(user, x, u, t, out):</div>
+<div class="line"><span class="lineno">  621</span>            xc, uc = col(x, n), control(u)</div>
+<div class="line"><span class="lineno">  622</span>            Q = model.Q(t=t, x=xc) <span class="keywordflow">if</span> takes_state <span class="keywordflow">else</span> model.Q(t=t)</div>
+<div class="line"><span class="lineno">  623</span>            Lm = KalmanEngine._safe_L(model, xc, uc, t)</div>
+<div class="line"><span class="lineno">  624</span>            <span class="keywordflow">if</span> Lm <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  625</span>                Q = Lm @ Q @ Lm.T</div>
+<div class="line"><span class="lineno">  626</span>            write(out, Q, n * n)</div>
+<div class="line"><span class="lineno">  627</span> </div>
+<div class="line"><span class="lineno">  628</span>        <span class="preprocessor">@ffi.callback(&quot;int(void *, double, double *)</span><span class="stringliteral">&quot;)</span></div>
+<div class="line"><span class="lineno">  629</span><span class="stringliteral">        </span><span class="preprocessor">@guard</span></div>
+<div class="line"><span class="lineno">  630</span>        <span class="keyword">def </span>measurement_noise(user, t, out):</div>
+<div class="line"><span class="lineno">  631</span>            write(out, model.R(t=t), m * m)</div>
+<div class="line"><span class="lineno">  632</span> </div>
+<div class="line"><span class="lineno">  633</span>        core.check(lib.kalman_model_callback_set_noise(handle, process_noise, measurement_noise), <span class="stringliteral">&quot;set_noise&quot;</span>)</div>
+<div class="line"><span class="lineno">  634</span>        keep += [process_noise, measurement_noise]</div>
+<div class="line"><span class="lineno">  635</span>    <span class="keywordflow">return</span> handle, (*keep, errors)</div>
+<div class="line"><span class="lineno">  636</span> </div>
+<div class="line"><span class="lineno">  637</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aba2523e85e5c1f760d90214d598acd3a" name="aba2523e85e5c1f760d90214d598acd3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aba2523e85e5c1f760d90214d598acd3a">&#9670;&#160;</a></span>constant_noise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.framework.models.native.constant_noise </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Whether ``model``'s noise is constant and additive: ``Q``, ``R`` and the
+noise coupling ``L`` are the base class's and hold matrices. Then they are
+pushed to C++ once. Otherwise (an overridden or callable ``Q``/``R``/``L``,
+a state-dependent ``Q``, a coupling left to be differenced from ``f``) the
+C++ filter asks the Python model for them at every step.</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00357">357</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  357</span><span class="keyword">def </span>constant_noise(model) -&gt; bool:</div>
+<div class="line"><span class="lineno">  358</span>    <span class="stringliteral">&quot;&quot;&quot;Whether ``model``&#39;s noise is constant and additive: ``Q``, ``R`` and the</span></div>
+<div class="line"><span class="lineno">  359</span><span class="stringliteral">    noise coupling ``L`` are the base class&#39;s and hold matrices. Then they are</span></div>
+<div class="line"><span class="lineno">  360</span><span class="stringliteral">    pushed to C++ once. Otherwise (an overridden or callable ``Q``/``R``/``L``,</span></div>
+<div class="line"><span class="lineno">  361</span><span class="stringliteral">    a state-dependent ``Q``, a coupling left to be differenced from ``f``) the</span></div>
+<div class="line"><span class="lineno">  362</span><span class="stringliteral">    C++ filter asks the Python model for them at every step.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  363</span>    <span class="keyword">from</span> ..model <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><span class="lineno">  364</span>    cls = type(model)</div>
+<div class="line"><span class="lineno">  365</span>    <span class="keywordflow">if</span> any(getattr(cls, name) <span class="keywordflow">is</span> <span class="keywordflow">not</span> getattr(KalmanModel, name) <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;Q&quot;</span>, <span class="stringliteral">&quot;R&quot;</span>, <span class="stringliteral">&quot;L&quot;</span>)):</div>
+<div class="line"><span class="lineno">  366</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  367</span>    <span class="keywordflow">if</span> any(name <span class="keywordflow">in</span> model.__dict__ <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;Q&quot;</span>, <span class="stringliteral">&quot;R&quot;</span>, <span class="stringliteral">&quot;L&quot;</span>)):</div>
+<div class="line"><span class="lineno">  368</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  369</span>    <span class="keywordflow">return</span> <span class="keywordflow">not</span> (callable(model._Q) <span class="keywordflow">or</span> callable(model._R) <span class="keywordflow">or</span> model._L <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> callable(model._L))</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab3f19d769b559e6c0ef67f3ab520ce98" name="ab3f19d769b559e6c0ef67f3ab520ce98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3f19d769b559e6c0ef67f3ab520ce98">&#9670;&#160;</a></span>native_integrator_kind()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.models.native.native_integrator_kind </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The C++ ``IntegratorKind`` of ``model``'s integrator, for a continuous twin's
+``integrator`` parameter; ``None`` when the C++ side has no such scheme (a
+custom integrator, a subclass of a built-in one, Dormand-Prince with other
+tolerances than the C++ defaults).</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00511">511</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  511</span><span class="keyword">def </span>native_integrator_kind(model):</div>
+<div class="line"><span class="lineno">  512</span>    <span class="stringliteral">&quot;&quot;&quot;The C++ ``IntegratorKind`` of ``model``&#39;s integrator, for a continuous twin&#39;s</span></div>
+<div class="line"><span class="lineno">  513</span><span class="stringliteral">    ``integrator`` parameter; ``None`` when the C++ side has no such scheme (a</span></div>
+<div class="line"><span class="lineno">  514</span><span class="stringliteral">    custom integrator, a subclass of a built-in one, Dormand-Prince with other</span></div>
+<div class="line"><span class="lineno">  515</span><span class="stringliteral">    tolerances than the C++ defaults).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  516</span>    <span class="keyword">from</span> ..integrator <span class="keyword">import</span> KalmanIntegrator, _BUILTIN_STEPS</div>
+<div class="line"><span class="lineno">  517</span>    integrator = model.default_integrator()</div>
+<div class="line"><span class="lineno">  518</span>    name = getattr(integrator, <span class="stringliteral">&quot;NATIVE&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  519</span>    kind = NATIVE_INTEGRATORS.get(name)</div>
+<div class="line"><span class="lineno">  520</span>    <span class="keywordflow">if</span> kind <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> type(integrator)._step <span class="keywordflow">is</span> <span class="keywordflow">not</span> _BUILTIN_STEPS.get(name) \</div>
+<div class="line"><span class="lineno">  521</span>            <span class="keywordflow">or</span> type(integrator).step <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanIntegrator.step:</div>
+<div class="line"><span class="lineno">  522</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  523</span>    <span class="keywordflow">if</span> kind == 2 <span class="keywordflow">and</span> (integrator.rtol, integrator.atol, integrator.max_substeps) != (1e-6, 1e-9, 10_000):</div>
+<div class="line"><span class="lineno">  524</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  525</span>    <span class="keywordflow">return</span> kind</div>
+<div class="line"><span class="lineno">  526</span> </div>
+<div class="line"><span class="lineno">  527</span> </div>
+<div class="line"><span class="lineno">  528</span><span class="comment"># --- a Python-written model on the C++ engines ----------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1e5f93bbc2cd4493810969c3549333ae" name="a1e5f93bbc2cd4493810969c3549333ae"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1e5f93bbc2cd4493810969c3549333ae">&#9670;&#160;</a></span>native_loop_enabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.framework.models.native.native_loop_enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00328">328</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  328</span><span class="keyword">def </span>native_loop_enabled() -&gt; bool:</div>
+<div class="line"><span class="lineno">  329</span>    <span class="keyword">import</span> os</div>
+<div class="line"><span class="lineno">  330</span>    <span class="keywordflow">return</span> USE_NATIVE_LOOP <span class="keywordflow">and</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_NATIVE_LOOP&quot;</span>, <span class="stringliteral">&quot;1&quot;</span>) != <span class="stringliteral">&quot;0&quot;</span> <span class="keywordflow">and</span> core.HAS_CXX_CORE</div>
+<div class="line"><span class="lineno">  331</span> </div>
+<div class="line"><span class="lineno">  332</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3314e663c3b822e311c2966e0962d02a" name="a3314e663c3b822e311c2966e0962d02a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3314e663c3b822e311c2966e0962d02a">&#9670;&#160;</a></span>native_model_classes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict[str, type] modules.framework.models.native.native_model_classes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">``{registered name -&gt; NativeModel subclass}`` for every model the C++
+factory currently knows, including those loaded from plugins since the last
+call. Empty when the library is not available.</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00725">725</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  725</span><span class="keyword">def </span>native_model_classes() -&gt; dict[str, type]:</div>
+<div class="line"><span class="lineno">  726</span>    <span class="stringliteral">&quot;&quot;&quot;``{registered name -&gt; NativeModel subclass}`` for every model the C++</span></div>
+<div class="line"><span class="lineno">  727</span><span class="stringliteral">    factory currently knows, including those loaded from plugins since the last</span></div>
+<div class="line"><span class="lineno">  728</span><span class="stringliteral">    call. Empty when the library is not available.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  729</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> core.HAS_CXX_CORE:</div>
+<div class="line"><span class="lineno">  730</span>        <span class="keywordflow">return</span> {}</div>
+<div class="line"><span class="lineno">  731</span>    <span class="keywordflow">for</span> name <span class="keywordflow">in</span> core.names():</div>
+<div class="line"><span class="lineno">  732</span>        <span class="comment"># libKalmanApps&#39; models are reached through their Python classes</span></div>
+<div class="line"><span class="lineno">  733</span>        <span class="comment"># (StormModel, BallisticModel ...), not listed a second time here.</span></div>
+<div class="line"><span class="lineno">  734</span>        <span class="keywordflow">if</span> name <span class="keywordflow">in</span> _CLASSES <span class="keywordflow">or</span> name <span class="keywordflow">in</span> (_apps_names <span class="keywordflow">or</span> ()):</div>
+<div class="line"><span class="lineno">  735</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  736</span>        info = core.describe(name)</div>
+<div class="line"><span class="lineno">  737</span>        _CLASSES[name] = type(name, (NativeModel,), {</div>
+<div class="line"><span class="lineno">  738</span>            <span class="stringliteral">&quot;__module__&quot;</span>: __name__,</div>
+<div class="line"><span class="lineno">  739</span>            <span class="stringliteral">&quot;__doc__&quot;</span>: f<span class="stringliteral">&quot;{info[&#39;title&#39;]} — {info[&#39;description&#39;]} (C++, {info[&#39;plugin&#39;] or &#39;built in&#39;})&quot;</span>,</div>
+<div class="line"><span class="lineno">  740</span>            <span class="stringliteral">&quot;__init__&quot;</span>: _init,</div>
+<div class="line"><span class="lineno">  741</span>            <span class="stringliteral">&quot;NATIVE_NAME&quot;</span>: name,</div>
+<div class="line"><span class="lineno">  742</span>            <span class="stringliteral">&quot;NAME&quot;</span>: info[<span class="stringliteral">&quot;title&quot;</span>],</div>
+<div class="line"><span class="lineno">  743</span>            <span class="stringliteral">&quot;DESCRIPTION&quot;</span>: info[<span class="stringliteral">&quot;description&quot;</span>],</div>
+<div class="line"><span class="lineno">  744</span>            <span class="stringliteral">&quot;VERSION&quot;</span>: info[<span class="stringliteral">&quot;version&quot;</span>],</div>
+<div class="line"><span class="lineno">  745</span>            <span class="stringliteral">&quot;DEFAULT_ENGINE&quot;</span>: ENGINE_BY_INT.get(info[<span class="stringliteral">&quot;engine&quot;</span>], KalmanEngineKind.EXTENDED),</div>
+<div class="line"><span class="lineno">  746</span>        })</div>
+<div class="line"><span class="lineno">  747</span>    <span class="keywordflow">return</span> dict(_CLASSES)</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac05cbc6c7cc18ebdc44eb72545b23cac" name="ac05cbc6c7cc18ebdc44eb72545b23cac"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac05cbc6c7cc18ebdc44eb72545b23cac">&#9670;&#160;</a></span>run_callback_filter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.framework.models.native.run_callback_filter </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>zk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>uk</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>x0</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>P0</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>smooth</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>engine</em> = <code>&quot;extended&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>control</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>engine_params</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Filter ``zk`` with a C++ engine (``"extended"`` or ``"unscented"``, with
+its constructor parameters) on a Python-written ``model``. Returns the
+per-step arrays of :func:`core.run_filter`.</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00684">684</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  685</span>                        engine=<span class="stringliteral">&quot;extended&quot;</span>, control=<span class="keywordtype">None</span>, **engine_params) -&gt; dict:</div>
+<div class="line"><span class="lineno">  686</span>    <span class="stringliteral">&quot;&quot;&quot;Filter ``zk`` with a C++ engine (``&quot;extended&quot;`` or ``&quot;unscented&quot;``, with</span></div>
+<div class="line"><span class="lineno">  687</span><span class="stringliteral">    its constructor parameters) on a Python-written ``model``. Returns the</span></div>
+<div class="line"><span class="lineno">  688</span><span class="stringliteral">    per-step arrays of :func:`core.run_filter`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  689</span>    lib = core.require()</div>
+<div class="line"><span class="lineno">  690</span>    <span class="comment"># A controller may retune the model while it runs (adaptive Q and R), so in</span></div>
+<div class="line"><span class="lineno">  691</span>    <span class="comment"># closed loop the noise is asked for at every step, never handed over once.</span></div>
+<div class="line"><span class="lineno">  692</span>    <span class="comment"># The engine by name, or a C++ engine already made (the particle engine on numpy&#39;s draws).</span></div>
+<div class="line"><span class="lineno">  693</span>    kind = engine <span class="keywordflow">if</span> isinstance(engine, str) <span class="keywordflow">else</span> {v: k <span class="keywordflow">for</span> k, v <span class="keywordflow">in</span> core.ENGINE_KINDS.items()}.get(</div>
+<div class="line"><span class="lineno">  694</span>        int(core.lib.kalman_engine_kind(engine)), <span class="stringliteral">&quot;extended&quot;</span>)</div>
+<div class="line"><span class="lineno">  695</span>    handle, keep = callback_handle(model, kind, live_noise=control <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  696</span>    n = int(model.n)</div>
+<div class="line"><span class="lineno">  697</span>    x0 = np.ascontiguousarray(np.asarray(model.x0 <span class="keywordflow">if</span> x0 <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> x0, dtype=np.float64).reshape(-1))</div>
+<div class="line"><span class="lineno">  698</span>    P0 = np.ascontiguousarray(np.asarray(model.P0 <span class="keywordflow">if</span> P0 <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> P0, dtype=np.float64).reshape(n, n))</div>
+<div class="line"><span class="lineno">  699</span>    core.check(lib.kalman_model_set_x0(handle, core.cdptr(x0)), <span class="stringliteral">&quot;set_x0&quot;</span>)</div>
+<div class="line"><span class="lineno">  700</span>    core.check(lib.kalman_model_set_P0(handle, core.cdptr(P0)), <span class="stringliteral">&quot;set_P0&quot;</span>)</div>
+<div class="line"><span class="lineno">  701</span>    core.check(lib.kalman_model_set_t0(handle, float(model.t0) <span class="keywordflow">if</span> model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0), <span class="stringliteral">&quot;set_t0&quot;</span>)</div>
+<div class="line"><span class="lineno">  702</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  703</span>        made = engine <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(engine, (str, int)) <span class="keywordflow">else</span> core.create_engine(engine, **engine_params)</div>
+<div class="line"><span class="lineno">  704</span>        <span class="keywordflow">return</span> core.run_filter(handle, made, n, int(model.m),</div>
+<div class="line"><span class="lineno">  705</span>                               int(model.l), zk, uk, smooth=smooth, control=control)</div>
+<div class="line"><span class="lineno">  706</span>    <span class="keywordflow">except</span> RuntimeError:</div>
+<div class="line"><span class="lineno">  707</span>        <span class="keywordflow">if</span> keep[-1]:</div>
+<div class="line"><span class="lineno">  708</span>            <span class="keywordflow">raise</span> keep[-1][0]                       <span class="comment"># the Python exception, not its C++ shadow</span></div>
+<div class="line"><span class="lineno">  709</span>        <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">  710</span> </div>
+<div class="line"><span class="lineno">  711</span> </div>
+<div class="line"><span class="lineno">  712</span><span class="comment"># --- one class per registered name ---------------------------------------------</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a23967df5f42640fd51e23d875a76622d" name="a23967df5f42640fd51e23d875a76622d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a23967df5f42640fd51e23d875a76622d">&#9670;&#160;</a></span>_apps_names</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">set modules.framework.models.native._apps_names = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00370">370</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="add0415adba8584d990c24e91789ab955" name="add0415adba8584d990c24e91789ab955"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add0415adba8584d990c24e91789ab955">&#9670;&#160;</a></span>_CLASSES</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.framework.models.native._CLASSES = {}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00713">713</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="a738e1b1b47a5058950dce03e32a9ae43" name="a738e1b1b47a5058950dce03e32a9ae43"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a738e1b1b47a5058950dce03e32a9ae43">&#9670;&#160;</a></span>APPS_LIBRARY</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.models.native.APPS_LIBRARY = &quot;KalmanApps&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00319">319</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="a5f036bbf77412eac8bbfa04f1ae43e74" name="a5f036bbf77412eac8bbfa04f1ae43e74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f036bbf77412eac8bbfa04f1ae43e74">&#9670;&#160;</a></span>ENGINE_BY_INT</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.framework.models.native.ENGINE_BY_INT</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {0: KalmanEngineKind.LINEAR, 1: KalmanEngineKind.EXTENDED,</div>
+<div class="line"><span class="lineno">    2</span>                 2: KalmanEngineKind.UNSCENTED, 3: KalmanEngineKind.PARTICLE,</div>
+<div class="line"><span class="lineno">    3</span>                 4: KalmanEngineKind.ENSEMBLE, 5: KalmanEngineKind.COMBINATORIAL}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00029">29</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="a7fbe0d61a6f3b84d3bb80b5c19de818f" name="a7fbe0d61a6f3b84d3bb80b5c19de818f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fbe0d61a6f3b84d3bb80b5c19de818f">&#9670;&#160;</a></span>NATIVE_INTEGRATORS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.framework.models.native.NATIVE_INTEGRATORS = {&quot;euler&quot;: 0, &quot;rk4&quot;: 1, &quot;dormand_prince&quot;: 2}</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00508">508</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="a6118f7c75668278dad0319c10da585a8" name="a6118f7c75668278dad0319c10da585a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6118f7c75668278dad0319c10da585a8">&#9670;&#160;</a></span>NATIVE_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.models.native.NATIVE_NAME</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00722">722</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="a6dd7137a8f49b71c1f4e5f893a8c08dd" name="a6dd7137a8f49b71c1f4e5f893a8c08dd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6dd7137a8f49b71c1f4e5f893a8c08dd">&#9670;&#160;</a></span>USE_NATIVE_LOOP</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool modules.framework.models.native.USE_NATIVE_LOOP = True</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00325">325</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+<a id="aa34106db67df7587328971529482ce81" name="aa34106db67df7587328971529482ce81"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa34106db67df7587328971529482ce81">&#9670;&#160;</a></span>USE_NATIVE_TWINS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool modules.framework.models.native.USE_NATIVE_TWINS = True</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00322">322</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1models.html">models</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1models_1_1native.html">native</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,373 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Integrators, Solvers and Differentiators" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Integrators, Solvers and Differentiators" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Integrators, Solvers and Differentiators</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_docs_26___integrators-and-_solvers.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Integrators, Solvers and Differentiators</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="integrators-solvers-and-differentiators"></a> Three roles. The first two are often confused:</p>
+<ul>
+<li>an <b>integrator</b> advances <em>time</em>: <code>x(t) → x(t+dt)</code> given a continuous derivative <code>ẋ = f(x, u, t)</code>;</li>
+<li>a <b>solver</b> discretizes <em>space</em> (spectral, finite-difference, …) and <b>composes</b> an integrator for its time march.</li>
+</ul>
+<p>For an ODE, <code>discretize</code> is the identity and the two coincide — which is why an ODE model binds only an integrator, and a field (PDE) model binds a solver. They are sibling packages; neither nests inside the other.</p>
+<hr  />
+<h1><a class="anchor" id="integrators"></a>
+Integrators</h1>
+<h2><a class="anchor" id="the-contract"></a>
+The contract</h2>
+<div class="fragment"><div class="line"><span class="keyword">class </span>KalmanIntegrator:</div>
+<div class="line">    KIND = <span class="keywordtype">None</span>            <span class="comment"># a KalmanIntegratorKind member</span></div>
+<div class="line">    tableau = <span class="keywordtype">None</span>         <span class="comment"># explicit Runge–Kutta Butcher tableau (c, A, b), or None</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>step(self, f, x, u=None, t=None, dt=1.0): ...      <span class="comment"># override this</span></div>
+<div class="line">    <span class="keyword">def </span>integrate(self, f, x, u=None, t=None, dt=1.0, n=1): ...   <span class="comment"># default loop</span></div>
+</div><!-- fragment --><p>Integrators own <b>no run state</b> and are <b>dtype-preserving</b> — they also step complex spectral fields, so never coerce to <code>float</code> inside a <code>step()</code>.</p>
+<h2><a class="anchor" id="shipped"></a>
+Shipped</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Kind   </th><th class="markdownTableHeadNone">Class   </th><th class="markdownTableHeadNone">Order   </th><th class="markdownTableHeadNone">Notes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>euler</code>   </td><td class="markdownTableBodyNone"><code>EulerIntegrator</code>   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">1-stage explicit; cheapest    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>rk4</code>   </td><td class="markdownTableBodyNone"><code>RK4Integrator</code>   </td><td class="markdownTableBodyNone">4   </td><td class="markdownTableBodyNone">the default    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>dormand_prince</code>   </td><td class="markdownTableBodyNone"><code>DormandPrinceIntegrator</code>   </td><td class="markdownTableBodyNone">5(4)   </td><td class="markdownTableBodyNone">embedded pair, adaptive substeps    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>implicit_euler</code>   </td><td class="markdownTableBodyNone"><em>reserved</em>   </td><td class="markdownTableBodyNone">1   </td><td class="markdownTableBodyNone">raises <code>NotImplementedError</code> — needs a Newton solve   </td></tr>
+</table>
+<h2><a class="anchor" id="choosing-one"></a>
+Choosing one</h2>
+<p>Declare it on the model, or override per instance:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.constants <span class="keyword">import</span> KalmanIntegratorKind</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>MyModel(KalmanModel):</div>
+<div class="line">    DEFAULT_INTEGRATOR  = KalmanIntegratorKind.DORMAND_PRINCE</div>
+<div class="line">    ALLOWED_INTEGRATORS = {KalmanIntegratorKind.RK4, KalmanIntegratorKind.DORMAND_PRINCE}</div>
+<div class="line">    SOLVER_SUBSTEPS     = 4      <span class="comment"># sub-divide each 1/fs filter step into 4 integrator steps</span></div>
+<div class="line"> </div>
+<div class="line">model = MyModel(<span class="stringliteral">&quot;m&quot;</span>, fs=100, integrator=KalmanIntegratorKind.RK4)   <span class="comment"># per-instance override</span></div>
+</div><!-- fragment --><p><code>SOLVER_SUBSTEPS</code> is the knob for stiff-ish dynamics at a low sampling rate: the filter step stays <code>1/fs</code>, but the integrator takes that many smaller steps inside it.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>The integrator only matters if <code>f()</code> is integrated.</b> The linear engine and the native C fast path use <code>F()</code> matrices and never call <code>f()</code>. On a matrices-only model, setting <code>integrator=</code> changes nothing at all. It takes effect when the model is <code>DYNAMICS = CONTINUOUS</code> (or a solver drives a field). </p>
+</blockquote>
+<h2><a class="anchor" id="verifying-it-took-effect"></a>
+Verifying it took effect</h2>
+<div class="fragment"><div class="line">model.default_integrator()       <span class="comment"># -&gt; the resolved instance</span></div>
+</div><!-- fragment --><hr  />
+<h1><a class="anchor" id="solvers"></a>
+Solvers</h1>
+<h2><a class="anchor" id="the-contract-1"></a>
+The contract</h2>
+<div class="fragment"><div class="line"><span class="keyword">class </span>KalmanSolver:</div>
+<div class="line">    KIND = <span class="keywordtype">None</span></div>
+<div class="line">    DEFAULT_INTEGRATOR = KalmanIntegratorKind.RK4</div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>__init__(self, *, integrator=None, backend=None, device=None): ...</div>
+<div class="line">    <span class="keyword">def </span>discretize(self, field): ...                     <span class="comment"># identity by default</span></div>
+<div class="line">    <span class="keyword">def </span>integrate(self, rhs, state, u=None, t=None, dt=1.0, n=1): ...   <span class="comment"># delegates</span></div>
+<div class="line">    <span class="keyword">def </span>solve(self, field, steps=1, u=None, t=None): ... <span class="comment"># override</span></div>
+</div><!-- fragment --><p>Composition, not inheritance: a solver <em>has-a</em> integrator, because different discretizations pair with different steppers.</p>
+<h2><a class="anchor" id="shipped-1"></a>
+Shipped</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Kind   </th><th class="markdownTableHeadNone">Class   </th><th class="markdownTableHeadNone">Mesh   </th><th class="markdownTableHeadNone">Physics hook    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>spectral</code>   </td><td class="markdownTableBodyNone"><code>SpectralSolver</code>   </td><td class="markdownTableBodyNone">regular <b>periodic</b>, square or rectangular   </td><td class="markdownTableBodyNone"><code>rhs_hat(wh) → dω̂/dt</code> (spectral space)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>finite_difference</code>   </td><td class="markdownTableBodyNone"><code>FiniteDifferenceSolver</code>   </td><td class="markdownTableBodyNone">regular rectangular, <code>periodic</code> / <code>dirichlet</code> / <code>neumann</code>   </td><td class="markdownTableBodyNone"><code>rhs(field, t) → ∂f/∂t</code> (real space)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>finite_volume</code>   </td><td class="markdownTableBodyNone"><em>reserved</em>   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">raises <code>NotImplementedError</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>finite_element</code>   </td><td class="markdownTableBodyNone"><em>reserved</em>   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">raises <code>NotImplementedError</code>   </td></tr>
+</table>
+<p>Both accept square <b>or rectangular</b> grids (<code>n=(ny, nx)</code>) and physical domain lengths (<code>length=(Ly, Lx)</code>); wavenumbers scale as <code>2π/L</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.solvers <span class="keyword">import</span> SpectralSolver, FiniteDifferenceSolver</div>
+<div class="line"> </div>
+<div class="line">s  = SpectralSolver(n=(32, 64), dt=0.01, length=(2*np.pi, 4*np.pi))</div>
+<div class="line">fd = FiniteDifferenceSolver(n=32, dt=1e-3, bc=<span class="stringliteral">&quot;neumann&quot;</span>, nu=0.05)</div>
+<div class="line">out = fd.solve(field, steps=5)</div>
+</div><!-- fragment --><p>The built-in <code>FiniteDifferenceSolver</code> default physics is the diffusion equation <code>∂f/∂t = ν∇²f</code>, so the class is usable and testable on its own. A real application subclasses it — <code>kalman.apps.weather.flow.NS2D</code> subclasses <code>SpectralSolver</code> and supplies the Kolmogorov forcing.</p>
+<h2><a class="anchor" id="the-butcher-tableau-protocol"></a>
+The Butcher-tableau protocol</h2>
+<p>Field solvers do <b>not</b> call <code>integrator.step()</code>. They read <code>integrator.tableau</code> — the explicit Runge–Kutta <code>(c, A, b)</code> — and run the stages themselves, so the same stepping scheme works in NumPy or Torch, on real or complex fields. That is what makes integrators genuinely swappable inside a solver.</p>
+<p>The consequence: an integrator with <code>tableau = None</code> cannot drive a field solver.</p>
+<div class="fragment"><div class="line">SpectralSolver(n=32, dt=0.01, integrator=resolve_integrator(KalmanIntegratorKind.IMPLICIT_EULER))</div>
+<div class="line"><span class="comment"># TypeError: Implicit Euler Integrator has no explicit tableau; the spectral solver</span></div>
+<div class="line"><span class="comment">#            needs an explicit Runge–Kutta method.</span></div>
+</div><!-- fragment --><p><code>DormandPrinceIntegrator</code> <em>does</em> expose a tableau, but field solvers use its 5th-order weights as a <b>fixed-step RK5</b> — the adaptive error control is dropped in that path.</p>
+<h2><a class="anchor" id="gpu--torch-backend"></a>
+GPU / Torch backend</h2>
+<p>Any solver takes <code>backend</code> (<code>"numpy"</code> default, <code>"torch"</code>) and <code>device</code> (<code>"cpu"</code>, <code>"cuda"</code>, <code>"mps"</code>), settable per instance or globally:</p>
+<div class="fragment"><div class="line">$ export KALMAN_BACKEND=torch KALMAN_DEVICE=mps</div>
+</div><!-- fragment --><div class="fragment"><div class="line">SpectralSolver(n=256, dt=0.005, backend=<span class="stringliteral">&quot;torch&quot;</span>, device=<span class="stringliteral">&quot;cuda&quot;</span>)</div>
+</div><!-- fragment --><p>The Torch path advances a batched <code>(N, g, g)</code> ensemble as one tensor operation — the EnKF forecast's dominant cost — and converts at the NumPy boundary, so callers are unchanged.</p>
+<blockquote class="doxtable">
+<p>&zwj;<b>Torch/MPS has no float64.</b> Use float32 on <code>mps</code>, float64 elsewhere. </p>
+</blockquote>
+<h1><a class="anchor" id="differentiators"></a>
+Differentiators</h1>
+<p>A third role, next to the two above: where a model's Jacobians come from. The extended filter needs <code>df/dx</code> and <code>dh/dx</code>; a model declares how they are obtained, the same way it declares its integrator.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.constants <span class="keyword">import</span> KalmanDifferentiatorKind</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>MyModel(KalmanModel):</div>
+<div class="line">    DIFFERENTIATOR = KalmanDifferentiatorKind.CENTRAL</div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Kind   </th><th class="markdownTableHeadNone">What it does   </th><th class="markdownTableHeadNone">Cost per Jacobian   </th><th class="markdownTableHeadNone">Error    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>ANALYTIC</code>   </td><td class="markdownTableBodyNone">the model gives the formula (it overrides <code>F</code>/<code>H</code>, or holds matrices)   </td><td class="markdownTableBodyNone">none   </td><td class="markdownTableBodyNone">none    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>FORWARD</code> (default)   </td><td class="markdownTableBodyNone"><code>(f(x + s) - f(x)) / s</code>   </td><td class="markdownTableBodyNone">n evaluations   </td><td class="markdownTableBodyNone">first order in the step    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>CENTRAL</code>   </td><td class="markdownTableBodyNone"><code>(f(x + s) - f(x - s)) / 2s</code>   </td><td class="markdownTableBodyNone">2n evaluations   </td><td class="markdownTableBodyNone">second order    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>AUTOMATIC</code>   </td><td class="markdownTableBodyNone">automatic differentiation   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">reserved, for <code>libKalmanLearn</code>   </td></tr>
+</table>
+<p>The differences are computed in C++ (<code><a class="el" href="namespace_kalman_1_1_differentiators.html">Kalman::Differentiators</a></code>), also for a model written in Python, and a C++ twin linearises with the scheme its Python class declares. A model that overrides <code>F()</code> or holds matrices is analytic whatever it declares.</p>
+<h1><a class="anchor" id="customization"></a>
+Customization</h1>
+<p>The kind enums are the authority for <b>shipped</b> schemes. Your own scheme does not need a member in them.</p>
+<h2><a class="anchor" id="autotoc_md1--swap-in-a-different-shipped-scheme"></a>
+1 — Swap in a different shipped scheme</h2>
+<p>By kind, on the class or per instance. Nothing else to do.</p>
+<h2><a class="anchor" id="autotoc_md2--subclass-a-shipped-solver-for-your-own-physics"></a>
+2 — Subclass a shipped solver for your own physics</h2>
+<p>The usual extension point: inherit <code>SpectralSolver</code> / <code>FiniteDifferenceSolver</code>, override <code>rhs_hat</code> / <code>rhs</code>, and keep the mesh, dealiasing, backends and tableau machinery.</p>
+<h2><a class="anchor" id="autotoc_md3--write-a-scheme-of-your-own"></a>
+3 — Write a scheme of your own</h2>
+<p>Subclass the base and implement <code>step()</code> (integrator) or <code>solve()</code> (solver). No <code>KIND</code> is needed — for a custom scheme the <b>base class is the contract</b>, and <code>ALLOWED_INTEGRATORS</code> / <code>ALLOWED_SOLVERS</code> do not apply, since a closed enum cannot describe a kind it has never heard of.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> KalmanIntegrator</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">class </span>HeunIntegrator(KalmanIntegrator):</div>
+<div class="line">    NAME = <span class="stringliteral">&quot;Heun&quot;</span></div>
+<div class="line">    tableau = ([0.0, 1.0], [[], [1.0]], [0.5, 0.5])   <span class="comment"># optional: lets field solvers use it</span></div>
+<div class="line"> </div>
+<div class="line">    <span class="keyword">def </span>step(self, f, x, u=None, t=None, dt=1.0):</div>
+<div class="line">        k1 = f(x, u, t)</div>
+<div class="line">        k2 = f(x + dt * k1, u, t + dt)</div>
+<div class="line">        <span class="keywordflow">return</span> x + 0.5 * dt * (k1 + k2)</div>
+<div class="line"> </div>
+<div class="line">model = MyModel(<span class="stringliteral">&quot;m&quot;</span>, fs=50, integrator=HeunIntegrator())   <span class="comment"># instance</span></div>
+<div class="line">model = MyModel(<span class="stringliteral">&quot;m&quot;</span>, fs=50, integrator=HeunIntegrator)     <span class="comment"># or the class</span></div>
+<div class="line">type(model.default_integrator())                           <span class="comment"># HeunIntegrator</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4--register-it-under-a-name"></a>
+4 — Register it under a name</h2>
+<p>Registration makes the scheme addressable everywhere a kind name is accepted — including a <a class="el" href="md_docs_29___python-_a_p_i.html">`KalmanSpec`</a>'s <code>bindings</code>, and therefore over REST and MCP — without editing <code><a class="el" href="constants_8py.html">constants.py</a></code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> register_integrator, register_solver, available_integrators</div>
+<div class="line"> </div>
+<div class="line">register_integrator(<span class="stringliteral">&quot;heun&quot;</span>, HeunIntegrator)          <span class="comment"># also works as a decorator</span></div>
+<div class="line">available_integrators()</div>
+<div class="line"><span class="comment"># [&#39;dormand_prince&#39;, &#39;euler&#39;, &#39;heun&#39;, &#39;implicit_euler&#39;, &#39;rk4&#39;]</span></div>
+<div class="line"> </div>
+<div class="line">MyModel(<span class="stringliteral">&quot;m&quot;</span>, fs=50, integrator=<span class="stringliteral">&quot;heun&quot;</span>)               <span class="comment"># by name</span></div>
+<div class="line">{<span class="stringliteral">&quot;bindings&quot;</span>: {<span class="stringliteral">&quot;integrator&quot;</span>: <span class="stringliteral">&quot;heun&quot;</span>}}                 <span class="comment"># in a spec</span></div>
+<div class="line"> </div>
+<div class="line">unregister_integrator(<span class="stringliteral">&quot;heun&quot;</span>)                        <span class="comment"># and back out again</span></div>
+</div><!-- fragment --><p>Registered names show up in <code>catalog()["integrators"]</code> / <code>["solvers"]</code>, so a client can discover them the same way it discovers the shipped ones.</p>
+<p>To <b>rebind a shipped kind</b> process-wide, pass the enum member rather than its name — deliberately explicit, because it changes what everyone else gets:</p>
+<div class="fragment"><div class="line">register_integrator(KalmanIntegratorKind.EULER, HeunIntegrator)</div>
+</div><!-- fragment --><p><code>register_*</code> refuses a class that is not a subclass of the right base (<code>TypeError</code>), and refuses a <em>name</em> that collides with a shipped kind (<code>ValueError</code> — pass the enum member if that is really what you meant).</p>
+<h2><a class="anchor" id="autotoc_md5--add-a-kind-to-the-framework-itself"></a>
+5 — Add a kind to the framework itself</h2>
+<p>For a scheme that belongs in the repository, add the member to <code><a class="el" href="constants_8py.html">framework/constants.py</a></code> <b>and</b> its registry entry in the same commit; <code><a class="el" href="test__structure_8py.html">tests/test_structure.py</a></code> requires every registry to cover its whole enum. Registration is for downstream code; the enum is for shipped schemes.</p>
+<hr  />
+<h1><a class="anchor" id="errors-not-silent-fallbacks"></a>
+Errors, not silent fallbacks</h1>
+<p>An unrecognised kind raises. A typo that quietly ran a different scheme used to be possible and is not any more:</p>
+<div class="fragment"><div class="line">resolve_integrator(<span class="stringliteral">&quot;nonsense&quot;</span>)</div>
+<div class="line"><span class="comment"># ValueError: unknown integrator kind &#39;nonsense&#39;; choose from</span></div>
+<div class="line"><span class="comment">#             [&#39;dormand_prince&#39;, &#39;euler&#39;, &#39;implicit_euler&#39;, &#39;rk4&#39;] or register_integrator(...)</span></div>
+<div class="line"> </div>
+<div class="line">resolve_solver(<span class="stringliteral">&quot;nonsense&quot;</span>)   <span class="comment"># ValueError</span></div>
+<div class="line">resolve_engine(<span class="stringliteral">&quot;nonsense&quot;</span>)   <span class="comment"># ValueError</span></div>
+</div><!-- fragment --><p><code>None</code> still means "the default" (RK4 / spectral / extended), which is what a model's <code>DEFAULT_*</code> resolution relies on.</p>
+<hr  />
+<h1><a class="anchor" id="remaining-rough-edges"></a>
+Remaining rough edges</h1>
+<p><b>The mesh contract is per-class, not inherited.</b> <code>KalmanSolver</code> carries only <code>backend</code>, <code>device</code> and the composed integrator. Grid attributes (<code>n</code>, <code>shape</code>, <code>length</code>, <code>dt</code>) and the physics hook are re-declared independently by each concrete solver, and the hook is even named differently between them (<code>rhs_hat</code> in spectral space vs <code>rhs</code> in real space). A solver written from the base class up inherits no mesh handling and no validation — subclass a shipped solver unless you are adding a whole discretization family.</p>
+<p><b>No error-control contract.</b> <code>step()</code> returns only the new state, with no error estimate, so embedded pairs cannot adapt at the framework level; <code>DormandPrinceIntegrator</code> handles its own substepping internally, and field solvers use it as fixed-step RK5.</p>
+<hr  />
+<h1><a class="anchor" id="summary-table"></a>
+Summary table</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">I want to…   </th><th class="markdownTableHeadNone">Route   </th><th class="markdownTableHeadNone">Status    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">use RK4 instead of Euler   </td><td class="markdownTableBodyNone"><code>DEFAULT_INTEGRATOR</code> or <code>integrator=</code>   </td><td class="markdownTableBodyNone">supported    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">sub-step within one filter step   </td><td class="markdownTableBodyNone"><code>SOLVER_SUBSTEPS</code>   </td><td class="markdownTableBodyNone">supported    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">new PDE physics on an existing mesh   </td><td class="markdownTableBodyNone">subclass <code>SpectralSolver</code> / <code>FiniteDifferenceSolver</code>   </td><td class="markdownTableBodyNone">supported, intended    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">run a field solver on GPU   </td><td class="markdownTableBodyNone"><code>backend="torch"</code>, <code>device=…</code>   </td><td class="markdownTableBodyNone">supported    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">plug my own stepper into one model   </td><td class="markdownTableBodyNone">custom class or instance via <code>integrator=</code>   </td><td class="markdownTableBodyNone">supported, no <code>KIND</code> needed    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">address my scheme by name / from a spec   </td><td class="markdownTableBodyNone"><code>register_integrator("name", cls)</code>   </td><td class="markdownTableBodyNone">supported    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">rebind a shipped kind globally   </td><td class="markdownTableBodyNone"><code>register_integrator(Kind.EULER, cls)</code>   </td><td class="markdownTableBodyNone">supported, explicit    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">add a kind to the framework   </td><td class="markdownTableBodyNone"><code><a class="el" href="constants_8py.html">constants.py</a></code> + registry, in-tree   </td><td class="markdownTableBodyNone">supported for contributors    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">catch a typo'd kind   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">raises <code>ValueError</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">inherit mesh handling in a new solver family   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone"><b>not supported</b>, subclass a shipped solver   </td></tr>
+</table>
+<p>Next: <a class="el" href="md_docs_27___providers.html">Providers</a>. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="guide.html">User guide</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

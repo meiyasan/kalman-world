@@ -1,0 +1,305 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_rest.TestMcp Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_rest.TestMcp Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_rest.TestMcp Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__rest_1_1_test_mcp.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__rest_1_1_test_mcp-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_rest.TestMcp Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_rest.TestMcp:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__rest_1_1_test_mcp__inherit__graph.svg" width="183" height="110"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a772d660d6bc5ebc2a35f01209f97f729" id="r_a772d660d6bc5ebc2a35f01209f97f729"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_mcp.html#a772d660d6bc5ebc2a35f01209f97f729">test_main_prints_hint_without_sdk</a> (self)</td></tr>
+<tr class="separator:a772d660d6bc5ebc2a35f01209f97f729"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a50d091bd3990e4786ac960fc7d43116d" id="r_a50d091bd3990e4786ac960fc7d43116d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_mcp.html#a50d091bd3990e4786ac960fc7d43116d">test_build_server_registers_tools</a> (self)</td></tr>
+<tr class="separator:a50d091bd3990e4786ac960fc7d43116d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43ce8730e72c0e3236c0acc6954b7660" id="r_a43ce8730e72c0e3236c0acc6954b7660"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__rest_1_1_test_mcp.html#a43ce8730e72c0e3236c0acc6954b7660">test_live_stdio_session</a> (self)</td></tr>
+<tr class="separator:a43ce8730e72c0e3236c0acc6954b7660"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00092">92</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a50d091bd3990e4786ac960fc7d43116d" name="a50d091bd3990e4786ac960fc7d43116d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a50d091bd3990e4786ac960fc7d43116d">&#9670;&#160;</a></span>test_build_server_registers_tools()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestMcp.test_build_server_registers_tools </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The server must actually construct against the installed SDK — this
+caught a real breakage when SDK 2.0 renamed FastMCP -&gt; MCPServer.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00102">102</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  102</span>    <span class="keyword">def </span>test_build_server_registers_tools(self):</div>
+<div class="line"><span class="lineno">  103</span>        <span class="stringliteral">&quot;&quot;&quot;The server must actually construct against the installed SDK — this</span></div>
+<div class="line"><span class="lineno">  104</span><span class="stringliteral">        caught a real breakage when SDK 2.0 renamed FastMCP -&gt; MCPServer.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  105</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1mcp_1_1server.html">modules.mcp.server</a> <span class="keyword">import</span> build_server, _server_class</div>
+<div class="line"><span class="lineno">  106</span>        self.assertIsNotNone(_server_class())</div>
+<div class="line"><span class="lineno">  107</span>        server = build_server()</div>
+<div class="line"><span class="lineno">  108</span>        self.assertIsNotNone(server)</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="ttc" id="anamespacemodules_1_1mcp_1_1server_html"><div class="ttname"><a href="namespacemodules_1_1mcp_1_1server.html">modules.mcp.server</a></div><div class="ttdef"><b>Definition</b> <a href="server_8py_source.html#l00001">server.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a43ce8730e72c0e3236c0acc6954b7660" name="a43ce8730e72c0e3236c0acc6954b7660"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43ce8730e72c0e3236c0acc6954b7660">&#9670;&#160;</a></span>test_live_stdio_session()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestMcp.test_live_stdio_session </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">End-to-end: drive the server as a real MCP client over stdio —
+handshake, tool listing, a scoped call, and scope enforcement.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00111">111</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>    <span class="keyword">def </span>test_live_stdio_session(self):</div>
+<div class="line"><span class="lineno">  112</span>        <span class="stringliteral">&quot;&quot;&quot;End-to-end: drive the server as a real MCP client over stdio —</span></div>
+<div class="line"><span class="lineno">  113</span><span class="stringliteral">        handshake, tool listing, a scoped call, and scope enforcement.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  114</span>        <span class="keyword">import</span> asyncio, json, os, subprocess</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="line"><span class="lineno">  116</span>        <span class="keyword">async def </span>drive():</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keyword">from</span> mcp <span class="keyword">import</span> ClientSession, StdioServerParameters</div>
+<div class="line"><span class="lineno">  118</span>            <span class="keyword">from</span> mcp.client.stdio <span class="keyword">import</span> stdio_client</div>
+<div class="line"><span class="lineno">  119</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1api_1_1auth.html">modules.api.auth</a> <span class="keyword">import</span> mint_token</div>
+<div class="line"><span class="lineno">  120</span>            secret = <span class="stringliteral">&quot;a-long-enough-integration-test-secret-key&quot;</span></div>
+<div class="line"><span class="lineno">  121</span>            env = dict(os.environ, PYTHONPATH=os.getcwd(), KALMAN_JWT_SECRET=secret)</div>
+<div class="line"><span class="lineno">  122</span>            <span class="comment"># `modules.mcp`, not `kalman.mcp`: the tests run on the source tree,</span></div>
+<div class="line"><span class="lineno">  123</span>            <span class="comment"># where the package is importable only as `modules` (CI does not</span></div>
+<div class="line"><span class="lineno">  124</span>            <span class="comment"># install it).</span></div>
+<div class="line"><span class="lineno">  125</span>            params = StdioServerParameters(command=sys.executable,</div>
+<div class="line"><span class="lineno">  126</span>                                           args=[<span class="stringliteral">&quot;-m&quot;</span>, <span class="stringliteral">&quot;modules.mcp&quot;</span>], env=env,</div>
+<div class="line"><span class="lineno">  127</span>                                           cwd=os.getcwd())</div>
+<div class="line"><span class="lineno">  128</span>            <span class="keyword">async</span> <span class="keyword">with</span> stdio_client(params) <span class="keyword">as</span> (r, w):</div>
+<div class="line"><span class="lineno">  129</span>                <span class="keyword">async</span> <span class="keyword">with</span> ClientSession(r, w) <span class="keyword">as</span> s:</div>
+<div class="line"><span class="lineno">  130</span>                    await s.initialize()</div>
+<div class="line"><span class="lineno">  131</span>                    tools = {t.name <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (await s.list_tools()).tools}</div>
+<div class="line"><span class="lineno">  132</span>                    reader = mint_token(<span class="stringliteral">&quot;bob&quot;</span>, [<span class="stringliteral">&quot;read&quot;</span>], secret=secret)</div>
+<div class="line"><span class="lineno">  133</span>                    sender = mint_token(<span class="stringliteral">&quot;ada&quot;</span>, [<span class="stringliteral">&quot;send_measurement&quot;</span>], secret=secret)</div>
+<div class="line"><span class="lineno">  134</span>                    ok = await s.call_tool(<span class="stringliteral">&quot;run_filter&quot;</span>,</div>
+<div class="line"><span class="lineno">  135</span>                                           {<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;data&quot;</span>: [[0.1 * i] <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(10)],</div>
+<div class="line"><span class="lineno">  136</span>                                            <span class="stringliteral">&quot;token&quot;</span>: sender})</div>
+<div class="line"><span class="lineno">  137</span>                    denied = await s.call_tool(<span class="stringliteral">&quot;run_filter&quot;</span>,</div>
+<div class="line"><span class="lineno">  138</span>                                               {<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;data&quot;</span>: [[0.0]], <span class="stringliteral">&quot;token&quot;</span>: reader})</div>
+<div class="line"><span class="lineno">  139</span>                    <span class="keywordflow">return</span> tools, ok, denied</div>
+<div class="line"><span class="lineno">  140</span> </div>
+<div class="line"><span class="lineno">  141</span>        tools, ok, denied = asyncio.run(drive())</div>
+<div class="line"><span class="lineno">  142</span>        self.assertIn(<span class="stringliteral">&quot;run_filter&quot;</span>, tools)</div>
+<div class="line"><span class="lineno">  143</span>        self.assertIn(<span class="stringliteral">&quot;register_model&quot;</span>, tools)</div>
+<div class="line"><span class="lineno">  144</span>        self.assertFalse(ok.is_error)</div>
+<div class="line"><span class="lineno">  145</span>        payload = json.loads(<span class="stringliteral">&quot;&quot;</span>.join(c.text <span class="keywordflow">for</span> c <span class="keywordflow">in</span> ok.content <span class="keywordflow">if</span> getattr(c, <span class="stringliteral">&quot;type&quot;</span>, <span class="stringliteral">&quot;&quot;</span>) == <span class="stringliteral">&quot;text&quot;</span>))</div>
+<div class="line"><span class="lineno">  146</span>        self.assertEqual(len(payload[<span class="stringliteral">&quot;xk&quot;</span>]), 10)</div>
+<div class="line"><span class="lineno">  147</span>        self.assertTrue(denied.is_error)          <span class="comment"># read-only token refused</span></div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span> </div>
+<div class="ttc" id="anamespacemodules_1_1api_1_1auth_html"><div class="ttname"><a href="namespacemodules_1_1api_1_1auth.html">modules.api.auth</a></div><div class="ttdef"><b>Definition</b> <a href="auth_8py_source.html#l00001">auth.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a772d660d6bc5ebc2a35f01209f97f729" name="a772d660d6bc5ebc2a35f01209f97f729"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a772d660d6bc5ebc2a35f01209f97f729">&#9670;&#160;</a></span>test_main_prints_hint_without_sdk()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_rest.TestMcp.test_main_prints_hint_without_sdk </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Without the SDK, the entry point prints an install hint and exits 0
+rather than crashing (the core never hard-depends on mcp).</pre> 
+<p class="definition">Definition at line <a class="el" href="test__rest_8py_source.html#l00095">95</a> of file <a class="el" href="test__rest_8py_source.html">test_rest.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   95</span>    <span class="keyword">def </span>test_main_prints_hint_without_sdk(self):</div>
+<div class="line"><span class="lineno">   96</span>        <span class="stringliteral">&quot;&quot;&quot;Without the SDK, the entry point prints an install hint and exits 0</span></div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">        rather than crashing (the core never hard-depends on mcp).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   98</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1mcp_1_1____main____.html">modules.mcp.__main__</a> <span class="keyword">import</span> main</div>
+<div class="line"><span class="lineno">   99</span>        self.assertEqual(<a class="code hl_function" href="ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a>([]), 0)</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="ttc" id="aballistics__root_8cc_html_ae66f6b31b5ad750f1fe042a706a4e3d4"><div class="ttname"><a href="ballistics__root_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a></div><div class="ttdeci">int main()</div><div class="ttdef"><b>Definition</b> <a href="ballistics__root_8cc_source.html#l00126">ballistics_root.cc:126</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1mcp_1_1____main_____html"><div class="ttname"><a href="namespacemodules_1_1mcp_1_1____main____.html">modules.mcp.__main__</a></div><div class="ttdef"><b>Definition</b> <a href="mcp_2____main_____8py_source.html#l00001">__main__.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__rest_8py_source.html">test_rest.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__rest.html">test_rest</a></li><li class="navelem"><a class="el" href="classtests_1_1test__rest_1_1_test_mcp.html">TestMcp</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>
