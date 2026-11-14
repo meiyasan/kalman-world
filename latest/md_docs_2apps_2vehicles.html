@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,7 +161,7 @@ How they are built</h1>
 <li><b>Control.</b> The lane model takes a steering input. Its notebook compares controllers that compute that input from the filter's estimate: proportional, PID, LQR, a sampling planner, and a small network trained to imitate it.</li>
 <li><b>C++.</b> Both models have a twin in <code>libKalmanApps</code> (<code>car-speed</code>, <code>car-lane</code>), which integrates the same derivative with the same scheme: RK4 for the speed test, Euler (or whichever integrator the lane model is given) for the lane. <code>CarLaneModel.filter(z, uk)</code> with a steering sequence runs wholly in C++. A steering computed by a controller function from the estimate (closed loop) keeps the Python model, called from the C++ loop, since the controller is Python.</li>
 </ul>
-<h1><a class="anchor" id="using-it-14"></a>
+<h1><a class="anchor" id="using-it-15"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> CarSpeedModel</div>
 <div class="line"> </div>

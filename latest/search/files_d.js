@@ -22,7 +22,7 @@ var searchData=
   ['combinatorial_2ecc_19',['Combinatorial.cc',['../_combinatorial_8cc.html',1,'']]],
   ['combinatorial_2eh_20',['Combinatorial.h',['../_combinatorial_8h.html',1,'']]],
   ['combinatorial_2epy_21',['combinatorial.py',['../combinatorial_8py.html',1,'']]],
-  ['composite_2epy_22',['composite.py',['../framework_2models_2composite_8py.html',1,'(Global Namespace)'],['../apps_2resonators_2oscillators_2composite_8py.html',1,'(Global Namespace)']]],
+  ['composite_2epy_22',['composite.py',['../apps_2resonators_2oscillators_2composite_8py.html',1,'(Global Namespace)'],['../framework_2models_2composite_8py.html',1,'(Global Namespace)']]],
   ['conftest_2epy_23',['conftest.py',['../conftest_8py.html',1,'']]],
   ['constants_2eh_24',['Constants.h',['../_constants_8h.html',1,'']]],
   ['constants_2epy_25',['constants.py',['../constants_8py.html',1,'']]],

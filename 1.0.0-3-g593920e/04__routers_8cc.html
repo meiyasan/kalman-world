@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/cxx/04_routers.cc File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/cxx/04_routers.cc File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/cxx/04_routers.cc File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('04__routers_8cc.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">04_routers.cc File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>The decision layer: normalisation, the rule-based routers, and the blend.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_kalman_8h_source.html">Kalman/Kalman.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_check_8h_source.html">Check.h</a>&quot;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;limits&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for 04_routers.cc:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="04__routers_8cc__incl.svg" width="5996" height="755"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="04__routers_8cc_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="04__routers_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The decision layer: normalisation, the rule-based routers, and the blend. </p>
+
+<p class="definition">Definition in file <a class="el" href="04__routers_8cc_source.html">04_routers.cc</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="04__routers_8cc_source.html#l00022">22</a> of file <a class="el" href="04__routers_8cc_source.html">04_routers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>{</div>
+<div class="line"><span class="lineno">   24</span>    <span class="comment">// --- Normalise ------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   25</span>    {</div>
+<div class="line"><span class="lineno">   26</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mu{2., 2., 4.};</div>
+<div class="line"><span class="lineno">   27</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> n = <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Router::Normalise</a>(mu);</div>
+<div class="line"><span class="lineno">   28</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(n(0) + n(1) + n(2), 1., 1e-12, <span class="stringliteral">&quot;Normalise: sums to 1&quot;</span>);</div>
+<div class="line"><span class="lineno">   29</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(n(2), 0.5, 1e-12, <span class="stringliteral">&quot;Normalise: preserves the ratios&quot;</span>);</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>        <span class="comment">// A mode driven to zero must stay recoverable, so it is floored, not dropped.</span></div>
+<div class="line"><span class="lineno">   32</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> dead{1., 0., 0.};</div>
+<div class="line"><span class="lineno">   33</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> d = <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Router::Normalise</a>(dead);</div>
+<div class="line"><span class="lineno">   34</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(d(1) &gt; 0., <span class="stringliteral">&quot;Normalise: a zeroed mode keeps a positive floor&quot;</span>);</div>
+<div class="line"><span class="lineno">   35</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(d(1) &lt; 1e-10, <span class="stringliteral">&quot;Normalise: the floor is negligible, not a real weight&quot;</span>);</div>
+<div class="line"><span class="lineno">   36</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(d(0) + d(1) + d(2), 1., 1e-12, <span class="stringliteral">&quot;Normalise: still a probability vector&quot;</span>);</div>
+<div class="line"><span class="lineno">   37</span> </div>
+<div class="line"><span class="lineno">   38</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> nan{std::numeric_limits&lt;double&gt;::quiet_NaN(),</div>
+<div class="line"><span class="lineno">   39</span>                   std::numeric_limits&lt;double&gt;::quiet_NaN()};</div>
+<div class="line"><span class="lineno">   40</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> u = <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Router::Normalise</a>(nan);</div>
+<div class="line"><span class="lineno">   41</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(u(0), 0.5, 1e-12, <span class="stringliteral">&quot;Normalise: all-NaN degrades to uniform, not garbage&quot;</span>);</div>
+<div class="line"><span class="lineno">   42</span>    }</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>    <span class="comment">// --- Bayesian -------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   45</span>    {</div>
+<div class="line"><span class="lineno">   46</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_bayesian.html">Bayesian</a> router;</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> nis(3, 2, 1.);</div>
+<div class="line"><span class="lineno">   48</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> c{0.5, 0.5};</div>
+<div class="line"><span class="lineno">   49</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> L{3.0, 1.0};</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mu = router.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_bayesian.html#adea466d230598f411f8080c0c37ce3ef">Route</a>(nis, c, L);</div>
+<div class="line"><span class="lineno">   52</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mu(0) + mu(1), 1., 1e-12, <span class="stringliteral">&quot;Bayesian: normalised&quot;</span>);</div>
+<div class="line"><span class="lineno">   53</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mu(0), 0.75, 1e-12, <span class="stringliteral">&quot;Bayesian: mu proportional to c * likelihood&quot;</span>);</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="line"><span class="lineno">   55</span>        <span class="comment">// With an uninformative likelihood the prior must survive untouched.</span></div>
+<div class="line"><span class="lineno">   56</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> cSkew{0.9, 0.1};</div>
+<div class="line"><span class="lineno">   57</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> flat{1.0, 1.0};</div>
+<div class="line"><span class="lineno">   58</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> keep = router.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_bayesian.html#adea466d230598f411f8080c0c37ce3ef">Route</a>(nis, cSkew, flat);</div>
+<div class="line"><span class="lineno">   59</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(keep(0), 0.9, 1e-12, <span class="stringliteral">&quot;Bayesian: a flat likelihood leaves the prior alone&quot;</span>);</div>
+<div class="line"><span class="lineno">   60</span>    }</div>
+<div class="line"><span class="lineno">   61</span> </div>
+<div class="line"><span class="lineno">   62</span>    <span class="comment">// --- Threshold ------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   63</span>    {</div>
+<div class="line"><span class="lineno">   64</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = 2.;</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> nis = MakeNis(10, 3, <span class="comment">/* good */</span> 1, <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>);</div>
+<div class="line"><span class="lineno">   66</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> c(3, 1. / 3.);</div>
+<div class="line"><span class="lineno">   67</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> L(3, 1.);</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a> hard(2, 5, <span class="comment">/* soft */</span> <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mh = hard.Route(nis, c, L);</div>
+<div class="line"><span class="lineno">   71</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mh(1), 1., 1e-12, <span class="stringliteral">&quot;Threshold(hard): all weight on the model whose NIS is m&quot;</span>);</div>
+<div class="line"><span class="lineno">   72</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mh(0), 0., 1e-12, <span class="stringliteral">&quot;Threshold(hard): nothing on the others&quot;</span>);</div>
+<div class="line"><span class="lineno">   73</span> </div>
+<div class="line"><span class="lineno">   74</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a> soft(2, 5, <span class="comment">/* soft */</span> <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> ms = soft.Route(nis, c, L);</div>
+<div class="line"><span class="lineno">   76</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(ms(0) + ms(1) + ms(2), 1., 1e-12, <span class="stringliteral">&quot;Threshold(soft): normalised&quot;</span>);</div>
+<div class="line"><span class="lineno">   77</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(ms(1) &gt; ms(0) &amp;&amp; ms(1) &gt; ms(2), <span class="stringliteral">&quot;Threshold(soft): still prefers the best match&quot;</span>);</div>
+<div class="line"><span class="lineno">   78</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(ms(0) &gt; 0., <span class="stringliteral">&quot;Threshold(soft): keeps the others alive&quot;</span>);</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>        <span class="comment">// A short history is averaged as it is (as routers/threshold.py does), not</span></div>
+<div class="line"><span class="lineno">   81</span>        <span class="comment">// padded: padding with the chi2(1) mean would drag every model toward 1.</span></div>
+<div class="line"><span class="lineno">   82</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> shortNis = MakeNis(2, 3, 1, <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>);</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> me = hard.Route(shortNis, c, L);</div>
+<div class="line"><span class="lineno">   84</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(me(1) + me(0) + me(2), 1., 1e-12, <span class="stringliteral">&quot;Threshold: normalised on a short history&quot;</span>);</div>
+<div class="line"><span class="lineno">   85</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(me(1), 1., 0., <span class="stringliteral">&quot;Threshold: a short history still picks the model at m&quot;</span>);</div>
+<div class="line"><span class="lineno">   86</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> two(2, 2, 0.);</div>
+<div class="line"><span class="lineno">   87</span>        two(0, 0) = 3.; two(1, 0) = 3.;                    <span class="comment">// model 0 sits at 3 = m, model 1 at 0</span></div>
+<div class="line"><span class="lineno">   88</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a> three(3, 5, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> ms3 = three.Route(two, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 0.5), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 1.));</div>
+<div class="line"><span class="lineno">   90</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(ms3(0), (1. / 1e-6) / (1. / 1e-6 + 1. / (3. + 1e-6)), 1e-12,</div>
+<div class="line"><span class="lineno">   91</span>                    <span class="stringliteral">&quot;Threshold(soft): the mean of the rows there are, with m = 3&quot;</span>);</div>
+<div class="line"><span class="lineno">   92</span>        <span class="comment">// Window 0 is the whole history (numpy&#39;s nis[-0:]): model 0 averages 3 = m over</span></div>
+<div class="line"><span class="lineno">   93</span>        <span class="comment">// all four rows, though its last row says 0.</span></div>
+<div class="line"><span class="lineno">   94</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> grow(4, 2, 1.);</div>
+<div class="line"><span class="lineno">   95</span>        grow(0, 0) = 12.; grow(1, 0) = 0.; grow(2, 0) = 0.; grow(3, 0) = 0.;</div>
+<div class="line"><span class="lineno">   96</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a> all(3, 0, <span class="keyword">false</span>), last(3, 1, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   97</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(all.Route(grow, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 0.5), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 1.))(0), 1., 0., <span class="stringliteral">&quot;Threshold: window 0 averages every row&quot;</span>);</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(last.Route(grow, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 0.5), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 1.))(1), 1., 0., <span class="stringliteral">&quot;Threshold: window 1 reads the last row&quot;</span>);</div>
+<div class="line"><span class="lineno">   99</span> </div>
+<div class="line"><span class="lineno">  100</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> empty(0, 3, 0.);</div>
+<div class="line"><span class="lineno">  101</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mu0 = hard.Route(empty, c, L);</div>
+<div class="line"><span class="lineno">  102</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mu0(0), 1. / 3., 1e-12, <span class="stringliteral">&quot;Threshold: uniform before anything is observed&quot;</span>);</div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span>    <span class="comment">// --- Hybrid ---------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  106</span>    {</div>
+<div class="line"><span class="lineno">  107</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_bayesian.html">Bayesian</a> a;</div>
+<div class="line"><span class="lineno">  108</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a> b(2, 5, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> nis = MakeNis(10, 2, <span class="comment">/* good */</span> 0, 2.);</div>
+<div class="line"><span class="lineno">  110</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> c{0.5, 0.5};</div>
+<div class="line"><span class="lineno">  111</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> L{1.0, 9.0};                 <span class="comment">// the likelihood favours model 1 ...</span></div>
+<div class="line"><span class="lineno">  112</span>                                            <span class="comment">// ... while the NIS favours model 0</span></div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="line"><span class="lineno">  114</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a> pureA(&amp;a, &amp;b, 0.0);</div>
+<div class="line"><span class="lineno">  115</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a> pureB(&amp;a, &amp;b, 1.0);</div>
+<div class="line"><span class="lineno">  116</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a> mixed(&amp;a, &amp;b, 0.5);</div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> ma = pureA.Route(nis, c, L);</div>
+<div class="line"><span class="lineno">  119</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mb = pureB.Route(nis, c, L);</div>
+<div class="line"><span class="lineno">  120</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mm = mixed.Route(nis, c, L);</div>
+<div class="line"><span class="lineno">  121</span> </div>
+<div class="line"><span class="lineno">  122</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(ma(0), a.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_bayesian.html#adea466d230598f411f8080c0c37ce3ef">Route</a>(nis, c, L)(0), 1e-9, <span class="stringliteral">&quot;Hybrid: alpha=0 is exactly router a&quot;</span>);</div>
+<div class="line"><span class="lineno">  123</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mb(0), <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Router::Normalise</a>(b.Route(nis, c, L))(0), 1e-9,</div>
+<div class="line"><span class="lineno">  124</span>                    <span class="stringliteral">&quot;Hybrid: alpha=1 is exactly router b&quot;</span>);</div>
+<div class="line"><span class="lineno">  125</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(mm(0) &gt; ma(0) &amp;&amp; mm(0) &lt; mb(0),</div>
+<div class="line"><span class="lineno">  126</span>              <span class="stringliteral">&quot;Hybrid: the blend sits between its two children&quot;</span>);</div>
+<div class="line"><span class="lineno">  127</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mm(0) + mm(1), 1., 1e-12, <span class="stringliteral">&quot;Hybrid: normalised&quot;</span>);</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordtype">bool</span> threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">try</span> { <a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a> bad(&amp;a, &amp;b, 1.5); }</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  132</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;Hybrid: an out-of-range alpha throws&quot;</span>);</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>        threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">try</span> { <a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a> bad(<span class="keyword">nullptr</span>, &amp;b); }</div>
+<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  137</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;Hybrid: a null child throws&quot;</span>);</div>
+<div class="line"><span class="lineno">  138</span>    }</div>
+<div class="line"><span class="lineno">  139</span> </div>
+<div class="line"><span class="lineno">  140</span>    <span class="comment">// --- the learned path: router owns features, model owns the forward pass --</span></div>
+<div class="line"><span class="lineno">  141</span>    {</div>
+<div class="line"><span class="lineno">  142</span>        <span class="comment">// No model attached: degrades to Bayesian rather than failing. A missing</span></div>
+<div class="line"><span class="lineno">  143</span>        <span class="comment">// optional dependency must cost the policy, never the filter.</span></div>
+<div class="line"><span class="lineno">  144</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Neural</a> idle;</div>
+<div class="line"><span class="lineno">  145</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(!idle.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a0d2f0f4cc556c2f65dd1c82966e6de57">IsReady</a>(), <span class="stringliteral">&quot;Neural: holds no model until one is attached&quot;</span>);</div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> nis(3, 2, 1.);</div>
+<div class="line"><span class="lineno">  148</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> c{0.5, 0.5};</div>
+<div class="line"><span class="lineno">  149</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> L{3.0, 1.0};</div>
+<div class="line"><span class="lineno">  150</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(idle.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a834012660eaa1bcde241f95e6f150a9a">Route</a>(nis, c, L)(0), 0.75, 1e-12,</div>
+<div class="line"><span class="lineno">  151</span>                    <span class="stringliteral">&quot;Neural: falls back to the Bayesian update with no model&quot;</span>);</div>
+<div class="line"><span class="lineno">  152</span> </div>
+<div class="line"><span class="lineno">  153</span>        <span class="comment">// Feature layout must match routers/neural.py: window rows front-padded</span></div>
+<div class="line"><span class="lineno">  154</span>        <span class="comment">// with 1.0, flattened row-major. This is the router&#39;s job, not the model&#39;s.</span></div>
+<div class="line"><span class="lineno">  155</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Neural</a> probe;</div>
+<div class="line"><span class="lineno">  156</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> hist(2, 2, 0.);</div>
+<div class="line"><span class="lineno">  157</span>        hist(0, 0) = 5.; hist(0, 1) = 6.;</div>
+<div class="line"><span class="lineno">  158</span>        hist(1, 0) = 7.; hist(1, 1) = 8.;</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> feat = probe.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a3972c7430e71fe4856693d140b03c992">Features</a>(hist);</div>
+<div class="line"><span class="lineno">  160</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(feat.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() == 5 * 2, <span class="stringliteral">&quot;Neural: feature length is window * models&quot;</span>);</div>
+<div class="line"><span class="lineno">  161</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(feat(0), 1., 1e-12, <span class="stringliteral">&quot;Neural: short history front-padded with 1.0&quot;</span>);</div>
+<div class="line"><span class="lineno">  162</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(feat(6), 5., 1e-12, <span class="stringliteral">&quot;Neural: row-major, oldest real row first&quot;</span>);</div>
+<div class="line"><span class="lineno">  163</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(feat(9), 8., 1e-12, <span class="stringliteral">&quot;Neural: most recent step in the last slot&quot;</span>);</div>
+<div class="line"><span class="lineno">  164</span> </div>
+<div class="line"><span class="lineno">  165</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mean(10, 1.), scale(10, 2.);</div>
+<div class="line"><span class="lineno">  166</span>        probe.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a9ed14462b9221944170aa74185ec2859">SetNormalisation</a>(mean, scale);</div>
+<div class="line"><span class="lineno">  167</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(probe.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a3972c7430e71fe4856693d140b03c992">Features</a>(hist)(9), (8. - 1.) / 2., 1e-12,</div>
+<div class="line"><span class="lineno">  168</span>                    <span class="stringliteral">&quot;Neural: applies the training normalisation&quot;</span>);</div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> zero(10, 0.);</div>
+<div class="line"><span class="lineno">  171</span>        probe.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#a9ed14462b9221944170aa74185ec2859">SetNormalisation</a>(mean, zero);</div>
+<div class="line"><span class="lineno">  172</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(probe.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_neural.html#acef90f115b214f0389d06b9d1942f5aa">Scale</a>()(0), 1., 1e-12, <span class="stringliteral">&quot;Neural: zero-variance feature not divided by 0&quot;</span>);</div>
+<div class="line"><span class="lineno">  173</span>    }</div>
+<div class="line"><span class="lineno">  174</span> </div>
+<div class="line"><span class="lineno">  175</span>    <span class="comment">// --- NN::MLP — the backend that needs no optional dependency at all -------</span></div>
+<div class="line"><span class="lineno">  176</span>    {</div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment">// Two modes, ten features. Layer picks whichever of the two feature groups</span></div>
+<div class="line"><span class="lineno">  178</span>        <span class="comment">// is larger, so the expected answer is known without training anything.</span></div>
+<div class="line"><span class="lineno">  179</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html">NN::MLP</a> mlp;</div>
+<div class="line"><span class="lineno">  180</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> W(2, 10, 0.);</div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 10; ++i) W(i % 2, i) = 1.0;</div>
+<div class="line"><span class="lineno">  182</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> b(2, 0.);</div>
+<div class="line"><span class="lineno">  183</span>        mlp.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a002c1ca557cadd0403d8d63b4884cc03">AddLayer</a>(W, b);</div>
+<div class="line"><span class="lineno">  184</span> </div>
+<div class="line"><span class="lineno">  185</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(mlp.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a14c75a7b142a00942bbce228d897cc9b">IsReady</a>(), <span class="stringliteral">&quot;NN::MLP: ready once a layer is added&quot;</span>);</div>
+<div class="line"><span class="lineno">  186</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(mlp.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#acb8999a9e2ceaa2ecc7489557cf8300e">NInputs</a>() == 10 &amp;&amp; mlp.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#ad8f17d3033d2b5bdb1f00e6f5c59e63a">NOutputs</a>() == 2, <span class="stringliteral">&quot;NN::MLP: reports its shape&quot;</span>);</div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> feat(10, 0.);</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 10; i += 2) feat(i) = 3.0;      <span class="comment">// favours mode 0</span></div>
+<div class="line"><span class="lineno">  190</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> probs = mlp(feat);</div>
+<div class="line"><span class="lineno">  191</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(probs(0) + probs(1), 1., 1e-12, <span class="stringliteral">&quot;NN::MLP: outputs a probability vector&quot;</span>);</div>
+<div class="line"><span class="lineno">  192</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(probs(0) &gt; probs(1), <span class="stringliteral">&quot;NN::MLP: the excited output wins&quot;</span>);</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>        <span class="comment">// Large logits must not overflow to NaN — the softmax shift earns its keep.</span></div>
+<div class="line"><span class="lineno">  195</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> big(10, 0.);</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 10; i += 2) big(i) = 400.0;</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> stable = mlp(big);</div>
+<div class="line"><span class="lineno">  198</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::isfinite(stable(0)) &amp;&amp; std::isfinite(stable(1)),</div>
+<div class="line"><span class="lineno">  199</span>              <span class="stringliteral">&quot;NN::MLP: softmax is shift-stabilised against overflow&quot;</span>);</div>
+<div class="line"><span class="lineno">  200</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(stable(0), 1., 1e-9, <span class="stringliteral">&quot;NN::MLP: saturates to a confident answer&quot;</span>);</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>        <span class="comment">// Shape mistakes are caught when the layer is added, not at inference.</span></div>
+<div class="line"><span class="lineno">  203</span>        <span class="keywordtype">bool</span> threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">try</span> { <a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html">NN::MLP</a> bad; bad.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a002c1ca557cadd0403d8d63b4884cc03">AddLayer</a>(<a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a>(2, 3, 0.), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(5, 0.)); }</div>
+<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  206</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;NN::MLP: a weight/bias mismatch throws on AddLayer&quot;</span>);</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>        threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  209</span>        <span class="keywordflow">try</span> { <a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html">NN::MLP</a> bad; bad.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a002c1ca557cadd0403d8d63b4884cc03">AddLayer</a>(<a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a>(2, 3, 0.), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 0.));</div>
+<div class="line"><span class="lineno">  210</span>              bad.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a002c1ca557cadd0403d8d63b4884cc03">AddLayer</a>(<a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a>(2, 9, 0.), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(2, 0.)); }</div>
+<div class="line"><span class="lineno">  211</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  212</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;NN::MLP: a layer that does not fit the previous one throws&quot;</span>);</div>
+<div class="line"><span class="lineno">  213</span> </div>
+<div class="line"><span class="lineno">  214</span>        <span class="comment">// And it drives the router end to end, with no optional dependency present.</span></div>
+<div class="line"><span class="lineno">  215</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Neural</a> router(&amp;mlp, 5);</div>
+<div class="line"><span class="lineno">  216</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(router.IsReady(), <span class="stringliteral">&quot;Neural: ready once a model is attached&quot;</span>);</div>
+<div class="line"><span class="lineno">  217</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> nis(5, 2, 0.);</div>
+<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">for</span> (std::size_t r = 0; r &lt; 5; ++r) { nis(r, 0) = 3.0; nis(r, 1) = 0.0; }</div>
+<div class="line"><span class="lineno">  219</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> c{0.5, 0.5}, L{1.0, 1.0};</div>
+<div class="line"><span class="lineno">  220</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> mu = router.<a class="code hl_function" href="class_kalman_1_1_routers_1_1_bayesian.html#adea466d230598f411f8080c0c37ce3ef">Route</a>(nis, c, L);</div>
+<div class="line"><span class="lineno">  221</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(mu(0) + mu(1), 1., 1e-12, <span class="stringliteral">&quot;Neural + NN::MLP: normalised&quot;</span>);</div>
+<div class="line"><span class="lineno">  222</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(mu(0) &gt; mu(1), <span class="stringliteral">&quot;Neural + NN::MLP: routes on the learned policy&quot;</span>);</div>
+<div class="line"><span class="lineno">  223</span> </div>
+<div class="line"><span class="lineno">  224</span>        <span class="comment">// A window that disagrees with the policy is a shape error, not a guess.</span></div>
+<div class="line"><span class="lineno">  225</span>        <a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Neural</a> wrong(&amp;mlp, 7);</div>
+<div class="line"><span class="lineno">  226</span>        threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  227</span>        <span class="keywordflow">try</span> { wrong.Route(nis, c, L); }</div>
+<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  229</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;Neural: a window mismatching the policy throws&quot;</span>);</div>
+<div class="line"><span class="lineno">  230</span>    }</div>
+<div class="line"><span class="lineno">  231</span> </div>
+<div class="line"><span class="lineno">  232</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a>(<span class="stringliteral">&quot;routers&quot;</span>);</div>
+<div class="line"><span class="lineno">  233</span>}</div>
+<div class="ttc" id="a_check_8h_html_a98ef4241b35c5906aeba89abe3cefd8f"><div class="ttname"><a href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a></div><div class="ttdeci">#define CHECK_CLOSE(got, want, tol, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00049">Check.h:49</a></div></div>
+<div class="ttc" id="a_check_8h_html_af78f878a664d9956c852a668fc3419ab"><div class="ttname"><a href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a></div><div class="ttdeci">#define CHECK(cond, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00048">Check.h:48</a></div></div>
+<div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_bayesian_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a></div><div class="ttdoc">The classical IKF update: mu_j ∝ c_j · L_j.</div><div class="ttdef"><b>Definition</b> <a href="_bayesian_8h_source.html#l00032">Bayesian.h:33</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_bayesian_html_adea466d230598f411f8080c0c37ce3ef"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_bayesian.html#adea466d230598f411f8080c0c37ce3ef">Kalman::Routers::Bayesian::Route</a></div><div class="ttdeci">Vector Route(const Matrix &amp;nis, const Vector &amp;c, const Vector &amp;likelihoods) const override</div><div class="ttdoc">Updated mode probabilities — see the class documentation.</div><div class="ttdef"><b>Definition</b> <a href="_routers_8cc_source.html#l00056">Routers.cc:56</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_hybrid_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_hybrid.html">Kalman::Routers::Hybrid</a></div><div class="ttdoc">Geometric blend (log-linear opinion pool) of two routers.</div><div class="ttdef"><b>Definition</b> <a href="_hybrid_8h_source.html#l00042">Hybrid.h:43</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_m_l_p_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html">Kalman::Routers::NN::MLP</a></div><div class="ttdoc">A tanh multilayer perceptron with a softmax head, evaluated directly.</div><div class="ttdef"><b>Definition</b> <a href="_m_l_p_8h_source.html#l00049">MLP.h:50</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_m_l_p_html_a002c1ca557cadd0403d8d63b4884cc03"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a002c1ca557cadd0403d8d63b4884cc03">Kalman::Routers::NN::MLP::AddLayer</a></div><div class="ttdeci">void AddLayer(const Matrix &amp;weight, const Vector &amp;bias)</div><div class="ttdoc">Append a layer.</div><div class="ttdef"><b>Definition</b> <a href="_m_l_p_8cc_source.html#l00020">MLP.cc:20</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_m_l_p_html_a14c75a7b142a00942bbce228d897cc9b"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#a14c75a7b142a00942bbce228d897cc9b">Kalman::Routers::NN::MLP::IsReady</a></div><div class="ttdeci">bool IsReady() const override</div><div class="ttdoc">True when the model can actually be evaluated.</div><div class="ttdef"><b>Definition</b> <a href="_m_l_p_8h_source.html#l00078">MLP.h:78</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_m_l_p_html_acb8999a9e2ceaa2ecc7489557cf8300e"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#acb8999a9e2ceaa2ecc7489557cf8300e">Kalman::Routers::NN::MLP::NInputs</a></div><div class="ttdeci">std::size_t NInputs() const override</div><div class="ttdoc">Features the model expects, or 0 when it does not care / cannot say.</div><div class="ttdef"><b>Definition</b> <a href="_m_l_p_8h_source.html#l00074">MLP.h:74</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_m_l_p_html_ad8f17d3033d2b5bdb1f00e6f5c59e63a"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html#ad8f17d3033d2b5bdb1f00e6f5c59e63a">Kalman::Routers::NN::MLP::NOutputs</a></div><div class="ttdeci">std::size_t NOutputs() const override</div><div class="ttdoc">Modes the model produces, or 0 when unknown.</div><div class="ttdef"><b>Definition</b> <a href="_m_l_p_8h_source.html#l00076">MLP.h:76</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00061">Neural.h:62</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html_a0d2f0f4cc556c2f65dd1c82966e6de57"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html#a0d2f0f4cc556c2f65dd1c82966e6de57">Kalman::Routers::Neural::IsReady</a></div><div class="ttdeci">bool IsReady() const</div><div class="ttdoc">True when a model is attached and evaluable.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00083">Neural.h:83</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html_a3972c7430e71fe4856693d140b03c992"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html#a3972c7430e71fe4856693d140b03c992">Kalman::Routers::Neural::Features</a></div><div class="ttdeci">Vector Features(const Matrix &amp;nis) const</div><div class="ttdoc">The flattened, standardised vector this router would feed the policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8cc_source.html#l00047">Neural.cc:47</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html_a834012660eaa1bcde241f95e6f150a9a"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html#a834012660eaa1bcde241f95e6f150a9a">Kalman::Routers::Neural::Route</a></div><div class="ttdeci">Vector Route(const Matrix &amp;nis, const Vector &amp;c, const Vector &amp;likelihoods) const override</div><div class="ttdoc">Updated mode probabilities — see the class documentation.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8cc_source.html#l00067">Neural.cc:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html_a9ed14462b9221944170aa74185ec2859"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html#a9ed14462b9221944170aa74185ec2859">Kalman::Routers::Neural::SetNormalisation</a></div><div class="ttdeci">void SetNormalisation(const Vector &amp;mean, const Vector &amp;scale)</div><div class="ttdoc">Feature standardisation recorded at training time.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8cc_source.html#l00036">Neural.cc:36</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html_acef90f115b214f0389d06b9d1942f5aa"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html#acef90f115b214f0389d06b9d1942f5aa">Kalman::Routers::Neural::Scale</a></div><div class="ttdeci">const Vector &amp; Scale() const</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00101">Neural.h:101</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html_a75d5794536f09b2adcbac66213bc9b31"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Kalman::Routers::Router::Normalise</a></div><div class="ttdeci">static Vector Normalise(Vector mu)</div><div class="ttdoc">Clip to a positive floor and normalise to a probability vector.</div><div class="ttdef"><b>Definition</b> <a href="_routers_8cc_source.html#l00023">Routers.cc:23</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_threshold_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_threshold.html">Kalman::Routers::Threshold</a></div><div class="ttdoc">Routes to whichever model's recent NIS sits closest to m.</div><div class="ttdef"><b>Definition</b> <a href="_threshold_8h_source.html#l00036">Threshold.h:37</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
+<div class="ttc" id="anamespace_check_html_a9ed42acec2d36cf39daa24ede8a31f95"><div class="ttname"><a href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a></div><div class="ttdeci">int Summary(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00040">Check.h:40</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="dir_e2c7378c4e3f48589680fb7bfbe13423.html">cxx</a></li><li class="navelem"><a class="el" href="04__routers_8cc.html">04_routers.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

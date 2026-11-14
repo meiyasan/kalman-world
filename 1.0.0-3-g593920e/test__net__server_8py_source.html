@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/test_net_server.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/test_net_server.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/test_net_server.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('test__net__server_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">test_net_server.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="test__net__server_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;The C++ servers (libKalmanNet, ``kalman-serve``) against the Python facade.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">Starts ``kalman-serve`` -- skipped when it is not built -- calls its REST routes</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">with urllib and has one MCP exchange over stdio, and compares the C++ answers</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">with :mod:`kalman.api`&#39;s for the same request on the same C++ model (the</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">example plugin&#39;s, loaded in both processes) and on a ``matrices`` spec.</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">States agree to 1e-9. Tokens minted by the Python side are accepted by the C++</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">server, and a token revoked through the Python registry is refused by it.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">import</span> json</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">import</span> re</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">import</span> subprocess</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="keyword">import</span> time</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">import</span> unittest</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="keyword">import</span> urllib.error</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">import</span> urllib.request</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> core, net  <span class="comment"># noqa: E402</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#abf1592c9da5445c695d30d5be39a0bca">   26</a></span>REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#a357675c270f66afcfe59221b63b68e6b">   27</a></span>HEADER = os.path.join(REPO, <span class="stringliteral">&quot;net&quot;</span>, <span class="stringliteral">&quot;include&quot;</span>, <span class="stringliteral">&quot;Kalman&quot;</span>, <span class="stringliteral">&quot;Net&quot;</span>, <span class="stringliteral">&quot;CAPI.h&quot;</span>)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#a54b9dc27e45d4b76855660b85ca39d84">   28</a></span>PLUGIN = <span class="stringliteral">&quot;KalmanPlugin_example&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#aa8dac55bcccef9e4d012b78ad6108545">   29</a></span>SECRET = <span class="stringliteral">&quot;a-secret-key-that-is-long-enough-for-hs256&quot;</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#ac73c5b1262a57969e809bb254821fe86">   31</a></span>_PROTO = re.compile(<span class="stringliteral">r&quot;^\s*(?:[A-Za-z_][\w ]*\s*\*?\s*)\b(kalman_\w+)\s*\&zwj;(&quot;</span>, re.M)</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="foldopen" id="foldopen00034" data-start="" data-end="">
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#adb572316bff9a05217c83775fe758eb4">   34</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__net__server.html#adb572316bff9a05217c83775fe758eb4">_prototypes</a>(text):</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    text = re.sub(<span class="stringliteral">r&quot;/\*.*?\*/&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, text, flags=re.S)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    text = re.sub(<span class="stringliteral">r&quot;//.*&quot;</span>, <span class="stringliteral">&quot;&quot;</span>, text)</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keywordflow">return</span> set(_PROTO.findall(text))</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+</div>
+<div class="foldopen" id="foldopen00040" data-start="" data-end="">
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#aab382283e18e950ee45a2ac75937e150">   40</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__net__server.html#aab382283e18e950ee45a2ac75937e150">_serve_binary</a>():</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keywordflow">for</span> d <span class="keywordflow">in</span> (<span class="stringliteral">&quot;var/install/bin&quot;</span>, <span class="stringliteral">&quot;var/build/bin&quot;</span>):</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        p = os.path.join(REPO, d, <span class="stringliteral">&quot;kalman-serve&quot;</span>)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">if</span> os.path.isfile(p) <span class="keywordflow">and</span> os.access(p, os.X_OK):</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">return</span> p</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+</div>
+<div class="foldopen" id="foldopen00048" data-start="" data-end="">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">   48</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">_plugin_path</a>():</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> core.HAS_CXX_CORE:</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">return</span> core.resolve_plugin(PLUGIN)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keywordflow">except</span> (FileNotFoundError, PermissionError, ValueError):</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#aa8b9a80e145dc30099f8ac6450cbd5d9">   57</a></span>SERVE = <a class="code hl_function" href="namespacetests_1_1test__net__server.html#aab382283e18e950ee45a2ac75937e150">_serve_binary</a>()</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#ac2270edb545dd899e1d1eef1b1ac5cef">   58</a></span>HAVE = SERVE <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <a class="code hl_function" href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">_plugin_path</a>() <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#ac9563bc7e30ee92c06ee3ed6aa5860cc">   59</a></span>WHY = <span class="stringliteral">&quot;kalman-serve or the example plugin is not built (make build examples, cmake --install)&quot;</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#a6bd24d3615c3412ea48ad8375b0d7cdb">   61</a></span>CV = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;cv&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 10,</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>      <span class="stringliteral">&quot;dynamics&quot;</span>: {<span class="stringliteral">&quot;F&quot;</span>: [[1, 0.1], [0, 1]], <span class="stringliteral">&quot;H&quot;</span>: [[1, 0]]},</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>      <span class="stringliteral">&quot;noise&quot;</span>: {<span class="stringliteral">&quot;Q&quot;</span>: [[1e-3, 0], [0, 1e-3]], <span class="stringliteral">&quot;R&quot;</span>: [[0.25]]},</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>      <span class="stringliteral">&quot;initial&quot;</span>: {<span class="stringliteral">&quot;x0&quot;</span>: [[0], [1]], <span class="stringliteral">&quot;P0&quot;</span>: [[1, 0], [0, 1]]}}</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#ac3c720d27c73d2cb892a28f32b12a2cd">   66</a></span>PENDULUM = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50.0,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="stringliteral">&quot;initial&quot;</span>: {<span class="stringliteral">&quot;x0&quot;</span>: [0.4, 0.0], <span class="stringliteral">&quot;P0&quot;</span>: [[0.1, 0.0], [0.0, 0.1]]}}</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__net__server.html#added6ba906b0eaebf39d4b8636f4256c">   69</a></span>CONSTANT_VELOCITY = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;constant-velocity&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 10.0,</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                     <span class="stringliteral">&quot;initial&quot;</span>: {<span class="stringliteral">&quot;x0&quot;</span>: [0.0, 1.0], <span class="stringliteral">&quot;P0&quot;</span>: [[1.0, 0.0], [0.0, 1.0]]}}</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="foldopen" id="foldopen00073" data-start="" data-end="">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html">   73</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__net__server_1_1_server.html">Server</a>:</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="stringliteral">&quot;&quot;&quot;``kalman-serve --rest`` on a free port, until stop().&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="foldopen" id="foldopen00076" data-start="" data-end="">
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html#aac370ff046ee802a97bbba61b2c89559">   76</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_server.html#aac370ff046ee802a97bbba61b2c89559">__init__</a>(self, env=None, *args):</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        e = dict(os.environ)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        e.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        e.update(env <span class="keywordflow">or</span> {})</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">   80</a></span>        self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a> = subprocess.Popen([SERVE, <span class="stringliteral">&quot;--rest&quot;</span>, <span class="stringliteral">&quot;--port&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>, <span class="stringliteral">&quot;--plugin&quot;</span>, PLUGIN, *args],</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                                     stdout=subprocess.DEVNULL, stderr=subprocess.PIPE, env=e, text=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        line = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a>.stderr.readline()</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        m = re.search(<span class="stringliteral">r&quot;:(\d+) &quot;</span>, line)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> m:</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a>.kill()</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;kalman-serve did not start: {line!r} {self.proc.stderr.read()}&quot;</span>)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html#ab3a70b4bc3ea5b92d6df971276671ba5">   87</a></span>        self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#ab3a70b4bc3ea5b92d6df971276671ba5">url</a> = f<span class="stringliteral">&quot;http://127.0.0.1:{m.group(1)}&quot;</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+</div>
+<div class="foldopen" id="foldopen00089" data-start="" data-end="">
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html#af53bee381172e5f1f22edb369b7c7edc">   89</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_server.html#af53bee381172e5f1f22edb369b7c7edc">stop</a>(self):</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a>.terminate()</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a>.wait(timeout=10)</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keywordflow">except</span> subprocess.TimeoutExpired:</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">proc</a>.kill()</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+</div>
+<div class="foldopen" id="foldopen00096" data-start="" data-end="">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_server.html#afad61263636ce4d0a4de948b4ddd45df">   96</a></span>    <span class="keyword">def </span>request(self, method, path, body=None, token=None):</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        data = <span class="keywordtype">None</span> <span class="keywordflow">if</span> body <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> json.dumps(body).encode()</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        headers = {<span class="stringliteral">&quot;Content-Type&quot;</span>: <span class="stringliteral">&quot;application/json&quot;</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">if</span> token:</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            headers[<span class="stringliteral">&quot;Authorization&quot;</span>] = f<span class="stringliteral">&quot;Bearer {token}&quot;</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        req = urllib.request.Request(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_server.html#ab3a70b4bc3ea5b92d6df971276671ba5">url</a> + path, data=data, method=method, headers=headers)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keyword">with</span> urllib.request.urlopen(req, timeout=60) <span class="keyword">as</span> r:</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="keywordflow">return</span> r.status, json.loads(r.read().decode())</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keywordflow">except</span> urllib.error.HTTPError <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            <span class="keywordflow">return</span> e.code, json.loads(e.read().decode() <span class="keywordflow">or</span> <span class="stringliteral">&quot;null&quot;</span>)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00109" data-start="" data-end="">
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_header_contract.html">  109</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__net__server_1_1_test_header_contract.html">TestHeaderContract</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="stringliteral">&quot;&quot;&quot;``native/net.py``&#39;s cdef is a copy of ``Kalman/Net/CAPI.h``.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="foldopen" id="foldopen00112" data-start="" data-end="">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_header_contract.html#aaeab913653e400c83b5890ca64e8a53b">  112</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_header_contract.html#aaeab913653e400c83b5890ca64e8a53b">test_cdef_matches_header</a>(self):</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">with</span> open(HEADER) <span class="keyword">as</span> fh:</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            header = <a class="code hl_function" href="namespacetests_1_1test__net__server.html#adb572316bff9a05217c83775fe758eb4">_prototypes</a>(fh.read())</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        self.assertTrue(header)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        self.assertEqual(header, <a class="code hl_function" href="namespacetests_1_1test__net__server.html#adb572316bff9a05217c83775fe758eb4">_prototypes</a>(net._CDEF))</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="preprocessor">@unittest.skipUnless(HAVE, WHY)</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00120" data-start="" data-end="">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html">  120</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html">TestRestAgainstFacade</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="preprocessor">@classmethod</span></div>
+<div class="foldopen" id="foldopen00123" data-start="" data-end="">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#afbb31f70cbd9d2b9dac8bb11ba5dab61">  123</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#afbb31f70cbd9d2b9dac8bb11ba5dab61">setUpClass</a>(cls):</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        os.environ.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        core.load_plugin(<a class="code hl_function" href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">_plugin_path</a>())                 <span class="comment"># the same C++ model in this process</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">  126</a></span>        cls.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a> = <a class="code hl_class" href="classtests_1_1test__net__server_1_1_server.html">Server</a>()</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="preprocessor">@classmethod</span></div>
+<div class="foldopen" id="foldopen00129" data-start="" data-end="">
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a35d604482b9c2dd5ee5c5404b184be96">  129</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a35d604482b9c2dd5ee5c5404b184be96">tearDownClass</a>(cls):</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        cls.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.stop()</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+</div>
+<div class="foldopen" id="foldopen00132" data-start="" data-end="">
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">  132</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">_data</a>(self, spec, n=40, seed=3):</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        rec = api.sample(spec, n / spec[<span class="stringliteral">&quot;fs&quot;</span>], seed=seed)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordflow">return</span> rec[<span class="stringliteral">&quot;zk&quot;</span>]</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+</div>
+<div class="foldopen" id="foldopen00137" data-start="" data-end="">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">  137</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(self, a, b, tol, what):</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        a, b = np.asarray(a, dtype=float), np.asarray(b, dtype=float)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        self.assertEqual(a.shape, b.shape, what)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        err = float(np.max(np.abs(a - b))) <span class="keywordflow">if</span> a.size <span class="keywordflow">else</span> 0.0</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        self.assertLessEqual(err, tol, f<span class="stringliteral">&quot;{what}: max |C++ - Python| = {err:.3g}&quot;</span>)</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keywordflow">return</span> err</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+</div>
+<div class="foldopen" id="foldopen00144" data-start="" data-end="">
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2ea6d5e1c1a062a6c6014187a6bb7d93">  144</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2ea6d5e1c1a062a6c6014187a6bb7d93">test_health_and_catalog</a>(self):</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        status, h = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/healthz&quot;</span>)</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        self.assertEqual(status, 200)</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        self.assertEqual((h[<span class="stringliteral">&quot;ok&quot;</span>], h[<span class="stringliteral">&quot;auth&quot;</span>]), (<span class="keyword">True</span>, <span class="keyword">False</span>))</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        status, cat = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/catalog&quot;</span>)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        self.assertEqual(status, 200)</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;constant-velocity&quot;</span>, <span class="stringliteral">&quot;pendulum&quot;</span>):</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            self.assertIn(name, cat[<span class="stringliteral">&quot;models&quot;</span>])</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        self.assertEqual(set(cat), {<span class="stringliteral">&quot;models&quot;</span>, <span class="stringliteral">&quot;controllers&quot;</span>, <span class="stringliteral">&quot;engines&quot;</span>, <span class="stringliteral">&quot;integrators&quot;</span>, <span class="stringliteral">&quot;solvers&quot;</span>,</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                                    <span class="stringliteral">&quot;providers&quot;</span>, <span class="stringliteral">&quot;authored&quot;</span>, <span class="stringliteral">&quot;sources&quot;</span>, <span class="stringliteral">&quot;native&quot;</span>})</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+</div>
+<div class="foldopen" id="foldopen00155" data-start="" data-end="">
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a5f0d58769fa4bb9a5fac0eb44667f53c">  155</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a5f0d58769fa4bb9a5fac0eb44667f53c">test_describe_matches</a>(self):</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;constant-velocity&quot;</span>):</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            status, d = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, f<span class="stringliteral">&quot;/describe/{name}&quot;</span>)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            self.assertEqual(status, 200)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            p = api.describe(name)</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> (<span class="stringliteral">&quot;n&quot;</span>, <span class="stringliteral">&quot;m&quot;</span>, <span class="stringliteral">&quot;l&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;analytic&quot;</span>, <span class="stringliteral">&quot;backend&quot;</span>, <span class="stringliteral">&quot;kind&quot;</span>, <span class="stringliteral">&quot;default_engine&quot;</span>, <span class="stringliteral">&quot;description&quot;</span>):</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                self.assertEqual(d[k], p[k], f<span class="stringliteral">&quot;describe({name})[{k}]&quot;</span>)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.assertEqual(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/describe/Nope&quot;</span>)[0], 404)</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+</div>
+<div class="foldopen" id="foldopen00165" data-start="" data-end="">
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a7e6989f9530587dbbf240ee18a410de0">  165</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a7e6989f9530587dbbf240ee18a410de0">test_filter_matches_on_a_cxx_model</a>(self):</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="keywordflow">for</span> spec <span class="keywordflow">in</span> (CONSTANT_VELOCITY, PENDULUM):</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            zk = self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">_data</a>(spec)</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <span class="keywordflow">for</span> smooth <span class="keywordflow">in</span> (<span class="keyword">False</span>, <span class="keyword">True</span>):</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                status, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/filter&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: spec, <span class="stringliteral">&quot;data&quot;</span>: zk, <span class="stringliteral">&quot;smooth&quot;</span>: smooth})</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                self.assertEqual(status, 200, c)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                p = api.run_filter(spec, zk, smooth=smooth)</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                <span class="keywordflow">if</span> smooth <span class="keywordflow">and</span> spec <span class="keywordflow">is</span> PENDULUM:</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                    <span class="comment"># The Python RTS pass on a nonlinear model gains with</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="comment"># transition[k] (the Jacobian at x_post[k-1]); Kalman::Filter</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                    <span class="comment"># with transition[k+1] (at x_post[k]), the RTS gain. They differ</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                    <span class="comment"># by ~5e-5 here, so the reference is the C++ pass driven from</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                    <span class="comment"># Python (NativeModel.filter_native), the same Kalman::Filter.</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    rec = api.make_model(spec).filter_native(zk, engine=<span class="stringliteral">&quot;extended&quot;</span>, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                    p = {<span class="stringliteral">&quot;xk&quot;</span>: rec.xk, <span class="stringliteral">&quot;Pk&quot;</span>: rec.Pk, <span class="stringliteral">&quot;time&quot;</span>: rec.time}</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;xk&quot;</span>], p[<span class="stringliteral">&quot;xk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;{spec[&#39;base&#39;]} xk smooth={smooth}&quot;</span>)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;Pk&quot;</span>], p[<span class="stringliteral">&quot;Pk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;{spec[&#39;base&#39;]} Pk smooth={smooth}&quot;</span>)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;time&quot;</span>], p[<span class="stringliteral">&quot;time&quot;</span>], 1e-12, f<span class="stringliteral">&quot;{spec[&#39;base&#39;]} time&quot;</span>)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+</div>
+<div class="foldopen" id="foldopen00185" data-start="" data-end="">
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9da207ceb94ac0044fa4e842c7127262">  185</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9da207ceb94ac0044fa4e842c7127262">test_filter_matches_on_a_matrices_spec</a>(self):</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        zk = [[0.1 * i + 0.05 * np.sin(i)] <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(30)]</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        status, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/filter&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;data&quot;</span>: zk})</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        self.assertEqual(status, 200, c)</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        p = api.run_filter(CV, zk)</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;xk&quot;</span>], p[<span class="stringliteral">&quot;xk&quot;</span>], 1e-9, <span class="stringliteral">&quot;matrices xk&quot;</span>)</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;Pk&quot;</span>], p[<span class="stringliteral">&quot;Pk&quot;</span>], 1e-9, <span class="stringliteral">&quot;matrices Pk&quot;</span>)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+</div>
+<div class="foldopen" id="foldopen00194" data-start="" data-end="">
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#af2d1d61b9ea69caa2f884665d3431661">  194</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#af2d1d61b9ea69caa2f884665d3431661">test_diagnostics_match</a>(self):</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        zk = self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">_data</a>(PENDULUM)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        _, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/filter&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: PENDULUM, <span class="stringliteral">&quot;data&quot;</span>: zk})</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        status, dc = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, f<span class="stringliteral">&quot;/diagnostics/{c[&#39;run_id&#39;]}&quot;</span>)</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        self.assertEqual(status, 200, dc)</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        dp = api.diagnostics(api.run_filter(PENDULUM, zk)[<span class="stringliteral">&quot;run_id&quot;</span>])</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(dc[<span class="stringliteral">&quot;innovation&quot;</span>], dp[<span class="stringliteral">&quot;innovation&quot;</span>], 1e-9, <span class="stringliteral">&quot;innovation&quot;</span>)</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(dc[<span class="stringliteral">&quot;innovation_covariance&quot;</span>], dp[<span class="stringliteral">&quot;innovation_covariance&quot;</span>], 1e-9, <span class="stringliteral">&quot;S&quot;</span>)</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(dc[<span class="stringliteral">&quot;nis&quot;</span>], dp[<span class="stringliteral">&quot;nis&quot;</span>], 1e-7, <span class="stringliteral">&quot;NIS&quot;</span>)</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>        self.assertEqual(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/diagnostics/run-nope&quot;</span>)[0], 404)</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
+</div>
+<div class="foldopen" id="foldopen00206" data-start="" data-end="">
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#aafae02bf079d590be8cc1f0197c36c0f">  206</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#aafae02bf079d590be8cc1f0197c36c0f">test_forecast_matches</a>(self):</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        <span class="keywordflow">for</span> spec <span class="keywordflow">in</span> (CONSTANT_VELOCITY, PENDULUM, CV):</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>            body = {<span class="stringliteral">&quot;spec&quot;</span>: spec, <span class="stringliteral">&quot;x0&quot;</span>: [0.3, 0.2], <span class="stringliteral">&quot;P0&quot;</span>: [[0.5, 0.1], [0.1, 0.4]], <span class="stringliteral">&quot;steps&quot;</span>: 5}</div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>            status, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/forecast&quot;</span>, body)</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>            self.assertEqual(status, 200, c)</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>            p = api.forecast(spec, body[<span class="stringliteral">&quot;x0&quot;</span>], body[<span class="stringliteral">&quot;P0&quot;</span>], 5)</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>            self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;xk&quot;</span>], p[<span class="stringliteral">&quot;xk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;forecast {spec[&#39;base&#39;]} xk&quot;</span>)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>            self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;Pk&quot;</span>], p[<span class="stringliteral">&quot;Pk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;forecast {spec[&#39;base&#39;]} Pk&quot;</span>)</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span> </div>
+</div>
+<div class="foldopen" id="foldopen00216" data-start="" data-end="">
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#ae860f72ac12bd9131b9f429a2749b5cf">  216</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#ae860f72ac12bd9131b9f429a2749b5cf">test_noise_free_sample_matches</a>(self):</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="keywordflow">for</span> spec <span class="keywordflow">in</span> (PENDULUM, CV):</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            kw = {<span class="stringliteral">&quot;duration&quot;</span>: 0.5, <span class="stringliteral">&quot;process_noise&quot;</span>: <span class="keyword">False</span>, <span class="stringliteral">&quot;measurement_noise&quot;</span>: <span class="keyword">False</span>}</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            status, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/sample&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: spec, **kw})</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            self.assertEqual(status, 200, c)</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            p = api.sample(spec, **kw)</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;xk&quot;</span>], p[<span class="stringliteral">&quot;xk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;sample {spec[&#39;base&#39;]} xk&quot;</span>)</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;zk&quot;</span>], p[<span class="stringliteral">&quot;zk&quot;</span>], 1e-9, f<span class="stringliteral">&quot;sample {spec[&#39;base&#39;]} zk&quot;</span>)</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;time&quot;</span>], p[<span class="stringliteral">&quot;time&quot;</span>], 1e-12, f<span class="stringliteral">&quot;sample {spec[&#39;base&#39;]} time&quot;</span>)</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+</div>
+<div class="foldopen" id="foldopen00227" data-start="" data-end="">
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#abe586fb1b7d2cb2b94719e469a1b9b26">  227</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#abe586fb1b7d2cb2b94719e469a1b9b26">test_errors_match</a>(self):</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        bad = {<span class="stringliteral">&quot;spec&quot;</span>: {<span class="stringliteral">&quot;F&quot;</span>: [[1]]}, <span class="stringliteral">&quot;data&quot;</span>: [[1.0]]}</div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        status, c = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/filter&quot;</span>, bad)</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        self.assertEqual(status, 400)</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        self.assertIn(<span class="stringliteral">&quot;&#39;F&#39; belongs in dynamics[&#39;F&#39;]&quot;</span>, c[<span class="stringliteral">&quot;detail&quot;</span>])</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        self.assertEqual(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/filter&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CV})[0], 400)</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        self.assertEqual(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/osse&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CV})[0], 501)</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        self.assertEqual(self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/providers&quot;</span>)[0], 501)</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+</div>
+<div class="foldopen" id="foldopen00236" data-start="" data-end="">
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a4397739bfd802be03630c80f5b315a05">  236</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a4397739bfd802be03630c80f5b315a05">test_shared_registry</a>(self):</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="stringliteral">&quot;&quot;&quot;A plugin loaded through the C++ server is in the Python registry.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>        status, out = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/plugins&quot;</span>, {<span class="stringliteral">&quot;name&quot;</span>: PLUGIN})</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        self.assertEqual(status, 200, out)</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        self.assertIn(<span class="stringliteral">&quot;pendulum&quot;</span>, out[<span class="stringliteral">&quot;models&quot;</span>])</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>        self.assertIn(PLUGIN, [p[<span class="stringliteral">&quot;name&quot;</span>] <span class="keywordflow">for</span> p <span class="keywordflow">in</span> api.plugins()[<span class="stringliteral">&quot;plugins&quot;</span>]])</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        status, evs = self.<a class="code hl_variable" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">server</a>.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/events?since=0&amp;limit=1000&quot;</span>)</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        self.assertEqual(status, 200)</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        self.assertEqual(evs, api.events(0, 1000))</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
+</div>
+<div class="foldopen" id="foldopen00247" data-start="" data-end="">
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a618ef562a21ab7ba56e78bccfbf8138d">  247</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a618ef562a21ab7ba56e78bccfbf8138d">test_in_process_call</a>(self):</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="stringliteral">&quot;&quot;&quot;The same verbs through the C interface (native/net.py).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> net.available():</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            self.skipTest(net.LOAD_ERROR)</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        zk = self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">_data</a>(CONSTANT_VELOCITY)</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        c = net.call(<span class="stringliteral">&quot;run_filter&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CONSTANT_VELOCITY, <span class="stringliteral">&quot;data&quot;</span>: zk})</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>        p = api.run_filter(CONSTANT_VELOCITY, zk)</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>        self.<a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">assertClose</a>(c[<span class="stringliteral">&quot;xk&quot;</span>], p[<span class="stringliteral">&quot;xk&quot;</span>], 1e-9, <span class="stringliteral">&quot;in-process xk&quot;</span>)</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keyword">with</span> self.assertRaises(net.NetError) <span class="keyword">as</span> ctx:</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>            net.call(<span class="stringliteral">&quot;describe&quot;</span>, {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;Nope&quot;</span>})</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        self.assertEqual(ctx.exception.status, 404)</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span><span class="preprocessor">@unittest.skipUnless(HAVE, WHY)</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00262" data-start="" data-end="">
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html">  262</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html">TestMcpStdio</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
+<div class="foldopen" id="foldopen00264" data-start="" data-end="">
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html#a0371c5ce064b8f2b448ebff0b768c83d">  264</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html#a0371c5ce064b8f2b448ebff0b768c83d">test_one_exchange</a>(self):</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        core.load_plugin(<a class="code hl_function" href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">_plugin_path</a>())</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        env = dict(os.environ)</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        env.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        zk = api.sample(CONSTANT_VELOCITY, 3.0, seed=5)[<span class="stringliteral">&quot;zk&quot;</span>]</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>        msgs = [</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>            {<span class="stringliteral">&quot;jsonrpc&quot;</span>: <span class="stringliteral">&quot;2.0&quot;</span>, <span class="stringliteral">&quot;id&quot;</span>: 1, <span class="stringliteral">&quot;method&quot;</span>: <span class="stringliteral">&quot;initialize&quot;</span>,</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>             <span class="stringliteral">&quot;params&quot;</span>: {<span class="stringliteral">&quot;protocolVersion&quot;</span>: <span class="stringliteral">&quot;2025-06-18&quot;</span>, <span class="stringliteral">&quot;capabilities&quot;</span>: {},</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>                        <span class="stringliteral">&quot;clientInfo&quot;</span>: {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;pytest&quot;</span>, <span class="stringliteral">&quot;version&quot;</span>: <span class="stringliteral">&quot;0&quot;</span>}}},</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            {<span class="stringliteral">&quot;jsonrpc&quot;</span>: <span class="stringliteral">&quot;2.0&quot;</span>, <span class="stringliteral">&quot;method&quot;</span>: <span class="stringliteral">&quot;notifications/initialized&quot;</span>},</div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            {<span class="stringliteral">&quot;jsonrpc&quot;</span>: <span class="stringliteral">&quot;2.0&quot;</span>, <span class="stringliteral">&quot;id&quot;</span>: 2, <span class="stringliteral">&quot;method&quot;</span>: <span class="stringliteral">&quot;tools/list&quot;</span>},</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            {<span class="stringliteral">&quot;jsonrpc&quot;</span>: <span class="stringliteral">&quot;2.0&quot;</span>, <span class="stringliteral">&quot;id&quot;</span>: 3, <span class="stringliteral">&quot;method&quot;</span>: <span class="stringliteral">&quot;tools/call&quot;</span>,</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>             <span class="stringliteral">&quot;params&quot;</span>: {<span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;run_filter&quot;</span>, <span class="stringliteral">&quot;arguments&quot;</span>: {<span class="stringliteral">&quot;spec&quot;</span>: CONSTANT_VELOCITY, <span class="stringliteral">&quot;data&quot;</span>: zk}}},</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        ]</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        out = subprocess.run([SERVE, <span class="stringliteral">&quot;--mcp&quot;</span>, <span class="stringliteral">&quot;--plugin&quot;</span>, PLUGIN], env=env, text=<span class="keyword">True</span>, timeout=60,</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>                             input=<span class="stringliteral">&quot;&quot;</span>.join(json.dumps(m) + <span class="stringliteral">&quot;\n&quot;</span> <span class="keywordflow">for</span> m <span class="keywordflow">in</span> msgs), capture_output=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        self.assertEqual(out.returncode, 0, out.stderr)</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        replies = [json.loads(line) <span class="keywordflow">for</span> line <span class="keywordflow">in</span> out.stdout.splitlines() <span class="keywordflow">if</span> line.strip()]</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        self.assertEqual([r[<span class="stringliteral">&quot;id&quot;</span>] <span class="keywordflow">for</span> r <span class="keywordflow">in</span> replies], [1, 2, 3])        <span class="comment"># no answer to the notification</span></div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        self.assertEqual(replies[0][<span class="stringliteral">&quot;result&quot;</span>][<span class="stringliteral">&quot;serverInfo&quot;</span>][<span class="stringliteral">&quot;name&quot;</span>], <span class="stringliteral">&quot;Kalman-AI&quot;</span>)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>        names = {t[<span class="stringliteral">&quot;name&quot;</span>] <span class="keywordflow">for</span> t <span class="keywordflow">in</span> replies[1][<span class="stringliteral">&quot;result&quot;</span>][<span class="stringliteral">&quot;tools&quot;</span>]}</div>
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>        python_tools = {<span class="stringliteral">&quot;list_models&quot;</span>, <span class="stringliteral">&quot;describe_model&quot;</span>, <span class="stringliteral">&quot;list_registered_models&quot;</span>, <span class="stringliteral">&quot;get_diagnostics&quot;</span>,</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>                        <span class="stringliteral">&quot;list_sources&quot;</span>, <span class="stringliteral">&quot;list_events&quot;</span>, <span class="stringliteral">&quot;run_filter&quot;</span>, <span class="stringliteral">&quot;forecast&quot;</span>, <span class="stringliteral">&quot;load_plugin&quot;</span>}</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        self.assertTrue(python_tools &lt;= names, python_tools - names)</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        result = replies[2][<span class="stringliteral">&quot;result&quot;</span>]</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        self.assertFalse(result[<span class="stringliteral">&quot;isError&quot;</span>], result)</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        p = api.run_filter(CONSTANT_VELOCITY, zk)</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        err = np.max(np.abs(np.asarray(result[<span class="stringliteral">&quot;structuredContent&quot;</span>][<span class="stringliteral">&quot;xk&quot;</span>]) - np.asarray(p[<span class="stringliteral">&quot;xk&quot;</span>])))</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        self.assertLessEqual(err, 1e-9)</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span> </div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="preprocessor">@unittest.skipUnless(HAVE and core.HAS_CXX_CORE, WHY)</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00297" data-start="" data-end="">
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html">  297</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html">TestTokensFromPython</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    <span class="stringliteral">&quot;&quot;&quot;A token minted by kalman.api.auth works on the C++ server; scopes and</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="stringliteral">    revocation hold there too.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
+<div class="foldopen" id="foldopen00301" data-start="" data-end="">
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html#a14578e6257b9f1dabdbd3bed72dd1e99">  301</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html#a14578e6257b9f1dabdbd3bed72dd1e99">test_python_tokens</a>(self):</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span>            <span class="keyword">import</span> jwt  <span class="comment"># noqa: F401</span></div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>            self.skipTest(<span class="stringliteral">&quot;PyJWT is not installed&quot;</span>)</div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1api.html">modules.api</a> <span class="keyword">import</span> auth, store</div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>        os.environ[<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>] = SECRET</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>            server = <a class="code hl_class" href="classtests_1_1test__net__server_1_1_server.html">Server</a>({<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>: SECRET})</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>                reader = auth.mint_token(<span class="stringliteral">&quot;bob&quot;</span>, [<span class="stringliteral">&quot;read&quot;</span>])</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/catalog&quot;</span>)[0], 401)</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/catalog&quot;</span>, token=reader)[0], 200)</div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>                status, who = server.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/whoami&quot;</span>, token=reader)</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>                self.assertEqual((status, who[<span class="stringliteral">&quot;user&quot;</span>], who[<span class="stringliteral">&quot;scopes&quot;</span>]), (200, <span class="stringliteral">&quot;bob&quot;</span>, [<span class="stringliteral">&quot;read&quot;</span>]))</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>                <span class="keyword">from</span> modules <span class="keyword">import</span> api</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>                self.assertEqual(who, api.whoami(reader))</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/forecast&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;x0&quot;</span>: [0, 0]},</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>                                                token=reader)[0], 403)</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/catalog&quot;</span>, token=reader + <span class="stringliteral">&quot;x&quot;</span>)[0], 401)</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>                <span class="comment"># Revoked through the Python registry: refused by the C++ server at once.</span></div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>                c = auth.claims(reader)</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>                store.revoke_token(c[<span class="stringliteral">&quot;jti&quot;</span>], c[<span class="stringliteral">&quot;sub&quot;</span>], c[<span class="stringliteral">&quot;exp&quot;</span>], <span class="stringliteral">&quot;test&quot;</span>)</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;GET&quot;</span>, <span class="stringliteral">&quot;/catalog&quot;</span>, token=reader)[0], 401)</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                admin = auth.mint_token(<span class="stringliteral">&quot;alice&quot;</span>, [<span class="stringliteral">&quot;admin&quot;</span>])</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>                self.assertEqual(server.request(<span class="stringliteral">&quot;POST&quot;</span>, <span class="stringliteral">&quot;/forecast&quot;</span>, {<span class="stringliteral">&quot;spec&quot;</span>: CV, <span class="stringliteral">&quot;x0&quot;</span>: [0, 0]},</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>                                                token=admin)[0], 200)</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>            <span class="keywordflow">finally</span>:</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>                server.stop()</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        <span class="keywordflow">finally</span>:</div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>            os.environ.pop(<span class="stringliteral">&quot;KALMAN_JWT_SECRET&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span> </div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span>    unittest.main()</div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_server_html"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_server.html">tests.test_net_server.Server</a></div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00073">test_net_server.py:73</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_server_html_aac370ff046ee802a97bbba61b2c89559"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_server.html#aac370ff046ee802a97bbba61b2c89559">tests.test_net_server.Server.__init__</a></div><div class="ttdeci">__init__(self, env=None, *args)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00076">test_net_server.py:76</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_server_html_ab3a70b4bc3ea5b92d6df971276671ba5"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_server.html#ab3a70b4bc3ea5b92d6df971276671ba5">tests.test_net_server.Server.url</a></div><div class="ttdeci">url</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00087">test_net_server.py:87</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_server_html_adb6a8ac121ec250cd7e53553c0557416"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_server.html#adb6a8ac121ec250cd7e53553c0557416">tests.test_net_server.Server.proc</a></div><div class="ttdeci">proc</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00080">test_net_server.py:80</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_server_html_af53bee381172e5f1f22edb369b7c7edc"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_server.html#af53bee381172e5f1f22edb369b7c7edc">tests.test_net_server.Server.stop</a></div><div class="ttdeci">stop(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00089">test_net_server.py:89</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_header_contract_html"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_header_contract.html">tests.test_net_server.TestHeaderContract</a></div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00109">test_net_server.py:109</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_header_contract_html_aaeab913653e400c83b5890ca64e8a53b"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_header_contract.html#aaeab913653e400c83b5890ca64e8a53b">tests.test_net_server.TestHeaderContract.test_cdef_matches_header</a></div><div class="ttdeci">test_cdef_matches_header(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00112">test_net_server.py:112</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_mcp_stdio_html"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html">tests.test_net_server.TestMcpStdio</a></div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00262">test_net_server.py:262</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_mcp_stdio_html_a0371c5ce064b8f2b448ebff0b768c83d"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_mcp_stdio.html#a0371c5ce064b8f2b448ebff0b768c83d">tests.test_net_server.TestMcpStdio.test_one_exchange</a></div><div class="ttdeci">test_one_exchange(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00264">test_net_server.py:264</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html">tests.test_net_server.TestRestAgainstFacade</a></div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00120">test_net_server.py:120</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a2e3b1b90e2a4251d55f086f30a5f2569"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2e3b1b90e2a4251d55f086f30a5f2569">tests.test_net_server.TestRestAgainstFacade._data</a></div><div class="ttdeci">_data(self, spec, n=40, seed=3)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00132">test_net_server.py:132</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a2ea6d5e1c1a062a6c6014187a6bb7d93"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a2ea6d5e1c1a062a6c6014187a6bb7d93">tests.test_net_server.TestRestAgainstFacade.test_health_and_catalog</a></div><div class="ttdeci">test_health_and_catalog(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00144">test_net_server.py:144</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a35d604482b9c2dd5ee5c5404b184be96"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a35d604482b9c2dd5ee5c5404b184be96">tests.test_net_server.TestRestAgainstFacade.tearDownClass</a></div><div class="ttdeci">tearDownClass(cls)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00129">test_net_server.py:129</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a4397739bfd802be03630c80f5b315a05"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a4397739bfd802be03630c80f5b315a05">tests.test_net_server.TestRestAgainstFacade.test_shared_registry</a></div><div class="ttdeci">test_shared_registry(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00236">test_net_server.py:236</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a5f0d58769fa4bb9a5fac0eb44667f53c"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a5f0d58769fa4bb9a5fac0eb44667f53c">tests.test_net_server.TestRestAgainstFacade.test_describe_matches</a></div><div class="ttdeci">test_describe_matches(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00155">test_net_server.py:155</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a618ef562a21ab7ba56e78bccfbf8138d"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a618ef562a21ab7ba56e78bccfbf8138d">tests.test_net_server.TestRestAgainstFacade.test_in_process_call</a></div><div class="ttdeci">test_in_process_call(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00247">test_net_server.py:247</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a73f0c37cdf85beec03118aaccc81f16a"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a73f0c37cdf85beec03118aaccc81f16a">tests.test_net_server.TestRestAgainstFacade.assertClose</a></div><div class="ttdeci">assertClose(self, a, b, tol, what)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00137">test_net_server.py:137</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a7e6989f9530587dbbf240ee18a410de0"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a7e6989f9530587dbbf240ee18a410de0">tests.test_net_server.TestRestAgainstFacade.test_filter_matches_on_a_cxx_model</a></div><div class="ttdeci">test_filter_matches_on_a_cxx_model(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00165">test_net_server.py:165</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a9da207ceb94ac0044fa4e842c7127262"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9da207ceb94ac0044fa4e842c7127262">tests.test_net_server.TestRestAgainstFacade.test_filter_matches_on_a_matrices_spec</a></div><div class="ttdeci">test_filter_matches_on_a_matrices_spec(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00185">test_net_server.py:185</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_a9fe35b91bd59489435ff4c4bb33461e6"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#a9fe35b91bd59489435ff4c4bb33461e6">tests.test_net_server.TestRestAgainstFacade.server</a></div><div class="ttdeci">server</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00126">test_net_server.py:126</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_aafae02bf079d590be8cc1f0197c36c0f"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#aafae02bf079d590be8cc1f0197c36c0f">tests.test_net_server.TestRestAgainstFacade.test_forecast_matches</a></div><div class="ttdeci">test_forecast_matches(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00206">test_net_server.py:206</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_abe586fb1b7d2cb2b94719e469a1b9b26"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#abe586fb1b7d2cb2b94719e469a1b9b26">tests.test_net_server.TestRestAgainstFacade.test_errors_match</a></div><div class="ttdeci">test_errors_match(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00227">test_net_server.py:227</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_ae860f72ac12bd9131b9f429a2749b5cf"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#ae860f72ac12bd9131b9f429a2749b5cf">tests.test_net_server.TestRestAgainstFacade.test_noise_free_sample_matches</a></div><div class="ttdeci">test_noise_free_sample_matches(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00216">test_net_server.py:216</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_af2d1d61b9ea69caa2f884665d3431661"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#af2d1d61b9ea69caa2f884665d3431661">tests.test_net_server.TestRestAgainstFacade.test_diagnostics_match</a></div><div class="ttdeci">test_diagnostics_match(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00194">test_net_server.py:194</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_rest_against_facade_html_afbb31f70cbd9d2b9dac8bb11ba5dab61"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_rest_against_facade.html#afbb31f70cbd9d2b9dac8bb11ba5dab61">tests.test_net_server.TestRestAgainstFacade.setUpClass</a></div><div class="ttdeci">setUpClass(cls)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00123">test_net_server.py:123</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_tokens_from_python_html"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html">tests.test_net_server.TestTokensFromPython</a></div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00297">test_net_server.py:297</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__net__server_1_1_test_tokens_from_python_html_a14578e6257b9f1dabdbd3bed72dd1e99"><div class="ttname"><a href="classtests_1_1test__net__server_1_1_test_tokens_from_python.html#a14578e6257b9f1dabdbd3bed72dd1e99">tests.test_net_server.TestTokensFromPython.test_python_tokens</a></div><div class="ttdeci">test_python_tokens(self)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00301">test_net_server.py:301</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1api_html"><div class="ttname"><a href="namespacemodules_1_1api.html">modules.api</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2api_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2native_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__net__server_html_a664f55b3331bc28e37f803f761867277"><div class="ttname"><a href="namespacetests_1_1test__net__server.html#a664f55b3331bc28e37f803f761867277">tests.test_net_server._plugin_path</a></div><div class="ttdeci">_plugin_path()</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00048">test_net_server.py:48</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__net__server_html_aab382283e18e950ee45a2ac75937e150"><div class="ttname"><a href="namespacetests_1_1test__net__server.html#aab382283e18e950ee45a2ac75937e150">tests.test_net_server._serve_binary</a></div><div class="ttdeci">_serve_binary()</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00040">test_net_server.py:40</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__net__server_html_adb572316bff9a05217c83775fe758eb4"><div class="ttname"><a href="namespacetests_1_1test__net__server.html#adb572316bff9a05217c83775fe758eb4">tests.test_net_server._prototypes</a></div><div class="ttdeci">_prototypes(text)</div><div class="ttdef"><b>Definition</b> <a href="test__net__server_8py_source.html#l00034">test_net_server.py:34</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__net__server_8py.html">test_net_server.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

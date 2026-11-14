@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="AGENTS.md — working on this codebase with an LLM" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: AGENTS.md — working on this codebase with an LLM" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>AGENTS.md — working on this codebase with an LLM</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md__a_g_e_n_t_s.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">AGENTS.md — working on this codebase with an LLM</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="agentsmd--working-on-this-codebase-with-an-llm"></a> Read this before changing anything. It records the conventions the code relies on, which are easy to violate from a cold read. Written for coding agents (Claude Code, Cursor, Copilot, …) and for humans reviewing their output.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md1-what-this-project-is"></a>
+1. What this project is</h1>
+<p>A Kalman-filtering framework: a small set of composable <b>contracts</b> in <code>modules/framework/</code>, and <b>domain applications</b> in <code>modules/apps/</code> built on them. <code>modules/</code> is published as the <code>kalman</code> package (see <code>[tool.setuptools] package-dir</code> in <code>pyproject.toml</code>), so on disk it is <code>modules/apps/…</code> but in imports it is <code>kalman.apps.…</code>.</p>
+<h2><a class="anchor" id="the-seven-roles"></a>
+The seven roles</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Role   </th><th class="markdownTableHeadNone">Question it answers   </th><th class="markdownTableHeadNone">Base (always in <code>framework/</code>)   </th><th class="markdownTableHeadNone">Concretes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Model</b>   </td><td class="markdownTableBodyNone">WHAT is the system? <code>f/h/Q/R</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="framework_2model_8py.html">framework/model.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/models/</code>, <code>apps/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Engine</b> (alias <b>Estimator</b>)   </td><td class="markdownTableBodyNone">HOW to infer under uncertainty   </td><td class="markdownTableBodyNone"><code><a class="el" href="engine_8py.html">framework/engine.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/engines/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Integrator</b>   </td><td class="markdownTableBodyNone">HOW to step <em>time</em>: <code>x(t) → x(t+dt)</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="integrator_8py.html">framework/integrator.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/integrators/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Solver</b>   </td><td class="markdownTableBodyNone">HOW to discretize <em>space</em>   </td><td class="markdownTableBodyNone"><code><a class="el" href="solver_8py.html">framework/solver.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/solvers/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Filter</b>   </td><td class="markdownTableBodyNone">WHEN — the forward/backward workflow   </td><td class="markdownTableBodyNone"><code><a class="el" href="filter_8py.html">framework/filter.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/filters/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Provider</b>   </td><td class="markdownTableBodyNone">WHERE the data comes from   </td><td class="markdownTableBodyNone"><code><a class="el" href="provider_8py.html">framework/provider.py</a></code>   </td><td class="markdownTableBodyNone"><code>providers/</code>, <code>apps/&lt;domain&gt;/providers/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Controller / Router</b>   </td><td class="markdownTableBodyNone">acting on, and selecting between, models   </td><td class="markdownTableBodyNone"><code><a class="el" href="framework_2control_8py.html">framework/control.py</a></code>, <code>routers/</code>   </td><td class="markdownTableBodyNone"><code>framework/controllers/</code>, <code>routers/</code>   </td></tr>
+</table>
+<p><b>Integrator vs Solver</b> is a real distinction, not a synonym: an <em>integrator</em> advances time (Euler/RK4/Dormand–Prince); a <em>solver</em> discretizes space (spectral/finite-difference/…) and <b>composes</b> an integrator for its time march. For an ODE they coincide, so a model binds only an integrator. They are <b>sibling packages</b> — never nest one inside the other.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md2-non-negotiable-invariants"></a>
+2. Non-negotiable invariants</h1>
+<p><code><a class="el" href="test__structure_8py.html">tests/test_structure.py</a></code> enforces most of these. If you break one, that suite fails — fix the code, do not weaken the test.</p>
+<ol type="1">
+<li>**<code>framework/</code> owns every abstract contract, base class, and registry resolver.** Concrete implementations live outside it. A new base class goes in <code>framework/</code>, full stop.</li>
+<li><b>Plug-ins are declared, not imported.</b> A model names its engine/integrator/ solver via a <code>Kind</code> enum (<code>DEFAULT_ENGINE</code>, <code>DEFAULT_INTEGRATOR</code>, <code>DEFAULT_SOLVER</code>) and <em>never</em> imports a concrete engine/solver. Resolution goes through the <code>*_BY_KIND</code> registry + <code>resolve_*()</code>.</li>
+<li><b>Every registry covers its whole kind enum</b>, and every concrete class tags the matching <code>KIND</code>. Adding an enum member means adding a registry entry (a reserved stub that raises <code>NotImplementedError</code> is acceptable).</li>
+<li><b>Every app domain is a package</b> with per-variant submodules, an <code>__init__</code> re-exporting its public names, and a <code>VARIANTS</code> dict of <code>KalmanModel</code> subclasses. No new flat <code>apps/*.py</code> modules.</li>
+<li><b>Public names are stable.</b> <code>from kalman.apps import X</code> must keep working after any reorganisation; <code>kalman.apps.X</code> must be the <em>same object</em> as the domain's <code>X</code>.</li>
+<li><b>Optional dependencies are lazily imported and guarded</b> (<code>torch</code>, <code>mcp</code>, <code>fastapi</code>, <code>bcrypt</code>, <code>pyjwt</code>, <code>httpx</code>, <code>cdsapi</code>, <code>xarray</code>, <code>h5py</code>). The core must import and the suite must pass without them. Entry points print an install hint and exit 0 rather than crashing.</li>
+<li><b>No <code>eval</code>/<code>exec</code> in <code>modules/api/</code>.</b> Spec authoring is data-only; code is only ever <em>emitted</em> for a human to review (<code>scaffold</code>), never executed.</li>
+</ol>
+<hr  />
+<h1><a class="anchor" id="autotoc_md3-layout"></a>
+3. Layout</h1>
+<div class="fragment"><div class="line">modules/                        → the `kalman` package</div>
+<div class="line">  framework/                    contracts + bases + registries (the core)</div>
+<div class="line">    model.py engine.py integrator.py solver.py provider.py filter.py control.py</div>
+<div class="line">    models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/</div>
+<div class="line">    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)</div>
+<div class="line">  providers/                    generic data sources (synthetic/file/sensor/remote)</div>
+<div class="line">  api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth</div>
+<div class="line">  mcp/  rest/                   transports over the facade (optional deps)</div>
+<div class="line">  apps/                         domain applications</div>
+<div class="line">    astro/         rocket  space</div>
+<div class="line">    gravitational/ gravwave  interferometer</div>
+<div class="line">    resonators/    oscillators  powergrids  suspensions</div>
+<div class="line">    weather/       flow  storms  geo  surrogate  data/  providers/</div>
+<div class="line">    ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/</div>
+<div class="line">  runtime/  helpers.py</div>
+<div class="line">tests/                          mirrors concerns, not files (pytest)</div>
+<div class="line">  cxx/                          the libKalman suite (plain binaries, ctest)</div>
+<div class="line">include/Kalman/  src/           libKalman — the standalone C++ port (see §10)</div>
+<div class="line">examples/cxx/                   standalone C++ programs using libKalman</div>
+<div class="line">share/notebooks/                executed, output-bearing narrative docs</div>
+</div><!-- fragment --><p><b>Families</b> (<code>astro</code>, <code>gravitational</code>, <code>resonators</code>) group related domains and expose a <code>DOMAINS</code> map. Grouping is by shared foundation or application area — <em>not</em> by superficial similarity. Domains inside a family keep their own <code>VARIANTS</code>; cross-family imports are normal (e.g. <code>interferometer</code> uses <code>resonators.oscillators</code>).</p>
+<p><code>apps/</code> contains <b>packages only</b> — there are no flat domain modules and no shims. Import from the canonical path (<code>kalman.apps.weather.flow</code>, …) or from the stable <code>kalman.apps</code> surface.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md4-how-to-add-things"></a>
+4. How to add things</h1>
+<p><b>A new model variant in an existing domain</b> — add <code>apps/&lt;domain&gt;/&lt;variant&gt;.py</code>, put shared enums/helpers in that domain's <code>base.py</code>, then register it in the domain <code>__init__</code> (<code>import</code>, <code>VARIANTS</code>, <code>__all__</code>). Nothing else needs to change.</p>
+<p><b>A new domain</b> — create the package with the layout above. If it clearly belongs to a family, put it there; otherwise leave it top-level.</p>
+<p><b>A nonlinear model</b> - there is one method, <code>f</code>. A physical model declares <code>DYNAMICS = KalmanDynamicsKind.CONTINUOUS</code> and writes <code>f</code> as the derivative dx/dt; the framework decodes it into the discrete step with the model's integrator, so engines only ever see a step. Leave <code>DYNAMICS</code> at <code>DISCRETE</code> (the default) and write the step itself only when a discrete map is what you genuinely have (a learned step, a layer-to-layer propagation, a rule). Never write an integration loop inside a model. <code>after_step()</code> is the hook for what must follow a decoded step (a clamp, a slot that is not integrated). Pre-set <code>self.n</code> <b>before</b> <code>super().__init__()</code> — construction runs <code>_check_shapes</code>, which evaluates <code>F(zeros)</code> and hence <code>f</code> at <code>x=0</code>.</p>
+<p><b>A new engine / integrator / solver / provider</b> — subclass the <code>framework/</code> base, tag <code>KIND</code>, and add it to the registry. Follow the existing <code>resolve_*()</code> pattern including the <code>autoreload</code> name-fallback.</p>
+<p><b>A new filter</b> — it should be a <em>thin leaf</em>: <code>NAME</code>, <code>DESCRIPTION</code>, <code>KIND</code>, and at most an <code>__init__</code> forwarding hyper-parameters to its engine (see <code><a class="el" href="ukf_8py.html">filters/ukf.py</a></code>). A filter that defines <code>forward</code> / <code>backward</code> / <code>smooth</code> is a smell: that is algorithm, and algorithm belongs to the engine. If one predict/update step genuinely does not describe your algorithm — a combinatorial search over a whole event, say — set <code>OWNS_PASS = True</code> on the <b>engine</b> and implement <code>KalmanEngine.forward()</code> / <code>backward()</code> there. <code>KalmanFilter</code> then hands the engine its data and turns the returned objects into records via their <code>to_record(model, flavor)</code>; the result type (a track, a cluster) stays private to the engine, and the leaf is thin again. <code>CombinatorialKalmanEngine</code> is the worked example.</p>
+<p><b>Registering the MCP server with a client</b> — <code>make mcp-clients</code> lists the MCP clients detected on this machine; <code>make mcp-install</code> (or <code>python tools/mcp_install.py --all</code>) registers 'Kalman-AI' with all of them, <code>--dry-run</code> shows the diff first and <code>--remove</code> unregisters. The script knows each client's config location and container key (<code>mcpServers</code>, VS Code's <code>servers</code>, Codex's TOML table), edits only our own entry and backs the file up first. To add a client, append it to <code>CLIENTS</code> in that script.</p>
+<p><b>A new API verb</b> — add it to <code>modules/api/</code>, declare its scope (<code>read</code>, <code>send_measurement</code>, <code>write_models</code>, <code>admin</code>), then expose it in <code>mcp/</code> and <code>rest/</code> as a thin adapter. Never put logic in a transport.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md5-numerical-conventions-that-bite"></a>
+5. Numerical conventions that bite</h1>
+<ul>
+<li><code>dt</code> is <b>never</b> passed into <code>f()</code>; only absolute <code>t</code> is. Derive <code>dt = 1/self.fs</code> (models do this; <code>SOLVER_SUBSTEPS</code> sub-divides it).</li>
+<li>Integrators are <b>dtype-preserving</b> — they also step complex spectral fields. Do not coerce to <code>float</code> in a <code>step()</code>.</li>
+<li>Solvers accept square <em>or</em> rectangular grids (<code>n=(ny, nx)</code>) and physical domain lengths (<code>length=(Ly, Lx)</code>); wavenumbers scale as <code>2π/L</code>. Validate incoming fields against the mesh and fail with a clear message.</li>
+<li>The linear engine and the native C fast path use <code>F()</code> matrices and never call <code>f()</code>. Changes to <code>f()</code> do not affect them — and must not break them.</li>
+<li>Torch/MPS has <b>no float64</b>: use float32 on <code>mps</code>, float64 elsewhere.</li>
+<li>Comparing several filter variants in one loop: give each its <b>own RNG stream</b> (<code>seed=</code>) and share only the observation stream, or results cross-contaminate. This is a real bug we already fixed once.</li>
+<li><b>Never call <code>expm()</code> inside <code>f()</code>, <code>F()</code> or any other per-step hook.</b> The EKF re-evaluates <code>f()</code> <code>2n+1</code> times per step for the central-difference Jacobian, so anything loop-invariant in there is paid thousands of times per second. Two cases were found and removed:<ul>
+<li>A <b>nilpotent</b> generator (<code>A² = 0</code> — a slope drives a coordinate, nothing drives the slope: constant-velocity kinematics, straight-line tracks) has <code>exp(A·s) = I + A·s</code> <b>exactly</b>. Write the closed form. It is not an approximation; it agrees with <code>scipy.linalg.expm</code> to the last bit at small <code>s</code> and is 1–2 ULP <em>more</em> accurate at large <code>s</code>, because the exact answer is representable and Padé scaling-and-squaring rounds. Removing it took <code>BallisticModel.f()</code> from 21.1 µs to 8.8 µs and its EKF forward pass from 1.9 s to 0.63 s (<b>3×</b>).</li>
+<li>Otherwise, hoist it: <code>dt = 1/fs</code> and the generator are constants of a run. Discretisation belongs in <code>__init__</code> or in a cache, never in the hot path.</li>
+</ul>
+</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md6-verification--required-before-claiming-done"></a>
+6. Verification — required before claiming done</h1>
+<div class="fragment"><div class="line">make setup                     # one-command onboarding (deps, extras, accel, self-check)</div>
+<div class="line">make tests                     # or: python -m pytest tests/ -q</div>
+<div class="line">python -m pytest tests/test_structure.py -q     # architecture invariants</div>
+<div class="line">make linter                    # ruff, correctness-focused</div>
+</div><!-- fragment --><p>Current baseline: <b>453 passed, 2 skipped</b> (skips are optional-dependency gates). The suite must stay green; a red suite is never "expected".</p>
+<p>Install the optional extras to exercise the transports for real rather than skipping them — <code>make setup</code>. The MCP server is covered by a <b>live stdio session</b> test that spawns <code>python -m kalman.mcp</code> and drives it as a client; it caught a real breakage when SDK 2.0 renamed <code>FastMCP</code> to <code>MCPServer</code>, which a mocked test would have missed.</p>
+<p>If you touch <code>apps/</code> layout, also verify the notebooks still import:</p>
+<div class="fragment"><div class="line">python - &lt;&lt;&#39;PY&#39;</div>
+<div class="line">import json, re, glob, sys, io, contextlib</div>
+<div class="line">sys.path.insert(0, &quot;.&quot;)</div>
+<div class="line">for nb in glob.glob(&quot;share/notebooks/*.ipynb&quot;):</div>
+<div class="line">    src = &quot;\n&quot;.join(&quot;&quot;.join(c[&quot;source&quot;]) for c in json.load(open(nb))[&quot;cells&quot;] if c[&quot;cell_type&quot;]==&quot;code&quot;)</div>
+<div class="line">    for s in re.findall(r&quot;^(?:from\s+kalman[\w.]*\s+import\s+\&zwj;([^)]*\&zwj;)|from\s+kalman[\w.]*\s+import\s+[^\n(]+|import\s+kalman[\w.]*)&quot;, src, re.M):</div>
+<div class="line">        try:</div>
+<div class="line">            with contextlib.redirect_stdout(io.StringIO()): exec(compile(s,&quot;&lt;nb&gt;&quot;,&quot;exec&quot;), {})</div>
+<div class="line">        except Exception as e: print(f&quot;{nb}: {s[:60]} -&gt; {e}&quot;)</div>
+<div class="line">PY</div>
+</div><!-- fragment --><p><b>Notebooks are expensive</b> (some take ~15 min to execute and carry embedded figures/animations). Prefer editing import paths textually — identical objects keep stored outputs valid — over re-executing. Never re-execute casually.</p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md7-working-style-expected-here"></a>
+7. Working style expected here</h1>
+<ul>
+<li><b>Verify, don't assert.</b> "Tests pass" means you ran them and are quoting the count. Physics claims get checked against an analytic result.</li>
+<li><b>Report failures plainly</b>, with the output. A partially-working change described as working is worse than a failing one.</li>
+<li><b>Preserve numerics across refactors.</b> When moving a model, keep its existing scheme (e.g. <code>CarLaneModel</code> stays explicit-Euler; "upgrading" it to RK4 would silently shift trajectories). Behaviour changes are a separate, deliberate commit.</li>
+<li><b>Incremental over big-bang.</b> Restructure one domain at a time, suite green after each.</li>
+<li><b>Don't commit</b> unless asked. Never commit secrets — <code>.cdsapirc</code> and credential files are gitignored and must stay that way. Outbound service credentials live in <code><a class="el" href="credentials_8py.html">providers/credentials.py</a></code>, distinct from the inbound JWT auth in <code><a class="el" href="auth_8py.html">api/auth.py</a></code>.</li>
+<li><b>Ask when a decision is the maintainer's</b> — naming, taxonomy, scope. Don't silently pick.</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="autotoc_md8-known-deferred-work"></a>
+8. Known deferred work</h1>
+<ul>
+<li><code><a class="el" href="surrogate_8py.html">apps/weather/surrogate.py</a></code> (the CNN forecast surrogate) should eventually become a learned <code>KalmanSolverKind.NEURAL</code> solver rather than a loose module.</li>
+<li><code>IMPLICIT_EULER</code> integrator and the finite-volume/finite-element solvers are reserved stubs that raise <code>NotImplementedError</code>.</li>
+<li>The ballistic, car, rocket and space models are <code>DYNAMICS = CONTINUOUS</code>. The storm, GPS and oscillator models still write a discrete <code>f()</code> and could follow.</li>
+<li><code>KalmanSolver</code> carries no mesh contract: <code>n</code>/<code>shape</code>/<code>length</code>/<code>dt</code> and the physics hook are re-declared per concrete solver, and the hook is named <code>rhs_hat</code> (spectral) vs <code>rhs</code> (finite-difference). A new discretization family inherits nothing; subclass a shipped solver instead.</li>
+<li><code>KalmanIntegrator.step()</code> returns no error estimate, so embedded pairs cannot adapt at the framework level; field solvers run Dormand–Prince as fixed-step RK5 off its Butcher tableau.</li>
+<li>Two Doxygen warnings come from source docstrings, not the docs: <code><a class="el" href="ckf_8py.html">framework/filters/ckf.py</a></code> (an inline comment read as a declaration) and <code><a class="el" href="helpers_8py.html">helpers.py</a>:358</code> (a docstring bullet list read as a member).</li>
+<li>A <code>KalmanSpec</code>'s top-level <code>fs</code> only reaches models whose <code>__init__</code> names <code>fs</code>; for <code>**kwargs</code> models it has to go in <code>dynamics.params</code>.</li>
+<li><code>KalmanSpec</code>'s documented <code>labels</code> / <code>control</code> fields are accepted but ignored by <code>make_model</code>.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md9-documentation"></a>
+9. Documentation</h1>
+<p><code>docs/</code> is a numbered Markdown tree (<code><a class="el" href="docs_2_r_e_a_d_m_e_8md.html">docs/README.md</a></code> is the index); <code><a class="el" href="_a_g_e_n_t_s_8md.html">AGENTS.md</a></code> is for changing the code, <code>docs/</code> for using it. When you change a public surface — a verb, an endpoint, a registry, an error message — update the page that documents it in the same commit. Pages 6, 9, 10 and 14 quote real behaviour including failure modes, so a fixed bug means an edited page.</p>
+<p>Those same files are <b>published</b>: <code>make docs</code> renders them, plus <code>modules/</code> docstrings, through Doxygen + doxygen-awesome (the <code>share/doxygen</code> submodule, which carries its own nested <code>cmake</code> submodule). The CI <code>docs</code> job runs on every commit and fails the pipeline if the build breaks; <code>pages</code> publishes from the default branch and version tags. See <code><a class="el" href="13___deployment_8md.html">docs/13_Deployment.md</a></code>.</p>
+<div class="fragment"><div class="line">git submodule update --init --recursive     # once per clone: share/doxygen + cmake/Modules</div>
+<div class="line">make docs        # needs cmake + doxygen + graphviz</div>
+</div><!-- fragment --><p>Three things about that build that are not obvious:</p>
+<ul>
+<li><b>Doxygen 1.18.0 crashes</b> (a bus error in its comment scanner, about one run in four on any Markdown page). Use 1.17 or 1.12: <code>cmake -S . -B var/build -DDOXYGEN_EXECUTABLE=/path/to/doxygen</code>.</li>
+<li><b>The page layout is <code>cmake/DoxygenLayout.xml</code></b>, not the theme's. The theme's file lists the navigation only; from Doxygen 1.13 on, a section the layout does not list is not rendered, and every class page came out empty. The top-level <code>CMakeLists.txt</code> appends <code>LAYOUT_FILE</code> to the generated Doxyfile.</li>
+<li><b>Search has two halves.</b> Doxygen's box finds names. <code>tools/site_search.py</code>, run by the <code>sitesearch</code> target after Doxygen, adds the text of every page: it writes <code>search/fulltext-index.js</code> and appends its script to <code>search/search.js</code>. It changes no template, so the theme submodule stays as it is. <code><a class="el" href="test__site__search_8py.html">tests/test_site_search.py</a></code> covers the index builder.</li>
+<li><b>The side navigation is grouped in <code><a class="el" href="navigation_8dox.html">share/site/navigation.dox</a></code></b> (Applications, User guide, API access, C++, For developers). A new guide page is listed there, or it appears alone at the top level. The same file is why page names carry no local path: <code>STRIP_FROM_PATH</code> is appended to the Doxyfile.</li>
+<li><b>One page per application, in <code>docs/apps/</code>.</b> Each says what the system is, the state and the measurement, how the model is built, how it steps in time (an integrator, a solver, or its own step), and a snippet that runs. Do not put two applications on one page. A new application gets a page, a row in <code><a class="el" href="17___applications_8md.html">docs/17_Applications.md</a></code>, and a line in <code><a class="el" href="navigation_8dox.html">navigation.dox</a></code>.</li>
+<li><b>Animations are precomputed</b> by <code>tools/make_animations.py</code> and committed as GIFs beside the page that shows them (<code>docs/images</code>, <code>docs/apps/images</code>). A GIF plays on the repository page as well as on the site. The build does not run the script.</li>
+<li><b>Versions.</b> Each build has its own folder; <code>tools/site_versions.py</code> lists them for the menu, orders them by version number and, in CI, restores the earlier ones and prunes old development builds (<code>make pages-restore</code>, <code>make pages-prune</code>). docs/13 has the details.</li>
+<li><b>The notebooks are pages of the site</b> (<code>notebooks/</code>, linked from the menu), written by <code>tools/site_notebooks.py</code> in the same target. A notebook viewed on GitLab is shown without JavaScript, so its interactive players are blank there; on the site they run. The step needs <code>nbconvert</code> in the Python that CMake found, and is skipped with a notice otherwise: <code>cmake -S . -B var/build -DKALMAN_SITE_PYTHON=/path/to/env/bin/python</code>.</li>
+</ul>
+<p>Doxygen's Markdown parser is stricter than a web renderer, and a malformed construct silently swallows the rest of the page rather than erroring. Three rules, all learned from real breakage here:</p>
+<ul>
+<li><b>Keep a <code>[text](link)</code> on one line.</b> A link split across a newline terminates the page — every table after it collapses into one cell.</li>
+<li>**No &lsquo;'single quotes&rsquo;<code>inside</code>inline code<code>in a table cell.** They become typographic quotes and unbalance the</code><code><code>, merging the rest of the table.</code></code></li>
+<li><code><code>**Never write a</code>&mdash;<code>rule directly after a blockquote**, and avoid </code>&lt;angle-bracket&gt;` placeholders in prose — Doxygen reads them as HTML tags and drops them.</code></li>
+</ul>
+<p><code>Page filenames use hyphens (<code><a class="el" href="9___python-_a_p_i_8md.html">9_Python-API.md</a></code>), not spaces: Doxygen cannot resolve <code>%20</code>-encoded cross-references. <code>make docs</code> must end with no warnings outside the two known docstring ones above.</code></p>
+<p><code></p><hr  />
+<p></code></p>
+<p><code></code></p>
+<h1><a class="anchor" id="autotoc_md10-libkalman--the-c-port"></a>
+10. libKalman — the C++ port</h1>
+<p><code></code></p>
+<p><code><code>include/Kalman/</code> + <code>src/</code> build <code>libKalman</code>: the same Model / Engine / Filter contracts in C++, as a <b>standalone library with no required dependency</b>. See <a class="el" href="md_docs_215___cxx-_library.html">docs/15</a> for using it; this section is about changing it.</code></p>
+<p><code><b>The dependency direction is the rule everything else follows.</b> kalman-framework does not depend on ROOT — ROOT+ depends on <em>it</em>. A ROOT/ROOT+ component links libKalman, never the reverse. So: no <code>TObject</code>, no <code>ClassDef</code>, no LinkDef, no dictionary, no <code>TMatrixD</code>, no <code>TGraph</code>, no <code>TFile</code>. <code><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a></code> and <code><a class="el" href="class_kalman_1_1_vector.html" title="A dense column vector of double.">Kalman::Vector</a></code> exist precisely so the core owes nothing to anyone.</code></p>
+<p><code><b>C++ is the implementation; Python is the interface.</b> The library does not link CPython and is not generated from anything. The Python classes forward to it: a model written in Python is run by the C++ filter loop, which calls back its <code>f</code> and <code>h</code> (<code><a class="el" href="class_kalman_1_1_models_1_1_callback.html" title="A model whose maps are functions supplied by the caller.">Kalman::Models::Callback</a></code>), and a controller function closes the loop the same way (<code>kalman_filter_run_closed_loop</code>). The Python implementations that remain are the reference the tests compare against (<code>native.python_reference()</code>), on their way out. Do not add a new feature to a Python core; add it in C++ and forward to it.</code></p>
+<p><code>**<code>include/</code> and <code>src/</code> mirror <code>modules/framework/</code>**, file for file and subdirectory for subdirectory — <code>Engines/</code>, <code>Models/</code>, <code>Filters/</code>, <code>IO/</code>, <code>Abstract/</code>. A new file on one side has an obvious home on the other. The mapping table is in docs/15; keep it accurate when you add to either side.</code></p>
+<p><code><b>No applications in the core.</b> libKalman ships no physics. A pendulum, a drift chamber, a suspension or a power grid subclasses <code>Models::Linear</code> / <code>Models::Extended</code> and lives at apps level, exactly as <code>modules/apps/</code> does for Python. The models in <code><a class="el" href="_fixtures_8h.html" title="Toy models used to exercise the engines.">tests/cxx/Fixtures.h</a></code> are test fixtures and must stay there.</code></p>
+<p><code><b>The applications are <code>libKalmanApps</code></b> (<code>apps/</code>), a second library that links the first. Each model in it is the twin of one Python class in <code>modules/apps/</code>, which mixes in <code>NativeTwin</code> and hands its filtering pass to the twin when the library is present. Rules for a twin:</code></p>
+<p><code></p><ul>
+<li>It must give the Python answer. <code><a class="el" href="test__native__twins_8py.html">tests/test_native_twins.py</a></code> compares the two on every ported configuration; add the new one there and to <code>tools/benchmark_twins.py</code>.</li>
+<li>Nothing is defined twice. Scalars cross as named parameters; <code>Q</code>, <code>R</code>, the sample rate and the initial state are pushed from the Python instance. Do not recompute a covariance in C++ that Python already built.</li>
+<li><code>native_name()</code> returns <code>None</code> for every configuration that was not ported (a Python callable, a state-dependent <code>Q</code>, an integrator the C++ side lacks). Falling back is correct; guessing is not. A control input is ported when the twin's <code>f</code> takes <code>u</code>: an open-loop command sequence goes to the twin, a controller function keeps the Python model in the C++ loop.</li>
+<li>A helper the dynamics call (<code>guidance</code>, <code>clip_u</code>, <code>_deriv</code> ...) joins the class's <code>_TWIN_CONTRACT</code>, so a subclass that changes it is not the twin. A continuous model's integrator and sub-steps cross as the <code>integrator</code> and <code>substeps</code> parameters (<code>native.native_integrator_kind</code>).</li>
+<li>Derive from <code><a class="el" href="class_kalman_1_1_apps_1_1_model.html" title="Base of the application models in libKalmanApps.">Kalman::Apps::Model</a></code>, which differences <code>f</code>/<code>h</code> as <code>helpers.numerical_jacobian</code> does. Do not use the library's central scheme in a twin: the two sides would linearise differently.</li>
+</ul>
+<p></code></p>
+<p><code><b>Adding a member to <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> changes its layout.</b> Everything compiled against the header must be rebuilt together: the library, <code>libKalmanApps</code>, the example plugin, the tests, and downstream users such as ROOT+. A stale plugin does not fail to load; it corrupts memory.</code></p>
+<p><code><b>Scope</b>: every <code>EngineKind</code> has a C++ engine (linear, extended, unscented, particle, ensemble, combinatorial), and the integrators, solvers, controllers and routers are ported too. Still Python-only: training of the learned routers and controllers (Torch), which cross as a finished policy through ONNX or TorchScript. docs/15 has the table.</code></p>
+<p><code>Conventions, most of which the build or the tests will enforce:</code></p>
+<p><code></p><ul>
+<li><b>Everything is in <code>namespace <a class="el" href="namespace_kalman.html">Kalman</a></code></b>, with <code>Engines::</code>, <code>Models::</code>, <code>Filters::</code>, <code>IO::</code> and <code>Abstract::</code> nested to match the directories. No <code>T</code> prefix: these are not ROOT classes, and the prefix would invite confusion with root-plus' own <code>ROOT::IOPlus::TKalmanFilter</code>, which is a separate and much smaller standalone filter. Both can live in one process.</li>
+<li><b>Three libraries, and the core links no AI runtime.</b> <code>libKalman</code> (<code>include/</code>, <code>src/</code>) is the core; <code>libKalmanApps</code> (<code>apps/</code>) the application models; <code>libKalmanLearn</code> (<code>learn/</code>) the learned components. ONNX Runtime and libTorch are found and linked by <code>learn/CMakeLists.txt</code> only (<code>KALMAN_USE_ONNXRUNTIME</code>, on when found; <code>KALMAN_USE_TORCH</code>, on when found: the C++ libTorch, from <code>Torch_DIR</code> or the conda environment's <code>libtorch</code> package, never through Python's <code>torch</code>). Never add <code>find_package(Torch)</code> or <code>find_package(ONNXRuntime)</code> to the core, and never include a runtime header outside <code>learn/src/</code>. The core's one optional backend is BLAS (<code>KALMAN_USE_BLAS</code>). Everything is complete and correct with all of them off.</li>
+<li>**<code>libKalmanNet</code> (<code>net/</code>) is the servers, and its dependencies stay in <code>net/</code>.** The JSON API, the REST and MCP servers and <code>kalman-serve</code> (docs/18). nlohmann_json, cpp-httplib, OpenSSL and SQLite are found by <code>net/CMakeLists.txt</code> only and linked PRIVATE; the public headers <code>Kalman/Net/*.h</code> use the standard library only, and the core gains no dependency for it (never add one of them to <code>include/</code> or <code>src/</code>). A verb keeps the name, arguments, answer shape and error message of its namesake in <code><a class="el" href="modules_2api_2____init_____8py.html">modules/api/__init__.py</a></code>, and its route and tool those of <code><a class="el" href="app_8py.html">modules/rest/app.py</a></code> and <code><a class="el" href="server_8py.html">modules/mcp/server.py</a></code>; <code><a class="el" href="test__net__server_8py.html">tests/test_net_server.py</a></code> compares the answers with the Python facade's, so a changed Python verb changes the C++ one in the same commit. Models written in Python are served by the Python process only: the C++ server answers 400 for them and 501 for the verbs that need a Python library, naming the Python server, rather than half-serving them. Tokens are verified here (the rules of <code><a class="el" href="auth_8py.html">auth.py</a></code>, the revocation list in the shared registry) and issued in Python.</li>
+<li><b>The core was <code>libKalmanFramework</code> up to 1.0.</b> The build installs that name as a link, and <code><a class="el" href="core_8py.html">native/core.py</a></code> still looks for it and reads the old environment variables. Keep both until a release note says otherwise.</li>
+<li><b>Do not route <code><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a></code> through Torch.</b> A Torch op has a ~230 ns dispatch floor — 10-25x an entire small matrix product. BLAS is used instead, and only at or above <code>KALMAN_BLAS_MIN_DIM</code>, because below the crossover the built-in kernel is measurably faster. Both numbers are measurements; re-measure before changing them.</li>
+<li><b>Roles and utilities have their own directories.</b> Integrators (<code>Kalman/Integrators/</code>, time), Solvers (<code>Kalman/Solvers/</code>, space, field models only) and Differentiators (<code>Kalman/Differentiators/</code>, Jacobians) are roles: a base class, a <code>Kind</code>, a model-level declaration. Linear algebra is <code>Kalman/Algebra/</code> (<code><a class="el" href="_cholesky_8h.html" title="Cholesky factorisation, and the solves and inverses built on it.">Cholesky.h</a></code>, <code><a class="el" href="_symmetric_8h.html" title="Operations on symmetric matrices (covariances)">Symmetric.h</a></code>, <code><a class="el" href="_exponential_8h.html" title="The matrix exponential, and decoding a continuous linear system.">Exponential.h</a></code>), free functions in <code><a class="el" href="namespace_kalman_1_1_algebra.html">Kalman::Algebra</a></code>. Do not call a linear or nonlinear equation solver a "Solver", and do not add LU: every matrix factored here is a covariance. <code><a class="el" href="namespace_kalman_1_1_utils.html">Kalman::Utils</a></code> re-exports the algebra names for existing code.</li>
+<li><b>Covariance inverses go through <code>Utils::Inverse</code></b>, which tries Cholesky and then falls back to an eigenvalue pseudo-inverse. There is deliberately <b>no</b> Tikhonov ladder there: ridging a singular innovation covariance makes the Cholesky succeed and returns an inverse of order 1e12, i.e. a colossal <a class="el" href="namespace_kalman.html">Kalman</a> gain conjured from a direction the measurement says nothing about. The jitter ladder belongs in <code>Utils::CholeskyFactor</code> (sampling), where it is harmless.</li>
+<li><b>C++20.</b> Do not set <code>CMAKE_CXX_STANDARD_REQUIRED</code>: <code>cmake/Modules/StandardCompilerCXX.cmake</code> repurposes it as a <em>minimum standard number</em>, so the usual <code>ON</code> is read as "require C++23" and configuration fails.</li>
+<li><b>The C++ tests are <code>tests/cxx/*.cc</code></b>, plain executables returning a failure count, run by <code>make ctests</code>. <code>make tests</code> stays the Python suite. They assert on filter <em>consistency</em> (NIS ~ m, NEES ~ n), not on golden numbers, so they catch a mis-scaled covariance rather than just a changed one.</li>
+<li><b>The routing layer crosses the language boundary as a trained policy, not a binding.</b> Training stays in Python (<code>routers/nn/</code> is Torch and stays Python-only); <code>export_onnx()</code> / <code>export_torchscript()</code> write one self-contained artifact with the feature standardisation and the softmax head baked in. Do not add a second file carrying the normalisation: shipped apart from its weights it still yields a valid-looking probability vector. Keep <code>export_onnx</code>'s <code>ir_version=9</code> default — Torch emits IR 10 and ONNX Runtime 1.16 rejects it outright. <code><a class="el" href="test__router__export_8py.html">tests/test_router_export.py</a></code> pins the equivalence, currently 2e-13 (ONNX) and 1.8e-13 (TorchScript).</li>
+<li><b>Keep the router/model split, and keep the runtimes out of the router.</b> <code><a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a></code> owns features and normalisation and holds a <code>NN::Model</code>; the backends own the forward pass. ONNX Runtime is reached only from <code>learn/src/Routers/NN/Onnx.cc</code> and libTorch only from <code>Torch.cc</code> beside it and <code>learn/src/Solvers/Vorticity.cc</code> (the batched field solver behind Python's <code>SpectralSolver(backend="torch")</code>, through <code><a class="el" href="learn_2include_2_kalman_2_learn_2_c_a_p_i_8h.html" title="The C interface of libKalmanLearn.">Kalman/Learn/CAPI.h</a></code> and <code><a class="el" href="learn_8py.html">native/learn.py</a></code>), all behind a pImpl. <code>backend="torch"</code> means that C++ solver only: do not add a Python-<code>torch</code> implementation beside it. That is what makes them optional in fact and not just in name: <code>NN::MLP</code> needs nothing, so the routing layer works in a build with no optional dependency at all. Never <code>#include &lt;onnxruntime...&gt;</code> or <code>&lt;torch/...&gt;</code> in <code>Routers/Neural.*</code> or any public header.</li>
+<li><b>A wrong-looking IKF is usually a wrong-looking <em>test</em>.</b> Two modes that differ only in Q, under a measurement noise that swamps both, genuinely cannot be told apart — measured: innovation covariances 8% apart and both with mean NIS ~ 1.09, at which point ~0.5/0.5 is the <em>correct</em> answer, not a bug. Before suspecting the filter, check that the regimes are distinguishable in the data at all. </li>
+</ul>
+<p></code></p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="developers.html">For developers</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

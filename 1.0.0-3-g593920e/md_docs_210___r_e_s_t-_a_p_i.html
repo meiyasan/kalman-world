@@ -1,0 +1,488 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="REST API" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: REST API" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>REST API</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_docs_210___r_e_s_t-_a_p_i.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">REST API</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="rest-api"></a> A FastAPI app over the <a class="el" href="md_docs_29___python-_a_p_i.html">`kalman.api` facade</a> — one thin adapter, no logic of its own. Every route declares a required <b>scope</b>, checked by the same <code>authorize()</code> the MCP server uses.</p>
+<div class="fragment"><div class="line">$ pip install &quot;kalman[rest]&quot;</div>
+<div class="line">$ make serve                      # in the background (make serve-status, serve-logs, serve-stop)</div>
+<div class="line">$ make rest                       # or in the foreground</div>
+</div><!-- fragment --><p>The same routes, for the models that live in C++, are also served by a C++ program, <code>kalman-serve --rest</code> (<a class="el" href="md_docs_218___net.html">libKalmanNet</a>).</p>
+<hr  />
+<h1><a class="anchor" id="ports-and-addresses"></a>
+Ports and addresses</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Service   </th><th class="markdownTableHeadNone">Default port   </th><th class="markdownTableHeadNone">Environment variables    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>REST API</b>   </td><td class="markdownTableBodyNone"><b>8000</b>   </td><td class="markdownTableBodyNone"><code>KALMAN_REST_HOST</code> (default <code>127.0.0.1</code>), <code>KALMAN_REST_PORT</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">MCP server (SSE)   </td><td class="markdownTableBodyNone">8765   </td><td class="markdownTableBodyNone"><code>KALMAN_MCP_HOST</code> (default <code>127.0.0.1</code>), <code>KALMAN_MCP_PORT</code>, <code>KALMAN_MCP_TRANSPORT</code>   </td></tr>
+</table>
+<p>On any address other than loopback, the server does not start without <code>KALMAN_JWT_SECRET</code> (at least 32 bytes). Set <code>KALMAN_ALLOW_ANONYMOUS=1</code> to override this, but only on a network you trust. See <a class="el" href="md_docs_212___authentication.html">Authentication</a>.</p>
+<div class="fragment"><div class="line">$ KALMAN_REST_PORT=9000 python -m kalman.rest</div>
+<div class="line">$ make serve PORT=9000            # the background service on another port</div>
+<div class="line">$ make serve BACKEND=docker       # docker compose: REST on 8000, MCP on 8765</div>
+</div><!-- fragment --><p><code>docker-compose.yml</code> publishes <code>8000:8000</code> and <code>8765:8765</code>. Full deployment detail is in <a class="el" href="md_docs_213___deployment.html">Deployment</a>.</p>
+<h2><a class="anchor" id="self-documenting"></a>
+Self-documenting</h2>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">URL   </th><th class="markdownTableHeadNone">What    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a href="http://localhost:8000/docs">http://localhost:8000/docs</a></code>   </td><td class="markdownTableBodyNone">interactive Swagger UI    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code><a href="http://localhost:8000/openapi.json">http://localhost:8000/openapi.json</a></code>   </td><td class="markdownTableBodyNone">the OpenAPI schema — a machine-discoverable contract for any non-MCP agent    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code><a href="http://localhost:8000/healthz">http://localhost:8000/healthz</a></code>   </td><td class="markdownTableBodyNone"><code>{"ok": true, "auth": false}</code>, unauthenticated; <code>auth</code> tells if tokens are required   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="endpoints"></a>
+Endpoints</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Method   </th><th class="markdownTableHeadNone">Path   </th><th class="markdownTableHeadNone">Scope   </th><th class="markdownTableHeadNone">Body / params    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/healthz</code>   </td><td class="markdownTableBodyNone">none   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/token</code>   </td><td class="markdownTableBodyNone">none (user + password)   </td><td class="markdownTableBodyNone"><code>{user, password, scopes?, exp_hours?}</code> → <code>{access_token, …}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/token/revoke</code>   </td><td class="markdownTableBodyNone">any valid token (<code>admin</code> for another user)   </td><td class="markdownTableBodyNone"><code>{}</code> this token, or <code>{user}</code> all tokens of a user    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/token/unlock</code>   </td><td class="markdownTableBodyNone"><code>admin</code>   </td><td class="markdownTableBodyNone"><code>{user}</code> — forget the failed logins of an account    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/whoami</code>   </td><td class="markdownTableBodyNone">any valid token   </td><td class="markdownTableBodyNone">— returns <code>{auth, user, scopes, exp}</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/catalog</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/describe/{name}</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/diagnostics/{run_id}</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/plot/{run_id}</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">returns <code>image/png</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/providers</code>, <code>/providers/{name}</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/models</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">— the registry, with owners    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/plugins</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">— plugins recorded in the registry    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/sources</code>, <code>/sources/{name}</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/events/cursor</code>   </td><td class="markdownTableBodyNone">none   </td><td class="markdownTableBodyNone">— returns <code>{last}</code>, the id of the newest event and nothing else    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/events</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone"><code>?since=&amp;limit=</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/events/stream</code>   </td><td class="markdownTableBodyNone"><code>read</code>   </td><td class="markdownTableBodyNone"><code>?since=&amp;timeout=</code>, Server-Sent Events    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/filter</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{spec, data, smooth?}</code> or <code>{spec, source, query?}</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/forecast</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{spec, x0, P0?, steps}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/osse</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{spec, options?}</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/control</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{model, controller, duration}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/fetch</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{source, query?}</code> or <code>{provider, query?}</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/sources/{name}/measurements</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>{rows, time?}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>GET</code>   </td><td class="markdownTableBodyNone"><code>/sources/{name}/measurements</code>   </td><td class="markdownTableBodyNone"><code>send_measurement</code>   </td><td class="markdownTableBodyNone"><code>?since=&amp;limit=</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/models</code>   </td><td class="markdownTableBodyNone"><code>write_models</code>   </td><td class="markdownTableBodyNone"><code>{spec, name?, replace?}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>DELETE</code>   </td><td class="markdownTableBodyNone"><code>/models/{name}</code>   </td><td class="markdownTableBodyNone"><code>write_models</code> + owner   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/sources</code>   </td><td class="markdownTableBodyNone"><code>write_models</code> (<code>admin</code> for <code>file</code>/<code>remote</code>/<code>sensor</code>)   </td><td class="markdownTableBodyNone"><code>{name, provider, replace?}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>DELETE</code>   </td><td class="markdownTableBodyNone"><code>/sources/{name}</code>   </td><td class="markdownTableBodyNone"><code>write_models</code> + owner   </td><td class="markdownTableBodyNone">—    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/plugins</code>   </td><td class="markdownTableBodyNone"><code>load_plugins</code>   </td><td class="markdownTableBodyNone"><code>{name}</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>POST</code>   </td><td class="markdownTableBodyNone"><code>/scaffold</code>   </td><td class="markdownTableBodyNone"><code>write_models</code>   </td><td class="markdownTableBodyNone"><code>{spec, class_name?}</code>   </td></tr>
+</table>
+<p>Status codes:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Code   </th><th class="markdownTableHeadNone">When    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>400</code>   </td><td class="markdownTableBodyNone">the request is wrong: a missing field, a bad spec, rows of the wrong width    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>401</code>   </td><td class="markdownTableBodyNone">no token, or a forged, expired or revoked token (with <code>WWW-Authenticate: Bearer</code>); a wrong password at <code>/token</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>403</code>   </td><td class="markdownTableBodyNone">a valid token without the scope, or a change to an entry the caller does not own    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>404</code>   </td><td class="markdownTableBodyNone">an unknown model, source or <code>run_id</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>409</code>   </td><td class="markdownTableBodyNone">the name is already used by a different definition    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>429</code>   </td><td class="markdownTableBodyNone">too many failed logins (with <code>Retry-After</code>)   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="examples"></a>
+Examples</h1>
+<p>Authentication is off until you set <code>KALMAN_JWT_SECRET</code>, so a local development server needs no header. Add <code>-H "Authorization: Bearer $TOKEN"</code> once it is on.</p>
+<div class="fragment"><div class="line">$ curl -s localhost:8000/healthz</div>
+<div class="line">{&quot;ok&quot;:true,&quot;auth&quot;:false}</div>
+<div class="line"> </div>
+<div class="line">$ curl -s localhost:8000/catalog | jq &#39;.models | length&#39;</div>
+<div class="line">43</div>
+<div class="line"> </div>
+<div class="line">$ curl -s localhost:8000/describe/StormModel | jq &#39;{name, default_engine, params}&#39;</div>
+</div><!-- fragment --><h2><a class="anchor" id="filtering-a-measurement-set"></a>
+Filtering a measurement set</h2>
+<div class="fragment"><div class="line">$ curl -s -X POST localhost:8000/filter \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{</div>
+<div class="line">      &quot;spec&quot;: {</div>
+<div class="line">        &quot;base&quot;: &quot;matrices&quot;, &quot;fs&quot;: 100.0,</div>
+<div class="line">        &quot;dynamics&quot;: {&quot;F&quot;: [[1, 0.01], [0, 1]], &quot;H&quot;: [[1, 0]]},</div>
+<div class="line">        &quot;noise&quot;:    {&quot;Q&quot;: [[1e-6, 0], [0, 1e-4]], &quot;R&quot;: [[0.05]]},</div>
+<div class="line">        &quot;initial&quot;:  {&quot;x0&quot;: [[0], [1]]},</div>
+<div class="line">        &quot;bindings&quot;: {&quot;engine&quot;: &quot;linear&quot;}</div>
+<div class="line">      },</div>
+<div class="line">      &quot;data&quot;: [[0.01], [0.02], [0.031], [0.039]]</div>
+<div class="line">    }&#39;</div>
+<div class="line">{&quot;run_id&quot;:&quot;run-3f9c2a1b7d4e&quot;,</div>
+<div class="line"> &quot;xk&quot;:[[0.01,1.0],[0.02,1.0],[0.030000082,1.00000012],[0.039999978,0.99999992]],</div>
+<div class="line"> &quot;Pk&quot;:[[[2.0099e-06,9.9996e-07],[9.9996e-07,1.99999e-04]], …],</div>
+<div class="line"> &quot;time&quot;:[…]}</div>
+</div><!-- fragment --><p><code>data</code> is <code>(T, m)</code> nested lists. The spec is the same <code>KalmanSpec</code> documented in <a class="el" href="md_docs_29___python-_a_p_i.html">Python API</a>.</p>
+<h2><a class="anchor" id="follow-ups-on-a-run"></a>
+Follow-ups on a run</h2>
+<div class="fragment"><div class="line">$ curl -s localhost:8000/diagnostics/run-3f9c2a1b7d4e | jq &#39;.nis | length&#39;</div>
+<div class="line">$ curl -s localhost:8000/plot/run-3f9c2a1b7d4e -o run.png</div>
+</div><!-- fragment --><p><code>/plot</code> returns <code>image/png</code>. A stored run carries no separate ground truth, so the measurement-error panel is omitted; pass your own truth and plot locally if you need it.</p>
+<h2><a class="anchor" id="forecasting"></a>
+Forecasting</h2>
+<div class="fragment"><div class="line">$ curl -s -X POST localhost:8000/forecast -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;spec&quot;: {…}, &quot;x0&quot;: [[0.0], [1.0]], &quot;steps&quot;: 4}&#39;</div>
+<div class="line">{&quot;xk&quot;: [...], &quot;Pk&quot;: [...]}</div>
+</div><!-- fragment --><p>Models with a domain forecast — the storm family's <code>forecast_cone</code> — return that instead (<code>{lon, lat, I, I_sigma, ellipses}</code>). See <a class="el" href="md_docs_29___python-_a_p_i.html">Python API</a>.</p>
+<p>Runs hold live model objects, so they stay in the memory of the REST process. They do not survive a restart, and the oldest go first after <code>KALMAN_MAX_RUNS</code> (default 1000). With more than one uvicorn worker, a <code>run_id</code> from one worker is not known to the others, so run a single worker. When the MCP server runs with <code>KALMAN_API_URL</code>, it sends its runs here too. Thus a <code>run_id</code> that an agent gets can be used from Unity, and the other way round.</p>
+<h2><a class="anchor" id="fetching-from-a-provider"></a>
+Fetching from a provider</h2>
+<div class="fragment"><div class="line">$ curl -s -X POST localhost:8000/fetch -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;source&quot;: &quot;lab-1&quot;, &quot;query&quot;: {}}&#39;</div>
+<div class="line">$ curl -s -X POST localhost:8000/fetch -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;provider&quot;: {&quot;kind&quot;: &quot;synthetic&quot;, &quot;init&quot;: {&quot;spec&quot;: {…}}}, &quot;query&quot;: {&quot;duration&quot;: 5}}&#39;</div>
+</div><!-- fragment --><p>A raw <code>file</code>, <code>remote</code> or <code>sensor</code> provider needs the <code>admin</code> scope. A raw <code>file</code> provider can read any file on the server. A raw <code>remote</code> provider makes the server call a URL with the server's own outbound credentials. Other users fetch from a <b>named source</b> that an admin set up (see below).</p>
+<h2><a class="anchor" id="authoring"></a>
+Authoring</h2>
+<div class="fragment"><div class="line">$ curl -s -X POST localhost:8000/models -H &quot;Authorization: Bearer $TOKEN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; -d &#39;{&quot;spec&quot;: {…}, &quot;name&quot;: &quot;demo_cv&quot;}&#39;</div>
+<div class="line">{&quot;name&quot;:&quot;demo_cv&quot;,&quot;n&quot;:2,&quot;m&quot;:1,&quot;l&quot;:0,&quot;owner&quot;:&quot;alice&quot;,&quot;action&quot;:&quot;created&quot;}</div>
+<div class="line"> </div>
+<div class="line">$ curl -s -X POST localhost:8000/scaffold -H &quot;Authorization: Bearer $TOKEN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; -d &#39;{&quot;spec&quot;: {…}, &quot;class_name&quot;: &quot;DemoCV&quot;}&#39;</div>
+<div class="line">{&quot;source&quot;:&quot;\&quot;\&quot;\&quot;Scaffolded from a KalmanSpec …&quot;}</div>
+</div><!-- fragment --><p><code>/scaffold</code> returns source text for a human to review and commit. Nothing is written to the repository and nothing is executed.</p>
+<hr  />
+<h1><a class="anchor" id="the-shared-registry"></a>
+The shared registry</h1>
+<p>Models, plugins and measurement sources are kept in one registry. All clients use it: curl, Unity, C++ programs, and the MCP server. It is a SQLite file in <code>KALMAN_STATE_DIR</code> (default <code>~/.kalman/state</code>; <code>/var/lib/kalman</code> in the container). The registry stays after a restart. Each process that uses the same directory sees the same entries.</p>
+<ul>
+<li><b>Register once, use everywhere.</b> After <code>POST /models</code>, the name is a spec base for all clients: <code>{"spec": {"base": "demo_cv"}, "data": …}</code>.</li>
+<li><b>The same spec again does nothing</b> (<code>"action": "unchanged"</code>). Thus a client can register its models each time it starts.</li>
+<li><b>A different spec under a used name gives <code>409</code>.</b> To change the entry, send <code>"replace": true</code>. Only the owner (the token's <code>sub</code>) or an admin can replace or delete an entry.</li>
+<li><b>A name cannot hide a catalog model.</b> You cannot register <code>pendulum</code> or <code>OscillatorModel</code> for your own spec.</li>
+<li><b>Plugins are loaded again in all processes.</b> A plugin that is loaded with <code>POST /plugins</code> is recorded. Each process that uses the registry loads it again by name from its own allow-listed directories. This includes a restarted server.</li>
+</ul>
+<div class="fragment"><div class="line">$ curl -s localhost:8000/models -H &quot;Authorization: Bearer $TOKEN&quot; | jq &#39;.models[] | {name, owner, n, m}&#39;</div>
+<div class="line">$ curl -s -X DELETE localhost:8000/models/demo_cv -H &quot;Authorization: Bearer $TOKEN&quot;</div>
+</div><!-- fragment --><h2><a class="anchor" id="measurement-sources"></a>
+Measurement sources</h2>
+<p>A <b>source</b> has a name. Clients fetch measurements from it, or filter them in one step. There are two kinds:</p>
+<ul>
+<li>**<code>push</code>**: a buffer. A device, a simulation or a Unity scene sends rows to it, and any client reads them.</li>
+<li><b>A provider that the server calls</b>, for example <code>remote</code> for a lab instrument behind HTTP. An admin sets it up one time, with the server's own outbound credential (only its <em>name</em>), and users fetch it by name.</li>
+</ul>
+<div class="fragment"><div class="line"># set up (write_models; admin for file/remote/sensor)</div>
+<div class="line">$ curl -s -X POST localhost:8000/sources -H &quot;Authorization: Bearer $TOKEN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;name&quot;: &quot;scene-1&quot;, &quot;provider&quot;: {&quot;kind&quot;: &quot;push&quot;, &quot;m&quot;: 1, &quot;description&quot;: &quot;Unity scene 1&quot;}}&#39;</div>
+<div class="line">$ curl -s -X POST localhost:8000/sources -H &quot;Authorization: Bearer $ADMIN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;name&quot;: &quot;lab-1&quot;, &quot;provider&quot;: {&quot;kind&quot;: &quot;remote&quot;,</div>
+<div class="line">         &quot;init&quot;: {&quot;base_url&quot;: &quot;https://lab.example/api&quot;, &quot;credential_name&quot;: &quot;lab&quot;}}}&#39;</div>
+<div class="line"> </div>
+<div class="line"># send rows into a push source (send_measurement); time is optional, one per row</div>
+<div class="line">$ curl -s -X POST localhost:8000/sources/scene-1/measurements -H &quot;Authorization: Bearer $TOKEN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; -d &#39;{&quot;rows&quot;: [[0.01], [0.02]], &quot;time&quot;: [0.0, 0.01]}&#39;</div>
+<div class="line">{&quot;source&quot;:&quot;scene-1&quot;,&quot;first&quot;:41,&quot;last&quot;:42,&quot;count&quot;:2}</div>
+<div class="line"> </div>
+<div class="line"># measure and filter in one call</div>
+<div class="line">$ curl -s -X POST localhost:8000/filter -H &quot;Authorization: Bearer $TOKEN&quot; \</div>
+<div class="line">    -H &#39;Content-Type: application/json&#39; \</div>
+<div class="line">    -d &#39;{&quot;spec&quot;: {&quot;base&quot;: &quot;demo_cv&quot;}, &quot;source&quot;: &quot;scene-1&quot;, &quot;query&quot;: {&quot;since&quot;: 0}}&#39;</div>
+<div class="line"> </div>
+<div class="line"># or read the rows: meta.next is the cursor for the next read</div>
+<div class="line">$ curl -s &quot;localhost:8000/sources/scene-1/measurements?since=40&quot; -H &quot;Authorization: Bearer $TOKEN&quot;</div>
+</div><!-- fragment --><p>A push source keeps the last <code>KALMAN_SOURCE_MAX_ROWS</code> rows (default 100000). One push can have at most 10000 rows. If you set <code>m</code>, rows of a different width are refused. A query can only narrow a source. It cannot change the <code>path</code> of a file source or the <code>base_url</code> of a remote source.</p>
+<h2><a class="anchor" id="subscribing-to-changes"></a>
+Subscribing to changes</h2>
+<p>Each change to the registry is an event: <code>model.created</code>, <code>model.replaced</code>, <code>model.deleted</code>, <code>plugin.loaded</code>, <code>source.created</code>, <code>source.replaced</code>, <code>source.deleted</code>, <code>measurement.received</code>. You can poll the events, or keep a stream open:</p>
+<div class="fragment"><div class="line">$ curl -s &quot;localhost:8000/events?since=0&quot; -H &quot;Authorization: Bearer $TOKEN&quot;</div>
+<div class="line">{&quot;events&quot;:[{&quot;id&quot;:1,&quot;type&quot;:&quot;model.created&quot;,&quot;payload&quot;:{&quot;name&quot;:&quot;demo_cv&quot;,&quot;owner&quot;:&quot;alice&quot;,&quot;n&quot;:2,&quot;m&quot;:1,&quot;l&quot;:0},&quot;ts&quot;:…}],&quot;last&quot;:1}</div>
+<div class="line"> </div>
+<div class="line">$ curl -N localhost:8000/events/stream -H &quot;Authorization: Bearer $TOKEN&quot;</div>
+<div class="line">retry: 3000</div>
+<div class="line"> </div>
+<div class="line">id: 2</div>
+<div class="line">event: measurement.received</div>
+<div class="line">data: {&quot;id&quot;: 2, &quot;type&quot;: &quot;measurement.received&quot;, &quot;payload&quot;: {&quot;source&quot;: &quot;scene-1&quot;, …}}</div>
+</div><!-- fragment --><p><code>GET /events/cursor</code> needs no token. It tells a client <em>that</em> the registry changed, not <em>what</em> changed. The MCP server uses it when it has no token of its own.</p>
+<p>The stream starts from now. It starts from <code>?since=</code> if you give it, or from the <code>Last-Event-ID</code> header that a reconnecting client sends. A comment line is sent every 15 s, so that proxies do not close the stream. <code>?timeout=&lt;seconds&gt;</code> closes the stream after that time. The log keeps the last </p>
+<h1><a class="anchor" id="kalman_max_events-events-default-10000"></a>
+&lt;tt&gt;KALMAN_MAX_EVENTS&lt;/tt&gt; events (default 10000).</h1>
+<h1><a class="anchor" id="known-rough-edges"></a>
+Known rough edges</h1>
+<ul>
+<li><b>Top-level <code>fs</code> is only forwarded when the model's <code>__init__</code> names it.</b> For a class that takes <code>**kwargs</code> instead (e.g. <code>BallisticLinearModel</code>), put it in <code>dynamics.params</code>: <code>{"dynamics": {"params": {"fs": 50.0}}}</code>.</li>
+<li><b>CORS is off by default.</b> Browser clients, including Unity WebGL builds, need it. Set <code>KALMAN_CORS_ORIGINS</code> to the allowed origins, separated by commas, for example <code><a href="https://game.example,http://localhost:8080">https://game.example,http://localhost:8080</a></code>, or <code>*</code>. The token goes in the <code>Authorization</code> header, never in a cookie, so credentials mode stays off.</li>
+<li><b>A browser <code>EventSource</code> cannot send headers.</b> Thus it cannot open <code>/events/stream</code> when auth is on. In a browser, poll <code>GET /events</code> with <code>fetch()</code>, or use an SSE client that sets headers.</li>
+</ul>
+<hr  />
+<h1><a class="anchor" id="connecting-from-unity"></a>
+Connecting from Unity</h1>
+<p>Use the <b>REST API on port 8000</b>. Unity cannot speak the MCP stdio transport, and while the MCP server can run over SSE on 8765, plain HTTP + JSON is the right interface for a game engine.</p>
+<p>Start the server so that the device can reach it. On a network interface, the server needs a secret:</p>
+<div class="fragment"><div class="line">$ export KALMAN_JWT_SECRET=$(python -c &#39;import secrets; print(secrets.token_urlsafe(48))&#39;)</div>
+<div class="line">$ KALMAN_REST_HOST=0.0.0.0 KALMAN_REST_PORT=8000 python -m kalman.rest</div>
+<div class="line">$ make api-token USER=unity SCOPES=read,send_measurement      # paste into the client</div>
+</div><!-- fragment --><p>Then in the Editor use <code><a href="http://localhost:8000">http://localhost:8000</a></code>; from a device on the same LAN use the host machine's IP (<code><a href="http://192.168.x.x:8000">http://192.168.x.x:8000</a></code>).</p>
+<div class="fragment"><div class="line"><span class="keyword">using </span>System.Collections;</div>
+<div class="line"><span class="keyword">using </span>System.Text;</div>
+<div class="line"><span class="keyword">using </span>UnityEngine;</div>
+<div class="line"><span class="keyword">using </span>UnityEngine.Networking;</div>
+<div class="line"> </div>
+<div class="line"><span class="keyword">public</span> <span class="keyword">class </span>KalmanClient : MonoBehaviour</div>
+<div class="line">{</div>
+<div class="line">    <span class="keyword">public</span> <span class="keywordtype">string</span> baseUrl = <span class="stringliteral">&quot;http://localhost:8000&quot;</span>;</div>
+<div class="line">    <span class="keyword">public</span> <span class="keywordtype">string</span> bearerToken = <span class="stringliteral">&quot;&quot;</span>;        <span class="comment">// leave empty when auth is disabled</span></div>
+<div class="line"> </div>
+<div class="line">    [System.Serializable] <span class="keyword">public</span> <span class="keyword">class </span>FilterResult { <span class="keyword">public</span> <span class="keywordtype">string</span> run_id; <span class="keyword">public</span> <span class="keywordtype">float</span>[][] xk; }</div>
+<div class="line"> </div>
+<div class="line">    IEnumerator Start() { yield <span class="keywordflow">return</span> Filter(); }</div>
+<div class="line"> </div>
+<div class="line">    IEnumerator Filter()</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordtype">string</span> body = <span class="stringliteral">@&quot;{</span></div>
+<div class="line"><span class="stringliteral">          &quot;&quot;spec&quot;&quot;: {</span></div>
+<div class="line"><span class="stringliteral">            &quot;&quot;base&quot;&quot;: &quot;&quot;matrices&quot;&quot;, &quot;&quot;fs&quot;&quot;: 100.0,</span></div>
+<div class="line"><span class="stringliteral">            &quot;&quot;dynamics&quot;&quot;: {&quot;&quot;F&quot;&quot;: [[1, 0.01], [0, 1]], &quot;&quot;H&quot;&quot;: [[1, 0]]},</span></div>
+<div class="line"><span class="stringliteral">            &quot;&quot;noise&quot;&quot;:    {&quot;&quot;Q&quot;&quot;: [[1e-6, 0], [0, 1e-4]], &quot;&quot;R&quot;&quot;: [[0.05]]},</span></div>
+<div class="line"><span class="stringliteral">            &quot;&quot;initial&quot;&quot;:  {&quot;&quot;x0&quot;&quot;: [[0], [1]]},</span></div>
+<div class="line"><span class="stringliteral">            &quot;&quot;bindings&quot;&quot;: {&quot;&quot;engine&quot;&quot;: &quot;&quot;linear&quot;&quot;}</span></div>
+<div class="line"><span class="stringliteral">          },</span></div>
+<div class="line"><span class="stringliteral">          &quot;&quot;data&quot;&quot;: [[0.01], [0.02], [0.031], [0.039]]</span></div>
+<div class="line"><span class="stringliteral">        }&quot;</span>;</div>
+<div class="line"> </div>
+<div class="line">        <span class="keyword">using </span>var req = <span class="keyword">new</span> UnityWebRequest($<span class="stringliteral">&quot;{baseUrl}/filter&quot;</span>, <span class="stringliteral">&quot;POST&quot;</span>);</div>
+<div class="line">        req.uploadHandler   = <span class="keyword">new</span> UploadHandlerRaw(Encoding.UTF8.GetBytes(body));</div>
+<div class="line">        req.downloadHandler = <span class="keyword">new</span> DownloadHandlerBuffer();</div>
+<div class="line">        req.SetRequestHeader(<span class="stringliteral">&quot;Content-Type&quot;</span>, <span class="stringliteral">&quot;application/json&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">if</span> (!<span class="keywordtype">string</span>.IsNullOrEmpty(bearerToken))</div>
+<div class="line">            req.SetRequestHeader(<span class="stringliteral">&quot;Authorization&quot;</span>, $<span class="stringliteral">&quot;Bearer {bearerToken}&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">        yield <span class="keywordflow">return</span> req.SendWebRequest();</div>
+<div class="line"> </div>
+<div class="line">        <span class="keywordflow">if</span> (req.result != UnityWebRequest.Result.Success)</div>
+<div class="line">            Debug.LogError($<span class="stringliteral">&quot;Kalman API: {req.responseCode} {req.error}&quot;</span>);</div>
+<div class="line">        <span class="keywordflow">else</span></div>
+<div class="line">            Debug.Log(req.downloadHandler.text);      <span class="comment">// {&quot;run_id&quot;:&quot;run-…&quot;,&quot;xk&quot;:[[…]],…}</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Notes for a real integration:</p>
+<ul>
+<li><b>Nested arrays.</b> Unity's built-in <code>JsonUtility</code> cannot deserialize jagged arrays (<code>float[][]</code>) or top-level arrays. Use <code>Newtonsoft.Json</code> (<code>com.unity.nuget.newtonsoft-json</code>) for the response.</li>
+<li><b>Per-frame filtering.</b> Do not POST the whole history every frame. Either batch the measurements you have accumulated, or keep the recursive update in C# and use the API for setup, tuning and diagnostics.</li>
+<li><b>Latency.</b> Each call is a round trip plus model construction; expect milliseconds on localhost, more over a network. Nothing in the API is real-time-safe.</li>
+<li><b>Tokens.</b> If you enable auth, mint a <code>read</code>+<code>send_measurement</code> token (<code>make api-token USER=unity SCOPES=read,send_measurement</code>) and never ship an <code>admin</code> token in a build — see <a class="el" href="md_docs_212___authentication.html">Authentication</a>. For a build that people use with their own accounts, do not put a token in the build: ask for the user and password, call <code>POST /token</code>, keep the <code>access_token</code> in memory, and call <code>POST /token/revoke</code> when the user logs out.</li>
+<li><b>WebGL builds</b> also need CORS: set <code>KALMAN_CORS_ORIGINS</code> (see above).</li>
+</ul>
+<h2><a class="anchor" id="sending-measurements-from-a-scene-and-getting-the-estimate-back"></a>
+Sending measurements from a scene and getting the estimate back</h2>
+<p>Use a <code>push</code> source when the scene is the instrument. The scene sends what it measures, and any client (this scene, an agent through MCP, a ROOT analysis) can filter those rows by the source name:</p>
+<div class="fragment"><div class="line"><span class="comment">// once, by someone with write_models:  POST /sources {&quot;name&quot;:&quot;scene-1&quot;,&quot;provider&quot;:{&quot;kind&quot;:&quot;push&quot;,&quot;m&quot;:1}}</span></div>
+<div class="line">IEnumerator Push(<span class="keywordtype">float</span> z, <span class="keywordtype">float</span> t)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordtype">string</span> body = $<span class="stringliteral">&quot;{{\&quot;rows\&quot;: [[{z}]], \&quot;time\&quot;: [{t}]}}&quot;</span>;</div>
+<div class="line">    <span class="keyword">using </span>var req = <span class="keyword">new</span> UnityWebRequest($<span class="stringliteral">&quot;{baseUrl}/sources/scene-1/measurements&quot;</span>, <span class="stringliteral">&quot;POST&quot;</span>);</div>
+<div class="line">    req.uploadHandler   = <span class="keyword">new</span> UploadHandlerRaw(Encoding.UTF8.GetBytes(body));</div>
+<div class="line">    req.downloadHandler = <span class="keyword">new</span> DownloadHandlerBuffer();</div>
+<div class="line">    req.SetRequestHeader(<span class="stringliteral">&quot;Content-Type&quot;</span>, <span class="stringliteral">&quot;application/json&quot;</span>);</div>
+<div class="line">    req.SetRequestHeader(<span class="stringliteral">&quot;Authorization&quot;</span>, $<span class="stringliteral">&quot;Bearer {bearerToken}&quot;</span>);</div>
+<div class="line">    yield <span class="keywordflow">return</span> req.SendWebRequest();</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">IEnumerator Estimate()</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// &quot;demo_cv&quot; is a model someone registered; any registered name or KalmanSpec works</span></div>
+<div class="line">    <span class="keywordtype">string</span> body = <span class="stringliteral">@&quot;{&quot;&quot;spec&quot;&quot;: {&quot;&quot;base&quot;&quot;: &quot;&quot;demo_cv&quot;&quot;}, &quot;&quot;source&quot;&quot;: &quot;&quot;scene-1&quot;&quot;}&quot;</span>;</div>
+<div class="line">    <span class="keyword">using </span>var req = <span class="keyword">new</span> UnityWebRequest($<span class="stringliteral">&quot;{baseUrl}/filter&quot;</span>, <span class="stringliteral">&quot;POST&quot;</span>);</div>
+<div class="line">    req.uploadHandler   = <span class="keyword">new</span> UploadHandlerRaw(Encoding.UTF8.GetBytes(body));</div>
+<div class="line">    req.downloadHandler = <span class="keyword">new</span> DownloadHandlerBuffer();</div>
+<div class="line">    req.SetRequestHeader(<span class="stringliteral">&quot;Content-Type&quot;</span>, <span class="stringliteral">&quot;application/json&quot;</span>);</div>
+<div class="line">    req.SetRequestHeader(<span class="stringliteral">&quot;Authorization&quot;</span>, $<span class="stringliteral">&quot;Bearer {bearerToken}&quot;</span>);</div>
+<div class="line">    yield <span class="keywordflow">return</span> req.SendWebRequest();</div>
+<div class="line">    Debug.Log(req.downloadHandler.text);          <span class="comment">// {&quot;run_id&quot;: &quot;...&quot;, &quot;xk&quot;: [[...]], ...}</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Use a <code>remote</code> source when the server must ask an instrument for a measurement on request. Then <code>POST /filter {"spec": …, "source": "lab-1"}</code> makes the measurement and gives the estimate in one call.</p>
+<p>Send the measurements in batches, for example every 100 ms, not one request per frame. To find new models without a restart, poll <code>GET /events?since=&lt;last&gt;</code> from a coroutine, and update the model list when you get a <code>model.created</code> event. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="access.html">API access</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

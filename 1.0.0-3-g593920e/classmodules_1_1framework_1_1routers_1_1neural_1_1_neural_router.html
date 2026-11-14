@@ -1,0 +1,1175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.routers.neural.NeuralRouter Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.routers.neural.NeuralRouter Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.routers.neural.NeuralRouter Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-static-methods">Static Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.routers.neural.NeuralRouter Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.routers.neural.NeuralRouter:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router__inherit__graph.svg" width="263" height="212"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a9536c39663a50fe868acc05e4075847d" id="r_a9536c39663a50fe868acc05e4075847d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a9536c39663a50fe868acc05e4075847d">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a5dd161e85ebda8d0e0d06d223d67c175">model</a>, int <a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a1ef887b8b27c5db31e246ce0c4507a97">window</a>=5)</td></tr>
+<tr class="separator:a9536c39663a50fe868acc05e4075847d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a618c5dd4622f86be169b0ebaf841b87c" id="r_a618c5dd4622f86be169b0ebaf841b87c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a618c5dd4622f86be169b0ebaf841b87c">route</a> (self, nis_arr, c, likelihoods)</td></tr>
+<tr class="separator:a618c5dd4622f86be169b0ebaf841b87c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0345d2724aec93db239f43d84ed49256" id="r_a0345d2724aec93db239f43d84ed49256"><td class="memItemLeft" align="right" valign="top">&quot;NeuralRouter&quot;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a0345d2724aec93db239f43d84ed49256">fit</a> (self, nis_arrays, labels_arrays, seed=None, **kwargs)</td></tr>
+<tr class="separator:a0345d2724aec93db239f43d84ed49256"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7609bf44c22afd612b125e65713132f6" id="r_a7609bf44c22afd612b125e65713132f6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a7609bf44c22afd612b125e65713132f6">save</a> (self, path)</td></tr>
+<tr class="separator:a7609bf44c22afd612b125e65713132f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a608ddee0701abfaded0d972f1c823116" id="r_a608ddee0701abfaded0d972f1c823116"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a608ddee0701abfaded0d972f1c823116">load</a> (self, path)</td></tr>
+<tr class="separator:a608ddee0701abfaded0d972f1c823116"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06fc6dee97a96e1b46c39e1e11339a98" id="r_a06fc6dee97a96e1b46c39e1e11339a98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a06fc6dee97a96e1b46c39e1e11339a98">export_onnx</a> (self, path, *int opset=17, int|None ir_version=9, bool bake_normalisation=True)</td></tr>
+<tr class="separator:a06fc6dee97a96e1b46c39e1e11339a98"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30f0c98efecc2d9ec778c4443ea15ebe" id="r_a30f0c98efecc2d9ec778c4443ea15ebe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a30f0c98efecc2d9ec778c4443ea15ebe">export_torchscript</a> (self, path, *bool bake_normalisation=True)</td></tr>
+<tr class="separator:a30f0c98efecc2d9ec778c4443ea15ebe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html">modules.framework.routers.base.KalmanRouter</a></td></tr>
+<tr class="memitem:ad46695db59c68160e17112d1b7954222 inherit pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_ad46695db59c68160e17112d1b7954222"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#ad46695db59c68160e17112d1b7954222">__call__</a> (self, nis_arr, c, likelihoods)</td></tr>
+<tr class="separator:ad46695db59c68160e17112d1b7954222 inherit pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae96388c30a7c4484213ebad84c5f2e8e inherit pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_ae96388c30a7c4484213ebad84c5f2e8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#ae96388c30a7c4484213ebad84c5f2e8e">__getstate__</a> (self)</td></tr>
+<tr class="separator:ae96388c30a7c4484213ebad84c5f2e8e inherit pub_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:a5dd161e85ebda8d0e0d06d223d67c175" id="r_a5dd161e85ebda8d0e0d06d223d67c175"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a5dd161e85ebda8d0e0d06d223d67c175">model</a></td></tr>
+<tr class="separator:a5dd161e85ebda8d0e0d06d223d67c175"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1ef887b8b27c5db31e246ce0c4507a97" id="r_a1ef887b8b27c5db31e246ce0c4507a97"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a1ef887b8b27c5db31e246ce0c4507a97">window</a></td></tr>
+<tr class="separator:a1ef887b8b27c5db31e246ce0c4507a97"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6fd8da467bf46d1ebc8228d15e241bd1" id="r_a6fd8da467bf46d1ebc8228d15e241bd1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a6fd8da467bf46d1ebc8228d15e241bd1">net</a></td></tr>
+<tr class="separator:a6fd8da467bf46d1ebc8228d15e241bd1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af8757a20648d74dc59f55585b52189a1" id="r_af8757a20648d74dc59f55585b52189a1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#af8757a20648d74dc59f55585b52189a1">bake</a></td></tr>
+<tr class="separator:af8757a20648d74dc59f55585b52189a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a096cf135f2a0671ccdfec472166d277b" id="r_a096cf135f2a0671ccdfec472166d277b"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a096cf135f2a0671ccdfec472166d277b">_window_feat</a> (self, np.ndarray nis_arr)</td></tr>
+<tr class="separator:a096cf135f2a0671ccdfec472166d277b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e4a88fc08a630273cdd670f27f4ac4c" id="r_a5e4a88fc08a630273cdd670f27f4ac4c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a5e4a88fc08a630273cdd670f27f4ac4c">_is_trained</a> (self)</td></tr>
+<tr class="separator:a5e4a88fc08a630273cdd670f27f4ac4c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaa4442dcab9a30c4afddab4ea6d51966" id="r_aaa4442dcab9a30c4afddab4ea6d51966"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#aaa4442dcab9a30c4afddab4ea6d51966">_export_prologue</a> (self, what)</td></tr>
+<tr class="separator:aaa4442dcab9a30c4afddab4ea6d51966"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html">modules.framework.routers.base.KalmanRouter</a></td></tr>
+<tr class="memitem:a8bf38e23c00b24efc52dd721e1cb31ef inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_a8bf38e23c00b24efc52dd721e1cb31ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a8bf38e23c00b24efc52dd721e1cb31ef">_native_owner</a> (self)</td></tr>
+<tr class="separator:a8bf38e23c00b24efc52dd721e1cb31ef inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70bb684edf991543a798b6b87b610bf3 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_a70bb684edf991543a798b6b87b610bf3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a70bb684edf991543a798b6b87b610bf3">_native_key</a> (self)</td></tr>
+<tr class="separator:a70bb684edf991543a798b6b87b610bf3 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18fd86cbefdc3cbbc034b7af926e2ccc inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_a18fd86cbefdc3cbbc034b7af926e2ccc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a18fd86cbefdc3cbbc034b7af926e2ccc">_native_create</a> (self)</td></tr>
+<tr class="separator:a18fd86cbefdc3cbbc034b7af926e2ccc inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26d1b4288b53049b867ae04161a28cd0 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_a26d1b4288b53049b867ae04161a28cd0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a26d1b4288b53049b867ae04161a28cd0">_native_rows</a> (self)</td></tr>
+<tr class="separator:a26d1b4288b53049b867ae04161a28cd0 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a500fbc34a2e589ba83a97b98c315e5d1 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_a500fbc34a2e589ba83a97b98c315e5d1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a500fbc34a2e589ba83a97b98c315e5d1">_native_router</a> (self)</td></tr>
+<tr class="separator:a500fbc34a2e589ba83a97b98c315e5d1 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afce4ad32ed324809c61e84fe8c607d06 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_afce4ad32ed324809c61e84fe8c607d06"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#afce4ad32ed324809c61e84fe8c607d06">_native_route</a> (self, nis_arr, c, likelihoods)</td></tr>
+<tr class="separator:afce4ad32ed324809c61e84fe8c607d06 inherit pro_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-methods" name="pro-static-methods"></a>
+Static Protected Member Functions</h2></td></tr>
+<tr class="memitem:a6a1d3255d15436c3c06306828848c718" id="r_a6a1d3255d15436c3c06306828848c718"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a6a1d3255d15436c3c06306828848c718">_policy_module</a> (<a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a6fd8da467bf46d1ebc8228d15e241bd1">net</a>, mean, std, <a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#af8757a20648d74dc59f55585b52189a1">bake</a>)</td></tr>
+<tr class="separator:a6a1d3255d15436c3c06306828848c718"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_static_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html">modules.framework.routers.base.KalmanRouter</a></td></tr>
+<tr class="memitem:ab958c820b480b5e4851606306a0bd7c4 inherit pro_static_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_ab958c820b480b5e4851606306a0bd7c4"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#ab958c820b480b5e4851606306a0bd7c4">_normalise</a> (np.ndarray mu)</td></tr>
+<tr class="separator:ab958c820b480b5e4851606306a0bd7c4 inherit pro_static_methods_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a8473b018b0dec68b2d91dbdb34021fc0" id="r_a8473b018b0dec68b2d91dbdb34021fc0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#a8473b018b0dec68b2d91dbdb34021fc0">_x_mean</a></td></tr>
+<tr class="separator:a8473b018b0dec68b2d91dbdb34021fc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae18df7e5aed78cf9262824ff017cd683" id="r_ae18df7e5aed78cf9262824ff017cd683"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html#ae18df7e5aed78cf9262824ff017cd683">_x_std</a></td></tr>
+<tr class="separator:ae18df7e5aed78cf9262824ff017cd683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html">modules.framework.routers.base.KalmanRouter</a></td></tr>
+<tr class="memitem:aed43331c2bc52914f25f261c5a1faf99 inherit pro_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_aed43331c2bc52914f25f261c5a1faf99"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#aed43331c2bc52914f25f261c5a1faf99">_native_state</a></td></tr>
+<tr class="separator:aed43331c2bc52914f25f261c5a1faf99 inherit pro_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td colspan="2" onclick="javascript:toggleInherit('pub_static_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router')"><img src="closed.png" alt="-"/>&#160;Static Public Attributes inherited from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html">modules.framework.routers.base.KalmanRouter</a></td></tr>
+<tr class="memitem:aba02dc9f6f705b544aa29ba0ac143b9e inherit pub_static_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router" id="r_aba02dc9f6f705b544aa29ba0ac143b9e"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#aba02dc9f6f705b544aa29ba0ac143b9e">NATIVE</a> = None</td></tr>
+<tr class="separator:aba02dc9f6f705b544aa29ba0ac143b9e inherit pub_static_attribs_classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">IKF router that delegates mode-probability estimation to a neural model.
+
+Parameters
+----------
+model : callable
+    Any object callable as ``probs = model(feat)`` where ``feat`` is a
+    1-D normalised numpy array of length M × window.
+    Optionally implements ``build(d_in, d_out, seed)`` and
+    ``fit(X, y, **kw)`` for lazy init and training.
+window : int
+    NIS sliding window length.  Padding value 1.0 = χ²(1) mean.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00046">46</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a9536c39663a50fe868acc05e4075847d" name="a9536c39663a50fe868acc05e4075847d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9536c39663a50fe868acc05e4075847d">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>window</em> = <code>5</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00060">60</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   60</span>    <span class="keyword">def </span>__init__(self, model, window: int = 5):</div>
+<div class="line"><span class="lineno">   61</span>        self.model   = model</div>
+<div class="line"><span class="lineno">   62</span>        self.window  = int(window)</div>
+<div class="line"><span class="lineno">   63</span>        self._x_mean: np.ndarray | <span class="keywordtype">None</span> = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   64</span>        self._x_std:  np.ndarray | <span class="keywordtype">None</span> = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   65</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aaa4442dcab9a30c4afddab4ea6d51966" name="aaa4442dcab9a30c4afddab4ea6d51966"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaa4442dcab9a30c4afddab4ea6d51966">&#9670;&#160;</a></span>_export_prologue()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter._export_prologue </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Checks and tensors both export paths need.</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00274">274</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>    <span class="keyword">def </span>_export_prologue(self, what):</div>
+<div class="line"><span class="lineno">  275</span>        <span class="stringliteral">&quot;&quot;&quot;Checks and tensors both export paths need.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  276</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  277</span> </div>
+<div class="line"><span class="lineno">  278</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._is_trained:</div>
+<div class="line"><span class="lineno">  279</span>            <span class="keywordflow">raise</span> RuntimeError(</div>
+<div class="line"><span class="lineno">  280</span>                f<span class="stringliteral">&quot;NeuralRouter.{what}: nothing to export — call fit() &quot;</span></div>
+<div class="line"><span class="lineno">  281</span>                <span class="stringliteral">&quot;(or InteractiveKalmanFilter.fit()) first.&quot;</span>)</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>        net = getattr(self.model, <span class="stringliteral">&quot;_net&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">if</span> net <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">raise</span> RuntimeError(</div>
+<div class="line"><span class="lineno">  286</span>                f<span class="stringliteral">&quot;NeuralRouter.{what}: {type(self.model).__name__} exposes no &quot;</span></div>
+<div class="line"><span class="lineno">  287</span>                <span class="stringliteral">&quot;torch module (`_net`), so it cannot be traced.&quot;</span>)</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">return</span> (net,</div>
+<div class="line"><span class="lineno">  290</span>                torch.tensor(self._x_mean, dtype=torch.float32),</div>
+<div class="line"><span class="lineno">  291</span>                torch.tensor(self._x_std, dtype=torch.float32),</div>
+<div class="line"><span class="lineno">  292</span>                int(len(self._x_mean)))</div>
+<div class="line"><span class="lineno">  293</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5e4a88fc08a630273cdd670f27f4ac4c" name="a5e4a88fc08a630273cdd670f27f4ac4c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5e4a88fc08a630273cdd670f27f4ac4c">&#9670;&#160;</a></span>_is_trained()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.framework.routers.neural.NeuralRouter._is_trained </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00077">77</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>    <span class="keyword">def </span>_is_trained(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">return</span> self._x_mean <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   79</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6a1d3255d15436c3c06306828848c718" name="a6a1d3255d15436c3c06306828848c718"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a1d3255d15436c3c06306828848c718">&#9670;&#160;</a></span>_policy_module()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter._policy_module </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>net</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mean</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>std</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>bake</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Standardise → network → softmax, as one traceable module.
+
+Shared by both export paths so ONNX and TorchScript cannot drift apart in
+what they consider "the policy".
+</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00246">246</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  246</span>    <span class="keyword">def </span>_policy_module(net, mean, std, bake):</div>
+<div class="line"><span class="lineno">  247</span>        <span class="stringliteral">&quot;&quot;&quot;Standardise → network → softmax, as one traceable module.</span></div>
+<div class="line"><span class="lineno">  248</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  249</span><span class="stringliteral">        Shared by both export paths so ONNX and TorchScript cannot drift apart in</span></div>
+<div class="line"><span class="lineno">  250</span><span class="stringliteral">        what they consider &quot;the policy&quot;.</span></div>
+<div class="line"><span class="lineno">  251</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  252</span>        <span class="keyword">import</span> copy</div>
+<div class="line"><span class="lineno">  253</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  254</span>        <span class="keyword">from</span> torch <span class="keyword">import</span> nn</div>
+<div class="line"><span class="lineno">  255</span> </div>
+<div class="line"><span class="lineno">  256</span>        <span class="keyword">class </span>_Policy(nn.Module):</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keyword">def </span>__init__(self, net, mean, std, bake):</div>
+<div class="line"><span class="lineno">  258</span>                super().__init__()</div>
+<div class="line"><span class="lineno">  259</span>                self.net = net</div>
+<div class="line"><span class="lineno">  260</span>                self.bake = bake</div>
+<div class="line"><span class="lineno">  261</span>                self.register_buffer(<span class="stringliteral">&quot;mean&quot;</span>, mean)</div>
+<div class="line"><span class="lineno">  262</span>                self.register_buffer(<span class="stringliteral">&quot;std&quot;</span>, std)</div>
+<div class="line"><span class="lineno">  263</span> </div>
+<div class="line"><span class="lineno">  264</span>            <span class="keyword">def </span>forward(self, x):</div>
+<div class="line"><span class="lineno">  265</span>                <span class="keywordflow">if</span> self.bake:</div>
+<div class="line"><span class="lineno">  266</span>                    x = (x - self.mean) / self.std</div>
+<div class="line"><span class="lineno">  267</span>                <span class="keywordflow">return</span> torch.softmax(self.net(x), dim=-1)</div>
+<div class="line"><span class="lineno">  268</span> </div>
+<div class="line"><span class="lineno">  269</span>        <span class="comment"># Deep-copy before moving to CPU: `.to()` is in-place for a Module, so</span></div>
+<div class="line"><span class="lineno">  270</span>        <span class="comment"># exporting would otherwise strand the caller&#39;s model on the wrong device</span></div>
+<div class="line"><span class="lineno">  271</span>        <span class="comment"># and every later route() call would fail.</span></div>
+<div class="line"><span class="lineno">  272</span>        <span class="keywordflow">return</span> _Policy(copy.deepcopy(net).to(<span class="stringliteral">&quot;cpu&quot;</span>).eval(), mean, std, bake).eval()</div>
+<div class="line"><span class="lineno">  273</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a096cf135f2a0671ccdfec472166d277b" name="a096cf135f2a0671ccdfec472166d277b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a096cf135f2a0671ccdfec472166d277b">&#9670;&#160;</a></span>_window_feat()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> np.ndarray modules.framework.routers.neural.NeuralRouter._window_feat </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">np.ndarray&#160;</td>
+          <td class="paramname"><em>nis_arr</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Last ``window`` NIS rows, padded with 1.0, flattened (M×window,).</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00068">68</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>_window_feat(self, nis_arr: np.ndarray) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">   69</span>        <span class="stringliteral">&quot;&quot;&quot;Last ``window`` NIS rows, padded with 1.0, flattened (M×window,).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   70</span>        block = nis_arr[-self.window:]</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">if</span> len(block) &lt; self.window:</div>
+<div class="line"><span class="lineno">   72</span>            pad   = np.ones((self.window - len(block), nis_arr.shape[1]))</div>
+<div class="line"><span class="lineno">   73</span>            block = np.vstack([pad, block])</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> block.ravel()</div>
+<div class="line"><span class="lineno">   75</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a06fc6dee97a96e1b46c39e1e11339a98" name="a06fc6dee97a96e1b46c39e1e11339a98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a06fc6dee97a96e1b46c39e1e11339a98">&#9670;&#160;</a></span>export_onnx()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.export_onnx </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*int &#160;</td>
+          <td class="paramname"><em>opset</em> = <code>17</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int | None &#160;</td>
+          <td class="paramname"><em>ir_version</em> = <code>9</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool &#160;</td>
+          <td class="paramname"><em>bake_normalisation</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Write the trained policy to ONNX, for execution by ``Kalman::Routers::Neural``.
+
+This is the seam between the two implementations of the framework. Training
+happens here, where the data loaders and the optimiser live; inference
+happens in C++, which then needs neither Python nor Torch.
+
+The exported graph is **self-contained by default**: the feature
+standardisation learned in :meth:`fit` and the softmax head are baked in as
+constants, so the graph maps a raw NIS window straight to probabilities.
+That is deliberate — a normalisation shipped separately from the weights it
+belongs to is a silent failure waiting to happen, because the wrong one
+still produces a valid-looking probability vector.
+
+A ``&lt;path&gt;.json`` sidecar records the window length and mode count so the
+C++ side (or a human) can check compatibility rather than discover a
+mismatch at runtime.
+
+Parameters
+----------
+path : str
+    Destination ``.onnx`` file.
+opset : int
+    ONNX opset version.
+ir_version : int or None
+    Pin the model's IR version after export. Torch emits the newest IR it
+    knows, which *deployed* runtimes routinely reject — ONNX Runtime 1.16
+    refuses anything above 9 with "Unsupported model IR version: 10". The
+    IR version is a container format, not the operator semantics, so
+    lowering it is safe as long as the opset is supported. Pass None to
+    keep whatever Torch produced.
+bake_normalisation : bool
+    Fold the standardisation into the graph. Turn it off only if the
+    consumer applies its own via ``SetNormalisation``.
+
+Returns
+-------
+dict — the metadata also written to the sidecar.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00161">161</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>                    bake_normalisation: bool = <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  163</span>        <span class="stringliteral">&quot;&quot;&quot;Write the trained policy to ONNX, for execution by ``Kalman::Routers::Neural``.</span></div>
+<div class="line"><span class="lineno">  164</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  165</span><span class="stringliteral">        This is the seam between the two implementations of the framework. Training</span></div>
+<div class="line"><span class="lineno">  166</span><span class="stringliteral">        happens here, where the data loaders and the optimiser live; inference</span></div>
+<div class="line"><span class="lineno">  167</span><span class="stringliteral">        happens in C++, which then needs neither Python nor Torch.</span></div>
+<div class="line"><span class="lineno">  168</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  169</span><span class="stringliteral">        The exported graph is **self-contained by default**: the feature</span></div>
+<div class="line"><span class="lineno">  170</span><span class="stringliteral">        standardisation learned in :meth:`fit` and the softmax head are baked in as</span></div>
+<div class="line"><span class="lineno">  171</span><span class="stringliteral">        constants, so the graph maps a raw NIS window straight to probabilities.</span></div>
+<div class="line"><span class="lineno">  172</span><span class="stringliteral">        That is deliberate — a normalisation shipped separately from the weights it</span></div>
+<div class="line"><span class="lineno">  173</span><span class="stringliteral">        belongs to is a silent failure waiting to happen, because the wrong one</span></div>
+<div class="line"><span class="lineno">  174</span><span class="stringliteral">        still produces a valid-looking probability vector.</span></div>
+<div class="line"><span class="lineno">  175</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  176</span><span class="stringliteral">        A ``&lt;path&gt;.json`` sidecar records the window length and mode count so the</span></div>
+<div class="line"><span class="lineno">  177</span><span class="stringliteral">        C++ side (or a human) can check compatibility rather than discover a</span></div>
+<div class="line"><span class="lineno">  178</span><span class="stringliteral">        mismatch at runtime.</span></div>
+<div class="line"><span class="lineno">  179</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  180</span><span class="stringliteral">        Parameters</span></div>
+<div class="line"><span class="lineno">  181</span><span class="stringliteral">        ----------</span></div>
+<div class="line"><span class="lineno">  182</span><span class="stringliteral">        path : str</span></div>
+<div class="line"><span class="lineno">  183</span><span class="stringliteral">            Destination ``.onnx`` file.</span></div>
+<div class="line"><span class="lineno">  184</span><span class="stringliteral">        opset : int</span></div>
+<div class="line"><span class="lineno">  185</span><span class="stringliteral">            ONNX opset version.</span></div>
+<div class="line"><span class="lineno">  186</span><span class="stringliteral">        ir_version : int or None</span></div>
+<div class="line"><span class="lineno">  187</span><span class="stringliteral">            Pin the model&#39;s IR version after export. Torch emits the newest IR it</span></div>
+<div class="line"><span class="lineno">  188</span><span class="stringliteral">            knows, which *deployed* runtimes routinely reject — ONNX Runtime 1.16</span></div>
+<div class="line"><span class="lineno">  189</span><span class="stringliteral">            refuses anything above 9 with &quot;Unsupported model IR version: 10&quot;. The</span></div>
+<div class="line"><span class="lineno">  190</span><span class="stringliteral">            IR version is a container format, not the operator semantics, so</span></div>
+<div class="line"><span class="lineno">  191</span><span class="stringliteral">            lowering it is safe as long as the opset is supported. Pass None to</span></div>
+<div class="line"><span class="lineno">  192</span><span class="stringliteral">            keep whatever Torch produced.</span></div>
+<div class="line"><span class="lineno">  193</span><span class="stringliteral">        bake_normalisation : bool</span></div>
+<div class="line"><span class="lineno">  194</span><span class="stringliteral">            Fold the standardisation into the graph. Turn it off only if the</span></div>
+<div class="line"><span class="lineno">  195</span><span class="stringliteral">            consumer applies its own via ``SetNormalisation``.</span></div>
+<div class="line"><span class="lineno">  196</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  197</span><span class="stringliteral">        Returns</span></div>
+<div class="line"><span class="lineno">  198</span><span class="stringliteral">        -------</span></div>
+<div class="line"><span class="lineno">  199</span><span class="stringliteral">        dict — the metadata also written to the sidecar.</span></div>
+<div class="line"><span class="lineno">  200</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  201</span>        <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  203</span> </div>
+<div class="line"><span class="lineno">  204</span>        net, mean, std, d_in = self._export_prologue(<span class="stringliteral">&quot;export_onnx&quot;</span>)</div>
+<div class="line"><span class="lineno">  205</span>        policy = self._policy_module(net, mean, std, bake_normalisation)</div>
+<div class="line"><span class="lineno">  206</span>        dummy = torch.zeros(1, d_in, dtype=torch.float32)</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>        <span class="keyword">with</span> torch.no_grad():</div>
+<div class="line"><span class="lineno">  209</span>            d_out = int(policy(dummy).shape[-1])</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>        torch.onnx.export(</div>
+<div class="line"><span class="lineno">  212</span>            policy, dummy, str(path),</div>
+<div class="line"><span class="lineno">  213</span>            input_names=[<span class="stringliteral">&quot;nis_window&quot;</span>], output_names=[<span class="stringliteral">&quot;mode_probabilities&quot;</span>],</div>
+<div class="line"><span class="lineno">  214</span>            dynamic_axes={<span class="stringliteral">&quot;nis_window&quot;</span>: {0: <span class="stringliteral">&quot;batch&quot;</span>},</div>
+<div class="line"><span class="lineno">  215</span>                          <span class="stringliteral">&quot;mode_probabilities&quot;</span>: {0: <span class="stringliteral">&quot;batch&quot;</span>}},</div>
+<div class="line"><span class="lineno">  216</span>            opset_version=opset,</div>
+<div class="line"><span class="lineno">  217</span>        )</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">if</span> ir_version <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  220</span>            <span class="keyword">import</span> onnx</div>
+<div class="line"><span class="lineno">  221</span>            model = onnx.load(str(path))</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">if</span> model.ir_version &gt; ir_version:</div>
+<div class="line"><span class="lineno">  223</span>                model.ir_version = ir_version</div>
+<div class="line"><span class="lineno">  224</span>                onnx.save(model, str(path))</div>
+<div class="line"><span class="lineno">  225</span> </div>
+<div class="line"><span class="lineno">  226</span>        meta = {</div>
+<div class="line"><span class="lineno">  227</span>            <span class="stringliteral">&quot;format&quot;</span>: <span class="stringliteral">&quot;onnx&quot;</span>,</div>
+<div class="line"><span class="lineno">  228</span>            <span class="stringliteral">&quot;window&quot;</span>: int(self.window),</div>
+<div class="line"><span class="lineno">  229</span>            <span class="stringliteral">&quot;opset&quot;</span>: int(opset),</div>
+<div class="line"><span class="lineno">  230</span>            <span class="stringliteral">&quot;ir_version&quot;</span>: ir_version,</div>
+<div class="line"><span class="lineno">  231</span>            <span class="stringliteral">&quot;n_models&quot;</span>: d_out,</div>
+<div class="line"><span class="lineno">  232</span>            <span class="stringliteral">&quot;n_features&quot;</span>: d_in,</div>
+<div class="line"><span class="lineno">  233</span>            <span class="stringliteral">&quot;normalisation_baked&quot;</span>: bool(bake_normalisation),</div>
+<div class="line"><span class="lineno">  234</span>            <span class="stringliteral">&quot;feature_layout&quot;</span>: <span class="stringliteral">&quot;last `window` NIS rows, front-padded with 1.0, flattened row-major&quot;</span>,</div>
+<div class="line"><span class="lineno">  235</span>        }</div>
+<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> bake_normalisation:</div>
+<div class="line"><span class="lineno">  237</span>            meta[<span class="stringliteral">&quot;mean&quot;</span>] = [float(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> self._x_mean]</div>
+<div class="line"><span class="lineno">  238</span>            meta[<span class="stringliteral">&quot;scale&quot;</span>] = [float(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> self._x_std]</div>
+<div class="line"><span class="lineno">  239</span> </div>
+<div class="line"><span class="lineno">  240</span>        <span class="keyword">with</span> open(f<span class="stringliteral">&quot;{path}.json&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  241</span>            json.dump(meta, fh, indent=2)</div>
+<div class="line"><span class="lineno">  242</span> </div>
+<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">return</span> meta</div>
+<div class="line"><span class="lineno">  244</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a30f0c98efecc2d9ec778c4443ea15ebe" name="a30f0c98efecc2d9ec778c4443ea15ebe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a30f0c98efecc2d9ec778c4443ea15ebe">&#9670;&#160;</a></span>export_torchscript()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.export_torchscript </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*bool &#160;</td>
+          <td class="paramname"><em>bake_normalisation</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Trace the trained policy to TorchScript, for ``Kalman::Routers::NN::Torch``.
+
+The counterpart of :meth:`export_onnx`, and the higher-fidelity one: the
+C++ side runs *this* module rather than a conversion of it, so an
+architecture the ONNX exporter mangles still deploys. The cost is that the
+consumer links libTorch instead of ONNX Runtime — roughly 2 GB against 10
+MB — and is pinned to a compatible Torch version.
+
+Like :meth:`export_onnx` the traced module is self-contained: the feature
+standardisation and the softmax head are inside it, so a raw NIS window
+maps straight to probabilities.
+
+Parameters
+----------
+path : str
+    Destination ``.pt`` file.
+bake_normalisation : bool
+    Fold the standardisation into the module.
+
+Returns
+-------
+dict — the metadata also written to ``&lt;path&gt;.json``.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00294">294</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  294</span>    <span class="keyword">def </span>export_torchscript(self, path, *, bake_normalisation: bool = <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  295</span>        <span class="stringliteral">&quot;&quot;&quot;Trace the trained policy to TorchScript, for ``Kalman::Routers::NN::Torch``.</span></div>
+<div class="line"><span class="lineno">  296</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  297</span><span class="stringliteral">        The counterpart of :meth:`export_onnx`, and the higher-fidelity one: the</span></div>
+<div class="line"><span class="lineno">  298</span><span class="stringliteral">        C++ side runs *this* module rather than a conversion of it, so an</span></div>
+<div class="line"><span class="lineno">  299</span><span class="stringliteral">        architecture the ONNX exporter mangles still deploys. The cost is that the</span></div>
+<div class="line"><span class="lineno">  300</span><span class="stringliteral">        consumer links libTorch instead of ONNX Runtime — roughly 2 GB against 10</span></div>
+<div class="line"><span class="lineno">  301</span><span class="stringliteral">        MB — and is pinned to a compatible Torch version.</span></div>
+<div class="line"><span class="lineno">  302</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  303</span><span class="stringliteral">        Like :meth:`export_onnx` the traced module is self-contained: the feature</span></div>
+<div class="line"><span class="lineno">  304</span><span class="stringliteral">        standardisation and the softmax head are inside it, so a raw NIS window</span></div>
+<div class="line"><span class="lineno">  305</span><span class="stringliteral">        maps straight to probabilities.</span></div>
+<div class="line"><span class="lineno">  306</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  307</span><span class="stringliteral">        Parameters</span></div>
+<div class="line"><span class="lineno">  308</span><span class="stringliteral">        ----------</span></div>
+<div class="line"><span class="lineno">  309</span><span class="stringliteral">        path : str</span></div>
+<div class="line"><span class="lineno">  310</span><span class="stringliteral">            Destination ``.pt`` file.</span></div>
+<div class="line"><span class="lineno">  311</span><span class="stringliteral">        bake_normalisation : bool</span></div>
+<div class="line"><span class="lineno">  312</span><span class="stringliteral">            Fold the standardisation into the module.</span></div>
+<div class="line"><span class="lineno">  313</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  314</span><span class="stringliteral">        Returns</span></div>
+<div class="line"><span class="lineno">  315</span><span class="stringliteral">        -------</span></div>
+<div class="line"><span class="lineno">  316</span><span class="stringliteral">        dict — the metadata also written to ``&lt;path&gt;.json``.</span></div>
+<div class="line"><span class="lineno">  317</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  318</span>        <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">  319</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  320</span> </div>
+<div class="line"><span class="lineno">  321</span>        net, mean, std, d_in = self._export_prologue(<span class="stringliteral">&quot;export_torchscript&quot;</span>)</div>
+<div class="line"><span class="lineno">  322</span>        policy = self._policy_module(net, mean, std, bake_normalisation)</div>
+<div class="line"><span class="lineno">  323</span> </div>
+<div class="line"><span class="lineno">  324</span>        dummy = torch.zeros(1, d_in, dtype=torch.float32)</div>
+<div class="line"><span class="lineno">  325</span>        <span class="keyword">with</span> torch.no_grad():</div>
+<div class="line"><span class="lineno">  326</span>            traced = torch.jit.trace(policy, dummy)</div>
+<div class="line"><span class="lineno">  327</span>            d_out = int(policy(dummy).shape[-1])</div>
+<div class="line"><span class="lineno">  328</span>        traced.save(str(path))</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span>        meta = {</div>
+<div class="line"><span class="lineno">  331</span>            <span class="stringliteral">&quot;format&quot;</span>: <span class="stringliteral">&quot;torchscript&quot;</span>,</div>
+<div class="line"><span class="lineno">  332</span>            <span class="stringliteral">&quot;window&quot;</span>: int(self.window),</div>
+<div class="line"><span class="lineno">  333</span>            <span class="stringliteral">&quot;n_models&quot;</span>: d_out,</div>
+<div class="line"><span class="lineno">  334</span>            <span class="stringliteral">&quot;n_features&quot;</span>: d_in,</div>
+<div class="line"><span class="lineno">  335</span>            <span class="stringliteral">&quot;normalisation_baked&quot;</span>: bool(bake_normalisation),</div>
+<div class="line"><span class="lineno">  336</span>            <span class="stringliteral">&quot;feature_layout&quot;</span>: <span class="stringliteral">&quot;last `window` NIS rows, front-padded with 1.0, flattened row-major&quot;</span>,</div>
+<div class="line"><span class="lineno">  337</span>        }</div>
+<div class="line"><span class="lineno">  338</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> bake_normalisation:</div>
+<div class="line"><span class="lineno">  339</span>            meta[<span class="stringliteral">&quot;mean&quot;</span>] = [float(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> self._x_mean]</div>
+<div class="line"><span class="lineno">  340</span>            meta[<span class="stringliteral">&quot;scale&quot;</span>] = [float(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> self._x_std]</div>
+<div class="line"><span class="lineno">  341</span> </div>
+<div class="line"><span class="lineno">  342</span>        <span class="keyword">with</span> open(f<span class="stringliteral">&quot;{path}.json&quot;</span>, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  343</span>            json.dump(meta, fh, indent=2)</div>
+<div class="line"><span class="lineno">  344</span> </div>
+<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">return</span> meta</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0345d2724aec93db239f43d84ed49256" name="a0345d2724aec93db239f43d84ed49256"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0345d2724aec93db239f43d84ed49256">&#9670;&#160;</a></span>fit()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> &quot;NeuralRouter&quot; modules.framework.routers.neural.NeuralRouter.fit </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>nis_arrays</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>labels_arrays</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Extract features, normalise, build model, train model.
+
+Called by ``InteractiveKalmanFilter.fit()``.
+
+Parameters
+----------
+nis_arrays : list of ndarray (T_i, M)
+    NIS history per training scenario (from a Bayesian-IKF run).
+labels_arrays : list of int ndarray (T_i,)
+    True regime 0 … M−1 at every step.
+seed : int, optional
+    Forwarded to ``model.build()`` if supported.
+</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#adf6e33fd7eb2444effbea5dece983f82">modules.framework.routers.base.KalmanRouter</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00092">92</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   92</span>    <span class="keyword">def </span>fit(self, nis_arrays, labels_arrays, seed=None, **kwargs) -&gt; &quot;NeuralRouter&quot;:</div>
+<div class="line"><span class="lineno">   93</span>        <span class="stringliteral">&quot;&quot;&quot;Extract features, normalise, build model, train model.</span></div>
+<div class="line"><span class="lineno">   94</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   95</span><span class="stringliteral">        Called by ``InteractiveKalmanFilter.fit()``.</span></div>
+<div class="line"><span class="lineno">   96</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">        Parameters</span></div>
+<div class="line"><span class="lineno">   98</span><span class="stringliteral">        ----------</span></div>
+<div class="line"><span class="lineno">   99</span><span class="stringliteral">        nis_arrays : list of ndarray (T_i, M)</span></div>
+<div class="line"><span class="lineno">  100</span><span class="stringliteral">            NIS history per training scenario (from a Bayesian-IKF run).</span></div>
+<div class="line"><span class="lineno">  101</span><span class="stringliteral">        labels_arrays : list of int ndarray (T_i,)</span></div>
+<div class="line"><span class="lineno">  102</span><span class="stringliteral">            True regime 0 … M−1 at every step.</span></div>
+<div class="line"><span class="lineno">  103</span><span class="stringliteral">        seed : int, optional</span></div>
+<div class="line"><span class="lineno">  104</span><span class="stringliteral">            Forwarded to ``model.build()`` if supported.</span></div>
+<div class="line"><span class="lineno">  105</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  106</span>        M    = nis_arrays[0].shape[1]</div>
+<div class="line"><span class="lineno">  107</span>        d_in = M * self.window</div>
+<div class="line"><span class="lineno">  108</span> </div>
+<div class="line"><span class="lineno">  109</span>        X_all, y_all = [], []</div>
+<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">for</span> nis_arr, labels <span class="keywordflow">in</span> zip(nis_arrays, labels_arrays):</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">for</span> k, lbl <span class="keywordflow">in</span> enumerate(labels):</div>
+<div class="line"><span class="lineno">  112</span>                X_all.append(self._window_feat(nis_arr[:k + 1]))</div>
+<div class="line"><span class="lineno">  113</span>                y_all.append(int(lbl))</div>
+<div class="line"><span class="lineno">  114</span> </div>
+<div class="line"><span class="lineno">  115</span>        X = np.array(X_all, dtype=float)</div>
+<div class="line"><span class="lineno">  116</span>        y = np.array(y_all,  dtype=int)</div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span>        self._x_mean = X.mean(0)</div>
+<div class="line"><span class="lineno">  119</span>        self._x_std  = X.std(0)</div>
+<div class="line"><span class="lineno">  120</span>        self._x_std[self._x_std &lt; 1e-8] = 1.0</div>
+<div class="line"><span class="lineno">  121</span>        Xn = (X - self._x_mean) / self._x_std</div>
+<div class="line"><span class="lineno">  122</span> </div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">if</span> hasattr(self.model, <span class="stringliteral">&quot;build&quot;</span>):</div>
+<div class="line"><span class="lineno">  124</span>            self.model.build(d_in, M, seed=seed)</div>
+<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">if</span> hasattr(self.model, <span class="stringliteral">&quot;fit&quot;</span>):</div>
+<div class="line"><span class="lineno">  126</span>            self.model.fit(Xn, y, **kwargs)</div>
+<div class="line"><span class="lineno">  127</span> </div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  129</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a608ddee0701abfaded0d972f1c823116" name="a608ddee0701abfaded0d972f1c823116"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a608ddee0701abfaded0d972f1c823116">&#9670;&#160;</a></span>load()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.load </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Restore what :meth:`save` stored. The architecture object is replaced by the
+saved one; a mismatch with the one this router was built with is refused
+rather than silently swapped, since the notebook's parameters would then
+no longer describe what runs.</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00146">146</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>    <span class="keyword">def </span>load(self, path):</div>
+<div class="line"><span class="lineno">  147</span>        <span class="stringliteral">&quot;&quot;&quot;Restore what :meth:`save` stored. The architecture object is replaced by the</span></div>
+<div class="line"><span class="lineno">  148</span><span class="stringliteral">        saved one; a mismatch with the one this router was built with is refused</span></div>
+<div class="line"><span class="lineno">  149</span><span class="stringliteral">        rather than silently swapped, since the notebook&#39;s parameters would then</span></div>
+<div class="line"><span class="lineno">  150</span><span class="stringliteral">        no longer describe what runs.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  151</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  152</span>        data = torch.load(path, weights_only=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">if</span> data.get(<span class="stringliteral">&quot;arch&quot;</span>) != type(self.model).__name__:</div>
+<div class="line"><span class="lineno">  154</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;NeuralRouter.load: {path} holds a {data.get(&#39;arch&#39;)}, this router &quot;</span></div>
+<div class="line"><span class="lineno">  155</span>                             f<span class="stringliteral">&quot;was built with a {type(self.model).__name__}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  156</span>        self.model = data[<span class="stringliteral">&quot;model&quot;</span>]</div>
+<div class="line"><span class="lineno">  157</span>        self._x_mean, self._x_std = data[<span class="stringliteral">&quot;x_mean&quot;</span>], data[<span class="stringliteral">&quot;x_std&quot;</span>]</div>
+<div class="line"><span class="lineno">  158</span>        self.window = int(data.get(<span class="stringliteral">&quot;window&quot;</span>, self.window))</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  160</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a618c5dd4622f86be169b0ebaf841b87c" name="a618c5dd4622f86be169b0ebaf841b87c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a618c5dd4622f86be169b0ebaf841b87c">&#9670;&#160;</a></span>route()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.route </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>nis_arr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>likelihoods</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Return updated mode probabilities.
+
+Parameters
+----------
+nis_arr : ndarray (k+1, M)
+c : ndarray (M,) — Markov predicted mode probabilities
+likelihoods : ndarray (M,) — Gaussian L_j per model
+
+Returns
+-------
+mu : ndarray (M,), non-negative, sums to 1
+</pre> 
+<p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1routers_1_1base_1_1_kalman_router.html#a38ef5212cfc74861ba68cdfe2476b143">modules.framework.routers.base.KalmanRouter</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00082">82</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   82</span>    <span class="keyword">def </span>route(self, nis_arr, c, likelihoods):</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._is_trained:</div>
+<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">return</span> self._normalise(c * likelihoods)   <span class="comment"># Bayesian fallback</span></div>
+<div class="line"><span class="lineno">   85</span>        feat   = self._window_feat(nis_arr)</div>
+<div class="line"><span class="lineno">   86</span>        feat_n = (feat - self._x_mean) / self._x_std</div>
+<div class="line"><span class="lineno">   87</span>        probs  = np.asarray(self.model(feat_n), dtype=float)</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">return</span> self._normalise(probs)</div>
+<div class="line"><span class="lineno">   89</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7609bf44c22afd612b125e65713132f6" name="a7609bf44c22afd612b125e65713132f6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7609bf44c22afd612b125e65713132f6">&#9670;&#160;</a></span>save()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.save </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>path</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Store the trained architecture and the feature normalisation at ``path``
+(a torch pickle), so a notebook can :meth:`load` it instead of training
+again. For a policy that must leave Python, use :meth:`export_onnx`.</pre> 
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00135">135</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  135</span>    <span class="keyword">def </span>save(self, path):</div>
+<div class="line"><span class="lineno">  136</span>        <span class="stringliteral">&quot;&quot;&quot;Store the trained architecture and the feature normalisation at ``path``</span></div>
+<div class="line"><span class="lineno">  137</span><span class="stringliteral">        (a torch pickle), so a notebook can :meth:`load` it instead of training</span></div>
+<div class="line"><span class="lineno">  138</span><span class="stringliteral">        again. For a policy that must leave Python, use :meth:`export_onnx`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  139</span>        <span class="keyword">import</span> torch</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._is_trained:</div>
+<div class="line"><span class="lineno">  141</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;NeuralRouter.save: nothing to save -- call fit() first.&quot;</span>)</div>
+<div class="line"><span class="lineno">  142</span>        torch.save({<span class="stringliteral">&quot;model&quot;</span>: self.model, <span class="stringliteral">&quot;x_mean&quot;</span>: self._x_mean, <span class="stringliteral">&quot;x_std&quot;</span>: self._x_std,</div>
+<div class="line"><span class="lineno">  143</span>                    <span class="stringliteral">&quot;window&quot;</span>: self.window, <span class="stringliteral">&quot;arch&quot;</span>: type(self.model).__name__}, path)</div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> path</div>
+<div class="line"><span class="lineno">  145</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a8473b018b0dec68b2d91dbdb34021fc0" name="a8473b018b0dec68b2d91dbdb34021fc0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8473b018b0dec68b2d91dbdb34021fc0">&#9670;&#160;</a></span>_x_mean</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter._x_mean</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00118">118</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<a id="ae18df7e5aed78cf9262824ff017cd683" name="ae18df7e5aed78cf9262824ff017cd683"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae18df7e5aed78cf9262824ff017cd683">&#9670;&#160;</a></span>_x_std</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter._x_std</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00119">119</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<a id="af8757a20648d74dc59f55585b52189a1" name="af8757a20648d74dc59f55585b52189a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af8757a20648d74dc59f55585b52189a1">&#9670;&#160;</a></span>bake</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.bake</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00260">260</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<a id="a5dd161e85ebda8d0e0d06d223d67c175" name="a5dd161e85ebda8d0e0d06d223d67c175"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5dd161e85ebda8d0e0d06d223d67c175">&#9670;&#160;</a></span>model</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.model</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00061">61</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<a id="a6fd8da467bf46d1ebc8228d15e241bd1" name="a6fd8da467bf46d1ebc8228d15e241bd1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6fd8da467bf46d1ebc8228d15e241bd1">&#9670;&#160;</a></span>net</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.net</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00259">259</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<a id="a1ef887b8b27c5db31e246ce0c4507a97" name="a1ef887b8b27c5db31e246ce0c4507a97"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1ef887b8b27c5db31e246ce0c4507a97">&#9670;&#160;</a></span>window</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.routers.neural.NeuralRouter.window</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="routers_2neural_8py_source.html#l00062">62</a> of file <a class="el" href="routers_2neural_8py_source.html">neural.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/routers/<a class="el" href="routers_2neural_8py_source.html">neural.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1routers.html">routers</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1routers_1_1neural.html">neural</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1routers_1_1neural_1_1_neural_router.html">NeuralRouter</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

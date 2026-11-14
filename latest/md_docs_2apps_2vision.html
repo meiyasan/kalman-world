@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ How it is built</h1>
 <li><b>Coasting.</b> A missed detection is passed as an empty measurement. The filter then predicts without correcting, and its uncertainty grows until the object is found again.</li>
 <li><b>Many objects.</b> <code>SortTracker</code> matches each new detection to the track whose predicted box overlaps it most, starts a track for a detection that matches none, and ends a track that has gone unmatched for <code>max_age</code> frames.</li>
 </ul>
-<h1><a class="anchor" id="using-it-15"></a>
+<h1><a class="anchor" id="using-it-14"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps.vision <span class="keyword">import</span> DetectionModel</div>
 <div class="line"> </div>

@@ -1,0 +1,276 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="src/Engine.cc Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: src/Engine.cc Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>src/Engine.cc Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_engine_8cc_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Engine.cc</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_engine_8cc.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_engine_8h.html">Kalman/Engine.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_utils_8h.html">Kalman/Utils.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman.html">Kalman</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>{</div>
+<div class="foldopen" id="foldopen00016" data-start="{" data-end="}">
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">   16</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">Engine::Predict</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P,</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>                         <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> *u, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                         <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xk, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pk, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <a class="code hl_function" href="class_kalman_1_1_engine.html#aeceb917250c591d8011b374f623e0c3b">Propagate</a>(model, x, u, t, xk, F);</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> Q = model.<a class="code hl_function" href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Q</a>(t);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> L = model.<a class="code hl_function" href="class_kalman_1_1_model.html#a6aa7a82c784691ddbdd3a01c5fa9ae12">L</a>(t);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">if</span> (!L.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>()) Q = Utils::Similarity(L, Q);      <span class="comment">// L Q L^T</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        Pk = Utils::Similarity(F, P);                     <span class="comment">// F P F^T</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        Pk += Q;</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        Utils::Symmetrize(Pk);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    }</div>
+</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="}">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">   31</a></span>    std::size_t <a class="code hl_function" href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">Engine::Update</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>                               <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, <span class="keywordtype">double</span> t,</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                               <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xOut, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;POut)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        xOut = x;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        POut = P;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">if</span> (keep.empty()) <span class="keywordflow">return</span> 0;                       <span class="comment">// predict-only step</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> zpred;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H;</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <a class="code hl_function" href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Measure</a>(model, x, t, zpred, H);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="comment">// Residual against the true h(x) — not H x — so the same code is correct</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="comment">// for a nonlinear observation map.</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> y(z);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        y -= zpred;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <a class="code hl_function" href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Utils::Correct</a>(<a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Utils::CompressRows</a>(H, keep), <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(model.<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t), keep),</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                       <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(y, keep), x, P, xOut, POut);</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="keywordflow">return</span> keep.size();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    }</div>
+</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="foldopen" id="foldopen00055" data-start="{" data-end="}">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">   55</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">Engine::Smooth</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPost, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPost,</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPriorNext, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPriorNext,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmoothNext, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmoothNext,</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F,</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmooth, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmooth)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> C = PPost * F.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aba250e1c5913edc9d1dd56494741d1ee">Transpose</a>() * Utils::Inverse(PPriorNext);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> dx(xSmoothNext);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        dx -= xPriorNext;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        xSmooth = xPost;</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        xSmooth += C * dx;</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> dP(PSmoothNext);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        dP -= PPriorNext;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        PSmooth = PPost;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        PSmooth += Utils::Similarity(C, dP);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        Utils::Symmetrize(PSmooth);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_kalman_1_1_engine.html#a71c17fe1ef80100037538b5ed31462aa">   77</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_kalman_1_1_engine.html#a71c17fe1ef80100037538b5ed31462aa">Engine::Innovation</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, <span class="keywordtype">double</span> t, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;nu, <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;S)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> zpred;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <a class="code hl_function" href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Measure</a>(model, x, t, zpred, H);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        nu = z;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        nu -= zpred;                                      <span class="comment">// NaN survives where z was missing</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        S = Utils::Similarity(H, P);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        S += model.<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    }</div>
+</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
+<div class="ttc" id="a_engine_8h_html"><div class="ttname"><a href="_engine_8h.html">Engine.h</a></div><div class="ttdoc">Header of the Kalman::Engine class.</div></div>
+<div class="ttc" id="a_utils_8h_html"><div class="ttname"><a href="_utils_8h.html">Utils.h</a></div><div class="ttdoc">Small dense linear-algebra helpers shared by the engines.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a476a54a04b6596c0d517f69bcd18be64"><div class="ttname"><a href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">Kalman::Engine::Update</a></div><div class="ttdeci">virtual std::size_t Update(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector &amp;z, double t, Vector &amp;xOut, Matrix &amp;POut) const</div><div class="ttdoc">Measurement update in Joseph form; NaN channels of z are skipped.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00031">Engine.cc:31</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a71c17fe1ef80100037538b5ed31462aa"><div class="ttname"><a href="class_kalman_1_1_engine.html#a71c17fe1ef80100037538b5ed31462aa">Kalman::Engine::Innovation</a></div><div class="ttdeci">void Innovation(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector &amp;z, double t, Vector &amp;nu, Matrix &amp;S) const</div><div class="ttdoc">Innovation nu = z - h(x) and its covariance S.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00077">Engine.cc:77</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a7d30a11f4ea09e0bb97efe69b438228b"><div class="ttname"><a href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Kalman::Engine::Measure</a></div><div class="ttdeci">virtual void Measure(const Model &amp;model, const Vector &amp;x, double t, Vector &amp;zpred, Matrix &amp;H) const =0</div><div class="ttdoc">Predict the measurement and report the observation matrix.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a9350b42e587bef994a2f79d98571278b"><div class="ttname"><a href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">Kalman::Engine::Predict</a></div><div class="ttdeci">virtual void Predict(const Model &amp;model, const Vector &amp;x, const Matrix &amp;P, const Vector *u, double t, Vector &amp;xk, Matrix &amp;Pk, Matrix &amp;F) const</div><div class="ttdoc">Prediction step: x = f(x, u), P = F P F^T + L Q L^T.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00016">Engine.cc:16</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_ad8f8f7a4a638bec696e482f6e16c9163"><div class="ttname"><a href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">Kalman::Engine::Smooth</a></div><div class="ttdeci">virtual void Smooth(const Vector &amp;xPost, const Matrix &amp;PPost, const Vector &amp;xPriorNext, const Matrix &amp;PPriorNext, const Vector &amp;xSmoothNext, const Matrix &amp;PSmoothNext, const Matrix &amp;F, Vector &amp;xSmooth, Matrix &amp;PSmooth) const</div><div class="ttdoc">One reverse Rauch–Tung–Striebel step.</div><div class="ttdef"><b>Definition</b> <a href="_engine_8cc_source.html#l00055">Engine.cc:55</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_aeceb917250c591d8011b374f623e0c3b"><div class="ttname"><a href="class_kalman_1_1_engine.html#aeceb917250c591d8011b374f623e0c3b">Kalman::Engine::Propagate</a></div><div class="ttdeci">virtual void Propagate(const Model &amp;model, const Vector &amp;x, const Vector *u, double t, Vector &amp;xk, Matrix &amp;F) const =0</div><div class="ttdoc">Advance the mean one step and report the transition matrix.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_a00851e44671a15d861d1eefb682b8cf7"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Kalman::Matrix::Empty</a></div><div class="ttdeci">bool Empty() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00099">Matrix.h:99</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_aba250e1c5913edc9d1dd56494741d1ee"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aba250e1c5913edc9d1dd56494741d1ee">Kalman::Matrix::Transpose</a></div><div class="ttdeci">Matrix Transpose() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00122">Matrix.cc:122</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html"><div class="ttname"><a href="class_kalman_1_1_model.html">Kalman::Model</a></div><div class="ttdoc">The system — WHAT is being estimated.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00066">Model.h:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a450c77e55f7dd11cc53f7100027753c6"><div class="ttname"><a href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">Kalman::Model::R</a></div><div class="ttdeci">virtual Matrix R(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00086">Model.cc:86</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6aa7a82c784691ddbdd3a01c5fa9ae12"><div class="ttname"><a href="class_kalman_1_1_model.html#a6aa7a82c784691ddbdd3a01c5fa9ae12">Kalman::Model::L</a></div><div class="ttdeci">virtual Matrix L(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00084">Model.cc:84</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ab6a9abc04fc8e4f6f334563b6ff7359d"><div class="ttname"><a href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Kalman::Model::Q</a></div><div class="ttdeci">virtual Matrix Q(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00085">Model.cc:85</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_addf8edff6b099465eb8a9720e477a96b"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Kalman::Utils::Correct</a></div><div class="ttdeci">void Correct(const Matrix &amp;Hc, const Matrix &amp;Rc, const Vector &amp;yc, const Vector &amp;x, const Matrix &amp;P, Vector &amp;xOut, Matrix &amp;POut)</div><div class="ttdoc">The Kalman correction from a residual: gain, mean, Joseph-form covariance.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00160">Utils.cc:160</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00123">Utils.cc:123</a></div></div>
+<div class="ttc" id="anamespace_kalman_html"><div class="ttname"><a href="namespace_kalman.html">Kalman</a></div><div class="ttdef"><b>Definition</b> <a href="_metadata_8h_source.html#l00026">Metadata.h:27</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_engine_8cc.html">Engine.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

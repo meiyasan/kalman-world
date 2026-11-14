@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2oscillators.html',''); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="oscillators"></a> A signal that contains narrow lines: a resonance ringing in a detector, a tone in a recording. The filter follows the amplitude and phase of each line, so the line can be measured or removed.</p>
-<h1><a class="anchor" id="the-model-5"></a>
+<h1><a class="anchor" id="the-model-6"></a>
 The model</h1>
 <p>A line at frequency <code>f0</code> is slow to change in amplitude and phase. Multiplying the signal by a wave at a nearby carrier frequency <code>fc</code> moves the line down to near zero frequency, where it becomes a slowly turning arrow: its <b>envelope</b>.</p>
 <div class="fragment"><div class="line">state        x = [Re, Im] of the envelope</div>
@@ -157,7 +157,7 @@ The model</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>OscillatorBankModel</code>   </td><td class="markdownTableBodyNone">several windows of the same signal at once   </td></tr>
 </table>
-<h1><a class="anchor" id="how-it-is-built-5"></a>
+<h1><a class="anchor" id="how-it-is-built-6"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The motion of the envelope is linear, so its step is exact: the matrix exponential of the turn and the decay over one sample.</li>
@@ -166,7 +166,7 @@ How it is built</h1>
 <li><b>A bank</b> sends the same signal to every window.</li>
 <li><b>It runs in C++.</b> A window and a bank are composites of constant matrices: block-diagonal <code>F</code> and <code>Q</code>, and an <code>H</code> that sums the lines of a window (<code>[I I ...]</code>) or stacks the windows. The composite says so (its <code>structure</code> is MATRICES), so <code>filter()</code> runs the linear <a class="el" href="namespace_kalman.html">Kalman</a> pass and the smoother on those matrices in C++ (<code>kf_forward_linear</code>, <code>kf_backward_rts</code>), and <code>sample()</code> runs its state chain there too. The demodulation, the decimation and the reconstruction (<code>preprocess</code>, <code>reconstruct</code>) are signal processing around the filter and stay in numpy and scipy.</li>
 </ul>
-<h1><a class="anchor" id="using-it-6"></a>
+<h1><a class="anchor" id="using-it-7"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> OscillatorModel</div>
 <div class="line"> </div>

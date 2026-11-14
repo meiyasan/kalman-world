@@ -1,0 +1,344 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/cxx/02_extended.cc File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/cxx/02_extended.cc File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/cxx/02_extended.cc File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('02__extended_8cc.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">02_extended.cc File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Extended engine: nonlinear tracking, numerical Jacobians, KF equivalence.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_kalman_8h_source.html">Kalman/Kalman.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_check_8h_source.html">Check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_fixtures_8h_source.html">Fixtures.h</a>&quot;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for 02_extended.cc:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="02__extended_8cc__incl.svg" width="5607" height="755"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="02__extended_8cc_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="02__extended_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Extended engine: nonlinear tracking, numerical Jacobians, KF equivalence. </p>
+
+<p class="definition">Definition in file <a class="el" href="02__extended_8cc_source.html">02_extended.cc</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="02__extended_8cc_source.html#l00013">13</a> of file <a class="el" href="02__extended_8cc_source.html">02_extended.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   14</span>{</div>
+<div class="line"><span class="lineno">   15</span>    <span class="comment">// --- the extended engine on a genuinely nonlinear model -----------------</span></div>
+<div class="line"><span class="lineno">   16</span>    <a class="code hl_class" href="class_fixture_1_1_pendulum.html">Fixture::Pendulum</a> <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>(1.0, 0.15, 100.);</div>
+<div class="line"><span class="lineno">   17</span>    <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.SetNoise(1e-2, 5e-2);</div>
+<div class="line"><span class="lineno">   18</span> </div>
+<div class="line"><span class="lineno">   19</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> x0(2); x0(0) = 0.6; x0(1) = 0.;   <span class="comment">// ~34 degrees: sin(x) is not x</span></div>
+<div class="line"><span class="lineno">   20</span>    <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.SetInitialState(x0);</div>
+<div class="line"><span class="lineno">   21</span> </div>
+<div class="line"><span class="lineno">   22</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.DefaultEngine() == EngineKind::Extended, <span class="stringliteral">&quot;pendulum: asks for the extended engine&quot;</span>);</div>
+<div class="line"><span class="lineno">   23</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(!<a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.HasAnalyticJacobian(), <span class="stringliteral">&quot;pendulum: declares a numerical Jacobian&quot;</span>);</div>
+<div class="line"><span class="lineno">   24</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.Differentiator() == DifferentiatorKind::Central, <span class="stringliteral">&quot;pendulum: central differences by default&quot;</span>);</div>
+<div class="line"><span class="lineno">   25</span>    {</div>
+<div class="line"><span class="lineno">   26</span>        <a class="code hl_class" href="class_fixture_1_1_pendulum.html">Fixture::Pendulum</a> other = <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>;</div>
+<div class="line"><span class="lineno">   27</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>(2);</div>
+<div class="line"><span class="lineno">   28</span>        <a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>(0) = 0.4; <a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>(1) = -0.3;</div>
+<div class="line"><span class="lineno">   29</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> central = other.<a class="code hl_function" href="class_kalman_1_1_model.html#ae74a793d24da7307b1c0274f74c299e9">Jacobian</a>(<a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(), 0.);</div>
+<div class="line"><span class="lineno">   30</span>        other.<a class="code hl_function" href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">SetDifferentiator</a>(DifferentiatorKind::Forward);</div>
+<div class="line"><span class="lineno">   31</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(other.<a class="code hl_function" href="class_kalman_1_1_model.html#a41087f82d625fb45e45b32f8e25a6c5d">Differentiator</a>() == DifferentiatorKind::Forward, <span class="stringliteral">&quot;model: the scheme is a declared property&quot;</span>);</div>
+<div class="line"><span class="lineno">   32</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> forward = other.<a class="code hl_function" href="class_kalman_1_1_model.html#ae74a793d24da7307b1c0274f74c299e9">Jacobian</a>(<a class="code hl_variable" href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a>, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(), 0.);</div>
+<div class="line"><span class="lineno">   33</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(forward(1, 0), central(1, 0), 1e-4, <span class="stringliteral">&quot;model: forward and central agree to first order&quot;</span>);</div>
+<div class="line"><span class="lineno">   34</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(forward(1, 0) != central(1, 0), <span class="stringliteral">&quot;model: and are not the same scheme&quot;</span>);</div>
+<div class="line"><span class="lineno">   35</span>        <span class="keywordtype">bool</span> refused = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   36</span>        <span class="keywordflow">try</span> { other.<a class="code hl_function" href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">SetDifferentiator</a>(DifferentiatorKind::Automatic); }</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { refused = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">   38</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(refused, <span class="stringliteral">&quot;model: automatic differentiation is refused in the core&quot;</span>);</div>
+<div class="line"><span class="lineno">   39</span>    }</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span>    <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(&amp;pendulum, 4242);</div>
+<div class="line"><span class="lineno">   42</span>    sampler.Generate(1500, x0);</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span>    <a class="code hl_class" href="class_kalman_1_1_filters_1_1_e_k_f.html">Filters::EKF</a> ekf(&amp;pendulum);</div>
+<div class="line"><span class="lineno">   45</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = ekf.Forward(sampler.Measurements());</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> nis = ekf.MeanNIS();</div>
+<div class="line"><span class="lineno">   48</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nis &gt; 0.6 &amp;&amp; nis &lt; 1.8, <span class="stringliteral">&quot;EKF: mean NIS consistent with m = 1&quot;</span>);</div>
+<div class="line"><span class="lineno">   49</span> </div>
+<div class="line"><span class="lineno">   50</span>    <span class="keywordtype">double</span> eraw = 0.;</div>
+<div class="line"><span class="lineno">   51</span>    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 1500; ++k)</div>
+<div class="line"><span class="lineno">   52</span>        eraw += std::pow(sampler.Measurements()[k](0) - sampler.Truth()[k](0), 2);</div>
+<div class="line"><span class="lineno">   53</span>    eraw = std::sqrt(eraw / 1500.);</div>
+<div class="line"><span class="lineno">   54</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> eest = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth());</div>
+<div class="line"><span class="lineno">   55</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(eest &lt; 0.5 * eraw, <span class="stringliteral">&quot;EKF: filtering at least halves the angle error&quot;</span>);</div>
+<div class="line"><span class="lineno">   56</span> </div>
+<div class="line"><span class="lineno">   57</span>    <span class="comment">// The velocity is never measured; the filter has to infer it from the dynamics.</span></div>
+<div class="line"><span class="lineno">   58</span>    <span class="keywordtype">double</span> evel = 0.;</div>
+<div class="line"><span class="lineno">   59</span>    <span class="keywordflow">for</span> (std::size_t k = 500; k &lt; 1500; ++k)</div>
+<div class="line"><span class="lineno">   60</span>        evel += std::pow(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(1) - sampler.Truth()[k](1), 2);</div>
+<div class="line"><span class="lineno">   61</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(std::sqrt(evel / 1000.) &lt; 0.3, <span class="stringliteral">&quot;EKF: recovers the unobserved angular velocity&quot;</span>);</div>
+<div class="line"><span class="lineno">   62</span> </div>
+<div class="line"><span class="lineno">   63</span>    <span class="comment">// --- the Jacobian itself -------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   64</span>    {</div>
+<div class="line"><span class="lineno">   65</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> x(2); x(0) = 0.4; x(1) = -0.3;</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> u;</div>
+<div class="line"><span class="lineno">   67</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> J = <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.Jacobian(x, u, 0.);</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(J.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>() == 2 &amp;&amp; J.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>() == 2, <span class="stringliteral">&quot;Jacobian: shape (2, 2)&quot;</span>);</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>        <span class="comment">// One RK4 step of dt = 0.01 is I + dt A + O(dt^2), with</span></div>
+<div class="line"><span class="lineno">   72</span>        <span class="comment">// A = [[0, 1], [-(g/l) cos(x0), -gamma]].</span></div>
+<div class="line"><span class="lineno">   73</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> dt = <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.DeltaT();</div>
+<div class="line"><span class="lineno">   74</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(J(0, 0), 1., 5e-3, <span class="stringliteral">&quot;Jacobian: (0,0) ~ 1&quot;</span>);</div>
+<div class="line"><span class="lineno">   75</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(J(0, 1), dt, 5e-4, <span class="stringliteral">&quot;Jacobian: (0,1) ~ dt&quot;</span>);</div>
+<div class="line"><span class="lineno">   76</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(J(1, 0), -dt * (<a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.Gravity() / <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.Length()) * std::cos(0.4),</div>
+<div class="line"><span class="lineno">   77</span>                    5e-3, <span class="stringliteral">&quot;Jacobian: (1,0) ~ -dt (g/l) cos(theta)&quot;</span>);</div>
+<div class="line"><span class="lineno">   78</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(J(1, 1), 1. - dt * <a class="code hl_function" href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">pendulum</a>.Damping(), 5e-3, <span class="stringliteral">&quot;Jacobian: (1,1) ~ 1 - dt gamma&quot;</span>);</div>
+<div class="line"><span class="lineno">   79</span>    }</div>
+<div class="line"><span class="lineno">   80</span> </div>
+<div class="line"><span class="lineno">   81</span>    <span class="comment">// --- a linear model must give the same answer under either engine --------</span></div>
+<div class="line"><span class="lineno">   82</span>    {</div>
+<div class="line"><span class="lineno">   83</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> cv(1, 100.);</div>
+<div class="line"><span class="lineno">   84</span>        cv.SetProcessNoise(0.5);</div>
+<div class="line"><span class="lineno">   85</span>        cv.SetMeasurementNoise(0.2);</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> s(&amp;cv, 777);</div>
+<div class="line"><span class="lineno">   88</span>        s.Generate(500);</div>
+<div class="line"><span class="lineno">   89</span> </div>
+<div class="line"><span class="lineno">   90</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;cv);</div>
+<div class="line"><span class="lineno">   91</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_e_k_f.html">Filters::EKF</a> ekf_lin(&amp;cv);</div>
+<div class="line"><span class="lineno">   92</span> </div>
+<div class="line"><span class="lineno">   93</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> a = kf.Forward(s.Measurements());</div>
+<div class="line"><span class="lineno">   94</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> b = ekf_lin.Forward(s.Measurements());</div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span>        <span class="keywordtype">double</span> maxdiff = 0.;</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; 500; ++k)</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 2; ++i)</div>
+<div class="line"><span class="lineno">   99</span>                maxdiff = std::max(maxdiff, std::abs(a.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(i) - b.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(i)));</div>
+<div class="line"><span class="lineno">  100</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(maxdiff &lt; 1e-9, <span class="stringliteral">&quot;EKF reduces to KF on a linear model&quot;</span>);</div>
+<div class="line"><span class="lineno">  101</span>    }</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>    <span class="comment">// --- an engine can be swapped on a plain Filter ---------------------------</span></div>
+<div class="line"><span class="lineno">  104</span>    {</div>
+<div class="line"><span class="lineno">  105</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> cv(1, 100.);</div>
+<div class="line"><span class="lineno">  106</span>        <a class="code hl_class" href="class_kalman_1_1_engines_1_1_linear.html">Engines::Linear</a> linear;</div>
+<div class="line"><span class="lineno">  107</span>        <a class="code hl_class" href="class_kalman_1_1_filter.html">Filter</a> <span class="keyword">generic</span>(&amp;cv, &amp;linear);</div>
+<div class="line"><span class="lineno">  108</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(generic.GetEngine()-&gt;Kind() == EngineKind::Linear, <span class="stringliteral">&quot;generic filter: honours the given engine&quot;</span>);</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span>        <a class="code hl_class" href="class_kalman_1_1_engines_1_1_extended.html">Engines::Extended</a> extended;</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keyword">generic</span>.SetEngine(&amp;extended);</div>
+<div class="line"><span class="lineno">  112</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(generic.GetEngine()-&gt;Kind() == EngineKind::Extended, <span class="stringliteral">&quot;generic filter: SetEngine swaps it&quot;</span>);</div>
+<div class="line"><span class="lineno">  113</span>    }</div>
+<div class="line"><span class="lineno">  114</span> </div>
+<div class="line"><span class="lineno">  115</span>    <span class="comment">// --- a model asking for a kind that is not one must fail loudly --------------</span></div>
+<div class="line"><span class="lineno">  116</span>    {</div>
+<div class="line"><span class="lineno">  117</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> cv(1, 100.);</div>
+<div class="line"><span class="lineno">  118</span>        cv.SetDefaultEngine(<span class="keyword">static_cast&lt;</span><a class="code hl_enumeration" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a><span class="keyword">&gt;</span>(42));   <span class="comment">// a corrupt spec, a version skew</span></div>
+<div class="line"><span class="lineno">  119</span> </div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordtype">bool</span> threw = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">try</span> { <a class="code hl_class" href="class_kalman_1_1_filter.html">Filter</a> f(&amp;cv); }</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::exception &amp;) { threw = <span class="keyword">true</span>; }</div>
+<div class="line"><span class="lineno">  123</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;resolution: an unimplemented engine kind throws rather than substituting&quot;</span>);</div>
+<div class="line"><span class="lineno">  124</span>    }</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a>(<span class="stringliteral">&quot;extended&quot;</span>);</div>
+<div class="line"><span class="lineno">  127</span>}</div>
+<div class="ttc" id="a_check_8h_html_a98ef4241b35c5906aeba89abe3cefd8f"><div class="ttname"><a href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a></div><div class="ttdeci">#define CHECK_CLOSE(got, want, tol, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00049">Check.h:49</a></div></div>
+<div class="ttc" id="a_check_8h_html_af78f878a664d9956c852a668fc3419ab"><div class="ttname"><a href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a></div><div class="ttdeci">#define CHECK(cond, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00048">Check.h:48</a></div></div>
+<div class="ttc" id="a_json_8cc_html_af1f11291c39b6010d450a6cc8b755b99"><div class="ttname"><a href="_json_8cc.html#af1f11291c39b6010d450a6cc8b755b99">at</a></div><div class="ttdeci">std::size_t at</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00082">Json.cc:82</a></div></div>
+<div class="ttc" id="aclass_fixture_1_1_constant_velocity_html"><div class="ttname"><a href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a></div><div class="ttdoc">Constant velocity with white-noise acceleration — the canonical linear model.</div><div class="ttdef"><b>Definition</b> <a href="_fixtures_8h_source.html#l00043">Fixtures.h:44</a></div></div>
+<div class="ttc" id="aclass_fixture_1_1_pendulum_html"><div class="ttname"><a href="class_fixture_1_1_pendulum.html">Fixture::Pendulum</a></div><div class="ttdoc">Damped pendulum — the smallest genuinely nonlinear model.</div><div class="ttdef"><b>Definition</b> <a href="_fixtures_8h_source.html#l00149">Fixtures.h:150</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_extended_html"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_extended.html">Kalman::Engines::Extended</a></div><div class="ttdoc">Jacobian-linearised Kalman step for nonlinear models.</div><div class="ttdef"><b>Definition</b> <a href="_engines_2_extended_8h_source.html#l00031">Extended.h:32</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_linear_html"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_linear.html">Kalman::Engines::Linear</a></div><div class="ttdoc">Standard linear Kalman step, using the model's matrices directly.</div><div class="ttdef"><b>Definition</b> <a href="_engines_2_linear_8h_source.html#l00027">Linear.h:28</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html"><div class="ttname"><a href="class_kalman_1_1_filter.html">Kalman::Filter</a></div><div class="ttdoc">The workflow — WHEN each step runs, and what is kept.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00054">Filter.h:55</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_e_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_e_k_f.html">Kalman::Filters::EKF</a></div><div class="ttdoc">The extended Kalman filter — a model driven by Kalman::Engines::Extended.</div><div class="ttdef"><b>Definition</b> <a href="_e_k_f_8h_source.html#l00034">EKF.h:35</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a643aff8a0e981bc3e533029259db7dda"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">Kalman::IO::Record::State</a></div><div class="ttdeci">const Vector &amp; State(std::size_t k) const</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00068">Record.cc:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_aa5dbe9f7404420162e4f451917c5f788"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">Kalman::IO::Record::RMSE</a></div><div class="ttdeci">double RMSE(std::size_t i, const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Root-mean-square difference between component i and truth.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00115">Record.cc:115</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_a571e5d05d267249cd6b396250ccb8ce2"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Kalman::Matrix::Rows</a></div><div class="ttdeci">std::size_t Rows() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00097">Matrix.h:97</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_aac29b6bb3af29976d7626d5ca569ae1c"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Kalman::Matrix::Cols</a></div><div class="ttdeci">std::size_t Cols() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00098">Matrix.h:98</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a41087f82d625fb45e45b32f8e25a6c5d"><div class="ttname"><a href="class_kalman_1_1_model.html#a41087f82d625fb45e45b32f8e25a6c5d">Kalman::Model::Differentiator</a></div><div class="ttdeci">DifferentiatorKind Differentiator() const</div><div class="ttdoc">Where Jacobian() and JacobianH() come from: Analytic, or a numerical scheme.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00315">Model.h:315</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_abbc77b9e0f133acbd9db352fd51bffc4"><div class="ttname"><a href="class_kalman_1_1_model.html#abbc77b9e0f133acbd9db352fd51bffc4">Kalman::Model::SetDifferentiator</a></div><div class="ttdeci">void SetDifferentiator(DifferentiatorKind kind, double step=0.)</div><div class="ttdoc">Declare how this model's Jacobians are obtained.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00147">Model.cc:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ae74a793d24da7307b1c0274f74c299e9"><div class="ttname"><a href="class_kalman_1_1_model.html#ae74a793d24da7307b1c0274f74c299e9">Kalman::Model::Jacobian</a></div><div class="ttdeci">virtual Matrix Jacobian(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">df/dx — F(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00240">Model.cc:240</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_sampler_html"><div class="ttname"><a href="class_kalman_1_1_sampler.html">Kalman::Sampler</a></div><div class="ttdoc">Draws truth and measurements from a model, for tests and demos.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8h_source.html#l00047">Sampler.h:48</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_check_html_a9ed42acec2d36cf39daa24ede8a31f95"><div class="ttname"><a href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a></div><div class="ttdeci">int Summary(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00040">Check.h:40</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">Kalman::EngineKind</a></div><div class="ttdeci">EngineKind</div><div class="ttdoc">Which inference algorithm a model wants, and which one an engine provides.</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00026">Constants.h:27</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__native__integrators_html_a4602de2c163d825276876c06c838f505"><div class="ttname"><a href="namespacetests_1_1test__native__integrators.html#a4602de2c163d825276876c06c838f505">tests.test_native_integrators.pendulum</a></div><div class="ttdeci">pendulum(x, u, t)</div><div class="ttdef"><b>Definition</b> <a href="test__native__integrators_8py_source.html#l00012">test_native_integrators.py:12</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="dir_e2c7378c4e3f48589680fb7bfbe13423.html">cxx</a></li><li class="navelem"><a class="el" href="02__extended_8cc.html">02_extended.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -1,0 +1,774 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.apps.astro.space.translunar Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.apps.astro.space.translunar Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.apps.astro.space.translunar Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">modules.apps.astro.space.translunar Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_observable.html">TransLunarObservable</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_state.html">TransLunarState</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a1aada7eafa90b9f312762c8198a29f27" id="r_a1aada7eafa90b9f312762c8198a29f27"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a1aada7eafa90b9f312762c8198a29f27">_kep_arc</a> (r0, v0, tof_ks, n=200, mu=None)</td></tr>
+<tr class="separator:a1aada7eafa90b9f312762c8198a29f27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa12f5f33022b304a9ef7e2efa776510f" id="r_aa12f5f33022b304a9ef7e2efa776510f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#aa12f5f33022b304a9ef7e2efa776510f">_orbit_ellipse</a> (body, t_ref=None, n=300)</td></tr>
+<tr class="separator:aa12f5f33022b304a9ef7e2efa776510f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeca32534f421a3c44851c1e96b38c126" id="r_aeca32534f421a3c44851c1e96b38c126"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#aeca32534f421a3c44851c1e96b38c126">_third_body</a> (r, r_body, GM)</td></tr>
+<tr class="separator:aeca32534f421a3c44851c1e96b38c126"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd3f57eff7c7bcba3a5cc8934c4e33fa" id="r_afd3f57eff7c7bcba3a5cc8934c4e33fa"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#afd3f57eff7c7bcba3a5cc8934c4e33fa">gravity</a> (r, t, moon_phase=0.0, sun_phase=0.0, bodies=(&quot;earth&quot;, &quot;moon&quot;, &quot;sun&quot;))</td></tr>
+<tr class="separator:afd3f57eff7c7bcba3a5cc8934c4e33fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1309003e1160cc600aa17b9f156e4f28" id="r_a1309003e1160cc600aa17b9f156e4f28"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a1309003e1160cc600aa17b9f156e4f28">_native_integrator</a> (model)</td></tr>
+<tr class="separator:a1309003e1160cc600aa17b9f156e4f28"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab071b40c12020ac792e66b1e8f1ba2b1" id="r_ab071b40c12020ac792e66b1e8f1ba2b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#ab071b40c12020ac792e66b1e8f1ba2b1">_stumpff_C</a> (z)</td></tr>
+<tr class="separator:ab071b40c12020ac792e66b1e8f1ba2b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae92797eeede82149f229898aeaf37158" id="r_ae92797eeede82149f229898aeaf37158"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#ae92797eeede82149f229898aeaf37158">_stumpff_S</a> (z)</td></tr>
+<tr class="separator:ae92797eeede82149f229898aeaf37158"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ab12b7f7888d68138890b46df8047bdaa" id="r_ab12b7f7888d68138890b46df8047bdaa"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#ab12b7f7888d68138890b46df8047bdaa">_PLANETS</a> = (&quot;mercury&quot;, &quot;venus&quot;, &quot;earth&quot;, &quot;mars&quot;, &quot;jupiter&quot;, &quot;saturn&quot;, &quot;uranus&quot;, &quot;neptune&quot;)</td></tr>
+<tr class="separator:ab12b7f7888d68138890b46df8047bdaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d31e8db579e7948f2f2bf62fe78e4ef" id="r_a1d31e8db579e7948f2f2bf62fe78e4ef"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a1d31e8db579e7948f2f2bf62fe78e4ef">_PLANET_STYLE</a></td></tr>
+<tr class="separator:a1d31e8db579e7948f2f2bf62fe78e4ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59fa1eb5406cb803bb0d3ea1c9aa3e34" id="r_a59fa1eb5406cb803bb0d3ea1c9aa3e34"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a59fa1eb5406cb803bb0d3ea1c9aa3e34">_BODY_COLOR</a></td></tr>
+<tr class="separator:a59fa1eb5406cb803bb0d3ea1c9aa3e34"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a35268a07bed8b5150b494cd2515eee1d" id="r_a35268a07bed8b5150b494cd2515eee1d"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a35268a07bed8b5150b494cd2515eee1d">_BODY_MS</a></td></tr>
+<tr class="separator:a35268a07bed8b5150b494cd2515eee1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68dc5652fbde528090f5ec1ea420a8f0" id="r_a68dc5652fbde528090f5ec1ea420a8f0"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a68dc5652fbde528090f5ec1ea420a8f0">_LEG_COLORS</a> = [&quot;royalblue&quot;, &quot;darkorange&quot;, &quot;limegreen&quot;, &quot;crimson&quot;, &quot;violet&quot;, &quot;gold&quot;]</td></tr>
+<tr class="separator:a68dc5652fbde528090f5ec1ea420a8f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca13ab9a6afe53be30e0ae0889a690f1" id="r_aca13ab9a6afe53be30e0ae0889a690f1"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#aca13ab9a6afe53be30e0ae0889a690f1">_NATIVE_INTEGRATORS</a> = {&quot;euler&quot;: 0, &quot;rk4&quot;: 1, &quot;dormand_prince&quot;: 2}</td></tr>
+<tr class="separator:aca13ab9a6afe53be30e0ae0889a690f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9d430c1d3d0b34fe7df70dd10003f17b" id="r_a9d430c1d3d0b34fe7df70dd10003f17b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#a9d430c1d3d0b34fe7df70dd10003f17b">_SPACE_TWIN_CONTRACT</a></td></tr>
+<tr class="separator:a9d430c1d3d0b34fe7df70dd10003f17b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">Trans-lunar injection and cislunar cruise (Earth-Moon).</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a1aada7eafa90b9f312762c8198a29f27" name="a1aada7eafa90b9f312762c8198a29f27"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1aada7eafa90b9f312762c8198a29f27">&#9670;&#160;</a></span>_kep_arc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._kep_arc </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>v0</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>tof_ks</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>200</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>mu</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Two-body RK4 arc: returns (n+1, 3) position array in Mm.</pre> 
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00064">64</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   64</span><span class="keyword">def </span>_kep_arc(r0, v0, tof_ks, n=200, mu=None):</div>
+<div class="line"><span class="lineno">   65</span>    <span class="stringliteral">&quot;&quot;&quot;Two-body RK4 arc: returns (n+1, 3) position array in Mm.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   66</span>    <span class="keywordflow">if</span> mu <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   67</span>        mu = GM_SUN</div>
+<div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>_deriv(s, t): <span class="keywordflow">return</span> np.r_[s[3:], -mu * s[:3] / np.linalg.norm(s[:3]) ** 3]</div>
+<div class="line"><span class="lineno">   69</span>    s = np.concatenate([r0, v0]); dt = tof_ks / n</div>
+<div class="line"><span class="lineno">   70</span>    pts = [s[:3].copy()]</div>
+<div class="line"><span class="lineno">   71</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(n):</div>
+<div class="line"><span class="lineno">   72</span>        s = _rk4(s, 0, dt, _deriv)</div>
+<div class="line"><span class="lineno">   73</span>        pts.append(s[:3].copy())</div>
+<div class="line"><span class="lineno">   74</span>    <span class="keywordflow">return</span> np.array(pts)</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1309003e1160cc600aa17b9f156e4f28" name="a1309003e1160cc600aa17b9f156e4f28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1309003e1160cc600aa17b9f156e4f28">&#9670;&#160;</a></span>_native_integrator()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._native_integrator </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The C++ IntegratorKind of ``model``'s integrator, or None when it has no twin.</pre> 
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00132">132</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span><span class="keyword">def </span>_native_integrator(model):</div>
+<div class="line"><span class="lineno">  133</span>    <span class="stringliteral">&quot;&quot;&quot;The C++ IntegratorKind of ``model``&#39;s integrator, or None when it has no twin.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  134</span>    <span class="keyword">from</span> ....framework.integrator <span class="keyword">import</span> KalmanIntegrator, _BUILTIN_STEPS</div>
+<div class="line"><span class="lineno">  135</span>    integrator = model.default_integrator()</div>
+<div class="line"><span class="lineno">  136</span>    name = getattr(integrator, <span class="stringliteral">&quot;NATIVE&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  137</span>    kind = _NATIVE_INTEGRATORS.get(name)</div>
+<div class="line"><span class="lineno">  138</span>    <span class="keywordflow">if</span> kind <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> type(integrator)._step <span class="keywordflow">is</span> <span class="keywordflow">not</span> _BUILTIN_STEPS.get(name) \</div>
+<div class="line"><span class="lineno">  139</span>            <span class="keywordflow">or</span> type(integrator).step <span class="keywordflow">is</span> <span class="keywordflow">not</span> KalmanIntegrator.step:</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  141</span>    <span class="keywordflow">if</span> kind == 2 <span class="keywordflow">and</span> (integrator.rtol, integrator.atol, integrator.max_substeps) != (1e-6, 1e-9, 10_000):</div>
+<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  143</span>    <span class="keywordflow">return</span> kind</div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span> </div>
+<div class="line"><span class="lineno">  146</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">  147</span><span class="comment">#  1) Trans-lunar coast — the gravitational catapult (Earth + Moon + Sun)</span></div>
+<div class="line"><span class="lineno">  148</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">  149</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa12f5f33022b304a9ef7e2efa776510f" name="aa12f5f33022b304a9ef7e2efa776510f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa12f5f33022b304a9ef7e2efa776510f">&#9670;&#160;</a></span>_orbit_ellipse()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._orbit_ellipse </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t_ref</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>300</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">True heliocentric orbit path for *body* (one full period, two-body RK4).
+
+Returns an (n+1, 2) array of (x, y) in AU, or ``None`` for hyperbolic orbits.
+Using the actual ephemeris position+velocity avoids the circular-orbit approximation
+and gives the correct elliptical shape (eccentricity, inclination projection).
+</pre> 
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00077">77</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span><span class="keyword">def </span>_orbit_ellipse(body, t_ref=None, n=300):</div>
+<div class="line"><span class="lineno">   78</span>    <span class="stringliteral">&quot;&quot;&quot;True heliocentric orbit path for *body* (one full period, two-body RK4).</span></div>
+<div class="line"><span class="lineno">   79</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   80</span><span class="stringliteral">    Returns an (n+1, 2) array of (x, y) in AU, or ``None`` for hyperbolic orbits.</span></div>
+<div class="line"><span class="lineno">   81</span><span class="stringliteral">    Using the actual ephemeris position+velocity avoids the circular-orbit approximation</span></div>
+<div class="line"><span class="lineno">   82</span><span class="stringliteral">    and gives the correct elliptical shape (eccentricity, inclination projection).</span></div>
+<div class="line"><span class="lineno">   83</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   84</span>    r0, v0 = body_state(body, t_ref)</div>
+<div class="line"><span class="lineno">   85</span>    r0_mag = np.linalg.norm(r0)</div>
+<div class="line"><span class="lineno">   86</span>    v0_sq  = float(np.dot(v0, v0))</div>
+<div class="line"><span class="lineno">   87</span>    denom  = 2.0 * GM_SUN / r0_mag - v0_sq</div>
+<div class="line"><span class="lineno">   88</span>    <span class="keywordflow">if</span> denom &lt;= 0:</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   90</span>    a    = GM_SUN / denom</div>
+<div class="line"><span class="lineno">   91</span>    T_ks = 2.0 * np.pi * np.sqrt(a ** 3 / GM_SUN)</div>
+<div class="line"><span class="lineno">   92</span>    pts  = _kep_arc(r0, v0, T_ks, n=n)</div>
+<div class="line"><span class="lineno">   93</span>    <span class="keywordflow">return</span> pts[:, :2] / D_SUN</div>
+<div class="line"><span class="lineno">   94</span> </div>
+<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   96</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">   97</span><span class="comment">#  Geocentric gravity helpers (shared by the trans-lunar model)</span></div>
+<div class="line"><span class="lineno">   98</span><span class="comment"># ===========================================================================</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab071b40c12020ac792e66b1e8f1ba2b1" name="ab071b40c12020ac792e66b1e8f1ba2b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab071b40c12020ac792e66b1e8f1ba2b1">&#9670;&#160;</a></span>_stumpff_C()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._stumpff_C </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00437">437</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  437</span><span class="keyword">def </span>_stumpff_C(z):</div>
+<div class="line"><span class="lineno">  438</span>    <span class="keywordflow">if</span> z &gt; 1e-6:</div>
+<div class="line"><span class="lineno">  439</span>        <span class="keywordflow">return</span> (1.0 - np.cos(np.sqrt(z))) / z</div>
+<div class="line"><span class="lineno">  440</span>    <span class="keywordflow">if</span> z &lt; -1e-6:</div>
+<div class="line"><span class="lineno">  441</span>        <span class="keywordflow">return</span> (np.cosh(np.sqrt(-z)) - 1.0) / (-z)</div>
+<div class="line"><span class="lineno">  442</span>    <span class="keywordflow">return</span> 0.5</div>
+<div class="line"><span class="lineno">  443</span> </div>
+<div class="line"><span class="lineno">  444</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae92797eeede82149f229898aeaf37158" name="ae92797eeede82149f229898aeaf37158"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae92797eeede82149f229898aeaf37158">&#9670;&#160;</a></span>_stumpff_S()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._stumpff_S </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00445">445</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  445</span><span class="keyword">def </span>_stumpff_S(z):</div>
+<div class="line"><span class="lineno">  446</span>    <span class="keywordflow">if</span> z &gt; 1e-6:</div>
+<div class="line"><span class="lineno">  447</span>        sz = np.sqrt(z); <span class="keywordflow">return</span> (sz - np.sin(sz)) / sz ** 3</div>
+<div class="line"><span class="lineno">  448</span>    <span class="keywordflow">if</span> z &lt; -1e-6:</div>
+<div class="line"><span class="lineno">  449</span>        sz = np.sqrt(-z); <span class="keywordflow">return</span> (np.sinh(sz) - sz) / sz ** 3</div>
+<div class="line"><span class="lineno">  450</span>    <span class="keywordflow">return</span> 1.0 / 6.0</div>
+<div class="line"><span class="lineno">  451</span> </div>
+<div class="line"><span class="lineno">  452</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aeca32534f421a3c44851c1e96b38c126" name="aeca32534f421a3c44851c1e96b38c126"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aeca32534f421a3c44851c1e96b38c126">&#9670;&#160;</a></span>_third_body()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._third_body </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r_body</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>GM</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">Third-body perturbation in a frame centred on the primary: ``GM[(r_b-r)/|r_b-r|³ −
+r_b/|r_b|³]``. The first term is the body's direct pull on the spacecraft; the second
+(indirect) subtracts its pull on the central body, so a distant body contributes only its
+true (tiny) tidal effect rather than a spurious bulk force.</pre> 
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00099">99</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span><span class="keyword">def </span>_third_body(r, r_body, GM):</div>
+<div class="line"><span class="lineno">  100</span>    <span class="stringliteral">&quot;&quot;&quot;Third-body perturbation in a frame centred on the primary: ``GM[(r_b-r)/|r_b-r|³ −</span></div>
+<div class="line"><span class="lineno">  101</span><span class="stringliteral">    r_b/|r_b|³]``. The first term is the body&#39;s direct pull on the spacecraft; the second</span></div>
+<div class="line"><span class="lineno">  102</span><span class="stringliteral">    (indirect) subtracts its pull on the central body, so a distant body contributes only its</span></div>
+<div class="line"><span class="lineno">  103</span><span class="stringliteral">    true (tiny) tidal effect rather than a spurious bulk force.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  104</span>    d = r_body - r</div>
+<div class="line"><span class="lineno">  105</span>    <span class="keywordflow">return</span> GM * (d / np.linalg.norm(d) ** 3 - r_body / np.linalg.norm(r_body) ** 3)</div>
+<div class="line"><span class="lineno">  106</span> </div>
+<div class="line"><span class="lineno">  107</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afd3f57eff7c7bcba3a5cc8934c4e33fa" name="afd3f57eff7c7bcba3a5cc8934c4e33fa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd3f57eff7c7bcba3a5cc8934c4e33fa">&#9670;&#160;</a></span>gravity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar.gravity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>moon_phase</em> = <code>0.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sun_phase</em> = <code>0.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>bodies</em> = <code>(&quot;earth&quot;,&#160;&quot;moon&quot;,&#160;&quot;sun&quot;)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Geocentric acceleration on a spacecraft at ``r`` (scaled): Earth's central pull plus
+the **third-body perturbations** of the Moon and Sun (analytic circular orbits).</pre> 
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00108">108</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  108</span><span class="keyword">def </span>gravity(r, t, moon_phase=0.0, sun_phase=0.0, bodies=(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;moon&quot;</span>, <span class="stringliteral">&quot;sun&quot;</span>)):</div>
+<div class="line"><span class="lineno">  109</span>    <span class="stringliteral">&quot;&quot;&quot;Geocentric acceleration on a spacecraft at ``r`` (scaled): Earth&#39;s central pull plus</span></div>
+<div class="line"><span class="lineno">  110</span><span class="stringliteral">    the **third-body perturbations** of the Moon and Sun (analytic circular orbits).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  111</span>    r = np.asarray(r, dtype=float).reshape(3)</div>
+<div class="line"><span class="lineno">  112</span>    a = np.zeros(3)</div>
+<div class="line"><span class="lineno">  113</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;earth&quot;</span> <span class="keywordflow">in</span> bodies:</div>
+<div class="line"><span class="lineno">  114</span>        a += -GM_EARTH * r / np.linalg.norm(r) ** 3</div>
+<div class="line"><span class="lineno">  115</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;moon&quot;</span> <span class="keywordflow">in</span> bodies:</div>
+<div class="line"><span class="lineno">  116</span>        a += _third_body(r, moon_position(t, moon_phase), GM_MOON)</div>
+<div class="line"><span class="lineno">  117</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;sun&quot;</span> <span class="keywordflow">in</span> bodies:</div>
+<div class="line"><span class="lineno">  118</span>        a += _third_body(r, sun_position(t, sun_phase), GM_SUN)</div>
+<div class="line"><span class="lineno">  119</span>    <span class="keywordflow">return</span> a</div>
+<div class="line"><span class="lineno">  120</span> </div>
+<div class="line"><span class="lineno">  121</span> </div>
+<div class="line"><span class="lineno">  122</span><span class="comment"># The C++ twins (libKalmanApps) integrate with the built-in Euler, RK4 or default</span></div>
+<div class="line"><span class="lineno">  123</span><span class="comment"># Dormand-Prince; any other scheme, or a subclass of one, keeps the Python physics.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="a59fa1eb5406cb803bb0d3ea1c9aa3e34" name="a59fa1eb5406cb803bb0d3ea1c9aa3e34"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a59fa1eb5406cb803bb0d3ea1c9aa3e34">&#9670;&#160;</a></span>_BODY_COLOR</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.apps.astro.space.translunar._BODY_COLOR</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {</div>
+<div class="line"><span class="lineno">    2</span>    <span class="stringliteral">&quot;sun&quot;</span>: <span class="stringliteral">&quot;gold&quot;</span>, <span class="stringliteral">&quot;mercury&quot;</span>: <span class="stringliteral">&quot;#9c9c9c&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>: <span class="stringliteral">&quot;#d9a066&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>: <span class="stringliteral">&quot;steelblue&quot;</span>,</div>
+<div class="line"><span class="lineno">    3</span>    <span class="stringliteral">&quot;mars&quot;</span>: <span class="stringliteral">&quot;#c1440e&quot;</span>, <span class="stringliteral">&quot;jupiter&quot;</span>: <span class="stringliteral">&quot;#caa472&quot;</span>, <span class="stringliteral">&quot;saturn&quot;</span>: <span class="stringliteral">&quot;#e0c47a&quot;</span>,</div>
+<div class="line"><span class="lineno">    4</span>    <span class="stringliteral">&quot;uranus&quot;</span>: <span class="stringliteral">&quot;#9fd6e0&quot;</span>, <span class="stringliteral">&quot;neptune&quot;</span>: <span class="stringliteral">&quot;#5b7fd6&quot;</span>, <span class="stringliteral">&quot;moon&quot;</span>: <span class="stringliteral">&quot;#aaa&quot;</span>,</div>
+<div class="line"><span class="lineno">    5</span>}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00050">50</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="a35268a07bed8b5150b494cd2515eee1d" name="a35268a07bed8b5150b494cd2515eee1d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a35268a07bed8b5150b494cd2515eee1d">&#9670;&#160;</a></span>_BODY_MS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.apps.astro.space.translunar._BODY_MS</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {</div>
+<div class="line"><span class="lineno">    2</span>    <span class="stringliteral">&quot;sun&quot;</span>: 20, <span class="stringliteral">&quot;mercury&quot;</span>: 5, <span class="stringliteral">&quot;venus&quot;</span>: 9, <span class="stringliteral">&quot;earth&quot;</span>: 9, <span class="stringliteral">&quot;moon&quot;</span>: 5,</div>
+<div class="line"><span class="lineno">    3</span>    <span class="stringliteral">&quot;mars&quot;</span>: 7, <span class="stringliteral">&quot;jupiter&quot;</span>: 16, <span class="stringliteral">&quot;saturn&quot;</span>: 14, <span class="stringliteral">&quot;uranus&quot;</span>: 11, <span class="stringliteral">&quot;neptune&quot;</span>: 11,</div>
+<div class="line"><span class="lineno">    4</span>}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00055">55</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="a68dc5652fbde528090f5ec1ea420a8f0" name="a68dc5652fbde528090f5ec1ea420a8f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68dc5652fbde528090f5ec1ea420a8f0">&#9670;&#160;</a></span>_LEG_COLORS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">list modules.apps.astro.space.translunar._LEG_COLORS = [&quot;royalblue&quot;, &quot;darkorange&quot;, &quot;limegreen&quot;, &quot;crimson&quot;, &quot;violet&quot;, &quot;gold&quot;]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00061">61</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="aca13ab9a6afe53be30e0ae0889a690f1" name="aca13ab9a6afe53be30e0ae0889a690f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aca13ab9a6afe53be30e0ae0889a690f1">&#9670;&#160;</a></span>_NATIVE_INTEGRATORS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.apps.astro.space.translunar._NATIVE_INTEGRATORS = {&quot;euler&quot;: 0, &quot;rk4&quot;: 1, &quot;dormand_prince&quot;: 2}</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00124">124</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="a1d31e8db579e7948f2f2bf62fe78e4ef" name="a1d31e8db579e7948f2f2bf62fe78e4ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d31e8db579e7948f2f2bf62fe78e4ef">&#9670;&#160;</a></span>_PLANET_STYLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict modules.apps.astro.space.translunar._PLANET_STYLE</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {</div>
+<div class="line"><span class="lineno">    2</span>    <span class="stringliteral">&quot;mercury&quot;</span>: (<span class="stringliteral">&quot;#9c9c9c&quot;</span>, 5), <span class="stringliteral">&quot;venus&quot;</span>: (<span class="stringliteral">&quot;#d9a066&quot;</span>, 7), <span class="stringliteral">&quot;earth&quot;</span>: (<span class="stringliteral">&quot;#3b6fb6&quot;</span>, 7),</div>
+<div class="line"><span class="lineno">    3</span>    <span class="stringliteral">&quot;mars&quot;</span>: (<span class="stringliteral">&quot;#c1440e&quot;</span>, 6), <span class="stringliteral">&quot;jupiter&quot;</span>: (<span class="stringliteral">&quot;#caa472&quot;</span>, 12), <span class="stringliteral">&quot;saturn&quot;</span>: (<span class="stringliteral">&quot;#e0c47a&quot;</span>, 11),</div>
+<div class="line"><span class="lineno">    4</span>    <span class="stringliteral">&quot;uranus&quot;</span>: (<span class="stringliteral">&quot;#9fd6e0&quot;</span>, 9), <span class="stringliteral">&quot;neptune&quot;</span>: (<span class="stringliteral">&quot;#5b7fd6&quot;</span>, 9),</div>
+<div class="line"><span class="lineno">    5</span>}</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00045">45</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="ab12b7f7888d68138890b46df8047bdaa" name="ab12b7f7888d68138890b46df8047bdaa"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab12b7f7888d68138890b46df8047bdaa">&#9670;&#160;</a></span>_PLANETS</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tuple modules.apps.astro.space.translunar._PLANETS = (&quot;mercury&quot;, &quot;venus&quot;, &quot;earth&quot;, &quot;mars&quot;, &quot;jupiter&quot;, &quot;saturn&quot;, &quot;uranus&quot;, &quot;neptune&quot;)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00042">42</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+<a id="a9d430c1d3d0b34fe7df70dd10003f17b" name="a9d430c1d3d0b34fe7df70dd10003f17b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9d430c1d3d0b34fe7df70dd10003f17b">&#9670;&#160;</a></span>_SPACE_TWIN_CONTRACT</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.apps.astro.space.translunar._SPACE_TWIN_CONTRACT</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  NativeTwin._TWIN_CONTRACT + (</div>
+<div class="line"><span class="lineno">    2</span>    <span class="stringliteral">&quot;derivative&quot;</span>, <span class="stringliteral">&quot;acceleration&quot;</span>, <span class="stringliteral">&quot;substeps&quot;</span>, <span class="stringliteral">&quot;after_step&quot;</span>, <span class="stringliteral">&quot;decode_step&quot;</span>)</div>
+</div><!-- fragment -->
+<p class="definition">Definition at line <a class="el" href="translunar_8py_source.html#l00128">128</a> of file <a class="el" href="translunar_8py_source.html">translunar.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps.html">apps</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro.html">astro</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space.html">space</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html">translunar</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

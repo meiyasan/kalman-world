@@ -1,0 +1,546 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.mcp.server Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.mcp.server Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.mcp.server Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1mcp_1_1server.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">modules.mcp.server Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1mcp_1_1server_1_1_jwt_verifier.html">JwtVerifier</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a81a0845bc1ca1f00aa02335fdb7394ea" id="r_a81a0845bc1ca1f00aa02335fdb7394ea"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1mcp_1_1server.html#a81a0845bc1ca1f00aa02335fdb7394ea">_server_class</a> ()</td></tr>
+<tr class="separator:a81a0845bc1ca1f00aa02335fdb7394ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a261eb43a1414a1813e2a14a6264fa40d" id="r_a261eb43a1414a1813e2a14a6264fa40d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1mcp_1_1server.html#a261eb43a1414a1813e2a14a6264fa40d">_transport_token</a> ()</td></tr>
+<tr class="separator:a261eb43a1414a1813e2a14a6264fa40d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae4aa9a62c54236f486d7b014fc104756" id="r_ae4aa9a62c54236f486d7b014fc104756"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1mcp_1_1server.html#ae4aa9a62c54236f486d7b014fc104756">build_server</a> (backend=None, *str transport=&quot;stdio&quot;, auth_settings=None, token_verifier=None)</td></tr>
+<tr class="separator:ae4aa9a62c54236f486d7b014fc104756"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:ad21d1360dd95e1961d57423de6c9bcfd" id="r_ad21d1360dd95e1961d57423de6c9bcfd"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1mcp_1_1server.html#ad21d1360dd95e1961d57423de6c9bcfd">SERVER_NAME</a> = &quot;Kalman-AI&quot;</td></tr>
+<tr class="separator:ad21d1360dd95e1961d57423de6c9bcfd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38800cff841ab1b70d5e3b91aa5484fb" id="r_a38800cff841ab1b70d5e3b91aa5484fb"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1mcp_1_1server.html#a38800cff841ab1b70d5e3b91aa5484fb">SERVER_TITLE</a> = &quot;Kalman-AI&quot;</td></tr>
+<tr class="separator:a38800cff841ab1b70d5e3b91aa5484fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">MCP server over the :mod:`kalman.api` facade — one thin adapter.
+
+Tools mirror the facade verbs, each declaring a required **scope**. Where the
+work happens is the backend's business (:mod:`.backend`): in this process, or
+— with ``KALMAN_API_URL`` set — in the REST API, which then owns the registry
+and the runs for everybody. Apps need no per-app MCP code — they're
+auto-cataloged; an authored spec is indistinguishable from a built-in.  The
+``mcp`` SDK is imported lazily.
+
+The caller's token, first match wins:
+
+  1. the ``token`` argument of the tool (clients that cannot set headers);
+  2. the ``Authorization: Bearer`` header of the HTTP transports (``sse``,
+     ``streamable-http``), checked by :class:`JwtVerifier` before any tool runs;
+  3. on stdio only, ``KALMAN_MCP_TOKEN`` — the token the client was registered
+     with (``tools/mcp_install.py --token``).
+
+Clients that listen on the resources (``catalog://models``,
+``catalog://sources``, ``registry://events``) are told when the shared registry
+changes, whoever changed it — see :mod:`.watch`.
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a81a0845bc1ca1f00aa02335fdb7394ea" name="a81a0845bc1ca1f00aa02335fdb7394ea"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a81a0845bc1ca1f00aa02335fdb7394ea">&#9670;&#160;</a></span>_server_class()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.mcp.server._server_class </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The SDK's decorator-style server class.
+
+MCP SDK 2.x exposes it as ``mcp.server.MCPServer``; 1.x called the same
+thing ``mcp.server.fastmcp.FastMCP``.  Support both so the server works
+against whichever generation is installed.</pre> 
+<p class="definition">Definition at line <a class="el" href="server_8py_source.html#l00026">26</a> of file <a class="el" href="server_8py_source.html">server.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   26</span><span class="keyword">def </span>_server_class():</div>
+<div class="line"><span class="lineno">   27</span>    <span class="stringliteral">&quot;&quot;&quot;The SDK&#39;s decorator-style server class.</span></div>
+<div class="line"><span class="lineno">   28</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   29</span><span class="stringliteral">    MCP SDK 2.x exposes it as ``mcp.server.MCPServer``; 1.x called the same</span></div>
+<div class="line"><span class="lineno">   30</span><span class="stringliteral">    thing ``mcp.server.fastmcp.FastMCP``.  Support both so the server works</span></div>
+<div class="line"><span class="lineno">   31</span><span class="stringliteral">    against whichever generation is installed.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   32</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   33</span>        <span class="keyword">from</span> mcp.server <span class="keyword">import</span> MCPServer          <span class="comment"># SDK &gt;= 2.0</span></div>
+<div class="line"><span class="lineno">   34</span>        <span class="keywordflow">return</span> MCPServer</div>
+<div class="line"><span class="lineno">   35</span>    <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><span class="lineno">   36</span>        <span class="keyword">from</span> mcp.server.fastmcp <span class="keyword">import</span> FastMCP    <span class="comment"># SDK 1.x</span></div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">return</span> FastMCP</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a261eb43a1414a1813e2a14a6264fa40d" name="a261eb43a1414a1813e2a14a6264fa40d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a261eb43a1414a1813e2a14a6264fa40d">&#9670;&#160;</a></span>_transport_token()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.mcp.server._transport_token </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="server_8py_source.html#l00069">69</a> of file <a class="el" href="server_8py_source.html">server.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span><span class="keyword">def </span>_transport_token():</div>
+<div class="line"><span class="lineno">   70</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keyword">from</span> mcp.server.auth.middleware.auth_context <span class="keyword">import</span> get_access_token</div>
+<div class="line"><span class="lineno">   72</span>    <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   74</span>    at = get_access_token()</div>
+<div class="line"><span class="lineno">   75</span>    <span class="keywordflow">return</span> at.token <span class="keywordflow">if</span> at <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae4aa9a62c54236f486d7b014fc104756" name="ae4aa9a62c54236f486d7b014fc104756"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae4aa9a62c54236f486d7b014fc104756">&#9670;&#160;</a></span>build_server()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.mcp.server.build_server </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>backend</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*str &#160;</td>
+          <td class="paramname"><em>transport</em> = <code>&quot;stdio&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>auth_settings</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>token_verifier</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The MCP server. ``backend`` defaults to :func:`.backend.from_env`;
+``auth_settings``/``token_verifier`` turn on bearer auth for HTTP transports
+(see ``__main__``).</pre> 
+<p class="definition">Definition at line <a class="el" href="server_8py_source.html#l00078">78</a> of file <a class="el" href="server_8py_source.html">server.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>                 token_verifier=<span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">   80</span>    <span class="stringliteral">&quot;&quot;&quot;The MCP server. ``backend`` defaults to :func:`.backend.from_env`;</span></div>
+<div class="line"><span class="lineno">   81</span><span class="stringliteral">    ``auth_settings``/``token_verifier`` turn on bearer auth for HTTP transports</span></div>
+<div class="line"><span class="lineno">   82</span><span class="stringliteral">    (see ``__main__``).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   83</span>    <span class="keyword">from</span> .backend <span class="keyword">import</span> from_env</div>
+<div class="line"><span class="lineno">   84</span>    backend = backend <span class="keywordflow">or</span> from_env()</div>
+<div class="line"><span class="lineno">   85</span>    service_token = os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_TOKEN&quot;</span>) <span class="keywordflow">if</span> transport == <span class="stringliteral">&quot;stdio&quot;</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>    <span class="keyword">def </span>tok(token: str) -&gt; str | <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">return</span> token <span class="keywordflow">or</span> _transport_token() <span class="keywordflow">or</span> service_token <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">   89</span> </div>
+<div class="line"><span class="lineno">   90</span>    cls = _server_class()</div>
+<div class="line"><span class="lineno">   91</span>    kw = {}</div>
+<div class="line"><span class="lineno">   92</span>    <span class="keywordflow">if</span> token_verifier <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   93</span>        kw = {<span class="stringliteral">&quot;token_verifier&quot;</span>: token_verifier, <span class="stringliteral">&quot;auth&quot;</span>: auth_settings}</div>
+<div class="line"><span class="lineno">   94</span>    watch_kw = {}</div>
+<div class="line"><span class="lineno">   95</span>    <span class="keywordflow">try</span>:                            <span class="comment"># SDK 2.x: the subscriptions/listen fan-out</span></div>
+<div class="line"><span class="lineno">   96</span>        <span class="keyword">from</span> mcp.server.subscriptions <span class="keyword">import</span> InMemorySubscriptionBus</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keyword">from</span> .watch <span class="keyword">import</span> RegistryWatcher</div>
+<div class="line"><span class="lineno">   98</span>        bus = InMemorySubscriptionBus()</div>
+<div class="line"><span class="lineno">   99</span>        watcher = RegistryWatcher(backend, bus, token=os.environ.get(<span class="stringliteral">&quot;KALMAN_MCP_TOKEN&quot;</span>) <span class="keywordflow">or</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  100</span>        watch_kw = {<span class="stringliteral">&quot;subscriptions&quot;</span>: bus, <span class="stringliteral">&quot;lifespan&quot;</span>: watcher.lifespan}</div>
+<div class="line"><span class="lineno">  101</span>    <span class="keywordflow">except</span> ImportError:             <span class="comment"># SDK 1.x: no listen; clients poll list_events</span></div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  103</span>    <span class="keywordflow">try</span>:                            <span class="comment"># SDK 2.x carries a display title/description</span></div>
+<div class="line"><span class="lineno">  104</span>        mcp = cls(SERVER_NAME, title=SERVER_TITLE,</div>
+<div class="line"><span class="lineno">  105</span>                  description=<span class="stringliteral">&quot;Kalman estimation framework: models, filters, &quot;</span></div>
+<div class="line"><span class="lineno">  106</span>                              <span class="stringliteral">&quot;solvers, providers, and spec authoring.&quot;</span>, **kw, **watch_kw)</div>
+<div class="line"><span class="lineno">  107</span>        <span class="keywordflow">if</span> watch_kw:</div>
+<div class="line"><span class="lineno">  108</span>            watcher.attach(mcp)     <span class="comment"># resources/subscribe, for clients before listen</span></div>
+<div class="line"><span class="lineno">  109</span>    <span class="keywordflow">except</span> TypeError:               <span class="comment"># SDK 1.x FastMCP takes the name only</span></div>
+<div class="line"><span class="lineno">  110</span>        mcp = cls(SERVER_TITLE, **kw)</div>
+<div class="line"><span class="lineno">  111</span> </div>
+<div class="line"><span class="lineno">  112</span>    <span class="comment"># ---- read ----</span></div>
+<div class="line"><span class="lineno">  113</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>list_models(token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  115</span>        <span class="stringliteral">&quot;&quot;&quot;List catalog models / engines / integrators / solvers / controllers /</span></div>
+<div class="line"><span class="lineno">  116</span><span class="stringliteral">        providers, the authored models in the shared registry, and the named</span></div>
+<div class="line"><span class="lineno">  117</span><span class="stringliteral">        measurement sources.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">return</span> backend.catalog(tok(token))</div>
+<div class="line"><span class="lineno">  119</span> </div>
+<div class="line"><span class="lineno">  120</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  121</span>    <span class="keyword">def </span>describe_model(name: str, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  122</span>        <span class="stringliteral">&quot;&quot;&quot;Describe a model or controller: params, dims, bindings. For an</span></div>
+<div class="line"><span class="lineno">  123</span><span class="stringliteral">        authored model: its spec and owner.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">return</span> backend.describe(name, tok(token))</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  127</span>    <span class="keyword">def </span>list_registered_models(token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  128</span>        <span class="stringliteral">&quot;&quot;&quot;The shared registry&#39;s authored models, with owner, dimensions and</span></div>
+<div class="line"><span class="lineno">  129</span><span class="stringliteral">        timestamps — what other people and agents have published.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">return</span> backend.models(tok(token))</div>
+<div class="line"><span class="lineno">  131</span> </div>
+<div class="line"><span class="lineno">  132</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  133</span>    <span class="keyword">def </span>get_diagnostics(run_id: str, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  134</span>        <span class="stringliteral">&quot;&quot;&quot;Filter-consistency diagnostics (NIS + innovation) for a stored run.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">return</span> backend.diagnostics(run_id, tok(token))</div>
+<div class="line"><span class="lineno">  136</span> </div>
+<div class="line"><span class="lineno">  137</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  138</span>    <span class="keyword">def </span>list_providers(token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  139</span>        <span class="stringliteral">&quot;&quot;&quot;List data providers with the measurements each can supply, the query</span></div>
+<div class="line"><span class="lineno">  140</span><span class="stringliteral">        keys fetch_data takes, and any credentials/packages they need.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">return</span> backend.providers(tok(token))</div>
+<div class="line"><span class="lineno">  142</span> </div>
+<div class="line"><span class="lineno">  143</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  144</span>    <span class="keyword">def </span>describe_provider(name: str, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  145</span>        <span class="stringliteral">&quot;&quot;&quot;Describe one provider (synthetic/era5/turbulence/file/sensor/remote):</span></div>
+<div class="line"><span class="lineno">  146</span><span class="stringliteral">        its measurements, query keys, and prerequisites.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">return</span> backend.describe_provider(name, tok(token))</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  150</span>    <span class="keyword">def </span>list_sources(token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  151</span>        <span class="stringliteral">&quot;&quot;&quot;Named measurement sources: push buffers that devices, simulations or</span></div>
+<div class="line"><span class="lineno">  152</span><span class="stringliteral">        Unity write rows into, and server-side providers set up by an admin.</span></div>
+<div class="line"><span class="lineno">  153</span><span class="stringliteral">        Fetch one with fetch_data(provider=&quot;&lt;name&gt;&quot;) or filter it directly with</span></div>
+<div class="line"><span class="lineno">  154</span><span class="stringliteral">        run_filter(source=&quot;&lt;name&gt;&quot;).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">return</span> backend.sources(tok(token))</div>
+<div class="line"><span class="lineno">  156</span> </div>
+<div class="line"><span class="lineno">  157</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  158</span>    <span class="keyword">def </span>list_events(since: int = 0, limit: int = 100, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  159</span>        <span class="stringliteral">&quot;&quot;&quot;Registry events after `since` (model.created/replaced/deleted,</span></div>
+<div class="line"><span class="lineno">  160</span><span class="stringliteral">        plugin.loaded, source.*, measurement.received). Pass the returned</span></div>
+<div class="line"><span class="lineno">  161</span><span class="stringliteral">        `last` as `since` next time to see only what is new.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">return</span> backend.events(since, limit, tok(token))</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>    <span class="comment"># ---- send_measurement ----</span></div>
+<div class="line"><span class="lineno">  165</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  166</span>    <span class="keyword">def </span>run_filter(spec: dict, data: list = <span class="keywordtype">None</span>, source: str = <span class="keywordtype">None</span>, query: dict = <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  167</span>                   smooth: bool = <span class="keyword">False</span>, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  168</span>        <span class="stringliteral">&quot;&quot;&quot;Filter measurements through a KalmanSpec&#39;s filter: give `data`</span></div>
+<div class="line"><span class="lineno">  169</span><span class="stringliteral">        (a list of rows), or `source` (a registered source name, with an</span></div>
+<div class="line"><span class="lineno">  170</span><span class="stringliteral">        optional `query`) to measure and filter in one call.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">return</span> backend.run_filter(spec, data, source, query, smooth, tok(token))</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  174</span>    <span class="keyword">def </span>forecast(spec: dict, x0: list, P0: list = <span class="keywordtype">None</span>, steps: int = 1, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  175</span>        <span class="stringliteral">&quot;&quot;&quot;Forecast ahead from a state: a track cone where the model defines one,</span></div>
+<div class="line"><span class="lineno">  176</span><span class="stringliteral">        else the propagated state + covariance.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">return</span> backend.forecast(spec, x0, P0, steps, tok(token))</div>
+<div class="line"><span class="lineno">  178</span> </div>
+<div class="line"><span class="lineno">  179</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  180</span>    <span class="keyword">def </span>run_osse(spec: dict, n_cycles: int = 40, n_members: int = 16, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  181</span>        <span class="stringliteral">&quot;&quot;&quot;Twin-experiment OSSE for a flow spec (EnKF vs free run).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">return</span> backend.run_osse(spec, n_cycles, n_members, tok(token))</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  185</span>    <span class="keyword">def </span>run_control(model: dict, controller: dict, duration: float, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  186</span>        <span class="stringliteral">&quot;&quot;&quot;Close the loop: run a controller over a model for a duration.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">return</span> backend.run_control(model, controller, duration, tok(token))</div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  190</span>    <span class="keyword">def </span>fetch_data(provider: dict | str, query: dict = <span class="keywordtype">None</span>, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  191</span>        <span class="stringliteral">&quot;&quot;&quot;Pull data: a registered source by name (&quot;lab-1&quot;, or {&quot;source&quot;:</span></div>
+<div class="line"><span class="lineno">  192</span><span class="stringliteral">        &quot;lab-1&quot;}), or a raw provider {&quot;kind&quot;: &quot;synthetic&quot;|..., &quot;init&quot;: {...}}.</span></div>
+<div class="line"><span class="lineno">  193</span><span class="stringliteral">        Raw file/remote/sensor providers need the admin scope.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">return</span> backend.fetch(provider, query <span class="keywordflow">or</span> {}, tok(token))</div>
+<div class="line"><span class="lineno">  195</span> </div>
+<div class="line"><span class="lineno">  196</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  197</span>    <span class="keyword">def </span>push_measurements(source: str, rows: list, time: list = <span class="keywordtype">None</span>, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  198</span>        <span class="stringliteral">&quot;&quot;&quot;Append measurement rows to a push source; subscribers get a</span></div>
+<div class="line"><span class="lineno">  199</span><span class="stringliteral">        measurement.received event.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  200</span>        <span class="keywordflow">return</span> backend.push_measurements(source, rows, time, tok(token))</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>    <span class="comment"># ---- write_models ----</span></div>
+<div class="line"><span class="lineno">  203</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  204</span>    <span class="keyword">def </span>register_model(spec: dict, name: str = <span class="keywordtype">None</span>, replace: bool = <span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  205</span>                       token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  206</span>        <span class="stringliteral">&quot;&quot;&quot;Validate + register an authored KalmanSpec in the shared registry,</span></div>
+<div class="line"><span class="lineno">  207</span><span class="stringliteral">        where every client (REST, Unity, other agents) can use it as a spec</span></div>
+<div class="line"><span class="lineno">  208</span><span class="stringliteral">        base. The same spec again is a no-op; a different one under a taken</span></div>
+<div class="line"><span class="lineno">  209</span><span class="stringliteral">        name needs replace=true and ownership.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">return</span> backend.register_model(spec, name, replace, tok(token))</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  213</span>    <span class="keyword">def </span>delete_model(name: str, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  214</span>        <span class="stringliteral">&quot;&quot;&quot;Remove an authored model from the shared registry (owner or admin).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  215</span>        <span class="keywordflow">return</span> backend.delete_model(name, tok(token))</div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  218</span>    <span class="keyword">def </span>register_source(name: str, provider: dict, replace: bool = <span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  219</span>                        token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  220</span>        <span class="stringliteral">&quot;&quot;&quot;Set up a named measurement source: {&quot;kind&quot;: &quot;push&quot;, &quot;m&quot;: &lt;width&gt;} for</span></div>
+<div class="line"><span class="lineno">  221</span><span class="stringliteral">        a buffer clients write into, or {&quot;kind&quot;: &quot;&lt;provider&gt;&quot;, &quot;init&quot;: {...}}</span></div>
+<div class="line"><span class="lineno">  222</span><span class="stringliteral">        (file/remote/sensor need admin).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">return</span> backend.register_source(name, provider, replace, tok(token))</div>
+<div class="line"><span class="lineno">  224</span> </div>
+<div class="line"><span class="lineno">  225</span>    <span class="comment"># ---- load_plugins ----</span></div>
+<div class="line"><span class="lineno">  226</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>load_plugin(name: str, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  228</span>        <span class="stringliteral">&quot;&quot;&quot;Load a compiled (C++) model library by *name* from the server&#39;s allow-listed</span></div>
+<div class="line"><span class="lineno">  229</span><span class="stringliteral">        plugin directories (KALMAN_PLUGIN_PATH); its models then appear in list_models</span></div>
+<div class="line"><span class="lineno">  230</span><span class="stringliteral">        and can be used as a spec base, in every process sharing the registry. Paths</span></div>
+<div class="line"><span class="lineno">  231</span><span class="stringliteral">        are refused unless inside those directories.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  232</span>        <span class="keywordflow">return</span> backend.load_plugin(name, tok(token))</div>
+<div class="line"><span class="lineno">  233</span> </div>
+<div class="line"><span class="lineno">  234</span>    <span class="preprocessor">@mcp.tool()</span></div>
+<div class="line"><span class="lineno">  235</span>    <span class="keyword">def </span>scaffold_app(spec: dict, class_name: str = <span class="keywordtype">None</span>, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">  236</span>        <span class="stringliteral">&quot;&quot;&quot;Emit reviewable modules/apps/&lt;name&gt;.py source from a spec (human commits).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  237</span>        <span class="keywordflow">return</span> backend.scaffold(spec, class_name, tok(token))</div>
+<div class="line"><span class="lineno">  238</span> </div>
+<div class="line"><span class="lineno">  239</span>    <span class="comment"># ---- resources ----</span></div>
+<div class="line"><span class="lineno">  240</span>    <span class="comment"># Subscribe to these to hear about registry changes (see .watch).</span></div>
+<div class="line"><span class="lineno">  241</span>    <span class="preprocessor">@mcp.resource(&quot;catalog://models&quot;)</span></div>
+<div class="line"><span class="lineno">  242</span>    <span class="keyword">def </span>catalog_models() -&gt; dict:</div>
+<div class="line"><span class="lineno">  243</span>        <span class="stringliteral">&quot;&quot;&quot;Every model usable as a spec base: catalog, plugins and authored.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  244</span>        cat = backend.catalog(tok(<span class="stringliteral">&quot;&quot;</span>))</div>
+<div class="line"><span class="lineno">  245</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;models&quot;</span>: cat[<span class="stringliteral">&quot;models&quot;</span>], <span class="stringliteral">&quot;authored&quot;</span>: cat.get(<span class="stringliteral">&quot;authored&quot;</span>, [])}</div>
+<div class="line"><span class="lineno">  246</span> </div>
+<div class="line"><span class="lineno">  247</span>    <span class="preprocessor">@mcp.resource(&quot;catalog://sources&quot;)</span></div>
+<div class="line"><span class="lineno">  248</span>    <span class="keyword">def </span>catalog_sources() -&gt; dict:</div>
+<div class="line"><span class="lineno">  249</span>        <span class="stringliteral">&quot;&quot;&quot;The named measurement sources, with row counts for push sources.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  250</span>        <span class="keywordflow">return</span> backend.sources(tok(<span class="stringliteral">&quot;&quot;</span>))</div>
+<div class="line"><span class="lineno">  251</span> </div>
+<div class="line"><span class="lineno">  252</span>    <span class="preprocessor">@mcp.resource(&quot;registry://events&quot;)</span></div>
+<div class="line"><span class="lineno">  253</span>    <span class="keyword">def </span>registry_events() -&gt; dict:</div>
+<div class="line"><span class="lineno">  254</span>        <span class="stringliteral">&quot;&quot;&quot;The 100 newest registry events, oldest first.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  255</span>        last = backend.events(-1, 1, tok(<span class="stringliteral">&quot;&quot;</span>))[<span class="stringliteral">&quot;last&quot;</span>]</div>
+<div class="line"><span class="lineno">  256</span>        <span class="keywordflow">return</span> backend.events(max(last - 100, 0), 100, tok(<span class="stringliteral">&quot;&quot;</span>))</div>
+<div class="line"><span class="lineno">  257</span> </div>
+<div class="line"><span class="lineno">  258</span>    <span class="keywordflow">return</span> mcp</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ad21d1360dd95e1961d57423de6c9bcfd" name="ad21d1360dd95e1961d57423de6c9bcfd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad21d1360dd95e1961d57423de6c9bcfd">&#9670;&#160;</a></span>SERVER_NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.mcp.server.SERVER_NAME = &quot;Kalman-AI&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="server_8py_source.html#l00040">40</a> of file <a class="el" href="server_8py_source.html">server.py</a>.</p>
+
+</div>
+</div>
+<a id="a38800cff841ab1b70d5e3b91aa5484fb" name="a38800cff841ab1b70d5e3b91aa5484fb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38800cff841ab1b70d5e3b91aa5484fb">&#9670;&#160;</a></span>SERVER_TITLE</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.mcp.server.SERVER_TITLE = &quot;Kalman-AI&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="server_8py_source.html#l00042">42</a> of file <a class="el" href="server_8py_source.html">server.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1mcp.html">mcp</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1mcp_1_1server.html">server</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

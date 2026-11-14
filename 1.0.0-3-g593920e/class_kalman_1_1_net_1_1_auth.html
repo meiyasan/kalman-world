@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Net::Auth Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Net::Auth Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Net::Auth Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_net_1_1_auth.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="class_kalman_1_1_net_1_1_auth-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Net::Auth Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Verifies the scoped JWTs that the Python side issues.  
+ <a href="class_kalman_1_1_net_1_1_auth.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_auth_8h_source.html">Auth.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a6f3741e74981bbc4445494001b154bbb" id="r_a6f3741e74981bbc4445494001b154bbb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a6f3741e74981bbc4445494001b154bbb">Auth</a> ()</td></tr>
+<tr class="memdesc:a6f3741e74981bbc4445494001b154bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configured from the environment: KALMAN_JWT_SECRET, _ISSUER, _AUDIENCE.  <br /></td></tr>
+<tr class="separator:a6f3741e74981bbc4445494001b154bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abbc380a99db90cc49af33c73dea6f807" id="r_abbc380a99db90cc49af33c73dea6f807"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#abbc380a99db90cc49af33c73dea6f807">Auth</a> (std::string secret, std::string issuer=&quot;&quot;, std::string audience=&quot;&quot;)</td></tr>
+<tr class="separator:abbc380a99db90cc49af33c73dea6f807"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a67e1e609577eab0a914027ce58c33fb2" id="r_a67e1e609577eab0a914027ce58c33fb2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a67e1e609577eab0a914027ce58c33fb2">SetRegistry</a> (const Registry *registry)</td></tr>
+<tr class="separator:a67e1e609577eab0a914027ce58c33fb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7edcba86d99fd5cb969f20891d04e47" id="r_ac7edcba86d99fd5cb969f20891d04e47"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#ac7edcba86d99fd5cb969f20891d04e47">Enabled</a> () const</td></tr>
+<tr class="memdesc:ac7edcba86d99fd5cb969f20891d04e47"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when a secret is configured.  <br /></td></tr>
+<tr class="separator:ac7edcba86d99fd5cb969f20891d04e47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf363a0642e255669acd121994a86152" id="r_abf363a0642e255669acd121994a86152"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#abf363a0642e255669acd121994a86152">Secret</a> () const</td></tr>
+<tr class="separator:abf363a0642e255669acd121994a86152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13a8878c2b18b0df411d784728a54af3" id="r_a13a8878c2b18b0df411d784728a54af3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_kalman_1_1_net_1_1_claims.html">Claims</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a13a8878c2b18b0df411d784728a54af3">Verify</a> (const std::string &amp;token) const</td></tr>
+<tr class="separator:a13a8878c2b18b0df411d784728a54af3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8d9bf9528e4007cfb083867a21fa48a1" id="r_a8d9bf9528e4007cfb083867a21fa48a1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a8d9bf9528e4007cfb083867a21fa48a1">Authorize</a> (const std::string &amp;token, const std::string &amp;scope) const</td></tr>
+<tr class="separator:a8d9bf9528e4007cfb083867a21fa48a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a96451456c7011c414523718f4a7c122a" id="r_a96451456c7011c414523718f4a7c122a"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a96451456c7011c414523718f4a7c122a">Identity</a> (const std::string &amp;token) const</td></tr>
+<tr class="memdesc:a96451456c7011c414523718f4a7c122a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The token's user, or "" when auth is off.  <br /></td></tr>
+<tr class="separator:a96451456c7011c414523718f4a7c122a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a74f37b54553a08fdd79d9020c52ed262" id="r_a74f37b54553a08fdd79d9020c52ed262"><td class="memItemLeft" align="right" valign="top">static const std::vector&lt; std::string &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a74f37b54553a08fdd79d9020c52ed262">Scopes</a> ()</td></tr>
+<tr class="memdesc:a74f37b54553a08fdd79d9020c52ed262"><td class="mdescLeft">&#160;</td><td class="mdescRight">The scopes a token may carry, as in <a class="el" href="auth_8py.html">auth.py</a>.  <br /></td></tr>
+<tr class="separator:a74f37b54553a08fdd79d9020c52ed262"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92ed629089d5487cbf78ea6be5a382f3" id="r_a92ed629089d5487cbf78ea6be5a382f3"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a92ed629089d5487cbf78ea6be5a382f3">Sign</a> (const std::string &amp;payloadJson, const std::string &amp;secret)</td></tr>
+<tr class="memdesc:a92ed629089d5487cbf78ea6be5a382f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">A HS256 JWT over <code>payloadJson</code> (a JSON object, as text).  <br /></td></tr>
+<tr class="separator:a92ed629089d5487cbf78ea6be5a382f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:a2b3c7a5dd17e61000a5316fc95f0bbd2" id="r_a2b3c7a5dd17e61000a5316fc95f0bbd2"><td class="memItemLeft" align="right" valign="top">static constexpr std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_net_1_1_auth.html#a2b3c7a5dd17e61000a5316fc95f0bbd2">kMinSecretBytes</a> = 32</td></tr>
+<tr class="memdesc:a2b3c7a5dd17e61000a5316fc95f0bbd2"><td class="mdescLeft">&#160;</td><td class="mdescRight">HS256 needs a key at least as long as its output (RFC 7518, 3.2).  <br /></td></tr>
+<tr class="separator:a2b3c7a5dd17e61000a5316fc95f0bbd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Verifies the scoped JWTs that the Python side issues. </p>
+<p>The tokens are those of <a class="el" href="auth_8py.html">modules/api/auth.py</a>: HS256 over the secret in <code>KALMAN_JWT_SECRET</code>, with the claims <code>sub</code>, <code>scopes</code>, <code>iat</code>, <code>exp</code>, <code>jti</code>, and <code>iss</code>/<code>aud</code> when <code>KALMAN_JWT_ISSUER</code>/<code>KALMAN_JWT_AUDIENCE</code> are set. A token minted by <code>python -m kalman.api.auth token</code> or <code>POST /token</code> is accepted here unchanged, and a token revoked through Python is refused here, because the revocation list is read from the same registry (<code>$KALMAN_STATE_DIR/registry.sqlite</code>).</p>
+<p>The rules are Python's, checked in the same order:</p>
+<ul>
+<li>no secret configured: auth is off, every call is allowed (local use);</li>
+<li>a secret configured: a token is required, its signature, <code>exp</code> (and <code>nbf</code>, <code>iat</code>), <code>iss</code> and <code>aud</code> must hold, it must not be revoked (401 otherwise), and it must carry the scope or <code>admin</code> (403 otherwise).</li>
+</ul>
+<p>Issuing tokens and managing accounts (bcrypt, the htpasswd file, logins and their lockout) stay in Python: this class only verifies. <a class="el" href="class_kalman_1_1_net_1_1_auth.html#a92ed629089d5487cbf78ea6be5a382f3" title="A HS256 JWT over payloadJson (a JSON object, as text).">Sign()</a> exists for tests and for tools that already hold the secret.</p>
+<hr  />
+ 
+<p class="definition">Definition at line <a class="el" href="_auth_8h_source.html#l00056">56</a> of file <a class="el" href="_auth_8h_source.html">Auth.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a6f3741e74981bbc4445494001b154bbb" name="a6f3741e74981bbc4445494001b154bbb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f3741e74981bbc4445494001b154bbb">&#9670;&#160;</a></span>Auth() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Auth::Auth </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Configured from the environment: KALMAN_JWT_SECRET, _ISSUER, _AUDIENCE. </p>
+
+</div>
+</div>
+<a id="abbc380a99db90cc49af33c73dea6f807" name="abbc380a99db90cc49af33c73dea6f807"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abbc380a99db90cc49af33c73dea6f807">&#9670;&#160;</a></span>Auth() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Net::Auth::Auth </td>
+          <td>(</td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>secret</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>issuer</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>audience</em> = <code>&quot;&quot;</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a8d9bf9528e4007cfb083867a21fa48a1" name="a8d9bf9528e4007cfb083867a21fa48a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d9bf9528e4007cfb083867a21fa48a1">&#9670;&#160;</a></span>Authorize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Net::Auth::Authorize </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>scope</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verify <code>token</code> and check it carries <code>scope</code> (or admin). No-op when auth is off. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_kalman_1_1_net_1_1_error.html" title="A refused request, with the HTTP status that says why.">Kalman::Net::Error</a></td><td>401 (token) or 403 (scope); 400 for a scope name that does not exist. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ac7edcba86d99fd5cb969f20891d04e47" name="ac7edcba86d99fd5cb969f20891d04e47"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7edcba86d99fd5cb969f20891d04e47">&#9670;&#160;</a></span>Enabled()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Kalman::Net::Auth::Enabled </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>True when a secret is configured. </p>
+
+<p class="definition">Definition at line <a class="el" href="_auth_8h_source.html#l00080">80</a> of file <a class="el" href="_auth_8h_source.html">Auth.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>{ <span class="keywordflow">return</span> !fSecret.empty(); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a96451456c7011c414523718f4a7c122a" name="a96451456c7011c414523718f4a7c122a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a96451456c7011c414523718f4a7c122a">&#9670;&#160;</a></span>Identity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Kalman::Net::Auth::Identity </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The token's user, or "" when auth is off. </p>
+
+</div>
+</div>
+<a id="a74f37b54553a08fdd79d9020c52ed262" name="a74f37b54553a08fdd79d9020c52ed262"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74f37b54553a08fdd79d9020c52ed262">&#9670;&#160;</a></span>Scopes()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const std::vector&lt; std::string &gt; &amp; Kalman::Net::Auth::Scopes </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The scopes a token may carry, as in <a class="el" href="auth_8py.html">auth.py</a>. </p>
+
+</div>
+</div>
+<a id="abf363a0642e255669acd121994a86152" name="abf363a0642e255669acd121994a86152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf363a0642e255669acd121994a86152">&#9670;&#160;</a></span>Secret()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::string &amp; Kalman::Net::Auth::Secret </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_auth_8h_source.html#l00081">81</a> of file <a class="el" href="_auth_8h_source.html">Auth.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>{ <span class="keywordflow">return</span> fSecret; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a67e1e609577eab0a914027ce58c33fb2" name="a67e1e609577eab0a914027ce58c33fb2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a67e1e609577eab0a914027ce58c33fb2">&#9670;&#160;</a></span>SetRegistry()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Net::Auth::SetRegistry </td>
+          <td>(</td>
+          <td class="paramtype">const Registry *&#160;</td>
+          <td class="paramname"><em>registry</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Where revocations are read from; nullptr reads none (and, with auth on, refuses every token: fail-closed, as <a class="el" href="auth_8py.html">auth.py</a> does). </p>
+
+<p class="definition">Definition at line <a class="el" href="_auth_8h_source.html#l00077">77</a> of file <a class="el" href="_auth_8h_source.html">Auth.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>{ fRegistry = registry; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a92ed629089d5487cbf78ea6be5a382f3" name="a92ed629089d5487cbf78ea6be5a382f3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92ed629089d5487cbf78ea6be5a382f3">&#9670;&#160;</a></span>Sign()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::string Kalman::Net::Auth::Sign </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>payloadJson</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>secret</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>A HS256 JWT over <code>payloadJson</code> (a JSON object, as text). </p>
+
+</div>
+</div>
+<a id="a13a8878c2b18b0df411d784728a54af3" name="a13a8878c2b18b0df411d784728a54af3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13a8878c2b18b0df411d784728a54af3">&#9670;&#160;</a></span>Verify()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_net_1_1_claims.html">Claims</a> Kalman::Net::Auth::Verify </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>token</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Verify signature, expiry, issuer, audience and revocation. </p><dl class="exception"><dt>Exceptions</dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="class_kalman_1_1_net_1_1_error.html" title="A refused request, with the HTTP status that says why.">Kalman::Net::Error</a></td><td>401 on any failure. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a2b3c7a5dd17e61000a5316fc95f0bbd2" name="a2b3c7a5dd17e61000a5316fc95f0bbd2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b3c7a5dd17e61000a5316fc95f0bbd2">&#9670;&#160;</a></span>kMinSecretBytes</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr std::size_t Kalman::Net::Auth::kMinSecretBytes = 32</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>HS256 needs a key at least as long as its output (RFC 7518, 3.2). </p>
+
+<p class="definition">Definition at line <a class="el" href="_auth_8h_source.html#l00069">69</a> of file <a class="el" href="_auth_8h_source.html">Auth.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>net/include/Kalman/Net/<a class="el" href="_auth_8h_source.html">Auth.h</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_net.html">Net</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_net_1_1_auth.html">Auth</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

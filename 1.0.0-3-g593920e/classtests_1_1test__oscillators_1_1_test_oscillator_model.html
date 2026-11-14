@@ -1,0 +1,441 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_oscillators.TestOscillatorModel Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_oscillators.TestOscillatorModel Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_oscillators.TestOscillatorModel Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__oscillators_1_1_test_oscillator_model.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__oscillators_1_1_test_oscillator_model-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_oscillators.TestOscillatorModel Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_oscillators.TestOscillatorModel:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__oscillators_1_1_test_oscillator_model__inherit__graph.svg" width="198" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a0d9a0dd0938a4c3148a8a04c9e55df65" id="r_a0d9a0dd0938a4c3148a8a04c9e55df65"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a0d9a0dd0938a4c3148a8a04c9e55df65">test_single_peak_dims</a> (self)</td></tr>
+<tr class="separator:a0d9a0dd0938a4c3148a8a04c9e55df65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b5148d843e7fa9f5f73bd1e3ab6fc69" id="r_a0b5148d843e7fa9f5f73bd1e3ab6fc69"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a0b5148d843e7fa9f5f73bd1e3ab6fc69">test_window_mask_drops_out_of_band</a> (self)</td></tr>
+<tr class="separator:a0b5148d843e7fa9f5f73bd1e3ab6fc69"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade52a108c7658679f4d18dbbbffdd16b" id="r_ade52a108c7658679f4d18dbbbffdd16b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#ade52a108c7658679f4d18dbbbffdd16b">test_window_mask_raises_if_nothing_in_band</a> (self)</td></tr>
+<tr class="separator:ade52a108c7658679f4d18dbbbffdd16b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fc7cb23f83b0c38097c2b91149a3b38" id="r_a7fc7cb23f83b0c38097c2b91149a3b38"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a7fc7cb23f83b0c38097c2b91149a3b38">test_filter_zk_at_decimated_rate</a> (self)</td></tr>
+<tr class="separator:a7fc7cb23f83b0c38097c2b91149a3b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1c129bc72312c175ee8a813a0cd45d7" id="r_aa1c129bc72312c175ee8a813a0cd45d7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#aa1c129bc72312c175ee8a813a0cd45d7">test_sample_produces_decimated_record</a> (self)</td></tr>
+<tr class="separator:aa1c129bc72312c175ee8a813a0cd45d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7f920378d2bd3b9711e43bcf8895fa77" id="r_a7f920378d2bd3b9711e43bcf8895fa77"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a7f920378d2bd3b9711e43bcf8895fa77">test_reconstruct_shape_and_amplitudes_from_state</a> (self)</td></tr>
+<tr class="separator:a7f920378d2bd3b9711e43bcf8895fa77"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a529472710b8fd9228531b7e9d934ccff" id="r_a529472710b8fd9228531b7e9d934ccff"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a529472710b8fd9228531b7e9d934ccff">test_tracks_amplitude</a> (self)</td></tr>
+<tr class="separator:a529472710b8fd9228531b7e9d934ccff"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d2f038b8282ec7d351eca505d5844b1" id="r_a0d2f038b8282ec7d351eca505d5844b1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html#a0d2f038b8282ec7d351eca505d5844b1">test_fit_inharmonicity_recovers_f0_and_b</a> (self)</td></tr>
+<tr class="separator:a0d2f038b8282ec7d351eca505d5844b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00065">65</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a7fc7cb23f83b0c38097c2b91149a3b38" name="a7fc7cb23f83b0c38097c2b91149a3b38"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fc7cb23f83b0c38097c2b91149a3b38">&#9670;&#160;</a></span>test_filter_zk_at_decimated_rate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_filter_zk_at_decimated_rate </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">After heterodyne + resample_poly downsampling, record.xk and record.zk
+live at the decimated rate (4·dfc); reconstruct() upsamples back to N.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00084">84</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>    <span class="keyword">def </span>test_filter_zk_at_decimated_rate(self):</div>
+<div class="line"><span class="lineno">   85</span>        <span class="stringliteral">&quot;&quot;&quot;After heterodyne + resample_poly downsampling, record.xk and record.zk</span></div>
+<div class="line"><span class="lineno">   86</span><span class="stringliteral">        live at the decimated rate (4·dfc); reconstruct() upsamples back to N.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   87</span>        fs, N = 256, 512</div>
+<div class="line"><span class="lineno">   88</span>        t = np.arange(N) / fs</div>
+<div class="line"><span class="lineno">   89</span>        strain = np.cos(2 * np.pi * 10 * t) + 0.05 * np.random.randn(N)</div>
+<div class="line"><span class="lineno">   90</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [10.0], fc=10.0, dfc=3.0, fs=fs,</div>
+<div class="line"><span class="lineno">   91</span>                            measurement_uncertainty=0.05, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">   92</span>        rec = m.filter(strain, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">   93</span>        N_dec = rec.xk.shape[0]</div>
+<div class="line"><span class="lineno">   94</span>        self.assertLess(N_dec, N)                    <span class="comment"># decimated</span></div>
+<div class="line"><span class="lineno">   95</span>        self.assertEqual(rec.xk.shape[1], 2)</div>
+<div class="line"><span class="lineno">   96</span>        self.assertEqual(rec.zk.shape, (N_dec, 2))   <span class="comment"># [Re, Im] at decimated rate</span></div>
+<div class="line"><span class="lineno">   97</span>        _no_nan_inf(rec.zk, <span class="stringliteral">&quot;OscillatorModel zk&quot;</span>)</div>
+<div class="line"><span class="lineno">   98</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0d2f038b8282ec7d351eca505d5844b1" name="a0d2f038b8282ec7d351eca505d5844b1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d2f038b8282ec7d351eca505d5844b1">&#9670;&#160;</a></span>test_fit_inharmonicity_recovers_f0_and_b()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_fit_inharmonicity_recovers_f0_and_b </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00139">139</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>    <span class="keyword">def </span>test_fit_inharmonicity_recovers_f0_and_b(self):</div>
+<div class="line"><span class="lineno">  140</span>        f0_true, B_true = 180.0, 0.1</div>
+<div class="line"><span class="lineno">  141</span>        peaks = partial_frequencies(f0_true, B_true, 5)</div>
+<div class="line"><span class="lineno">  142</span>        f0_fit, B_fit = OscillatorModel.fit_inharmonicity(peaks)</div>
+<div class="line"><span class="lineno">  143</span>        self.assertAlmostEqual(f0_fit, f0_true, delta=0.1)</div>
+<div class="line"><span class="lineno">  144</span>        self.assertAlmostEqual(B_fit, B_true, delta=1e-3)</div>
+<div class="line"><span class="lineno">  145</span> </div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><span class="lineno">  148</span><span class="comment"># Harmonic / Inharmonic ladder generation</span></div>
+<div class="line"><span class="lineno">  149</span><span class="comment"># ===========================================================================</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7f920378d2bd3b9711e43bcf8895fa77" name="a7f920378d2bd3b9711e43bcf8895fa77"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7f920378d2bd3b9711e43bcf8895fa77">&#9670;&#160;</a></span>test_reconstruct_shape_and_amplitudes_from_state()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_reconstruct_shape_and_amplitudes_from_state </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00111">111</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>    <span class="keyword">def </span>test_reconstruct_shape_and_amplitudes_from_state(self):</div>
+<div class="line"><span class="lineno">  112</span>        fs, N = 256, 512</div>
+<div class="line"><span class="lineno">  113</span>        t = np.arange(N) / fs</div>
+<div class="line"><span class="lineno">  114</span>        strain = np.cos(2 * np.pi * 10 * t) + 0.05 * np.random.randn(N)</div>
+<div class="line"><span class="lineno">  115</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [10.0], fc=10.0, dfc=3.0, fs=fs,</div>
+<div class="line"><span class="lineno">  116</span>                            measurement_uncertainty=0.05, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">  117</span>        rec = m.filter(strain, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  118</span>        recon = m.reconstruct(rec)</div>
+<div class="line"><span class="lineno">  119</span>        self.assertEqual(recon.shape, (N,))            <span class="comment"># upsampled back to original length</span></div>
+<div class="line"><span class="lineno">  120</span>        N_dec = rec.xk.shape[0]</div>
+<div class="line"><span class="lineno">  121</span>        amp = m.amplitudes(rec)                        <span class="comment"># derived from xk at decimated rate</span></div>
+<div class="line"><span class="lineno">  122</span>        self.assertEqual(amp.shape, (N_dec, 1))</div>
+<div class="line"><span class="lineno">  123</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa1c129bc72312c175ee8a813a0cd45d7" name="aa1c129bc72312c175ee8a813a0cd45d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1c129bc72312c175ee8a813a0cd45d7">&#9670;&#160;</a></span>test_sample_produces_decimated_record()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_sample_produces_decimated_record </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">sample() produces a record at the decimated rate; its xk and zk are
+consistent at that rate.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00099">99</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>    <span class="keyword">def </span>test_sample_produces_decimated_record(self):</div>
+<div class="line"><span class="lineno">  100</span>        <span class="stringliteral">&quot;&quot;&quot;sample() produces a record at the decimated rate; its xk and zk are</span></div>
+<div class="line"><span class="lineno">  101</span><span class="stringliteral">        consistent at that rate.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  102</span>        fs = 256</div>
+<div class="line"><span class="lineno">  103</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [10.0], fc=10.0, dfc=3.0, fs=fs,</div>
+<div class="line"><span class="lineno">  104</span>                            measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">  105</span>        m.initial_state([1.0, 0.0])</div>
+<div class="line"><span class="lineno">  106</span>        sample = m.sample(2.0)</div>
+<div class="line"><span class="lineno">  107</span>        zk = np.asarray(sample.zk)</div>
+<div class="line"><span class="lineno">  108</span>        self.assertEqual(zk.shape[0], sample.xk.shape[0])</div>
+<div class="line"><span class="lineno">  109</span>        _no_nan_inf(zk, <span class="stringliteral">&quot;OscillatorModel sample zk&quot;</span>)</div>
+<div class="line"><span class="lineno">  110</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0d9a0dd0938a4c3148a8a04c9e55df65" name="a0d9a0dd0938a4c3148a8a04c9e55df65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d9a0dd0938a4c3148a8a04c9e55df65">&#9670;&#160;</a></span>test_single_peak_dims()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_single_peak_dims </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00067">67</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>    <span class="keyword">def </span>test_single_peak_dims(self):</div>
+<div class="line"><span class="lineno">   68</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [10.0], fc=10.0, dfc=2.0, fs=100)</div>
+<div class="line"><span class="lineno">   69</span>        self.assertEqual(m.n, 2)   <span class="comment"># one in-band mode -&gt; [Re, Im]</span></div>
+<div class="line"><span class="lineno">   70</span>        self.assertEqual(m.m, 2)   <span class="comment"># FUSED demodulated band channel (filter space)</span></div>
+<div class="line"><span class="lineno">   71</span>        self.assertEqual(m.l, 0)</div>
+<div class="line"><span class="lineno">   72</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a529472710b8fd9228531b7e9d934ccff" name="a529472710b8fd9228531b7e9d934ccff"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a529472710b8fd9228531b7e9d934ccff">&#9670;&#160;</a></span>test_tracks_amplitude()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_tracks_amplitude </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">After convergence, the recovered envelope amplitude matches truth.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00124">124</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  124</span>    <span class="keyword">def </span>test_tracks_amplitude(self):</div>
+<div class="line"><span class="lineno">  125</span>        <span class="stringliteral">&quot;&quot;&quot;After convergence, the recovered envelope amplitude matches truth.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  126</span>        np.random.seed(42)</div>
+<div class="line"><span class="lineno">  127</span>        fs, N = 256, 1024</div>
+<div class="line"><span class="lineno">  128</span>        t = np.arange(N) / fs</div>
+<div class="line"><span class="lineno">  129</span>        truth = np.cos(2 * np.pi * 10 * t)</div>
+<div class="line"><span class="lineno">  130</span>        strain = truth + 0.1 * np.random.randn(N)</div>
+<div class="line"><span class="lineno">  131</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [10.0], fc=10.0, dfc=3.0, fs=fs,</div>
+<div class="line"><span class="lineno">  132</span>                            measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
+<div class="line"><span class="lineno">  133</span>        rec = m.filter(strain, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  134</span>        amp_arr = m.amplitudes(rec)</div>
+<div class="line"><span class="lineno">  135</span>        N_dec = amp_arr.shape[0]</div>
+<div class="line"><span class="lineno">  136</span>        amp = amp_arr[N_dec // 4:].mean()</div>
+<div class="line"><span class="lineno">  137</span>        self.assertAlmostEqual(amp, 1.0, delta=0.25, msg=f<span class="stringliteral">&quot;window amplitude off: {amp:.3f}&quot;</span>)</div>
+<div class="line"><span class="lineno">  138</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0b5148d843e7fa9f5f73bd1e3ab6fc69" name="a0b5148d843e7fa9f5f73bd1e3ab6fc69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b5148d843e7fa9f5f73bd1e3ab6fc69">&#9670;&#160;</a></span>test_window_mask_drops_out_of_band()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_window_mask_drops_out_of_band </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">fc ± dfc is the active filter: candidates outside the window are
+generated but silently dropped from the state, even if more modes exist.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00073">73</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   73</span>    <span class="keyword">def </span>test_window_mask_drops_out_of_band(self):</div>
+<div class="line"><span class="lineno">   74</span>        <span class="stringliteral">&quot;&quot;&quot;fc ± dfc is the active filter: candidates outside the window are</span></div>
+<div class="line"><span class="lineno">   75</span><span class="stringliteral">        generated but silently dropped from the state, even if more modes exist.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   76</span>        m = OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [8.0, 10.0, 30.0], fc=10.0, dfc=3.0, fs=100)</div>
+<div class="line"><span class="lineno">   77</span>        np.testing.assert_allclose(np.sort(m.frequencies), [8.0, 10.0])  <span class="comment"># 30 Hz masked out</span></div>
+<div class="line"><span class="lineno">   78</span>        self.assertEqual((m.n, m.m), (4, 2))</div>
+<div class="line"><span class="lineno">   79</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ade52a108c7658679f4d18dbbbffdd16b" name="ade52a108c7658679f4d18dbbbffdd16b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade52a108c7658679f4d18dbbbffdd16b">&#9670;&#160;</a></span>test_window_mask_raises_if_nothing_in_band()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_oscillators.TestOscillatorModel.test_window_mask_raises_if_nothing_in_band </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00080">80</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>    <span class="keyword">def </span>test_window_mask_raises_if_nothing_in_band(self):</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">   82</span>            OscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [100.0], fc=10.0, dfc=2.0, fs=100)</div>
+<div class="line"><span class="lineno">   83</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__oscillators.html">test_oscillators</a></li><li class="navelem"><a class="el" href="classtests_1_1test__oscillators_1_1_test_oscillator_model.html">TestOscillatorModel</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

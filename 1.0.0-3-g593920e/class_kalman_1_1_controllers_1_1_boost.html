@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Kalman::Controllers::Boost Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Kalman::Controllers::Boost Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Kalman::Controllers::Boost Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_kalman_1_1_controllers_1_1_boost.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
+<a href="class_kalman_1_1_controllers_1_1_boost-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Kalman::Controllers::Boost Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows. Mirrors <code><a class="el" href="boost_8py.html">controllers/boost.py</a></code>.  
+ <a href="class_kalman_1_1_controllers_1_1_boost.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>&gt;</code></p>
+<div class="dynheader">
+Inheritance diagram for Kalman::Controllers::Boost:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_controllers_1_1_boost__inherit__graph.svg" width="215" height="198"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a3495664f45451217430b1f5c274a5438" id="r_a3495664f45451217430b1f5c274a5438"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a3495664f45451217430b1f5c274a5438">Boost</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> *model, double boostFactor=3., double threshold=2., std::size_t window=10, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xRef=<a class="el" href="class_kalman_1_1_vector.html">Vector</a>(), const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Qcost=<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>(), const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Rcost=<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>())</td></tr>
+<tr class="separator:a3495664f45451217430b1f5c274a5438"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d6d2dd50ee2467a5463b32d0aabe204" id="r_a7d6d2dd50ee2467a5463b32d0aabe204"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a7d6d2dd50ee2467a5463b32d0aabe204">Title</a> () const override</td></tr>
+<tr class="memdesc:a7d6d2dd50ee2467a5463b32d0aabe204"><td class="mdescLeft">&#160;</td><td class="mdescRight">Human-readable name of the <em>kind</em> of thing this is.  <br /></td></tr>
+<tr class="separator:a7d6d2dd50ee2467a5463b32d0aabe204"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1798aa2f39f578fb11566b04c62f394" id="r_aa1798aa2f39f578fb11566b04c62f394"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#aa1798aa2f39f578fb11566b04c62f394">Description</a> () const override</td></tr>
+<tr class="memdesc:aa1798aa2f39f578fb11566b04c62f394"><td class="mdescLeft">&#160;</td><td class="mdescRight">One sentence on what it does.  <br /></td></tr>
+<tr class="separator:aa1798aa2f39f578fb11566b04c62f394"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11a9b88c979b4b773365ff2d0b330c42" id="r_a11a9b88c979b4b773365ff2d0b330c42"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a11a9b88c979b4b773365ff2d0b330c42">Policy</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;, double, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *) override</td></tr>
+<tr class="memdesc:a11a9b88c979b4b773365ff2d0b330c42"><td class="mdescLeft">&#160;</td><td class="mdescRight">The policy itself. Required.  <br /></td></tr>
+<tr class="separator:a11a9b88c979b4b773365ff2d0b330c42"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43233269a12a0b265fac49e2bbf2380f" id="r_a43233269a12a0b265fac49e2bbf2380f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a43233269a12a0b265fac49e2bbf2380f">Update</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xHat, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, double t, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *nu) override</td></tr>
+<tr class="memdesc:a43233269a12a0b265fac49e2bbf2380f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Adapt the model after the policy (scale R, scale Q, ...). Optional.  <br /></td></tr>
+<tr class="separator:a43233269a12a0b265fac49e2bbf2380f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af48de98185ed176ab45a15546120e686" id="r_af48de98185ed176ab45a15546120e686"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#af48de98185ed176ab45a15546120e686">Reset</a> () override</td></tr>
+<tr class="memdesc:af48de98185ed176ab45a15546120e686"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the logs and any internal state; restore what <a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a43233269a12a0b265fac49e2bbf2380f" title="Adapt the model after the policy (scale R, scale Q, ...). Optional.">Update()</a> changed.  <br /></td></tr>
+<tr class="separator:af48de98185ed176ab45a15546120e686"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf144954b7e4aea39e84d8569951e0a8" id="r_abf144954b7e4aea39e84d8569951e0a8"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, double &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#abf144954b7e4aea39e84d8569951e0a8">ScaleLog</a> () const</td></tr>
+<tr class="separator:abf144954b7e4aea39e84d8569951e0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_kalman_1_1_controller"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_controller')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_controller.html">Kalman::Controller</a></td></tr>
+<tr class="memitem:a2345ad58ed042054aa68aa09930658a7 inherit pub_methods_class_kalman_1_1_controller" id="r_a2345ad58ed042054aa68aa09930658a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> *model, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xRef=<a class="el" href="class_kalman_1_1_vector.html">Vector</a>(), const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Qcost=<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>(), const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Rcost=<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>())</td></tr>
+<tr class="separator:a2345ad58ed042054aa68aa09930658a7 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a59d059b9536d3bcfe7e9c99403b4d385 inherit pub_methods_class_kalman_1_1_controller" id="r_a59d059b9536d3bcfe7e9c99403b4d385"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a59d059b9536d3bcfe7e9c99403b4d385">~Controller</a> ()=default</td></tr>
+<tr class="separator:a59d059b9536d3bcfe7e9c99403b4d385 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ababe8434b98164fff512789298e6b3 inherit pub_methods_class_kalman_1_1_controller" id="r_a3ababe8434b98164fff512789298e6b3"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a3ababe8434b98164fff512789298e6b3">Title</a> () const override</td></tr>
+<tr class="memdesc:a3ababe8434b98164fff512789298e6b3 inherit pub_methods_class_kalman_1_1_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Human-readable name of the <em>kind</em> of thing this is.  <br /></td></tr>
+<tr class="separator:a3ababe8434b98164fff512789298e6b3 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada51789dac86e87d7a5a78c5635f7509 inherit pub_methods_class_kalman_1_1_controller" id="r_ada51789dac86e87d7a5a78c5635f7509"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#ada51789dac86e87d7a5a78c5635f7509">Description</a> () const override</td></tr>
+<tr class="memdesc:ada51789dac86e87d7a5a78c5635f7509 inherit pub_methods_class_kalman_1_1_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">One sentence on what it does.  <br /></td></tr>
+<tr class="separator:ada51789dac86e87d7a5a78c5635f7509 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60d23129291fb9fb272a757219aadebb inherit pub_methods_class_kalman_1_1_controller" id="r_a60d23129291fb9fb272a757219aadebb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a60d23129291fb9fb272a757219aadebb">GetModel</a> () const</td></tr>
+<tr class="separator:a60d23129291fb9fb272a757219aadebb inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a18b6e3a1eabec4ab5d7eb1a2137fe2f7 inherit pub_methods_class_kalman_1_1_controller" id="r_a18b6e3a1eabec4ab5d7eb1a2137fe2f7"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a18b6e3a1eabec4ab5d7eb1a2137fe2f7">XRef</a> () const</td></tr>
+<tr class="separator:a18b6e3a1eabec4ab5d7eb1a2137fe2f7 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adad6a079c7190a31363aff2b6c7978e6 inherit pub_methods_class_kalman_1_1_controller" id="r_adad6a079c7190a31363aff2b6c7978e6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#adad6a079c7190a31363aff2b6c7978e6">SetXRef</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xRef)</td></tr>
+<tr class="separator:adad6a079c7190a31363aff2b6c7978e6 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd7681c955e7a6bf11ea7cbacdccd3e5 inherit pub_methods_class_kalman_1_1_controller" id="r_acd7681c955e7a6bf11ea7cbacdccd3e5"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#acd7681c955e7a6bf11ea7cbacdccd3e5">QCost</a> () const</td></tr>
+<tr class="separator:acd7681c955e7a6bf11ea7cbacdccd3e5 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa279df564d16f31f07e1adece9741259 inherit pub_methods_class_kalman_1_1_controller" id="r_aa279df564d16f31f07e1adece9741259"><td class="memItemLeft" align="right" valign="top">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#aa279df564d16f31f07e1adece9741259">RCost</a> () const</td></tr>
+<tr class="separator:aa279df564d16f31f07e1adece9741259 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3adaa444a54de98bddb9e154e342138 inherit pub_methods_class_kalman_1_1_controller" id="r_ae3adaa444a54de98bddb9e154e342138"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a> () const</td></tr>
+<tr class="memdesc:ae3adaa444a54de98bddb9e154e342138 inherit pub_methods_class_kalman_1_1_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command dimension, at least 1 so an uncontrolled plant still gets a vector.  <br /></td></tr>
+<tr class="separator:ae3adaa444a54de98bddb9e154e342138 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a86f76fbaff62cd32b725a5e0c3681d0d inherit pub_methods_class_kalman_1_1_controller" id="r_a86f76fbaff62cd32b725a5e0c3681d0d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a86f76fbaff62cd32b725a5e0c3681d0d">Command</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xHat, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, double t, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *nu=nullptr)</td></tr>
+<tr class="memdesc:a86f76fbaff62cd32b725a5e0c3681d0d inherit pub_methods_class_kalman_1_1_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">The command for this step; logs the cost and the command.  <br /></td></tr>
+<tr class="separator:a86f76fbaff62cd32b725a5e0c3681d0d inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38d13a99a85dc61d3f98c53fc71f3aeb inherit pub_methods_class_kalman_1_1_controller" id="r_a38d13a99a85dc61d3f98c53fc71f3aeb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a38d13a99a85dc61d3f98c53fc71f3aeb">operator()</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xHat, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, double t, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *nu=nullptr)</td></tr>
+<tr class="separator:a38d13a99a85dc61d3f98c53fc71f3aeb inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dd1620b9f036b080e0476f8204c8ae7 inherit pub_methods_class_kalman_1_1_controller" id="r_a5dd1620b9f036b080e0476f8204c8ae7"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, double &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a5dd1620b9f036b080e0476f8204c8ae7">CostLog</a> () const</td></tr>
+<tr class="separator:a5dd1620b9f036b080e0476f8204c8ae7 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a7c77fbb77bbfd48b64e7c4063d3c58 inherit pub_methods_class_kalman_1_1_controller" id="r_a6a7c77fbb77bbfd48b64e7c4063d3c58"><td class="memItemLeft" align="right" valign="top">const std::vector&lt; std::pair&lt; double, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &gt; &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a6a7c77fbb77bbfd48b64e7c4063d3c58">ControlLog</a> () const</td></tr>
+<tr class="separator:a6a7c77fbb77bbfd48b64e7c4063d3c58 inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a61efea062307b353187fcd3eeccf4e9c inherit pub_methods_class_kalman_1_1_controller" id="r_a61efea062307b353187fcd3eeccf4e9c"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a61efea062307b353187fcd3eeccf4e9c">TotalCost</a> () const</td></tr>
+<tr class="memdesc:a61efea062307b353187fcd3eeccf4e9c inherit pub_methods_class_kalman_1_1_controller"><td class="mdescLeft">&#160;</td><td class="mdescRight">Sum of the logged costs.  <br /></td></tr>
+<tr class="separator:a61efea062307b353187fcd3eeccf4e9c inherit pub_methods_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_abstract_1_1_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html">Kalman::Abstract::Metadata</a></td></tr>
+<tr class="memitem:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a4d2072d8053f1800062433de843a0320"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a4d2072d8053f1800062433de843a0320">~Metadata</a> ()=default</td></tr>
+<tr class="separator:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a794690cc8b1e23360b7ad7e8070caa36"><td class="memItemLeft" align="right" valign="top">virtual const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a794690cc8b1e23360b7ad7e8070caa36">Version</a> () const</td></tr>
+<tr class="memdesc:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation version, bumped when behaviour changes.  <br /></td></tr>
+<tr class="separator:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:a3295d92dc569722d930a728e41ff5f72" id="r_a3295d92dc569722d930a728e41ff5f72"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a3295d92dc569722d930a728e41ff5f72">fBoostFactor</a> = 3.</td></tr>
+<tr class="separator:a3295d92dc569722d930a728e41ff5f72"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab204d0f7c8df9918637c6ce668406f22" id="r_ab204d0f7c8df9918637c6ce668406f22"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#ab204d0f7c8df9918637c6ce668406f22">fThreshold</a> = 2.</td></tr>
+<tr class="separator:ab204d0f7c8df9918637c6ce668406f22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0829e5657551a1a6a9d69d44d29ffeee" id="r_a0829e5657551a1a6a9d69d44d29ffeee"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a0829e5657551a1a6a9d69d44d29ffeee">fWindow</a> = 10</td></tr>
+<tr class="separator:a0829e5657551a1a6a9d69d44d29ffeee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adf4cdfc74a5c5751873fedb795eb1982" id="r_adf4cdfc74a5c5751873fedb795eb1982"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a></td></tr>
+<tr class="separator:adf4cdfc74a5c5751873fedb795eb1982"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a463e453f2774c8017c4c5cb2c697fe08" id="r_a463e453f2774c8017c4c5cb2c697fe08"><td class="memItemLeft" align="right" valign="top">std::vector&lt; double &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a></td></tr>
+<tr class="separator:a463e453f2774c8017c4c5cb2c697fe08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a853abfcf016a6c9748dbbb40c42e14e4" id="r_a853abfcf016a6c9748dbbb40c42e14e4"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a853abfcf016a6c9748dbbb40c42e14e4">fScaleLog</a></td></tr>
+<tr class="separator:a853abfcf016a6c9748dbbb40c42e14e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pro_attribs_class_kalman_1_1_controller"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_kalman_1_1_controller')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_kalman_1_1_controller.html">Kalman::Controller</a></td></tr>
+<tr class="memitem:a690b08a8bd00fe48eefaf86e0c6a687c inherit pro_attribs_class_kalman_1_1_controller" id="r_a690b08a8bd00fe48eefaf86e0c6a687c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a> = nullptr</td></tr>
+<tr class="separator:a690b08a8bd00fe48eefaf86e0c6a687c inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42488f3e43226775fd7da46afebbec83 inherit pro_attribs_class_kalman_1_1_controller" id="r_a42488f3e43226775fd7da46afebbec83"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a></td></tr>
+<tr class="separator:a42488f3e43226775fd7da46afebbec83 inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a659418d38230261d65a36b1329602be9 inherit pro_attribs_class_kalman_1_1_controller" id="r_a659418d38230261d65a36b1329602be9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a659418d38230261d65a36b1329602be9">fQCost</a></td></tr>
+<tr class="separator:a659418d38230261d65a36b1329602be9 inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff5539ce56a36076a0b8f3c5baa57b88 inherit pro_attribs_class_kalman_1_1_controller" id="r_aff5539ce56a36076a0b8f3c5baa57b88"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#aff5539ce56a36076a0b8f3c5baa57b88">fRCost</a></td></tr>
+<tr class="separator:aff5539ce56a36076a0b8f3c5baa57b88 inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09d2459b53d2285ca9c677fd7c3327e7 inherit pro_attribs_class_kalman_1_1_controller" id="r_a09d2459b53d2285ca9c677fd7c3327e7"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; double, double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a09d2459b53d2285ca9c677fd7c3327e7">fCostLog</a></td></tr>
+<tr class="separator:a09d2459b53d2285ca9c677fd7c3327e7 inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3961c1672800f8a1a674aa9edb7c01df inherit pro_attribs_class_kalman_1_1_controller" id="r_a3961c1672800f8a1a674aa9edb7c01df"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::pair&lt; double, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html#a3961c1672800f8a1a674aa9edb7c01df">fControlLog</a></td></tr>
+<tr class="separator:a3961c1672800f8a1a674aa9edb7c01df inherit pro_attribs_class_kalman_1_1_controller"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows. Mirrors <code><a class="el" href="boost_8py.html">controllers/boost.py</a></code>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00034">34</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a3495664f45451217430b1f5c274a5438" name="a3495664f45451217430b1f5c274a5438"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3495664f45451217430b1f5c274a5438">&#9670;&#160;</a></span>Boost()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Kalman::Controllers::Boost::Boost </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_model.html">Model</a> *&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>boostFactor</em> = <code>3.</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>threshold</em> = <code>2.</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>window</em> = <code>10</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>xRef</em> = <code><a class="el" href="class_kalman_1_1_vector.html">Vector</a>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>Qcost</em> = <code><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>Rcost</em> = <code><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a>()</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00249">249</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  251</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a3295d92dc569722d930a728e41ff5f72">fBoostFactor</a>(boostFactor), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#ab204d0f7c8df9918637c6ce668406f22">fThreshold</a>(threshold), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a0829e5657551a1a6a9d69d44d29ffeee">fWindow</a>(window)</div>
+<div class="line"><span class="lineno">  252</span>    {</div>
+<div class="line"><span class="lineno">  253</span>        <span class="keywordflow">if</span> (!(boostFactor &gt; 0.) || window == 0) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::Boost: positive factor and window.&quot;</span>);</div>
+<div class="line"><span class="lineno">  254</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_controller_html_a2345ad58ed042054aa68aa09930658a7"><div class="ttname"><a href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Kalman::Controller::Controller</a></div><div class="ttdeci">Controller(Model *model, const Vector &amp;xRef=Vector(), const Matrix &amp;Qcost=Matrix(), const Matrix &amp;Rcost=Matrix())</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00018">Controller.cc:18</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_a0829e5657551a1a6a9d69d44d29ffeee"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#a0829e5657551a1a6a9d69d44d29ffeee">Kalman::Controllers::Boost::fWindow</a></div><div class="ttdeci">std::size_t fWindow</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00039">Adaptive.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_a3295d92dc569722d930a728e41ff5f72"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#a3295d92dc569722d930a728e41ff5f72">Kalman::Controllers::Boost::fBoostFactor</a></div><div class="ttdeci">double fBoostFactor</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00037">Adaptive.h:37</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_ab204d0f7c8df9918637c6ce668406f22"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#ab204d0f7c8df9918637c6ce668406f22">Kalman::Controllers::Boost::fThreshold</a></div><div class="ttdeci">double fThreshold</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00038">Adaptive.h:38</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="aa1798aa2f39f578fb11566b04c62f394" name="aa1798aa2f39f578fb11566b04c62f394"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa1798aa2f39f578fb11566b04c62f394">&#9670;&#160;</a></span>Description()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Controllers::Boost::Description </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>One sentence on what it does. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00049">49</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   49</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Innovation-based Kalman gain boost by R scaling.&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a11a9b88c979b4b773365ff2d0b330c42" name="a11a9b88c979b4b773365ff2d0b330c42"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11a9b88c979b4b773365ff2d0b330c42">&#9670;&#160;</a></span>Policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_vector.html">Vector</a> Kalman::Controllers::Boost::Policy </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>xHat</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>P</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *&#160;</td>
+          <td class="paramname"><em>nu</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>The policy itself. Required. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e">Kalman::Controller</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00256">256</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  257</span>    {</div>
+<div class="line"><span class="lineno">  258</span>        <span class="keywordflow">return</span> Vector(<a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), 0.);</div>
+<div class="line"><span class="lineno">  259</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_controller_html_ae3adaa444a54de98bddb9e154e342138"><div class="ttname"><a href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">Kalman::Controller::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdoc">The command dimension, at least 1 so an uncontrolled plant still gets a vector.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00034">Controller.cc:34</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af48de98185ed176ab45a15546120e686" name="af48de98185ed176ab45a15546120e686"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af48de98185ed176ab45a15546120e686">&#9670;&#160;</a></span>Reset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Controllers::Boost::Reset </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Clear the logs and any internal state; restore what <a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a43233269a12a0b265fac49e2bbf2380f" title="Adapt the model after the policy (scale R, scale Q, ...). Optional.">Update()</a> changed. </p>
+
+<p>Reimplemented from <a class="el" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00286">286</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  287</span>    {</div>
+<div class="line"><span class="lineno">  288</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Controller::Reset</a>();</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>()) <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a539b2e2973a3375a5703942bc1a8a452">SetR</a>(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a>);</div>
+<div class="line"><span class="lineno">  290</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.clear();</div>
+<div class="line"><span class="lineno">  291</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a853abfcf016a6c9748dbbb40c42e14e4">fScaleLog</a>.clear();</div>
+<div class="line"><span class="lineno">  292</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_controller_html_a0ad205266e8105f26359bea1882e4d5d"><div class="ttname"><a href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller::Reset</a></div><div class="ttdeci">virtual void Reset()</div><div class="ttdoc">Clear the logs and any internal state; restore what Update() changed.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00069">Controller.cc:69</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controller_html_a690b08a8bd00fe48eefaf86e0c6a687c"><div class="ttname"><a href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">Kalman::Controller::fModel</a></div><div class="ttdeci">Model * fModel</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00047">Controller.h:47</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_a463e453f2774c8017c4c5cb2c697fe08"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">Kalman::Controllers::Boost::fNis</a></div><div class="ttdeci">std::vector&lt; double &gt; fNis</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00041">Adaptive.h:41</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_a853abfcf016a6c9748dbbb40c42e14e4"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#a853abfcf016a6c9748dbbb40c42e14e4">Kalman::Controllers::Boost::fScaleLog</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; double, double &gt; &gt; fScaleLog</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00042">Adaptive.h:42</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_boost_html_adf4cdfc74a5c5751873fedb795eb1982"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">Kalman::Controllers::Boost::fRNominal</a></div><div class="ttdeci">Matrix fRNominal</div><div class="ttdef"><b>Definition</b> <a href="_adaptive_8h_source.html#l00040">Adaptive.h:40</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_a00851e44671a15d861d1eefb682b8cf7"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Kalman::Matrix::Empty</a></div><div class="ttdeci">bool Empty() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00099">Matrix.h:99</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a539b2e2973a3375a5703942bc1a8a452"><div class="ttname"><a href="class_kalman_1_1_model.html#a539b2e2973a3375a5703942bc1a8a452">Kalman::Model::SetR</a></div><div class="ttdeci">void SetR(const Matrix &amp;R)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00294">Model.cc:294</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abf144954b7e4aea39e84d8569951e0a8" name="abf144954b7e4aea39e84d8569951e0a8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf144954b7e4aea39e84d8569951e0a8">&#9670;&#160;</a></span>ScaleLog()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const std::vector&lt; std::pair&lt; double, double &gt; &gt; &amp; Kalman::Controllers::Boost::ScaleLog </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00055">55</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a853abfcf016a6c9748dbbb40c42e14e4">fScaleLog</a>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7d6d2dd50ee2467a5463b32d0aabe204" name="a7d6d2dd50ee2467a5463b32d0aabe204"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7d6d2dd50ee2467a5463b32d0aabe204">&#9670;&#160;</a></span>Title()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * Kalman::Controllers::Boost::Title </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Human-readable name of the <em>kind</em> of thing this is. </p>
+
+<p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00048">48</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Boost Controller&quot;</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a43233269a12a0b265fac49e2bbf2380f" name="a43233269a12a0b265fac49e2bbf2380f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a43233269a12a0b265fac49e2bbf2380f">&#9670;&#160;</a></span>Update()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Controllers::Boost::Update </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname">, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *&#160;</td>
+          <td class="paramname">&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Adapt the model after the policy (scale R, scale Q, ...). Optional. </p>
+
+<p>Reimplemented from <a class="el" href="class_kalman_1_1_controller.html#a7608ef78ab09c9ff5abf389ea0201842">Kalman::Controller</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00261">261</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  262</span>    {</div>
+<div class="line"><span class="lineno">  263</span>        <span class="keywordflow">if</span> (!nu) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a>.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>()) <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a> = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t);</div>
+<div class="line"><span class="lineno">  265</span> </div>
+<div class="line"><span class="lineno">  266</span>        <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(*nu);</div>
+<div class="line"><span class="lineno">  267</span>        <span class="keywordflow">if</span> (keep.empty()) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  268</span> </div>
+<div class="line"><span class="lineno">  269</span>        <span class="keyword">const</span> Matrix H = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Utils::CompressRows</a>(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">JacobianH</a>(xHat, t), keep);</div>
+<div class="line"><span class="lineno">  270</span>        Matrix S = Utils::Similarity(H, P);</div>
+<div class="line"><span class="lineno">  271</span>        S += <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t), keep);</div>
+<div class="line"><span class="lineno">  272</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.push_back(<a class="code hl_function" href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Utils::Mahalanobis</a>(<a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(*nu, keep), Utils::Inverse(S)));</div>
+<div class="line"><span class="lineno">  273</span> </div>
+<div class="line"><span class="lineno">  274</span>        <span class="keyword">const</span> std::size_t first = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.size() &gt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a0829e5657551a1a6a9d69d44d29ffeee">fWindow</a> ? <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.size() - <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a0829e5657551a1a6a9d69d44d29ffeee">fWindow</a> : 0;</div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordtype">double</span> mean = 0.;</div>
+<div class="line"><span class="lineno">  276</span>        <span class="keywordflow">for</span> (std::size_t i = first; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.size(); ++i) mean += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>[i];</div>
+<div class="line"><span class="lineno">  277</span>        mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a463e453f2774c8017c4c5cb2c697fe08">fNis</a>.size() - first);</div>
+<div class="line"><span class="lineno">  278</span> </div>
+<div class="line"><span class="lineno">  279</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> scale = mean &gt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#ab204d0f7c8df9918637c6ce668406f22">fThreshold</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(keep.size()) ? 1. / <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a3295d92dc569722d930a728e41ff5f72">fBoostFactor</a> : 1.;</div>
+<div class="line"><span class="lineno">  280</span>        Matrix R = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#adf4cdfc74a5c5751873fedb795eb1982">fRNominal</a>;</div>
+<div class="line"><span class="lineno">  281</span>        R *= scale;</div>
+<div class="line"><span class="lineno">  282</span>        <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a539b2e2973a3375a5703942bc1a8a452">SetR</a>(R);</div>
+<div class="line"><span class="lineno">  283</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_boost.html#a853abfcf016a6c9748dbbb40c42e14e4">fScaleLog</a>.emplace_back(t, scale);</div>
+<div class="line"><span class="lineno">  284</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a450c77e55f7dd11cc53f7100027753c6"><div class="ttname"><a href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">Kalman::Model::R</a></div><div class="ttdeci">virtual Matrix R(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00086">Model.cc:86</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a4b10c079475ed1d5ca555e80fd420d70"><div class="ttname"><a href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Kalman::Model::JacobianH</a></div><div class="ttdeci">virtual Matrix JacobianH(const Vector &amp;x, double t=0.) const</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00249">Model.cc:249</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aecfd9e403601d17e1f15968074161067"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Kalman::Utils::Mahalanobis</a></div><div class="ttdeci">double Mahalanobis(const Vector &amp;y, const Matrix &amp;Sinv)</div><div class="ttdoc">Quadratic form y^T S^-1 y, given an already-inverted Sinv.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00141">Utils.cc:141</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00123">Utils.cc:123</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a3295d92dc569722d930a728e41ff5f72" name="a3295d92dc569722d930a728e41ff5f72"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3295d92dc569722d930a728e41ff5f72">&#9670;&#160;</a></span>fBoostFactor</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Kalman::Controllers::Boost::fBoostFactor = 3.</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00037">37</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<a id="a463e453f2774c8017c4c5cb2c697fe08" name="a463e453f2774c8017c4c5cb2c697fe08"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a463e453f2774c8017c4c5cb2c697fe08">&#9670;&#160;</a></span>fNis</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;double&gt; Kalman::Controllers::Boost::fNis</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00041">41</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<a id="adf4cdfc74a5c5751873fedb795eb1982" name="adf4cdfc74a5c5751873fedb795eb1982"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adf4cdfc74a5c5751873fedb795eb1982">&#9670;&#160;</a></span>fRNominal</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> Kalman::Controllers::Boost::fRNominal</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00040">40</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<a id="a853abfcf016a6c9748dbbb40c42e14e4" name="a853abfcf016a6c9748dbbb40c42e14e4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a853abfcf016a6c9748dbbb40c42e14e4">&#9670;&#160;</a></span>fScaleLog</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt;std::pair&lt;double, double&gt; &gt; Kalman::Controllers::Boost::fScaleLog</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00042">42</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<a id="ab204d0f7c8df9918637c6ce668406f22" name="ab204d0f7c8df9918637c6ce668406f22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab204d0f7c8df9918637c6ce668406f22">&#9670;&#160;</a></span>fThreshold</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">double Kalman::Controllers::Boost::fThreshold = 2.</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00038">38</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<a id="a0829e5657551a1a6a9d69d44d29ffeee" name="a0829e5657551a1a6a9d69d44d29ffeee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0829e5657551a1a6a9d69d44d29ffeee">&#9670;&#160;</a></span>fWindow</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::size_t Kalman::Controllers::Boost::fWindow = 10</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_adaptive_8h_source.html#l00039">39</a> of file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/Kalman/Controllers/<a class="el" href="_adaptive_8h_source.html">Adaptive.h</a></li>
+<li>src/Controllers/<a class="el" href="_controllers_8cc_source.html">Controllers.cc</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespace_kalman.html">Kalman</a></li><li class="navelem"><a class="el" href="namespace_kalman_1_1_controllers.html">Controllers</a></li><li class="navelem"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html">Boost</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

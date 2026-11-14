@@ -1,0 +1,248 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/api/auth.py File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/api/auth.py File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/api/auth.py File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('auth_8py.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#namespaces">Namespaces</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">auth.py File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p><a href="auth_8py_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_auth_error.html">modules.api.auth.AuthError</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_invalid_token.html">modules.api.auth.InvalidToken</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_bad_credentials.html">modules.api.auth.BadCredentials</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1api_1_1auth_1_1_rate_limited.html">modules.api.auth.RateLimited</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacemodules" id="r_namespacemodules"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules.html">modules</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1api" id="r_namespacemodules_1_1api"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api.html">modules.api</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespacemodules_1_1api_1_1auth" id="r_namespacemodules_1_1api_1_1auth"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html">modules.api.auth</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:aef3c78b0cc0dcd31accb328dae03df59" id="r_aef3c78b0cc0dcd31accb328dae03df59"><td class="memItemLeft" align="right" valign="top">str|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aef3c78b0cc0dcd31accb328dae03df59">modules.api.auth._secret</a> ()</td></tr>
+<tr class="separator:aef3c78b0cc0dcd31accb328dae03df59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4dd67a550ffcf7dc4d2290d4430dec3a" id="r_a4dd67a550ffcf7dc4d2290d4430dec3a"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a4dd67a550ffcf7dc4d2290d4430dec3a">modules.api.auth._htpasswd_path</a> ()</td></tr>
+<tr class="separator:a4dd67a550ffcf7dc4d2290d4430dec3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a0d9beb6cbb78ab01f90f118d8a0f41" id="r_a4a0d9beb6cbb78ab01f90f118d8a0f41"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a4a0d9beb6cbb78ab01f90f118d8a0f41">modules.api.auth.enabled</a> ()</td></tr>
+<tr class="separator:a4a0d9beb6cbb78ab01f90f118d8a0f41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a34bdcbbb137f6a04efca0558c9332ce3" id="r_a34bdcbbb137f6a04efca0558c9332ce3"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a34bdcbbb137f6a04efca0558c9332ce3">modules.api.auth._decode</a> (str credential)</td></tr>
+<tr class="separator:a34bdcbbb137f6a04efca0558c9332ce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95157e094f3812fa9dbde037c7d710e5" id="r_a95157e094f3812fa9dbde037c7d710e5"><td class="memItemLeft" align="right" valign="top">dict|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a95157e094f3812fa9dbde037c7d710e5">modules.api.auth.claims</a> (str|None credential)</td></tr>
+<tr class="separator:a95157e094f3812fa9dbde037c7d710e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc591445fb4135d19169bc3984e47a1b" id="r_acc591445fb4135d19169bc3984e47a1b"><td class="memItemLeft" align="right" valign="top">str|None&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acc591445fb4135d19169bc3984e47a1b">modules.api.auth.identity</a> (str|None credential)</td></tr>
+<tr class="separator:acc591445fb4135d19169bc3984e47a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a42b77c36adfd0d0ff1f449989586ee31" id="r_a42b77c36adfd0d0ff1f449989586ee31"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a42b77c36adfd0d0ff1f449989586ee31">modules.api.auth.has_scope</a> (str|None credential, str scope)</td></tr>
+<tr class="separator:a42b77c36adfd0d0ff1f449989586ee31"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf26602441f97f224aba5fab22855ac3" id="r_abf26602441f97f224aba5fab22855ac3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#abf26602441f97f224aba5fab22855ac3">modules.api.auth.require_owner</a> (dict record, str|None credential, str what)</td></tr>
+<tr class="separator:abf26602441f97f224aba5fab22855ac3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98dae25c80b7b8ca0d0b1e3b8404148a" id="r_a98dae25c80b7b8ca0d0b1e3b8404148a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a98dae25c80b7b8ca0d0b1e3b8404148a">modules.api.auth.check_server</a> (str host, *str service, bool verified_elsewhere=False)</td></tr>
+<tr class="separator:a98dae25c80b7b8ca0d0b1e3b8404148a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a62e1961b73b2317a1652d653f6795080" id="r_a62e1961b73b2317a1652d653f6795080"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a62e1961b73b2317a1652d653f6795080">modules.api.auth.authorize</a> (str|None credential, str scope)</td></tr>
+<tr class="separator:a62e1961b73b2317a1652d653f6795080"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd47b5e61aef44e8a5234598fffd6385" id="r_acd47b5e61aef44e8a5234598fffd6385"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acd47b5e61aef44e8a5234598fffd6385">modules.api.auth.mint_token</a> (str user, scopes, *str|None secret=None, float exp_hours=24.0)</td></tr>
+<tr class="separator:acd47b5e61aef44e8a5234598fffd6385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7917e8de3dc861702a64e2ea5bca5a6a" id="r_a7917e8de3dc861702a64e2ea5bca5a6a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a7917e8de3dc861702a64e2ea5bca5a6a">modules.api.auth._bcrypt</a> ()</td></tr>
+<tr class="separator:a7917e8de3dc861702a64e2ea5bca5a6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d52f6f01108222fa9182f6cb04d4086" id="r_a2d52f6f01108222fa9182f6cb04d4086"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a2d52f6f01108222fa9182f6cb04d4086">modules.api.auth._clean_scopes</a> (scopes)</td></tr>
+<tr class="separator:a2d52f6f01108222fa9182f6cb04d4086"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade66b7fb327eb22befc5a5d359d6dd14" id="r_ade66b7fb327eb22befc5a5d359d6dd14"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ade66b7fb327eb22befc5a5d359d6dd14">modules.api.auth._accounts</a> (str|None path=None)</td></tr>
+<tr class="separator:ade66b7fb327eb22befc5a5d359d6dd14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aff7783e713ae2c4832ad834b3fcd1c8f" id="r_aff7783e713ae2c4832ad834b3fcd1c8f"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aff7783e713ae2c4832ad834b3fcd1c8f">modules.api.auth.add_user</a> (str user, str password, str|None path=None, scopes=None)</td></tr>
+<tr class="separator:aff7783e713ae2c4832ad834b3fcd1c8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab250802b58f2431cb8e45626e0217f4" id="r_aab250802b58f2431cb8e45626e0217f4"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#aab250802b58f2431cb8e45626e0217f4">modules.api.auth.verify_user</a> (str user, str password, str|None path=None)</td></tr>
+<tr class="separator:aab250802b58f2431cb8e45626e0217f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a430b1ab53051092fd48f2363fadf16e4" id="r_a430b1ab53051092fd48f2363fadf16e4"><td class="memItemLeft" align="right" valign="top">list[str]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a430b1ab53051092fd48f2363fadf16e4">modules.api.auth.user_scopes</a> (str user, str|None path=None)</td></tr>
+<tr class="separator:a430b1ab53051092fd48f2363fadf16e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d0a9980dc299d35db424d5add46997" id="r_a70d0a9980dc299d35db424d5add46997"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a70d0a9980dc299d35db424d5add46997">modules.api.auth._throttle</a> (str user, str client)</td></tr>
+<tr class="separator:a70d0a9980dc299d35db424d5add46997"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43d94780fc5f951afcc41f8311c4e1dc" id="r_a43d94780fc5f951afcc41f8311c4e1dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a43d94780fc5f951afcc41f8311c4e1dc">modules.api.auth.unlock</a> (str user)</td></tr>
+<tr class="separator:a43d94780fc5f951afcc41f8311c4e1dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5b1f7ffd12ad7351e615de8e24fd9b1" id="r_ab5b1f7ffd12ad7351e615de8e24fd9b1"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ab5b1f7ffd12ad7351e615de8e24fd9b1">modules.api.auth.login</a> (str user, str password, scopes=None, *float|None exp_hours=None, str client=&quot;&quot;)</td></tr>
+<tr class="separator:ab5b1f7ffd12ad7351e615de8e24fd9b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab396be7b849f933a502009cd4e6e34c0" id="r_ab396be7b849f933a502009cd4e6e34c0"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ab396be7b849f933a502009cd4e6e34c0">modules.api.auth.revoke</a> (str|None credential=None, *str|None user=None)</td></tr>
+<tr class="separator:ab396be7b849f933a502009cd4e6e34c0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a60f3d69c9adbc31a4dc823259f97f003" id="r_a60f3d69c9adbc31a4dc823259f97f003"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a60f3d69c9adbc31a4dc823259f97f003">modules.api.auth._api_post</a> (str base_url, str path, str token, dict body)</td></tr>
+<tr class="separator:a60f3d69c9adbc31a4dc823259f97f003"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad43a21a49d8efe7ded719262025b8ca3" id="r_ad43a21a49d8efe7ded719262025b8ca3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ad43a21a49d8efe7ded719262025b8ca3">modules.api.auth._main</a> (argv=None)</td></tr>
+<tr class="separator:ad43a21a49d8efe7ded719262025b8ca3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a540e36ab48d632f88bc304c58a30be8f" id="r_a540e36ab48d632f88bc304c58a30be8f"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a540e36ab48d632f88bc304c58a30be8f">modules.api.auth.SCOPES</a> = (&quot;read&quot;, &quot;send_measurement&quot;, &quot;write_models&quot;, &quot;load_plugins&quot;, &quot;admin&quot;)</td></tr>
+<tr class="separator:a540e36ab48d632f88bc304c58a30be8f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad1583bb6090bbd250fda14699801c152" id="r_ad1583bb6090bbd250fda14699801c152"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#ad1583bb6090bbd250fda14699801c152">modules.api.auth.MIN_SECRET_BYTES</a> = 32</td></tr>
+<tr class="separator:ad1583bb6090bbd250fda14699801c152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0831f33986166fbdb3122d24cae31a93" id="r_a0831f33986166fbdb3122d24cae31a93"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#a0831f33986166fbdb3122d24cae31a93">modules.api.auth._LOOPBACK</a> = (&quot;127.0.0.1&quot;, &quot;localhost&quot;, &quot;::1&quot;)</td></tr>
+<tr class="separator:a0831f33986166fbdb3122d24cae31a93"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acc6d135ec8d72b12fb0802c7618c8d37" id="r_acc6d135ec8d72b12fb0802c7618c8d37"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1api_1_1auth.html#acc6d135ec8d72b12fb0802c7618c8d37">modules.api.auth._BCRYPT_MAX</a> = 72</td></tr>
+<tr class="separator:acc6d135ec8d72b12fb0802c7618c8d37"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_cd57d34d9ddb895ce8faa79f2b7a4929.html">api</a></li><li class="navelem"><a class="el" href="auth_8py.html">auth.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

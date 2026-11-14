@@ -1,0 +1,1065 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.native Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.native Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.native Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacemodules_1_1native.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">modules.native Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:a835510f8cb25f8910b30d8ebb990edad" id="r_a835510f8cb25f8910b30d8ebb990edad"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a835510f8cb25f8910b30d8ebb990edad">available</a> ()</td></tr>
+<tr class="separator:a835510f8cb25f8910b30d8ebb990edad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a835e0424a58c3238c770d4d96bd08d04" id="r_a835e0424a58c3238c770d4d96bd08d04"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a835e0424a58c3238c770d4d96bd08d04">version</a> ()</td></tr>
+<tr class="separator:a835e0424a58c3238c770d4d96bd08d04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78111d82429d4c74a1da31d4662a2ef2" id="r_a78111d82429d4c74a1da31d4662a2ef2"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a78111d82429d4c74a1da31d4662a2ef2">names</a> ()</td></tr>
+<tr class="separator:a78111d82429d4c74a1da31d4662a2ef2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2b495ade5c4ba2777dea8d148459f820" id="r_a2b495ade5c4ba2777dea8d148459f820"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a2b495ade5c4ba2777dea8d148459f820">describe</a> (str name)</td></tr>
+<tr class="separator:a2b495ade5c4ba2777dea8d148459f820"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fb96ef311b01dc208fe9b148e152dc4" id="r_a1fb96ef311b01dc208fe9b148e152dc4"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a1fb96ef311b01dc208fe9b148e152dc4">plugins</a> ()</td></tr>
+<tr class="separator:a1fb96ef311b01dc208fe9b148e152dc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adbe622c41ed55b927ace4fd98c5c2d45" id="r_adbe622c41ed55b927ace4fd98c5c2d45"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#adbe622c41ed55b927ace4fd98c5c2d45">load_plugin</a> (str name_or_path)</td></tr>
+<tr class="separator:adbe622c41ed55b927ace4fd98c5c2d45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a125f738aa5f6674250048516964be48c" id="r_a125f738aa5f6674250048516964be48c"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a125f738aa5f6674250048516964be48c">export_model</a> (str name, str path=None, *bool linearize=False, int steps=0, dict parameters=None)</td></tr>
+<tr class="separator:a125f738aa5f6674250048516964be48c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2080373a32cded5b83520acd2911315e" id="r_a2080373a32cded5b83520acd2911315e"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a2080373a32cded5b83520acd2911315e">_plugin_of</a> (str name)</td></tr>
+<tr class="separator:a2080373a32cded5b83520acd2911315e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a458112dad68a1076d1baabab10f88fc2" id="r_a458112dad68a1076d1baabab10f88fc2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a458112dad68a1076d1baabab10f88fc2">_tabulate</a> (model, steps)</td></tr>
+<tr class="separator:a458112dad68a1076d1baabab10f88fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a51076d55e6d58157363400c3fdf96f0c" id="r_a51076d55e6d58157363400c3fdf96f0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a51076d55e6d58157363400c3fdf96f0c">_stand_in</a> (model, structure, linearize, steps=0)</td></tr>
+<tr class="separator:a51076d55e6d58157363400c3fdf96f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d712f6b615083d0c72c60baee6a1c66" id="r_a2d712f6b615083d0c72c60baee6a1c66"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a2d712f6b615083d0c72c60baee6a1c66">_constructor_values</a> (model)</td></tr>
+<tr class="separator:a2d712f6b615083d0c72c60baee6a1c66"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ebba239d1fcf72ccfc03b3dbadd04bc" id="r_a2ebba239d1fcf72ccfc03b3dbadd04bc"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a2ebba239d1fcf72ccfc03b3dbadd04bc">export</a> (model, str path=None, *bool linearize=False, int steps=0)</td></tr>
+<tr class="separator:a2ebba239d1fcf72ccfc03b3dbadd04bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae1765fca0e0059fefa17185a727c33a3" id="r_ae1765fca0e0059fefa17185a727c33a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#ae1765fca0e0059fefa17185a727c33a3">open_model</a> (str path, *bool settings=True)</td></tr>
+<tr class="separator:ae1765fca0e0059fefa17185a727c33a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a71fc8d37c6532979547f0632f98fcb49" id="r_a71fc8d37c6532979547f0632f98fcb49"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#a71fc8d37c6532979547f0632f98fcb49">read_model_file</a> (str path)</td></tr>
+<tr class="separator:a71fc8d37c6532979547f0632f98fcb49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6fefa4ff3a4317b48fd7bf54d813d3a" id="r_aa6fefa4ff3a4317b48fd7bf54d813d3a"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1native.html#aa6fefa4ff3a4317b48fd7bf54d813d3a">status</a> ()</td></tr>
+<tr class="separator:aa6fefa4ff3a4317b48fd7bf54d813d3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">kalman.native - the C++ side of the framework, in one place.
+
+C++ is the implementation and Python the interface: the classes of
+``kalman.framework`` forward to ``libKalman`` on their own, so most code never
+imports this module. It is for the cases where the C++ side is addressed
+directly::
+
+    import kalman.native as native
+
+    native.available()                    # is libKalman loaded?
+    native.status()                       # which libraries, where from
+    native.load_plugin("KalmanPlugin_toy")   # register a C++ model library
+    model = native.NativeModel("toy")     # a model that lives in C++
+    engine = native.NativeEngine("extended")
+
+    with native.python_reference():       # the Python reference path, for comparisons
+        ...
+
+Nothing is implemented here; every name comes from ``kalman.framework``.
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="a2d712f6b615083d0c72c60baee6a1c66" name="a2d712f6b615083d0c72c60baee6a1c66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d712f6b615083d0c72c60baee6a1c66">&#9670;&#160;</a></span>_constructor_values()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.native._constructor_values </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The arguments ``model`` was constructed with, as a file can hold them:
+``(found, not_written)``. Numbers, strings, booleans and arrays of numbers
+are written. An argument that is code or an object (a callable, a
+controller) cannot be, and is listed in ``not_written`` when it was given.
+The sample rate, noise and initial state are left out: the file has its own
+places for them.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00204">204</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  204</span><span class="keyword">def </span>_constructor_values(model):</div>
+<div class="line"><span class="lineno">  205</span>    <span class="stringliteral">&quot;&quot;&quot;The arguments ``model`` was constructed with, as a file can hold them:</span></div>
+<div class="line"><span class="lineno">  206</span><span class="stringliteral">    ``(found, not_written)``. Numbers, strings, booleans and arrays of numbers</span></div>
+<div class="line"><span class="lineno">  207</span><span class="stringliteral">    are written. An argument that is code or an object (a callable, a</span></div>
+<div class="line"><span class="lineno">  208</span><span class="stringliteral">    controller) cannot be, and is listed in ``not_written`` when it was given.</span></div>
+<div class="line"><span class="lineno">  209</span><span class="stringliteral">    The sample rate, noise and initial state are left out: the file has its own</span></div>
+<div class="line"><span class="lineno">  210</span><span class="stringliteral">    places for them.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  211</span>    <span class="keyword">import</span> enum</div>
+<div class="line"><span class="lineno">  212</span>    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  213</span>    found, missing = {}, []</div>
+<div class="line"><span class="lineno">  214</span>    arguments = getattr(model, <span class="stringliteral">&quot;_init_arguments&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">or</span> {}</div>
+<div class="line"><span class="lineno">  215</span>    skipped = {<span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;sample_rate&quot;</span>, <span class="stringliteral">&quot;x0&quot;</span>, <span class="stringliteral">&quot;P0&quot;</span>, <span class="stringliteral">&quot;Q&quot;</span>, <span class="stringliteral">&quot;R&quot;</span>, getattr(model, <span class="stringliteral">&quot;_init_first&quot;</span>, <span class="keywordtype">None</span>)}</div>
+<div class="line"><span class="lineno">  216</span>    <span class="keywordflow">for</span> name, value <span class="keywordflow">in</span> arguments.items():</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">if</span> name <span class="keywordflow">in</span> skipped <span class="keywordflow">or</span> value <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  218</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">if</span> isinstance(value, (np.floating, np.integer, np.bool_)):</div>
+<div class="line"><span class="lineno">  220</span>            value = value.item()</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">if</span> isinstance(value, enum.Enum):</div>
+<div class="line"><span class="lineno">  222</span>            value = value._name_            <span class="comment"># the framework&#39;s constructors take a kind by its name</span></div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">if</span> isinstance(value, (bool, int, float, str)):</div>
+<div class="line"><span class="lineno">  224</span>            found[name] = value</div>
+<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">if</span> isinstance(value, (list, tuple)) <span class="keywordflow">and</span> value <span class="keywordflow">and</span> all(isinstance(v, str) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> value):</div>
+<div class="line"><span class="lineno">  227</span>            found[name] = list(value)</div>
+<div class="line"><span class="lineno">  228</span>            <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">if</span> isinstance(value, (list, tuple, np.ndarray)):</div>
+<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  231</span>                array = np.asarray(value, dtype=float)</div>
+<div class="line"><span class="lineno">  232</span>            <span class="keywordflow">except</span> (TypeError, ValueError):</div>
+<div class="line"><span class="lineno">  233</span>                array = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">if</span> array <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> np.all(np.isfinite(array)):</div>
+<div class="line"><span class="lineno">  235</span>                found[name] = array.tolist()</div>
+<div class="line"><span class="lineno">  236</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  237</span>        missing.append(name)</div>
+<div class="line"><span class="lineno">  238</span>    <span class="keywordflow">return</span> found, missing</div>
+<div class="line"><span class="lineno">  239</span> </div>
+<div class="line"><span class="lineno">  240</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2080373a32cded5b83520acd2911315e" name="a2080373a32cded5b83520acd2911315e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2080373a32cded5b83520acd2911315e">&#9670;&#160;</a></span>_plugin_of()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str modules.native._plugin_of </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00104">104</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  104</span><span class="keyword">def </span>_plugin_of(name: str) -&gt; str:</div>
+<div class="line"><span class="lineno">  105</span>    library = os.path.basename(_core.describe(name)[<span class="stringliteral">&quot;plugin&quot;</span>] <span class="keywordflow">or</span> <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  106</span>    <span class="keywordflow">return</span> (library[3:] <span class="keywordflow">if</span> library.startswith(<span class="stringliteral">&quot;lib&quot;</span>) <span class="keywordflow">else</span> library).split(<span class="stringliteral">&quot;.&quot;</span>)[0]</div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a51076d55e6d58157363400c3fdf96f0c" name="a51076d55e6d58157363400c3fdf96f0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a51076d55e6d58157363400c3fdf96f0c">&#9670;&#160;</a></span>_stand_in()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.native._stand_in </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>structure</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>linearize</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">A C++ model of matrices (Kalman::Models::Tabulated) holding what the
+Python model ``model`` states: what the exporter writes, and what the filter
+runs for a model whose matrices change with time (``steps`` samples of them
+are then tabulated).</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00130">130</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  130</span><span class="keyword">def </span>_stand_in(model, structure, linearize, steps=0):</div>
+<div class="line"><span class="lineno">  131</span>    <span class="stringliteral">&quot;&quot;&quot;A C++ model of matrices (Kalman::Models::Tabulated) holding what the</span></div>
+<div class="line"><span class="lineno">  132</span><span class="stringliteral">    Python model ``model`` states: what the exporter writes, and what the filter</span></div>
+<div class="line"><span class="lineno">  133</span><span class="stringliteral">    runs for a model whose matrices change with time (``steps`` samples of them</span></div>
+<div class="line"><span class="lineno">  134</span><span class="stringliteral">    are then tabulated).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  135</span>    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  136</span>    <span class="keyword">from</span> .framework.constants <span class="keyword">import</span> KalmanStructureKind <span class="keyword">as</span> S</div>
+<div class="line"><span class="lineno">  137</span>    L, ffi = _core.require(), _core.ffi</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>    <span class="keyword">def </span>flat(a, shape):</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> np.ascontiguousarray(np.asarray(a, dtype=float).reshape(shape))</div>
+<div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>    n, m, l = int(model.n), int(model.m), int(getattr(model, <span class="stringliteral">&quot;l&quot;</span>, 0) <span class="keywordflow">or</span> 0)</div>
+<div class="line"><span class="lineno">  143</span>    name = type(model).__name__</div>
+<div class="line"><span class="lineno">  144</span>    raw = L.kalman_model_create_matrices(name.encode(), n, m, l)</div>
+<div class="line"><span class="lineno">  145</span>    <span class="keywordflow">if</span> raw == ffi.NULL:</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;export: {_core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  147</span>    handle = ffi.gc(raw, L.kalman_model_destroy)</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>    <span class="keyword">def </span>put(fn, array, what, *args):</div>
+<div class="line"><span class="lineno">  150</span>        _core.check(fn(handle, *args, _core.cdptr(array)), f<span class="stringliteral">&quot;export: {what}&quot;</span>)</div>
+<div class="line"><span class="lineno">  151</span> </div>
+<div class="line"><span class="lineno">  152</span>    t0 = float(getattr(model, <span class="stringliteral">&quot;t0&quot;</span>, 0.0) <span class="keywordflow">or</span> 0.0)</div>
+<div class="line"><span class="lineno">  153</span>    tables = _tabulate(model, steps) <span class="keywordflow">if</span> (structure <span class="keywordflow">is</span> S.TIME_VARYING <span class="keywordflow">and</span> steps <span class="keywordflow">and</span> <span class="keywordflow">not</span> linearize) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  154</span>    first = (<span class="keyword">lambda</span> k, call: tables[k][0]) <span class="keywordflow">if</span> tables <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> (<span class="keyword">lambda</span> k, call: call())</div>
+<div class="line"><span class="lineno">  155</span>    <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;fs&quot;</span>, <span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">  156</span>        _core.check(L.kalman_model_set_sample_rate(handle, float(model.fs)), <span class="stringliteral">&quot;export: fs&quot;</span>)</div>
+<div class="line"><span class="lineno">  157</span>    _core.check(L.kalman_model_set_t0(handle, t0), <span class="stringliteral">&quot;export: t0&quot;</span>)</div>
+<div class="line"><span class="lineno">  158</span>    x0 = flat(model.x0, (n,))</div>
+<div class="line"><span class="lineno">  159</span>    put(L.kalman_model_set_x0, x0, <span class="stringliteral">&quot;x0&quot;</span>)</div>
+<div class="line"><span class="lineno">  160</span>    <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;P0&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  161</span>        put(L.kalman_model_set_P0, flat(model.P0, (n, n)), <span class="stringliteral">&quot;P0&quot;</span>)</div>
+<div class="line"><span class="lineno">  162</span>    put(L.kalman_model_set_Q, flat(first(<span class="stringliteral">&quot;Q&quot;</span>, <span class="keyword">lambda</span>: model.Q(t=t0)), (n, n)), <span class="stringliteral">&quot;Q&quot;</span>)</div>
+<div class="line"><span class="lineno">  163</span>    put(L.kalman_model_set_R, flat(first(<span class="stringliteral">&quot;R&quot;</span>, <span class="keyword">lambda</span>: model.R(t=t0)), (m, m)), <span class="stringliteral">&quot;R&quot;</span>)</div>
+<div class="line"><span class="lineno">  164</span> </div>
+<div class="line"><span class="lineno">  165</span>    <span class="keywordflow">for</span> state, enum, count <span class="keywordflow">in</span> ((1, model.states, n), (0, model.observables, m)):</div>
+<div class="line"><span class="lineno">  166</span>        members = list(enum)</div>
+<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">if</span> len(members) == count:       <span class="comment"># one name per component, or none at all</span></div>
+<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">for</span> i, member <span class="keywordflow">in</span> enumerate(members):</div>
+<div class="line"><span class="lineno">  169</span>                unit = member._value_ <span class="keywordflow">if</span> isinstance(member._value_, str) <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  170</span>                _core.check(L.kalman_model_set_component(handle, state, i, member._name_.lower().encode(),</div>
+<div class="line"><span class="lineno">  171</span>                                                         unit.encode(<span class="stringliteral">&quot;ascii&quot;</span>, <span class="stringliteral">&quot;replace&quot;</span>)), <span class="stringliteral">&quot;export: components&quot;</span>)</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>    <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.MAPS <span class="keywordflow">and</span> <span class="keywordflow">not</span> linearize:</div>
+<div class="line"><span class="lineno">  174</span>        _core.check(L.kalman_model_set_structure(handle, 0), <span class="stringliteral">&quot;export: structure&quot;</span>)</div>
+<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">return</span> handle</div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>    <span class="comment"># The matrices: the model&#39;s own, or for a model given by code its Jacobians at x0.</span></div>
+<div class="line"><span class="lineno">  178</span>    put(L.kalman_model_set_matrix, flat(model.F(x=model.x0, t=t0) <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.MAPS</div>
+<div class="line"><span class="lineno">  179</span>                                        <span class="keywordflow">else</span> first(<span class="stringliteral">&quot;F&quot;</span>, <span class="keyword">lambda</span>: model.F(t=t0)), (n, n)), <span class="stringliteral">&quot;F&quot;</span>, b<span class="stringliteral">&quot;F&quot;</span>)</div>
+<div class="line"><span class="lineno">  180</span>    put(L.kalman_model_set_matrix, flat(model.H(x=model.x0, t=t0) <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.MAPS</div>
+<div class="line"><span class="lineno">  181</span>                                        <span class="keywordflow">else</span> first(<span class="stringliteral">&quot;H&quot;</span>, <span class="keyword">lambda</span>: model.H(t=t0)), (m, n)), <span class="stringliteral">&quot;H&quot;</span>, b<span class="stringliteral">&quot;H&quot;</span>)</div>
+<div class="line"><span class="lineno">  182</span>    <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.MAPS:</div>
+<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">return</span> handle</div>
+<div class="line"><span class="lineno">  184</span>    <span class="keywordflow">if</span> tables <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  185</span>        <span class="comment"># Only what the model gives as a function goes in as a table; the rest is constant.</span></div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">for</span> which, stored <span class="keywordflow">in</span> ((<span class="stringliteral">&quot;F&quot;</span>, model._F), (<span class="stringliteral">&quot;H&quot;</span>, model._H), (<span class="stringliteral">&quot;Q&quot;</span>, model._Q), (<span class="stringliteral">&quot;R&quot;</span>, model._R)):</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keywordflow">if</span> callable(stored):</div>
+<div class="line"><span class="lineno">  188</span>                _core.check(L.kalman_model_set_table(handle, which.encode(), int(steps), _core.cdptr(tables[which])),</div>
+<div class="line"><span class="lineno">  189</span>                            f<span class="stringliteral">&quot;table of {which}&quot;</span>)</div>
+<div class="line"><span class="lineno">  190</span>    <span class="keywordflow">if</span> l &gt; 0 <span class="keywordflow">and</span> model.B(t=t0) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  191</span>        put(L.kalman_model_set_matrix, flat(model.B(t=t0), (n, l)), <span class="stringliteral">&quot;B&quot;</span>, b<span class="stringliteral">&quot;B&quot;</span>)</div>
+<div class="line"><span class="lineno">  192</span>    <span class="keywordflow">if</span> model.L(t=t0) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  193</span>        put(L.kalman_model_set_matrix, flat(model.L(t=t0), (n, n)), <span class="stringliteral">&quot;L&quot;</span>, b<span class="stringliteral">&quot;L&quot;</span>)</div>
+<div class="line"><span class="lineno">  194</span>    <span class="keywordflow">if</span> getattr(model, <span class="stringliteral">&quot;_Ac&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> getattr(model, <span class="stringliteral">&quot;_Qc&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  195</span>        <span class="comment"># Stated in continuous time: the file keeps the generator and the intensity.</span></div>
+<div class="line"><span class="lineno">  196</span>        put(L.kalman_model_set_generator, flat(model._Ac, (n, n)), <span class="stringliteral">&quot;A&quot;</span>)</div>
+<div class="line"><span class="lineno">  197</span>        Qc = np.atleast_2d(np.asarray(model._Qc, dtype=float))</div>
+<div class="line"><span class="lineno">  198</span>        Lc = flat(model._Lc, (n, Qc.shape[0]))</div>
+<div class="line"><span class="lineno">  199</span>        _core.check(L.kalman_model_set_noise_intensity(handle, Qc.shape[0], _core.cdptr(np.ascontiguousarray(Qc)),</div>
+<div class="line"><span class="lineno">  200</span>                                                       _core.cdptr(Lc)), <span class="stringliteral">&quot;export: Qc&quot;</span>)</div>
+<div class="line"><span class="lineno">  201</span>    <span class="keywordflow">return</span> handle</div>
+<div class="line"><span class="lineno">  202</span> </div>
+<div class="line"><span class="lineno">  203</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a458112dad68a1076d1baabab10f88fc2" name="a458112dad68a1076d1baabab10f88fc2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a458112dad68a1076d1baabab10f88fc2">&#9670;&#160;</a></span>_tabulate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.native._tabulate </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>steps</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">F, H, Q and R of a model whose matrices are functions of time, over
+``steps`` samples: ``{name: array (steps, rows, columns)}``.
+
+Each function is called once per sample, sample after sample, in the order
+the filter's loop asks for them (F, Q, H, R) and at the times it reaches by
+adding dt. A function is meant to depend on t alone; one that keeps a count
+of its calls still sees the sequence it would in the loop.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00109">109</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span><span class="keyword">def </span>_tabulate(model, steps):</div>
+<div class="line"><span class="lineno">  110</span>    <span class="stringliteral">&quot;&quot;&quot;F, H, Q and R of a model whose matrices are functions of time, over</span></div>
+<div class="line"><span class="lineno">  111</span><span class="stringliteral">    ``steps`` samples: ``{name: array (steps, rows, columns)}``.</span></div>
+<div class="line"><span class="lineno">  112</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  113</span><span class="stringliteral">    Each function is called once per sample, sample after sample, in the order</span></div>
+<div class="line"><span class="lineno">  114</span><span class="stringliteral">    the filter&#39;s loop asks for them (F, Q, H, R) and at the times it reaches by</span></div>
+<div class="line"><span class="lineno">  115</span><span class="stringliteral">    adding dt. A function is meant to depend on t alone; one that keeps a count</span></div>
+<div class="line"><span class="lineno">  116</span><span class="stringliteral">    of its calls still sees the sequence it would in the loop.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  117</span>    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  118</span>    n, m = int(model.n), int(model.m)</div>
+<div class="line"><span class="lineno">  119</span>    t, dt = float(getattr(model, <span class="stringliteral">&quot;t0&quot;</span>, 0.0) <span class="keywordflow">or</span> 0.0), 1.0 / float(model.fs <span class="keywordflow">or</span> 1.0)</div>
+<div class="line"><span class="lineno">  120</span>    out = {k: [] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> <span class="stringliteral">&quot;FQHR&quot;</span>}</div>
+<div class="line"><span class="lineno">  121</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(int(steps)):</div>
+<div class="line"><span class="lineno">  122</span>        out[<span class="stringliteral">&quot;F&quot;</span>].append(np.asarray(model.F(t=t), dtype=float).reshape(n, n))</div>
+<div class="line"><span class="lineno">  123</span>        out[<span class="stringliteral">&quot;Q&quot;</span>].append(np.asarray(model.Q(t=t), dtype=float).reshape(n, n))</div>
+<div class="line"><span class="lineno">  124</span>        out[<span class="stringliteral">&quot;H&quot;</span>].append(np.asarray(model.H(t=t), dtype=float).reshape(m, n))</div>
+<div class="line"><span class="lineno">  125</span>        out[<span class="stringliteral">&quot;R&quot;</span>].append(np.asarray(model.R(t=t), dtype=float).reshape(m, m))</div>
+<div class="line"><span class="lineno">  126</span>        t += dt</div>
+<div class="line"><span class="lineno">  127</span>    <span class="keywordflow">return</span> {k: np.ascontiguousarray(np.stack(v)) <span class="keywordflow">for</span> k, v <span class="keywordflow">in</span> out.items()}</div>
+<div class="line"><span class="lineno">  128</span> </div>
+<div class="line"><span class="lineno">  129</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a835510f8cb25f8910b30d8ebb990edad" name="a835510f8cb25f8910b30d8ebb990edad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a835510f8cb25f8910b30d8ebb990edad">&#9670;&#160;</a></span>available()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> bool modules.native.available </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">True when libKalman is loaded.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00035">35</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   35</span><span class="keyword">def </span>available() -&gt; bool:</div>
+<div class="line"><span class="lineno">   36</span>    <span class="stringliteral">&quot;&quot;&quot;True when libKalman is loaded.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   37</span>    <span class="keywordflow">return</span> bool(_core.HAS_CXX_CORE)</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2b495ade5c4ba2777dea8d148459f820" name="a2b495ade5c4ba2777dea8d148459f820"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2b495ade5c4ba2777dea8d148459f820">&#9670;&#160;</a></span>describe()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.native.describe </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>name</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">What the C++ factory knows about the model ``name``.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00050">50</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span><span class="keyword">def </span>describe(name: str) -&gt; dict:</div>
+<div class="line"><span class="lineno">   51</span>    <span class="stringliteral">&quot;&quot;&quot;What the C++ factory knows about the model ``name``.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   52</span>    <span class="keywordflow">return</span> _core.describe(name)</div>
+<div class="line"><span class="lineno">   53</span> </div>
+<div class="line"><span class="lineno">   54</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2ebba239d1fcf72ccfc03b3dbadd04bc" name="a2ebba239d1fcf72ccfc03b3dbadd04bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ebba239d1fcf72ccfc03b3dbadd04bc">&#9670;&#160;</a></span>export()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.native.export </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*bool &#160;</td>
+          <td class="paramname"><em>linearize</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>steps</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Write ``model`` out and return its ``model.json`` as a dict (``model.export`` calls this).
+
+Any model: one written in C++ (a :class:`NativeModel`) or in Python. What the
+file holds follows ``model.structure``:
+
+- matrices: all of it (``kind`` "complete");
+- matrices that change with time: all of it over ``steps`` samples, as tables
+  (needs ``steps`` and a ``.kw`` path);
+- code (``f``, ``h``): a "reference" to the model by name with its settings,
+  or, with ``linearize``, its Jacobians at the initial state as matrices.
+
+A reference to a Python class carries the arguments the instance was
+constructed with. An argument that is code or an object cannot be written;
+``origin["parameters_not_written"]`` lists those, and such a file gives the
+class's default for them. The class must be in ``kalman.api``'s catalogue.
+
+``path`` ending in ``.kw`` gives one archive, another name ending in
+``.json`` plain JSON; with no path nothing is written.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00241">241</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  241</span><span class="keyword">def </span>export(model, path: str = <span class="keywordtype">None</span>, *, linearize: bool = <span class="keyword">False</span>, steps: int = 0) -&gt; dict:</div>
+<div class="line"><span class="lineno">  242</span>    <span class="stringliteral">&quot;&quot;&quot;Write ``model`` out and return its ``model.json`` as a dict (``model.export`` calls this).</span></div>
+<div class="line"><span class="lineno">  243</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  244</span><span class="stringliteral">    Any model: one written in C++ (a :class:`NativeModel`) or in Python. What the</span></div>
+<div class="line"><span class="lineno">  245</span><span class="stringliteral">    file holds follows ``model.structure``:</span></div>
+<div class="line"><span class="lineno">  246</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  247</span><span class="stringliteral">    - matrices: all of it (``kind`` &quot;complete&quot;);</span></div>
+<div class="line"><span class="lineno">  248</span><span class="stringliteral">    - matrices that change with time: all of it over ``steps`` samples, as tables</span></div>
+<div class="line"><span class="lineno">  249</span><span class="stringliteral">      (needs ``steps`` and a ``.kw`` path);</span></div>
+<div class="line"><span class="lineno">  250</span><span class="stringliteral">    - code (``f``, ``h``): a &quot;reference&quot; to the model by name with its settings,</span></div>
+<div class="line"><span class="lineno">  251</span><span class="stringliteral">      or, with ``linearize``, its Jacobians at the initial state as matrices.</span></div>
+<div class="line"><span class="lineno">  252</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  253</span><span class="stringliteral">    A reference to a Python class carries the arguments the instance was</span></div>
+<div class="line"><span class="lineno">  254</span><span class="stringliteral">    constructed with. An argument that is code or an object cannot be written;</span></div>
+<div class="line"><span class="lineno">  255</span><span class="stringliteral">    ``origin[&quot;parameters_not_written&quot;]`` lists those, and such a file gives the</span></div>
+<div class="line"><span class="lineno">  256</span><span class="stringliteral">    class&#39;s default for them. The class must be in ``kalman.api``&#39;s catalogue.</span></div>
+<div class="line"><span class="lineno">  257</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  258</span><span class="stringliteral">    ``path`` ending in ``.kw`` gives one archive, another name ending in</span></div>
+<div class="line"><span class="lineno">  259</span><span class="stringliteral">    ``.json`` plain JSON; with no path nothing is written.</span></div>
+<div class="line"><span class="lineno">  260</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  261</span>    <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">  262</span>    <span class="keyword">from</span> .framework.constants <span class="keyword">import</span> KalmanStructureKind <span class="keyword">as</span> S</div>
+<div class="line"><span class="lineno">  263</span>    L, ffi = _core.require(), _core.ffi</div>
+<div class="line"><span class="lineno">  264</span>    path = <span class="keywordtype">None</span> <span class="keywordflow">if</span> path <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> os.fspath(path)</div>
+<div class="line"><span class="lineno">  265</span> </div>
+<div class="line"><span class="lineno">  266</span>    params = origin = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  267</span>    <span class="keywordflow">if</span> isinstance(model, NativeModel):</div>
+<div class="line"><span class="lineno">  268</span>        handle = model._handle</div>
+<div class="line"><span class="lineno">  269</span>        registered = model.native_name <span class="keywordflow">if</span> _core.has(model.native_name) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  270</span>        plugin = _plugin_of(registered) <span class="keywordflow">if</span> registered <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  271</span>    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  272</span>        structure = model.structure</div>
+<div class="line"><span class="lineno">  273</span>        <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.TIME_VARYING <span class="keywordflow">and</span> <span class="keywordflow">not</span> linearize <span class="keywordflow">and</span> steps &lt;= 0:</div>
+<div class="line"><span class="lineno">  274</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;export: this model&#39;s matrices change with time; say over how many samples to &quot;</span></div>
+<div class="line"><span class="lineno">  275</span>                             <span class="stringliteral">&quot;tabulate them (steps=), or ask for the matrices at the first sample (linearize=True).&quot;</span>)</div>
+<div class="line"><span class="lineno">  276</span>        registered, plugin = <span class="keywordtype">None</span>, <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  277</span>        origin = {<span class="stringliteral">&quot;model&quot;</span>: type(model).__name__,</div>
+<div class="line"><span class="lineno">  278</span>                  <span class="stringliteral">&quot;python&quot;</span>: f<span class="stringliteral">&quot;{type(model).__module__}.{type(model).__qualname__}&quot;</span>,</div>
+<div class="line"><span class="lineno">  279</span>                  <span class="stringliteral">&quot;title&quot;</span>: str(getattr(model, <span class="stringliteral">&quot;NAME&quot;</span>, <span class="stringliteral">&quot;&quot;</span>) <span class="keywordflow">or</span> type(model).__name__),</div>
+<div class="line"><span class="lineno">  280</span>                  <span class="stringliteral">&quot;description&quot;</span>: str(getattr(model, <span class="stringliteral">&quot;DESCRIPTION&quot;</span>, <span class="stringliteral">&quot;&quot;</span>) <span class="keywordflow">or</span> <span class="stringliteral">&quot;&quot;</span>)}</div>
+<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">if</span> structure <span class="keywordflow">is</span> S.MAPS <span class="keywordflow">and</span> <span class="keywordflow">not</span> linearize:</div>
+<div class="line"><span class="lineno">  282</span>            <span class="keyword">from</span> . <span class="keyword">import</span> api</div>
+<div class="line"><span class="lineno">  283</span>            registered = type(model).__name__</div>
+<div class="line"><span class="lineno">  284</span>            <span class="keywordflow">if</span> registered <span class="keywordflow">not</span> <span class="keywordflow">in</span> api._model_catalog():</div>
+<div class="line"><span class="lineno">  285</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;export: {registered} is given by code and is not in kalman.api&#39;s catalogue, so a &quot;</span></div>
+<div class="line"><span class="lineno">  286</span>                                 <span class="stringliteral">&quot;file cannot refer to it by name. Use linearize=True for its Jacobians at x0.&quot;</span>)</div>
+<div class="line"><span class="lineno">  287</span>            params, missing = _constructor_values(model)</div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordflow">if</span> missing:</div>
+<div class="line"><span class="lineno">  289</span>                origin[<span class="stringliteral">&quot;parameters_not_written&quot;</span>] = missing</div>
+<div class="line"><span class="lineno">  290</span>        handle = _stand_in(model, structure, linearize, int(steps))</div>
+<div class="line"><span class="lineno">  291</span> </div>
+<div class="line"><span class="lineno">  292</span>    args = (registered.encode() <span class="keywordflow">if</span> registered <span class="keywordflow">else</span> ffi.NULL, plugin.encode() <span class="keywordflow">if</span> plugin <span class="keywordflow">else</span> ffi.NULL,</div>
+<div class="line"><span class="lineno">  293</span>            int(bool(linearize)), int(steps),</div>
+<div class="line"><span class="lineno">  294</span>            json.dumps(origin, ensure_ascii=<span class="keyword">True</span>).encode() <span class="keywordflow">if</span> origin <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> ffi.NULL)</div>
+<div class="line"><span class="lineno">  295</span>    <span class="keywordflow">if</span> params <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> path <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  296</span>        _core.check(L.kalman_model_save(handle, path.encode(), *args), <span class="stringliteral">&quot;export&quot;</span>)</div>
+<div class="line"><span class="lineno">  297</span>        <span class="keywordflow">return</span> read_model_file(path)[<span class="stringliteral">&quot;document&quot;</span>]</div>
+<div class="line"><span class="lineno">  298</span>    text = L.kalman_model_export_json(handle, *args)</div>
+<div class="line"><span class="lineno">  299</span>    <span class="keywordflow">if</span> text == ffi.NULL:</div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;export: {_core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  301</span>    document = json.loads(ffi.string(text).decode())</div>
+<div class="line"><span class="lineno">  302</span>    <span class="keywordflow">if</span> params <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  303</span>        <span class="comment"># A reference to a Python class: its settings are the constructor&#39;s arguments.</span></div>
+<div class="line"><span class="lineno">  304</span>        document[<span class="stringliteral">&quot;spec&quot;</span>][<span class="stringliteral">&quot;dynamics&quot;</span>][<span class="stringliteral">&quot;params&quot;</span>] = params</div>
+<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">if</span> path <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  306</span>            _core.check(L.kalman_model_document_save(json.dumps(document).encode(), path.encode()), <span class="stringliteral">&quot;export&quot;</span>)</div>
+<div class="line"><span class="lineno">  307</span>    <span class="keywordflow">return</span> document</div>
+<div class="line"><span class="lineno">  308</span> </div>
+<div class="line"><span class="lineno">  309</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a125f738aa5f6674250048516964be48c" name="a125f738aa5f6674250048516964be48c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a125f738aa5f6674250048516964be48c">&#9670;&#160;</a></span>export_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.native.export_model </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">str &#160;</td>
+          <td class="paramname"><em>path</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*bool &#160;</td>
+          <td class="paramname"><em>linearize</em> = <code>False</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int &#160;</td>
+          <td class="paramname"><em>steps</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">dict &#160;</td>
+          <td class="paramname"><em>parameters</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Write the registered C++ model ``name`` out and return its ``model.json`` as a dict.
+
+``path`` ending in ``.kw`` gives one archive (``model.json`` and the tables
+it refers to), another name ending in ``.json`` plain JSON; with no path nothing
+is written. (``name.kw.json`` is the settings file of ``name.kw``, not a model.)
+A model of matrices is written whole (``kind`` "complete"). A model given by
+code is written as a "reference" to its name and settings, or, with
+``linearize``, as its Jacobians at the initial state. A model whose matrices
+change with time needs ``steps``, the number of samples to tabulate, and a
+``.kw`` path. ``parameters`` sets named parameters first.
+
+``result["spec"]`` is what :mod:`kalman.api` takes.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00066">66</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                 parameters: dict = <span class="keywordtype">None</span>) -&gt; dict:</div>
+<div class="line"><span class="lineno">   68</span>    <span class="stringliteral">&quot;&quot;&quot;Write the registered C++ model ``name`` out and return its ``model.json`` as a dict.</span></div>
+<div class="line"><span class="lineno">   69</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   70</span><span class="stringliteral">    ``path`` ending in ``.kw`` gives one archive (``model.json`` and the tables</span></div>
+<div class="line"><span class="lineno">   71</span><span class="stringliteral">    it refers to), another name ending in ``.json`` plain JSON; with no path nothing</span></div>
+<div class="line"><span class="lineno">   72</span><span class="stringliteral">    is written. (``name.kw.json`` is the settings file of ``name.kw``, not a model.)</span></div>
+<div class="line"><span class="lineno">   73</span><span class="stringliteral">    A model of matrices is written whole (``kind`` &quot;complete&quot;). A model given by</span></div>
+<div class="line"><span class="lineno">   74</span><span class="stringliteral">    code is written as a &quot;reference&quot; to its name and settings, or, with</span></div>
+<div class="line"><span class="lineno">   75</span><span class="stringliteral">    ``linearize``, as its Jacobians at the initial state. A model whose matrices</span></div>
+<div class="line"><span class="lineno">   76</span><span class="stringliteral">    change with time needs ``steps``, the number of samples to tabulate, and a</span></div>
+<div class="line"><span class="lineno">   77</span><span class="stringliteral">    ``.kw`` path. ``parameters`` sets named parameters first.</span></div>
+<div class="line"><span class="lineno">   78</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   79</span><span class="stringliteral">    ``result[&quot;spec&quot;]`` is what :mod:`kalman.api` takes.</span></div>
+<div class="line"><span class="lineno">   80</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   81</span>    <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">   82</span>    L = _core.require()</div>
+<div class="line"><span class="lineno">   83</span>    ffi = _core.ffi</div>
+<div class="line"><span class="lineno">   84</span>    handle = L.kalman_model_create(name.encode())</div>
+<div class="line"><span class="lineno">   85</span>    <span class="keywordflow">if</span> handle == ffi.NULL:</div>
+<div class="line"><span class="lineno">   86</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;export_model({name!r}): {_core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">   87</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">for</span> key, value <span class="keywordflow">in</span> (parameters <span class="keywordflow">or</span> {}).items():</div>
+<div class="line"><span class="lineno">   89</span>            _core.check(L.kalman_model_set_parameter(handle, str(key).encode(), float(value)),</div>
+<div class="line"><span class="lineno">   90</span>                        f<span class="stringliteral">&quot;export_model({name!r}): parameter {key!r}&quot;</span>)</div>
+<div class="line"><span class="lineno">   91</span>        plugin = _plugin_of(name)</div>
+<div class="line"><span class="lineno">   92</span>        args = (name.encode(), plugin.encode() <span class="keywordflow">if</span> plugin <span class="keywordflow">else</span> ffi.NULL, int(bool(linearize)), int(steps), ffi.NULL)</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">if</span> path <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   94</span>            _core.check(L.kalman_model_save(handle, os.fspath(path).encode(), *args), f<span class="stringliteral">&quot;export_model({name!r})&quot;</span>)</div>
+<div class="line"><span class="lineno">   95</span>            <span class="keywordflow">return</span> read_model_file(path)[<span class="stringliteral">&quot;document&quot;</span>]</div>
+<div class="line"><span class="lineno">   96</span>        text = L.kalman_model_export_json(handle, *args)</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">if</span> text == ffi.NULL:</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;export_model({name!r}): {_core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> json.loads(ffi.string(text).decode())</div>
+<div class="line"><span class="lineno">  100</span>    <span class="keywordflow">finally</span>:</div>
+<div class="line"><span class="lineno">  101</span>        L.kalman_model_destroy(handle)</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adbe622c41ed55b927ace4fd98c5c2d45" name="adbe622c41ed55b927ace4fd98c5c2d45"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adbe622c41ed55b927ace4fd98c5c2d45">&#9670;&#160;</a></span>load_plugin()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> list modules.native.load_plugin </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>name_or_path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Load a C++ model library, by name from the allowed plugin directories or by
+a path inside them, and return the model names it registered.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00060">60</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   60</span><span class="keyword">def </span>load_plugin(name_or_path: str) -&gt; list:</div>
+<div class="line"><span class="lineno">   61</span>    <span class="stringliteral">&quot;&quot;&quot;Load a C++ model library, by name from the allowed plugin directories or by</span></div>
+<div class="line"><span class="lineno">   62</span><span class="stringliteral">    a path inside them, and return the model names it registered.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   63</span>    <span class="keywordflow">return</span> _core.load_plugin(_core.resolve_plugin(name_or_path))</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a78111d82429d4c74a1da31d4662a2ef2" name="a78111d82429d4c74a1da31d4662a2ef2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a78111d82429d4c74a1da31d4662a2ef2">&#9670;&#160;</a></span>names()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> list modules.native.names </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The models registered with the C++ factory.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00045">45</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   45</span><span class="keyword">def </span>names() -&gt; list:</div>
+<div class="line"><span class="lineno">   46</span>    <span class="stringliteral">&quot;&quot;&quot;The models registered with the C++ factory.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   47</span>    <span class="keywordflow">return</span> _core.names()</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae1765fca0e0059fefa17185a727c33a3" name="ae1765fca0e0059fefa17185a727c33a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae1765fca0e0059fefa17185a727c33a3">&#9670;&#160;</a></span>open_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.native.open_model </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>path</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*bool &#160;</td>
+          <td class="paramname"><em>settings</em> = <code>True</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open a model file and return the model, ready to filter with.
+
+Everything the file holds is used: the tables of a model whose matrices
+change with time, and the settings file beside it (``path + ".json"``) unless
+``settings`` is false. A reference needs what it refers to: the plugin of a
+C++ model loaded (:func:`load_plugin`), or the Python class in
+``kalman.api``'s catalogue.
+
+A file of matrices or a reference to a C++ model runs in C++ (a
+:class:`NativeModel`); a reference to a Python class gives that class.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00310">310</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  310</span><span class="keyword">def </span>open_model(path: str, *, settings: bool = <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  311</span>    <span class="stringliteral">&quot;&quot;&quot;Open a model file and return the model, ready to filter with.</span></div>
+<div class="line"><span class="lineno">  312</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  313</span><span class="stringliteral">    Everything the file holds is used: the tables of a model whose matrices</span></div>
+<div class="line"><span class="lineno">  314</span><span class="stringliteral">    change with time, and the settings file beside it (``path + &quot;.json&quot;``) unless</span></div>
+<div class="line"><span class="lineno">  315</span><span class="stringliteral">    ``settings`` is false. A reference needs what it refers to: the plugin of a</span></div>
+<div class="line"><span class="lineno">  316</span><span class="stringliteral">    C++ model loaded (:func:`load_plugin`), or the Python class in</span></div>
+<div class="line"><span class="lineno">  317</span><span class="stringliteral">    ``kalman.api``&#39;s catalogue.</span></div>
+<div class="line"><span class="lineno">  318</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  319</span><span class="stringliteral">    A file of matrices or a reference to a C++ model runs in C++ (a</span></div>
+<div class="line"><span class="lineno">  320</span><span class="stringliteral">    :class:`NativeModel`); a reference to a Python class gives that class.</span></div>
+<div class="line"><span class="lineno">  321</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  322</span>    path = os.fspath(path)</div>
+<div class="line"><span class="lineno">  323</span>    read = read_model_file(path)</div>
+<div class="line"><span class="lineno">  324</span>    document = read[<span class="stringliteral">&quot;document&quot;</span>]</div>
+<div class="line"><span class="lineno">  325</span>    <span class="keywordflow">if</span> (document.get(<span class="stringliteral">&quot;origin&quot;</span>) <span class="keywordflow">or</span> {}).get(<span class="stringliteral">&quot;python&quot;</span>) <span class="keywordflow">and</span> document.get(<span class="stringliteral">&quot;kind&quot;</span>) == <span class="stringliteral">&quot;reference&quot;</span>:</div>
+<div class="line"><span class="lineno">  326</span>        <span class="keyword">from</span> . <span class="keyword">import</span> api</div>
+<div class="line"><span class="lineno">  327</span>        spec = dict(document[<span class="stringliteral">&quot;spec&quot;</span>])</div>
+<div class="line"><span class="lineno">  328</span>        chosen = read[<span class="stringliteral">&quot;settings&quot;</span>] <span class="keywordflow">if</span> settings <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  329</span>        <span class="keywordflow">if</span> chosen:</div>
+<div class="line"><span class="lineno">  330</span>            <span class="comment"># The same rules as Kalman::IO::ModelFile::Apply.</span></div>
+<div class="line"><span class="lineno">  331</span>            <span class="keywordflow">if</span> chosen.get(<span class="stringliteral">&quot;for&quot;</span>) <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="keywordtype">None</span>, spec[<span class="stringliteral">&quot;base&quot;</span>]):</div>
+<div class="line"><span class="lineno">  332</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;{path}.json: these settings were written for the model {chosen[&#39;for&#39;]!r}, &quot;</span></div>
+<div class="line"><span class="lineno">  333</span>                                 f<span class="stringliteral">&quot;not for {spec[&#39;base&#39;]!r}.&quot;</span>)</div>
+<div class="line"><span class="lineno">  334</span>            allowed = {<span class="stringliteral">&quot;format&quot;</span>, <span class="stringliteral">&quot;format_version&quot;</span>, <span class="stringliteral">&quot;for&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;parameters&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>, <span class="stringliteral">&quot;initial&quot;</span>}</div>
+<div class="line"><span class="lineno">  335</span>            unknown = sorted(set(chosen) - allowed)</div>
+<div class="line"><span class="lineno">  336</span>            <span class="keywordflow">if</span> unknown:</div>
+<div class="line"><span class="lineno">  337</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;{path}.json: {unknown[0]!r} is not a setting (settings are: fs, parameters, noise, &quot;</span></div>
+<div class="line"><span class="lineno">  338</span>                                 <span class="stringliteral">&quot;initial). A settings file cannot change what the model is.&quot;</span>)</div>
+<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">if</span> <span class="stringliteral">&quot;fs&quot;</span> <span class="keywordflow">in</span> chosen:</div>
+<div class="line"><span class="lineno">  340</span>                spec[<span class="stringliteral">&quot;fs&quot;</span>] = chosen[<span class="stringliteral">&quot;fs&quot;</span>]</div>
+<div class="line"><span class="lineno">  341</span>            dynamics = dict(spec.get(<span class="stringliteral">&quot;dynamics&quot;</span>) <span class="keywordflow">or</span> {})</div>
+<div class="line"><span class="lineno">  342</span>            dynamics[<span class="stringliteral">&quot;params&quot;</span>] = {**(dynamics.get(<span class="stringliteral">&quot;params&quot;</span>) <span class="keywordflow">or</span> {}), **(chosen.get(<span class="stringliteral">&quot;parameters&quot;</span>) <span class="keywordflow">or</span> {})}</div>
+<div class="line"><span class="lineno">  343</span>            spec[<span class="stringliteral">&quot;dynamics&quot;</span>] = dynamics</div>
+<div class="line"><span class="lineno">  344</span>            spec[<span class="stringliteral">&quot;noise&quot;</span>] = {**(spec.get(<span class="stringliteral">&quot;noise&quot;</span>) <span class="keywordflow">or</span> {}), **(chosen.get(<span class="stringliteral">&quot;noise&quot;</span>) <span class="keywordflow">or</span> {})}</div>
+<div class="line"><span class="lineno">  345</span>            spec[<span class="stringliteral">&quot;initial&quot;</span>] = {**(spec.get(<span class="stringliteral">&quot;initial&quot;</span>) <span class="keywordflow">or</span> {}), **(chosen.get(<span class="stringliteral">&quot;initial&quot;</span>) <span class="keywordflow">or</span> {})}</div>
+<div class="line"><span class="lineno">  346</span>        <span class="keywordflow">return</span> api.make_model(spec)</div>
+<div class="line"><span class="lineno">  347</span> </div>
+<div class="line"><span class="lineno">  348</span>    L, ffi = _core.require(), _core.ffi</div>
+<div class="line"><span class="lineno">  349</span>    handle = L.kalman_model_open(path.encode(), int(bool(settings)))</div>
+<div class="line"><span class="lineno">  350</span>    <span class="keywordflow">if</span> handle == ffi.NULL:</div>
+<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;open_model({path!r}): {_core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  352</span>    <span class="keywordflow">return</span> NativeModel(_handle=handle)</div>
+<div class="line"><span class="lineno">  353</span> </div>
+<div class="line"><span class="lineno">  354</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1fb96ef311b01dc208fe9b148e152dc4" name="a1fb96ef311b01dc208fe9b148e152dc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fb96ef311b01dc208fe9b148e152dc4">&#9670;&#160;</a></span>plugins()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> list modules.native.plugins </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The plugin libraries loaded so far.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00055">55</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span><span class="keyword">def </span>plugins() -&gt; list:</div>
+<div class="line"><span class="lineno">   56</span>    <span class="stringliteral">&quot;&quot;&quot;The plugin libraries loaded so far.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   57</span>    <span class="keywordflow">return</span> _core.plugins()</div>
+<div class="line"><span class="lineno">   58</span> </div>
+<div class="line"><span class="lineno">   59</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a71fc8d37c6532979547f0632f98fcb49" name="a71fc8d37c6532979547f0632f98fcb49"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a71fc8d37c6532979547f0632f98fcb49">&#9670;&#160;</a></span>read_model_file()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.native.read_model_file </td>
+          <td>(</td>
+          <td class="paramtype">str&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Read a model file: ``{"document": &lt;model.json as a dict&gt;, "tables": {name: array},
+"settings": &lt;the settings file beside it as a dict, or None&gt;}``.
+
+Takes the archive (``.kw``) or plain JSON, told apart by content. The settings
+file is ``path + ".json"``: what is changed from the model file (``fs``,
+``parameters``, ``noise``, ``initial``). It is returned, not applied: the C++
+side applies it when it opens the file (``kalman model``, ``kalman_model_load``). A table has the shape ``(steps, rows, columns)``: one matrix per
+sample for a matrix that changes with time. Needs no C++ library.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00355">355</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  355</span><span class="keyword">def </span>read_model_file(path: str) -&gt; dict:</div>
+<div class="line"><span class="lineno">  356</span>    <span class="stringliteral">&quot;&quot;&quot;Read a model file: ``{&quot;document&quot;: &lt;model.json as a dict&gt;, &quot;tables&quot;: {name: array},</span></div>
+<div class="line"><span class="lineno">  357</span><span class="stringliteral">    &quot;settings&quot;: &lt;the settings file beside it as a dict, or None&gt;}``.</span></div>
+<div class="line"><span class="lineno">  358</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  359</span><span class="stringliteral">    Takes the archive (``.kw``) or plain JSON, told apart by content. The settings</span></div>
+<div class="line"><span class="lineno">  360</span><span class="stringliteral">    file is ``path + &quot;.json&quot;``: what is changed from the model file (``fs``,</span></div>
+<div class="line"><span class="lineno">  361</span><span class="stringliteral">    ``parameters``, ``noise``, ``initial``). It is returned, not applied: the C++</span></div>
+<div class="line"><span class="lineno">  362</span><span class="stringliteral">    side applies it when it opens the file (``kalman model``, ``kalman_model_load``). A table has the shape ``(steps, rows, columns)``: one matrix per</span></div>
+<div class="line"><span class="lineno">  363</span><span class="stringliteral">    sample for a matrix that changes with time. Needs no C++ library.</span></div>
+<div class="line"><span class="lineno">  364</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  365</span>    <span class="keyword">import</span> json</div>
+<div class="line"><span class="lineno">  366</span>    <span class="keyword">import</span> zipfile</div>
+<div class="line"><span class="lineno">  367</span>    <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  368</span>    tables = {}</div>
+<div class="line"><span class="lineno">  369</span>    <span class="keywordflow">if</span> zipfile.is_zipfile(path):</div>
+<div class="line"><span class="lineno">  370</span>        <span class="keyword">with</span> zipfile.ZipFile(path) <span class="keyword">as</span> archive:</div>
+<div class="line"><span class="lineno">  371</span>            document = json.loads(archive.read(<span class="stringliteral">&quot;model.json&quot;</span>))</div>
+<div class="line"><span class="lineno">  372</span>            <span class="keywordflow">for</span> key, entry <span class="keywordflow">in</span> ((document.get(<span class="stringliteral">&quot;tables&quot;</span>) <span class="keywordflow">or</span> {}).get(<span class="stringliteral">&quot;entries&quot;</span>) <span class="keywordflow">or</span> {}).items():</div>
+<div class="line"><span class="lineno">  373</span>                tables[key] = np.frombuffer(archive.read(entry[<span class="stringliteral">&quot;file&quot;</span>]), dtype=<span class="stringliteral">&quot;&lt;f8&quot;</span>).reshape(entry[<span class="stringliteral">&quot;shape&quot;</span>])</div>
+<div class="line"><span class="lineno">  374</span>    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  375</span>        <span class="keyword">with</span> open(path, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> handle:</div>
+<div class="line"><span class="lineno">  376</span>            document = json.load(handle)</div>
+<div class="line"><span class="lineno">  377</span>    <span class="keywordflow">if</span> document.get(<span class="stringliteral">&quot;format&quot;</span>) != <span class="stringliteral">&quot;kalman-model&quot;</span>:</div>
+<div class="line"><span class="lineno">  378</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;{path}: not a model file (\&quot;format\&quot; is not \&quot;kalman-model\&quot;).&quot;</span>)</div>
+<div class="line"><span class="lineno">  379</span>    settings = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  380</span>    beside = os.fspath(path) + <span class="stringliteral">&quot;.json&quot;</span></div>
+<div class="line"><span class="lineno">  381</span>    <span class="keywordflow">if</span> os.path.isfile(beside):</div>
+<div class="line"><span class="lineno">  382</span>        <span class="keyword">with</span> open(beside, encoding=<span class="stringliteral">&quot;utf-8&quot;</span>) <span class="keyword">as</span> handle:</div>
+<div class="line"><span class="lineno">  383</span>            settings = json.load(handle)</div>
+<div class="line"><span class="lineno">  384</span>        <span class="keywordflow">if</span> settings.get(<span class="stringliteral">&quot;format&quot;</span>) != <span class="stringliteral">&quot;kalman-settings&quot;</span>:</div>
+<div class="line"><span class="lineno">  385</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;{beside}: not a settings file (\&quot;format\&quot; is not \&quot;kalman-settings\&quot;).&quot;</span>)</div>
+<div class="line"><span class="lineno">  386</span>    <span class="keywordflow">return</span> {<span class="stringliteral">&quot;document&quot;</span>: document, <span class="stringliteral">&quot;tables&quot;</span>: tables, <span class="stringliteral">&quot;settings&quot;</span>: settings}</div>
+<div class="line"><span class="lineno">  387</span> </div>
+<div class="line"><span class="lineno">  388</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa6fefa4ff3a4317b48fd7bf54d813d3a" name="aa6fefa4ff3a4317b48fd7bf54d813d3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa6fefa4ff3a4317b48fd7bf54d813d3a">&#9670;&#160;</a></span>status()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> dict modules.native.status </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Which C++ libraries this process uses: the core, the application models and
+the learned components, each with its path or the reason it is absent.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00389">389</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  389</span><span class="keyword">def </span>status() -&gt; dict:</div>
+<div class="line"><span class="lineno">  390</span>    <span class="stringliteral">&quot;&quot;&quot;Which C++ libraries this process uses: the core, the application models and</span></div>
+<div class="line"><span class="lineno">  391</span><span class="stringliteral">    the learned components, each with its path or the reason it is absent.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  392</span>    <span class="keyword">from</span> .framework.native <span class="keyword">import</span> learn</div>
+<div class="line"><span class="lineno">  393</span>    <span class="keyword">from</span> .framework.models <span class="keyword">import</span> native <span class="keyword">as</span> _native</div>
+<div class="line"><span class="lineno">  394</span>    out = {<span class="stringliteral">&quot;core&quot;</span>: {<span class="stringliteral">&quot;loaded&quot;</span>: available(), <span class="stringliteral">&quot;path&quot;</span>: _core.LIBRARY_PATH, <span class="stringliteral">&quot;error&quot;</span>: _core.LOAD_ERROR,</div>
+<div class="line"><span class="lineno">  395</span>                    <span class="stringliteral">&quot;version&quot;</span>: _core.version() <span class="keywordflow">if</span> available() <span class="keywordflow">else</span> <span class="keywordtype">None</span>}}</div>
+<div class="line"><span class="lineno">  396</span>    apps = sorted(_native.apps_library_names())</div>
+<div class="line"><span class="lineno">  397</span>    out[<span class="stringliteral">&quot;apps&quot;</span>] = {<span class="stringliteral">&quot;loaded&quot;</span>: bool(apps), <span class="stringliteral">&quot;models&quot;</span>: apps}</div>
+<div class="line"><span class="lineno">  398</span>    out[<span class="stringliteral">&quot;learn&quot;</span>] = {<span class="stringliteral">&quot;loaded&quot;</span>: learn.available(), <span class="stringliteral">&quot;path&quot;</span>: learn.LIBRARY_PATH, <span class="stringliteral">&quot;error&quot;</span>: learn.LOAD_ERROR,</div>
+<div class="line"><span class="lineno">  399</span>                    <span class="stringliteral">&quot;torch&quot;</span>: learn.has_torch()}</div>
+<div class="line"><span class="lineno">  400</span>    <span class="keywordflow">return</span> out</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a835e0424a58c3238c770d4d96bd08d04" name="a835e0424a58c3238c770d4d96bd08d04"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a835e0424a58c3238c770d4d96bd08d04">&#9670;&#160;</a></span>version()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> str modules.native.version </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The version of the loaded libKalman.</pre> 
+<p class="definition">Definition at line <a class="el" href="native_8py_source.html#l00040">40</a> of file <a class="el" href="native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   40</span><span class="keyword">def </span>version() -&gt; str:</div>
+<div class="line"><span class="lineno">   41</span>    <span class="stringliteral">&quot;&quot;&quot;The version of the loaded libKalman.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   42</span>    <span class="keywordflow">return</span> _core.version()</div>
+<div class="line"><span class="lineno">   43</span> </div>
+<div class="line"><span class="lineno">   44</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1native.html">native</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

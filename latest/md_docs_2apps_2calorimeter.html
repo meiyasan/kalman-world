@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-2-g101bd0d</span>
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -146,7 +146,7 @@ The model</h1>
 <div class="line">dynamics     the position advances by the slope from one layer to the next</div>
 <div class="line">measurement  z = the centre of the energy deposit in a layer, and its amount</div>
 </div><!-- fragment --><p>Three classes share this domain: a straight-line tracker with four states, and an electromagnetic and a hadronic model that add the energy as a fifth.</p>
-<h1><a class="anchor" id="how-it-is-built"></a>
+<h1><a class="anchor" id="how-it-is-built-1"></a>
 How it is built</h1>
 <ul>
 <li><b>The filter steps over depth, not over time.</b> One step is one layer of the calorimeter.</li>
@@ -154,7 +154,7 @@ How it is built</h1>
 <li><b>Materials.</b> <code>CalorimeterGeometry</code> builds a stack from real materials and gives its radiation length and Molière radius, the width of a shower.</li>
 <li><b>Reconstruction.</b> <code>model.reconstruct(...)</code> runs the filter forward through the layers and back, and returns the smoothed track and energy.</li>
 </ul>
-<h1><a class="anchor" id="using-it-1"></a>
+<h1><a class="anchor" id="using-it-2"></a>
 Using it</h1>
 <p>A calorimeter needs a geometry and simulated showers, so the shortest complete example is the notebook.</p>
 <p>Notebook: <a href="../../share/notebooks/06_Calorimeter.ipynb">06_Calorimeter</a>. </p>

@@ -1,0 +1,799 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_native_twins Namespace Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_native_twins Namespace Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_native_twins Namespace Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('namespacetests_1_1test__native__twins.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a> &#124;
+<a href="#var-members">Variables</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_native_twins Namespace Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_ballistic_twin.html">TestBallisticTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_car_lane_twin.html">TestCarLaneTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_car_speed_twin.html">TestCarSpeedTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_interplanetary_twin.html">TestInterplanetaryTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_polarization_twin.html">TestPolarizationTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_rocket_twins.html">TestRocketTwins</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_smoother_uses_each_steps_transition.html">TestSmootherUsesEachStepsTransition</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_storm_twin.html">TestStormTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_tornado_twin.html">TestTornadoTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_trans_lunar_twin.html">TestTransLunarTwin</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__twins_1_1_test_twin_contract.html">TestTwinContract</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ab58210eee9d49b118c99eb47a2902804" id="r_ab58210eee9d49b118c99eb47a2902804"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ab58210eee9d49b118c99eb47a2902804">both</a> (make, z, **kw)</td></tr>
+<tr class="separator:ab58210eee9d49b118c99eb47a2902804"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6b2814fc0f53c65d691de25ffc09f253" id="r_a6b2814fc0f53c65d691de25ffc09f253"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a6b2814fc0f53c65d691de25ffc09f253">close</a> (test, a, b, rtol, what)</td></tr>
+<tr class="separator:a6b2814fc0f53c65d691de25ffc09f253"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a871ac9e985a2e4912abc1df3c563eb62" id="r_a871ac9e985a2e4912abc1df3c563eb62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a871ac9e985a2e4912abc1df3c563eb62">trajectory</a> (n=400, fs=100.0, seed=0, drop=17)</td></tr>
+<tr class="separator:a871ac9e985a2e4912abc1df3c563eb62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af6bd197a8a8ff6cd3ddeb735ce1001d9" id="r_af6bd197a8a8ff6cd3ddeb735ce1001d9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#af6bd197a8a8ff6cd3ddeb735ce1001d9">steering</a> (n, fs=50.0)</td></tr>
+<tr class="separator:af6bd197a8a8ff6cd3ddeb735ce1001d9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec425c08f669f5dcd3b06690bc3e1ff9" id="r_aec425c08f669f5dcd3b06690bc3e1ff9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#aec425c08f669f5dcd3b06690bc3e1ff9">liftoff_model</a> ()</td></tr>
+<tr class="separator:aec425c08f669f5dcd3b06690bc3e1ff9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab8d0953b7fc2c431cd345ea7f2f4bb70" id="r_ab8d0953b7fc2c431cd345ea7f2f4bb70"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ab8d0953b7fc2c431cd345ea7f2f4bb70">ascent_program</a> (n=240)</td></tr>
+<tr class="separator:ab8d0953b7fc2c431cd345ea7f2f4bb70"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd672e1c0d9cc3d9cea3272270f01ca6" id="r_acd672e1c0d9cc3d9cea3272270f01ca6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#acd672e1c0d9cc3d9cea3272270f01ca6">ascent_model</a> (**kw)</td></tr>
+<tr class="separator:acd672e1c0d9cc3d9cea3272270f01ca6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1fb276ffda6e51377677d87134e03fd7" id="r_a1fb276ffda6e51377677d87134e03fd7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a1fb276ffda6e51377677d87134e03fd7">descent_model</a> (**kw)</td></tr>
+<tr class="separator:a1fb276ffda6e51377677d87134e03fd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5f6f5d99fbf99af401912a946ddfe94f" id="r_a5f6f5d99fbf99af401912a946ddfe94f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a5f6f5d99fbf99af401912a946ddfe94f">landing_model</a> (**kw)</td></tr>
+<tr class="separator:a5f6f5d99fbf99af401912a946ddfe94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70fab812719e4e02909c7277f3228777" id="r_a70fab812719e4e02909c7277f3228777"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a70fab812719e4e02909c7277f3228777">free_return</a> (**kw)</td></tr>
+<tr class="separator:a70fab812719e4e02909c7277f3228777"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3cc05631456a105f5613444676d7ef9" id="r_ae3cc05631456a105f5613444676d7ef9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ae3cc05631456a105f5613444676d7ef9">mars_cruise</a> (**kw)</td></tr>
+<tr class="separator:ae3cc05631456a105f5613444676d7ef9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad05e6acc836c436b1032021dac35c2e2" id="r_ad05e6acc836c436b1032021dac35c2e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ad05e6acc836c436b1032021dac35c2e2">polarization_run</a> (fs=100.0, T=40.0, seed=0)</td></tr>
+<tr class="separator:ad05e6acc836c436b1032021dac35c2e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a844782f3e10fb5a200bdb0eea9f349ce" id="r_a844782f3e10fb5a200bdb0eea9f349ce"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#a844782f3e10fb5a200bdb0eea9f349ce">HAVE_APPS</a> = bool(apps_library_names())</td></tr>
+<tr class="separator:a844782f3e10fb5a200bdb0eea9f349ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab870543212b1a93cb452ace66486e555" id="r_ab870543212b1a93cb452ace66486e555"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ab870543212b1a93cb452ace66486e555">needs_apps</a> = unittest.skipUnless(<a class="el" href="namespacetests_1_1test__native__twins.html#a844782f3e10fb5a200bdb0eea9f349ce">HAVE_APPS</a>, &quot;libKalmanApps is not built&quot;)</td></tr>
+<tr class="separator:ab870543212b1a93cb452ace66486e555"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4371d359453cb60b9d476e2372936f9" id="r_ac4371d359453cb60b9d476e2372936f9"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ac4371d359453cb60b9d476e2372936f9">STATE_RTOL</a> = 1e-7</td></tr>
+<tr class="separator:ac4371d359453cb60b9d476e2372936f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af059d043c87e86fb5cc5c1546ff93fa8" id="r_af059d043c87e86fb5cc5c1546ff93fa8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#af059d043c87e86fb5cc5c1546ff93fa8">COVARIANCE_RTOL</a> = 1e-6</td></tr>
+<tr class="separator:af059d043c87e86fb5cc5c1546ff93fa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae73f4d95b9200251d0f9b549a60beb13" id="r_ae73f4d95b9200251d0f9b549a60beb13"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#ae73f4d95b9200251d0f9b549a60beb13">BOOSTER</a> = dict(m0=30_000.0, m_dry=22_000.0, thrust_max=845e3, drag_area=10.0)</td></tr>
+<tr class="separator:ae73f4d95b9200251d0f9b549a60beb13"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af515b6761dc9df03cf3a9b1e2ec729f2" id="r_af515b6761dc9df03cf3a9b1e2ec729f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__twins.html#af515b6761dc9df03cf3a9b1e2ec729f2">BOOSTER_X0</a> = np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 30_000.0])</td></tr>
+<tr class="separator:af515b6761dc9df03cf3a9b1e2ec729f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">An application model and its C++ twin (libKalmanApps) are one model.
+
+A Python model that mixes in :class:`NativeTwin` hands its filtering pass to
+the C++ class registered under :meth:`native_name`. These tests pin the two
+things that makes safe: the twin gives the Python answer, and every
+configuration without a C++ counterpart keeps the Python physics.
+
+Skipped when libKalmanApps is not built (``make build``).
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="acd672e1c0d9cc3d9cea3272270f01ca6" name="acd672e1c0d9cc3d9cea3272270f01ca6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acd672e1c0d9cc3d9cea3272270f01ca6">&#9670;&#160;</a></span>ascent_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.ascent_model </td>
+          <td>(</td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00402">402</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  402</span><span class="keyword">def </span>ascent_model(**kw):</div>
+<div class="line"><span class="lineno">  403</span>    model = RocketAscentModel(dt_s=2.0, track_km=1.0, **kw)</div>
+<div class="line"><span class="lineno">  404</span>    model.initial_state(np.array([[R_EARTH], [0], [0], [0]]),</div>
+<div class="line"><span class="lineno">  405</span>                        P0=np.diag([(1 * KM)**2, (1 * KM)**2, 0.01**2, 0.01**2]))</div>
+<div class="line"><span class="lineno">  406</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  407</span> </div>
+<div class="line"><span class="lineno">  408</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab8d0953b7fc2c431cd345ea7f2f4bb70" name="ab8d0953b7fc2c431cd345ea7f2f4bb70"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab8d0953b7fc2c431cd345ea7f2f4bb70">&#9670;&#160;</a></span>ascent_program()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.ascent_program </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>240</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00394">394</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  394</span><span class="keyword">def </span>ascent_program(n=240):</div>
+<div class="line"><span class="lineno">  395</span>    uk = np.zeros((n, 2))</div>
+<div class="line"><span class="lineno">  396</span>    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(n):</div>
+<div class="line"><span class="lineno">  397</span>        pitch = np.deg2rad(89.0 - 111.0 * (i / (n - 1)) ** 0.57)</div>
+<div class="line"><span class="lineno">  398</span>        uk[i] = [19.4 * np.sin(pitch), 19.4 * np.cos(pitch)]</div>
+<div class="line"><span class="lineno">  399</span>    <span class="keywordflow">return</span> uk</div>
+<div class="line"><span class="lineno">  400</span> </div>
+<div class="line"><span class="lineno">  401</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab58210eee9d49b118c99eb47a2902804" name="ab58210eee9d49b118c99eb47a2902804"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab58210eee9d49b118c99eb47a2902804">&#9670;&#160;</a></span>both()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.both </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>make</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>z</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">(record with the Python physics, record on the C++ twin).</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00033">33</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   33</span><span class="keyword">def </span>both(make, z, **kw):</div>
+<div class="line"><span class="lineno">   34</span>    <span class="stringliteral">&quot;&quot;&quot;(record with the Python physics, record on the C++ twin).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   35</span>    <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">   36</span>        python = make().filter(z, **kw)</div>
+<div class="line"><span class="lineno">   37</span>    model = make()</div>
+<div class="line"><span class="lineno">   38</span>    <span class="keyword">assert</span> model.native_handle() <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>, <span class="stringliteral">&quot;the twin was expected to be used&quot;</span></div>
+<div class="line"><span class="lineno">   39</span>    <span class="keywordflow">return</span> python, model.filter(z, **kw)</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span><span class="comment"># How close &quot;the same answer&quot; is. One call of f agrees to the last digit or two</span></div>
+<div class="line"><span class="lineno">   43</span><span class="comment"># (numpy and the C math library round a cosine differently), and both sides then</span></div>
+<div class="line"><span class="lineno">   44</span><span class="comment"># difference f with a step of 1e-6, which turns that last digit into ~1e-9 of</span></div>
+<div class="line"><span class="lineno">   45</span><span class="comment"># noise in each Jacobian. Over a few hundred steps that is ~1e-8 on the state and</span></div>
+<div class="line"><span class="lineno">   46</span><span class="comment"># ~1e-7 on the covariance, relative to the largest entry.</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6b2814fc0f53c65d691de25ffc09f253" name="a6b2814fc0f53c65d691de25ffc09f253"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6b2814fc0f53c65d691de25ffc09f253">&#9670;&#160;</a></span>close()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.close </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>test</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rtol</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>what</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00051">51</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span><span class="keyword">def </span>close(test, a, b, rtol, what):</div>
+<div class="line"><span class="lineno">   52</span>    a, b = np.asarray(a, float), np.asarray(b, float)</div>
+<div class="line"><span class="lineno">   53</span>    scale = max(1.0, float(np.nanmax(np.abs(a))))</div>
+<div class="line"><span class="lineno">   54</span>    test.assertLess(float(np.nanmax(np.abs(a - b))) / scale, rtol, what)</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1fb276ffda6e51377677d87134e03fd7" name="a1fb276ffda6e51377677d87134e03fd7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1fb276ffda6e51377677d87134e03fd7">&#9670;&#160;</a></span>descent_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.descent_model </td>
+          <td>(</td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00413">413</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  413</span><span class="keyword">def </span>descent_model(**kw):</div>
+<div class="line"><span class="lineno">  414</span>    model = RocketDescentModel(fs=20.0, **BOOSTER, **kw)</div>
+<div class="line"><span class="lineno">  415</span>    model.initial_state(BOOSTER_X0)</div>
+<div class="line"><span class="lineno">  416</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  417</span> </div>
+<div class="line"><span class="lineno">  418</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a70fab812719e4e02909c7277f3228777" name="a70fab812719e4e02909c7277f3228777"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70fab812719e4e02909c7277f3228777">&#9670;&#160;</a></span>free_return()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.free_return </td>
+          <td>(</td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The notebook's Apollo-style free return: a 400 km parking orbit, then TLI.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00543">543</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  543</span><span class="keyword">def </span>free_return(**kw):</div>
+<div class="line"><span class="lineno">  544</span>    <span class="stringliteral">&quot;&quot;&quot;The notebook&#39;s Apollo-style free return: a 400 km parking orbit, then TLI.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  545</span>    <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> R_EARTH, KM, D_MOON, GM_EARTH</div>
+<div class="line"><span class="lineno">  546</span>    r0 = R_EARTH + 400 * KM</div>
+<div class="line"><span class="lineno">  547</span>    v = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / (0.5 * (r0 + D_MOON)))) + 0.034</div>
+<div class="line"><span class="lineno">  548</span>    model = TransLunarModel(**{<span class="stringliteral">&quot;moon_phase_deg&quot;</span>: 133.0, <span class="stringliteral">&quot;sun_phase_deg&quot;</span>: 60.0, <span class="stringliteral">&quot;dt_s&quot;</span>: 180.0,</div>
+<div class="line"><span class="lineno">  549</span>                               <span class="stringliteral">&quot;track_km&quot;</span>: 5.0, <span class="stringliteral">&quot;n_sub&quot;</span>: 4, **kw})</div>
+<div class="line"><span class="lineno">  550</span>    model.initial_state(np.array([[r0], [0], [0], [0], [v], [0]]),</div>
+<div class="line"><span class="lineno">  551</span>                        P0=np.diag([(50 * KM) ** 2] * 3 + [0.01 ** 2] * 3))</div>
+<div class="line"><span class="lineno">  552</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  553</span> </div>
+<div class="line"><span class="lineno">  554</span> </div>
+<div class="ttc" id="anamespacemodules_1_1runtime_1_1astro_html"><div class="ttname"><a href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></div><div class="ttdef"><b>Definition</b> <a href="astro_8py_source.html#l00001">astro.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5f6f5d99fbf99af401912a946ddfe94f" name="a5f6f5d99fbf99af401912a946ddfe94f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5f6f5d99fbf99af401912a946ddfe94f">&#9670;&#160;</a></span>landing_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.landing_model </td>
+          <td>(</td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00419">419</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  419</span><span class="keyword">def </span>landing_model(**kw):</div>
+<div class="line"><span class="lineno">  420</span>    model = RocketLandingModel(<span class="stringliteral">&quot;LANDING&quot;</span>, **kw)</div>
+<div class="line"><span class="lineno">  421</span>    model.initial_state([3000.0, -150.0, 1000.0], P0=np.diag([20.0**2, 5.0**2, 10.0**2]))</div>
+<div class="line"><span class="lineno">  422</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  423</span> </div>
+<div class="line"><span class="lineno">  424</span> </div>
+<div class="line"><span class="lineno">  425</span><span class="preprocessor">@needs_apps</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aec425c08f669f5dcd3b06690bc3e1ff9" name="aec425c08f669f5dcd3b06690bc3e1ff9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aec425c08f669f5dcd3b06690bc3e1ff9">&#9670;&#160;</a></span>liftoff_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.liftoff_model </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00387">387</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  387</span><span class="keyword">def </span>liftoff_model():</div>
+<div class="line"><span class="lineno">  388</span>    model = RocketLiftoffModel(<span class="stringliteral">&quot;LIFTOFF&quot;</span>, m0=549_000.0, m_dry=138_000.0, ve=2900.0, mdot=2600.0,</div>
+<div class="line"><span class="lineno">  389</span>                               drag_area=8.0, length=70.0, width=3.7, fs=10.0, track_m=50.0, q_mass=0.0)</div>
+<div class="line"><span class="lineno">  390</span>    model.initial_state([0.0, 0.0, model.m0], P0=np.diag([50.0**2, 10.0**2, 50.0**2]))</div>
+<div class="line"><span class="lineno">  391</span>    <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  392</span> </div>
+<div class="line"><span class="lineno">  393</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae3cc05631456a105f5613444676d7ef9" name="ae3cc05631456a105f5613444676d7ef9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3cc05631456a105f5613444676d7ef9">&#9670;&#160;</a></span>mars_cruise()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.mars_cruise </td>
+          <td>(</td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kw</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The notebook's Earth-Mars cruise, seeded by a Lambert arc of the 2026 window.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00555">555</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  555</span><span class="keyword">def </span>mars_cruise(**kw):</div>
+<div class="line"><span class="lineno">  556</span>    <span class="stringliteral">&quot;&quot;&quot;The notebook&#39;s Earth-Mars cruise, seeded by a Lambert arc of the 2026 window.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  557</span>    <span class="keyword">from</span> astropy.time <span class="keyword">import</span> Time, TimeDelta</div>
+<div class="line"><span class="lineno">  558</span>    <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html">modules.apps.astro.space.transfers</a> <span class="keyword">import</span> lambert</div>
+<div class="line"><span class="lineno">  559</span>    <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> body_state, DAY</div>
+<div class="line"><span class="lineno">  560</span>    dep, tof = Time(<span class="stringliteral">&quot;2026-10-28&quot;</span>), 311.0</div>
+<div class="line"><span class="lineno">  561</span>    r1, _ = body_state(<span class="stringliteral">&quot;earth&quot;</span>, dep)</div>
+<div class="line"><span class="lineno">  562</span>    r2, _ = body_state(<span class="stringliteral">&quot;mars&quot;</span>, dep + TimeDelta(tof * 86400, format=<span class="stringliteral">&quot;sec&quot;</span>))</div>
+<div class="line"><span class="lineno">  563</span>    v1, _ = lambert(r1, r2, tof * DAY)</div>
+<div class="line"><span class="lineno">  564</span>    model = InterplanetaryModel(**{<span class="stringliteral">&quot;departure&quot;</span>: <span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;target&quot;</span>: <span class="stringliteral">&quot;mars&quot;</span>, <span class="stringliteral">&quot;epoch&quot;</span>: dep,</div>
+<div class="line"><span class="lineno">  565</span>                                   <span class="stringliteral">&quot;span_days&quot;</span>: tof + 20, <span class="stringliteral">&quot;dt_s&quot;</span>: 43200.0, <span class="stringliteral">&quot;track_Mm&quot;</span>: 0.02, **kw})</div>
+<div class="line"><span class="lineno">  566</span>    model.initial_state(np.r_[r1, v1].reshape(-1, 1), P0=np.diag([1.0] * 3 + [1e-4] * 3))</div>
+<div class="line"><span class="lineno">  567</span>    <span class="keywordflow">return</span> model, tof * DAY</div>
+<div class="line"><span class="lineno">  568</span> </div>
+<div class="line"><span class="lineno">  569</span> </div>
+<div class="line"><span class="lineno">  570</span><span class="preprocessor">@needs_apps</span></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html">modules.apps.astro.space.transfers</a></div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00001">transfers.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ad05e6acc836c436b1032021dac35c2e2" name="ad05e6acc836c436b1032021dac35c2e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad05e6acc836c436b1032021dac35c2e2">&#9670;&#160;</a></span>polarization_run()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.polarization_run </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fs</em> = <code>100.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>T</em> = <code>40.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The notebook's synthetic chirp: amplitude, carrier 1 -&gt; 2 Hz and the two
+polarization angles all moving, sigma_n = 0.3 on each real component.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00643">643</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  643</span><span class="keyword">def </span>polarization_run(fs=100.0, T=40.0, seed=0):</div>
+<div class="line"><span class="lineno">  644</span>    <span class="stringliteral">&quot;&quot;&quot;The notebook&#39;s synthetic chirp: amplitude, carrier 1 -&gt; 2 Hz and the two</span></div>
+<div class="line"><span class="lineno">  645</span><span class="stringliteral">    polarization angles all moving, sigma_n = 0.3 on each real component.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  646</span>    <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1gravitational_1_1gravwave.html">modules.apps.gravitational.gravwave</a> <span class="keyword">import</span> jones_signal</div>
+<div class="line"><span class="lineno">  647</span>    t = np.arange(int(T * fs)) / fs</div>
+<div class="line"><span class="lineno">  648</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  649</span>    a = 1.0 + 0.1 * np.cos(2 * np.pi * 0.2 * t)</div>
+<div class="line"><span class="lineno">  650</span>    psi = 2 * np.pi * (t + 0.5 * (1.0 / T) * t ** 2)</div>
+<div class="line"><span class="lineno">  651</span>    theta = (np.pi / 2) * (1.0 + 0.5 * np.sin(2 * np.pi * 0.05 * t))</div>
+<div class="line"><span class="lineno">  652</span>    phi = np.pi * (1.0 + 0.5 * np.sin(2 * np.pi * 0.10 * t + 1.0))</div>
+<div class="line"><span class="lineno">  653</span>    z = np.array([jones_signal(a[k], psi[k], theta[k], phi[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(t))])</div>
+<div class="line"><span class="lineno">  654</span>    z = z + 0.3 * (rng.standard_normal(z.shape) + 1j * rng.standard_normal(z.shape))</div>
+<div class="line"><span class="lineno">  655</span>    zk = np.column_stack([z[:, 0].real, z[:, 0].imag, z[:, 1].real, z[:, 1].imag])</div>
+<div class="line"><span class="lineno">  656</span> </div>
+<div class="line"><span class="lineno">  657</span>    <span class="keyword">def </span>make(**kw):</div>
+<div class="line"><span class="lineno">  658</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1gravitational_1_1gravwave.html">modules.apps.gravitational.gravwave</a> <span class="keyword">import</span> PolarizationModel</div>
+<div class="line"><span class="lineno">  659</span>        model = PolarizationModel(<span class="stringliteral">&quot;gw&quot;</span>, **{<span class="stringliteral">&quot;fs&quot;</span>: fs, <span class="stringliteral">&quot;delta&quot;</span>: 0.5, <span class="stringliteral">&quot;sigma_a&quot;</span>: 0.05, <span class="stringliteral">&quot;sigma_psi&quot;</span>: 0.6,</div>
+<div class="line"><span class="lineno">  660</span>                                           <span class="stringliteral">&quot;sigma_theta&quot;</span>: 0.05, <span class="stringliteral">&quot;sigma_phi&quot;</span>: 0.05, <span class="stringliteral">&quot;sigma_n&quot;</span>: 0.3, **kw})</div>
+<div class="line"><span class="lineno">  661</span>        model.initial_state([np.log(a[0]), 0.0, psi[0] - 2 * np.pi / fs, 2 * np.pi, theta[0], 0.0, phi[0], 0.0])</div>
+<div class="line"><span class="lineno">  662</span>        <span class="keywordflow">return</span> model</div>
+<div class="line"><span class="lineno">  663</span>    <span class="keywordflow">return</span> make, zk</div>
+<div class="line"><span class="lineno">  664</span> </div>
+<div class="line"><span class="lineno">  665</span> </div>
+<div class="line"><span class="lineno">  666</span><span class="preprocessor">@needs_apps</span></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1gravitational_1_1gravwave_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1gravitational_1_1gravwave.html">modules.apps.gravitational.gravwave</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2gravitational_2gravwave_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="af6bd197a8a8ff6cd3ddeb735ce1001d9" name="af6bd197a8a8ff6cd3ddeb735ce1001d9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af6bd197a8a8ff6cd3ddeb735ce1001d9">&#9670;&#160;</a></span>steering()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.steering </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fs</em> = <code>50.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">A lane-change steering program, past the actuator limit for half a second.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00322">322</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  322</span><span class="keyword">def </span>steering(n, fs=50.0):</div>
+<div class="line"><span class="lineno">  323</span>    <span class="stringliteral">&quot;&quot;&quot;A lane-change steering program, past the actuator limit for half a second.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  324</span>    t = np.arange(n) / fs</div>
+<div class="line"><span class="lineno">  325</span>    u = 0.01 * np.sin(0.8 * t) + 0.15 * ((t &gt; 3.0) &amp; (t &lt; 3.5)) - 0.15 * ((t &gt; 3.5) &amp; (t &lt; 4.0))</div>
+<div class="line"><span class="lineno">  326</span>    <span class="keywordflow">return</span> u.reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  327</span> </div>
+<div class="line"><span class="lineno">  328</span> </div>
+<div class="line"><span class="lineno">  329</span><span class="preprocessor">@needs_apps</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a871ac9e985a2e4912abc1df3c563eb62" name="a871ac9e985a2e4912abc1df3c563eb62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a871ac9e985a2e4912abc1df3c563eb62">&#9670;&#160;</a></span>trajectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.trajectory </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n</em> = <code>400</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>fs</em> = <code>100.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>drop</em> = <code>17</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00057">57</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span><span class="keyword">def </span>trajectory(n=400, fs=100.0, seed=0, drop=17):</div>
+<div class="line"><span class="lineno">   58</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">   59</span>    t = np.arange(n) / fs</div>
+<div class="line"><span class="lineno">   60</span>    z = np.c_[30 * t, 10 * t, 120 * t - 0.5 * 9.81 * t**2] + rng.normal(0, 0.5, (n, 3))</div>
+<div class="line"><span class="lineno">   61</span>    <span class="keywordflow">if</span> drop:</div>
+<div class="line"><span class="lineno">   62</span>        z[::drop] = np.nan</div>
+<div class="line"><span class="lineno">   63</span>    <span class="keywordflow">return</span> z</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span><span class="preprocessor">@needs_apps</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Variable Documentation</h2>
+<a id="ae73f4d95b9200251d0f9b549a60beb13" name="ae73f4d95b9200251d0f9b549a60beb13"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae73f4d95b9200251d0f9b549a60beb13">&#9670;&#160;</a></span>BOOSTER</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.BOOSTER = dict(m0=30_000.0, m_dry=22_000.0, thrust_max=845e3, drag_area=10.0)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00409">409</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+<a id="af515b6761dc9df03cf3a9b1e2ec729f2" name="af515b6761dc9df03cf3a9b1e2ec729f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af515b6761dc9df03cf3a9b1e2ec729f2">&#9670;&#160;</a></span>BOOSTER_X0</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.BOOSTER_X0 = np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 30_000.0])</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00410">410</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+<a id="af059d043c87e86fb5cc5c1546ff93fa8" name="af059d043c87e86fb5cc5c1546ff93fa8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af059d043c87e86fb5cc5c1546ff93fa8">&#9670;&#160;</a></span>COVARIANCE_RTOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tests.test_native_twins.COVARIANCE_RTOL = 1e-6</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00048">48</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+<a id="a844782f3e10fb5a200bdb0eea9f349ce" name="a844782f3e10fb5a200bdb0eea9f349ce"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a844782f3e10fb5a200bdb0eea9f349ce">&#9670;&#160;</a></span>HAVE_APPS</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.HAVE_APPS = bool(apps_library_names())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00029">29</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+<a id="ab870543212b1a93cb452ace66486e555" name="ab870543212b1a93cb452ace66486e555"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab870543212b1a93cb452ace66486e555">&#9670;&#160;</a></span>needs_apps</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_twins.needs_apps = unittest.skipUnless(<a class="el" href="namespacetests_1_1test__native__twins.html#a844782f3e10fb5a200bdb0eea9f349ce">HAVE_APPS</a>, &quot;libKalmanApps is not built&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00030">30</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+<a id="ac4371d359453cb60b9d476e2372936f9" name="ac4371d359453cb60b9d476e2372936f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4371d359453cb60b9d476e2372936f9">&#9670;&#160;</a></span>STATE_RTOL</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int tests.test_native_twins.STATE_RTOL = 1e-7</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__twins_8py_source.html#l00047">47</a> of file <a class="el" href="test__native__twins_8py_source.html">test_native_twins.py</a>.</p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__native__twins.html">test_native_twins</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

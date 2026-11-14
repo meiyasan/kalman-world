@@ -2,7 +2,7 @@ var searchData=
 [
   ['sampler_2ecc_0',['Sampler.cc',['../_sampler_8cc.html',1,'']]],
   ['sampler_2eh_1',['Sampler.h',['../_sampler_8h.html',1,'']]],
-  ['sampler_2epy_2',['sampler.py',['../apps_2calorimeter_2sampler_8py.html',1,'(Global Namespace)'],['../framework_2sampler_8py.html',1,'(Global Namespace)']]],
+  ['sampler_2epy_2',['sampler.py',['../framework_2sampler_8py.html',1,'(Global Namespace)'],['../apps_2calorimeter_2sampler_8py.html',1,'(Global Namespace)']]],
   ['scaffold_2epy_3',['scaffold.py',['../scaffold_8py.html',1,'']]],
   ['sensor_2epy_4',['sensor.py',['../sensor_8py.html',1,'']]],
   ['server_2epy_5',['server.py',['../server_8py.html',1,'']]],
@@ -14,7 +14,7 @@ var searchData=
   ['spec_2epy_11',['spec.py',['../spec_8py.html',1,'']]],
   ['spectral_2ecc_12',['Spectral.cc',['../_spectral_8cc.html',1,'']]],
   ['spectral_2eh_13',['Spectral.h',['../_spectral_8h.html',1,'']]],
-  ['spectral_2epy_14',['spectral.py',['../framework_2solvers_2spectral_8py.html',1,'(Global Namespace)'],['../apps_2gravitational_2interferometer_2spectral_8py.html',1,'(Global Namespace)']]],
+  ['spectral_2epy_14',['spectral.py',['../apps_2gravitational_2interferometer_2spectral_8py.html',1,'(Global Namespace)'],['../framework_2solvers_2spectral_8py.html',1,'(Global Namespace)']]],
   ['speed_2epy_15',['speed.py',['../speed_8py.html',1,'']]],
   ['store_2epy_16',['store.py',['../store_8py.html',1,'']]],
   ['storm_2eh_17',['Storm.h',['../_storm_8h.html',1,'']]],

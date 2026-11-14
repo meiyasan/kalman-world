@@ -1,0 +1,346 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="src/Diagnostics.cc Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: src/Diagnostics.cc Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>src/Diagnostics.cc Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('_diagnostics_8cc_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Diagnostics.cc</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="_diagnostics_8cc.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#include &quot;<a class="code" href="_diagnostics_8h.html">Kalman/Diagnostics.h</a>&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;<a class="code" href="_filter_8h.html">Kalman/Filter.h</a>&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;<a class="code" href="_utils_8h.html">Kalman/Utils.h</a>&quot;</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="preprocessor">#include &lt;stdexcept&gt;</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_kalman.html">Kalman</a></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>{</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="keyword">namespace</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        Matrix InnovationCovarianceAt(<span class="keyword">const</span> Filter &amp;filter, std::size_t k,</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                                      <span class="keyword">const</span> std::vector&lt;std::size_t&gt; &amp;keep)</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        {</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            <span class="keyword">const</span> Model &amp;model = *filter.GetModel();</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> t = filter.Times()[k];</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            Vector zpred;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            Matrix H;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            filter.GetEngine()-&gt;Measure(model, filter.PriorStates()[k], t, zpred, H);</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="keyword">const</span> Matrix Hc = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Utils::CompressRows</a>(H, keep);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <span class="keyword">const</span> Matrix Rc = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(model.R(t), keep);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            Matrix S = Utils::Similarity(Hc, filter.PriorCovariances()[k]);</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            S += Rc;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordflow">return</span> S;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        }</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    }</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="foldopen" id="foldopen00043" data-start="{" data-end="}">
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">   43</a></span>    std::vector&lt;double&gt; <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">Diagnostics::NIS</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keyword">const</span> std::size_t N = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        std::vector&lt;double&gt; out(N);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; N; ++k)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa3ab61f1f12157a2951aa8a4be94af4e">Innovations</a>()[k]);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordflow">if</span> (keep.empty())</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            {</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                <span class="comment">// Nothing was measured at this step, so there is no innovation to</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="comment">// normalise; NaN keeps it out of averages instead of biasing them to 0.</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                out[k] = std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> S = InnovationCovarianceAt(fFilter, k, keep);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> nu = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa3ab61f1f12157a2951aa8a4be94af4e">Innovations</a>()[k], keep);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            out[k] = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Utils::Mahalanobis</a>(nu, Utils::Inverse(S));</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="foldopen" id="foldopen00066" data-start="{" data-end="}">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#a10a657d70c971fd2ac6a4c5433405535">   66</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a10a657d70c971fd2ac6a4c5433405535">Diagnostics::MeanNIS</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="keyword">const</span> std::vector&lt;double&gt; nis = <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">NIS</a>();</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordtype">double</span> sum = 0.;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        std::size_t used = 0;</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keywordflow">for</span> (<span class="keywordtype">double</span> v : nis)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="keywordflow">if</span> (!std::isnan(v)) { sum += v; ++used; }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">return</span> used ? sum / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(used)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                    : std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
+</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="foldopen" id="foldopen00077" data-start="{" data-end="}">
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">   77</a></span>    std::vector&lt;double&gt; <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">Diagnostics::NEES</a>(<span class="keyword">const</span> std::vector&lt;Vector&gt; &amp;truth)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">const</span> std::size_t N = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">if</span> (truth.size() != N)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Diagnostics::NEES: truth must have one state per step.&quot;</span>);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        std::vector&lt;double&gt; out(N);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; N; ++k)</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        {</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> e(fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#a4f39c3bf9552b5fa3ad6d6229605b36c">PosteriorStates</a>()[k]);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            e -= truth[k];</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            out[k] = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Utils::Mahalanobis</a>(e, Utils::Inverse(fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#ab774f111fc579efcd5a4080ff22e3997">PosteriorCovariances</a>()[k]));</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        }</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    }</div>
+</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="foldopen" id="foldopen00093" data-start="{" data-end="}">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#ab592cff2f3444bd5cdf0ed767bf1f499">   93</a></span>    <span class="keywordtype">double</span> <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#ab592cff2f3444bd5cdf0ed767bf1f499">Diagnostics::MeanNEES</a>(<span class="keyword">const</span> std::vector&lt;Vector&gt; &amp;truth)<span class="keyword"> const</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keyword">const</span> std::vector&lt;double&gt; nees = <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">NEES</a>(truth);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordtype">double</span> sum = 0.;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="keywordflow">for</span> (<span class="keywordtype">double</span> v : nees) sum += v;</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">return</span> nees.empty() ? 0. : sum / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(nees.size());</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    }</div>
+</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="foldopen" id="foldopen00101" data-start="{" data-end="}">
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#ab70b6649315650963d76724fec131785">  101</a></span>    std::vector&lt;Matrix&gt; <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#ab70b6649315650963d76724fec131785">Diagnostics::InnovationCovariance</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keyword">const</span> std::size_t N = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>();</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        std::vector&lt;Matrix&gt; out;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        out.reserve(N);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; N; ++k)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="comment">// Reported over *all* channels here, not just the present ones: this is</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// the model&#39;s predicted spread, which exists whether or not the sensor</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="comment">// reported. NIS() above is the one that has to compress.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model = *fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#af2fc0424c1e5e619bb89ceb8bc03656c">GetModel</a>();</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> t = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#a94458702dffeee5ab0b30cca6b422c44">Times</a>()[k];</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> zpred;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#a5075992adc7eb2832c37ab59ca78d907">GetEngine</a>()-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Measure</a>(model, fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#ac7278f3b8425747cf682c5babb5bb145">PriorStates</a>()[k], t, zpred, H);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> S = Utils::Similarity(H, fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#ad483afcef43450f8d968ff41c03bbe63">PriorCovariances</a>()[k]);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            S += model.<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t);</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            out.push_back(S);</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
+</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span> </div>
+<div class="foldopen" id="foldopen00126" data-start="{" data-end="}">
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno"><a class="line" href="class_kalman_1_1_diagnostics.html#adfa9d93bd52e1fdcae50364342b35358">  126</a></span>    std::vector&lt;Matrix&gt; <a class="code hl_function" href="class_kalman_1_1_diagnostics.html#adfa9d93bd52e1fdcae50364342b35358">Diagnostics::Gains</a>()<span class="keyword"> const</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="keyword">    </span>{</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        <span class="keyword">const</span> std::size_t N = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">NSteps</a>();</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        std::vector&lt;Matrix&gt; out;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        out.reserve(N);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; N; ++k)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        {</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_model.html">Model</a> &amp;model = *fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#af2fc0424c1e5e619bb89ceb8bc03656c">GetModel</a>();</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> t = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#a94458702dffeee5ab0b30cca6b422c44">Times</a>()[k];</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> zpred;</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#a5075992adc7eb2832c37ab59ca78d907">GetEngine</a>()-&gt;<a class="code hl_function" href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Measure</a>(model, fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#ac7278f3b8425747cf682c5babb5bb145">PriorStates</a>()[k], t, zpred, H);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P = fFilter.<a class="code hl_function" href="class_kalman_1_1_filter.html#ad483afcef43450f8d968ff41c03bbe63">PriorCovariances</a>()[k];</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> S = Utils::Similarity(H, P);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            S += model.<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t);</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            out.push_back(P * H.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aba250e1c5913edc9d1dd56494741d1ee">Transpose</a>() * Utils::Inverse(S));</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        }</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    }</div>
+</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>}</div>
+<div class="ttc" id="a_diagnostics_8h_html"><div class="ttname"><a href="_diagnostics_8h.html">Diagnostics.h</a></div><div class="ttdoc">Header of the Kalman::Diagnostics class.</div></div>
+<div class="ttc" id="a_filter_8h_html"><div class="ttname"><a href="_filter_8h.html">Filter.h</a></div><div class="ttdoc">Header of the Kalman::Filter class.</div></div>
+<div class="ttc" id="a_utils_8h_html"><div class="ttname"><a href="_utils_8h.html">Utils.h</a></div><div class="ttdoc">Small dense linear-algebra helpers shared by the engines.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a10a657d70c971fd2ac6a4c5433405535"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a10a657d70c971fd2ac6a4c5433405535">Kalman::Diagnostics::MeanNIS</a></div><div class="ttdeci">double MeanNIS() const</div><div class="ttdoc">Mean of NIS() over the run, ignoring the unmeasured (NaN) steps.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00066">Diagnostics.cc:66</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a1efe134b45ccdb2ae9447fb924503f2d"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a1efe134b45ccdb2ae9447fb924503f2d">Kalman::Diagnostics::NEES</a></div><div class="ttdeci">std::vector&lt; double &gt; NEES(const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Per-step e^T P^-1 e against a known truth.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00077">Diagnostics.cc:77</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_a982d9210dda6af0c4de5d68a96181739"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#a982d9210dda6af0c4de5d68a96181739">Kalman::Diagnostics::NIS</a></div><div class="ttdeci">std::vector&lt; double &gt; NIS() const</div><div class="ttdoc">Per-step nu^T S^-1 nu.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00043">Diagnostics.cc:43</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_ab592cff2f3444bd5cdf0ed767bf1f499"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#ab592cff2f3444bd5cdf0ed767bf1f499">Kalman::Diagnostics::MeanNEES</a></div><div class="ttdeci">double MeanNEES(const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Mean of NEES() over the run.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00093">Diagnostics.cc:93</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_ab70b6649315650963d76724fec131785"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#ab70b6649315650963d76724fec131785">Kalman::Diagnostics::InnovationCovariance</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; InnovationCovariance() const</div><div class="ttdoc">Per-step innovation covariance S = H P H^T + R.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00101">Diagnostics.cc:101</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_diagnostics_html_adfa9d93bd52e1fdcae50364342b35358"><div class="ttname"><a href="class_kalman_1_1_diagnostics.html#adfa9d93bd52e1fdcae50364342b35358">Kalman::Diagnostics::Gains</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; Gains() const</div><div class="ttdoc">Per-step Kalman gain K = P H^T S^-1.</div><div class="ttdef"><b>Definition</b> <a href="_diagnostics_8cc_source.html#l00126">Diagnostics.cc:126</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engine_html_a7d30a11f4ea09e0bb97efe69b438228b"><div class="ttname"><a href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Kalman::Engine::Measure</a></div><div class="ttdeci">virtual void Measure(const Model &amp;model, const Vector &amp;x, double t, Vector &amp;zpred, Matrix &amp;H) const =0</div><div class="ttdoc">Predict the measurement and report the observation matrix.</div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a4f39c3bf9552b5fa3ad6d6229605b36c"><div class="ttname"><a href="class_kalman_1_1_filter.html#a4f39c3bf9552b5fa3ad6d6229605b36c">Kalman::Filter::PosteriorStates</a></div><div class="ttdeci">const std::vector&lt; Vector &gt; &amp; PosteriorStates() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00169">Filter.h:169</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a5075992adc7eb2832c37ab59ca78d907"><div class="ttname"><a href="class_kalman_1_1_filter.html#a5075992adc7eb2832c37ab59ca78d907">Kalman::Filter::GetEngine</a></div><div class="ttdeci">Engine * GetEngine() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00094">Filter.h:94</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_a94458702dffeee5ab0b30cca6b422c44"><div class="ttname"><a href="class_kalman_1_1_filter.html#a94458702dffeee5ab0b30cca6b422c44">Kalman::Filter::Times</a></div><div class="ttdeci">const std::vector&lt; double &gt; &amp; Times() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00176">Filter.h:176</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aa3ab61f1f12157a2951aa8a4be94af4e"><div class="ttname"><a href="class_kalman_1_1_filter.html#aa3ab61f1f12157a2951aa8a4be94af4e">Kalman::Filter::Innovations</a></div><div class="ttdeci">const std::vector&lt; Vector &gt; &amp; Innovations() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00175">Filter.h:175</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_aa4caf7ca408184c91f0e0b7b27b25061"><div class="ttname"><a href="class_kalman_1_1_filter.html#aa4caf7ca408184c91f0e0b7b27b25061">Kalman::Filter::NSteps</a></div><div class="ttdeci">std::size_t NSteps() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00164">Filter.h:164</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ab774f111fc579efcd5a4080ff22e3997"><div class="ttname"><a href="class_kalman_1_1_filter.html#ab774f111fc579efcd5a4080ff22e3997">Kalman::Filter::PosteriorCovariances</a></div><div class="ttdeci">const std::vector&lt; Matrix &gt; &amp; PosteriorCovariances() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00170">Filter.h:170</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ac7278f3b8425747cf682c5babb5bb145"><div class="ttname"><a href="class_kalman_1_1_filter.html#ac7278f3b8425747cf682c5babb5bb145">Kalman::Filter::PriorStates</a></div><div class="ttdeci">const std::vector&lt; Vector &gt; &amp; PriorStates() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00167">Filter.h:167</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_ad483afcef43450f8d968ff41c03bbe63"><div class="ttname"><a href="class_kalman_1_1_filter.html#ad483afcef43450f8d968ff41c03bbe63">Kalman::Filter::PriorCovariances</a></div><div class="ttdeci">const std::vector&lt; Matrix &gt; &amp; PriorCovariances() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00168">Filter.h:168</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html_af2fc0424c1e5e619bb89ceb8bc03656c"><div class="ttname"><a href="class_kalman_1_1_filter.html#af2fc0424c1e5e619bb89ceb8bc03656c">Kalman::Filter::GetModel</a></div><div class="ttdeci">Model * GetModel() const</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00093">Filter.h:93</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html_aba250e1c5913edc9d1dd56494741d1ee"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aba250e1c5913edc9d1dd56494741d1ee">Kalman::Matrix::Transpose</a></div><div class="ttdeci">Matrix Transpose() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00122">Matrix.cc:122</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html"><div class="ttname"><a href="class_kalman_1_1_model.html">Kalman::Model</a></div><div class="ttdoc">The system — WHAT is being estimated.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00066">Model.h:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a450c77e55f7dd11cc53f7100027753c6"><div class="ttname"><a href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">Kalman::Model::R</a></div><div class="ttdeci">virtual Matrix R(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00086">Model.cc:86</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aecfd9e403601d17e1f15968074161067"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aecfd9e403601d17e1f15968074161067">Kalman::Utils::Mahalanobis</a></div><div class="ttdeci">double Mahalanobis(const Vector &amp;y, const Matrix &amp;Sinv)</div><div class="ttdoc">Quadratic form y^T S^-1 y, given an already-inverted Sinv.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00141">Utils.cc:141</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00123">Utils.cc:123</a></div></div>
+<div class="ttc" id="anamespace_kalman_html"><div class="ttname"><a href="namespace_kalman.html">Kalman</a></div><div class="ttdef"><b>Definition</b> <a href="_metadata_8h_source.html#l00026">Metadata.h:27</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="_diagnostics_8cc.html">Diagnostics.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

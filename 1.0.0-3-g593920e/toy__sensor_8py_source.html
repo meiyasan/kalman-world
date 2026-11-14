@@ -1,0 +1,314 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="examples/python/toy_sensor.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: examples/python/toy_sensor.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>examples/python/toy_sensor.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('toy__sensor_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">toy_sensor.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="toy__sensor_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;The toy model from Python: written in C++ and written in Python, on the same readings.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">The cooling-coffee model exists twice, stating the same physics:</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">``examples/cxx/toy_plugin.cc`` in C++ and ``examples/python/toy_model.py`` in</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">Python. ``examples/cxx/toy_sensor.cc`` simulates a test sensor with the C++</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">one, filters the readings and writes two CSV files. This script filters the</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">*same readings* three ways and compares each with what the C++ program wrote:</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">1. the model written in C++, loaded by name: ``model.filter(readings)`` hands</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">   the whole pass to C++, so this is the C++ program&#39;s own computation;</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">2. the model written in Python: the same C++ filter runs the pass and calls</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">   back into the Python ``f`` and ``h`` at each step;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral">3. the model written in Python with the C++ library left aside</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">   (``python_reference()``): the Python loop and the Python arithmetic, the</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">   reference the framework&#39;s tests compare against.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="stringliteral">It prints how far apart they are, how long each took, and what the filter</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral">learned.</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral">    make build &amp;&amp; make examples                    # builds the model and the C++ program</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">    ./var/build/bin/toy_sensor                     # writes toy_sensor.csv, toy_estimate.csv</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    python examples/python/toy_sensor.py           # reads them from the current directory</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">    python examples/python/toy_sensor.py --plot    # also saves toy_sensor.png</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">import</span> argparse</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">import</span> os</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keyword">import</span> kalman</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keywordflow">except</span> ImportError:                                <span class="comment"># running from a checkout that is not installed</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), <span class="stringliteral">&quot;..&quot;</span>, <span class="stringliteral">&quot;..&quot;</span>))</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">import</span> modules <span class="keyword">as</span> kalman</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">import</span> time <span class="keyword">as</span> clock</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html#a4b66027bfa7afc50a0fb7f3dcd04ee79">   40</a></span>native = sys.modules[kalman.__name__ + <span class="stringliteral">&quot;.framework.native.core&quot;</span>]</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html#a40f2beb1654503894753b17e873be093">   41</a></span>_models = sys.modules[kalman.__name__ + <span class="stringliteral">&quot;.framework.models.native&quot;</span>]</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html#ac9f1de007e0dee93cd6c0c6c5b18d924">   42</a></span>NativeModel, python_reference = _models.NativeModel, _models.python_reference</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="keyword">from</span> toy_model <span class="keyword">import</span> CoolingCoffeeModel           <span class="comment"># noqa: E402  the same model, written in Python</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
+<div class="foldopen" id="foldopen00048" data-start="" data-end="">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html#a8039df89efe10f6d48f31a72a4057c58">   48</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetoy__sensor.html#a8039df89efe10f6d48f31a72a4057c58">load_csv</a>(path):</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> os.path.exists(path):</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        sys.exit(f<span class="stringliteral">&quot;{path} not found: run ./var/build/bin/toy_sensor first (it writes it).&quot;</span>)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">return</span> np.loadtxt(path, delimiter=<span class="stringliteral">&quot;,&quot;</span>, skiprows=1)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+</div>
+<div class="foldopen" id="foldopen00054" data-start="" data-end="">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespacetoy__sensor.html#a67260fa7f8d3e4eeee06ff508e819a76">   54</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetoy__sensor.html#a67260fa7f8d3e4eeee06ff508e819a76">main</a>():</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    parser.add_argument(<span class="stringliteral">&quot;directory&quot;</span>, nargs=<span class="stringliteral">&quot;?&quot;</span>, default=<span class="stringliteral">&quot;.&quot;</span>, help=<span class="stringliteral">&quot;where toy_sensor wrote its CSV files&quot;</span>)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    parser.add_argument(<span class="stringliteral">&quot;--plot&quot;</span>, action=<span class="stringliteral">&quot;store_true&quot;</span>, help=<span class="stringliteral">&quot;save toy_sensor.png in that directory&quot;</span>)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    args = parser.parse_args()</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>    kalman.set_debug(0)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment"># --- the model: the compiled C++ class, found by name --------------------------</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    native.load_plugin(native.resolve_plugin(<span class="stringliteral">&quot;KalmanPlugin_toy&quot;</span>))</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    coffee = <a class="code hl_variable" href="namespacetoy__sensor.html#ac9f1de007e0dee93cd6c0c6c5b18d924">NativeModel</a>(<span class="stringliteral">&quot;toy-coffee&quot;</span>, <span class="stringliteral">&quot;thermometer&quot;</span>)</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    coffee.set_parameter(<span class="stringliteral">&quot;room&quot;</span>, 21.0)             <span class="comment"># degC; the same named parameter as in C++</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    print(f<span class="stringliteral">&quot;model   : {coffee!r}, parameters {coffee.parameters()}&quot;</span>)</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment"># --- the test sensor: the readings the C++ program simulated --------------------</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    sensor = <a class="code hl_function" href="namespacetoy__sensor.html#a8039df89efe10f6d48f31a72a4057c58">load_csv</a>(os.path.join(args.directory, <span class="stringliteral">&quot;toy_sensor.csv&quot;</span>))</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    time, true_T, true_k, readings = sensor.T</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    cxx = <a class="code hl_function" href="namespacetoy__sensor.html#a8039df89efe10f6d48f31a72a4057c58">load_csv</a>(os.path.join(args.directory, <span class="stringliteral">&quot;toy_estimate.csv&quot;</span>))</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    readings = readings.reshape(-1, 1)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keyword">def </span>timed(run, repeat=3):</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        best = float(<span class="stringliteral">&quot;inf&quot;</span>)                        <span class="comment"># the best of a few runs: the first one loads and warms up</span></div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(repeat):</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            start = clock.perf_counter()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            record = run()</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            best = min(best, (clock.perf_counter() - start) * 1e3)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">return</span> record, np.asarray(record.xk).reshape(len(readings), 2), best</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="comment"># --- 1. the model written in C++: the whole pass in C++ -------------------------</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    record, python_x, ms_cxx = timed(<span class="keyword">lambda</span>: coffee.filter(readings))</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="comment"># --- 2. the model written in Python, run by the C++ filter ----------------------</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    written = <a class="code hl_class" href="classtoy__model_1_1_cooling_coffee_model.html">CoolingCoffeeModel</a>(<span class="stringliteral">&quot;thermometer&quot;</span>, room=21.0)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    _, written_x, ms_written = timed(<span class="keyword">lambda</span>: written.filter(readings))</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="comment"># --- 3. the model written in Python, with the Python loop -----------------------</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keyword">with</span> <a class="code hl_variable" href="namespacetoy__sensor.html#a17831e538294b8ec24d50854bc2b3b9a">python_reference</a>():</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        _, reference_x, ms_reference = timed(<span class="keyword">lambda</span>: <a class="code hl_class" href="classtoy__model_1_1_cooling_coffee_model.html">CoolingCoffeeModel</a>(<span class="stringliteral">&quot;thermometer&quot;</span>, room=21.0).filter(readings))</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment"># --- compare with what the C++ program computed ---------------------------------</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    cxx_x = cxx[:, 1:3]</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    scale = np.max(np.abs(cxx_x), axis=0)          <span class="comment"># compare T and k each on its own scale</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    readings = readings.reshape(-1)</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keyword">def </span>apart(x):</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">return</span> (f<span class="stringliteral">&quot;T {np.max(np.abs(x[:, 0] - cxx_x[:, 0])) / scale[0]:.1e}&quot;</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                f<span class="stringliteral">&quot;   k {np.max(np.abs(x[:, 1] - cxx_x[:, 1])) / scale[1]:.1e}&quot;</span>)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    print(f<span class="stringliteral">&quot;sensor  : {len(readings)} readings, thermometer error &quot;</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>          f<span class="stringliteral">&quot;{np.sqrt(np.mean((readings - true_T) ** 2)):.3f} degC (RMS)&quot;</span>)</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    print(f<span class="stringliteral">&quot;filter  : temperature error {np.sqrt(np.mean((python_x[:, 0] - true_T) ** 2)):.3f} degC (RMS)&quot;</span>)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    sigma_k = float(np.sqrt(np.asarray(record.Pk)[-1, 1, 1]))</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    print(f<span class="stringliteral">&quot;learned : k = {python_x[-1, 1]:.6f} +/- {sigma_k:.6f} /s   (truth {true_k[-1]:.6f})&quot;</span>)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    print(<span class="stringliteral">&quot;agreement with the C++ program (largest difference, relative to the largest value):&quot;</span>)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    print(f<span class="stringliteral">&quot;    model in C++                      : {apart(python_x)}   ({ms_cxx:.1f} ms)&quot;</span>)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    print(f<span class="stringliteral">&quot;    model in Python, C++ filter       : {apart(written_x)}   ({ms_written:.1f} ms)&quot;</span>)</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    print(f<span class="stringliteral">&quot;    model in Python, Python filter    : {apart(reference_x)}   ({ms_reference:.1f} ms)&quot;</span>)</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span> </div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordflow">if</span> args.plot:</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">import</span> matplotlib</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        matplotlib.use(<span class="stringliteral">&quot;Agg&quot;</span>)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        sigma_T = np.sqrt(np.asarray(record.Pk)[:, 0, 0])</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        sig_k = np.sqrt(np.asarray(record.Pk)[:, 1, 1])</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        fig, (top, bottom) = plt.subplots(2, 1, figsize=(9, 6.5), sharex=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        minutes = time / 60.0</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        top.plot(minutes, readings, <span class="stringliteral">&quot;.&quot;</span>, color=<span class="stringliteral">&quot;0.7&quot;</span>, ms=2, label=<span class="stringliteral">&quot;thermometer readings&quot;</span>)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        top.plot(minutes, true_T, <span class="stringliteral">&quot;k-&quot;</span>, lw=1.5, label=<span class="stringliteral">&quot;true temperature&quot;</span>)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        top.plot(minutes, python_x[:, 0], <span class="stringliteral">&quot;-&quot;</span>, color=<span class="stringliteral">&quot;tab:blue&quot;</span>, lw=1.2, label=<span class="stringliteral">&quot;filter estimate&quot;</span>)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        top.fill_between(minutes, python_x[:, 0] - 2 * sigma_T, python_x[:, 0] + 2 * sigma_T,</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                         color=<span class="stringliteral">&quot;tab:blue&quot;</span>, alpha=0.2, label=<span class="stringliteral">&quot;estimate ± 2σ&quot;</span>)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        top.set_ylabel(<span class="stringliteral">&quot;temperature [°C]&quot;</span>); top.legend(fontsize=8); top.grid(alpha=0.3)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        top.set_title(<span class="stringliteral">&quot;A cooling cup of coffee: the model written in C++, filtered from Python&quot;</span>)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        bottom.plot(minutes, true_k * 1e3, <span class="stringliteral">&quot;k-&quot;</span>, lw=1.5, label=<span class="stringliteral">&quot;true cooling rate&quot;</span>)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        bottom.plot(minutes, python_x[:, 1] * 1e3, <span class="stringliteral">&quot;-&quot;</span>, color=<span class="stringliteral">&quot;tab:red&quot;</span>, lw=1.2, label=<span class="stringliteral">&quot;learned by the filter&quot;</span>)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        bottom.fill_between(minutes, (python_x[:, 1] - 2 * sig_k) * 1e3, (python_x[:, 1] + 2 * sig_k) * 1e3,</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                            color=<span class="stringliteral">&quot;tab:red&quot;</span>, alpha=0.2, label=<span class="stringliteral">&quot;estimate ± 2σ&quot;</span>)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        bottom.set_xlabel(<span class="stringliteral">&quot;time [min]&quot;</span>); bottom.set_ylabel(<span class="stringliteral">&quot;cooling rate k [10⁻³ / s]&quot;</span>)</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        bottom.legend(fontsize=8); bottom.grid(alpha=0.3)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        fig.tight_layout()</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        out = os.path.join(args.directory, <span class="stringliteral">&quot;toy_sensor.png&quot;</span>)</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        fig.savefig(out, dpi=110)</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        print(f<span class="stringliteral">&quot;wrote   : {out}&quot;</span>)</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <a class="code hl_function" href="namespacetoy__sensor.html#a67260fa7f8d3e4eeee06ff508e819a76">main</a>()</div>
+<div class="ttc" id="aclasstoy__model_1_1_cooling_coffee_model_html"><div class="ttname"><a href="classtoy__model_1_1_cooling_coffee_model.html">toy_model.CoolingCoffeeModel</a></div><div class="ttdef"><b>Definition</b> <a href="toy__model_8py_source.html#l00057">toy_model.py:57</a></div></div>
+<div class="ttc" id="anamespacetoy__sensor_html_a17831e538294b8ec24d50854bc2b3b9a"><div class="ttname"><a href="namespacetoy__sensor.html#a17831e538294b8ec24d50854bc2b3b9a">toy_sensor.python_reference</a></div><div class="ttdeci">python_reference</div><div class="ttdef"><b>Definition</b> <a href="toy__sensor_8py_source.html#l00042">toy_sensor.py:42</a></div></div>
+<div class="ttc" id="anamespacetoy__sensor_html_a67260fa7f8d3e4eeee06ff508e819a76"><div class="ttname"><a href="namespacetoy__sensor.html#a67260fa7f8d3e4eeee06ff508e819a76">toy_sensor.main</a></div><div class="ttdeci">main()</div><div class="ttdef"><b>Definition</b> <a href="toy__sensor_8py_source.html#l00054">toy_sensor.py:54</a></div></div>
+<div class="ttc" id="anamespacetoy__sensor_html_a8039df89efe10f6d48f31a72a4057c58"><div class="ttname"><a href="namespacetoy__sensor.html#a8039df89efe10f6d48f31a72a4057c58">toy_sensor.load_csv</a></div><div class="ttdeci">load_csv(path)</div><div class="ttdef"><b>Definition</b> <a href="toy__sensor_8py_source.html#l00048">toy_sensor.py:48</a></div></div>
+<div class="ttc" id="anamespacetoy__sensor_html_ac9f1de007e0dee93cd6c0c6c5b18d924"><div class="ttname"><a href="namespacetoy__sensor.html#ac9f1de007e0dee93cd6c0c6c5b18d924">toy_sensor.NativeModel</a></div><div class="ttdeci">NativeModel</div><div class="ttdef"><b>Definition</b> <a href="toy__sensor_8py_source.html#l00042">toy_sensor.py:42</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_d28a4824dc47e487b107a5db32ef43c4.html">examples</a></li><li class="navelem"><a class="el" href="dir_d050070cc3e4bbd91d897ff8856046e0.html">python</a></li><li class="navelem"><a class="el" href="toy__sensor_8py.html">toy_sensor.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

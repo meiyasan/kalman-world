@@ -1,0 +1,644 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.abstract.metadata.KalmanFilterMetadata Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.abstract.metadata.KalmanFilterMetadata Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.abstract.metadata.KalmanFilterMetadata Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
+<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
+<a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.abstract.metadata.KalmanFilterMetadata Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.abstract.metadata.KalmanFilterMetadata:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata__inherit__graph.svg" width="1499" height="307"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a79e864e3b9fea3a0d0acf0a3dc27638a" id="r_a79e864e3b9fea3a0d0acf0a3dc27638a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a79e864e3b9fea3a0d0acf0a3dc27638a">__str__</a> (self)</td></tr>
+<tr class="separator:a79e864e3b9fea3a0d0acf0a3dc27638a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html">modules.framework.abstract.contracts.KalmanFilterABC</a></td></tr>
+<tr class="memitem:ae3c06ff86f34cbcc162998e17302f353 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c" id="r_ae3c06ff86f34cbcc162998e17302f353"><td class="memItemLeft" align="right" valign="top"> '<a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html">KalmanFilterABC</a>|<a class="el" href="classmodules_1_1framework_1_1io_1_1record_1_1_kalman_record.html">KalmanRecord</a>'&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#ae3c06ff86f34cbcc162998e17302f353">forward</a> (self, z, u=None, **kwargs)</td></tr>
+<tr class="separator:ae3c06ff86f34cbcc162998e17302f353 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2cc45b3df828c9b1d7fb5bda83edb921 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c" id="r_a2cc45b3df828c9b1d7fb5bda83edb921"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmodules_1_1framework_1_1io_1_1record_1_1_kalman_record.html">KalmanRecord</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#a2cc45b3df828c9b1d7fb5bda83edb921">backward</a> (self, **kwargs)</td></tr>
+<tr class="separator:a2cc45b3df828c9b1d7fb5bda83edb921 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html">modules.framework.abstract.metadata.KalmanMetadata</a></td></tr>
+<tr class="memitem:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a14a4e351ed86dadadb83ab64e78f0236"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a14a4e351ed86dadadb83ab64e78f0236">name</a> (self)</td></tr>
+<tr class="separator:a14a4e351ed86dadadb83ab64e78f0236 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4ad79eab0dcb89ded410f2c536759a3a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4ad79eab0dcb89ded410f2c536759a3a">description</a> (self)</td></tr>
+<tr class="separator:a4ad79eab0dcb89ded410f2c536759a3a inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a95528fa2d5aaf13b2f4f12c48720c69e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a95528fa2d5aaf13b2f4f12c48720c69e">version</a> (self)</td></tr>
+<tr class="separator:a95528fa2d5aaf13b2f4f12c48720c69e inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a4d420229416cbba37ebaa47a52baf5b9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a4d420229416cbba37ebaa47a52baf5b9">read</a> (cls, filename)</td></tr>
+<tr class="separator:a4d420229416cbba37ebaa47a52baf5b9 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_a0c0e9919afe47470788a45a0734e810d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#a0c0e9919afe47470788a45a0734e810d">write</a> (self, filename)</td></tr>
+<tr class="separator:a0c0e9919afe47470788a45a0734e810d inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata" id="r_add0c479d5879a49d4b6948ed57d951c5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata.html#add0c479d5879a49d4b6948ed57d951c5">print</a> (self, **kwargs)</td></tr>
+<tr class="separator:add0c479d5879a49d4b6948ed57d951c5 inherit pub_methods_classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-attribs" name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:ac9de94f9001e73e0eb5859fedd7c3834" id="r_ac9de94f9001e73e0eb5859fedd7c3834"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#ac9de94f9001e73e0eb5859fedd7c3834">NAME</a> = &quot;Kalman Filter&quot;</td></tr>
+<tr class="separator:ac9de94f9001e73e0eb5859fedd7c3834"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdbcc5a027a16c5f28e20fedea9935f0" id="r_acdbcc5a027a16c5f28e20fedea9935f0"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#acdbcc5a027a16c5f28e20fedea9935f0">DESCRIPTION</a> = &quot;Base class for Kalman filters (workflow: <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#ae3c06ff86f34cbcc162998e17302f353">forward</a> / <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#a2cc45b3df828c9b1d7fb5bda83edb921">backward</a> over a model + engine).&quot;</td></tr>
+<tr class="separator:acdbcc5a027a16c5f28e20fedea9935f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0a0ee839fa920ac17c80c8bcc18bfdc4" id="r_a0a0ee839fa920ac17c80c8bcc18bfdc4"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a0a0ee839fa920ac17c80c8bcc18bfdc4">VERSION</a> = &quot;1.0&quot;</td></tr>
+<tr class="separator:a0a0ee839fa920ac17c80c8bcc18bfdc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb91e1333c6685421114cc3daef68f01" id="r_afb91e1333c6685421114cc3daef68f01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#afb91e1333c6685421114cc3daef68f01">epsilon</a> = sys.float_info.epsilon</td></tr>
+<tr class="separator:afb91e1333c6685421114cc3daef68f01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac89e8707516c63dce214750fe9696b33" id="r_ac89e8707516c63dce214750fe9696b33"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#ac89e8707516c63dce214750fe9696b33">x</a> = None</td></tr>
+<tr class="separator:ac89e8707516c63dce214750fe9696b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3821ff334a8f288a6f6d75a97265891f" id="r_a3821ff334a8f288a6f6d75a97265891f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a3821ff334a8f288a6f6d75a97265891f">P</a> = None</td></tr>
+<tr class="separator:a3821ff334a8f288a6f6d75a97265891f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6bd074d065dfa75f7c095690324b703" id="r_ae6bd074d065dfa75f7c095690324b703"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#ae6bd074d065dfa75f7c095690324b703">prior</a> = None</td></tr>
+<tr class="separator:ae6bd074d065dfa75f7c095690324b703"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4a2ee58078e9ca776a8c89862e9bcfe" id="r_ac4a2ee58078e9ca776a8c89862e9bcfe"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#ac4a2ee58078e9ca776a8c89862e9bcfe">posterior</a> = None</td></tr>
+<tr class="separator:ac4a2ee58078e9ca776a8c89862e9bcfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b09875c5b658ba1dd29bd9a7e8dd343" id="r_a1b09875c5b658ba1dd29bd9a7e8dd343"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a1b09875c5b658ba1dd29bd9a7e8dd343">smooth</a> = None</td></tr>
+<tr class="separator:a1b09875c5b658ba1dd29bd9a7e8dd343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab82275cc44dcffc2dfbfefab69ec472" id="r_aab82275cc44dcffc2dfbfefab69ec472"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#aab82275cc44dcffc2dfbfefab69ec472">measurement</a> = None</td></tr>
+<tr class="separator:aab82275cc44dcffc2dfbfefab69ec472"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a191a03dde69f4d2ecd49af7f9c591235" id="r_a191a03dde69f4d2ecd49af7f9c591235"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a191a03dde69f4d2ecd49af7f9c591235">control</a> = None</td></tr>
+<tr class="separator:a191a03dde69f4d2ecd49af7f9c591235"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0280a9ed9d4f101564997d21ece34028" id="r_a0280a9ed9d4f101564997d21ece34028"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a0280a9ed9d4f101564997d21ece34028">transition</a> = None</td></tr>
+<tr class="separator:a0280a9ed9d4f101564997d21ece34028"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
+Static Protected Attributes</h2></td></tr>
+<tr class="memitem:a8a963a1579c7e39182846d7267fa3c8c" id="r_a8a963a1579c7e39182846d7267fa3c8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html">KalmanModelMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#a8a963a1579c7e39182846d7267fa3c8c">_model</a> = None</td></tr>
+<tr class="separator:a8a963a1579c7e39182846d7267fa3c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac06aa38a5dc74b3df328aa86c15e5a01" id="r_ac06aa38a5dc74b3df328aa86c15e5a01"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html#ac06aa38a5dc74b3df328aa86c15e5a01">_engine</a> = None</td></tr>
+<tr class="separator:ac06aa38a5dc74b3df328aa86c15e5a01"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00315">315</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a79e864e3b9fea3a0d0acf0a3dc27638a" name="a79e864e3b9fea3a0d0acf0a3dc27638a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79e864e3b9fea3a0d0acf0a3dc27638a">&#9670;&#160;</a></span>__str__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.__str__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00337">337</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  337</span>    <span class="keyword">def </span>__str__(self):</div>
+<div class="line"><span class="lineno">  338</span> </div>
+<div class="line"><span class="lineno">  339</span>        <span class="keyword">import</span> textwrap</div>
+<div class="line"><span class="lineno">  340</span>        <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  341</span>        <span class="keyword">from</span> ...runtime.debug <span class="keyword">import</span> get_debug</div>
+<div class="line"><span class="lineno">  342</span> </div>
+<div class="line"><span class="lineno">  343</span>        spacer = <span class="stringliteral">&quot; &quot;</span> * 4</div>
+<div class="line"><span class="lineno">  344</span>        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)</div>
+<div class="line"><span class="lineno">  345</span>        debug = get_debug()</div>
+<div class="line"><span class="lineno">  346</span> </div>
+<div class="line"><span class="lineno">  347</span>        <span class="keyword">def </span>fmt_arr(a):</div>
+<div class="line"><span class="lineno">  348</span>            <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  349</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;None&quot;</span></div>
+<div class="line"><span class="lineno">  350</span>            a = np.asarray(a)</div>
+<div class="line"><span class="lineno">  351</span>            shape = <span class="stringliteral">&quot;x&quot;</span>.join(map(str, a.shape))</div>
+<div class="line"><span class="lineno">  352</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> debug:</div>
+<div class="line"><span class="lineno">  353</span>                <span class="keywordflow">return</span> f<span class="stringliteral">&quot;{shape}&quot;</span></div>
+<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">return</span> np.array2string(a, precision=3, max_line_width=np.inf)</div>
+<div class="line"><span class="lineno">  355</span> </div>
+<div class="line"><span class="lineno">  356</span>        res  = f<span class="stringliteral">&quot;{self.NAME} (v{self.VERSION})\n&quot;</span></div>
+<div class="line"><span class="lineno">  357</span>        res += f<span class="stringliteral">&quot;{spacer}{desc}\n\n&quot;</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="keywordflow">if</span> self._model:</div>
+<div class="line"><span class="lineno">  359</span>            res += f<span class="stringliteral">&quot;{spacer}Model.....................: {type(self._model).__name__}\n&quot;</span></div>
+<div class="line"><span class="lineno">  360</span>            res += f<span class="stringliteral">&quot;{spacer}States (n={self._model.n})...........: {self._model.states.repr()}\n&quot;</span></div>
+<div class="line"><span class="lineno">  361</span>            res += f<span class="stringliteral">&quot;{spacer}Observables (m={self._model.m})........: {self._model.observables.repr()}\n&quot;</span></div>
+<div class="line"><span class="lineno">  362</span>            res += f<span class="stringliteral">&quot;{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n&quot;</span></div>
+<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">if</span> self._engine <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  364</span>            res += f<span class="stringliteral">&quot;{spacer}Engine....................: {type(self._engine).__name__}\n&quot;</span></div>
+<div class="line"><span class="lineno">  365</span>        res += f<span class="stringliteral">&quot;{spacer}Precision.................: {self.epsilon:.3e}\n\n&quot;</span></div>
+<div class="line"><span class="lineno">  366</span> </div>
+<div class="line"><span class="lineno">  367</span>        res += f<span class="stringliteral">&quot;{spacer}Microstate variable sizes:\n&quot;</span></div>
+<div class="line"><span class="lineno">  368</span>        res += f<span class="stringliteral">&quot;{2*spacer}x.....................: {fmt_arr(self.x)} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  369</span>        res += f<span class="stringliteral">&quot;{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  370</span> </div>
+<div class="line"><span class="lineno">  371</span>        <span class="comment"># Macrostate logs (prior/posterior/smooth/measurement/control) only exist</span></div>
+<div class="line"><span class="lineno">  372</span>        <span class="comment"># once forward()/backward() has actually run — before that they&#39;re all</span></div>
+<div class="line"><span class="lineno">  373</span>        <span class="comment"># empty, and printing four &quot;0 element(s)&quot; lines is just noise, not</span></div>
+<div class="line"><span class="lineno">  374</span>        <span class="comment"># information. Show the section only once there is something to show.</span></div>
+<div class="line"><span class="lineno">  375</span>        n_prior       = len(self.prior <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  376</span>        n_posterior   = len(self.posterior <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  377</span>        n_measurement = len(self.measurement <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  378</span>        n_control     = len(self.control <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">if</span> n_prior <span class="keywordflow">or</span> n_posterior <span class="keywordflow">or</span> n_measurement <span class="keywordflow">or</span> n_control:</div>
+<div class="line"><span class="lineno">  380</span>            res += f<span class="stringliteral">&quot;\n{spacer}Macrostate variable sizes:\n&quot;</span></div>
+<div class="line"><span class="lineno">  381</span>            res += f<span class="stringliteral">&quot;{2*spacer}Prior.................: {n_prior} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  382</span>            res += f<span class="stringliteral">&quot;{2*spacer}Posterior.............: {n_posterior} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  383</span>            res += f<span class="stringliteral">&quot;{2*spacer}Measurement...........: {n_measurement} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  384</span>            res += f<span class="stringliteral">&quot;{2*spacer}Control...............: {n_control} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  385</span> </div>
+<div class="line"><span class="lineno">  386</span>        <span class="keywordflow">return</span> res</div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac06aa38a5dc74b3df328aa86c15e5a01" name="ac06aa38a5dc74b3df328aa86c15e5a01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac06aa38a5dc74b3df328aa86c15e5a01">&#9670;&#160;</a></span>_engine</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata._engine = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00322">322</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a8a963a1579c7e39182846d7267fa3c8c" name="a8a963a1579c7e39182846d7267fa3c8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8a963a1579c7e39182846d7267fa3c8c">&#9670;&#160;</a></span>_model</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html">KalmanModelMetadata</a> modules.framework.abstract.metadata.KalmanFilterMetadata._model = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00321">321</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a191a03dde69f4d2ecd49af7f9c591235" name="a191a03dde69f4d2ecd49af7f9c591235"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a191a03dde69f4d2ecd49af7f9c591235">&#9670;&#160;</a></span>control</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.control = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00334">334</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="acdbcc5a027a16c5f28e20fedea9935f0" name="acdbcc5a027a16c5f28e20fedea9935f0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdbcc5a027a16c5f28e20fedea9935f0">&#9670;&#160;</a></span>DESCRIPTION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.abstract.metadata.KalmanFilterMetadata.DESCRIPTION = &quot;Base class for Kalman filters (workflow: <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#ae3c06ff86f34cbcc162998e17302f353">forward</a> / <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_filter_a_b_c.html#a2cc45b3df828c9b1d7fb5bda83edb921">backward</a> over a model + engine).&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00318">318</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="afb91e1333c6685421114cc3daef68f01" name="afb91e1333c6685421114cc3daef68f01"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb91e1333c6685421114cc3daef68f01">&#9670;&#160;</a></span>epsilon</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.epsilon = sys.float_info.epsilon</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00323">323</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="aab82275cc44dcffc2dfbfefab69ec472" name="aab82275cc44dcffc2dfbfefab69ec472"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab82275cc44dcffc2dfbfefab69ec472">&#9670;&#160;</a></span>measurement</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.measurement = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00333">333</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="ac9de94f9001e73e0eb5859fedd7c3834" name="ac9de94f9001e73e0eb5859fedd7c3834"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9de94f9001e73e0eb5859fedd7c3834">&#9670;&#160;</a></span>NAME</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.abstract.metadata.KalmanFilterMetadata.NAME = &quot;Kalman Filter&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00317">317</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a3821ff334a8f288a6f6d75a97265891f" name="a3821ff334a8f288a6f6d75a97265891f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3821ff334a8f288a6f6d75a97265891f">&#9670;&#160;</a></span>P</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.P = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00327">327</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="ac4a2ee58078e9ca776a8c89862e9bcfe" name="ac4a2ee58078e9ca776a8c89862e9bcfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4a2ee58078e9ca776a8c89862e9bcfe">&#9670;&#160;</a></span>posterior</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.posterior = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00331">331</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="ae6bd074d065dfa75f7c095690324b703" name="ae6bd074d065dfa75f7c095690324b703"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6bd074d065dfa75f7c095690324b703">&#9670;&#160;</a></span>prior</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.prior = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00330">330</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a1b09875c5b658ba1dd29bd9a7e8dd343" name="a1b09875c5b658ba1dd29bd9a7e8dd343"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b09875c5b658ba1dd29bd9a7e8dd343">&#9670;&#160;</a></span>smooth</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.smooth = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a99c6e0c2850f1ad2824d175727353281">modules.framework.filter.BayesFilter</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00332">332</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a0280a9ed9d4f101564997d21ece34028" name="a0280a9ed9d4f101564997d21ece34028"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0280a9ed9d4f101564997d21ece34028">&#9670;&#160;</a></span>transition</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.transition = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00335">335</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="a0a0ee839fa920ac17c80c8bcc18bfdc4" name="a0a0ee839fa920ac17c80c8bcc18bfdc4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a0ee839fa920ac17c80c8bcc18bfdc4">&#9670;&#160;</a></span>VERSION</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">str modules.framework.abstract.metadata.KalmanFilterMetadata.VERSION = &quot;1.0&quot;</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00319">319</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<a id="ac89e8707516c63dce214750fe9696b33" name="ac89e8707516c63dce214750fe9696b33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac89e8707516c63dce214750fe9696b33">&#9670;&#160;</a></span>x</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.abstract.metadata.KalmanFilterMetadata.x = None</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00326">326</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/abstract/<a class="el" href="metadata_8py_source.html">metadata.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1abstract.html">abstract</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1abstract_1_1metadata.html">metadata</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_filter_metadata.html">KalmanFilterMetadata</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

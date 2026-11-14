@@ -33,13 +33,13 @@ var NAVTREE =
       [ "Applications at a glance", "md_docs_217___applications.html", null ],
       [ "Ballistics", "md_docs_2apps_2ballistics.html", [
         [ "The model", "md_docs_2apps_2ballistics.html#the-model", null ],
-        [ "How it is built", "md_docs_2apps_2ballistics.html#how-it-is-built-1", null ],
-        [ "Using it", "md_docs_2apps_2ballistics.html#using-it-2", null ]
+        [ "How it is built", "md_docs_2apps_2ballistics.html#how-it-is-built", null ],
+        [ "Using it", "md_docs_2apps_2ballistics.html#using-it-1", null ]
       ] ],
       [ "Oscillators", "md_docs_2apps_2oscillators.html", [
-        [ "The model", "md_docs_2apps_2oscillators.html#the-model-5", null ],
-        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-5", null ],
-        [ "Using it", "md_docs_2apps_2oscillators.html#using-it-6", null ],
+        [ "The model", "md_docs_2apps_2oscillators.html#the-model-6", null ],
+        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-6", null ],
+        [ "Using it", "md_docs_2apps_2oscillators.html#using-it-7", null ],
         [ "Reconstruction: resampling artifacts and their fixes", "md_docs_2apps_2oscillators.html#reconstruction-resampling-artifacts-and-their-fixes", [
           [ "1. Asymmetric tail decay in the reconstructed time series", "md_docs_2apps_2oscillators.html#autotoc_md1-asymmetric-tail-decay-in-the-reconstructed-time-series", null ],
           [ "2. \"Bad suppression range\" — apparent leakage outside the window", "md_docs_2apps_2oscillators.html#autotoc_md2-bad-suppression-range--apparent-leakage-outside-the-window", null ]
@@ -56,14 +56,14 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2suspension.html#using-it-12", null ]
       ] ],
       [ "Gravitational-wave polarization", "md_docs_2apps_2polarization.html", [
-        [ "The model", "md_docs_2apps_2polarization.html#the-model-6", null ],
-        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-6", null ],
-        [ "Using it", "md_docs_2apps_2polarization.html#using-it-7", null ]
+        [ "The model", "md_docs_2apps_2polarization.html#the-model-5", null ],
+        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-5", null ],
+        [ "Using it", "md_docs_2apps_2polarization.html#using-it-6", null ]
       ] ],
       [ "Calorimeter", "md_docs_2apps_2calorimeter.html", [
         [ "The model", "md_docs_2apps_2calorimeter.html#the-model-1", null ],
-        [ "How it is built", "md_docs_2apps_2calorimeter.html#how-it-is-built", null ],
-        [ "Using it", "md_docs_2apps_2calorimeter.html#using-it-1", null ]
+        [ "How it is built", "md_docs_2apps_2calorimeter.html#how-it-is-built-1", null ],
+        [ "Using it", "md_docs_2apps_2calorimeter.html#using-it-2", null ]
       ] ],
       [ "Rockets", "md_docs_2apps_2rocket.html", [
         [ "The model", "md_docs_2apps_2rocket.html#the-model-8", null ],
@@ -82,14 +82,14 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2space.html#using-it-10", null ]
       ] ],
       [ "Sensor fusion", "md_docs_2apps_2fusion.html", [
-        [ "The model", "md_docs_2apps_2fusion.html#the-model-2", null ],
+        [ "The model", "md_docs_2apps_2fusion.html#the-model-3", null ],
         [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-2", null ],
         [ "Using it", "md_docs_2apps_2fusion.html#using-it-3", null ]
       ] ],
       [ "Computer vision", "md_docs_2apps_2vision.html", [
         [ "The models", "md_docs_2apps_2vision.html#the-models-1", null ],
         [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-12", null ],
-        [ "Using it", "md_docs_2apps_2vision.html#using-it-15", null ]
+        [ "Using it", "md_docs_2apps_2vision.html#using-it-14", null ]
       ] ],
       [ "GPS and relativity", "md_docs_2apps_2gps.html", [
         [ "The model", "md_docs_2apps_2gps.html#the-model-4", null ],
@@ -100,10 +100,10 @@ var NAVTREE =
         [ "The speed test", "md_docs_2apps_2vehicles.html#the-speed-test", null ],
         [ "Lane keeping", "md_docs_2apps_2vehicles.html#lane-keeping", null ],
         [ "How they are built", "md_docs_2apps_2vehicles.html#how-they-are-built-1", null ],
-        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-14", null ]
+        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-15", null ]
       ] ],
       [ "Turbulent flow", "md_docs_2apps_2flow.html", [
-        [ "The model", "md_docs_2apps_2flow.html#the-model-3", null ],
+        [ "The model", "md_docs_2apps_2flow.html#the-model-2", null ],
         [ "Solver and integrator: two different jobs", "md_docs_2apps_2flow.html#solver-and-integrator-two-different-jobs", null ],
         [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-3", null ],
         [ "Using it", "md_docs_2apps_2flow.html#using-it-4", null ]
@@ -182,7 +182,7 @@ var NAVTREE =
           [ "Verifying it took effect", "md_docs_26___integrators-and-_solvers.html#verifying-it-took-effect", null ]
         ] ],
         [ "Solvers", "md_docs_26___integrators-and-_solvers.html#solvers", [
-          [ "The contract", "md_docs_26___integrators-and-_solvers.html#the-contract-1", null ],
+          [ "The contract", "md_docs_26___integrators-and-_solvers.html#the-contract-2", null ],
           [ "Shipped", "md_docs_26___integrators-and-_solvers.html#shipped-1", null ],
           [ "The Butcher-tableau protocol", "md_docs_26___integrators-and-_solvers.html#the-butcher-tableau-protocol", null ],
           [ "GPU / Torch backend", "md_docs_26___integrators-and-_solvers.html#gpu--torch-backend", null ]
@@ -200,7 +200,7 @@ var NAVTREE =
         [ "Summary table", "md_docs_26___integrators-and-_solvers.html#summary-table", null ]
       ] ],
       [ "Providers", "md_docs_27___providers.html", [
-        [ "The contract", "md_docs_27___providers.html#the-contract-2", null ],
+        [ "The contract", "md_docs_27___providers.html#the-contract-1", null ],
         [ "Shipped providers", "md_docs_27___providers.html#shipped-providers", null ],
         [ "Resolving one", "md_docs_27___providers.html#resolving-one", null ],
         [ "By kind", "md_docs_27___providers.html#by-kind", [

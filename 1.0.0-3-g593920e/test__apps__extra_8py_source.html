@@ -1,0 +1,867 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/test_apps_extra.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/test_apps_extra.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/test_apps_extra.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('test__apps__extra_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">test_apps_extra.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="test__apps__extra_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__apps__extra.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Tests for the application models not already covered by ``test_module`` /</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral">``test_filtering`` / ``test_tracking``:</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">  - rocket      (TransLunarModel free return, RocketLaunchModel powered ascent)</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">  - gravwave    (PolarizationModel Jones-formalism EKF)</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">  - powergrids  (PowerGridStateModel harmonic voltage tracker)</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">  - ballistics  (BallisticModel — the nonlinear EKF variant)</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">  - oscillators (Harmonic / Inharmonic / Phasor / Analytic variants)</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">These keep trajectories short so the suite stays fast while still exercising each</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">model&#39;s sample -&gt; filter -&gt; reconstruct path end to end.</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">import</span> unittest</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps.html">modules.apps</a> <span class="keyword">import</span> (</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    PolarizationModel, jones_signal,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    PowerGridStateModel,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    HarmonicOscillatorModel, InharmonicOscillatorModel,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    PhasorOscillatorModel, AnalyticOscillatorModel,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>)</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1ballistics.html">modules.apps.ballistics</a> <span class="keyword">import</span> BallisticModel</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1rocket.html">modules.apps.astro.rocket</a> <span class="keyword">import</span> (</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    RocketAscentModel, RocketLiftoffModel, RocketLandingModel, RocketDescentModel,</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    RocketLaunchModel, RocketTakeoffModel,            <span class="comment"># legacy aliases</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>)</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a> <span class="keyword">import</span> (</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    TransLunarModel, InterplanetaryModel, lambert, hohmann_transfer,</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>)</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a> <span class="keyword">import</span> CarSpeedModel</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ExtendedKalmanFilter</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="foldopen" id="foldopen00038" data-start="" data-end="">
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">   38</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(arr, label=&quot;array&quot;):</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    arr = np.asarray(arr)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">assert</span> <span class="keywordflow">not</span> np.any(np.isnan(arr)), f<span class="stringliteral">&quot;{label} contains NaN&quot;</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="keyword">assert</span> <span class="keywordflow">not</span> np.any(np.isinf(arr)), f<span class="stringliteral">&quot;{label} contains Inf&quot;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span><span class="comment"># Rocket — trans-lunar free return + powered ascent</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="comment"># ===========================================================================</span></div>
+</div>
+<div class="foldopen" id="foldopen00047" data-start="" data-end="">
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html">   47</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_rocket.html">TestRocket</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment"># The multi-body gravity divides by |r|, which is 0 at the default zero-state the</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment"># numerical Jacobian probes at construction — a benign degenerate-point warning.</span></div>
+<div class="foldopen" id="foldopen00050" data-start="" data-end="">
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a5b509617b8c1f35286b1d328387c2dbf">   50</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a5b509617b8c1f35286b1d328387c2dbf">setUp</a>(self):</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a2f4def3325c4bf45b076d15ca07d2bc2">   51</a></span>        self.<a class="code hl_variable" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a2f4def3325c4bf45b076d15ca07d2bc2">_errstate</a> = np.errstate(invalid=<span class="stringliteral">&quot;ignore&quot;</span>, divide=<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        self.<a class="code hl_variable" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a2f4def3325c4bf45b076d15ca07d2bc2">_errstate</a>.__enter__()</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+</div>
+<div class="foldopen" id="foldopen00054" data-start="" data-end="">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7a871375d5e4d8edad0cab42e06d2f10">   54</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7a871375d5e4d8edad0cab42e06d2f10">tearDown</a>(self):</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        self.<a class="code hl_variable" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a2f4def3325c4bf45b076d15ca07d2bc2">_errstate</a>.__exit__(<span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
+</div>
+<div class="foldopen" id="foldopen00057" data-start="" data-end="">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7bb81f2c19fa524b7fb080e810cf3ea7">   57</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7bb81f2c19fa524b7fb080e810cf3ea7">_translunar</a>(self, **kw):</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a>(dt_s=120.0, track_km=5.0, **kw)</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        r0 = R_EARTH + 400 * KM</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        a_tx = 0.5 * (r0 + D_MOON)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        v_tli = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / a_tx)) + 0.034</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        m.initial_state(np.array([[r0], [0], [0], [0], [v_tli], [0]]),</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                        P0=np.diag([(50 * KM) ** 2] * 3 + [0.01 ** 2] * 3))</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">return</span> m</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+</div>
+<div class="foldopen" id="foldopen00066" data-start="" data-end="">
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0abdac9e9ed78a3e22cd774c0e243547">   66</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0abdac9e9ed78a3e22cd774c0e243547">test_dims</a>(self):</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a>()</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        self.assertEqual((m.n, m.m, m.l), (6, 3, 0))</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+</div>
+<div class="foldopen" id="foldopen00070" data-start="" data-end="">
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#af51ee6fc88d023d64bbe9bb99ef4ba9a">   70</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#af51ee6fc88d023d64bbe9bb99ef4ba9a">test_free_return_ekf_tracks_truth</a>(self):</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        m = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7bb81f2c19fa524b7fb080e810cf3ea7">_translunar</a>()</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        full = m.sample(40 * 0.12, process_noise=<span class="keyword">False</span>)   <span class="comment"># 40 RK4 steps of the exact ellipse</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        self.assertEqual(full.xk.shape, (40, 6))</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        est = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">ExtendedKalmanFilter</a>(m).forward(full.zk)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;translunar EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="comment"># position fixes are at 5 km; the EKF estimate should stay well inside ~50 km</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        err_mm = np.linalg.norm(full.xk[:, :3] - est.xk[:, :3], axis=1)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        self.assertLess(np.median(err_mm) * 1e3, 50.0)   <span class="comment"># Mm -&gt; km</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+</div>
+<div class="foldopen" id="foldopen00080" data-start="" data-end="">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0b3af19b01161ebd350389a5af202f97">   80</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0b3af19b01161ebd350389a5af202f97">test_moon_track_shape</a>(self):</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a>()</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        moon = m.moon_track(np.arange(5) * m._dt)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        self.assertEqual(moon.shape, (5, 3))</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+</div>
+<div class="foldopen" id="foldopen00085" data-start="" data-end="">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#aec06d9ce3cf0ed9960f242082bacc8d1">   85</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#aec06d9ce3cf0ed9960f242082bacc8d1">test_legacy_aliases_resolve</a>(self):</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        self.assertIs(RocketLaunchModel, RocketAscentModel)</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        self.assertIs(RocketTakeoffModel, RocketLiftoffModel)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+</div>
+<div class="foldopen" id="foldopen00089" data-start="" data-end="">
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a525a9f60e2e0fe57ef2d8dea9953ed77">   89</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a525a9f60e2e0fe57ef2d8dea9953ed77">test_powered_ascent_with_control_input</a>(self):</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        launch = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html">RocketAscentModel</a>(dt_s=1.0, track_km=0.5)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        self.assertEqual((launch.n, launch.m, launch.l), (4, 2, 2))   <span class="comment"># state, obs, thrust control</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        N = 40</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        uk = np.zeros((N, 2))</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(N):</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            pitch = np.deg2rad(min(70.0, 0.45 * i))</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            uk[i] = [18.0 * np.cos(pitch), 18.0 * np.sin(pitch)]</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        launch.initial_state(np.array([[R_EARTH], [0], [0], [0]]),</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                             P0=np.diag([(1 * KM) ** 2, (1 * KM) ** 2, 0.01 ** 2, 0.01 ** 2]))</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        asc = launch.sample(N / launch.fs, uk=uk)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        est = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">ExtendedKalmanFilter</a>(launch).forward(asc.zk, uk)</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        self.assertEqual(asc.xk.shape, (N, 4))</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;rocket-launch EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="comment"># thrust must have lifted the vehicle off the pad</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        alt = np.linalg.norm(asc.xk[:, :2], axis=1) - R_EARTH</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        self.assertGreater(alt[-1], alt[0])</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="comment"># Rocket vertical liftoff — propellant burn (mass is a state)</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00111" data-start="" data-end="">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html">  111</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html">TestRocketLiftoff</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="foldopen" id="foldopen00113" data-start="" data-end="">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a96b239742d5c8a0230d4665ebfb2b190">  113</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a96b239742d5c8a0230d4665ebfb2b190">test_dims_and_figures_of_merit</a>(self):</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html">RocketLiftoffModel</a>(<span class="stringliteral">&quot;LIFTOFF&quot;</span>, m0=1000.0, m_dry=400.0, ve=2500.0, mdot=8.0)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        self.assertEqual((m.n, m.m, m.l), (3, 1, 0))   <span class="comment"># [h, v, m], observe altitude</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        self.assertAlmostEqual(m.thrust, 2500.0 * 8.0)            <span class="comment"># T = ve * mdot</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        self.assertAlmostEqual(m.burn_time, 600.0 / 8.0)          <span class="comment"># propellant / mdot</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        self.assertGreater(m.twr(), 1.0)                          <span class="comment"># it must leave the pad</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+</div>
+<div class="foldopen" id="foldopen00120" data-start="" data-end="">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a32fb98bce47453de2105090f2ab1cc9d">  120</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a32fb98bce47453de2105090f2ab1cc9d">test_liftoff_burns_fuel_and_ekf_recovers_velocity</a>(self):</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html">RocketLiftoffModel</a>(<span class="stringliteral">&quot;LIFTOFF&quot;</span>, fs=10.0, track_m=20.0)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        m.initial_state([0.0, 0.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        flight = m.sample(60.0, process_noise=<span class="keyword">False</span>)             <span class="comment"># clean burn</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        self.assertEqual(flight.xk.shape, (600, 3))</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="comment"># mass strictly decreases while burning; altitude rises</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        self.assertLess(flight.xk[-1, 2], m.m0)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        self.assertGreaterEqual(flight.xk[:, 2].min(), m.m_dry - 1e-6)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        self.assertGreater(flight.xk[-1, 0], flight.xk[0, 0])</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        est = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">ExtendedKalmanFilter</a>(m).forward(flight.zk)</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;rocket-takeoff EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="comment"># altitude tracking beats the raw radar fixes ...</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        rmse_filt = np.sqrt(np.mean((est.xk[:, 0] - flight.xk[:, 0]) ** 2))</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        rmse_radar = np.sqrt(np.mean((flight.zk.reshape(-1) - flight.xk[:, 0]) ** 2))</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        self.assertLess(rmse_filt, rmse_radar)</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        <span class="comment"># ... and the unmeasured climb rate is recovered to within a few m/s</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        rmse_vel = np.sqrt(np.mean((est.xk[:, 1] - flight.xk[:, 1]) ** 2))</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        self.assertLess(rmse_vel, 5.0)</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span> </div>
+</div>
+<div class="foldopen" id="foldopen00141" data-start="" data-end="">
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#ac12b04bc5b2d50f76d329385f1c77ed0">  141</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#ac12b04bc5b2d50f76d329385f1c77ed0">test_metrics_keys</a>(self):</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html">RocketLiftoffModel</a>(<span class="stringliteral">&quot;LIFTOFF&quot;</span>, fs=10.0)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        m.initial_state([0.0, 0.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        flight = m.sample(80.0, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        met = m.metrics(flight)</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keywordflow">for</span> key <span class="keywordflow">in</span> (<span class="stringliteral">&quot;burnout time [s]&quot;</span>, <span class="stringliteral">&quot;apogee [km]&quot;</span>, <span class="stringliteral">&quot;max accel [g]&quot;</span>, <span class="stringliteral">&quot;max-Q [kPa]&quot;</span>):</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            self.assertIn(key, met)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        self.assertGreater(met[<span class="stringliteral">&quot;apogee [km]&quot;</span>], 0.0)</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span><span class="comment"># Rocket vertical landing — the hoverslam / powered descent</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00154" data-start="" data-end="">
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html">  154</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html">TestRocketLanding</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="foldopen" id="foldopen00156" data-start="" data-end="">
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">  156</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">_model</a>(self, **kw):</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html">RocketLandingModel</a>(<span class="stringliteral">&quot;LANDING&quot;</span>, fs=10.0, track_m=20.0, **kw)</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        m.initial_state([1500.0, -50.0, m.m0], P0=np.diag([20.0 ** 2, 5.0 ** 2, 5.0 ** 2]))</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span> m</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
+</div>
+<div class="foldopen" id="foldopen00161" data-start="" data-end="">
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a1c2fd888094212db98c706f5dbc60f3d">  161</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a1c2fd888094212db98c706f5dbc60f3d">test_dims</a>(self):</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html">RocketLandingModel</a>(<span class="stringliteral">&quot;LANDING&quot;</span>)</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.assertEqual((m.n, m.m, m.l), (3, 1, 0))   <span class="comment"># [h, v, m], observe altitude</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
+</div>
+<div class="foldopen" id="foldopen00165" data-start="" data-end="">
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#ad56dc64fa2e9c26558f24f2c6c2434e5">  165</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#ad56dc64fa2e9c26558f24f2c6c2434e5">test_soft_touchdown_and_fuel_burn</a>(self):</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        m = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">_model</a>()</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        flight = m.sample(40.0, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        h, v, mass = flight.xk[:, 0], flight.xk[:, 1], flight.xk[:, 2]</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        <span class="comment"># the booster reaches the pad and arrives slowly (a hoverslam, not a crash)</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        self.assertLessEqual(h.min(), 1.0)</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        i_td = int(np.argmin(np.abs(h)))</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        self.assertLess(abs(v[i_td]), 2.0)</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        <span class="comment"># it burned propellant to do it, but never past the dry mass</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        self.assertLess(mass.min(), m.m0)</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        self.assertGreaterEqual(mass.min(), m.m_dry - 1e-6)</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+</div>
+<div class="foldopen" id="foldopen00178" data-start="" data-end="">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#adc995cd6b7945f2bf8031b9abe06beaf">  178</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#adc995cd6b7945f2bf8031b9abe06beaf">test_ekf_recovers_descent_rate_from_altitude</a>(self):</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        np.random.seed(1)</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        m = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">_model</a>()</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        flight = m.sample(40.0, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        est = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">ExtendedKalmanFilter</a>(m).forward(flight.zk)</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;rocket-landing EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        rmse_filt = np.sqrt(np.mean((est.xk[:, 0] - flight.xk[:, 0]) ** 2))</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        rmse_radar = np.sqrt(np.mean((flight.zk.reshape(-1) - flight.xk[:, 0]) ** 2))</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        self.assertLess(rmse_filt, rmse_radar)                   <span class="comment"># beats raw radar on altitude</span></div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        rmse_vel = np.sqrt(np.mean((est.xk[:, 1] - flight.xk[:, 1]) ** 2))</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        self.assertLess(rmse_vel, 5.0)                           <span class="comment"># recovers the unmeasured speed</span></div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+</div>
+<div class="foldopen" id="foldopen00190" data-start="" data-end="">
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a9003b8635133669a3fd534ad07228e83">  190</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a9003b8635133669a3fd534ad07228e83">test_metrics_keys</a>(self):</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        m = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">_model</a>()</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        flight = m.sample(40.0, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        met = m.metrics(flight)</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="keywordflow">for</span> key <span class="keywordflow">in</span> (<span class="stringliteral">&quot;ignition time [s]&quot;</span>, <span class="stringliteral">&quot;touchdown speed [m/s]&quot;</span>, <span class="stringliteral">&quot;propellant burned [kg]&quot;</span>):</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            self.assertIn(key, met)</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        self.assertGreater(met[<span class="stringliteral">&quot;propellant burned [kg]&quot;</span>], 0.0)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span><span class="comment"># Rocket 2-D powered descent — gimballed, lands upright, control input</span></div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00202" data-start="" data-end="">
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html">  202</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html">TestRocketDescent</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="foldopen" id="foldopen00204" data-start="" data-end="">
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a2cab0f060e460a328c5ed408aae8fd49">  204</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a2cab0f060e460a328c5ed408aae8fd49">_x0</a>(self):</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>        <span class="keywordflow">return</span> np.array([350.0, 2000.0, -20.0, -60.0, 0.05, 0.0, 1000.0])</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+</div>
+<div class="foldopen" id="foldopen00207" data-start="" data-end="">
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a1d82c80ee0f3f378e035fc93a0c0df4a">  207</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a1d82c80ee0f3f378e035fc93a0c0df4a">test_dims</a>(self):</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>        self.assertEqual(<a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>().l, 0)                 <span class="comment"># closed-loop autopilot</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>        self.assertEqual(<a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>(control=<span class="keyword">True</span>).l, 2)     <span class="comment"># [throttle, gimbal]</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>        self.assertEqual((<a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>().n, <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>().m), (7, 3))</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+</div>
+<div class="foldopen" id="foldopen00212" data-start="" data-end="">
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#ad50006f1fda27b6c758a8e2c2b7cecbc">  212</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#ad50006f1fda27b6c758a8e2c2b7cecbc">test_closed_loop_lands_upright_on_pad</a>(self):</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>(fs=20.0)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>        m.initial_state(self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a2cab0f060e460a328c5ed408aae8fd49">_x0</a>())</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        X = np.asarray(m.sample(70.0, process_noise=<span class="keyword">False</span>).xk)</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        i = int(np.argmin(np.abs(X[:, 1])))</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        self.assertLess(abs(X[i, 0]), 5.0)                          <span class="comment"># within 5 m of the pad</span></div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        self.assertLess(np.hypot(X[i, 2], X[i, 3]), 2.0)            <span class="comment"># soft touchdown</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        self.assertLess(np.degrees(abs(X[i, 4])), 3.0)             <span class="comment"># arrives upright</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span> </div>
+</div>
+<div class="foldopen" id="foldopen00221" data-start="" data-end="">
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a3792e79e17799fc068d6f8c0d7f6b5d2">  221</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a3792e79e17799fc068d6f8c0d7f6b5d2">test_control_input_program_and_ekf</a>(self):</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">RocketDescentModel</a>(fs=20.0, control=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        x0 = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a2cab0f060e460a328c5ed408aae8fd49">_x0</a>(); N = int(70 * m.fs)</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        uk, truth = m.autopilot(x0, N)</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        self.assertEqual(uk.shape, (N, 2))</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        self.assertTrue(np.all((uk[:, 0] &gt;= 0.0) &amp; (uk[:, 0] &lt;= 1.0)))            <span class="comment"># throttle in [0,1]</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        self.assertLessEqual(np.abs(uk[:, 1]).max(), m.gimbal_max + 1e-9)         <span class="comment"># gimbal bounded</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        self.assertGreater(np.abs(uk[:, 1]).max(), 0.0)                           <span class="comment"># it actually steers</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        m.initial_state(x0)</div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        s = m.sample(N / m.fs, uk=uk, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        est = m.filter(s.zk, uk)</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;rocket-descent EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        X = np.asarray(s.xk); i = int(np.argmin(np.abs(X[:, 1])))</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        self.assertLess(abs(X[i, 0]), 5.0)                          <span class="comment"># control program lands on pad</span></div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span><span class="comment"># Interplanetary — Lambert, Hohmann and the heliocentric N-body cruise</span></div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00240" data-start="" data-end="">
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html">  240</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html">TestInterplanetary</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="foldopen" id="foldopen00242" data-start="" data-end="">
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a661817d06b53bfe75bca417630637440">  242</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a661817d06b53bfe75bca417630637440">test_lambert_round_trip</a>(self):</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        <span class="comment"># A known transfer: solve Lambert, then check the arc reproduces the geometry.</span></div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>        r1, _ = body_state(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;2027-01-01&quot;</span>)</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        r2, _ = body_state(<span class="stringliteral">&quot;mars&quot;</span>,  <span class="stringliteral">&quot;2027-09-01&quot;</span>)</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        v1, v2 = lambert(r1, r2, 243 * DAY, mu=GM_SUN)</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keywordflow">for</span> v <span class="keywordflow">in</span> (v1, v2):                                          <span class="comment"># heliocentric speeds are sane</span></div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            self.assertTrue(5.0 &lt; np.linalg.norm(v) &lt; 60.0)</div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+</div>
+<div class="foldopen" id="foldopen00250" data-start="" data-end="">
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#ac2bbdd165e42beda5d3fc5ce94a787da">  250</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#ac2bbdd165e42beda5d3fc5ce94a787da">test_hohmann_earth_mars</a>(self):</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        h = hohmann_transfer(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=<span class="stringliteral">&quot;2027-01-01&quot;</span>)</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        self.assertTrue(np.isfinite(h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>]) <span class="keywordflow">and</span> h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>] &gt; 0)</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        self.assertTrue(150.0 &lt; h[<span class="stringliteral">&quot;tof_days&quot;</span>] &lt; 400.0)             <span class="comment"># Earth→Mars ballpark</span></div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
+</div>
+<div class="foldopen" id="foldopen00255" data-start="" data-end="">
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#acf2630420409ef10d6a4e2dbd82f9f59">  255</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#acf2630420409ef10d6a4e2dbd82f9f59">test_hohmann_uses_semi_major_axes</a>(self):</div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="comment"># The estimate must not depend on where the planets are on the day: the orbit</span></div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <span class="comment"># radii are semi-major axes, so the textbook figures come out at any epoch.</span></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>        <span class="keywordflow">for</span> epoch <span class="keywordflow">in</span> (<span class="stringliteral">&quot;2026-11-11&quot;</span>, <span class="stringliteral">&quot;2027-08-01&quot;</span>):</div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>            h = hohmann_transfer(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=epoch)</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;a2_AU&quot;</span>], 1.524, delta=0.005)</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;dv_total_kms&quot;</span>], 5.6, delta=0.1)</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;tof_days&quot;</span>], 259.0, delta=3.0)</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>            self.assertAlmostEqual(h[<span class="stringliteral">&quot;synodic_period_days&quot;</span>], 780.0, delta=5.0)</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+</div>
+<div class="foldopen" id="foldopen00265" data-start="" data-end="">
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a2c387fb924155031642c489aad8dad2a">  265</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a2c387fb924155031642c489aad8dad2a">test_chain_lambert_separates_gravity_from_burn</a>(self):</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        <span class="keyword">from</span> astropy.time <span class="keyword">import</span> Time</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a> <span class="keyword">import</span> chain_lambert</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        sequence = [<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>]</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        dates = [Time(t) <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (<span class="stringliteral">&quot;1997-10-15 08:43&quot;</span>, <span class="stringliteral">&quot;1998-04-26 13:52&quot;</span>,</div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>                                   <span class="stringliteral">&quot;1999-06-24 20:30&quot;</span>, <span class="stringliteral">&quot;1999-08-18 03:28&quot;</span>)]</div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>        single = chain_lambert(sequence, dates)</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>        self.assertEqual(single[0][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 0.0)            <span class="comment"># the launch is not a flyby</span></div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>        <span class="keywordflow">for</span> before, leg <span class="keywordflow">in</span> zip(single, single[1:]):</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>            <span class="comment"># the planet turns the velocity for free; the burn is only the speed mismatch</span></div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>            self.assertGreater(leg[<span class="stringliteral">&quot;dv_gravity_kms&quot;</span>], leg[<span class="stringliteral">&quot;dv_burn_kms&quot;</span>])</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>            self.assertAlmostEqual(leg[<span class="stringliteral">&quot;dv_burn_kms&quot;</span>],</div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>                                   abs(leg[<span class="stringliteral">&quot;v_inf_dep_kms&quot;</span>] - before[<span class="stringliteral">&quot;v_inf_arr_kms&quot;</span>]), places=9)</div>
+<div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span>        <span class="comment"># A deep-space manoeuvre on the Venus-Venus leg makes both Venus flybys free.</span></div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>        legs = chain_lambert(sequence, dates, dsm={1: Time(<span class="stringliteral">&quot;1998-12-03 06:45&quot;</span>)})</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span>        self.assertLess(legs[1][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 1e-5)</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        self.assertLess(legs[2][<span class="stringliteral">&quot;dv_burn_kms&quot;</span>], 1e-5)</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>        self.assertTrue(0.3 &lt; legs[1][<span class="stringliteral">&quot;dv_dsm_kms&quot;</span>] &lt; 0.8)         <span class="comment"># Cassini&#39;s was about 0.45 km/s</span></div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>        self.assertTrue(100.0 &lt; legs[1][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span>        self.assertTrue(100.0 &lt; legs[2][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
+<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span> </div>
+</div>
+<div class="foldopen" id="foldopen00286" data-start="" data-end="">
+<div class="line"><a id="l00286" name="l00286"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a30df6b605dd6700b8a6c613d7e3e74e4">  286</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a30df6b605dd6700b8a6c613d7e3e74e4">test_two_body_cruise_ekf</a>(self):</div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>        <span class="comment"># No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.</span></div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model.html">InterplanetaryModel</a>(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=<span class="keywordtype">None</span>, dt_s=43200.0, track_Mm=0.02)</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> D_SUN</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        x0 = np.array([[D_SUN], [0], [0], [0], [np.sqrt(GM_SUN / D_SUN)], [0]])</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        m.initial_state(x0)</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>        s = m.sample(80 * DAY, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        est = m.filter(s.zk)</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;interplanetary EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>        self.assertEqual(np.asarray(s.xk).shape[1], 6)</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span> </div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment"># Car straight-line speed test</span></div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00301" data-start="" data-end="">
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html">  301</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html">TestCarSpeed</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="foldopen" id="foldopen00303" data-start="" data-end="">
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#ad12031d8f4c487ccc8a1b15b6322c377">  303</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#ad12031d8f4c487ccc8a1b15b6322c377">test_dims</a>(self):</div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>        car = <a class="code hl_class" href="classmodules_1_1apps_1_1vehicles_1_1speed_1_1_car_speed_model.html">CarSpeedModel</a>(<span class="stringliteral">&quot;CAR&quot;</span>, fs=20.0)</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>        self.assertEqual((car.n, car.m, car.l), (2, 1, 0))   <span class="comment"># [s, v], observe position</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
+</div>
+<div class="foldopen" id="foldopen00307" data-start="" data-end="">
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a375d02766162ebd4cb51c2c5ace5a292">  307</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a375d02766162ebd4cb51c2c5ace5a292">test_ekf_beats_naive_differencing</a>(self):</div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span>        car = <a class="code hl_class" href="classmodules_1_1apps_1_1vehicles_1_1speed_1_1_car_speed_model.html">CarSpeedModel</a>(<span class="stringliteral">&quot;CAR&quot;</span>, fs=20.0, gps_uncertainty=0.5)</div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span>        car.initial_state([0.0, 0.0], P0=np.diag([0.5 ** 2, 0.5 ** 2]))</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno">  311</span>        run = car.sample(10.0)</div>
+<div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>        self.assertEqual(run.xk.shape, (200, 2))</div>
+<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>        <span class="comment"># the car actually accelerates off the line</span></div>
+<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>        self.assertGreater(run.xk[-1, 1], run.xk[0, 1])</div>
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span> </div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>        est = <a class="code hl_class" href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">ExtendedKalmanFilter</a>(car).forward(run.zk)</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(est.xk, <span class="stringliteral">&quot;car EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>        v_true = run.xk[:, 1]</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>        v_naive = np.gradient(run.zk.reshape(-1), car._dt)       <span class="comment"># differentiate raw GPS</span></div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>        rmse_filt = np.sqrt(np.mean((est.xk[:, 1] - v_true) ** 2))</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>        rmse_naive = np.sqrt(np.mean((v_naive - v_true) ** 2))</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>        self.assertLess(rmse_filt, rmse_naive)</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span> </div>
+</div>
+<div class="foldopen" id="foldopen00324" data-start="" data-end="">
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a0f8e003dfb3e5bf8d23bd0557ae9c768">  324</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a0f8e003dfb3e5bf8d23bd0557ae9c768">test_metrics_zero_to_hundred</a>(self):</div>
+<div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        car = <a class="code hl_class" href="classmodules_1_1apps_1_1vehicles_1_1speed_1_1_car_speed_model.html">CarSpeedModel</a>(<span class="stringliteral">&quot;CAR&quot;</span>, fs=20.0)</div>
+<div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        car.initial_state([0.0, 0.0], P0=np.diag([0.5 ** 2, 0.5 ** 2]))</div>
+<div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span>        run = car.sample(12.0, process_noise=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span>        met = car.metrics(run)</div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span>        <span class="comment"># a 1500 kg / 150 kW car reaches 100 km/h in a handful of seconds</span></div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span>        self.assertIsNotNone(met[<span class="stringliteral">&quot;0-100 km/h [s]&quot;</span>])</div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span>        self.assertTrue(2.0 &lt; met[<span class="stringliteral">&quot;0-100 km/h [s]&quot;</span>] &lt; 12.0)</div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span>        self.assertGreater(met[<span class="stringliteral">&quot;top speed [km/h]&quot;</span>], 100.0)</div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span> </div>
+<div class="line"><a id="l00335" name="l00335"></a><span class="lineno">  335</span> </div>
+<div class="line"><a id="l00336" name="l00336"></a><span class="lineno">  336</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00337" name="l00337"></a><span class="lineno">  337</span><span class="comment"># Gravitational-wave polarization EKF</span></div>
+<div class="line"><a id="l00338" name="l00338"></a><span class="lineno">  338</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00339" data-start="" data-end="">
+<div class="line"><a id="l00339" name="l00339"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_polarization.html">  339</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_polarization.html">TestPolarization</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00340" name="l00340"></a><span class="lineno">  340</span> </div>
+<div class="foldopen" id="foldopen00341" data-start="" data-end="">
+<div class="line"><a id="l00341" name="l00341"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a2c157e9f233835f677ea2b29f2ca71fa">  341</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a2c157e9f233835f677ea2b29f2ca71fa">_signal</a>(self, fs=100.0, T=8.0, seed=0):</div>
+<div class="line"><a id="l00342" name="l00342"></a><span class="lineno">  342</span>        t = np.arange(int(T * fs)) / fs</div>
+<div class="line"><a id="l00343" name="l00343"></a><span class="lineno">  343</span>        a = 1.0 + 0.1 * np.cos(2 * np.pi * 0.2 * t)</div>
+<div class="line"><a id="l00344" name="l00344"></a><span class="lineno">  344</span>        psi = 2 * np.pi * 1.0 * t</div>
+<div class="line"><a id="l00345" name="l00345"></a><span class="lineno">  345</span>        theta = (np.pi / 2) * np.ones_like(t)</div>
+<div class="line"><a id="l00346" name="l00346"></a><span class="lineno">  346</span>        phi = np.pi * np.ones_like(t)</div>
+<div class="line"><a id="l00347" name="l00347"></a><span class="lineno">  347</span>        z = np.array([jones_signal(a[k], psi[k], theta[k], phi[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(t))])</div>
+<div class="line"><a id="l00348" name="l00348"></a><span class="lineno">  348</span>        zk = np.column_stack([z[:, 0].real, z[:, 0].imag, z[:, 1].real, z[:, 1].imag])</div>
+<div class="line"><a id="l00349" name="l00349"></a><span class="lineno">  349</span>        rng = np.random.RandomState(seed)</div>
+<div class="line"><a id="l00350" name="l00350"></a><span class="lineno">  350</span>        zk = zk + 0.05 * rng.randn(*zk.shape)</div>
+<div class="line"><a id="l00351" name="l00351"></a><span class="lineno">  351</span>        <span class="keywordflow">return</span> t, a, psi, theta, phi, zk</div>
+<div class="line"><a id="l00352" name="l00352"></a><span class="lineno">  352</span> </div>
+</div>
+<div class="foldopen" id="foldopen00353" data-start="" data-end="">
+<div class="line"><a id="l00353" name="l00353"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a6b7cf38a3afd21b0b1e63512ecf69b14">  353</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a6b7cf38a3afd21b0b1e63512ecf69b14">test_dims_and_jones_shape</a>(self):</div>
+<div class="line"><a id="l00354" name="l00354"></a><span class="lineno">  354</span>        m = PolarizationModel(<span class="stringliteral">&quot;gw&quot;</span>, fs=100.0)</div>
+<div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>        self.assertEqual((m.n, m.m, m.l), (8, 4, 0))</div>
+<div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>        self.assertEqual(jones_signal(1.0, 0.0, np.pi / 2, 0.0).shape, (2,))</div>
+<div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span> </div>
+</div>
+<div class="foldopen" id="foldopen00358" data-start="" data-end="">
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a0044cc5cb52cc26703baf2653eafb816">  358</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a0044cc5cb52cc26703baf2653eafb816">test_filter_recovers_amplitude_and_reconstructs</a>(self):</div>
+<div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>        t, a, psi, theta, phi, zk = self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a2c157e9f233835f677ea2b29f2ca71fa">_signal</a>()</div>
+<div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>        m = PolarizationModel(<span class="stringliteral">&quot;gw&quot;</span>, fs=100.0, sigma_n=0.5)</div>
+<div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>        m.initial_state([np.log(a[0]), 0.0, psi[0], 2 * np.pi * 1.0,</div>
+<div class="line"><a id="l00362" name="l00362"></a><span class="lineno">  362</span>                         theta[0], 0.0, phi[0], 0.0])</div>
+<div class="line"><a id="l00363" name="l00363"></a><span class="lineno">  363</span>        rec = m.filter(zk, smooth=<span class="keyword">False</span>)</div>
+<div class="line"><a id="l00364" name="l00364"></a><span class="lineno">  364</span>        self.assertEqual(rec.xk.shape, (len(t), 8))</div>
+<div class="line"><a id="l00365" name="l00365"></a><span class="lineno">  365</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(rec.xk, <span class="stringliteral">&quot;polarization xk&quot;</span>)</div>
+<div class="line"><a id="l00366" name="l00366"></a><span class="lineno">  366</span>        p = m.physical_parameters(rec)</div>
+<div class="line"><a id="l00367" name="l00367"></a><span class="lineno">  367</span>        self.assertAlmostEqual(float(p[<span class="stringliteral">&quot;amplitude&quot;</span>][len(t) // 2:].mean()), 1.0, delta=0.2)</div>
+<div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>        z1 = m.reconstruct_component(rec)</div>
+<div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>        self.assertEqual(z1.shape, (len(t),))</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(z1.real, <span class="stringliteral">&quot;z1 reconstruction&quot;</span>)</div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span> </div>
+<div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span> </div>
+<div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span><span class="comment"># Power grid harmonic tracker</span></div>
+<div class="line"><a id="l00375" name="l00375"></a><span class="lineno">  375</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00376" data-start="" data-end="">
+<div class="line"><a id="l00376" name="l00376"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_power_grid.html">  376</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_power_grid.html">TestPowerGrid</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00377" name="l00377"></a><span class="lineno">  377</span> </div>
+<div class="foldopen" id="foldopen00378" data-start="" data-end="">
+<div class="line"><a id="l00378" name="l00378"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_power_grid.html#a4dea0b9f70fc32527784da853551e8d5">  378</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_power_grid.html#a4dea0b9f70fc32527784da853551e8d5">test_filter_reconstruct_and_even_harmonic_suppression</a>(self):</div>
+<div class="line"><a id="l00379" name="l00379"></a><span class="lineno">  379</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00380" name="l00380"></a><span class="lineno">  380</span>        fs, N = 1024, 1024</div>
+<div class="line"><a id="l00381" name="l00381"></a><span class="lineno">  381</span>        t = np.arange(N) / fs</div>
+<div class="line"><a id="l00382" name="l00382"></a><span class="lineno">  382</span>        peak = 230.0 * np.sqrt(2.0)</div>
+<div class="line"><a id="l00383" name="l00383"></a><span class="lineno">  383</span>        <span class="comment"># Clean odd-harmonic mains: fundamental + a small 3rd harmonic, NO 2nd harmonic.</span></div>
+<div class="line"><a id="l00384" name="l00384"></a><span class="lineno">  384</span>        v = peak * np.sin(2 * np.pi * 50 * t) + 0.1 * peak * np.sin(2 * np.pi * 150 * t)</div>
+<div class="line"><a id="l00385" name="l00385"></a><span class="lineno">  385</span>        v_noisy = v + 0.5 * np.random.randn(N)</div>
+<div class="line"><a id="l00386" name="l00386"></a><span class="lineno">  386</span> </div>
+<div class="line"><a id="l00387" name="l00387"></a><span class="lineno">  387</span>        pg = PowerGridStateModel(<span class="stringliteral">&quot;L1&quot;</span>, f0=50.0, harmonics=3, fs=fs)</div>
+<div class="line"><a id="l00388" name="l00388"></a><span class="lineno">  388</span>        rec = pg.filter(v_noisy, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>        self.assertEqual(rec.xk.shape, (N, 6))   <span class="comment"># 3 harmonics x [Re, Im]</span></div>
+<div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span> </div>
+<div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>        amp, sigma = pg.harmonic_envelope(rec)</div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>        self.assertEqual(amp.shape, (N, 3))</div>
+<div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>        tail = slice(N // 2, <span class="keywordtype">None</span>)</div>
+<div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        h1, h2, h3 = (amp[tail, k].mean() <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(3))</div>
+<div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>        self.assertAlmostEqual(h1, peak, delta=0.1 * peak)   <span class="comment"># fundamental recovered</span></div>
+<div class="line"><a id="l00396" name="l00396"></a><span class="lineno">  396</span>        self.assertLess(h2, 0.1 * h1)                        <span class="comment"># absent even harmonic ~ 0</span></div>
+<div class="line"><a id="l00397" name="l00397"></a><span class="lineno">  397</span>        self.assertGreater(h3, h2)                           <span class="comment"># present 3rd harmonic above the even</span></div>
+<div class="line"><a id="l00398" name="l00398"></a><span class="lineno">  398</span> </div>
+<div class="line"><a id="l00399" name="l00399"></a><span class="lineno">  399</span>        v_hat = pg.reconstruct_voltage(rec)</div>
+<div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span>        self.assertEqual(v_hat.shape, (N,))</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno">  401</span>        rms_err = np.sqrt(np.mean((v_hat[tail] - v[tail]) ** 2))</div>
+<div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>        self.assertLess(rms_err, 0.1 * peak)                 <span class="comment"># reconstruction tracks the clean wave</span></div>
+<div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span> </div>
+<div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span> </div>
+<div class="line"><a id="l00405" name="l00405"></a><span class="lineno">  405</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00406" name="l00406"></a><span class="lineno">  406</span><span class="comment"># Ballistic EKF (nonlinear gravity/drag)</span></div>
+<div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00408" data-start="" data-end="">
+<div class="line"><a id="l00408" name="l00408"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html">  408</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html">TestBallisticEKF</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span> </div>
+<div class="foldopen" id="foldopen00410" data-start="" data-end="">
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a354df5a21c0e3bbead70d9f4578fd6d9">  410</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a354df5a21c0e3bbead70d9f4578fd6d9">test_dims_order3</a>(self):</div>
+<div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=64)</div>
+<div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span>        self.assertEqual((m.n, m.m), (9, 3))     <span class="comment"># [p,v,a] per axis, observe position</span></div>
+<div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span> </div>
+</div>
+<div class="foldopen" id="foldopen00414" data-start="" data-end="">
+<div class="line"><a id="l00414" name="l00414"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a4c86a437f3a65da2cc3a9917bbafc9cc">  414</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a4c86a437f3a65da2cc3a9917bbafc9cc">test_sample_then_filter_beats_measurement</a>(self):</div>
+<div class="line"><a id="l00415" name="l00415"></a><span class="lineno">  415</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00416" name="l00416"></a><span class="lineno">  416</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=64,</div>
+<div class="line"><a id="l00417" name="l00417"></a><span class="lineno">  417</span>                           measurement_uncertainty=50.0, process_uncertainty=0.5)</div>
+<div class="line"><a id="l00418" name="l00418"></a><span class="lineno">  418</span>        <span class="comment"># axis-major state [px,vx,ax, py,vy,ay, pz,vz,az]</span></div>
+<div class="line"><a id="l00419" name="l00419"></a><span class="lineno">  419</span>        m.initial_state([0, 120, 0, 0, 80, 0, 1000, 0, -9.81])</div>
+<div class="line"><a id="l00420" name="l00420"></a><span class="lineno">  420</span>        truth = m.sample(1.0)</div>
+<div class="line"><a id="l00421" name="l00421"></a><span class="lineno">  421</span>        rec = m.filter(truth.zk)</div>
+<div class="line"><a id="l00422" name="l00422"></a><span class="lineno">  422</span>        self.assertEqual(rec.xk.shape, (64, 9))</div>
+<div class="line"><a id="l00423" name="l00423"></a><span class="lineno">  423</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(rec.xk, <span class="stringliteral">&quot;ballistic EKF xk&quot;</span>)</div>
+<div class="line"><a id="l00424" name="l00424"></a><span class="lineno">  424</span>        pos_idx = [0, 3, 6]</div>
+<div class="line"><a id="l00425" name="l00425"></a><span class="lineno">  425</span>        rmse_filt = np.sqrt(np.mean((rec.xk[:, pos_idx] - truth.xk[:, pos_idx]) ** 2))</div>
+<div class="line"><a id="l00426" name="l00426"></a><span class="lineno">  426</span>        rmse_meas = np.sqrt(np.mean((truth.zk - truth.xk[:, pos_idx]) ** 2))</div>
+<div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        self.assertLess(rmse_filt, rmse_meas)</div>
+<div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span> </div>
+</div>
+<div class="foldopen" id="foldopen00429" data-start="" data-end="">
+<div class="line"><a id="l00429" name="l00429"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab9f6c2ff45f1c203902509f62bcfc07c">  429</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab9f6c2ff45f1c203902509f62bcfc07c">_orbit_step_error</a>(self, substeps):</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>        <span class="stringliteral">&quot;&quot;&quot;Position error, m, of one 86.4 s propagation on a circular orbit (r = 5,600 km</span></div>
+<div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span><span class="stringliteral">        round GM = 1.06252e14 m^3/s^2, a 2.2 h period) against the exact circle.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>        G, gm, r, dt = 6.674e-11, 1.06252e14, 5.6e6, 86.4</div>
+<div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span>        v = np.sqrt(gm / r)</div>
+<div class="line"><a id="l00434" name="l00434"></a><span class="lineno">  434</span>        m = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=1.0 / dt, G=G, M=gm / G, g=<span class="keywordtype">None</span>, c_drag=0,</div>
+<div class="line"><a id="l00435" name="l00435"></a><span class="lineno">  435</span>                           substeps=substeps)</div>
+<div class="line"><a id="l00436" name="l00436"></a><span class="lineno">  436</span>        x = np.array([r, 0, -gm / r**2, 0, 0, 0, 0, v, 0], dtype=float)</div>
+<div class="line"><a id="l00437" name="l00437"></a><span class="lineno">  437</span>        nxt = m.f(x).reshape(-1)</div>
+<div class="line"><a id="l00438" name="l00438"></a><span class="lineno">  438</span>        theta = v / r * dt</div>
+<div class="line"><a id="l00439" name="l00439"></a><span class="lineno">  439</span>        exact = np.array([r * np.cos(theta), 0.0, r * np.sin(theta)])</div>
+<div class="line"><a id="l00440" name="l00440"></a><span class="lineno">  440</span>        <span class="keywordflow">return</span> float(np.linalg.norm(nxt[[0, 3, 6]] - exact))</div>
+<div class="line"><a id="l00441" name="l00441"></a><span class="lineno">  441</span> </div>
+</div>
+<div class="foldopen" id="foldopen00442" data-start="" data-end="">
+<div class="line"><a id="l00442" name="l00442"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a5468cc55950a7db0fcfb97f07f2f2b19">  442</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a5468cc55950a7db0fcfb97f07f2f2b19">test_orbit_substeps_follow_the_orbit</a>(self):</div>
+<div class="line"><a id="l00443" name="l00443"></a><span class="lineno">  443</span>        <span class="comment"># The model&#39;s integrator (RK4) follows a 2.2 h orbit sampled every 86 s to</span></div>
+<div class="line"><a id="l00444" name="l00444"></a><span class="lineno">  444</span>        <span class="comment"># under a metre in one step; the hand-written Taylor step it replaced was 283 m</span></div>
+<div class="line"><a id="l00445" name="l00445"></a><span class="lineno">  445</span>        <span class="comment"># off. More steps are more accurate still: fourth order, so 16 steps gain</span></div>
+<div class="line"><a id="l00446" name="l00446"></a><span class="lineno">  446</span>        <span class="comment"># far more than a factor of 16.</span></div>
+<div class="line"><a id="l00447" name="l00447"></a><span class="lineno">  447</span>        one, auto, sixteen = (self.<a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab9f6c2ff45f1c203902509f62bcfc07c">_orbit_step_error</a>(s) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> (1, <span class="stringliteral">&quot;auto&quot;</span>, 16))</div>
+<div class="line"><a id="l00448" name="l00448"></a><span class="lineno">  448</span>        self.assertLess(one, 1.0)</div>
+<div class="line"><a id="l00449" name="l00449"></a><span class="lineno">  449</span>        self.assertLess(auto, one / 100.0)</div>
+<div class="line"><a id="l00450" name="l00450"></a><span class="lineno">  450</span>        self.assertLess(sixteen, auto)</div>
+<div class="line"><a id="l00451" name="l00451"></a><span class="lineno">  451</span> </div>
+</div>
+<div class="foldopen" id="foldopen00452" data-start="" data-end="">
+<div class="line"><a id="l00452" name="l00452"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a8b78980bd821269b060c660101bfef8e">  452</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a8b78980bd821269b060c660101bfef8e">test_the_integrator_is_selectable</a>(self):</div>
+<div class="line"><a id="l00453" name="l00453"></a><span class="lineno">  453</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a> <span class="keyword">import</span> KalmanIntegratorKind</div>
+<div class="line"><a id="l00454" name="l00454"></a><span class="lineno">  454</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a> <span class="keyword">import</span> DormandPrinceIntegrator</div>
+<div class="line"><a id="l00455" name="l00455"></a><span class="lineno">  455</span>        G, gm, r, dt = 6.674e-11, 1.06252e14, 5.6e6, 86.4</div>
+<div class="line"><a id="l00456" name="l00456"></a><span class="lineno">  456</span>        v = np.sqrt(gm / r)</div>
+<div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>        x = np.array([r, 0, -gm / r**2, 0, 0, 0, 0, v, 0], dtype=float)</div>
+<div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>        theta = v / r * dt</div>
+<div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>        exact = np.array([r * np.cos(theta), 0.0, r * np.sin(theta)])</div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>        errors = {}</div>
+<div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span>        <span class="keywordflow">for</span> label, integrator <span class="keywordflow">in</span> ((<span class="stringliteral">&quot;euler&quot;</span>, KalmanIntegratorKind.EULER), (<span class="stringliteral">&quot;rk4&quot;</span>, KalmanIntegratorKind.RK4),</div>
+<div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>                                  (<span class="stringliteral">&quot;dp&quot;</span>, DormandPrinceIntegrator(rtol=1e-10, atol=1e-6))):</div>
+<div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>            m = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=1.0 / dt, G=G, M=gm / G, g=<span class="keywordtype">None</span>, c_drag=0, integrator=integrator)</div>
+<div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span>            errors[label] = float(np.linalg.norm(m.f(x).reshape(-1)[[0, 3, 6]] - exact))</div>
+<div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span>        self.assertGreater(errors[<span class="stringliteral">&quot;euler&quot;</span>], 1000.0)          <span class="comment"># first order: kilometres off</span></div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span>        self.assertLess(errors[<span class="stringliteral">&quot;rk4&quot;</span>], 1.0)</div>
+<div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span>        self.assertLess(errors[<span class="stringliteral">&quot;dp&quot;</span>], 1e-3)</div>
+<div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span> </div>
+</div>
+<div class="foldopen" id="foldopen00469" data-start="" data-end="">
+<div class="line"><a id="l00469" name="l00469"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab92b3ff63039ed549bd7bff0fa51ef04">  469</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab92b3ff63039ed549bd7bff0fa51ef04">test_substeps_one_is_the_default</a>(self):</div>
+<div class="line"><a id="l00470" name="l00470"></a><span class="lineno">  470</span>        m1 = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=64)</div>
+<div class="line"><a id="l00471" name="l00471"></a><span class="lineno">  471</span>        m2 = <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=64, substeps=1)</div>
+<div class="line"><a id="l00472" name="l00472"></a><span class="lineno">  472</span>        x = np.array([0, 120, 0, 0, 80, 0, 1000, 0, -9.81], dtype=float)</div>
+<div class="line"><a id="l00473" name="l00473"></a><span class="lineno">  473</span>        np.testing.assert_array_equal(m1.f(x), m2.f(x))</div>
+<div class="line"><a id="l00474" name="l00474"></a><span class="lineno">  474</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00475" name="l00475"></a><span class="lineno">  475</span>            <a class="code hl_class" href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">BallisticModel</a>(<span class="stringliteral">&quot;XYZ&quot;</span>, order=3, fs=64, substeps=0)</div>
+<div class="line"><a id="l00476" name="l00476"></a><span class="lineno">  476</span> </div>
+<div class="line"><a id="l00477" name="l00477"></a><span class="lineno">  477</span> </div>
+<div class="line"><a id="l00478" name="l00478"></a><span class="lineno">  478</span><span class="comment"># ===========================================================================</span></div>
+<div class="line"><a id="l00479" name="l00479"></a><span class="lineno">  479</span><span class="comment"># Oscillator family variants</span></div>
+<div class="line"><a id="l00480" name="l00480"></a><span class="lineno">  480</span><span class="comment"># ===========================================================================</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00481" data-start="" data-end="">
+<div class="line"><a id="l00481" name="l00481"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html">  481</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html">TestOscillatorVariants</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00482" name="l00482"></a><span class="lineno">  482</span> </div>
+<div class="foldopen" id="foldopen00483" data-start="" data-end="">
+<div class="line"><a id="l00483" name="l00483"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#a8d1537304f578e8598a4309feb88808e">  483</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#a8d1537304f578e8598a4309feb88808e">test_harmonic_oscillator_dims</a>(self):</div>
+<div class="line"><a id="l00484" name="l00484"></a><span class="lineno">  484</span>        m = HarmonicOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, f0=10.0, fc=10.0, dfc=20.0, n_harmonics=3, fs=256)</div>
+<div class="line"><a id="l00485" name="l00485"></a><span class="lineno">  485</span>        self.assertEqual(m.n, 6)     <span class="comment"># 3 partials x [Re, Im]</span></div>
+<div class="line"><a id="l00486" name="l00486"></a><span class="lineno">  486</span>        self.assertEqual(m.m, 2)</div>
+<div class="line"><a id="l00487" name="l00487"></a><span class="lineno">  487</span> </div>
+</div>
+<div class="foldopen" id="foldopen00488" data-start="" data-end="">
+<div class="line"><a id="l00488" name="l00488"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#ac25441548dbba49287dc29e0bd85775b">  488</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#ac25441548dbba49287dc29e0bd85775b">test_inharmonic_partials_stretch_with_B</a>(self):</div>
+<div class="line"><a id="l00489" name="l00489"></a><span class="lineno">  489</span>        harm = HarmonicOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, f0=10.0, fc=30.0, dfc=40.0, n_harmonics=3, fs=256)</div>
+<div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span>        inh = InharmonicOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, f0=10.0, fc=30.0, dfc=40.0,</div>
+<div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>                                        n_harmonics=3, B=0.01, fs=256)</div>
+<div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>        <span class="comment"># inharmonicity pushes higher partials sharp of the exact harmonic ladder</span></div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>        self.assertGreater(max(inh.frequencies), max(harm.frequencies))</div>
+<div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span> </div>
+</div>
+<div class="foldopen" id="foldopen00495" data-start="" data-end="">
+<div class="line"><a id="l00495" name="l00495"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#afdcec801bd76bdb5d007373c42c151cb">  495</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#afdcec801bd76bdb5d007373c42c151cb">test_phasor_oscillator_filter</a>(self):</div>
+<div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>        np.random.seed(0)</div>
+<div class="line"><a id="l00497" name="l00497"></a><span class="lineno">  497</span>        fs, N = 1024, 1024</div>
+<div class="line"><a id="l00498" name="l00498"></a><span class="lineno">  498</span>        t = np.arange(N) / fs</div>
+<div class="line"><a id="l00499" name="l00499"></a><span class="lineno">  499</span>        v = np.cos(2 * np.pi * 50 * t) + 0.5 * np.cos(2 * np.pi * 100 * t)</div>
+<div class="line"><a id="l00500" name="l00500"></a><span class="lineno">  500</span>        m = PhasorOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, [50.0, 100.0], fs=fs)</div>
+<div class="line"><a id="l00501" name="l00501"></a><span class="lineno">  501</span>        self.assertEqual((m.n, m.m), (4, 1))</div>
+<div class="line"><a id="l00502" name="l00502"></a><span class="lineno">  502</span>        rec = m.filter(v + 0.05 * np.random.randn(N))</div>
+<div class="line"><a id="l00503" name="l00503"></a><span class="lineno">  503</span>        self.assertEqual(rec.xk.shape, (N, 4))</div>
+<div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(rec.xk, <span class="stringliteral">&quot;phasor xk&quot;</span>)</div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span> </div>
+</div>
+<div class="foldopen" id="foldopen00506" data-start="" data-end="">
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno"><a class="line" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#abff969b93373ef8cee9f16e2c946ee44">  506</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#abff969b93373ef8cee9f16e2c946ee44">test_analytic_oscillator_tracks_envelope</a>(self):</div>
+<div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>        <span class="comment"># AnalyticOscillatorModel observes the 2-column analytic signal [Re, Im];</span></div>
+<div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>        <span class="comment"># sample() emits that directly, so round-trip sample -&gt; filter like the notebook.</span></div>
+<div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span>        m = AnalyticOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, sample_rate=256, w0=np.pi / 3, wc=np.pi / 3,</div>
+<div class="line"><a id="l00510" name="l00510"></a><span class="lineno">  510</span>                                    Q=10000, measurement_uncertainty=2.0,</div>
+<div class="line"><a id="l00511" name="l00511"></a><span class="lineno">  511</span>                                    process_uncertainty=0.01, random_seed=42)</div>
+<div class="line"><a id="l00512" name="l00512"></a><span class="lineno">  512</span>        self.assertEqual((m.n, m.m), (2, 2))</div>
+<div class="line"><a id="l00513" name="l00513"></a><span class="lineno">  513</span>        m.initial_state([10.0, 0.0])</div>
+<div class="line"><a id="l00514" name="l00514"></a><span class="lineno">  514</span>        sample = m.sample(8.0)</div>
+<div class="line"><a id="l00515" name="l00515"></a><span class="lineno">  515</span>        rec = m.filter(sample.zk, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00516" name="l00516"></a><span class="lineno">  516</span>        self.assertEqual(rec.xk.shape, (sample.xk.shape[0], 2))</div>
+<div class="line"><a id="l00517" name="l00517"></a><span class="lineno">  517</span>        <a class="code hl_function" href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">_no_nan_inf</a>(rec.xk, <span class="stringliteral">&quot;analytic oscillator xk&quot;</span>)</div>
+<div class="line"><a id="l00518" name="l00518"></a><span class="lineno">  518</span>        <span class="comment"># recovered envelope amplitude stays positive and bounded near the seeded ~10</span></div>
+<div class="line"><a id="l00519" name="l00519"></a><span class="lineno">  519</span>        env = np.hypot(rec.xk[:, 0], rec.xk[:, 1])</div>
+<div class="line"><a id="l00520" name="l00520"></a><span class="lineno">  520</span>        self.assertGreater(env[len(env) // 4:].mean(), 1.0)</div>
+<div class="line"><a id="l00521" name="l00521"></a><span class="lineno">  521</span> </div>
+<div class="line"><a id="l00522" name="l00522"></a><span class="lineno">  522</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00523" name="l00523"></a><span class="lineno">  523</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00524" name="l00524"></a><span class="lineno">  524</span>    unittest.main()</div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html">modules.apps.astro.rocket.ascent.RocketAscentModel</a></div><div class="ttdef"><b>Definition</b> <a href="ascent_8py_source.html#l00053">ascent.py:53</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html">modules.apps.astro.rocket.descent.RocketDescentModel</a></div><div class="ttdef"><b>Definition</b> <a href="descent_8py_source.html#l00150">descent.py:150</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html">modules.apps.astro.rocket.landing.RocketLandingModel</a></div><div class="ttdef"><b>Definition</b> <a href="landing_8py_source.html#l00052">landing.py:52</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html">modules.apps.astro.rocket.liftoff.RocketLiftoffModel</a></div><div class="ttdef"><b>Definition</b> <a href="liftoff_8py_source.html#l00059">liftoff.py:59</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model.html">modules.apps.astro.space.interplanetary.InterplanetaryModel</a></div><div class="ttdef"><b>Definition</b> <a href="interplanetary_8py_source.html#l00152">interplanetary.py:152</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">modules.apps.astro.space.translunar.TransLunarModel</a></div><div class="ttdef"><b>Definition</b> <a href="translunar_8py_source.html#l00158">translunar.py:158</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html">modules.apps.ballistics.extended.BallisticModel</a></div><div class="ttdef"><b>Definition</b> <a href="apps_2ballistics_2extended_8py_source.html#l00014">extended.py:14</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1vehicles_1_1speed_1_1_car_speed_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1vehicles_1_1speed_1_1_car_speed_model.html">modules.apps.vehicles.speed.CarSpeedModel</a></div><div class="ttdef"><b>Definition</b> <a href="speed_8py_source.html#l00037">speed.py:37</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter_html"><div class="ttname"><a href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">modules.framework.filters.ekf.ExtendedKalmanFilter</a></div><div class="ttdef"><b>Definition</b> <a href="ekf_8py_source.html#l00006">ekf.py:6</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html">tests.test_apps_extra.TestBallisticEKF</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00408">test_apps_extra.py:408</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_a354df5a21c0e3bbead70d9f4578fd6d9"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a354df5a21c0e3bbead70d9f4578fd6d9">tests.test_apps_extra.TestBallisticEKF.test_dims_order3</a></div><div class="ttdeci">test_dims_order3(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00410">test_apps_extra.py:410</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_a4c86a437f3a65da2cc3a9917bbafc9cc"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a4c86a437f3a65da2cc3a9917bbafc9cc">tests.test_apps_extra.TestBallisticEKF.test_sample_then_filter_beats_measurement</a></div><div class="ttdeci">test_sample_then_filter_beats_measurement(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00414">test_apps_extra.py:414</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_a5468cc55950a7db0fcfb97f07f2f2b19"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a5468cc55950a7db0fcfb97f07f2f2b19">tests.test_apps_extra.TestBallisticEKF.test_orbit_substeps_follow_the_orbit</a></div><div class="ttdeci">test_orbit_substeps_follow_the_orbit(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00442">test_apps_extra.py:442</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_a8b78980bd821269b060c660101bfef8e"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#a8b78980bd821269b060c660101bfef8e">tests.test_apps_extra.TestBallisticEKF.test_the_integrator_is_selectable</a></div><div class="ttdeci">test_the_integrator_is_selectable(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00452">test_apps_extra.py:452</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_ab92b3ff63039ed549bd7bff0fa51ef04"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab92b3ff63039ed549bd7bff0fa51ef04">tests.test_apps_extra.TestBallisticEKF.test_substeps_one_is_the_default</a></div><div class="ttdeci">test_substeps_one_is_the_default(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00469">test_apps_extra.py:469</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_ballistic_e_k_f_html_ab9f6c2ff45f1c203902509f62bcfc07c"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_ballistic_e_k_f.html#ab9f6c2ff45f1c203902509f62bcfc07c">tests.test_apps_extra.TestBallisticEKF._orbit_step_error</a></div><div class="ttdeci">_orbit_step_error(self, substeps)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00429">test_apps_extra.py:429</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_car_speed_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_car_speed.html">tests.test_apps_extra.TestCarSpeed</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00301">test_apps_extra.py:301</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_car_speed_html_a0f8e003dfb3e5bf8d23bd0557ae9c768"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a0f8e003dfb3e5bf8d23bd0557ae9c768">tests.test_apps_extra.TestCarSpeed.test_metrics_zero_to_hundred</a></div><div class="ttdeci">test_metrics_zero_to_hundred(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00324">test_apps_extra.py:324</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_car_speed_html_a375d02766162ebd4cb51c2c5ace5a292"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#a375d02766162ebd4cb51c2c5ace5a292">tests.test_apps_extra.TestCarSpeed.test_ekf_beats_naive_differencing</a></div><div class="ttdeci">test_ekf_beats_naive_differencing(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00307">test_apps_extra.py:307</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_car_speed_html_ad12031d8f4c487ccc8a1b15b6322c377"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_car_speed.html#ad12031d8f4c487ccc8a1b15b6322c377">tests.test_apps_extra.TestCarSpeed.test_dims</a></div><div class="ttdeci">test_dims(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00303">test_apps_extra.py:303</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html">tests.test_apps_extra.TestInterplanetary</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00240">test_apps_extra.py:240</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html_a2c387fb924155031642c489aad8dad2a"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a2c387fb924155031642c489aad8dad2a">tests.test_apps_extra.TestInterplanetary.test_chain_lambert_separates_gravity_from_burn</a></div><div class="ttdeci">test_chain_lambert_separates_gravity_from_burn(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00265">test_apps_extra.py:265</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html_a30df6b605dd6700b8a6c613d7e3e74e4"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a30df6b605dd6700b8a6c613d7e3e74e4">tests.test_apps_extra.TestInterplanetary.test_two_body_cruise_ekf</a></div><div class="ttdeci">test_two_body_cruise_ekf(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00286">test_apps_extra.py:286</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html_a661817d06b53bfe75bca417630637440"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#a661817d06b53bfe75bca417630637440">tests.test_apps_extra.TestInterplanetary.test_lambert_round_trip</a></div><div class="ttdeci">test_lambert_round_trip(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00242">test_apps_extra.py:242</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html_ac2bbdd165e42beda5d3fc5ce94a787da"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#ac2bbdd165e42beda5d3fc5ce94a787da">tests.test_apps_extra.TestInterplanetary.test_hohmann_earth_mars</a></div><div class="ttdeci">test_hohmann_earth_mars(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00250">test_apps_extra.py:250</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_interplanetary_html_acf2630420409ef10d6a4e2dbd82f9f59"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_interplanetary.html#acf2630420409ef10d6a4e2dbd82f9f59">tests.test_apps_extra.TestInterplanetary.test_hohmann_uses_semi_major_axes</a></div><div class="ttdeci">test_hohmann_uses_semi_major_axes(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00255">test_apps_extra.py:255</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_oscillator_variants_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html">tests.test_apps_extra.TestOscillatorVariants</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00481">test_apps_extra.py:481</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_oscillator_variants_html_a8d1537304f578e8598a4309feb88808e"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#a8d1537304f578e8598a4309feb88808e">tests.test_apps_extra.TestOscillatorVariants.test_harmonic_oscillator_dims</a></div><div class="ttdeci">test_harmonic_oscillator_dims(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00483">test_apps_extra.py:483</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_oscillator_variants_html_abff969b93373ef8cee9f16e2c946ee44"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#abff969b93373ef8cee9f16e2c946ee44">tests.test_apps_extra.TestOscillatorVariants.test_analytic_oscillator_tracks_envelope</a></div><div class="ttdeci">test_analytic_oscillator_tracks_envelope(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00506">test_apps_extra.py:506</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_oscillator_variants_html_ac25441548dbba49287dc29e0bd85775b"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#ac25441548dbba49287dc29e0bd85775b">tests.test_apps_extra.TestOscillatorVariants.test_inharmonic_partials_stretch_with_B</a></div><div class="ttdeci">test_inharmonic_partials_stretch_with_B(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00488">test_apps_extra.py:488</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_oscillator_variants_html_afdcec801bd76bdb5d007373c42c151cb"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_oscillator_variants.html#afdcec801bd76bdb5d007373c42c151cb">tests.test_apps_extra.TestOscillatorVariants.test_phasor_oscillator_filter</a></div><div class="ttdeci">test_phasor_oscillator_filter(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00495">test_apps_extra.py:495</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_polarization_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_polarization.html">tests.test_apps_extra.TestPolarization</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00339">test_apps_extra.py:339</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_polarization_html_a0044cc5cb52cc26703baf2653eafb816"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a0044cc5cb52cc26703baf2653eafb816">tests.test_apps_extra.TestPolarization.test_filter_recovers_amplitude_and_reconstructs</a></div><div class="ttdeci">test_filter_recovers_amplitude_and_reconstructs(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00358">test_apps_extra.py:358</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_polarization_html_a2c157e9f233835f677ea2b29f2ca71fa"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a2c157e9f233835f677ea2b29f2ca71fa">tests.test_apps_extra.TestPolarization._signal</a></div><div class="ttdeci">_signal(self, fs=100.0, T=8.0, seed=0)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00341">test_apps_extra.py:341</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_polarization_html_a6b7cf38a3afd21b0b1e63512ecf69b14"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_polarization.html#a6b7cf38a3afd21b0b1e63512ecf69b14">tests.test_apps_extra.TestPolarization.test_dims_and_jones_shape</a></div><div class="ttdeci">test_dims_and_jones_shape(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00353">test_apps_extra.py:353</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_power_grid_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_power_grid.html">tests.test_apps_extra.TestPowerGrid</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00376">test_apps_extra.py:376</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_power_grid_html_a4dea0b9f70fc32527784da853551e8d5"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_power_grid.html#a4dea0b9f70fc32527784da853551e8d5">tests.test_apps_extra.TestPowerGrid.test_filter_reconstruct_and_even_harmonic_suppression</a></div><div class="ttdeci">test_filter_reconstruct_and_even_harmonic_suppression(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00378">test_apps_extra.py:378</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_descent_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html">tests.test_apps_extra.TestRocketDescent</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00202">test_apps_extra.py:202</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_descent_html_a1d82c80ee0f3f378e035fc93a0c0df4a"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a1d82c80ee0f3f378e035fc93a0c0df4a">tests.test_apps_extra.TestRocketDescent.test_dims</a></div><div class="ttdeci">test_dims(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00207">test_apps_extra.py:207</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_descent_html_a2cab0f060e460a328c5ed408aae8fd49"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a2cab0f060e460a328c5ed408aae8fd49">tests.test_apps_extra.TestRocketDescent._x0</a></div><div class="ttdeci">_x0(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00204">test_apps_extra.py:204</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_descent_html_a3792e79e17799fc068d6f8c0d7f6b5d2"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#a3792e79e17799fc068d6f8c0d7f6b5d2">tests.test_apps_extra.TestRocketDescent.test_control_input_program_and_ekf</a></div><div class="ttdeci">test_control_input_program_and_ekf(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00221">test_apps_extra.py:221</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_descent_html_ad50006f1fda27b6c758a8e2c2b7cecbc"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_descent.html#ad50006f1fda27b6c758a8e2c2b7cecbc">tests.test_apps_extra.TestRocketDescent.test_closed_loop_lands_upright_on_pad</a></div><div class="ttdeci">test_closed_loop_lands_upright_on_pad(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00212">test_apps_extra.py:212</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html">tests.test_apps_extra.TestRocket</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00047">test_apps_extra.py:47</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a0abdac9e9ed78a3e22cd774c0e243547"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0abdac9e9ed78a3e22cd774c0e243547">tests.test_apps_extra.TestRocket.test_dims</a></div><div class="ttdeci">test_dims(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00066">test_apps_extra.py:66</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a0b3af19b01161ebd350389a5af202f97"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a0b3af19b01161ebd350389a5af202f97">tests.test_apps_extra.TestRocket.test_moon_track_shape</a></div><div class="ttdeci">test_moon_track_shape(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00080">test_apps_extra.py:80</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a2f4def3325c4bf45b076d15ca07d2bc2"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a2f4def3325c4bf45b076d15ca07d2bc2">tests.test_apps_extra.TestRocket._errstate</a></div><div class="ttdeci">_errstate</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00051">test_apps_extra.py:51</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a525a9f60e2e0fe57ef2d8dea9953ed77"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a525a9f60e2e0fe57ef2d8dea9953ed77">tests.test_apps_extra.TestRocket.test_powered_ascent_with_control_input</a></div><div class="ttdeci">test_powered_ascent_with_control_input(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00089">test_apps_extra.py:89</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a5b509617b8c1f35286b1d328387c2dbf"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a5b509617b8c1f35286b1d328387c2dbf">tests.test_apps_extra.TestRocket.setUp</a></div><div class="ttdeci">setUp(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00050">test_apps_extra.py:50</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a7a871375d5e4d8edad0cab42e06d2f10"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7a871375d5e4d8edad0cab42e06d2f10">tests.test_apps_extra.TestRocket.tearDown</a></div><div class="ttdeci">tearDown(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00054">test_apps_extra.py:54</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_a7bb81f2c19fa524b7fb080e810cf3ea7"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#a7bb81f2c19fa524b7fb080e810cf3ea7">tests.test_apps_extra.TestRocket._translunar</a></div><div class="ttdeci">_translunar(self, **kw)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00057">test_apps_extra.py:57</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_aec06d9ce3cf0ed9960f242082bacc8d1"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#aec06d9ce3cf0ed9960f242082bacc8d1">tests.test_apps_extra.TestRocket.test_legacy_aliases_resolve</a></div><div class="ttdeci">test_legacy_aliases_resolve(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00085">test_apps_extra.py:85</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_html_af51ee6fc88d023d64bbe9bb99ef4ba9a"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket.html#af51ee6fc88d023d64bbe9bb99ef4ba9a">tests.test_apps_extra.TestRocket.test_free_return_ekf_tracks_truth</a></div><div class="ttdeci">test_free_return_ekf_tracks_truth(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00070">test_apps_extra.py:70</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html">tests.test_apps_extra.TestRocketLanding</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00154">test_apps_extra.py:154</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html_a1c2fd888094212db98c706f5dbc60f3d"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a1c2fd888094212db98c706f5dbc60f3d">tests.test_apps_extra.TestRocketLanding.test_dims</a></div><div class="ttdeci">test_dims(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00161">test_apps_extra.py:161</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html_a9003b8635133669a3fd534ad07228e83"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#a9003b8635133669a3fd534ad07228e83">tests.test_apps_extra.TestRocketLanding.test_metrics_keys</a></div><div class="ttdeci">test_metrics_keys(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00190">test_apps_extra.py:190</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html_ad56dc64fa2e9c26558f24f2c6c2434e5"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#ad56dc64fa2e9c26558f24f2c6c2434e5">tests.test_apps_extra.TestRocketLanding.test_soft_touchdown_and_fuel_burn</a></div><div class="ttdeci">test_soft_touchdown_and_fuel_burn(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00165">test_apps_extra.py:165</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html_adc995cd6b7945f2bf8031b9abe06beaf"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#adc995cd6b7945f2bf8031b9abe06beaf">tests.test_apps_extra.TestRocketLanding.test_ekf_recovers_descent_rate_from_altitude</a></div><div class="ttdeci">test_ekf_recovers_descent_rate_from_altitude(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00178">test_apps_extra.py:178</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_landing_html_af914922feac9e07526c110086d7ede74"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_landing.html#af914922feac9e07526c110086d7ede74">tests.test_apps_extra.TestRocketLanding._model</a></div><div class="ttdeci">_model(self, **kw)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00156">test_apps_extra.py:156</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_liftoff_html"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html">tests.test_apps_extra.TestRocketLiftoff</a></div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00111">test_apps_extra.py:111</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_liftoff_html_a32fb98bce47453de2105090f2ab1cc9d"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a32fb98bce47453de2105090f2ab1cc9d">tests.test_apps_extra.TestRocketLiftoff.test_liftoff_burns_fuel_and_ekf_recovers_velocity</a></div><div class="ttdeci">test_liftoff_burns_fuel_and_ekf_recovers_velocity(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00120">test_apps_extra.py:120</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_liftoff_html_a96b239742d5c8a0230d4665ebfb2b190"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#a96b239742d5c8a0230d4665ebfb2b190">tests.test_apps_extra.TestRocketLiftoff.test_dims_and_figures_of_merit</a></div><div class="ttdeci">test_dims_and_figures_of_merit(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00113">test_apps_extra.py:113</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__apps__extra_1_1_test_rocket_liftoff_html_ac12b04bc5b2d50f76d329385f1c77ed0"><div class="ttname"><a href="classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html#ac12b04bc5b2d50f76d329385f1c77ed0">tests.test_apps_extra.TestRocketLiftoff.test_metrics_keys</a></div><div class="ttdeci">test_metrics_keys(self)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00141">test_apps_extra.py:141</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1rocket_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1rocket.html">modules.apps.astro.rocket</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astro_2rocket_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astro_2space_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1ballistics_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1ballistics.html">modules.apps.ballistics</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2ballistics_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1vehicles_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2vehicles_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_html"><div class="ttname"><a href="namespacemodules_1_1apps.html">modules.apps</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1constants_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00001">constants.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1integrators_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2integrators_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1runtime_1_1astro_html"><div class="ttname"><a href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></div><div class="ttdef"><b>Definition</b> <a href="astro_8py_source.html#l00001">astro.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__apps__extra_html_a2acf1dc0e2b4aa65ecc42318a5dd10cf"><div class="ttname"><a href="namespacetests_1_1test__apps__extra.html#a2acf1dc0e2b4aa65ecc42318a5dd10cf">tests.test_apps_extra._no_nan_inf</a></div><div class="ttdeci">_no_nan_inf(arr, label=&quot;array&quot;)</div><div class="ttdef"><b>Definition</b> <a href="test__apps__extra_8py_source.html#l00038">test_apps_extra.py:38</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__apps__extra_8py.html">test_apps_extra.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

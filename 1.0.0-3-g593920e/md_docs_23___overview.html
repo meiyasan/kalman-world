@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="Overview" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: Overview" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>Overview</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('md_docs_23___overview.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div><div class="header">
+  <div class="headertitle"><div class="title">Overview</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="textblock"><p><a class="anchor" id="overview"></a> The framework separates a <a class="el" href="namespace_kalman.html">Kalman</a> problem into seven roles, each answering one question. A role is an <b>abstract contract</b> in <code>kalman.framework</code>; concrete implementations live outside it. Nothing in the design is Kalman-specific except the engines — the same skeleton carries particle filters, ensemble assimilation and combinatorial track finding.</p>
+<hr  />
+<h1><a class="anchor" id="the-seven-roles-1"></a>
+The seven roles</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Role   </th><th class="markdownTableHeadNone">Question it answers   </th><th class="markdownTableHeadNone">Contract   </th><th class="markdownTableHeadNone">Concretes    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Model</b>   </td><td class="markdownTableBodyNone">WHAT is the system? <code>f/h/Q/R</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="framework_2model_8py.html">framework/model.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/models/</code>, <code>apps/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Engine</b> (alias <em>Estimator</em>)   </td><td class="markdownTableBodyNone">HOW to infer under uncertainty   </td><td class="markdownTableBodyNone"><code><a class="el" href="engine_8py.html">framework/engine.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/engines/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Integrator</b>   </td><td class="markdownTableBodyNone">HOW to step <em>time</em>: <code>x(t) → x(t+dt)</code>   </td><td class="markdownTableBodyNone"><code><a class="el" href="integrator_8py.html">framework/integrator.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/integrators/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Solver</b>   </td><td class="markdownTableBodyNone">HOW to discretize <em>space</em>   </td><td class="markdownTableBodyNone"><code><a class="el" href="solver_8py.html">framework/solver.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/solvers/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Filter</b>   </td><td class="markdownTableBodyNone">WHEN — the forward/backward workflow   </td><td class="markdownTableBodyNone"><code><a class="el" href="filter_8py.html">framework/filter.py</a></code>   </td><td class="markdownTableBodyNone"><code>framework/filters/</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><b>Provider</b>   </td><td class="markdownTableBodyNone">WHERE the data comes from   </td><td class="markdownTableBodyNone"><code><a class="el" href="provider_8py.html">framework/provider.py</a></code>   </td><td class="markdownTableBodyNone"><code>providers/</code>, <code>apps/&lt;domain&gt;/providers/</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><b>Controller / Router</b>   </td><td class="markdownTableBodyNone">acting on, and choosing between, models   </td><td class="markdownTableBodyNone"><code><a class="el" href="framework_2control_8py.html">framework/control.py</a></code>, <code>routers/</code>   </td><td class="markdownTableBodyNone"><code>framework/controllers/</code>, <code>routers/</code>   </td></tr>
+</table>
+<p>Dependencies point one way only: <b>Filter → Engine → Model</b>. A model never imports an engine, a solver or a filter.</p>
+<p>The Engine/Filter split is where the algorithm ends and the workflow begins: a filter says <em>when</em> things run and what is kept, an engine says <em>how</em> the belief moves. So the concrete filters are thin — <code>LinearKalmanFilter</code> is six lines — and none of them implement <code>forward</code>/<code>backward</code> themselves. When one predict/update step does not describe an algorithm at all, the engine takes over the whole pass instead (<code>KalmanEngine.OWNS_PASS</code>); <code>CombinatorialKalmanEngine</code> does this, consuming an entire detector event and returning finished tracks, while its filter stays as thin as the rest.</p>
+<h2><a class="anchor" id="integrator-vs-solver"></a>
+Integrator vs Solver</h2>
+<p>These are not synonyms. An <em>integrator</em> advances time (Euler / RK4 / Dormand–Prince). A <em>solver</em> discretizes space (spectral / finite-difference) and <b>composes</b> an integrator for its time march. For an ODE the two coincide — <code>discretize</code> is the identity — which is why an ODE model binds only an integrator, and a PDE model binds a solver. They are sibling packages; neither nests inside the other. See <a class="el" href="md_docs_26___integrators-and-_solvers.html">Integrators and Solvers</a>.</p>
+<hr  />
+<h1><a class="anchor" id="declared-not-imported"></a>
+Declared, not imported</h1>
+<p>The single most important convention: a model <b>declares</b> its collaborators by enum, and the framework resolves them.</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>MyModel(KalmanModel):</div>
+<div class="line">    DEFAULT_ENGINE      = KalmanEngineKind.EXTENDED</div>
+<div class="line">    DEFAULT_INTEGRATOR  = KalmanIntegratorKind.RK4</div>
+<div class="line">    DEFAULT_SOLVER      = KalmanSolverKind.SPECTRAL</div>
+<div class="line">    ALLOWED_ENGINES     = {KalmanEngineKind.EXTENDED, KalmanEngineKind.UNSCENTED}</div>
+</div><!-- fragment --><p>The kinds live in <code><a class="el" href="constants_8py.html">framework/constants.py</a></code>; the registries (<code>ENGINE_BY_KIND</code>, <code>INTEGRATOR_BY_KIND</code>, <code>SOLVER_BY_KIND</code>, <code>PROVIDER_BY_KIND</code>) and their <code>resolve_*()</code> functions do the lookup. <code>KalmanFilter</code> validates that the engine it resolved is in <code>model.ALLOWED_ENGINES</code> and raises <code>TypeError</code> otherwise.</p>
+<p>The available kinds today:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Registry   </th><th class="markdownTableHeadNone">Members    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KalmanEngineKind</code>   </td><td class="markdownTableBodyNone"><code>linear</code>, <code>extended</code>, <code>unscented</code>, <code>particle</code>, <code>combinatorial</code>, <code>ensemble</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>KalmanIntegratorKind</code>   </td><td class="markdownTableBodyNone"><code>euler</code>, <code>rk4</code>, <code>dormand_prince</code>, <code>implicit_euler</code> *(reserved)*    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>KalmanSolverKind</code>   </td><td class="markdownTableBodyNone"><code>spectral</code>, <code>finite_difference</code>, <code>finite_volume</code> *(reserved)*, <code>finite_element</code> *(reserved)*    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>KalmanProviderKind</code>   </td><td class="markdownTableBodyNone"><code>synthetic</code>, <code>era5</code>, <code>turbulence</code>, <code>file</code>, <code>sensor</code>, <code>remote</code>   </td></tr>
+</table>
+<p><em>Reserved</em> members exist in the enum and the registry but raise <code>NotImplementedError</code> when used — the registries are required to cover their whole enum, and <code><a class="el" href="test__structure_8py.html">tests/test_structure.py</a></code> enforces it.</p>
+<hr  />
+<h1><a class="anchor" id="notation"></a>
+Notation</h1>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Symbol   </th><th class="markdownTableHeadNone">Shape   </th><th class="markdownTableHeadNone">Meaning    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>gk</code>   </td><td class="markdownTableBodyNone"><code>(T, M, 1)</code>   </td><td class="markdownTableBodyNone">Raw input timeseries, before conditioning    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>uk</code>   </td><td class="markdownTableBodyNone"><code>(T, L, 1)</code>   </td><td class="markdownTableBodyNone">Control input timeseries (or a callable controller)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>zk</code>   </td><td class="markdownTableBodyNone"><code>(T, M, 1)</code>   </td><td class="markdownTableBodyNone">Conditioned measurements, after <code>preprocess</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>xk</code>   </td><td class="markdownTableBodyNone"><code>(n, 1)</code>   </td><td class="markdownTableBodyNone">State vector at one timestep    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>xk_hat</code>   </td><td class="markdownTableBodyNone"><code>(T, n, 1)</code>   </td><td class="markdownTableBodyNone">Batch of state estimates (prior / posterior / smoothed)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>zk_hat</code>   </td><td class="markdownTableBodyNone"><code>(T, M, 1)</code>   </td><td class="markdownTableBodyNone">Predicted measurements in filter space, <code>h(xk_hat)</code>    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>gk_hat</code>   </td><td class="markdownTableBodyNone"><code>(T, M, 1)</code>   </td><td class="markdownTableBodyNone">Predicted measurements in raw space, <code>postprocess(zk_hat)</code>    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>n</code>, <code>m</code>, <code>l</code>   </td><td class="markdownTableBodyNone">—   </td><td class="markdownTableBodyNone">State, measurement and control dimensions   </td></tr>
+</table>
+<hr  />
+<h1><a class="anchor" id="the-pipeline"></a>
+The pipeline</h1>
+<div class="fragment"><div class="line">gk          raw input timeseries            (T, M, 1)</div>
+<div class="line"> │</div>
+<div class="line"> ▼  preprocess(gk, uk) ──────────────────── gk → filter space</div>
+<div class="line"> │</div>
+<div class="line">zk          conditioned measurements         (T, M, 1)</div>
+<div class="line"> │</div>
+<div class="line"> ▼  ── filter loop: for z, u in zip(zk, uk) ─────────────────────────────</div>
+<div class="line"> │      predict:  x⁻, P⁻  ←  f(x, u),  F, Q</div>
+<div class="line"> │      update:   x⁺, P⁺  ←  x⁻ + K·(z − h(x⁻)),  H, R</div>
+<div class="line"> ▼</div>
+<div class="line">xk_hat      state estimates                  (T, n, 1)</div>
+<div class="line"> │</div>
+<div class="line"> ▼  inprocess(xk_hat) ──────────────────── optional state-space transform</div>
+<div class="line"> ▼  h(xk_hat) ──────────────────────────── state → filter space</div>
+<div class="line"> │</div>
+<div class="line">zk_hat      predicted measurements           (T, M, 1)</div>
+<div class="line"> │</div>
+<div class="line"> ▼  postprocess(zk_hat) ────────────────── filter space → raw space</div>
+<div class="line"> │</div>
+<div class="line">gk_hat      predicted raw output             (T, M, 1)   mirrors gk</div>
+</div><!-- fragment --><p><code>preprocess</code> and <code>postprocess</code> are a matched pair: if <code>preprocess</code> whitens or heterodynes the signal, <code>postprocess</code> maps predictions back so <code>gk_hat</code> is directly comparable with <code>gk</code>. All three hooks default to identity.</p>
+<hr  />
+<h1><a class="anchor" id="package-layout"></a>
+Package layout</h1>
+<div class="fragment"><div class="line">modules/                        → the `kalman` package</div>
+<div class="line">  framework/                    contracts + bases + registries (the core)</div>
+<div class="line">    model.py engine.py integrator.py solver.py provider.py filter.py control.py</div>
+<div class="line">    models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/</div>
+<div class="line">    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)</div>
+<div class="line">  providers/                    generic data sources (synthetic/file/sensor/remote)</div>
+<div class="line">  api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth</div>
+<div class="line">  mcp/  rest/                   transports over the facade (optional deps)</div>
+<div class="line">  apps/                         domain applications</div>
+<div class="line">    astro/         rocket  space</div>
+<div class="line">    gravitational/ gravwave  interferometer</div>
+<div class="line">    resonators/    oscillators  powergrids  suspensions</div>
+<div class="line">    weather/       flow  storms  geo  surrogate  data/  providers/</div>
+<div class="line">    ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/</div>
+<div class="line">  runtime/  helpers.py</div>
+<div class="line">tests/                          mirrors concerns, not files</div>
+<div class="line">share/notebooks/                executed, output-bearing narrative docs</div>
+</div><!-- fragment --><p><b>Families</b> (<code>astro</code>, <code>gravitational</code>, <code>resonators</code>) group domains that share a foundation or an application area. Each domain keeps its own <code>VARIANTS</code> dict of model classes; cross-family imports are normal (<code>interferometer</code> uses <code>resonators.oscillators</code>).</p>
+<p><code>apps/</code> contains packages only. Import from the canonical path (<code>kalman.apps.weather.flow</code>) or from the stable <code>kalman.apps</code> surface — both resolve to the same objects, and <code>from kalman.apps import X</code> is guaranteed to keep working across reorganisations.</p>
+<hr  />
+<h1><a class="anchor" id="one-facade-three-front-doors"></a>
+One facade, three front doors</h1>
+<div class="fragment"><div class="line">                 ┌──────────────┐</div>
+<div class="line">Python  ───────▶ │              │</div>
+<div class="line">REST /8000 ────▶ │  kalman.api  │ ──▶  framework  ──▶  apps</div>
+<div class="line">MCP /8765  ───▶  │   (facade)   │</div>
+<div class="line">                 └──────────────┘</div>
+<div class="line">                        │</div>
+<div class="line">                  kalman.api.auth   ← scopes: read / send_measurement /</div>
+<div class="line">                                       write_models / admin</div>
+</div><!-- fragment --><p><code>kalman.api</code> harvests the existing metadata and registries rather than maintaining a parallel description layer, and speaks plain dicts and lists (NumPy arrays ↔ nested lists) so any transport can carry it. The MCP and REST layers are <b>thin adapters with no logic of their own</b> — a new verb is added to <code>kalman.api</code>, given a scope, and then exposed in both.</p>
+<p>Continue with <a class="el" href="md_docs_24___models.html">Models</a>, or jump to <a class="el" href="md_docs_29___python-_a_p_i.html">Python API</a> if you are integrating rather than modelling. </p>
+</div></div><!-- contents -->
+</div><!-- PageDoc -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="guide.html">User guide</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>
