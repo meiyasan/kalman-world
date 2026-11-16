@@ -282,7 +282,7 @@ class TestTornadoCounterpart(unittest.TestCase):
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, mu={mu} a={persistence}")
 
     def test_the_bank_runs_on_counterparts(self):
-        models, _, _ = TornadoEnvironmentModel.ikf_bank(season="peak")
+        models, _, _ = TornadoEnvironmentModel.regime_bank(season="peak")
         self.assertTrue(all(m.native_handle() is not None for m in models))
 
 

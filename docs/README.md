@@ -15,10 +15,10 @@ Pages are numbered in reading order. If you are new, read 1 → 3 → 5 and stop
 | 2 | [Installation](2_Installation.md) | Environments, extras, native acceleration, Docker |
 | 3 | [Overview](3_Overview.md) | Architecture: the seven roles and how they compose |
 | 4 | [Models](4_Models.md) | The three ways to define a system; the model catalog |
-| 5 | [Filters and Diagnostics](5_Filters-and-Diagnostics.md) | KF/EKF/UKF/PF/EnKF/CKF/IKF — which one, and is it healthy |
+| 5 | [Filters and Diagnostics](5_Filters-and-Diagnostics.md) | KF/EKF/UKF/PF/EnKF/CKF and `route` — which one, and is it healthy |
 | 6 | [Integrators and Solvers](6_Integrators-and-Solvers.md) | Time stepping, spatial discretization, GPU backends, customization |
 | 7 | [Providers](7_Providers.md) | Where the data comes from: synthetic, file, sensor, remote, ERA5 |
-| 8 | [Control and Routing](8_Control-and-Routing.md) | Closed-loop controllers and IKF model routing |
+| 8 | [Control and Routing](8_Control-and-Routing.md) | Closed-loop controllers and model routing |
 | 19 | [The Kalman contract](19_Contract.md) | Every public term, in C++ and Python, and how the ensemble and track-finding words map onto it |
 
 ## For API access

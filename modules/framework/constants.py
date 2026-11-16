@@ -97,6 +97,7 @@ class KalmanEngineKind(Enum):
     PARTICLE      = auto()  # sequential importance resampling (PF)
     COMBINATORIAL = auto()  # branch-on-ambiguous-hit track finding (CKF)
     ENSEMBLE      = auto()  # perturbed-observation ensemble Kalman filter (EnKF)
+    INTERACTING   = auto()  # several modes of one system, mixed and routed (IMM); see route()
 
 
 # All engine kinds — convenient default for ``ALLOWED_ENGINES``.

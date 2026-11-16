@@ -28,6 +28,7 @@ namespace Kalman
             case EngineKind::Particle:  return "Particle";
             case EngineKind::Ensemble:  return "Ensemble";
             case EngineKind::Combinatorial: return "Combinatorial";
+            case EngineKind::Interacting: return "Interacting";
         }
         return "Unknown";
     }

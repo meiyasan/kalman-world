@@ -18,7 +18,7 @@
  *   x_{k+1} = mu + a (x_k - mu)
  * \endcode
  *
- * A benign and a tornadic instance in a Kalman::Filters::IKF give the
+ * A benign and a tornadic instance in a Kalman::Models::Router give the
  * probability that the environment is in the tornadic regime.
  *
  * | Parameter     | Meaning                           |
@@ -47,7 +47,7 @@ namespace Kalman::Apps::Weather
 
             const char *Title() const override { return "Tornado Environment"; }
             const char *Description() const override
-            { return "Mean-reverting significant-tornado-parameter latent (one IKF regime)."; }
+            { return "Mean-reverting significant-tornado-parameter latent (one regime of a router model)."; }
 
             Vector f(const Vector &x, const Vector &u, double t = 0.) const override;
             Vector h(const Vector &x, double t = 0.) const override;

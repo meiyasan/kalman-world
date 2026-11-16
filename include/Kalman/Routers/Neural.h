@@ -21,7 +21,7 @@
  * \code{.cpp}
  * Kalman::Routers::NN::Onnx policy("router.onnx");   // or NN::MLP, or your own
  * Kalman::Routers::Neural   router(&policy, 5);
- * Kalman::Filters::IKF      ikf(models, Pi, &router);
+ * auto modes = Kalman::Route(models, Pi);  modes->SetDecision(&router);
  * \endcode
  *
  * \note There is no ONNX in this header, and none in its implementation. The
@@ -77,7 +77,7 @@ namespace Kalman::Routers
 
             const char *Title() const override { return "Neural Router"; }
             const char *Description() const override
-            { return "IKF routing delegated to a learned policy; owns the NIS features."; }
+            { return "Mode routing delegated to a learned policy; owns the NIS features."; }
 
             /// True when a model is attached and evaluable.
             bool IsReady() const { return fModel && fModel->IsReady(); }

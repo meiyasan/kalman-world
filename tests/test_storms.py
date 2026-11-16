@@ -1,6 +1,6 @@
-"""Tests for the reduced storm models — StormModel (track/intensity + IKF
+"""Tests for the reduced storm models — StormModel (track/intensity + route
 recurvature regimes + forecast cone) and TornadoEnvironmentModel (regime-
-probability IKF with seasonal transition priors)."""
+probability, routed, with seasonal transition priors)."""
 import sys
 import unittest
 import numpy as np
@@ -13,7 +13,8 @@ from modules.apps.weather.storms import (StormModel, TornadoEnvironmentModel,
                                   japan_steering, japan_region, landfall_probability,
                                   JAPAN_BBOX, brazil_season, brazil_tornado_scenario,
                                   seasonal_tornado_probability, _SEASON_PI)
-from modules.framework.filters import InteractiveKalmanFilter, ExtendedKalmanFilter
+from modules.framework.filters import ExtendedKalmanFilter
+from modules.framework import route
 
 
 # ── StormModel dynamics ─────────────────────────────────────────────────────
@@ -52,14 +53,14 @@ class TestStormModel(unittest.TestCase):
         self.assertLess(s.beta_n, 0)       # SH beta drifts poleward (south)
 
     def test_imm_bank_structure(self):
-        models, Pi, probs = StormModel.ikf_bank(stall=True)
+        models, Pi, probs = StormModel.regime_bank(stall=True)
         self.assertEqual(len(models), 3)
         self.assertEqual(Pi.shape, (3, 3))
         np.testing.assert_allclose(Pi.sum(axis=1), 1.0)
         self.assertAlmostEqual(probs.sum(), 1.0)
         self.assertEqual(models[0].omega, 0.0)
         self.assertLess(models[1].omega, 0.0)          # NH recurve = clockwise
-        models2, Pi2, _ = StormModel.ikf_bank(stall=False)
+        models2, Pi2, _ = StormModel.regime_bank(stall=False)
         self.assertEqual(len(models2), 2)
 
 
@@ -68,12 +69,12 @@ class TestTyphoonTracking(unittest.TestCase):
     def _run(self, fix_noise=1.0, seed=1):
         truth, fixes = synthetic_track(n_steps=40, recurve_at=18,
                                        fix_noise=fix_noise, seed=seed)
-        models, Pi, probs = StormModel.ikf_bank(fix_noise=fix_noise, stall=True)
+        models, Pi, probs = StormModel.regime_bank(fix_noise=fix_noise, stall=True)
         for m in models:
             m.initial_state(np.array([[138.], [12.], [-20.], [7.], [40.]]),
                             np.diag([1., 1., 50., 50., 200.]))
-        ikf = InteractiveKalmanFilter(models, Pi, probs)
-        rec = ikf.forward(fixes)
+        ikf = route(models, Pi, probs)
+        rec = ikf.filter(fixes)
         return truth, fixes, ikf, rec
 
     def test_imm_beats_raw_fixes(self):
@@ -99,7 +100,7 @@ class TestTyphoonTracking(unittest.TestCase):
         truth, _, _, rec = self._run(fix_noise=0.5)
         x0 = np.asarray(rec.xk)[15].reshape(-1, 1)
         P0 = np.asarray(rec.Pk)[15]
-        cone = StormModel.ikf_bank()[0][1].forecast_cone(x0, P0, steps=10)
+        cone = StormModel.regime_bank()[0][1].forecast_cone(x0, P0, steps=10)
         self.assertEqual(len(cone["ellipses"]), 10)
         semis = np.array([e[2] for e in cone["ellipses"]])
         self.assertTrue(np.all(np.diff(semis) >= -1e-9))     # monotone growth
@@ -112,7 +113,6 @@ class TestTyphoonTracking(unittest.TestCase):
         self.assertEqual(StormModel(hemisphere="s").hemisphere, "S")
         with self.assertRaises(ValueError):
             StormModel(hemisphere="E")
-        self.assertIs(StormModel.ikf_bank.__func__, StormModel.ikf_bank.__func__)
 
     def test_standard_plot_is_self_contained(self):
         """model.plot(record) reproduces the canonical figure with no extra code."""
@@ -308,8 +308,8 @@ class TestTornadoEnvironment(unittest.TestCase):
         self.assertAlmostEqual(m.f(np.array([[3.0]])).ravel()[0], 3.0)   # fixed point at mu
 
     def test_seasonal_transition_matrices_differ(self):
-        _, pi_peak, _ = TornadoEnvironmentModel.ikf_bank(season="peak")
-        _, pi_off, _ = TornadoEnvironmentModel.ikf_bank(season="off")
+        _, pi_peak, _ = TornadoEnvironmentModel.regime_bank(season="peak")
+        _, pi_off, _ = TornadoEnvironmentModel.regime_bank(season="off")
         np.testing.assert_allclose(pi_peak.sum(axis=1), 1.0)
         np.testing.assert_allclose(pi_off.sum(axis=1), 1.0)
         # tornadic-regime persistence higher in peak season
@@ -320,9 +320,9 @@ class TestTornadoEnvironment(unittest.TestCase):
 
     def test_regime_probability_tracks_event(self):
         obs, labels = synthetic_environment(n_steps=200, onsets=((70, 110),), seed=2)
-        models, Pi, probs = TornadoEnvironmentModel.ikf_bank(season="peak")
-        ikf = InteractiveKalmanFilter(models, Pi, probs)
-        ikf.forward(obs)
+        models, Pi, probs = TornadoEnvironmentModel.regime_bank(season="peak")
+        ikf = route(models, Pi, probs)
+        ikf.filter(obs)
         p_tor = ikf.mode_probabilities[:, 1]
         self.assertGreater(p_tor[labels == 1].mean(), p_tor[labels == 0].mean() + 0.2)
         self.assertTrue(np.all((p_tor >= 0) & (p_tor <= 1)))

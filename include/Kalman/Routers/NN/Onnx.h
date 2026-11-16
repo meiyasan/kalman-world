@@ -25,7 +25,7 @@
  * \code{.cpp}
  * Kalman::Routers::NN::Onnx policy("router.onnx");
  * Kalman::Routers::Neural   router(&policy, 5);
- * Kalman::Filters::IKF      ikf(models, Pi, &router);
+ * auto modes = Kalman::Route(models, Pi);  modes->SetDecision(&router);
  * \endcode
  *
  * \note **This class is the optional part, and it is the only optional part.**

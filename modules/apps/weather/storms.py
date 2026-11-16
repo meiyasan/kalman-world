@@ -9,9 +9,9 @@ local phenomenon and — crucially — its **covariance**.
   ``[lon, lat, v_e, v_n, I]`` (centre, translation velocity, intensity); the
   dynamics are the textbook **steering flow + beta drift + coordinated turn**,
   so the motion has genuine *regimes* (straight-running vs. recurving).  That
-  regime structure is exactly what an :class:`~kalman.framework.filters.InteractiveKalmanFilter`
-  (IKF) is for — recurvature is the "manoeuvre".  Use
-  :meth:`StormModel.ikf_bank` to get the ready-made model bank + transition
+  regime structure is exactly what ``route`` (several models of one system, on
+  the interacting engine) is for — recurvature is the "manoeuvre".  Use
+  :meth:`StormModel.regime_bank` to get the ready-made model bank + transition
   matrix.  The ensemble/covariance gives the track **cone of uncertainty**
   (:meth:`forecast_cone`) and an intensity error bar for free.
 
@@ -19,8 +19,8 @@ local phenomenon and — crucially — its **covariance**.
   deterministic tracker (a tornado is sub-grid and minutes-predictable); the
   actionable quantity is the **probability the environment is in the tornadic
   regime**.  This is a mean-reverting significant-tornado-parameter latent with
-  a benign and a tornadic regime; IKF returns the regime probability, and the
-  **seasonal climatology enters as the IKF transition matrix** (``season=``).
+  a benign and a tornadic regime; ``route`` returns the regime probability, and the
+  **seasonal climatology enters as the transition matrix** (``season=``).
 
 Neither needs training data; both deliver calibrated covariance/probability
 from physics + the filter, which is the point (see the notebook 13 discussion
@@ -78,8 +78,8 @@ class StormModel(NativeCounterpart, ExtendedKalmanModel):
     **Beta drift** ``β`` is the quasi-steady poleward-westward self-advection
     from the planetary-vorticity gradient (~1–2 m/s toward WNW in the NH); its
     sign flips by ``hemisphere``.  The **turn rate** ``ω`` is what distinguishes
-    the motion regimes an IKF switches between (``ω=0`` straight vs.
-    ``ω=ω_recurve`` recurving) — see :meth:`ikf_bank`.
+    the motion regimes ``route`` switches between (``ω=0`` straight vs.
+    ``ω=ω_recurve`` recurving) — see :meth:`regime_bank`.
 
     Observation: a centre fix ``[lon, lat]`` (best-track / satellite), plus
     intensity ``I`` when ``observe_intensity`` (default True).  ``n=5``.
@@ -87,7 +87,7 @@ class StormModel(NativeCounterpart, ExtendedKalmanModel):
     Parameters
     ----------
     omega : float
-        Turn rate [rad/h]; 0 = straight-running.  ``ikf_bank`` sets this per
+        Turn rate [rad/h]; 0 = straight-running.  ``regime_bank`` sets this per
         regime.  Sign convention: negative = clockwise in the (east, north)
         plane = NH recurvature (poleward then eastward).
     beta_drift : float
@@ -219,15 +219,15 @@ class StormModel(NativeCounterpart, ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(-1, 1)
 
     # ------------------------------------------------------------------
-    # IKF bank: straight-running vs recurving (vs stalling) motion regimes
+    # Regime bank: straight-running vs recurving (vs stalling) motion regimes
     # ------------------------------------------------------------------
     @classmethod
-    def ikf_bank(cls, sensor="TC", *, omega_recurve=0.022, stall=True,
+    def regime_bank(cls, sensor="TC", *, omega_recurve=0.022, stall=True,
                  stay=0.90, hemisphere="N", **kw):
-        """Build the IKF model bank + Markov transition matrix.
+        """Build the model bank for ``route`` + Markov transition matrix.
 
         Returns ``(models, transition, initial_probs)`` ready for
-        :class:`~kalman.framework.filters.InteractiveKalmanFilter`.  Regimes:
+        ``route``.  Regimes:
 
         - **straight** — ``ω=0`` (trade-wind steering, WNW motion);
         - **recurve**  — ``ω`` set for the hemisphere (poleward-then-eastward);
@@ -254,7 +254,6 @@ class StormModel(NativeCounterpart, ExtendedKalmanModel):
         probs = np.full(M, 1.0 / M)
         return models, Pi, probs
 
-    imm_bank = ikf_bank      # the literature's name (Interacting Multiple Model)
 
     # ------------------------------------------------------------------
     # Forecast cone: propagate mean + covariance forward with NO updates
@@ -466,7 +465,7 @@ def synthetic_track(n_steps=40, *, recurve_at=18, dt_hours=6.0, hemisphere="N",
     a rise-and-decay intensity — plus noisy centre/intensity fixes.
 
     Returns ``(truth (T, 5), fixes (T, 3))`` — feed ``truth`` as the OSSE truth
-    and ``fixes`` as observations to an IKF tracker.  Exercises the regime
+    and ``fixes`` as observations to a routed model.  Exercises the regime
     switch at ``recurve_at``.
     """
     rng = np.random.default_rng(seed)
@@ -751,7 +750,7 @@ def landfall_probability(tracks, region=japan_region):
 
 
 # ======================================================================
-# Tornado-environment regime model (probabilistic, IKF)
+# Tornado-environment regime model (probabilistic, routed)
 # ======================================================================
 class TornadoState(KalmanState):
     STP = "STP"     # significant-tornado-parameter proxy (dimensionless)
@@ -761,7 +760,7 @@ class TornadoObservable(KalmanObservable):
     STP = "STP"
 
 
-# Seasonal IKF transition priors: (stay_benign, stay_tornadic).  Higher
+# Seasonal transition priors: (stay_benign, stay_tornadic).  Higher
 # stay_tornadic and easier switch-in during the local severe season.
 _SEASON_PI = {
     "peak":   (0.90, 0.85),   # local tornado season (SH spring–summer for S. Brazil)
@@ -772,7 +771,7 @@ _SEASON_PI = {
 
 class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
     """
-    Mean-reverting tornado-environment latent — one regime of an IKF.
+    Mean-reverting tornado-environment latent — one regime of a routed model.
 
     A single latent ``x = [STP]`` (a significant-tornado-parameter proxy —
     combine CAPE × shear × storm-relative helicity from local mesonet/radar)
@@ -783,9 +782,9 @@ class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
     A tornado is not deterministically trackable, so the deliverable is the
     **probability the environment sits in the tornadic regime** — obtained by
     running a benign and a tornadic instance of this model in an
-    :class:`~kalman.framework.filters.InteractiveKalmanFilter`; the IKF mode probability
+    ``route``; the mode probability
     *is* that probability, and it comes with the latent's covariance.
-    ``ikf_bank(season=...)`` sets the Markov transition matrix from the local
+    ``regime_bank(season=...)`` sets the Markov transition matrix from the local
     **seasonal climatology** — the physically-honest way "seasoning" enters.
 
     Parameters
@@ -799,7 +798,7 @@ class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
     """
 
     NAME = "Tornado Environment"
-    DESCRIPTION = "Mean-reverting significant-tornado-parameter latent (one IKF regime)."
+    DESCRIPTION = "Mean-reverting significant-tornado-parameter latent (one regime of a routed model)."
     VERSION = "1.0"
 
     @property
@@ -838,11 +837,11 @@ class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(1, 1)
 
     @classmethod
-    def ikf_bank(cls, sensor="ENV", *, season="shoulder",
+    def regime_bank(cls, sensor="ENV", *, season="shoulder",
                  mu_benign=0.3, mu_tornadic=3.0, **kw):
         """Benign + tornadic instances + the **seasonal** transition matrix.
 
-        Returns ``(models, transition, initial_probs)`` for the IKF; the
+        Returns ``(models, transition, initial_probs)`` for ``route``; the
         transition matrix is drawn from ``_SEASON_PI[season]`` so the local
         severe-weather season raises both the tornadic-regime persistence and
         the prior probability of switching into it.
@@ -854,7 +853,6 @@ class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
         probs = np.array([0.9, 0.1])
         return [benign, tornadic], Pi, probs
 
-    imm_bank = ikf_bank      # the literature's name (Interacting Multiple Model)
 
 
 def synthetic_environment(n_steps=200, *, onsets=((70, 110),), season="shoulder",
@@ -862,7 +860,7 @@ def synthetic_environment(n_steps=200, *, onsets=((70, 110),), season="shoulder"
     """Synthetic STP time series that spends ``onsets`` cycle-windows in the
     tornadic regime, plus noisy observations and the true regime labels.
 
-    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the IKF tracker and
+    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the routed model and
     compare ``mode_probabilities[:, 1]`` against ``labels``.
     """
     rng = np.random.default_rng(seed)
@@ -885,7 +883,7 @@ def synthetic_environment(n_steps=200, *, onsets=((70, 110),), season="shoulder"
 # tornado hot-spot: the South American Low-Level Jet feeds warm moist Amazonian
 # air into cold fronts sweeping up from the south, spiking shear + instability
 # in the SH spring–summer.  The *season* is the physically-honest prior — it
-# sets the IKF transition matrix, not a hand-tuned threshold.
+# sets the transition matrix, not a hand-tuned threshold.
 _BRAZIL_SEASON = {9: "peak", 10: "peak", 11: "peak", 12: "peak", 1: "peak", 2: "peak",
                   3: "shoulder", 8: "shoulder",
                   4: "off", 5: "off", 6: "off", 7: "off"}
@@ -929,26 +927,26 @@ def brazil_tornado_scenario(n_days=360, *, start_month=7, seed=0,
 
 
 def seasonal_tornado_probability(obs, months, *, season_fn=brazil_season,
-                                 model_cls=None, **ikf_kw):
+                                 model_cls=None, **bank_kw):
     """Per-step P(tornadic) with a **season-dependent prior**.
 
-    Runs the IKF once per season (each with that season's transition matrix from
-    :meth:`TornadoEnvironmentModel.ikf_bank`) and, at every step, returns the
+    Runs the routed model once per season (each with that season's transition matrix from
+    :meth:`TornadoEnvironmentModel.regime_bank`) and, at every step, returns the
     probability from the filter whose season matches that step's month.  So an
     identical environmental signal reads as a confident warning in the peak
     season and a hedged one off-season — the Bayesian-correct way to fold the
     Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.
     """
-    from ...framework.filters import InteractiveKalmanFilter
+    from ...framework.operations import route
     cls = model_cls or TornadoEnvironmentModel
     obs = np.asarray(obs, float)
     months = np.asarray(months)
     seasons = np.array([season_fn(mo) for mo in months])
     prob = np.zeros(len(obs))
     for s in np.unique(seasons):
-        models, Pi, p0 = cls.ikf_bank(season=str(s), **ikf_kw)
-        ikf = InteractiveKalmanFilter(models, Pi, p0)
-        ikf.forward(obs)
-        p_s = ikf.mode_probabilities[:, 1]
+        models, Pi, p0 = cls.regime_bank(season=str(s), **bank_kw)
+        modes = route(models, Pi, p0)
+        modes.filter(obs)
+        p_s = modes.mode_probabilities[:, 1]
         prob[seasons == s] = p_s[seasons == s]
     return prob

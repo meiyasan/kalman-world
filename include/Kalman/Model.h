@@ -467,6 +467,10 @@ namespace Kalman
             /// This model and \p other side by side, each with its own state (Models::Composite).
             /// Both are borrowed.
             std::unique_ptr<Model> Compose(Model &other, Readout readout = Readout::Stacked);
+            /// \p modes as several models of one system, with a probability on each
+            /// (Models::Router; \p Pi the Markov transition between them). All are borrowed.
+            static std::unique_ptr<Model> Route(const std::vector<Model *> &modes, const Matrix &Pi,
+                                                const Vector &mu0 = Vector());
             /// This model carrying its last \p depth states (Models::Lag): for sensors that
             /// report late, and fixed-lag smoothing.
             std::unique_ptr<Model> Lag(std::size_t depth);

@@ -1,11 +1,11 @@
-"""BayesianRouter — classical IKF Bayesian mode-probability update."""
+"""BayesianRouter — classical Bayesian mode-probability update."""
 from __future__ import annotations
 import numpy as np
 from .base import KalmanRouter
 
 
 class BayesianRouter(KalmanRouter):
-    """Classical IKF update: μ_j ∝ c_j · L_j.
+    """Classical update: μ_j ∝ c_j · L_j.
 
     Combines the Markov transition prior ``c`` with the Gaussian innovation
     likelihood ``L_j = N(ν_j; 0, S_j)``.  Theoretically optimal when all

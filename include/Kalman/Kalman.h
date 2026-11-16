@@ -31,12 +31,12 @@
  * |------|----------|-------|
  * | Model  | WHAT is the system? | Kalman::Model |
  * | Engine | HOW to infer?       | Kalman::Engine (Kalman::Engines::Linear, Extended, Unscented, Particle, Ensemble) |
- * | Filter | WHEN does it run?   | Kalman::Filter (Kalman::Filters::KF, EKF, UKF, PF, EnKF); Kalman::Filters::IKF, Kalman::Filters::CKF |
+ * | Filter | WHEN does it run?   | Kalman::Filter (Kalman::Filters::KF, EKF, UKF, PF, EnKF); Kalman::Filters::CKF |
  * | Controller | WHAT to command? | Kalman::Controller (Kalman::Controllers::Proportional, PID, LQR, MPPI, Boost, AdaptiveQR) |
  *
  * \section libkalman_routing The decision layer
  *
- * Kalman::Filters::IKF runs several models at once and carries a probability on
+ * Kalman::Models::Router (on Kalman::Engines::Interacting) holds several models at once and carries a probability on
  * each; a Kalman::Routers::Router owns that probability update and is the only
  * pluggable part of the step. Kalman::Routers::Bayesian is the classical rule,
  * Kalman::Routers::Threshold a NIS-based one, Kalman::Routers::Hybrid a blend,
@@ -126,6 +126,8 @@
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Lag.h"
 #include "Kalman/Models/Composite.h"
+#include "Kalman/Models/Router.h"
+#include "Kalman/Engines/Interacting.h"
 #include "Kalman/Instrument.h"
 #include "Kalman/Operations.h"
 #include "Kalman/Observability.h"
@@ -135,7 +137,6 @@
 #include "Kalman/Filters/PF.h"
 #include "Kalman/Filters/EnKF.h"
 #include "Kalman/Filters/CKF.h"
-#include "Kalman/Filters/IKF.h"
 #include "Kalman/IO/Record.h"
 #include "Kalman/IO/Collection.h"
 #include "Kalman/IO/Json.h"

@@ -315,6 +315,12 @@ kalman_router_t *kalman_router_create_callback(kalman_route_fn route, void *user
 void kalman_router_destroy(kalman_router_t *router);
 int kalman_router_route(const kalman_router_t *router, int rows, int M, const double *nis, const double *c,
                         const double *likelihoods, double *mu);
+kalman_model_t *kalman_model_create_router(kalman_model_t *const *modes, int count, const double *Pi,
+                                           const double *mu0, const char *const *names);
+int kalman_model_router_set_decision(kalman_model_t *model, const kalman_router_t *router);
+int kalman_model_mode_count(const kalman_model_t *model);
+int kalman_engine_interacting_steps(const kalman_engine_t *engine);
+int kalman_engine_interacting_history(const kalman_engine_t *engine, double *mu, double *nis);
 
 void kf_predict(int n, int l,
                 const double *F, const double *x, const double *P,
@@ -549,7 +555,7 @@ def load_plugin(path: str) -> list[str]:
 # --- engines and a fused pass --------------------------------------------------
 # Kalman::EngineKind by name, the contract shared with Constants.h and models/native.py.
 ENGINE_KINDS = {"linear": 0, "extended": 1, "unscented": 2, "particle": 3,
-                "ensemble": 4, "combinatorial": 5}
+                "ensemble": 4, "combinatorial": 5, "interacting": 6}
 
 
 def particle_engine_on_numpy(n_particles, threshold, cloud):
@@ -1055,7 +1061,7 @@ def solve_dare(A, B, Q, R):
 
 # --- routers -------------------------------------------------------------------
 def create_router(kind, *, a=None, b=None, route=None, **params):
-    """A C++ IKF router (garbage-collected handle): ``"bayesian"``, ``"threshold"``
+    """A C++ mode router (garbage-collected handle): ``"bayesian"``, ``"threshold"``
     (``m``, ``window``, ``soft``), ``"hybrid"`` (children handles ``a``, ``b`` and
     ``alpha``; the caller keeps them alive) or ``"callback"`` (``route`` a
     ``kalman_route_fn`` callback, kept alive by the caller)."""

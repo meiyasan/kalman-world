@@ -129,7 +129,7 @@ modules/                        → the `kalman` package
   framework/                    contracts + bases + registries (the core)
     model.py engine.py integrator.py solver.py provider.py filter.py control.py
     models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
-    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
+    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF)
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)

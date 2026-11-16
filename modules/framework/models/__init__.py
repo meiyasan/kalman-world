@@ -12,6 +12,7 @@ from .compose import Composite
 from .operation import OperationModel
 from .joint import Joint
 from .lag import Lag
+from .route import Router
 from .fusion import Fusion
 from .native import NativeModel, native_model_classes
 
@@ -23,6 +24,7 @@ __all__ = [
     "OperationModel",
     "Joint",
     "Lag",
+    "Router",
     "Fusion",
     "NativeModel",
     "native_model_classes",

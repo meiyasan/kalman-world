@@ -74,9 +74,9 @@ class TestReservedNames(unittest.TestCase):
     """
 
     #: Methods of KalmanModel that return a model made from this one.
-    OPERATIONS = ("joint", "add_sensor", "add_instrument", "lag", "compose")
+    OPERATIONS = ("joint", "add_sensor", "add_instrument", "lag", "compose", "route")
     #: Reserved for the operations still to come: nothing may take these names.
-    PLANNED = ("route",)
+    PLANNED = ()
     #: Aliases of f and h, provided by the base class; a model never defines them.
     ALIASES = ("step", "sense")
     #: Looked up on a model by the ensemble engine only.

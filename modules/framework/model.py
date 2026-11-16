@@ -686,6 +686,14 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from .operations import compose
         return compose(self, *others, readout=readout, names=names, **kwargs)
 
+    @staticmethod
+    def route(models, transition, initial_probs=None, **kwargs):
+        """``models`` as the modes of one system that changes regime, with a
+        probability on each: ``KalmanModel.route([dry, icy], Pi)``. See
+        :class:`~.models.route.Router`."""
+        from .operations import route
+        return route(models, transition, initial_probs, **kwargs)
+
     def lag(self, depth):
         """This model carrying its last ``depth`` states along with the present one:
         a sensor with a ``delay`` then reads the state as it was, and

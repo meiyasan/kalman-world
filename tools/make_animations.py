@@ -147,18 +147,18 @@ def ballistics():
 
 # ---------------------------------------------------------------------------
 def storm():
-    """A recurving tropical cyclone: the IKF follows the track and learns the regime."""
+    """A recurving tropical cyclone: the routed model follows the track and learns the regime."""
     from modules.apps.weather.storms import StormModel, synthetic_track
-    from modules.framework.filters import InteractiveKalmanFilter
+    from modules.framework import route
     truth, fixes = synthetic_track(n_steps=40, recurve_at=18, fix_noise=0.3, seed=3)
-    models, Pi, probs = StormModel.ikf_bank(fix_noise=0.3, stall=True)
+    models, Pi, probs = StormModel.regime_bank(fix_noise=0.3, stall=True)
     x0 = np.array([[fixes[0, 0]], [fixes[0, 1]], [-20.0], [6.0], [fixes[0, 2]]])
     for m in models:
         m.initial_state(x0)
-    ikf = InteractiveKalmanFilter(models, Pi, initial_probs=probs)
-    record = ikf.forward(fixes)
+    modes = route(models, Pi, probs)
+    record = modes.filter(fixes)
     x = np.asarray(record.xk)
-    mu = np.asarray(ikf.mode_probabilities)
+    mu = np.asarray(modes.mode_probabilities)
     n = len(x)
     hours = np.arange(n) * 6.0
     names = ["straight", "recurving", "stalled"]
@@ -172,7 +172,7 @@ def storm():
         left.plot(truth[:, 0], truth[:, 1], "k--", lw=0.8, alpha=0.45)
         left.plot(fixes[s, 0], fixes[s, 1], "x", color=GREY, ms=6, label="satellite fixes (σ = 0.3°)")
         left.plot(truth[s, 0], truth[s, 1], "k-", lw=1.4, label="true track")
-        left.plot(x[s, 0], x[s, 1], "-", color=BLUE, lw=1.9, label="IKF estimate")
+        left.plot(x[s, 0], x[s, 1], "-", color=BLUE, lw=1.9, label="estimate")
         left.plot(x[k, 0], x[k, 1], "o", color=BLUE, ms=8)
         left.set_xlim(truth[:, 0].min() - 3, truth[:, 0].max() + 3)
         left.set_ylim(truth[:, 1].min() - 3, truth[:, 1].max() + 3)

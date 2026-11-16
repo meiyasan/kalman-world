@@ -147,30 +147,32 @@ controller defines it.
 
 ---
 
-## Routers (IKF)
+## Routers
 
 A router decides how much weight each model in a bank deserves right now.
-`InteractiveKalmanFilter` runs M filters in parallel — one per regime — and each
-step: mixes their states, runs every model's Kalman step, logs each model's NIS,
-asks the router for updated probabilities, and recombines
-`x̂ = Σ μⱼ x̂ⱼ`.
+`route(models, Pi)` makes one model of the models of the regimes; the filter
+then runs it on the interacting engine (`Kalman::Engines::Interacting`, the IMM
+of the literature), which keeps one belief per regime and at each step: mixes
+them, runs every mode's Kalman step, logs each mode's NIS, asks the router for
+updated probabilities, and recombines `x̂ = Σ μⱼ x̂ⱼ`.
 
 ```python
-from kalman.framework.filters import InteractiveKalmanFilter
+from kalman.framework import route
 from kalman.framework.routers import BayesianRouter, ThresholdRouter, NeuralRouter, HybridRouter
 from kalman.framework.routers.nn import MLP
 
-ikf = InteractiveKalmanFilter(models, Pi)                              # Bayesian default
-ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())
-ikf = InteractiveKalmanFilter(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))
-record = ikf.forward(zk)
+modes = route(models, Pi)                                              # Bayesian default
+modes = route(models, Pi, router=ThresholdRouter())
+modes = route(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))
+record = modes.filter(zk)
+modes.mode_probabilities                   # (T, M)
 ```
 
 `Pi` is the Markov transition matrix between regimes.
 
 | Router | Decides from | Needs training |
 |---|---|---|
-| `BayesianRouter` | model likelihoods (the textbook IKF update) | no |
+| `BayesianRouter` | model likelihoods (the textbook update) | no |
 | `ThresholdRouter` | NIS crossing a threshold | no |
 | `NeuralRouter` | a learned function of the NIS/likelihood features | yes |
 | `HybridRouter` | Bayesian prior blended with a learned correction | yes |
@@ -178,8 +180,8 @@ record = ikf.forward(zk)
 Learning routers are trained on labelled regime sequences:
 
 ```python
-ikf.fit(training_zk_list, labels_list)     # collects NIS features, trains the router
-record = ikf.forward(test_zk)
+modes.fit(training_zk_list, labels_list)   # collects NIS features, trains the router
+record = modes.filter(test_zk)
 ```
 
 Swapping the router never touches the filter — that is the point of the split.
@@ -191,6 +193,6 @@ Network architectures are pluggable through `kalman.framework.routers.nn`.
 
 - [`12_KalmanAI.ipynb`](../share/notebooks/12_KalmanAI.ipynb) — the control and
   routing layer end to end: P/PID/LQR/MPPI/neural comparison, adaptive `Q`/`R`,
-  IKF routing.
-- [`14_StormTracking.ipynb`](../share/notebooks/14_StormTracking.ipynb) — IKF over
+  routing.
+- [`14_StormTracking.ipynb`](../share/notebooks/14_StormTracking.ipynb) — routing over
   storm recurvature regimes.

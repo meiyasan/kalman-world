@@ -30,7 +30,8 @@ namespace Kalman
         Unscented = 2,     ///< sigma points (UKF)
         Particle = 3,      ///< sequential importance resampling (PF)
         Ensemble = 4,      ///< perturbed-observation ensemble (EnKF)
-        Combinatorial = 5  ///< branch-on-ambiguous-hit track finding (CKF)
+        Combinatorial = 5, ///< branch-on-ambiguous-hit track finding (CKF)
+        Interacting = 6    ///< several modes of one system, mixed and routed (IMM); see Models::Router
     };
 
     /**

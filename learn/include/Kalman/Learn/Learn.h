@@ -34,7 +34,7 @@
  *
  * Kalman::Routers::NN::Onnx policy("router.onnx");
  * Kalman::Routers::Neural   router(&policy, window, mean, scale);
- * Kalman::Filters::IKF      ikf({&cruise, &manoeuvre}, Pi, &router);
+ * auto modes = Kalman::Model::Route({&cruise, &manoeuvre}, Pi);   // then SetDecision(&router)
  * \endcode
  *
  * Link `libKalmanLearn` as well as `libKalman`. Both runtimes are optional:

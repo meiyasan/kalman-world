@@ -92,7 +92,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/routers/nn/mlp.py` | `Kalman/Routers/NN/MLP.h` | `Routers::NN::MLP` (no dependency) |
 | `framework/routers/nn/*.py` | `Kalman/Routers/NN/Torch.h` | `Routers::NN::Torch` (TorchScript; in `libKalmanLearn`) |
 | `framework/routers/nn/*.py` | `Kalman/Routers/NN/Onnx.h` | `Routers::NN::Onnx` (ONNX; in `libKalmanLearn`) |
-| `framework/filters/ikf.py` | `Kalman/Filters/IKF.h` | `Filters::IKF` (aliased `IMM`) |
+| `framework/models/route.py` | `Kalman/Models/Router.h` | `Models::Router`, `Kalman::Route` |
+| `framework/engines/interacting.py` | `Kalman/Engines/Interacting.h` | `Engines::Interacting` |
 | — (numpy) | `Kalman/Matrix.h` | `Kalman::Matrix`, `Kalman::Vector` |
 | `modules/helpers.py` | `Kalman/Utils.h` | `Kalman::Utils` |
 | `framework/models/native.py` | `Kalman/Factory.h` | `Kalman::Factory` + `KALMAN_REGISTER_MODEL` |
@@ -137,7 +138,7 @@ exports the algebra names, so existing code compiles unchanged.
 |------|----------|-------|
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
-| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IKF`, `Filters::CKF` |
+| **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::CKF` |
 | **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI` |
 | **Tuner** | HOW to retune the noise? | `Kalman::Tuner` → `Tuners::Boost`, `Tuners::AdaptiveQR` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
@@ -411,16 +412,21 @@ pass, as an exception naming the matrix and both shapes.
 ## The decision layer
 
 When no single model covers a system's whole behaviour, run several and carry a
-probability on each. `Kalman::Filters::IKF` does the mixing, prediction and
-combination; the *decision* — which model is right now — is delegated to a
+probability on each. `Kalman::Models::Router` (`Kalman::Route`) holds the
+models, the *modes*, and the Markov matrix between them;
+`Kalman::Engines::Interacting`, its default engine, does the mixing,
+prediction and combination inside a plain `Kalman::Filter`; the *decision* — which model is right now — is delegated to a
 `Kalman::Routers::Router` and is the only pluggable part of the step.
 
 ```cpp
 Kalman::Routers::Bayesian router;                 // the classical mu ∝ c · L
-Kalman::Filters::IKF ikf({&cruise, &manoeuvre}, Pi, &router);
+auto modes = Kalman::Model::Route({&cruise, &manoeuvre}, Pi);     // borrows; Kalman::Route shares
+dynamic_cast<Kalman::Models::Router &>(*modes).SetDecision(&router);
 
-auto record = ikf.Forward(measurements);
-const Kalman::Matrix &modes = ikf.ModeHistory();  // (T, M): which regime, when
+Kalman::Filter filter(modes.get());               // the interacting engine
+auto record = filter.Forward(measurements);       // the combined estimate
+const auto &engine = dynamic_cast<const Kalman::Engines::Interacting &>(*filter.GetEngine());
+const Kalman::Matrix history = engine.ModeHistory();   // (T, M): which regime, when
 ```
 
 | Router | Decides on | Needs |
@@ -457,7 +463,7 @@ not a language binding — once at load time, rather than once per step.
 
 ```python
 router = NeuralRouter(model=MLP(hidden=32), window=5)
-ikf.fit(training_zk, labels)                  # train where the data loaders are
+modes.fit(training_zk, labels)                # train where the data loaders are
 router.export_onnx("router.onnx")             # for NN::Onnx
 router.export_torchscript("router.pt")        # for NN::Torch
 ```
@@ -465,7 +471,7 @@ router.export_torchscript("router.pt")        # for NN::Torch
 ```cpp
 Kalman::Routers::NN::Onnx policy("router.onnx");   // or NN::Torch, or NN::MLP
 Kalman::Routers::Neural   router(&policy, /* window */ 5);
-Kalman::Filters::IKF      ikf({&cruise, &manoeuvre}, Pi, &router);
+// then: modes.SetDecision(&router) on the Models::Router
 ```
 
 Both exports produce the same probabilities as the Python router; measured
@@ -1198,10 +1204,6 @@ in front (`right_U`). On notebook 01's Doppler radar
 (n = 9, m = 4, 384 steps) sampling and filtering take 0.18 s, against 2.1 s
 for the subclass that overrode `h` in Python and so lost the counterpart.
 
-The name is not `Observe`: that is the ensemble engine's hook
-(`EnsembleModel::Observe`, Python `model.observe(X)`), the measurement of
-every member at once.
-
 The parameter accessors of `Kalman::Model` (`ParameterNames`, `HasParameter`,
 `Parameter`, `SetParameter`) are virtual so that such a model answers with its
 inner model's parameters: a `Models::Joint` around it can then estimate them.
@@ -1215,8 +1217,7 @@ sums them on one shared channel (`Readout::Summed`). Each part linearises
 itself and brings its sensors; a parameter of a part is `<part>.<name>`. Through
 the C API: `kalman_model_create_composite`, `kalman_model_part_count`,
 `kalman_model_part_name`. From Python: `compose`, `Composite`
-(`framework/models/compose.py`), which replaced the Python
-`CompositeKalmanModel`.
+(`framework/models/compose.py`); the composite once written in Python is gone.
 
 The oscillator windows (`OscillatorModel` and its harmonic and inharmonic
 ladders), `OscillatorBankModel` and `InterferometerModel` with its detectors
@@ -1365,7 +1366,7 @@ linear filter. Both can be present in one process.
 | Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
 | What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.covariance_mask()` (a `KalmanEnsembleModel`); the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a counterpart hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`CovarianceMask`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
-| Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
+| Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); `Models::Router` on `Engines::Interacting` |
 | Applications | `modules/apps/` | `libKalmanApps`: a counterpart for every model given by code (19 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no counterpart; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |
 | Sampling | `model.sample()`: the C++ loop, numpy's draws | `Kalman::Sampler` (its own generator) |

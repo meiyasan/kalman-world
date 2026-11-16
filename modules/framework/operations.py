@@ -31,6 +31,14 @@ def lag(model, depth):
     return model.lag(depth)
 
 
+def route(models, transition, initial_probs=None, **kwargs):
+    """``models`` as the modes of one system that changes regime, with a probability
+    on each; ``transition`` is the Markov matrix between them. See
+    :class:`~.models.route.Router`."""
+    from .models.route import Router
+    return Router(models, transition, initial_probs, **kwargs)
+
+
 def add_instrument(model, instrument):
     """``model`` read by every sensor of ``instrument`` (a
     :class:`~.instrument.KalmanInstrument`), as a new model."""
@@ -65,4 +73,4 @@ def compose(*parts, name=None, rate=None, readout=None, names=None, **kwargs):
     return KalmanInstrument(name or "+".join(part.name for part in parts), parts, rate=rate)
 
 
-__all__ = ["joint", "add_sensor", "add_instrument", "compose", "lag"]
+__all__ = ["joint", "add_sensor", "add_instrument", "compose", "lag", "route"]

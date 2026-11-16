@@ -36,6 +36,17 @@ namespace Kalman
             std::vector<std::shared_ptr<Model>>{Borrow(this), Borrow(&other)}, readout);
     }
 
+    std::shared_ptr<Models::Router> Route(std::vector<std::shared_ptr<Model>> modes, const Matrix &Pi,
+                                          const Vector &mu0, std::vector<std::string> names)
+    { return std::make_shared<Models::Router>(std::move(modes), Pi, mu0, std::move(names)); }
+
+    std::unique_ptr<Model> Model::Route(const std::vector<Model *> &modes, const Matrix &Pi, const Vector &mu0)
+    {
+        std::vector<std::shared_ptr<Model>> borrowed;
+        for (Model *mode : modes) borrowed.push_back(Borrow(mode));
+        return std::make_unique<Models::Router>(std::move(borrowed), Pi, mu0);
+    }
+
     std::shared_ptr<Models::Lag> Lag(std::shared_ptr<Model> model, std::size_t depth)
     { return std::make_shared<Models::Lag>(std::move(model), depth); }
 

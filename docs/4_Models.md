@@ -162,6 +162,29 @@ This is not `add_sensor`, where a second sensor reads the *same* state.
 
 ---
 
+## A system that changes regime: `route`
+
+`route(models, Pi)` makes one model of several models of the *same* system,
+one per regime, with a probability on each; `Pi` is the Markov matrix that
+says how likely the system is to go from one regime to another in a step.
+Unlike `compose`, the models share the state and the measurement.
+
+```python
+from kalman.framework import route
+
+car = route([dry, icy], Pi)                  # also KalmanModel.route([...], Pi), Router([...], Pi)
+record = car.filter(zk)                      # the combined estimate
+car.mode_probabilities                       # (T, 2): which regime, when
+```
+
+The filter is the ordinary one: the routed model asks for the interacting
+engine (the Interacting Multiple Model of the literature), which keeps one
+belief per regime. The decision layer (`router=`) and its training are in
+[Control and Routing](8_Control-and-Routing.md). A parameter of one regime is
+`"<mode>.<name>"`. There is no smoother.
+
+---
+
 ## Joint models: estimating parameters with the state
 
 `model.joint(...)` (also `joint(model, ...)` and the class `Joint`) estimates some of a model's parameters along with its
@@ -409,9 +432,7 @@ with `self._name_channels(["X", "Y", "Z"])`. `add_sensor` takes a
 The operations nest: `shell.add_sensor(doppler).joint({"c_drag": ...})`
 estimates a parameter of the shell with both sensors. The model is
 `Kalman::Models::Fusion`; the dynamics run on the model's C++ counterpart when it has
-one, and `g` is called back from the C++ loop. `model.observe(X)` is something
-else: the measurement of many states at once, which the ensemble filter asks
-for at every step. Notebook 01, Step 6 adds a Doppler radar to a tracked shell.
+one, and `g` is called back from the C++ loop. Notebook 01, Step 6 adds a Doppler radar to a tracked shell.
 
 ---
 

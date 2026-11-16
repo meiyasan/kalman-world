@@ -27,7 +27,7 @@ not silently at step 4000.
 | `ParticleFilter` | `particle` | multi-modal or non-Gaussian posteriors | no |
 | `EnsembleKalmanFilter` | `ensemble` | very high dimension (fields, grids) | no |
 | `CombinatorialKalmanFilter` | `combinatorial` | many hits per layer, tracks to *find* not just follow | yes |
-| `InteractiveKalmanFilter` | (routes M filters) | regime switching between several models | per-model |
+| any, on `route(models, Pi)` | interacting (IMM) | regime switching between several models | per-model |
 
 The classes fall in two families, by what the belief is taken to be:
 
@@ -143,22 +143,27 @@ filter to loop over. Two consequences worth knowing: the filter's per-step logs
 diagnostics do not apply; and `ckf.sample()` raises, because there is no time
 series to draw — use `model.generate_event()`.
 
-### IKF — regime switching
+### Regime switching: `route`
 
-Runs M filters in parallel, one per regime, mixing their states each step and
-re-weighting by likelihood. The *routing* policy is pluggable.
+A system that changes regime has no filter of its own. `route(models, Pi)`
+makes one model of the models of the regimes, with a probability on each, and
+the ordinary filter runs it on the interacting engine (the Interacting
+Multiple Model of the literature): one belief per regime, mixed at each step
+and weighed by how well each explains the measurement. Who decides the
+probabilities, the *router*, is pluggable. There is no smoother.
 
 ```python
-from kalman.framework.filters import InteractiveKalmanFilter
+from kalman.framework import route
 from kalman.framework.routers import BayesianRouter, ThresholdRouter, NeuralRouter
 from kalman.framework.routers.nn import MLP
 
-ikf = InteractiveKalmanFilter(models, Pi)                              # Bayesian default
-ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())
-ikf = InteractiveKalmanFilter(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))
+modes = route(models, Pi)                                              # Bayesian default
+modes = route(models, Pi, router=ThresholdRouter())
+modes = route(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))
 
-ikf.fit(training_zk_list, labels_list)     # learning routers only
-record = ikf.forward(test_zk)
+modes.fit(training_zk_list, labels_list)   # learning routers only
+record = modes.filter(test_zk)             # the combined estimate
+modes.mode_probabilities                   # (T, M): which regime, when
 ```
 
 ---

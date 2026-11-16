@@ -10,6 +10,7 @@
 
 #include "Kalman/Filter.h"
 #include "Kalman/Engines/Combinatorial.h"
+#include "Kalman/Engines/Interacting.h"
 #include "Kalman/Engines/Ensemble.h"
 #include "Kalman/Engines/Extended.h"
 #include "Kalman/Engines/Linear.h"
@@ -63,6 +64,7 @@ namespace Kalman
             // As a per-step engine the combinatorial one is an Extended step; the
             // track-finding pass itself is reached through Filters::CKF.
             case EngineKind::Combinatorial: return new Engines::Combinatorial();
+            case EngineKind::Interacting: return new Engines::Interacting();
         }
 
         // Fail loudly rather than silently substituting a different algorithm: an

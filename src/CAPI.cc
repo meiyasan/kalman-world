@@ -24,6 +24,8 @@
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Lag.h"
 #include "Kalman/Models/Composite.h"
+#include "Kalman/Models/Router.h"
+#include "Kalman/Engines/Interacting.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
@@ -153,6 +155,7 @@ namespace
             case Kalman::EngineKind::Particle:      return std::make_unique<Kalman::Engines::Particle>();
             case Kalman::EngineKind::Ensemble:      return std::make_unique<Kalman::Engines::Ensemble>();
             case Kalman::EngineKind::Combinatorial: return std::make_unique<Kalman::Engines::Combinatorial>();
+            case Kalman::EngineKind::Interacting:   return std::make_unique<Kalman::Engines::Interacting>();
         }
         throw std::invalid_argument("no engine kind " + std::to_string(kind));
     }
@@ -2319,6 +2322,84 @@ int kalman_track_copy(const kalman_tracks_t *tracks, int i, int *layers, int *in
             if (prior_P) Copy(c.priorP[k], prior_P + k * n * n, n, n, "prior_P");
             if (Fc) Copy(c.Fc[k], Fc + k * n * n, n, n, "Fc");
         }
+        return 0;
+    });
+}
+
+/* --- a model with several modes, and the interacting engine ------------------ */
+
+kalman_model_t *kalman_model_create_router(kalman_model_t *const *modes, int count, const double *Pi,
+                                           const double *mu0, const char *const *names)
+{
+    try
+    {
+        Ok();
+        if (!modes || count <= 0) throw std::invalid_argument("give the modes (count > 0)");
+        if (!Pi) throw std::invalid_argument("null Pi");
+        const std::size_t M = static_cast<std::size_t>(count);
+        std::vector<std::shared_ptr<Kalman::Model>> shared;
+        std::vector<std::string> called;
+        for (int i = 0; i < count; ++i)
+        {
+            if (!modes[i]) throw std::invalid_argument("null mode");
+            shared.emplace_back(&Deref(modes[i]), [](Kalman::Model *) {});      // borrowed
+            if (names)
+            {
+                if (!names[i]) throw std::invalid_argument("null mode name");
+                called.emplace_back(names[i]);
+            }
+        }
+        return new kalman_model{std::make_unique<Kalman::Models::Router>(
+            std::move(shared), Mat(Pi, M, M, "Pi"), mu0 ? Vec(mu0, M, "mu0") : Kalman::Vector(), std::move(called))};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_router_set_decision(kalman_model_t *model, const kalman_router_t *router)
+{
+    return Guard([&] {
+        auto *modes = dynamic_cast<Kalman::Models::Router *>(&Deref(model));
+        if (!modes) throw std::invalid_argument("not a router model");
+        modes->SetDecision(&Deref(router));
+        return 0;
+    });
+}
+
+int kalman_model_mode_count(const kalman_model_t *model)
+{
+    return Guard([&] {
+        const auto *modes = dynamic_cast<const Kalman::Models::Router *>(&Deref(model));
+        return modes ? static_cast<int>(modes->NModes()) : 0;
+    });
+}
+
+extern "C++"
+{
+    static const Kalman::Engines::Interacting &InteractingOf(const kalman_engine_t *h)
+    {
+        const auto *e = dynamic_cast<const Kalman::Engines::Interacting *>(&Deref(h));
+        if (!e) throw std::invalid_argument("the engine is not an interacting engine");
+        return *e;
+    }
+}
+
+int kalman_engine_interacting_steps(const kalman_engine_t *engine)
+{
+    return Guard([&] { return static_cast<int>(InteractingOf(engine).NSteps()); });
+}
+
+int kalman_engine_interacting_history(const kalman_engine_t *engine, double *mu, double *nis)
+{
+    return Guard([&] {
+        const Kalman::Engines::Interacting &e = InteractingOf(engine);
+        const Kalman::Matrix modes = e.ModeHistory(), stats = e.NisHistory();
+        for (std::size_t k = 0; k < modes.Rows(); ++k)
+            for (std::size_t j = 0; j < modes.Cols(); ++j)
+            {
+                if (mu) mu[k * modes.Cols() + j] = modes(k, j);
+                if (nis) nis[k * modes.Cols() + j] = stats(k, j);
+            }
         return 0;
     });
 }

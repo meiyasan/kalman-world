@@ -86,7 +86,7 @@ modules/                        → the `kalman` package
   framework/                    contracts + bases + registries (the core)
     model.py engine.py integrator.py solver.py provider.py filter.py control.py
     models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
-    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)
+    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF)
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)
@@ -505,7 +505,7 @@ Conventions, most of which the build or the tests will enforce:
   needs nothing, so the routing layer works in a build with no optional
   dependency at all. Never `#include <onnxruntime...>` or `<torch/...>` in
   `Routers/Neural.*` or any public header.
-- **A wrong-looking IKF is usually a wrong-looking *test*.** Two modes that
+- **A wrong-looking routed model (`route`, the interacting engine) is usually a wrong-looking *test*.** Two modes that
   differ only in Q, under a measurement noise that swamps both, genuinely cannot
   be told apart — measured: innovation covariances 8% apart and both with mean
   NIS ~ 1.09, at which point ~0.5/0.5 is the *correct* answer, not a bug. Before

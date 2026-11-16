@@ -32,6 +32,7 @@
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Models/Lag.h"
 #include "Kalman/Models/Composite.h"
+#include "Kalman/Models/Router.h"
 #include "Kalman/Sensor.h"
 #include "Kalman/Instrument.h"
 
@@ -47,6 +48,12 @@ namespace Kalman
     /// one that makes an instrument of sensors.
     std::shared_ptr<Models::Composite> Compose(std::vector<std::shared_ptr<Model>> parts,
                                                Readout readout = Readout::Stacked, std::vector<std::string> names = {});
+
+    /// Several models of one system with a probability on each (Models::Router), for a
+    /// system that changes regime: \p Pi is the Markov transition between them. Run by the
+    /// interacting engine (the IMM of the literature).
+    std::shared_ptr<Models::Router> Route(std::vector<std::shared_ptr<Model>> modes, const Matrix &Pi,
+                                          const Vector &mu0 = Vector(), std::vector<std::string> names = {});
 
     /// \p model carrying its last \p depth states: for sensors that report late, and
     /// fixed-lag smoothing.

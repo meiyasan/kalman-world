@@ -28,7 +28,8 @@ from ..native import core
 # Kalman::EngineKind (Constants.h) -> the Python kind, by the shared integer.
 ENGINE_BY_INT = {0: KalmanEngineKind.LINEAR, 1: KalmanEngineKind.EXTENDED,
                  2: KalmanEngineKind.UNSCENTED, 3: KalmanEngineKind.PARTICLE,
-                 4: KalmanEngineKind.ENSEMBLE, 5: KalmanEngineKind.COMBINATORIAL}
+                 4: KalmanEngineKind.ENSEMBLE, 5: KalmanEngineKind.COMBINATORIAL,
+                 6: KalmanEngineKind.INTERACTING}
 
 
 class NativeModel(KalmanModel):

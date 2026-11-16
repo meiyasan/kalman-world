@@ -3,7 +3,7 @@
     python tools/benchmark_controllers.py
 
 Per call, best of several repeats, on the lane-keeping car of notebook 12
-(CarLaneModel, n = 3, l = 1) and on random IKF inputs. "C++" is the class as
+(CarLaneModel, n = 3, l = 1) and on random router inputs. "C++" is the class as
 shipped with libKalman installed; "Python" is the same class on its Python
 reference path (its C++ object switched off on the instance), everything else
 unchanged — the model's own f still runs as it does for any caller, so the

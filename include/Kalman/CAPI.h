@@ -718,7 +718,7 @@ int kalman_solve_dare(int n, int l, const double *A, const double *B, const doub
 
 /* --- routers ---------------------------------------------------------------- */
 
-/// An IKF mode router (Kalman::Routers::Router). Opaque; destroy it with kalman_router_destroy().
+/// A mode decision layer (Kalman::Routers::Router). Opaque; destroy it with kalman_router_destroy().
 typedef struct kalman_router kalman_router_t;
 
 /// Routers::Bayesian: `mu_j` proportional to `c_j L_j`.
@@ -743,6 +743,26 @@ void kalman_router_destroy(kalman_router_t *router);
 /// Router::Route(): `mu` (M) from the NIS history `nis` (rows x M, rows may be 0), `c` (M), `likelihoods` (M).
 int kalman_router_route(const kalman_router_t *router, int rows, int M, const double *nis, const double *c,
                         const double *likelihoods, double *mu);
+
+/* --- a model with several modes, and the interacting engine ------------------ */
+
+/// `count` models of one system with a probability on each (Kalman::Models::Router): `Pi`
+/// (count x count, row-major) is the Markov transition between them, `mu0` (count; may be NULL
+/// for uniform) the initial probabilities, `names` (count strings; may be NULL) what the modes
+/// are called. Its default engine is the interacting one (kind 6). The modes are borrowed, as
+/// for kalman_model_create_joint. NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_create_router(kalman_model_t *const *modes, int count, const double *Pi,
+                                           const double *mu0, const char *const *names);
+/// The decision layer of a router model (Models::Router::SetDecision); `router` is borrowed and
+/// must outlive the model. 0 or -1.
+int kalman_model_router_set_decision(kalman_model_t *model, const kalman_router_t *router);
+/// The number of modes of a router model; 0 for any other model. -1 on failure.
+int kalman_model_mode_count(const kalman_model_t *model);
+/// The number of updates an interacting engine has made since its last reset. -1 on failure.
+int kalman_engine_interacting_steps(const kalman_engine_t *engine);
+/// Its histories, each (steps x modes, row-major): the mode probabilities `mu` and the NIS of
+/// every mode `nis`. Either may be NULL. 0 or -1.
+int kalman_engine_interacting_history(const kalman_engine_t *engine, double *mu, double *nis);
 
 /* --- kernels: the framework's arithmetic for a model that lives elsewhere ---
  *

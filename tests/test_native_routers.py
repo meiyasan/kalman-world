@@ -1,7 +1,7 @@
-"""The rule-based IKF routers decide in C++ (Kalman::Routers); the Python arithmetic is the reference.
+"""The rule-based mode routers decide in C++ (Kalman::Routers); the Python arithmetic is the reference.
 
 Bayesian, Threshold and Hybrid routers are compared with their Python reference
-on random inputs and inside a whole IKF pass, then the error paths: a Python
+on random inputs and inside a whole pass of a routed model, then the error paths: a Python
 child of a Hybrid called back from C++ and raising, configurations the C++
 classes do not take, and the C API refusing bad arguments.
 
@@ -104,23 +104,22 @@ class TestRoutersAgreeWithTheirReference(unittest.TestCase):
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
-class TestInsideTheIKF(unittest.TestCase):
-    """A whole IKF pass with the C++ router, against the same pass with the reference router."""
+class TestInsideARoutedPass(unittest.TestCase):
+    """A whole pass of a routed model with the C++ router, against the same pass with the reference router."""
 
     def test_mode_probabilities_agree(self):
-        from modules.framework.filters.ikf import InteractiveKalmanFilter
-        from tests.test_ikf import _two_models, _sim, PI, REGIME_200_TEST
+        from modules.framework import route
+        from tests.test_route import _two_models, _sim, PI, REGIME_200_TEST
         zk, _ = _sim(REGIME_200_TEST, seed=3)
         for make in (BayesianRouter,
                      lambda: ThresholdRouter(m=1, window=10, soft=True),
                      lambda: HybridRouter(BayesianRouter(), ThresholdRouter(m=1, window=5, soft=True), alpha=0.3)):
             router = make()
-            cxx = InteractiveKalmanFilter(list(_two_models()), PI, router=router)
-            cxx.forward(zk, record=False)
+            cxx = route(list(_two_models()), PI, router=router)
+            cxx.filter(zk)
             ref_router = make()
-            ref = InteractiveKalmanFilter(list(_two_models()), PI,
-                                          router=lambda n, c, L, r=ref_router: r._reference_route(n, c, L))
-            ref.forward(zk, record=False)
+            ref = route(list(_two_models()), PI, router=lambda n, c, L, r=ref_router: r._reference_route(n, c, L))
+            ref.filter(zk)
             self.assertIsNotNone(router.__dict__.get("_native_state"))
             np.testing.assert_allclose(cxx.mode_probabilities, ref.mode_probabilities, rtol=0, atol=1e-12)
             self.assertGreater(np.ptp(cxx.mode_probabilities[:, 1]), 0.5)      # it did switch

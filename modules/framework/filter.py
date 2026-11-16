@@ -257,7 +257,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         (a name ``core.create_engine`` takes), or None."""
         from .engines.extended import ExtendedKalmanEngine
         from .engines.linear import LinearKalmanEngine
-        return {ExtendedKalmanEngine: "extended", LinearKalmanEngine: "linear"}.get(type(self.engine))
+        from .engines.interacting import InteractingKalmanEngine
+        return {ExtendedKalmanEngine: "extended", LinearKalmanEngine: "linear",
+                InteractingKalmanEngine: "interacting"}.get(type(self.engine))
 
     def _counterpart_sigma_engine(self):
         """The same for the engines that draw points over the state: the kind and
@@ -279,7 +281,8 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         name = self._counterpart_engine()
         if name is not None:
             core.check(core.lib.kalman_model_set_noise_inputs(handle, 0, 0), "set_noise_inputs")
-            return core.create_engine(name)
+            self._engine_handle = core.create_engine(name)
+            return self._engine_handle
         engine, model = self.engine, self._model
         core.check(core.lib.kalman_model_set_noise_inputs(
             handle, int(bool(engine._noise_through_f(model))), int(bool(engine._noise_through_h(model)))),
@@ -502,6 +505,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         self.x = out["x_post"][-1].reshape(n, 1)
         self.P = out["P_post"][-1]
+        after = getattr(self.engine, "_after_native_pass", None)
+        if after is not None and getattr(self, "_engine_handle", None) is not None:
+            after(self._engine_handle, len(getattr(self._model, "models", ())))
 
     # ------------------------------------------------------------------
     # C-accelerated fast path (constant-matrix linear model, no control

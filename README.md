@@ -23,8 +23,8 @@ smoothed, sampled, controlled, written to a file, or served over an API.
 | `kalman` (program) | lists the models an installation can run and exports them to `.kw` files |
 
 **Filters.** Gaussian beliefs: linear (KF), extended (EKF), unscented (UKF),
-ensemble (EnKF), combinatorial track finding (CKF) and interacting multiple
-models (IKF). Non-Gaussian beliefs: the particle filter. The filtering runs
+ensemble (EnKF), combinatorial track finding (CKF), and several models of a
+system that changes regime (`route`, the IMM of the literature). Non-Gaussian beliefs: the particle filter. The filtering runs
 in C++; a model written in Python is called back from the C++ loop.
 
 **Sensors and operations.** A model lists its sensors, and a model can be made
@@ -32,7 +32,7 @@ from another: `model.add_sensor(sensor)` reads the same state with one more
 sensor (sensor fusion), `model.add_instrument(compose(s1, s2))` with a set of
 them that share a rate and a calibration, `model.joint({...})` estimates some
 of its parameters (an instrument's offset among them) along with its state,
-`compose(a, b)` puts models side by side, `model.lag(L)` carries its last states for sensors that report late and for
+`compose(a, b)` puts models side by side, `route(models, Pi)` carries a probability on each of several, `model.lag(L)` carries its last states for sensors that report late and for
 fixed-lag smoothing. The same in C++ (`model.AddSensor(sensor)`,
 `model.Joint({...})`). See [Models](docs/4_Models.md).
 

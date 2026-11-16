@@ -80,7 +80,7 @@ each exists as a method of the model and as a function.
 | lag | the model carrying its last L states: a sensor with a `delay` reads the state as it was, and block `j` is the state `j` steps ago given what came since (fixed-lag smoothing) | `model.lag(L)`, `KalmanSensor(delay=)` | `model.Lag(L)`, `Sensor::delay` | in place |
 | compose | sensors into an instrument | `compose(s1, s2, name=...)`, `s1 \| s2` | `Kalman::Compose({s1, s2}, name)`, `s1 \| s2` | in place |
 | compose | models side by side, each with its own state; readout `STACKED` (each part its measurement) or `SUMMED` (one shared); a part's parameter is `"<part>.<name>"` | `compose(a, b)`, `a.compose(b)` | `Kalman::Compose({a, b})`, `a.Compose(b)` | in place |
-| route | several models of one system, with a probability on each (the IMM of the literature) | `KalmanModel.route(models, Pi)` | `Model::Route(models, Pi)` | step 15 |
+| route | several models of one system (the *modes*), with a probability on each; run by the interacting engine (the IMM of the literature); the decision layer is a `KalmanRouter` | `route(models, Pi)`, `KalmanModel.route(models, Pi)` | `Kalman::Route(models, Pi)`, `Model::Route(models, Pi)` | in place |
 
 ## Control: acting on the system
 
@@ -130,6 +130,30 @@ uses the first. The other two stay inside their own filter.
 | one hypothesis among several | hypothesis | | track candidate |
 | choosing between hypotheses | data association | | ambiguity resolution |
 
+### The operations, and what other fields call them
+
+| What it does | Contract | Elsewhere |
+|---|---|---|
+| a parameter estimated with the state | `joint` | state augmentation, joint (or dual) estimation |
+| one more sensor on the same state | `add_sensor` | sensor fusion |
+| a set of sensors with one calibration | instrument, `add_instrument` | sensor calibration, bias estimation |
+| a measurement that arrives late | a sensor's `delay`, on a model made by `lag` | out-of-sequence measurement, delayed-state filter |
+| the state a few steps ago, given what came since | `lag`, `model.block(j)` | fixed-lag smoothing |
+| systems with separate states in one filter | `compose` | decoupled (block-diagonal) systems |
+| one system, several regimes | `route` | multiple-model estimation, jump Markov system |
+
+Target tracking has its own words for the last one, kept inside the
+interacting engine (`Engines::Interacting`):
+
+| Concept | Contract | Multiple-model tracking |
+|---|---|---|
+| one of the models of the system | a model given to `route` | mode, regime |
+| the algorithm | the interacting engine, run by the ordinary filter | IMM (interacting multiple model) filter |
+| every belief blended before the prediction | (inside the engine) | mixing, interaction |
+| how likely each model is now | `mode_probabilities` | mode probability |
+| who sets those probabilities | router (`KalmanRouter`) | mode probability update |
+| how regimes follow each other | transition matrix `Pi` | Markov chain, transition probability matrix |
+
 Two words that mislead:
 
 - **Localization** in the ensemble filter is not about finding a position. It
@@ -166,13 +190,16 @@ variants, now `initial_state(x0, P0)`; `model.localization()`, now
 `remove_sensor`, `clear_sensors`, `sensor(i)`), now a sensor's labels.
 `CompositeKalmanModel` and its readouts `FUSED` / `INDEPENDENT`, now `compose`
 (`Composite`) with `SUMMED` / `STACKED`.
+`InteractiveKalmanFilter` (IKF) and `Filters::IKF`, now `route` (`Router`,
+`Models::Router`) on the interacting engine; its `mu_log` and `nis_log` are
+`mode_probabilities` and `nis_history`; the storm models' `ikf_bank` is
+`regime_bank`.
 "Twin" now only means the twin experiment of the weather application: the C++
 class that stands for a Python model is its *counterpart* (`NativeCounterpart`,
 was `NativeTwin`; `KALMAN_NATIVE_COUNTERPARTS`, was `KALMAN_NATIVE_TWINS`).
 
 | Older name | Contract name | Step |
 |---|---|---|
-| `InteractiveKalmanFilter`, IKF | `route` and the interacting engine | 15 |
 
 ## Names made clearer
 

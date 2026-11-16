@@ -1,4 +1,4 @@
-"""NeuralRouter — IKF router backed by a pluggable neural model.
+"""NeuralRouter — router backed by a pluggable neural model.
 
 The router owns feature extraction and normalisation.
 The model owns architecture, training, and inference.
@@ -10,9 +10,9 @@ Usage::
 
     router = NeuralRouter(model=MLP(hidden=32), window=5)
 
-    ikf = InteractiveKalmanFilter(models, Pi, router=router)
-    ikf.fit(training_zk_list, labels_list)      # trains the model
-    record = ikf.forward(test_zk)
+    modes = route(models, Pi, router=router)
+    modes.fit(training_zk_list, labels_list)      # trains the model
+    record = modes.filter(test_zk)
 
 Any callable ``model`` with signature ``model(features) → probs`` works,
 including PyTorch modules, sklearn classifiers, or custom numpy networks.
@@ -44,7 +44,7 @@ from .base import KalmanRouter
 
 
 class NeuralRouter(KalmanRouter):
-    """IKF router that delegates mode-probability estimation to a neural model.
+    """Router that delegates mode-probability estimation to a neural model.
 
     Parameters
     ----------
@@ -92,12 +92,12 @@ class NeuralRouter(KalmanRouter):
     def fit(self, nis_arrays, labels_arrays, seed=None, **kwargs) -> "NeuralRouter":
         """Extract features, normalise, build model, train model.
 
-        Called by ``InteractiveKalmanFilter.fit()``.
+        Called by ``Router.fit()`` (the model made by ``route``).
 
         Parameters
         ----------
         nis_arrays : list of ndarray (T_i, M)
-            NIS history per training scenario (from a Bayesian-IKF run).
+            NIS history per training scenario (from a run with the Bayesian decision).
         labels_arrays : list of int ndarray (T_i,)
             True regime 0 … M−1 at every step.
         seed : int, optional
@@ -278,7 +278,7 @@ class NeuralRouter(KalmanRouter):
         if not self._is_trained:
             raise RuntimeError(
                 f"NeuralRouter.{what}: nothing to export — call fit() "
-                "(or InteractiveKalmanFilter.fit()) first.")
+                "(or fit() of the routed model) first.")
 
         net = getattr(self.model, "_net", None)
         if net is None:

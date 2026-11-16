@@ -38,9 +38,10 @@ x' = μ + a (x - μ)          μ: the regime's level,  a: how long the air remem
 - **Time stepping.** Neither model uses an integrator. A turn at a constant
   rate has an exact solution over one step, and the model writes it out.
 - **Regimes.** The filter does not know which regime the storm is in.
-  `StormModel.ikf_bank()` returns one model per regime (straight, recurving,
-  stalled) and the chance of switching between them. The Interactive Kalman
-  Filter (IKF, the Interacting Multiple Model filter of the literature) runs
+  `StormModel.regime_bank()` returns one model per regime (straight, recurving,
+  stalled) and the chance of switching between them. `route` makes one
+  model of them, which the filter runs on the interacting engine (the
+  Interacting Multiple Model of the literature): it steps
   them together and weighs each by how well it explains the fixes. For the
   tornado model the switching chances come from the season.
 - **Forecast.** `forecast_cone` runs the model forward with no measurements.
@@ -57,13 +58,13 @@ x' = μ + a (x - μ)          μ: the regime's level,  a: how long the air remem
 
 ```python
 from kalman.apps import StormModel, synthetic_track
-from kalman.framework.filters import InteractiveKalmanFilter
+from kalman.framework import route
 
 truth, fixes = synthetic_track(n_steps=40, recurve_at=18, fix_noise=0.3, seed=3)
-models, transition, probabilities = StormModel.ikf_bank(fix_noise=0.3)
-ikf = InteractiveKalmanFilter(models, transition, initial_probs=probabilities)
-estimate = ikf.forward(fixes)
-regimes = ikf.mode_probabilities            # one column per regime
+models, transition, probabilities = StormModel.regime_bank(fix_noise=0.3)
+storm = route(models, transition, probabilities)
+estimate = storm.filter(fixes)
+regimes = storm.mode_probabilities          # one column per regime
 ```
 
 Notebook: [14_StormTracking](../../share/notebooks/14_StormTracking.ipynb).
