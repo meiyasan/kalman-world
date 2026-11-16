@@ -75,7 +75,7 @@ included, so a change on one side has an obvious home on the other:
 | `framework/filters/enkf.py` | `Kalman/Filters/EnKF.h` | `Filters::EnKF` |
 | `framework/filters/ckf.py` | `Kalman/Filters/CKF.h` | `Filters::CKF` |
 | `framework/control.py` | `Kalman/Controller.h` | `Kalman::Controller` |
-| `framework/controllers/proportional.py`, `pid.py`, `lqr.py`, `mppi.py` | `Kalman/Controllers/*.h` | `Controllers::Proportional`, `PID`, `LQR`, `MPPI` |
+| `framework/controllers/proportional.py`, `pid.py`, `lqr.py`, `mpc.py`, `mppi.py` | `Kalman/Controllers/*.h` | `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI` |
 | `framework/controllers/boost.py`, `adaptive_qr.py` | `Kalman/Controllers/Adaptive.h` | `Controllers::Boost`, `Controllers::AdaptiveQR` |
 | `framework/io/record.py` | `Kalman/IO/Record.h` | `IO::Record` (aliased `Kalman::Record`) |
 | `framework/io/collection.py` | `Kalman/IO/Collection.h` | `IO::Collection` |
@@ -134,7 +134,7 @@ exports the algebra names, so existing code compiles unchanged.
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
 | **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IKF`, `Filters::CKF` |
-| **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPPI`; `Boost`, `AdaptiveQR` |
+| **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI`; `Boost`, `AdaptiveQR` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
 | **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
 
@@ -1287,7 +1287,7 @@ linear filter. Both can be present in one process.
 |---|---|---|
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
 | Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
-| Controllers | P, PID, LQR, MPPI, Boost, AdaptiveQR forward to C++; Neural (Torch) stays Python; scipy's DARE is the reference | the same six; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
+| Controllers | P, PID, LQR, MPPI, Boost, AdaptiveQR forward to C++; MPC is C++ only (the Python class has no implementation of its own); Neural (Torch) stays Python; scipy's DARE is the reference | the same six and MPC; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
 | Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |

@@ -603,6 +603,15 @@ kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_
                                                    double noise_sigma, double lambda, int n_iters,
                                                    unsigned long long seed, const double *x_ref,
                                                    const double *Qcost, const double *Rcost);
+/// A model predictive controller (Kalman::Controllers::MPC): `horizon` steps planned ahead at
+/// every step, under the limits `u_min`, `u_max` and the rate limit `du_max` (L doubles each;
+/// NULL for none), with `n_iterations` linearisation passes per step.
+kalman_controller_t *kalman_controller_create_mpc(kalman_model_t *model, int horizon, const double *u_min,
+                                                  const double *u_max, const double *du_max, int n_iterations,
+                                                  const double *x_ref, const double *Qcost, const double *Rcost);
+/// The commands an MPC planned at its last step, `horizon` x L row-major, first one first.
+/// -1 when `controller` is not an MPC or `horizon` is not its own.
+int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizon, double *plan);
 kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
                                                     double threshold, int window, const double *x_ref,
                                                     const double *Qcost, const double *Rcost);

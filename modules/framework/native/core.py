@@ -262,6 +262,10 @@ kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_
                                                    double noise_sigma, double lambda, int n_iters,
                                                    unsigned long long seed, const double *x_ref,
                                                    const double *Qcost, const double *Rcost);
+kalman_controller_t *kalman_controller_create_mpc(kalman_model_t *model, int horizon, const double *u_min,
+                                                  const double *u_max, const double *du_max, int n_iterations,
+                                                  const double *x_ref, const double *Qcost, const double *Rcost);
+int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizon, double *plan);
 kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
                                                     double threshold, int window, const double *x_ref,
                                                     const double *Qcost, const double *Rcost);
@@ -901,7 +905,7 @@ def _optional(array, shape):
 
 def create_controller(kind, model_handle, n, L, *, x_ref=None, Qcost=None, Rcost=None, **params):
     """A C++ controller (garbage-collected handle) of ``kind`` — ``"proportional"``,
-    ``"pid"``, ``"lqr"``, ``"mppi"``, ``"boost"``, ``"adaptive_qr"`` — on the model
+    ``"pid"``, ``"lqr"``, ``"mpc"``, ``"mppi"``, ``"boost"``, ``"adaptive_qr"`` — on the model
     ``model_handle`` (n states, command dimension ``L = max(l, 1)``), with the
     parameters of the C++ constructor. ``model_handle`` must outlive it."""
     lib_ = require()
@@ -924,6 +928,10 @@ def create_controller(kind, model_handle, n, L, *, x_ref=None, Qcost=None, Rcost
         h = lib_.kalman_controller_create_mppi(model_handle, int(params["n_rollouts"]), int(params["horizon"]),
                                                float(params["noise_sigma"]), float(params["lam"]),
                                                int(params["n_iters"]), int(params.get("seed") or 0), *costs)
+    elif kind == "mpc":
+        h = lib_.kalman_controller_create_mpc(model_handle, int(params["horizon"]), opt(params.get("u_min"), (L,)),
+                                              opt(params.get("u_max"), (L,)), opt(params.get("du_max"), (L,)),
+                                              int(params.get("n_iterations") or 1), *costs)
     elif kind == "boost":
         h = lib_.kalman_controller_create_boost(model_handle, float(params["boost_factor"]),
                                                 float(params["threshold"]), int(params["window"]), *costs)
@@ -1004,6 +1012,13 @@ def mppi_set_draws(handle, draws):
     """The perturbations the next MPPI policy call uses (iteration, rollout, step, command order)."""
     d = np.ascontiguousarray(np.asarray(draws, dtype=np.float64).reshape(-1))
     check(lib.kalman_controller_mppi_set_draws(handle, int(d.size), cdptr(d)), "kalman_controller_mppi_set_draws")
+
+
+def mpc_plan(handle, horizon, L):
+    """The commands an MPC planned at its last step, ``(horizon, L)``."""
+    plan = np.empty((int(horizon), int(L)), dtype=np.float64)
+    check(lib.kalman_controller_mpc_plan(handle, int(horizon), dptr(plan)), "kalman_controller_mpc_plan")
+    return plan
 
 
 def solve_dare(A, B, Q, R):

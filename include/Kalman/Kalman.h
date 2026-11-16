@@ -107,6 +107,7 @@
 #include "Kalman/Controllers/Proportional.h"
 #include "Kalman/Controllers/PID.h"
 #include "Kalman/Controllers/LQR.h"
+#include "Kalman/Controllers/MPC.h"
 #include "Kalman/Controllers/MPPI.h"
 #include "Kalman/Controllers/Adaptive.h"
 #include "Kalman/Engines/Linear.h"

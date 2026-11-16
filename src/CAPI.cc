@@ -27,6 +27,7 @@
 #include "Kalman/Controller.h"
 #include "Kalman/Controllers/Adaptive.h"
 #include "Kalman/Controllers/LQR.h"
+#include "Kalman/Controllers/MPC.h"
 #include "Kalman/Controllers/MPPI.h"
 #include "Kalman/Controllers/PID.h"
 #include "Kalman/Controllers/Proportional.h"
@@ -1778,6 +1779,38 @@ kalman_controller_t *kalman_controller_create_mppi(kalman_model_t *model, int n_
         return std::make_unique<Kalman::Controllers::MPPI>(
             &M, static_cast<std::size_t>(n_rollouts), static_cast<std::size_t>(horizon), noise_sigma, lambda,
             static_cast<std::size_t>(n_iters), static_cast<std::uint64_t>(seed), c.xRef, c.Q, c.R);
+    });
+}
+
+kalman_controller_t *kalman_controller_create_mpc(kalman_model_t *model, int horizon, const double *u_min,
+                                                  const double *u_max, const double *du_max, int n_iterations,
+                                                  const double *x_ref, const double *Qcost, const double *Rcost)
+{
+    return MakeController([&]() -> std::unique_ptr<Kalman::Controller> {
+        if (horizon <= 0 || n_iterations <= 0)
+            throw std::invalid_argument("MPC: the horizon and the iterations must be positive");
+        Kalman::Model &M = Deref(model);
+        const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
+        const std::size_t L = CommandSize(M);
+        const auto limit = [L](const double *v, const char *what) { return v ? Vec(v, L, what) : Kalman::Vector(); };
+        return std::make_unique<Kalman::Controllers::MPC>(
+            &M, static_cast<std::size_t>(horizon), limit(u_min, "u_min"), limit(u_max, "u_max"), limit(du_max, "du_max"),
+            static_cast<std::size_t>(n_iterations), c.xRef, c.Q, c.R);
+    });
+}
+
+int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizon, double *plan)
+{
+    return Guard([&] {
+        if (!controller || !plan) throw std::invalid_argument("null controller or plan");
+        const auto *mpc = dynamic_cast<const Kalman::Controllers::MPC *>(controller->controller.get());
+        if (!mpc) throw std::invalid_argument("not an MPC controller");
+        const auto &commands = mpc->Plan();
+        if (horizon < 0 || static_cast<std::size_t>(horizon) != commands.size()) throw std::invalid_argument("the horizon is not the controller's");
+        std::size_t at = 0;
+        for (const auto &u : commands)
+            for (std::size_t b = 0; b < u.Size(); ++b) plan[at++] = u(b);
+        return 0;
     });
 }
 

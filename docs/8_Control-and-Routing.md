@@ -51,11 +51,57 @@ its cost relative to a controller whose raw output already respects the limit.
 | `ProportionalKalmanController` | `Kp` | simplest possible feedback |
 | `PIDKalmanController` | `Kp`, `Ki`, `Kd` | classical three-term |
 | `LQRKalmanController` | `Qcost`, `Rcost` (+ `fit()`) | optimal linear-quadratic gain |
+| `MPCKalmanController` | `horizon`, `u_min`, `u_max`, `du_max`, `n_iterations` | model predictive control: a plan under limits, remade at every step |
 | `MPPIKalmanController` | `n_rollouts`, `horizon`, `noise_sigma`, `lam` | sampling-based MPC, honours actuator limits natively |
 | `NeuralKalmanController` | `hidden`, `features` (+ `fit()` / `fit_mppi()`) | learned policy, can distil MPPI |
 | `BoostKalmanController` | `boost_factor`, `threshold`, `window` | transient response boost on innovation spikes |
 | `AdaptiveQRKalmanController` | `window`, `q_min`, `q_max` | retunes `Q`/`R` online from innovation statistics |
 | `NeuralAdaptiveQRKalmanController` | `window`, `hidden`, `q_min`, `q_max` | learned `Q`/`R` adaptation across regimes |
+
+### Model predictive control
+
+`MPCKalmanController` plans `horizon` commands ahead at every step, applies the
+first, and plans again. Limits on the command are constraints of the plan, not
+a clip applied after it:
+
+```python
+from kalman.framework import MPCKalmanController
+
+model = CarLaneModel("camera", fs=50, x0=x0)
+Qcost, Rcost, x_ref = model.control_cost()
+mpc = MPCKalmanController(model, horizon=40,
+                          u_min=-model.steer_limit, u_max=model.steer_limit,   # steering within 0.1 rad
+                          du_max=0.01,                                         # and at most 0.01 rad per step
+                          Qcost=Qcost, Rcost=Rcost, x_ref=x_ref)
+u = mpc(x_hat, P, t)          # the first command of the plan
+mpc.plan()                    # the whole plan, (horizon, l)
+```
+
+| | |
+|---|---|
+| Cost | the same `Qcost`, `Rcost`, `x_ref` as every controller, summed over the horizon, plus a terminal cost: the Riccati solution, so that with no limit in the way the command is the LQR command whatever the horizon |
+| Limits | `u_min`, `u_max` on the command and `du_max` on its change per step (a number, or one per command) |
+| Prediction | the model's own `f`: exact for a model of matrices, linearised along the previous plan otherwise, `n_iterations` passes per step |
+| Solver | Hildreth's method on the dual of the quadratic programme: no dependency, the same answer for the same input |
+
+Beside the others: LQR is one gain and knows no limit; MPPI replans by rolling
+random command sequences through `f`; MPC replans deterministically. On the
+lane-keeping car started 3 m off the lane centre (250 steps, no noise):
+
+| Controller | Cost | Largest steering asked | Per step |
+|---|---|---|---|
+| LQR, clipped by the actuator | 257.2 | 0.288 rad | 0.07 ms |
+| MPC, horizon 40 | 257.2 | 0.100 rad | 9 ms |
+| MPPI, 100 rollouts, horizon 15 | 454.6 | 0.093 rad | 141 ms |
+
+For this car, LQR clipped after the fact happens to be as good as planning with
+the limit: the two costs agree. MPC never asks for more than the actuator
+gives, and it is the one that takes a rate limit. Where clipping does cost,
+MPC is ahead: a mass driven by a limited force from 6 m away costs 404.5 under
+MPC against 412.2 under clipped LQR (`tests/cxx/13_controllers.cc`).
+
+The planner is `Kalman::Controllers::MPC`; the Python class forwards to it and
+has no implementation of its own, so it needs libKalman.
 
 The last two are *not* control in the actuator sense — they act on the filter's
 own noise model. That is deliberate: the same callable hook is the natural place

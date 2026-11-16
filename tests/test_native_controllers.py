@@ -22,7 +22,7 @@ from modules.framework.native import core
 import modules.framework.models.native as native
 from modules.framework.models.extended import ExtendedKalmanModel
 from modules.framework.controllers import (ProportionalKalmanController, PIDKalmanController,
-                                           LQRKalmanController, MPPIKalmanController,
+                                           LQRKalmanController, MPCKalmanController, MPPIKalmanController,
                                            BoostKalmanController, AdaptiveQRKalmanController)
 from modules.apps.vehicles import CarLaneModel
 
@@ -79,6 +79,74 @@ def closed_loop_run(controller, N, seed=0):
         xs[k] = x_true.ravel()
         t_now += 1.0 / model.fs
     return xs
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
+class TestModelPredictiveControl(unittest.TestCase):
+    """MPCKalmanController forwards to Kalman::Controllers::MPC; it has no Python
+    implementation, so it is pinned against LQR and against its own limits."""
+
+    @staticmethod
+    def rollout(controller, n_steps=200):
+        """A noise-free run of the car: the commands asked for, and the cost."""
+        model = controller.model
+        Qcost, Rcost, x_ref = model.control_cost()
+        x, asked, cost = model.x0.copy(), [], 0.0
+        for k in range(n_steps):
+            u = np.asarray(controller(x, 1e-4 * np.eye(3), k / model.fs), dtype=float).reshape(-1, 1)
+            applied = model.clip_u(u)
+            asked.append(float(u[0, 0]))
+            cost += float((x - x_ref).T @ Qcost @ (x - x_ref) + applied.T @ Rcost @ applied)
+            x = np.asarray(model.decode_step(x, u=u, t=k / model.fs), dtype=float).reshape(-1, 1)
+        return np.array(asked), cost, x
+
+    def test_with_no_limit_in_the_way_it_is_lqr(self):
+        make = lambda: lane(x0=(0.5, 0.02, 15.0))
+        lqr = LQRKalmanController(make(), **cost_of(make())).fit()
+        mpc = MPCKalmanController(make(), horizon=40, **cost_of(make()))
+        u_lqr, cost_lqr, _ = self.rollout(lqr)
+        u_mpc, cost_mpc, _ = self.rollout(mpc)
+        np.testing.assert_allclose(u_mpc, u_lqr, atol=2e-4)
+        self.assertAlmostEqual(cost_mpc, cost_lqr, delta=1e-3 * cost_lqr)
+
+    def test_the_limit_is_part_of_the_plan(self):
+        model = lane(x0=(3.0, 0.0, 15.0))                     # 3 m off the lane centre
+        mpc = MPCKalmanController(model, horizon=40, u_min=-model.steer_limit, u_max=model.steer_limit,
+                                  **cost_of(model))
+        lqr = LQRKalmanController(lane(x0=(3.0, 0.0, 15.0)), **cost_of(model)).fit()
+        asked, cost, x = self.rollout(mpc, 250)
+        asked_lqr, cost_lqr, _ = self.rollout(lqr, 250)
+        self.assertLessEqual(np.abs(asked).max(), model.steer_limit + 1e-12)       # never asks for more
+        self.assertGreater(np.abs(asked_lqr).max(), 2 * model.steer_limit)         # LQR does, and is clipped
+        self.assertLess(abs(float(x[0, 0])), 1e-2)                                 # back on the lane centre
+        self.assertLessEqual(cost, cost_lqr * (1 + 1e-6))
+        plan = mpc.plan()
+        self.assertEqual(plan.shape, (40, 1))
+        self.assertLessEqual(np.abs(plan).max(), model.steer_limit + 1e-12)
+
+    def test_a_rate_limit(self):
+        model = lane(x0=(3.0, 0.0, 15.0))
+        mpc = MPCKalmanController(model, horizon=40, u_min=-0.1, u_max=0.1, du_max=0.01, **cost_of(model))
+        asked, _, x = self.rollout(mpc, 300)
+        self.assertLessEqual(np.abs(np.diff(asked)).max(), 0.01 + 1e-9)
+        self.assertLess(abs(float(x[0, 0])), 5e-2)
+
+    def test_the_same_run_twice(self):
+        runs = [self.rollout(MPCKalmanController(lane(), horizon=20, u_min=-0.1, u_max=0.1, **cost_of(lane())), 40)[0]
+                for _ in range(2)]
+        np.testing.assert_array_equal(runs[0], runs[1])
+
+    def test_reset_forgets_the_plan(self):
+        mpc = MPCKalmanController(lane(), horizon=20, u_min=-0.1, u_max=0.1, **cost_of(lane()))
+        first = self.rollout(mpc, 30)[0]
+        mpc.reset()
+        np.testing.assert_array_equal(self.rollout(mpc, 30)[0], first)
+
+    def test_refusals(self):
+        with self.assertRaises(RuntimeError):                # limits of the wrong size: no C++ controller
+            MPCKalmanController(lane(), u_min=[-0.1, -0.1], **cost_of(lane()))(np.zeros((3, 1)), np.eye(3), 0.0)
+        with self.assertRaisesRegex(RuntimeError, "uMin must not exceed uMax"):
+            MPCKalmanController(lane(), u_min=0.1, u_max=-0.1, **cost_of(lane()))(np.zeros((3, 1)), np.eye(3), 0.0)
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")

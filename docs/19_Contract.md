@@ -84,7 +84,7 @@ each exists as a method of the model and as a function.
 
 | Term | Meaning | Status |
 |---|---|---|
-| controller | computes the command `u` from the estimate: proportional, PID, LQR, MPC, MPPI | MPC: step 3 |
+| controller | computes the command `u` from the estimate: proportional, PID, LQR, MPC, MPPI | in place |
 | tuner | retunes `Q` and `R` from the innovations; commands nothing | step 8 |
 
 ## The three vocabularies

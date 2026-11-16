@@ -1,6 +1,6 @@
 /**
  * \file 13_controllers.cc
- * \brief Controllers: the closed loop, P / PID / LQR / MPPI, the actuator hook, the adapters.
+ * \brief Controllers: the closed loop, P / PID / LQR / MPC / MPPI, the actuator hook, the adapters.
  */
 #include "Kalman/Kalman.h"
 #include "Check.h"
@@ -216,6 +216,133 @@ int main()
         threw = false;
         try { none.Fit(); } catch (const std::runtime_error &) { threw = true; }
         CHECK(threw, "LQR: a plant without control cannot be fitted");
+    }
+
+    // --- MPC ----------------------------------------------------------------------------
+    {
+        const double fsSlow = 5.;
+        const Matrix Rc(1, 1, 0.01);
+        const Matrix I2 = Matrix::Identity(2);
+
+        // The cost of a noise-free run from x0: sum of e^T e + 0.01 u^2, u as delivered.
+        const auto rollout = [&](Fixture::ControlledVelocity &plant, Controller &ctrl, Vector x, std::size_t steps,
+                                 double *peak = nullptr, double *jump = nullptr) {
+            double cost = 0., last = 0.;
+            for (std::size_t k = 0; k < steps; ++k)
+            {
+                const Vector u = plant.ClipControl(ctrl.Policy(x, I2, static_cast<double>(k) * plant.DeltaT(), nullptr));
+                if (peak) *peak = std::max(*peak, std::abs(u(0)));
+                if (jump && k > 0) *jump = std::max(*jump, std::abs(u(0) - last));
+                last = u(0);
+                cost += x(0) * x(0) + x(1) * x(1) + 0.01 * u(0) * u(0);
+                x = plant.f(x, u, 0.);
+            }
+            return cost;
+        };
+
+        // With no limit in the way the first command is the LQR command, whatever the horizon.
+        Fixture::ControlledVelocity plant(fsSlow);
+        Controllers::LQR lqr(&plant, Vector(), Matrix(), Rc);
+        lqr.Fit();
+        Vector x0(2); x0(0) = 1.; x0(1) = -0.3;
+        const double uLqr = lqr.Policy(x0, I2, 0., nullptr)(0);
+        for (std::size_t horizon : {1, 5, 25})
+        {
+            Controllers::MPC mpc(&plant, horizon, Vector(), Vector(), Vector(), 1, Vector(), Matrix(), Rc);
+            CHECK_CLOSE(mpc.Policy(x0, I2, 0., nullptr)(0), uLqr, 1e-9, "MPC: with no limit, the LQR command (any horizon)");
+            CHECK(mpc.Sweeps() == 0 && mpc.ActiveLimits() == 0, "MPC: and no limit was active");
+        }
+        {
+            Controllers::MPC mpc(&plant, 10, Vector(), Vector(), Vector(), 1, Vector(), Matrix(), Rc);
+            mpc.Policy(x0, I2, 0., nullptr);
+            CHECK(mpc.Plan().size() == 10 && mpc.Predicted().size() == 11, "MPC: a plan of `horizon` commands and the states it leads through");
+            const Vector next = plant.f(x0, mpc.Plan()[0], 0.);
+            CHECK(mpc.Predicted()[1](0) == next(0) && mpc.Predicted()[1](1) == next(1), "MPC: the prediction is the model's own f");
+            Controllers::MPC again(&plant, 10, Vector(), Vector(), Vector(), 1, Vector(), Matrix(), Rc);
+            CHECK(again.Policy(x0, I2, 0., nullptr)(0) == mpc.Plan()[0](0), "MPC: the same input gives the same command");
+            const double first = mpc.Plan()[0](0);
+            mpc.Reset();
+            CHECK(mpc.Policy(x0, I2, 0., nullptr)(0) == first, "MPC: Reset() forgets the plan");
+        }
+
+        // A limit on the command is a constraint of the plan.
+        Fixture::ControlledVelocity limited(fsSlow, 1.);
+        Vector far(2); far(0) = 6.; far(1) = 0.;
+        Vector lo(1), hi(1); lo(0) = -1.; hi(0) = 1.;
+        Controllers::MPC mpc(&limited, 40, lo, hi, Vector(), 1, Vector(), Matrix(), Rc);
+        const Vector u0 = mpc.Policy(far, I2, 0., nullptr);
+        bool inside = true;
+        for (const Vector &u : mpc.Plan()) inside = inside && u(0) >= -1. && u(0) <= 1.;
+        CHECK(inside && u0(0) == -1., "MPC: every planned command is inside the limits; the first is on one");
+        CHECK(mpc.ActiveLimits() > 0 && mpc.Sweeps() > 0, "MPC: the limit was active in the plan");
+
+        mpc.Reset();
+        Controllers::LQR clipped(&limited, Vector(), Matrix(), Rc);
+        clipped.Fit();
+        double peak = 0.;
+        const double costMpc = rollout(limited, mpc, far, 150, &peak), costLqr = rollout(limited, clipped, far, 150);
+        std::printf("  from x = 6 under |u| <= 1: cost MPC %.2f, clipped LQR %.2f\n", costMpc, costLqr);
+        CHECK(peak <= 1. + 1e-12, "MPC: no command beyond the limit over the run");
+        CHECK(costMpc < costLqr, "MPC: planning with the limit beats LQR clipped after the fact");
+
+        // A limit on how fast the command may change.
+        Vector rate(1); rate(0) = 0.2;
+        Controllers::MPC smooth(&limited, 40, lo, hi, rate, 1, Vector(), Matrix(), Rc);
+        double jump = 0.;
+        rollout(limited, smooth, far, 80, nullptr, &jump);
+        CHECK(jump <= 0.2 + 1e-9, "MPC: the command changes by at most duMax per step");
+        bool planSmooth = true;
+        for (std::size_t k = 1; k < smooth.Plan().size(); ++k)
+            planSmooth = planSmooth && std::abs(smooth.Plan()[k](0) - smooth.Plan()[k - 1](0)) <= 0.2 + 1e-9;
+        CHECK(planSmooth, "MPC: and so does the plan");
+
+        // A nonlinear plant: a cart with quadratic drag, linearised along the plan.
+        class Cart : public Models::Extended
+        {
+            public:
+                Cart() : Models::Extended("cart", 2, 1, 1)
+                {
+                    SetSampleRate(10.);
+                    SetDifferentiator(DifferentiatorKind::Central);
+                    Matrix H(1, 2, 0.); H(0, 0) = 1.; SetH(H);
+                }
+                Vector f(const Vector &x, const Vector &u, double = 0.) const override
+                {
+                    const double dt = DeltaT(), a = (u.Empty() ? 0. : u(0)) - 0.5 * x(1) * std::abs(x(1));
+                    Vector out(2);
+                    out(0) = x(0) + dt * x(1);
+                    out(1) = x(1) + dt * a;
+                    return out;
+                }
+        };
+        Cart cart;
+        Vector lim2(1), lim2n(1); lim2(0) = 2.; lim2n(0) = -2.;
+        Controllers::MPC drive(&cart, 30, lim2n, lim2, Vector(), 2, Vector(), Matrix(), Rc);
+        Vector xc(2); xc(0) = 3.; xc(1) = 0.;
+        double peakCart = 0.;
+        for (std::size_t k = 0; k < 120; ++k)
+        {
+            const Vector u = drive.Policy(xc, I2, 0., nullptr);
+            peakCart = std::max(peakCart, std::abs(u(0)));
+            xc = cart.f(xc, u, 0.);
+        }
+        std::printf("  nonlinear cart after 12 s: x = %.4f, v = %.4f\n", xc(0), xc(1));
+        CHECK(std::abs(xc(0)) < 0.02 && std::abs(xc(1)) < 0.02, "MPC: a nonlinear plant is brought to the set point");
+        CHECK(peakCart <= 2. + 1e-12, "MPC: within its limits");
+
+        // Refusals.
+        bool threw = false;
+        try { Fixture::ConstantVelocity none(1, fsSlow); Controllers::MPC bad(&none); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "MPC: a plant without control is refused");
+        threw = false;
+        try { Controllers::MPC bad(&plant, 0); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "MPC: a zero horizon is refused");
+        threw = false;
+        try { Controllers::MPC bad(&plant, 5, hi, lo); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "MPC: uMin above uMax is refused");
+        threw = false;
+        try { Controllers::MPC bad(&plant, 5, Vector(2, 0.), Vector()); } catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "MPC: limits of the wrong size are refused");
     }
 
     // --- MPPI ---------------------------------------------------------------------------
