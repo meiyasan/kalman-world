@@ -552,6 +552,65 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from .models.joint import Joint
         return Joint(self, parameters, **kwargs)
 
+    def add_sensor(self, sensor):
+        """Add a sensor. A :class:`~.sensor.KalmanSensor` gives back a **new model**,
+        this one read by one more sensor (``radar = shell.add_sensor(doppler)``; this
+        model is left as it is). A name (a string) is only a label: it is appended to
+        this model's label list, in place, as before."""
+        from .sensor import KalmanSensor
+        if isinstance(sensor, KalmanSensor):
+            from .models.fusion import Fusion
+            return Fusion(self, sensor)
+        return super().add_sensor(sensor)
+
+    @property
+    def sensors(self):
+        """The sensors of this model, in the order of ``z``: the one it was built
+        with (its own ``h`` and ``R``), then those added with :meth:`add_sensor`."""
+        given = self.__dict__.get("_sensors_given")
+        if given is not None:
+            return given
+        from .native import core
+        if not core.HAS_CXX_CORE:
+            return [self._builtin_sensor()]                 # no library: the same rule, in Python
+        # Asked of the C++ model (Model::Sensors()), which is what a filter runs.
+        from .models import native
+        return native.sensors_of(native.view_of(self), keep=self)
+
+    @sensors.setter
+    def sensors(self, value):
+        self.__dict__["_sensors_given"] = value
+
+    def _builtin_sensor(self):
+        """How this model's own measurement is labelled, for the C++ model to take
+        (``native._push_labels``): the sensor a model has without declaring any,
+        which reads ``h`` with noise ``R``. Named after the model's one observable when it declares exactly one
+        (the ballistic model's ``position``), else after its label, else its class.
+        Its channels are the model's labels when there is one per channel (``X``,
+        ``Y``, ``Z``), else its observables."""
+        from .sensor import KalmanSensor
+        m = int(self.m)
+        labels = [str(label) for label in (self._sensor or [])]
+        members = list(self.observables.__members__.items())
+        synthetic = all(name == f"Z{i}" for i, (name, _) in enumerate(members))
+        unit = lambda member: member._value_ if isinstance(member._value_, str) else ""
+        if members and not synthetic and len(members) == 1:
+            name = members[0][0].lower()
+        elif labels and (len(labels) != m or m == 1):
+            name = labels[0]
+        else:
+            name = type(self).__name__
+        if len(labels) == m and m > 1:
+            shared = unit(members[0][1]) if len(members) == 1 else ""
+            channels = {label: (unit(members[i][1]) if len(members) == m else shared)
+                        for i, label in enumerate(labels)}
+        elif len(members) == m:
+            channels = {key: unit(member) for key, member in members}
+        else:
+            channels = {f"Z{i}": "" for i in range(m)}
+        return KalmanSensor(name, lambda x, t=None: self.h(x, t=t), R=np.asarray(self.R(), dtype=float),
+                            labels=channels, jacobian=lambda x, t=None: self.H(x, t))
+
     def control_cost(self):
         """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
         return np.eye(self.n), np.eye(max(self.l, 1)), np.zeros((self.n, 1))

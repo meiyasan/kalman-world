@@ -64,6 +64,57 @@ class TestFrameworkOwnsContracts(unittest.TestCase):
         self.assertIs(KalmanEstimator, KalmanEngine)
 
 
+class TestReservedNames(unittest.TestCase):
+    """The names of the model contract mean one thing each.
+
+    An operation gives back a model made from this one; an engine hook is a
+    method an engine looks up on the model. A name used for both, or redefined by
+    an application with another meaning, is found by the wrong caller without any
+    error (an ``observe`` operation once hijacked the ensemble engine's hook).
+    """
+
+    #: Methods of KalmanModel that return a model made from this one.
+    OPERATIONS = ("joint", "add_sensor")
+    #: Reserved for the operations still to come: nothing may take these names.
+    PLANNED = ("lag", "compose", "route", "add_instrument", "instruments")
+    #: Looked up on a model by the ensemble engine.
+    ENSEMBLE_HOOKS = ("forecast", "observe", "localization", "initial_ensemble")
+
+    @staticmethod
+    def _models():
+        for _, name, _ in pkgutil.walk_packages(apps.__path__, apps.__name__ + "."):
+            try:
+                importlib.import_module(name)
+            except Exception:
+                continue
+        seen, stack = [], [KalmanModel]
+        while stack:
+            for sub in stack.pop().__subclasses__():
+                if sub not in seen:
+                    seen.append(sub)
+                    stack.append(sub)
+        return seen
+
+    def test_operations_are_methods_of_the_base_contract(self):
+        for name in self.OPERATIONS:
+            self.assertTrue(callable(getattr(KalmanModel, name, None)), name)
+
+    def test_no_operation_is_named_like_a_hook(self):
+        self.assertFalse(set(self.OPERATIONS + self.PLANNED) & set(self.ENSEMBLE_HOOKS))
+
+    def test_applications_do_not_redefine_them(self):
+        for cls in self._models():
+            if not cls.__module__.startswith("modules.apps"):
+                continue
+            for name in self.OPERATIONS + self.PLANNED:
+                self.assertNotIn(name, cls.__dict__, f"{cls.__name__}.{name} shadows a model operation")
+
+    def test_planned_names_are_free(self):
+        for cls in [KalmanModel] + self._models():
+            for name in self.PLANNED:
+                self.assertFalse(hasattr(cls, name), f"{cls.__name__}.{name} is taken before its operation exists")
+
+
 class TestRegistriesCoverTheirKinds(unittest.TestCase):
     """Each plug-in registry maps every member of its kind enum."""
 

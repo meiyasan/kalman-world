@@ -27,6 +27,12 @@ ensemble (EnKF), combinatorial track finding (CKF) and interacting multiple
 models (IKF). Non-Gaussian beliefs: the particle filter. The filtering runs
 in C++; a model written in Python is called back from the C++ loop.
 
+**Sensors and operations.** A model lists its sensors, and a model can be made
+from another: `model.add_sensor(sensor)` reads the same state with one more
+instrument (sensor fusion), `model.joint({...})` estimates some of its
+parameters along with its state. The same in C++ (`model.AddSensor(sensor)`,
+`model.Joint({...})`). See [Models](docs/4_Models.md).
+
 **Applications.** Fifteen worked systems, from ballistics, rockets and space
 navigation to particle tracking, gravitational waves, GPS, storms and
 turbulent flow. Each has a page and a notebook: see

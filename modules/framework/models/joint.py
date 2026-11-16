@@ -27,12 +27,10 @@ from __future__ import annotations
 from typing import Mapping
 
 import numpy as np
-from scipy.linalg import block_diag
 
 from ..constants import KalmanState
 from ..model import KalmanModel
 from ..native import core
-from . import native
 from .operation import OperationModel
 
 
@@ -96,36 +94,11 @@ class Joint(OperationModel):
             sensor_id = (model._sensor[0] if model._sensor else type(model).__name__) + "+" + "+".join(names)
         self._adopt(handle, [model], sensor_id, **kwargs)
 
-    # ------------------------------------------------------------------
-    # Initial state: the joint one, or one the inner model takes
-    # ------------------------------------------------------------------
-    def initial_state(self, x0=None, P0=None):
-        if getattr(self, "x0", None) is None or "inners" not in self.__dict__:
-            return super().initial_state(x0, P0)            # during construction
-        size = lambda a: None if a is None else int(np.size(a))
-        if x0 is None and P0 is None:
-            return super().initial_state()
-        if size(x0) in (None, self.n) and size(P0) in (None, self.n * self.n):
-            return super().initial_state(x0, P0)
-        full_P0 = P0 if size(P0) == self.n * self.n else None
-        self.inner.initial_state(x0, None if full_P0 is not None else P0)
-        values = native.declared_parameters(self._inner_cxx)
-        theta = np.array([[values[name]] for name in self.names])
-        x0_ = np.vstack([np.asarray(self.inner.x0, dtype=float).reshape(self.n_inner, 1), theta])
-        P0_ = block_diag(np.asarray(self.inner.P0, dtype=float).reshape(self.n_inner, self.n_inner),
-                         np.diag([s ** 2 for s, _ in self.estimated.values()]))
-        return super().initial_state(x0_, full_P0 if full_P0 is not None else P0_)
-
-    # ------------------------------------------------------------------
-    # Labels
-    # ------------------------------------------------------------------
     @property
     def states(self) -> KalmanState:
+        """The inner state components, then the parameters: as the C++ model names them."""
         if getattr(self, "_states_enum", None) is None:
-            inner = list(self.inner.states.__members__)
-            labels = (inner if len(inner) == self.n_inner else [f"X{i}" for i in range(self.n_inner)]) + self.names
-            self._states_enum = KalmanState(f"{type(self.inner).__name__}JointState",
-                                            {label: i for i, label in enumerate(labels)})
+            self._states_enum = self._labels(True, KalmanState, "JointState")
         return self._states_enum
 
     def __repr__(self):

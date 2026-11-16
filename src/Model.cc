@@ -393,6 +393,18 @@ namespace Kalman
     std::vector<Model::Component> Model::MeasurementComponents() const
     { return Components(fMeasurementComponents, fNMeasure, "z"); }
 
+    std::vector<Sensor> Model::Sensors() const
+    {
+        // The sensor the model was built with: its own h and R, whole.
+        Sensor builtIn;
+        builtIn.name = BuiltInSensorName();
+        builtIn.g = [this](const Vector &x, double t) { return this->h(x, t); };
+        builtIn.jacobian = [this](const Vector &x, double t) { return this->JacobianH(x, t); };
+        builtIn.R = R(fT0);
+        builtIn.channels = MeasurementComponents();
+        return {builtIn};
+    }
+
     void Model::DeclareState(std::vector<Component> components)
     {
         CheckComponents(components, fNState, "the state");

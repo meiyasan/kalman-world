@@ -5,7 +5,7 @@ Layers (dependency points downward only: Filter → Engine → Model):
 - ``model.py``   : ``KalmanModel``  — the system (WHAT): f/h/F/H/B/L/M/Q/R.
 - ``engine.py``  : ``KalmanEngine`` — the algorithm (HOW): one predict/update/smooth step.
 - ``filter.py``  : ``BayesFilter`` — the workflow (WHEN): forward/backward + run state; ``KalmanFilter`` is its Gaussian family, ``ParticleFilter`` stands beside it.
-- ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite`` / ``Joint``).
+- ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite`` / ``Joint`` / ``Fusion``).
 - ``engines/``   : concrete engines (``LinearKalmanEngine`` / ``Extended`` / ``Unscented`` / ``Particle``).
 - ``filters/``   : the recognisable filter names (``LinearKalmanFilter`` / ``Extended`` / ``Unscented`` / ``Particle`` / ``Ensemble`` / ``Combinatorial`` / ``Interactive``).
 - ``constants.py``: ``KalmanEngineKind`` (LINEAR/EXTENDED/UNSCENTED/PARTICLE) used to bind models↔engines.
@@ -26,13 +26,15 @@ from .solvers import (SpectralSolver, FiniteDifferenceSolver, resolve_solver,
 from .provider import KalmanProvider
 from .filter import BayesFilter, KalmanFilter
 from .control import KalmanController
-from .operations import joint
+from .operations import joint, add_sensor
+from .sensor import KalmanSensor
 from .models import (
     LinearKalmanModel,
     ExtendedKalmanModel,
     UnscentedKalmanModel,
     CompositeKalmanModel,
     Joint,
+    Fusion,
     NativeModel,
 )
 from .engines import (
@@ -100,7 +102,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel", "Joint", "joint", "NativeModel",
+    "CompositeKalmanModel", "Joint", "joint", "Fusion", "add_sensor", "KalmanSensor", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

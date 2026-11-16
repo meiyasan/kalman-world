@@ -202,13 +202,100 @@ estimates the drag coefficient of a shell this way.
 
 ---
 
+## Sensors
+
+A **sensor** is what acquires a measurement: what it reads of the state, how
+noisy it is, and what its channels are called. Each channel is an
+**observable**, a quantity that can be measured, with its unit; the
+**measurement** is the numbers that come out. A model lists its sensors:
+
+```python
+shell = BallisticModel("XYZ", order=3, fs=32, m=4.2, c_drag=6e-4,
+                       measurement_uncertainty=10, process_uncertainty=0.5)
+shell.sensors        # [KalmanSensor('position', ..., channels=3)]: X, Y, Z in m
+```
+
+`model.add_sensor(sensor)` (also `add_sensor(model, sensor)`) gives a **new
+model**, read by one more sensor on the same state; the model it was called on
+is left as it is. One filter update then weighs every sensor by its noise,
+which is sensor fusion:
+
+```
+z = [ h(x, t) ; g(x, t) ]          R = diag(R_model, R_sensor)
+```
+
+```python
+from kalman.framework import KalmanSensor
+
+def radial_velocity(x):                      # the velocity along the line of sight
+    x = np.asarray(x).reshape(-1)
+    p, v = x[[0, 3, 6]], x[[1, 4, 7]]
+    return [float(v @ p / np.linalg.norm(p))]
+
+doppler = KalmanSensor("doppler", radial_velocity, R=1.0, labels={"V_RADIAL": "m/s"})
+radar = shell.add_sensor(doppler)
+radar.sensors        # [position, doppler]
+radar.observables    # X, Y, Z, V_RADIAL: derived from the sensors
+record = radar.filter(zk)                    # zk has four columns
+```
+
+| `KalmanSensor(name, ...)` | |
+|---|---|
+| `g` | a function `g(x)` or `g(x, t=...)` returning its `k` readings |
+| `G=` | instead of `g`, a `k x n` matrix for readings linear in the state; a model of matrices stays one, on the linear engine |
+| `R=` | its noise: a `k x k` covariance, `k` variances, or one variance for all |
+| `labels=` | its observables: `{"X": "m", ...}`, a list of names, or a `KalmanObservable` enum; named after the sensor by default |
+| `jacobian=` | `dg/dx`; differenced with the model's scheme when not given |
+
+Three kinds of sensor on the same shell:
+
+```python
+P = np.zeros((3, 9)); P[0, 0] = P[1, 3] = P[2, 6] = 1.0     # picks x, y, z out of the state
+
+# a second position instrument: redundant, fused by its noise
+lidar = KalmanSensor("lidar", G=P, R=2.0**2, labels={"X": "m", "Y": "m", "Z": "m"})
+
+# one that is not aligned with the axes: its noise is given in its own axes
+tilted = KalmanSensor("tilted", G=Rot @ P, R=np.diag([1.0, 1.0, 25.0]))
+
+# a camera: two pixel coordinates, by a projection that divides by the depth
+def pixels(x):
+    p = Rot @ (P @ np.asarray(x).reshape(-1) - camera_position)
+    return [focal * p[0] / p[2], focal * p[1] / p[2]]
+camera = KalmanSensor("camera", pixels, R=0.5**2, labels={"U": "px", "V": "px"})
+
+tracked = shell.add_sensor(lidar).add_sensor(camera)        # they nest: one flat list of sensors
+tracked.observables   # X, Y, Z, lidar_X, lidar_Y, lidar_Z, U, V: a name already taken gets its sensor's in front
+```
+
+One camera gives the direction of a point and not how far it is; two at
+different places give both, with no special code: the filter triangulates
+through the two sensors' Jacobians (`tests/test_add_sensor.py`, `TestCameras`:
+the depth of a point 40 m away is left with metres of doubt by one camera and
+found to 5 cm by two).
+
+A model that declares no sensor has one built in: its own `h` and `R`, named
+after its observable (`position`) and with the model's labels as channels.
+`add_sensor("X")` with a string is still only a label, appended in place, as
+before. `KalmanObservable` stays the type of a channel label; a model's
+`observables` are those of its sensors, in the order of `z`.
+
+The operations nest: `shell.add_sensor(doppler).joint({"c_drag": ...})`
+estimates a parameter of the shell with both sensors. The model is
+`Kalman::Models::Fusion`; the dynamics run on the model's C++ twin when it has
+one, and `g` is called back from the C++ loop. `model.observe(X)` is something
+else: the measurement of many states at once, which the ensemble filter asks
+for at every step. Notebook 01, Step 6 adds a Doppler radar to a tracked shell.
+
+---
+
 ## The shipped catalog
 
 46 model classes are discoverable through `kalman.api.catalog()["models"]`.
 
 | Family / domain | Models |
 |---|---|
-| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `CompositeKalmanModel`, `Joint` |
+| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `CompositeKalmanModel`, `Joint`, `Fusion` |
 | **astro.rocket** | `RocketAscentModel`, `RocketDescentModel`, `RocketLiftoffModel`, `RocketLandingModel` (+ `RocketLaunchModel`, `RocketTakeoffModel` legacy aliases) |
 | **astro.space** | `TransLunarModel`, `InterplanetaryModel` |
 | **ballistics** | `BallisticModel`, `BallisticLinearModel` |

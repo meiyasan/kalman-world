@@ -55,6 +55,7 @@
 #include "Kalman/Constants.h"
 #include "Kalman/Integrator.h"
 #include "Kalman/Differentiator.h"
+#include "Kalman/Sensor.h"
 
 #include <map>
 #include <memory>
@@ -63,15 +64,13 @@
 
 namespace Kalman
 {
+    struct EstimatedParameter;      // Kalman/Models/Joint.h
+
     class Model : public Abstract::Metadata
     {
         public:
-            /// One component of the state or of the measurement: what it is and its unit.
-            struct Component
-            {
-                std::string name;
-                std::string unit;   ///< "" when dimensionless or not stated
-            };
+            /// One component of the state or of the measurement (Kalman::Component).
+            using Component = Kalman::Component;
 
         protected:
             std::string fName = "model";
@@ -127,6 +126,7 @@ namespace Kalman
             // (see DeclareState() and DeclareMeasurement()).
             std::vector<Component> fStateComponents;
             std::vector<Component> fMeasurementComponents;
+            std::string fBuiltInSensor;   // see BuiltInSensorName()
 
         public:
             Model() = default;
@@ -343,14 +343,16 @@ namespace Kalman
             // Python class a C++ model sits behind, a spec read from JSON, a ROOT
             // macro. A model declares its scalars once, in its constructor, and
             // reads them back in ParametersChanged().
+            // Virtual so that a model made from another (Models::Observed,
+            // Models::Composite ...) can answer with the inner model's parameters.
             /// The declared names, sorted.
-            std::vector<std::string> ParameterNames() const;
-            bool HasParameter(const std::string &name) const { return fParameters.count(name) > 0; }
+            virtual std::vector<std::string> ParameterNames() const;
+            virtual bool HasParameter(const std::string &name) const { return fParameters.count(name) > 0; }
             /// \throws std::out_of_range naming the unknown parameter and the known ones.
-            double Parameter(const std::string &name) const;
+            virtual double Parameter(const std::string &name) const;
             /// Set a declared parameter, then call ParametersChanged().
             /// \throws std::out_of_range as Parameter().
-            void SetParameter(const std::string &name, double value);
+            virtual void SetParameter(const std::string &name, double value);
 
             // --- named arrays ---------------------------------------------------
             // The same for what is not one number: the orbital elements of each
@@ -375,6 +377,52 @@ namespace Kalman
             std::vector<Component> StateComponents() const;
             /// The m components of the measurement, in the order of z.
             std::vector<Component> MeasurementComponents() const;
+            /// The same under the names the Python contract uses (`model.states`).
+            std::vector<Component> States() const { return StateComponents(); }
+            /// The observables: what the sensors measure, in the order of z (`model.observables`).
+            std::vector<Component> Observables() const { return MeasurementComponents(); }
+
+            // --- sensors ------------------------------------------------------------
+            // What acquires the measurement. A model has the sensor it was built
+            // with (its own h and R) and those added to it.
+            /**
+             * rief The sensors of this model, in the order of z.
+             *
+             * By default one sensor, built in: it reads `h(x, t)` with noise `R`,
+             * its channels are the measurement components, and it is named
+             * BuiltInSensorName(). A model made by AddSensor() lists the inner
+             * model's sensors, then the added ones. The built-in sensor borrows
+             * the model: it must not outlive it.
+             */
+            virtual std::vector<Sensor> Sensors() const;
+            /// The name of the built-in sensor: Name() unless SetBuiltInSensorName() gave one.
+            const std::string &BuiltInSensorName() const { return fBuiltInSensor.empty() ? fName : fBuiltInSensor; }
+            void SetBuiltInSensorName(std::string name) { fBuiltInSensor = std::move(name); }
+
+            // --- operations: a model made from this one --------------------------------
+            // Each returns a model that borrows this one, which must outlive it (the
+            // convention of Kalman::Filter). Kalman/Operations.h has the same as
+            // functions on shared models.
+            /// This model with one more sensor on the same state (Models::Fusion).
+            std::unique_ptr<Model> AddSensor(const Sensor &sensor);
+            /// This model with some of its parameters estimated along with its state (Models::Joint).
+            std::unique_ptr<Model> Joint(const std::vector<EstimatedParameter> &parameters);
+
+            /// Name the measurement components from outside the class (a caller in
+            /// another language pushing its labels). \throws as DeclareMeasurement().
+            void SetObservables(std::vector<Component> components) { DeclareMeasurement(std::move(components)); }
+            /// The same for the state components.
+            void SetStates(std::vector<Component> components) { DeclareState(std::move(components)); }
+
+            /**
+             * \brief Take the initial state again from the model this one is made from.
+             *
+             * Nothing to do for a model that stands alone. A model made by an
+             * operation (Models::Joint, Models::Fusion) derives its initial state
+             * from its inner model's when it is built; after the inner one is given
+             * another, this derives it again, by the same rule.
+             */
+            virtual void AdoptInitialState() {}
 
         protected:
             /// Name the components of the state (constructor only).

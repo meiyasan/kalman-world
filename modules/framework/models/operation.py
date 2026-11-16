@@ -13,6 +13,8 @@ Python methods.
 """
 from __future__ import annotations
 
+import numpy as np
+
 from . import native
 from .native import NativeModel
 
@@ -41,7 +43,15 @@ class OperationModel(NativeModel):
     def _adopt(self, handle, inners, sensor_id, **kwargs):
         self.inners = list(inners)
         self.dtype = self.inners[0].dtype
-        NativeModel.__init__(self, sensor_id=sensor_id, _handle=handle, **kwargs)
+        try:
+            NativeModel.__init__(self, sensor_id=sensor_id, _handle=handle, **kwargs)
+        except RuntimeError as shadow:
+            # A Python function called back from C++ raised: give its exception, not
+            # the C++ report of it.
+            error = self._failed("operation")
+            if isinstance(error, ValueError) and str(error).startswith("operation:"):
+                raise
+            raise error from shadow
 
     def _refresh(self):
         for refresh in self.__dict__.get("_refreshers", []):
@@ -50,6 +60,33 @@ class OperationModel(NativeModel):
     def native_handle(self):
         self._refresh()
         return super().native_handle()
+
+    def initial_state(self, x0=None, P0=None):
+        """The initial state of this model, or one its inner model takes: the latter
+        is handed to the inner model, and this model derives its own from it again
+        in C++ (``Model::AdoptInitialState``), by the rule it was built with."""
+        if getattr(self, "x0", None) is None or "inners" not in self.__dict__:
+            return super().initial_state(x0, P0)            # during construction
+        if x0 is None and P0 is None:
+            return super().initial_state()
+        from ..native import core
+        inner, n = self.inners[0], int(self.n)
+        size = lambda a: None if a is None else int(np.size(a))
+        own = n != int(inner.n) and size(x0) in (None, n) and size(P0) in (None, n * n)
+        if own:
+            return super().initial_state(x0, P0)
+        full_P0 = P0 if (n != int(inner.n) and size(P0) == n * n) else None
+        inner.initial_state(x0, None if full_P0 is not None else P0)
+        native._push_initial_state(inner, self._inner_cxx)
+        core.check(core.lib.kalman_model_adopt_initial_state(self._handle), "adopt_initial_state")
+        x = self._vec(core.lib.kalman_model_x0, "x0").reshape(-1, 1)
+        P = self._mat(core.lib.kalman_model_P0, (n, n), "P0")
+        return super().initial_state(x, full_P0 if full_P0 is not None else P)
+
+    def _labels(self, state: bool, base, suffix):
+        """The labels the C++ model carries, as an enum (indices as values)."""
+        labels = [name for name, _ in native.labels_of(self._handle, state)]
+        return base(f"{type(self.inners[0]).__name__}{suffix}", {label: i for i, label in enumerate(labels)})
 
     @property
     def observables(self):

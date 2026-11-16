@@ -65,6 +65,9 @@ included, so a change on one side has an obvious home on the other:
 | `framework/models/linear.py` | `Kalman/Models/Linear.h` | `Models::Linear` |
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/models/joint.py` | `Kalman/Models/Joint.h` | `Models::Joint` |
+| `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
+| `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
+| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::Joint` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
@@ -1069,6 +1072,72 @@ declares the parameters on the callback model and hands every change back to
 the Python model, whose `f` and `h` read it. `tests/test_joint.py` compares
 the two routes. On notebook 01's shell (n = 10, 384 steps) the pass takes
 59 ms on the twin and 0.94 s through the callbacks.
+
+### Sensors, and a model read by one more
+
+`Kalman::Sensor` (`Kalman/Sensor.h`) is what acquires a measurement: a name,
+its readings as a function `g(x, t)` or a matrix `G`, its noise `R`, an
+optional Jacobian, and its channels as `Kalman::Component`s (its observables:
+name and unit). `Sensor::Check(n)` holds every refusal, so C++ and Python
+refuse alike.
+
+Every model lists its sensors, `Model::Sensors()`: by default one, built in,
+which reads the model's own `h` with its `R` and is named
+`BuiltInSensorName()` (the model's name unless set). `Model::States()` and
+`Model::Observables()` are the components under the names the Python contract
+uses.
+
+`Kalman::Models::Fusion` is a model read by one more sensor on the same state:
+`z = [h; g]`, `R = diag(R, R_sensor)`, and `Sensors()` is the inner model's
+list followed by the added sensor. The dynamics, the process noise and the
+named parameters are the inner model's.
+
+```cpp
+Kalman::Sensor doppler("doppler", radialVelocity, R, nullptr, {{"V_RADIAL", "m/s"}});
+
+MyShell shell;                                            // on the stack
+std::unique_ptr<Kalman::Model> radar = shell.AddSensor(doppler);   // borrows shell
+
+auto shared = std::make_shared<MyShell>();
+auto radar2 = Kalman::AddSensor(shared, doppler);         // shares it
+```
+
+The method borrows the model, which must outlive the result, as a
+`Kalman::Filter` borrows its model; the function in `Kalman/Operations.h`
+shares it. `model.Joint({...})` and `Kalman::Joint(model, {...})` are the same
+pair for the joint model.
+
+With a function the sensor's rows of the Jacobian are the given `dg/dx`, or
+differenced with the inner scheme. With a matrix on a model that is its
+matrices the result is still its matrices (`H(t)` is the inner one with `G`
+below), and the linear engine runs it. Through the C API:
+`kalman_model_add_sensor`, `kalman_model_add_sensor_matrix`, and the readers
+`kalman_model_sensor_count`, `kalman_model_sensor_name`,
+`kalman_model_sensor_channels`.
+
+From Python: `KalmanSensor` (`framework/sensor.py`), `model.add_sensor(sensor)`
+and `model.sensors`. Python describes nothing itself. A Python model hands its
+labels to its C++ handle (`kalman_model_set_sensor_name`,
+`kalman_model_set_observables`, `kalman_model_set_states`), and `model.sensors`,
+the observables and a joint model's states are then read back from the C++
+model: a sensor's name, channels, noise and readings come through
+`kalman_model_sensor_name`, `_channels`, `_R`, `_G` and `_measure`. Setting the
+initial state of a fused or joint model from one its inner model takes calls
+`Model::AdoptInitialState()` (`kalman_model_adopt_initial_state`), which
+derives it again by the rule the model was built with.
+`tests/test_contract_parity.py` pins all of it. An observable keeps its name
+unless the model already has one of that name; it then takes its sensor's name
+in front (`right_U`). On notebook 01's Doppler radar
+(n = 9, m = 4, 384 steps) sampling and filtering take 0.18 s, against 2.1 s
+for the subclass that overrode `h` in Python and so lost the twin.
+
+The name is not `Observe`: that is the ensemble engine's hook
+(`EnsembleModel::Observe`, Python `model.observe(X)`), the measurement of
+every member at once.
+
+The parameter accessors of `Kalman::Model` (`ParameterNames`, `HasParameter`,
+`Parameter`, `SetParameter`) are virtual so that such a model answers with its
+inner model's parameters: a `Models::Joint` around it can then estimate them.
 
 ### Composite models: matrices, no twin
 

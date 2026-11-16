@@ -536,6 +536,88 @@ def declared_parameters(handle) -> dict:
     return out
 
 
+def _push_labels(model, handle):
+    """Give the handle the labels the Python model declares: the name of its
+    built-in sensor, its observables, and its state components when it names one
+    per component. Both languages then describe the model alike."""
+    lib, ffi = core.lib, core.ffi
+    encode = lambda texts: [ffi.new("char[]", text.encode("utf-8", "replace")) for text in texts]
+
+    def push(setter, labels, what):
+        names, units = encode([name for name, _ in labels]), encode([unit for _, unit in labels])
+        core.check(setter(handle, len(labels), ffi.new("const char *[]", names), ffi.new("const char *[]", units)), what)
+
+    sensor = model._builtin_sensor()
+    if len(sensor.labels or []) == int(model.m):
+        core.check(lib.kalman_model_set_sensor_name(handle, sensor.name.encode()), "set_sensor_name")
+        push(lib.kalman_model_set_observables, sensor.labels, "set_observables")
+    members = list(model.states.__members__.items())
+    if len(members) == int(model.n):
+        push(lib.kalman_model_set_states,
+             [(name, member._value_ if isinstance(member._value_, str) else "") for name, member in members], "set_states")
+
+
+def view_of(model):
+    """The C++ model that stands for ``model`` when it is asked to describe itself
+    (its sensors, its labels): itself for a C++ model, otherwise the handle of
+    :func:`handle_of`, made once and kept on the model."""
+    if isinstance(model, NativeModel):
+        getattr(model, "_refresh", lambda: None)()
+        return model._handle
+    cached = model.__dict__.get("_cxx_view")
+    if cached is None or cached[3] != (int(model.n), int(model.m)):
+        handle, keep, refresh = handle_of(model)
+        cached = model.__dict__["_cxx_view"] = (handle, keep, refresh, (int(model.n), int(model.m)))
+    else:
+        cached[2]()
+        _push_labels(model, cached[0])
+    return cached[0]
+
+
+def labels_of(handle, state: bool):
+    """``[(name, unit), ...]`` of the state components or of the observables of a C++ model."""
+    lib = core.lib
+    n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
+    core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
+    name, unit = ((lib.kalman_model_state_name, lib.kalman_model_state_unit) if state
+                  else (lib.kalman_model_measurement_name, lib.kalman_model_measurement_unit))
+    return [(core._s(name(handle, i)), core._s(unit(handle, i))) for i in range(int(n[0]) if state else int(m[0]))]
+
+
+def sensors_of(handle, keep=None):
+    """The sensors of a C++ model (``Model::Sensors()``), as :class:`KalmanSensor`
+    objects that read through it: name, channels, observables, noise, and the
+    readings themselves are asked of the C++ model."""
+    from ..sensor import KalmanSensor
+    lib = core.lib
+    n = core.ffi.new("int *")
+    core.check(lib.kalman_model_dims(handle, n, core.ffi.new("int *"), core.ffi.new("int *")), "kalman_model_dims")
+    n = int(n[0])
+    observables = labels_of(handle, state=False)
+    out, first = [], 0
+    for i in range(core.check(lib.kalman_model_sensor_count(handle), "sensor_count")):
+        k = core.check(lib.kalman_model_sensor_channels(handle, i), "sensor_channels")
+        R = np.empty((k, k), dtype=np.float64)
+        core.check(lib.kalman_model_sensor_R(handle, i, core.dptr(R)), "sensor_R")
+        G = np.empty((k, n), dtype=np.float64)
+        linear = core.check(lib.kalman_model_sensor_G(handle, i, core.dptr(G)), "sensor_G") == 1
+
+        def measure(x, t=None, _i=i, _k=k):
+            state = np.ascontiguousarray(np.asarray(x, dtype=np.float64).reshape(-1))
+            z = np.empty(_k, dtype=np.float64)
+            core.check(lib.kalman_model_sensor_measure(handle, _i, core.cdptr(state), 0.0 if t is None else float(t),
+                                                       core.dptr(z)), "sensor_measure")
+            return z.reshape(-1, 1)
+
+        sensor = KalmanSensor(core._s(lib.kalman_model_sensor_name(handle, i)),
+                              None if linear else measure, G=G if linear else None, R=R,
+                              labels=dict(observables[first:first + k]))
+        sensor._keep = (handle, keep)                    # the C++ model it reads through
+        out.append(sensor)
+        first += k
+    return out
+
+
 def _push_initial_state(model, handle):
     n = int(model.n)
     x0 = np.ascontiguousarray(np.asarray(model.x0, dtype=np.float64).reshape(n))
@@ -581,6 +663,7 @@ def handle_of(model, parameters=()):
     twin_declares = declared_parameters(twin) if twin is not None else {}
     if twin is not None and all(name in twin_declares for name in names):
         _push_initial_state(model, twin)
+        _push_labels(model, twin)
         return twin, (model,), twin_of                     # native_handle() pushes Q, R, fs, parameters
 
     if any(name not in model.keys() for name in names):
@@ -590,7 +673,9 @@ def handle_of(model, parameters=()):
             and np.dtype(getattr(model, "dtype", np.float64)) == np.float64:
         from ...native import _stand_in
         try:
-            return _stand_in(model, KalmanStructureKind.MATRICES, False), (model,), lambda: None
+            stand_in = _stand_in(model, KalmanStructureKind.MATRICES, False)
+            _push_labels(model, stand_in)
+            return stand_in, (model,), lambda: None
         except (TypeError, ValueError, AttributeError):
             pass                                            # matrices the C++ model does not take
 
@@ -600,6 +685,11 @@ def handle_of(model, parameters=()):
     core.check(lib.kalman_model_set_differentiator(handle, core.DIFFERENTIATOR_KINDS[scheme],
                                                    1e-5 if scheme == "central" else 1e-6), "set_differentiator")
     _push_initial_state(model, handle)
+    _push_labels(model, handle)
+    # Every number the model keeps is declared, not only those asked for: an
+    # operation around this handle may name one later (joint around observe).
+    names = names + [key for key in model.keys() if key not in names
+                     and isinstance(model[key], (int, float)) and not isinstance(model[key], bool)]
     if not names:
         return handle, (model, keep), lambda: None
 
@@ -625,6 +715,8 @@ def handle_of(model, parameters=()):
 def callback_errors(keep) -> list:
     """The Python exceptions raised inside the callbacks of a :func:`handle_of` result."""
     for item in keep:
+        if isinstance(item, list):
+            return item
         if isinstance(item, tuple) and item and isinstance(item[-1], list):
             return item[-1]
     return []

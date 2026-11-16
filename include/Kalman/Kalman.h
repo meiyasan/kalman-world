@@ -121,6 +121,8 @@
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Models/Joint.h"
+#include "Kalman/Models/Fusion.h"
+#include "Kalman/Operations.h"
 #include "Kalman/Filters/KF.h"
 #include "Kalman/Filters/EKF.h"
 #include "Kalman/Filters/UKF.h"

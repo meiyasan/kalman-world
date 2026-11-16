@@ -163,6 +163,43 @@ int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const
 kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
                                               const double *sigma, const double *drift);
 
+/// `inner` read by one more sensor `name` (Kalman::Sensor, Kalman::Models::Fusion): `k`
+/// channels `g(x, t)` of noise covariance `R` (k x k, row-major). `jacobian` (k x n) may be
+/// NULL: it is then differenced. `labels` and `units` (k strings each) name its observables
+/// and may be NULL. `inner` is borrowed, as for kalman_model_create_joint; the functions and
+/// `user` must outlive the model. NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
+                                        kalman_measure_jacobian_fn jacobian, const double *R,
+                                        const char *const *labels, const char *const *units, void *user);
+/// The same for a sensor that reads `G x`, `G` of shape k x `columns` (row-major; `columns` must
+/// be the state dimension, and is checked): a model of matrices stays one.
+kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
+                                               const double *G, const double *R, const char *const *labels,
+                                               const char *const *units);
+/// The number of sensors of a model (Model::Sensors()): the built-in one, then those added. -1 on failure.
+int kalman_model_sensor_count(const kalman_model_t *model);
+/// The name of sensor `i`. Valid until the next call on this thread.
+const char *kalman_model_sensor_name(const kalman_model_t *model, int i);
+/// The number of channels of sensor `i`. -1 on failure.
+int kalman_model_sensor_channels(const kalman_model_t *model, int i);
+/// Name the built-in sensor of a model (Model::SetBuiltInSensorName). 0 or -1.
+int kalman_model_set_sensor_name(kalman_model_t *model, const char *name);
+/// Name the m observables of a model (Model::SetObservables): `labels` and `units`, m strings each
+/// (`units` may be NULL). For a caller in another language pushing its labels. 0 or -1.
+int kalman_model_set_observables(kalman_model_t *model, int m, const char *const *labels, const char *const *units);
+
+/// Name the n state components of a model (Model::SetStates), as kalman_model_set_observables. 0 or -1.
+int kalman_model_set_states(kalman_model_t *model, int n, const char *const *labels, const char *const *units);
+/// Take the initial state again from the model this one was made from (Model::AdoptInitialState). 0 or -1.
+int kalman_model_adopt_initial_state(kalman_model_t *model);
+/// The readings `z` (kalman_model_sensor_channels() doubles) of sensor `i` at state `x`, time `t`. 0 or -1.
+int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double *x, double t, double *z);
+/// The noise covariance of sensor `i`, k x k row-major. 0 or -1.
+int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R);
+/// The matrix `G` (k x n row-major) of sensor `i` when its readings are `G x`: 1 and `G` filled,
+/// 0 when it reads through a function (`G` untouched), -1 on failure. `G` may be NULL to ask only.
+int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G);
+
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);
 

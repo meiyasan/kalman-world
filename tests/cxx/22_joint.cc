@@ -184,5 +184,14 @@ int main()
     std::printf("  position RMSE: joint %.4f, damping known %.4f\n", e_aug, e_known);
     CHECK(e_aug < 1.2 * e_known, "EKF: within 20% of the filter that knew the damping");
 
+    // --- the method borrows, the function shares ---------------------------------------------
+    {
+        Oscillator onStack(2., 0., fs);
+        const std::unique_ptr<Model> joint = onStack.Joint({{"damping", 0.5, 1e-4}});
+        CHECK(joint->NState() == 3, "model.Joint({...}): borrows a model on the stack");
+        CHECK(Kalman::Joint(std::make_shared<Oscillator>(2., 0., fs), {{"damping", 0.5, 1e-4}})->NState() == 3,
+              "Joint(model, {...}): shares the model");
+    }
+
     return Check::Summary("22_joint");
 }

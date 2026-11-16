@@ -20,6 +20,7 @@
 #include "Kalman/Factory.h"
 #include "Kalman/IO/ModelFile.h"
 #include "Kalman/Models/Joint.h"
+#include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
@@ -360,6 +361,181 @@ kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const ch
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+extern "C++"
+{
+    static std::vector<Kalman::Component> Components(int k, const char *const *labels, const char *const *units)
+    {
+        std::vector<Kalman::Component> out;
+        if (!labels) return out;
+        for (int i = 0; i < k; ++i)
+        {
+            if (!labels[i]) throw std::invalid_argument("null label");
+            out.push_back({labels[i], (units && units[i]) ? units[i] : ""});
+        }
+        return out;
+    }
+
+    static kalman_model_t *Fuse(kalman_model_t *inner, Kalman::Sensor sensor)
+    {
+        std::shared_ptr<Kalman::Model> shared(&Deref(inner), [](Kalman::Model *) {});   // borrowed
+        return new kalman_model{std::make_unique<Kalman::Models::Fusion>(std::move(shared), std::move(sensor))};
+    }
+}
+
+kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
+                                        kalman_measure_jacobian_fn jacobian, const double *R,
+                                        const char *const *labels, const char *const *units, void *user)
+{
+    try
+    {
+        Ok();
+        const std::size_t n = Deref(inner).NState();
+        if (k <= 0) throw std::invalid_argument("a sensor has at least one channel (k > 0)");
+        if (!g || !R) throw std::invalid_argument("null measurement function or R");
+        const std::size_t kk = static_cast<std::size_t>(k);
+        Kalman::Sensor::Measure measure = [g, user, kk](const Kalman::Vector &x, double t) {
+            Kalman::Vector z(kk);
+            if (g(user, x.Data(), t, z.Data()) != 0) throw std::runtime_error("the measurement function of the sensor failed");
+            return z;
+        };
+        Kalman::Sensor::MeasureJacobian dg;
+        if (jacobian)
+            dg = [jacobian, user, kk, n](const Kalman::Vector &x, double t) {
+                Kalman::Matrix J(kk, n, 0.);
+                if (jacobian(user, x.Data(), t, J.Data()) != 0) throw std::runtime_error("the Jacobian of the sensor failed");
+                return J;
+            };
+        return Fuse(inner, Kalman::Sensor(name ? name : "", std::move(measure), Mat(R, kk, kk, "R"), std::move(dg),
+                                          Components(k, labels, units)));
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
+                                               const double *G, const double *R, const char *const *labels,
+                                               const char *const *units)
+{
+    try
+    {
+        Ok();
+        Deref(inner);
+        if (k <= 0 || columns <= 0) throw std::invalid_argument("a sensor has at least one channel (k > 0, columns > 0)");
+        if (!G || !R) throw std::invalid_argument("null G or R");
+        const std::size_t kk = static_cast<std::size_t>(k), n = static_cast<std::size_t>(columns);
+        return Fuse(inner, Kalman::Sensor(name ? name : "", Mat(G, kk, n, "G"), Mat(R, kk, kk, "R"),
+                                          Components(k, labels, units)));
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_sensor_count(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).Sensors().size()); });
+}
+
+const char *kalman_model_sensor_name(const kalman_model_t *model, int i)
+{
+    static thread_local std::string name;
+    name.clear();
+    Guard([&] {
+        const auto sensors = Deref(model).Sensors();
+        if (i < 0 || static_cast<std::size_t>(i) >= sensors.size()) throw std::out_of_range("no such sensor");
+        name = sensors[static_cast<std::size_t>(i)].name;
+        return 0;
+    });
+    return name.c_str();
+}
+
+int kalman_model_sensor_channels(const kalman_model_t *model, int i)
+{
+    return Guard([&] {
+        const auto sensors = Deref(model).Sensors();
+        if (i < 0 || static_cast<std::size_t>(i) >= sensors.size()) throw std::out_of_range("no such sensor");
+        return static_cast<int>(sensors[static_cast<std::size_t>(i)].Channels());
+    });
+}
+
+int kalman_model_set_sensor_name(kalman_model_t *model, const char *name)
+{
+    return Guard([&] {
+        if (!name) throw std::invalid_argument("null sensor name");
+        Deref(model).SetBuiltInSensorName(name);
+        return 0;
+    });
+}
+
+int kalman_model_set_observables(kalman_model_t *model, int m, const char *const *labels, const char *const *units)
+{
+    return Guard([&] {
+        if (m < 0 || !labels) throw std::invalid_argument("null labels");
+        Deref(model).SetObservables(Components(m, labels, units));
+        return 0;
+    });
+}
+
+int kalman_model_set_states(kalman_model_t *model, int n, const char *const *labels, const char *const *units)
+{
+    return Guard([&] {
+        if (n < 0 || !labels) throw std::invalid_argument("null labels");
+        Deref(model).SetStates(Components(n, labels, units));
+        return 0;
+    });
+}
+
+int kalman_model_adopt_initial_state(kalman_model_t *model)
+{
+    return Guard([&] { Deref(model).AdoptInitialState(); return 0; });
+}
+
+extern "C++"
+{
+    static Kalman::Sensor SensorAt(const kalman_model_t *model, int i)
+    {
+        auto sensors = Deref(model).Sensors();
+        if (i < 0 || static_cast<std::size_t>(i) >= sensors.size()) throw std::out_of_range("no such sensor");
+        return sensors[static_cast<std::size_t>(i)];
+    }
+}
+
+int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double *x, double t, double *z)
+{
+    return Guard([&] {
+        if (!x || !z) throw std::invalid_argument("null x or z");
+        const Kalman::Sensor sensor = SensorAt(model, i);
+        const Kalman::Vector state = Vec(x, Deref(model).NState(), "x");
+        const Kalman::Vector out = sensor.IsLinear() ? sensor.G * state : sensor.g(state, t);
+        if (out.Size() != sensor.Channels()) throw std::runtime_error("the sensor returned the wrong number of readings");
+        for (std::size_t c = 0; c < out.Size(); ++c) z[c] = out(c);
+        return 0;
+    });
+}
+
+int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R)
+{
+    return Guard([&] {
+        if (!R) throw std::invalid_argument("null R");
+        const Kalman::Sensor sensor = SensorAt(model, i);
+        const std::size_t k = sensor.Channels();
+        for (std::size_t a = 0; a < k; ++a)
+            for (std::size_t b = 0; b < k; ++b) R[a * k + b] = sensor.R(a, b);
+        return 0;
+    });
+}
+
+int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G)
+{
+    return Guard([&] {
+        const Kalman::Sensor sensor = SensorAt(model, i);
+        if (!sensor.IsLinear()) return 0;
+        if (G)
+            for (std::size_t a = 0; a < sensor.G.Rows(); ++a)
+                for (std::size_t b = 0; b < sensor.G.Cols(); ++b) G[a * sensor.G.Cols() + b] = sensor.G(a, b);
+        return 1;
+    });
 }
 
 int kalman_model_callback_set_noise(kalman_model_t *model, kalman_process_noise_fn process_noise,

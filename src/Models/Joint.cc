@@ -64,7 +64,20 @@ namespace Kalman::Models
         SetAnalyticJacobian(false);
         SetStructure(StructureKind::Maps);
 
-        // The initial state: the inner model's, then the parameters as they are now.
+        AdoptInitialState();
+
+        std::vector<Component> components = fInner->StateComponents();
+        for (const auto &e : fEstimated) components.push_back({e.name, ""});
+        DeclareState(std::move(components));
+        DeclareMeasurement(fInner->MeasurementComponents());
+
+        CheckActs();
+    }
+
+    void Joint::AdoptInitialState()
+    {
+        // The inner model's initial state, then the parameters as they are now.
+        const std::size_t n = fNInner, p = fEstimated.size();
         const Vector &s0 = fInner->X0();
         const Matrix &P0 = fInner->P0();
         Vector x0(n + p, 0.);
@@ -82,13 +95,6 @@ namespace Kalman::Models
         }
         SetInitialState(x0);
         SetInitialCovariance(Px);
-
-        std::vector<Component> components = fInner->StateComponents();
-        for (const auto &e : fEstimated) components.push_back({e.name, ""});
-        DeclareState(std::move(components));
-        DeclareMeasurement(fInner->MeasurementComponents());
-
-        CheckActs();
     }
 
     void Joint::CheckActs() const

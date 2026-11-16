@@ -67,18 +67,24 @@
 #include <string>
 #include <vector>
 
+namespace Kalman
+{
+    /// One parameter estimated with the state: its name in the model, and its noise.
+    struct EstimatedParameter
+    {
+        std::string name;
+        double sigma = 0.;  ///< standard deviation of the initial guess (> 0)
+        double drift = 0.;  ///< standard deviation of its random walk per step (>= 0)
+    };
+}
+
 namespace Kalman::Models
 {
     class Joint : public Model
     {
         public:
-            /// One estimated parameter: its name in the inner model, and its noise.
-            struct Parameter
-            {
-                std::string name;
-                double sigma = 0.;  ///< standard deviation of the initial guess (> 0)
-                double drift = 0.;  ///< standard deviation of its random walk per step (>= 0)
-            };
+            /// One estimated parameter (Kalman::EstimatedParameter).
+            using Parameter = EstimatedParameter;
 
         private:
             std::shared_ptr<Model> fInner;
@@ -145,6 +151,8 @@ namespace Kalman::Models
             Matrix Q(double t = 0.) const override;
             Matrix R(double t = 0.) const override;
 
+            /// The inner initial state, then the parameters as the inner model holds them now.
+            void AdoptInitialState() override;
             void CheckShapes() const override;
             std::string Describe() const override;
     };
