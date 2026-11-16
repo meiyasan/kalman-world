@@ -234,6 +234,18 @@ int kalman_model_set_sensor_delay(kalman_model_t *model, double delay);
 /// How late sensor `i` reports; 0 when it does not. -1 on failure.
 double kalman_model_sensor_delay(const kalman_model_t *model, int i);
 
+/// `count` models side by side, each with its own state (Kalman::Models::Composite). `readout`
+/// is 0 for stacked measurements, `z = [h1(x1); h2(x2); ...]`, or 1 for one measurement the
+/// parts sum into. `names` (count strings) calls the parts and may be NULL: each then goes by
+/// its model's name. A parameter of a part is `<part>.<name>`. The parts are borrowed, as for
+/// kalman_model_create_joint. NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_create_composite(kalman_model_t *const *parts, int count, int readout,
+                                              const char *const *names);
+/// The number of parts of a composite model; 0 for any other model. -1 on failure.
+int kalman_model_part_count(const kalman_model_t *model);
+/// The name of part `i` of a composite model. Valid until the next call on this thread.
+const char *kalman_model_part_name(const kalman_model_t *model, int i);
+
 /// How well `steps` measurements determine each direction of the state of `model`, along its
 /// noise-free path from its initial state (Kalman::Observability). `eigenvalues` (n, smallest
 /// first) and `weakness` (n: the share of each state component in the directions the

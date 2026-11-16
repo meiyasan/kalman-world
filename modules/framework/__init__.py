@@ -5,14 +5,14 @@ Layers (dependency points downward only: Filter → Engine → Model):
 - ``model.py``   : ``KalmanModel``  — the system (WHAT): f/h/F/H/B/L/M/Q/R.
 - ``engine.py``  : ``KalmanEngine`` — the algorithm (HOW): one predict/update/smooth step.
 - ``filter.py``  : ``BayesFilter`` — the workflow (WHEN): forward/backward + run state; ``KalmanFilter`` is its Gaussian family, ``ParticleFilter`` stands beside it.
-- ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``...Composite`` / ``Joint`` / ``Fusion``).
+- ``models/``    : typed model bases (``LinearKalmanModel`` / ``...Extended`` / ``...Unscented`` / ``Composite`` / ``Joint`` / ``Fusion``).
 - ``engines/``   : concrete engines (``LinearKalmanEngine`` / ``Extended`` / ``Unscented`` / ``Particle``).
 - ``filters/``   : the recognisable filter names (``LinearKalmanFilter`` / ``Extended`` / ``Unscented`` / ``Particle`` / ``Ensemble`` / ``Combinatorial`` / ``Interactive``).
 - ``constants.py``: ``KalmanEngineKind`` (LINEAR/EXTENDED/UNSCENTED/PARTICLE) used to bind models↔engines.
 
 Domain applications live in ``kalman.apps``.
 """
-from .constants import (KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind, KalmanDynamicsKind, KalmanDifferentiatorKind,
+from .constants import (KalmanReadout, KalmanEngineKind, KalmanIntegratorKind, KalmanSolverKind, KalmanDynamicsKind, KalmanDifferentiatorKind,
                         KalmanProviderKind)
 from .model import KalmanModel
 from .engine import KalmanEngine, KalmanEstimator
@@ -36,7 +36,7 @@ from .models import (
     LinearKalmanModel,
     ExtendedKalmanModel,
     UnscentedKalmanModel,
-    CompositeKalmanModel,
+    Composite,
     Joint,
     Lag,
     Fusion,
@@ -105,7 +105,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel", "Joint", "joint", "Lag", "lag", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
+    "Composite", "KalmanReadout", "Joint", "joint", "Lag", "lag", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

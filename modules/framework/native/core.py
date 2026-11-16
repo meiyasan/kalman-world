@@ -120,6 +120,10 @@ int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *
 kalman_model_t *kalman_model_create_lag(kalman_model_t *inner, int depth);
 int kalman_model_set_sensor_delay(kalman_model_t *model, double delay);
 double kalman_model_sensor_delay(const kalman_model_t *model, int i);
+kalman_model_t *kalman_model_create_composite(kalman_model_t *const *parts, int count, int readout,
+                                              const char *const *names);
+int kalman_model_part_count(const kalman_model_t *model);
+const char *kalman_model_part_name(const kalman_model_t *model, int i);
 int kalman_model_observability(const kalman_model_t *model, int steps, double tolerance, double *eigenvalues,
                                double *weakness);
 const char *kalman_model_name(const kalman_model_t *model);

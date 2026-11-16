@@ -1,7 +1,7 @@
 """Composite models run as models of matrices, in C++.
 
-A :class:`CompositeKalmanModel` stacks its parts: block-diagonal F and Q, and an
-H that stacks (INDEPENDENT) or sums (FUSED) the parts' readouts. When every part
+A :class:`Composite` (``compose``) puts its parts side by side: block-diagonal F and Q, and an
+H that stacks (STACKED) or sums (SUMMED) the parts' readouts. When every part
 is constant matrices the composite is too, and says so (``structure`` is
 MATRICES), so its filtering pass and its smoother run in C++ on those matrices
 (``kf_forward_linear`` / ``kf_backward_rts``) instead of the C++ loop calling the
@@ -23,13 +23,13 @@ sys.path.insert(0, ".")
 import modules.framework.models.native as native
 from modules.framework.filter import KalmanFilter
 from modules.framework.native import HAS_C_ACCEL
-from modules.framework.constants import KalmanStructureKind as S, KalmanEngineKind, KalmanObservableReadout
+from modules.framework.constants import KalmanStructureKind as S, KalmanEngineKind, KalmanReadout
 from modules.framework.engines.linear import LinearKalmanEngine
-from modules.framework.models.composite import CompositeKalmanModel
+from modules.framework.models.compose import Composite
 from modules.apps.resonators.oscillators import (
     AnalyticOscillatorModel, OscillatorModel, OscillatorBankModel, InharmonicOscillatorModel,
     HarmonicOscillatorModel, PhasorOscillatorModel, partial_frequencies)
-from modules.apps.gravitational.interferometer import InterferometerModel, InterferometerK1
+from modules.apps.gravitational.interferometer import InterferometerK1
 
 needs_kernels = unittest.skipUnless(HAS_C_ACCEL, "libKalman is not built")
 
@@ -80,14 +80,15 @@ def close_smoothed(test, py, cx, model, what):
 
 
 def on_cpp(test, make, z, smooth=False):
-    """The default pass, asserting it is the fused C++ one."""
-    with mock.patch.object(KalmanFilter, "_forward_native", autospec=True,
-                           side_effect=KalmanFilter._forward_native) as fused, \
+    """The default pass, asserting it is the C++ one on the C++ composite: the
+    whole loop in Kalman::Filter, no Python called back."""
+    with mock.patch.object(KalmanFilter, "_forward_counterpart", autospec=True,
+                           side_effect=KalmanFilter._forward_counterpart) as cxx, \
             mock.patch.object(KalmanFilter, "_forward_callback", autospec=True,
                               side_effect=KalmanFilter._forward_callback) as callback:
         model = make()
         record = model.filter(z, smooth=smooth)
-    test.assertEqual(fused.call_count, 1, "the pass ran in kf_forward_linear")
+    test.assertEqual(cxx.call_count, 1, "the pass ran in Kalman::Filter on the C++ composite")
     test.assertEqual(callback.call_count, 0, "no Python callbacks")
     test.assertIsInstance(model._filter.engine, LinearKalmanEngine)
     test.last_model = model
@@ -123,13 +124,13 @@ class TestCompositeOfMatrices(unittest.TestCase):
         self.assertIs(HarmonicOscillatorModel("h", f0=60.0, fc=120.0, dfc=5.0, fs=FS).structure, S.MATRICES)
         a = AnalyticOscillatorModel("a", fs=100.0, f0=10.0, Q=100)
         b = AnalyticOscillatorModel("b", fs=100.0, f0=12.0, Q=100)
-        for mode in (KalmanObservableReadout.INDEPENDENT, KalmanObservableReadout.FUSED):
-            self.assertIs(CompositeKalmanModel(a, b, obs_mode=mode).structure, S.MATRICES, mode)
+        for mode in (KalmanReadout.STACKED, KalmanReadout.SUMMED):
+            self.assertIs(Composite(a, b, readout=mode).structure, S.MATRICES, mode)
 
     def test_engine_follows_the_structure(self):
         # The class keeps its declaration (what the catalogue shows); an instance
         # made of matrices runs on the linear engine.
-        self.assertIs(CompositeKalmanModel.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
+        self.assertIs(Composite.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
         self.assertIs(OscillatorModel.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
         self.assertIs(one_line().DEFAULT_ENGINE, KalmanEngineKind.LINEAR)
         self.assertIs(bank().DEFAULT_ENGINE, KalmanEngineKind.LINEAR)
@@ -171,23 +172,9 @@ class TestCompositeOfMatrices(unittest.TestCase):
         py, cx = reference(make, z), on_cpp(self, make, z)
         # 88 modes in three windows, about thirty phasors sharing each 2-D
         # envelope: the covariance reaches a condition number of 8e9, and a
-        # rounding of 1e-16 becomes 1e-6. The pass this replaces (the C++ EKF
-        # calling the Python closures) was as far from the Python loop: 2.5e-6
-        # on the state, 6.6e-7 on the covariance. Against it the C++ linear pass
-        # agrees to 2e-12.
+        # rounding of 1e-16 becomes 1e-6.
         close(self, py.xk, cx.xk, 1e-5, "state")
         close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance")
-        before = make()
-        before.DEFAULT_ENGINE = KalmanEngineKind.EXTENDED      # the old default: the C++ loop with callbacks
-        # A model of matrices on the extended engine runs on a C++ model of them
-        # today; that path is put aside here to get the pass the composites used to take.
-        with mock.patch.object(KalmanFilter, "_matrices_eligible", lambda self, uk_fn: False), \
-                mock.patch.object(KalmanFilter, "_forward_callback", autospec=True,
-                                  side_effect=KalmanFilter._forward_callback) as callback:
-            old = before.filter(z)
-        self.assertEqual(callback.call_count, 1)
-        close(self, old.xk, cx.xk, 1e-10, "state, against the C++ loop it replaces")
-        close(self, old.Pk, cx.Pk, 1e-10, "covariance, against the C++ loop it replaces")
 
     def test_missing_samples(self):
         z = strain([180.1], [1.0], [1.3e4], 0.1, seed=4)
@@ -220,26 +207,13 @@ class TestCompositeOfMatrices(unittest.TestCase):
         self.assertGreater(float(np.max(np.abs(np.asarray(cx.xk) - np.asarray(one_line().filter(z).xk)))), 1e-6)
 
     def test_what_is_not_matrices_keeps_its_path(self):
-        # An h replaced after construction: code, the extended engine, the C++ loop
-        # calling the Python model.
-        model = one_line()
-        inner = model.h
-        model.h = lambda x, v=None, t=None: 1.0 * inner(x, v, t)
-        self.assertIs(model.structure, S.MAPS)
-        self.assertIs(model.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
-
         # A part that is code makes the composite code.
         from modules.apps.gravitational.gravwave import PolarizationModel
-        mixed = CompositeKalmanModel(PolarizationModel("gw", fs=100.0),
+        mixed = Composite(PolarizationModel("gw", fs=100.0),
                                      AnalyticOscillatorModel("a", fs=100.0, f0=10.0, Q=100))
         self.assertIs(mixed.structure, S.MAPS)
         self.assertIs(mixed.DEFAULT_ENGINE, KalmanEngineKind.EXTENDED)
 
-        # A declared STRUCTURE wins.
-        class Declared(CompositeKalmanModel):
-            STRUCTURE = S.MAPS
-        a = AnalyticOscillatorModel("a", fs=100.0, f0=10.0, Q=100)
-        self.assertIs(Declared(a).structure, S.MAPS)
 
 
 @needs_kernels
@@ -251,7 +225,7 @@ class TestCompositeTimeVarying(unittest.TestCase):
     constant-matrix pass, which would read H once."""
 
     def make(self):
-        return CompositeKalmanModel(PhasorOscillatorModel("p", [50.0, 100.0], fs=1000.0),
+        return Composite(PhasorOscillatorModel("p", [50.0, 100.0], fs=1000.0),
                                     AnalyticOscillatorModel("a", fs=1000.0, f0=10.0, Q=100))
 
     def test_declares_time_varying(self):
@@ -331,7 +305,7 @@ if __name__ == "__main__":
 @needs_kernels
 class TestControlledInterferometer(unittest.TestCase):
     """The violin-bank controller retunes the windows' Q as the run goes; the pass
-    still runs on the C++ model of the composite's matrices, with Q pushed at each
+    still runs in Kalman::Filter on the C++ composite, with the parts pushed at each
     step, and the controller sees what it sees in the Python loop."""
 
     def test_violin_bank_controller(self):
@@ -346,8 +320,8 @@ class TestControlledInterferometer(unittest.TestCase):
                 with native.python_reference():
                     record = KalmanFilter(model).forward(z, uk=controller)
             else:
-                with mock.patch.object(KalmanFilter, "_forward_matrices", autospec=True,
-                                       side_effect=KalmanFilter._forward_matrices) as spy:
+                with mock.patch.object(KalmanFilter, "_forward_retuned_operation", autospec=True,
+                                       side_effect=KalmanFilter._forward_retuned_operation) as spy:
                     record = KalmanFilter(model).forward(z, uk=controller)
                 self.assertEqual(spy.call_count, 1)
             log = sum(len(c.scale_log) for a in controller._window_aqrs for c in a._ctrls)

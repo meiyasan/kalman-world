@@ -185,7 +185,7 @@ class InterferometerModel(OscillatorBankModel):
         Q_init : float
             Fallback Q when Lorentzian fit is unavailable for a peak.
         merge_gap_hz : float
-            Peaks within this Hz are merged into one FUSED window.
+            Peaks within this Hz are merged into one summed window.
         window_margin_hz : float
             Extra padding on each side of the outermost peak in a window.
         min_prominence : float, optional

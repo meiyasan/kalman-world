@@ -4,8 +4,8 @@ from scipy.linalg import expm
 from scipy.optimize import curve_fit
 
 from ....framework.models.linear import LinearKalmanModel
-from ....framework.models.composite import CompositeKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from ....framework.models.compose import Composite
+from ....framework.constants import KalmanState, KalmanObservable, KalmanReadout
 from .base import (OscillatorState, OscillatorObservable, wire_inharmonicity,
                    wire_fundamental, partial_frequencies)
 
@@ -22,7 +22,7 @@ class InharmonicOscillatorModel(OscillatorModel):
     As any :class:`OscillatorModel` window it **masks** to ``[fc ± dfc]``: only partials
     inside the window are tracked, even though the full ladder is generated.  To track
     the whole ladder, place one :class:`InharmonicOscillatorModel` per partial and
-    compose them in an :class:`OscillatorBankModel` (INDEPENDENT).
+    compose them in an :class:`OscillatorBankModel` (stacked).
 
     Physical parameters (Young's modulus, wire diameter, length, tension) can be
     converted to ``(f0, B)`` via :func:`wire_fundamental` and :func:`wire_inharmonicity`.

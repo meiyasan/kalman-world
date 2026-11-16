@@ -679,6 +679,13 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from .models.joint import Joint
         return Joint(self, parameters, **kwargs)
 
+    def compose(self, *others, readout=None, names=None, **kwargs):
+        """This model and ``others`` side by side, each with its own state, as one
+        model: stacked measurements, or with ``readout=KalmanReadout.SUMMED`` one
+        measurement they add into. See :class:`~.models.compose.Composite`."""
+        from .operations import compose
+        return compose(self, *others, readout=readout, names=names, **kwargs)
+
     def lag(self, depth):
         """This model carrying its last ``depth`` states along with the present one:
         a sensor with a ``delay`` then reads the state as it was, and

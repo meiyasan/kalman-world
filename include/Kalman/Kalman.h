@@ -125,6 +125,7 @@
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Lag.h"
+#include "Kalman/Models/Composite.h"
 #include "Kalman/Instrument.h"
 #include "Kalman/Operations.h"
 #include "Kalman/Observability.h"

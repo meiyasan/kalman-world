@@ -686,7 +686,17 @@ def handle_of(model, parameters=()):
         try:
             stand_in = _stand_in(model, KalmanStructureKind.MATRICES, False)
             _push_labels(model, stand_in)
-            return stand_in, (model,), lambda: None
+
+            def push_matrices(n=int(model.n), m=int(model.m)):
+                # What may have been retuned since: the noise and the two matrices.
+                flat = lambda a, shape: np.ascontiguousarray(np.asarray(a, dtype=np.float64).reshape(shape))
+                if model.fs:
+                    core.check(lib.kalman_model_set_sample_rate(stand_in, float(model.fs)), "set_sample_rate")
+                core.check(lib.kalman_model_set_Q(stand_in, core.cdptr(flat(model.Q(), (n, n)))), "set_Q")
+                core.check(lib.kalman_model_set_R(stand_in, core.cdptr(flat(model.R(), (m, m)))), "set_R")
+                core.check(lib.kalman_model_set_matrix(stand_in, b"F", core.cdptr(flat(model.F(), (n, n)))), "set F")
+                core.check(lib.kalman_model_set_matrix(stand_in, b"H", core.cdptr(flat(model.H(), (m, n)))), "set H")
+            return stand_in, (model,), push_matrices
         except (TypeError, ValueError, AttributeError):
             pass                                            # matrices the C++ model does not take
 

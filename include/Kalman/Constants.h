@@ -65,6 +65,15 @@ namespace Kalman
     };
 
     /**
+     * \brief How the parts of a composite model are read (Models::Composite).
+     */
+    enum class Readout
+    {
+        Stacked = 0,       ///< each part has its own measurement: z = [h1(x1); h2(x2); ...]
+        Summed = 1         ///< the parts share one measurement: z = h1(x1) + h2(x2) + ...
+    };
+
+    /**
      * \brief Where a model's Jacobians come from (see Kalman::Differentiator).
      */
     enum class DifferentiatorKind

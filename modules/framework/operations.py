@@ -6,8 +6,9 @@ Each builds a model from other models, and is also a method of
 ``kalman.framework.models``: ``joint(m, p)``, ``m.joint(p)`` and ``Joint(m, p)``
 are the same model, and likewise ``add_sensor`` and ``Fusion``, ``lag`` and ``Lag``.
 
-``compose`` puts things side by side: sensors into an instrument
-(:class:`~.instrument.KalmanInstrument`).
+``compose`` puts things side by side: models into a composite model
+(``compose(a, b)``, ``a.compose(b)``, ``Composite(a, b)``), sensors into an
+instrument (:class:`~.instrument.KalmanInstrument`).
 """
 from __future__ import annotations
 
@@ -36,15 +37,30 @@ def add_instrument(model, instrument):
     return model.add_instrument(instrument)
 
 
-def compose(*parts, name=None, rate=None):
-    """Sensors as one instrument: ``compose(thermometer, co2, name="station", rate=0.5)``.
+def compose(*parts, name=None, rate=None, readout=None, names=None, **kwargs):
+    """Things side by side.
+
+    Models, each with its own state, as one model (:class:`~.models.compose.Composite`):
+    ``compose(a, b)``, or ``compose(a, b, readout=KalmanReadout.SUMMED)`` when they
+    share one measurement; ``names=`` calls the parts.
+
+    Sensors as one instrument: ``compose(thermometer, co2, name="station", rate=0.5)``.
     Without a name it is named after its sensors (``"thermometer+co2"``)."""
     from .instrument import KalmanInstrument
+    from .model import KalmanModel
     from .sensor import KalmanSensor
     if len(parts) == 1 and isinstance(parts[0], (list, tuple)):
         parts = tuple(parts[0])
+    if parts and all(isinstance(part, KalmanModel) for part in parts):
+        if name is not None or rate is not None:
+            raise TypeError("compose: name= and rate= are an instrument's; models take readout= and names=.")
+        from .constants import KalmanReadout
+        from .models.compose import Composite
+        return Composite(*parts, readout=readout or KalmanReadout.STACKED, names=names, **kwargs)
+    if readout is not None or names is not None or kwargs:
+        raise TypeError("compose: readout= and names= are for models; sensors take name= and rate=.")
     if not parts or not all(isinstance(part, KalmanSensor) for part in parts):
-        raise TypeError("compose: KalmanSensor objects are expected, got "
+        raise TypeError("compose: models, or sensors, are expected, got "
                         f"{[type(part).__name__ for part in parts]}.")
     return KalmanInstrument(name or "+".join(part.name for part in parts), parts, rate=rate)
 

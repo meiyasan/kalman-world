@@ -66,10 +66,11 @@ included, so a change on one side has an obvious home on the other:
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/models/joint.py` | `Kalman/Models/Joint.h` | `Models::Joint` |
 | `framework/models/lag.py` | `Kalman/Models/Lag.h` | `Models::Lag` |
+| `framework/models/compose.py` | `Kalman/Models/Composite.h` | `Models::Composite` |
 | `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
 | `framework/instrument.py` | `Kalman/Instrument.h` | `Kalman::Instrument`, `Kalman::Compose` |
 | `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
-| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag` |
+| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag`, `Kalman::Compose` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
@@ -1205,29 +1206,35 @@ The parameter accessors of `Kalman::Model` (`ParameterNames`, `HasParameter`,
 `Parameter`, `SetParameter`) are virtual so that such a model answers with its
 inner model's parameters: a `Models::Joint` around it can then estimate them.
 
-### Composite models: matrices, no counterpart
+### Composite models
 
-A `CompositeKalmanModel` stacks its parts: block-diagonal `F` and `Q`, and an
-`H` that stacks the parts' readouts (INDEPENDENT) or sums them on one shared
-channel (FUSED). The oscillator windows (`OscillatorModel` and its harmonic and
-inharmonic ladders), `OscillatorBankModel` and `InterferometerModel` with its
-detectors K1, H1, L1 and V1 are composites of `AnalyticOscillatorModel`s, each
-of them constant matrices. They need no counterpart: a composite reads its
-`structure` from its parts (MATRICES when all are constant matrices,
-TIME_VARYING when one of their matrices is a function of time, MAPS as soon as
-one part is code or a stacked map was replaced after construction), and an
-instance that is not code takes the linear engine (`DEFAULT_ENGINE` read on
-the class stays the extended engine, which serves any part). `filter()` then
-runs `kf_forward_linear` and the smoother `kf_backward_rts` on the stacked
-matrices, and `sample()` runs its state chain in C++ (`kalman_propagate` on a
-`Models::Tabulated` holding them, numpy's draws). A time-varying composite
+`Kalman::Models::Composite` (`Kalman::Compose({a, b}, readout, names)`,
+`a.Compose(b)`) is several models side by side: block-diagonal `F`, `Q` and
+Jacobians, and a measurement that stacks the parts' (`Readout::Stacked`) or
+sums them on one shared channel (`Readout::Summed`). Each part linearises
+itself and brings its sensors; a parameter of a part is `<part>.<name>`. Through
+the C API: `kalman_model_create_composite`, `kalman_model_part_count`,
+`kalman_model_part_name`. From Python: `compose`, `Composite`
+(`framework/models/compose.py`), which replaced the Python
+`CompositeKalmanModel`.
+
+The oscillator windows (`OscillatorModel` and its harmonic and inharmonic
+ladders), `OscillatorBankModel` and `InterferometerModel` with its detectors
+K1, H1, L1 and V1 are composites of `AnalyticOscillatorModel`s, each of them
+constant matrices: the composite is then matrices too, on the linear engine,
+and `filter()` runs the whole pass in `Kalman::Filter` on the C++ composite
+with no Python called back. A part retuned after construction is pushed again
+before a pass. `sample()` runs its state chain in C++ (`kalman_propagate`). A
+composite with a part whose matrix is a function of time is time-varying: it
 stores the stacked matrix that changes as a function of time (`_F`, `_H`,
-`_Q`, `_R`), as any model built from one does, so the pass over tables and the
-exporter tabulate it; it never takes the constant-matrix pass.
+`_Q`, `_R`), so the pass over tables and the exporter tabulate it. Against the
+pass on stacked matrices it replaces, same states to the last bit and (4 s of
+strain at 4096 Hz, demodulation included): one line 7.0 to 6.7 ms, three lines
+6.2 to 5.0 ms, a bank of three windows 14.6 to 9.6 ms.
 
-Before, these models ran on the extended engine: the C++ loop calling the
-Python closures for `f`, `F`, `h`, `H`, `Q` and `R` at every step, and the
-smoother in Python. Measured with `tools/benchmark_counterparts.py --repeat 3`
+The earlier history of these models: they once ran on the extended engine,
+the C++ loop calling the Python closures at every step. Measured then with
+`tools/benchmark_counterparts.py --repeat 3`
 (500 filter steps at the decimated rate; the times include the demodulation
 and decimation of `prepare_measurements`, which stay in numpy and scipy):
 
@@ -1245,17 +1252,13 @@ far from the Python loop; against it the C++ linear pass agrees to 1.7e-12.
 In the notebook (02_Oscillators) the three filtering passes went from 16, 30
 and 76 ms to 3.9, 3.7 and 6.1 ms.
 
-Stays in Python: an `InterferometerModel` filtered with its
-`ViolinBankController` (`make_controller()`). The controller retunes each
-leaf's `Q` from the innovations at every step (the factor itself is computed
-by the C++ `Tuners::AdaptiveQR`, one per leaf), and running that loop in
-C++ needs three things that do not exist yet: a C entry that runs
-`Kalman::Filter` with a C++ controller (`kalman_filter_run_closed_loop` takes
-a function), a C++ composite whose `Q` follows its adapted leaves, and a
-controller that dispatches the bank's state and innovation to the leaves'
-controllers. The K1 catalogue with the controller runs at about 12 ms a step
-in the Python loop (1.5 s for 120 steps), most of it numpy's `F P F^T` at
-n = 176. The peak finding of `InterferometerModel.fit` (`spectral.py`: Welch,
+An `InterferometerModel` filtered with its `ViolinBankController`
+(`make_controller()`) runs in `Kalman::Filter` on the C++ composite as well:
+the controller, which retunes each leaf's `Q` from the innovations (the factor
+is computed by the C++ `Tuners::AdaptiveQR`, one per leaf), is called at each
+step before the prediction, and what it leaves on the leaves is pushed into
+their C++ models at once. The controller itself is still a Python function.
+The peak finding of `InterferometerModel.fit` (`spectral.py`: Welch,
 `find_peaks`, the Lorentzian `curve_fit`) builds the model before any filter
 runs, and `subtract`/`reconstruct` resample and remodulate its output: both are
 signal processing around the filter, in scipy.

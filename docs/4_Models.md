@@ -133,28 +133,32 @@ reads `F/H`; the linear KF reads `F/H` as constants.
 
 ## Composite models
 
-`CompositeKalmanModel` combines N submodels. State evolution is always
-block-diagonal — submodels evolve independently. Only the *measurement*
-composition varies, set by `obs_mode`:
+`compose` puts several models side by side, each with its own state. The parts
+evolve independently, so the state is theirs one after the other and `F` and
+`Q` are block-diagonal. What is measured depends on the readout:
 
-| Mode | Measurement vector | Use case |
+| Readout | Measurement | Use |
 |---|---|---|
-| `INDEPENDENT` | `z = [h₁(x₁); h₂(x₂); …]` stacked | separate sensors, one measurement each |
-| `FUSED` | `z = Σ hᵢ(xᵢ)` summed | all submodels contribute additively to one observable |
+| `STACKED` (default) | `z = [h₁(x₁); h₂(x₂); …]` | each part has its own measurement and brings its sensors |
+| `SUMMED` | `z = h₁(x₁) + h₂(x₂) + …` | several signals on one channel: the lines of a spectrum, a signal and its background |
 
 ```python
-from kalman.framework import CompositeKalmanModel
-from kalman.framework.constants import KalmanObservableReadout
+from kalman.framework import compose, KalmanReadout
 
-composite = CompositeKalmanModel(m1, m2, obs_mode=KalmanObservableReadout.INDEPENDENT)
+both  = compose(m1, m2)                                  # also m1.compose(m2), Composite(m1, m2)
+lines = compose(m1, m2, readout=KalmanReadout.SUMMED)    # one measurement, R of the first part
+both.part("m2")                                          # where the second part sits in the state
 ```
 
-Only operators touching `z` are mode-aware (`h`, `H`, and `prepare_measurements`, which
-splits by `m.m` in INDEPENDENT mode and passes through in FUSED). `f`, `F` and
-`Q` are always block-diagonal; `adjust_state` and `finish_output` are identity.
-Override `_bind_prepare_measurements` / `_bind_adjust_state` / `_bind_finish_output` in a
-subclass to inject domain logic while keeping the composite wiring intact — see
-the worked example in [`../README.md`](../README.md).
+A parameter of a part is `"<part>.<name>"` (the part goes by its sensor's
+name, or by `names=[...]`), so `joint` reaches it:
+`both.joint({"m1.damping": (0.5, 1e-4)})`. Models of matrices side by side are
+a model of matrices, on the linear engine; one part that is code makes the
+composite code, each part linearising itself. Parts of the same kind share
+their state names, so `record.plot(component="position", dim=2)` picks the
+third part's. The arithmetic is `Kalman::Models::Composite`.
+
+This is not `add_sensor`, where a second sensor reads the *same* state.
 
 ---
 
@@ -417,7 +421,7 @@ for at every step. Notebook 01, Step 6 adds a Doppler radar to a tracked shell.
 
 | Family / domain | Models |
 |---|---|
-| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `CompositeKalmanModel`, `Joint`, `Fusion` |
+| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `Composite`, `Joint`, `Fusion`, `Lag` |
 | **astro.rocket** | `RocketAscentModel`, `RocketDescentModel`, `RocketLiftoffModel`, `RocketLandingModel` (+ `RocketLaunchModel`, `RocketTakeoffModel` legacy aliases) |
 | **astro.space** | `TransLunarModel`, `InterplanetaryModel` |
 | **ballistics** | `BallisticModel`, `BallisticLinearModel` |

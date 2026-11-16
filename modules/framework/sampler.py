@@ -223,8 +223,11 @@ class KalmanSampler:
         from .engines.linear import LinearKalmanEngine
         from .constants import KalmanStructureKind
         from .models.native import NativeModel
+        from .models.operation import OperationModel
         model = self.model
-        if type(self.engine) is not LinearKalmanEngine or isinstance(model, NativeModel):
+        # A model made by an operation (compose ...) states its matrices as any other.
+        if type(self.engine) is not LinearKalmanEngine or \
+                (isinstance(model, NativeModel) and not isinstance(model, OperationModel)):
             return None
         if getattr(model, "structure", None) is not KalmanStructureKind.MATRICES:
             return None

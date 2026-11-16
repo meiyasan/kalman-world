@@ -26,6 +26,16 @@ namespace Kalman
     std::shared_ptr<Models::Joint> Joint(std::shared_ptr<Model> model, std::vector<EstimatedParameter> parameters)
     { return std::make_shared<Models::Joint>(std::move(model), std::move(parameters)); }
 
+    std::shared_ptr<Models::Composite> Compose(std::vector<std::shared_ptr<Model>> parts, Readout readout,
+                                               std::vector<std::string> names)
+    { return std::make_shared<Models::Composite>(std::move(parts), readout, std::move(names)); }
+
+    std::unique_ptr<Model> Model::Compose(Model &other, Readout readout)
+    {
+        return std::make_unique<Models::Composite>(
+            std::vector<std::shared_ptr<Model>>{Borrow(this), Borrow(&other)}, readout);
+    }
+
     std::shared_ptr<Models::Lag> Lag(std::shared_ptr<Model> model, std::size_t depth)
     { return std::make_shared<Models::Lag>(std::move(model), depth); }
 

@@ -464,6 +464,9 @@ namespace Kalman
             std::unique_ptr<Model> AddInstrument(const Instrument &instrument);
             /// This model with some of its parameters estimated along with its state (Models::Joint).
             std::unique_ptr<Model> Joint(const std::vector<EstimatedParameter> &parameters);
+            /// This model and \p other side by side, each with its own state (Models::Composite).
+            /// Both are borrowed.
+            std::unique_ptr<Model> Compose(Model &other, Readout readout = Readout::Stacked);
             /// This model carrying its last \p depth states (Models::Lag): for sensors that
             /// report late, and fixed-lag smoothing.
             std::unique_ptr<Model> Lag(std::size_t depth);

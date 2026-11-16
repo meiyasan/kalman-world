@@ -79,7 +79,7 @@ each exists as a method of the model and as a function.
 | add an instrument | the same for a set of sensors | `model.add_instrument(instrument)` | `model.AddInstrument(instrument)` | in place |
 | lag | the model carrying its last L states: a sensor with a `delay` reads the state as it was, and block `j` is the state `j` steps ago given what came since (fixed-lag smoothing) | `model.lag(L)`, `KalmanSensor(delay=)` | `model.Lag(L)`, `Sensor::delay` | in place |
 | compose | sensors into an instrument | `compose(s1, s2, name=...)`, `s1 \| s2` | `Kalman::Compose({s1, s2}, name)`, `s1 \| s2` | in place |
-| compose | models side by side, each with its own state | `a.compose(b)` | `a.Compose(b)` | step 14 |
+| compose | models side by side, each with its own state; readout `STACKED` (each part its measurement) or `SUMMED` (one shared); a part's parameter is `"<part>.<name>"` | `compose(a, b)`, `a.compose(b)` | `Kalman::Compose({a, b})`, `a.Compose(b)` | in place |
 | route | several models of one system, with a probability on each (the IMM of the literature) | `KalmanModel.route(models, Pi)` | `Model::Route(models, Pi)` | step 15 |
 
 ## Control: acting on the system
@@ -164,14 +164,14 @@ variants, now `initial_state(x0, P0)`; `model.localization()`, now
 `model.covariance_mask()`; `sensor_id`, the first argument of a model, now
 `sensor` (a name, a `KalmanSensor`, or a list); the label list (`add_sensor("X")`,
 `remove_sensor`, `clear_sensors`, `sensor(i)`), now a sensor's labels.
+`CompositeKalmanModel` and its readouts `FUSED` / `INDEPENDENT`, now `compose`
+(`Composite`) with `SUMMED` / `STACKED`.
 "Twin" now only means the twin experiment of the weather application: the C++
 class that stands for a Python model is its *counterpart* (`NativeCounterpart`,
 was `NativeTwin`; `KALMAN_NATIVE_COUNTERPARTS`, was `KALMAN_NATIVE_TWINS`).
 
 | Older name | Contract name | Step |
 |---|---|---|
-| readouts `FUSED`, `INDEPENDENT` | `SUMMED`, `STACKED` | 14 |
-| `CompositeKalmanModel` | `compose` | 14 |
 | `InteractiveKalmanFilter`, IKF | `route` and the interacting engine | 15 |
 
 ## Names made clearer

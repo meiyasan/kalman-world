@@ -4,22 +4,22 @@ from scipy.linalg import expm
 from scipy.optimize import curve_fit
 
 from ....framework.models.linear import LinearKalmanModel
-from ....framework.models.composite import CompositeKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from ....framework.models.compose import Composite
+from ....framework.constants import KalmanState, KalmanObservable, KalmanReadout
 from .base import (OscillatorState, OscillatorObservable, wire_inharmonicity,
                    wire_fundamental, partial_frequencies)
 
 # ======================================================================
-# A bank of windows over one real signal — INDEPENDENT across distinct fc
+# A bank of windows over one real signal — stacked across distinct fc
 # ======================================================================
-class OscillatorBankModel(CompositeKalmanModel):
+class OscillatorBankModel(Composite):
     """
     A bank of :class:`OscillatorModel` windows analysing **one** real signal across
     several distinct centers ``fc_i``.
 
-    Internally this is a :class:`CompositeKalmanModel` with ``obs_mode=INDEPENDENT``:
+    Internally this is a :class:`Composite` with ``readout=STACKED``:
     each window tracks its own demodulated band and the observations are stacked.
-    The standard :class:`CompositeKalmanModel` prepare_measurements would try to split the input
+    A plain composite would split the input
     by channel count, which cannot broadcast one real signal to N demodulators.  This
     class overrides prepare_measurements with :meth:`_broadcast_preprocess` to send the single
     real strain to every window's own Hilbert demodulator.
@@ -27,7 +27,7 @@ class OscillatorBankModel(CompositeKalmanModel):
     Composition pattern::
 
         OscillatorBankModel(w1, w2, w3)
-          = CompositeKalmanModel(w1, w2, w3, obs_mode=INDEPENDENT)
+          = compose(w1, w2, w3)
           + prepare_measurements: broadcast real strain → each window's own _demod_preprocess
 
     Each window's finish_output remodulates to a real band, so ``record.zk`` has one
@@ -36,14 +36,14 @@ class OscillatorBankModel(CompositeKalmanModel):
     """
 
     NAME = "Oscillator Bank (window bank)"
-    DESCRIPTION = "INDEPENDENT bank of windowed OscillatorModels over one real signal."
+    DESCRIPTION = "Stacked bank of windowed OscillatorModels over one real signal."
     VERSION = "1.1"
 
     def __init__(self, *windows, **kwargs):
         if not windows:
             raise ValueError("OscillatorBankModel needs at least one window.")
         self.windows = list(windows)
-        super().__init__(*windows, obs_mode=KalmanObservableReadout.INDEPENDENT, **kwargs)
+        super().__init__(*windows, readout=KalmanReadout.STACKED, **kwargs)
         self.fs = windows[0].fs
         self._fs_original = windows[0]._fs_original
         self.prepare_measurements = self._broadcast_preprocess   # expand: 1 real → N basebands
@@ -66,9 +66,9 @@ class OscillatorBankModel(CompositeKalmanModel):
     def _reconstruct_postprocess(self, zk_hat, **kwargs):
         """Postprocess: N window phasors (decimated) → one real signal at original rate.
 
-        ``zk_hat`` = ``h(xk)`` from the INDEPENDENT composite, shape ``(N_dec, 2·N_win)``.
-        Columns ``2i, 2i+1`` are ``[Re(Σψ̂_win_i), Im(Σψ̂_win_i)]`` — already the FUSED
-        phasor sum within window ``i`` (computed by each window's FUSED ``h``).
+        ``zk_hat`` = ``h(xk)`` from the stacked composite, shape ``(N_dec, 2·N_win)``.
+        Columns ``2i, 2i+1`` are ``[Re(Σψ̂_win_i), Im(Σψ̂_win_i)]`` — already the summed
+        phasor sum within window ``i`` (computed by each window's summed ``h``).
         Each window's phasor is upsampled to ``fs_original``, remodulated at ``fc_i``,
         and summed across windows.  Returns ``(N, 1)`` real.
         Symmetric counterpart: ``_broadcast_preprocess``.
@@ -124,7 +124,7 @@ class OscillatorBankModel(CompositeKalmanModel):
     def reconstruct_window(self, record, i, *, band_limit=False):
         """Return the real-band reconstruction for window ``i`` without re-filtering.
 
-        Slices window ``i``'s state from ``record.xk``, computes the FUSED phasor sum,
+        Slices window ``i``'s state from ``record.xk``, computes the summed phasor sum,
         upsamples, and remodulates.  Does not touch the other windows.
         """
         offset = sum(w.n for w in self.windows[:i])

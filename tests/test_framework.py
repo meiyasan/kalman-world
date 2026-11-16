@@ -13,7 +13,7 @@ import numpy as np
 sys.path.insert(0, ".")
 from modules.framework import (
     LinearKalmanModel, ExtendedKalmanModel, UnscentedKalmanModel,
-    CompositeKalmanModel, KalmanEngineKind,
+    Composite, KalmanEngineKind,
     LinearKalmanEngine, ExtendedKalmanEngine,
 )
 from modules.framework.abstract.mixins import KalmanModelMixin
@@ -158,22 +158,22 @@ class TestUnscentedModel(unittest.TestCase):
 class TestCompositeModel(unittest.TestCase):
 
     def test_block_dimensions(self):
-        comp = CompositeKalmanModel(_linear_model("a"), _linear_model("b"))
+        comp = Composite(_linear_model("a"), _linear_model("b"))
         self.assertEqual((comp.n, comp.m, comp.l), (4, 2, 0))
 
     def test_requires_at_least_one_submodel(self):
         with self.assertRaises(ValueError):
-            CompositeKalmanModel()
+            Composite()
 
     def test_mismatched_fs_rejected(self):
         a = _linear_model("a")
         b = LinearKalmanModel("b", F=F_CV, H=H_POS, Q=Q_CV, R=R_POS, fs=20)
         with self.assertRaises(ValueError):
-            CompositeKalmanModel(a, b)
+            Composite(a, b)
 
     def test_sample_and_filter(self):
         np.random.seed(1)
-        comp = CompositeKalmanModel(_linear_model("a"), _linear_model("b"))
+        comp = Composite(_linear_model("a"), _linear_model("b"))
         truth = comp.sample(2.0)
         rec = comp.filter(truth.zk)
         self.assertEqual(rec.xk.shape, (20, 4))

@@ -4,8 +4,8 @@ from scipy.linalg import expm
 from scipy.optimize import curve_fit
 
 from ....framework.models.linear import LinearKalmanModel
-from ....framework.models.composite import CompositeKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from ....framework.models.compose import Composite
+from ....framework.constants import KalmanState, KalmanObservable, KalmanReadout
 from .base import (OscillatorState, OscillatorObservable, wire_inharmonicity,
                    wire_fundamental, partial_frequencies)
 

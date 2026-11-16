@@ -69,9 +69,10 @@ class KalmanObservableFlavor(LabelEnum):
     TRUE      = 1 # True observation (with process noise)
     MEASURED  = 2 # Measured observation (with measurement noise)
 
-class KalmanObservableReadout(Enum):
-    INDEPENDENT = auto() # Each submodel provides an independent measurement.
-    FUSED = auto() # All submodels contribute additively to the same measurement
+class KalmanReadout(Enum):
+    """How the parts of a composite model are read (``Kalman::Readout``)."""
+    STACKED = 0   # each part has its own measurement: z = [h1(x1); h2(x2); ...]
+    SUMMED = 1    # the parts share one measurement:   z = h1(x1) + h2(x2) + ...
 
 
 # -----------------------------

@@ -4,8 +4,8 @@ from scipy.linalg import expm
 from scipy.optimize import curve_fit
 
 from ....framework.models.linear import LinearKalmanModel
-from ....framework.models.composite import CompositeKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanObservableReadout
+from ....framework.models.compose import Composite
+from ....framework.constants import KalmanState, KalmanObservable, KalmanReadout
 from .analytic import AnalyticOscillatorModel
 from .base import (OscillatorState, OscillatorObservable, wire_inharmonicity,
                    wire_fundamental, partial_frequencies)
@@ -13,7 +13,7 @@ from .base import (OscillatorState, OscillatorObservable, wire_inharmonicity,
 # ======================================================================
 # One analysis window  [fc ± dfc]  — the atomic windowed model
 # ======================================================================
-class OscillatorModel(CompositeKalmanModel):
+class OscillatorModel(Composite):
     """
     One analysis window ``[fc ± dfc]`` over a **real** signal — the generic rotating-frame
     oscillator tracker.
@@ -27,7 +27,7 @@ class OscillatorModel(CompositeKalmanModel):
     the whole ladder, stack one window per partial inside an
     :class:`OscillatorBankModel`.
 
-    The in-band modes share the single demodulated band channel in **FUSED** mode
+    The in-band modes share the single demodulated band channel in **summed** readout
     (``H = [I₂ … I₂]``, ``z = Σ_i ψ_i``) — the joint Kalman filter of Moisset et al.
     (2025) / Mukherjee & Finn (1999).  A single in-band mode is the trivial (degenerate)
     case.
@@ -66,7 +66,7 @@ class OscillatorModel(CompositeKalmanModel):
     """
 
     NAME = "Windowed Oscillator (one fc ± dfc band)"
-    DESCRIPTION = ("One demodulated analysis window; in-band modes combined FUSED "
+    DESCRIPTION = ("One demodulated analysis window; in-band modes summed "
                    "(z = Σ ψ_i). Real in → filter → real band out.")
     VERSION = "3.1"
 
@@ -115,7 +115,7 @@ class OscillatorModel(CompositeKalmanModel):
                       P0=p0_var * np.eye(2))
                   for f, q in zip(in_band, Qs)]
 
-        super().__init__(*blocks, obs_mode=KalmanObservableReadout.FUSED, **kwargs)
+        super().__init__(*blocks, readout=KalmanReadout.SUMMED, **kwargs)
         self.fs = self._fs_dec
 
         self.prepare_measurements = self._demod_preprocess
@@ -217,9 +217,9 @@ class OscillatorModel(CompositeKalmanModel):
 
     # --- finish_output: filtered phasor sum → real band signal at original rate ---
     def _reconstruct_postprocess(self, zk_hat, band_limit=False, **kwargs):
-        """Postprocess: FUSED phasor sum (decimated) → real band signal at original rate.
+        """Postprocess: summed phasor sum (decimated) → real band signal at original rate.
 
-        ``zk_hat`` = ``h(xk)`` from the FUSED composite = ``Σψ̂_i``, shape ``(N_dec, 2)``.
+        ``zk_hat`` = ``h(xk)`` from the summed composite = ``Σψ̂_i``, shape ``(N_dec, 2)``.
         Upsamples to ``fs_original`` then remodulates: ``Re[Σψ̂ · e^{jωc·t}]``.
         Symmetric counterpart: ``_demod_preprocess``.
         Returns ``(N, 1)`` real.

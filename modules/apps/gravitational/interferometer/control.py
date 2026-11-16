@@ -71,11 +71,11 @@ if TYPE_CHECKING:                      # model.py imports this module; the name 
 class _LeafAdaptiveQR:
     """Drives one ``AdaptiveQRKalmanTuner`` per leaf inside an ``OscillatorModel``.
 
-    ``OscillatorModel`` is a ``CompositeKalmanModel`` whose ``Q()`` is bound as
-    a closure over its leaf submodels — mutating ``window._Q`` has no effect.
+    ``OscillatorModel`` is a composite: its ``Q()`` is its parts' in blocks,
+    so mutating ``window._Q`` has no effect.
     This class targets each ``AnalyticOscillatorModel`` leaf directly so that the
     ``model._Q`` mutations performed by ``AdaptiveQRKalmanTuner._update``
-    actually propagate through ``CompositeKalmanModel.Q()``.
+    reach the composite ``Q()``.
     """
 
     def __init__(self, window: OscillatorModel, *, window_len: int = 30,
@@ -90,7 +90,7 @@ class _LeafAdaptiveQR:
     def update(self, x_hat_win, P_win, t, nu_win):
         """Scale each leaf's Q from the window-level innovation ``nu_win`` (shape (2,1)).
 
-        All leaves in a FUSED window share the same 2-element [Re, Im] innovation
+        All leaves in a summed window share the same 2-element [Re, Im] innovation
         channel, so each leaf receives the same ``nu_win``.  State/covariance are
         sliced to match each leaf's own ``n=2`` state block.
         """
@@ -145,9 +145,9 @@ class ViolinBankController(KalmanController):
             o    = self._state_offsets[i]
             x_i  = x_hat[o:o + win.n]
             P_i  = P[o:o + win.n, o:o + win.n]
-            # OscillatorBankModel uses INDEPENDENT composition →
+            # OscillatorBankModel uses stacked composition →
             # bank nu = [nu_win0; nu_win1; ...], each window contributes 2 elements
-            # (FUSED internally → single 2-D [Re,Im] observation channel per window).
+            # (summed internally → single 2-D [Re,Im] observation channel per window).
             nu_i = nu[2 * i: 2 * i + 2]
             aqr.update(x_i, P_i, t, nu_i)
         return None

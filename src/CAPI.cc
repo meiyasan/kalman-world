@@ -23,6 +23,7 @@
 #include "Kalman/Observability.h"
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Lag.h"
+#include "Kalman/Models/Composite.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
@@ -612,6 +613,54 @@ double kalman_model_sensor_delay(const kalman_model_t *model, int i)
     double delay = -1.;
     Guard([&] { delay = SensorAt(model, i).delay; return 0; });
     return delay;
+}
+
+kalman_model_t *kalman_model_create_composite(kalman_model_t *const *parts, int count, int readout,
+                                              const char *const *names)
+{
+    try
+    {
+        Ok();
+        if (!parts || count <= 0) throw std::invalid_argument("give at least one model (count > 0)");
+        if (readout != 0 && readout != 1) throw std::invalid_argument("readout is 0 (stacked) or 1 (summed)");
+        std::vector<std::shared_ptr<Kalman::Model>> shared;
+        std::vector<std::string> called;
+        for (int i = 0; i < count; ++i)
+        {
+            if (!parts[i]) throw std::invalid_argument("null part");
+            shared.emplace_back(&Deref(parts[i]), [](Kalman::Model *) {});      // borrowed
+            if (names)
+            {
+                if (!names[i]) throw std::invalid_argument("null part name");
+                called.emplace_back(names[i]);
+            }
+        }
+        return new kalman_model{std::make_unique<Kalman::Models::Composite>(
+            std::move(shared), readout == 1 ? Kalman::Readout::Summed : Kalman::Readout::Stacked, std::move(called))};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_part_count(const kalman_model_t *model)
+{
+    return Guard([&] {
+        const auto *composite = dynamic_cast<const Kalman::Models::Composite *>(&Deref(model));
+        return composite ? static_cast<int>(composite->NParts()) : 0;
+    });
+}
+
+const char *kalman_model_part_name(const kalman_model_t *model, int i)
+{
+    static thread_local std::string name;
+    name.clear();
+    Guard([&] {
+        const auto *composite = dynamic_cast<const Kalman::Models::Composite *>(&Deref(model));
+        if (!composite || i < 0 || static_cast<std::size_t>(i) >= composite->NParts()) throw std::out_of_range("no such part");
+        name = composite->PartName(static_cast<std::size_t>(i));
+        return 0;
+    });
+    return name.c_str();
 }
 
 int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R)

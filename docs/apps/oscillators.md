@@ -88,7 +88,7 @@ Result: tail tracks truth (relative RMS error ~0.4% vs a full tail collapse).
 > `2π·Δf·δt`, so an on-resonance (DC) envelope is unaffected but a detuned mode picks up
 > a phase error that grows with `Δf` — silently capping the subtraction of detuned modes
 > at ~30 dB. Padding by a multiple of `down` makes `pad·up/down` an exact integer (zero
-> delay); detuned single-mode subtraction then reaches 50–60 dB, and the 3-peak FUSED
+> delay); detuned single-mode subtraction then reaches 50–60 dB, and the 3-peak summed
 > demo goes from ~30 dB to ~40–54 dB.
 
 ### 2. "Bad suppression range" — apparent leakage outside the window

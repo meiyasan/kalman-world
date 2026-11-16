@@ -8,7 +8,7 @@ engine. Domain applications live in top-level ``apps`` and subclass these.
 from .linear import LinearKalmanModel
 from .extended import ExtendedKalmanModel
 from .unscented import UnscentedKalmanModel
-from .composite import CompositeKalmanModel
+from .compose import Composite
 from .operation import OperationModel
 from .joint import Joint
 from .lag import Lag
@@ -19,7 +19,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel",
+    "Composite",
     "OperationModel",
     "Joint",
     "Lag",

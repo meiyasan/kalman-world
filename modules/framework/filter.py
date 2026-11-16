@@ -194,6 +194,8 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         counterpart = self._native_counterpart(uk_fn)
         if counterpart is not None:
             self._forward_counterpart(counterpart, zk, uk, uk_fn)
+        elif self._retuned_operation_eligible(uk_fn):
+            self._forward_retuned_operation(zk, uk_fn)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         elif self._matrices_eligible(uk_fn):
@@ -317,7 +319,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         # are the same arithmetic (the Jacobian of F x is F).
         if not native.native_loop_enabled() or self._counterpart_engine() is None:
             return False
-        if isinstance(model, native.NativeModel) or np.dtype(getattr(model, "dtype", np.float64)) != np.float64:
+        if (isinstance(model, native.NativeModel) and not getattr(model, "_time_varying", False)) or np.dtype(getattr(model, "dtype", np.float64)) != np.float64:
             return False
         return model.structure in (KalmanStructureKind.TIME_VARYING, KalmanStructureKind.MATRICES)
 
@@ -350,6 +352,38 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             core.check(core.lib.kalman_model_set_R(handle, core.cdptr(R)), "set_R")
             return np.zeros(0)
         out = core.run_filter(handle, engine, n, m, l, zk, control=control)
+        self._store_pass(out, zk, np.zeros((len(zk), 0)))
+
+    # ------------------------------------------------------------------
+    # A model made by an operation (compose ...) under a controller that commands
+    # nothing and retunes its parts (adaptive Q and R, the violin-bank
+    # controller): the pass runs in Kalman::Filter on the C++ model, the
+    # controller runs at each step before the prediction, as in the Python loop,
+    # and what it leaves on the parts is pushed into their C++ models at once.
+    # ------------------------------------------------------------------
+    def _retuned_operation_eligible(self, uk_fn) -> bool:
+        from .models import native
+        from .models.operation import OperationModel
+        model = self._model
+        return (uk_fn is not None and isinstance(model, OperationModel) and model.l == 0
+                and native.native_loop_enabled() and self._counterpart_engine() is not None
+                and not getattr(model, "_time_varying", False))
+
+    def _forward_retuned_operation(self, zk, uk_fn):
+        from .native import core, as_contiguous
+        model = self._model
+        n, m = model.n, model.m
+        handle = model.native_handle()
+        x0 = as_contiguous(np.asarray(self.x, dtype=float).reshape(-1))
+        P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))
+        core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+
+        def control(x, P, t, nu=None):
+            uk_fn(x, P, t, nu=nu)
+            model._refresh()
+            return np.zeros(0)
+        out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk, control=control)
         self._store_pass(out, zk, np.zeros((len(zk), 0)))
 
     def _closed_loop_eligible(self) -> bool:

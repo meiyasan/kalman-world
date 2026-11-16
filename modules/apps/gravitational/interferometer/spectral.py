@@ -243,7 +243,7 @@ def group_peaks_into_windows(peak_fits: list[dict], *,
     """Group nearby fitted peaks into analysis windows.
 
     Peaks separated by less than ``merge_gap_hz`` are placed in the same
-    ``OscillatorModel`` window (FUSED — they share one demodulated channel,
+    ``OscillatorModel`` window (summed — they share one demodulated channel,
     matching the Moisset et al. joint filter design).  Each window is
     characterised by:
 
