@@ -28,13 +28,21 @@ system that changes regime (`route`, the IMM of the literature). Non-Gaussian be
 in C++; a model written in Python is called back from the C++ loop.
 
 **Sensors and operations.** A model lists its sensors, and a model can be made
-from another: `model.add_sensor(sensor)` reads the same state with one more
-sensor (sensor fusion), `model.add_instrument(compose(s1, s2))` with a set of
-them that share a rate and a calibration, `model.joint({...})` estimates some
-of its parameters (an instrument's offset among them) along with its state,
-`compose(a, b)` puts models side by side, `route(models, Pi)` carries a probability on each of several, `model.lag(L)` carries its last states for sensors that report late and for
-fixed-lag smoothing. The same in C++ (`model.AddSensor(sensor)`,
-`model.Joint({...})`). See [Models](docs/4_Models.md).
+from other models. Each operation is a method, a function and a class, the
+same in Python and in C++, and the filter is always the ordinary one:
+
+| Operation | What the new model is |
+|---|---|
+| `model.add_sensor(sensor)` | the model read by one more sensor on the same state (sensor fusion) |
+| `model.add_instrument(compose(s1, s2))` | the same for a set of sensors that share a rate and a calibration |
+| `model.joint({...})` | the model with some parameters (an instrument's offset among them) estimated with its state |
+| `model.lag(L)` | the model carrying its last states: sensors that report late, fixed-lag smoothing |
+| `compose(a, b)` | models side by side, each with its own state |
+| `route(models, Pi)` | several models of one system that changes regime, with a probability on each |
+
+[`examples/python/operations.py`](examples/python/operations.py) runs each of
+them on a cart; the vocabulary is in [The contract](docs/19_Contract.md).
+See [Models](docs/4_Models.md).
 
 **Applications.** Fifteen worked systems, from ballistics, rockets and space
 navigation to particle tracking, gravitational waves, GPS, storms and

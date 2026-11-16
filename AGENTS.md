@@ -69,7 +69,15 @@ fails — fix the code, do not weaken the test.
      model writes `f` and `h` only.
    - A community's words live inside its filter (forecast, project, analysis,
      localization in the ensemble filter; hit, layer, seed, hole in track
-     finding), implemented by the generic method and with a comment naming it.
+     finding; mode, mixing in the interacting engine), implemented by the generic
+     method and with a comment naming it.
+   - A model made from models is an operation: a method, a verb function and a
+     noun class (`joint`/`Joint`, `add_sensor`/`Fusion`, `add_instrument`,
+     `lag`/`Lag`, `compose`/`Composite`, `route`/`Router`), written in C++
+     (`Kalman/Models/`, `Kalman/Operations.h`) and wrapped in Python. No
+     operation gets a filter class of its own.
+   - A replaced name is removed, not aliased; `tests/test_terminology.py` keeps
+     it from coming back.
    - No speed is lost: a batched or threaded path stays so, measured before
      and after.
    - Same names in C++ and Python. C++ is the implementation; Python wraps.
@@ -208,8 +216,8 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **453 passed, 2 skipped** (skips are optional-dependency
-gates). The suite must stay green; a red suite is never "expected".
+Current baseline: **920 passed, 28 skipped** (skips are optional-dependency
+gates), and 27 of 27 in the C++ suite (`ctest`). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than
 skipping them — `make setup`. The MCP
