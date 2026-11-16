@@ -185,7 +185,11 @@ class UnscentedKalmanEngine(KalmanEngine):
         else:
             gamma, Wm, Wc = self._ut_weights(n)
             sig = self._sigmas(x_vec, P, gamma)
-            Y = np.array([self._f_call(model, sp, u=u, t=t) for sp in sig])
+            # f of every sigma point: in one call when the model's f is BATCHED.
+            if model.batched("f"):
+                Y = np.asarray(model.f(sig.T, u=u, t=t), dtype=np.float64).T
+            else:
+                Y = np.array([self._f_call(model, sp, u=u, t=t) for sp in sig])
             x_pred = np.einsum("i,ij->j", Wm, Y)
             P_pred = self._weighted_outer_sum(Wc, Y, x_pred)
             L = self._L(model, x_vec.reshape(-1, 1), u, t)
@@ -217,7 +221,11 @@ class UnscentedKalmanEngine(KalmanEngine):
         else:
             gamma, Wm, Wc = self._ut_weights(n)
             sig = self._sigmas(x_pred, P_pred, gamma)
-            Z = np.array([self._h_call(model, sp, t=t) for sp in sig])
+            # h of every sigma point: in one call when the model's h is BATCHED.
+            if model.batched("h"):
+                Z = np.asarray(model.h(sig.T, t=t), dtype=np.float64).T
+            else:
+                Z = np.array([self._h_call(model, sp, t=t) for sp in sig])
             z_pred = np.einsum("i,ij->j", Wm, Z)
             S = self._weighted_outer_sum(Wc, Z, z_pred)
             Pxz = self._weighted_cross_sum(Wc, sig - x_pred, Z - z_pred)

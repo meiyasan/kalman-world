@@ -179,8 +179,9 @@ namespace Kalman::Engines
         {
             Weights(n, gamma, wm, wc);
             const std::vector<Vector> sigma = SigmaPoints(x, P, gamma);
-            Y.reserve(sigma.size());
-            for (const Vector &s : sigma) Y.push_back(model.f(s, uu, t));
+            // f of every sigma point, in one call (Kalman::Model::f for many states).
+            Y = sigma;
+            model.f(Y, uu, t);
 
             xk = WeightedMean(wm, Y);
             Pk = WeightedOuter(wc, Y, xk, Y, xk);
@@ -234,8 +235,8 @@ namespace Kalman::Engines
         {
             Weights(n, gamma, wm, wc);
             X = SigmaPoints(x, P, gamma);
-            Z.reserve(X.size());
-            for (const Vector &s : X) Z.push_back(model.h(s, t));
+            // h of every sigma point, in one call (Kalman::Model::h for many states).
+            model.h(X, t, Z);
             zpred = WeightedMean(wm, Z);
             S = WeightedOuter(wc, Z, zpred, Z, zpred);
             S += model.R(t);

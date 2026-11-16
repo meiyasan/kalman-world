@@ -140,16 +140,16 @@ namespace Kalman::Engines
             fDraws.gaussian(Q, fParticles.size(), noise);
             if (noise.size() != fParticles.size())
                 throw std::runtime_error("Engines::Particle: the noise source returned the wrong number of draws.");
-            for (std::size_t s = 0; s < fParticles.size(); ++s)
-            {
-                if (noise[s].Size() != Q.Rows())
+            for (const Vector &w : noise)
+                if (w.Size() != Q.Rows())
                     throw std::runtime_error("Engines::Particle: a noise draw has the wrong size.");
-                if (through) fParticles[s] = model.f(fParticles[s], uu, noise[s], t);
-                else
-                {
-                    fParticles[s] = model.f(fParticles[s], uu, t);
-                    fParticles[s] += noise[s];
-                }
+            if (through)
+                for (std::size_t s = 0; s < fParticles.size(); ++s) fParticles[s] = model.f(fParticles[s], uu, noise[s], t);
+            else
+            {
+                // f of every particle, in one call (Kalman::Model::f for many states), then the noise.
+                model.f(fParticles, uu, t);
+                for (std::size_t s = 0; s < fParticles.size(); ++s) fParticles[s] += noise[s];
             }
         }
         else
@@ -158,15 +158,15 @@ namespace Kalman::Engines
             for (std::size_t i = 0; i < Q.Rows() * Q.Cols() && !noisy; ++i) noisy = Q.Data()[i] != 0.;
             const Matrix factor = noisy ? Utils::CholeskyFactor(Q, true) : Matrix();
 
-            for (Vector &p : fParticles)
-            {
-                if (through)
+            if (through)
+                for (Vector &p : fParticles)
                     p = model.f(p, uu, factor.Empty() ? Vector(Q.Rows(), 0.) : Draw(factor), t);
-                else
-                {
-                    p = model.f(p, uu, t);
-                    if (!factor.Empty()) p += Draw(factor);
-                }
+            else
+            {
+                // f of every particle, in one call, then one draw each, in the same order.
+                model.f(fParticles, uu, t);
+                if (!factor.Empty())
+                    for (Vector &p : fParticles) p += Draw(factor);
             }
         }
 
@@ -192,10 +192,13 @@ namespace Kalman::Engines
 
         std::vector<double> logw(fParticles.size());
         double top = -INFINITY;
+        // h of every particle, in one call (Kalman::Model::h for many states).
+        std::vector<Vector> readings;
+        model.h(fParticles, t, readings);
         for (std::size_t s = 0; s < fParticles.size(); ++s)
         {
             Vector dz = zc;
-            dz -= Utils::Compress(model.h(fParticles[s], t), keep);
+            dz -= Utils::Compress(readings[s], keep);
             logw[s] = std::log(fWeights[s] + 1e-300) - 0.5 * Utils::Mahalanobis(dz, Rinv);
             top = std::max(top, logw[s]);
         }

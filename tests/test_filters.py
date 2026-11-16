@@ -161,3 +161,62 @@ class TestNonlinearFilters(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestManyStatesInOneCall(unittest.TestCase):
+    """The unscented and particle engines hand their sigma points and particles to
+    f and h in one call when the model declares them BATCHED; the answer is the
+    one they get point by point."""
+
+    @staticmethod
+    def models():
+        import numpy as np
+        from modules.framework.model import KalmanModel
+
+        class Loop(KalmanModel):
+            def __init__(self):
+                self.n, self.m, self.l = 2, 1, 0
+                self.calls = 0
+                super().__init__("p", fs=20.0, Q=np.diag([1e-5, 1e-3]), R=np.array([[1e-2]]), L=np.eye(2),
+                                 x0=np.array([[0.6], [0.0]]), P0=0.1 * np.eye(2))
+
+            def f(self, x, u=None, w=None, t=None):
+                self.calls += 1
+                x = np.asarray(x, dtype=float)
+                out = np.vstack([x[0] + 0.05 * x[1], x[1] - 0.05 * 9.81 * np.sin(x[0])])
+                return out if w is None else out + np.asarray(w, dtype=float).reshape(out.shape)
+
+            def h(self, x, v=None, t=None):
+                z = np.sin(np.asarray(x, dtype=float)[:1])
+                return z if v is None else z + np.asarray(v, dtype=float).reshape(z.shape)
+
+        class Batch(Loop):
+            BATCHED = ("f", "h")
+        return Loop, Batch
+
+    def test_unscented(self):
+        import numpy as np
+        from modules.framework.filters import UnscentedKalmanFilter
+        Loop, Batch = self.models()
+        z = np.sin(0.6 * np.cos(np.arange(200) * 0.05 * 3.13)).reshape(-1, 1)
+        loop, batch = Loop(), Batch()
+        a, b = UnscentedKalmanFilter(loop).filter(z, reset=True), UnscentedKalmanFilter(batch).filter(z, reset=True)
+        np.testing.assert_allclose(b.xk, a.xk, rtol=0, atol=1e-12)
+        np.testing.assert_allclose(b.Pk, a.Pk, rtol=0, atol=1e-12)
+
+    def test_particle(self):
+        import numpy as np
+        from modules.framework.engines.particle import ParticleEngine
+        Loop, Batch = self.models()
+        out = []
+        for cls in (Loop, Batch):
+            model, engine = cls(), ParticleEngine(n_particles=300)
+            np.random.seed(5)
+            engine.reset(model)
+            x, P = model.x0, model.P0
+            for k in range(40):
+                x, P, _ = engine._predict(model, x, P, t=k * 0.05)
+                x, P = engine._update(model, x, P, np.array([[0.3]]), t=k * 0.05)
+            out.append((np.asarray(x).ravel(), model.calls))
+        np.testing.assert_allclose(out[1][0], out[0][0], rtol=0, atol=1e-12)
+        self.assertLess(out[1][1], out[0][1] / 100)          # one call per step, not one per particle

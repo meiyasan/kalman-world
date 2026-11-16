@@ -83,6 +83,13 @@ class ParticleEngine(KalmanEngine):
                 Q = L @ Q @ L.T
         noise = np.random.multivariate_normal(np.zeros(n), Q, size=self.n_particles)
 
+        if not accepts_w and model.batched("f"):
+            # f of every particle in one call (the model's f is BATCHED), then the noise.
+            self._particles = np.ascontiguousarray(
+                np.asarray(model.f(self._particles.T, u=u, t=t), dtype=np.float64).T + noise)
+            x_mean, P_cov = self._estimate()
+            return x_mean, P_cov, np.eye(n)
+
         prop = np.empty_like(self._particles)
         for i, xp in enumerate(self._particles):
             xi = xp.reshape(-1, 1)
@@ -117,9 +124,12 @@ class ParticleEngine(KalmanEngine):
 
         # model.h() is unavoidable Python (per-particle nonlinear map); only the
         # quadratic-form reduction below is pushed into C.
-        zp = np.empty((self.n_particles, mv), dtype=np.float64)
-        for i, xp in enumerate(self._particles):
-            zp[i] = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
+        if model.batched("h"):                          # h of every particle in one call
+            zp = np.ascontiguousarray(np.asarray(model.h(self._particles.T, t=t), dtype=np.float64).T[:, idx])
+        else:
+            zp = np.empty((self.n_particles, mv), dtype=np.float64)
+            for i, xp in enumerate(self._particles):
+                zp[i] = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
 
         logw = np.log(self._weights + 1e-300)
         from ..native import HAS_C_ACCEL
