@@ -7,31 +7,29 @@
  *
  * *********************************************
  *
- * \details Neither commands anything — Policy() is zero. They live in the
- * controller slot because that is the hook a Kalman::Filter offers once per step
- * with the innovation in hand, and adapting the model *is* a control decision
- * about the filter. Both restore the nominal matrix on Reset(). They act through
+ * \details The two tuners (Kalman::Tuner): they retune the model and command
+ * nothing. Both restore the nominal matrix on Reset(). They act through
  * Model::SetR / SetQ, so a model whose R(t) or Q(t) override ignores the stored
- * matrix is unaffected — the same caveat as the Python originals.
+ * matrix is unaffected, the same caveat as the Python originals.
  *
  * *********************************************
  */
 
-#ifndef KALMAN_CONTROLLERS_ADAPTIVE_H
-#define KALMAN_CONTROLLERS_ADAPTIVE_H
+#ifndef KALMAN_TUNERS_ADAPTIVE_H
+#define KALMAN_TUNERS_ADAPTIVE_H
 
-#include "Kalman/Controller.h"
+#include "Kalman/Tuner.h"
 
 #include <utility>
 #include <vector>
 
-namespace Kalman::Controllers
+namespace Kalman::Tuners
 {
     /**
      * \brief When the filter is surprised (NIS >> m over a window), shrink R so the gain grows.
-     * Mirrors `controllers/boost.py`.
+     * Mirrors `tuners/boost.py`.
      */
-    class Boost : public Controller
+    class Boost : public Tuner
     {
         protected:
             double fBoostFactor = 3.;
@@ -45,10 +43,8 @@ namespace Kalman::Controllers
             Boost(Model *model, double boostFactor = 3., double threshold = 2., std::size_t window = 10,
                   const Vector &xRef = Vector(), const Matrix &Qcost = Matrix(), const Matrix &Rcost = Matrix());
 
-            const char *Title() const override { return "Boost Controller"; }
+            const char *Title() const override { return "Boost Tuner"; }
             const char *Description() const override { return "Innovation-based Kalman gain boost by R scaling."; }
-
-            Vector Policy(const Vector &, const Matrix &, double, const Vector *) override;
             void Update(const Vector &xHat, const Matrix &P, double t, const Vector *nu) override;
             void Reset() override;
 
@@ -57,9 +53,9 @@ namespace Kalman::Controllers
 
     /**
      * \brief Compare the empirical innovation covariance with the model's S; scale Q by the ratio.
-     * Clipped to `[qMin, qMax]`. Mirrors `controllers/adaptive_qr.py`.
+     * Clipped to `[qMin, qMax]`. Mirrors `tuners/adaptive_qr.py`.
      */
-    class AdaptiveQR : public Controller
+    class AdaptiveQR : public Tuner
     {
         protected:
             std::size_t fWindow = 20;
@@ -72,10 +68,8 @@ namespace Kalman::Controllers
             AdaptiveQR(Model *model, std::size_t window = 20, double qMin = 0.1, double qMax = 10.,
                        const Vector &xRef = Vector(), const Matrix &Qcost = Matrix(), const Matrix &Rcost = Matrix());
 
-            const char *Title() const override { return "Adaptive Q/R Controller"; }
+            const char *Title() const override { return "Adaptive Q/R Tuner"; }
             const char *Description() const override { return "Innovation-based Q scaling."; }
-
-            Vector Policy(const Vector &, const Matrix &, double, const Vector *) override;
             void Update(const Vector &xHat, const Matrix &P, double t, const Vector *nu) override;
             void Reset() override;
 
@@ -83,4 +77,4 @@ namespace Kalman::Controllers
     };
 }
 
-#endif // KALMAN_CONTROLLERS_ADAPTIVE_H
+#endif // KALMAN_TUNERS_ADAPTIVE_H

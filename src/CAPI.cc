@@ -25,7 +25,7 @@
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
 #include "Kalman/Controller.h"
-#include "Kalman/Controllers/Adaptive.h"
+#include "Kalman/Tuners/Adaptive.h"
 #include "Kalman/Controllers/LQR.h"
 #include "Kalman/Controllers/MPC.h"
 #include "Kalman/Controllers/MPPI.h"
@@ -1708,8 +1708,8 @@ namespace
     // The scale log of an adapter, or null for a controller that adapts nothing.
     const std::vector<std::pair<double, double>> *ScaleLog(const Kalman::Controller &C)
     {
-        if (const auto *boost = dynamic_cast<const Kalman::Controllers::Boost *>(&C)) return &boost->ScaleLog();
-        if (const auto *aqr = dynamic_cast<const Kalman::Controllers::AdaptiveQR *>(&C)) return &aqr->ScaleLog();
+        if (const auto *boost = dynamic_cast<const Kalman::Tuners::Boost *>(&C)) return &boost->ScaleLog();
+        if (const auto *aqr = dynamic_cast<const Kalman::Tuners::AdaptiveQR *>(&C)) return &aqr->ScaleLog();
         return nullptr;
     }
 
@@ -1814,7 +1814,7 @@ int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizo
     });
 }
 
-kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+kalman_controller_t *kalman_tuner_create_boost(kalman_model_t *model, double boost_factor,
                                                     double threshold, int window, const double *x_ref,
                                                     const double *Qcost, const double *Rcost)
 {
@@ -1822,12 +1822,12 @@ kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, doubl
         if (window <= 0) throw std::invalid_argument("Boost: the window must be positive");
         Kalman::Model &M = Deref(model);
         const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
-        return std::make_unique<Kalman::Controllers::Boost>(&M, boost_factor, threshold,
+        return std::make_unique<Kalman::Tuners::Boost>(&M, boost_factor, threshold,
                                                             static_cast<std::size_t>(window), c.xRef, c.Q, c.R);
     });
 }
 
-kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+kalman_controller_t *kalman_tuner_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
                                                           double q_max, const double *x_ref,
                                                           const double *Qcost, const double *Rcost)
 {
@@ -1835,7 +1835,7 @@ kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model,
         if (window <= 0) throw std::invalid_argument("AdaptiveQR: the window must be positive");
         Kalman::Model &M = Deref(model);
         const Costs c = ReadCosts(M, x_ref, Qcost, Rcost);
-        return std::make_unique<Kalman::Controllers::AdaptiveQR>(&M, static_cast<std::size_t>(window), q_min, q_max,
+        return std::make_unique<Kalman::Tuners::AdaptiveQR>(&M, static_cast<std::size_t>(window), q_min, q_max,
                                                                  c.xRef, c.Q, c.R);
     });
 }

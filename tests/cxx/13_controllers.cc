@@ -399,7 +399,7 @@ int main()
         // Boost: measurements far from the model's expectation drive NIS up; R shrinks.
         Fixture::ControlledVelocity plant(fs);
         plant.SetMeasurementNoise(0.01);
-        Controllers::Boost boost(&plant, 3., 2., 5);
+        Tuners::Boost boost(&plant, 3., 2., 5);
         const Matrix R0 = plant.R();
         std::vector<Vector> z(40, Vector(1, 5.));            // a jump the model does not expect
         Filters::KF kf(&plant);
@@ -415,7 +415,7 @@ int main()
         Fixture::ControlledVelocity plant2(fs);
         plant2.SetProcessNoise(0.01); plant2.SetMeasurementNoise(0.05);
         const Matrix Q0 = plant2.Q();
-        Controllers::AdaptiveQR aqr(&plant2, 10, 0.1, 10.);
+        Tuners::AdaptiveQR aqr(&plant2, 10, 0.1, 10.);
         Sampler s(&plant2, 4);
         s.Generate(80);
         std::vector<Vector> noisy = s.Measurements();
@@ -491,6 +491,30 @@ int main()
         Controllers::Proportional p(&plant, Matrix(1, 1, 4.));
         p(Vector(1, 1.), Matrix::Identity(1), 0.);
         CHECK_CLOSE(p.CostLog().back().second, 1. + 0.25, 1e-15, "callback: the cost is charged on the clipped command");
+    }
+
+    // --- a tuner is its own role; a filter takes a controller and a tuner -------------------------
+    {
+        Fixture::ControlledVelocity plant(fs);
+        Vector x0(2); x0(0) = 1.; x0(1) = 0.;
+        plant.SetInitialState(x0);
+        Tuners::AdaptiveQR tune(&plant, 10);
+        CHECK(dynamic_cast<Tuner *>(&tune) != nullptr && dynamic_cast<Controller *>(&tune) != nullptr,
+              "tuner: a Tuner, which is a Controller that commands nothing");
+        CHECK(tune.Policy(x0, Matrix::Identity(2), 0., nullptr)(0) == 0., "tuner: its command is zero");
+
+        Controllers::LQR lqr(&plant);
+        lqr.Fit();
+        std::vector<Vector> zk(80, Vector(1, 0.5));
+        Filter filter(&plant);
+        const Record both = filter.Forward(zk, lqr, tune);
+        CHECK(both.NSteps() == 80 && lqr.ControlLog().size() == 80, "Forward(zk, controller, tuner): the controller commands every step");
+        CHECK(!tune.ScaleLog().empty(), "Forward(zk, controller, tuner): the tuner retuned");
+        Fixture::ControlledVelocity other(fs);
+        Tuners::AdaptiveQR foreign(&other, 10);
+        bool threw = false;
+        try { filter.Forward(zk, lqr, foreign); } catch (const std::runtime_error &) { threw = true; }
+        CHECK(threw, "Forward(zk, controller, tuner): a tuner built for another model is refused");
     }
 
     return Check::Summary("13_controllers");

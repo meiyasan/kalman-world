@@ -20,8 +20,8 @@ sys.path.insert(0, ".")
 
 from modules.apps.vehicles import CarLaneModel                           # noqa: E402
 from modules.framework.controllers import (ProportionalKalmanController, PIDKalmanController,  # noqa: E402
-                                           LQRKalmanController, MPPIKalmanController,
-                                           BoostKalmanController, AdaptiveQRKalmanController)
+                                           LQRKalmanController, MPPIKalmanController)
+from modules.framework.tuners import BoostKalmanTuner, AdaptiveQRKalmanTuner  # noqa: E402
 from modules.framework.routers import BayesianRouter, ThresholdRouter, HybridRouter  # noqa: E402
 
 
@@ -63,8 +63,8 @@ def main():
     both("LQR (policy)", lambda: LQRKalmanController(lane(), **cost).fit(), step)
     both("LQR fit (DARE + gain; Python = scipy)", lambda: LQRKalmanController(lane(), **cost),
          lambda c: c.fit() if "_native_handle" not in c.__dict__ else c._reference_fit(), number=50)
-    both("Boost (window 5)", lambda: BoostKalmanController(lane(), boost_factor=5.0, threshold=2.0, window=5), step)
-    both("AdaptiveQR (window 20)", lambda: AdaptiveQRKalmanController(lane(), window=20, q_min=0.5, q_max=10.0),
+    both("Boost (window 5)", lambda: BoostKalmanTuner(lane(), boost_factor=5.0, threshold=2.0, window=5), step)
+    both("AdaptiveQR (window 20)", lambda: AdaptiveQRKalmanTuner(lane(), window=20, q_min=0.5, q_max=10.0),
          step)
     both("MPPI 30 x 20 x 2 (Python f)", lambda: MPPIKalmanController(lane(), n_rollouts=30, horizon=20, n_iters=2,
                                                                      noise_sigma=0.05, seed=7, **cost),

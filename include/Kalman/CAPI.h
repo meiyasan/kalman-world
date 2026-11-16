@@ -612,10 +612,10 @@ kalman_controller_t *kalman_controller_create_mpc(kalman_model_t *model, int hor
 /// The commands an MPC planned at its last step, `horizon` x L row-major, first one first.
 /// -1 when `controller` is not an MPC or `horizon` is not its own.
 int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizon, double *plan);
-kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+kalman_controller_t *kalman_tuner_create_boost(kalman_model_t *model, double boost_factor,
                                                     double threshold, int window, const double *x_ref,
                                                     const double *Qcost, const double *Rcost);
-kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+kalman_controller_t *kalman_tuner_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
                                                           double q_max, const double *x_ref,
                                                           const double *Qcost, const double *Rcost);
 void kalman_controller_destroy(kalman_controller_t *controller);

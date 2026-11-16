@@ -85,7 +85,7 @@ each exists as a method of the model and as a function.
 | Term | Meaning | Status |
 |---|---|---|
 | controller | computes the command `u` from the estimate: proportional, PID, LQR, MPC, MPPI | in place |
-| tuner | retunes `Q` and `R` from the innovations; commands nothing | step 8 |
+| tuner | retunes `Q` and `R` from the innovations; commands nothing: `KalmanTuner` / `Kalman::Tuner`, given to a filter beside a controller (`tuner=`) | in place |
 
 ## The three vocabularies
 
@@ -168,7 +168,6 @@ was `NativeTwin`; `KALMAN_NATIVE_COUNTERPARTS`, was `KALMAN_NATIVE_TWINS`).
 
 | Older name | Contract name | Step |
 |---|---|---|
-| `Boost`, `AdaptiveQR` as controllers | tuners | 8 |
 | readouts `FUSED`, `INDEPENDENT` | `SUMMED`, `STACKED` | 14 |
 | `CompositeKalmanModel` | `compose` | 14 |
 | `InteractiveKalmanFilter`, IKF | `route` and the interacting engine | 15 |

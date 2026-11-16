@@ -266,10 +266,10 @@ kalman_controller_t *kalman_controller_create_mpc(kalman_model_t *model, int hor
                                                   const double *u_max, const double *du_max, int n_iterations,
                                                   const double *x_ref, const double *Qcost, const double *Rcost);
 int kalman_controller_mpc_plan(const kalman_controller_t *controller, int horizon, double *plan);
-kalman_controller_t *kalman_controller_create_boost(kalman_model_t *model, double boost_factor,
+kalman_controller_t *kalman_tuner_create_boost(kalman_model_t *model, double boost_factor,
                                                     double threshold, int window, const double *x_ref,
                                                     const double *Qcost, const double *Rcost);
-kalman_controller_t *kalman_controller_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
+kalman_controller_t *kalman_tuner_create_adaptive_qr(kalman_model_t *model, int window, double q_min,
                                                           double q_max, const double *x_ref,
                                                           const double *Qcost, const double *Rcost);
 void kalman_controller_destroy(kalman_controller_t *controller);
@@ -933,10 +933,10 @@ def create_controller(kind, model_handle, n, L, *, x_ref=None, Qcost=None, Rcost
                                               opt(params.get("u_max"), (L,)), opt(params.get("du_max"), (L,)),
                                               int(params.get("n_iterations") or 1), *costs)
     elif kind == "boost":
-        h = lib_.kalman_controller_create_boost(model_handle, float(params["boost_factor"]),
+        h = lib_.kalman_tuner_create_boost(model_handle, float(params["boost_factor"]),
                                                 float(params["threshold"]), int(params["window"]), *costs)
     elif kind == "adaptive_qr":
-        h = lib_.kalman_controller_create_adaptive_qr(model_handle, int(params["window"]), float(params["q_min"]),
+        h = lib_.kalman_tuner_create_adaptive_qr(model_handle, int(params["window"]), float(params["q_min"]),
                                                       float(params["q_max"]), *costs)
     else:
         raise KeyError(f"no C++ controller {kind!r}")

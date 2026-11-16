@@ -5,9 +5,6 @@ from .lqr import LQRKalmanController
 from .mpc import MPCKalmanController
 from .mppi import MPPIKalmanController
 from .neural import NeuralKalmanController
-from .boost import BoostKalmanController
-from .adaptive_qr import AdaptiveQRKalmanController
-from .neural_qr import NeuralAdaptiveQRKalmanController
 
 __all__ = [
     "ProportionalKalmanController",
@@ -16,7 +13,4 @@ __all__ = [
     "MPCKalmanController",
     "MPPIKalmanController",
     "NeuralKalmanController",
-    "BoostKalmanController",
-    "AdaptiveQRKalmanController",
-    "NeuralAdaptiveQRKalmanController",
 ]

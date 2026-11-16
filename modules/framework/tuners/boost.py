@@ -1,11 +1,11 @@
-"""BoostKalmanController — innovation-based Kalman gain boost via R-scaling."""
+"""BoostKalmanTuner — innovation-based Kalman gain boost via R-scaling."""
 from __future__ import annotations
 import numpy as np
 
-from ..control import KalmanController
+from ..tuner import KalmanTuner
 
 
-class BoostKalmanController(KalmanController):
+class BoostKalmanTuner(KalmanTuner):
     """When the filter is surprised (NIS >> m), shrink R so K grows.
 
     Monitors Normalised Innovation Squared over a sliding window.
@@ -20,11 +20,11 @@ class BoostKalmanController(KalmanController):
     Note: ``model._R`` mutation is effective only for leaf
     ``LinearKalmanModel`` instances.  For composite window models (e.g.
     ``OscillatorModel``) R is bound as a closure and ``_R`` is ignored;
-    use ``AdaptiveQRKalmanController`` for composite models.
+    use ``AdaptiveQRKalmanTuner`` for composite models.
 
     Usage::
 
-        boost = BoostKalmanController(model, boost_factor=3.0, threshold=2.0)
+        boost = BoostKalmanTuner(model, boost_factor=3.0, threshold=2.0)
         record = filter.forward(zk, uk=boost)
 
     With libKalman installed the NIS window and the decision are computed by

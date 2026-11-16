@@ -19,7 +19,7 @@ Stage 2 -- Kalman tracking and subtraction
         clean  = model.subtract(strain, record)
 
     ``make_controller()`` returns a ``ViolinBankController`` that attaches one
-    ``AdaptiveQRKalmanController`` per window, self-adjusting each window's
+    ``AdaptiveQRKalmanTuner`` per window, self-adjusting each window's
     process-noise level (Q) from empirical innovation statistics.
 
 Noise sources
@@ -57,7 +57,7 @@ from scipy.optimize import curve_fit
 from scipy.signal import welch as scipy_welch, find_peaks as scipy_find_peaks
 
 from ...resonators.oscillators import OscillatorModel, OscillatorBankModel
-from ....framework.controllers.adaptive_qr import AdaptiveQRKalmanController
+from ....framework.tuners.adaptive_qr import AdaptiveQRKalmanTuner
 from ....framework.control import KalmanController
 from .control import _LeafAdaptiveQR, ViolinBankController
 from .spectral import _estimate_half_max_width, find_peaks_in_band, fit_lorentzian_peak, group_peaks_into_windows, welch_psd
@@ -72,7 +72,7 @@ class InterferometerModel(OscillatorBankModel):
     * A classmethod :meth:`fit` that auto-builds the window bank from raw strain
       data by fitting Lorentzian profiles to detected PSD peaks.
     * :meth:`make_controller` returning a ``ViolinBankController`` with one
-      ``AdaptiveQRKalmanController`` per window for closed-loop Q adaptation.
+      ``AdaptiveQRKalmanTuner`` per window for closed-loop Q adaptation.
     * :meth:`subtract` convenience method (thin wrapper over inherited
       ``reconstruct``).
 
@@ -123,7 +123,7 @@ class InterferometerModel(OscillatorBankModel):
             One window per violin-mode group.  Build via :meth:`fit` or supply
             manually for pre-known peak parameters.
         aqr_window : int
-            Innovation buffer length for each ``AdaptiveQRKalmanController``.
+            Innovation buffer length for each ``AdaptiveQRKalmanTuner``.
         aqr_q_min, aqr_q_max : float
             Clipping bounds for the Q-scaling factor per window.
         """

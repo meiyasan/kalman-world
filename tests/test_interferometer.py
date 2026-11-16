@@ -13,8 +13,8 @@ from modules.apps.gravitational.interferometer import (
     ViolinBankController,
 )
 from modules.apps.resonators.oscillators import OscillatorModel, AnalyticOscillatorModel
-from modules.framework.controllers.boost import BoostKalmanController
-from modules.framework.controllers.adaptive_qr import AdaptiveQRKalmanController
+from modules.framework.tuners.boost import BoostKalmanTuner
+from modules.framework.tuners.adaptive_qr import AdaptiveQRKalmanTuner
 from modules.framework.filter import KalmanFilter
 
 
@@ -304,12 +304,12 @@ class TestBoostControllerRefactor(unittest.TestCase):
     def test_inherits_kalman_controller(self):
         from modules.framework.control import KalmanController
         m = AnalyticOscillatorModel("s", fs=128, f0=10.0, fc=10.0, Q=100)
-        b = BoostKalmanController(m)
+        b = BoostKalmanTuner(m)
         self.assertIsInstance(b, KalmanController)
 
     def test_policy_returns_zero(self):
         m = AnalyticOscillatorModel("s", fs=128, f0=10.0, fc=10.0, Q=100)
-        b = BoostKalmanController(m)
+        b = BoostKalmanTuner(m)
         u = b._policy(np.zeros((m.n, 1)), np.eye(m.n), 0.0)
         self.assertEqual(u.shape, (1, 1))  # max(l=0, 1) = 1
         np.testing.assert_allclose(u, 0.0)
@@ -322,7 +322,7 @@ class TestBoostControllerRefactor(unittest.TestCase):
         m.initial_state([5, 0])
         s    = m.sample(2.0)
         x    = np.asarray(s.zk)
-        b    = BoostKalmanController(m, boost_factor=5.0, threshold=2.0, window=5)
+        b    = BoostKalmanTuner(m, boost_factor=5.0, threshold=2.0, window=5)
         kf   = KalmanFilter(m)
         kf.forward(x, uk=b)
         self.assertGreater(len(b.scale_log), 0)
@@ -333,12 +333,12 @@ class TestAdaptiveQRControllerRefactor(unittest.TestCase):
     def test_inherits_kalman_controller(self):
         from modules.framework.control import KalmanController
         m = AnalyticOscillatorModel("s", fs=128, f0=10.0, fc=10.0, Q=100)
-        a = AdaptiveQRKalmanController(m)
+        a = AdaptiveQRKalmanTuner(m)
         self.assertIsInstance(a, KalmanController)
 
     def test_policy_returns_zero(self):
         m = AnalyticOscillatorModel("s", fs=128, f0=10.0, fc=10.0, Q=100)
-        a = AdaptiveQRKalmanController(m)
+        a = AdaptiveQRKalmanTuner(m)
         u = a._policy(np.zeros((m.n, 1)), np.eye(m.n), 0.0)
         np.testing.assert_allclose(u, 0.0)
 
@@ -350,7 +350,7 @@ class TestAdaptiveQRControllerRefactor(unittest.TestCase):
         m.initial_state([5, 0])
         s  = m.sample(3.0)
         x  = np.asarray(s.zk)
-        a  = AdaptiveQRKalmanController(m, window=20)
+        a  = AdaptiveQRKalmanTuner(m, window=20)
         kf = KalmanFilter(m)
         kf.forward(x, uk=a)
         self.assertGreater(len(a.scale_log), 0)

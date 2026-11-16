@@ -19,7 +19,7 @@ Stage 2 -- Kalman tracking and subtraction
         clean  = model.subtract(strain, record)
 
     ``make_controller()`` returns a ``ViolinBankController`` that attaches one
-    ``AdaptiveQRKalmanController`` per window, self-adjusting each window's
+    ``AdaptiveQRKalmanTuner`` per window, self-adjusting each window's
     process-noise level (Q) from empirical innovation statistics.
 
 Noise sources
@@ -57,7 +57,7 @@ from scipy.optimize import curve_fit
 from scipy.signal import welch as scipy_welch, find_peaks as scipy_find_peaks
 
 from ...resonators.oscillators import OscillatorModel, OscillatorBankModel
-from ....framework.controllers.adaptive_qr import AdaptiveQRKalmanController
+from ....framework.tuners.adaptive_qr import AdaptiveQRKalmanTuner
 from ....framework.control import KalmanController
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:                      # model.py imports this module; the name is only an annotation here
@@ -69,12 +69,12 @@ if TYPE_CHECKING:                      # model.py imports this module; the name 
 # ======================================================================
 
 class _LeafAdaptiveQR:
-    """Drives one ``AdaptiveQRKalmanController`` per leaf inside an ``OscillatorModel``.
+    """Drives one ``AdaptiveQRKalmanTuner`` per leaf inside an ``OscillatorModel``.
 
     ``OscillatorModel`` is a ``CompositeKalmanModel`` whose ``Q()`` is bound as
     a closure over its leaf submodels — mutating ``window._Q`` has no effect.
     This class targets each ``AnalyticOscillatorModel`` leaf directly so that the
-    ``model._Q`` mutations performed by ``AdaptiveQRKalmanController._update``
+    ``model._Q`` mutations performed by ``AdaptiveQRKalmanTuner._update``
     actually propagate through ``CompositeKalmanModel.Q()``.
     """
 
@@ -82,7 +82,7 @@ class _LeafAdaptiveQR:
                  q_min: float = 0.1, q_max: float = 10.0):
         self._leaves = window.models  # list[AnalyticOscillatorModel]
         self._ctrls  = [
-            AdaptiveQRKalmanController(leaf, window=window_len,
+            AdaptiveQRKalmanTuner(leaf, window=window_len,
                                        q_min=q_min, q_max=q_max)
             for leaf in self._leaves
         ]

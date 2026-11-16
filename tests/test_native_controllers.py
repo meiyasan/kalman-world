@@ -22,8 +22,8 @@ from modules.framework.native import core
 import modules.framework.models.native as native
 from modules.framework.models.extended import ExtendedKalmanModel
 from modules.framework.controllers import (ProportionalKalmanController, PIDKalmanController,
-                                           LQRKalmanController, MPCKalmanController, MPPIKalmanController,
-                                           BoostKalmanController, AdaptiveQRKalmanController)
+                                           LQRKalmanController, MPCKalmanController, MPPIKalmanController)
+from modules.framework.tuners import BoostKalmanTuner, AdaptiveQRKalmanTuner
 from modules.apps.vehicles import CarLaneModel
 
 LATERAL_NOISE_STD = 0.3
@@ -79,6 +79,49 @@ def closed_loop_run(controller, N, seed=0):
         xs[k] = x_true.ravel()
         t_now += 1.0 / model.fs
     return xs
+
+
+class TestTunerRole(unittest.TestCase):
+    """A tuner retunes the filter's noise and commands nothing; a filter takes a
+    controller and a tuner separately."""
+
+    def test_tuners_are_tuners_and_command_nothing(self):
+        from modules.framework.tuner import KalmanTuner
+        from modules.framework.control import KalmanController
+        from modules.framework.tuners import NeuralAdaptiveQRKalmanTuner
+        for cls in (BoostKalmanTuner, AdaptiveQRKalmanTuner, NeuralAdaptiveQRKalmanTuner):
+            self.assertTrue(issubclass(cls, KalmanTuner) and issubclass(cls, KalmanController))
+        for cls in (LQRKalmanController, MPCKalmanController, MPPIKalmanController, PIDKalmanController):
+            self.assertFalse(issubclass(cls, KalmanTuner))
+        model = lane()
+        u = AdaptiveQRKalmanTuner(model, window=5)(np.zeros((3, 1)), np.eye(3), 0.0, nu=np.zeros((1, 1)))
+        np.testing.assert_array_equal(np.asarray(u).ravel(), [0.0])
+        import modules.framework.controllers as controllers
+        self.assertFalse(hasattr(controllers, "BoostKalmanTuner") or hasattr(controllers, "BoostKalmanController"))
+
+    def test_a_filter_takes_a_controller_and_a_tuner(self):
+        from modules.framework.filters import ExtendedKalmanFilter
+        rng = np.random.default_rng(3)
+        z = 0.5 + 0.3 * rng.standard_normal((60, 1))
+
+        def run(**loop):
+            model = lane(x0=(0.5, 0.02, 15.0))
+            parts = {key: make(model) for key, make in loop.items()}
+            record = ExtendedKalmanFilter(model).forward(z, **parts)
+            return np.asarray(record.xk), parts
+
+        lqr = lambda model: LQRKalmanController(model, **cost_of(model)).fit()
+        tune = lambda model: AdaptiveQRKalmanTuner(model, window=10)
+        alone, _ = run(uk=lqr)
+        both, parts = run(uk=lqr, tuner=tune)
+        only, tuned = run(tuner=tune)
+        as_before, _ = run(uk=tune)                                   # a tuner in the controller slot, as it was
+        self.assertEqual(len(parts["uk"].u_log), 60)                  # the controller decided every command
+        self.assertEqual(len(parts["tuner"].scale_log), len(tuned["tuner"].scale_log))
+        self.assertGreater(np.abs(both - alone).max(), 0.0)           # the tuner did retune
+        np.testing.assert_array_equal(only, as_before)
+        with self.assertRaisesRegex(ValueError, "a tuner goes with a controller"):
+            ExtendedKalmanFilter(lane()).forward(z, uk=np.zeros((60, 1)), tuner=tune(lane()))
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")
@@ -237,8 +280,8 @@ class TestEveryControllerAgreesWithItsReference(unittest.TestCase):
 
     def test_boost_retunes_the_python_model(self):
         m_cxx, m_ref = lane(), lane()
-        cxx = BoostKalmanController(m_cxx, boost_factor=5.0, threshold=0.5, window=3)
-        ref = reference(BoostKalmanController(m_ref, boost_factor=5.0, threshold=0.5, window=3))
+        cxx = BoostKalmanTuner(m_cxx, boost_factor=5.0, threshold=0.5, window=3)
+        ref = reference(BoostKalmanTuner(m_ref, boost_factor=5.0, threshold=0.5, window=3))
         drive(cxx, 30)
         drive(ref, 30)
         self.assertEqual([t for t, _ in cxx.scale_log], [t for t, _ in ref.scale_log])
@@ -250,8 +293,8 @@ class TestEveryControllerAgreesWithItsReference(unittest.TestCase):
 
     def test_adaptive_qr_retunes_the_python_model(self):
         m_cxx, m_ref = lane(), lane()
-        cxx = AdaptiveQRKalmanController(m_cxx, window=5, q_min=0.5, q_max=10.0)
-        ref = reference(AdaptiveQRKalmanController(m_ref, window=5, q_min=0.5, q_max=10.0))
+        cxx = AdaptiveQRKalmanTuner(m_cxx, window=5, q_min=0.5, q_max=10.0)
+        ref = reference(AdaptiveQRKalmanTuner(m_ref, window=5, q_min=0.5, q_max=10.0))
         drive(cxx, 30)
         drive(ref, 30)
         self.assertEqual(len(cxx.scale_log), 26)
@@ -467,7 +510,7 @@ class TestNotebook12(unittest.TestCase):
         t = np.arange(300) / 50
         truth = np.where(t < 2, 0.0, np.where(t > 4, 3.5, 3.5 * (1 - np.cos(np.pi * (t - 2) / 2)) / 2))
         zk = (truth + rng.normal(0, LATERAL_NOISE_STD, 300)).reshape(-1, 1)
-        make = lambda m: BoostKalmanController(m, boost_factor=5.0, threshold=2.0, window=5)
+        make = lambda m: BoostKalmanTuner(m, boost_factor=5.0, threshold=2.0, window=5)
         x_cxx, s_cxx = self._filter(make, zk, False)
         x_ref, s_ref = self._filter(make, zk, True)
         x_py, s_py = self._filter(make, zk, True, everything_reference=True)
@@ -484,7 +527,7 @@ class TestNotebook12(unittest.TestCase):
         for k in range(300):
             zk[k, 0] = y + rng.normal(0, LATERAL_NOISE_STD)
             y += rng.normal(0, np.sqrt(30e-4))
-        make = lambda m: AdaptiveQRKalmanController(m, window=20, q_min=0.5, q_max=10.0)
+        make = lambda m: AdaptiveQRKalmanTuner(m, window=20, q_min=0.5, q_max=10.0)
         x_cxx, s_cxx = self._filter(make, zk, False)
         x_ref, s_ref = self._filter(make, zk, True)
         x_py, s_py = self._filter(make, zk, True, everything_reference=True)

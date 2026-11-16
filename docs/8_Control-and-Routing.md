@@ -54,9 +54,6 @@ its cost relative to a controller whose raw output already respects the limit.
 | `MPCKalmanController` | `horizon`, `u_min`, `u_max`, `du_max`, `n_iterations` | model predictive control: a plan under limits, remade at every step |
 | `MPPIKalmanController` | `n_rollouts`, `horizon`, `noise_sigma`, `lam` | sampling-based MPC, honours actuator limits natively |
 | `NeuralKalmanController` | `hidden`, `features` (+ `fit()` / `fit_mppi()`) | learned policy, can distil MPPI |
-| `BoostKalmanController` | `boost_factor`, `threshold`, `window` | transient response boost on innovation spikes |
-| `AdaptiveQRKalmanController` | `window`, `q_min`, `q_max` | retunes `Q`/`R` online from innovation statistics |
-| `NeuralAdaptiveQRKalmanController` | `window`, `hidden`, `q_min`, `q_max` | learned `Q`/`R` adaptation across regimes |
 
 ### Model predictive control
 
@@ -107,9 +104,26 @@ LQR asks for ten times the limit: MPC then has the lowest cost of the three
 The planner is `Kalman::Controllers::MPC`; the Python class forwards to it and
 has no implementation of its own, so it needs libKalman.
 
-The last two are *not* control in the actuator sense — they act on the filter's
-own noise model. That is deliberate: the same callable hook is the natural place
-to adapt tuning online.
+### Tuners
+
+A tuner is a different role: it acts on the *filter*, not on the system. Once
+per step, with the innovation in hand, it retunes the model's `Q` or `R`, and
+it commands nothing. A filter takes a controller and a tuner separately:
+
+```python
+filter.forward(zk, uk=lqr, tuner=adaptive)     # a command from lqr, the noise retuned by adaptive
+filter.forward(zk, tuner=adaptive)             # no command, the noise retuned
+```
+
+| Class | Key parameters | Character |
+|---|---|---|
+| `BoostKalmanTuner` | `boost_factor`, `threshold`, `window` | transient response boost on innovation spikes |
+| `AdaptiveQRKalmanTuner` | `window`, `q_min`, `q_max` | retunes `Q`/`R` online from innovation statistics |
+| `NeuralAdaptiveQRKalmanTuner` | `window`, `hidden`, `q_min`, `q_max` | learned `Q`/`R` adaptation across regimes |
+
+They derive from `KalmanTuner` (`Kalman::Tuner` in C++, with
+`Tuners::Boost` and `Tuners::AdaptiveQR`), which is a controller whose
+command is fixed at zero: what a tuner writes is its update.
 
 All take `model` first and accept `x_ref`, `Qcost`, `Rcost`. Defaults come from
 `model.control_cost()` when the model defines it, else identity matrices.

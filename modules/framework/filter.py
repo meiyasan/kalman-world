@@ -152,6 +152,15 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         elif len(self.posterior) > buffer * self.sample_rate():
             self.reset_to_latest()
 
+        # --- a tuner beside the controller: it retunes Q or R at the same point of the step ---
+        tuner = kwargs.pop("tuner", None)
+        if tuner is not None:
+            if uk is not None and not callable(uk):
+                raise ValueError("forward(): a tuner goes with a controller (uk=controller, tuner=...) or alone, "
+                                 "not with a sequence of commands.")
+            from .tuner import with_tuner
+            uk = with_tuner(uk, tuner)
+
         # --- detect callable controller (closed-loop) before normalisation ---
         uk_fn = uk if callable(uk) else None
 

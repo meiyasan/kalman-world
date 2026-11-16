@@ -76,7 +76,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/filters/ckf.py` | `Kalman/Filters/CKF.h` | `Filters::CKF` |
 | `framework/control.py` | `Kalman/Controller.h` | `Kalman::Controller` |
 | `framework/controllers/proportional.py`, `pid.py`, `lqr.py`, `mpc.py`, `mppi.py` | `Kalman/Controllers/*.h` | `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI` |
-| `framework/controllers/boost.py`, `adaptive_qr.py` | `Kalman/Controllers/Adaptive.h` | `Controllers::Boost`, `Controllers::AdaptiveQR` |
+| `framework/tuner.py` | `Kalman/Tuner.h` | `Kalman::Tuner` |
+| `framework/tuners/boost.py`, `adaptive_qr.py` | `Kalman/Tuners/Adaptive.h` | `Tuners::Boost`, `Tuners::AdaptiveQR` |
 | `framework/io/record.py` | `Kalman/IO/Record.h` | `IO::Record` (aliased `Kalman::Record`) |
 | `framework/io/collection.py` | `Kalman/IO/Collection.h` | `IO::Collection` |
 | `framework/routers/base.py` | `Kalman/Routers/Base.h` | `Routers::Router` |
@@ -99,7 +100,7 @@ purely declarative headers (`Abstract/`, `Models/`, `Filters/`) have no `.cc`
 because there is nothing to compile, not because they are missing.
 
 **Not ported yet**, and deliberately absent rather than stubbed: the *learned*
-controllers (`NeuralKalmanController`, `NeuralAdaptiveQRKalmanController` — their
+controllers (`NeuralKalmanController`, `NeuralAdaptiveQRKalmanTuner` — their
 training is Torch, and what would cross is a trained policy through the ONNX
 seam, as for the routers), the reserved integrator/solver kinds
 (`ImplicitEuler`, `FiniteVolume`, `FiniteElement` — `Make()` throws for them,
@@ -134,7 +135,8 @@ exports the algebra names, so existing code compiles unchanged.
 | **Model** | WHAT is the system? | `Kalman::Model` → `Models::Linear`, `Models::Extended` |
 | **Engine** (alias *Estimator*) | HOW to infer? | `Kalman::Engine` → `Engines::Linear`, `Engines::Extended`, `Engines::Unscented`, `Engines::Particle`, `Engines::Ensemble`, `Engines::Combinatorial` |
 | **Filter** | WHEN does it run? | `Kalman::Filter` → `Filters::KF`, `Filters::EKF`, `Filters::UKF`, `Filters::PF`, `Filters::EnKF`; `Filters::IKF`, `Filters::CKF` |
-| **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI`; `Boost`, `AdaptiveQR` |
+| **Controller** | WHAT to command? | `Kalman::Controller` → `Controllers::Proportional`, `PID`, `LQR`, `MPC`, `MPPI` |
+| **Tuner** | HOW to retune the noise? | `Kalman::Tuner` → `Tuners::Boost`, `Tuners::AdaptiveQR` |
 | **Integrator** | WHEN, within one dt? | `Kalman::Integrator` → `Integrators::Euler`, `RK4`, `DormandPrince` |
 | **Solver** | HOW, in space? | `Kalman::Solver` → `Solvers::Spectral`, `Solvers::FiniteDifference` |
 
@@ -1182,7 +1184,7 @@ and 76 ms to 3.9, 3.7 and 6.1 ms.
 Stays in Python: an `InterferometerModel` filtered with its
 `ViolinBankController` (`make_controller()`). The controller retunes each
 leaf's `Q` from the innovations at every step (the factor itself is computed
-by the C++ `Controllers::AdaptiveQR`, one per leaf), and running that loop in
+by the C++ `Tuners::AdaptiveQR`, one per leaf), and running that loop in
 C++ needs three things that do not exist yet: a C entry that runs
 `Kalman::Filter` with a C++ controller (`kalman_filter_run_closed_loop` takes
 a function), a C++ composite whose `Q` follows its adapted leaves, and a
@@ -1287,7 +1289,7 @@ linear filter. Both can be present in one process.
 |---|---|---|
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
 | Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
-| Controllers | P, PID, LQR, MPPI, Boost, AdaptiveQR forward to C++; MPC is C++ only (the Python class has no implementation of its own); Neural (Torch) stays Python; scipy's DARE is the reference | the same six and MPC; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
+| Controllers and tuners | P, PID, LQR, MPPI and the tuners Boost, AdaptiveQR forward to C++; MPC is C++ only (the Python class has no implementation of its own); Neural (Torch) stays Python; scipy's DARE is the reference | the same six and MPC; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
 | Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |

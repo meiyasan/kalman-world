@@ -1,11 +1,11 @@
-"""AdaptiveQRKalmanController — innovation-based Q scaling."""
+"""AdaptiveQRKalmanTuner — innovation-based Q scaling."""
 from __future__ import annotations
 import numpy as np
 
-from ..control import KalmanController
+from ..tuner import KalmanTuner
 
 
-class AdaptiveQRKalmanController(KalmanController):
+class AdaptiveQRKalmanTuner(KalmanTuner):
     """Compare empirical innovation covariance vs model-predicted S.
 
     If the ratio exceeds 1, Q is too small (model overconfident) — scale
@@ -19,7 +19,7 @@ class AdaptiveQRKalmanController(KalmanController):
 
     Usage::
 
-        aqr = AdaptiveQRKalmanController(model, window=20)
+        aqr = AdaptiveQRKalmanTuner(model, window=20)
         record = filter.forward(zk, uk=aqr)
 
     With libKalman installed the innovation window and the factor are computed by

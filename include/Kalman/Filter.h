@@ -39,6 +39,7 @@
 
 #include "Kalman/Abstract/Metadata.h"
 #include "Kalman/Controller.h"
+#include "Kalman/Tuner.h"
 #include "Kalman/Diagnostics.h"
 #include "Kalman/Engine.h"
 #include "Kalman/Matrix.h"
@@ -121,6 +122,12 @@ namespace Kalman
              * kept in Controls(); the controller keeps its own cost log.
              */
             Record Forward(const std::vector<Vector> &zk, Controller &controller, bool reset = true);
+            /**
+             * \brief The same with a tuner beside the controller: \p controller decides the
+             * command, \p tuner retunes the model's noise. (A tuner alone goes in the
+             * overload above: it is a controller that commands nothing.)
+             */
+            Record Forward(const std::vector<Vector> &zk, Controller &controller, Tuner &tuner, bool reset = true);
 
             /**
              * \brief Rauch–Tung–Striebel smoother over the stored forward pass.
@@ -200,7 +207,7 @@ namespace Kalman
 
             /// The one loop behind both Forward() overloads.
             Record Run(const std::vector<Vector> &zk, const std::vector<Vector> *uk,
-                       Controller *controller, bool reset);
+                       Controller *controller, bool reset, Tuner *tuner = nullptr);
     };
 }
 

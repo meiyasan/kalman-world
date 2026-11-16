@@ -1,14 +1,14 @@
-"""NeuralAdaptiveQRKalmanController — learned, per-state Q adaptation."""
+"""NeuralAdaptiveQRKalmanTuner — learned, per-state Q adaptation."""
 from __future__ import annotations
 import numpy as np
 
-from ..control import KalmanController
+from ..tuner import KalmanTuner
 
 
 def _window_feats(nu_window: np.ndarray) -> np.ndarray:
     """[std, lag-1 autocorr, lag-3 autocorr] of a window of scalar innovations.
 
-    Std alone is what ``AdaptiveQRKalmanController``'s trace-ratio test uses -- it
+    Std alone is what ``AdaptiveQRKalmanTuner``'s trace-ratio test uses -- it
     reacts strongly to noise entering *directly* at the measured state, but is nearly
     blind to noise on an *unmeasured* state that only reaches the measurement
     indirectly through the dynamics coupling (e.g. heading noise reaching a
@@ -29,15 +29,15 @@ def _window_feats(nu_window: np.ndarray) -> np.ndarray:
     return np.array([std, _autocorr(1), _autocorr(3)])
 
 
-class NeuralAdaptiveQRKalmanController(KalmanController):
+class NeuralAdaptiveQRKalmanTuner(KalmanTuner):
     """Classify *which* state's process noise is structurally elevated, from a window
     of innovations, and apply a **per-state** Q correction — something the single
-    scalar in :class:`AdaptiveQRKalmanController` cannot do (it must scale every state's
+    scalar in :class:`AdaptiveQRKalmanTuner` cannot do (it must scale every state's
     Q by the same factor, whether that state's noise actually changed or not).
 
     Usage::
 
-        nqr = NeuralAdaptiveQRKalmanController(model, window=20)
+        nqr = NeuralAdaptiveQRKalmanTuner(model, window=20)
         nqr.fit(regime_scales={
             "nominal": np.array([1.0, 1.0, 1.0]),
             "lat":     np.array([25.0, 1.0, 1.0]),
@@ -145,7 +145,7 @@ class NeuralAdaptiveQRKalmanController(KalmanController):
             t_ = 0.0
             for _ in range(episode_len):
                 x_true = np.asarray(model.f(x_true, t=t_), dtype=float).reshape(-1, 1)
-                # scale_vec multiplies Q (variance), like AdaptiveQRKalmanController's
+                # scale_vec multiplies Q (variance), like AdaptiveQRKalmanTuner's
                 # lambda and the diag(scale) @ Q_nominal applied at inference below --
                 # so the std used to draw noise is sqrt(scale_vec), not scale_vec itself.
                 w = rng_i.normal(0, q_std0 * np.sqrt(scale_vec)).reshape(-1, 1)

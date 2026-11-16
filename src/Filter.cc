@@ -112,8 +112,16 @@ namespace Kalman
         return Run(zk, nullptr, &controller, reset);
     }
 
+    Record Filter::Forward(const std::vector<Vector> &zk, Controller &controller, Tuner &tuner, bool reset)
+    {
+        if (controller.GetModel() != fModel || tuner.GetModel() != fModel)
+            throw std::runtime_error("Kalman::Filter::Forward: the controller or the tuner was built for a different model.");
+        if (reset) { controller.Reset(); tuner.Reset(); }
+        return Run(zk, nullptr, &controller, reset, &tuner);
+    }
+
     Record Filter::Run(const std::vector<Vector> &zk, const std::vector<Vector> *uk,
-                       Controller *controller, bool reset)
+                       Controller *controller, bool reset, Tuner *tuner)
     {
         if (zk.empty()) throw std::runtime_error("Kalman::Filter::Forward: no measurements given.");
         fModel->CheckShapes();
@@ -153,6 +161,8 @@ namespace Kalman
             if (controller)
             {
                 command = controller->Command(fX, fP, t, lastNu);
+            // The tuner at the same point of the step: it retunes Q or R, commands nothing.
+            if (tuner) tuner->Command(fX, fP, t, lastNu);
                 u = l > 0 ? &command : nullptr;
             }
 

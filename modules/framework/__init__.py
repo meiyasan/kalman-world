@@ -26,6 +26,8 @@ from .solvers import (SpectralSolver, FiniteDifferenceSolver, resolve_solver,
 from .provider import KalmanProvider
 from .filter import BayesFilter, KalmanFilter
 from .control import KalmanController
+from .tuner import KalmanTuner
+from .tuners import BoostKalmanTuner, AdaptiveQRKalmanTuner, NeuralAdaptiveQRKalmanTuner
 from .operations import joint, add_sensor
 from .sensor import KalmanSensor
 from .engine_models import KalmanEnsembleModel, KalmanDetectorModel
@@ -51,9 +53,6 @@ from .controllers import (
     MPCKalmanController,
     MPPIKalmanController,
     NeuralKalmanController,
-    BoostKalmanController,
-    AdaptiveQRKalmanController,
-    NeuralAdaptiveQRKalmanController,
 )
 from .routers import (
     KalmanRouter,
@@ -100,7 +99,7 @@ __all__ = [
     "KalmanProvider",
     "BayesFilter",
     "KalmanFilter",
-    "KalmanController",
+    "KalmanController", "KalmanTuner",
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
@@ -114,9 +113,9 @@ __all__ = [
     "LQRKalmanController",
     "MPCKalmanController", "MPPIKalmanController",
     "NeuralKalmanController",
-    "BoostKalmanController",
-    "AdaptiveQRKalmanController",
-    "NeuralAdaptiveQRKalmanController",
+    "BoostKalmanTuner",
+    "AdaptiveQRKalmanTuner",
+    "NeuralAdaptiveQRKalmanTuner",
     "KalmanRouter",
     "BayesianRouter",
     "ThresholdRouter",
