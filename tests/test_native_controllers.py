@@ -286,12 +286,12 @@ class TestEveryControllerAgreesWithItsReference(unittest.TestCase):
         m = lane()
         c = PIDKalmanController(m, Kp=np.array([[0.1, 0.7, 0.0]]), Ki=np.array([[0.02, 0.0, 0.0]]))
         drive(c, 2)
-        for twin in (copy.deepcopy(c), pickle.loads(pickle.dumps(c))):
-            self.assertIsNone(twin.__dict__.get("_native_state"))
-            twin.reset()
+        for counterpart in (copy.deepcopy(c), pickle.loads(pickle.dumps(c))):
+            self.assertIsNone(counterpart.__dict__.get("_native_state"))
+            counterpart.reset()
             c.reset()
-            np.testing.assert_allclose(drive(twin, 4), drive(c, 4), atol=1e-14)
-            self.assertIsNotNone(twin.__dict__.get("_native_state"))
+            np.testing.assert_allclose(drive(counterpart, 4), drive(c, 4), atol=1e-14)
+            self.assertIsNotNone(counterpart.__dict__.get("_native_state"))
 
 
 class _Unstable(ExtendedKalmanModel):

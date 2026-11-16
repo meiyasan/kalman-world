@@ -194,7 +194,7 @@ record = model.filter(zk)                                      # record.xk[:, 9]
 A parameter that changes neither `f` nor `h` is refused when the model is
 built: a model that reads it only in its constructor would leave the
 estimate on its prior. The model is `Kalman::Models::Joint`, and the pass
-runs in `Kalman::Filter`: around the inner model's C++ twin when it has one
+runs in `Kalman::Filter`: around the inner model's C++ counterpart when it has one
 that declares the parameters, otherwise around a callback model that calls the
 inner model's Python methods and sets the parameters back on it. The inner
 model is taken as it is when the joint one is built. Notebook 01, Step 7
@@ -294,7 +294,7 @@ with `self._name_channels(["X", "Y", "Z"])`. `add_sensor` takes a
 
 The operations nest: `shell.add_sensor(doppler).joint({"c_drag": ...})`
 estimates a parameter of the shell with both sensors. The model is
-`Kalman::Models::Fusion`; the dynamics run on the model's C++ twin when it has
+`Kalman::Models::Fusion`; the dynamics run on the model's C++ counterpart when it has
 one, and `g` is called back from the C++ loop. `model.observe(X)` is something
 else: the measurement of many states at once, which the ensemble filter asks
 for at every step. Notebook 01, Step 6 adds a Doppler radar to a tracked shell.

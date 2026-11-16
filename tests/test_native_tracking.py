@@ -1,4 +1,4 @@
-"""The drift chamber and its C++ twin (Kalman::Apps::Tracking::DriftChamber): track
+"""The drift chamber and its C++ counterpart (Kalman::Apps::Tracking::DriftChamber): track
 finding propagates in C++ instead of calling back into the Python model.
 
 Skipped when libKalmanApps is not built (``make build``).
@@ -30,7 +30,7 @@ def find(model, event):
 
 
 @needs_apps
-class TestDriftChamberTwin(unittest.TestCase):
+class TestDriftChamberCounterpart(unittest.TestCase):
     # The search compares chi-squares: both sides must make the same choices, and
     # then agree on each track. One propagation ends in a bisection onto the
     # layer and both sides difference it with a step of 1e-6, which leaves about
@@ -42,19 +42,19 @@ class TestDriftChamberTwin(unittest.TestCase):
             python = find(make(), event)
         model = make()
         self.assertIsNotNone(model.native_handle())
-        twin = find(model, event)
-        self.assertEqual([t.hit_ids for t in python.tracks_raw], [t.hit_ids for t in twin.tracks_raw])
-        self.assertEqual([t.hit_ids for t in python.candidates], [t.hit_ids for t in twin.candidates])
-        for a, b in zip(python.tracks_raw, twin.tracks_raw):
+        counterpart = find(model, event)
+        self.assertEqual([t.hit_ids for t in python.tracks_raw], [t.hit_ids for t in counterpart.tracks_raw])
+        self.assertEqual([t.hit_ids for t in python.candidates], [t.hit_ids for t in counterpart.candidates])
+        for a, b in zip(python.tracks_raw, counterpart.tracks_raw):
             self.assertLess(np.abs(np.asarray(a.xk) - np.asarray(b.xk)).max(), 1e-5)
             self.assertLess(abs(a.chi2 - b.chi2), 1e-3 * max(1.0, a.chi2))
-        for a, b in zip(python.tracks, twin.tracks):            # smoothed records
+        for a, b in zip(python.tracks, counterpart.tracks):            # smoothed records
             self.assertLess(np.abs(np.asarray(a.xk) - np.asarray(b.xk)).max(), 1e-5)
-        return python, twin
+        return python, counterpart
 
     def test_three_tracks_in_background(self):
-        _, twin = self.check({}, dict(n_tracks=3, n_background=4, seed=0))
-        self.assertGreaterEqual(len(twin.tracks_raw), 3)
+        _, counterpart = self.check({}, dict(n_tracks=3, n_background=4, seed=0))
+        self.assertGreaterEqual(len(counterpart.tracks_raw), 3)
 
     def test_holes_another_field_more_layers(self):
         self.check(dict(n_layers=12, Bz=1.0), dict(n_tracks=6, n_background=10, efficiency=0.9, seed=5))
@@ -76,13 +76,13 @@ class TestDriftChamberTwin(unittest.TestCase):
         make = lambda: DriftChamberModel(n_layers=12, Bz=1.0)
         event = make().generate_event(n_tracks=6, n_background=10, efficiency=0.9, seed=5)
         find(make(), event)                                     # load and warm up
-        start = time.perf_counter(); find(make(), event); twin = time.perf_counter() - start
-        os.environ["KALMAN_NATIVE_TWINS"] = "0"
+        start = time.perf_counter(); find(make(), event); counterpart = time.perf_counter() - start
+        os.environ["KALMAN_NATIVE_COUNTERPARTS"] = "0"
         try:
             start = time.perf_counter(); find(make(), event); callback = time.perf_counter() - start
         finally:
-            os.environ["KALMAN_NATIVE_TWINS"] = "1"
-        self.assertLess(twin * 5, callback)
+            os.environ["KALMAN_NATIVE_COUNTERPARTS"] = "1"
+        self.assertLess(counterpart * 5, callback)
 
 
 if __name__ == "__main__":

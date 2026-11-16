@@ -10,7 +10,7 @@
  * \class Kalman::Apps::Tracking::DriftChamber
  * \brief A charged particle in an axial field, sampled on concentric layers.
  *
- * \details The twin of the Python `DriftChamberModel`
+ * \details The counterpart of the Python `DriftChamberModel`
  * (modules/apps/tracking/driftchamber.py). In the transverse plane the
  * trajectory is a circular arc. The state is `[x, y, px, py]`, position in cm
  * and momentum in GeV/c; a hit is the position `(x, y)` where the arc crosses

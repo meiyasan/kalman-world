@@ -392,28 +392,28 @@ Python. The models in `tests/cxx/Fixtures.h` are test fixtures and must stay
 there.
 
 **The applications are `libKalmanApps`** (`apps/`), a second library that links
-the first. Each model in it is the twin of one Python class in `modules/apps/`,
-which mixes in `NativeTwin` and hands its filtering pass to the twin when the
-library is present. Rules for a twin:
+the first. Each model in it is the counterpart of one Python class in `modules/apps/`,
+which mixes in `NativeCounterpart` and hands its filtering pass to the counterpart when the
+library is present. Rules for a counterpart:
 
-- It must give the Python answer. `tests/test_native_twins.py` compares the two
+- It must give the Python answer. `tests/test_native_counterparts.py` compares the two
   on every ported configuration; add the new one there and to
-  `tools/benchmark_twins.py`.
+  `tools/benchmark_counterparts.py`.
 - Nothing is defined twice. Scalars cross as named parameters; `Q`, `R`, the
   sample rate and the initial state are pushed from the Python instance. Do not
   recompute a covariance in C++ that Python already built.
 - `native_name()` returns `None` for every configuration that was not ported
   (a Python callable, a state-dependent `Q`, an integrator the C++ side lacks).
   Falling back is correct; guessing is not. A control input is ported when the
-  twin's `f` takes `u`: an open-loop command sequence goes to the twin, a
+  counterpart's `f` takes `u`: an open-loop command sequence goes to the counterpart, a
   controller function keeps the Python model in the C++ loop.
 - A helper the dynamics call (`guidance`, `clip_u`, `_deriv` ...) joins the
-  class's `_TWIN_CONTRACT`, so a subclass that changes it is not the twin.
+  class's `_COUNTERPART_CONTRACT`, so a subclass that changes it is not the counterpart.
   A continuous model's integrator and sub-steps cross as the `integrator` and
   `substeps` parameters (`native.native_integrator_kind`).
 - Derive from `Kalman::Apps::Model`, which differences `f`/`h` as
   `helpers.numerical_jacobian` does. Do not use the library's central scheme in
-  a twin: the two sides would linearise differently.
+  a counterpart: the two sides would linearise differently.
 
 **Adding a member to `Kalman::Model` changes its layout.** Everything compiled
 against the header must be rebuilt together: the library, `libKalmanApps`, the

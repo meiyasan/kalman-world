@@ -31,7 +31,7 @@ import numpy as np
 from ....framework.models.extended import ExtendedKalmanModel
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....framework.control import KalmanController
-from ....framework.models.native import NativeTwin
+from ....framework.models.native import NativeCounterpart
 from ....runtime import astro as _astro
 from ....runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
@@ -119,18 +119,18 @@ def gravity(r, t, moon_phase=0.0, sun_phase=0.0, bodies=("earth", "moon", "sun")
     return a
 
 
-# The C++ twins (libKalmanApps) integrate with the built-in Euler, RK4 or default
+# The C++ counterparts (libKalmanApps) integrate with the built-in Euler, RK4 or default
 # Dormand-Prince; any other scheme, or a subclass of one, keeps the Python physics.
 _NATIVE_INTEGRATORS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
 
-# What a continuous space model's twin stands in for: the framework's contract plus
+# What a continuous space model's counterpart stands in for: the framework's contract plus
 # the hooks its decoded step is made of.
-_SPACE_TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + (
+_SPACE_COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + (
     "derivative", "acceleration", "substeps", "after_step", "decode_step")
 
 
 def _native_integrator(model):
-    """The C++ IntegratorKind of ``model``'s integrator, or None when it has no twin."""
+    """The C++ IntegratorKind of ``model``'s integrator, or None when it has no counterpart."""
     from ....framework.integrator import KalmanIntegrator, _BUILTIN_STEPS
     integrator = model.default_integrator()
     name = getattr(integrator, "NATIVE", None)
@@ -155,7 +155,7 @@ class TransLunarObservable(KalmanObservable):
     X = "Mm"; Y = "Mm"; Z = "Mm"
 
 
-class TransLunarModel(NativeTwin, ExtendedKalmanModel):
+class TransLunarModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Restricted four-body trans-lunar model (Earth + Moon + Sun).
 
@@ -197,11 +197,11 @@ class TransLunarModel(NativeTwin, ExtendedKalmanModel):
         super().__init__("ROCKET", Q=Q, R=R, fs=self.fs, **kw)
 
     # ------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Astro::TransLunar). The Moon and the
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Astro::TransLunar). The Moon and the
     # Sun ride on circular orbits given by a formula, so every configuration has
     # one, ephemeris-seeded phases included; another integrator stays in Python.
     # ------------------------------------------------------------------
-    _TWIN_CONTRACT = _SPACE_TWIN_CONTRACT
+    _COUNTERPART_CONTRACT = _SPACE_COUNTERPART_CONTRACT
 
     def native_name(self):
         if _native_integrator(self) is None:
@@ -273,7 +273,7 @@ class TransLunarModel(NativeTwin, ExtendedKalmanModel):
         """Signature figure: the geocentric trajectory in the x–y plane — truth, EKF
         reconstruction and noisy fixes, with Earth (exaggerated ×``scale``), the Moon's
         orbit and the **lunar flyby** (closest approach) starred. Pass ``kepler`` — an
-        Earth-only counterfactual trajectory (e.g. from a ``bodies=("earth",)`` twin model)
+        Earth-only counterfactual trajectory (e.g. from a ``bodies=("earth",)`` counterpart model)
         — to overlay where the craft *would* drift **without the Moon**, making the
         gravitational catapult visible. ``nmax`` truncates the path (e.g. at re-entry)."""
         import matplotlib.pyplot as plt
@@ -313,7 +313,7 @@ class TransLunarModel(NativeTwin, ExtendedKalmanModel):
         """Interactive **lunar-catapult** replay: the spacecraft flies its free return while the
         per-body **perturbing** accelerations (Earth central pull + Moon/Sun third-body tidal
         terms) are drawn as live vectors with a numeric read-out. Pass ``kepler`` (the Earth-only
-        twin, e.g. from a ``bodies=("earth",)`` model) to fly the **without-Moon** path in lock-step
+        counterpart, e.g. from a ``bodies=("earth",)`` model) to fly the **without-Moon** path in lock-step
         beside it — you watch the two diverge at the flyby, which *is* the catapult."""
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D

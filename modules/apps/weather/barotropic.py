@@ -131,7 +131,7 @@ class BarotropicFlowModel(KolmogorovFlowModel):
         self.latitude_deg = float(latitude_deg)
         self.clim_vorticity_rms = float(clim_vorticity_rms)
 
-    # The C++ twin: Kalman::Apps::Weather::BarotropicFlow, the same field model
+    # The C++ counterpart: Kalman::Apps::Weather::BarotropicFlow, the same field model
     # stepping the beta-plane solver.
     _NATIVE_NAME = "barotropic-flow"
     _NATIVE_SOLVER = BetaPlaneNS2D

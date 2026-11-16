@@ -32,7 +32,7 @@ the two.
 | The controllers: P, PID, LQR, MPPI, Boost, AdaptiveQR | C++ (`Kalman::Controllers`); a Python model's `f`, `h`, noise and `clip_u` are called back | real double-precision models; the neural controllers stay in Python |
 | The routers: Bayesian, Threshold, Hybrid | C++ (`Kalman::Routers`); a Hybrid's Python child is called back | when the library is found |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
-| The four application models with a C++ twin | C++, the whole pass in one call | when `libKalmanApps` is found |
+| The four application models with a C++ counterpart | C++, the whole pass in one call | when `libKalmanApps` is found |
 
 One loop runs every case, in C++. What differs is where the physics is
 evaluated. A model written in Python is called back at every step, so its pass
@@ -129,9 +129,9 @@ finally the system loader.
 |---|---|---|
 | To try an idea quickly | a Python class (see [Models](4_Models.md)) | the C++ loop calling Python: about the speed of Python |
 | One model for C++ programs, ROOT+ and Python | a C++ class, registered by name | the whole pass in C++ |
-| An existing Python class to run faster, unchanged for its users | a C++ twin behind the Python class | the whole pass in C++ |
+| An existing Python class to run faster, unchanged for its users | a C++ counterpart behind the Python class | the whole pass in C++ |
 
-Measured on this repository's models (2000 steps, `tools/benchmark_twins.py`):
+Measured on this repository's models (2000 steps, `tools/benchmark_counterparts.py`):
 the C++ pass is 9 to 11 times faster for the storm and tornado models, 19 times
 for the car, and 33 to 42 times for the ballistic model. The results agree with
 the Python ones to about one part in a hundred million.
@@ -319,17 +319,17 @@ Parameters are numbers. A model whose size depends on a setting (two or three
 states per axis, say) registers one name per size instead, as the ballistic
 model does with `ballistic` and `ballistic-order2`.
 
-## Giving an existing Python model a C++ twin
+## Giving an existing Python model a C++ counterpart
 
 When a Python class already has users, keep it and put the C++ class behind it.
 The four application models that do this are listed in
-[the C++ library page](15_Cxx-Library.md), with the rules a twin must follow.
+[the C++ library page](15_Cxx-Library.md), with the rules a counterpart must follow.
 In short:
 
 ```python
-from kalman.framework.models.native import NativeTwin
+from kalman.framework.models.native import NativeCounterpart
 
-class StormModel(NativeTwin, ExtendedKalmanModel):
+class StormModel(NativeCounterpart, ExtendedKalmanModel):
 
     def native_name(self):                       # which C++ model stands in for this one
         if self.steering is not None:            # a Python callback has no C++ counterpart
@@ -343,11 +343,11 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
 `model.filter(z)` then runs in C++ when it can and in Python when it cannot.
 The user of `StormModel` sees no difference except the time it takes.
 
-To compare the two paths, switch the twins off:
+To compare the two paths, switch the counterparts off:
 
 ```python
 import kalman.framework.models.native as native
-native.USE_NATIVE_TWINS = False        # or KALMAN_NATIVE_TWINS=0 in the environment
+native.USE_NATIVE_COUNTERPARTS = False        # or KALMAN_NATIVE_COUNTERPARTS=0 in the environment
 ```
 
 ## When something goes wrong
@@ -359,4 +359,4 @@ native.USE_NATIVE_TWINS = False        # or KALMAN_NATIVE_TWINS=0 in the environ
 | `loaded but registered no model` | the plugin was linked against another copy of the library | rebuild the plugin with the library it will run with |
 | A crash right after changing `Kalman/Model.h` | a library or plugin still compiled against the old header | rebuild everything together: the library, `libKalmanApps`, every plugin, and ROOT+ |
 | `import torch` fails with a symbol error | `DYLD_LIBRARY_PATH` points at another libtorch | `unset DYLD_LIBRARY_PATH` for this environment |
-| A twin is not used | the configuration has no C++ counterpart | `model.native_handle()` returns `None`; see the table in [the C++ library page](15_Cxx-Library.md) |
+| A counterpart is not used | the configuration has no C++ counterpart | `model.native_handle()` returns `None`; see the table in [the C++ library page](15_Cxx-Library.md) |

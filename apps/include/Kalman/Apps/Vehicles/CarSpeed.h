@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Vehicles::CarSpeed
- * \brief Straight-line acceleration run of one car — the twin of
+ * \brief Straight-line acceleration run of one car — the counterpart of
  * `kalman.apps.vehicles.CarSpeedModel`.
  *
  * \details State `[s, v]`, distance and speed; the position is observed. The

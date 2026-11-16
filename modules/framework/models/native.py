@@ -128,7 +128,7 @@ class NativeModel(KalmanModel):
         Kalman::Filter instead of asking for f, h and the matrices step by step.
         ``None`` for a subclass that rewrites part of the model in Python."""
         import os
-        if not USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0":
+        if not USE_NATIVE_COUNTERPARTS or os.environ.get("KALMAN_NATIVE_COUNTERPARTS", "1") == "0":
             return None
         for name in ("f", "h", "F", "H", "B", "L", "Q", "R"):
             if name in self.__dict__ or getattr(type(self), name) is not getattr(NativeModel, name):
@@ -315,11 +315,11 @@ class NativeModel(KalmanModel):
         return f"NativeModel({self.native_name!r}, n={self.n}, m={self.m}, l={self.l}, fs={self.fs})"
 
 
-# --- a Python model with a C++ twin ---------------------------------------------
+# --- a Python model with a C++ counterpart ---------------------------------------------
 APPS_LIBRARY = "KalmanApps"
-#: Switch every twin off (``False``) to run the Python physics — how a before/after
-#: comparison is made. ``KALMAN_NATIVE_TWINS=0`` in the environment does the same.
-USE_NATIVE_TWINS = True
+#: Switch every counterpart off (``False``) to run the Python physics — how a before/after
+#: comparison is made. ``KALMAN_NATIVE_COUNTERPARTS=0`` in the environment does the same.
+USE_NATIVE_COUNTERPARTS = True
 #: Run the filter loop in C++ for a model written in Python (its f/h called back).
 #: ``False``, or ``KALMAN_NATIVE_LOOP=0``, keeps the Python reference loop.
 USE_NATIVE_LOOP = True
@@ -332,18 +332,18 @@ def native_loop_enabled() -> bool:
 
 class python_reference:
     """Context manager: inside it every model runs the Python reference path
-    (no C++ twin, no C++ loop). What the equivalence tests and the benchmarks
+    (no C++ counterpart, no C++ loop). What the equivalence tests and the benchmarks
     compare against."""
 
     def __enter__(self):
-        global USE_NATIVE_TWINS, USE_NATIVE_LOOP
-        self._saved = (USE_NATIVE_TWINS, USE_NATIVE_LOOP)
-        USE_NATIVE_TWINS = USE_NATIVE_LOOP = False
+        global USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP
+        self._saved = (USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP)
+        USE_NATIVE_COUNTERPARTS = USE_NATIVE_LOOP = False
         return self
 
     def __exit__(self, *exc):
-        global USE_NATIVE_TWINS, USE_NATIVE_LOOP
-        USE_NATIVE_TWINS, USE_NATIVE_LOOP = self._saved
+        global USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP
+        USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP = self._saved
         return False
 
 
@@ -384,16 +384,16 @@ def apps_library_names() -> set[str]:
     return _apps_names
 
 
-class NativeTwin:
+class NativeCounterpart:
     """Mixin for an application model whose physics also exists in libKalmanApps.
 
     The Python class stays the model: its constructor, its attributes, ``plot``
     and the notebooks are unchanged. What changes is who runs the filtering
     pass. When the configuration has a C++ counterpart, ``KalmanFilter.forward``
-    hands the whole pass to the twin (``Kalman::Filter`` in C++, one call), and
+    hands the whole pass to the counterpart (``Kalman::Filter`` in C++, one call), and
     otherwise the Python loop runs as before.
 
-    A model declares its twin with two methods:
+    A model declares its counterpart with two methods:
 
     - :meth:`native_name` — the registered C++ name for *this* configuration, or
       ``None`` when it has none (a Python callback, a feature not ported);
@@ -402,15 +402,15 @@ class NativeTwin:
 
     The sample rate, ``Q`` and ``R`` are pushed from the Python instance on every
     run, and the initial state by the filter, so nothing is defined twice and a
-    change made to the Python model after construction reaches the twin.
+    change made to the Python model after construction reaches the counterpart.
     """
 
-    #: What must be exactly the declaring class's own for the twin to stand in.
+    #: What must be exactly the declaring class's own for the counterpart to stand in.
     #: A continuous model's class keeps what it wrote as ``f`` under
     #: ``derivative`` (KalmanModel.__init_subclass__), so its ``f`` is the shared
     #: decoded step: the derivative, the closing step and the sub-stepping are
     #: what a subclass changes, and are checked too.
-    _TWIN_CONTRACT = ("f", "h", "F", "H", "B", "L", "Q", "R", "derivative", "after_step", "substeps")
+    _COUNTERPART_CONTRACT = ("f", "h", "F", "H", "B", "L", "Q", "R", "derivative", "after_step", "substeps")
 
     def native_name(self) -> str | None:
         return None
@@ -420,23 +420,23 @@ class NativeTwin:
 
     def native_arrays(self) -> dict:
         """The named arrays to push (the C++ class's ``DeclareArray`` names). The
-        twin may size itself from them."""
+        counterpart may size itself from them."""
         return {}
 
-    #: Stored matrices the twin computes itself from what is pushed (``("_F",)``
-    #: for a model built with ``A=``): they do not keep the twin from standing in.
-    _TWIN_DECODES = ()
+    #: Stored matrices the counterpart computes itself from what is pushed (``("_F",)``
+    #: for a model built with ``A=``): they do not keep the counterpart from standing in.
+    _COUNTERPART_DECODES = ()
 
-    def _twin_owner(self) -> type:
+    def _counterpart_owner(self) -> type:
         for cls in type(self).__mro__:
-            if "native_name" in cls.__dict__ and cls is not NativeTwin:
+            if "native_name" in cls.__dict__ and cls is not NativeCounterpart:
                 return cls
-        return NativeTwin
+        return NativeCounterpart
 
     def native_handle(self):
-        """The configured C++ twin, or ``None`` when the Python physics must run."""
+        """The configured C++ counterpart, or ``None`` when the Python physics must run."""
         import os
-        if not USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0":
+        if not USE_NATIVE_COUNTERPARTS or os.environ.get("KALMAN_NATIVE_COUNTERPARTS", "1") == "0":
             return None
         if not core.HAS_CXX_CORE:
             return None
@@ -445,16 +445,16 @@ class NativeTwin:
             return None
         # A subclass or an instance that redefines the contract is a different
         # model from the one that was ported.
-        owner = self._twin_owner()
-        for attr in self._TWIN_CONTRACT:
+        owner = self._counterpart_owner()
+        for attr in self._COUNTERPART_CONTRACT:
             if attr in self.__dict__ or getattr(type(self), attr, None) is not getattr(owner, attr, None):
                 return None
-        # A control input is fine: the twin's f takes u, and the filter hands
-        # the twin the control sequence (a controller function keeps the Python
-        # model, see KalmanFilter._native_twin).
+        # A control input is fine: the counterpart's f takes u, and the filter hands
+        # the counterpart the control sequence (a controller function keeps the Python
+        # model, see KalmanFilter._native_counterpart).
         if np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
             return None
-        if any(getattr(self, attr) is not None for attr in ("_F", "_H") if attr not in self._TWIN_DECODES):
+        if any(getattr(self, attr) is not None for attr in ("_F", "_H") if attr not in self._COUNTERPART_DECODES):
             return None
         if callable(self._Q) or callable(self._R):
             return None
@@ -463,25 +463,25 @@ class NativeTwin:
             return None
 
         lib = core.lib
-        cached = self.__dict__.get("_native_twin")
+        cached = self.__dict__.get("_native_counterpart")
         if cached is None or cached[0] != name:
             handle = lib.kalman_model_create(name.encode())
             if handle == core.ffi.NULL:
                 raise KeyError(f"{type(self).__name__}: {core.last_error()}")
             handle = core.ffi.gc(handle, lib.kalman_model_destroy)
-            self._push_arrays(handle)             # a twin may size itself from them
+            self._push_arrays(handle)             # a counterpart may size itself from them
             n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
             core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
             if (int(n[0]), int(m[0]), int(l[0])) != (self.n, self.m, self.l):
                 raise RuntimeError(
-                    f"{type(self).__name__}: the C++ twin {name!r} has (n, m, l) = "
+                    f"{type(self).__name__}: the C++ counterpart {name!r} has (n, m, l) = "
                     f"({n[0]}, {m[0]}, {l[0]}), the Python model ({self.n}, {self.m}, {self.l}).")
-            self._native_twin = cached = (name, handle)
+            self._native_counterpart = cached = (name, handle)
         handle = cached[1]
 
         if self.fs:
             core.check(lib.kalman_model_set_sample_rate(handle, float(self.fs)), "set_sample_rate")
-        # The twin linearises with the scheme the Python model declares.
+        # The counterpart linearises with the scheme the Python model declares.
         scheme = getattr(getattr(self, "DIFFERENTIATOR", None), "name", "FORWARD").lower()
         if scheme not in ("forward", "central"):
             return None
@@ -504,12 +504,12 @@ class NativeTwin:
                        f"set_array({key!r})")
 
 
-#: Python integrator name -> Kalman::IntegratorKind, the "integrator" parameter of a twin.
+#: Python integrator name -> Kalman::IntegratorKind, the "integrator" parameter of a counterpart.
 NATIVE_INTEGRATORS = {"euler": 0, "rk4": 1, "dormand_prince": 2}
 
 
 def native_integrator_kind(model):
-    """The C++ ``IntegratorKind`` of ``model``'s integrator, for a continuous twin's
+    """The C++ ``IntegratorKind`` of ``model``'s integrator, for a continuous counterpart's
     ``integrator`` parameter; ``None`` when the C++ side has no such scheme (a
     custom integrator, a subclass of a built-in one, Dormand-Prince with other
     tolerances than the C++ defaults)."""
@@ -635,9 +635,9 @@ def handle_of(model, parameters=()):
     settings into the handle again (call it before a pass).
 
     In order: the C++ model itself (a :class:`NativeModel`, which another
-    operation's result is), the model's twin in libKalmanApps, a model of its
+    operation's result is), the model's counterpart in libKalmanApps, a model of its
     constant matrices, and otherwise a ``Kalman::Models::Callback`` calling its
-    Python methods. ``parameters`` names what the handle must declare: a twin that
+    Python methods. ``parameters`` names what the handle must declare: a counterpart that
     lacks one, or a model of matrices, is passed over for the callback model, on
     which they are declared and set back on the Python model
     (``kalman_model_callback_declare_parameters``).
@@ -658,16 +658,16 @@ def handle_of(model, parameters=()):
             raise missing(declared)
         return model._handle, (model,), refresh
 
-    twin_of = getattr(model, "native_handle", None)
-    twin = twin_of() if twin_of is not None else None
-    twin_declares = declared_parameters(twin) if twin is not None else {}
-    if twin is not None and all(name in twin_declares for name in names):
-        _push_initial_state(model, twin)
-        _push_labels(model, twin)
-        return twin, (model,), twin_of                     # native_handle() pushes Q, R, fs, parameters
+    counterpart_of = getattr(model, "native_handle", None)
+    counterpart = counterpart_of() if counterpart_of is not None else None
+    counterpart_declares = declared_parameters(counterpart) if counterpart is not None else {}
+    if counterpart is not None and all(name in counterpart_declares for name in names):
+        _push_initial_state(model, counterpart)
+        _push_labels(model, counterpart)
+        return counterpart, (model,), counterpart_of                     # native_handle() pushes Q, R, fs, parameters
 
     if any(name not in model.keys() for name in names):
-        raise missing(set(model.keys()) | set(twin_declares))
+        raise missing(set(model.keys()) | set(counterpart_declares))
 
     if not names and getattr(model, "structure", None) is KalmanStructureKind.MATRICES \
             and np.dtype(getattr(model, "dtype", np.float64)) == np.float64:

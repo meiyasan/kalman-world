@@ -182,9 +182,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
         # --- main loop (engine does predict + masked update); a constant-matrix
         # linear model with no control callback can run the whole pass fused in C ---
-        twin = self._native_twin(uk_fn)
-        if twin is not None:
-            self._forward_twin(twin, zk, uk, uk_fn)
+        counterpart = self._native_counterpart(uk_fn)
+        if counterpart is not None:
+            self._forward_counterpart(counterpart, zk, uk, uk_fn)
         elif self._native_forward_eligible(uk_fn):
             self._forward_native(zk, uk)
         elif self._matrices_eligible(uk_fn):
@@ -223,32 +223,32 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         return self.get_record(indexing=indexing, inprocess=inprocess, postprocess=postprocess) if record else self
 
     # ------------------------------------------------------------------
-    # A model with a C++ twin (libKalmanApps): the whole pass — the model's
+    # A model with a C++ counterpart (libKalmanApps): the whole pass — the model's
     # f/h, its Jacobians and the EKF steps — runs in Kalman::Filter, in one
     # call. Only the plain extended engine qualifies: a subclass or another
     # engine kind keeps the Python loop.
     # ------------------------------------------------------------------
-    def _native_twin(self, uk_fn):
+    def _native_counterpart(self, uk_fn):
         # In closed loop the controller may retune the Python model as it runs
-        # (adaptive Q and R); a twin would not see it, so the C++ loop calls the
+        # (adaptive Q and R); a counterpart would not see it, so the C++ loop calls the
         # Python model instead.
         if uk_fn is not None:
             return None
         handle_of = getattr(self._model, "native_handle", None)
         if handle_of is None:
             return None
-        if self._twin_engine() is None and self._twin_sigma_engine() is None:
+        if self._counterpart_engine() is None and self._counterpart_sigma_engine() is None:
             return None
         return handle_of()
 
-    def _twin_engine(self):
+    def _counterpart_engine(self):
         """The C++ engine that stands for this filter's engine on a C++ model
         (a name ``core.create_engine`` takes), or None."""
         from .engines.extended import ExtendedKalmanEngine
         from .engines.linear import LinearKalmanEngine
         return {ExtendedKalmanEngine: "extended", LinearKalmanEngine: "linear"}.get(type(self.engine))
 
-    def _twin_sigma_engine(self):
+    def _counterpart_sigma_engine(self):
         """The same for the engines that draw points over the state: the kind and
         its settings, or None."""
         from .engines.unscented import UnscentedKalmanEngine
@@ -260,12 +260,12 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             return {"kind": "unscented", "alpha": engine.alpha, "beta": engine.beta, "kappa": engine.kappa}
         return {"kind": "particle", "n_particles": engine.n_particles, "threshold": engine.resample_threshold}
 
-    def _make_twin_engine(self, handle):
-        """The C++ engine for a pass on the twin ``handle``. For the engines that
-        draw points, the twin is told where the Python class takes its noise (as
+    def _make_counterpart_engine(self, handle):
+        """The C++ engine for a pass on the counterpart ``handle``. For the engines that
+        draw points, the counterpart is told where the Python class takes its noise (as
         an argument of f and h, or added after them), so both draw the same points."""
         from .native import core
-        name = self._twin_engine()
+        name = self._counterpart_engine()
         if name is not None:
             core.check(core.lib.kalman_model_set_noise_inputs(handle, 0, 0), "set_noise_inputs")
             return core.create_engine(name)
@@ -280,7 +280,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         from the cloud the Python engine drew at reset and draws from numpy as it
         would, so a seeded run gives the Python run's numbers."""
         from .native import core
-        settings = self._twin_sigma_engine()
+        settings = self._counterpart_sigma_engine()
         if settings["kind"] != "particle":
             return core.create_engine(**settings)
         handle, self._particle_draws = core.particle_engine_on_numpy(
@@ -306,7 +306,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
                 return False
         # The linear engine, or the extended one: on a model of matrices the two
         # are the same arithmetic (the Jacobian of F x is F).
-        if not native.native_loop_enabled() or self._twin_engine() is None:
+        if not native.native_loop_enabled() or self._counterpart_engine() is None:
             return False
         if isinstance(model, native.NativeModel) or np.dtype(getattr(model, "dtype", np.float64)) != np.float64:
             return False
@@ -323,7 +323,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         P0 = as_contiguous(np.asarray(self.P, dtype=float).reshape(n, n))
         core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
         core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
-        engine = core.create_engine(self._twin_engine())
+        engine = core.create_engine(self._counterpart_engine())
         if uk_fn is None:
             out = core.run_filter(handle, engine, n, m, l, zk, uk[:len(zk)] if l > 0 else None)
             self._store_pass(out, zk, uk)
@@ -351,7 +351,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         from .models import native
         return native.native_loop_enabled()
 
-    def _forward_twin(self, handle, zk, uk, uk_fn=None):
+    def _forward_counterpart(self, handle, zk, uk, uk_fn=None):
         from .native import core
         from .native import as_contiguous
 
@@ -367,18 +367,18 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
                    "set_t0")
 
         if uk_fn is not None:
-            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, model.l, zk, control=uk_fn)
+            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, control=uk_fn)
             uk = out["controls"]
         elif model.l > 0:
             # One command per measurement, as the Python loop reads them (a longer
             # program is cut, like the loop that stops at the last measurement).
-            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, model.l, zk, uk[:len(zk)])
+            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, model.l, zk, uk[:len(zk)])
         else:
-            out = core.run_filter(handle, self._make_twin_engine(handle), n, m, 0, zk)
+            out = core.run_filter(handle, self._make_counterpart_engine(handle), n, m, 0, zk)
         self._store_pass(out, zk, uk)
 
     # ------------------------------------------------------------------
-    # A model written in Python, with no C++ twin: the loop and the EKF
+    # A model written in Python, with no C++ counterpart: the loop and the EKF
     # arithmetic still run in Kalman::Filter, which calls back into the
     # model's own f/h/F/H. Same results as the Python loop below, which
     # stays for the cases this path does not cover (a controller callback,
@@ -398,10 +398,10 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         if type(self.engine) is EnsembleKalmanEngine:
             # A field model's whole-ensemble path (f or h written for every member
             # at once, its own covariance mask) runs in
-            # C++ when it has a twin (libKalmanApps); otherwise the Python engine runs.
+            # C++ when it has a counterpart (libKalmanApps); otherwise the Python engine runs.
             model = self._model
             if getattr(model, "BATCHED", ()) or isinstance(model, KalmanEnsembleModel):
-                return uk_fn is None and self.engine._native_twin(self._model) is not None
+                return uk_fn is None and self.engine._native_counterpart(self._model) is not None
             if self.engine._rho_xy is not None or self.engine._rho_yy is not None:
                 return False
         elif type(self.engine) not in (ExtendedKalmanEngine, UnscentedKalmanEngine, ParticleEngine):
@@ -430,9 +430,9 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
             # The cloud the Python engine drew at reset, and numpy's draws after it.
             kind = {"engine": self._sigma_engine_handle()}
         elif type(engine).__name__ == "EnsembleKalmanEngine":
-            twin = engine._native_twin(model)
-            if twin is not None:                    # a field model: its hooks run in C++ too
-                self._store_pass(engine._forward_native(model, twin, zk), zk, uk)
+            counterpart = engine._native_counterpart(model)
+            if counterpart is not None:                    # a field model: its hooks run in C++ too
+                self._store_pass(engine._forward_native(model, counterpart, zk), zk, uk)
                 return
             kind = {"engine": "ensemble", "n_members": engine.n_members, "inflation": engine.inflation,
                     "seed": int(engine.rng.integers(0, 2**31 - 1))}

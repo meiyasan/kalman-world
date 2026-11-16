@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::RocketAscent
- * \brief Planar guided ascent, thrust as the control input - the twin of
+ * \brief Planar guided ascent, thrust as the control input - the counterpart of
  * `kalman.apps.astro.rocket.RocketAscentModel`.
  *
  * \details State `[x, y, vx, vy]` in Earth-centred axes, scaled units (Mm and

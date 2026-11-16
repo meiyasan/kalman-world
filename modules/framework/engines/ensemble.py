@@ -250,7 +250,7 @@ class EnsembleKalmanEngine(KalmanEngine):
         return out
 
     # ------------------------------------------------------------------
-    # The whole pass in C++, for a field model with a twin in libKalmanApps
+    # The whole pass in C++, for a field model with a counterpart in libKalmanApps
     # (Kalman::Apps::Weather::KolmogorovFlow): the forecast of the ensemble,
     # its observation, the tapers, the analysis and the loop over the cycles
     # run there. The draws are made here, by this engine's numpy generator,
@@ -258,9 +258,9 @@ class EnsembleKalmanEngine(KalmanEngine):
     # run whoever does the arithmetic. The initial ensemble is the one
     # reset() drew (from the model's climatology).
     # ------------------------------------------------------------------
-    def _native_twin(self, model, Q=None):
-        """The configured C++ twin of ``model`` when the pass can run in C++, else
-        ``None``: another engine class, the reference path, a model with no twin
+    def _native_counterpart(self, model, Q=None):
+        """The configured C++ counterpart of ``model`` when the pass can run in C++, else
+        ``None``: another engine class, the reference path, a model with no counterpart
         for its configuration, or a ``Q`` that is not diagonal."""
         from ..models import native
         if type(self) is not EnsembleKalmanEngine or not native.native_loop_enabled():
@@ -286,7 +286,7 @@ class EnsembleKalmanEngine(KalmanEngine):
     def _native_engine(self, model, handle, zk, analyse=True, Q=None):
         """The C++ engine for one pass over ``zk``: this engine's members, the
         draws the Python steps would take, and the tapers given to this engine.
-        Pushes the process noise of ``Q`` (the model's by default) to the twin."""
+        Pushes the process noise of ``Q`` (the model's by default) to the counterpart."""
         from ..native import core
         if self._members is None:
             self.reset(model)
@@ -318,7 +318,7 @@ class EnsembleKalmanEngine(KalmanEngine):
                                "the Python and C++ steps disagree on the draws they take.")
 
     def _forward_native(self, model, handle, zk):
-        """The filter pass (``Kalman::Filter`` over the C++ engine and twin): the
+        """The filter pass (``Kalman::Filter`` over the C++ engine and counterpart): the
         per-step arrays of :func:`~kalman.framework.native.core.run_filter`."""
         from ..native import core
         zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(len(zk), model.m))

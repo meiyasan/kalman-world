@@ -41,7 +41,7 @@ Two classes share this domain:
 - **Process noise.** `process_uncertainty` is `q` in m/s^1.5: left alone, the
   velocity wanders by `q √t`. It stands for what the model leaves out, such as
   wind.
-- **C++.** `BallisticModel` has a twin in `libKalmanApps`
+- **C++.** `BallisticModel` has a counterpart in `libKalmanApps`
   (`Kalman::Apps::Ballistics::Ballistic`). With the default single step the whole
   filter runs there, about 30 to 40 times faster. Sub-stepping, a speed-dependent
   process noise and a thrust input keep the Python step.

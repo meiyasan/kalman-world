@@ -43,11 +43,11 @@ two, quantity by quantity.
 - **Course corrections.** With `control=True` the interplanetary model takes a
   small velocity change as its input. The notebook computes these corrections
   from the filter's estimate and shows what each one removes.
-- **C++.** `TransLunarModel` and `InterplanetaryModel` have twins in
+- **C++.** `TransLunarModel` and `InterplanetaryModel` have counterparts in
   `libKalmanApps` (`Kalman::Apps::Astro::TransLunar`, `::Interplanetary`), so
   `model.filter(z)` runs wholly in C++, about 10 times faster. The planets'
   positions the interplanetary model tabulates from the ephemeris are handed
-  to the twin when it runs. A course correction (`control=True`) and an
+  to the counterpart when it runs. A course correction (`control=True`) and an
   integrator of your own keep the Python step.
 
 ## Using it

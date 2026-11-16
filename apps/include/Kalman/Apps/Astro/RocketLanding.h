@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::RocketLanding
- * \brief Vertical propulsive landing (a hoverslam) - the twin of
+ * \brief Vertical propulsive landing (a hoverslam) - the counterpart of
  * `kalman.apps.astro.rocket.RocketLandingModel`.
  *
  * \details State `[h, v, m]`, altitude, vertical speed and mass (SI units); the

@@ -23,7 +23,7 @@ and a filter free to choose between the two loses the phase.
 - **A nonlinear measurement.** The channels depend on the state through sines
   and cosines, so this is an extended Kalman filter. The model gives the
   derivative of the measurement in closed form.
-- **It runs in C++.** `filter()` hands the whole pass to the C++ twin
+- **It runs in C++.** `filter()` hands the whole pass to the C++ counterpart
   `Kalman::Apps::Gravitational::Polarization` (registered `polarization`; see
   `kalman model polarization` for its components and units). The noise matrices
   and the sample rate are pushed from the Python model; turning a complex

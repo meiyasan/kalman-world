@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::TransLunar
- * \brief Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the twin of
+ * \brief Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the counterpart of
  * `kalman.apps.astro.space.TransLunarModel`.
  *
  * \details Geocentric state `[x, y, z, vx, vy, vz]`, position in Mm and velocity

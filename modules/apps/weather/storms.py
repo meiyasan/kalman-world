@@ -30,7 +30,7 @@ from __future__ import annotations
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 from ...framework.constants import KalmanState, KalmanObservable
 
 KM_PER_DEG_LAT = 110.574
@@ -57,7 +57,7 @@ class StormObservable(KalmanObservable):
 
 
 
-class StormModel(NativeTwin, ExtendedKalmanModel):
+class StormModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Reduced tropical-cyclone track + intensity model (steering + beta + turn).
 
@@ -161,7 +161,7 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
                          x0=x0, **kw)
 
     # ------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Storm). A steering flow is
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Weather::Storm). A steering flow is
     # a Python callable, which has no C++ counterpart, and so is an intensity
     # tendency, except the one a LearnedIntensityModel fitted on the analytic
     # environment: a ridge regression, whose coefficients cross as arrays.
@@ -770,7 +770,7 @@ _SEASON_PI = {
 }
 
 
-class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
+class TornadoEnvironmentModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Mean-reverting tornado-environment latent — one regime of an IKF.
 
@@ -821,7 +821,7 @@ class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
         super().__init__(sensor, Q=Q, R=R, L=np.eye(1), fs=1.0 / float(dt_hours),
                          x0=x0, **kw)
 
-    # C++ twin (libKalmanApps: Kalman::Apps::Weather::Tornado).
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Weather::Tornado).
     def native_name(self):
         return "tornado-environment"
 

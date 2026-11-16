@@ -48,10 +48,10 @@ x' = μ + a (x - μ)          μ: the regime's level,  a: how long the air remem
 - **Steering and intensity.** A steering wind and an intensity trend can be
   passed as Python functions. The storm then follows the wind and no longer
   needs a prescribed turn rate.
-- **C++.** Both models have twins in `libKalmanApps`. A steering function
+- **C++.** Both models have counterparts in `libKalmanApps`. A steering function
   keeps the Python step, and so does an intensity function, except the one a
   `LearnedIntensityModel` fitted on `analytic_environment` gives: a ridge
-  regression, whose coefficients the twin takes as arrays.
+  regression, whose coefficients the counterpart takes as arrays.
 
 ## Using it
 

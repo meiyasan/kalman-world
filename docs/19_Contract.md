@@ -162,10 +162,12 @@ variants, now `initial_state(x0, P0)`; `model.localization()`, now
 `model.covariance_mask()`; `sensor_id`, the first argument of a model, now
 `sensor` (a name, a `KalmanSensor`, or a list); the label list (`add_sensor("X")`,
 `remove_sensor`, `clear_sensors`, `sensor(i)`), now a sensor's labels.
+"Twin" now only means the twin experiment of the weather application: the C++
+class that stands for a Python model is its *counterpart* (`NativeCounterpart`,
+was `NativeTwin`; `KALMAN_NATIVE_COUNTERPARTS`, was `KALMAN_NATIVE_TWINS`).
 
 | Older name | Contract name | Step |
 |---|---|---|
-| `NativeTwin`, "the C++ twin" | `NativeCounterpart`, "the C++ model" | 7 |
 | `Boost`, `AdaptiveQR` as controllers | tuners | 8 |
 | readouts `FUSED`, `INDEPENDENT` | `SUMMED`, `STACKED` | 14 |
 | `CompositeKalmanModel` | `compose` | 14 |

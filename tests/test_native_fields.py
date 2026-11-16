@@ -1,13 +1,13 @@
 """A field model's ensemble pass runs in C++ (libKalmanApps: Weather::KolmogorovFlow).
 
 With the ensemble engine, ``KolmogorovFlowModel`` and ``BarotropicFlowModel``
-hand the whole pass to their twin: the forecast of every member, the
+hand the whole pass to their counterpart: the forecast of every member, the
 observation of the ensemble, the localization tapers, the analysis and the
 loop over the cycles. The draws stay numpy's (the engine's generator, in the
 order the Python steps take them), so the C++ pass is compared here with the
 Python reference on the same seed, member for member.
 
-How close: the reference steps the field with numpy's FFT and the twin with
+How close: the reference steps the field with numpy's FFT and the counterpart with
 the library's; one solver step agrees to ~1e-16 relative, and the chaotic flow
 grows that to ~1e-13 over the 1,200 steps of notebook 13 (measured, then held
 by the analysis). The tolerances below are 1e-9 relative to the largest entry.
@@ -59,13 +59,13 @@ def measurements(model, steps=12, seed=21):
     return zs
 
 
-def filter_pass(make, engine_kw, reference, expect_twin=True):
+def filter_pass(make, engine_kw, reference, expect_counterpart=True):
     def go():
         model = make()
         zs = measurements(model)
         f = EnsembleKalmanFilter(model, **engine_kw)
         if not reference:
-            assert (f.engine._native_twin(model) is not None) == expect_twin
+            assert (f.engine._native_counterpart(model) is not None) == expect_counterpart
         rec = f.forward(zs)
         return (np.asarray(rec.xk), np.asarray(rec.Pk), f.engine.members.copy(),
                 int(f.engine.rng.integers(0, 1 << 62)), [np.asarray(nu).ravel() for nu in f.innovation])
@@ -111,7 +111,7 @@ class TestFieldFilterPass(unittest.TestCase):
             return model
         self.compare(make, n_members=10, inflation=1.03, seed=1)
 
-    def test_the_twin_declares_what_python_does(self):
+    def test_the_counterpart_declares_what_python_does(self):
         model = mini("gradient")
         handle = model.native_handle()
         x = model.climatology()[:, 3].copy()
@@ -159,14 +159,14 @@ class TestFieldFallbacks(unittest.TestCase):
         Q[0, 1] = Q[1, 0] = 0.001
         model._Q = Q
         self.assertIsNone(model.native_handle(), "a Q with off-diagonal terms")
-        self.assertIsNone(EnsembleKalmanEngine(n_members=4)._native_twin(model))
+        self.assertIsNone(EnsembleKalmanEngine(n_members=4)._native_counterpart(model))
 
     def test_a_python_pass_still_gives_the_reference(self):
         def make():
             model = mini()
             model.surrogate = lambda X: np.column_stack([model.solver.advance(x, model.cycle) for x in X.T])
             return model
-        got = filter_pass(make, dict(n_members=8, seed=2), False, expect_twin=False)
+        got = filter_pass(make, dict(n_members=8, seed=2), False, expect_counterpart=False)
         want = filter_pass(make, dict(n_members=8, seed=2), True)
         self.assertLess(rel(got[0], want[0]), RTOL)
 
@@ -191,11 +191,11 @@ class TestTwinExperiment(unittest.TestCase):
             with native.python_reference():
                 return go()
         if mode == "loop":                       # the C++ solver and kernel, the Python loop
-            saved, native.USE_NATIVE_TWINS = native.USE_NATIVE_TWINS, False
+            saved, native.USE_NATIVE_COUNTERPARTS = native.USE_NATIVE_COUNTERPARTS, False
             try:
                 return go()
             finally:
-                native.USE_NATIVE_TWINS = saved
+                native.USE_NATIVE_COUNTERPARTS = saved
         return go()
 
     @classmethod

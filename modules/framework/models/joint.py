@@ -58,7 +58,7 @@ class Joint(OperationModel):
     ``c_drag`` to its state, with an initial standard deviation of ``1e-3`` and a
     random walk of ``1e-6`` per step, starting from the value the inner model
     holds. A parameter is one the model keeps as metadata (``model["c_drag"]``)
-    or one its C++ twin declares.
+    or one its C++ counterpart declares.
 
     ``initial_state`` takes either the joint state (``n + p`` numbers) or one the
     inner model takes; the latter is handed to the inner model, and the

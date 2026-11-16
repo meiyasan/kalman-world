@@ -9,7 +9,7 @@
  *
  * \class Kalman::Apps::Gravitational::Polarization
  * \brief Online estimation of a gravitational-wave polarization (Jones
- * formalism, Amblard and Michel) -- the twin of
+ * formalism, Amblard and Michel) -- the counterpart of
  * `kalman.apps.gravitational.PolarizationModel`.
  *
  * \details The state is eight numbers, four angles each with its rate:

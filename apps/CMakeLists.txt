@@ -4,7 +4,7 @@
 # libKalman ships the contracts and no physics; this library is where
 # the physics lives. It registers every model with Kalman::Factory, so it is
 # loaded like any plugin: by the Python package (which then runs a Python
-# model's filtering pass on its C++ twin), by the MCP server, or linked directly
+# model's filtering pass on its C++ counterpart), by the MCP server, or linked directly
 # by a C++ or ROOT+ program that includes <Kalman/Apps/...>.
 cmake_minimum_required(VERSION 3.20)
 

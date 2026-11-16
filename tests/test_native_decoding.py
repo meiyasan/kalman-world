@@ -144,7 +144,7 @@ class TestDifferentiators(unittest.TestCase):
             Formula().F(x=x)
         self.assertIn("ANALYTIC", str(raised.exception))
 
-    def test_a_twin_linearises_with_the_declared_scheme(self):
+    def test_a_counterpart_linearises_with_the_declared_scheme(self):
         from modules.apps.ballistics.extended import BallisticModel
         from modules.framework.constants import KalmanDifferentiatorKind as Kind
 
@@ -162,9 +162,9 @@ class TestDifferentiators(unittest.TestCase):
 
         if CentralBallistic("b").native_handle() is None:
             self.skipTest("libKalmanApps is not built")
-        twin, python = run(CentralBallistic, False), run(CentralBallistic, True)
-        np.testing.assert_allclose(twin, python, rtol=1e-6, atol=1e-9)
-        self.assertGreater(np.abs(twin - run(BallisticModel, False)).max(), 0.0)   # and it is not the forward one
+        counterpart, python = run(CentralBallistic, False), run(CentralBallistic, True)
+        np.testing.assert_allclose(counterpart, python, rtol=1e-6, atol=1e-9)
+        self.assertGreater(np.abs(counterpart - run(BallisticModel, False)).max(), 0.0)   # and it is not the forward one
 
 
 class TestSamplerSeed(unittest.TestCase):
@@ -189,14 +189,14 @@ class TestSamplerInCxx(unittest.TestCase):
 
     def check(self, a, b):
         # The covariance goes through a differenced Jacobian, so it agrees as the
-        # filter's does (tests/test_native_twins.py), not to rounding.
+        # filter's does (tests/test_native_counterparts.py), not to rounding.
         for name, tol in (("xk", 1e-9), ("zk", 1e-9), ("Pk", 1e-6)):
             x, y = np.asarray(getattr(a, name), float), np.asarray(getattr(b, name), float)
             self.assertEqual(x.shape, y.shape, name)
             scale = max(1.0, np.nanmax(np.abs(y)))
             self.assertLess(np.nanmax(np.abs(x - y)) / scale, tol, name)
 
-    def test_a_twin_and_a_python_model(self):
+    def test_a_counterpart_and_a_python_model(self):
         from modules.apps.ballistics.extended import BallisticModel
         from modules.apps.vehicles.lane import CarLaneModel
 
@@ -206,7 +206,7 @@ class TestSamplerInCxx(unittest.TestCase):
             return m
         self.assertIsNotNone(ballistic().native_handle())
         self.check(*self.both(ballistic, 5.0))
-        self.check(*self.both(lambda: BallisticModel("b", fs=20.0, drag_uncertainty=0.3, c_drag=0.01), 3.0))   # no twin
+        self.check(*self.both(lambda: BallisticModel("b", fs=20.0, drag_uncertainty=0.3, c_drag=0.01), 3.0))   # no counterpart
         self.check(*self.both(lambda: CarLaneModel("lane"), 4.0))
 
     def test_noise_switches_and_resuming(self):

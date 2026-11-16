@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Vehicles::CarLane
- * \brief Lateral lane keeping with steering control - the twin of
+ * \brief Lateral lane keeping with steering control - the counterpart of
  * `kalman.apps.vehicles.CarLaneModel`.
  *
  * \details State `[y, psi, v]`, lateral offset, heading and speed; control

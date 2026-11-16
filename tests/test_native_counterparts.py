@@ -1,8 +1,8 @@
-"""An application model and its C++ twin (libKalmanApps) are one model.
+"""An application model and its C++ counterpart (libKalmanApps) are one model.
 
-A Python model that mixes in :class:`NativeTwin` hands its filtering pass to
+A Python model that mixes in :class:`NativeCounterpart` hands its filtering pass to
 the C++ class registered under :meth:`native_name`. These tests pin the two
-things that makes safe: the twin gives the Python answer, and every
+things that makes safe: the counterpart gives the Python answer, and every
 configuration without a C++ counterpart keeps the Python physics.
 
 Skipped when libKalmanApps is not built (``make build``).
@@ -16,7 +16,7 @@ sys.path.insert(0, ".")
 
 from modules.framework.native import core
 import modules.framework.models.native as native
-from modules.framework.models.native import NativeTwin, apps_library_names, native_model_classes
+from modules.framework.models.native import NativeCounterpart, apps_library_names, native_model_classes
 from modules.framework.filters import UnscentedKalmanFilter
 from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_steering, LearnedIntensityModel,
                                          synthetic_steered_track,
@@ -31,11 +31,11 @@ needs_apps = unittest.skipUnless(HAVE_APPS, "libKalmanApps is not built")
 
 
 def both(make, z, **kw):
-    """(record with the Python physics, record on the C++ twin)."""
+    """(record with the Python physics, record on the C++ counterpart)."""
     with native.python_reference():
         python = make().filter(z, **kw)
     model = make()
-    assert model.native_handle() is not None, "the twin was expected to be used"
+    assert model.native_handle() is not None, "the counterpart was expected to be used"
     return python, model.filter(z, **kw)
 
 
@@ -64,16 +64,16 @@ def trajectory(n=400, fs=100.0, seed=0, drop=17):
 
 
 @needs_apps
-class TestStormTwin(unittest.TestCase):
+class TestStormCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_in_both_hemispheres(self):
+    def test_counterpart_matches_python_in_both_hemispheres(self):
         for hemisphere, omega in (("N", 0.0), ("N", -0.022), ("S", 0.0), ("S", 0.022)):
             _, fixes = synthetic_track(n_steps=300, hemisphere=hemisphere, seed=2)
             py, cx = both(lambda: StormModel("TC", hemisphere=hemisphere, omega=omega), fixes)
             close(self, py.xk, cx.xk, STATE_RTOL, f"state, {hemisphere} omega={omega}")
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {hemisphere} omega={omega}")
 
-    def test_track_only_model_has_its_own_twin(self):
+    def test_track_only_model_has_its_own_counterpart(self):
         _, fixes = synthetic_track(n_steps=200, seed=4)
         model = StormModel("TC", observe_intensity=False)
         self.assertEqual(model.native_name(), "storm-track-only")
@@ -88,12 +88,12 @@ class TestStormTwin(unittest.TestCase):
         close(self, py.xk, cx.xk, STATE_RTOL, "state through the gap")
         close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance through the gap")
 
-    def test_smoothing_runs_on_the_twin_forward_pass(self):
+    def test_smoothing_runs_on_the_counterpart_forward_pass(self):
         _, fixes = synthetic_track(n_steps=200, seed=6)
         py, cx = both(lambda: StormModel("TC", omega=-0.022), fixes, smooth=True)
         close(self, py.xk, cx.xk, COVARIANCE_RTOL, "smoothed state")
 
-    def test_a_change_after_construction_reaches_the_twin(self):
+    def test_a_change_after_construction_reaches_the_counterpart(self):
         _, fixes = synthetic_track(n_steps=200, seed=7)
 
         def make():
@@ -113,7 +113,7 @@ class TestStormTwin(unittest.TestCase):
         second = np.asarray(model.filter(fixes).xk)
         np.testing.assert_array_equal(first, second)
 
-    def test_a_learned_intensity_tendency_runs_on_the_twin(self):
+    def test_a_learned_intensity_tendency_runs_on_the_counterpart(self):
         # notebook 14's regression, fitted on steered tracks, then used without steering
         tracks = [synthetic_steered_track(n_steps=40, lon0=150 + 3 * k, lat0=8 + k, seed=k)[0] for k in range(6)]
         learned = LearnedIntensityModel().fit(tracks)
@@ -126,7 +126,7 @@ class TestStormTwin(unittest.TestCase):
         close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance with a learned intensity")
         persistence = StormModel("TC").filter(fixes)
         self.assertGreater(float(np.max(np.abs(np.asarray(persistence.xk)[:, 4] - np.asarray(cx.xk)[:, 4]))), 1.0)
-        model = make()                              # and the twin forgets it again
+        model = make()                              # and the counterpart forgets it again
         model.native_handle()
         model.intensity_fn = None
         close(self, np.asarray(model.filter(fixes).xk), np.asarray(persistence.xk), STATE_RTOL, "persistence again")
@@ -147,41 +147,41 @@ class TestStormTwin(unittest.TestCase):
         self.assertIsNone(StormModel("TC", steering=analytic_steering).native_handle())
         self.assertIsNone(StormModel("TC", intensity_fn=lambda lon, lat, I, t: 0.0).native_handle())
 
-    def test_a_subclass_that_changes_the_dynamics_is_not_the_twin(self):
+    def test_a_subclass_that_changes_the_dynamics_is_not_the_counterpart(self):
         class Stalled(StormModel):
             def f(self, x, u=None, w=None, t=None):
                 return np.asarray(x, float).reshape(-1, 1)
         self.assertIsNone(Stalled("TC").native_handle())
 
-        class Renamed(StormModel):                  # same physics, another name: still the twin
+        class Renamed(StormModel):                  # same physics, another name: still the counterpart
             NAME = "Renamed"
         self.assertIsNotNone(Renamed("TC").native_handle())
 
-    def test_the_unscented_engine_runs_on_the_twin_a_subclass_of_it_does_not(self):
+    def test_the_unscented_engine_runs_on_the_counterpart_a_subclass_of_it_does_not(self):
         from modules.framework.engines.unscented import UnscentedKalmanEngine
         _, fixes = synthetic_track(n_steps=60, seed=9)
         flt = UnscentedKalmanFilter(StormModel("TC"))
-        self.assertIsNotNone(flt._native_twin(None))
+        self.assertIsNotNone(flt._native_counterpart(None))
         self.assertEqual(len(flt.forward(fixes).xk), 60)
 
         class Tuned(UnscentedKalmanEngine):
             pass
         flt = UnscentedKalmanFilter(StormModel("TC"))
         flt._engine = Tuned()
-        self.assertIsNone(flt._native_twin(None))
+        self.assertIsNone(flt._native_counterpart(None))
 
-    def test_switch_and_environment_turn_twins_off(self):
+    def test_switch_and_environment_turn_counterparts_off(self):
         model = StormModel("TC")
-        native.USE_NATIVE_TWINS = False
+        native.USE_NATIVE_COUNTERPARTS = False
         try:
             self.assertIsNone(model.native_handle())
         finally:
-            native.USE_NATIVE_TWINS = True
-        os.environ["KALMAN_NATIVE_TWINS"] = "0"
+            native.USE_NATIVE_COUNTERPARTS = True
+        os.environ["KALMAN_NATIVE_COUNTERPARTS"] = "0"
         try:
             self.assertIsNone(model.native_handle())
         finally:
-            del os.environ["KALMAN_NATIVE_TWINS"]
+            del os.environ["KALMAN_NATIVE_COUNTERPARTS"]
         self.assertIsNotNone(model.native_handle())
 
 
@@ -219,9 +219,9 @@ class TestSmootherUsesEachStepsTransition(unittest.TestCase):
 
 
 @needs_apps
-class TestBallisticTwin(unittest.TestCase):
+class TestBallisticCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_with_and_without_drag(self):
+    def test_counterpart_matches_python_with_and_without_drag(self):
         z = trajectory()
         for kw in ({}, {"c_drag": 0.01}, {"c_drag": 0.05, "m": 2.0}, {"order": 2}, {"order": 2, "c_drag": 0.01}):
             py, cx = both(lambda: BallisticModel("b", fs=100.0, **kw), z)
@@ -244,7 +244,7 @@ class TestBallisticTwin(unittest.TestCase):
         py, cx = both(make, z)
         close(self, py.xk, cx.xk, STATE_RTOL, "state on a circular orbit")
 
-    def test_features_without_a_twin_keep_the_python_physics(self):
+    def test_features_without_a_counterpart_keep_the_python_physics(self):
         self.assertIsNone(BallisticModel("b", drag_uncertainty=0.3, c_drag=0.01).native_handle())
         from modules.framework.integrators import DormandPrinceIntegrator, RK4Integrator
         self.assertIsNone(BallisticModel("b", integrator=DormandPrinceIntegrator(rtol=1e-9)).native_handle())
@@ -257,7 +257,7 @@ class TestBallisticTwin(unittest.TestCase):
         self.assertIsNone(custom.native_handle())
         self.assertIsNotNone(BallisticModel("b").native_handle())
 
-    def test_substeps_and_integrator_reach_the_twin(self):
+    def test_substeps_and_integrator_reach_the_counterpart(self):
         from modules.framework.constants import KalmanIntegratorKind
         for kw in (dict(substeps=4), dict(integrator=KalmanIntegratorKind.EULER),
                    dict(integrator=KalmanIntegratorKind.DORMAND_PRINCE), dict(substeps=3, c_drag=0.02)):
@@ -272,28 +272,28 @@ class TestBallisticTwin(unittest.TestCase):
 
 
 @needs_apps
-class TestTornadoTwin(unittest.TestCase):
+class TestTornadoCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_in_both_regimes(self):
+    def test_counterpart_matches_python_in_both_regimes(self):
         obs, _ = synthetic_environment(n_steps=300, onsets=((90, 160),), seed=3)
         for mu, persistence in ((0.3, 0.85), (3.0, 0.85), (3.0, 0.5)):
             py, cx = both(lambda: TornadoEnvironmentModel("ENV", mu=mu, persistence=persistence), obs)
             close(self, py.xk, cx.xk, STATE_RTOL, f"state, mu={mu} a={persistence}")
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, mu={mu} a={persistence}")
 
-    def test_the_bank_runs_on_twins(self):
+    def test_the_bank_runs_on_counterparts(self):
         models, _, _ = TornadoEnvironmentModel.ikf_bank(season="peak")
         self.assertTrue(all(m.native_handle() is not None for m in models))
 
 
 @needs_apps
-class TestCarSpeedTwin(unittest.TestCase):
+class TestCarSpeedCounterpart(unittest.TestCase):
 
     def run_of(self, **kw):
         car = CarSpeedModel("CAR", **kw)
         return np.asarray(car.sample(15.0, seed=1).zk)
 
-    def test_twin_matches_python_through_the_grip_to_power_handoff(self):
+    def test_counterpart_matches_python_through_the_grip_to_power_handoff(self):
         for kw in ({}, {"power": 300_000.0, "mass": 1200.0}, {"grade": 0.05, "mu": 0.6}, {"fs": 50.0}):
             z = self.run_of(**kw)
             py, cx = both(lambda: CarSpeedModel("CAR", **kw), z)
@@ -327,12 +327,12 @@ def steering(n, fs=50.0):
 
 
 @needs_apps
-class TestCarLaneTwin(unittest.TestCase):
+class TestCarLaneCounterpart(unittest.TestCase):
 
     def make(self, **kw):
         return lambda: CarLaneModel("camera", fs=50, x0=[[0.3], [0.0], [15.0]], lateral_uncertainty=0.05, **kw)
 
-    def test_twin_matches_python_with_the_steering_program(self):
+    def test_counterpart_matches_python_with_the_steering_program(self):
         uk = steering(500)
         for kw in ({}, {"q_lat": 2.5e-3, "q_head": 1e-4}, {"wheelbase": 3.5, "steer_limit": 0.05}):
             z = self.make(**kw)().sample(10.0, uk=uk, seed=1).zk
@@ -341,7 +341,7 @@ class TestCarLaneTwin(unittest.TestCase):
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
             self.assertGreater(float(np.ptp(np.asarray(cx.xk)[:, 1])), 0.01, "the car steered")
 
-    def test_integrator_and_substeps_reach_the_twin(self):
+    def test_integrator_and_substeps_reach_the_counterpart(self):
         uk = steering(300)
         for kw in (dict(integrator=KalmanIntegratorKind.RK4), dict(substeps=4)):
             def make():
@@ -381,7 +381,7 @@ class TestCarLaneTwin(unittest.TestCase):
     def test_a_controller_function_keeps_the_python_model(self):
         from modules.framework.filters import ExtendedKalmanFilter
         flt = ExtendedKalmanFilter(CarLaneModel("camera"))
-        self.assertIsNone(flt._native_twin(lambda x, P, t, nu=None: np.zeros((1, 1))))
+        self.assertIsNone(flt._native_counterpart(lambda x, P, t, nu=None: np.zeros((1, 1))))
 
 
 def liftoff_model():
@@ -423,7 +423,7 @@ def landing_model(**kw):
 
 
 @needs_apps
-class TestRocketTwins(unittest.TestCase):
+class TestRocketCounterparts(unittest.TestCase):
     """The scenarios of share/notebooks/06_RocketScience.ipynb, seeded."""
 
     def check(self, make, z, what, **kw):
@@ -461,7 +461,7 @@ class TestRocketTwins(unittest.TestCase):
             cx = self.check(lambda: landing_model(**kw), z, f"landing {kw}")
             self.assertLess(abs(float(np.asarray(cx.xk)[-1, 0])), 0.5, "landed")
 
-    def test_substeps_and_integrator_reach_the_twins(self):
+    def test_substeps_and_integrator_reach_the_counterparts(self):
         class Fine(RocketLandingModel):
             SOLVER_SUBSTEPS = 3
         class Euler(RocketLiftoffModel):
@@ -508,10 +508,10 @@ class TestRocketTwins(unittest.TestCase):
 
 
 @needs_apps
-class TestTwinContract(unittest.TestCase):
+class TestCounterpartContract(unittest.TestCase):
 
-    def test_twins_stay_out_of_the_plugin_catalogue(self):
-        """StormModel is the catalogue entry; its twin is not listed a second time."""
+    def test_counterparts_stay_out_of_the_plugin_catalogue(self):
+        """StormModel is the catalogue entry; its counterpart is not listed a second time."""
         StormModel("TC").native_handle()            # make sure the library is loaded
         listed = set(native_model_classes())
         self.assertFalse(listed & apps_library_names(), listed & apps_library_names())
@@ -533,8 +533,8 @@ class TestTwinContract(unittest.TestCase):
         self.assertEqual(lib.kalman_model_set_parameter(handle, b"basin", 1.0), -1)
         self.assertIn("basin", core.last_error())
 
-    def test_a_model_without_native_name_is_never_a_twin(self):
-        class Plain(NativeTwin):
+    def test_a_model_without_native_name_is_never_a_counterpart(self):
+        class Plain(NativeCounterpart):
             pass
         self.assertIsNone(Plain().native_name())
 
@@ -568,9 +568,9 @@ def mars_cruise(**kw):
 
 
 @needs_apps
-class TestTransLunarTwin(unittest.TestCase):
+class TestTransLunarCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_through_the_lunar_flyby(self):
+    def test_counterpart_matches_python_through_the_lunar_flyby(self):
         from modules.runtime.astro import DAY
         np.random.seed(8)
         z = free_return().sample(4.5 * DAY, process_noise=False).zk      # out past the Moon
@@ -579,7 +579,7 @@ class TestTransLunarTwin(unittest.TestCase):
             close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
 
-    def test_ephemeris_phases_and_integrators_reach_the_twin(self):
+    def test_ephemeris_phases_and_integrators_reach_the_counterpart(self):
         from modules.runtime.astro import DAY
         # (Dormand-Prince is left out of these runs for its time, not its result:
         # the framework probes f at x = 0, where |r| = 0 makes it step to its limit.)
@@ -591,7 +591,7 @@ class TestTransLunarTwin(unittest.TestCase):
             close(self, py.xk, cx.xk, STATE_RTOL, f"state, {kw}")
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
 
-    def test_configurations_without_a_twin_keep_the_python_physics(self):
+    def test_configurations_without_a_counterpart_keep_the_python_physics(self):
         from modules.framework.integrators import RK4Integrator
 
         class Mine(RK4Integrator):
@@ -607,9 +607,9 @@ class TestTransLunarTwin(unittest.TestCase):
 
 
 @needs_apps
-class TestInterplanetaryTwin(unittest.TestCase):
+class TestInterplanetaryCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_on_the_mars_cruise(self):
+    def test_counterpart_matches_python_on_the_mars_cruise(self):
         for kw in ({}, {"perturbers": ("venus", "jupiter")}, {"epoch": None}, {"n_sub": 3}):
             model, span = mars_cruise(**kw)
             self.assertEqual(model.native_name(), "interplanetary", str(kw))
@@ -626,7 +626,7 @@ class TestInterplanetaryTwin(unittest.TestCase):
         py, cx = both(lambda: mars_cruise(span_days=100.0)[0], z)
         close(self, py.xk, cx.xk, STATE_RTOL, "state past the table")
 
-    def test_configurations_without_a_twin_keep_the_python_physics(self):
+    def test_configurations_without_a_counterpart_keep_the_python_physics(self):
         self.assertIsNone(InterplanetaryModel("earth", "mars", control=True).native_handle())
         model, _ = mars_cruise()
         model._field.t_grid = model._field.t_grid * 1.0000001     # not numpy.arange's grid
@@ -664,18 +664,18 @@ def polarization_run(fs=100.0, T=40.0, seed=0):
 
 
 @needs_apps
-class TestPolarizationTwin(unittest.TestCase):
+class TestPolarizationCounterpart(unittest.TestCase):
 
-    def test_twin_matches_python_on_the_chirp(self):
+    def test_counterpart_matches_python_on_the_chirp(self):
         from unittest import mock
         from modules.framework.filter import KalmanFilter
         make, zk = polarization_run()
         with native.python_reference():
             py = make().filter(zk)
-        with mock.patch.object(KalmanFilter, "_forward_twin", autospec=True,
-                               side_effect=KalmanFilter._forward_twin) as twin:
+        with mock.patch.object(KalmanFilter, "_forward_counterpart", autospec=True,
+                               side_effect=KalmanFilter._forward_counterpart) as counterpart:
             cx = make().filter(zk)
-        self.assertEqual(twin.call_count, 1, "the pass ran on the twin")
+        self.assertEqual(counterpart.call_count, 1, "the pass ran on the counterpart")
         close(self, py.xk, cx.xk, STATE_RTOL, "state")
         close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "covariance")
 
@@ -688,7 +688,7 @@ class TestPolarizationTwin(unittest.TestCase):
         close(self, py.xk, cx.xk, COVARIANCE_RTOL, "smoothed state through the gap")
         close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, "smoothed covariance through the gap")
 
-    def test_noise_and_rate_reach_the_twin(self):
+    def test_noise_and_rate_reach_the_counterpart(self):
         make, zk = polarization_run(fs=50.0, T=10.0, seed=5)
         py, cx = both(lambda: make(fs=50.0, delta=0.9, sigma_psi=2.0, sigma_n=0.5), zk)
         close(self, py.xk, cx.xk, STATE_RTOL, "state at 50 Hz")
@@ -698,7 +698,7 @@ class TestPolarizationTwin(unittest.TestCase):
         core.check(core.lib.kalman_model_R(handle, 0.0, core.dptr(R)), "R")
         np.testing.assert_allclose(R, 0.25 * np.eye(4), rtol=0, atol=1e-15)
 
-    def test_configurations_without_a_twin_keep_the_python_physics(self):
+    def test_configurations_without_a_counterpart_keep_the_python_physics(self):
         from modules.apps.gravitational.gravwave import PolarizationModel
         make, _ = polarization_run()
         model = make()

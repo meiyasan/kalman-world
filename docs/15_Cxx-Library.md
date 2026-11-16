@@ -213,7 +213,7 @@ run under ctest, so the two never shadow each other.
 | Library | CMake target | What it holds | Depends on |
 |---|---|---|---|
 | `libKalman` | `Kalman::Kalman` | the core: models, engines, filters, integrators, solvers, controllers, routers | nothing (BLAS when found) |
-| `libKalmanApps` | `Kalman::Apps` | the application models, each the twin of a Python class | `libKalman` |
+| `libKalmanApps` | `Kalman::Apps` | the application models, each the counterpart of a Python class | `libKalman` |
 | `libKalmanLearn` | `Kalman::Learn` | learned components: the ONNX and TorchScript backends | `libKalman`; ONNX Runtime and libTorch, both optional |
 | `libKalmanNet` | `Kalman::Net` | the JSON API, the REST and MCP servers, `kalman-serve` ([docs/18](18_Net.md)) | `libKalman`; nlohmann_json, cpp-httplib, OpenSSL (SQLite optional), all private |
 
@@ -581,7 +581,7 @@ and Unity, agents and other users can then use it as a spec base.
 
 ### Models that are their matrices
 
-A model written in Python that is nothing but its matrices needs no twin
+A model written in Python that is nothing but its matrices needs no counterpart
 written for it: the framework builds the C++ model itself
 (`Kalman::Models::Tabulated`) and runs the whole pass on it.
 
@@ -609,7 +609,7 @@ step.
 
 ### Named arrays
 
-A twin is configured through named scalars (`DeclareParameter`). What is not
+A counterpart is configured through named scalars (`DeclareParameter`). What is not
 one number, such as the orbit of each satellite, goes through named arrays:
 
 ```cpp
@@ -625,17 +625,17 @@ filter refuses to run instead of reading past an end. The GPS receiver does
 both: it has one pseudorange per satellite and six arrays of orbital
 elements.
 
-On the Python side a twin gives them with `native_arrays()`, beside
+On the Python side a counterpart gives them with `native_arrays()`, beside
 `native_parameters()`; a `NativeModel` has `arrays()` and `set_array()`. In C:
 `kalman_model_array_count`, `_array_name`, `_array_size`, `_array`,
 `_set_array`. In a model file and in a settings file an array is a list under
 the same key as the parameters, and `kalman model NAME` shows its length and
 first values.
 
-The GPS twin against the Python reference, 600 s at 1 Hz
+The GPS counterpart against the Python reference, 600 s at 1 Hz
 (`tests/test_native_gps.py`):
 
-| Configuration | Channels | State, largest difference | Covariance, relative | Python | Twin |
+| Configuration | Channels | State, largest difference | Covariance, relative | Python | Counterpart |
 |---|---|---|---|---|---|
 | 8 fixed satellites | 8 | 3.3e-9 m (of 6.4e6 m) | 2.1e-16 | 136 ms | 37 ms |
 | 24 satellites rising and setting (10 degree mask) | 24, 9988 pseudoranges missing | 3.7e-9 m | 1.1e-16 | 138 ms | 49 ms |
@@ -643,14 +643,14 @@ The GPS twin against the Python reference, 600 s at 1 Hz
 
 Track finding already ran in the C++ combinatorial engine, calling back into
 the Python model for each propagation and each Jacobian. With the
-drift-chamber twin it stays in C++ throughout. 12 layers, 6 tracks, 10
+drift-chamber counterpart it stays in C++ throughout. 12 layers, 6 tracks, 10
 background hits a layer, 10% of hits missing (`tests/test_native_tracking.py`):
 
 | | Time | Against the Python search |
 |---|---|---|
 | Python search | 1878 ms | |
 | C++ engine, Python model called back | 1884 ms | same hits on every track; states within 1.2e-6 cm |
-| C++ engine, C++ twin | 20 ms | same hits on every track; states within 1.0e-6 cm |
+| C++ engine, C++ counterpart | 20 ms | same hits on every track; states within 1.0e-6 cm |
 
 ## Model files: `.kw`
 
@@ -849,11 +849,11 @@ second library, `libKalmanApps` (`apps/include/Kalman/Apps/`, `apps/src/`), whic
 links the first and registers each model with the factory. `make build` builds
 both and they install side by side.
 
-Each model there is the **twin** of one Python class. The Python class stays
+Each model there is the **counterpart** of one Python class. The Python class stays
 the model: its name, its constructor, `plot`, the catalogue entry and the
 notebooks are unchanged. What changes is who runs the filtering pass. When the
 library is present and the configuration has a C++ counterpart,
-`model.filter(z)` hands the whole pass to the twin: the model's `f`/`h`, the
+`model.filter(z)` hands the whole pass to the counterpart: the model's `f`/`h`, the
 Jacobians and the EKF steps run inside `Kalman::Filter`, in one call. Otherwise
 the Python loop runs as before.
 
@@ -876,7 +876,7 @@ the Python loop runs as before.
 | `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `f`, `h` or `covariance_mask`, a callback in `TwinExperiment.run`; `sample()` |
 | `BarotropicFlowModel` (ensemble engine) | `Apps::Weather::BarotropicFlow` | `barotropic-flow` | as `KolmogorovFlowModel` |
 
-The ballistic, car and rocket twins are continuous models: each overrides
+The ballistic, car and rocket counterparts are continuous models: each overrides
 `Derivative()` and calls `UseContinuousDynamics()`, and its `f` is the
 framework's integration of that derivative followed by the model's own closing
 step (the acceleration slot, the speed kept non-negative, the mass kept at the
@@ -884,12 +884,12 @@ dry mass, a landed stage held on the pad). Their `integrator` and `substeps`
 parameters carry the Python model's integrator (Euler, RK4, Dormand-Prince
 with the default tolerances: `native.native_integrator_kind`) and sub-steps.
 
-A twin may take a control input (`CarLaneModel`, `RocketAscentModel`,
-`RocketDescentModel(control=True)`): `model.filter(z, uk)` hands the twin the
+A counterpart may take a control input (`CarLaneModel`, `RocketAscentModel`,
+`RocketDescentModel(control=True)`): `model.filter(z, uk)` hands the counterpart the
 command sequence with the measurements. A controller *function* (closed loop)
 is Python, so it keeps the Python model in the C++ loop instead.
 
-The space twins are continuous too, with `substeps` (the Python `n_sub`) and
+The space counterparts are continuous too, with `substeps` (the Python `n_sub`) and
 `integrator` as parameters. The trans-lunar coast needs only numbers: the
 gravitational parameters, and the Moon and the Sun on circles given by a
 radius, a rate and a phase (an `epoch` with `use_ephemeris=True` only sets the
@@ -897,16 +897,16 @@ phases). The interplanetary cruise needs a table: the Python model samples the
 perturbing planets from the ephemeris every 2 days when it is built and
 interpolates it with `numpy.interp`. The table crosses as two named arrays,
 `body_gm` and `body_positions` (bodies x samples x 3), with `grid_step` as a
-parameter. The twin interpolates the way `numpy.interp` does (end values
+parameter. The counterpart interpolates the way `numpy.interp` does (end values
 outside the grid).
 Positions are in Mm, velocities in km/s and time in ks, as in Python, so
-the twins state that unit (`SetTimeUnit(1000.)`), so `kalman model` prints their sample rate in hertz.
+the counterparts state that unit (`SetTimeUnit(1000.)`), so `kalman model` prints their sample rate in hertz.
 
-Measured with `python tools/benchmark_twins.py --repeat 5` (2000 steps, Apple
+Measured with `python tools/benchmark_counterparts.py --repeat 5` (2000 steps, Apple
 silicon; the times move with the load on the machine, the ratios do not); the last two columns are the largest difference between the two
 runs, relative to the largest entry:
 
-| Model | Python | C++ twin | Faster | State | Covariance |
+| Model | Python | C++ counterpart | Faster | State | Covariance |
 |---|---|---|---|---|---|
 | `StormModel`, NH straight | 183.2 ms | 17.2 ms | 10.7x | 5.7e-09 | 1.9e-07 |
 | `StormModel`, NH recurving | 193.6 ms | 17.0 ms | 11.4x | 1.4e-08 | 2.2e-07 |
@@ -928,7 +928,7 @@ runs, relative to the largest entry:
 
 (The polarization row was measured with `--repeat 3`, in a run where the
 order-3 ballistic row read 2041.3 ms against 34.1 ms: the notebook's chirp,
-1 to 2 Hz at 100 Hz with the amplitude and both angles moving. Before the twin
+1 to 2 Hz at 100 Hz with the amplitude and both angles moving. Before the counterpart
 the pass ran the C++ loop calling the Python `f`, `h` and `H`: 103.3 ms.)
 | `StormModel`, learned intensity | 165.8 ms | 11.6 ms | 14.3x | 1.0e-08 | 2.4e-07 |
 
@@ -948,14 +948,14 @@ shows the same effect at its worst: a position of `6.7e6` m differenced against
 an acceleration step of `1e-6` leaves `1e-3` of noise in that Jacobian column
 on *both* sides. An analytic Jacobian would remove it from both.
 
-**How a twin stays the same model.** Nothing is defined twice:
+**How a counterpart stays the same model.** Nothing is defined twice:
 
-- The twin's scalars are the *named parameters* of `Kalman::Model`
+- The counterpart's scalars are the *named parameters* of `Kalman::Model`
   (`DeclareParameter`, `SetParameter`, `ParametersChanged`), pushed from the
   Python instance by name: `omega`, `beta_drift`, `c_drag` and so on.
 - The sample rate, `Q` and `R` are pushed from the Python instance on every
   run, and the initial state by the filter. A change made to the Python model
-  after construction therefore reaches the twin.
+  after construction therefore reaches the counterpart.
 - `Apps::Model` differences `f` and `h` the way `helpers.numerical_jacobian`
   does (forward, step `1e-6 max(1, |x_j|)`), not with the library's central
   scheme, so the two sides linearise alike.
@@ -963,11 +963,11 @@ on *both* sides. An analytic Jacobian would remove it from both.
   `R` is a different model from the one that was ported, and keeps the Python
   loop. For a continuous model `derivative`, `after_step` and `substeps` count
   too (the class's `f` is kept as `derivative`), and a model adds the helpers
-  its dynamics call (`guidance`, `clip_u` ...) to its `_TWIN_CONTRACT`. So
+  its dynamics call (`guidance`, `clip_u` ...) to its `_COUNTERPART_CONTRACT`. So
   does any engine other than the plain extended one.
 
-`kalman.framework.models.native.USE_NATIVE_TWINS = False`, or
-`KALMAN_NATIVE_TWINS=0` in the environment, switches every twin off. That is how
+`kalman.framework.models.native.USE_NATIVE_COUNTERPARTS = False`, or
+`KALMAN_NATIVE_COUNTERPARTS=0` in the environment, switches every counterpart off. That is how
 the "Python" column above is measured.
 
 ### Field models on the ensemble engine
@@ -975,14 +975,14 @@ the "Python" column above is measured.
 `KolmogorovFlowModel` and `BarotropicFlowModel` are fields: the state is the
 vorticity on a periodic grid (n = 4096 at 64 x 64), filtered by the ensemble
 engine through `f` and `h` written for every member at once, a `covariance_mask`,
-and an initial state given as samples. Their twins (`Apps::Weather::KolmogorovFlow`,
+and an initial state given as samples. Their counterparts (`Apps::Weather::KolmogorovFlow`,
 `kolmogorov-flow`, and `Apps::Weather::BarotropicFlow`, `barotropic-flow`)
 implement `Engines::EnsembleModel` beside `Kalman::Model`: the members are
 forecast in parallel (one thread each, up to the `threads` parameter, 0 for
 every core), observed together, tapered with Gaspari-Cohn from the torus
 distances, and `Q` is read as its diagonal, so a cycle forms nothing of size
 n x n. With the ensemble engine `model.filter` runs `Kalman::Filter` over the
-twin, and `TwinExperiment.run` runs each method in one call of
+counterpart, and `TwinExperiment.run` runs each method in one call of
 `Filters::EnKF::Cycle`, which keeps the means and the spread and no covariance.
 
 | What crosses | How |
@@ -998,11 +998,11 @@ column j (along x) of the field, the measurement `w(i,j)` at a probe, or
 `dw/dx(i,j)` then `dw/dy(i,j)` for gradient probes. `kalman model
 kolmogorov-flow` lists the first ten and the last three of a long table.
 
-Measured with `python tools/benchmark_twins.py --fields --notebook` (16 cores,
-best of 3; the 64 x 64 run once). "C++ loop" is the pass before the twin: the
+Measured with `python tools/benchmark_counterparts.py --fields --notebook` (16 cores,
+best of 3; the 64 x 64 run once). "C++ loop" is the pass before the counterpart: the
 Python loop calling the C++ solver for each member and the C++ analysis kernel.
 
-| Case | Python | C++ loop | C++ twin | Twin against loop | Mean | Spread or P |
+| Case | Python | C++ loop | C++ counterpart | Counterpart against loop | Mean | Spread or P |
 |---|---|---|---|---|---|---|
 | `KolmogorovFlowModel`, EnKF 16 x 16, 16 members, 25 cycles (notebook 13, step 5) | 1102.5 ms | 300.7 ms | 114.1 ms | 2.6x | 6.2e-15 | 2.4e-14 |
 | the same, gradient probes | 1281.4 ms | 346.8 ms | 115.1 ms | 3.0x | 1.2e-14 | 3.5e-14 |
@@ -1011,9 +1011,9 @@ Python loop calling the C++ solver for each member and the C++ analysis kernel.
 
 The last two columns are the largest difference from the Python reference,
 relative to the largest entry (for the twin experiment: the RMSE and the spread
-of every cycle). The reference steps the field with numpy's FFT and the twin
+of every cycle). The reference steps the field with numpy's FFT and the counterpart
 with the library's; one solver step agrees to 1e-16, and the chaotic flow grows
-that to about 1e-13 over the 1,200 solver steps of the notebook. The twin agrees
+that to about 1e-13 over the 1,200 solver steps of the notebook. The counterpart agrees
 with the C++ loop to 4e-15. Notebook 13 prints the same numbers as before; its
 "wall time" of the solver EnKF went from 17.4 s to 1.9 s (the 64 x 64 run in the
 table also makes the truth, one field at a time). Where the analysis is badly
@@ -1029,20 +1029,20 @@ instance that changes `f`, `h` or `covariance_mask`, a `callback` in
 engine's prediction in Python.
 
 `StormModel` with a `LearnedIntensityModel` tendency (fitted on
-`analytic_environment`, no steering function) runs on the storm twin, which
+`analytic_environment`, no steering function) runs on the storm counterpart, which
 takes the regression's coefficients and standardisation as the arrays
 `intensity_coef`, `intensity_mean` and `intensity_scale`: 165.8 ms in Python,
-11.6 ms on the twin (14.3x), state within 1.0e-8 and covariance within 2.4e-7,
+11.6 ms on the counterpart (14.3x), state within 1.0e-8 and covariance within 2.4e-7,
 as the other storm rows. Notebook 14 always passes a steering function, so it
 keeps the Python step and prints the same numbers.
 
-**Adding a twin.** Write the class under `apps/` deriving from
+**Adding a counterpart.** Write the class under `apps/` deriving from
 `Kalman::Apps::Model`, declare its parameters, register it; then mix
-`NativeTwin` into the Python class and give it `native_name()` (the registered
+`NativeCounterpart` into the Python class and give it `native_name()` (the registered
 name for this configuration, or `None`) and `native_parameters()`. Add its
-cases to `tests/test_native_twins.py` and to `tools/benchmark_twins.py`.
+cases to `tests/test_native_counterparts.py` and to `tools/benchmark_counterparts.py`.
 
-### Joint models: the twin, wrapped
+### Joint models: the counterpart, wrapped
 
 `Kalman::Models::Joint` takes a model and some of its declared parameters
 (`DeclareParameter`) and appends them to the state, each with the standard
@@ -1065,13 +1065,13 @@ keeps that handle alive.
 
 `Joint` is the Python face: a `NativeModel` around a
 `Kalman::Models::Joint`, computing nothing itself. The inner model reaches
-C++ as its twin when it has one that declares every estimated parameter, and
+C++ as its counterpart when it has one that declares every estimated parameter, and
 otherwise as a `Models::Callback` calling its Python methods. For that case
 `Callback::DeclareParameters` (`kalman_model_callback_declare_parameters`)
 declares the parameters on the callback model and hands every change back to
 the Python model, whose `f` and `h` read it. `tests/test_joint.py` compares
 the two routes. On notebook 01's shell (n = 10, 384 steps) the pass takes
-59 ms on the twin and 0.94 s through the callbacks.
+59 ms on the counterpart and 0.94 s through the callbacks.
 
 ### Sensors, and a model read by one more
 
@@ -1129,7 +1129,7 @@ derives it again by the rule the model was built with.
 unless the model already has one of that name; it then takes its sensor's name
 in front (`right_U`). On notebook 01's Doppler radar
 (n = 9, m = 4, 384 steps) sampling and filtering take 0.18 s, against 2.1 s
-for the subclass that overrode `h` in Python and so lost the twin.
+for the subclass that overrode `h` in Python and so lost the counterpart.
 
 The name is not `Observe`: that is the ensemble engine's hook
 (`EnsembleModel::Observe`, Python `model.observe(X)`), the measurement of
@@ -1139,14 +1139,14 @@ The parameter accessors of `Kalman::Model` (`ParameterNames`, `HasParameter`,
 `Parameter`, `SetParameter`) are virtual so that such a model answers with its
 inner model's parameters: a `Models::Joint` around it can then estimate them.
 
-### Composite models: matrices, no twin
+### Composite models: matrices, no counterpart
 
 A `CompositeKalmanModel` stacks its parts: block-diagonal `F` and `Q`, and an
 `H` that stacks the parts' readouts (INDEPENDENT) or sums them on one shared
 channel (FUSED). The oscillator windows (`OscillatorModel` and its harmonic and
 inharmonic ladders), `OscillatorBankModel` and `InterferometerModel` with its
 detectors K1, H1, L1 and V1 are composites of `AnalyticOscillatorModel`s, each
-of them constant matrices. They need no twin: a composite reads its
+of them constant matrices. They need no counterpart: a composite reads its
 `structure` from its parts (MATRICES when all are constant matrices,
 TIME_VARYING when one of their matrices is a function of time, MAPS as soon as
 one part is code or a stacked map was replaced after construction), and an
@@ -1161,7 +1161,7 @@ exporter tabulate it; it never takes the constant-matrix pass.
 
 Before, these models ran on the extended engine: the C++ loop calling the
 Python closures for `f`, `F`, `h`, `H`, `Q` and `R` at every step, and the
-smoother in Python. Measured with `tools/benchmark_twins.py --repeat 3`
+smoother in Python. Measured with `tools/benchmark_counterparts.py --repeat 3`
 (500 filter steps at the decimated rate; the times include the demodulation
 and decimation of `preprocess`, which stay in numpy and scipy):
 
@@ -1295,9 +1295,9 @@ linear filter. Both can be present in one process.
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
-| What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.covariance_mask()` (a `KalmanEnsembleModel`); the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`CovarianceMask`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
+| What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.covariance_mask()` (a `KalmanEnsembleModel`); the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a counterpart hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`CovarianceMask`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
-| Applications | `modules/apps/` | `libKalmanApps`: a twin for every model given by code (19 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no twin; none in the core library |
+| Applications | `modules/apps/` | `libKalmanApps`: a counterpart for every model given by code (19 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no counterpart; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |
 | Sampling | `model.sample()`: the C++ loop, numpy's draws | `Kalman::Sampler` (its own generator) |
 | JSON API, REST, MCP | `kalman.api`, `kalman.rest`, `kalman.mcp` (all verbs, Python-written models included) | `libKalmanNet`, `kalman-serve` (C++ models; see [Net](18_Net.md)) |
@@ -1318,18 +1318,18 @@ when one does not). Which pass a model takes:
 
 | The model is | The pass |
 |---|---|
-| given by code, with a twin in `libKalmanApps` | the twin, on the extended, unscented or particle engine; the ensemble engine for the field models; the combinatorial one for the drift chamber |
+| given by code, with a counterpart in `libKalmanApps` | the counterpart, on the extended, unscented or particle engine; the ensemble engine for the field models; the combinatorial one for the drift chamber |
 | its matrices, constant | the linear kernel, or `Tabulated` on the extended engine |
 | its matrices, functions of time (calorimeter, power grid, phasor) | `Tabulated` with tables |
 | a composite of such models (oscillators, the interferometer) | as its parts: matrices |
 | C++ already (`NativeModel`, a `.kw` file) | itself |
-| written in Python with its own `f` and `h` and no twin (a user's model, `examples/python/toy_model.py`) | the C++ loop, calling back into `f` and `h` at each step |
+| written in Python with its own `f` and `h` and no counterpart (a user's model, `examples/python/toy_model.py`) | the C++ loop, calling back into `f` and `h` at each step |
 
 What still runs in Python, and why:
 
 - **A model written in Python by a user.** That is the point of the last row:
   nothing to compile, at the cost below. Writing it in C++ (the toy shows both)
-  or giving it a twin removes the cost.
+  or giving it a counterpart removes the cost.
 - **Code handed in as an argument**: a steering flow or an intensity function
   for the storm, a controller function in the loop, a custom integrator, a
   surrogate forecast for the flow. A Python callable cannot run in C++; the
@@ -1344,7 +1344,7 @@ What still runs in Python, and why:
 - **Random draws** are made by numpy and handed to C++, on purpose: a seeded
   run gives the same numbers on either side.
 
-The cost of the callback row, measured on `BallisticModel` before it had a twin:
+The cost of the callback row, measured on `BallisticModel` before it had a counterpart:
 
 ```
 model.f  (Python/numpy/scipy)   :  20.74 µs per call

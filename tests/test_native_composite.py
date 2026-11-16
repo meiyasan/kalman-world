@@ -33,7 +33,7 @@ from modules.apps.gravitational.interferometer import InterferometerModel, Inter
 
 needs_kernels = unittest.skipUnless(HAS_C_ACCEL, "libKalman is not built")
 
-# As in test_native_twins: the state to 1e-7 and the covariance to 1e-6 of the
+# As in test_native_counterparts: the state to 1e-7 and the covariance to 1e-6 of the
 # largest entry. The two passes are the same arithmetic in another order (the
 # C++ update is not the Python one term for term), so they agree far closer,
 # to about 1e-12; the shared bound is kept.
@@ -59,7 +59,7 @@ def strain(freqs, amps, Qs, noise, T=4.0, seed=0):
 
 
 def reference(make, z, smooth=False):
-    """The Python loop: no C++ loop, no twin, no fused linear pass."""
+    """The Python loop: no C++ loop, no counterpart, no fused linear pass."""
     with native.python_reference(), \
             mock.patch.object(KalmanFilter, "_native_forward_eligible", return_value=False):
         return make().filter(z, smooth=smooth)

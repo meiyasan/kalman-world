@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Weather::KolmogorovFlow
- * \brief A 2-D vorticity field observed at sparse probes — the twin of
+ * \brief A 2-D vorticity field observed at sparse probes — the counterpart of
  * `kalman.apps.weather.KolmogorovFlowModel`.
  *
  * \details The state is the whole vorticity field on a periodic `grid x grid`

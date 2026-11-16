@@ -17,7 +17,7 @@ Vehicle dynamics models for the Kalman framework.
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 from ...framework.constants import KalmanState, KalmanObservable, KalmanIntegratorKind, KalmanDynamicsKind
 
 
@@ -34,7 +34,7 @@ class CarSpeedObservable(KalmanObservable):
     DISTANCE = "m"
 
 
-class CarSpeedModel(NativeTwin, ExtendedKalmanModel):
+class CarSpeedModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Straight-line acceleration ("speed") test of a single car.
 
@@ -105,7 +105,7 @@ class CarSpeedModel(NativeTwin, ExtendedKalmanModel):
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
     # ----------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Vehicles::CarSpeed). It takes one
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Vehicles::CarSpeed). It takes one
     # RK4 step per sample, so another integrator or sub-stepping stays in Python.
     # ----------------------------------------------------------------------
     def native_name(self):

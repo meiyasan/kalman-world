@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Ballistics::Ballistic
- * \brief Nonlinear 3-D ballistic model — the twin of
+ * \brief Nonlinear 3-D ballistic model — the counterpart of
  * `kalman.apps.ballistics.BallisticModel`.
  *
  * \details Gravity plus quadratic aerodynamic drag. The state is axis-major,

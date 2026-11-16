@@ -34,7 +34,7 @@ import numpy as np
 
 from ...framework.constants import KalmanObservable, KalmanState
 from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 
 # ---- physical constants (SI) ----
 C_LIGHT = 299_792_458.0            # speed of light [m/s]
@@ -119,7 +119,7 @@ class GPSObservable(KalmanObservable):
     PSEUDORANGE = "m"
 
 
-class GPSModel(NativeTwin, ExtendedKalmanModel):
+class GPSModel(NativeCounterpart, ExtendedKalmanModel):
     """EKF GPS positioning with togglable relativistic clock corrections.
 
     Parameters
@@ -231,11 +231,11 @@ class GPSModel(NativeTwin, ExtendedKalmanModel):
         super().__init__(sensor, A=A, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     # ------------------------------------------------------------------
-    # The C++ twin (Kalman::Apps::GPS::Receiver): the filtering pass runs
+    # The C++ counterpart (Kalman::Apps::GPS::Receiver): the filtering pass runs
     # there, on the constellation of this instance. preprocess() (the
     # relativistic corrections) stays here: it prepares the data.
     # ------------------------------------------------------------------
-    _TWIN_DECODES = ("_F",)                # F = exp(A / fs): the twin decodes the same generator
+    _COUNTERPART_DECODES = ("_F",)                # F = exp(A / fs): the counterpart decodes the same generator
 
     def native_name(self):
         return "gps"

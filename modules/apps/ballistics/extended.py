@@ -6,12 +6,12 @@ constant-acceleration KF variant.
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 from ...framework.constants import KalmanDynamicsKind
 from .base import BallisticState, BallisticObservable, BallisticNoise, ApexEstimate, ImpactEstimate
 
 # ===== Nonlinear ballistic EKF (use proper Q here) =====
-class BallisticModel(NativeTwin, ExtendedKalmanModel):
+class BallisticModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Nonlinear 3D ballistic model with explicit gravity (G*M),
     aerodynamic drag, thrust input, and internally computed Q/R matrices.
@@ -105,7 +105,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         self._name_channels(["X", "Y", "Z"])       # the channels of its sensor
 
     # ----------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
     # speed-dependent Q, a thrust control, a user-supplied f/h, "auto" sub-steps
     # and an integrator other than the built-in Euler, RK4 or default
     # Dormand-Prince stay in Python.
@@ -114,7 +114,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
 
     def _native_integrator(self):
         from ...framework.integrator import KalmanIntegrator
-        """The C++ kind of this model's integrator, or None when it has no twin."""
+        """The C++ kind of this model's integrator, or None when it has no counterpart."""
         from ...framework.integrator import _BUILTIN_STEPS
         integrator = self.default_integrator()
         name = getattr(integrator, "NATIVE", None)

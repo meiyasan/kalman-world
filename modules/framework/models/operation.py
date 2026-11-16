@@ -8,7 +8,7 @@ give back a model. The work is done by a C++ class (``Kalman::Models::Joint``
 noise are the C++ model's and a filtering pass runs in ``Kalman::Filter``.
 
 An inner model reaches C++ through :func:`~.native.handle_of`: as it is when it
-is C++ already, as its twin, as its matrices, or through callbacks to its
+is C++ already, as its counterpart, as its matrices, or through callbacks to its
 Python methods.
 """
 from __future__ import annotations

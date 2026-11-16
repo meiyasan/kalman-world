@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Weather::Tornado
- * \brief Mean-reverting tornado-environment latent — the twin of
+ * \brief Mean-reverting tornado-environment latent — the counterpart of
  * `kalman.apps.weather.TornadoEnvironmentModel`.
  *
  * \details One latent, a significant-tornado-parameter proxy, relaxing toward

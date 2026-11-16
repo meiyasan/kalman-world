@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::RocketDescent
- * \brief Planar powered descent of a gimballed rigid booster - the twin of
+ * \brief Planar powered descent of a gimballed rigid booster - the counterpart of
  * `kalman.apps.astro.rocket.RocketDescentModel`.
  *
  * \details State `[x, y, vx, vy, theta, omega, m]` (SI units, `y` the altitude of

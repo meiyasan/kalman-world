@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::Interplanetary
- * \brief Heliocentric N-body cruise — the twin of
+ * \brief Heliocentric N-body cruise — the counterpart of
  * `kalman.apps.astro.space.InterplanetaryModel`.
  *
  * \details Sun-centred state `[x, y, z, vx, vy, vz]`, position in Mm and

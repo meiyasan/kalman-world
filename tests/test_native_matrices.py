@@ -22,7 +22,7 @@ from modules.framework.model import KalmanModel
 from modules.framework.constants import KalmanStructureKind
 
 needs_core = unittest.skipUnless(core.HAS_CXX_CORE, "libKalman is not built")
-PATHS = ("_forward_twin", "_forward_matrices", "_forward_native", "_forward_callback")
+PATHS = ("_forward_counterpart", "_forward_matrices", "_forward_native", "_forward_callback")
 
 
 class path_taken:
@@ -186,7 +186,7 @@ class TestNativeModelPass(unittest.TestCase):
             z = np.cumsum(np.random.default_rng(2).normal(size=(120, model.m)), axis=0) * 0.01
             with path_taken() as path:
                 record = model.filter(z)
-            self.assertEqual(path.last, "_forward_twin", name)
+            self.assertEqual(path.last, "_forward_counterpart", name)
             whole = native.NativeModel(name).filter_native(z, engine=engine)
             np.testing.assert_array_equal(np.asarray(record.xk).reshape(120, -1), np.asarray(whole.xk).reshape(120, -1))
 
@@ -203,10 +203,10 @@ if __name__ == "__main__":
 
 
 @unittest.skipUnless("ballistic" in native.apps_library_names(), "libKalmanApps is not built")
-class TestTwinsOnTheSigmaPointEngines(unittest.TestCase):
-    """A model with a C++ twin runs wholly in C++ on the unscented and particle
+class TestCounterpartsOnTheSigmaPointEngines(unittest.TestCase):
+    """A model with a C++ counterpart runs wholly in C++ on the unscented and particle
     engines too. The Python classes take their noise as an argument of f and h,
-    so the points are drawn over the noise as well: the twin is told to do the same."""
+    so the points are drawn over the noise as well: the counterpart is told to do the same."""
 
     def cases(self):
         from modules.apps.ballistics import BallisticModel
@@ -226,21 +226,21 @@ class TestTwinsOnTheSigmaPointEngines(unittest.TestCase):
                     reference = UnscentedKalmanFilter(make()).forward(z)
                 with path_taken() as path:
                     record = UnscentedKalmanFilter(make()).forward(z)
-                self.assertEqual(path.last, "_forward_twin", type(make()).__name__)
+                self.assertEqual(path.last, "_forward_counterpart", type(make()).__name__)
                 state, covariance = apart(reference, record)
                 self.assertLess(state, 1e-7, type(make()).__name__)
                 # With alpha = 1e-3 the points sit 1e-3 sigma from the mean and their
                 # weights are of order 1e6: the last digit of h comes back that much larger.
                 self.assertLess(covariance, 1e-4, type(make()).__name__)
 
-    def test_particle_runs_on_the_twin(self):
+    def test_particle_runs_on_the_counterpart(self):
         from modules.framework.filters import ParticleFilter
         from modules.apps.vehicles import CarSpeedModel
         z = np.asarray(CarSpeedModel("s").sample(5.0, seed=1).zk)
         np.random.seed(3)
         with path_taken() as path:
             record = ParticleFilter(CarSpeedModel("s"), n_particles=400).forward(z)
-        self.assertEqual(path.last, "_forward_twin")
+        self.assertEqual(path.last, "_forward_counterpart")
         self.assertTrue(np.all(np.isfinite(np.asarray(record.xk, float))))
 
     def test_the_extended_pass_after_a_sigma_pass_is_unchanged(self):
@@ -269,7 +269,7 @@ class TestFilterFamilies(unittest.TestCase):
 class TestSmootherInCxx(unittest.TestCase):
     """The RTS sweep runs in C++ after an extended pass too (one Jacobian per step)."""
 
-    def test_after_a_twin_and_after_a_time_varying_model(self):
+    def test_after_a_counterpart_and_after_a_time_varying_model(self):
         from modules.apps.ballistics import BallisticModel
         from modules.apps.gravitational.gravwave.polarization import PolarizationModel
         cases = [(lambda: BallisticModel("s", fs=100.0), None),
@@ -342,10 +342,10 @@ class TestParticleFilterOnNumpysDraws(unittest.TestCase):
         else:
             with path_taken() as path:
                 record = ParticleFilter(make(), n_particles=300).forward(z)
-            self.assertIn(path.last, ("_forward_twin", "_forward_callback"))
+            self.assertIn(path.last, ("_forward_counterpart", "_forward_callback"))
         return np.asarray(record.xk, float), np.random.uniform()
 
-    def test_twin_and_python_model(self):
+    def test_counterpart_and_python_model(self):
         from modules.apps.vehicles import CarSpeedModel
         cases = [(lambda: CarSpeedModel("s"), np.asarray(CarSpeedModel("s").sample(5.0, seed=1).zk)),
                  (lambda: KalmanModel("s", F=F0, Q=Q0, R=np.array([[0.04]]), **KW), Z[:60])]

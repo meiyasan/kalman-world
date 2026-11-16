@@ -29,7 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeTwin, native_integrator_kind
+from ....framework.models.native import NativeCounterpart, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
@@ -50,7 +50,7 @@ class RocketAscentObservable(KalmanObservable):
     X = "Mm"; Y = "Mm"
 
 
-class RocketAscentModel(NativeTwin, ExtendedKalmanModel):
+class RocketAscentModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Planar **guided** powered ascent from Earth's surface (the steering/guidance model).
 
@@ -89,10 +89,10 @@ class RocketAscentModel(NativeTwin, ExtendedKalmanModel):
         # every prediction.
         super().__init__("LAUNCH", Q=Q, R=R, L=np.eye(self.n), fs=self.fs, **kw)
 
-    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketAscent) -------
-    # The thrust program is the control input u (l = 2), handed to the twin
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketAscent) -------
+    # The thrust program is the control input u (l = 2), handed to the counterpart
     # with the measurements; a controller function keeps the Python model.
-    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("acceleration",)
+    _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("acceleration",)
 
     def native_name(self):
         return "rocket-ascent" if native_integrator_kind(self) is not None else None

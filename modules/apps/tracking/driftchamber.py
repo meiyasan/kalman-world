@@ -25,7 +25,7 @@ import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.engine_models import KalmanDetectorModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 from ...framework.constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
 
 # Curvature constant: 1/R [1/cm] = KAPPA · q [e] · B [T] / p [GeV/c]. It is the speed of
@@ -63,7 +63,7 @@ class TrackingEvent:
         return len(self.tracks)
 
 
-class DriftChamberModel(NativeTwin, KalmanDetectorModel, ExtendedKalmanModel):
+class DriftChamberModel(NativeCounterpart, KalmanDetectorModel, ExtendedKalmanModel):
     """
     Transverse charged-particle tracker on concentric layers (Belle II CDC style).
 
@@ -119,7 +119,7 @@ class DriftChamberModel(NativeTwin, KalmanDetectorModel, ExtendedKalmanModel):
     # ------------------------------------------------------------------
     #  Dynamics — circular arc in a uniform field, propagated by radius
     # ------------------------------------------------------------------
-    # The C++ twin (Kalman::Apps::Tracking::DriftChamber): the track finding
+    # The C++ counterpart (Kalman::Apps::Tracking::DriftChamber): the track finding
     # propagates and linearises there instead of calling back into f().
     def native_name(self):
         return "drift-chamber"

@@ -346,11 +346,11 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         # Seeds built by seed(): one assigned hit each, nothing accumulated yet.
         if any(len(s.hit_ids) != 1 or s.holes or s.chi2 or s.score for s in seeds):
             return False
-        return bool(seeds) and (self._twin(model) is not None or native.callback_eligible(model))
+        return bool(seeds) and (self._counterpart(model) is not None or native.callback_eligible(model))
 
     @staticmethod
-    def _twin(model):
-        """The model's C++ twin when it has one for this configuration."""
+    def _counterpart(model):
+        """The model's C++ counterpart when it has one for this configuration."""
         handle_of = getattr(model, "native_handle", None)
         return handle_of() if handle_of is not None else None
 
@@ -360,8 +360,8 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         from ..native import core
         lib, ffi = core.lib, core.ffi
         n, m = model.n, model.m
-        # A model with a C++ twin is propagated there; any other through its own f and h.
-        handle, keep = self._twin(model), ([],)
+        # A model with a C++ counterpart is propagated there; any other through its own f and h.
+        handle, keep = self._counterpart(model), ([],)
         if handle is None:
             handle, keep = callback_handle(model)
 

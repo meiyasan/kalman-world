@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Astro::RocketLiftoff
- * \brief Vertical liftoff with a finite propellant load - the twin of
+ * \brief Vertical liftoff with a finite propellant load - the counterpart of
  * `kalman.apps.astro.rocket.RocketLiftoffModel`.
  *
  * \details State `[h, v, m]`, altitude, climb rate and mass (SI units); the

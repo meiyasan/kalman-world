@@ -2,7 +2,7 @@ import numpy as np
 
 from ....framework.constants import KalmanObservable, KalmanState
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeTwin
+from ....framework.models.native import NativeCounterpart
 
 # ===== State / Observable enums =====
 
@@ -35,7 +35,7 @@ def jones_signal(a, psi, theta, phi):
 
 # ===== Model =====
 
-class PolarizationModel(NativeTwin, ExtendedKalmanModel):
+class PolarizationModel(NativeCounterpart, ExtendedKalmanModel):
     """
     EKF for online estimation of gravitational-wave polarization parameters.
 
@@ -145,13 +145,13 @@ class PolarizationModel(NativeTwin, ExtendedKalmanModel):
         super().__init__(sensor, Q=Q, R=R, fs=fs, **kwargs)
 
     # ------------------------------------------------------------------
-    # The C++ twin (libKalmanApps: Kalman::Apps::Gravitational::Polarization):
+    # The C++ counterpart (libKalmanApps: Kalman::Apps::Gravitational::Polarization):
     # the filtering pass runs there. Q and R are pushed from this instance;
     # the sample rate sets dt on both sides. preprocess() (complex signal to
     # four real columns) stays here: it prepares the data.
     # ------------------------------------------------------------------
     def native_name(self):
-        # The twin steps with dt = 1/fs; a transition built for another rate
+        # The counterpart steps with dt = 1/fs; a transition built for another rate
         # (fs changed after construction, or _transition edited) is not it.
         J = np.array([[1.0, 1.0 / self.fs], [0.0, 1.0]]) if self.fs else None
         if J is None or not np.array_equal(self._transition, np.kron(np.eye(4), J)):

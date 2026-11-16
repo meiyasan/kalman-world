@@ -1,15 +1,15 @@
-"""Before / after: each application model with a C++ twin, filtered twice, and the
+"""Before / after: each application model with a C++ counterpart, filtered twice, and the
 composite models of matrices, which run the C++ linear pass.
 
-"Before" is the Python physics (the twin switched off), "after" is the same
+"Before" is the Python physics (the counterpart switched off), "after" is the same
 Python model handing its pass to libKalmanApps. Both runs go through
 ``model.filter()``; the table gives the time of each, the ratio, and how far the
 two results are apart, relative to the largest state / covariance entry.
 
-    python tools/benchmark_twins.py            # from the repository root
-    python tools/benchmark_twins.py --steps 5000 --repeat 5
-    python tools/benchmark_twins.py --fields   # the field models on the ensemble engine
-    python tools/benchmark_twins.py --fields --notebook   # and notebook 13's assimilation, 64 x 64
+    python tools/benchmark_counterparts.py            # from the repository root
+    python tools/benchmark_counterparts.py --steps 5000 --repeat 5
+    python tools/benchmark_counterparts.py --fields   # the field models on the ensemble engine
+    python tools/benchmark_counterparts.py --fields --notebook   # and notebook 13's assimilation, 64 x 64
 
 Needs ``libKalman`` and ``libKalmanApps`` (``make build`` then
 ``cmake --install var/build``).
@@ -50,15 +50,15 @@ def timed(make, z, repeat, uk=None):
 
 def compare(make, z, repeat, uk=None):
     """Three runs of one model: the Python reference loop, the C++ loop calling
-    the Python model, and the model's C++ twin when it has one. ``uk`` is the
+    the Python model, and the model's C++ counterpart when it has one. ``uk`` is the
     control sequence of a model that takes one."""
     with native.python_reference():
         t_py, x_py, P_py, _ = timed(make, z, repeat, uk)
-    native.USE_NATIVE_TWINS = False
+    native.USE_NATIVE_COUNTERPARTS = False
     try:
         t_loop, x_loop, _, _ = timed(make, z, repeat, uk)
     finally:
-        native.USE_NATIVE_TWINS = True
+        native.USE_NATIVE_COUNTERPARTS = True
     t_cx, x_cx, P_cx, model = timed(make, z, repeat, uk)
     used = model.native_handle() is not None if hasattr(model, "native_handle") else False
     scale = max(1.0, np.nanmax(np.abs(x_py)))
@@ -205,7 +205,7 @@ def cases(steps):
 
 def composite_cases(steps):
     """The composites of notebook 02 and the K1 catalogue: models of matrices,
-    with no twin. ``steps`` is the number of filter steps (decimated samples)."""
+    with no counterpart. ``steps`` is the number of filter steps (decimated samples)."""
     from modules.apps.resonators.oscillators import (OscillatorModel, OscillatorBankModel,   # noqa: E402
                                                      InharmonicOscillatorModel, partial_frequencies)
     from modules.apps.gravitational.interferometer import InterferometerK1                   # noqa: E402
@@ -268,7 +268,7 @@ def compare_composite(make, z, repeat):
 def field_run(make, mode, repeat, run):
     """Best time of ``run(model)`` (the model made outside the timing) in one mode:
     the Python reference, the C++ solver and kernel in the Python loop (the pass
-    before the twin), or the twin."""
+    before the counterpart), or the counterpart."""
     def once():
         model = make()
         start = time.perf_counter()
@@ -280,11 +280,11 @@ def field_run(make, mode, repeat, run):
             with native.python_reference():
                 dt, out = once()
         elif mode == "loop":
-            native.USE_NATIVE_TWINS = False
+            native.USE_NATIVE_COUNTERPARTS = False
             try:
                 dt, out = once()
             finally:
-                native.USE_NATIVE_TWINS = True
+                native.USE_NATIVE_COUNTERPARTS = True
         else:
             dt, out = once()
         best = min(best, dt)
@@ -348,20 +348,20 @@ def field_cases(notebook):
 
 
 def fields(repeat, notebook):
-    print(f"\n{'field model, ensemble pass':36s} {'Python':>10s} {'C++ loop':>10s} {'C++ twin':>10s} "
+    print(f"\n{'field model, ensemble pass':36s} {'Python':>10s} {'C++ loop':>10s} {'C++ counterpart':>10s} "
           f"{'faster':>8s} {'mean':>9s} {'spread/P':>9s}")
     for name, make, run in field_cases(notebook):
         times, outs = {}, {}
-        for mode in ("reference", "loop", "twin"):
+        for mode in ("reference", "loop", "counterpart"):
             times[mode], outs[mode] = field_run(make, mode, 1 if "64x64" in name else repeat, run)
         rel = lambda a, b: float(np.nanmax(np.abs(a - b)) / np.nanmax(np.abs(b)))
-        dx = max(rel(outs[m][0], outs["reference"][0]) for m in ("loop", "twin"))
-        dP = max(rel(outs[m][1], outs["reference"][1]) for m in ("loop", "twin"))
-        print(f"{name:36s} {times['reference']:8.1f} ms {times['loop']:8.1f} ms {times['twin']:8.1f} ms "
-              f"{times['loop'] / times['twin']:7.1f}x {dx:9.1e} {dP:9.1e}")
+        dx = max(rel(outs[m][0], outs["reference"][0]) for m in ("loop", "counterpart"))
+        dP = max(rel(outs[m][1], outs["reference"][1]) for m in ("loop", "counterpart"))
+        print(f"{name:36s} {times['reference']:8.1f} ms {times['loop']:8.1f} ms {times['counterpart']:8.1f} ms "
+              f"{times['loop'] / times['counterpart']:7.1f}x {dx:9.1e} {dP:9.1e}")
     print("\nPython: the reference (numpy solver, numpy analysis). C++ loop: the Python loop calling the C++")
-    print("solver and analysis kernel (the pass before the twin). C++ twin: the whole pass in libKalmanApps.")
-    print("faster: C++ loop against the twin. mean, spread/P: largest difference from the reference, relative.")
+    print("solver and analysis kernel (the pass before the counterpart). C++ counterpart: the whole pass in libKalmanApps.")
+    print("faster: C++ loop against the counterpart. mean, spread/P: largest difference from the reference, relative.")
 
 
 def main():
@@ -388,9 +388,9 @@ def main():
         if args.only not in name:
             continue
         t_py, t_loop, t_cx, dx, dP, used = compare(make, z, args.repeat, *uk)
-        twin = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
-        print(f"{name:32s} {t_py:8.1f} ms {t_loop:8.1f} ms {twin} {dx:9.1e} {dP:11.1e}")
-    print(f"\nComposites (models of matrices, no twin), {args.composite_steps} filter steps, best of {args.repeat}\n")
+        counterpart = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
+        print(f"{name:32s} {t_py:8.1f} ms {t_loop:8.1f} ms {counterpart} {dx:9.1e} {dP:11.1e}")
+    print(f"\nComposites (models of matrices, no counterpart), {args.composite_steps} filter steps, best of {args.repeat}\n")
     print(f"{'model':32s} {'n':>4s} {'Python':>10s} {'C++ loop':>10s} {'C++ linear':>10s} {'faster':>8s} {'state':>9s} {'covariance':>11s}")
     for name, make, z in composite_cases(args.composite_steps):
         if args.only not in name:
@@ -399,7 +399,7 @@ def main():
         fused = f"{t_cx:8.1f} ms {t_py / t_cx:7.1f}x" if used else f"{'none':>11s} {t_py / t_loop:7.1f}x"
         print(f"{name:32s} {n:4d} {t_py:8.1f} ms {t_loop:8.1f} ms {fused} {dx:9.1e} {dP:11.1e}")
     print("\nPython: the reference loop. C++ loop: the C++ filter calling the Python model.")
-    print("C++ model: the model's C++ twin. faster: Python against the fastest of the two.")
+    print("C++ model: the model's C++ counterpart. faster: Python against the fastest of the two.")
     print("state / covariance: largest difference from the Python run, relative to the largest entry.")
 
 

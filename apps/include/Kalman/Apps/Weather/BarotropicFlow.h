@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Weather::BarotropicFlow
- * \brief Barotropic vorticity on a mid-latitude beta-plane — the twin of
+ * \brief Barotropic vorticity on a mid-latitude beta-plane — the counterpart of
  * `kalman.apps.weather.BarotropicFlowModel`.
  *
  * \details The field model of Weather::KolmogorovFlow with the physics of the

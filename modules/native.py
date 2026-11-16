@@ -23,12 +23,12 @@ from __future__ import annotations
 import os
 
 from .framework.native import core as _core
-from .framework.models.native import (NativeModel, NativeTwin, python_reference, native_model_classes,
+from .framework.models.native import (NativeModel, NativeCounterpart, python_reference, native_model_classes,
                                       run_callback_filter)
 from .framework.engines.native import NativeEngine
 
 __all__ = ["available", "status", "version", "names", "describe", "plugins", "load_plugin",
-           "NativeModel", "NativeTwin", "NativeEngine", "native_model_classes", "run_callback_filter",
+           "NativeModel", "NativeCounterpart", "NativeEngine", "native_model_classes", "run_callback_filter",
            "python_reference", "export_model", "read_model_file", "export", "open_model"]
 
 

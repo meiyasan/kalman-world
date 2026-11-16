@@ -178,7 +178,7 @@ def build_server(backend=None, *, transport: str = "stdio", auth_settings=None,
 
     @mcp.tool()
     def run_osse(spec: dict, n_cycles: int = 40, n_members: int = 16, token: str = "") -> dict:
-        """Twin-experiment OSSE for a flow spec (EnKF vs free run)."""
+        """Counterpart-experiment OSSE for a flow spec (EnKF vs free run)."""
         return backend.run_osse(spec, n_cycles, n_members, tok(token))
 
     @mcp.tool()

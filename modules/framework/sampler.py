@@ -146,7 +146,7 @@ class KalmanSampler:
         return KalmanRecord(times, zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self.model)
 
     def _native_measurements(self, xk, vk, t_start, eligible):
-        """``h`` over the whole run in one C++ call, for a model that is C++ (a twin,
+        """``h`` over the whole run in one C++ call, for a model that is C++ (a counterpart,
         a ``NativeModel``, a model of matrices); the noise drawn by numpy is added
         after it, which is what those models' ``h`` does with its ``v``. ``None``
         when the model's own Python ``h`` must be asked sample by sample."""
@@ -155,8 +155,8 @@ class KalmanSampler:
         model = self.model
         handle = self._matrices_handle()
         if handle is None:
-            twin = getattr(model, "native_handle", None)
-            handle = twin() if twin is not None else None
+            counterpart = getattr(model, "native_handle", None)
+            handle = counterpart() if counterpart is not None else None
         if handle is None or self.engine._noise_through_h(model) is None:
             return None
         from .native import core
@@ -199,8 +199,8 @@ class KalmanSampler:
             # on those matrices in C++ (a Kalman::Models::Tabulated holding them).
             return core.propagate(matrices, core.create_engine("linear"), n, l, n_samples, x, P,
                                   t_start, self.fs, uk=controls, wk=draws)
-        twin = getattr(model, "native_handle", None)
-        handle, keep = (twin() if twin is not None else None), None
+        counterpart = getattr(model, "native_handle", None)
+        handle, keep = (counterpart() if counterpart is not None else None), None
         if handle is None:
             handle, keep = native.callback_handle(model, "extended", live_noise=True)
         try:

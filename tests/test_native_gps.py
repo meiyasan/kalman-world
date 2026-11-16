@@ -1,5 +1,5 @@
-"""The GPS receiver and its C++ twin (Kalman::Apps::GPS::Receiver), and the named
-arrays a twin is configured with (one orbit per satellite).
+"""The GPS receiver and its C++ counterpart (Kalman::Apps::GPS::Receiver), and the named
+arrays a counterpart is configured with (one orbit per satellite).
 
 Skipped when libKalmanApps is not built (``make build``).
 """
@@ -25,7 +25,7 @@ def both(make, z):
     with native.python_reference():
         python = make().filter(z)
     model = make()
-    assert model.native_handle() is not None, "the twin was expected to be used"
+    assert model.native_handle() is not None, "the counterpart was expected to be used"
     return python, model.filter(z)
 
 
@@ -37,7 +37,7 @@ def apart(a, b):
 
 
 @needs_apps
-class TestGPSTwin(unittest.TestCase):
+class TestGPSCounterpart(unittest.TestCase):
     # The state is 6.4e6 m: 1e-6 m is 1.6e-13 of it.
     def check(self, **kw):
         make = lambda: GPSModel("rx", **kw)
@@ -54,19 +54,19 @@ class TestGPSTwin(unittest.TestCase):
         self.check(n_sat=5, fs=2.0, apply_relativistic=False)
 
     def test_satellites_rising_and_setting(self):
-        """The whole pool of 24, each masked while below the cutoff: the twin has 24
+        """The whole pool of 24, each masked while below the cutoff: the counterpart has 24
         channels and the missing pseudoranges are skipped."""
         z = self.check(elevation_mask=10.0)
         self.assertEqual(z.shape[1], 24)
         self.assertGreater(int(np.isnan(z).sum()), 1000)
 
-    def test_the_twin_takes_this_instance_constellation(self):
+    def test_the_counterpart_takes_this_instance_constellation(self):
         model = GPSModel("rx", n_sat=6, receiver_lat=-30.0, receiver_lon=120.0)
         handle = model.native_handle()
         n, m, l = (core.ffi.new("int *") for _ in range(3))
         core.check(core.lib.kalman_model_dims(handle, n, m, l), "dims")
         self.assertEqual((n[0], m[0]), (5, 6))
-        # h of the twin against h of the Python model, at a later time
+        # h of the counterpart against h of the Python model, at a later time
         x = np.asarray(model.x0, float).reshape(-1) + np.array([10.0, -20.0, 5.0, 3.0, 0.1])
         z = np.empty(6)
         core.check(core.lib.kalman_model_h(handle, core.cdptr(np.ascontiguousarray(x)), 1234.5, core.dptr(z)), "h")

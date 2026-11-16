@@ -29,7 +29,7 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 import numpy as np
 
 from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeTwin, native_integrator_kind
+from ....framework.models.native import NativeCounterpart, native_integrator_kind
 from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
@@ -147,7 +147,7 @@ class RocketDescentObservable(KalmanObservable):
     THETA = "rad"    # inertial-measurement-unit attitude
 
 
-class RocketDescentModel(NativeTwin, ExtendedKalmanModel):
+class RocketDescentModel(NativeCounterpart, ExtendedKalmanModel):
     """
     Planar **powered descent & landing** of a rigid booster — the accurate, *steerable*
     cousin of :class:`RocketLandingModel` (which is 1-D vertical only).
@@ -236,13 +236,13 @@ class RocketDescentModel(NativeTwin, ExtendedKalmanModel):
             kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
-    # --- C++ twin (libKalmanApps: Kalman::Apps::Astro::RocketDescent) ------
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketDescent) ------
     # Both configurations have one: the guidance flying the booster (l = 0,
     # "rocket-descent") and the throttle/gimbal program as the control input
     # (control=True, l = 2, "rocket-descent-control"). The atmosphere, the
     # inertia, the guidance, the command mapping and _deriv are the dynamics:
     # a subclass that changes one of them is another model.
-    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("_deriv", "_rho", "inertia", "guidance", "_control_from_u")
+    _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("_deriv", "_rho", "inertia", "guidance", "_control_from_u")
 
     def native_name(self):
         if native_integrator_kind(self) is None:

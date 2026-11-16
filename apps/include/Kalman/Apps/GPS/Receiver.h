@@ -10,7 +10,7 @@
  * \class Kalman::Apps::GPS::Receiver
  * \brief A GPS receiver solving for its position and clock from pseudoranges.
  *
- * \details The twin of the Python `GPSModel` (modules/apps/gps/model.py). The
+ * \details The counterpart of the Python `GPSModel` (modules/apps/gps/model.py). The
  * state is `[x, y, z, b, bdot]`: the receiver's position in an Earth-centred
  * frame, its clock bias and clock drift, in metres and metres per second.
  * The receiver stands still and its clock bias follows its drift, `db/dt = bdot`:

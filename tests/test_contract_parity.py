@@ -3,7 +3,7 @@
 What a model says of itself must not depend on the language it is asked in: the
 sensors, their channels, the observables, the dimensions and the parameters that
 Python reports are those the C++ model reports through the C API. The numbers are
-compared elsewhere (``test_native_twins``, ``test_joint``, ``test_add_sensor``);
+compared elsewhere (``test_native_counterparts``, ``test_joint``, ``test_add_sensor``);
 this file compares the *description*, operation by operation.
 """
 import sys
@@ -89,13 +89,13 @@ class TestSensors(unittest.TestCase):
     def test_a_matrix_sensor(self):
         self.same(Oscillator().add_sensor(KalmanSensor("radar", G=[[0.0, 1.0]], R=0.04, labels={"V": "m/s"})))
 
-    def test_the_ballistic_model_on_its_twin_and_through_callbacks(self):
+    def test_the_ballistic_model_on_its_counterpart_and_through_callbacks(self):
         make = lambda: BallisticModel("XYZ", order=3, fs=32, m=4.2, c_drag=6e-4, measurement_uncertainty=10,
                                       process_uncertainty=0.5).add_sensor(
             KalmanSensor("doppler", lambda x: [float(x[1, 0])], R=1.0, labels={"V_RADIAL": "m/s"}))
-        twin = make()
-        self.same(twin)
-        self.assertEqual(python_sensors(twin), [("XYZ", 3), ("doppler", 1)])
+        counterpart = make()
+        self.same(counterpart)
+        self.assertEqual(python_sensors(counterpart), [("XYZ", 3), ("doppler", 1)])
         with native.python_reference():
             self.same(make())
 

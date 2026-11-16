@@ -1,7 +1,7 @@
 """joint: parameters of a model estimated with its state.
 
 ``Joint`` (``model.joint(...)``, ``joint(model, ...)``) is ``Kalman::Models::Joint`` seen from Python. Its
-inner model reaches C++ as its twin (libKalmanApps) or as a callback model whose
+inner model reaches C++ as its counterpart (libKalmanApps) or as a callback model whose
 parameters are set back on the Python side. Both routes are pinned here, against
 each other and against the analytic Jacobian of a small oscillator.
 """
@@ -162,7 +162,7 @@ class TestEstimation(unittest.TestCase):
 
 
 @needs_apps
-class TestBallisticTwin(unittest.TestCase):
+class TestBallisticCounterpart(unittest.TestCase):
     """The case of notebook 01, Step 7: the drag coefficient of a shell."""
 
     INIT = [[100, 100, 0], [200, 100, 0], [300, 100, -9.81]]
@@ -179,13 +179,13 @@ class TestBallisticTwin(unittest.TestCase):
         truth.initial_state(self.INIT)
         self.sample = truth.sample(12)
 
-    def test_the_twin_and_the_callbacks_agree(self):
-        with native.python_reference():                 # no twin: the inner model is called back
+    def test_the_counterpart_and_the_callbacks_agree(self):
+        with native.python_reference():                 # no counterpart: the inner model is called back
             python = self.make()
             self.assertIsNone(python.native_handle())
             py = python.filter(self.sample.zk, smooth=False, reset=True)
         model = self.make()
-        self.assertIsNotNone(model.native_handle(), "the twin was expected to be used")
+        self.assertIsNotNone(model.native_handle(), "the counterpart was expected to be used")
         cx = model.filter(self.sample.zk, smooth=False, reset=True)
         scale = np.abs(py.xk).max(axis=0)
         np.testing.assert_array_less(np.abs(py.xk - cx.xk).max(axis=0), 1e-7 * np.maximum(1.0, scale))

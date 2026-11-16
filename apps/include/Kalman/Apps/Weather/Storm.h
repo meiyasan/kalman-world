@@ -8,7 +8,7 @@
  * *********************************************
  *
  * \class Kalman::Apps::Weather::Storm
- * \brief Reduced tropical-cyclone track and intensity model — the twin of
+ * \brief Reduced tropical-cyclone track and intensity model — the counterpart of
  * `kalman.apps.weather.StormModel`.
  *
  * \details State `[lon, lat, v_e, v_n, I]`: centre [deg], translation velocity

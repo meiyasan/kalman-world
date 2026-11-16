@@ -34,7 +34,7 @@ measurement  z = offset                                    (a lane camera)
 - **Control.** The lane model takes a steering input. Its notebook compares
   controllers that compute that input from the filter's estimate: proportional,
   PID, LQR, a sampling planner, and a small network trained to imitate it.
-- **C++.** Both models have a twin in `libKalmanApps` (`car-speed`, `car-lane`),
+- **C++.** Both models have a counterpart in `libKalmanApps` (`car-speed`, `car-lane`),
   which integrates the same derivative with the same scheme: RK4 for the speed
   test, Euler (or whichever integrator the lane model is given) for the lane.
   `CarLaneModel.filter(z, uk)` with a steering sequence runs wholly in C++. A

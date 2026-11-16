@@ -10,7 +10,7 @@
  * \page libkalmanapps libKalmanApps — the application models
  *
  * libKalman ships the contracts and no physics. libKalmanApps is where the
- * physics lives in C++: each model here is the twin of one Python class in
+ * physics lives in C++: each model here is the counterpart of one Python class in
  * `kalman.apps`, and gives the same answer.
  *
  * | C++ class | Registered name | Python class |
@@ -43,7 +43,7 @@
  * \endcode
  *
  * From Python nothing changes: `StormModel("TC").filter(fixes)` runs its whole
- * pass on the twin when this library is installed, and in Python otherwise.
+ * pass on the counterpart when this library is installed, and in Python otherwise.
  *
  * Every model derives from Kalman::Apps::Model and is configured through the
  * named parameters of Kalman::Model. Link `libKalmanApps` as well as

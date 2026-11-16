@@ -502,7 +502,7 @@ def run_filter(spec: dict, data=None, *, smooth: bool = False, source: str | Non
 
 def run_osse(spec: dict, *, n_cycles: int = 40, n_members: int = 16,
              inflation: float = 1.06, **kw) -> dict:
-    """Twin-experiment OSSE for a field/flow spec (EnKF vs free run).
+    """Counterpart-experiment OSSE for a field/flow spec (EnKF vs free run).
     Returns the per-cycle RMSE/spread histories."""
     from ..apps.weather import TwinExperiment
     model = make_model(spec)

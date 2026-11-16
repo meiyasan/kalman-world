@@ -174,7 +174,7 @@ class MyModel(KalmanModel):
 | `AUTOMATIC` | automatic differentiation | - | reserved, for `libKalmanLearn` |
 
 The differences are computed in C++ (`Kalman::Differentiators`), also for a
-model written in Python, and a C++ twin linearises with the scheme its Python
+model written in Python, and a C++ counterpart linearises with the scheme its Python
 class declares. A model that overrides `F()` or holds matrices is analytic
 whatever it declares.
 

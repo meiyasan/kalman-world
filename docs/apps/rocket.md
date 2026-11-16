@@ -37,7 +37,7 @@ mass.
 - **Process noise.** Each model passes `L = I`, so the noise acts on every
   state. Without it the framework finds that the step does not respond to
   noise and applies none.
-- **C++.** All four have a twin in `libKalmanApps` (`rocket-liftoff`,
+- **C++.** All four have a counterpart in `libKalmanApps` (`rocket-liftoff`,
   `rocket-ascent`, `rocket-descent` and `rocket-descent-control`,
   `rocket-landing`): the derivative, the guidance and the closing step (mass
   kept at the dry mass, a landed stage held on the pad) in C++, so

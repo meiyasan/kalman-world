@@ -26,7 +26,7 @@ import numpy as np
 
 from ...framework.model import KalmanModel
 from ...framework.engine_models import KalmanEnsembleModel
-from ...framework.models.native import NativeTwin
+from ...framework.models.native import NativeCounterpart
 from ...framework.constants import KalmanEngineKind, KalmanObservable
 from ...framework.engines.ensemble import EnsembleKalmanEngine, gaspari_cohn
 from ...framework.solvers.spectral import SpectralSolver
@@ -81,7 +81,7 @@ class FlowObservable(KalmanObservable):
 # ======================================================================
 # The Kalman model — full vorticity field, sparse point observations
 # ======================================================================
-class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
+class KolmogorovFlowModel(NativeCounterpart, KalmanEnsembleModel, KalmanModel):
     """
     Kolmogorov-flow vorticity field as a Kalman state (n = grid², chaotic).
 
@@ -169,14 +169,14 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
         super().__init__(sensor, **kwargs)
 
     # ------------------------------------------------------------------
-    # C++ twin (libKalmanApps: Kalman::Apps::Weather::KolmogorovFlow). With
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Weather::KolmogorovFlow). With
     # the ensemble engine the whole pass runs there: the forecast of every
     # member, the observation, the tapers, the analysis and the cycles. A
     # surrogate forecast is a Python callable and keeps the Python pass, as
     # does a solver on libTorch (backend="torch"), which libKalmanApps does
     # not link, and a solver other than the one this class builds.
     # ------------------------------------------------------------------
-    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("covariance_mask", "torus_distance",
+    _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("covariance_mask", "torus_distance",
                                                   "vorticity_gradient")
     _NATIVE_NAME = "kolmogorov-flow"
     _NATIVE_SOLVER = NS2D
@@ -205,22 +205,22 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
                 "process_variance": np.diag(np.asarray(self._Q, dtype=float))}
 
     def native_handle(self):
-        """The configured C++ twin, or ``None`` when the Python pass must run.
+        """The configured C++ counterpart, or ``None`` when the Python pass must run.
 
-        The twin's size follows from its ``grid`` parameter, so the parameters
+        The counterpart's size follows from its ``grid`` parameter, so the parameters
         are pushed before the arrays and the dimensions are checked after both;
         ``Q`` crosses as its diagonal (``process_variance``), never as the dense
         ``n x n`` it is here."""
         import os
         from ...framework.models import native
         from ...framework.native import core
-        if not native.USE_NATIVE_TWINS or os.environ.get("KALMAN_NATIVE_TWINS", "1") == "0" or not core.HAS_CXX_CORE:
+        if not native.USE_NATIVE_COUNTERPARTS or os.environ.get("KALMAN_NATIVE_COUNTERPARTS", "1") == "0" or not core.HAS_CXX_CORE:
             return None
         name = self.native_name()
         if not name or name not in native.apps_library_names():
             return None
-        owner = self._twin_owner()
-        for attr in self._TWIN_CONTRACT:
+        owner = self._counterpart_owner()
+        for attr in self._COUNTERPART_CONTRACT:
             if attr in self.__dict__ or getattr(type(self), attr, None) is not getattr(owner, attr, None):
                 return None
         if np.dtype(getattr(self, "dtype", np.float64)) != np.float64:
@@ -234,12 +234,12 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
             return None                                   # a full Q: the Python pass draws it
 
         lib = core.lib
-        cached = self.__dict__.get("_native_twin")
+        cached = self.__dict__.get("_native_counterpart")
         if cached is None or cached[0] != name:
             handle = lib.kalman_model_create(name.encode())
             if handle == core.ffi.NULL:
                 raise KeyError(f"{type(self).__name__}: {core.last_error()}")
-            self._native_twin = cached = (name, core.ffi.gc(handle, lib.kalman_model_destroy))
+            self._native_counterpart = cached = (name, core.ffi.gc(handle, lib.kalman_model_destroy))
         handle = cached[1]
         for key, value in self.native_parameters().items():
             core.check(lib.kalman_model_set_parameter(handle, key.encode(), float(value)), f"set_parameter({key!r})")
@@ -247,7 +247,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
         n, m, l = core.ffi.new("int *"), core.ffi.new("int *"), core.ffi.new("int *")
         core.check(lib.kalman_model_dims(handle, n, m, l), "kalman_model_dims")
         if (int(n[0]), int(m[0]), int(l[0])) != (self.n, self.m, self.l):
-            raise RuntimeError(f"{type(self).__name__}: the C++ twin {name!r} has (n, m, l) = "
+            raise RuntimeError(f"{type(self).__name__}: the C++ counterpart {name!r} has (n, m, l) = "
                                f"({n[0]}, {m[0]}, {l[0]}), the Python model ({self.n}, {self.m}, {self.l}).")
         if self.fs:
             core.check(lib.kalman_model_set_sample_rate(handle, float(self.fs)), "set_sample_rate")
@@ -612,21 +612,21 @@ class TwinExperiment:
         """No-assimilation control — the baseline any filter must beat."""
         return self.add_method(name, assimilate=False)
 
-    def _native_twin(self, method, callback):
-        """The C++ twin a method's whole run can use, or ``None`` (Python loop): a
+    def _native_counterpart(self, method, callback):
+        """The C++ counterpart a method's whole run can use, or ``None`` (Python loop): a
         surrogate forecast, a callback watching every cycle, another engine, or a
-        model with no twin."""
+        model with no counterpart."""
         if callback is not None or type(method["engine"]) is not EnsembleKalmanEngine:
             return None
         view = method["view"]
         if view is not self.model and (not isinstance(view, self._MethodView) or view._fn is not None):
             return None
-        return method["engine"]._native_twin(self.model, Q=view.Q(t=None))
+        return method["engine"]._native_counterpart(self.model, Q=view.Q(t=None))
 
     def run(self, verbose=True, every=15, callback=None, record_fields=False):
         """Run every method over the cycles; see the class docstring.
 
-        A method whose model has a C++ twin runs its whole run in C++
+        A method whose model has a C++ counterpart runs its whole run in C++
         (``Kalman::Filters::EnKF::Cycle``: the forecasts of its members in
         parallel, the observations, the analyses), on the truth and the
         measurements made here first; the others run the Python loop, cycle by
@@ -653,12 +653,12 @@ class TwinExperiment:
                 y = np.where(self.obs_mask[c], y, np.nan)   # silent stations this cycle
             return truth, y
 
-        twins = {name: self._native_twin(m, callback) for name, m in self.methods.items()}
-        twins = {name: handle for name, handle in twins.items() if handle is not None}
+        counterparts = {name: self._native_counterpart(m, callback) for name, m in self.methods.items()}
+        counterparts = {name: handle for name, handle in counterparts.items() if handle is not None}
         if self.n_cycles == 0:
-            twins = {}
+            counterparts = {}
         cycles = None
-        if twins:
+        if counterparts:
             # The truth and the measurements first (the same draws of rng_obs, in
             # the same order), then each method's whole run in one C++ call.
             cycles = []
@@ -667,7 +667,7 @@ class TwinExperiment:
                 cycles.append((truth.copy(), y))
             truths = [tr for tr, _ in cycles]
             ys = np.asarray([y for _, y in cycles])
-            for name, handle in twins.items():
+            for name, handle in counterparts.items():
                 m, h = self.methods[name], hist[name]
                 t0 = time.time()
                 out = m["engine"]._cycle_native(m["view"], handle, ys, analyse=m["assimilate"], Q=m["view"].Q(t=None))
@@ -684,7 +684,7 @@ class TwinExperiment:
             if record_fields:
                 self.fields["truth"].append(truth.copy())
             for name, m in self.methods.items():
-                if name in twins:
+                if name in counterparts:
                     continue
                 eng, h = m["engine"], hist[name]
                 t0 = time.time()

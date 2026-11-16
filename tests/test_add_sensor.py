@@ -3,7 +3,7 @@
 ``model.add_sensor(sensor)`` (``add_sensor(model, sensor)``, ``Fusion``) is
 ``Kalman::Models::Fusion`` seen from Python. Pinned here: the three ways in, the
 function and the matrix sensors, the list of sensors and the observables derived
-from it, both routes of the inner model to C++ (its twin, or callbacks), nesting
+from it, both routes of the inner model to C++ (its counterpart, or callbacks), nesting
 under ``joint``, and the model's first argument: a name, a sensor, or a list.
 """
 import sys
@@ -319,8 +319,8 @@ class TestBallisticDoppler(unittest.TestCase):
         warnings.simplefilter("ignore")
         self.sample = self.make(random_seed=7).sample(12)
 
-    def test_the_twin_and_the_callbacks_agree(self):
-        with native.python_reference():                 # no twin: the shell is called back
+    def test_the_counterpart_and_the_callbacks_agree(self):
+        with native.python_reference():                 # no counterpart: the shell is called back
             py = self.make().filter(self.sample.zk, smooth=False, reset=True)
         cx = self.make().filter(self.sample.zk, smooth=False, reset=True)
         np.testing.assert_array_less(np.abs(py.xk - cx.xk).max(axis=0), 1e-6 * np.maximum(1.0, np.abs(py.xk).max(axis=0)))
