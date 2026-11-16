@@ -70,7 +70,7 @@ included, so a change on one side has an obvious home on the other:
 | `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
 | `framework/instrument.py` | `Kalman/Instrument.h` | `Kalman::Instrument`, `Kalman::Compose` |
 | `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
-| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag`, `Kalman::Compose` |
+| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag`, `Kalman::Compose`, `Kalman::Route` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |

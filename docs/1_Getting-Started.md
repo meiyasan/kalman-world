@@ -129,11 +129,41 @@ catalog()["models"]           # 43 names
 describe("BallisticModel")    # params, version, engine/integrator/solver bindings
 ```
 
+## Growing a model with operations
+
+When the problem grows, the model grows and the filter stays. An *operation*
+takes a model and gives back a model:
+
+```python
+from kalman.framework import KalmanSensor, compose, route
+
+# one more sensor on the same state: a velocity reading beside the position
+fused = model.add_sensor(KalmanSensor("odometer", G=[[0.0, 1.0]], R=0.01))
+fused.m                                  # 2
+
+# a parameter estimated with the state: here the odometer's unknown offset
+gauge = compose(KalmanSensor("wheel", G=[[0.0, 1.0]], R=0.01), name="odometer").calibrate(gain=1.0, offset=0.0)
+tuned = model.add_instrument(gauge).joint({"odometer.offset": (0.5, 0.0)})
+tuned.n                                  # 3: position, velocity, odometer.offset
+
+# two systems in one filter, and one system with two regimes
+pair  = compose(model, other)            # states side by side
+modes = route([quiet, shaken], Pi)       # same state, a probability on each model
+
+record = fused.filter(zk)                # every one of them runs like any model
+```
+
+`lag(L)` completes the list (a sensor that reports late). The six are described
+in [Models](4_Models.md#operations-a-model-made-from-models), and
+[`examples/python/operations.py`](../examples/python/operations.py) runs them
+one after the other.
+
 ---
 
 ## Where to go next
 
 - **I want to model my own system** → [Models](4_Models.md)
+- **I want more sensors, an unknown parameter, several systems or regimes** → [operations](4_Models.md#operations-a-model-made-from-models)
 - **Which filter should I use?** → [Filters and Diagnostics](5_Filters-and-Diagnostics.md)
 - **My dynamics are an ODE/PDE** → [Integrators and Solvers](6_Integrators-and-Solvers.md)
 - **I want to drive this from another program** → [Python API](9_Python-API.md),

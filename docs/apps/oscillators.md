@@ -27,6 +27,12 @@ longer the line rings and the narrower it is.
 
 ## How it is built
 
+- **Built from operations.** Several lines on one channel are `compose(...,
+  readout=KalmanReadout.SUMMED)`: each line keeps its own state and their
+  measurements add. A bank of windows is `compose(w1, w2, w3)`, stacked:
+  `OscillatorBankModel` is the `Composite` class plus the step that sends the
+  one real signal to every window. Being composites of matrices, both run on
+  the linear filter, and a line's parameter is `"<part>.<name>"` for `joint`.
 - **Time stepping.** The motion of the envelope is linear, so its step is exact:
   the matrix exponential of the turn and the decay over one sample.
 - **A window is a mask.** `OscillatorModel` takes a list of candidate

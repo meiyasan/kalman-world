@@ -34,4 +34,29 @@ car = SensorFusionModel("car", sensors=[
 ], fs=50.0)
 ```
 
+## The same model, from operations
+
+`SensorFusionModel` is a convenience over the framework's operations, and gives
+the same record as the model built with them:
+
+```python
+from kalman.framework import KalmanModel, KalmanSensor, compose
+
+car = KalmanModel("gps", fs=50.0, F=F, Q=Q, H=[[1.0, 0.0]], R=[[3.0**2]])       # its own sensor: the GPS
+car = car.add_sensor(KalmanSensor("odometry", G=[[0.0, 1.0]], R=0.1**2))       # one more, on the velocity
+```
+
+The operations also cover what a list of rows cannot:
+
+- **An instrument that is not calibrated.** `compose(sensor, name="lidar").calibrate(gain, offset)`
+  gives the model the parameters `lidar.gain` and `lidar.offset`, and
+  `model.joint({"lidar.offset": (1.0, 0.0)})` estimates the offset with the
+  state, as long as another sensor reads the same quantity without it.
+- **A sensor that reports late.** `KalmanSensor(..., delay=0.2)` on a model with
+  `.lag(10)`: the model carries its last ten states and the sensor reads the
+  oldest. Read as if it were current, a 0.2 s delay on a target at 8 m/s is a
+  1.6 m error.
+
+Step 6 of the notebook runs all three.
+
 Notebook: [09_SensorFusion](../../share/notebooks/09_SensorFusion.ipynb).

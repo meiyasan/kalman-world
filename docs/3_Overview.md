@@ -43,6 +43,46 @@ nests inside the other. See [Integrators and Solvers](6_Integrators-and-Solvers.
 
 ---
 
+## Operations: a model made from models
+
+A bigger problem is not a new kind of filter. It is a bigger *model*, made from
+the ones you have by an **operation**: a function that takes models and gives
+back a model. The filter that runs the result is the ordinary one.
+
+| Operation | What the new model is | State | Measurement |
+|---|---|---|---|
+| `model.add_sensor(sensor)` | the model read by one more sensor | unchanged | one more block of rows |
+| `model.add_instrument(instrument)` | the same, for sensors grouped under one name with a rate and a calibration | unchanged | its sensors' rows |
+| `model.joint({...})` | the model with some of its parameters estimated | state, then the parameters | unchanged |
+| `model.lag(L)` | the model carrying its last `L` states | `L + 1` copies of the state | unchanged; a late sensor reads a past copy |
+| `compose(a, b)` | two systems side by side | theirs, one after the other | stacked, or summed on one channel |
+| `route(models, Pi)` | one system seen by several models, one per regime | shared | shared |
+
+```python
+from kalman.framework import KalmanSensor, compose
+
+lens   = KalmanSensor("lens", G=[[1, 0]], R=0.01, delay=0.03)        # precise, and 0.03 s late
+camera = compose(lens, name="camera").calibrate(gain=1.0, offset=0.0)  # an instrument, with a calibration
+
+tracker = (cart.add_instrument(camera)                 # one more reading of the same state
+               .lag(3)                                 # the last three states, for the late sensor
+               .joint({"camera.offset": (1.0, 0.0)}))  # and the camera's offset estimated
+record = tracker.filter(zk)                            # the ordinary filter: n = 9, m = 2
+```
+
+Each operation has three spellings that build the same object: the method
+(`model.lag(3)`), the function (`lag(model, 3)`) and the class (`Lag(model, 3)`,
+the one an application subclasses). C++ has the same names, `Kalman::Lag(model, 3)`
+and `Kalman::Models::Lag`, and does the arithmetic; Python wraps it. Operations
+nest, and the result keeps what its parts declared: models of matrices combine
+into a model of matrices, which stays on the linear engine.
+
+What other fields call these (sensor fusion, state augmentation, the
+augmented-state filter, IMM) is in [The contract](19_Contract.md); how to use
+each one is in [Models](4_Models.md#operations-a-model-made-from-models).
+Runnable on a cart: [`examples/python/operations.py`](../examples/python/operations.py)
+and [`examples/cxx/operations.cc`](../examples/cxx/operations.cc).
+
 ## Declared, not imported
 
 The single most important convention: a model **declares** its collaborators by

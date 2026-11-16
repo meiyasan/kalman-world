@@ -3,13 +3,16 @@
 Each operation takes models and gives back a model; the filter is always the
 ordinary one. Everything is computed by the C++ library.
 
-    add_sensor   one more sensor on the same state
-    lag          the last states carried along: a sensor that reports late
-    joint        a parameter estimated with the state
-    compose      two systems side by side
-    route        one system, two regimes
+    add_sensor      one more sensor on the same state
+    lag             the last states carried along: a sensor that reports late
+    add_instrument  sensors under one name, with a calibration
+    joint           a parameter estimated with the state
+    compose         two systems side by side
+    route           one system, two regimes
 
     python examples/python/operations.py
+
+The same steps in C++: ``examples/cxx/operations.cc``.
 """
 from __future__ import annotations
 import os

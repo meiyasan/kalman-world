@@ -40,8 +40,10 @@ same in Python and in C++, and the filter is always the ordinary one:
 | `compose(a, b)` | models side by side, each with its own state |
 | `route(models, Pi)` | several models of one system that changes regime, with a probability on each |
 
-[`examples/python/operations.py`](examples/python/operations.py) runs each of
-them on a cart; the vocabulary is in [The contract](docs/19_Contract.md).
+[`examples/python/operations.py`](examples/python/operations.py) and
+[`examples/cxx/operations.cc`](examples/cxx/operations.cc) run each of
+them on a cart, and notebook 09 (sensor fusion) shows `add_sensor`,
+instruments, `joint` and `lag` on data; the vocabulary is in [The contract](docs/19_Contract.md).
 See [Models](docs/4_Models.md).
 
 **Applications.** Fifteen worked systems, from ballistics, rockets and space

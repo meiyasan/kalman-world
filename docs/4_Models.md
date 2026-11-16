@@ -131,6 +131,49 @@ reads `F/H`; the linear KF reads `F/H` as constants.
 
 ---
 
+## Operations: a model made from models
+
+The three paths above write a model from nothing. The operations make one from
+models you already have. Each takes models and returns a model that any filter
+runs, so they chain:
+
+| Operation | Use it when | Section |
+|---|---|---|
+| `add_sensor(model, sensor)` | another sensor reads the same state | [Sensors](#sensors) |
+| `add_instrument(model, instrument)` | sensors come as a set, with one rate and one calibration | [Instruments](#instruments) |
+| `joint(model, {...})` | a parameter of the model is not known | [Joint models](#joint-models-estimating-parameters-with-the-state) |
+| `lag(model, L)` | a sensor reports late, or you want the state of `L` steps ago improved by what came after | [A sensor that reports late](#a-sensor-that-reports-late-and-the-lagged-model) |
+| `compose(a, b)` | several systems, each with its own state, in one filter | [Composite models](#composite-models) |
+| `route(models, Pi)` | one system that changes regime | [`route`](#a-system-that-changes-regime-route) |
+
+Every one is also a method (`model.add_sensor(sensor)`, `a.compose(b)`,
+`KalmanModel.route(models, Pi)`) and a class (`Fusion`, `Joint`, `Lag`,
+`Composite`, `Router`); the three build the same object. The class is what an
+application subclasses, as `OscillatorBankModel(Composite)` does.
+
+```python
+radar = shell.add_sensor(KalmanSensor("doppler", doppler, R=1.0))     # one more sensor
+model = radar.joint({"c_drag": (1e-3, 1e-6)})                         # and the drag estimated
+ExtendedKalmanFilter(model).filter(zk)
+```
+
+Three rules hold for all of them:
+
+- **The result keeps what the parts declare.** Models of matrices give a model
+  of matrices, on the linear engine; one part that is code makes the result code.
+- **Parameters are forwarded by name.** A sensor's or an instrument's are
+  `"<owner>.<name>"`, a part's `"<part>.<name>"`, a regime's `"<mode>.<name>"`,
+  so `joint` reaches any of them through the operations around it.
+- **The arithmetic is C++.** Each is a `Kalman::Models::…` class and a function
+  in `Kalman/Operations.h`; the Python object wraps it. A model written in
+  Python is called back for its `f` and `h`.
+
+[`examples/python/operations.py`](../examples/python/operations.py) and
+[`examples/cxx/operations.cc`](../examples/cxx/operations.cc) run the six on a
+cart, with the same names in both languages.
+
+---
+
 ## Composite models
 
 `compose` puts several models side by side, each with its own state. The parts

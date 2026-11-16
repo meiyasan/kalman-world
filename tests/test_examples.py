@@ -90,3 +90,38 @@ class TestToyDemonstration(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+OPERATIONS_PROGRAM = os.path.join(REPO, "var", "build", "bin", "operations")
+OPERATIONS_SCRIPT = os.path.join(REPO, "examples", "python", "operations.py")
+
+
+@unittest.skipUnless(core.HAS_CXX_CORE and os.path.exists(OPERATIONS_PROGRAM), "the examples are not built (make examples)")
+class TestOperationsDemonstration(unittest.TestCase):
+    """``examples/cxx/operations.cc`` and ``examples/python/operations.py``: the same steps, the same names."""
+
+    @staticmethod
+    def numbers(line):
+        return [float(x) for x in re.findall(r"-?\d+\.\d+", line)]
+
+    def check(self, out, names):
+        lines = {line.split(":")[0].strip().lower(): line for line in out.splitlines() if ":" in line[:18]}
+        self.assertEqual([name for name in names if name not in lines], [], out)
+        with_camera, without = self.numbers(lines[names[0]])
+        self.assertLess(with_camera, 0.7 * without, "the late camera, read with its delay, improves the position")
+        offset, sigma, truth = self.numbers(lines[names[1]])
+        self.assertLess(abs(offset - truth), 3 * sigma, "the gauge's offset is found within 3 sigma")
+        self.assertIn("n = 4, m = 2", lines[names[2]])
+        quiet_half, shaken_half = self.numbers(lines[names[3]])
+        self.assertLess(quiet_half, 0.3, "the quiet half is recognised")
+        self.assertGreater(shaken_half, 0.5, "and so is the shaken one")
+
+    def test_cxx(self):
+        run = subprocess.run([OPERATIONS_PROGRAM], capture_output=True, text=True, timeout=120)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.check(run.stdout, ["addsensor + lag", "joint", "compose", "route"])
+
+    def test_python(self):
+        run = subprocess.run([sys.executable, OPERATIONS_SCRIPT], capture_output=True, text=True, timeout=300, cwd=REPO)
+        self.assertEqual(run.returncode, 0, run.stderr)
+        self.check(run.stdout, ["add_sensor + lag", "joint", "compose", "route"])
