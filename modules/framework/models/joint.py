@@ -35,20 +35,21 @@ from .operation import OperationModel
 
 
 def _spec(name, value):
-    """``(sigma, drift)`` from a tuple or a mapping. The values are checked in C++."""
+    """``(sigma, drift, tau)`` from a tuple or a mapping. The values are checked in C++."""
     if isinstance(value, Mapping):
-        unknown = set(value) - {"sigma", "drift"}
+        unknown = set(value) - {"sigma", "drift", "tau"}
         if unknown:
-            raise ValueError(f"joint: {name!r} takes sigma= and drift=, not {sorted(unknown)}.")
+            raise ValueError(f"joint: {name!r} takes sigma=, drift= and tau=, not {sorted(unknown)}.")
         if "sigma" not in value:
             raise ValueError(f"joint: {name!r} needs sigma=.")
-        return float(value["sigma"]), float(value.get("drift", 0.0))
+        return float(value["sigma"]), float(value.get("drift", 0.0)), float(value.get("tau", 0.0))
     try:
-        sigma, drift = value
+        sigma, drift, *rest = value
+        (tau,) = rest or (0.0,)
     except (TypeError, ValueError):
-        raise ValueError(f"joint: {name!r} needs (sigma, drift) or {{'sigma': ..., 'drift': ...}}, "
-                         f"got {value!r}.") from None
-    return float(sigma), float(drift)
+        raise ValueError(f"joint: {name!r} needs (sigma, drift), (sigma, drift, tau) or "
+                         f"{{'sigma': ..., 'drift': ..., 'tau': ...}}, got {value!r}.") from None
+    return float(sigma), float(drift), float(tau)
 
 
 class Joint(OperationModel):
@@ -83,10 +84,9 @@ class Joint(OperationModel):
 
         self._inner_cxx = inner = self._inner(model, names)        # borrowed by the C++ model
         encoded = [ffi.new("char[]", name.encode()) for name in names]
-        sigma = np.ascontiguousarray([s for s, _ in specs], dtype=np.float64)
-        drift = np.ascontiguousarray([d for _, d in specs], dtype=np.float64)
+        sigma, drift, tau = (np.ascontiguousarray(column, dtype=np.float64) for column in zip(*specs))
         handle = lib.kalman_model_create_joint(inner, len(names), ffi.new("const char *[]", encoded),
-                                               core.cdptr(sigma), core.cdptr(drift))
+                                               core.cdptr(sigma), core.cdptr(drift), core.cdptr(tau))
         if handle == ffi.NULL:
             raise self._failed("joint")
 
@@ -98,6 +98,43 @@ class Joint(OperationModel):
         if getattr(self, "_states_enum", None) is None:
             self._states_enum = self._label_enum(True, KalmanState, "JointState")
         return self._states_enum
+
+    # ------------------------------------------------------------------
+    # Can the data tell the parameters apart? Asked once per initial state.
+    # ------------------------------------------------------------------
+    #: Measurements considered by the check, and the share of a weak direction
+    #: above which a parameter is reported.
+    OBSERVABILITY_STEPS = 50
+    OBSERVABILITY_SHARE = 0.05
+
+    def native_handle(self):
+        handle = super().native_handle()
+        self._warn_if_unobservable()
+        return handle
+
+    def _warn_if_unobservable(self):
+        """Warn when the measurements cannot determine an estimated parameter from
+        this initial state: it would stay on its prior, or move only together with
+        the components named. Checked when a pass starts, where the initial state
+        is the real one (a system at rest can hide a parameter motion reveals)."""
+        import warnings
+        key = np.asarray(self.x0, dtype=np.float64).tobytes() + np.asarray(self.P0, dtype=np.float64).tobytes()
+        if self.__dict__.get("_observability_checked") == key:
+            return
+        self._observability_checked = key
+        try:
+            report = self.observability(steps=self.OBSERVABILITY_STEPS)
+        except Exception:
+            return                                   # a model the check cannot run on is not thereby wrong
+        weak = report["weakness"]
+        labels = list(weak)
+        for name in self.names:
+            if weak.get(name, 0.0) > self.OBSERVABILITY_SHARE:
+                others = [label for label in labels if label != name and weak[label] > self.OBSERVABILITY_SHARE]
+                together = f" apart from {', '.join(others)}" if others else ""
+                warnings.warn(f"joint: the measurements do not determine {name!r}{together} from this initial state "
+                              f"(over {self.OBSERVABILITY_STEPS} steps); its estimate will rest on its prior. "
+                              "See model.observability().", RuntimeWarning, stacklevel=3)
 
     def __repr__(self):
         return f"Joint({type(self.inner).__name__}, {self.names}, n={self.n}, m={self.m}, l={self.l}, fs={self.fs})"

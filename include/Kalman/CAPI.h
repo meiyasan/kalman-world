@@ -157,11 +157,12 @@ int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const
 
 /// A model whose state also carries `p` of `inner`'s declared parameters, estimated
 /// with the motion (Kalman::Models::Joint): `names[k]` with the standard deviation
-/// `sigma[k]` of its initial guess and `drift[k]` of its random walk per step. `inner`
+/// `sigma[k]` of its initial guess and `drift[k]` of its random walk per step; `tau`
+/// (may be NULL) gives each a time to return to its starting value, 0 for never. `inner`
 /// is borrowed: it must outlive the new model, and is not destroyed with it.
 /// NULL with kalman_last_error() on failure.
 kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
-                                              const double *sigma, const double *drift);
+                                              const double *sigma, const double *drift, const double *tau);
 
 /// `inner` read by one more sensor `name` (Kalman::Sensor, Kalman::Models::Fusion): `k`
 /// channels `g(x, t)` of noise covariance `R` (k x k, row-major). `jacobian` (k x n) may be
@@ -199,6 +200,13 @@ int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R);
 /// The matrix `G` (k x n row-major) of sensor `i` when its readings are `G x`: 1 and `G` filled,
 /// 0 when it reads through a function (`G` untouched), -1 on failure. `G` may be NULL to ask only.
 int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G);
+
+/// How well `steps` measurements determine each direction of the state of `model`, along its
+/// noise-free path from its initial state (Kalman::Observability). `eigenvalues` (n, smallest
+/// first) and `weakness` (n: the share of each state component in the directions the
+/// measurements do not determine, 0 to 1) may be NULL. Returns the rank, or -1 on failure.
+int kalman_model_observability(const kalman_model_t *model, int steps, double tolerance, double *eigenvalues,
+                               double *weakness);
 
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);

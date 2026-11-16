@@ -20,6 +20,7 @@
 #include "Kalman/Factory.h"
 #include "Kalman/IO/ModelFile.h"
 #include "Kalman/Models/Joint.h"
+#include "Kalman/Observability.h"
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
@@ -342,7 +343,7 @@ int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const
 }
 
 kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
-                                              const double *sigma, const double *drift)
+                                              const double *sigma, const double *drift, const double *tau)
 {
     try
     {
@@ -354,7 +355,7 @@ kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const ch
         for (int k = 0; k < p; ++k)
         {
             if (!names[k]) throw std::invalid_argument("null parameter name");
-            parameters.push_back({names[k], sigma[k], drift[k]});
+            parameters.push_back({names[k], sigma[k], drift[k], tau ? tau[k] : 0.});
         }
         // Borrowed: the caller keeps `inner` alive and destroys it.
         std::shared_ptr<Kalman::Model> shared(&borrowed, [](Kalman::Model *) {});
@@ -536,6 +537,22 @@ int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G)
             for (std::size_t a = 0; a < sensor.G.Rows(); ++a)
                 for (std::size_t b = 0; b < sensor.G.Cols(); ++b) G[a * sensor.G.Cols() + b] = sensor.G(a, b);
         return 1;
+    });
+}
+
+int kalman_model_observability(const kalman_model_t *model, int steps, double tolerance, double *eigenvalues,
+                               double *weakness)
+{
+    return Guard([&] {
+        if (steps <= 0) throw std::invalid_argument("consider at least one step");
+        const Kalman::Model &M = Deref(model);
+        const Kalman::Observability obs(M, static_cast<std::size_t>(steps), nullptr, tolerance > 0. ? tolerance : 1e-9);
+        for (std::size_t i = 0; i < M.NState(); ++i)
+        {
+            if (eigenvalues) eigenvalues[i] = obs.Eigenvalues()(i);
+            if (weakness) weakness[i] = obs.Weakness(i);
+        }
+        return static_cast<int>(obs.Rank());
     });
 }
 

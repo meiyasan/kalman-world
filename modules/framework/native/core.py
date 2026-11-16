@@ -92,7 +92,7 @@ typedef int (*kalman_parameter_fn)(void *user, const char *name, double value);
 int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const char *const *names,
                                              const double *values, kalman_parameter_fn set);
 kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
-                                              const double *sigma, const double *drift);
+                                              const double *sigma, const double *drift, const double *tau);
 kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
                                         kalman_measure_jacobian_fn jacobian, const double *R,
                                         const char *const *labels, const char *const *units, void *user);
@@ -109,6 +109,8 @@ int kalman_model_adopt_initial_state(kalman_model_t *model);
 int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double *x, double t, double *z);
 int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R);
 int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G);
+int kalman_model_observability(const kalman_model_t *model, int steps, double tolerance, double *eigenvalues,
+                               double *weakness);
 const char *kalman_model_name(const kalman_model_t *model);
 const char *kalman_model_title(const kalman_model_t *model);
 const char *kalman_model_description(const kalman_model_t *model);

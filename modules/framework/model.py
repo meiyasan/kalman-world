@@ -728,6 +728,39 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         return KalmanSensor(name, lambda x, t=None: self.h(x, t=t), R=np.asarray(self.R(), dtype=float),
                             labels=channels, jacobian=lambda x, t=None: self.H(x, t))
 
+    def observability(self, steps=50, tolerance=1e-9):
+        """How well ``steps`` measurements determine each direction of the state,
+        along the model's noise-free path from its initial state
+        (``Kalman::Observability``): a question asked of a model before any data.
+
+        Returns ``rank`` (the number of directions the measurements determine),
+        ``observable`` (whether that is all of them), ``eigenvalues`` (the
+        information gained along each direction, in units of what ``P0`` already
+        knew, smallest first) and ``weakness``: for each state component its share,
+        from 0 to 1, in the directions that are *not* determined. A component at 0
+        is determined; at 1 the measurements say nothing about it; in between it is
+        determined only together with the other components above 0.
+        """
+        from .native import core
+        from .models import native
+        handle = native.view_of(self)
+        if isinstance(self, native.NativeModel):                 # the handle starts where this model does
+            n = int(self.n)
+            x0 = np.ascontiguousarray(np.asarray(self.x0, dtype=np.float64).reshape(n))
+            P0 = np.ascontiguousarray(np.asarray(self.P0, dtype=np.float64).reshape(n, n))
+            core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+            core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+        else:
+            native._push_initial_state(self, handle)
+        n = int(self.n)
+        eigenvalues, weakness = np.empty(n), np.empty(n)
+        rank = core.check(core.lib.kalman_model_observability(handle, int(steps), float(tolerance),
+                                                              core.dptr(eigenvalues), core.dptr(weakness)),
+                          "kalman_model_observability")
+        labels = [name for name, _ in native.labels_of(handle, state=True)]
+        return {"rank": int(rank), "observable": int(rank) == n, "eigenvalues": eigenvalues,
+                "weakness": dict(zip(labels, weakness.tolist()))}
+
     def control_cost(self):
         """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
         return np.eye(self.n), np.eye(max(self.l, 1)), np.zeros((self.n, 1))

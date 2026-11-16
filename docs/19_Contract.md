@@ -53,6 +53,7 @@ from its sample rate), `z` the measurement.
 | instrument | a set of sensors and what they share: calibration, pose, rate, delay | `KalmanInstrument`, `model.instruments` | `Kalman::Instrument`, `model.Instruments()` | step 12 |
 | measurement | the numbers that come out of the sensors | `zk` | `zk` | in place |
 | parameter | a named number of the model, which can be estimated | `model["c_drag"]` | `model.Parameter("c_drag")` | in place |
+| observability | whether the measurements can tell the state components apart, asked before any data | `model.observability(steps)` | `Kalman::Observability(model, steps)` | in place |
 
 ## The engine and the filter: how it is estimated
 

@@ -161,6 +161,85 @@ class TestEstimation(unittest.TestCase):
         self.assertEqual(model.inner["damping"], 0.0)
 
 
+class Gauge(KalmanModel):
+    """A constant amplitude read through a gain and an offset: ``z = gain * a + offset``.
+    The three enter the one measurement together, so the data cannot tell them apart."""
+
+    def __init__(self, sensor="gauge", *, gain=2.0, offset=0.0, **kwargs):
+        self.n, self.m, self.l = 1, 1, 0
+        self["gain"], self["offset"] = gain, offset
+        super().__init__(sensor, fs=10.0, Q=np.array([[1e-8]]), R=np.array([[1e-2]]),
+                         x0=np.array([[3.0]]), P0=np.eye(1), **kwargs)
+
+    def f(self, x, u=None, w=None, t=None):
+        x = np.asarray(x, dtype=float).reshape(1, 1)
+        return x if w is None else x + np.asarray(w, dtype=float).reshape(1, 1)
+
+    def h(self, x, v=None, t=None):
+        z = self["gain"] * np.asarray(x, dtype=float).reshape(1, 1) + self["offset"]
+        return z if v is None else z + np.asarray(v, dtype=float).reshape(1, 1)
+
+
+@needs_core
+class TestObservability(unittest.TestCase):
+    """Can the measurements tell the state components apart? Asked before any data."""
+
+    def test_an_oscillator_measured_in_position(self):
+        report = Oscillator(damping=0.3).observability(steps=100)
+        self.assertTrue(report["observable"])
+        self.assertEqual(report["rank"], 2)
+        self.assertTrue(all(share < 1e-6 for share in report["weakness"].values()))
+
+    def test_its_damping_is_determined_too(self):
+        report = Oscillator(damping=0.0).joint({"damping": (0.5, 1e-4)}).observability(steps=200)
+        self.assertTrue(report["observable"])
+        self.assertLess(report["weakness"]["damping"], 1e-6)
+
+    def test_a_gain_cannot_be_told_from_the_amplitude(self):
+        report = Gauge().joint({"gain": (0.5, 0.0)}).observability()
+        self.assertEqual((report["rank"], report["observable"]), (1, False))
+        self.assertGreater(report["weakness"]["gain"], 0.05)
+        self.assertGreater(report["weakness"]["X0"], 0.05)
+
+    def test_joint_warns_when_a_pass_starts(self):
+        z = 6.0 + 0.1 * np.random.default_rng(0).standard_normal((40, 1))
+        with self.assertWarnsRegex(RuntimeWarning, "do not determine 'gain' apart from X0"):
+            Gauge().joint({"gain": (0.5, 0.0)}).filter(z, smooth=False, reset=True)
+        with warnings.catch_warnings():
+            warnings.simplefilter("error", RuntimeWarning)                 # and says nothing when it can
+            truth = Oscillator(damping=0.3, random_seed=11).sample(20.0)
+            Oscillator(damping=0.0).joint({"damping": (0.5, 1e-4)}).filter(truth.zk, smooth=False, reset=True)
+
+
+@needs_core
+class TestTau(unittest.TestCase):
+    """A parameter with a tau wanders and returns to where it started."""
+
+    def test_spec_forms(self):
+        for spec in ((1.0, 0.1, 2.0), {"sigma": 1.0, "drift": 0.1, "tau": 2.0}):
+            self.assertEqual(Gauge().joint({"offset": spec}).estimated["offset"], (1.0, 0.1, 2.0))
+        self.assertEqual(Gauge().joint({"offset": (1.0, 0.1)}).estimated["offset"], (1.0, 0.1, 0.0))
+        with self.assertRaisesRegex(ValueError, "tau of 'offset' must be >= 0"):
+            Gauge().joint({"offset": (1.0, 0.1, -1.0)})
+
+    def test_it_decays_towards_its_starting_value(self):
+        phi = np.exp(-0.1 / 2.0)
+        x = np.array([[3.0], [0.8]])                                        # the offset started at 0
+        walk, markov = Gauge().joint({"offset": (1.0, 0.1)}), Gauge().joint({"offset": (1.0, 0.1, 2.0)})
+        self.assertEqual(walk.f(x)[1, 0], 0.8)
+        self.assertAlmostEqual(markov.f(x)[1, 0], phi * 0.8, places=14)
+        self.assertAlmostEqual(markov.F(x)[1, 1], phi, places=14)
+
+    def test_its_variance_settles(self):
+        phi = np.exp(-0.1 / 2.0)
+        markov = Gauge().joint({"offset": (1.0, 0.1, 2.0)})
+        z = np.full((3000, 1), np.nan)                                      # nothing is measured
+        with warnings.catch_warnings():
+            warnings.simplefilter("ignore")
+            record = markov.filter(z, smooth=False, reset=True)
+        self.assertAlmostEqual(record.Pk[-1, 1, 1], 0.01 / (1 - phi ** 2), places=6)
+
+
 @needs_apps
 class TestBallisticCounterpart(unittest.TestCase):
     """The case of notebook 01, Step 7: the drag coefficient of a shell."""
@@ -226,11 +305,11 @@ class TestCAPI(unittest.TestCase):
             encoded = [ffi.new("char[]", b"damping")]
             names = ffi.new("const char *[]", encoded)
             sigma, drift = ffi.new("double[]", [0.5]), ffi.new("double[]", [0.0])
-            handle = lib.kalman_model_create_joint(inner, 1, names, sigma, drift)
+            handle = lib.kalman_model_create_joint(inner, 1, names, sigma, drift, ffi.NULL)
             self.assertEqual(handle, ffi.NULL)
             self.assertIn("damping", core.last_error())
-            self.assertEqual(lib.kalman_model_create_joint(ffi.NULL, 1, names, sigma, drift), ffi.NULL)
-            self.assertEqual(lib.kalman_model_create_joint(inner, 0, names, sigma, drift), ffi.NULL)
+            self.assertEqual(lib.kalman_model_create_joint(ffi.NULL, 1, names, sigma, drift, ffi.NULL), ffi.NULL)
+            self.assertEqual(lib.kalman_model_create_joint(inner, 0, names, sigma, drift, ffi.NULL), ffi.NULL)
         finally:
             lib.kalman_model_destroy(inner)
 

@@ -1075,6 +1075,33 @@ the Python model, whose `f` and `h` read it. `tests/test_joint.py` compares
 the two routes. On notebook 01's shell (n = 10, 384 steps) the pass takes
 59 ms on the counterpart and 0.94 s through the callbacks.
 
+### Observability
+
+`Kalman::Observability` (`Kalman/Observability.h`) asks of a model, before any
+data, whether its measurements can tell the components of its state apart. It
+follows the noise-free path from the initial state for `steps` steps and sums
+the observability Gramian `sum Phi^T H^T R^-1 H Phi`, scaled by the initial
+standard deviations so that an eigenvalue is the information gained along its
+direction in units of what `P0` already knew. `Rank()` counts the directions
+that are determined, `Weakness(i)` gives the share of state component `i` in
+those that are not, and `WeakComponents()` lists them.
+
+```cpp
+Kalman::Models::Joint both(gauge, {{"gain", 0.5, 0.}});     // z = gain * a
+Kalman::Observability obs(both, 50);
+obs.Rank();              // 1 of 2
+obs.WeakComponents();    // the amplitude and the gain: only their product is measured
+```
+
+It uses the model's own Jacobians and `Algebra::SymmetricEigen`. From Python:
+`model.observability(steps=...)` (`kalman_model_observability`); a joint model
+runs it when a pass starts and warns on a parameter the data cannot determine.
+
+A parameter of a joint model may also be given a `tau`
+(`EstimatedParameter::tau`): it then returns towards its starting value with
+`exp(-dt / tau)` per step, a first-order Gauss-Markov process, in place of a
+random walk.
+
 ### Sensors, and a model read by one more
 
 `Kalman::Sensor` (`Kalman/Sensor.h`) is what acquires a measurement: a name,

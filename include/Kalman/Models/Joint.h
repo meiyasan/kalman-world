@@ -24,7 +24,18 @@
  * \endcode
  *
  * so the parameters are constants that may drift a little (a random walk),
- * which keeps the filter able to move them. Each map sets the inner model's
+ * which keeps the filter able to move them. A parameter given a time `tau`
+ * wanders and comes back instead (a first-order Gauss-Markov process, for a
+ * sensor bias or a clock offset):
+ *
+ * \code{.unparsed}
+ *     theta_{k+1} = mu + exp(-dt / tau) (theta_k - mu) + w_theta
+ * \endcode
+ *
+ * with `mu` the value the inner model held when this one took its initial
+ * state and `dt` the sample period, in the model's unit of time. Its variance
+ * then settles at `drift^2 / (1 - exp(-2 dt / tau))` instead of growing
+ * without bound. Each map sets the inner model's
  * parameters to the values carried in the state, evaluates, and puts the
  * previous values back: the inner model is left as it was found.
  *
@@ -74,7 +85,8 @@ namespace Kalman
     {
         std::string name;
         double sigma = 0.;  ///< standard deviation of the initial guess (> 0)
-        double drift = 0.;  ///< standard deviation of its random walk per step (>= 0)
+        double drift = 0.;  ///< standard deviation of the noise added to it per step (>= 0)
+        double tau = 0.;    ///< time over which it returns to its starting value; 0: never (a random walk)
     };
 }
 
@@ -90,6 +102,10 @@ namespace Kalman::Models
             std::shared_ptr<Model> fInner;
             std::vector<Parameter> fEstimated;
             std::size_t fNInner = 0;   // n of the inner model
+            std::vector<double> fMean; // the value each parameter started from (what a tau returns to)
+
+            /// `exp(-dt / tau)` of parameter \p k (1 for a random walk).
+            double Decay(std::size_t k) const;
             // The state of the last f() call: an engine asks for Q(t) right after
             // stepping, and a Q that depends on the parameters needs their values.
             mutable Vector fLastX;
@@ -113,7 +129,7 @@ namespace Kalman::Models
              * \param inner       the model whose parameters are estimated (shared).
              * \param parameters  which of its declared parameters, with their noise.
              * \throws std::invalid_argument for a null model, no parameter, a name
-             *         given twice, a sigma <= 0 or a drift < 0, or a parameter that
+             *         given twice, a sigma <= 0, a drift < 0 or a tau < 0, or a parameter that
              *         changes neither f nor h at the inner initial state nor at a
              *         point shifted from it (a model that reads it only when built
              *         would leave the estimate on its prior).

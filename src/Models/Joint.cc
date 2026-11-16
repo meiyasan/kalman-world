@@ -39,6 +39,8 @@ namespace Kalman::Models
                                                 + "' needs an initial standard deviation > 0.");
                 if (!(p.drift >= 0.))
                     throw std::invalid_argument("Models::Joint: the drift of '" + p.name + "' must be >= 0.");
+                if (!(p.tau >= 0.))
+                    throw std::invalid_argument("Models::Joint: the tau of '" + p.name + "' must be >= 0.");
             }
             return parameters.size();
         }
@@ -88,9 +90,11 @@ namespace Kalman::Models
             for (std::size_t j = 0; j < n; ++j)
                 Px(i, j) = (P0.Rows() == n && P0.Cols() == n) ? P0(i, j) : (i == j ? 1. : 0.);
         }
+        fMean.assign(p, 0.);
         for (std::size_t k = 0; k < p; ++k)
         {
             x0(n + k) = fInner->Parameter(fEstimated[k].name);
+            fMean[k] = x0(n + k);
             Px(n + k, n + k) = fEstimated[k].sigma * fEstimated[k].sigma;
         }
         SetInitialState(x0);
@@ -168,6 +172,12 @@ namespace Kalman::Models
             fInner->SetParameter(fEstimated[k].name, previous[k]);
     }
 
+    double Joint::Decay(std::size_t k) const
+    {
+        const double tau = fEstimated[k].tau;
+        return tau > 0. ? std::exp(-DeltaT() / tau) : 1.;
+    }
+
     DifferentiatorKind Joint::ParameterScheme() const
     {
         const DifferentiatorKind kind = fInner->Differentiator();
@@ -196,8 +206,10 @@ namespace Kalman::Models
         catch (...) { Restore(previous); throw; }
         Restore(previous);
 
-        Vector out(x);                                 // the parameters stay as they are
+        Vector out(x);                                 // the parameters stay, or return towards their mean
         for (std::size_t i = 0; i < fNInner; ++i) out(i) = next(i);
+        for (std::size_t k = 0; k < fEstimated.size(); ++k)
+            out(fNInner + k) = fMean[k] + Decay(k) * (x(fNInner + k) - fMean[k]);
         return out;
     }
 
@@ -217,7 +229,8 @@ namespace Kalman::Models
 
         Vector out(x);
         for (std::size_t i = 0; i < fNInner; ++i) out(i) = next(i);
-        for (std::size_t i = fNInner; i < fNState; ++i) out(i) += w(i);
+        for (std::size_t k = 0; k < fEstimated.size(); ++k)
+            out(fNInner + k) = fMean[k] + Decay(k) * (x(fNInner + k) - fMean[k]) + w(fNInner + k);
         return out;
     }
 
@@ -276,7 +289,7 @@ namespace Kalman::Models
             for (std::size_t j = 0; j < n; ++j) J(i, j) = Js(i, j);
             for (std::size_t k = 0; k < p; ++k) J(i, n + k) = Jt(i, k);
         }
-        for (std::size_t k = 0; k < p; ++k) J(n + k, n + k) = 1.;
+        for (std::size_t k = 0; k < p; ++k) J(n + k, n + k) = Decay(k);
         return J;
     }
 

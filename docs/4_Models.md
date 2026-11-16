@@ -191,6 +191,29 @@ record = model.filter(zk)                                      # record.xk[:, 9]
 | `Q`, `R` | `diag(Q_inner, drift^2)` and `R_inner`; a `Q` that takes the state gets the inner state and the parameters |
 | Engine | the inner model's, or the extended engine when the inner model is linear |
 
+A parameter given a time `tau` wanders and returns to its starting value
+instead of drifting for ever, which suits a sensor bias or a clock offset:
+`{"offset": (sigma, drift, tau)}`, or `{"sigma": ..., "drift": ..., "tau": ...}`.
+Its variance then settles at `drift^2 / (1 - exp(-2 dt / tau))`.
+
+**Can the data tell them apart?** `model.observability(steps=50)` answers
+before any data: how many directions of the state the measurements determine
+along the model's path from its initial state, and for each state component
+its share (0 to 1) in the directions they do not. A gain read together with
+the amplitude it multiplies is the classic case: `z = gain * a` fixes the
+product, not the two.
+
+```python
+report = gauge.joint({"gain": (0.5, 0.0)}).observability()
+report["rank"], report["observable"]      # 1, False
+report["weakness"]                        # {"X0": 0.36, "gain": 0.64}: one direction, shared by both
+```
+
+A joint model runs this check when a pass starts and warns when an estimated
+parameter lies in such a direction: its estimate would rest on its prior. The
+answer is local: a system at rest can hide a parameter that motion reveals, so
+it is asked at the initial state the pass starts from.
+
 A parameter that changes neither `f` nor `h` is refused when the model is
 built: a model that reads it only in its constructor would leave the
 estimate on its prior. The model is `Kalman::Models::Joint`, and the pass
