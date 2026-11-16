@@ -611,7 +611,8 @@ def sensors_of(handle, keep=None):
 
         sensor = KalmanSensor(core._s(lib.kalman_model_sensor_name(handle, i)),
                               None if linear else measure, G=G if linear else None, R=R,
-                              labels=dict(observables[first:first + k]))
+                              labels=dict(observables[first:first + k]),
+                              rate=(float(lib.kalman_model_sensor_rate(handle, i)) or None))
         sensor._keep = (handle, keep)                    # the C++ model it reads through
         out.append(sensor)
         first += k

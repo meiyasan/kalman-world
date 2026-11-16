@@ -57,7 +57,8 @@ class Fusion(OperationModel):
         cunits = ffi.new("const char *[]", units) if labels else ffi.NULL
         if sensor.is_linear:
             handle = lib.kalman_model_add_sensor_matrix(inner, sensor.name.encode(), k, sensor.G.shape[1],
-                                                        core.cdptr(sensor.G), core.cdptr(R), cnames, cunits)
+                                                        core.cdptr(sensor.G), core.cdptr(R), cnames, cunits,
+                                                        float(sensor.rate or 0.0))
         else:
             errors: list[BaseException] = []
             state = lambda x: np.frombuffer(ffi.buffer(x, n * 8), dtype=np.float64).reshape(n, 1).copy()
@@ -82,7 +83,7 @@ class Fusion(OperationModel):
                   if sensor.jacobian is not None else ffi.NULL)
             self._keeps.append((measure, dg, errors))
             handle = lib.kalman_model_add_sensor(inner, sensor.name.encode(), k, measure, dg, core.cdptr(R),
-                                                 cnames, cunits, ffi.NULL)
+                                                 cnames, cunits, float(sensor.rate or 0.0), ffi.NULL)
         if handle == ffi.NULL:
             raise self._failed("add_sensor")
 

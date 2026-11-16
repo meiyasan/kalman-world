@@ -40,9 +40,12 @@ class KalmanSensor:
         (numbered when ``k > 1``).
     jacobian : ``dg/dx`` as ``jacobian(x)`` or ``jacobian(x, t=...)``, ``k x n``;
         differenced when not given.
+    rate : how often it reports [Hz, or per unit of the model's time]; ``None``
+        for every step of the model. Between two of its reports its channels are
+        missing (NaN), which the engines skip: see ``model.measurements``.
     """
 
-    def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None):
+    def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None, rate=None):
         if not isinstance(name, str) or not name:
             raise ValueError("KalmanSensor: a sensor needs a name.")
         if (g is None) == (G is None):
@@ -56,6 +59,9 @@ class KalmanSensor:
             raise ValueError(f"KalmanSensor: the G of {name!r} must be a k x n matrix.")
         self.R = R
         self.jacobian = jacobian
+        if rate is not None and not float(rate) > 0.0:
+            raise ValueError(f"KalmanSensor: the rate of {name!r} must be positive.")
+        self.rate = None if rate is None else float(rate)
         self.labels = self._labels(labels)
 
     # ------------------------------------------------------------------

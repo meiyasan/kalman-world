@@ -281,6 +281,23 @@ record = radar.filter(zk)                    # zk has four columns
 | `R=` | its noise: a `k x k` covariance, `k` variances, or one variance for all |
 | `labels=` | its observables: `{"X": "m", ...}`, a list of names, or a `KalmanObservable` enum; named after the sensor by default |
 | `jacobian=` | `dg/dx`; differenced with the model's scheme when not given |
+| `rate=` | how often it reports; by default at every step of the model |
+
+A sensor with a `rate` reports less often than the model steps. Between two of
+its reports its channels are missing (NaN), which every engine skips, so
+sensors of different rates need no special filter. `model.measurements` lays
+each sensor's own readings on the model's steps:
+
+```python
+gps   = KalmanSensor("gps", G=[[1.0, 0.0]], R=0.25, rate=2)       # twice a second
+wheel = KalmanSensor("wheel", G=[[0.0, 1.0]], R=0.04)             # at every step
+car   = KalmanModel([gps, wheel], fs=10, F=F, Q=Q, x0=x0, P0=P0)
+zk    = car.measurements({"gps": z_gps, "wheel": z_wheel})        # (N, 2), NaN where the GPS is silent
+record = car.filter(zk)
+```
+
+`model.sample()` leaves the same gaps. The fusion application's `SensorSpec` is
+such a sensor.
 
 Three kinds of sensor on the same shell:
 

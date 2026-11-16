@@ -206,6 +206,55 @@ class TestFirstArgument(unittest.TestCase):
             KalmanModel(KalmanSensor("s", rate, R=0.04), **self.KW)            # channels unknown before the model
 
 
+class TestRates(unittest.TestCase):
+    """A sensor may report less often than the model steps."""
+
+    KW = dict(fs=10.0, F=np.array([[1, 0.1], [0, 1]]), Q=np.diag([1e-4, 1e-2]),
+              x0=np.array([[0.0], [1.0]]), P0=np.eye(2))
+
+    def model(self):
+        gps = KalmanSensor("gps", G=[[1.0, 0.0]], R=0.25, rate=2.0)          # every fifth step
+        wheel = KalmanSensor("wheel", G=[[0.0, 1.0]], R=0.04)                # every step
+        return KalmanModel([gps, wheel], **self.KW)
+
+    def test_the_rate_is_a_field_of_the_sensor_in_both_languages(self):
+        fused = Oscillator(fs=50.0).add_sensor(KalmanSensor("slow", rate, R=0.04, rate=5.0))
+        self.assertEqual([s.rate for s in fused.sensors], [None, 5.0])       # read back from the C++ model
+        with self.assertRaises(ValueError):
+            KalmanSensor("s", rate, R=0.04, rate=0.0)
+
+    def test_measurements_lays_each_sensor_on_the_models_steps(self):
+        model = self.model()
+        z = model.measurements({"gps": [[10.0], [11.0]], "wheel": np.arange(10.0).reshape(-1, 1)})
+        self.assertEqual(z.shape, (10, 2))
+        np.testing.assert_array_equal(z[:, 1], np.arange(10.0))
+        np.testing.assert_array_equal(np.where(~np.isnan(z[:, 0]))[0], [0, 5])
+        np.testing.assert_array_equal(z[[0, 5], 0], [10.0, 11.0])
+        only = model.measurements({"wheel": np.arange(10.0).reshape(-1, 1)})  # a sensor left out is missing
+        self.assertTrue(np.isnan(only[:, 0]).all())
+        with self.assertRaisesRegex(KeyError, "has no sensor"):
+            model.measurements({"radar": [[1.0]]})
+
+    def test_a_sample_reports_only_when_the_sensor_does(self):
+        np.random.seed(1)
+        z = self.model().sample(2.0).zk
+        np.testing.assert_array_equal(np.where(~np.isnan(z[:, 0]))[0], [0, 5, 10, 15])
+        self.assertFalse(np.isnan(z[:, 1]).any())
+
+    def test_the_slow_sensor_bounds_what_the_fast_one_lets_drift(self):
+        np.random.seed(4)
+        both = self.model()
+        sample = both.sample(120.0)
+        with_gps = both.filter(sample.zk, smooth=False, reset=True)
+        wheel_only = KalmanModel(KalmanSensor("wheel", G=[[0.0, 1.0]], R=0.04), **self.KW).filter(
+            sample.zk[:, 1:], smooth=False, reset=True)
+        doubt = lambda record: np.sqrt(record.Pk[-1, 0, 0])
+        self.assertGreater(doubt(wheel_only), 3 * doubt(with_gps))            # speed alone: the position drifts
+        self.assertLess(abs(with_gps.xk[-1, 0] - sample.xk[-1, 0]), 4 * doubt(with_gps))
+        between = np.sqrt(with_gps.Pk[-5:, 0, 0])                             # it grows between two fixes
+        self.assertGreater(between.max(), between.min())
+
+
 class TestMatrices(unittest.TestCase):
     """A matrix added to a model of matrices is the model with the stacked H."""
 

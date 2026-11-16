@@ -120,8 +120,10 @@ class KalmanRecord:
                 raise ValueError("xk contains NaN or Inf values.")
             if np.isnan(self.Pk).any() or np.isinf(self.Pk).any():
                 raise ValueError("Pk contains NaN or Inf values.")
-            if np.isnan(self.zk).any() or np.isinf(self.zk).any():
-                raise ValueError("zk contains NaN or Inf values.")
+            # NaN in zk is a channel that did not report (a sensor with its own rate);
+            # an infinite measurement is an error.
+            if np.isinf(self.zk).any():
+                raise ValueError("zk contains Inf values.")
     @staticmethod
     def _normalize_index(idx, size=None):
         """Convert int, Enum, or tuple/list/array to np.array of ints."""

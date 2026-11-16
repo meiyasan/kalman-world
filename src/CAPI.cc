@@ -388,7 +388,8 @@ extern "C++"
 
 kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
                                         kalman_measure_jacobian_fn jacobian, const double *R,
-                                        const char *const *labels, const char *const *units, void *user)
+                                        const char *const *labels, const char *const *units, double rate,
+                                        void *user)
 {
     try
     {
@@ -409,8 +410,10 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
                 if (jacobian(user, x.Data(), t, J.Data()) != 0) throw std::runtime_error("the Jacobian of the sensor failed");
                 return J;
             };
-        return Fuse(inner, Kalman::Sensor(name ? name : "", std::move(measure), Mat(R, kk, kk, "R"), std::move(dg),
-                                          Components(k, labels, units)));
+        Kalman::Sensor sensor(name ? name : "", std::move(measure), Mat(R, kk, kk, "R"), std::move(dg),
+                              Components(k, labels, units));
+        sensor.rate = rate;
+        return Fuse(inner, std::move(sensor));
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
@@ -418,7 +421,7 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
 
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
-                                               const char *const *units)
+                                               const char *const *units, double rate)
 {
     try
     {
@@ -427,8 +430,9 @@ kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char
         if (k <= 0 || columns <= 0) throw std::invalid_argument("a sensor has at least one channel (k > 0, columns > 0)");
         if (!G || !R) throw std::invalid_argument("null G or R");
         const std::size_t kk = static_cast<std::size_t>(k), n = static_cast<std::size_t>(columns);
-        return Fuse(inner, Kalman::Sensor(name ? name : "", Mat(G, kk, n, "G"), Mat(R, kk, kk, "R"),
-                                          Components(k, labels, units)));
+        Kalman::Sensor sensor(name ? name : "", Mat(G, kk, n, "G"), Mat(R, kk, kk, "R"), Components(k, labels, units));
+        sensor.rate = rate;
+        return Fuse(inner, std::move(sensor));
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
@@ -501,6 +505,13 @@ extern "C++"
         if (i < 0 || static_cast<std::size_t>(i) >= sensors.size()) throw std::out_of_range("no such sensor");
         return sensors[static_cast<std::size_t>(i)];
     }
+}
+
+double kalman_model_sensor_rate(const kalman_model_t *model, int i)
+{
+    double rate = -1.;
+    Guard([&] { rate = SensorAt(model, i).rate; return 0; });
+    return rate;
 }
 
 int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double *x, double t, double *z)

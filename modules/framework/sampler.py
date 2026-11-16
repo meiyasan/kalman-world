@@ -141,6 +141,12 @@ class KalmanSampler:
         zk = KalmanRecord._normalize_out(zk, indexing=indexing, dtype=self.model.dtype)
         if finish_output:
             zk = self.model.finish_output(zk, **kwargs)
+        # A sensor with its own rate does not report at every step: its channels
+        # are missing (NaN) in between, as they would be in the data.
+        if getattr(self.model, "_has_rated_sensor", lambda: False)():
+            reports = self.model._reports(n_samples)
+            if not reports.all() and np.ndim(zk) == 2 and np.shape(zk) == reports.shape:
+                zk = np.where(reports, np.asarray(zk, dtype=float), np.nan)
 
         times = t_start + np.arange(n_samples) / self.fs
         return KalmanRecord(times, zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self.model)

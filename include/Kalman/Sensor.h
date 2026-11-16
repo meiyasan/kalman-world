@@ -18,7 +18,10 @@
  *
  * given either as a function `g` (with its Jacobian, or differenced when none
  * is given) or as a matrix `G`, for `g(x) = G x`. Its channels are named: each
- * is an *observable*, a quantity that can be measured, with its unit.
+ * is an *observable*, a quantity that can be measured, with its unit. A sensor
+ * may report less often than the model steps: its `rate`. On the steps between
+ * two of its reports its channels are simply missing (NaN), which every engine
+ * skips, so sensors of different rates need no special filter.
  *
  * A model lists its sensors (Model::Sensors()): the one it was built with, made
  * of its own `h` and `R`, then those added with Model::AddSensor(). Several
@@ -63,6 +66,7 @@ namespace Kalman
         Matrix R;                           ///< (k,k) noise covariance
         MeasureJacobian jacobian;           ///< `dg/dx`; differenced when empty
         std::vector<Component> channels;    ///< its observables; named after the sensor when empty
+        double rate = 0.;                   ///< how often it reports, per unit of the model's time; 0: at every step
 
         Sensor() = default;
         /// A sensor that reads `g(x, t)`.
@@ -83,7 +87,7 @@ namespace Kalman
          * \brief Check the sensor against a state of \p n components.
          * \throws std::invalid_argument for no name, no channel, both or neither of
          *         `g` and `G`, an `R` that is not square, a `G` that is not k x n,
-         *         or a number of channel names other than k.
+         *         a number of channel names other than k, or a negative rate.
          */
         void Check(std::size_t n) const;
     };

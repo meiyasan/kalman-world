@@ -168,21 +168,25 @@ kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const ch
 /// channels `g(x, t)` of noise covariance `R` (k x k, row-major). `jacobian` (k x n) may be
 /// NULL: it is then differenced. `labels` and `units` (k strings each) name its observables
 /// and may be NULL. `inner` is borrowed, as for kalman_model_create_joint; the functions and
-/// `user` must outlive the model. NULL with kalman_last_error() on failure.
+/// `user` must outlive the model. `rate` is how often the sensor reports (0: at every step).
+/// NULL with kalman_last_error() on failure.
 kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
                                         kalman_measure_jacobian_fn jacobian, const double *R,
-                                        const char *const *labels, const char *const *units, void *user);
+                                        const char *const *labels, const char *const *units, double rate,
+                                        void *user);
 /// The same for a sensor that reads `G x`, `G` of shape k x `columns` (row-major; `columns` must
 /// be the state dimension, and is checked): a model of matrices stays one.
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
-                                               const char *const *units);
+                                               const char *const *units, double rate);
 /// The number of sensors of a model (Model::Sensors()): the built-in one, then those added. -1 on failure.
 int kalman_model_sensor_count(const kalman_model_t *model);
 /// The name of sensor `i`. Valid until the next call on this thread.
 const char *kalman_model_sensor_name(const kalman_model_t *model, int i);
 /// The number of channels of sensor `i`. -1 on failure.
 int kalman_model_sensor_channels(const kalman_model_t *model, int i);
+/// How often sensor `i` reports, per unit of the model's time; 0 when it reports at every step. -1 on failure.
+double kalman_model_sensor_rate(const kalman_model_t *model, int i);
 /// Name the built-in sensor of a model (Model::SetBuiltInSensorName). 0 or -1.
 int kalman_model_set_sensor_name(kalman_model_t *model, const char *name);
 /// Name the m observables of a model (Model::SetObservables): `labels` and `units`, m strings each

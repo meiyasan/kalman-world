@@ -704,6 +704,64 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     def sensors(self, value):
         self.__dict__["_sensors_given"] = value
 
+    # ------------------------------------------------------------
+    # Sensors that report at their own rate
+    # ------------------------------------------------------------
+    def _has_rated_sensor(self):
+        """Whether a sensor of this model reports at a rate of its own."""
+        if "_sensors_given" not in self.__dict__ and "inners" not in self.__dict__:
+            return False                              # a plain model: its own sensor, at every step
+        return any(sensor.rate is not None for sensor in self.sensors)
+
+    def _reports(self, n_steps):
+        """``(n_steps, m)`` booleans: whether each measurement channel reports at
+        each step of the model. A sensor with a ``rate`` reports at the steps
+        nearest to its own instants; the others at every step."""
+        from ..helpers import report_steps
+        fs = float(self.fs or 1.0)
+        mask, first = np.ones((int(n_steps), int(self.m)), dtype=bool), 0
+        for sensor in self.sensors:
+            k = sensor.channels if sensor.channels is not None else sensor.resolved(int(self.n), self.x0)[0]
+            if sensor.rate is not None and sensor.rate != fs:
+                mask[:, first:first + k] = False
+                mask[report_steps(sensor.rate, fs, n_steps), first:first + k] = True
+            first += k
+        return mask
+
+    def measurements(self, readings):
+        """The measurement array a filter takes, ``(N, m)``, from each sensor's own
+        readings: ``model.measurements({"gps": z_gps, "wheel": z_wheel})``.
+
+        Each array holds one row per report of that sensor, at the sensor's own
+        ``rate`` (the model's when it has none). They are laid on the model's steps;
+        where a sensor does not report, its channels are NaN, which every engine
+        skips (it predicts and does not correct those channels). A sensor left out
+        is NaN throughout.
+        """
+        from ..helpers import make_multirate_input
+        fs = float(self.fs or 1.0)
+        sensors = self.sensors
+        unknown = set(readings) - {sensor.name for sensor in sensors}
+        if unknown:
+            raise KeyError(f"{type(self).__name__} has no sensor {sorted(unknown)}; it has "
+                           f"{[sensor.name for sensor in sensors]}.")
+        given, widths = [], []
+        for sensor in sensors:
+            k = sensor.channels if sensor.channels is not None else sensor.resolved(int(self.n), self.x0)[0]
+            widths.append(k)
+            if sensor.name in readings:
+                z = np.asarray(readings[sensor.name], dtype=np.float64)
+                z = z.reshape(-1, k)
+                given.append((z, float(sensor.rate or fs)))
+            else:
+                given.append(None)
+        present = [g for g in given if g is not None]
+        if not present:
+            raise ValueError("measurements(): give the readings of at least one sensor.")
+        N = int(round(max(len(z) / rate for z, rate in present) * fs))
+        stack = [g if g is not None else (np.full((N, k), np.nan), fs) for g, k in zip(given, widths)]
+        return make_multirate_input(stack, fs)
+
     def _builtin_sensor(self):
         """The sensor the model is built with: it reads the model's own ``h`` with
         noise ``R`` and is named by the constructor's ``sensor`` argument. Its

@@ -49,6 +49,7 @@ namespace Kalman
         if (!channels.empty() && channels.size() != k)
             throw std::invalid_argument(who + "has " + std::to_string(k) + " channels and "
                                         + std::to_string(channels.size()) + " names.");
+        if (!(rate >= 0.)) throw std::invalid_argument(who + "has a negative rate.");
         for (const auto &c : channels)
             if (c.name.empty()) throw std::invalid_argument(who + "has a channel with no name.");
     }

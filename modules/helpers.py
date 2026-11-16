@@ -449,6 +449,15 @@ def resample_poly_float(y, fs_old, fs_new, max_denominator=1e12):
 
     return y_resampled
 
+def report_steps(rate, base_fs, n_steps):
+    """The steps of a filter running at ``base_fs`` at which a sensor of ``rate``
+    reports, among the first ``n_steps``: the step nearest to each of its instants
+    (the rule of :func:`make_multirate_input`)."""
+    count = int(np.ceil(n_steps * float(rate) / float(base_fs))) + 1
+    steps = np.round(np.arange(count) * float(base_fs) / float(rate)).astype(int)
+    return np.unique(steps[steps < n_steps])
+
+
 def make_multirate_input(sensor_data, base_fs):
     """
     Interleave multiple sensors running at different rates into a single

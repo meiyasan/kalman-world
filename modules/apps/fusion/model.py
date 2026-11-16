@@ -21,13 +21,13 @@ Multi-rate measurements are built with :func:`kalman.helpers.make_multirate_inpu
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
 
 import numpy as np
 
 from ...helpers import make_multirate_input, rainbow, set_random_seed
 from ...framework.constants import KalmanObservable, KalmanState
 from ...framework.models.linear import LinearKalmanModel
+from ...framework.sensor import KalmanSensor
 
 
 # ===== State / observable enums (units) =====
@@ -41,9 +41,9 @@ class FusionObservable(KalmanObservable):
     VELOCITY = "m/s"
 
 
-@dataclass
-class SensorSpec:
-    """One measurement channel feeding the fused estimate.
+class SensorSpec(KalmanSensor):
+    """One sensor feeding the fused estimate: a :class:`KalmanSensor` that reads
+    the position or the velocity of the target.
 
     Parameters
     ----------
@@ -52,18 +52,18 @@ class SensorSpec:
     observes : {"position", "velocity"}
         Which state the sensor reports.
     uncertainty : float
-        Measurement noise std for this channel (so its ``R`` entry is ``uncertainty²``).
+        Measurement noise std for this channel (so its ``R`` is ``uncertainty²``).
     rate : float | None
         Sampling rate [Hz]; ``None`` means the model's base rate ``fs``.
     """
-    name: str
-    observes: str = "position"
-    uncertainty: float = 1.0
-    rate: float | None = None
 
-    def __post_init__(self):
-        if self.observes not in ("position", "velocity"):
-            raise ValueError(f"SensorSpec.observes must be 'position' or 'velocity', got {self.observes!r}")
+    def __init__(self, name: str, observes: str = "position", uncertainty: float = 1.0, rate: float | None = None):
+        if observes not in ("position", "velocity"):
+            raise ValueError(f"SensorSpec.observes must be 'position' or 'velocity', got {observes!r}")
+        self.observes, self.uncertainty = observes, float(uncertainty)
+        super().__init__(name, G=[[1.0, 0.0]] if observes == "position" else [[0.0, 1.0]],
+                         R=[float(uncertainty) ** 2], rate=rate,
+                         labels={observes.upper(): "m" if observes == "position" else "m/s"})
 
 
 class SensorFusionModel(LinearKalmanModel):

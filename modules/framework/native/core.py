@@ -95,13 +95,15 @@ kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const ch
                                               const double *sigma, const double *drift, const double *tau);
 kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name, int k, kalman_measure_fn g,
                                         kalman_measure_jacobian_fn jacobian, const double *R,
-                                        const char *const *labels, const char *const *units, void *user);
+                                        const char *const *labels, const char *const *units, double rate,
+                                        void *user);
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
-                                               const char *const *units);
+                                               const char *const *units, double rate);
 int kalman_model_sensor_count(const kalman_model_t *model);
 const char *kalman_model_sensor_name(const kalman_model_t *model, int i);
 int kalman_model_sensor_channels(const kalman_model_t *model, int i);
+double kalman_model_sensor_rate(const kalman_model_t *model, int i);
 int kalman_model_set_sensor_name(kalman_model_t *model, const char *name);
 int kalman_model_set_observables(kalman_model_t *model, int m, const char *const *labels, const char *const *units);
 int kalman_model_set_states(kalman_model_t *model, int n, const char *const *labels, const char *const *units);

@@ -49,7 +49,7 @@ from its sample rate), `z` the measurement.
 | initial state | where the system starts and how sure that is (the prior): a mean and a covariance, or N samples of it | `model.initial_state(x0, P0)`, `model.initial_state(samples=N)` | `model.InitialState(x0, P0)`, `model.InitialState(N, normal)` | in place |
 | states | the components of the state, with units | `model.states` | `model.States()` | in place |
 | observable | a quantity that can be measured, with its unit | `model.observables` | `model.Observables()` | in place |
-| sensor | what acquires a measurement: what it reads, its noise, its observables | `KalmanSensor`, `model.sensors` | `Kalman::Sensor`, `model.Sensors()` | in place |
+| sensor | what acquires a measurement: what it reads, its noise, its observables, its rate | `KalmanSensor`, `model.sensors` | `Kalman::Sensor`, `model.Sensors()` | in place |
 | instrument | a set of sensors and what they share: calibration, pose, rate, delay | `KalmanInstrument`, `model.instruments` | `Kalman::Instrument`, `model.Instruments()` | step 12 |
 | measurement | the numbers that come out of the sensors | `zk` | `zk` | in place |
 | parameter | a named number of the model, which can be estimated | `model["c_drag"]` | `model.Parameter("c_drag")` | in place |
