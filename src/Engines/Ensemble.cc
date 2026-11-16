@@ -45,19 +45,6 @@ namespace Kalman::Engines
 
     // --- the hooks a model may offer -------------------------------------------
 
-    void EnsembleModel::Forecast(const Model &model, std::vector<Vector> &members, const Vector &u, double t) const
-    {
-        for (Vector &x : members) x = model.f(x, u, t);
-    }
-
-    void EnsembleModel::Observe(const Model &model, const std::vector<Vector> &members, double t,
-                                std::vector<Vector> &out) const
-    {
-        out.clear();
-        out.reserve(members.size());
-        for (const Vector &x : members) out.push_back(model.h(x, t));
-    }
-
     bool EnsembleModel::Localization(Matrix &, Matrix &) const { return false; }
 
     bool EnsembleModel::ProcessNoiseVariances(double, Vector &) const { return false; }
@@ -214,9 +201,9 @@ namespace Kalman::Engines
         if (u && model.NControl() > 0 && u->Size() == model.NControl()) uu = *u;
 
         const auto *hooks = dynamic_cast<const EnsembleModel *>(&model);
-        if (hooks) hooks->Forecast(model, fMembers, uu, t);
-        else
-            for (Vector &x : fMembers) x = model.f(x, uu, t);
+        // forecast: the ensemble word for the predict step. It is f of every member
+        // (one call: Kalman::Model::f for many states), then the process noise.
+        model.f(fMembers, uu, t);
 
         // The process noise, after every member has moved (the order of the draws
         // is the Python engine's: one (n, N) block).
@@ -249,17 +236,12 @@ namespace Kalman::Engines
         return Mean();
     }
 
-    void Ensemble::Observations(const Model &model, double t, std::vector<Vector> &Y) const
+    void Ensemble::Project(const Model &model, double t, std::vector<Vector> &Y) const
     {
-        if (const auto *hooks = dynamic_cast<const EnsembleModel *>(&model))
-            hooks->Observe(model, fMembers, t, Y);
-        else
-        {
-            Y.clear();
-            Y.reserve(fMembers.size());
-            for (const Vector &x : fMembers) Y.push_back(model.h(x, t));
-        }
-        if (Y.size() != fMembers.size()) throw std::runtime_error("Engines::Ensemble: Observe() must give one measurement per member.");
+        // project: the members into measurement space. It is h of every member
+        // (one call: Kalman::Model::h for many states).
+        model.h(fMembers, t, Y);
+        if (Y.size() != fMembers.size()) throw std::runtime_error("Engines::Ensemble: h must give one measurement per member.");
     }
 
     Matrix Ensemble::Analysis(const Matrix &X, const Matrix &Y, const Matrix &R, const Vector &z,
@@ -329,7 +311,7 @@ namespace Kalman::Engines
 
         // Observation-space ensemble, restricted to the channels that arrived.
         std::vector<Vector> Yfull;
-        Observations(model, t, Yfull);
+        Project(model, t, Yfull);
 
         Matrix X(n, N), Y(p, N);
         for (std::size_t s = 0; s < N; ++s)

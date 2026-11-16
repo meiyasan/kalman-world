@@ -90,12 +90,12 @@ int main()
         std::vector<Vector> serial = members;
         for (Vector &x : serial) x = flow.f(x, Vector());
         flow.SetParameter("threads", 3.);
-        flow.Forecast(flow, members, Vector(), 0.);
+        flow.f(members, Vector(), 0.);
         double fd = 0.;
         for (std::size_t s = 0; s < members.size(); ++s) fd = std::max(fd, RMSE(members[s], serial[s]));
-        CHECK(fd == 0., "forecast: the members in parallel are f, member by member");
-        grad.Observe(grad, members, 0., Y);
-        CHECK(Y.size() == 5 && RMSE(Y[2], grad.h(members[2])) == 0., "observe: h of every member");
+        CHECK(fd == 0., "f of many states: the members in parallel are f, member by member");
+        grad.h(members, 0., Y);
+        CHECK(Y.size() == 5 && RMSE(Y[2], grad.h(members[2])) == 0., "h of many states: h of every member");
     }
 
     // --- the tapers ------------------------------------------------------------

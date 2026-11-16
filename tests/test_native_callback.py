@@ -163,10 +163,9 @@ class TestFilterTakesTheCxxLoop(unittest.TestCase):
         from modules.framework.filters import EnsembleKalmanFilter
 
         class Field(Pendulum):
-            def forecast(self, X, t=None):
-                return X
+            BATCHED = ("f",)                     # its f takes every member in one call
         self.assertFalse(EnsembleKalmanFilter(Field())._callback_eligible(None),
-                         "an ensemble model with a whole-ensemble hook")
+                         "an ensemble model whose f is written for every member at once")
 
 
 @unittest.skipUnless(core.HAS_CXX_CORE, "libKalman not built")

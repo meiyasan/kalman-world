@@ -326,7 +326,7 @@ namespace Kalman::Apps::Weather
         return H;
     }
 
-    void KolmogorovFlow::Forecast(const Kalman::Model &, std::vector<Vector> &members, const Vector &, double t) const
+    void KolmogorovFlow::f(std::vector<Vector> &members, const Vector &, double t) const
     {
         CheckShapes();
         Parallel(members.size(), Workers(members.size()), [&](std::size_t s) {
@@ -335,7 +335,7 @@ namespace Kalman::Apps::Weather
         });
     }
 
-    void KolmogorovFlow::Observe(const Kalman::Model &, const std::vector<Vector> &members, double,
+    void KolmogorovFlow::h(const std::vector<Vector> &members, double,
                                  std::vector<Vector> &out) const
     {
         CheckShapes();

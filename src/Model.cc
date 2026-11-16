@@ -393,6 +393,18 @@ namespace Kalman
     std::vector<Model::Component> Model::MeasurementComponents() const
     { return Components(fMeasurementComponents, fNMeasure, "z"); }
 
+    void Model::f(std::vector<Vector> &states, const Vector &u, double t) const
+    {
+        for (Vector &x : states) x = f(x, u, t);
+    }
+
+    void Model::h(const std::vector<Vector> &states, double t, std::vector<Vector> &out) const
+    {
+        out.clear();
+        out.reserve(states.size());
+        for (const Vector &x : states) out.push_back(h(x, t));
+    }
+
     std::vector<Sensor> Model::Sensors() const
     {
         // The sensor the model was built with: its own h and R, whole.

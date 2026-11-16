@@ -3,6 +3,7 @@ from __future__ import annotations
 import numpy as np
 
 from ..engine import KalmanEngine
+from ..model import _over_columns
 from ..constants import KalmanEngineKind
 
 
@@ -137,23 +138,19 @@ class EnsembleKalmanEngine(KalmanEngine):
     def forecast(self, model, u=None, t=None):
         """Propagate every member through the model dynamics (+ ``Q`` draws).
 
-        Uses ``model.forecast(X, t=t)`` when the model offers a batched map
-        (columns → columns; also the hook where an AI surrogate plugs in),
-        else loops ``model.f`` per member.  Returns the ensemble mean.
+        "Forecast" is the ensemble filter's word for the predict step: the model's
+        ``f`` on every member (in one call when the model declares its ``f``
+        ``BATCHED``, a batched solver or an AI surrogate; column by column
+        otherwise), then a draw of ``Q`` for each.  Returns the ensemble mean.
         """
         X = self._members
         n, N = X.shape
         u = (np.asarray(u).reshape(-1, 1) if (u is not None and model.l > 0) else None)
 
-        batch = getattr(model, "forecast", None)
-        if callable(batch):
-            X = np.asarray(batch(X, t=t), dtype=np.float64)
-        else:
-            out = np.empty_like(X)
-            for i in range(N):
-                out[:, i] = np.asarray(
-                    model.f(X[:, i].reshape(-1, 1), u=u, t=t), dtype=np.float64).reshape(-1)
-            X = out
+        # forecast: the ensemble word for the predict step. It is the model's f on
+        # every member (one call when the model's f is BATCHED, else column by
+        # column), then the process noise below.
+        X = np.asarray(_over_columns(model, "f", X, n, u=u, t=t), dtype=np.float64)
 
         Q = np.asarray(model.Q(t=t), dtype=np.float64)
         # A declared noise coupling applies here as in every engine: w ~ N(0, L Q L^T).
@@ -167,6 +164,17 @@ class EnsembleKalmanEngine(KalmanEngine):
                 X = X + np.linalg.cholesky(Q) @ self.rng.standard_normal((n, N))
         self._members = X
         return self.mean
+
+    def project(self, model, t=None, members=None):
+        """Project the members into measurement space: ``(m, N)``, one column per
+        member.
+
+        "Project" is the ensemble filter's word for it. It is the model's ``h`` on
+        every member (in one call when the model declares its ``h`` ``BATCHED``,
+        column by column otherwise): what each member says the sensors would read.
+        """
+        X = self._members if members is None else members
+        return np.asarray(_over_columns(model, "h", X, int(model.m), t=t), dtype=np.float64)
 
     def analyze(self, model, z, t=None):
         """Perturbed-obs analysis update of the ensemble; returns the mean.
@@ -188,15 +196,7 @@ class EnsembleKalmanEngine(KalmanEngine):
             m = X.mean(axis=1, keepdims=True)
             X = m + self.inflation * (X - m)
 
-        # Obs-space ensemble h(X) — batched model hook if offered, else per member.
-        hbatch = getattr(model, "observe", None)
-        if callable(hbatch):
-            Y = np.asarray(hbatch(X, t=t), dtype=np.float64)[idx, :]
-        else:
-            Y = np.empty((len(idx), N))
-            for i in range(N):
-                Y[:, i] = np.asarray(
-                    model.h(X[:, i].reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]
+        Y = self.project(model, t=t, members=X)[idx, :]
 
         R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]
         # The draws come first and from numpy's generator in both paths, so a

@@ -93,9 +93,10 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
       between grid cells and probes (radius ``loc_radius`` grid units).
     - ``initial_ensemble(N)`` — random climatology snapshots (large, honest
       initial error), from a cached spin-up run.
-    - ``forecast(X)`` — batched member propagation, **the AI plug-in point**:
-      assign ``model.surrogate = fn`` (columns → columns) to swap the solver
-      for a learned forecast without touching the filter.
+    - ``f`` and ``h`` take every member in one call (``BATCHED``). ``f`` on many
+      fields is **the AI plug-in point**: assign ``model.surrogate = fn``
+      (columns → columns) to swap the solver for a learned forecast without
+      touching the filter.
 
     Validated lessons carried over from the prototype OSSE (see notebook 13):
     a 16-member localized+inflated EnKF converges to well below the free-run
@@ -173,7 +174,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
     # does a solver on libTorch (backend="torch"), which libKalmanApps does
     # not link, and a solver other than the one this class builds.
     # ------------------------------------------------------------------
-    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("forecast", "observe", "localization", "torus_distance",
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("localization", "torus_distance",
                                                   "vorticity_gradient")
     _NATIVE_NAME = "kolmogorov-flow"
     _NATIVE_SOLVER = NS2D
@@ -255,24 +256,36 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
     # ------------------------------------------------------------------
     # Dynamics / observation
     # ------------------------------------------------------------------
+    #: f and h take every member in one call (the columns of ``(d, N)``).
+    BATCHED = ("f", "h")
+
     def f(self, x, u=None, w=None, t=None):
-        """One assimilation cycle of the pseudo-spectral solver."""
+        """One assimilation cycle of the pseudo-spectral solver, for one field or
+        for many: the columns of ``(d, N)`` are advanced together (by the
+        surrogate if one is assigned)."""
         x = np.asarray(x, dtype=float)
+        if x.ndim == 2 and x.shape[1] > 1:
+            if self.surrogate is not None:
+                return np.asarray(self.surrogate(x), dtype=float)
+            out = np.empty_like(x)
+            for i in range(x.shape[1]):
+                out[:, i] = self.solver.advance(x[:, i], self.cycle)
+            return out
         out = self.solver.advance(x.reshape(-1), self.cycle)
         return out.reshape(x.shape) if x.ndim > 1 else out
 
-    def forecast(self, X, t=None):
-        """Batched member propagation (d, N) → (d, N); surrogate if assigned."""
-        X = np.asarray(X, dtype=float)
-        if self.surrogate is not None:
-            return np.asarray(self.surrogate(X), dtype=float)
-        out = np.empty_like(X)
-        for i in range(X.shape[1]):
-            out[:, i] = self.solver.advance(X[:, i], self.cycle)
-        return out
-
     def h(self, x, v=None, t=None):
+        """What the probes read, for one field or for many (``(d, N)`` gives
+        ``(m, N)``). For ``obs_type='gradient'`` the first ``p`` rows are ∂ω/∂x at
+        the probes, the next ``p`` are ∂ω/∂y."""
         x = np.asarray(x, dtype=float)
+        if x.ndim == 2 and x.shape[1] > 1:
+            if self.obs_type == "gradient":
+                gx, gy = self.vorticity_gradient(x)           # (d, N) each
+                Z = np.vstack([gx[self.obs_idx], gy[self.obs_idx]])
+            else:
+                Z = x[self.obs_idx, :]
+            return Z if v is None else Z + np.asarray(v, dtype=float).reshape(Z.shape)
         if self.obs_type == "gradient":
             gx, gy = self.vorticity_gradient(x.reshape(-1))
             z = np.concatenate([gx.ravel()[self.obs_idx],
@@ -281,20 +294,11 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
             z = x.reshape(-1)[self.obs_idx].reshape(-1, 1)
         return z if v is None else z + np.asarray(v, dtype=float).reshape(-1, 1)
 
-    def observe(self, X, t=None):
-        """Batched observation map (d, N) → (m, N).  For ``obs_type='gradient'``
-        the first ``p`` rows are ∂ω/∂x at the probes, the next ``p`` are ∂ω/∂y."""
-        X = np.asarray(X, dtype=float)
-        if self.obs_type == "gradient":
-            gx, gy = self.vorticity_gradient(X)           # (d, N) each
-            return np.vstack([gx[self.obs_idx], gy[self.obs_idx]])
-        return X[self.obs_idx, :]
-
     def H(self, x=None, t=None):
         """Linear observation operator (m × d).  Point-selection for vorticity
         obs; a spectral-gradient sampling operator for gradient obs (built once
-        and cached — only the ensemble/particle engines run here, which use
-        ``observe`` instead, so this serves shape-checking / inspection)."""
+        and cached — only the ensemble/particle engines run here, which call
+        ``h`` on the members instead, so this serves shape-checking / inspection)."""
         if self.obs_type == "gradient":
             if getattr(self, "_H_grad", None) is None:
                 gx = np.zeros((self.n_probes, self.n))
@@ -353,7 +357,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
         single source of truth — it is the same one the dynamics use); this
         wraps it for the DA layer: a *linear* operator on the field, so it drops
         straight into the Kalman machinery as an observation operator
-        (:meth:`observe`) or an analysis diagnostic (:meth:`gradient_diagnostic`).
+        (:meth:`h`) or an analysis diagnostic (:meth:`gradient_diagnostic`).
         Accepts a flat ``(d,)`` field, a ``(g, g)`` field, or a batched ensemble
         ``(d, N)``; returns ``(∂ω/∂x, ∂ω/∂y)`` in the matching layout."""
         F = np.asarray(field, dtype=float)
@@ -571,8 +575,8 @@ class TwinExperiment:
             object.__setattr__(self, "_model", model)
             object.__setattr__(self, "_fn", fn)
             object.__setattr__(self, "_q_std", q_std)
-        def forecast(self, X, t=None):
-            return self._fn(X) if self._fn is not None else self._model.forecast(X, t=t)
+        def f(self, X, u=None, w=None, t=None):
+            return self._fn(X) if self._fn is not None else self._model.f(X, u=u, w=w, t=t)
         def Q(self, t=None):
             if self._q_std is None:
                 return self._model.Q(t=t)
@@ -634,7 +638,7 @@ class TwinExperiment:
         self.fields = ({"truth": [], **{n: {"forecast": [], "analysis": []} for n in self.methods}}
                        if record_fields else None)
 
-        def observe(c, truth):
+        def measure_truth(c, truth):
             truth = model.f(truth) if self._truth_traj is None else self._truth_traj[c]
             y = np.asarray(model.h(truth)).reshape(-1) + self.rng_obs.normal(0.0, sig)
             if self.obs_mask is not None:
@@ -651,7 +655,7 @@ class TwinExperiment:
             # the same order), then each method's whole run in one C++ call.
             cycles = []
             for c in range(self.n_cycles):
-                truth, y = observe(c, truth)
+                truth, y = measure_truth(c, truth)
                 cycles.append((truth.copy(), y))
             truths = [tr for tr, _ in cycles]
             ys = np.asarray([y for _, y in cycles])
@@ -668,7 +672,7 @@ class TwinExperiment:
                     self.fields[name]["analysis"] = [mu.copy() for mu in out["analysis"]]
 
         for c in range(self.n_cycles):
-            truth, y = cycles[c] if cycles is not None else observe(c, truth)
+            truth, y = cycles[c] if cycles is not None else measure_truth(c, truth)
             if record_fields:
                 self.fields["truth"].append(truth.copy())
             for name, m in self.methods.items():

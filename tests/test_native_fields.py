@@ -148,11 +148,11 @@ class TestFieldFallbacks(unittest.TestCase):
         self.assertIsNone(model.native_name(), "other physics")
 
     def test_a_changed_hook_or_a_full_q(self):
-        class Observed(KolmogorovFlowModel):
-            def observe(self, X, t=None):
-                return super().observe(X, t) * 1.0
-        model = Observed("o", grid=16, cycle=4, n_obs=10, seed=1)
-        self.assertIsNone(model.native_handle(), "an observe() of its own")
+        class Rescaled(KolmogorovFlowModel):
+            def h(self, x, v=None, t=None):
+                return super().h(x, v=v, t=t) * 1.0
+        model = Rescaled("o", grid=16, cycle=4, n_obs=10, seed=1)
+        self.assertIsNone(model.native_handle(), "an h of its own")
 
         model = KolmogorovFlowModel("q", grid=8, cycle=4, n_obs=10, seed=1)
         Q = 0.01 * np.eye(model.n)

@@ -166,17 +166,21 @@ class TestKolmogorovFlowModel(unittest.TestCase):
         self.assertEqual(z.shape, (40, 1))
         np.testing.assert_allclose(z.ravel(), w2[m.obs_idx])
 
-    def test_forecast_batch_matches_f(self):
+    def test_f_and_h_of_many_fields_are_f_and_h_of_each(self):
         m = self.model
         X = m.initial_ensemble(3, rng=0)
-        Xf = m.forecast(X)
+        self.assertEqual(m.BATCHED, ("f", "h"))
+        Xf = m.f(X)
         np.testing.assert_allclose(Xf[:, 1], m.f(X[:, 1].copy()), atol=1e-10)
+        np.testing.assert_allclose(m.h(X)[:, 2], m.h(X[:, 2].copy()).ravel(), atol=1e-12)
+        np.testing.assert_array_equal(m.step(X), Xf)                 # step is f, sense is h
+        np.testing.assert_array_equal(m.sense(X), m.h(X))
 
     def test_surrogate_plug_in(self):
         m = self.model
         m.surrogate = lambda X: X * 0.5                      # any columns→columns map
         X = np.ones((m.n, 2))
-        np.testing.assert_allclose(m.forecast(X), 0.5 * np.ones((m.n, 2)))
+        np.testing.assert_allclose(m.f(X), 0.5 * np.ones((m.n, 2)))
         m.surrogate = None
 
     def test_localization_shapes(self):
@@ -575,7 +579,7 @@ class TestFlowSurrogate(unittest.TestCase):
         self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     # cycle 1: surrogate
         self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     # cycle 2: surrogate
         anchored = hybrid(X.copy())                          # cycle 3: true solver
-        np.testing.assert_allclose(anchored, model.forecast(X), atol=1e-10)
+        np.testing.assert_allclose(anchored, model.f(X), atol=1e-10)
         self.assertTrue(np.all(hybrid.reset()(X.copy()) == 7.0))
 
 

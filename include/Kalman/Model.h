@@ -228,6 +228,31 @@ namespace Kalman
              */
             virtual Vector ClipControl(const Vector &u) const { return u; }
 
+            // --- f and h for many states ----------------------------------------------
+            // f and h take one state or many. An engine that carries many states
+            // (the members of an ensemble, sigma points, particles) hands them all
+            // over in one call. The defaults loop over the one-state form; a model
+            // overrides them when it has something faster, a solver that advances
+            // every field in one pass.
+            /// `f` of every state of \p states, in place: `states[s] = f(states[s], u, t)`.
+            virtual void f(std::vector<Vector> &states, const Vector &u, double t) const;
+            /// `h` of every state: `out[s] = h(states[s], t)`.
+            virtual void h(const std::vector<Vector> &states, double t, std::vector<Vector> &out) const;
+
+            // --- step and sense: f and h by name ------------------------------------------
+            // Readable aliases, for callers: Step() is f, Sense() is h, for one state
+            // or many. Not virtual: a model writes f and h, never these. (They are also
+            // how to reach the many-states form on a class that overrides only the
+            // one-state f or h, which hides the other overload from its own type.)
+            /// `f(x, u, t)`: the state one step on.
+            Vector Step(const Vector &x, const Vector &u, double t = 0.) const { return f(x, u, t); }
+            /// `f` of every state, in place.
+            void Step(std::vector<Vector> &states, const Vector &u, double t = 0.) const { f(states, u, t); }
+            /// `h(x, t)`: what the sensors read at \p x.
+            Vector Sense(const Vector &x, double t = 0.) const { return h(x, t); }
+            /// `h` of every state.
+            void Sense(const std::vector<Vector> &states, double t, std::vector<Vector> &out) const { h(states, t, out); }
+
             /// `df/dx` — F(t) when analytic, central differences otherwise.
             virtual Matrix Jacobian(const Vector &x, const Vector &u, double t = 0.) const;
             /// `dh/dx` — H(t) when analytic, central differences otherwise.

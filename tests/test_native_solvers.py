@@ -96,7 +96,7 @@ class TestEnsembleAnalysisInCxx(unittest.TestCase):
             x = truth.copy()
             means = []
             for k in range(4):
-                x = np.asarray(model.forecast(x.reshape(-1, 1)), float).ravel()
+                x = np.asarray(model.f(x.reshape(-1, 1)), float).ravel()
                 z = np.asarray(model.h(x.reshape(-1, 1)), float).ravel() + 0.05 * rng.standard_normal(model.m)
                 if k == 2:
                     z[::3] = np.nan                       # some probes silent

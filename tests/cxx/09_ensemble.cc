@@ -161,5 +161,31 @@ int main()
         CHECK(std::sqrt(evel / 400.) < 0.5, "EnKF pendulum: the unobserved velocity is tracked");
     }
 
+    // --- f and h take one state or many, on every model; Step and Sense are their aliases ------
+    {
+        Fixture::Pendulum any(1.0, 0.15, 100.);
+        Vector a(2), b(2); a(0) = 0.3; a(1) = 0.1; b(0) = -0.2; b(1) = 0.4;
+        std::vector<Vector> states = {a, b}, Y;
+        const Model &model = any;
+        model.f(states, Vector(), 0.);
+        CHECK(states[0](0) == any.f(a, Vector(), 0.)(0) && states[1](1) == any.f(b, Vector(), 0.)(1),
+              "f of many states: f of each, by default");
+        model.h(states, 0., Y);
+        CHECK(Y.size() == 2 && Y[1](0) == any.h(states[1], 0.)(0), "h of many states: h of each, by default");
+
+        CHECK(any.Step(a, Vector(), 0.)(1) == any.f(a, Vector(), 0.)(1), "Step: f by name");
+        CHECK(any.Sense(a, 0.)(0) == any.h(a, 0.)(0), "Sense: h by name");
+        std::vector<Vector> again = {a, b}, Z;
+        any.Step(again, Vector(), 0.);
+        any.Sense(again, 0., Z);
+        CHECK(again[1](0) == states[1](0) && Z[0](0) == Y[0](0), "Step and Sense: for many states too");
+
+        Engines::Ensemble engine(4, 1., 7);
+        engine.Reset(any);
+        std::vector<Vector> projected;
+        engine.Project(any, 0., projected);
+        CHECK(projected.size() == 4 && projected[0].Size() == 1, "Ensemble::Project: h of every member");
+    }
+
     return Check::Summary("09_ensemble");
 }

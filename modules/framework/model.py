@@ -286,6 +286,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     # ------------------------------------------------------------------
     def __init_subclass__(cls, **kwargs):
         super().__init_subclass__(**kwargs)
+        for alias, symbol in (("step", "f"), ("sense", "h")):
+            if alias in cls.__dict__:
+                raise TypeError(f"{cls.__name__} defines {alias}(): it is the name of {symbol}, which is "
+                                f"what a model writes. Define {symbol}().")
         if "__init__" in cls.__dict__:
             cls.__init__ = _recording(cls.__dict__["__init__"])
         written = cls.__dict__.get("f")
@@ -361,6 +365,32 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             M = self.M(t=t)
             z = z + (v if M is None else M @ v)
         return z
+
+    # ============================================================
+    # f and h for one state or many; step and sense, their names
+    # ============================================================
+    #: The maps this model's own code evaluates for many states at once: any of
+    #: ``"f"``, ``"h"``. A state is a column ``(n, 1)``; many states are the columns
+    #: of ``(n, N)``. An engine that carries many states (the members of an
+    #: ensemble, sigma points, particles) hands them all to a declared map in one
+    #: call, and loops over the columns otherwise. Declare it only for code written
+    #: for it: an ``f`` that picks entries by position would read the wrong ones.
+    BATCHED = ()
+
+    def batched(self, name) -> bool:
+        """Whether this model's ``f`` (or ``h``) takes many states in one call."""
+        return name in self.BATCHED
+
+    def step(self, x, u=None, w=None, t=None):
+        """``f`` by name: the state one step on. Give one state, or many as the
+        columns of ``(n, N)``; a model whose ``f`` is not ``BATCHED`` is then
+        evaluated column by column. A model writes ``f``, never this."""
+        return _over_columns(self, "f", x, int(self.n), u=u, w=w, t=t)
+
+    def sense(self, x, v=None, t=None):
+        """``h`` by name: what the sensors read at a state. One state or many, as
+        for :meth:`step`. A model writes ``h``, never this."""
+        return _over_columns(self, "h", x, int(self.m), v=v, t=t)
 
     # ============================================================
     # Jacobians (stored matrices if given, else numerical)
@@ -646,6 +676,25 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if interactive:
             return self._plot_interactive(record, sample=sample, component=comps, error=error, **kwargs)
         return self._plot_static(record, sample=sample, component=comps, error=error, **kwargs)
+
+
+def _over_columns(model, name, x, rows, **kwargs):
+    """``model.f`` or ``model.h`` on one state or on the columns of ``(n, N)``: in
+    one call when the model declares that map ``BATCHED``, column by column
+    otherwise. The noise argument (``w`` or ``v``), when given for many states, has
+    one column per state. What the engines and ``step`` / ``sense`` share."""
+    fn = getattr(model, name)
+    X = np.asarray(x)
+    if X.ndim != 2 or X.shape[1] <= 1 or name in getattr(model, "BATCHED", ()):
+        return fn(x, **kwargs)
+    noise = next((key for key in ("w", "v") if kwargs.get(key) is not None), None)
+    out = np.empty((rows, X.shape[1]), dtype=np.float64)
+    for i in range(X.shape[1]):
+        column = dict(kwargs)
+        if noise is not None:
+            column[noise] = np.asarray(kwargs[noise]).reshape(-1, X.shape[1])[:, i].reshape(-1, 1)
+        out[:, i] = np.asarray(fn(X[:, i].reshape(-1, 1), **column), dtype=np.float64).reshape(-1)
+    return out
 
 
 def _decoded_step(self, x, u=None, w=None, t=None):

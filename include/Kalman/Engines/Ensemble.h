@@ -68,25 +68,22 @@ namespace Kalman::Engines
     double GaspariCohn(double distance, double L);
 
     /**
-     * \brief What a model offers the ensemble engine beyond `f` and `h`.
+     * \brief What a field model offers the ensemble engine beyond the model contract.
      *
      * \details A model implements this next to Kalman::Model, the way a trackable
      * model implements Tracking::Detector, and the engine finds it with a
-     * `dynamic_cast`. The Python hooks of the same names are `forecast(X)`,
-     * `observe(X)`, `localization()` and the noise the engine draws from `Q`.
-     * Each default does what the engine does without the hook.
+     * `dynamic_cast`. The Python hooks of the same names are `localization()` and
+     * the noise the engine draws from `Q`. Each default does what the engine does
+     * without the hook.
+     *
+     * `f` and `h` over every member are part of the contract of every model
+     * (Kalman::Model: `f` and `h` take one state or many), not of this interface.
      */
     class EnsembleModel
     {
         public:
             virtual ~EnsembleModel() = default;
 
-            /// Advance every member one step, in place (`model.forecast(X)`).
-            virtual void Forecast(const Model &model, std::vector<Vector> &members,
-                                  const Vector &u, double t) const;
-            /// The measurement of every member (`model.observe(X)`): out[s] = h(members[s]).
-            virtual void Observe(const Model &model, const std::vector<Vector> &members, double t,
-                                 std::vector<Vector> &out) const;
             /// The tapers on `P H^T` (n x m) and `H P H^T` (m x m); false for none.
             virtual bool Localization(Matrix &rhoXY, Matrix &rhoYY) const;
             /// The variances of a diagonal `Q`, without forming it; false to use `Q(t)`.
@@ -185,8 +182,21 @@ namespace Kalman::Engines
                         Vector &xSmooth, Matrix &PSmooth) const override;
 
             // --- the ensemble-native steps, for DA workflows -------------------------
-            /// Propagate every member; returns the new mean.
+            /**
+             * \brief Forecast: advance every member one step; returns the new mean.
+             *
+             * "Forecast" is the ensemble filter's word for the predict step. It is the
+             * model's `f` given every member at once (Kalman::Model::f for many
+             * states), followed by a draw of the process noise for each.
+             */
             Vector Forecast(const Model &model, const Vector *u, double t) const;
+            /**
+             * \brief Project the members into measurement space: `Y[s] = h(member s, t)`.
+             *
+             * "Project" is the ensemble filter's word for it; it is the model's `h`
+             * given every member at once (Kalman::Model::h for many states).
+             */
+            void Project(const Model &model, double t, std::vector<Vector> &Y) const;
             /// Perturbed-observation analysis; NaN channels skipped; returns the mean.
             Vector Analyze(const Model &model, const Vector &z, double t) const;
 
@@ -213,7 +223,6 @@ namespace Kalman::Engines
             /// N draws of `rows` standard normals: the engine's stream, or those handed in.
             std::vector<Vector> Normals(std::size_t rows) const;
             Vector Draw(const Matrix &factor) const;
-            void Observations(const Model &model, double t, std::vector<Vector> &Y) const;
     };
 }
 

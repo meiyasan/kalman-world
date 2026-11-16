@@ -77,8 +77,12 @@ class TestReservedNames(unittest.TestCase):
     OPERATIONS = ("joint", "add_sensor")
     #: Reserved for the operations still to come: nothing may take these names.
     PLANNED = ("lag", "compose", "route", "add_instrument", "instruments")
-    #: Looked up on a model by the ensemble engine.
-    ENSEMBLE_HOOKS = ("forecast", "observe", "localization", "initial_ensemble")
+    #: Aliases of f and h, provided by the base class; a model never defines them.
+    ALIASES = ("step", "sense")
+    #: Looked up on a model by the ensemble engine only.
+    ENSEMBLE_HOOKS = ("localization", "initial_ensemble")
+    #: Ensemble-filter words that are not model methods: the engine's own steps.
+    NOT_ON_A_MODEL = ("forecast", "observe", "project", "analyze")
 
     @staticmethod
     def _models():
@@ -99,8 +103,55 @@ class TestReservedNames(unittest.TestCase):
         for name in self.OPERATIONS:
             self.assertTrue(callable(getattr(KalmanModel, name, None)), name)
 
+    def test_f_and_h_take_one_state_or_many(self):
+        import numpy as np
+        model = KalmanModel("cv", fs=10.0, F=np.array([[1, 0.1], [0, 1]]), H=np.array([[1.0, 0.0]]),
+                            Q=1e-3 * np.eye(2), R=np.array([[0.1]]), x0=np.zeros((2, 1)), P0=np.eye(2))
+        X = np.array([[0.0, 1.0, 2.0], [1.0, 1.0, -1.0]])
+        x = X[:, 1:2]
+        np.testing.assert_array_equal(model.step(x), model.f(x))                 # step is f
+        np.testing.assert_array_equal(model.sense(x), model.h(x))                # sense is h
+        np.testing.assert_array_equal(model.step(X), model.F() @ X)              # many: each column
+        np.testing.assert_array_equal(model.sense(X), model.H() @ X)
+        self.assertEqual(KalmanModel.BATCHED, ())
+        self.assertFalse(model.batched("f") or model.batched("h"))
+
+    def test_a_model_not_written_for_many_states_is_looped_over(self):
+        import numpy as np
+
+        class ByPosition(KalmanModel):
+            def __init__(self):
+                self.n, self.m, self.l = 2, 1, 0
+                super().__init__("p", fs=1.0, Q=np.zeros((2, 2)), R=np.eye(1), x0=np.zeros((2, 1)), P0=np.eye(2))
+
+            def f(self, x, u=None, w=None, t=None):
+                x = np.asarray(x, dtype=float).reshape(-1)       # picks entries by position
+                return np.array([[x[0] + x[1]], [x[1]]])
+
+            def h(self, x, v=None, t=None):
+                return np.asarray(x, dtype=float).reshape(-1)[:1].reshape(1, 1)
+
+        model = ByPosition()
+        X = np.array([[0.0, 1.0, 2.0], [1.0, 1.0, -1.0]])
+        np.testing.assert_array_equal(model.step(X), [[1.0, 2.0, 1.0], [1.0, 1.0, -1.0]])
+        np.testing.assert_array_equal(model.sense(X), [[0.0, 1.0, 2.0]])
+
+    def test_a_model_never_defines_the_aliases(self):
+        for alias in self.ALIASES:
+            with self.assertRaisesRegex(TypeError, "is the name of"):
+                type("Wrong", (KalmanModel,), {alias: lambda self, x: x})
+
+    def test_ensemble_words_are_not_model_methods(self):
+        for cls in [KalmanModel] + self._models():
+            for name in self.NOT_ON_A_MODEL:
+                self.assertFalse(callable(cls.__dict__.get(name)), f"{cls.__name__}.{name}: an engine's word on a model")
+
+    def test_the_flow_model_declares_its_maps(self):
+        from modules.apps.weather.flow import KolmogorovFlowModel
+        self.assertEqual(KolmogorovFlowModel.BATCHED, ("f", "h"))
+
     def test_no_operation_is_named_like_a_hook(self):
-        self.assertFalse(set(self.OPERATIONS + self.PLANNED) & set(self.ENSEMBLE_HOOKS))
+        self.assertFalse(set(self.OPERATIONS + self.PLANNED) & set(self.ENSEMBLE_HOOKS + self.NOT_ON_A_MODEL + self.ALIASES))
 
     def test_applications_do_not_redefine_them(self):
         for cls in self._models():

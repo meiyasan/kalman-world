@@ -119,10 +119,9 @@ namespace Kalman::Apps::Weather
             Matrix Q(double t = 0.) const override;
 
             // --- what the ensemble engine asks of a field --------------------------
-            void Forecast(const Kalman::Model &model, std::vector<Vector> &members,
-                          const Vector &u, double t) const override;
-            void Observe(const Kalman::Model &model, const std::vector<Vector> &members, double t,
-                         std::vector<Vector> &out) const override;
+            // f and h of every member in one call, the members in parallel.
+            void f(std::vector<Vector> &members, const Vector &u, double t) const override;
+            void h(const std::vector<Vector> &members, double t, std::vector<Vector> &out) const override;
             bool Localization(Matrix &rhoXY, Matrix &rhoYY) const override;
             bool ProcessNoiseVariances(double t, Vector &variances) const override;
 
