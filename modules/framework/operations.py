@@ -4,7 +4,7 @@ The model operations as functions.
 Each builds a model from other models, and is also a method of
 :class:`~kalman.framework.model.KalmanModel` and a class of
 ``kalman.framework.models``: ``joint(m, p)``, ``m.joint(p)`` and ``Joint(m, p)``
-are the same model, and likewise ``add_sensor`` and ``Fusion``.
+are the same model, and likewise ``add_sensor`` and ``Fusion``, ``lag`` and ``Lag``.
 
 ``compose`` puts things side by side: sensors into an instrument
 (:class:`~.instrument.KalmanInstrument`).
@@ -22,6 +22,12 @@ def add_sensor(model, sensor):
     """``model`` read by one more ``sensor`` (a :class:`~.sensor.KalmanSensor`), as a new
     model. See :class:`~.models.fusion.Fusion`."""
     return model.add_sensor(sensor)
+
+
+def lag(model, depth):
+    """``model`` carrying its last ``depth`` states, for sensors that report late and
+    fixed-lag smoothing. See :class:`~.models.lag.Lag`."""
+    return model.lag(depth)
 
 
 def add_instrument(model, instrument):
@@ -43,4 +49,4 @@ def compose(*parts, name=None, rate=None):
     return KalmanInstrument(name or "+".join(part.name for part in parts), parts, rate=rate)
 
 
-__all__ = ["joint", "add_sensor", "add_instrument", "compose"]
+__all__ = ["joint", "add_sensor", "add_instrument", "compose", "lag"]

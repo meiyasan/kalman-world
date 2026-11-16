@@ -31,7 +31,9 @@ in C++; a model written in Python is called back from the C++ loop.
 from another: `model.add_sensor(sensor)` reads the same state with one more
 sensor (sensor fusion), `model.add_instrument(compose(s1, s2))` with a set of
 them that share a rate and a calibration, `model.joint({...})` estimates some
-of its parameters (an instrument's offset among them) along with its state. The same in C++ (`model.AddSensor(sensor)`,
+of its parameters (an instrument's offset among them) along with its state,
+`model.lag(L)` carries its last states for sensors that report late and for
+fixed-lag smoothing. The same in C++ (`model.AddSensor(sensor)`,
 `model.Joint({...})`). See [Models](docs/4_Models.md).
 
 **Applications.** Fifteen worked systems, from ballistics, rockets and space

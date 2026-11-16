@@ -127,6 +127,9 @@ namespace Kalman::Models
             void SetInstrument(const std::string &instrument) { fSensor.instrument = instrument; }
 
             void CheckShapes() const override;
+            void CheckDelays() const override;
+            /// How late the added sensor reports (see Sensor::delay).
+            void SetDelay(double delay);
             std::string Describe() const override;
     };
 }

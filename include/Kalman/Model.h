@@ -376,6 +376,15 @@ namespace Kalman
              * a readable message rather than deep inside the loop.
              */
             virtual void CheckShapes() const;
+            /**
+             * \brief Refuse a sensor that reports late on a model that carries no past state.
+             *
+             * Called by CheckShapes(). A sensor with a `delay` reads the state as it
+             * was; only a lagged model (Models::Lag, `model.Lag(L)`) holds it. The
+             * sensors are added first, then the model is lagged.
+             * \throws std::invalid_argument naming the sensor.
+             */
+            virtual void CheckDelays() const;
 
             /// One-line description, for logs.
             virtual std::string Describe() const;
@@ -455,6 +464,9 @@ namespace Kalman
             std::unique_ptr<Model> AddInstrument(const Instrument &instrument);
             /// This model with some of its parameters estimated along with its state (Models::Joint).
             std::unique_ptr<Model> Joint(const std::vector<EstimatedParameter> &parameters);
+            /// This model carrying its last \p depth states (Models::Lag): for sensors that
+            /// report late, and fixed-lag smoothing.
+            std::unique_ptr<Model> Lag(std::size_t depth);
 
             /// Name the measurement components from outside the class (a caller in
             /// another language pushing its labels). \throws as DeclareMeasurement().

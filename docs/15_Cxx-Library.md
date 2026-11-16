@@ -65,10 +65,11 @@ included, so a change on one side has an obvious home on the other:
 | `framework/models/linear.py` | `Kalman/Models/Linear.h` | `Models::Linear` |
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/models/joint.py` | `Kalman/Models/Joint.h` | `Models::Joint` |
+| `framework/models/lag.py` | `Kalman/Models/Lag.h` | `Models::Lag` |
 | `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
 | `framework/instrument.py` | `Kalman/Instrument.h` | `Kalman::Instrument`, `Kalman::Compose` |
 | `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
-| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint` |
+| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
@@ -1167,6 +1168,18 @@ gain. `Model::Instruments()` groups the sensors back. Through the C API:
 `kalman_model_instrument_name`, `kalman_model_sensor_instrument`,
 `kalman_model_sensor_calibration`. Tested in `tests/cxx/25_instrument.cc` and
 `tests/test_instrument.py`, on the same scenario.
+
+`Kalman::Models::Lag` (`model.Lag(L)`, `Kalman::Lag(model, L)`) carries the
+last `L` states: `X = [x_k; ...; x_{k-L}]`, `f` steps the first block and
+shifts the rest, `Q = diag(Q, 0)`. A sensor with a `Sensor::delay` has its rows
+of `h`, `H` and `JacobianH` evaluated at block `round(delay * fs)`
+(`Lag::Delay(row)`), one inner evaluation per distinct delay; with none the
+inner `h` is called once, as before. `Lag::Block(x, j)` is the state `j` steps
+ago. `Model::CheckDelays()`, called by `CheckShapes()` at the start of a pass,
+refuses a late sensor on a model that carries no past state. Through the C
+API: `kalman_model_create_lag`, `kalman_model_set_sensor_delay`,
+`kalman_model_sensor_delay`. Tested in `tests/cxx/26_lag.cc` and
+`tests/test_lag.py`.
 
 From Python: `KalmanSensor` (`framework/sensor.py`), `model.add_sensor(sensor)`
 and `model.sensors`. Python describes nothing itself. A Python model hands its

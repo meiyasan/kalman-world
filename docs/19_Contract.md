@@ -77,7 +77,7 @@ each exists as a method of the model and as a function.
 | joint | the model with some parameters estimated along with its state | `model.joint({...})` | `model.Joint({...})` | in place |
 | add a sensor | the model read by one more sensor on the same state (sensor fusion) | `model.add_sensor(sensor)` | `model.AddSensor(sensor)` | in place |
 | add an instrument | the same for a set of sensors | `model.add_instrument(instrument)` | `model.AddInstrument(instrument)` | in place |
-| lag | the model carrying its last L states (delayed sensors, fixed-lag smoothing) | `model.lag(L)` | `model.Lag(L)` | step 13 |
+| lag | the model carrying its last L states: a sensor with a `delay` reads the state as it was, and block `j` is the state `j` steps ago given what came since (fixed-lag smoothing) | `model.lag(L)`, `KalmanSensor(delay=)` | `model.Lag(L)`, `Sensor::delay` | in place |
 | compose | sensors into an instrument | `compose(s1, s2, name=...)`, `s1 \| s2` | `Kalman::Compose({s1, s2}, name)`, `s1 \| s2` | in place |
 | compose | models side by side, each with its own state | `a.compose(b)` | `a.Compose(b)` | step 14 |
 | route | several models of one system, with a probability on each (the IMM of the literature) | `KalmanModel.route(models, Pi)` | `Model::Route(models, Pi)` | step 15 |

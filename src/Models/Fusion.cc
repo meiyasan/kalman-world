@@ -225,6 +225,21 @@ namespace Kalman::Models
         return out;
     }
 
+    void Fusion::SetDelay(double delay)
+    {
+        if (!(delay >= 0.)) throw std::invalid_argument("Models::Fusion: a delay cannot be negative.");
+        fSensor.delay = delay;
+    }
+
+    void Fusion::CheckDelays() const
+    {
+        if (fSensor.delay > 0.)
+            throw std::invalid_argument("Models::Fusion: the sensor '" + fSensor.name + "' reports late (delay "
+                                        + std::to_string(fSensor.delay) + ") and the model carries no past state "
+                                        "before it: add the sensors first, then lag the model (Models::Lag).");
+        fInner->CheckDelays();
+    }
+
     void Fusion::CheckShapes() const
     {
         Sync();

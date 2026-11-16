@@ -26,6 +26,12 @@ namespace Kalman
     std::shared_ptr<Models::Joint> Joint(std::shared_ptr<Model> model, std::vector<EstimatedParameter> parameters)
     { return std::make_shared<Models::Joint>(std::move(model), std::move(parameters)); }
 
+    std::shared_ptr<Models::Lag> Lag(std::shared_ptr<Model> model, std::size_t depth)
+    { return std::make_shared<Models::Lag>(std::move(model), depth); }
+
+    std::unique_ptr<Model> Model::Lag(std::size_t depth)
+    { return std::make_unique<Models::Lag>(Borrow(this), depth); }
+
     std::shared_ptr<Model> AddInstrument(std::shared_ptr<Model> model, const Instrument &instrument)
     {
         instrument.Check(model ? model->NState() : 0);

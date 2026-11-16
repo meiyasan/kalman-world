@@ -87,6 +87,8 @@ class Fusion(OperationModel):
                                                  cnames, cunits, rate, ffi.NULL)
         if handle == ffi.NULL:
             raise self._failed("add_sensor")
+        if sensor.delay:
+            core.check(lib.kalman_model_set_sensor_delay(handle, float(sensor.delay)), "set_sensor_delay")
         if instrument is not None:
             # Its name, and its calibration: the C++ model then declares the
             # parameters "<instrument>.gain" and "<instrument>.offset".

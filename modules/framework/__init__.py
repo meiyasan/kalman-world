@@ -28,7 +28,7 @@ from .filter import BayesFilter, KalmanFilter
 from .control import KalmanController
 from .tuner import KalmanTuner
 from .tuners import BoostKalmanTuner, AdaptiveQRKalmanTuner, NeuralAdaptiveQRKalmanTuner
-from .operations import joint, add_sensor, add_instrument, compose
+from .operations import joint, add_sensor, add_instrument, compose, lag
 from .sensor import KalmanSensor
 from .instrument import KalmanInstrument
 from .engine_models import KalmanEnsembleModel, KalmanDetectorModel
@@ -38,6 +38,7 @@ from .models import (
     UnscentedKalmanModel,
     CompositeKalmanModel,
     Joint,
+    Lag,
     Fusion,
     NativeModel,
 )
@@ -104,7 +105,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel", "Joint", "joint", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
+    "CompositeKalmanModel", "Joint", "joint", "Lag", "lag", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

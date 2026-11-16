@@ -314,10 +314,20 @@ namespace Kalman
 
     // --- validation ----------------------------------------------------------
 
+    void Model::CheckDelays() const
+    {
+        for (const Sensor &sensor : Sensors())
+            if (sensor.delay > 0.)
+                throw std::invalid_argument("Kalman::Model: the sensor '" + sensor.name + "' reports late (delay "
+                                            + std::to_string(sensor.delay) + ") and the model carries no past "
+                                            "state: lag it, after its sensors are added (Models::Lag).");
+    }
+
     void Model::CheckShapes() const
     {
         if (fNState == 0 || fNMeasure == 0)
             throw std::runtime_error("Kalman::Model: the model was never sized (n, m must be > 0).");
+        CheckDelays();
 
         const double t = fT0;
 

@@ -223,6 +223,17 @@ int kalman_model_sensor_instrument(const kalman_model_t *model, int i);
 /// through one, 0 when it does not (1 and 0 are then written), -1 on failure.
 int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *gain, double *offset);
 
+/// `inner` carrying its last `depth` states along with the present one (Kalman::Models::Lag):
+/// its sensors that report late (kalman_model_set_sensor_delay) then read the state as it was,
+/// and block `j` of the state is the fixed-lag smoothed state `j` steps ago. `inner` is
+/// borrowed, as for kalman_model_create_joint. NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_create_lag(kalman_model_t *inner, int depth);
+/// How late the sensor `model` was made with reports, in the model's unit of time (a model
+/// returned by kalman_model_add_sensor*; Kalman::Sensor::delay). 0 or -1.
+int kalman_model_set_sensor_delay(kalman_model_t *model, double delay);
+/// How late sensor `i` reports; 0 when it does not. -1 on failure.
+double kalman_model_sensor_delay(const kalman_model_t *model, int i);
+
 /// How well `steps` measurements determine each direction of the state of `model`, along its
 /// noise-free path from its initial state (Kalman::Observability). `eigenvalues` (n, smallest
 /// first) and `weakness` (n: the share of each state component in the directions the

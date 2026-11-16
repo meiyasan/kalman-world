@@ -170,6 +170,7 @@ namespace Kalman::Models
             /// The inner initial state, then the parameters as the inner model holds them now.
             void AdoptInitialState() override;
             void CheckShapes() const override;
+            void CheckDelays() const override { fInner->CheckDelays(); }
             std::string Describe() const override;
     };
 }

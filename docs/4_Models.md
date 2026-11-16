@@ -368,6 +368,34 @@ makes the offset a quantity the filter finds (`examples/python/instrument.py`:
 1.5 found to 0.01 from 400 readings). A calibrated reading is not a matrix
 `H x`, so the model runs on the extended engine.
 
+### A sensor that reports late, and the lagged model
+
+Some sensors answer late: a camera that takes 0.3 s to process a frame reports
+where the object *was*. Give the sensor its `delay`, then make the model carry
+its past states with `lag`:
+
+```python
+camera = KalmanSensor("camera", G=[[1.0, 0.0]], R=0.01, delay=0.3)
+model  = cart.add_sensor(camera).lag(3)       # 3 steps of 0.1 s: the sensors first, then the lag
+record = model.filter(zk)
+```
+
+`model.lag(L)` (also `lag(model, L)`) is a new model whose state is the inner
+one `L + 1` times over, `[x_k; x_{k-1}; ...; x_{k-L}]`: each step computes the
+new present state and shifts the others down. The late sensor's rows of `h`
+read the block of its delay, so the update corrects that past state and,
+through the covariance between the blocks, the present one. No filter changes;
+a model of matrices stays one, on the linear engine. On a cart with a noisy
+position sensor and a precise one 3 steps late (`tests/test_lag.py`), the
+position error is 0.11 with the lag, 0.21 with the late sensor left out, and
+1.1 with its delay ignored. Without `lag`, a filtering pass refuses a late
+sensor rather than read it at the wrong time.
+
+The same model gives **fixed-lag smoothing** as the filter runs:
+`record.xk[:, model.block(j)]` is the state `j` steps before each row, given
+everything measured up to that row. Its components are named after the inner
+ones with `@-j`.
+
 The sensor a model is built with reads its own `h` and `R` and carries the
 name given as first argument; a model names its channels in its constructor
 with `self._name_channels(["X", "Y", "Z"])`. `add_sensor` takes a

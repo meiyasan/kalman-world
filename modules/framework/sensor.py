@@ -43,9 +43,12 @@ class KalmanSensor:
     rate : how often it reports [Hz, or per unit of the model's time]; ``None``
         for every step of the model. Between two of its reports its channels are
         missing (NaN), which the engines skip: see ``model.measurements``.
+    delay : how late it reports [s, or the model's unit of time]: it reads the
+        state as it was ``delay`` ago. The model must carry its past states:
+        ``model.add_sensor(sensor).lag(L)`` with ``L >= delay * fs`` steps.
     """
 
-    def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None, rate=None):
+    def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None, rate=None, delay=None):
         if not isinstance(name, str) or not name:
             raise ValueError("KalmanSensor: a sensor needs a name.")
         if (g is None) == (G is None):
@@ -62,6 +65,9 @@ class KalmanSensor:
         if rate is not None and not float(rate) > 0.0:
             raise ValueError(f"KalmanSensor: the rate of {name!r} must be positive.")
         self.rate = None if rate is None else float(rate)
+        if delay is not None and not float(delay) >= 0.0:
+            raise ValueError(f"KalmanSensor: the delay of {name!r} cannot be negative.")
+        self.delay = float(delay) if delay else None
         self.labels = self._labels(labels)
         # What the instrument that carries it gives it (see KalmanInstrument); filled
         # for the sensors a model reports (model.sensors).

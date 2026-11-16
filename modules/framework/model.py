@@ -226,6 +226,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         for part in parts:
             if not isinstance(part, (str, int, KalmanSensor)):
                 raise TypeError(f"{type(self).__name__}: a sensor is a name or a KalmanSensor, got {type(part).__name__}.")
+        for part in parts:
+            if isinstance(part, KalmanSensor) and part.delay:
+                raise ValueError(f"{type(self).__name__}: the sensor {part.name!r} reports late (delay={part.delay}); "
+                                 "add it with model.add_sensor(sensor), then model.lag(L).")
         names = [part.name if isinstance(part, KalmanSensor) else str(part) for part in parts]
         if len(set(names)) != len(names):
             raise ValueError(f"{type(self).__name__}: two sensors share a name in {names}.")
@@ -674,6 +678,15 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         ``model.joint({"c_drag": (sigma, drift)})``. See :class:`~.models.joint.Joint`."""
         from .models.joint import Joint
         return Joint(self, parameters, **kwargs)
+
+    def lag(self, depth):
+        """This model carrying its last ``depth`` states along with the present one:
+        a sensor with a ``delay`` then reads the state as it was, and
+        ``record.xk[:, lagged.block(j)]`` is the state ``j`` steps ago given what was
+        measured since (fixed-lag smoothing). Add the sensors first. See
+        :class:`~.models.lag.Lag`."""
+        from .models.lag import Lag
+        return Lag(self, depth)
 
     def add_sensor(self, sensor):
         """This model read by one more sensor, a :class:`~.sensor.KalmanSensor`:

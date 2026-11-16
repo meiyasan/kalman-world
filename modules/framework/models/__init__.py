@@ -11,6 +11,7 @@ from .unscented import UnscentedKalmanModel
 from .composite import CompositeKalmanModel
 from .operation import OperationModel
 from .joint import Joint
+from .lag import Lag
 from .fusion import Fusion
 from .native import NativeModel, native_model_classes
 
@@ -21,6 +22,7 @@ __all__ = [
     "CompositeKalmanModel",
     "OperationModel",
     "Joint",
+    "Lag",
     "Fusion",
     "NativeModel",
     "native_model_classes",

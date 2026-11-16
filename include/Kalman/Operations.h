@@ -30,6 +30,7 @@
 
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Joint.h"
+#include "Kalman/Models/Lag.h"
 #include "Kalman/Sensor.h"
 #include "Kalman/Instrument.h"
 
@@ -40,6 +41,10 @@ namespace Kalman
 {
     /// \p model with one more sensor on the same state (Models::Fusion).
     std::shared_ptr<Models::Fusion> AddSensor(std::shared_ptr<Model> model, Sensor sensor);
+
+    /// \p model carrying its last \p depth states: for sensors that report late, and
+    /// fixed-lag smoothing.
+    std::shared_ptr<Models::Lag> Lag(std::shared_ptr<Model> model, std::size_t depth);
 
     /// \p model read by every sensor of \p instrument (a chain of Models::Fusion).
     std::shared_ptr<Model> AddInstrument(std::shared_ptr<Model> model, const Instrument &instrument);

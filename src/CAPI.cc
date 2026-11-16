@@ -22,6 +22,7 @@
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Observability.h"
 #include "Kalman/Models/Fusion.h"
+#include "Kalman/Models/Lag.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
@@ -580,6 +581,37 @@ int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *
         *offset = sensor.calibrated ? sensor.offset : 0.;
         return sensor.calibrated ? 1 : 0;
     });
+}
+
+kalman_model_t *kalman_model_create_lag(kalman_model_t *inner, int depth)
+{
+    try
+    {
+        Ok();
+        Kalman::Model &borrowed = Deref(inner);
+        if (depth <= 0) throw std::invalid_argument("carry at least one past state (depth > 0)");
+        std::shared_ptr<Kalman::Model> shared(&borrowed, [](Kalman::Model *) {});   // borrowed
+        return new kalman_model{std::make_unique<Kalman::Models::Lag>(std::move(shared), static_cast<std::size_t>(depth))};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_set_sensor_delay(kalman_model_t *model, double delay)
+{
+    return Guard([&] {
+        auto *fusion = dynamic_cast<Kalman::Models::Fusion *>(&Deref(model));
+        if (!fusion) throw std::invalid_argument("not a model made by adding a sensor");
+        fusion->SetDelay(delay);
+        return 0;
+    });
+}
+
+double kalman_model_sensor_delay(const kalman_model_t *model, int i)
+{
+    double delay = -1.;
+    Guard([&] { delay = SensorAt(model, i).delay; return 0; });
+    return delay;
 }
 
 int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R)

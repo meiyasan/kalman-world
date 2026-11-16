@@ -67,6 +67,8 @@ namespace Kalman
         MeasureJacobian jacobian;           ///< `dg/dx`; differenced when empty
         std::vector<Component> channels;    ///< its observables; named after the sensor when empty
         double rate = 0.;                   ///< how often it reports, per unit of the model's time; 0: at every step
+        double delay = 0.;                  ///< how late it reports, in the model's unit of time: it reads the
+                                            ///< state as it was `delay` ago (needs a lagged model, Models::Lag)
 
         // What a sensor gets from the instrument that carries it (Kalman::Instrument).
         std::string instrument;             ///< the instrument's name; empty for a sensor on its own

@@ -616,7 +616,8 @@ def sensors_of(handle, keep=None):
         sensor = KalmanSensor(core._s(lib.kalman_model_sensor_name(handle, i)),
                               None if linear else measure, G=G if linear else None, R=R,
                               labels=dict(observables[first:first + k]),
-                              rate=(float(lib.kalman_model_sensor_rate(handle, i)) or None))
+                              rate=(float(lib.kalman_model_sensor_rate(handle, i)) or None),
+                              delay=(float(lib.kalman_model_sensor_delay(handle, i)) or None))
         sensor._keep = (handle, keep)                    # the C++ model it reads through
         sensor.calibrated = calibrated
         sensor.gain, sensor.offset = float(gain[0]), float(offset[0])
