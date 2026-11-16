@@ -26,6 +26,24 @@ namespace Kalman
     std::shared_ptr<Models::Joint> Joint(std::shared_ptr<Model> model, std::vector<EstimatedParameter> parameters)
     { return std::make_shared<Models::Joint>(std::move(model), std::move(parameters)); }
 
+    std::shared_ptr<Model> AddInstrument(std::shared_ptr<Model> model, const Instrument &instrument)
+    {
+        instrument.Check(model ? model->NState() : 0);
+        for (const Sensor &sensor : instrument.Sensors())
+            model = std::make_shared<Models::Fusion>(std::move(model), sensor);
+        return model;
+    }
+
+    std::unique_ptr<Model> Model::AddInstrument(const Instrument &instrument)
+    {
+        instrument.Check(NState());
+        const std::vector<Sensor> sensors = instrument.Sensors();
+        std::shared_ptr<Model> model = Borrow(this);
+        for (std::size_t i = 0; i + 1 < sensors.size(); ++i)
+            model = std::make_shared<Models::Fusion>(std::move(model), sensors[i]);
+        return std::make_unique<Models::Fusion>(std::move(model), sensors.back());
+    }
+
     std::unique_ptr<Model> Model::AddSensor(const Sensor &sensor)
     { return std::make_unique<Models::Fusion>(Borrow(this), sensor); }
 

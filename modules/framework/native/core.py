@@ -111,6 +111,12 @@ int kalman_model_adopt_initial_state(kalman_model_t *model);
 int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double *x, double t, double *z);
 int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R);
 int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G);
+int kalman_model_set_instrument(kalman_model_t *model, const char *instrument, int calibrated, double gain,
+                                double offset);
+int kalman_model_instrument_count(const kalman_model_t *model);
+const char *kalman_model_instrument_name(const kalman_model_t *model, int j);
+int kalman_model_sensor_instrument(const kalman_model_t *model, int i);
+int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *gain, double *offset);
 int kalman_model_observability(const kalman_model_t *model, int steps, double tolerance, double *eigenvalues,
                                double *weakness);
 const char *kalman_model_name(const kalman_model_t *model);

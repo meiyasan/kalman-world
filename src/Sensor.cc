@@ -34,6 +34,17 @@ namespace Kalman
         return out;
     }
 
+    Vector Sensor::Read(const Vector &x, double t) const
+    {
+        Vector z = g ? g(x, t) : G * x;
+        if (z.Size() != Channels())
+            throw std::runtime_error("Kalman::Sensor: the sensor '" + name + "' returned " + std::to_string(z.Size())
+                                     + " values, " + std::to_string(Channels()) + " expected.");
+        if (calibrated)
+            for (std::size_t i = 0; i < z.Size(); ++i) z(i) = gain * z(i) + offset;
+        return z;
+    }
+
     void Sensor::Check(std::size_t n) const
     {
         if (name.empty()) throw std::invalid_argument("Kalman::Sensor: a sensor needs a name.");

@@ -686,6 +686,45 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from .models.fusion import Fusion
         return Fusion(self, sensor)
 
+    def add_instrument(self, instrument):
+        """This model read by every sensor of ``instrument``, a
+        :class:`~.instrument.KalmanInstrument`: a **new model**. Its sensors share the
+        instrument's name, its rate, and its calibration when it has one: the new
+        model then declares ``"<name>.gain"`` and ``"<name>.offset"``, which
+        :meth:`joint` can estimate."""
+        from .instrument import KalmanInstrument
+        if not isinstance(instrument, KalmanInstrument):
+            raise TypeError(f"add_instrument takes a KalmanInstrument, got {type(instrument).__name__}; "
+                            "compose(sensor, ...) makes one.")
+        from .models.fusion import Fusion
+        model = self
+        for sensor in instrument.sensors:
+            model = Fusion(model, sensor, instrument=instrument)
+        return model
+
+    @property
+    def instruments(self):
+        """The sensors of this model grouped by the instrument that carries them, in
+        order (``Model::Instruments()``); a sensor on its own is an instrument of one,
+        under its own name."""
+        from .instrument import KalmanInstrument
+        from .native import core
+        sensors = self.sensors
+        if self.__dict__.get("_sensors_given") is not None or not core.HAS_CXX_CORE:
+            return [KalmanInstrument(sensor.name, [sensor]) for sensor in sensors]
+        from .models import native
+        handle = native.view_of(self)
+        groups = [[] for _ in range(core.check(core.lib.kalman_model_instrument_count(handle), "instrument_count"))]
+        for i, sensor in enumerate(sensors):
+            groups[core.check(core.lib.kalman_model_sensor_instrument(handle, i), "sensor_instrument")].append(sensor)
+        out = []
+        for j, group in enumerate(groups):
+            instrument = KalmanInstrument(core._s(core.lib.kalman_model_instrument_name(handle, j)), group)
+            if group[0].calibrated:
+                instrument.calibrate(group[0].gain, group[0].offset)
+            out.append(instrument)
+        return out
+
     @property
     def sensors(self):
         """The sensors of this model, in the order of ``z``: the one it was built

@@ -124,6 +124,7 @@
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Models/Fusion.h"
+#include "Kalman/Instrument.h"
 #include "Kalman/Operations.h"
 #include "Kalman/Observability.h"
 #include "Kalman/Filters/KF.h"

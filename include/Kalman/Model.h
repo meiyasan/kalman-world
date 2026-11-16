@@ -56,6 +56,7 @@
 #include "Kalman/Integrator.h"
 #include "Kalman/Differentiator.h"
 #include "Kalman/Sensor.h"
+#include "Kalman/Instrument.h"
 
 #include <functional>
 #include <map>
@@ -436,6 +437,9 @@ namespace Kalman
              * the model: it must not outlive it.
              */
             virtual std::vector<Sensor> Sensors() const;
+            /// The sensors grouped by the instrument that carries them, in order; a sensor
+            /// on its own is an instrument of one, under its own name.
+            std::vector<Instrument> Instruments() const;
             /// The name of the built-in sensor: Name() unless SetBuiltInSensorName() gave one.
             const std::string &BuiltInSensorName() const { return fBuiltInSensor.empty() ? fName : fBuiltInSensor; }
             void SetBuiltInSensorName(std::string name) { fBuiltInSensor = std::move(name); }
@@ -446,6 +450,9 @@ namespace Kalman
             // functions on shared models.
             /// This model with one more sensor on the same state (Models::Fusion).
             std::unique_ptr<Model> AddSensor(const Sensor &sensor);
+            /// This model read by every sensor of \p instrument, which share its name, its
+            /// rate and its calibration (Kalman::Instrument).
+            std::unique_ptr<Model> AddInstrument(const Instrument &instrument);
             /// This model with some of its parameters estimated along with its state (Models::Joint).
             std::unique_ptr<Model> Joint(const std::vector<EstimatedParameter> &parameters);
 

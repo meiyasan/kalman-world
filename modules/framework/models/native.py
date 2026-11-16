@@ -601,6 +601,10 @@ def sensors_of(handle, keep=None):
         core.check(lib.kalman_model_sensor_R(handle, i, core.dptr(R)), "sensor_R")
         G = np.empty((k, n), dtype=np.float64)
         linear = core.check(lib.kalman_model_sensor_G(handle, i, core.dptr(G)), "sensor_G") == 1
+        gain, offset = core.ffi.new("double *"), core.ffi.new("double *")
+        calibrated = core.check(lib.kalman_model_sensor_calibration(handle, i, gain, offset),
+                                "sensor_calibration") == 1
+        linear = linear and not calibrated               # gain * G x + offset is read through C++
 
         def measure(x, t=None, _i=i, _k=k):
             state = np.ascontiguousarray(np.asarray(x, dtype=np.float64).reshape(-1))
@@ -614,6 +618,11 @@ def sensors_of(handle, keep=None):
                               labels=dict(observables[first:first + k]),
                               rate=(float(lib.kalman_model_sensor_rate(handle, i)) or None))
         sensor._keep = (handle, keep)                    # the C++ model it reads through
+        sensor.calibrated = calibrated
+        sensor.gain, sensor.offset = float(gain[0]), float(offset[0])
+        j = core.check(lib.kalman_model_sensor_instrument(handle, i), "sensor_instrument")
+        carrier = core._s(lib.kalman_model_instrument_name(handle, j))
+        sensor.instrument = carrier if (carrier != sensor.name or sensor.calibrated) else None
         out.append(sensor)
         first += k
     return out

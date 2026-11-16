@@ -31,6 +31,7 @@
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Sensor.h"
+#include "Kalman/Instrument.h"
 
 #include <memory>
 #include <vector>
@@ -39,6 +40,9 @@ namespace Kalman
 {
     /// \p model with one more sensor on the same state (Models::Fusion).
     std::shared_ptr<Models::Fusion> AddSensor(std::shared_ptr<Model> model, Sensor sensor);
+
+    /// \p model read by every sensor of \p instrument (a chain of Models::Fusion).
+    std::shared_ptr<Model> AddInstrument(std::shared_ptr<Model> model, const Instrument &instrument);
 
     /// \p model with some of its declared parameters estimated along with its state (Models::Joint).
     std::shared_ptr<Models::Joint> Joint(std::shared_ptr<Model> model, std::vector<EstimatedParameter> parameters);

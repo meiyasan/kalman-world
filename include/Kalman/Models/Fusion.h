@@ -59,6 +59,7 @@ namespace Kalman::Models
             std::size_t fNExtra = 0;          // its number of channels, k
 
             void Sync() const;
+            void Settle();      ///< structure, Jacobian scheme and default engine, from the sensor
             Vector Extra(const Vector &x, double t) const;
             Vector Stack(const Vector &head, const Vector &tail) const;
 
@@ -81,6 +82,12 @@ namespace Kalman::Models
             /// The number of channels it added.
             std::size_t NExtra() const { return fNExtra; }
             std::vector<Sensor> Sensors() const override;
+
+        private:
+            /// 1 for "<owner>.gain", 2 for "<owner>.offset", 0 for neither.
+            int Own(const std::string &name) const;
+
+        public:
             /// The inner model's initial state: the state is the same.
             void AdoptInitialState() override;
 
@@ -107,10 +114,17 @@ namespace Kalman::Models
             Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const override;
 
             // --- the parameters are the inner model's ---------------------------------
-            std::vector<std::string> ParameterNames() const override { return fInner->ParameterNames(); }
-            bool HasParameter(const std::string &name) const override { return fInner->HasParameter(name); }
-            double Parameter(const std::string &name) const override { return fInner->Parameter(name); }
-            void SetParameter(const std::string &name, double value) override { fInner->SetParameter(name, value); }
+            // and, for a calibrated sensor, the gain and offset its reading goes through:
+            // "<owner>.gain" and "<owner>.offset", with <owner> its instrument (or itself).
+            std::vector<std::string> ParameterNames() const override;
+            bool HasParameter(const std::string &name) const override;
+            double Parameter(const std::string &name) const override;
+            void SetParameter(const std::string &name, double value) override;
+
+            /// Give the added sensor a calibration to carry (see Sensor::calibrated).
+            void Calibrate(double gain = 1., double offset = 0.);
+            /// Name the instrument that carries the added sensor (see Sensor::instrument).
+            void SetInstrument(const std::string &instrument) { fSensor.instrument = instrument; }
 
             void CheckShapes() const override;
             std::string Describe() const override;

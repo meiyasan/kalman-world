@@ -66,8 +66,9 @@ included, so a change on one side has an obvious home on the other:
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
 | `framework/models/joint.py` | `Kalman/Models/Joint.h` | `Models::Joint` |
 | `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
+| `framework/instrument.py` | `Kalman/Instrument.h` | `Kalman::Instrument`, `Kalman::Compose` |
 | `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
-| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::Joint` |
+| `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
@@ -1143,6 +1144,29 @@ below), and the linear engine runs it. Through the C API:
 `kalman_model_add_sensor`, `kalman_model_add_sensor_matrix`, and the readers
 `kalman_model_sensor_count`, `kalman_model_sensor_name`,
 `kalman_model_sensor_channels`.
+
+`Kalman::Instrument` (`Kalman/Instrument.h`) is a set of sensors with one name,
+one rate and, after `Calibrate(gain, offset)`, one calibration:
+
+```cpp
+Kalman::Instrument station = Kalman::Compose({thermometer, co2}, "station", 0.5);   // or thermometer | co2
+station.Calibrate(1., 0.);
+auto read = Kalman::AddInstrument(room, station);        // a chain of Models::Fusion
+read->Parameter("station.offset");                       // declared by the model
+auto joint = Kalman::Joint(read, {{"station.offset", 2., 0.}});   // estimated with the state
+```
+
+`Instrument::Sensors()` stamps each sensor (`Sensor::instrument`, `rate`,
+`calibrated`, `gain`, `offset`); `Sensor::Read(x, t)` is the reading through
+the calibration, and `Models::Fusion` declares `<name>.gain` and
+`<name>.offset`, setting them on every sensor of the instrument at once. A
+calibrated reading is `gain * G x + offset`, which no matrix `H` carries: the
+model is then maps, on the extended engine, its Jacobian rows scaled by the
+gain. `Model::Instruments()` groups the sensors back. Through the C API:
+`kalman_model_set_instrument`, `kalman_model_instrument_count`,
+`kalman_model_instrument_name`, `kalman_model_sensor_instrument`,
+`kalman_model_sensor_calibration`. Tested in `tests/cxx/25_instrument.cc` and
+`tests/test_instrument.py`, on the same scenario.
 
 From Python: `KalmanSensor` (`framework/sensor.py`), `model.add_sensor(sensor)`
 and `model.sensors`. Python describes nothing itself. A Python model hands its

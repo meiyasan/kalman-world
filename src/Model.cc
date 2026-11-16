@@ -432,6 +432,24 @@ namespace Kalman
         return {builtIn};
     }
 
+    std::vector<Instrument> Model::Instruments() const
+    {
+        std::vector<Instrument> out;
+        for (const Sensor &s : Sensors())
+        {
+            if (out.empty() || out.back().name != s.Owner() || s.instrument.empty())
+            {
+                Instrument group(s.Owner(), {});
+                group.calibrated = s.calibrated;
+                group.gain = s.gain;
+                group.offset = s.offset;
+                out.push_back(std::move(group));
+            }
+            out.back().sensors.push_back(s);
+        }
+        return out;
+    }
+
     void Model::DeclareState(std::vector<Component> components)
     {
         CheckComponents(components, fNState, "the state");

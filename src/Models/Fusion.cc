@@ -11,6 +11,7 @@
 #include "Kalman/Models/Fusion.h"
 #include "Kalman/Differentiator.h"
 
+#include <algorithm>
 #include <sstream>
 #include <stdexcept>
 #include <utility>
@@ -34,23 +35,7 @@ namespace Kalman::Models
         SetBuiltInSensorName(fInner->BuiltInSensorName());
         AdoptInitialState();
 
-        if (fSensor.IsLinear())
-        {
-            // Still what the inner model is: its matrices with one more block, or code.
-            if (fInner->HasAnalyticJacobian()) SetAnalyticJacobian(true);
-            else SetDifferentiator(fInner->Differentiator(), fInner->Epsilon());
-            SetStructure(fInner->Structure());
-        }
-        else
-        {
-            // A function on top of a linear model is no longer its matrices. Its rows
-            // of the Jacobian are differenced with the inner scheme (forward, at its
-            // default step, under an inner model that has formulas).
-            if (fInner->DefaultEngine() == EngineKind::Linear) SetDefaultEngine(EngineKind::Extended);
-            if (fInner->HasAnalyticJacobian()) SetDifferentiator(DifferentiatorKind::Forward);
-            else SetDifferentiator(fInner->Differentiator(), fInner->Epsilon());
-            SetStructure(StructureKind::Maps);
-        }
+        Settle();
 
         DeclareState(fInner->StateComponents());
         // An observable keeps its name unless the model already has one of that
@@ -67,6 +52,28 @@ namespace Kalman::Models
         DeclareMeasurement(std::move(channels));
     }
 
+    void Fusion::Settle()
+    {
+        const bool formulas = fSensor.IsLinear() || fSensor.jacobian;
+        if (fSensor.IsLinear() && !fSensor.calibrated)
+        {
+            // Still what the inner model is: its matrices with one more block, or code.
+            if (fInner->HasAnalyticJacobian()) SetAnalyticJacobian(true);
+            else SetDifferentiator(fInner->Differentiator(), fInner->Epsilon());
+            SetStructure(fInner->Structure());
+            return;
+        }
+        // A function on top of a linear model is no longer its matrices; nor is a
+        // calibrated reading, `gain * G x + offset`, which no matrix H carries. The
+        // rows of the Jacobian without a formula are differenced with the inner
+        // scheme (forward, at its default step, under an inner model that has formulas).
+        if (fInner->DefaultEngine() == EngineKind::Linear) SetDefaultEngine(EngineKind::Extended);
+        if (fInner->HasAnalyticJacobian() && formulas && fSensor.IsLinear()) SetAnalyticJacobian(true);
+        else if (fInner->HasAnalyticJacobian()) SetDifferentiator(DifferentiatorKind::Forward);
+        else SetDifferentiator(fInner->Differentiator(), fInner->Epsilon());
+        SetStructure(StructureKind::Maps);
+    }
+
     void Fusion::AdoptInitialState()
     {
         if (fInner->X0().Size() == fNState) SetInitialState(fInner->X0());
@@ -80,6 +87,55 @@ namespace Kalman::Models
         return out;
     }
 
+    // --- parameters: the inner model's, and the calibration of the added sensor ---------
+
+    int Fusion::Own(const std::string &name) const
+    {
+        if (!fSensor.calibrated) return 0;
+        const std::string &owner = fSensor.Owner();
+        if (name == owner + ".gain") return 1;
+        if (name == owner + ".offset") return 2;
+        return 0;
+    }
+
+    void Fusion::Calibrate(double gain, double offset)
+    {
+        fSensor.calibrated = true;
+        fSensor.gain = gain;
+        fSensor.offset = offset;
+        Settle();
+    }
+
+    std::vector<std::string> Fusion::ParameterNames() const
+    {
+        std::vector<std::string> names = fInner->ParameterNames();
+        if (fSensor.calibrated)
+            for (const char *suffix : {".gain", ".offset"})
+            {
+                const std::string name = fSensor.Owner() + suffix;
+                if (std::find(names.begin(), names.end(), name) == names.end()) names.push_back(name);
+            }
+        std::sort(names.begin(), names.end());
+        return names;
+    }
+
+    bool Fusion::HasParameter(const std::string &name) const { return Own(name) != 0 || fInner->HasParameter(name); }
+
+    double Fusion::Parameter(const std::string &name) const
+    {
+        const int own = Own(name);
+        return own == 1 ? fSensor.gain : own == 2 ? fSensor.offset : fInner->Parameter(name);
+    }
+
+    void Fusion::SetParameter(const std::string &name, double value)
+    {
+        const int own = Own(name);
+        if (own == 1) fSensor.gain = value;
+        if (own == 2) fSensor.offset = value;
+        // Sensors of one instrument share its calibration: the layers below take it too.
+        if (own == 0 || fInner->HasParameter(name)) fInner->SetParameter(name, value);
+    }
+
     void Fusion::Sync() const
     {
         if (fInner->SampleRate() != fSampleRate) fInner->SetSampleRate(fSampleRate);
@@ -87,11 +143,7 @@ namespace Kalman::Models
 
     Vector Fusion::Extra(const Vector &x, double t) const
     {
-        Vector g = fSensor.g ? fSensor.g(x, t) : fSensor.G * x;
-        if (g.Size() != fNExtra)
-            throw std::runtime_error("Models::Fusion: the sensor '" + fSensor.name + "' returned "
-                                     + std::to_string(g.Size()) + " values, " + std::to_string(fNExtra) + " expected.");
-        return g;
+        return fSensor.Read(x, t);
     }
 
     Vector Fusion::Stack(const Vector &head, const Vector &tail) const
@@ -126,8 +178,9 @@ namespace Kalman::Models
         Sync();
         const Matrix Hs = fInner->JacobianH(x, t);
         Matrix G;
-        if (fSensor.IsLinear()) G = fSensor.G;
-        else if (fSensor.jacobian) G = fSensor.jacobian(x, t);
+        const double gain = fSensor.calibrated ? fSensor.gain : 1.;
+        if (fSensor.IsLinear()) { G = fSensor.G; G *= gain; }
+        else if (fSensor.jacobian) { G = fSensor.jacobian(x, t); G *= gain; }
         else
             G = Differentiators::Jacobian(
                 fNumericalScheme, [this, t](const Vector &xx) { return Extra(xx, t); }, x, fEpsilon);
@@ -154,7 +207,8 @@ namespace Kalman::Models
         {
             for (std::size_t i = 0; i < fNInnerMeasure; ++i) out(i, j) = Hs(i, j);
             if (fSensor.IsLinear())
-                for (std::size_t i = 0; i < fNExtra; ++i) out(fNInnerMeasure + i, j) = fSensor.G(i, j);
+                for (std::size_t i = 0; i < fNExtra; ++i)
+                    out(fNInnerMeasure + i, j) = (fSensor.calibrated ? fSensor.gain : 1.) * fSensor.G(i, j);
         }
         return out;
     }

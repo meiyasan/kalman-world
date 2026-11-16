@@ -29,8 +29,9 @@ in C++; a model written in Python is called back from the C++ loop.
 
 **Sensors and operations.** A model lists its sensors, and a model can be made
 from another: `model.add_sensor(sensor)` reads the same state with one more
-instrument (sensor fusion), `model.joint({...})` estimates some of its
-parameters along with its state. The same in C++ (`model.AddSensor(sensor)`,
+sensor (sensor fusion), `model.add_instrument(compose(s1, s2))` with a set of
+them that share a rate and a calibration, `model.joint({...})` estimates some
+of its parameters (an instrument's offset among them) along with its state. The same in C++ (`model.AddSensor(sensor)`,
 `model.Joint({...})`). See [Models](docs/4_Models.md).
 
 **Applications.** Fifteen worked systems, from ballistics, rockets and space

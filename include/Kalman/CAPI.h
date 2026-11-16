@@ -205,6 +205,24 @@ int kalman_model_sensor_R(const kalman_model_t *model, int i, double *R);
 /// 0 when it reads through a function (`G` untouched), -1 on failure. `G` may be NULL to ask only.
 int kalman_model_sensor_G(const kalman_model_t *model, int i, double *G);
 
+/// Name the instrument that carries the sensor `model` was made with (a model returned by
+/// kalman_model_add_sensor*; Kalman::Instrument), and, with `calibrated` non-zero, send its
+/// reading through `z = gain * g(x, t) + offset`: the model then declares the parameters
+/// `<instrument>.gain` and `<instrument>.offset` (`<sensor>.gain`, `.offset` for a null or
+/// empty `instrument`). 0 or -1.
+int kalman_model_set_instrument(kalman_model_t *model, const char *instrument, int calibrated, double gain,
+                                double offset);
+/// The number of instruments of a model (Model::Instruments()): its sensors grouped by the
+/// instrument that carries them, a sensor on its own counting as one. -1 on failure.
+int kalman_model_instrument_count(const kalman_model_t *model);
+/// The name of instrument `j`. Valid until the next call on this thread.
+const char *kalman_model_instrument_name(const kalman_model_t *model, int j);
+/// The index of the instrument that carries sensor `i`. -1 on failure.
+int kalman_model_sensor_instrument(const kalman_model_t *model, int i);
+/// The calibration of sensor `i`: 1 with `gain` and `offset` filled when its reading goes
+/// through one, 0 when it does not (1 and 0 are then written), -1 on failure.
+int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *gain, double *offset);
+
 /// How well `steps` measurements determine each direction of the state of `model`, along its
 /// noise-free path from its initial state (Kalman::Observability). `eigenvalues` (n, smallest
 /// first) and `weakness` (n: the share of each state component in the directions the

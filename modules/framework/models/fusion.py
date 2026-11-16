@@ -38,7 +38,7 @@ class Fusion(OperationModel):
     DESCRIPTION = "A model read by one more sensor on the same state."
     VERSION = "1.0"
 
-    def __init__(self, model: KalmanModel, sensor: KalmanSensor, **kwargs):
+    def __init__(self, model: KalmanModel, sensor: KalmanSensor, *, instrument=None, **kwargs):
         if not isinstance(model, KalmanModel):
             raise TypeError(f"add_sensor: the model must be a KalmanModel, got {type(model).__name__}.")
         if not isinstance(sensor, KalmanSensor):
@@ -48,6 +48,8 @@ class Fusion(OperationModel):
         self.inner, self.sensor = model, sensor
         k, R, _ = sensor.resolved(n, model.x0, float(model.t0 or 0.0))
         labels = sensor.labels or []                               # none: C++ names them after the sensor
+        # A sensor carried by an instrument takes its rate when it states none.
+        rate = float(sensor.rate or (instrument.rate if instrument is not None else None) or 0.0)
         self.n_extra = k
 
         self._inner_cxx = inner = self._inner(model)               # borrowed by the C++ model
@@ -57,8 +59,7 @@ class Fusion(OperationModel):
         cunits = ffi.new("const char *[]", units) if labels else ffi.NULL
         if sensor.is_linear:
             handle = lib.kalman_model_add_sensor_matrix(inner, sensor.name.encode(), k, sensor.G.shape[1],
-                                                        core.cdptr(sensor.G), core.cdptr(R), cnames, cunits,
-                                                        float(sensor.rate or 0.0))
+                                                        core.cdptr(sensor.G), core.cdptr(R), cnames, cunits, rate)
         else:
             errors: list[BaseException] = []
             state = lambda x: np.frombuffer(ffi.buffer(x, n * 8), dtype=np.float64).reshape(n, 1).copy()
@@ -83,9 +84,15 @@ class Fusion(OperationModel):
                   if sensor.jacobian is not None else ffi.NULL)
             self._keeps.append((measure, dg, errors))
             handle = lib.kalman_model_add_sensor(inner, sensor.name.encode(), k, measure, dg, core.cdptr(R),
-                                                 cnames, cunits, float(sensor.rate or 0.0), ffi.NULL)
+                                                 cnames, cunits, rate, ffi.NULL)
         if handle == ffi.NULL:
             raise self._failed("add_sensor")
+        if instrument is not None:
+            # Its name, and its calibration: the C++ model then declares the
+            # parameters "<instrument>.gain" and "<instrument>.offset".
+            core.check(lib.kalman_model_set_instrument(handle, instrument.name.encode(), int(instrument.calibrated),
+                                                       float(instrument.gain), float(instrument.offset)),
+                       "set_instrument")
 
         self._adopt(handle, [model], **kwargs)
 

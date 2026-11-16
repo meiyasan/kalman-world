@@ -68,6 +68,12 @@ namespace Kalman
         std::vector<Component> channels;    ///< its observables; named after the sensor when empty
         double rate = 0.;                   ///< how often it reports, per unit of the model's time; 0: at every step
 
+        // What a sensor gets from the instrument that carries it (Kalman::Instrument).
+        std::string instrument;             ///< the instrument's name; empty for a sensor on its own
+        bool calibrated = false;            ///< whether its reading goes through a gain and an offset
+        double gain = 1.;                   ///< z = gain * g(x, t) + offset
+        double offset = 0.;
+
         Sensor() = default;
         /// A sensor that reads `g(x, t)`.
         Sensor(std::string name, Measure g, const Matrix &R, MeasureJacobian jacobian = nullptr,
@@ -82,6 +88,13 @@ namespace Kalman
 
         /// Its observables: the given ones, or the sensor's name (numbered when k > 1).
         std::vector<Component> Observables() const;
+
+        /// Its readings of the state \p x: `g(x, t)` or `G x`, through its calibration.
+        /// \throws std::runtime_error when `g` returns another number of readings.
+        Vector Read(const Vector &x, double t = 0.) const;
+
+        /// The name its calibration parameters carry: the instrument's, or its own.
+        const std::string &Owner() const { return instrument.empty() ? name : instrument; }
 
         /**
          * \brief Check the sensor against a state of \p n components.

@@ -50,7 +50,7 @@ from its sample rate), `z` the measurement.
 | states | the components of the state, with units | `model.states` | `model.States()` | in place |
 | observable | a quantity that can be measured, with its unit | `model.observables` | `model.Observables()` | in place |
 | sensor | what acquires a measurement: what it reads, its noise, its observables, its rate | `KalmanSensor`, `model.sensors` | `Kalman::Sensor`, `model.Sensors()` | in place |
-| instrument | a set of sensors and what they share: calibration, pose, rate, delay | `KalmanInstrument`, `model.instruments` | `Kalman::Instrument`, `model.Instruments()` | step 12 |
+| instrument | a set of sensors and what they share: a name, a rate, a calibration (`"<name>.gain"`, `"<name>.offset"`, two parameters of the model) | `KalmanInstrument`, `model.instruments` | `Kalman::Instrument`, `model.Instruments()` | in place |
 | measurement | the numbers that come out of the sensors | `zk` | `zk` | in place |
 | parameter | a named number of the model, which can be estimated | `model["c_drag"]` | `model.Parameter("c_drag")` | in place |
 | observability | whether the measurements can tell the state components apart, asked before any data | `model.observability(steps)` | `Kalman::Observability(model, steps)` | in place |
@@ -76,9 +76,10 @@ each exists as a method of the model and as a function.
 |---|---|---|---|---|
 | joint | the model with some parameters estimated along with its state | `model.joint({...})` | `model.Joint({...})` | in place |
 | add a sensor | the model read by one more sensor on the same state (sensor fusion) | `model.add_sensor(sensor)` | `model.AddSensor(sensor)` | in place |
-| add an instrument | the same for a set of sensors | `model.add_instrument(instrument)` | `model.AddInstrument(instrument)` | step 12 |
+| add an instrument | the same for a set of sensors | `model.add_instrument(instrument)` | `model.AddInstrument(instrument)` | in place |
 | lag | the model carrying its last L states (delayed sensors, fixed-lag smoothing) | `model.lag(L)` | `model.Lag(L)` | step 13 |
-| compose | models side by side, each with its own state; also sensors into an instrument | `a.compose(b)` | `a.Compose(b)` | step 14 |
+| compose | sensors into an instrument | `compose(s1, s2, name=...)`, `s1 \| s2` | `Kalman::Compose({s1, s2}, name)`, `s1 \| s2` | in place |
+| compose | models side by side, each with its own state | `a.compose(b)` | `a.Compose(b)` | step 14 |
 | route | several models of one system, with a probability on each (the IMM of the literature) | `KalmanModel.route(models, Pi)` | `Model::Route(models, Pi)` | step 15 |
 
 ## Control: acting on the system

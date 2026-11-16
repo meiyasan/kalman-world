@@ -520,10 +520,65 @@ int kalman_model_sensor_measure(const kalman_model_t *model, int i, const double
         if (!x || !z) throw std::invalid_argument("null x or z");
         const Kalman::Sensor sensor = SensorAt(model, i);
         const Kalman::Vector state = Vec(x, Deref(model).NState(), "x");
-        const Kalman::Vector out = sensor.IsLinear() ? sensor.G * state : sensor.g(state, t);
-        if (out.Size() != sensor.Channels()) throw std::runtime_error("the sensor returned the wrong number of readings");
+        const Kalman::Vector out = sensor.Read(state, t);
         for (std::size_t c = 0; c < out.Size(); ++c) z[c] = out(c);
         return 0;
+    });
+}
+
+int kalman_model_set_instrument(kalman_model_t *model, const char *instrument, int calibrated, double gain,
+                                double offset)
+{
+    return Guard([&] {
+        auto *fusion = dynamic_cast<Kalman::Models::Fusion *>(&Deref(model));
+        if (!fusion) throw std::invalid_argument("not a model made by adding a sensor");
+        if (instrument && *instrument) fusion->SetInstrument(instrument);
+        if (calibrated) fusion->Calibrate(gain, offset);
+        return 0;
+    });
+}
+
+int kalman_model_instrument_count(const kalman_model_t *model)
+{
+    return Guard([&] { return static_cast<int>(Deref(model).Instruments().size()); });
+}
+
+const char *kalman_model_instrument_name(const kalman_model_t *model, int j)
+{
+    static thread_local std::string name;
+    name.clear();
+    Guard([&] {
+        const auto instruments = Deref(model).Instruments();
+        if (j < 0 || static_cast<std::size_t>(j) >= instruments.size()) throw std::out_of_range("no such instrument");
+        name = instruments[static_cast<std::size_t>(j)].name;
+        return 0;
+    });
+    return name.c_str();
+}
+
+int kalman_model_sensor_instrument(const kalman_model_t *model, int i)
+{
+    return Guard([&] {
+        if (i < 0) throw std::out_of_range("no such sensor");
+        int first = 0, j = 0;
+        for (const auto &instrument : Deref(model).Instruments())
+        {
+            first += static_cast<int>(instrument.sensors.size());
+            if (i < first) return j;
+            ++j;
+        }
+        throw std::out_of_range("no such sensor");
+    });
+}
+
+int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *gain, double *offset)
+{
+    return Guard([&] {
+        if (!gain || !offset) throw std::invalid_argument("null gain or offset");
+        const Kalman::Sensor sensor = SensorAt(model, i);
+        *gain = sensor.calibrated ? sensor.gain : 1.;
+        *offset = sensor.calibrated ? sensor.offset : 0.;
+        return sensor.calibrated ? 1 : 0;
     });
 }
 

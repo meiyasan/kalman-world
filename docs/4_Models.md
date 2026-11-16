@@ -326,6 +326,48 @@ through the two sensors' Jacobians (`tests/test_add_sensor.py`, `TestCameras`:
 the depth of a point 40 m away is left with metres of doubt by one camera and
 found to 5 cm by two).
 
+### Instruments
+
+An **instrument** is a set of sensors on one piece of hardware: a weather
+station, a receiver, a camera. Sensors are composed into one, and the model
+takes it whole:
+
+```python
+from kalman.framework import compose
+
+station = compose(thermometer, co2, name="station", rate=0.5)    # or: thermometer | co2
+room    = model.add_instrument(station)       # a new model, read by both
+room.instruments                              # [model's own sensor, station]
+```
+
+Its sensors share the instrument's name, its `rate` (unless a sensor states
+its own), and its **calibration** when it is given one: every reading then
+goes through one gain and one offset,
+
+```
+z = gain * g(x, t) + offset
+```
+
+which the model declares as two parameters, `"station.gain"` and
+`"station.offset"`. Being parameters, `joint` can estimate them along with the
+state, which is calibrating the instrument while it measures:
+
+```python
+thermo  = compose(probe, name="thermo").calibrate(gain=1.0, offset=0.0)
+alone   = room.add_instrument(thermo).joint({"thermo.offset": (2.0, 0.0)})
+alone.observability(50)["weakness"]     # temperature and thermo.offset share a direction: not determined
+
+checked = room.add_instrument(thermo).add_sensor(reference).joint({"thermo.offset": (2.0, 0.0)})
+checked.observability(50)["observable"] # True: a calibrated thermometer settles it
+record  = checked.filter(zk)            # the last state component is the offset
+```
+
+One thermometer cannot tell its own offset from the temperature, and
+`observability` says so before any data; a second one, already calibrated,
+makes the offset a quantity the filter finds (`examples/python/instrument.py`:
+1.5 found to 0.01 from 400 readings). A calibrated reading is not a matrix
+`H x`, so the model runs on the extended engine.
+
 The sensor a model is built with reads its own `h` and `R` and carries the
 name given as first argument; a model names its channels in its constructor
 with `self._name_channels(["X", "Y", "Z"])`. `add_sensor` takes a

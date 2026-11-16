@@ -63,6 +63,10 @@ class KalmanSensor:
             raise ValueError(f"KalmanSensor: the rate of {name!r} must be positive.")
         self.rate = None if rate is None else float(rate)
         self.labels = self._labels(labels)
+        # What the instrument that carries it gives it (see KalmanInstrument); filled
+        # for the sensors a model reports (model.sensors).
+        self.instrument = None
+        self.calibrated, self.gain, self.offset = False, 1.0, 0.0
 
     # ------------------------------------------------------------------
     @staticmethod
@@ -118,6 +122,17 @@ class KalmanSensor:
         names none and has not been added to a model yet (``model.sensors`` gives
         the names it took)."""
         return self.labels
+
+    def compose(self, *sensors, name=None, rate=None):
+        """This sensor and ``sensors`` as one instrument (a
+        :class:`~.instrument.KalmanInstrument`); ``self | other`` for two."""
+        from .operations import compose
+        return compose(self, *sensors, name=name, rate=rate)
+
+    def __or__(self, other):
+        if not isinstance(other, KalmanSensor):
+            return NotImplemented
+        return self.compose(other)
 
     def __repr__(self):
         k = self.channels
