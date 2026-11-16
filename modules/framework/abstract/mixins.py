@@ -456,15 +456,10 @@ class KalmanStateMixin:
     def get_measurement(self : KalmanEngineMetadata, k=None, indexing=None):
         return KalmanRecord._normalize_out(self.measurement, indexing=indexing) if k is None else self.measurement[k]
 
-    # Initial state API
-    def get_initial_state_vector(self : KalmanEngineMetadata):
-        return self._model.x0
-    def get_initial_state_covariance(self : KalmanEngineMetadata):
-        return self._model.P0
-    def get_initial_state(self : KalmanEngineMetadata):
-        return self.get_initial_state_vector(), self.get_initial_state_covariance()
-    def initial_state(self : KalmanEngineMetadata, x0=None, P0=None):
-        return self._model.initial_state(x0=x0, P0=P0)
+    def initial_state(self : KalmanEngineMetadata, x0=None, P0=None, *, samples=None, rng=None):
+        """The model's initial state, by the model's own accessor: set it, read it
+        as ``(x0, P0)``, or get it as ``samples`` states (``KalmanModel.initial_state``)."""
+        return self._model.initial_state(x0=x0, P0=P0, samples=samples, rng=rng)
     
     # Utility to extract vector/matrix from state tuple or list of tuples
     def _get_tuple(self: KalmanEngineMetadata, state, ith):

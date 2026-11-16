@@ -160,6 +160,12 @@ class TestReservedNames(unittest.TestCase):
         for gone in ("initial_state_vector", "initial_state_covariance", "get_initial_state",
                      "get_initial_state_vector", "get_initial_state_covariance", "initial_ensemble"):
             self.assertFalse(hasattr(model, gone), gone)
+        from modules.framework.filter import KalmanFilter
+        kf = KalmanFilter(model)
+        np.testing.assert_array_equal(kf.initial_state()[0], model.x0)        # the filter has the same one
+        self.assertEqual(kf.initial_state(samples=3, rng=1).shape, (2, 3))
+        for gone in ("get_initial_state", "get_initial_state_vector", "get_initial_state_covariance"):
+            self.assertFalse(hasattr(kf, gone), gone)
 
     def test_ensemble_words_are_not_model_methods(self):
         for cls in [KalmanModel] + self._models():
