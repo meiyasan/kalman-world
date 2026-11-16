@@ -80,9 +80,9 @@ class TestReservedNames(unittest.TestCase):
     #: Aliases of f and h, provided by the base class; a model never defines them.
     ALIASES = ("step", "sense")
     #: Looked up on a model by the ensemble engine only.
-    ENSEMBLE_HOOKS = ("localization", "initial_ensemble")
+    ENSEMBLE_HOOKS = ("localization",)
     #: Ensemble-filter words that are not model methods: the engine's own steps.
-    NOT_ON_A_MODEL = ("forecast", "observe", "project", "analyze")
+    NOT_ON_A_MODEL = ("forecast", "observe", "project", "analyze", "initial_ensemble")
 
     @staticmethod
     def _models():
@@ -140,6 +140,26 @@ class TestReservedNames(unittest.TestCase):
         for alias in self.ALIASES:
             with self.assertRaisesRegex(TypeError, "is the name of"):
                 type("Wrong", (KalmanModel,), {alias: lambda self, x: x})
+
+    def test_one_initial_state_in_two_forms(self):
+        import numpy as np
+        model = KalmanModel("cv", fs=10.0, F=np.array([[1, 0.1], [0, 1]]), H=np.array([[1.0, 0.0]]),
+                            Q=1e-3 * np.eye(2), R=np.array([[0.1]]), x0=np.array([[1.0], [-2.0]]),
+                            P0=np.diag([4.0, 0.25]))
+        x0, P0 = model.initial_state()                                   # read
+        np.testing.assert_array_equal(x0.ravel(), [1.0, -2.0])
+        model.initial_state([0.0, 1.0])                                  # set the mean only
+        np.testing.assert_array_equal(model.x0.ravel(), [0.0, 1.0])
+        np.testing.assert_array_equal(model.P0, np.diag([4.0, 0.25]))
+        X = model.initial_state(samples=4000, rng=3)                     # as samples: columns
+        self.assertEqual(X.shape, (2, 4000))
+        np.testing.assert_allclose(X.mean(axis=1), [0.0, 1.0], atol=0.1)
+        np.testing.assert_allclose(X.std(axis=1), [2.0, 0.5], rtol=0.05)
+        np.testing.assert_array_equal(model.initial_state(samples=5, rng=3), model.initial_state(samples=5, rng=3))
+        self.assertEqual(model.initial_state(samples=7).shape, (2, 7))   # numpy's global stream
+        for gone in ("initial_state_vector", "initial_state_covariance", "get_initial_state",
+                     "get_initial_state_vector", "get_initial_state_covariance", "initial_ensemble"):
+            self.assertFalse(hasattr(model, gone), gone)
 
     def test_ensemble_words_are_not_model_methods(self):
         for cls in [KalmanModel] + self._models():

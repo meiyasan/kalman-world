@@ -35,8 +35,7 @@ class KalmanSampler:
         (``model.sample()`` always uses a fresh sampler, so it is unaffected.)
         """
         self._t = float(self.model.t0) if self.model.t0 is not None else 0.0
-        x0 = self.model.get_initial_state_vector()
-        P0 = self.model.get_initial_state_covariance()
+        x0, P0 = self.model.x0, self.model.P0
         self._x = None if x0 is None else np.array(x0, dtype=float, copy=True)
         self._P = None if P0 is None else np.array(P0, dtype=float, copy=True)
         return self

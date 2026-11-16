@@ -168,7 +168,7 @@ class TestKolmogorovFlowModel(unittest.TestCase):
 
     def test_f_and_h_of_many_fields_are_f_and_h_of_each(self):
         m = self.model
-        X = m.initial_ensemble(3, rng=0)
+        X = m.initial_state(samples=3, rng=0)
         self.assertEqual(m.BATCHED, ("f", "h"))
         Xf = m.f(X)
         np.testing.assert_allclose(Xf[:, 1], m.f(X[:, 1].copy()), atol=1e-10)
@@ -259,7 +259,7 @@ class TestFieldGradients(unittest.TestCase):
 
     def test_gradient_diagnostic_uncertainty(self):
         m = _tiny_flow()
-        ens = m.initial_ensemble(12, rng=0)
+        ens = m.initial_state(samples=12, rng=0)
         d = m.gradient_diagnostic(ens)
         for key in ("gx_mean", "gy_mean", "mag_mean", "mag_sigma"):
             self.assertEqual(d[key].shape, (m.grid, m.grid))
@@ -380,7 +380,7 @@ class TestTruthReplay(unittest.TestCase):
 
     def test_replay_clamps_cycles_and_validates_shape(self):
         model = _tiny_flow()
-        traj = model.initial_ensemble(4, rng=0).T            # (4, n): 4 cycles worth
+        traj = model.initial_state(samples=4, rng=0).T            # (4, n): 4 cycles worth
         osse = TwinExperiment(model, n_cycles=99, n_members=6, truth_trajectory=traj)
         self.assertEqual(osse.n_cycles, 4)
         grid_shaped = traj.reshape(4, model.grid, model.grid)  # (T, g, g) accepted too
@@ -556,7 +556,7 @@ class TestFlowSurrogate(unittest.TestCase):
             traj, width=8, nblocks=1, epochs=5, rollout=2, batch=8, verbose=False)
         self.assertTrue(np.isfinite(val))
         forecast = fs.as_forecaster(net, mu, sd)
-        X = model.initial_ensemble(3, rng=0)
+        X = model.initial_state(samples=3, rng=0)
         self.assertEqual(forecast(X).shape, X.shape)
         errs = fs.rollout_rmse(forecast, model, n_cycles=3)
         self.assertEqual(len(errs), 3)
@@ -573,7 +573,7 @@ class TestFlowSurrogate(unittest.TestCase):
         except ImportError:
             self.skipTest("torch not installed")
         model = _tiny_flow()
-        X = model.initial_ensemble(2, rng=0)
+        X = model.initial_state(samples=2, rng=0)
         marker = lambda Z: np.full_like(Z, 7.0)              # obviously-not-solver map
         hybrid = ReanchoredForecast(model, marker, every=3)
         self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     # cycle 1: surrogate

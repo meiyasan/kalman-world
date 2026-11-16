@@ -263,7 +263,7 @@ class TestFieldSteeringCoupling(unittest.TestCase):
     def test_velocity_sampler_periodic_and_finite(self):
         from modules.apps.weather.storms import field_steering
         flow = self._flow()
-        field = flow.initial_ensemble(1, rng=0)[:, 0]
+        field = flow.initial_state(samples=1, rng=0)[:, 0]
         samp = flow.velocity_sampler(field, (120., 160., 8., 45.), speed=10.0)
         ve, vn = samp(140.0, 20.0)
         self.assertTrue(np.isfinite(ve) and np.isfinite(vn))
@@ -273,7 +273,7 @@ class TestFieldSteeringCoupling(unittest.TestCase):
     def test_field_steering_composes_base_plus_anomaly(self):
         from modules.apps.weather.storms import field_steering
         flow = self._flow()
-        field = flow.initial_ensemble(1, rng=0)[:, 0]
+        field = flow.initial_state(samples=1, rng=0)[:, 0]
         samp = flow.velocity_sampler(field, (120., 160., 8., 45.), speed=10.0)
         s0 = field_steering(samp, base=japan_steering, weight=0.0)
         np.testing.assert_allclose(s0(140, 20), japan_steering(140, 20), atol=1e-9)  # weight 0 = base
@@ -283,7 +283,7 @@ class TestFieldSteeringCoupling(unittest.TestCase):
     def test_field_ensemble_drives_track_spread(self):
         from modules.apps.weather.storms import field_steering
         flow = self._flow()
-        ens = flow.initial_ensemble(12, rng=1)
+        ens = flow.initial_state(samples=12, rng=1)
         x0 = np.array([[140.], [20.], [-14.], [6.], [75.]])
         ends = []
         for k in range(ens.shape[1]):

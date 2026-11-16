@@ -46,7 +46,7 @@ from its sample rate), `z` the measurement.
 | `f`, `h` on many states | the same two functions given N states side by side; a model declares when its own code handles the batch | `model.f(X, u, t)`, `model.h(X, t)` | overloads of `f` and `h` | in place |
 | `step`, `sense` | readable aliases of `f` and `h`; never written by a model | `model.step(...)`, `model.sense(...)` | `model.Step(...)`, `model.Sense(...)` | in place |
 | `Q`, `R` | process and measurement noise covariances | `model.Q(t)`, `model.R(t)` | `model.Q(t)`, `model.R(t)` | in place |
-| initial state | where the system starts and how sure that is (the prior): a mean and a covariance, or N samples of it | `model.initial_state(x0, P0)`, `model.initial_state(samples=N)` | `model.InitialState(x0, P0)`, `model.InitialState(N, rng)` | step 4 |
+| initial state | where the system starts and how sure that is (the prior): a mean and a covariance, or N samples of it | `model.initial_state(x0, P0)`, `model.initial_state(samples=N)` | `model.InitialState(x0, P0)`, `model.InitialState(N, normal)` | in place |
 | states | the components of the state, with units | `model.states` | `model.States()` | in place |
 | observable | a quantity that can be measured, with its unit | `model.observables` | `model.Observables()` | in place |
 | sensor | what acquires a measurement: what it reads, its noise, its observables | `KalmanSensor`, `model.sensors` | `Kalman::Sensor`, `model.Sensors()` | in place |
@@ -154,13 +154,13 @@ finding. In C++ these are `Engines::EnsembleModel` and `Tracking::Detector`.
 ## Names being replaced
 
 Already gone: `model.forecast(X)` and `model.observe(X)`, now `f` and `h` given
-many states.
+many states; `model.initial_ensemble(N)`, now `model.initial_state(samples=N)`;
+`initial_state_vector`, `initial_state_covariance` and the `get_initial_state`
+variants, now `initial_state(x0, P0)`.
 
 | Older name | Contract name | Step |
 |---|---|---|
 | `model.localization()` | `model.covariance_mask()` | 5 |
-| `model.initial_ensemble(N)` | `model.initial_state(samples=N)` | 4 |
-| `initial_state_vector`, `initial_state_covariance`, `get_initial_state` and its variants | `initial_state(x0, P0)` | 4 |
 | `sensor_id`, the first argument of a model | `sensor`: a name, a `KalmanSensor`, or a list | 6 |
 | the label form `add_sensor("X")` | a sensor's `labels` | 6 |
 | `NativeTwin`, "the C++ twin" | `NativeCounterpart`, "the C++ model" | 7 |

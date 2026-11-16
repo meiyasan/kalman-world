@@ -139,12 +139,15 @@ namespace Kalman::Engines
             return;
         }
 
-        const Matrix factor = Utils::CholeskyFactor(model.P0(), true);
-        if (factor.Empty())
-            throw std::runtime_error("Engines::Ensemble: P0 has no Cholesky factor; cannot seed the members.");
+        fMembers = InitialEnsemble(model);
+    }
 
-        fMembers.assign(fNMembers, model.X0());
-        for (Vector &x : fMembers) x += Draw(factor);
+    std::vector<Vector> Ensemble::InitialEnsemble(const Model &model) const
+    {
+        // initial ensemble: the ensemble word for the model's initial state given
+        // as samples (Kalman::Model::InitialState), drawn from this engine's stream.
+        std::normal_distribution<double> gauss(0., 1.);
+        return model.InitialState(fNMembers, [&] { return gauss(fRandom); });
     }
 
     Vector Ensemble::Mean() const

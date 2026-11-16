@@ -974,8 +974,8 @@ the "Python" column above is measured.
 
 `KolmogorovFlowModel` and `BarotropicFlowModel` are fields: the state is the
 vorticity on a periodic grid (n = 4096 at 64 x 64), filtered by the ensemble
-engine through the hooks `forecast`, `observe`, `localization` and
-`initial_ensemble`. Their twins (`Apps::Weather::KolmogorovFlow`,
+engine through `f` and `h` written for every member at once, `localization`,
+and an initial state given as samples. Their twins (`Apps::Weather::KolmogorovFlow`,
 `kolmogorov-flow`, and `Apps::Weather::BarotropicFlow`, `barotropic-flow`)
 implement `Engines::EnsembleModel` beside `Kalman::Model`: the members are
 forecast in parallel (one thread each, up to the `threads` parameter, 0 for
@@ -1295,7 +1295,7 @@ linear filter. Both can be present in one process.
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
-| Ensemble hooks | `model.forecast(X)`, `model.observe(X)`, `model.localization()`, `model.initial_ensemble()`; the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Engines::EnsembleModel` (`Forecast`, `Observe`, `Localization`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
+| What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.localization()`; the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`Localization`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
 | Applications | `modules/apps/` | `libKalmanApps`: a twin for every model given by code (19 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no twin; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |

@@ -119,7 +119,7 @@ def test_a_data_seeded_climatology_replaces_the_synthetic_one():
 
     # And it must actually be used, not just stored beside a spin-up.
     assert model.climatology() is clim
-    ensemble = model.initial_ensemble(4)
+    ensemble = model.initial_state(samples=4)
     assert ensemble.shape == (32 * 32, 4)
     for col in range(4):
         assert np.any(np.all(np.isclose(clim, ensemble[:, [col]]), axis=0)), \
@@ -140,7 +140,7 @@ def test_a_data_seeded_climatology_rejects_the_wrong_shape_and_nans():
 def test_the_model_advances_a_physical_field_without_blowing_up():
     model = BarotropicFlowModel("test", grid=32, dt=60.0, cycle=60)
     model.climatology(n_snapshots=4, spinup=60, stride=5)
-    state = model.initial_ensemble(2)[:, 0]
+    state = model.initial_state(samples=2)[:, 0]
 
     for _ in range(5):
         state = model.f(state)

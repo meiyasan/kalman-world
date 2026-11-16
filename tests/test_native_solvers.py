@@ -87,10 +87,10 @@ class TestEnsembleAnalysisInCxx(unittest.TestCase):
         engine = EnsembleKalmanEngine(n_members=12, inflation=1.05, seed=5)
         rng = np.random.default_rng(9)
         # A small ensemble drawn around a spun-up state (the model's own
-        # initial_ensemble would spin a 2500-step climatology first).
+        # initial state as samples would spin a 2500-step climatology first).
         truth = model.solver.advance(model.solver.random_ic(), 200).ravel()
         start = truth[:, None] + 0.3 * np.random.default_rng(1).standard_normal((model.n, 12))
-        model.initial_ensemble = lambda N, rng=None: start.copy()
+        model.initial_state = lambda x0=None, P0=None, *, samples=None, rng=None: start.copy()
         def go():
             engine.reset(model)
             x = truth.copy()

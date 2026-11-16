@@ -393,6 +393,21 @@ namespace Kalman
     std::vector<Model::Component> Model::MeasurementComponents() const
     { return Components(fMeasurementComponents, fNMeasure, "z"); }
 
+    std::vector<Vector> Model::InitialState(std::size_t N, const std::function<double()> &normal) const
+    {
+        const Matrix factor = Utils::CholeskyFactor(fP0, true);
+        if (factor.Empty())
+            throw std::runtime_error("Kalman::Model: P0 has no Cholesky factor; the initial state cannot be sampled.");
+        std::vector<Vector> states(N, fX0);
+        for (Vector &x : states)
+        {
+            Vector w(factor.Cols());
+            for (std::size_t i = 0; i < w.Size(); ++i) w(i) = normal();
+            x += factor * w;
+        }
+        return states;
+    }
+
     void Model::f(std::vector<Vector> &states, const Vector &u, double t) const
     {
         for (Vector &x : states) x = f(x, u, t);

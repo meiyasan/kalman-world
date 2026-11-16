@@ -34,10 +34,10 @@ class ParticleEngine(KalmanEngine):
     # Per-run state
     # ------------------------------------------------------------------
     def reset(self, model):
-        n = model.n
-        x0 = np.asarray(model.x0, dtype=np.float64).reshape(-1)
-        P0 = np.asarray(model.P0, dtype=np.float64)
-        self._particles = np.random.multivariate_normal(x0, P0, size=self.n_particles)
+        # The cloud a run starts from: the model's initial state as samples (drawn
+        # from numpy's global stream, as the rest of this engine's noise is).
+        self._particles = np.ascontiguousarray(
+            np.asarray(model.initial_state(samples=self.n_particles), dtype=np.float64).T)
         self._weights = np.full(self.n_particles, 1.0 / self.n_particles)
         return self
 

@@ -91,8 +91,9 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
       ``sig_o``); the probes are drawn once from ``seed``.
     - ``localization()`` — Gaspari–Cohn tapers from periodic torus distances
       between grid cells and probes (radius ``loc_radius`` grid units).
-    - ``initial_ensemble(N)`` — random climatology snapshots (large, honest
-      initial error), from a cached spin-up run.
+    - ``initial_state(samples=N)`` — random climatology snapshots (large, honest
+      initial error), from a cached spin-up run: the ensemble filter's initial
+      ensemble.
     - ``f`` and ``h`` take every member in one call (``BATCHED``). ``f`` on many
       fields is **the AI plug-in point**: assign ``model.surrogate = fn``
       (columns → columns) to swap the solver for a learned forecast without
@@ -442,11 +443,16 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
             self._clim = np.array(snaps).T
         return self._clim
 
-    def initial_ensemble(self, N, rng=None):
-        """Random climatology snapshots as columns (d, N) — honest large error."""
+    def initial_state(self, x0=None, P0=None, *, samples=None, rng=None):
+        """The initial state. As samples (``samples=N``) it is ``N`` random
+        climatology snapshots, the columns of ``(d, N)``: an honest, large
+        initial error, where a draw around ``x0`` with a ``d x d`` covariance
+        would be neither affordable nor a flow."""
+        if samples is None:
+            return super().initial_state(x0, P0)
         rng = rng if isinstance(rng, np.random.Generator) else np.random.default_rng(rng)
         S = self.climatology()
-        return S[:, rng.choice(S.shape[1], size=N, replace=False)].copy()
+        return S[:, rng.choice(S.shape[1], size=int(samples), replace=False)].copy()
 
     def equilibrium_state(self, decorrelate=400):
         """A truth-candidate state on the attractor, decorrelated from the
@@ -543,8 +549,8 @@ class TwinExperiment:
                                  f"(T, {model.grid}, {model.grid}); got {traj.shape}")
             self._truth_traj = traj
             self.n_cycles = min(self.n_cycles, traj.shape[0])
-        self._ens0 = model.initial_ensemble(self.n_members,
-                                            rng=np.random.default_rng(seed_setup))
+        self._ens0 = model.initial_state(samples=self.n_members,
+                                         rng=np.random.default_rng(seed_setup))
         # --- asynchronous observation network (optional) -------------------
         # Real stations are neither synchronized nor equal-rate: each probe
         # gets its own reporting period and phase, and cycles where it stays

@@ -183,6 +183,14 @@ namespace Kalman::Engines
 
             // --- the ensemble-native steps, for DA workflows -------------------------
             /**
+             * \brief The members a run starts from when none were handed in.
+             *
+             * "Initial ensemble" is the ensemble filter's word for the model's initial
+             * state given as samples: this is Kalman::Model::InitialState(N, ...)
+             * with the engine's own random stream.
+             */
+            std::vector<Vector> InitialEnsemble(const Model &model) const;
+            /**
              * \brief Forecast: advance every member one step; returns the new mean.
              *
              * "Forecast" is the ensemble filter's word for the predict step. It is the

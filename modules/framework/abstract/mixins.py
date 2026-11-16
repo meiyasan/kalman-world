@@ -283,21 +283,26 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
     def sample_rate(self : KalmanModelMetadata) -> float:
         return self.fs if self.fs is not None else 0.0
 
-    # Initial state API
-    def get_initial_state_vector(self):
-        return self.x0
-    def get_initial_state_covariance(self):
-        return self.P0
-    def get_initial_state(self):
-        return self.initial_state_vector(), self.initial_state_covariance()
+    # ------------------------------------------------------
+    # The initial state: where the system starts, and how sure that is (the prior)
+    # ------------------------------------------------------
+    def initial_state(self, x0=None, P0=None, *, samples=None, rng=None):
+        """The initial state, in its two forms.
 
-    def initial_state_vector(self, x0=None):
-        x0, _ = self.initial_state(x0=x0)
-        return x0
-    def initial_state_covariance(self, P0=None):
-        _, P0 = self.initial_state(P0=P0)
-        return P0
-    def initial_state(self, x0=None, P0=None):
+        ``initial_state(x0, P0)`` sets its mean and covariance (either may be
+        left out) and ``initial_state()`` reads them: both give ``(x0, P0)``.
+
+        ``initial_state(samples=N)`` gives it as ``N`` states drawn from it, the
+        columns of ``(n, N)``: what the engines that carry many states start
+        from (the particle filter's cloud; the ensemble filter calls it its
+        initial ensemble). By default they are drawn around ``x0`` with
+        covariance ``P0``, from ``rng`` (a numpy ``Generator`` or a seed), or
+        from numpy's global stream when ``rng`` is ``None``. A model for which
+        that is wrong or impossible (a field too large for a ``P0``) overrides
+        this method and answers the ``samples=`` case itself.
+        """
+        if samples is not None:
+            return self._draw_initial_state(int(samples), rng)
 
         import warnings
         n = int(self.n)
@@ -332,9 +337,20 @@ class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, Kalma
 
         self.P0 = P0
 
-        # Return the (vector, covariance) so initial_state_vector()/_covariance() — which
-        # unpack this — work, and callers can read back what was set.
+        # Return the (vector, covariance), so callers can read back what was set.
         return self.x0, self.P0
+
+    def _draw_initial_state(self, N, rng=None):
+        """``N`` draws of ``x0 + noise of covariance P0``, as the columns of ``(n, N)``."""
+        n = int(self.n)
+        x0 = np.asarray(self.x0, dtype=np.float64).reshape(-1)
+        P0 = np.asarray(self.P0, dtype=np.float64)
+        if rng is None:                                   # numpy's global stream
+            return np.random.multivariate_normal(x0, P0, size=N).T
+        rng = rng if isinstance(rng, np.random.Generator) else np.random.default_rng(rng)
+        if np.allclose(P0, np.diag(np.diag(P0))):
+            return x0[:, None] + np.sqrt(np.diag(P0))[:, None] * rng.standard_normal((n, N))
+        return x0[:, None] + np.linalg.cholesky(P0) @ rng.standard_normal((n, N))
 
     # ------------------------------------------------------
     # Measurement <-> state mapping (via the observation matrix H)

@@ -32,9 +32,9 @@ class EnsembleKalmanEngine(KalmanEngine):
 
     Like :class:`ParticleEngine` this is a **stateful** engine: it holds the
     ensemble ``(n, N)`` for the duration of a forward pass and (re)seeds it via
-    ``reset(model)`` — from ``model.initial_ensemble(N, rng)`` when the model
-    provides one (e.g. climatology snapshots), else from a Gaussian ``x0/P0``
-    draw.  ``_predict``/``_update`` return the ensemble mean/covariance as
+    ``reset(model)`` — from ``model.initial_state(samples=N, rng)``: a Gaussian
+    ``x0/P0`` draw by default, or what the model gives (e.g. climatology
+    snapshots).  ``_predict``/``_update`` return the ensemble mean/covariance as
     ``(x, P)`` so records and diagnostics are unchanged; the raw members stay
     available as ``.members`` for DA-style workflows that never want the dense
     ``(n, n)`` covariance (see :meth:`forecast` / :meth:`analyze`).
@@ -89,20 +89,21 @@ class EnsembleKalmanEngine(KalmanEngine):
     # ------------------------------------------------------------------
     # Per-run state
     # ------------------------------------------------------------------
-    def reset(self, model):
+    def initial_ensemble(self, model):
+        """The members a run starts from, ``(n, N)``.
+
+        "Initial ensemble" is the ensemble filter's word for the model's initial
+        state given as samples: this is ``model.initial_state(samples=N, rng=...)``
+        with the engine's own random stream.
+        """
         N = self.n_members
-        init = getattr(model, "initial_ensemble", None)
-        if callable(init):
-            X = np.asarray(init(N, rng=self.rng), dtype=np.float64)
-            if X.shape != (model.n, N):
-                raise ValueError(f"initial_ensemble must return ({model.n},{N}); got {X.shape}")
-        else:
-            x0 = np.asarray(model.x0, dtype=np.float64).reshape(-1, 1)
-            P0 = np.asarray(model.P0, dtype=np.float64)
-            if np.allclose(P0, np.diag(np.diag(P0))):
-                X = x0 + np.sqrt(np.diag(P0))[:, None] * self.rng.standard_normal((model.n, N))
-            else:
-                X = x0 + np.linalg.cholesky(P0) @ self.rng.standard_normal((model.n, N))
+        X = np.asarray(model.initial_state(samples=N, rng=self.rng), dtype=np.float64)
+        if X.shape != (model.n, N):
+            raise ValueError(f"initial_state(samples={N}) must return ({model.n},{N}); got {X.shape}")
+        return X
+
+    def reset(self, model):
+        X = self.initial_ensemble(model)
         self._members = X
 
         loc = self._localization

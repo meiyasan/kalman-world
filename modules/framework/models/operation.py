@@ -61,10 +61,12 @@ class OperationModel(NativeModel):
         self._refresh()
         return super().native_handle()
 
-    def initial_state(self, x0=None, P0=None):
+    def initial_state(self, x0=None, P0=None, *, samples=None, rng=None):
         """The initial state of this model, or one its inner model takes: the latter
         is handed to the inner model, and this model derives its own from it again
         in C++ (``Model::AdoptInitialState``), by the rule it was built with."""
+        if samples is not None:
+            return super().initial_state(samples=samples, rng=rng)
         if getattr(self, "x0", None) is None or "inners" not in self.__dict__:
             return super().initial_state(x0, P0)            # during construction
         if x0 is None and P0 is None:

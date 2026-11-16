@@ -57,6 +57,7 @@
 #include "Kalman/Differentiator.h"
 #include "Kalman/Sensor.h"
 
+#include <functional>
 #include <map>
 #include <memory>
 #include <string>
@@ -270,6 +271,21 @@ namespace Kalman
             const Matrix &P0() const { return fP0; }
             void SetInitialState(const Vector &x0);
             void SetInitialCovariance(const Matrix &P0);
+            /// Set the initial state: its mean and its covariance (the Python `initial_state(x0, P0)`).
+            void InitialState(const Vector &x0, const Matrix &P0) { SetInitialState(x0); SetInitialCovariance(P0); }
+            /**
+             * \brief The initial state as \p N states drawn from it (the Python
+             * `initial_state(samples=N)`).
+             *
+             * What an engine that carries many states starts from: the particle
+             * filter's cloud, and what the ensemble filter calls its initial
+             * ensemble. By default each is `x0 + L w`, with `L L^T = P0` and `w` made
+             * of n values of \p normal (a source of standard normal draws, called n
+             * times per state, state after state). A model for which that is wrong or
+             * impossible (a field too large for a `P0`) overrides it.
+             * \throws std::runtime_error when `P0` has no Cholesky factor.
+             */
+            virtual std::vector<Vector> InitialState(std::size_t N, const std::function<double()> &normal) const;
 
             EngineKind DefaultEngine() const { return fDefaultEngine; }
             void SetDefaultEngine(EngineKind kind) { fDefaultEngine = kind; }

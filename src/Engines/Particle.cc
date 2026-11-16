@@ -52,12 +52,9 @@ namespace Kalman::Engines
             fResamples = 0;
             return;
         }
-        const Matrix factor = Utils::CholeskyFactor(model.P0(), true);
-        if (factor.Empty())
-            throw std::runtime_error("Engines::Particle: P0 has no Cholesky factor; cannot seed the cloud.");
-
-        fParticles.assign(fNParticles, model.X0());
-        for (Vector &p : fParticles) p += Draw(factor);
+        // The cloud a run starts from: the model's initial state as samples.
+        std::normal_distribution<double> gauss(0., 1.);
+        fParticles = model.InitialState(fNParticles, [&] { return gauss(fRandom); });
         fWeights.assign(fNParticles, 1. / static_cast<double>(fNParticles));
         fResamples = 0;
     }

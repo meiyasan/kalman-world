@@ -107,8 +107,9 @@ record = enkf.forward(zk)
 
 The covariance is carried by the ensemble and never formed densely. If the model
 defines `localization()`, it supplies the Gaspari–Cohn tapers; if it defines
-`initial_ensemble(N, rng)`, members are seeded from climatology instead of a
-Gaussian `x0/P0` draw. `backward()` raises — there is no RTS smoother.
+the `samples=` case of `initial_state`, the members (the initial ensemble) are
+seeded from what it gives, climatology for a flow, instead of a Gaussian `x0/P0`
+draw. `backward()` raises — there is no RTS smoother.
 
 For a twin-experiment (OSSE) harness comparing EnKF against a free run, see
 `kalman.apps.weather.TwinExperiment` and `kalman.api.run_osse()`.

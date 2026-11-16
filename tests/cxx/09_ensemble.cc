@@ -187,5 +187,23 @@ int main()
         CHECK(projected.size() == 4 && projected[0].Size() == 1, "Ensemble::Project: h of every member");
     }
 
+    // --- the initial state as samples; the ensemble's initial ensemble is that -------------------
+    {
+        Fixture::ConstantVelocity cv(1, 100.);
+        Vector x0(2); x0(0) = 1.; x0(1) = -2.;
+        Matrix P0(2, 2, 0.); P0(0, 0) = 4.; P0(1, 1) = 0.25;
+        cv.InitialState(x0, P0);
+        CHECK(cv.X0()(1) == -2. && cv.P0()(0, 0) == 4., "InitialState(x0, P0): sets both");
+        const auto ones = cv.InitialState(3, [] { return 1.; });
+        CHECK(ones.size() == 3 && ones[2](0) == 3. && ones[2](1) == -1.5, "InitialState(N, normal): x0 + L w for each");
+
+        Engines::Ensemble a(6, 1., 11), b(6, 1., 11);
+        a.Reset(cv);
+        const auto start = b.InitialEnsemble(cv);
+        bool same = start.size() == 6;
+        for (std::size_t s = 0; s < start.size() && same; ++s) same = start[s](0) == a.Members()[s](0);
+        CHECK(same, "Ensemble::InitialEnsemble: what Reset() starts from");
+    }
+
     return Check::Summary("09_ensemble");
 }
