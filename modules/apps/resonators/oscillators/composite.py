@@ -34,11 +34,11 @@ class OscillatorModel(CompositeKalmanModel):
 
     **Signal flow:**
 
-    * ``preprocess`` — real strain → Hilbert → demodulate at ``fc`` → ``[Re, Im]``
+    * ``prepare_measurements`` — real strain → Hilbert → demodulate at ``fc`` → ``[Re, Im]``
     * Filter runs in rotating frame on the ``[Re, Im]`` envelope
-    * ``postprocess`` — ``[Re, Im]`` → remodulate at ``fc`` → **real band reconstruction**
+    * ``finish_output`` — ``[Re, Im]`` → remodulate at ``fc`` → **real band reconstruction**
 
-    The postprocess remodulation ensures that ``sample().zk`` is a real signal in the
+    The finish_output remodulation ensures that ``sample().zk`` is a real signal in the
     same space as the model's input, so ``model.filter(sample.zk)`` works directly.
 
     Parameters
@@ -118,8 +118,8 @@ class OscillatorModel(CompositeKalmanModel):
         super().__init__(*blocks, obs_mode=KalmanObservableReadout.FUSED, **kwargs)
         self.fs = self._fs_dec
 
-        self.preprocess = self._demod_preprocess
-        self.postprocess = self._identity_postprocess
+        self.prepare_measurements = self._demod_preprocess
+        self.finish_output = self._identity_postprocess
 
     # --- resample_poly helper (handles float sample rates) ---
     @staticmethod
@@ -215,7 +215,7 @@ class OscillatorModel(CompositeKalmanModel):
         taps = firwin(ntaps, cutoff_hz / fnyq)
         return filtfilt(taps, 1.0, psi, padlen=min(3 * ntaps, n - 1))
 
-    # --- postprocess: filtered phasor sum → real band signal at original rate ---
+    # --- finish_output: filtered phasor sum → real band signal at original rate ---
     def _reconstruct_postprocess(self, zk_hat, band_limit=False, **kwargs):
         """Postprocess: FUSED phasor sum (decimated) → real band signal at original rate.
 
@@ -241,10 +241,10 @@ class OscillatorModel(CompositeKalmanModel):
         arg = self._wc * t
         return (psi_up.real * np.cos(arg) - psi_up.imag * np.sin(arg)).reshape(-1, 1)
 
-    # --- identity postprocess (kept for backward compat / standalone use) ---
+    # --- identity finish_output (kept for backward compat / standalone use) ---
     @staticmethod
     def _identity_postprocess(zk_hat, **kwargs):
-        """Identity postprocess: pass ``h(xk)`` through unchanged as ``[Re, Im]`` phasors."""
+        """Identity finish_output: pass ``h(xk)`` through unchanged as ``[Re, Im]`` phasors."""
         return np.asarray(zk_hat, dtype=float).reshape(len(zk_hat), -1)
 
     def reconstruct(self, record, *, band_limit=False):

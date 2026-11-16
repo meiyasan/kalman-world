@@ -92,7 +92,7 @@ namespace Kalman::Models
             bool HasProcessNoiseInput() const override { return fInner->HasProcessNoiseInput(); }
             Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const override
             { Sync(); return fInner->f(x, u, w, t); }
-            Vector ClipControl(const Vector &u) const override { return fInner->ClipControl(u); }
+            Vector LimitControl(const Vector &u) const override { return fInner->LimitControl(u); }
             Matrix F(double t = 0.) const override { Sync(); return fInner->F(t); }
             Matrix B(double t = 0.) const override { return fInner->B(t); }
             Matrix L(double t = 0.) const override { return fInner->L(t); }

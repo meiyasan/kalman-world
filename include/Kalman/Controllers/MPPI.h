@@ -24,7 +24,7 @@ namespace Kalman::Controllers
      * Unlike LQR — one gain from one linearisation — MPPI resolves
      * `argmin E[sum e^T Qcost e + u^T Rcost u]` from scratch each tick by rolling
      * `nRollouts` perturbed sequences through the model's own nonlinear `f()`, so any
-     * actuator limit the model enforces (ClipControl) is respected *during* planning.
+     * actuator limit the model enforces (LimitControl) is respected *during* planning.
      * Warm-started: the nominal found at step k, shifted by one, seeds step k+1.
      * The random stream is controller-owned and seeded. Mirrors `controllers/mppi.py`.
      */

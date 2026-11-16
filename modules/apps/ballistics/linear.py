@@ -87,9 +87,9 @@ class BallisticLinearModel(LinearKalmanModel):
 
         super().__init__(sensor, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
-    def preprocess(self, zk, uk=None, **kwargs): return zk, uk
-    def inprocess(self, state_vector, **kwargs): return state_vector
-    def postprocess(self, xk_hat, **kwargs):     return xk_hat
+    def prepare_measurements(self, zk, uk=None, **kwargs): return zk, uk
+    def adjust_state(self, state_vector, **kwargs): return state_vector
+    def finish_output(self, xk_hat, **kwargs):     return xk_hat
 
     # ------------------------------------------------------------------
     # Trajectory estimators (closed-form for constant acceleration)

@@ -38,7 +38,7 @@ new `B` rebinds the model's input matrix as a side effect).
 ### Cost accounting
 
 Cost is charged against the command the actuator can **actually deliver**
-(`model.clip_u(u)`), not the controller's raw ask. A fixed-gain controller with
+(`model.limit_control(u)`), not the controller's raw ask. A fixed-gain controller with
 no notion of an actuator limit can request far more effort than the plant ever
 receives; charging `Rcost` against that fictitious effort would unfairly inflate
 its cost relative to a controller whose raw output already respects the limit.

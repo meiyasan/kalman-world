@@ -137,7 +137,7 @@ class TestModelPredictiveControl(unittest.TestCase):
         x, asked, cost = model.x0.copy(), [], 0.0
         for k in range(n_steps):
             u = np.asarray(controller(x, 1e-4 * np.eye(3), k / model.fs), dtype=float).reshape(-1, 1)
-            applied = model.clip_u(u)
+            applied = model.limit_control(u)
             asked.append(float(u[0, 0]))
             cost += float((x - x_ref).T @ Qcost @ (x - x_ref) + applied.T @ Rcost @ applied)
             x = np.asarray(model.decode_step(x, u=u, t=k / model.fs), dtype=float).reshape(-1, 1)
@@ -358,7 +358,7 @@ class _Unstable(ExtendedKalmanModel):
     def h(self, x, v=None, t=None):
         return np.asarray(x, float).reshape(-1)[:1].reshape(1, 1)
 
-    def clip_u(self, u):
+    def limit_control(self, u):
         if self.fail_clip:
             raise KeyError("no actuator")
         return np.clip(u, -0.5, 0.5)

@@ -10,7 +10,7 @@ from .metadata import KalmanModelMetadata, KalmanEngineMetadata, KalmanFilterMet
 from ..constants import KalmanStateFlavor
 
 from .contracts import KalmanModelABC, KalmanEngineABC, KalmanFilterABC
-class KalmanProxyMixin:
+class KalmanRunMixin:
     """
     Model-side convenience sugar (intent: the model is *not* the algorithm).
 
@@ -273,7 +273,7 @@ class KalmanInferenceMixin:
             raise ValueError(f"R must be ({m},{m}); got {format_shape(Rarr)}")
         return Rarr
 
-class KalmanModelMixin(KalmanModelABC, KalmanProxyMixin, KalmanShapeMixin, KalmanInferenceMixin):
+class KalmanModelMixin(KalmanModelABC, KalmanRunMixin, KalmanShapeMixin, KalmanInferenceMixin):
 
     def time(self: KalmanModelMetadata, k: int | float | None = None) -> np.ndarray:
         N = int(round(k * self.fs)) if k is not None else 0
@@ -579,8 +579,8 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
         self.engine.reset(self.model)
         return self
 
-    def __call__(self, gk, uk=None, **kwargs):
-        return self.forward(gk, uk, **kwargs)
+    def __call__(self, raw, uk=None, **kwargs):
+        return self.forward(raw, uk, **kwargs)
 
     def __len__(self : KalmanFilterMetadata):
         return len(self.posterior)
@@ -593,8 +593,8 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
     def get_record(self : KalmanFilterMetadata, *, flavor=KalmanStateFlavor.POSTERIOR, **kwargs) -> KalmanRecord:
 
         indexing    = kwargs.pop("indexing", None)
-        inprocess   = kwargs.pop("inprocess", True)
-        postprocess = kwargs.pop("postprocess", True)
+        adjust_state   = kwargs.pop("adjust_state", True)
+        finish_output = kwargs.pop("finish_output", True)
         if kwargs.pop("smooth", False):
             flavor = KalmanStateFlavor.SMOOTHED
 
@@ -610,13 +610,13 @@ class KalmanFilterMixin(KalmanFilterABC, KalmanStateMixin):
         else:
             raise ValueError(f"Unexpected flavor {flavor} for KalmanRecord.")
 
-        if inprocess:
-            xk_hat = self.model.inprocess(xk_hat, **kwargs)
+        if adjust_state:
+            xk_hat = self.model.adjust_state(xk_hat, **kwargs)
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk_hat = KalmanRecord._normalize_out(xk_hat)
 
         zk_hat = KalmanRecord._normalize_out([self.model.h(x.reshape(-1, 1)) for x in xk_hat], indexing=indexing)
-        if postprocess:
-            zk_hat = self.model.postprocess(zk_hat, **kwargs)
+        if finish_output:
+            zk_hat = self.model.finish_output(zk_hat, **kwargs)
 
         return KalmanRecord(self.time(), zk=zk_hat, xk=xk_hat, Pk=Pk_hat, flavor=flavor, model=self.model)

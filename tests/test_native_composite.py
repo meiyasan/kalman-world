@@ -193,14 +193,14 @@ class TestCompositeOfMatrices(unittest.TestCase):
         z = strain([180.1], [1.0], [1.3e4], 0.1, seed=4)
         # A gap in the decimated envelope: NaN after the demodulation, both components.
         model = one_line()
-        zk, _ = model.preprocess(z.reshape(-1, 1))
+        zk, _ = model.prepare_measurements(z.reshape(-1, 1))
         zk = zk.copy()
         zk[20:30] = np.nan
         zk[40, 1] = np.nan
 
         def run(make):
             model = make()
-            return model.filter(zk, preprocess=False)
+            return model.filter(zk, prepare_measurements=False)
         with native.python_reference(), \
                 mock.patch.object(KalmanFilter, "_native_forward_eligible", return_value=False):
             py = run(one_line)

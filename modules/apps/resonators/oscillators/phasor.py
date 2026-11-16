@@ -114,7 +114,7 @@ class PhasorOscillatorModel(LinearKalmanModel):
         row[0, 1::2] = -np.sin(self._omega * t)
         return row
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         """Use the raw scalar signal. A 2-column analytic ``[real, imag]`` input is
         accepted for convenience — only the real (measured) column is kept."""
         zk = np.asarray(zk)

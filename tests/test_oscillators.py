@@ -46,7 +46,7 @@ class TestAnalyticOscillatorModel(unittest.TestCase):
         self.assertAlmostEqual(m["fc"], 12.5)
 
     def test_sample_postprocess_roundtrip(self):
-        """preprocess/postprocess are inverse rotations: sample().zk is analytic
+        """prepare_measurements/finish_output are inverse rotations: sample().zk is analytic
         lab-frame data that can be fed straight back into filter()."""
         m = AnalyticOscillatorModel("s", fs=128, f0=10.0, fc=10.0, Q=1000,
                                     measurement_uncertainty=0.5, process_uncertainty=0.01,
@@ -243,7 +243,7 @@ class TestOscillatorBankModel(unittest.TestCase):
         comp = OscillatorBankModel(w1, w2)
         rec = comp.filter(strain)
         self.assertEqual(rec.xk.shape[1], 4)        # 2 windows × [Re, Im]
-        self.assertEqual(rec.zk.shape[1], 4)        # identity postprocess: [Re1,Im1,Re2,Im2]
+        self.assertEqual(rec.zk.shape[1], 4)        # identity finish_output: [Re1,Im1,Re2,Im2]
         _no_nan_inf(rec.xk, "OscillatorComposite xk")
         recon = comp.reconstruct(rec)
         self.assertEqual(recon.shape, (N,))         # upsampled back to original

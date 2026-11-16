@@ -99,5 +99,5 @@ class OperationModel(NativeModel):
     def observables(self):
         return self.inners[0].observables
 
-    def clip_u(self, u):
-        return self.inners[0].clip_u(u)
+    def limit_control(self, u):
+        return self.inners[0].limit_control(u)

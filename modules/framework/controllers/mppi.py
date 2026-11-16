@@ -32,7 +32,7 @@ class MPPIKalmanController(KalmanController):
     each step only has to refine an already-good guess rather than search from scratch.
 
     With libKalman installed the rollouts run in ``Kalman::Controllers::MPPI``, which then
-    holds the warm-started sequence: ``model.f`` and ``model.clip_u`` are called back from
+    holds the warm-started sequence: ``model.f`` and ``model.limit_control`` are called back from
     C++ for a model written in Python (and not at all for a model written in C++). The
     perturbations are still drawn here, from the same seeded numpy generator in the same
     order, so a seeded controller makes the same decisions on either path.
@@ -87,7 +87,7 @@ class MPPIKalmanController(KalmanController):
                     # every candidate, and so the weighted-average nominal, inside the box
                     # the actuator can actually reach -- matching real MPC practice, and
                     # keeping u_try consistent with what u_nom will be averaged from.
-                    u_k = np.asarray(model.clip_u(u_try[i, k].reshape(-1, 1)), dtype=float).reshape(-1)
+                    u_k = np.asarray(model.limit_control(u_try[i, k].reshape(-1, 1)), dtype=float).reshape(-1)
                     u_try[i, k] = u_k
                     u_k = u_k.reshape(-1, 1)
                     xi = np.asarray(model.f(xi, u=u_k, t=t + k * dt), dtype=float).reshape(-1, 1)

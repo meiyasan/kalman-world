@@ -118,7 +118,7 @@ namespace Fixture
 
             double Limit() const { return fLimit; }
 
-            Kalman::Vector ClipControl(const Kalman::Vector &u) const override
+            Kalman::Vector LimitControl(const Kalman::Vector &u) const override
             {
                 if (fLimit <= 0.) return u;
                 Kalman::Vector out = u;
@@ -129,7 +129,7 @@ namespace Fixture
             Kalman::Vector f(const Kalman::Vector &x, const Kalman::Vector &u,
                              double t = 0.) const override
             {
-                return Kalman::Model::f(x, u.Empty() ? u : ClipControl(u), t);
+                return Kalman::Model::f(x, u.Empty() ? u : LimitControl(u), t);
             }
     };
 

@@ -146,13 +146,13 @@ class SuspensionModel(LinearKalmanModel):
 
         super().__init__(sensor, F=F, H=H, Q=Q, R=R, B=B_d, fs=fs, **kwargs)
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         return zk, uk
 
-    def inprocess(self, zk_hat, **kwargs):
+    def adjust_state(self, zk_hat, **kwargs):
         return zk_hat
 
-    def postprocess(self, zk_hat, **kwargs):
+    def finish_output(self, zk_hat, **kwargs):
         return zk_hat
 
     # ==================================================================

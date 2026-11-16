@@ -78,9 +78,9 @@ class CompositeKalmanModel(KalmanModel):
             self.R = lambda t=None: block_diag(*[(m.R(t) if callable(m.R) else m.R) for m in self.models if m.m > 0])
 
         # Processing hooks
-        self.preprocess  = self._bind_preprocess()
-        self.inprocess   = self._bind_inprocess()
-        self.postprocess = self._bind_postprocess()
+        self.prepare_measurements  = self._bind_prepare_measurements()
+        self.adjust_state   = self._bind_adjust_state()
+        self.finish_output = self._bind_finish_output()
 
         super().__init__("Composite", x0=x0, P0=P0, fs=self.fs, **kwargs)
         self._labels = [label for m in self.models for label in (m._labels or [])]
@@ -289,11 +289,11 @@ class CompositeKalmanModel(KalmanModel):
     # ==========================================================
     #  Pre / In / Post processing (mode-aware)
     # ==========================================================
-    def _bind_preprocess(self):
-        """Bind preprocess — always independent of observation mode."""
-        def preprocess(zk, uk: Optional[np.ndarray] = None, **kwargs):
+    def _bind_prepare_measurements(self):
+        """Bind prepare_measurements — always independent of observation mode."""
+        def prepare_measurements(zk, uk: Optional[np.ndarray] = None, **kwargs):
             """
-            Apply each submodel’s preprocess independently.
+            Apply each submodel’s prepare_measurements independently.
             zk: (T, M, 1)
             uk: (T, L, 1)
             """
@@ -310,17 +310,17 @@ class CompositeKalmanModel(KalmanModel):
 
             out_zk, out_uk = [], []
             for m, zk_i, uk_i in zip(self.models, zk_parts, uk_parts):
-                zk_p, uk_p = m.preprocess(zk_i, uk_i, **kwargs)
+                zk_p, uk_p = m.prepare_measurements(zk_i, uk_i, **kwargs)
                 out_zk.append(zk_p if zk_p is not None else np.empty((zk.shape[0], 0, 1)))
                 out_uk.append(uk_p if uk_p is not None else np.empty((zk.shape[0], 0, 1)))
 
             return np.concatenate(out_zk, axis=1), np.concatenate(out_uk, axis=1)
-        return preprocess
+        return prepare_measurements
 
 
-    def _bind_inprocess(self):
-        """Bind inprocess — independent across observation channels."""
-        def inprocess(zk_hat, **kwargs):
+    def _bind_adjust_state(self):
+        """Bind adjust_state — independent across observation channels."""
+        def adjust_state(zk_hat, **kwargs):
             """
             Transform predicted measurements per submodel.
             zk_hat: (T, M, 1)
@@ -329,14 +329,14 @@ class CompositeKalmanModel(KalmanModel):
                 return np.empty((0, 0, 1))
 
             parts = np.split(zk_hat, np.cumsum([m.m for m in self.models[:-1]]), axis=1)
-            out = [m.inprocess(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
+            out = [m.adjust_state(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
             return np.concatenate(out, axis=1)
-        return inprocess
+        return adjust_state
 
 
-    def _bind_postprocess(self):
-        """Bind postprocess — independent of observation mode."""
-        def postprocess(zk_hat, **kwargs):
+    def _bind_finish_output(self):
+        """Bind finish_output — independent of observation mode."""
+        def finish_output(zk_hat, **kwargs):
             """
             Apply each submodel’s postprocessing to predicted measurements.
             zk_hat: (T, M, 1)
@@ -345,19 +345,19 @@ class CompositeKalmanModel(KalmanModel):
                 return np.empty((0, 0, 1))
 
             parts = np.split(zk_hat, np.cumsum([m.m for m in self.models[:-1]]), axis=1)
-            out = [m.postprocess(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
+            out = [m.finish_output(z_i, **kwargs) for m, z_i in zip(self.models, parts)]
             return np.concatenate(out, axis=1)
-        return postprocess
+        return finish_output
 
     # -----------------------------
     # Abstract methods are dynamically bound in __init__
     # -----------------------------
 
-    def preprocess(self, zk, uk = None, **kwargs):
+    def prepare_measurements(self, zk, uk = None, **kwargs):
         pass
-    def inprocess(self, zk_hat, **kwargs):
+    def adjust_state(self, zk_hat, **kwargs):
         pass
-    def postprocess(self, zk_hat, **kwargs):
+    def finish_output(self, zk_hat, **kwargs):
         pass
 
     def f(self, x: np.ndarray, u: Optional[np.ndarray] = None, w: Optional[np.ndarray] = None, t: Optional[float] = None) -> np.ndarray:

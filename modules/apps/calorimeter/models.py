@@ -142,10 +142,10 @@ class CalorimeterLinearModel(_CaloBase):
         Rk = self._R_k[k]; self._step += 1
         return Rk
 
-    def preprocess(self, zk, uk=None, **kw):
+    def prepare_measurements(self, zk, uk=None, **kw):
         self._step = 0; return zk, uk
-    def inprocess(self, xk_hat, **kw):   return xk_hat
-    def postprocess(self, zk_hat, **kw): return zk_hat
+    def adjust_state(self, xk_hat, **kw):   return xk_hat
+    def finish_output(self, zk_hat, **kw): return zk_hat
 
     @staticmethod
     def build_measurements(hits):
@@ -253,10 +253,10 @@ class _CaloEnergyModel(_CaloBase):
         R3[2, 2] = max(sig, 1e-12); self._step += 1
         return R3
 
-    def preprocess(self, zk, uk=None, **kw):
+    def prepare_measurements(self, zk, uk=None, **kw):
         self._step = 0; return zk, uk
-    def inprocess(self, xk_hat, **kw):   return xk_hat
-    def postprocess(self, zk_hat, **kw): return zk_hat
+    def adjust_state(self, xk_hat, **kw):   return xk_hat
+    def finish_output(self, zk_hat, **kw): return zk_hat
 
     def reconstruct(self, meas=None) -> dict:
         """Filter forward through the layers, smooth backward, and return the estimate at

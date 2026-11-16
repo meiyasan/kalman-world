@@ -44,13 +44,13 @@ class KalmanController:
             self.model._B = np.asarray(B_new, dtype=float)
             self.B_log.append((t, B_new.copy()))
 
-        # Cost against the command the actuator can actually deliver (model.clip_u), not
+        # Cost against the command the actuator can actually deliver (model.limit_control), not
         # the controller's raw ask -- a fixed-gain controller with no notion of an actuator
         # limit (e.g. LQR) can ask for far more than the plant ever receives, and charging
         # Rcost against that fictitious, never-applied effort would inflate its cost against
         # a controller (e.g. MPPI) whose raw output already respects the limit. u_log still
         # keeps the raw command for diagnostics -- only the logged cost uses the clipped one.
-        u_applied = np.asarray(self.model.clip_u(u), dtype=float).reshape(-1, 1)
+        u_applied = np.asarray(self.model.limit_control(u), dtype=float).reshape(-1, 1)
         e = x_hat - self.x_ref
         cost = float((e.T @ self.Qcost @ e + u_applied.T @ self.Rcost @ u_applied).item())
         self.cost_log.append((t, cost))
@@ -102,7 +102,7 @@ class KalmanController:
 
         The model reaches C++ as itself when it is a :class:`NativeModel` (a model
         written in C++), and otherwise as a callback model whose ``f``, ``h``,
-        Jacobians, noise and actuator limit (``clip_u``) call the Python model.
+        Jacobians, noise and actuator limit (``limit_control``) call the Python model.
         A controller that reads the noise (Boost, AdaptiveQR) always gets the
         callback model, which asks for ``Q`` and ``R`` at every call: the retuning
         is made on the Python model, by this class, and the C++ side must see it.
@@ -137,11 +137,11 @@ class KalmanController:
             return self.model._handle, (self.model, [])
         handle, keep = native.callback_handle(self.model, "extended", live_noise=True)
         errors = keep[-1]
-        if type(self.model).clip_u is not KalmanModel.clip_u:
-            keep = (*keep[:-1], self._clip_callback(handle, errors), errors)
+        if type(self.model).limit_control is not KalmanModel.limit_control:
+            keep = (*keep[:-1], self._limit_callback(handle, errors), errors)
         return handle, keep
 
-    def _clip_callback(self, handle, errors):
+    def _limit_callback(self, handle, errors):
         from .native import core
         ffi, model, l = core.ffi, self.model, int(self.model.l)
 
@@ -149,16 +149,16 @@ class KalmanController:
         def clip(_user, u, out):
             try:
                 command = np.frombuffer(ffi.buffer(u, l * 8), dtype=np.float64).reshape(l, 1).copy()
-                applied = np.ascontiguousarray(np.asarray(model.clip_u(command), dtype=np.float64).reshape(-1))
+                applied = np.ascontiguousarray(np.asarray(model.limit_control(command), dtype=np.float64).reshape(-1))
                 if applied.size != l:
-                    raise ValueError(f"clip_u returned {applied.size} values for a command of {l}.")
+                    raise ValueError(f"limit_control returned {applied.size} values for a command of {l}.")
                 ffi.memmove(out, applied, l * 8)
                 return 0
             except BaseException as exc:            # must not unwind through C++
                 errors.append(exc)
                 return 1
 
-        core.check(core.lib.kalman_model_callback_set_clip(handle, clip), "set_clip")
+        core.check(core.lib.kalman_model_callback_set_limit(handle, clip), "set_clip")
         return clip
 
     def _native_call(self, fn, *args):

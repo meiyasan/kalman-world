@@ -96,11 +96,11 @@ class CarLaneModel(NativeCounterpart, ExtendedKalmanModel):
 
     # ----------------------------------------------------------------------
     # C++ counterpart (libKalmanApps: Kalman::Apps::Vehicles::CarLane). The steering
-    # limit is part of the dynamics, so a subclass that changes clip_u is
+    # limit is part of the dynamics, so a subclass that changes limit_control is
     # another model. A controller function (closed loop) keeps this Python
     # model in the C++ loop; so does an integrator the C++ side does not have.
     # ----------------------------------------------------------------------
-    _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("clip_u",)
+    _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("limit_control",)
 
     def native_name(self):
         return "car-lane" if native_integrator_kind(self) is not None else None
@@ -109,7 +109,7 @@ class CarLaneModel(NativeCounterpart, ExtendedKalmanModel):
         return {"wheelbase": self.wheelbase, "steer_limit": self.steer_limit,
                 "substeps": float(self.substeps()), "integrator": float(native_integrator_kind(self))}
 
-    def clip_u(self, u):
+    def limit_control(self, u):
         """Steering-angle actuator limit: ``|delta| <= steer_limit``."""
         u_arr = np.asarray(u, float).reshape(-1).copy()
         if len(u_arr) > 0:
@@ -126,7 +126,7 @@ class CarLaneModel(NativeCounterpart, ExtendedKalmanModel):
         y, psi, v = x[0], x[1], x[2]
         delta = 0.0
         if u is not None:
-            u_arr = self.clip_u(u).reshape(-1)
+            u_arr = self.limit_control(u).reshape(-1)
             if len(u_arr) > 0:
                 delta = u_arr[0]
         return np.array([[v * np.sin(psi)], [v * np.tan(delta) / self.wheelbase], [0.0]])

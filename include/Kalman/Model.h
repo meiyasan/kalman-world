@@ -227,7 +227,7 @@ namespace Kalman
              * thrust ceiling) overrides it so a controller's logged cost and an MPPI
              * rollout see the same constraint `f()` enforces internally.
              */
-            virtual Vector ClipControl(const Vector &u) const { return u; }
+            virtual Vector LimitControl(const Vector &u) const { return u; }
 
             // --- f and h for many states ----------------------------------------------
             // f and h take one state or many. An engine that carries many states

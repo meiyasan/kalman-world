@@ -248,8 +248,8 @@ int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
 
 /* --- controllers --- */
 typedef struct kalman_controller kalman_controller_t;
-typedef int (*kalman_clip_fn)(void *user, const double *u, double *u_out);
-int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip);
+typedef int (*kalman_limit_fn)(void *user, const double *u, double *u_out);
+int kalman_model_callback_set_limit(kalman_model_t *model, kalman_limit_fn clip);
 kalman_controller_t *kalman_controller_create_proportional(kalman_model_t *model, const double *Kp,
                                                            const double *x_ref, const double *Qcost,
                                                            const double *Rcost);

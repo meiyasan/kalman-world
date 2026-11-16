@@ -578,11 +578,11 @@ int kalman_integrate(int kind, double rtol, double atol, int max_substeps,
 typedef struct kalman_controller kalman_controller_t;
 
 /// `u_out = clip(u)`, l values each: what the actuator of a callback model delivers. Return 0 on success.
-typedef int (*kalman_clip_fn)(void *user, const double *u, double *u_out);
+typedef int (*kalman_limit_fn)(void *user, const double *u, double *u_out);
 
-/// Give a callback model its actuator limit (Model::ClipControl); NULL restores the identity.
+/// Give a callback model its actuator limit (Model::LimitControl); NULL restores the identity.
 /// -1 when `model` is not a callback model.
-int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip);
+int kalman_model_callback_set_limit(kalman_model_t *model, kalman_limit_fn clip);
 
 /**
  * The shipped controllers (Kalman::Controllers), with the parameters of their C++

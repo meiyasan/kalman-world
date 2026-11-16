@@ -81,8 +81,8 @@ class KalmanSampler:
         if seed is not None:
             np.random.seed(int(seed))
 
-        inprocess = kwargs.pop("inprocess", True)
-        postprocess = kwargs.pop("postprocess", True)
+        adjust_state = kwargs.pop("adjust_state", True)
+        finish_output = kwargs.pop("finish_output", True)
         indexing = kwargs.pop("indexing", "xy")
 
         measurement_noise = kwargs.pop("measurement_noise", True)
@@ -129,18 +129,18 @@ class KalmanSampler:
         self._t = t_start + n_samples / self.fs
         self._x, self._P = x, P
 
-        if inprocess:
-            xk = self.model.inprocess(xk, **kwargs)
+        if adjust_state:
+            xk = self.model.adjust_state(xk, **kwargs)
        
         # Squeeze trailing unit dim: (N, n, 1) → (N, n) so record.xk indexing works correctly
         xk = KalmanRecord._normalize_out(xk)
 
-        zk = self._native_measurements(xk, vk, t_start, chain is not None and not inprocess)
+        zk = self._native_measurements(xk, vk, t_start, chain is not None and not adjust_state)
         if zk is None:
             zk = [self.model.h(xx.reshape(-1, 1), v, t_start + k / self.fs) for xx, v, k in zip(xk, vk, range(n_samples))]
         zk = KalmanRecord._normalize_out(zk, indexing=indexing, dtype=self.model.dtype)
-        if postprocess:
-            zk = self.model.postprocess(zk, **kwargs)
+        if finish_output:
+            zk = self.model.finish_output(zk, **kwargs)
 
         times = t_start + np.arange(n_samples) / self.fs
         return KalmanRecord(times, zk=zk, xk=xk, Pk=Pk, flavor=KalmanStateFlavor.SAMPLED, model=self.model)

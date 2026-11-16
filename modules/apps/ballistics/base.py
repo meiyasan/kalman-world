@@ -2,7 +2,7 @@
 and the estimate record types used by every ballistics model variant."""
 from collections import namedtuple
 
-from ...framework.constants import KalmanObservable, KalmanState, EnumBis
+from ...framework.constants import KalmanObservable, KalmanState, LabelEnum
 
 # Results of the trajectory estimators below; the *_std fields are 1-σ uncertainties
 # (None when no state covariance is supplied). Times are relative to the state's epoch.
@@ -23,7 +23,7 @@ class BallisticObservable(KalmanObservable):
 # value in m/s² means "acceleration noise" (constant-acceleration model), m/s³
 # means "jerk noise" (nearly-constant-acceleration model). Picking the unit picks
 # the model. Compares equal to its name too (e.g. ``noise == "acceleration"``).
-class BallisticNoise(EnumBis):
+class BallisticNoise(LabelEnum):
     ACCELERATION = "m/s²"   # white-noise-acceleration → accel stays flat (constant-accel)
     JERK         = "m/s³"   # white-noise-jerk        → accel random-walks (nearly-constant-accel)
 
@@ -34,7 +34,7 @@ class BallisticNoise(EnumBis):
         if isinstance(noise, cls):
             return noise
         for m in cls:
-            if m == noise or m.value == noise:   # match by name (EnumBis.__eq__) or by unit
+            if m == noise or m.value == noise:   # match by name (LabelEnum.__eq__) or by unit
                 return m
         raise ValueError(f"Unknown noise {noise!r}; use {cls.repr()} or a unit in {cls.values()}.")
 

@@ -19,18 +19,18 @@ class OscillatorBankModel(CompositeKalmanModel):
 
     Internally this is a :class:`CompositeKalmanModel` with ``obs_mode=INDEPENDENT``:
     each window tracks its own demodulated band and the observations are stacked.
-    The standard :class:`CompositeKalmanModel` preprocess would try to split the input
+    The standard :class:`CompositeKalmanModel` prepare_measurements would try to split the input
     by channel count, which cannot broadcast one real signal to N demodulators.  This
-    class overrides preprocess with :meth:`_broadcast_preprocess` to send the single
+    class overrides prepare_measurements with :meth:`_broadcast_preprocess` to send the single
     real strain to every window's own Hilbert demodulator.
 
     Composition pattern::
 
         OscillatorBankModel(w1, w2, w3)
           = CompositeKalmanModel(w1, w2, w3, obs_mode=INDEPENDENT)
-          + preprocess: broadcast real strain → each window's own _demod_preprocess
+          + prepare_measurements: broadcast real strain → each window's own _demod_preprocess
 
-    Each window's postprocess remodulates to a real band, so ``record.zk`` has one
+    Each window's finish_output remodulates to a real band, so ``record.zk`` has one
     real column per window.  ``reconstruct(record)`` sums them to give the total
     extracted signal; ``strain − reconstruct(record)`` is the cleaned residual.
     """
@@ -46,8 +46,8 @@ class OscillatorBankModel(CompositeKalmanModel):
         super().__init__(*windows, obs_mode=KalmanObservableReadout.INDEPENDENT, **kwargs)
         self.fs = windows[0].fs
         self._fs_original = windows[0]._fs_original
-        self.preprocess = self._broadcast_preprocess   # expand: 1 real → N basebands
-        self.postprocess = self._identity_postprocess  # keep decimated phasors; reconstruct() upsamples
+        self.prepare_measurements = self._broadcast_preprocess   # expand: 1 real → N basebands
+        self.finish_output = self._identity_postprocess  # keep decimated phasors; reconstruct() upsamples
 
     @staticmethod
     def _identity_postprocess(zk_hat, **kwargs):

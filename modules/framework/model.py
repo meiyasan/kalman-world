@@ -511,7 +511,7 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         x = self.x0 if x is None else x
         return self._jacobian(lambda uu: self.f(as_col(x), u=uu, w=None, t=t), as_col(u))
 
-    def clip_u(self, u: np.ndarray) -> np.ndarray:
+    def limit_control(self, u: np.ndarray) -> np.ndarray:
         """Actuator-limit hook: map a controller's raw command to what the plant can
         actually deliver. Identity by default; models with real actuator limits (e.g. a
         steering-angle clip) override this so callers — controllers logging cost, or
@@ -732,13 +732,13 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
         return np.eye(self.n), np.eye(max(self.l, 1)), np.zeros((self.n, 1))
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         """Identity measurement/control preprocessing (override per domain)."""
         return zk, uk
-    def inprocess(self, zk_hat, **kwargs):
+    def adjust_state(self, zk_hat, **kwargs):
         """Identity state in-processing (override per domain)."""
         return zk_hat
-    def postprocess(self, zk_hat, **kwargs):
+    def finish_output(self, zk_hat, **kwargs):
         """Identity observation post-processing (override per domain)."""
         return zk_hat
 

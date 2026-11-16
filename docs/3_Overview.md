@@ -80,13 +80,13 @@ whole enum, and `tests/test_structure.py` enforces it.
 
 | Symbol | Shape | Meaning |
 |--------|-------|---------|
-| `gk` | `(T, M, 1)` | Raw input timeseries, before conditioning |
+| `raw` | `(T, M, 1)` | Raw input timeseries, before conditioning |
 | `uk` | `(T, L, 1)` | Control input timeseries (or a callable controller) |
-| `zk` | `(T, M, 1)` | Conditioned measurements, after `preprocess` |
+| `zk` | `(T, M, 1)` | Conditioned measurements, after `prepare_measurements` |
 | `xk` | `(n, 1)` | State vector at one timestep |
 | `xk_hat` | `(T, n, 1)` | Batch of state estimates (prior / posterior / smoothed) |
 | `zk_hat` | `(T, M, 1)` | Predicted measurements in filter space, `h(xk_hat)` |
-| `gk_hat` | `(T, M, 1)` | Predicted measurements in raw space, `postprocess(zk_hat)` |
+| `raw_hat` | `(T, M, 1)` | Predicted measurements in raw space, `finish_output(zk_hat)` |
 | `n`, `m`, `l` | — | State, measurement and control dimensions |
 
 ---
@@ -94,9 +94,9 @@ whole enum, and `tests/test_structure.py` enforces it.
 ## The pipeline
 
 ```
-gk          raw input timeseries            (T, M, 1)
+raw          raw input timeseries            (T, M, 1)
  │
- ▼  preprocess(gk, uk) ──────────────────── gk → filter space
+ ▼  prepare_measurements(raw, uk) ──────────────────── raw → filter space
  │
 zk          conditioned measurements         (T, M, 1)
  │
@@ -106,19 +106,19 @@ zk          conditioned measurements         (T, M, 1)
  ▼
 xk_hat      state estimates                  (T, n, 1)
  │
- ▼  inprocess(xk_hat) ──────────────────── optional state-space transform
+ ▼  adjust_state(xk_hat) ──────────────────── optional state-space transform
  ▼  h(xk_hat) ──────────────────────────── state → filter space
  │
 zk_hat      predicted measurements           (T, M, 1)
  │
- ▼  postprocess(zk_hat) ────────────────── filter space → raw space
+ ▼  finish_output(zk_hat) ────────────────── filter space → raw space
  │
-gk_hat      predicted raw output             (T, M, 1)   mirrors gk
+raw_hat      predicted raw output             (T, M, 1)   mirrors raw
 ```
 
-`preprocess` and `postprocess` are a matched pair: if `preprocess` whitens or
-heterodynes the signal, `postprocess` maps predictions back so `gk_hat` is
-directly comparable with `gk`. All three hooks default to identity.
+`prepare_measurements` and `finish_output` are a matched pair: if `prepare_measurements` whitens or
+heterodynes the signal, `finish_output` maps predictions back so `raw_hat` is
+directly comparable with `raw`. All three hooks default to identity.
 
 ---
 

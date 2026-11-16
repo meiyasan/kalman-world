@@ -31,7 +31,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
     - ``wc`` : carrier angular frequency [rad/s]
 
     **Frames:** This is the rotating-frame atom.  The carrier rotation lives in the
-    **signal** (``preprocess`` multiplies by ``e^{−iω_c t}``); ``H = identity``; and
+    **signal** (``prepare_measurements`` multiplies by ``e^{−iω_c t}``); ``H = identity``; and
     the frequency-offset precession sits in ``F = expm(Δω·dt)``.  Its lab-frame dual
     is :class:`PhasorOscillatorModel`, where the carrier lives in the time-varying
     ``H(t)`` and ``F = I``.
@@ -41,8 +41,8 @@ class AnalyticOscillatorModel(LinearKalmanModel):
     ``scipy.signal.hilbert``); inside an :class:`OscillatorModel` window the
     demodulation is done once at the window level.
 
-    **pre/in/postprocess symmetry:** ``preprocess`` rotates the analytic input into the
-    rotating frame; ``postprocess`` inverse-rotates back to the lab-frame analytic signal.
+    **pre/in/finish_output symmetry:** ``prepare_measurements`` rotates the analytic input into the
+    rotating frame; ``finish_output`` inverse-rotates back to the lab-frame analytic signal.
     This means ``sample().zk`` is in the same space as the model's input → you can call
     ``model.filter(sample.zk)`` directly.
     """
@@ -110,7 +110,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         x0, P0 = kwargs.pop("x0", None), kwargs.pop("P0", None)
         super().__init__(name, F=A, H=C, Q=Qn, R=R, P0=P0, x0=x0, **kwargs)
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         """Analytic signal [real, imag] → rotate into the rotating frame at wc."""
         zr, zi = zk[:, 0], zk[:, 1]
         times = self.t0 + np.arange(len(zk)) / self.fs
@@ -119,10 +119,10 @@ class AnalyticOscillatorModel(LinearKalmanModel):
                                   zi * np.cos(arg) - zr * np.sin(arg)])
         return zk_rot, uk
 
-    def inprocess(self, zk_hat, **kwargs):
+    def adjust_state(self, zk_hat, **kwargs):
         return zk_hat
 
-    def postprocess(self, zk_hat, **kwargs):
+    def finish_output(self, zk_hat, **kwargs):
         """Inverse-rotate back to the lab-frame analytic signal."""
         zr, zi = zk_hat[:, 0], zk_hat[:, 1]
         times = self.t0 + np.arange(len(zk_hat)) / self.fs
@@ -138,7 +138,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         if sample is None:
             return None
         from ....framework.io.record import KalmanRecord
-        zk_rot = self.preprocess(np.asarray(sample.zk))[0]
+        zk_rot = self.prepare_measurements(np.asarray(sample.zk))[0]
         return KalmanRecord(sample.time, zk=zk_rot, xk=sample.xk, Pk=sample.Pk,
                             flavor=sample.flavor, model=sample.model)
 
@@ -152,7 +152,7 @@ class AnalyticOscillatorModel(LinearKalmanModel):
         import matplotlib.pyplot as plt
         t  = np.asarray(record.time)
         xk = np.asarray(record.xk)
-        zk = self.preprocess(np.asarray(sample.zk))[0] if sample is not None else None
+        zk = self.prepare_measurements(np.asarray(sample.zk))[0] if sample is not None else None
         xt = np.asarray(sample.xk) if sample is not None else None
 
         fig, (ax_re, ax_im, ax_ph) = plt.subplots(1, 3, figsize=figsize)

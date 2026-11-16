@@ -22,7 +22,7 @@ bias and clock drift, all in metres / m·s⁻¹). The measurement is the per-sat
 pseudorange ``ρ_i = |s_i(t) − p| + b`` (nonlinear → analytic line-of-sight Jacobian). The
 relativistic terms are baked into the simulated pseudoranges; toggling
 ``model.apply_relativistic`` decides whether the receiver removes them in
-:meth:`GPSModel.preprocess`, giving a clean **before/after** comparison.
+:meth:`GPSModel.prepare_measurements`, giving a clean **before/after** comparison.
 
 The famous secular rate is *common-mode* and is absorbed by the estimated clock drift
 ``ḃ`` (which is exactly why a 4th satellite is needed — to solve for the clock); the part
@@ -140,7 +140,7 @@ class GPSModel(NativeCounterpart, ExtendedKalmanModel):
         Random-walk std of the clock drift [m/s per sqrt(s)]. The simulated receiver clock
         is ideal, so the default is small; a quartz receiver clock needs about 0.1.
     apply_relativistic : bool
-        If True, :meth:`preprocess` removes the relativistic terms from the pseudoranges
+        If True, :meth:`prepare_measurements` removes the relativistic terms from the pseudoranges
         before filtering (toggle this to compare before/after).
     """
 
@@ -232,7 +232,7 @@ class GPSModel(NativeCounterpart, ExtendedKalmanModel):
 
     # ------------------------------------------------------------------
     # The C++ counterpart (Kalman::Apps::GPS::Receiver): the filtering pass runs
-    # there, on the constellation of this instance. preprocess() (the
+    # there, on the constellation of this instance. prepare_measurements() (the
     # relativistic corrections) stays here: it prepares the data.
     # ------------------------------------------------------------------
     _COUNTERPART_DECODES = ("_F",)                # F = exp(A / fs): the counterpart decodes the same generator
@@ -315,14 +315,14 @@ class GPSModel(NativeCounterpart, ExtendedKalmanModel):
             corr = corr + (SECULAR_RATE * t)[:, None]          # common-mode secular
         return C_LIGHT * corr
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         if not self.apply_relativistic:
             return zk, uk
         zk = np.asarray(zk, dtype=self.dtype)
         return zk - self._correction_meters(zk.shape[0]), uk
 
-    def inprocess(self, state_vector, **kwargs): return state_vector
-    def postprocess(self, zk_hat, **kwargs):     return zk_hat
+    def adjust_state(self, state_vector, **kwargs): return state_vector
+    def finish_output(self, zk_hat, **kwargs):     return zk_hat
 
     # ------------------------------------------------------------------
     # Synthetic measurements (reality includes relativity)

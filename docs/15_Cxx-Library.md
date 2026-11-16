@@ -153,7 +153,7 @@ integrator's Butcher tableau — one `RungeKuttaStep` template serves a
 A controller closes the loop: `Filter::Forward(zk, controller)` calls it once
 per step with the belief, the time and the last innovation, and feeds the
 command to the prediction — `KalmanFilter.forward(zk, uk=controller)` in
-Python. The cost it logs is charged against `Model::ClipControl(u)`, what the
+Python. The cost it logs is charged against `Model::LimitControl(u)`, what the
 actuator delivers, not the raw ask; MPPI's rollouts clip the same way, so a
 planner sees the limit it will hit. LQR solves the Riccati equation with
 `Algebra::SolveDARE` (the recursion, then Newton steps on a Stein equation
@@ -865,16 +865,16 @@ the Python loop runs as before.
 | `BallisticModel` | `Apps::Ballistics::Ballistic` | `ballistic`, `ballistic-order2` | `drag_uncertainty` (speed-dependent Q), `substeps` other than 1, thrust controls, a user `f`/`h` |
 | `TornadoEnvironmentModel` | `Apps::Weather::Tornado` | `tornado-environment` | nothing |
 | `CarSpeedModel` | `Apps::Vehicles::CarSpeed` | `car-speed` | an integrator other than RK4, sub-stepping |
-| `GPSModel` | `Apps::GPS::Receiver` | `gps` | `preprocess()` (the relativistic corrections applied to the pseudoranges before the filter); a `dtype` other than float64 |
+| `GPSModel` | `Apps::GPS::Receiver` | `gps` | `prepare_measurements()` (the relativistic corrections applied to the pseudoranges before the filter); a `dtype` other than float64 |
 | `DriftChamberModel` | `Apps::Tracking::DriftChamber` | `drift-chamber` | `generate_event()` (it draws with numpy's generator) |
-| `CarLaneModel` | `Apps::Vehicles::CarLane` | `car-lane` | a steering computed by a controller function (closed loop), an integrator the C++ side lacks, a subclass's own `clip_u` |
+| `CarLaneModel` | `Apps::Vehicles::CarLane` | `car-lane` | a steering computed by a controller function (closed loop), an integrator the C++ side lacks, a subclass's own `limit_control` |
 | `RocketLiftoffModel` | `Apps::Astro::RocketLiftoff` | `rocket-liftoff` | an integrator the C++ side lacks |
 | `RocketAscentModel` | `Apps::Astro::RocketAscent` | `rocket-ascent` | a thrust computed by a controller function, an integrator the C++ side lacks |
 | `RocketDescentModel` | `Apps::Astro::RocketDescent` | `rocket-descent`, `rocket-descent-control` (`control=True`) | a command computed by a controller function, an integrator the C++ side lacks |
 | `RocketLandingModel` | `Apps::Astro::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
 | `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
 | `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
-| `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `preprocess()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
+| `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `prepare_measurements()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
 | `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `f`, `h` or `covariance_mask`, a callback in `TwinExperiment.run`; `sample()` |
 | `BarotropicFlowModel` (ensemble engine) | `Apps::Weather::BarotropicFlow` | `barotropic-flow` | as `KolmogorovFlowModel` |
 
@@ -965,7 +965,7 @@ on *both* sides. An analytic Jacobian would remove it from both.
   `R` is a different model from the one that was ported, and keeps the Python
   loop. For a continuous model `derivative`, `after_step` and `substeps` count
   too (the class's `f` is kept as `derivative`), and a model adds the helpers
-  its dynamics call (`guidance`, `clip_u` ...) to its `_COUNTERPART_CONTRACT`. So
+  its dynamics call (`guidance`, `limit_control` ...) to its `_COUNTERPART_CONTRACT`. So
   does any engine other than the plain extended one.
 
 `kalman.framework.models.native.USE_NATIVE_COUNTERPARTS = False`, or
@@ -1165,7 +1165,7 @@ Before, these models ran on the extended engine: the C++ loop calling the
 Python closures for `f`, `F`, `h`, `H`, `Q` and `R` at every step, and the
 smoother in Python. Measured with `tools/benchmark_counterparts.py --repeat 3`
 (500 filter steps at the decimated rate; the times include the demodulation
-and decimation of `preprocess`, which stay in numpy and scipy):
+and decimation of `prepare_measurements`, which stay in numpy and scipy):
 
 | Model | n | Python loop | C++ loop, callbacks (before) | C++ linear pass | Faster | State | Covariance |
 |---|---|---|---|---|---|---|---|
@@ -1290,7 +1290,7 @@ linear filter. Both can be present in one process.
 | Engines | Linear, Extended, Unscented, Particle, Ensemble, Combinatorial | the same six |
 | Track finding | `CombinatorialKalmanFilter.forward(hits, layer_radii=)`, model `radii` / `seed_state` | `Filters::CKF::Find(hits)`, model implements `Tracking::Detector` |
 | Controllers and tuners | P, PID, LQR, MPPI and the tuners Boost, AdaptiveQR forward to C++; MPC is C++ only (the Python class has no implementation of its own); Neural (Torch) stays Python; scipy's DARE is the reference | the same six and MPC; LQR by `Algebra::SolveDARE`, which agrees with scipy to 1.4e-11 or better (measured on 8 systems, 4e-14 except for a pole at 0.999); no Neural |
-| Closed loop | `forward(zk, uk=controller)`; `model.clip_u` | `Forward(zk, controller)`; `Model::ClipControl` |
+| Closed loop | `forward(zk, uk=controller)`; `model.limit_control` | `Forward(zk, controller)`; `Model::LimitControl` |
 | Engines from Python | — | `NativeEngine` behind `KalmanFilter`; `filter_native()` fused |
 | Integrators / solvers | Euler, RK4, Dormand–Prince / spectral, finite-difference; `register_*` by name | the same four + two; a custom scheme is an `Integrator` subclass handed to `Model::SetIntegrator` or a `Solver` |
 | Noise of a continuous model | `Qc=`, `Lc=` (with `A=` for a linear model) | `SetNoiseIntensity(Qc, Lc)`, `SetGenerator(A)`; decoded by `Utils::VanLoan`, which Python calls |
@@ -1340,7 +1340,7 @@ What still runs in Python, and why:
   model that takes no control input): the Python loop.
 - **The libTorch backend of the field models** inside the assimilation loop
   (`libKalmanApps` does not link `libKalmanLearn`); the solver itself is C++.
-- **Around the filter**: `preprocess` and `postprocess` (demodulation, the
+- **Around the filter**: `prepare_measurements` and `finish_output` (demodulation, the
   relativistic corrections), event and hit generators that draw with numpy's
   generator, spectra and peak fits, plots, the servers.
 - **Random draws** are made by numpy and handed to C++, on purpose: a seeded

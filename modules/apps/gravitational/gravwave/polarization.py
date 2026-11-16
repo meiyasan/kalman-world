@@ -147,7 +147,7 @@ class PolarizationModel(NativeCounterpart, ExtendedKalmanModel):
     # ------------------------------------------------------------------
     # The C++ counterpart (libKalmanApps: Kalman::Apps::Gravitational::Polarization):
     # the filtering pass runs there. Q and R are pushed from this instance;
-    # the sample rate sets dt on both sides. preprocess() (complex signal to
+    # the sample rate sets dt on both sides. prepare_measurements() (complex signal to
     # four real columns) stays here: it prepares the data.
     # ------------------------------------------------------------------
     def native_name(self):
@@ -217,15 +217,15 @@ class PolarizationModel(NativeCounterpart, ExtendedKalmanModel):
         fill(0, 1, dz1_dphi,  6);  fill(2, 3, dz2_dphi,  6)
         return Jac
 
-    def preprocess(self, zk, uk=None, **kwargs):
+    def prepare_measurements(self, zk, uk=None, **kwargs):
         zk = np.asarray(zk)
         if np.iscomplexobj(zk) and zk.shape[1] == 2:
             zk = np.column_stack([zk[:, 0].real, zk[:, 0].imag,
                                    zk[:, 1].real, zk[:, 1].imag])
         return zk, uk
 
-    def inprocess(self, state_vector, **kwargs):  return state_vector
-    def postprocess(self, xk_hat, **kwargs):      return xk_hat
+    def adjust_state(self, state_vector, **kwargs):  return state_vector
+    def finish_output(self, xk_hat, **kwargs):      return xk_hat
 
     # ==================================================================
     # Derived physical parameters (a, ψ̇, θ, φ) from the log-amplitude state.

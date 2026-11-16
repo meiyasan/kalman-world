@@ -1722,12 +1722,12 @@ namespace
     }
 }
 
-int kalman_model_callback_set_clip(kalman_model_t *model, kalman_clip_fn clip)
+int kalman_model_callback_set_limit(kalman_model_t *model, kalman_limit_fn clip)
 {
     return Guard([&] {
         auto *callback = dynamic_cast<Kalman::Models::Callback *>(&Deref(model));
         if (!callback) throw std::invalid_argument("not a callback model");
-        callback->SetClip(clip);
+        callback->SetLimit(clip);
         return 0;
     });
 }

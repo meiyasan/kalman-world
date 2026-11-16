@@ -172,17 +172,16 @@ was `NativeTwin`; `KALMAN_NATIVE_COUNTERPARTS`, was `KALMAN_NATIVE_TWINS`).
 | `CompositeKalmanModel` | `compose` | 14 |
 | `InteractiveKalmanFilter`, IKF | `route` and the interacting engine | 15 |
 
-## Names proposed, to be confirmed
+## Names made clearer
 
-These are clearer names for hooks that work but say little. They are a
-proposal: none is applied until confirmed.
+Hooks and helpers that worked but said little were renamed:
 
-| Today | Proposed | What it does |
+| Was | Is | What it does |
 |---|---|---|
 | `preprocess` | `prepare_measurements` | turns the raw input into measurements |
 | `inprocess` | `adjust_state` | adjusts the state inside a pass |
 | `postprocess` | `finish_output` | adjusts what a pass gives back |
 | `gk` | `raw` | the input of a pass before it is prepared |
-| `clip_u` | `limit_control` | what the actuator can deliver of a command |
+| `clip_u` / `ClipControl` | `limit_control` / `LimitControl` | what the actuator can deliver of a command |
 | `KalmanProxyMixin` | `KalmanRunMixin` | gives a model its `filter`, `smooth` and `sample` shortcuts |
-| `EnumBis` | `LabelEnum` | the base of the label enums; it would also stop hiding a member's `.name` |
+| `EnumBis` | `LabelEnum` | the base of the label enums; a member's `.name` is its name again |

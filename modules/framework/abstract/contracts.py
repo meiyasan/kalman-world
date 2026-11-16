@@ -19,17 +19,17 @@ class KalmanModelABC(ABC):
     # Data processing hooks
     # ------------------------------------------------------
     @abstractmethod
-    def preprocess(self, zk, uk: Optional[np.ndarray] = None, **kwargs):
+    def prepare_measurements(self, zk, uk: Optional[np.ndarray] = None, **kwargs):
         """Prepare measurements/control (batch). Return (zk, uk)."""
         ...
 
     @abstractmethod
-    def inprocess(self, xk_hat, **kwargs):
+    def adjust_state(self, xk_hat, **kwargs):
         """Transform state estimates before h is applied."""
         ...
 
     @abstractmethod
-    def postprocess(self, zk_hat, **kwargs):
+    def finish_output(self, zk_hat, **kwargs):
         """Transform predicted observations (e.g., unit conversions)."""
         ...
 

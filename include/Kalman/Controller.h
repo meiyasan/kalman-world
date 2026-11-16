@@ -18,7 +18,7 @@
  *
  * Every call logs the quadratic cost `e^T Qcost e + u^T Rcost u` with `e = x_hat -
  * x_ref`, charged against the command the actuator can actually deliver
- * (Kalman::Model::ClipControl), not the controller's raw ask: a fixed-gain
+ * (Kalman::Model::LimitControl), not the controller's raw ask: a fixed-gain
  * controller with no notion of an actuator limit can ask for far more than the
  * plant ever receives, and costing that fictitious effort would inflate it
  * against a controller whose output already respects the limit.

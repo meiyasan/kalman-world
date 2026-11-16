@@ -120,9 +120,9 @@ Two rules that bite here:
 | `DEFAULT_ENGINE` / `ALLOWED_ENGINES` | which estimator(s) this system admits |
 | `DEFAULT_INTEGRATOR` / `ALLOWED_INTEGRATORS` | time-stepping scheme, see [page 6](6_Integrators-and-Solvers.md) |
 | `DEFAULT_SOLVER` / `ALLOWED_SOLVERS` / `SOLVER_SUBSTEPS` | spatial discretization for field models |
-| `preprocess` / `inprocess` / `postprocess` | signal conditioning hooks around the filter loop |
+| `prepare_measurements` / `adjust_state` / `finish_output` | signal conditioning hooks around the filter loop |
 | `states` / `observables` | labelled state and measurement enums, used by plots — synthesized as `X0…Xn-1` / `Z0…Zm-1` when not declared |
-| `clip_u()` | actuator limits, honoured by the control-cost accounting |
+| `limit_control()` | actuator limits, honoured by the control-cost accounting |
 | `control_cost()` | default `Qcost`/`Rcost` for controllers |
 | `plot(record, sample=…)` | the model's signature figure |
 
@@ -149,10 +149,10 @@ from kalman.framework.constants import KalmanObservableReadout
 composite = CompositeKalmanModel(m1, m2, obs_mode=KalmanObservableReadout.INDEPENDENT)
 ```
 
-Only operators touching `z` are mode-aware (`h`, `H`, and `preprocess`, which
+Only operators touching `z` are mode-aware (`h`, `H`, and `prepare_measurements`, which
 splits by `m.m` in INDEPENDENT mode and passes through in FUSED). `f`, `F` and
-`Q` are always block-diagonal; `inprocess` and `postprocess` are identity.
-Override `_bind_preprocess` / `_bind_inprocess` / `_bind_postprocess` in a
+`Q` are always block-diagonal; `adjust_state` and `finish_output` are identity.
+Override `_bind_prepare_measurements` / `_bind_adjust_state` / `_bind_finish_output` in a
 subclass to inject domain logic while keeping the composite wiring intact — see
 the worked example in [`../README.md`](../README.md).
 

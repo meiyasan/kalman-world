@@ -52,7 +52,7 @@ namespace Kalman
         Update(xHat, P, t, nu);
 
         // Cost against what the actuator delivers, not the raw ask (see the header).
-        const Vector applied = fModel->ClipControl(u);
+        const Vector applied = fModel->LimitControl(u);
         Vector e = xHat;
         e -= fXRef;
         double cost = 0.;

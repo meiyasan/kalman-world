@@ -42,7 +42,7 @@ longer the line rings and the narrower it is.
   is MATRICES), so `filter()` runs the linear Kalman pass and the smoother on
   those matrices in C++ (`kf_forward_linear`, `kf_backward_rts`), and `sample()`
   runs its state chain there too. The demodulation, the decimation and the
-  reconstruction (`preprocess`, `reconstruct`) are signal processing around the
+  reconstruction (`prepare_measurements`, `reconstruct`) are signal processing around the
   filter and stay in numpy and scipy.
 
 ## Using it

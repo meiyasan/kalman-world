@@ -360,7 +360,7 @@ class TestCarLaneCounterpart(unittest.TestCase):
 
     def test_what_stays_in_python(self):
         class Wider(CarLaneModel):                      # another actuator limit
-            def clip_u(self, u):
+            def limit_control(self, u):
                 return np.asarray(u, float).reshape(-1, 1)
         self.assertIsNone(Wider("camera").native_handle())
 

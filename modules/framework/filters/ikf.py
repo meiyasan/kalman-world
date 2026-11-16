@@ -115,11 +115,11 @@ class InteractiveKalmanFilter:
 
     # ── forward pass ──────────────────────────────────────────────────────────
 
-    def forward(self, gk, uk=None, *, record=True, **kwargs):
+    def forward(self, raw, uk=None, *, record=True, **kwargs):
         indexing = kwargs.pop("indexing", "xy")
         self.reset()
 
-        gk_arr = gk.zk if isinstance(gk, KalmanRecord) else gk
+        gk_arr = raw.zk if isinstance(raw, KalmanRecord) else raw
         gk_arr = KalmanRecord._normalize_in(gk_arr, indexing=indexing,
                                             dtype=self.models[0].dtype)
 

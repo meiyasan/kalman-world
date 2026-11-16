@@ -25,7 +25,7 @@
  * model.
  *
  * The relativistic corrections are applied to the pseudoranges before the
- * filter (the Python class's preprocess()), not here.
+ * filter (the Python class's prepare_measurements()), not here.
  *
  * | Array | Unit | |
  * |---|---|---|

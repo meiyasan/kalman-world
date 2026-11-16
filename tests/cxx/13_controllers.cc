@@ -99,7 +99,7 @@ int main()
         const Vector u = p(x, Matrix::Identity(2), 0.);
         CHECK_CLOSE(u(0), -10., 1e-12, "clip: the raw command is what the policy asked");
         CHECK_CLOSE(p.CostLog()[0].second, 1. + 0.25, 1e-12, "clip: the cost charges the clipped 0.5, not the raw 10");
-        CHECK_CLOSE(limited.ClipControl(u)(0), -0.5, 1e-12, "clip: the plant delivers the limit");
+        CHECK_CLOSE(limited.LimitControl(u)(0), -0.5, 1e-12, "clip: the plant delivers the limit");
     }
 
     // --- the closed loop drives the belief to the set point --------------------------
@@ -230,7 +230,7 @@ int main()
             double cost = 0., last = 0.;
             for (std::size_t k = 0; k < steps; ++k)
             {
-                const Vector u = plant.ClipControl(ctrl.Policy(x, I2, static_cast<double>(k) * plant.DeltaT(), nullptr));
+                const Vector u = plant.LimitControl(ctrl.Policy(x, I2, static_cast<double>(k) * plant.DeltaT(), nullptr));
                 if (peak) *peak = std::max(*peak, std::abs(u(0)));
                 if (jump && k > 0) *jump = std::max(*jump, std::abs(u(0) - last));
                 last = u(0);
@@ -485,9 +485,9 @@ int main()
             static int Clip(void *, const double *u, double *out) { out[0] = std::max(-0.5, std::min(0.5, u[0])); return 0; }
         };
         Models::Callback plant("clipped", 1, 1, 1, &Plant::Step, &Plant::Measure);
-        CHECK_CLOSE(plant.ClipControl(Vector(1, 3.))(0), 3., 0., "callback: no clip function, no limit");
-        plant.SetClip(&Plant::Clip);
-        CHECK_CLOSE(plant.ClipControl(Vector(1, 3.))(0), 0.5, 0., "callback: SetClip() is the actuator limit");
+        CHECK_CLOSE(plant.LimitControl(Vector(1, 3.))(0), 3., 0., "callback: no clip function, no limit");
+        plant.SetLimit(&Plant::Clip);
+        CHECK_CLOSE(plant.LimitControl(Vector(1, 3.))(0), 0.5, 0., "callback: SetLimit() is the actuator limit");
         Controllers::Proportional p(&plant, Matrix(1, 1, 4.));
         p(Vector(1, 1.), Matrix::Identity(1), 0.);
         CHECK_CLOSE(p.CostLog().back().second, 1. + 0.25, 1e-15, "callback: the cost is charged on the clipped command");

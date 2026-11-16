@@ -1,6 +1,6 @@
 from enum import Enum, auto
 
-class EnumBis(Enum):
+class LabelEnum(Enum):
     """Enhanced Enum base with class-safe introspection methods."""
 
     def __eq__(self, other):
@@ -22,9 +22,6 @@ class EnumBis(Enum):
     def matches(self, *args):
         return any(self == arg for arg in args)
     
-    @classmethod
-    def name(cls) -> str:
-        return cls.__name__
     @classmethod
     def repr(cls) -> str:
         return cls.__name__ + "<" + ", ".join([e.upper() for e in cls.keys()]) + ">"
@@ -52,10 +49,10 @@ class EnumBis(Enum):
             raise TypeError(f"{member!r} is not a member of {cls.__name__}")
         return members.index(member)
 
-class KalmanState(EnumBis):
+class KalmanState(LabelEnum):
     pass
 
-class KalmanStateFlavor(EnumBis):
+class KalmanStateFlavor(LabelEnum):
     SAMPLED   = 0 # Sampled state
     PRIOR     = 1 # State before update step
     POSTERIOR = 2 # State after update step
@@ -64,10 +61,10 @@ class KalmanStateFlavor(EnumBis):
 # -----------------------------
 # ----- Observation enums -----
 # -----------------------------
-class KalmanObservable(EnumBis):
+class KalmanObservable(LabelEnum):
     pass
 
-class KalmanObservableFlavor(EnumBis):
+class KalmanObservableFlavor(LabelEnum):
     IDEAL     = 0 # Full ideal observation (no noise)
     TRUE      = 1 # True observation (with process noise)
     MEASURED  = 2 # Measured observation (with measurement noise)

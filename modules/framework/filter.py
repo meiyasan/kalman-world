@@ -124,20 +124,20 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
     # ------------------------------------------------------------------
     # Forward filtering
     # ------------------------------------------------------------------
-    def forward(self, gk, uk=None, *, record: bool = True, **kwargs):
+    def forward(self, raw, uk=None, *, record: bool = True, **kwargs):
 
         # A whole-pass engine (e.g. the combinatorial track finder) is handed the data
         # and returns finished results; there is no per-step loop to run, and none of
         # the time-series normalisation below applies. See KalmanEngine.OWNS_PASS.
         if self.engine.OWNS_PASS:
-            self.pass_result = self.engine.forward(self.model, gk, **kwargs)
+            self.pass_result = self.engine.forward(self.model, raw, **kwargs)
             self.pass_records = self._pass_records(KalmanStateFlavor.POSTERIOR)
             return self.pass_records if record else self
 
         indexing    = kwargs.pop("indexing", "xy")
-        preprocess  = kwargs.pop("preprocess", True)
-        inprocess   = kwargs.pop("inprocess", True)
-        postprocess = kwargs.pop("postprocess", True)
+        prepare_measurements  = kwargs.pop("prepare_measurements", True)
+        adjust_state   = kwargs.pop("adjust_state", True)
+        finish_output = kwargs.pop("finish_output", True)
 
         reset  = kwargs.pop("reset", True)
         buffer = kwargs.pop("buffer", 60)  # seconds
@@ -165,24 +165,24 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         uk_fn = uk if callable(uk) else None
 
         # --- normalise measurements / control ---
-        gk = gk.zk if isinstance(gk, KalmanRecord) else gk
-        gk = KalmanRecord._normalize_in(gk, indexing=indexing, dtype=self.model.dtype)
-        assert gk.shape[1] >= 1, f"gk must have at least 1 column, got {format_shape(gk)}."
+        raw = raw.zk if isinstance(raw, KalmanRecord) else raw
+        raw = KalmanRecord._normalize_in(raw, indexing=indexing, dtype=self.model.dtype)
+        assert raw.shape[1] >= 1, f"raw must have at least 1 column, got {format_shape(raw)}."
 
         if uk_fn is None:
             uk = uk.zk if isinstance(uk, KalmanRecord) else uk
             if uk is None or len(uk) < 1:
-                uk = np.zeros((len(gk), self.l))
+                uk = np.zeros((len(raw), self.l))
             uk = KalmanRecord._normalize_in(uk, indexing=indexing, dtype=self.model.dtype)
             if self.l > 0:
                 assert uk is not None and uk.shape[1] == self.l, \
                     f"Control input uk has wrong number of columns. Expected ({self.l},1), got {format_shape(uk)}."
 
-        # --- preprocess (may alter shapes) ---
+        # --- prepare_measurements (may alter shapes) ---
         if uk_fn is not None:
-            zk, _ = self.model.preprocess(gk, None) if preprocess else (gk, None)
+            zk, _ = self.model.prepare_measurements(raw, None) if prepare_measurements else (raw, None)
         else:
-            zk, uk = self.model.preprocess(gk, uk) if preprocess else (gk, uk)
+            zk, uk = self.model.prepare_measurements(raw, uk) if prepare_measurements else (raw, uk)
         assert zk.shape[1] == self.m, \
             f"Preprocessed zk has incorrect number of columns. Expected ({self.m},1), got {format_shape(zk)}."
         if uk_fn is None and self.l > 0:
@@ -229,7 +229,7 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
 
                 t += dt
 
-        return self.get_record(indexing=indexing, inprocess=inprocess, postprocess=postprocess) if record else self
+        return self.get_record(indexing=indexing, adjust_state=adjust_state, finish_output=finish_output) if record else self
 
     # ------------------------------------------------------------------
     # A model with a C++ counterpart (libKalmanApps): the whole pass — the model's

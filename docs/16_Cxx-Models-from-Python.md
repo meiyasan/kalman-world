@@ -29,7 +29,7 @@ the two.
 | The ensemble filter of a field model (its `f` and `h` written for every member, its `covariance_mask`, its initial state as samples) | `KolmogorovFlowModel`, `BarotropicFlowModel`: the whole pass in C++ (`libKalmanApps`), the members forecast in parallel; the draws and the initial ensemble are numpy's. Another field model: its hooks in Python, the analysis arithmetic in the C++ kernel `enkf_analysis` | when the library is found; a surrogate forecast or a libTorch solver keeps the Python hooks |
 | Sampling: `model.sample(...)` | the C++ loop; the noise is still drawn by numpy, so a seeded run is unchanged | extended engine |
 | A closed loop: `forward(z, controller)` with a controller function | the same C++ loop, which calls the controller at every step | when the model takes a control |
-| The controllers P, PID, LQR, MPPI and the tuners Boost, AdaptiveQR | C++ (`Kalman::Controllers`, `Kalman::Tuners`); a Python model's `f`, `h`, noise and `clip_u` are called back | real double-precision models; the neural controllers stay in Python |
+| The controllers P, PID, LQR, MPPI and the tuners Boost, AdaptiveQR | C++ (`Kalman::Controllers`, `Kalman::Tuners`); a Python model's `f`, `h`, noise and `limit_control` are called back | real double-precision models; the neural controllers stay in Python |
 | The routers: Bayesian, Threshold, Hybrid | C++ (`Kalman::Routers`); a Hybrid's Python child is called back | when the library is found |
 | A nonlinear model written in C++ | C++, the whole pass in one call | when its library is loaded |
 | The four application models with a C++ counterpart | C++, the whole pass in one call | when `libKalmanApps` is found |
@@ -64,7 +64,7 @@ without the library, and the tests compare the two
 | `ProportionalKalmanController` | `Controllers::Proportional` | the belief, once per call | exact |
 | `PIDKalmanController` | `Controllers::PID` (holds the integral) | the belief | 1e-17 |
 | `LQRKalmanController` | `Controllers::LQR`, `Algebra::SolveDARE` | `model.F()`, `model.B()` once, at `fit()` | gain 1e-13 (scipy is the reference) |
-| `MPPIKalmanController` | `Controllers::MPPI` (holds the warm start) | the perturbations, drawn in Python from the seeded generator; `model.f` and `clip_u` are called back per rollout step | 1e-11 |
+| `MPPIKalmanController` | `Controllers::MPPI` (holds the warm start) | the perturbations, drawn in Python from the seeded generator; `model.f` and `limit_control` are called back per rollout step | 1e-11 |
 | `BoostKalmanTuner` | `Tuners::Boost` | `H` and the current `R`, called back; the factor comes back and is applied to `model._R` here | the same boosts at the same steps |
 | `AdaptiveQRKalmanTuner` | `Tuners::AdaptiveQR` | `H` and `R`, called back; the factor is applied to `model._Q` here | 1e-13 per call, 2.5e-11 after 280 closed-loop steps |
 | `BayesianRouter` | `Routers::Bayesian` | `c` and the likelihoods (no NIS) | exact |

@@ -177,7 +177,7 @@ namespace Kalman::Controllers
                     for (std::size_t j = 0; j < l; ++j) uk(j) += draws.empty() ? gauss(fRandom) : draws[cursor++];
                     // Clip the candidate before rolling it out or costing it, so the
                     // averaged nominal stays inside what the actuator can deliver.
-                    uk = fModel->ClipControl(uk);
+                    uk = fModel->LimitControl(uk);
                     trial[i][k] = uk;
 
                     xi = fModel->f(xi, fModel->NControl() > 0 ? uk : Vector(), t + static_cast<double>(k) * dt);

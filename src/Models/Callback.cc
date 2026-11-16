@@ -113,7 +113,7 @@ namespace Kalman::Models
         return fProcessNoise ? Matrix() : Extended::L(t);
     }
 
-    Vector Callback::ClipControl(const Vector &u) const
+    Vector Callback::LimitControl(const Vector &u) const
     {
         if (!fClip || u.Empty()) return u;
         const std::vector<double> uin = Flat(u);

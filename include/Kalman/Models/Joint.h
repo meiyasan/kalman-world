@@ -143,7 +143,7 @@ namespace Kalman::Models
             Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const override;
             bool HasMeasurementNoiseInput() const override { return fInner->HasMeasurementNoiseInput(); }
             Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const override;
-            Vector ClipControl(const Vector &u) const override { return fInner->ClipControl(u); }
+            Vector LimitControl(const Vector &u) const override { return fInner->LimitControl(u); }
 
             // --- coefficients --------------------------------------------------
             Matrix B(double t = 0.) const override;

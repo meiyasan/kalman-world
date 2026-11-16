@@ -62,7 +62,7 @@ namespace Kalman::Models
             /// `z = h(x, v, t)`, the observation with its noise \p v (length m) inside.
             using NoisyMeasureFn = int (*)(void *user, const double *x, const double *v, double t, double *z);
             /// `u_out = clip(u)`, both of length l: what the actuator delivers of a command.
-            using ClipFn = int (*)(void *user, const double *u, double *u_out);
+            using LimitFn = int (*)(void *user, const double *u, double *u_out);
             /// Set the caller's parameter \p name to \p value (see DeclareParameters()).
             using ParameterFn = int (*)(void *user, const char *name, double value);
 
@@ -77,7 +77,7 @@ namespace Kalman::Models
             MeasurementNoiseFn fMeasurementNoise = nullptr;
             NoisyStepFn fNoisyStep = nullptr;
             NoisyMeasureFn fNoisyMeasure = nullptr;
-            ClipFn fClip = nullptr;
+            LimitFn fClip = nullptr;
             ParameterFn fParameter = nullptr;
             // The values last handed to the caller, so a change is pushed once.
             std::map<std::string, double> fPushed;
@@ -120,8 +120,8 @@ namespace Kalman::Models
             /// null). The sigma-point engine then augments the state with it.
             void SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure);
 
-            /// Give the model its actuator limit (Model::ClipControl); null keeps the identity.
-            void SetClip(ClipFn clip) { fClip = clip; }
+            /// Give the model its actuator limit (Model::LimitControl); null keeps the identity.
+            void SetLimit(LimitFn clip) { fClip = clip; }
 
             /**
              * \brief Declare parameters that live on the caller's side.
@@ -133,7 +133,7 @@ namespace Kalman::Models
              * another language. Declaring a name twice keeps the first value.
              */
             void DeclareParameters(const std::vector<std::pair<std::string, double>> &parameters, ParameterFn set);
-            Vector ClipControl(const Vector &u) const override;
+            Vector LimitControl(const Vector &u) const override;
 
             using Extended::f;
             bool HasProcessNoiseInput() const override { return fNoisyStep != nullptr; }

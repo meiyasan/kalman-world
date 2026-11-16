@@ -407,7 +407,7 @@ library is present. Rules for a counterpart:
   Falling back is correct; guessing is not. A control input is ported when the
   counterpart's `f` takes `u`: an open-loop command sequence goes to the counterpart, a
   controller function keeps the Python model in the C++ loop.
-- A helper the dynamics call (`guidance`, `clip_u`, `_deriv` ...) joins the
+- A helper the dynamics call (`guidance`, `limit_control`, `_deriv` ...) joins the
   class's `_COUNTERPART_CONTRACT`, so a subclass that changes it is not the counterpart.
   A continuous model's integrator and sub-steps cross as the `integrator` and
   `substeps` parameters (`native.native_integrator_kind`).

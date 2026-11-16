@@ -67,7 +67,7 @@ record = kf.filter(zk, smooth=True)     # both, in one call
 truth = kf.sample(10.0)                 # synthetic truth + measurements
 ```
 
-`forward(gk, uk=None, *, record=True, **kwargs)` accepts a control sequence
+`forward(raw, uk=None, *, record=True, **kwargs)` accepts a control sequence
 `uk` — or a **callable controller**, see
 [Control and Routing](8_Control-and-Routing.md). `record=False` skips
 building the `KalmanRecord` when you only want the run state.
@@ -81,7 +81,7 @@ Every run returns a frozen `KalmanRecord`:
 | `time` | `(T,)` | time base |
 | `xk` | `(T, n)` | state estimates |
 | `Pk` | `(T, n, n)` | state covariances |
-| `zk` | `(T, m)` | measurements (or reconstructed output after `postprocess`) |
+| `zk` | `(T, m)` | measurements (or reconstructed output after `finish_output`) |
 
 Plus `len()`, `record[k]`, iteration over `(t, x, P, z)`, and the derived
 `n`, `m`, `duration`, `sample_rate`. It validates its own shapes and rejects

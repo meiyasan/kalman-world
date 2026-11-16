@@ -98,7 +98,7 @@ class InterferometerModel(OscillatorBankModel):
     ``NOISE_SOURCES = ("violin",)``
 
     Future: ``"powergrid"`` via ``PowerGridStateModel`` (separate parallel
-    filter — incompatible with this bank's broadcast-preprocess architecture);
+    filter — incompatible with this bank's broadcast-prepare_measurements architecture);
     ``"omc_pcal"`` as additional fixed-frequency windows inside this bank.
     """
 

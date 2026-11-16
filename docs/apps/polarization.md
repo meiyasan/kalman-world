@@ -27,7 +27,7 @@ and a filter free to choose between the two loses the phase.
   `Kalman::Apps::Gravitational::Polarization` (registered `polarization`; see
   `kalman model polarization` for its components and units). The noise matrices
   and the sample rate are pushed from the Python model; turning a complex
-  signal into four real columns (`preprocess`) stays in Python.
+  signal into four real columns (`prepare_measurements`) stays in Python.
 - **The signals are in toy units**: an amplitude near 1 and a few hertz. A real
   wave has a strain near 1e-21 between ten hertz and a kilohertz.
 
