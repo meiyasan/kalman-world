@@ -51,7 +51,7 @@ class PhasorOscillatorModel(LinearKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
     frequencies : float | array-like
         Line frequencies [Hz] to track jointly (one ``[Re, Im]`` phasor each).
     fs : float
@@ -76,7 +76,7 @@ class PhasorOscillatorModel(LinearKalmanModel):
     def observables(self):
         return PhasorObservable
 
-    def __init__(self, sensor_id, frequencies, *, fs=4096.0,
+    def __init__(self, sensor, frequencies, *, fs=4096.0,
                  measurement_uncertainty=1.0, process_uncertainty=0.01,
                  p0_std=100.0, **kwargs):
 
@@ -100,7 +100,7 @@ class PhasorOscillatorModel(LinearKalmanModel):
         if P0 is None:
             P0 = (p0_std ** 2) * np.eye(2 * N)                  # generous prior for acquisition
 
-        super().__init__(sensor_id, F=F, H=self._observation_row, Q=Q, R=R,
+        super().__init__(sensor, F=F, H=self._observation_row, Q=Q, R=R,
                          fs=fs, x0=x0, P0=P0, **kwargs)
 
     # ------------------------------------------------------------------

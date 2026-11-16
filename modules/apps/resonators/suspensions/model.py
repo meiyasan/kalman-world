@@ -38,7 +38,7 @@ class SuspensionModel(LinearKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Sensor / channel name.
     m_s : float
         Sprung mass [kg], default 300.
@@ -76,7 +76,7 @@ class SuspensionModel(LinearKalmanModel):
     def observables(self):
         return SuspensionObservable
 
-    def __init__(self, sensor_id: str,
+    def __init__(self, sensor: str,
                  m_s: float = 300.0,
                  m_u: float = 50.0,
                  k_s: float = 20_000.0,
@@ -144,7 +144,7 @@ class SuspensionModel(LinearKalmanModel):
                 (measurement_uncertainty * 10) ** 2,   # ż_u  uncertainty
             ]).astype(self.dtype)
 
-        super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, B=B_d, fs=fs, **kwargs)
+        super().__init__(sensor, F=F, H=H, Q=Q, R=R, B=B_d, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs):
         return zk, uk

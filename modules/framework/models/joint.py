@@ -69,7 +69,7 @@ class Joint(OperationModel):
     DESCRIPTION = "A model whose state also carries some of its parameters, estimated with the motion."
     VERSION = "1.0"
 
-    def __init__(self, model: KalmanModel, parameters: Mapping, sensor_id=None, **kwargs):
+    def __init__(self, model: KalmanModel, parameters: Mapping, **kwargs):
         if not isinstance(model, KalmanModel):
             raise TypeError(f"joint: the inner model must be a KalmanModel, got {type(model).__name__}.")
         if not parameters:
@@ -90,15 +90,13 @@ class Joint(OperationModel):
         if handle == ffi.NULL:
             raise self._failed("joint")
 
-        if sensor_id is None:
-            sensor_id = (model._sensor[0] if model._sensor else type(model).__name__) + "+" + "+".join(names)
-        self._adopt(handle, [model], sensor_id, **kwargs)
+        self._adopt(handle, [model], **kwargs)
 
     @property
     def states(self) -> KalmanState:
         """The inner state components, then the parameters: as the C++ model names them."""
         if getattr(self, "_states_enum", None) is None:
-            self._states_enum = self._labels(True, KalmanState, "JointState")
+            self._states_enum = self._label_enum(True, KalmanState, "JointState")
         return self._states_enum
 
     def __repr__(self):

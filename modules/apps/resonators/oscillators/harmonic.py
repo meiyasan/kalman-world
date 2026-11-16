@@ -29,7 +29,7 @@ class InharmonicOscillatorModel(OscillatorModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
     f0 : float
         Fundamental frequency [Hz].
     fc : float
@@ -46,14 +46,14 @@ class InharmonicOscillatorModel(OscillatorModel):
     DESCRIPTION = "Windowed oscillator over an inharmonic ladder f_n = n·f0·√(1+B·n²)."
     VERSION = "3.1"
 
-    def __init__(self, sensor_id, f0, fc, dfc, *, n_harmonics=3, B=0.0,
+    def __init__(self, sensor, f0, fc, dfc, *, n_harmonics=3, B=0.0,
                  Q=1e4, fs=4096.0, measurement_uncertainty=1.0,
                  process_uncertainty=1e-3, p0=None, **kwargs):
         self.f0 = float(f0)
         self.inharmonicity = float(B)
         self.n_harmonics = int(n_harmonics)
         self.partial_freqs = partial_frequencies(f0, B, n_harmonics)
-        super().__init__(sensor_id, self.partial_freqs, fc, dfc, Q=Q, fs=fs,
+        super().__init__(sensor, self.partial_freqs, fc, dfc, Q=Q, fs=fs,
                          measurement_uncertainty=measurement_uncertainty,
                          process_uncertainty=process_uncertainty, p0=p0, **kwargs)
 
@@ -72,9 +72,9 @@ class HarmonicOscillatorModel(InharmonicOscillatorModel):
     DESCRIPTION = "Windowed oscillator over a harmonic ladder f_n = n·f0."
     VERSION = "3.1"
 
-    def __init__(self, sensor_id, f0, fc, dfc, *, n_harmonics=3, **kwargs):
+    def __init__(self, sensor, f0, fc, dfc, *, n_harmonics=3, **kwargs):
         if kwargs.pop("B", 0.0):
             raise TypeError("HarmonicOscillatorModel forces B=0; use InharmonicOscillatorModel for B>0.")
-        super().__init__(sensor_id, f0, fc, dfc, n_harmonics=n_harmonics, B=0.0, **kwargs)
+        super().__init__(sensor, f0, fc, dfc, n_harmonics=n_harmonics, B=0.0, **kwargs)
 
 

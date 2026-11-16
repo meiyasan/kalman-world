@@ -24,7 +24,7 @@ class BallisticLinearModel(LinearKalmanModel):
     def observables(self):
         return BallisticObservable
 
-    def __init__(self, sensor_id: str | int,
+    def __init__(self, sensor: str | int,
                  measurement_uncertainty: float = 0.5,  # position-sensor noise std σ [m]; R = σ²
                  process_uncertainty: float = 0.5,  # white-acceleration strength q [m/s^1.5]: velocity wanders by q·√t; see Q note
                  **kwargs):
@@ -85,7 +85,7 @@ class BallisticLinearModel(LinearKalmanModel):
             a_var = self.dtype(process_uncertainty) ** 2
             kwargs["P0"] = np.diag([p_var, v_var, a_var]).astype(self.dtype)
 
-        super().__init__(sensor_id, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
     def inprocess(self, state_vector, **kwargs): return state_vector

@@ -71,7 +71,7 @@ class CoolingCoffeeModel(ExtendedKalmanModel):
     def observables(self):
         return CoffeeObservable
 
-    def __init__(self, sensor_id="thermometer", room=21.0, fs=1.0, **kwargs):
+    def __init__(self, sensor="thermometer", room=21.0, fs=1.0, **kwargs):
         self.room = float(room)                    # degC
         self.n, self.m, self.l = 2, 1, 0
         # The model is nearly exact: a little slack on T, and a very slow
@@ -82,7 +82,7 @@ class CoolingCoffeeModel(ExtendedKalmanModel):
         # cooling rate that is only a guess.
         kwargs.setdefault("x0", np.array([[80.0], [1e-3]]))
         kwargs.setdefault("P0", np.diag([25.0, 1e-6]))
-        super().__init__(sensor_id, fs=fs, L=np.eye(2), **kwargs)
+        super().__init__(sensor, fs=fs, L=np.eye(2), **kwargs)
 
     def f(self, x, u=None, w=None, t=None):
         """The exact solution over one step, so no integrator is needed."""

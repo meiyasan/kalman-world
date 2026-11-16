@@ -5,7 +5,7 @@ from __future__ import annotations
 Two-stage workflow
 ------------------
 Stage 1 -- peak fitting
-    ``InterferometerModel.fit(sensor_id, strain, fs, bands)``
+    ``InterferometerModel.fit(sensor, strain, fs, bands)``
     Estimates PSD via Welch, detects spectral peaks per band with
     ``scipy.signal.find_peaks``, fits each peak to a Lorentzian profile to
     extract (f0, Q, amplitude), and groups nearby peaks into analysis windows.
@@ -109,7 +109,7 @@ class InterferometerModel(OscillatorBankModel):
 
     NOISE_SOURCES = ("violin",)
 
-    def __init__(self, sensor_id: str, windows: list[OscillatorModel], *,
+    def __init__(self, sensor: str, windows: list[OscillatorModel], *,
                  aqr_window: int = 30,
                  aqr_q_min: float = 0.1,
                  aqr_q_max: float = 10.0,
@@ -117,7 +117,7 @@ class InterferometerModel(OscillatorBankModel):
         """
         Parameters
         ----------
-        sensor_id : str
+        sensor : str
             Channel / detector identifier (e.g. ``"H1"``, ``"K1"``).
         windows : list of OscillatorModel
             One window per violin-mode group.  Build via :meth:`fit` or supply
@@ -127,7 +127,7 @@ class InterferometerModel(OscillatorBankModel):
         aqr_q_min, aqr_q_max : float
             Clipping bounds for the Q-scaling factor per window.
         """
-        self.sensor_id = sensor_id
+        self.sensor = sensor
         super().__init__(*windows, **kwargs)
 
         self._window_aqr: list[_LeafAdaptiveQR] = [
@@ -157,7 +157,7 @@ class InterferometerModel(OscillatorBankModel):
     # ------------------------------------------------------------------
 
     @classmethod
-    def fit(cls, sensor_id: str,
+    def fit(cls, sensor: str,
             strain,
             fs: float,
             bands: list[tuple[float, float]],
@@ -174,7 +174,7 @@ class InterferometerModel(OscillatorBankModel):
 
         Parameters
         ----------
-        sensor_id : str
+        sensor : str
         strain : array-like, shape (N,)
             Raw strain time series.
         fs : float
@@ -240,7 +240,7 @@ class InterferometerModel(OscillatorBankModel):
             peak_freqs_w = [p["f0"] for p in wd["peaks"]]
             Qs_w         = [p["Q"]  for p in wd["peaks"]]
             win = OscillatorModel(
-                sensor_id,
+                sensor,
                 peak_freqs_w,
                 fc=wd["fc"],
                 dfc=wd["dfc"],
@@ -252,7 +252,7 @@ class InterferometerModel(OscillatorBankModel):
             win._fit_results = wd["peaks"]  # store for peak_summary()
             windows.append(win)
 
-        return cls(sensor_id, windows, **kwargs)
+        return cls(sensor, windows, **kwargs)
 
     # ------------------------------------------------------------------
     # Post-filter convenience

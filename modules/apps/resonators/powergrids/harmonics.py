@@ -158,7 +158,7 @@ class PowerGridStateModel(PhasorOscillatorModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Channel / sensor name (e.g. "L1").
     f0 : float
         Fundamental frequency [Hz], default 50.
@@ -198,7 +198,7 @@ class PowerGridStateModel(PhasorOscillatorModel):
         return PowerGridObservable
     # `states` (PhasorState: REAL, IMAG) is inherited from PhasorOscillatorModel.
 
-    def __init__(self, sensor_id: str,
+    def __init__(self, sensor: str,
                  f0: float = 50.0,
                  harmonics: int = 3,
                  fs: float = 1024.0,
@@ -218,7 +218,7 @@ class PowerGridStateModel(PhasorOscillatorModel):
         # Reuse the inharmonic frequency model: B=0 → exact harmonic grid f_k = k·f0.
         self.partial_freqs = partial_frequencies(f0, B, harmonics)
 
-        super().__init__(sensor_id, self.partial_freqs, fs=fs,
+        super().__init__(sensor, self.partial_freqs, fs=fs,
                          measurement_uncertainty=measurement_uncertainty,
                          process_uncertainty=process_uncertainty,
                          p0_std=p0_std, **kwargs)

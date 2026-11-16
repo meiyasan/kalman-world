@@ -589,9 +589,8 @@ class KalmanRecord:
         # Mix in axis label if axis is provided
         appended_noun = False
         if axis is not None:
-            if model is not None and hasattr(model, "sensor") and hasattr(model, "_sensor") and len(model._sensor) > 0:
-                safe_axis = min(axis, len(model._sensor) - 1)
-                axis_label = model.sensor(safe_axis)
+            if model is not None and getattr(model, "_labels", None):
+                axis_label = model._axis_label(axis)
                 label = f"{label}{axis_label}"
                 appended_noun = bool(axis_label)
 
@@ -1560,22 +1559,22 @@ class KalmanRecord:
         # Aux (projections/connectors) – route through _plot_kwargs but we’ll keep legend proxies in base color
         def kw_proj_state(axis):
             kw = self._plot_kwargs(flavor=self.flavor, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
+            axis_str = self.model._axis_label(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_true(axis):
             kw = self._plot_kwargs(flavor=KalmanObservableFlavor.TRUE, common=KalmanObservableFlavor.TRUE in commons, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
+            axis_str = self.model._axis_label(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_proj_ideal(axis):
             kw = self._plot_kwargs(flavor=KalmanObservableFlavor.IDEAL, common=KalmanObservableFlavor.IDEAL in commons, axis=axis, color=axis+1, alpha=0.65)
-            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
+            axis_str = self.model._axis_label(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_meas_proj(axis):
             kw = self._plot_kwargs(flavor=KalmanObservableFlavor.MEASURED, common=KalmanObservableFlavor.MEASURED in commons, axis=axis, color=axis+1, kind="scatter", zorder=-1, s=s_size, alpha=alpha)
-            axis_str = self.model.sensor(axis) if self.model else "#" + str(axis+1)
+            axis_str = self.model._axis_label(axis) if self.model else "#" + str(axis+1)
             kw["label"] = f"Projection {axis_str}"
             return kw
         def kw_conn(axis):

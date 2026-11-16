@@ -71,7 +71,7 @@ class SensorFusionModel(LinearKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Channel / group name.
     sensors : list[SensorSpec]
         The sensors to fuse (stacked as rows of ``H``; ``R = diag(σ_i²)``).
@@ -94,7 +94,7 @@ class SensorFusionModel(LinearKalmanModel):
     def observables(self):
         return FusionObservable
 
-    def __init__(self, sensor_id: str | int,
+    def __init__(self, sensor: str | int,
                  sensors: list[SensorSpec],
                  fs: float = 50.0,
                  process_uncertainty: float = 1.0,
@@ -128,7 +128,7 @@ class SensorFusionModel(LinearKalmanModel):
         if kwargs.get("P0") is None:
             kwargs["P0"] = np.diag([10.0, 10.0]).astype(self.dtype)
 
-        super().__init__(sensor_id, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
     def inprocess(self, state_vector, **kwargs): return state_vector

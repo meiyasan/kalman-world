@@ -20,7 +20,7 @@ arrays ↔ nested lists) so any transport can carry them:
 A model is described by a :class:`KalmanSpec` dict::
 
     {"base": "matrices" | "continuous" | "<CatalogClassName>",
-     "sensor_id": ..., "fs": ...,
+     "sensor": ..., "fs": ...,
      "dynamics": {"F":..,"H":..} | {"A":..,"Qc":..} | {"params": {...}},
      "noise": {"Q":.., "R":..}, "initial": {"x0":.., "P0":..},
      "labels": {"states":[...], "observables":[...]},
@@ -293,7 +293,7 @@ _SPEC_SECTIONS = {
     "cost": "control", "Qcost": "control", "Rcost": "control", "x_ref": "control",
 }
 
-_SPEC_TOP_LEVEL = {"base", "name", "sensor_id", "fs", "dynamics", "noise",
+_SPEC_TOP_LEVEL = {"base", "name", "sensor", "fs", "dynamics", "noise",
                    "initial", "labels", "control", "bindings", "description"}
 
 #: Names callers reach for that the spec calls something else.  ``model`` is the
@@ -355,7 +355,7 @@ def make_model(spec: dict) -> KalmanModel:
     base = spec.get("base", "matrices")
     if base in _MODELS:                            # authored spec referenced by name
         return make_model(_MODELS[base])
-    sensor = spec.get("sensor_id", "api")
+    sensor = spec.get("sensor", "api")
     fs = spec.get("fs", 1.0)
     noise = spec.get("noise", {}) or {}
     initial = spec.get("initial", {}) or {}
@@ -389,7 +389,7 @@ def make_model(spec: dict) -> KalmanModel:
     if cls is None:
         raise ValueError(f"unknown model base {base!r}; see catalog()['models'].")
     params = dict((spec.get("dynamics", {}) or {}).get("params", {}) or {})
-    # bind params against the class signature; pass sensor_id/fs when accepted
+    # bind params against the class signature; pass sensor/fs when accepted
     try:
         plist = list(inspect.signature(cls.__init__).parameters)   # ordered
     except (TypeError, ValueError):
@@ -427,7 +427,7 @@ def make_model(spec: dict) -> KalmanModel:
         if k in accepted or takes_var_kw:
             params.setdefault(k, v)
     ordered = [p for p in plist if p != "self"]
-    if ordered and ordered[0] in ("sensor_id", "name"):
+    if ordered and ordered[0] in ("sensor", "name"):
         return cls(sensor, **params)
     return cls(**params)
 

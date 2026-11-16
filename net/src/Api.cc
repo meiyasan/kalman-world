@@ -162,7 +162,7 @@ namespace Kalman::Net
             {"integrator", "bindings"}, {"solver", "bindings"}, {"cost", "control"},
             {"Qcost", "control"}, {"Rcost", "control"}, {"x_ref", "control"}};
 
-        const std::set<std::string> kTopLevel = {"base", "name", "sensor_id", "fs", "dynamics", "noise",
+        const std::set<std::string> kTopLevel = {"base", "name", "sensor", "fs", "dynamics", "noise",
                                                  "initial", "labels", "control", "bindings", "description"};
 
         const std::map<std::string, std::string> kAliases = {
@@ -452,8 +452,8 @@ namespace Kalman::Net
                 if (auto rec = registry.GetModel(base)) return Build((*rec)["spec"], depth + 1);
             }
 
-            const std::string sensor = spec.contains("sensor_id") && spec["sensor_id"].is_string()
-                                       ? spec["sensor_id"].get<std::string>() : std::string("api");
+            const std::string sensor = spec.contains("sensor") && spec["sensor"].is_string()
+                                       ? spec["sensor"].get<std::string>() : std::string("api");
             const double fs = Present(spec, "fs") ? Number(spec["fs"], "fs") : 1.;
             const json noise = Section(spec, "noise");
             const json initial = Section(spec, "initial");

@@ -111,7 +111,7 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
     @property
     def observables(self): return StormObservable
 
-    def __init__(self, sensor_id="TC", *,
+    def __init__(self, sensor="TC", *,
                  omega=0.0,
                  beta_drift=5.0,
                  hemisphere="N",
@@ -157,7 +157,7 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
 
         if x0 is None:
             x0 = np.array([[135.0], [15.0], [-20.0], [6.0], [80.0]])
-        super().__init__(sensor_id, Q=Q, R=R, L=np.eye(self.n), fs=1.0 / self._dt,
+        super().__init__(sensor, Q=Q, R=R, L=np.eye(self.n), fs=1.0 / self._dt,
                          x0=x0, **kw)
 
     # ------------------------------------------------------------------
@@ -222,7 +222,7 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
     # IKF bank: straight-running vs recurving (vs stalling) motion regimes
     # ------------------------------------------------------------------
     @classmethod
-    def ikf_bank(cls, sensor_id="TC", *, omega_recurve=0.022, stall=True,
+    def ikf_bank(cls, sensor="TC", *, omega_recurve=0.022, stall=True,
                  stay=0.90, hemisphere="N", **kw):
         """Build the IKF model bank + Markov transition matrix.
 
@@ -242,11 +242,11 @@ class StormModel(NativeTwin, ExtendedKalmanModel):
         pole_sign = -1.0 if hemi == "N" else 1.0
         w_rec = pole_sign * abs(omega_recurve)
         models = [
-            cls(sensor_id, omega=0.0,   hemisphere=hemi, **kw),
-            cls(sensor_id, omega=w_rec, hemisphere=hemi, **kw),
+            cls(sensor, omega=0.0,   hemisphere=hemi, **kw),
+            cls(sensor, omega=w_rec, hemisphere=hemi, **kw),
         ]
         if stall:
-            models.append(cls(sensor_id, omega=0.0, hemisphere=hemi,
+            models.append(cls(sensor, omega=0.0, hemisphere=hemi,
                               q_vel=18.0, **kw))
         M = len(models)
         off = (1.0 - stay) / (M - 1)
@@ -807,7 +807,7 @@ class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
     @property
     def observables(self): return TornadoObservable
 
-    def __init__(self, sensor_id="ENV", *, mu=0.3, persistence=0.85,
+    def __init__(self, sensor="ENV", *, mu=0.3, persistence=0.85,
                  q_std=0.15, obs_noise=0.4, dt_hours=1.0, x0=None, **kw):
         self.dtype = np.float64
         self.mu = float(mu)
@@ -818,7 +818,7 @@ class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
         R = np.array([[obs_noise**2]], float)
         if x0 is None:
             x0 = np.array([[mu]])
-        super().__init__(sensor_id, Q=Q, R=R, L=np.eye(1), fs=1.0 / float(dt_hours),
+        super().__init__(sensor, Q=Q, R=R, L=np.eye(1), fs=1.0 / float(dt_hours),
                          x0=x0, **kw)
 
     # C++ twin (libKalmanApps: Kalman::Apps::Weather::Tornado).
@@ -838,7 +838,7 @@ class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
         return z if v is None else z + np.asarray(v, float).reshape(1, 1)
 
     @classmethod
-    def ikf_bank(cls, sensor_id="ENV", *, season="shoulder",
+    def ikf_bank(cls, sensor="ENV", *, season="shoulder",
                  mu_benign=0.3, mu_tornadic=3.0, **kw):
         """Benign + tornadic instances + the **seasonal** transition matrix.
 
@@ -848,8 +848,8 @@ class TornadoEnvironmentModel(NativeTwin, ExtendedKalmanModel):
         the prior probability of switching into it.
         """
         stay_b, stay_t = _SEASON_PI.get(season, _SEASON_PI["shoulder"])
-        benign   = cls(sensor_id, mu=mu_benign,   persistence=0.7, q_std=0.10, **kw)
-        tornadic = cls(sensor_id, mu=mu_tornadic, persistence=0.9, q_std=0.5,  **kw)
+        benign   = cls(sensor, mu=mu_benign,   persistence=0.7, q_std=0.10, **kw)
+        tornadic = cls(sensor, mu=mu_tornadic, persistence=0.9, q_std=0.5,  **kw)
         Pi = np.array([[stay_b, 1 - stay_b], [1 - stay_t, stay_t]])
         probs = np.array([0.9, 0.1])
         return [benign, tornadic], Pi, probs

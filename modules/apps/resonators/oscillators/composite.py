@@ -43,7 +43,7 @@ class OscillatorModel(CompositeKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
     frequencies : float | array-like
         Candidate mode frequencies [Hz]; masked to those inside ``[fc ± dfc]``.
     fc : float
@@ -79,7 +79,7 @@ class OscillatorModel(CompositeKalmanModel):
     def observables(self):
         return OscillatorObservable
 
-    def __init__(self, sensor_id, frequencies, fc, dfc, *,
+    def __init__(self, sensor, frequencies, fc, dfc, *,
                  Q=1e4, fs=4096.0, measurement_uncertainty=1.0,
                  process_uncertainty=1e-3, p0=None, **kwargs):
 
@@ -108,7 +108,7 @@ class OscillatorModel(CompositeKalmanModel):
 
         p0_var = float(p0) if p0 is not None else (1e3 * float(measurement_uncertainty)) ** 2
         blocks = [AnalyticOscillatorModel(
-                      f"{sensor_id}@{f:.3f}Hz", fs=self._fs_dec,
+                      f"{sensor}@{f:.3f}Hz", fs=self._fs_dec,
                       f0=f, fc=fc, Q=q,
                       measurement_uncertainty=sigma_envelope,
                       process_uncertainty=process_uncertainty,

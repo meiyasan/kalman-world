@@ -95,7 +95,7 @@ class TestSensors(unittest.TestCase):
             KalmanSensor("doppler", lambda x: [float(x[1, 0])], R=1.0, labels={"V_RADIAL": "m/s"}))
         twin = make()
         self.same(twin)
-        self.assertEqual(python_sensors(twin), [("position", 3), ("doppler", 1)])
+        self.assertEqual(python_sensors(twin), [("XYZ", 3), ("doppler", 1)])
         with native.python_reference():
             self.same(make())
 

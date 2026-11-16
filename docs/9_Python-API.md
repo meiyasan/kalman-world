@@ -53,7 +53,7 @@ already in the catalog, or the two declarative bases, are accepted.
 {
   "base": "matrices" | "continuous" | "<CatalogClassName>",
   "name": "my_model",                  # optional, used by register_model
-  "sensor_id": "api",
+  "sensor": "api",
   "fs": 100.0,
 
   "dynamics": {"F": …, "H": …, "B": …, "L": …, "M": …}    # base="matrices"
@@ -77,7 +77,7 @@ All matrices are nested lists (or NumPy arrays, when calling from Python).
 ```python
 dt = 0.01
 spec = {
-    "base": "matrices", "sensor_id": "demo", "fs": 100.0,
+    "base": "matrices", "sensor": "demo", "fs": 100.0,
     "dynamics": {"F": [[1, dt], [0, 1]], "H": [[1, 0]]},
     "noise":    {"Q": [[1e-6, 0], [0, 1e-4]], "R": [[0.05]]},
     "initial":  {"x0": [[0.0], [1.0]]},
@@ -100,7 +100,7 @@ spec = {
 bound against the class signature:
 
 ```python
-spec = {"base": "BallisticModel", "sensor_id": "shot", "fs": 50.0,
+spec = {"base": "BallisticModel", "sensor": "shot", "fs": 50.0,
         "dynamics": {"params": {"c_drag": 0.02}}}
 ```
 
@@ -131,7 +131,7 @@ describe("StormModel")            # params, version, engine/integrator/solver bi
 
 dt = 0.01
 spec = {
-    "base": "matrices", "sensor_id": "demo", "fs": 100.0,
+    "base": "matrices", "sensor": "demo", "fs": 100.0,
     "dynamics": {"F": [[1, dt], [0, 1]], "H": [[1, 0]]},
     "noise":    {"Q": [[1e-6, 0], [0, 1e-4]], "R": [[0.05]]},
     "initial":  {"x0": [[0.0], [1.0]]},

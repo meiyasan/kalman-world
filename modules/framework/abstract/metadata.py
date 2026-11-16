@@ -105,37 +105,23 @@ class KalmanModelMetadata(KalmanModelABC, KalmanMetadata):
         return np.zeros((self.m, 1))
     
     # --------------------------------------------------------------
-    # Sensor axis management
+    # Labels of the model's own sensor
     # --------------------------------------------------------------
-    _sensor: list[str] = None # List of sensor names
+    #: The name of the sensor the model was built with, or one name per channel
+    #: of it (set by the constructor's ``sensor`` argument and ``_name_channels``).
+    _labels: list[str] = None
+    _sensor_name: str = None
 
-    def sensor(self, id) -> list[str]:
-        if self._sensor is None:
-            return None
-        if isinstance(id, int):
-            if id < 0 or id >= len(self._sensor):
-                raise IndexError(f"Sensor ID #{id} is out of range: 0 to {len(self._sensor)-1}.")
-            return self._sensor[id]
-        elif isinstance(id, str):
-            if id not in self._sensor:
-                raise ValueError(f"Sensor ID {id!r} not found in sensor list.")
-            return id
-        else:
-            raise TypeError("Sensor ID must be an integer index or a string name.")
+    def _name_channels(self, names):
+        """Name the channels of the model's own sensor, one per measurement
+        channel: ``self._name_channels(["X", "Y", "Z"])`` in a model's constructor."""
+        self._labels = [str(name) for name in names]
 
-    def add_sensor(self, sensor_id: str | int):
-        if self._sensor is None:
-            self._sensor = []
-        if sensor_id in self._sensor:
-            raise ValueError(f"Sensor ID {sensor_id!r} already exists in sensor list.")
-        self._sensor.append(sensor_id)
-        
-    def remove_sensor(self, sensor_id: str | int):
-        if self._sensor is not None and sensor_id in self._sensor:
-            self._sensor.remove(sensor_id)
-
-    def clear_sensors(self):
-        self._sensor = []
+    def _axis_label(self, axis):
+        """The label of measurement channel ``axis``: its own name when the
+        channels are named, the sensor's name otherwise."""
+        labels = self._labels or []
+        return labels[min(int(axis), len(labels) - 1)] if labels else f"#{int(axis) + 1}"
 
     # ------------------------------------------------------
     # Optional dictionary for extra metadata

@@ -224,7 +224,7 @@ class TestApiIntegration(unittest.TestCase):
         self.assertEqual(api.describe("OscillatorModel")["backend"], "python")
 
     def test_spec_with_a_native_base_runs_the_filter(self):
-        spec = {"base": "constant-velocity", "sensor_id": "cv", "fs": 20,
+        spec = {"base": "constant-velocity", "sensor": "cv", "fs": 20,
                 "initial": {"x0": [[0.0], [1.0]]}}
         sampled = api.sample(spec, 1.0)
         self.assertEqual(len(sampled["zk"]), 20)
@@ -321,7 +321,7 @@ class TestNativeEngine(unittest.TestCase):
         self.assertTrue(np.all(np.isfinite(a)) and np.all(np.isfinite(c)))
 
     def test_api_binding_selects_the_native_backend(self):
-        spec = {"base": "pendulum", "sensor_id": "p", "fs": 50,
+        spec = {"base": "pendulum", "sensor": "p", "fs": 50,
                 "bindings": {"engine": "extended", "backend": "native"}}
         filt = api.make_filter(spec)
         self.assertEqual(type(filt.engine).__name__, "NativeEngine")

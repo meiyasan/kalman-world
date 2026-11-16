@@ -111,7 +111,7 @@ class CalorimeterLinearModel(_CaloBase):
     @property
     def observables(self): return CalorimeterObservable2
 
-    def __init__(self, sensor_id, z_layers, R_xy_layers, *,
+    def __init__(self, sensor, z_layers, R_xy_layers, *,
                  sigma_t=1e-4, sigma_cell=5.0, x0=None, P0=None, **kw):
         self._z_k = np.asarray(z_layers, dtype=float)
         self._R_k = self._add_floor(R_xy_layers, sigma_cell)
@@ -120,7 +120,7 @@ class CalorimeterLinearModel(_CaloBase):
         if x0 is None: x0 = np.zeros((4, 1))
         if P0 is None: P0 = np.diag([1e6, 1e6, 1e2, 1e2]).astype(float)
         kw.setdefault("fs", 1)
-        super().__init__(sensor_id, F=self._F, H=self._H.copy(),
+        super().__init__(sensor, F=self._F, H=self._H.copy(),
                          Q=self._Q, R=self._R, x0=x0, P0=P0, **kw)
         self._engine = _KalmanFilter(self)
 
@@ -172,7 +172,7 @@ class _CaloEnergyModel(_CaloBase):
     @property
     def observables(self): return CalorimeterObservable3
 
-    def __init__(self, sensor_id, z_layers, R_xy_layers, E_layers, E_seed, *,
+    def __init__(self, sensor, z_layers, R_xy_layers, E_layers, E_seed, *,
                  sigma_t=1e-4, sigma_cell=5.0, sigma_sampling=0.02,
                  sigma_noise=1e-4, sigma_E_state=1e-3, z_start=0.0,
                  x0=None, P0=None, **kw):
@@ -217,7 +217,7 @@ class _CaloEnergyModel(_CaloBase):
                           (0.5 * self._E_seed)**2]).astype(float)
 
         kw.setdefault("fs", 1)
-        super().__init__(sensor_id, F=self._F, H=self._H_cb,
+        super().__init__(sensor, F=self._F, H=self._H_cb,
                          Q=self._Q, R=self._R_cb, x0=x0, P0=P0, **kw)
         self._engine = _KalmanFilter(self)
 
@@ -320,12 +320,12 @@ class _CaloEnergyModel(_CaloBase):
         return chi2 / max(1, n_obs - self.n)
 
     @classmethod
-    def from_hits(cls, sensor_id, hits, **kw):
+    def from_hits(cls, sensor, hits, **kw):
         z, R, m = build_measurements(hits)
-        return cls(sensor_id, z, R, m[:, 2], m[:, 2].sum(), meas_xy=m[:, :2], meas=m, **kw)
+        return cls(sensor, z, R, m[:, 2], m[:, 2].sum(), meas_xy=m[:, :2], meas=m, **kw)
 
     @classmethod
-    def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
+    def from_geometry(cls, sensor, hits, geometry: CalorimeterGeometry, **kw):
         """Build model using parameters derived from a CalorimeterGeometry."""
         raise NotImplementedError
 
@@ -340,14 +340,14 @@ class CalorimeterElectromagneticModel(_CaloEnergyModel):
     """5-state EM shower model for photons/gammas (Longo-Sestili in X₀)."""
     NAME = "Calorimeter Electromagnetic Shower Model"; VERSION = "1.1"
 
-    def __init__(self, sensor_id, z_layers, R_xy_layers, E_layers, E_seed, **kw):
+    def __init__(self, sensor, z_layers, R_xy_layers, E_layers, E_seed, **kw):
         self._X0_mm  = float(kw.pop("X0_mm",  11.4))
         self._Ec_GeV = float(kw.pop("Ec_GeV", 0.010))
         self._a_EM   = float(kw.pop("a_EM",   0.50))
         self._b_EM   = float(kw.pop("b_EM",   0.50))
         kw.setdefault("sigma_sampling", 0.020)
         kw.setdefault("sigma_noise",    1e-4)
-        super().__init__(sensor_id, z_layers, R_xy_layers, E_layers, E_seed, **kw)
+        super().__init__(sensor, z_layers, R_xy_layers, E_layers, E_seed, **kw)
 
     def _profile_fractions(self, z_layers, dz_layers, E_seed, **kw):
         return em_shower_profile(z_layers, dz_layers, E_seed,
@@ -355,27 +355,27 @@ class CalorimeterElectromagneticModel(_CaloEnergyModel):
                                  a_EM=self._a_EM, b_EM=self._b_EM)
 
     @classmethod
-    def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
+    def from_geometry(cls, sensor, hits, geometry: CalorimeterGeometry, **kw):
         kw.setdefault("X0_mm", geometry.X0_eff_mm)
         kw.setdefault("z_start", geometry._z_start)
         kw.setdefault("sigma_sampling", geometry.sigma_sampling_em)
         kw.setdefault("sigma_cell",
                       geometry._active_layers[0].cell_size_mm / (12 ** 0.5)
                       if geometry._active_layers else 5.)
-        return cls.from_hits(sensor_id, hits, **kw)
+        return cls.from_hits(sensor, hits, **kw)
 
 
 class CalorimeterHadronicModel(_CaloEnergyModel):
     """5-state hadronic shower model for neutral particles (Gamma in λ_int)."""
     NAME = "Calorimeter Hadronic Shower Model"; VERSION = "1.1"
 
-    def __init__(self, sensor_id, z_layers, R_xy_layers, E_layers, E_seed, **kw):
+    def __init__(self, sensor, z_layers, R_xy_layers, E_layers, E_seed, **kw):
         self._lambda_mm = float(kw.pop("lambda_mm", 168.0))
         self._c_had     = float(kw.pop("c_had",     0.025))
         self._b_had     = float(kw.pop("b_had",     1.00))
         kw.setdefault("sigma_sampling", 0.50)
         kw.setdefault("sigma_noise",    5e-4)
-        super().__init__(sensor_id, z_layers, R_xy_layers, E_layers, E_seed, **kw)
+        super().__init__(sensor, z_layers, R_xy_layers, E_layers, E_seed, **kw)
 
     def _profile_fractions(self, z_layers, dz_layers, E_seed, **kw):
         return hadronic_shower_profile(z_layers, dz_layers, E_seed,
@@ -383,14 +383,14 @@ class CalorimeterHadronicModel(_CaloEnergyModel):
                                        c_had=self._c_had, b_had=self._b_had)
 
     @classmethod
-    def from_geometry(cls, sensor_id, hits, geometry: CalorimeterGeometry, **kw):
+    def from_geometry(cls, sensor, hits, geometry: CalorimeterGeometry, **kw):
         kw.setdefault("lambda_mm", geometry.lambda_eff_mm)
         kw.setdefault("z_start", geometry._z_start)
         kw.setdefault("sigma_sampling", geometry.sigma_sampling_had)
         kw.setdefault("sigma_cell",
                       geometry._active_layers[0].cell_size_mm / (12 ** 0.5)
                       if geometry._active_layers else 10.)
-        return cls.from_hits(sensor_id, hits, **kw)
+        return cls.from_hits(sensor, hits, **kw)
 
 
 # ── Convenience presets ───────────────────────────────────────────────────────
@@ -407,13 +407,13 @@ HCAL_PRESETS = {
 }
 
 
-def ecal_model_from_hits(hits, sensor_id=0, preset="lyso", **kw):
+def ecal_model_from_hits(hits, sensor=0, preset="lyso", **kw):
     """Build CalorimeterElectromagneticModel from hits + named ECAL preset."""
     p = dict(ECAL_PRESETS.get(preset, ECAL_PRESETS["lyso"])); p.update(kw)
-    return CalorimeterElectromagneticModel.from_hits(sensor_id, hits, **p)
+    return CalorimeterElectromagneticModel.from_hits(sensor, hits, **p)
 
 
-def hcal_model_from_hits(hits, sensor_id=0, preset="fe_scint", **kw):
+def hcal_model_from_hits(hits, sensor=0, preset="fe_scint", **kw):
     """Build CalorimeterHadronicModel from hits + named HCAL preset."""
     p = dict(HCAL_PRESETS.get(preset, HCAL_PRESETS["fe_scint"])); p.update(kw)
-    return CalorimeterHadronicModel.from_hits(sensor_id, hits, **p)
+    return CalorimeterHadronicModel.from_hits(sensor, hits, **p)

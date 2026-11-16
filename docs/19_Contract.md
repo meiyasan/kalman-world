@@ -159,12 +159,12 @@ Already gone: `model.forecast(X)` and `model.observe(X)`, now `f` and `h` given
 many states; `model.initial_ensemble(N)`, now `model.initial_state(samples=N)`;
 `initial_state_vector`, `initial_state_covariance` and the `get_initial_state`
 variants, now `initial_state(x0, P0)`; `model.localization()`, now
-`model.covariance_mask()`.
+`model.covariance_mask()`; `sensor_id`, the first argument of a model, now
+`sensor` (a name, a `KalmanSensor`, or a list); the label list (`add_sensor("X")`,
+`remove_sensor`, `clear_sensors`, `sensor(i)`), now a sensor's labels.
 
 | Older name | Contract name | Step |
 |---|---|---|
-| `sensor_id`, the first argument of a model | `sensor`: a name, a `KalmanSensor`, or a list | 6 |
-| the label form `add_sensor("X")` | a sensor's `labels` | 6 |
 | `NativeTwin`, "the C++ twin" | `NativeCounterpart`, "the C++ model" | 7 |
 | `Boost`, `AdaptiveQR` as controllers | tuners | 8 |
 | readouts `FUSED`, `INDEPENDENT` | `SUMMED`, `STACKED` | 14 |

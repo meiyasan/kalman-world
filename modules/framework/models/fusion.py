@@ -38,7 +38,7 @@ class Fusion(OperationModel):
     DESCRIPTION = "A model read by one more sensor on the same state."
     VERSION = "1.0"
 
-    def __init__(self, model: KalmanModel, sensor: KalmanSensor, sensor_id=None, **kwargs):
+    def __init__(self, model: KalmanModel, sensor: KalmanSensor, **kwargs):
         if not isinstance(model, KalmanModel):
             raise TypeError(f"add_sensor: the model must be a KalmanModel, got {type(model).__name__}.")
         if not isinstance(sensor, KalmanSensor):
@@ -86,9 +86,7 @@ class Fusion(OperationModel):
         if handle == ffi.NULL:
             raise self._failed("add_sensor")
 
-        if sensor_id is None:
-            sensor_id = (model._sensor[0] if model._sensor else type(model).__name__) + "+" + sensor.name
-        self._adopt(handle, [model], sensor_id, **kwargs)
+        self._adopt(handle, [model], **kwargs)
 
     # ------------------------------------------------------------------
     # Labels: the C++ model's
@@ -110,7 +108,7 @@ class Fusion(OperationModel):
     def observables(self) -> KalmanObservable:
         """The observables of its sensors, in the order of ``z``: as the C++ model names them."""
         if getattr(self, "_observables_enum", None) is None:
-            self._observables_enum = self._labels(False, KalmanObservable, "FusionObservable")
+            self._observables_enum = self._label_enum(False, KalmanObservable, "FusionObservable")
         return self._observables_enum
 
     def __repr__(self):

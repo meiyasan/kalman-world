@@ -51,7 +51,7 @@ def _kalman_importable():
                 sys.modules[alias] = before
 
 
-CV = {"base": "matrices", "sensor_id": "cv", "fs": 10,
+CV = {"base": "matrices", "sensor": "cv", "fs": 10,
       "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]]},
       "noise": {"Q": [[1e-3, 0], [0, 1e-3]], "R": [[0.25]]},
       "initial": {"x0": [[0], [1]]}}
@@ -104,7 +104,7 @@ class TestExecute(unittest.TestCase):
         self.assertEqual(len(d["nis"]), 20)
 
     def test_run_control_cost(self):
-        spec = {"base": "matrices", "sensor_id": "c", "fs": 10,
+        spec = {"base": "matrices", "sensor": "c", "fs": 10,
                 "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]], "B": [[0], [0.1]]},
                 "noise": {"Q": [[1e-3, 0], [0, 1e-3]], "R": [[0.25]]},
                 "initial": {"x0": [[1.0], [0.0]]}}

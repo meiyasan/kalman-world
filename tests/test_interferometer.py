@@ -157,7 +157,7 @@ class TestInterferometerModelConstruct(unittest.TestCase):
         win = self._one_window()
         m = InterferometerModel("K1", [win])
         self.assertEqual(len(m.windows), 1)
-        self.assertEqual(m.sensor_id, "K1")
+        self.assertEqual(m.sensor, "K1")
 
     def test_two_windows(self):
         w1 = self._one_window(175.0)

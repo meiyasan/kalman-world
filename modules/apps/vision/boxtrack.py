@@ -166,7 +166,7 @@ class BoxTrackModel(LinearKalmanModel):
     def observables(self):
         return BoxTrackObservable
 
-    def __init__(self, sensor_id: str | int,
+    def __init__(self, sensor: str | int,
                  measurement_uncertainty: float = 1.0,
                  process_uncertainty: float = 1.0,
                  fs: float = 30.0,
@@ -193,7 +193,7 @@ class BoxTrackModel(LinearKalmanModel):
             P0[4:, 4:] *= 1000.0                            # large prior on unobserved velocities
             kwargs["P0"] = P0
 
-        super().__init__(sensor_id, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, F=F, H=H, Q=Q, R=R, fs=fs, **kwargs)
 
     # ---- explicit input injection: detector boxes -> measurement rows ----
     @staticmethod

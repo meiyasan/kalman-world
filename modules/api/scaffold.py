@@ -33,7 +33,7 @@ def scaffold(spec: dict, class_name: str | None = None, *, credential: str | Non
     noise = spec.get("noise", {}) or {}
     init = spec.get("initial", {}) or {}
     fs = spec.get("fs", 1.0)
-    sensor = spec.get("sensor_id", "S")
+    sensor = spec.get("sensor", "S")
 
     kwargs = []
     if base == "matrices":
@@ -65,9 +65,9 @@ class {cls}({parent}):
     DESCRIPTION = "Scaffolded from a KalmanSpec."
     VERSION = "0.1"
 
-    def __init__(self, sensor_id={sensor!r}, **kw):
+    def __init__(self, sensor={sensor!r}, **kw):
         super().__init__(
-            sensor_id,
+            sensor,
             {args},
             **kw,
         )

@@ -5,7 +5,7 @@ from __future__ import annotations
 Two-stage workflow
 ------------------
 Stage 1 -- peak fitting
-    ``InterferometerModel.fit(sensor_id, strain, fs, bands)``
+    ``InterferometerModel.fit(sensor, strain, fs, bands)``
     Estimates PSD via Welch, detects spectral peaks per band with
     ``scipy.signal.find_peaks``, fits each peak to a Lorentzian profile to
     extract (f0, Q, amplitude), and groups nearby peaks into analysis windows.

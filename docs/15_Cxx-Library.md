@@ -538,7 +538,7 @@ import kalman.api as api
 api.load_plugin("KalmanPlugin_example")           # by name, from the allow-listed dirs
 m = NativeModel("pendulum", "sensor-1")           # a C++ model ...
 rec = m.filter(m.sample(5.0).zk)                  # ... driven by the Python EKF
-api.run_filter({"base": "constant-velocity", "sensor_id": "cv", "fs": 20}, zk)
+api.run_filter({"base": "constant-velocity", "sensor": "cv", "fs": 20}, zk)
 ```
 
 Every registered name becomes a class in `api.catalog()["models"]`, `describe()`

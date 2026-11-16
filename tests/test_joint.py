@@ -31,10 +31,10 @@ class Oscillator(KalmanModel):
 
     NAME = "Test Oscillator"
 
-    def __init__(self, sensor_id="osc", *, omega=2.0, damping=0.0, fs=50.0, **kwargs):
+    def __init__(self, sensor="osc", *, omega=2.0, damping=0.0, fs=50.0, **kwargs):
         self.n, self.m, self.l = 2, 1, 0
         self["omega"], self["damping"] = omega, damping
-        super().__init__(sensor_id, fs=fs, Q=np.diag([1e-6, 1e-4]), R=np.array([[1e-2]]),
+        super().__init__(sensor, fs=fs, Q=np.diag([1e-6, 1e-4]), R=np.array([[1e-2]]),
                          x0=np.array([[1.0], [0.0]]), P0=np.eye(2), **kwargs)
 
     def f(self, x, u=None, w=None, t=None):

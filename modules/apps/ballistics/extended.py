@@ -102,10 +102,7 @@ class BallisticModel(NativeTwin, ExtendedKalmanModel):
         self.m = 3
 
         super().__init__(name, Q=Qd, R=R, **kwargs)
-        self.clear_sensors()
-        self.add_sensor("X")
-        self.add_sensor("Y")
-        self.add_sensor("Z")
+        self._name_channels(["X", "Y", "Z"])       # the channels of its sensor
 
     # ----------------------------------------------------------------------
     # C++ twin (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A

@@ -83,9 +83,7 @@ class CompositeKalmanModel(KalmanModel):
         self.postprocess = self._bind_postprocess()
 
         super().__init__("Composite", x0=x0, P0=P0, fs=self.fs, **kwargs)
-        self._sensor.clear()
-        for m in self.models:
-            self._sensor.extend(m._sensor)
+        self._labels = [label for m in self.models for label in (m._labels or [])]
 
         # What was bound here: a part of the contract replaced afterwards (an
         # h of one's own, say) makes the composite code, whatever its parts are.

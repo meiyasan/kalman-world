@@ -16,7 +16,7 @@ direction (a C call is cheap; it is a *Python* callback from C++ that is not).
 :func:`native_model_classes` turns every registered name into a class — ``NAME``,
 ``DESCRIPTION``, ``VERSION`` and ``DEFAULT_ENGINE`` filled from the C++ metadata —
 so the catalogue, ``describe()`` and ``make_model()`` treat a plugin model exactly
-like a class in ``apps/``: ``{"base": "constant-velocity", "sensor_id": "cv"}``.
+like a class in ``apps/``: ``{"base": "constant-velocity", "sensor": "cv"}``.
 """
 from __future__ import annotations
 import numpy as np
@@ -48,7 +48,7 @@ class NativeModel(KalmanModel):
     DEFAULT_ENGINE = KalmanEngineKind.EXTENDED
     ALLOWED_ENGINES = ALL_ENGINES
 
-    def __init__(self, name: str | None = None, sensor_id=None, **kwargs):
+    def __init__(self, name: str | None = None, sensor=None, **kwargs):
         L = core.require()
         # A model that exists already (read from a file) is wrapped as it is.
         handle = kwargs.pop("_handle", None)
@@ -120,7 +120,7 @@ class NativeModel(KalmanModel):
             core.check(L.kalman_model_engine(self._handle), "engine"), KalmanEngineKind.EXTENDED)
         self._analytic = core.check(L.kalman_model_analytic_jacobian(self._handle), "analytic") == 1
 
-        super().__init__(sensor_id if sensor_id is not None else name,
+        super().__init__(sensor if sensor is not None else name,
                          fs=fs, x0=x0.reshape(-1, 1), P0=P0, **kwargs)
 
     def native_handle(self):
@@ -910,13 +910,13 @@ def run_callback_filter(model, zk, uk=None, *, x0=None, P0=None, smooth=False,
 _CLASSES: dict[str, type] = {}
 
 
-def _init(self, sensor_id=None, fs=None, **kwargs):
+def _init(self, sensor=None, fs=None, **kwargs):
     # `fs` is named (not swallowed by **kwargs) so make_model() binds the spec's
     # sample rate to it the way it does for every other catalogue class; None
     # means "keep the C++ model's own".
     if fs is not None:
         kwargs["fs"] = fs
-    NativeModel.__init__(self, self.NATIVE_NAME, sensor_id, **kwargs)
+    NativeModel.__init__(self, self.NATIVE_NAME, sensor, **kwargs)
 
 
 def native_model_classes() -> dict[str, type]:

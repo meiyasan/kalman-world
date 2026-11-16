@@ -68,10 +68,10 @@ class PendulumModel(KalmanModel):
     VERSION = "1.0"
     DEFAULT_ENGINE = KalmanEngineKind.EXTENDED
 
-    def __init__(self, sensor_id="p", g=9.81, L=1.0, **kw):
+    def __init__(self, sensor="p", g=9.81, L=1.0, **kw):
         self.n = 2                       # BEFORE super(): construction evaluates F(zeros)
         self.g, self.L = g, L
-        super().__init__(sensor_id, **kw)
+        super().__init__(sensor, **kw)
 
     DYNAMICS = KalmanDynamicsKind.CONTINUOUS     # f returns dx/dt
 
@@ -210,9 +210,21 @@ noisy it is, and what its channels are called. Each channel is an
 **measurement** is the numbers that come out. A model lists its sensors:
 
 ```python
-shell = BallisticModel("XYZ", order=3, fs=32, m=4.2, c_drag=6e-4,
+shell = BallisticModel("radar", order=3, fs=32, m=4.2, c_drag=6e-4,
                        measurement_uncertainty=10, process_uncertainty=0.5)
-shell.sensors        # [KalmanSensor('position', ..., channels=3)]: X, Y, Z in m
+shell.sensors        # [KalmanSensor('radar', ..., channels=3)]: X, Y, Z in m
+```
+
+The first argument of a model is its sensor. A name, as here, names the sensor
+the model is built with (its own `h` and `R`). A `KalmanSensor` in its place
+*is* the measurement, and a list gives several; a name in the list keeps the
+model's own sensor beside the others:
+
+```python
+gps   = KalmanSensor("gps", G=[[1.0, 0.0]], R=0.25, labels={"X": "m"})
+wheel = KalmanSensor("wheel", lambda x: [x[1, 0]], R=[0.04], labels={"V": "m/s"})
+car   = KalmanModel([gps, wheel], fs=10, F=F, Q=Q, x0=x0, P0=P0)     # no H, no R: the sensors are them
+both  = BallisticModel(["radar", doppler], order=3, fs=32, ...)      # its own sensor, and one more
 ```
 
 `model.add_sensor(sensor)` (also `add_sensor(model, sensor)`) gives a **new
@@ -234,7 +246,7 @@ def radial_velocity(x):                      # the velocity along the line of si
 
 doppler = KalmanSensor("doppler", radial_velocity, R=1.0, labels={"V_RADIAL": "m/s"})
 radar = shell.add_sensor(doppler)
-radar.sensors        # [position, doppler]
+radar.sensors        # [radar, doppler]
 radar.observables    # X, Y, Z, V_RADIAL: derived from the sensors
 record = radar.filter(zk)                    # zk has four columns
 ```
@@ -274,10 +286,10 @@ through the two sensors' Jacobians (`tests/test_add_sensor.py`, `TestCameras`:
 the depth of a point 40 m away is left with metres of doubt by one camera and
 found to 5 cm by two).
 
-A model that declares no sensor has one built in: its own `h` and `R`, named
-after its observable (`position`) and with the model's labels as channels.
-`add_sensor("X")` with a string is still only a label, appended in place, as
-before. `KalmanObservable` stays the type of a channel label; a model's
+The sensor a model is built with reads its own `h` and `R` and carries the
+name given as first argument; a model names its channels in its constructor
+with `self._name_channels(["X", "Y", "Z"])`. `add_sensor` takes a
+`KalmanSensor` only. `KalmanObservable` stays the type of a channel label; a model's
 `observables` are those of its sensors, in the order of `z`.
 
 The operations nest: `shell.add_sensor(doppler).joint({"c_drag": ...})`

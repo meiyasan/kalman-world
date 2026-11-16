@@ -120,7 +120,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
     def observables(self):
         return FlowObservable
 
-    def __init__(self, sensor_id: str,
+    def __init__(self, sensor: str,
                  grid: int = 64,
                  nu: float = 1/150.0,
                  chi: float = 2.0,
@@ -166,7 +166,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
         kwargs.setdefault("R", np.diag(np.full(self.m, self.sig_o ** 2)))
         kwargs.setdefault("x0", np.zeros((d, 1)))
         kwargs.setdefault("P0", np.eye(d))
-        super().__init__(sensor_id, **kwargs)
+        super().__init__(sensor, **kwargs)
 
     # ------------------------------------------------------------------
     # C++ twin (libKalmanApps: Kalman::Apps::Weather::KolmogorovFlow). With

@@ -71,7 +71,7 @@ class PolarizationModel(NativeTwin, ExtendedKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Unique identifier for the sensor.
     fs : float
         Sampling frequency [Hz].  Default: 100.
@@ -104,7 +104,7 @@ class PolarizationModel(NativeTwin, ExtendedKalmanModel):
     @property
     def observables(self): return PolarizationObservable
 
-    def __init__(self, sensor_id: str,
+    def __init__(self, sensor: str,
                  fs:          float = 100.0,
                  delta:       float = 0.5,
                  sigma_a:     float = 0.1,
@@ -142,7 +142,7 @@ class PolarizationModel(NativeTwin, ExtendedKalmanModel):
 
         R = (sigma_n ** 2) * np.eye(4)
 
-        super().__init__(sensor_id, Q=Q, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, Q=Q, R=R, fs=fs, **kwargs)
 
     # ------------------------------------------------------------------
     # The C++ twin (libKalmanApps: Kalman::Apps::Gravitational::Polarization):

@@ -57,7 +57,7 @@ class DetectionModel(LinearKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Camera / track name.
     measurement_uncertainty : float
         Detector centroid noise std [px] (so ``R = σ²·I₂``).
@@ -82,7 +82,7 @@ class DetectionModel(LinearKalmanModel):
     def observables(self):
         return DetectionObservable
 
-    def __init__(self, sensor_id: str | int,
+    def __init__(self, sensor: str | int,
                  measurement_uncertainty: float = 8.0,
                  process_uncertainty: float = 40.0,
                  fs: float = 30.0,
@@ -115,7 +115,7 @@ class DetectionModel(LinearKalmanModel):
             p, v = self._meas_unc ** 2, (10.0 * self._meas_unc) ** 2
             kwargs["P0"] = np.diag([p, p, v, v]).astype(self.dtype)
 
-        super().__init__(sensor_id, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, A=A, H=H, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     def preprocess(self, zk, uk=None, **kwargs): return zk, uk
     def inprocess(self, state_vector, **kwargs): return state_vector

@@ -260,14 +260,14 @@ and the JSON API all work on it.
 class CoolingCoffeeModel(ExtendedKalmanModel):
     DIFFERENTIATOR = KalmanDifferentiatorKind.CENTRAL      # as the C++ class linearises
 
-    def __init__(self, sensor_id="thermometer", room=21.0, fs=1.0, **kwargs):
+    def __init__(self, sensor="thermometer", room=21.0, fs=1.0, **kwargs):
         self.room = float(room)
         self.n, self.m, self.l = 2, 1, 0
         kwargs.setdefault("Q", np.diag([1e-4, 1e-12]))
         kwargs.setdefault("R", np.array([[0.5 ** 2]]))
         kwargs.setdefault("x0", np.array([[80.0], [1e-3]]))
         kwargs.setdefault("P0", np.diag([25.0, 1e-6]))
-        super().__init__(sensor_id, fs=fs, L=np.eye(2), **kwargs)
+        super().__init__(sensor, fs=fs, L=np.eye(2), **kwargs)
 
     def f(self, x, u=None, w=None, t=None):
         T, k = np.asarray(x, dtype=float).reshape(-1)

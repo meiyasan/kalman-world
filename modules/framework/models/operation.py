@@ -40,11 +40,11 @@ class OperationModel(NativeModel):
                 return errors[0]
         return ValueError(f"{what}: {core.last_error()}")
 
-    def _adopt(self, handle, inners, sensor_id, **kwargs):
+    def _adopt(self, handle, inners, **kwargs):
         self.inners = list(inners)
         self.dtype = self.inners[0].dtype
         try:
-            NativeModel.__init__(self, sensor_id=sensor_id, _handle=handle, **kwargs)
+            NativeModel.__init__(self, sensor=self._own_sensor_name(inners[0]), _handle=handle, **kwargs)
         except RuntimeError as shadow:
             # A Python function called back from C++ raised: give its exception, not
             # the C++ report of it.
@@ -52,6 +52,11 @@ class OperationModel(NativeModel):
             if isinstance(error, ValueError) and str(error).startswith("operation:"):
                 raise
             raise error from shadow
+
+    @staticmethod
+    def _own_sensor_name(inner):
+        """The name of the sensor the inner model was built with: this model's too."""
+        return getattr(inner, "_sensor_name", None) or type(inner).__name__
 
     def _refresh(self):
         for refresh in self.__dict__.get("_refreshers", []):
@@ -85,7 +90,7 @@ class OperationModel(NativeModel):
         P = self._mat(core.lib.kalman_model_P0, (n, n), "P0")
         return super().initial_state(x, full_P0 if full_P0 is not None else P)
 
-    def _labels(self, state: bool, base, suffix):
+    def _label_enum(self, state: bool, base, suffix):
         """The labels the C++ model carries, as an enum (indices as values)."""
         labels = [name for name, _ in native.labels_of(self._handle, state)]
         return base(f"{type(self.inners[0]).__name__}{suffix}", {label: i for i, label in enumerate(labels)})

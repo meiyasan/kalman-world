@@ -34,7 +34,7 @@ def _recording(init):
                     kind = signature.parameters[name].kind
                     if position == 0 or kind is inspect.Parameter.VAR_POSITIONAL:
                         continue
-                    if position == 1 and name in ("sensor_id", "sensor", "name"):
+                    if position == 1 and name in ("sensor", "name"):
                         first = name                    # the sensor id: the reader gives its own
                     if kind is inspect.Parameter.VAR_KEYWORD:
                         recorded.update(value)
@@ -102,9 +102,13 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
     ALLOWED_SOLVERS     = ALL_SOLVERS
     SOLVER_SUBSTEPS     = 1
 
-    def __init__(self, sensor_id: str | int, **kwargs):
-
-        self.add_sensor(sensor_id)
+    def __init__(self, sensor, **kwargs):
+        """``sensor`` is the model's first sensor: a name (the sensor the model
+        is built with, its own ``h`` and ``R``, is called that), a
+        :class:`~.sensor.KalmanSensor` (which then *is* the model's measurement, in
+        place of its own ``h`` and ``R``), or a list of them (a name in the list
+        keeps the model's own sensor beside the others)."""
+        declared = self._read_sensors(sensor, kwargs)
 
         # --- Sampling rate ---
         self.fs = kwargs.pop("fs", None) or kwargs.pop("sample_rate", None) or getattr(self, "fs", None)
@@ -201,6 +205,95 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         P0 = kwargs.pop("P0", None)
         self.initial_state(x0, P0)
 
+        self._check_shapes(strict=False)
+        if declared is not None:
+            self._install_sensors(declared)
+
+    # ------------------------------------------------------------
+    # The constructor's ``sensor`` argument
+    # ------------------------------------------------------------
+    def _read_sensors(self, sensor, kwargs):
+        """Read the ``sensor`` argument. A name alone is the common case and
+        returns ``None``. Otherwise the list of parts (names and sensors) is
+        returned for :meth:`_install_sensors`; when every part is a
+        :class:`KalmanSensor` they replace the model's own measurement, and the
+        ``H`` / ``R`` / ``m`` the model is built with are set from them here."""
+        from .sensor import KalmanSensor
+        from scipy.linalg import block_diag
+        parts = list(sensor) if isinstance(sensor, (list, tuple)) else [sensor]
+        if not parts:
+            raise ValueError(f"{type(self).__name__}: give a sensor (a name, a KalmanSensor, or a list of them).")
+        for part in parts:
+            if not isinstance(part, (str, int, KalmanSensor)):
+                raise TypeError(f"{type(self).__name__}: a sensor is a name or a KalmanSensor, got {type(part).__name__}.")
+        names = [part.name if isinstance(part, KalmanSensor) else str(part) for part in parts]
+        if len(set(names)) != len(names):
+            raise ValueError(f"{type(self).__name__}: two sensors share a name in {names}.")
+        own = [part for part in parts if not isinstance(part, KalmanSensor)]
+        if len(own) > 1:
+            raise ValueError(f"{type(self).__name__}: one name only (the model's own sensor), got {own}.")
+        self._sensor_name = str(own[0]) if own else names[0]
+        self._labels = [self._sensor_name]
+        if len(parts) == 1 and own:
+            return None
+
+        if not own:                                    # the sensors are the whole measurement
+            given = [part for part in parts]
+            counts = [g.channels for g in given]
+            if any(k is None for k in counts):
+                raise ValueError(f"{type(self).__name__}: a sensor that replaces the model's measurement must say "
+                                 "how many channels it has: give R as a matrix or a list, or labels.")
+            covs = []
+            for g, k in zip(given, counts):
+                R = np.asarray(g.R, dtype=np.float64)
+                covs.append(R * np.eye(k) if R.ndim == 0 else np.diag(R) if R.ndim == 1 else R)
+            kwargs["R"] = block_diag(*covs)
+            self.m = int(sum(counts))
+            if all(g.is_linear for g in given):
+                kwargs["H"] = np.vstack([g.G for g in given])
+            else:
+                kwargs.pop("H", None)
+                self.h = self._stacked_h(given)
+        return parts
+
+    def _stacked_h(self, sensors, first=None):
+        """``h`` made of ``first`` (a measurement function, or none) and then each sensor's readings."""
+        def h(x, v=None, t=None):
+            x = np.asarray(x, dtype=float).reshape(-1, 1)
+            rows = [] if first is None else [np.asarray(first(x, t=t), dtype=float).reshape(-1, 1)]
+            rows += [np.asarray(sensor.measure(x, t), dtype=float).reshape(-1, 1) for sensor in sensors]
+            z = np.vstack(rows)
+            return z if v is None else z + np.asarray(v, dtype=float).reshape(-1, 1)
+        return h
+
+    def _install_sensors(self, parts):
+        """Finish what :meth:`_read_sensors` began, once the model is built: list
+        the sensors, and when the model keeps its own sensor beside the others,
+        stack their readings and their noise after its own."""
+        from .sensor import KalmanSensor
+        from scipy.linalg import block_diag
+        n = int(self.n)
+        added = [part for part in parts if isinstance(part, KalmanSensor)]
+        if len(added) == len(parts):
+            self.__dict__["_sensors_given"] = added
+            return
+        if callable(self._R):
+            raise ValueError(f"{type(self).__name__}: sensors cannot be listed beside a model whose R is a "
+                             "function of time; use add_sensor().")
+        own = self._builtin_sensor()
+        own_h, own_H = self.h, self._H
+        covs = [np.asarray(self._R, dtype=np.float64)]
+        for sensor in added:
+            covs.append(sensor.resolved(n, self.x0, float(self.t0 or 0.0))[1])
+        self._R = block_diag(*covs).astype(self.dtype)
+        self.m = int(self._R.shape[0])
+        linear = own_H is not None and not callable(own_H) and all(sensor.is_linear for sensor in added)
+        self._H = np.vstack([own_H] + [sensor.G for sensor in added]).astype(self.dtype) if linear else None
+        if not linear:
+            self.h = self._stacked_h(added, first=lambda x, t=None: own_h(x, t=t))
+        self._is_linear = self._F is not None and self._H is not None
+        self._observables_enum = None
+        self.__dict__["_sensors_given"] = [own] + added
         self._check_shapes(strict=False)
 
     # ============================================================
@@ -583,15 +676,15 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         return Joint(self, parameters, **kwargs)
 
     def add_sensor(self, sensor):
-        """Add a sensor. A :class:`~.sensor.KalmanSensor` gives back a **new model**,
-        this one read by one more sensor (``radar = shell.add_sensor(doppler)``; this
-        model is left as it is). A name (a string) is only a label: it is appended to
-        this model's label list, in place, as before."""
+        """This model read by one more sensor, a :class:`~.sensor.KalmanSensor`:
+        a **new model** (``radar = shell.add_sensor(doppler)``); this one is left as
+        it is. See :class:`~.models.fusion.Fusion`."""
         from .sensor import KalmanSensor
-        if isinstance(sensor, KalmanSensor):
-            from .models.fusion import Fusion
-            return Fusion(self, sensor)
-        return super().add_sensor(sensor)
+        if not isinstance(sensor, KalmanSensor):
+            raise TypeError(f"add_sensor takes a KalmanSensor, got {type(sensor).__name__}. A name for the "
+                            "model's own sensor is the first argument of the model.")
+        from .models.fusion import Fusion
+        return Fusion(self, sensor)
 
     @property
     def sensors(self):
@@ -612,24 +705,18 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         self.__dict__["_sensors_given"] = value
 
     def _builtin_sensor(self):
-        """How this model's own measurement is labelled, for the C++ model to take
-        (``native._push_labels``): the sensor a model has without declaring any,
-        which reads ``h`` with noise ``R``. Named after the model's one observable when it declares exactly one
-        (the ballistic model's ``position``), else after its label, else its class.
-        Its channels are the model's labels when there is one per channel (``X``,
-        ``Y``, ``Z``), else its observables."""
+        """The sensor the model is built with: it reads the model's own ``h`` with
+        noise ``R`` and is named by the constructor's ``sensor`` argument. Its
+        channels are the names given by ``_name_channels`` when there is one per
+        channel (``X``, ``Y``, ``Z``), else the model's observables. This is how
+        the model's measurement is labelled for the C++ model
+        (``native._push_labels``)."""
         from .sensor import KalmanSensor
         m = int(self.m)
-        labels = [str(label) for label in (self._sensor or [])]
+        labels = [str(label) for label in (self._labels or [])]
         members = list(self.observables.__members__.items())
-        synthetic = all(name == f"Z{i}" for i, (name, _) in enumerate(members))
         unit = lambda member: member._value_ if isinstance(member._value_, str) else ""
-        if members and not synthetic and len(members) == 1:
-            name = members[0][0].lower()
-        elif labels and (len(labels) != m or m == 1):
-            name = labels[0]
-        else:
-            name = type(self).__name__
+        name = getattr(self, "_sensor_name", None) or (labels[0] if labels else type(self).__name__)
         if len(labels) == m and m > 1:
             shared = unit(members[0][1]) if len(members) == 1 else ""
             channels = {label: (unit(members[i][1]) if len(members) == m else shared)

@@ -4,7 +4,7 @@
 ``Kalman::Models::Fusion`` seen from Python. Pinned here: the three ways in, the
 function and the matrix sensors, the list of sensors and the observables derived
 from it, both routes of the inner model to C++ (its twin, or callbacks), nesting
-under ``joint``, and the label form ``add_sensor("X")``, which is unchanged.
+under ``joint``, and the model's first argument: a name, a sensor, or a list.
 """
 import sys
 import unittest
@@ -79,10 +79,11 @@ class TestConstruction(unittest.TestCase):
         self.assertIsNot(model, inner)
         self.assertEqual((inner.m, len(inner.sensors)), (1, 1))
 
-    def test_a_label_is_still_only_a_label(self):
-        inner = Oscillator()
-        self.assertIsNone(inner.add_sensor("second"))                        # in place, as before
-        self.assertEqual((inner._sensor, inner.m), (["osc", "second"], 1))
+    def test_only_a_sensor_can_be_added(self):
+        with self.assertRaisesRegex(TypeError, "add_sensor takes a KalmanSensor"):
+            Oscillator().add_sensor("second")                               # a name is the model's first argument
+        for gone in ("sensor", "remove_sensor", "clear_sensors"):
+            self.assertFalse(hasattr(Oscillator(), gone), gone)
 
     def test_function_sensor(self):
         inner = Oscillator()
@@ -151,6 +152,58 @@ class TestConstruction(unittest.TestCase):
         model.initial_state([0.3, -0.2])
         np.testing.assert_array_equal(model.x0.ravel(), [0.3, -0.2])
         np.testing.assert_array_equal(model.inner.x0.ravel(), [0.3, -0.2])
+
+
+class TestFirstArgument(unittest.TestCase):
+    """The first argument of a model is its sensor: a name, a KalmanSensor, or a list."""
+
+    KW = dict(fs=10.0, F=np.array([[1, 0.1], [0, 1]]), Q=np.diag([1e-4, 1e-2]),
+              x0=np.array([[0.0], [1.0]]), P0=np.eye(2))
+
+    def test_a_name_names_the_models_own_sensor(self):
+        model = KalmanModel("radar", H=np.array([[1.0, 0.0]]), R=np.array([[0.25]]), **self.KW)
+        self.assertEqual([(s.name, s.channels) for s in model.sensors], [("radar", 1)])
+
+    def test_a_sensor_is_the_measurement(self):
+        radar = KalmanSensor("radar", G=[[1.0, 0.0]], R=0.25, labels={"X": "m"})
+        model = KalmanModel(radar, **self.KW)
+        self.assertEqual((model.m, [s.name for s in model.sensors]), (1, ["radar"]))
+        np.testing.assert_array_equal(model.H(), [[1.0, 0.0]])
+        np.testing.assert_array_equal(model.R(), [[0.25]])
+        self.assertIs(model.structure, KalmanStructureKind.MATRICES)          # still a model of matrices
+        written = KalmanModel("radar", H=np.array([[1.0, 0.0]]), R=np.array([[0.25]]), **self.KW)
+        np.random.seed(2)
+        z = written.sample(20.0).zk
+        np.testing.assert_allclose(model.filter(z, smooth=False, reset=True).xk,
+                                   written.filter(z, smooth=False, reset=True).xk, rtol=0, atol=1e-12)
+
+    def test_several_sensors(self):
+        position = KalmanSensor("gps", G=[[1.0, 0.0]], R=0.25)
+        speed = KalmanSensor("wheel", lambda x: [x[1, 0]], R=[0.04])
+        model = KalmanModel([position, speed], **self.KW)
+        self.assertEqual((model.m, [s.name for s in model.sensors]), (2, ["gps", "wheel"]))
+        np.testing.assert_array_equal(model.h(np.array([[3.0], [4.0]])).ravel(), [3.0, 4.0])
+        np.testing.assert_allclose(model.R(), np.diag([0.25, 0.04]))
+
+    def test_a_name_in_the_list_keeps_the_models_own_sensor(self):
+        model = Oscillator(["probe", gyro()])
+        self.assertEqual((model.m, [s.name for s in model.sensors]), (2, ["probe", "gyro"]))
+        np.testing.assert_array_equal(model.h(np.array([[0.4], [-0.7]])).ravel(), [0.4, -0.7])
+        np.testing.assert_allclose(model.R(), np.diag([1e-2, 0.04]))
+        added = Oscillator("probe").add_sensor(gyro())                      # the same model, by add_sensor
+        truth = Oscillator(damping=0.3, random_seed=5).add_sensor(gyro()).sample(20.0)
+        np.testing.assert_allclose(model.filter(truth.zk, smooth=False, reset=True).xk,
+                                   added.filter(truth.zk, smooth=False, reset=True).xk, rtol=0, atol=1e-6)
+
+    def test_refusals(self):
+        with self.assertRaises(TypeError):
+            KalmanModel(3.5, **self.KW)
+        with self.assertRaises(ValueError):
+            KalmanModel(["a", "b"], H=np.array([[1.0, 0.0]]), R=np.array([[1.0]]), **self.KW)   # two names
+        with self.assertRaises(ValueError):
+            KalmanModel([gyro(), gyro()], **self.KW)                           # the same name twice
+        with self.assertRaises(ValueError):
+            KalmanModel(KalmanSensor("s", rate, R=0.04), **self.KW)            # channels unknown before the model
 
 
 class TestMatrices(unittest.TestCase):
@@ -274,7 +327,7 @@ class TestBallisticDoppler(unittest.TestCase):
 
     def test_one_position_sensor_of_three_channels_then_doppler(self):
         model = self.make()
-        self.assertEqual([(s.name, s.channels) for s in model.sensors], [("position", 3), ("doppler", 1)])
+        self.assertEqual([(s.name, s.channels) for s in model.sensors], [("XYZ", 3), ("doppler", 1)])
         self.assertEqual(model.sensors[0].observables, [("X", "m"), ("Y", "m"), ("Z", "m")])
         self.assertEqual(model.sensors[1].observables, [("V_RADIAL", "m/s")])
         self.assertEqual(list(model.observables.__members__), ["X", "Y", "Z", "V_RADIAL"])

@@ -378,7 +378,7 @@ def test_every_python_catalogue_model_goes_through_a_file():
         try:
             with warnings.catch_warnings():
                 warnings.simplefilter("ignore")
-                model = cls("s") if first in (["sensor_id"], ["name"]) else cls()
+                model = cls("s") if first in (["sensor"], ["name"]) else cls()
                 structure = model.structure
         except Exception:
             continue                    # needs arguments: not this test's business

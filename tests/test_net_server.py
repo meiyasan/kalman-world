@@ -58,7 +58,7 @@ SERVE = _serve_binary()
 HAVE = SERVE is not None and _plugin_path() is not None
 WHY = "kalman-serve or the example plugin is not built (make build examples, cmake --install)"
 
-CV = {"base": "matrices", "sensor_id": "cv", "fs": 10,
+CV = {"base": "matrices", "sensor": "cv", "fs": 10,
       "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]]},
       "noise": {"Q": [[1e-3, 0], [0, 1e-3]], "R": [[0.25]]},
       "initial": {"x0": [[0], [1]], "P0": [[1, 0], [0, 1]]}}

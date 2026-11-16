@@ -117,12 +117,12 @@ class BarotropicFlowModel(KolmogorovFlowModel):
                    "a mid-latitude model for assimilating measured reanalysis.")
     VERSION = "1.0"
 
-    def __init__(self, sensor_id: str, *, grid: int = 64, nu: float = 2.0e4,
+    def __init__(self, sensor: str, *, grid: int = 64, nu: float = 2.0e4,
                  latitude_deg: float = 50.0, beta: float | None = None,
                  dt: float = 60.0, cycle: int = 60,
                  lat_span_deg: float = 20.0, lon_span_deg: float = 20.0,
                  clim_vorticity_rms: float = 4.5e-5, seed: int = 7, **kw):
-        super().__init__(sensor_id, grid=grid, nu=nu, dt=dt, cycle=cycle, seed=seed, **kw)
+        super().__init__(sensor, grid=grid, nu=nu, dt=dt, cycle=cycle, seed=seed, **kw)
         # Replace the solver the parent built, and drop any climatology cached from it.
         self.solver = BetaPlaneNS2D(
             n=int(grid), nu=nu, beta=beta, latitude_deg=latitude_deg, dt=dt,

@@ -15,7 +15,7 @@ sys.path.insert(0, ".")
 import modules.api as api
 from modules.api import auth, store
 
-CV = {"base": "matrices", "sensor_id": "cv", "fs": 10,
+CV = {"base": "matrices", "sensor": "cv", "fs": 10,
       "dynamics": {"F": [[1, 0.1], [0, 1]], "H": [[1, 0]]},
       "noise": {"Q": [[1e-3, 0], [0, 1e-3]], "R": [[0.25]]},
       "initial": {"x0": [[0], [1]]}}

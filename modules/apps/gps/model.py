@@ -124,7 +124,7 @@ class GPSModel(NativeTwin, ExtendedKalmanModel):
 
     Parameters
     ----------
-    sensor_id : str
+    sensor : str
         Receiver name.
     receiver_lat, receiver_lon : float
         Receiver geodetic latitude / longitude [deg] (spherical Earth).
@@ -157,7 +157,7 @@ class GPSModel(NativeTwin, ExtendedKalmanModel):
     def observables(self):
         return GPSObservable
 
-    def __init__(self, sensor_id: str | int,
+    def __init__(self, sensor: str | int,
                  receiver_lat: float = 45.0,
                  receiver_lon: float = 10.0,
                  n_sat: int = 8,
@@ -228,7 +228,7 @@ class GPSModel(NativeTwin, ExtendedKalmanModel):
             kwargs["P0"] = np.diag([100.0 ** 2, 100.0 ** 2, 100.0 ** 2,
                                     100.0 ** 2, 1.0 ** 2]).astype(self.dtype)
 
-        super().__init__(sensor_id, A=A, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
+        super().__init__(sensor, A=A, Qc=Qc, Lc=Lc, R=R, fs=fs, **kwargs)
 
     # ------------------------------------------------------------------
     # The C++ twin (Kalman::Apps::GPS::Receiver): the filtering pass runs

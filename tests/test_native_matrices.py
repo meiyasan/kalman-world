@@ -312,7 +312,7 @@ class TestNoModelFallsBackToThePythonLoop(unittest.TestCase):
                     continue
                 first = list(inspect.signature(cls.__init__).parameters)[1:2]
                 try:
-                    model = cls("s") if first in (["sensor_id"], ["name"]) else cls()
+                    model = cls("s") if first in (["sensor"], ["name"]) else cls()
                     z = np.asarray(model.sample(20 / (model.fs or 1.0), seed=1).zk, float)
                 except Exception:
                     continue                    # needs arguments, or its default state cannot be sampled
