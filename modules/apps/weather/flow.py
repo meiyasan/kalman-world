@@ -25,6 +25,7 @@ import time
 import numpy as np
 
 from ...framework.model import KalmanModel
+from ...framework.engine_models import KalmanEnsembleModel
 from ...framework.models.native import NativeTwin
 from ...framework.constants import KalmanEngineKind, KalmanObservable
 from ...framework.engines.ensemble import EnsembleKalmanEngine, gaspari_cohn
@@ -80,7 +81,7 @@ class FlowObservable(KalmanObservable):
 # ======================================================================
 # The Kalman model — full vorticity field, sparse point observations
 # ======================================================================
-class KolmogorovFlowModel(NativeTwin, KalmanModel):
+class KolmogorovFlowModel(NativeTwin, KalmanEnsembleModel, KalmanModel):
     """
     Kolmogorov-flow vorticity field as a Kalman state (n = grid², chaotic).
 
@@ -89,7 +90,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
       allows only the ensemble and particle engines.
     - ``h`` — sample the field at ``n_obs`` fixed probe points (+ iid noise
       ``sig_o``); the probes are drawn once from ``seed``.
-    - ``localization()`` — Gaspari–Cohn tapers from periodic torus distances
+    - ``covariance_mask()`` — the ensemble filter's localization: Gaspari–Cohn tapers from periodic torus distances
       between grid cells and probes (radius ``loc_radius`` grid units).
     - ``initial_state(samples=N)`` — random climatology snapshots (large, honest
       initial error), from a cached spin-up run: the ensemble filter's initial
@@ -175,7 +176,7 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
     # does a solver on libTorch (backend="torch"), which libKalmanApps does
     # not link, and a solver other than the one this class builds.
     # ------------------------------------------------------------------
-    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("localization", "torus_distance",
+    _TWIN_CONTRACT = NativeTwin._TWIN_CONTRACT + ("covariance_mask", "torus_distance",
                                                   "vorticity_gradient")
     _NATIVE_NAME = "kolmogorov-flow"
     _NATIVE_SOLVER = NS2D
@@ -334,8 +335,9 @@ class KolmogorovFlowModel(NativeTwin, KalmanModel):
             return np.minimum(dd, n - dd)
         return np.sqrt(wrap(ax, bx)**2 + wrap(ay, by)**2)
 
-    def localization(self):
-        """(rho_xy, rho_yy) Gaspari–Cohn tapers for the ensemble engine.
+    def covariance_mask(self):
+        """(rho_xy, rho_yy) Gaspari–Cohn tapers: how far each probe's correction
+        reaches (what the ensemble engine calls its localization).
 
         For ``obs_type='gradient'`` the two channels of each probe sit at the
         same location, so the tapers are block-tiled: ``rho_xy`` duplicated

@@ -184,7 +184,7 @@ class TestKolmogorovFlowModel(unittest.TestCase):
         m.surrogate = None
 
     def test_localization_shapes(self):
-        rho_xy, rho_yy = self.model.localization()
+        rho_xy, rho_yy = self.model.covariance_mask()
         self.assertEqual(rho_xy.shape, (256, 40))
         self.assertEqual(rho_yy.shape, (40, 40))
         np.testing.assert_allclose(np.diag(rho_yy), 1.0)
@@ -235,7 +235,7 @@ class TestFieldGradients(unittest.TestCase):
                                 n_obs=30, obs_type="gradient", loc_radius=4.0, seed=2)
         self.assertEqual(m.m, 60)                                       # 2 × 30 probes
         self.assertEqual(m.H().shape, (60, 256))
-        rho_xy, rho_yy = m.localization()
+        rho_xy, rho_yy = m.covariance_mask()
         self.assertEqual(rho_xy.shape, (256, 60))
         self.assertEqual(rho_yy.shape, (60, 60))
         w = m.solver.random_ic().ravel()

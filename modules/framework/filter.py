@@ -394,12 +394,13 @@ class BayesFilter(KalmanFilterMetadata, KalmanFilterMixin):
         from .engines.unscented import UnscentedKalmanEngine
         from .engines.particle import ParticleEngine
         from .engines.ensemble import EnsembleKalmanEngine
+        from .engine_models import KalmanEnsembleModel
         if type(self.engine) is EnsembleKalmanEngine:
             # A field model's whole-ensemble path (f or h written for every member
             # at once, its own covariance mask) runs in
             # C++ when it has a twin (libKalmanApps); otherwise the Python engine runs.
             model = self._model
-            if getattr(model, "BATCHED", ()) or callable(getattr(model, "localization", None)):
+            if getattr(model, "BATCHED", ()) or isinstance(model, KalmanEnsembleModel):
                 return uk_fn is None and self.engine._native_twin(self._model) is not None
             if self.engine._rho_xy is not None or self.engine._rho_yy is not None:
                 return False

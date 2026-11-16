@@ -122,7 +122,7 @@ namespace Kalman::Apps::Weather
             // f and h of every member in one call, the members in parallel.
             void f(std::vector<Vector> &members, const Vector &u, double t) const override;
             void h(const std::vector<Vector> &members, double t, std::vector<Vector> &out) const override;
-            bool Localization(Matrix &rhoXY, Matrix &rhoYY) const override;
+            bool CovarianceMask(Matrix &rhoXY, Matrix &rhoYY) const override;
             bool ProcessNoiseVariances(double t, Vector &variances) const override;
 
             /// Distance between two cells on the periodic grid, in cells.

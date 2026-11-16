@@ -258,6 +258,12 @@ class CombinatorialKalmanEngine(ExtendedKalmanEngine):
         -------
         list[TrackCandidate] — the accepted, arbitrated tracks.
         """
+        # What track finding asks beyond the model contract: the layers, and a seed
+        # per hit (KalmanDetectorModel; Kalman::Tracking::Detector in C++).
+        from ..engine_models import KalmanDetectorModel
+        if not isinstance(model, KalmanDetectorModel):
+            raise TypeError(f"{type(model).__name__} cannot be tracked: it is not a KalmanDetectorModel "
+                            "(layer radii and seed_state).")
         radii = np.asarray(layer_radii if layer_radii is not None else model.radii, dtype=float)
         hits = [np.asarray(h, dtype=float).reshape(-1, model.m) for h in hits_by_layer]
         L = len(hits)

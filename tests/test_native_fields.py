@@ -96,7 +96,7 @@ class TestFieldFilterPass(unittest.TestCase):
 
     def test_tapers_given_to_the_engine(self):
         model = mini()
-        rho_xy, rho_yy = model.localization()
+        rho_xy, rho_yy = model.covariance_mask()
         loc = (0.5 * rho_xy, rho_yy)              # not the model's: the engine's win
         self.compare(mini, n_members=10, localization=loc, seed=4)
 

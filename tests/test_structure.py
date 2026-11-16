@@ -80,9 +80,9 @@ class TestReservedNames(unittest.TestCase):
     #: Aliases of f and h, provided by the base class; a model never defines them.
     ALIASES = ("step", "sense")
     #: Looked up on a model by the ensemble engine only.
-    ENSEMBLE_HOOKS = ("localization",)
+    ENSEMBLE_HOOKS = ("covariance_mask",)
     #: Ensemble-filter words that are not model methods: the engine's own steps.
-    NOT_ON_A_MODEL = ("forecast", "observe", "project", "analyze", "initial_ensemble")
+    NOT_ON_A_MODEL = ("forecast", "observe", "project", "analyze", "initial_ensemble", "localization")
 
     @staticmethod
     def _models():
@@ -166,6 +166,22 @@ class TestReservedNames(unittest.TestCase):
         self.assertEqual(kf.initial_state(samples=3, rng=1).shape, (2, 3))
         for gone in ("get_initial_state", "get_initial_state_vector", "get_initial_state_covariance"):
             self.assertFalse(hasattr(kf, gone), gone)
+
+    def test_what_only_one_engine_needs_is_a_class_beside_the_model(self):
+        import numpy as np
+        from modules.framework.engine_models import KalmanEnsembleModel, KalmanDetectorModel
+        from modules.apps.weather.flow import KolmogorovFlowModel
+        from modules.apps.tracking import DriftChamberModel
+        from modules.framework.filters import CombinatorialKalmanFilter
+        self.assertTrue(issubclass(KolmogorovFlowModel, KalmanEnsembleModel))
+        self.assertTrue(issubclass(DriftChamberModel, KalmanDetectorModel))
+        self.assertIsNone(KalmanEnsembleModel().covariance_mask())           # no mask by default
+        for name in ("covariance_mask", "seed_state", "radii"):
+            self.assertFalse(hasattr(KalmanModel, name), f"{name} is not part of every model")
+        plain = KalmanModel("cv", fs=10.0, F=np.eye(2), H=np.array([[1.0, 0.0]]), Q=1e-3 * np.eye(2),
+                            R=np.array([[0.1]]), x0=np.zeros((2, 1)), P0=np.eye(2))
+        with self.assertRaisesRegex(TypeError, "not a KalmanDetectorModel"):
+            CombinatorialKalmanFilter(plain).forward([np.zeros((1, 1))], layer_radii=[1.0])
 
     def test_ensemble_words_are_not_model_methods(self):
         for cls in [KalmanModel] + self._models():

@@ -4,6 +4,7 @@ import numpy as np
 
 from ..engine import KalmanEngine
 from ..model import _over_columns
+from ..engine_models import KalmanEnsembleModel
 from ..constants import KalmanEngineKind
 
 
@@ -48,7 +49,8 @@ class EnsembleKalmanEngine(KalmanEngine):
 
     ``ρ_xy (n,p)`` / ``ρ_yy (p,p)`` are localization tapers (e.g.
     :func:`gaspari_cohn` of the state↔obs distances), taken from
-    ``model.localization()`` when available, else no localization.
+    ``model.covariance_mask()`` when the model is a ``KalmanEnsembleModel``, else no
+    localization.
 
     **RNG discipline** — the perturbed-obs draws ``ε`` come from an
     engine-owned ``numpy`` Generator (``seed=``), *never* the global stream.
@@ -108,8 +110,10 @@ class EnsembleKalmanEngine(KalmanEngine):
 
         loc = self._localization
         if loc is None:
-            hook = getattr(model, "localization", None)
-            loc = hook() if callable(hook) else None
+            # localization: the ensemble word for the model's covariance mask
+            # (KalmanEnsembleModel.covariance_mask). A view of a model stands for it.
+            owner = getattr(model, "_model", model)
+            loc = model.covariance_mask() if isinstance(owner, KalmanEnsembleModel) else None
         self._rho_xy, self._rho_yy = (None, None) if loc is None else loc
         return self
 

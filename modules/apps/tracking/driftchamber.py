@@ -24,6 +24,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.engine_models import KalmanDetectorModel
 from ...framework.models.native import NativeTwin
 from ...framework.constants import KalmanEngineKind, ALL_ENGINES, KalmanState, KalmanObservable
 
@@ -62,7 +63,7 @@ class TrackingEvent:
         return len(self.tracks)
 
 
-class DriftChamberModel(NativeTwin, ExtendedKalmanModel):
+class DriftChamberModel(NativeTwin, KalmanDetectorModel, ExtendedKalmanModel):
     """
     Transverse charged-particle tracker on concentric layers (Belle II CDC style).
 

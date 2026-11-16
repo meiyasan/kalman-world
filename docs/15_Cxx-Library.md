@@ -873,7 +873,7 @@ the Python loop runs as before.
 | `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
 | `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
 | `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `preprocess()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
-| `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `forecast`/`observe`/`localization`, a callback in `TwinExperiment.run`; `sample()` |
+| `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `f`, `h` or `covariance_mask`, a callback in `TwinExperiment.run`; `sample()` |
 | `BarotropicFlowModel` (ensemble engine) | `Apps::Weather::BarotropicFlow` | `barotropic-flow` | as `KolmogorovFlowModel` |
 
 The ballistic, car and rocket twins are continuous models: each overrides
@@ -974,7 +974,7 @@ the "Python" column above is measured.
 
 `KolmogorovFlowModel` and `BarotropicFlowModel` are fields: the state is the
 vorticity on a periodic grid (n = 4096 at 64 x 64), filtered by the ensemble
-engine through `f` and `h` written for every member at once, `localization`,
+engine through `f` and `h` written for every member at once, a `covariance_mask`,
 and an initial state given as samples. Their twins (`Apps::Weather::KolmogorovFlow`,
 `kolmogorov-flow`, and `Apps::Weather::BarotropicFlow`, `barotropic-flow`)
 implement `Engines::EnsembleModel` beside `Kalman::Model`: the members are
@@ -1024,7 +1024,7 @@ the analysis kernel.
 Still in Python: a `surrogate` forecast (a Python callable), a solver on
 libTorch (`backend="torch"`: libKalmanApps does not link libKalmanLearn), a
 solver with other physics, a `Q` with off-diagonal terms, a subclass or an
-instance that changes `forecast`, `observe` or `localization`, a `callback` in
+instance that changes `f`, `h` or `covariance_mask`, a `callback` in
 `TwinExperiment.run`, and `model.sample()`, whose sampler steps the ensemble
 engine's prediction in Python.
 
@@ -1295,7 +1295,7 @@ linear filter. Both can be present in one process.
 | ODE models | `DYNAMICS = CONTINUOUS`, `f` returns dx/dt; `DEFAULT_INTEGRATOR`, `SOLVER_SUBSTEPS` | override `Derivative()`, call `UseContinuousDynamics()`, `SetIntegrator()`, `SetSubsteps()` |
 | Spectral solver backend | the numpy backend forwards to `Solvers::Vorticity` when the solver states its physics; `backend="torch"` runs the C++ libTorch solver below | built-in FFT, one field at a time (`Solvers::Spectral`, `Solvers::Vorticity`); libTorch, batched, CPU/CUDA/MPS (`Learn::Solvers::Vorticity`) |
 | Non-additive noise (UKF) | augmented-state sigma points, when the map really uses the noise argument | the same (`HasProcessNoiseInput`, `HasMeasurementNoiseInput`) |
-| What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.localization()`; the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`Localization`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
+| What the ensemble engine asks of a model | `f` and `h` on every member (`BATCHED`), `model.initial_state(samples=N)`, `model.covariance_mask()` (a `KalmanEnsembleModel`); the analysis arithmetic is the C++ kernel `enkf_analysis`; a field model with a twin hands the whole pass to C++ | `Model::f` and `Model::h` for many states, `Model::InitialState(N, normal)`; `Engines::EnsembleModel` (`CovarianceMask`, `ProcessNoiseVariances`) beside `Kalman::Model`; `SetLocalization`, `SetMembers`, `SetNormals` on the engine; `Filters::EnKF::Cycle` |
 | Routers | Bayesian, Threshold, Hybrid forward to C++; Neural trains in Torch | Bayesian, Threshold, Hybrid (a Python child is called back), Neural (a trained policy: `NN::MLP`, ONNX, TorchScript); IKF |
 | Applications | `modules/apps/` | `libKalmanApps`: a twin for every model given by code (19 registered names, `kalman models`); models that are their matrices run on `Kalman::Models::Tabulated` with no twin; none in the core library |
 | Jacobians | `DIFFERENTIATOR`: analytic, forward (default) or central differences, computed in C++ | `Model::SetDifferentiator`; `Differentiators::Forward`, `::Central` |

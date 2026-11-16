@@ -45,7 +45,7 @@ namespace Kalman::Engines
 
     // --- the hooks a model may offer -------------------------------------------
 
-    bool EnsembleModel::Localization(Matrix &, Matrix &) const { return false; }
+    bool EnsembleModel::CovarianceMask(Matrix &, Matrix &) const { return false; }
 
     bool EnsembleModel::ProcessNoiseVariances(double, Vector &) const { return false; }
 
@@ -128,7 +128,8 @@ namespace Kalman::Engines
         fModelRhoXY = Matrix();
         fModelRhoYY = Matrix();
         if (const auto *hooks = dynamic_cast<const EnsembleModel *>(&model))
-            if (!hooks->Localization(fModelRhoXY, fModelRhoYY))
+            // localization: the ensemble word for the model's covariance mask.
+            if (!hooks->CovarianceMask(fModelRhoXY, fModelRhoYY))
                 fModelRhoXY = fModelRhoYY = Matrix();
 
         if (!fStart.empty())

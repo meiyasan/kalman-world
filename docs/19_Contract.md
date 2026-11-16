@@ -149,18 +149,20 @@ Two words that mislead:
 
 What only one engine needs from a model is a small mixin beside the contract:
 `covariance_mask` for the ensemble filter, `radii` and `seed_state` for track
-finding. In C++ these are `Engines::EnsembleModel` and `Tracking::Detector`.
+finding. These are the classes `KalmanEnsembleModel` and `KalmanDetectorModel`
+(`Engines::EnsembleModel` and `Tracking::Detector` in C++), which a model
+inherits beside the contract; the engine checks for the class.
 
 ## Names being replaced
 
 Already gone: `model.forecast(X)` and `model.observe(X)`, now `f` and `h` given
 many states; `model.initial_ensemble(N)`, now `model.initial_state(samples=N)`;
 `initial_state_vector`, `initial_state_covariance` and the `get_initial_state`
-variants, now `initial_state(x0, P0)`.
+variants, now `initial_state(x0, P0)`; `model.localization()`, now
+`model.covariance_mask()`.
 
 | Older name | Contract name | Step |
 |---|---|---|
-| `model.localization()` | `model.covariance_mask()` | 5 |
 | `sensor_id`, the first argument of a model | `sensor`: a name, a `KalmanSensor`, or a list | 6 |
 | the label form `add_sensor("X")` | a sensor's `labels` | 6 |
 | `NativeTwin`, "the C++ twin" | `NativeCounterpart`, "the C++ model" | 7 |

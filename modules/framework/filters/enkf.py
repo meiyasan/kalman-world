@@ -14,7 +14,7 @@ class EnsembleKalmanFilter(KalmanFilter):
 
     The workhorse for high-dimensional data assimilation (fields, grids): the
     covariance is carried by the ensemble, never formed densely during the
-    analysis.  ``model.localization()`` (if defined) supplies the Gaspari–Cohn
+    analysis.  ``model.covariance_mask()`` (a ``KalmanEnsembleModel``) supplies the Gaspari–Cohn
     tapers; ``model.initial_state(samples=N, rng)`` seeds the members
     from climatology instead of a Gaussian ``x0/P0`` draw.
     """

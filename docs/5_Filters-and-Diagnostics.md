@@ -106,7 +106,8 @@ record = enkf.forward(zk)
 ```
 
 The covariance is carried by the ensemble and never formed densely. If the model
-defines `localization()`, it supplies the Gaspari–Cohn tapers; if it defines
+is a `KalmanEnsembleModel`, its `covariance_mask()` supplies the Gaspari–Cohn
+tapers (the filter's localization); if it defines
 the `samples=` case of `initial_state`, the members (the initial ensemble) are
 seeded from what it gives, climatology for a flow, instead of a Gaussian `x0/P0`
 draw. `backward()` raises — there is no RTS smoother.

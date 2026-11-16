@@ -28,6 +28,7 @@ from .filter import BayesFilter, KalmanFilter
 from .control import KalmanController
 from .operations import joint, add_sensor
 from .sensor import KalmanSensor
+from .engine_models import KalmanEnsembleModel, KalmanDetectorModel
 from .models import (
     LinearKalmanModel,
     ExtendedKalmanModel,
@@ -103,7 +104,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "CompositeKalmanModel", "Joint", "joint", "Fusion", "add_sensor", "KalmanSensor", "NativeModel",
+    "CompositeKalmanModel", "Joint", "joint", "Fusion", "add_sensor", "KalmanSensor", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

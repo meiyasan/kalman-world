@@ -101,7 +101,7 @@ int main()
     // --- the tapers ------------------------------------------------------------
     {
         Matrix rxy, ryy;
-        CHECK(flow.Localization(rxy, ryy) && rxy.Rows() == 256 && rxy.Cols() == 32 && ryy.Rows() == 32,
+        CHECK(flow.CovarianceMask(rxy, ryy) && rxy.Rows() == 256 && rxy.Cols() == 32 && ryy.Rows() == 32,
               "localization: (n, m) and (m, m)");
         const std::size_t p0 = flow.Probes()[0];
         bool unit = true, compact = true, bounded = true;

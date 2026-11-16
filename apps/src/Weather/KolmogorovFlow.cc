@@ -365,7 +365,7 @@ namespace Kalman::Apps::Weather
         return std::sqrt(dx * dx + dy * dy);
     }
 
-    bool KolmogorovFlow::Localization(Matrix &rhoXY, Matrix &rhoYY) const
+    bool KolmogorovFlow::CovarianceMask(Matrix &rhoXY, Matrix &rhoYY) const
     {
         CheckShapes();
         std::lock_guard<std::mutex> lock(fCacheMutex);

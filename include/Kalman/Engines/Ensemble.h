@@ -72,7 +72,7 @@ namespace Kalman::Engines
      *
      * \details A model implements this next to Kalman::Model, the way a trackable
      * model implements Tracking::Detector, and the engine finds it with a
-     * `dynamic_cast`. The Python hooks of the same names are `localization()` and
+     * `dynamic_cast`. The Python class is `KalmanEnsembleModel`, with `covariance_mask()` and
      * the noise the engine draws from `Q`. Each default does what the engine does
      * without the hook.
      *
@@ -85,7 +85,9 @@ namespace Kalman::Engines
             virtual ~EnsembleModel() = default;
 
             /// The tapers on `P H^T` (n x m) and `H P H^T` (m x m); false for none.
-            virtual bool Localization(Matrix &rhoXY, Matrix &rhoYY) const;
+            /// (The ensemble literature calls it covariance localization; the engine keeps
+            /// that word for its own setting, SetLocalization().)
+            virtual bool CovarianceMask(Matrix &rhoXY, Matrix &rhoYY) const;
             /// The variances of a diagonal `Q`, without forming it; false to use `Q(t)`.
             virtual bool ProcessNoiseVariances(double t, Vector &variances) const;
     };
@@ -129,7 +131,7 @@ namespace Kalman::Engines
              * \param rhoXY (n, m) multiplies `P H^T` elementwise.
              * \param rhoYY (m, m) multiplies `H P H^T` elementwise.
              * Pass empty matrices to switch localization off. Tapers set here win
-             * over a model's own (EnsembleModel::Localization()).
+             * over a model's own (EnsembleModel::CovarianceMask()).
              */
             void SetLocalization(const Matrix &rhoXY, const Matrix &rhoYY);
 
