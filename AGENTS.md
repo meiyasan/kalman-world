@@ -61,6 +61,21 @@ fails — fix the code, do not weaken the test.
    install hint and exit 0 rather than crashing.
 7. **No `eval`/`exec` in `modules/api/`.** Spec authoring is data-only; code is
    only ever *emitted* for a human to review (`scaffold`), never executed.
+8. **One vocabulary: the Kalman contract** ([docs/19](docs/19_Contract.md)). Read
+   that page before naming anything public.
+   - The contract speaks control engineering: `f`, `h`, predict, update, prior,
+     posterior, measurement, initial state.
+   - `f` and `h` take one state or many; `step` and `sense` are their aliases. A
+     model writes `f` and `h` only.
+   - A community's words live inside its filter (forecast, project, analysis,
+     localization in the ensemble filter; hit, layer, seed, hole in track
+     finding), implemented by the generic method and with a comment naming it.
+   - No speed is lost: a batched or threaded path stays so, measured before
+     and after.
+   - Same names in C++ and Python. C++ is the implementation; Python wraps.
+   - A replaced public name is removed, not aliased. A new one is checked
+     against the base class and every application model first
+     (`tests/test_structure.py::TestReservedNames`).
 
 ---
 
