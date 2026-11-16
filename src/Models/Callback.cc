@@ -122,6 +122,30 @@ namespace Kalman::Models
         return ToVector(out);
     }
 
+    void Callback::DeclareParameters(const std::vector<std::pair<std::string, double>> &parameters, ParameterFn set)
+    {
+        if (!set) throw std::invalid_argument("Models::Callback: DeclareParameters needs a function that sets them.");
+        fParameter = set;
+        for (const auto &[name, value] : parameters)
+        {
+            if (HasParameter(name)) continue;
+            DeclareParameter(name, value);
+            fPushed[name] = value;                     // the caller holds it already
+        }
+    }
+
+    void Callback::ParametersChanged()
+    {
+        if (!fParameter) return;
+        for (auto &[name, pushed] : fPushed)
+        {
+            const double value = Parameter(name);
+            if (value == pushed) continue;
+            Check(fParameter(fUser, name.c_str(), value), "set parameter");
+            pushed = value;
+        }
+    }
+
     void Callback::SetNoiseInputs(NoisyStepFn noisyStep, NoisyMeasureFn noisyMeasure)
     {
         fNoisyStep = noisyStep;

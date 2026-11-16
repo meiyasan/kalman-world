@@ -19,6 +19,7 @@
 #include "Kalman/Engines/Unscented.h"
 #include "Kalman/Factory.h"
 #include "Kalman/IO/ModelFile.h"
+#include "Kalman/Models/Joint.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
 #include "Kalman/Algebra/Riccati.h"
@@ -315,6 +316,47 @@ kalman_model_t *kalman_model_create_callback(const char *name, int n, int m, int
             name ? name : "callback", static_cast<std::size_t>(n), static_cast<std::size_t>(m),
             static_cast<std::size_t>(l), f, h, jacobian_f, jacobian_h, user);
         return new kalman_model{std::move(model)};
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const char *const *names,
+                                             const double *values, kalman_parameter_fn set)
+{
+    return Guard([&] {
+        auto *callback = dynamic_cast<Kalman::Models::Callback *>(&Deref(model));
+        if (!callback) throw std::invalid_argument("not a callback model");
+        if (p < 0 || (p > 0 && (!names || !values))) throw std::invalid_argument("null names or values");
+        std::vector<std::pair<std::string, double>> parameters;
+        for (int k = 0; k < p; ++k)
+        {
+            if (!names[k]) throw std::invalid_argument("null parameter name");
+            parameters.emplace_back(names[k], values[k]);
+        }
+        callback->DeclareParameters(parameters, set);
+        return 0;
+    });
+}
+
+kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
+                                              const double *sigma, const double *drift)
+{
+    try
+    {
+        Ok();
+        Kalman::Model &borrowed = Deref(inner);
+        if (p <= 0) throw std::invalid_argument("name at least one parameter (p > 0)");
+        if (!names || !sigma || !drift) throw std::invalid_argument("null names, sigma or drift");
+        std::vector<Kalman::Models::Joint::Parameter> parameters;
+        for (int k = 0; k < p; ++k)
+        {
+            if (!names[k]) throw std::invalid_argument("null parameter name");
+            parameters.push_back({names[k], sigma[k], drift[k]});
+        }
+        // Borrowed: the caller keeps `inner` alive and destroys it.
+        std::shared_ptr<Kalman::Model> shared(&borrowed, [](Kalman::Model *) {});
+        return new kalman_model{std::make_unique<Kalman::Models::Joint>(std::move(shared), std::move(parameters))};
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }

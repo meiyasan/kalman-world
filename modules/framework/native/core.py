@@ -88,6 +88,11 @@ typedef int (*kalman_noisy_step_fn)(void *user, const double *x, const double *u
 typedef int (*kalman_noisy_measure_fn)(void *user, const double *x, const double *v, double t, double *z);
 int kalman_model_callback_set_noise_inputs(kalman_model_t *model, kalman_noisy_step_fn f_with_noise,
                                            kalman_noisy_measure_fn h_with_noise);
+typedef int (*kalman_parameter_fn)(void *user, const char *name, double value);
+int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const char *const *names,
+                                             const double *values, kalman_parameter_fn set);
+kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
+                                              const double *sigma, const double *drift);
 const char *kalman_model_name(const kalman_model_t *model);
 const char *kalman_model_title(const kalman_model_t *model);
 const char *kalman_model_description(const kalman_model_t *model);

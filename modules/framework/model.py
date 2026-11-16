@@ -543,6 +543,15 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         return base(f"{type(self).__name__}{suffix}",
                     {f"{prefix}{i}": i for i in range(int(count or 0))})
 
+    # ============================================================
+    # Operations: a model made from this one (see framework/operations.py)
+    # ============================================================
+    def joint(self, parameters, **kwargs):
+        """This model with some of its parameters estimated along with its state:
+        ``model.joint({"c_drag": (sigma, drift)})``. See :class:`~.models.joint.Joint`."""
+        from .models.joint import Joint
+        return Joint(self, parameters, **kwargs)
+
     def control_cost(self):
         """(Qcost, Rcost, x_ref) hints for controller training. Override per domain."""
         return np.eye(self.n), np.eye(max(self.l, 1)), np.zeros((self.n, 1))

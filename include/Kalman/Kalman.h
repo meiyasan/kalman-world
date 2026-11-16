@@ -120,6 +120,7 @@
 #include "Kalman/Models/Extended.h"
 #include "Kalman/Models/Callback.h"
 #include "Kalman/Models/Tabulated.h"
+#include "Kalman/Models/Joint.h"
 #include "Kalman/Filters/KF.h"
 #include "Kalman/Filters/EKF.h"
 #include "Kalman/Filters/UKF.h"

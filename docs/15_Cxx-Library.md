@@ -64,6 +64,7 @@ included, so a change on one side has an obvious home on the other:
 | `framework/engines/combinatorial.py` (`TrackCandidate`, `GateContext`) | `Kalman/Tracking.h` | `Tracking::Candidate`, `Tracking::GateContext`, `Tracking::Detector` |
 | `framework/models/linear.py` | `Kalman/Models/Linear.h` | `Models::Linear` |
 | `framework/models/extended.py` | `Kalman/Models/Extended.h` | `Models::Extended` |
+| `framework/models/joint.py` | `Kalman/Models/Joint.h` | `Models::Joint` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
 | `framework/filters/ekf.py` | `Kalman/Filters/EKF.h` | `Filters::EKF` |
 | `framework/filters/ukf.py` | `Kalman/Filters/UKF.h` | `Filters::UKF` |
@@ -1037,6 +1038,37 @@ keeps the Python step and prints the same numbers.
 `NativeTwin` into the Python class and give it `native_name()` (the registered
 name for this configuration, or `None`) and `native_parameters()`. Add its
 cases to `tests/test_native_twins.py` and to `tools/benchmark_twins.py`.
+
+### Joint models: the twin, wrapped
+
+`Kalman::Models::Joint` takes a model and some of its declared parameters
+(`DeclareParameter`) and appends them to the state, each with the standard
+deviation of its initial guess and of its random walk per step:
+
+```cpp
+auto shell = std::make_shared<MyShell>();                 // declares "c_drag"
+Kalman::Models::Joint model(shell, {{"c_drag", 1e-3, 1e-6}});
+Kalman::Filters::EKF ekf(&model);
+```
+
+Each map sets the inner parameters to the values in the state, evaluates and
+puts the previous values back, so the inner model is left as it was found. The
+Jacobian is assembled by blocks: the inner model's `Jacobian()` for the
+motion, the `p` parameter columns differenced with the inner model's scheme
+and step, `[0, I]` below. The inner model is shared and receives this model's
+sample rate before each evaluation. Through the C API,
+`kalman_model_create_joint` wraps a model handle it borrows: the caller
+keeps that handle alive.
+
+`Joint` is the Python face: a `NativeModel` around a
+`Kalman::Models::Joint`, computing nothing itself. The inner model reaches
+C++ as its twin when it has one that declares every estimated parameter, and
+otherwise as a `Models::Callback` calling its Python methods. For that case
+`Callback::DeclareParameters` (`kalman_model_callback_declare_parameters`)
+declares the parameters on the callback model and hands every change back to
+the Python model, whose `f` and `h` read it. `tests/test_joint.py` compares
+the two routes. On notebook 01's shell (n = 10, 384 steps) the pass takes
+59 ms on the twin and 0.94 s through the callbacks.
 
 ### Composite models: matrices, no twin
 

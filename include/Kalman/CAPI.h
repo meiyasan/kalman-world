@@ -146,6 +146,23 @@ typedef int (*kalman_noisy_measure_fn)(void *user, const double *x, const double
 int kalman_model_callback_set_noise_inputs(kalman_model_t *model, kalman_noisy_step_fn f_with_noise,
                                            kalman_noisy_measure_fn h_with_noise);
 
+/// Set the caller's parameter `name` to `value`. Return 0 on success.
+typedef int (*kalman_parameter_fn)(void *user, const char *name, double value);
+
+/// Declare `p` parameters of a callback model that live on the caller's side, with
+/// their current `values`; each later change is handed to `set` (Models::Callback::
+/// DeclareParameters). -1 when `model` is not a callback model.
+int kalman_model_callback_declare_parameters(kalman_model_t *model, int p, const char *const *names,
+                                             const double *values, kalman_parameter_fn set);
+
+/// A model whose state also carries `p` of `inner`'s declared parameters, estimated
+/// with the motion (Kalman::Models::Joint): `names[k]` with the standard deviation
+/// `sigma[k]` of its initial guess and `drift[k]` of its random walk per step. `inner`
+/// is borrowed: it must outlive the new model, and is not destroyed with it.
+/// NULL with kalman_last_error() on failure.
+kalman_model_t *kalman_model_create_joint(kalman_model_t *inner, int p, const char *const *names,
+                                              const double *sigma, const double *drift);
+
 /// The instance's Name() (what the application called this system).
 const char *kalman_model_name(const kalman_model_t *model);
 

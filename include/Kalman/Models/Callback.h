@@ -34,6 +34,11 @@
 
 #include "Kalman/Models/Extended.h"
 
+#include <map>
+#include <string>
+#include <utility>
+#include <vector>
+
 namespace Kalman::Models
 {
     class Callback : public Extended
@@ -58,6 +63,8 @@ namespace Kalman::Models
             using NoisyMeasureFn = int (*)(void *user, const double *x, const double *v, double t, double *z);
             /// `u_out = clip(u)`, both of length l: what the actuator delivers of a command.
             using ClipFn = int (*)(void *user, const double *u, double *u_out);
+            /// Set the caller's parameter \p name to \p value (see DeclareParameters()).
+            using ParameterFn = int (*)(void *user, const char *name, double value);
 
         private:
             StepFn fStep;
@@ -71,6 +78,9 @@ namespace Kalman::Models
             NoisyStepFn fNoisyStep = nullptr;
             NoisyMeasureFn fNoisyMeasure = nullptr;
             ClipFn fClip = nullptr;
+            ParameterFn fParameter = nullptr;
+            // The values last handed to the caller, so a change is pushed once.
+            std::map<std::string, double> fPushed;
             // The point of the last f() call. An engine asks for Q(t) right after
             // stepping from (x, u, t); a state-dependent noise needs that point.
             mutable Vector fLastX, fLastU;
@@ -112,6 +122,17 @@ namespace Kalman::Models
 
             /// Give the model its actuator limit (Model::ClipControl); null keeps the identity.
             void SetClip(ClipFn clip) { fClip = clip; }
+
+            /**
+             * \brief Declare parameters that live on the caller's side.
+             *
+             * Each is declared here with its current value (Model::DeclareParameter),
+             * and every SetParameter() that changes one hands the new value to
+             * \p set, so the caller's f and h read it. This is how
+             * Kalman::Models::Joint estimates a parameter of a model written in
+             * another language. Declaring a name twice keeps the first value.
+             */
+            void DeclareParameters(const std::vector<std::pair<std::string, double>> &parameters, ParameterFn set);
             Vector ClipControl(const Vector &u) const override;
 
             using Extended::f;
@@ -119,6 +140,9 @@ namespace Kalman::Models
             Vector f(const Vector &x, const Vector &u, const Vector &w, double t) const override;
             bool HasMeasurementNoiseInput() const override { return fNoisyMeasure != nullptr; }
             Vector MeasureWithNoise(const Vector &x, const Vector &v, double t) const override;
+
+        protected:
+            void ParametersChanged() override;
     };
 }
 

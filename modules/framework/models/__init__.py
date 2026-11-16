@@ -9,6 +9,8 @@ from .linear import LinearKalmanModel
 from .extended import ExtendedKalmanModel
 from .unscented import UnscentedKalmanModel
 from .composite import CompositeKalmanModel
+from .operation import OperationModel
+from .joint import Joint
 from .native import NativeModel, native_model_classes
 
 __all__ = [
@@ -16,6 +18,8 @@ __all__ = [
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
     "CompositeKalmanModel",
+    "OperationModel",
+    "Joint",
     "NativeModel",
     "native_model_classes",
 ]

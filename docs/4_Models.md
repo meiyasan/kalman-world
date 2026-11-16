@@ -158,13 +158,57 @@ the worked example in [`../README.md`](../README.md).
 
 ---
 
+## Joint models: estimating parameters with the state
+
+`model.joint(...)` (also `joint(model, ...)` and the class `Joint`) estimates some of a model's parameters along with its
+state. Each parameter the inner model keeps (`model["c_drag"]`) can join the
+state as a constant that may drift a little:
+
+```
+x = [ s ; theta ]                 s: the inner state,  theta: the parameters
+s_{k+1}     = f(s_k, u_k, t ; theta_k)
+theta_{k+1} = theta_k + w,        w ~ N(0, drift^2)
+z_k         = h(s_k, t ; theta_k)
+```
+
+```python
+from kalman.apps.ballistics import BallisticModel
+from kalman.framework import joint
+
+shell = BallisticModel("XYZ", order=3, fs=32, m=4.2, c_drag=0.0,
+                       measurement_uncertainty=10, process_uncertainty=0.3)
+model = shell.joint({"c_drag": (1e-3, 1e-6)})   # (initial std, drift per step); or joint(shell, {...})
+model.initial_state([[100, 100, 0], [200, 100, 0], [300, 100, -9.81]])   # the 9 states of the shell
+record = model.filter(zk)                                      # record.xk[:, 9] is c_drag
+```
+
+| | |
+|---|---|
+| Initial state | the inner `x0`, then each parameter's current value; `P0 = diag(P0_inner, sigma^2)` |
+| `initial_state(x0, P0)` | takes the joint state, or one the inner model takes (handed to it, the parameters start again from its values) |
+| `f`, `h` | set the inner parameters from the state, evaluate, put the previous values back |
+| `F`, `H` | by blocks: the inner model's own Jacobian, the parameter columns differenced with its scheme, `[0, I]` below |
+| `Q`, `R` | `diag(Q_inner, drift^2)` and `R_inner`; a `Q` that takes the state gets the inner state and the parameters |
+| Engine | the inner model's, or the extended engine when the inner model is linear |
+
+A parameter that changes neither `f` nor `h` is refused when the model is
+built: a model that reads it only in its constructor would leave the
+estimate on its prior. The model is `Kalman::Models::Joint`, and the pass
+runs in `Kalman::Filter`: around the inner model's C++ twin when it has one
+that declares the parameters, otherwise around a callback model that calls the
+inner model's Python methods and sets the parameters back on it. The inner
+model is taken as it is when the joint one is built. Notebook 01, Step 7
+estimates the drag coefficient of a shell this way.
+
+---
+
 ## The shipped catalog
 
 46 model classes are discoverable through `kalman.api.catalog()["models"]`.
 
 | Family / domain | Models |
 |---|---|
-| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `CompositeKalmanModel` |
+| **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `CompositeKalmanModel`, `Joint` |
 | **astro.rocket** | `RocketAscentModel`, `RocketDescentModel`, `RocketLiftoffModel`, `RocketLandingModel` (+ `RocketLaunchModel`, `RocketTakeoffModel` legacy aliases) |
 | **astro.space** | `TransLunarModel`, `InterplanetaryModel` |
 | **ballistics** | `BallisticModel`, `BallisticLinearModel` |

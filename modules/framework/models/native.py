@@ -525,6 +525,111 @@ def native_integrator_kind(model):
     return kind
 
 
+# --- any model as a C++ handle ----------------------------------------------------
+def declared_parameters(handle) -> dict:
+    """The named parameters a C++ model declares, with their values."""
+    lib, value, out = core.lib, core.ffi.new("double *"), {}
+    for i in range(core.check(lib.kalman_model_parameter_count(handle), "parameter_count")):
+        name = core._s(lib.kalman_model_parameter_name(handle, i))
+        core.check(lib.kalman_model_parameter(handle, name.encode(), value), name)
+        out[name] = float(value[0])
+    return out
+
+
+def _push_initial_state(model, handle):
+    n = int(model.n)
+    x0 = np.ascontiguousarray(np.asarray(model.x0, dtype=np.float64).reshape(n))
+    core.check(core.lib.kalman_model_set_x0(handle, core.cdptr(x0)), "set_x0")
+    if getattr(model, "P0", None) is not None:
+        P0 = np.ascontiguousarray(np.asarray(model.P0, dtype=np.float64).reshape(n, n))
+        core.check(core.lib.kalman_model_set_P0(handle, core.cdptr(P0)), "set_P0")
+
+
+def handle_of(model, parameters=()):
+    """``model`` as a C++ model, for an operation (joint, observe ...) to wrap.
+
+    Returns ``(handle, keep, refresh)``: ``keep`` must stay referenced for as long
+    as the handle is used, and ``refresh()`` pushes the Python model's current
+    settings into the handle again (call it before a pass).
+
+    In order: the C++ model itself (a :class:`NativeModel`, which another
+    operation's result is), the model's twin in libKalmanApps, a model of its
+    constant matrices, and otherwise a ``Kalman::Models::Callback`` calling its
+    Python methods. ``parameters`` names what the handle must declare: a twin that
+    lacks one, or a model of matrices, is passed over for the callback model, on
+    which they are declared and set back on the Python model
+    (``kalman_model_callback_declare_parameters``).
+    """
+    from ..constants import KalmanDifferentiatorKind, KalmanStructureKind
+    lib, ffi = core.require(), core.ffi
+    names = list(parameters)
+
+    def missing(available):
+        return KeyError(f"{type(model).__name__} has no parameter {[n for n in names if n not in available]}; "
+                        f"it has {sorted(available)}.")
+
+    if isinstance(model, NativeModel):
+        refresh = getattr(model, "_refresh", lambda: None)
+        refresh()
+        declared = declared_parameters(model._handle)
+        if any(name not in declared for name in names):
+            raise missing(declared)
+        return model._handle, (model,), refresh
+
+    twin_of = getattr(model, "native_handle", None)
+    twin = twin_of() if twin_of is not None else None
+    twin_declares = declared_parameters(twin) if twin is not None else {}
+    if twin is not None and all(name in twin_declares for name in names):
+        _push_initial_state(model, twin)
+        return twin, (model,), twin_of                     # native_handle() pushes Q, R, fs, parameters
+
+    if any(name not in model.keys() for name in names):
+        raise missing(set(model.keys()) | set(twin_declares))
+
+    if not names and getattr(model, "structure", None) is KalmanStructureKind.MATRICES \
+            and np.dtype(getattr(model, "dtype", np.float64)) == np.float64:
+        from ...native import _stand_in
+        try:
+            return _stand_in(model, KalmanStructureKind.MATRICES, False), (model,), lambda: None
+        except (TypeError, ValueError, AttributeError):
+            pass                                            # matrices the C++ model does not take
+
+    handle, keep = callback_handle(model, "extended", live_noise=True)
+    # Differenced as the Python model differences its own Jacobians.
+    scheme = "central" if getattr(model, "DIFFERENTIATOR", None) is KalmanDifferentiatorKind.CENTRAL else "forward"
+    core.check(lib.kalman_model_set_differentiator(handle, core.DIFFERENTIATOR_KINDS[scheme],
+                                                   1e-5 if scheme == "central" else 1e-6), "set_differentiator")
+    _push_initial_state(model, handle)
+    if not names:
+        return handle, (model, keep), lambda: None
+
+    errors = keep[-1]
+
+    @ffi.callback("int(void *, const char *, double)")
+    def set_parameter(user, name, value):
+        try:
+            model[ffi.string(name).decode()] = float(value)
+            return 0
+        except BaseException as exc:                        # must not unwind through C++
+            errors.append(exc)
+            return 1
+
+    encoded = [ffi.new("char[]", name.encode()) for name in names]
+    values = np.ascontiguousarray([float(model[name]) for name in names], dtype=np.float64)
+    core.check(lib.kalman_model_callback_declare_parameters(
+        handle, len(names), ffi.new("const char *[]", encoded), core.cdptr(values), set_parameter),
+        "declare_parameters")
+    return handle, (model, keep, set_parameter), lambda: None
+
+
+def callback_errors(keep) -> list:
+    """The Python exceptions raised inside the callbacks of a :func:`handle_of` result."""
+    for item in keep:
+        if isinstance(item, tuple) and item and isinstance(item[-1], list):
+            return item[-1]
+    return []
+
+
 # --- a Python-written model on the C++ engines ----------------------------------
 def callback_handle(model, engine="extended", live_noise=False):
     """A C++ ``Kalman::Models::Callback`` whose ``f``, ``h`` and Jacobians call
