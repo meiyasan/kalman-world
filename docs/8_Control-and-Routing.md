@@ -100,6 +100,10 @@ gives, and it is the one that takes a rate limit. Where clipping does cost,
 MPC is ahead: a mass driven by a limited force from 6 m away costs 404.5 under
 MPC against 412.2 under clipped LQR (`tests/cxx/13_controllers.cc`).
 
+Notebook 12 (section 5b) runs it on the same car with cheaper steering, where
+LQR asks for ten times the limit: MPC then has the lowest cost of the three
+(327.2, against 331.6 for LQR and 341.7 for MPPI) and the smallest overshoot.
+
 The planner is `Kalman::Controllers::MPC`; the Python class forwards to it and
 has no implementation of its own, so it needs libKalman.
 
