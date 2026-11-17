@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -142,7 +142,7 @@ $(document).ready(function(){initNavTree('dir_68267d1309a1af8e8297ef4c3efbcdba.h
 <div class="dynheader">
 Directory dependency graph for src:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="dir_68267d1309a1af8e8297ef4c3efbcdba_dep.svg" width="962" height="134"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="dir_68267d1309a1af8e8297ef4c3efbcdba_dep.svg" width="1147" height="132"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="subdirs" name="subdirs"></a>
@@ -163,7 +163,11 @@ Directories</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="iconfclosed"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_1aeaa3b8d5e0f5b3686ee45015c76325.html">Routers</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="iconfclosed"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_afe58f6d0ef7eec69c2706509daaefe7.html">Sensors</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="iconfclosed"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_55c9547e0c5508e4b11ac086347e4308.html">Solvers</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><span class="iconfclosed"></span>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="dir_285013ff4a2df6cea32d031dbcf378fb.html">Tuners</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
@@ -192,6 +196,9 @@ Files</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_filter_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_filter_8cc.html">Filter.cc</a></td></tr>
 <tr class="memdesc:_filter_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> class. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_instrument_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_instrument_8cc.html">Instrument.cc</a></td></tr>
+<tr class="memdesc:_instrument_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source of the <a class="el" href="struct_kalman_1_1_instrument.html" title="A set of sensors, and what they share.">Kalman::Instrument</a> structure. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_integrator_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_integrator_8cc.html">Integrator.cc</a></td></tr>
 <tr class="memdesc:_integrator_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_integrator.html" title="The time-stepping scheme — WHEN, within one dt.">Kalman::Integrator</a> base and the kind resolver. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -204,8 +211,20 @@ Files</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_model_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_model_8cc.html">Model.cc</a></td></tr>
 <tr class="memdesc:_model_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a> class. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_observability_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_observability_8cc.html">Observability.cc</a></td></tr>
+<tr class="memdesc:_observability_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source of the <a class="el" href="class_kalman_1_1_observability.html" title="Can the measurements tell the components of the state apart?">Kalman::Observability</a> class. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="src_2operations_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="src_2operations_8cc.html">Operations.cc</a></td></tr>
+<tr class="memdesc:src_2operations_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The model operations: the functions, and the methods of <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_sampler_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sampler_8cc.html">Sampler.cc</a></td></tr>
 <tr class="memdesc:_sampler_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_sampler.html" title="Draws truth and measurements from a model, for tests and demos.">Kalman::Sampler</a> class. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_sensor_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensor_8cc.html">Sensor.cc</a></td></tr>
+<tr class="memdesc:_sensor_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Source of the <a class="el" href="struct_kalman_1_1_sensor.html" title="What acquires a measurement: what it reads of the state, and how well.">Kalman::Sensor</a> structure. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_sensor_factory_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_sensor_factory_8cc.html">SensorFactory.cc</a></td></tr>
+<tr class="memdesc:_sensor_factory_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_sensor_factory.html">Kalman::SensorFactory</a> class. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_solver_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_solver_8cc.html">Solver.cc</a></td></tr>
 <tr class="memdesc:_solver_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation of the <a class="el" href="class_kalman_1_1_solver.html" title="The spatial discretization — HOW, in space.">Kalman::Solver</a> base and the kind resolver. <br /></td></tr>

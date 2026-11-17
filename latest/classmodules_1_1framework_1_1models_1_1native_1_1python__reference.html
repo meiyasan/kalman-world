@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -158,9 +158,9 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Context manager: inside it every model runs the Python reference path
-(no C++ twin, no C++ loop). What the equivalence tests and the benchmarks
+(no C++ counterpart, no C++ loop). What the equivalence tests and the benchmarks
 compare against.</pre> 
-<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00333">333</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00334">334</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a50a28ac9ecd2080a8cb714ede37fcd79" name="a50a28ac9ecd2080a8cb714ede37fcd79"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a50a28ac9ecd2080a8cb714ede37fcd79">&#9670;&#160;</a></span>__enter__()</h2>
@@ -178,13 +178,13 @@ compare against.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00338">338</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  338</span>    <span class="keyword">def </span>__enter__(self):</div>
-<div class="line"><span class="lineno">  339</span>        <span class="keyword">global</span> USE_NATIVE_TWINS, USE_NATIVE_LOOP</div>
-<div class="line"><span class="lineno">  340</span>        self._saved = (USE_NATIVE_TWINS, USE_NATIVE_LOOP)</div>
-<div class="line"><span class="lineno">  341</span>        USE_NATIVE_TWINS = USE_NATIVE_LOOP = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  342</span>        <span class="keywordflow">return</span> self</div>
-<div class="line"><span class="lineno">  343</span> </div>
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00339">339</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span>    <span class="keyword">def </span>__enter__(self):</div>
+<div class="line"><span class="lineno">  340</span>        <span class="keyword">global</span> USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP</div>
+<div class="line"><span class="lineno">  341</span>        self._saved = (USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP)</div>
+<div class="line"><span class="lineno">  342</span>        USE_NATIVE_COUNTERPARTS = USE_NATIVE_LOOP = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  343</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  344</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -214,13 +214,13 @@ compare against.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00344">344</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  344</span>    <span class="keyword">def </span>__exit__(self, *exc):</div>
-<div class="line"><span class="lineno">  345</span>        <span class="keyword">global</span> USE_NATIVE_TWINS, USE_NATIVE_LOOP</div>
-<div class="line"><span class="lineno">  346</span>        USE_NATIVE_TWINS, USE_NATIVE_LOOP = self._saved</div>
-<div class="line"><span class="lineno">  347</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  348</span> </div>
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00345">345</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  345</span>    <span class="keyword">def </span>__exit__(self, *exc):</div>
+<div class="line"><span class="lineno">  346</span>        <span class="keyword">global</span> USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP</div>
+<div class="line"><span class="lineno">  347</span>        USE_NATIVE_COUNTERPARTS, USE_NATIVE_LOOP = self._saved</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">return</span> <span class="keyword">False</span></div>
 <div class="line"><span class="lineno">  349</span> </div>
+<div class="line"><span class="lineno">  350</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -245,7 +245,7 @@ compare against.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00340">340</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="framework_2models_2native_8py_source.html#l00341">341</a> of file <a class="el" href="framework_2models_2native_8py_source.html">native.py</a>.</p>
 
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -216,15 +216,15 @@ $(document).ready(function(){initNavTree('_m_l_p_8cc_source.html',''); initResiz
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">// few hundred are ordinary for a confident policy, and exp() of those</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="comment">// overflows to inf, which then divides to NaN.</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">double</span> hi = x(0);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">for</span> (std::size_t i = 1; i &lt; x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(); ++i) hi = std::max(hi, x(i));</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">for</span> (std::size_t i = 1; i &lt; x.Size(); ++i) hi = std::max(hi, x(i));</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordtype">double</span> sum = 0.;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(); ++i)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.Size(); ++i)</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        {</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            x(i) = std::exp(x(i) - hi);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            sum += x(i);</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        }</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(); ++i) x(i) /= sum;</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.Size(); ++i) x(i) /= sum;</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordflow">return</span> x;</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    }</div>
 </div>

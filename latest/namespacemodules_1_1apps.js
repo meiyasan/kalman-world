@@ -1,6 +1,7 @@
 var namespacemodules_1_1apps =
 [
-    [ "astro", "namespacemodules_1_1apps_1_1astro.html", "namespacemodules_1_1apps_1_1astro" ],
+    [ "aerospace", "namespacemodules_1_1apps_1_1aerospace.html", "namespacemodules_1_1apps_1_1aerospace" ],
+    [ "astrophysics", "namespacemodules_1_1apps_1_1astrophysics.html", "namespacemodules_1_1apps_1_1astrophysics" ],
     [ "ballistics", "namespacemodules_1_1apps_1_1ballistics.html", "namespacemodules_1_1apps_1_1ballistics" ],
     [ "calorimeter", "namespacemodules_1_1apps_1_1calorimeter.html", "namespacemodules_1_1apps_1_1calorimeter" ],
     [ "fusion", "namespacemodules_1_1apps_1_1fusion.html", "namespacemodules_1_1apps_1_1fusion" ],

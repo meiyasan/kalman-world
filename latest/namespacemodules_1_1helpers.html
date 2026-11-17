@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -203,6 +203,8 @@ Functions</h2></td></tr>
 <tr class="separator:a8f80af46caed9ad6e5f482f104a42b4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf55c901fa1655d003d7a9af581d3972" id="r_aaf55c901fa1655d003d7a9af581d3972"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1helpers.html#aaf55c901fa1655d003d7a9af581d3972">resample_poly_float</a> (y, fs_old, fs_new, max_denominator=1e12)</td></tr>
 <tr class="separator:aaf55c901fa1655d003d7a9af581d3972"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf554e11d6aae00af837126404de0850" id="r_abf554e11d6aae00af837126404de0850"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1helpers.html#abf554e11d6aae00af837126404de0850">report_steps</a> (rate, base_fs, n_steps)</td></tr>
+<tr class="separator:abf554e11d6aae00af837126404de0850"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a91c138bd7dcee778cb7ce1e7395105e6" id="r_a91c138bd7dcee778cb7ce1e7395105e6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1helpers.html#a91c138bd7dcee778cb7ce1e7395105e6">make_multirate_input</a> (sensor_data, base_fs)</td></tr>
 <tr class="separator:a91c138bd7dcee778cb7ce1e7395105e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a426ffd7f6c8c4fe08871a38934c05f7d" id="r_a426ffd7f6c8c4fe08871a38934c05f7d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1helpers.html#a426ffd7f6c8c4fe08871a38934c05f7d">vectorize</a> (z)</td></tr>
@@ -654,32 +656,32 @@ The counterpart of :func:`cached_fit` for a *result* rather than a trained
 object -- a multi-seed comparison, a benchmark table -- anything picklable.
 Same refresh rule: ``force=True`` or ``KALMAN_CACHE_REFRESH=1`` recomputes.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00595">595</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  595</span><span class="keyword">def </span>cached(path, compute, *, force=None, verbose=True):</div>
-<div class="line"><span class="lineno">  596</span>    <span class="stringliteral">&quot;&quot;&quot;``compute()`` once, pickled at ``path``; later calls return the stored result.</span></div>
-<div class="line"><span class="lineno">  597</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  598</span><span class="stringliteral">    The counterpart of :func:`cached_fit` for a *result* rather than a trained</span></div>
-<div class="line"><span class="lineno">  599</span><span class="stringliteral">    object -- a multi-seed comparison, a benchmark table -- anything picklable.</span></div>
-<div class="line"><span class="lineno">  600</span><span class="stringliteral">    Same refresh rule: ``force=True`` or ``KALMAN_CACHE_REFRESH=1`` recomputes.</span></div>
-<div class="line"><span class="lineno">  601</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  602</span>    <span class="keyword">import</span> os</div>
-<div class="line"><span class="lineno">  603</span>    <span class="keyword">import</span> pickle</div>
-<div class="line"><span class="lineno">  604</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
-<div class="line"><span class="lineno">  605</span>    path = Path(path)</div>
-<div class="line"><span class="lineno">  606</span>    <span class="keywordflow">if</span> force <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  607</span>        force = os.environ.get(<span class="stringliteral">&quot;KALMAN_CACHE_REFRESH&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).strip() <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>, <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;no&quot;</span>)</div>
-<div class="line"><span class="lineno">  608</span>    <span class="keywordflow">if</span> path.exists() <span class="keywordflow">and</span> <span class="keywordflow">not</span> force:</div>
-<div class="line"><span class="lineno">  609</span>        <span class="keywordflow">if</span> verbose:</div>
-<div class="line"><span class="lineno">  610</span>            print(f<span class="stringliteral">&quot;[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to recompute)&quot;</span>)</div>
-<div class="line"><span class="lineno">  611</span>        <span class="keyword">with</span> open(path, <span class="stringliteral">&quot;rb&quot;</span>) <span class="keyword">as</span> fh:</div>
-<div class="line"><span class="lineno">  612</span>            <span class="keywordflow">return</span> pickle.load(fh)</div>
-<div class="line"><span class="lineno">  613</span>    result = compute()</div>
-<div class="line"><span class="lineno">  614</span>    path.parent.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  615</span>    <span class="keyword">with</span> open(path, <span class="stringliteral">&quot;wb&quot;</span>) <span class="keyword">as</span> fh:</div>
-<div class="line"><span class="lineno">  616</span>        pickle.dump(result, fh, protocol=pickle.HIGHEST_PROTOCOL)</div>
-<div class="line"><span class="lineno">  617</span>    <span class="keywordflow">if</span> verbose:</div>
-<div class="line"><span class="lineno">  618</span>        print(f<span class="stringliteral">&quot;[cache] saved {path.name}&quot;</span>)</div>
-<div class="line"><span class="lineno">  619</span>    <span class="keywordflow">return</span> result</div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00604">604</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  604</span><span class="keyword">def </span>cached(path, compute, *, force=None, verbose=True):</div>
+<div class="line"><span class="lineno">  605</span>    <span class="stringliteral">&quot;&quot;&quot;``compute()`` once, pickled at ``path``; later calls return the stored result.</span></div>
+<div class="line"><span class="lineno">  606</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  607</span><span class="stringliteral">    The counterpart of :func:`cached_fit` for a *result* rather than a trained</span></div>
+<div class="line"><span class="lineno">  608</span><span class="stringliteral">    object -- a multi-seed comparison, a benchmark table -- anything picklable.</span></div>
+<div class="line"><span class="lineno">  609</span><span class="stringliteral">    Same refresh rule: ``force=True`` or ``KALMAN_CACHE_REFRESH=1`` recomputes.</span></div>
+<div class="line"><span class="lineno">  610</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  611</span>    <span class="keyword">import</span> os</div>
+<div class="line"><span class="lineno">  612</span>    <span class="keyword">import</span> pickle</div>
+<div class="line"><span class="lineno">  613</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
+<div class="line"><span class="lineno">  614</span>    path = Path(path)</div>
+<div class="line"><span class="lineno">  615</span>    <span class="keywordflow">if</span> force <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  616</span>        force = os.environ.get(<span class="stringliteral">&quot;KALMAN_CACHE_REFRESH&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).strip() <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>, <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;no&quot;</span>)</div>
+<div class="line"><span class="lineno">  617</span>    <span class="keywordflow">if</span> path.exists() <span class="keywordflow">and</span> <span class="keywordflow">not</span> force:</div>
+<div class="line"><span class="lineno">  618</span>        <span class="keywordflow">if</span> verbose:</div>
+<div class="line"><span class="lineno">  619</span>            print(f<span class="stringliteral">&quot;[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to recompute)&quot;</span>)</div>
+<div class="line"><span class="lineno">  620</span>        <span class="keyword">with</span> open(path, <span class="stringliteral">&quot;rb&quot;</span>) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  621</span>            <span class="keywordflow">return</span> pickle.load(fh)</div>
+<div class="line"><span class="lineno">  622</span>    result = compute()</div>
+<div class="line"><span class="lineno">  623</span>    path.parent.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  624</span>    <span class="keyword">with</span> open(path, <span class="stringliteral">&quot;wb&quot;</span>) <span class="keyword">as</span> fh:</div>
+<div class="line"><span class="lineno">  625</span>        pickle.dump(result, fh, protocol=pickle.HIGHEST_PROTOCOL)</div>
+<div class="line"><span class="lineno">  626</span>    <span class="keywordflow">if</span> verbose:</div>
+<div class="line"><span class="lineno">  627</span>        print(f<span class="stringliteral">&quot;[cache] saved {path.name}&quot;</span>)</div>
+<div class="line"><span class="lineno">  628</span>    <span class="keywordflow">return</span> result</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -745,38 +747,38 @@ notebook and a stale entry is deleted rather than reasoned about.
 
 Returns whatever ``fit()`` returned, or ``load(path)``'s result on a cache hit.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00564">564</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  564</span><span class="keyword">def </span>cached_fit(path, fit, *, load, save, force=None, verbose=True):</div>
-<div class="line"><span class="lineno">  565</span>    <span class="stringliteral">&quot;&quot;&quot;Run ``fit()`` unless ``path`` already holds its result, in which case ``load(path)``.</span></div>
-<div class="line"><span class="lineno">  566</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  567</span><span class="stringliteral">    After a fit the result is stored with ``save(path)``. A training step that takes</span></div>
-<div class="line"><span class="lineno">  568</span><span class="stringliteral">    minutes then costs a file read on every later run of the notebook -- and the</span></div>
-<div class="line"><span class="lineno">  569</span><span class="stringliteral">    plots downstream see the very same weights, not a retrained near-copy.</span></div>
-<div class="line"><span class="lineno">  570</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  571</span><span class="stringliteral">    ``force=True`` (or ``KALMAN_CACHE_REFRESH=1`` in the environment) retrains and</span></div>
-<div class="line"><span class="lineno">  572</span><span class="stringliteral">    overwrites, which is what to do after changing the training parameters: the</span></div>
-<div class="line"><span class="lineno">  573</span><span class="stringliteral">    cache is keyed by path alone, on purpose, so that a notebook stays a plain</span></div>
-<div class="line"><span class="lineno">  574</span><span class="stringliteral">    notebook and a stale entry is deleted rather than reasoned about.</span></div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00573">573</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  573</span><span class="keyword">def </span>cached_fit(path, fit, *, load, save, force=None, verbose=True):</div>
+<div class="line"><span class="lineno">  574</span>    <span class="stringliteral">&quot;&quot;&quot;Run ``fit()`` unless ``path`` already holds its result, in which case ``load(path)``.</span></div>
 <div class="line"><span class="lineno">  575</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  576</span><span class="stringliteral">    Returns whatever ``fit()`` returned, or ``load(path)``&#39;s result on a cache hit.</span></div>
-<div class="line"><span class="lineno">  577</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  578</span>    <span class="keyword">import</span> os</div>
-<div class="line"><span class="lineno">  579</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
-<div class="line"><span class="lineno">  580</span>    path = Path(path)</div>
-<div class="line"><span class="lineno">  581</span>    <span class="keywordflow">if</span> force <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  582</span>        force = os.environ.get(<span class="stringliteral">&quot;KALMAN_CACHE_REFRESH&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).strip() <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>, <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;no&quot;</span>)</div>
-<div class="line"><span class="lineno">  583</span>    <span class="keywordflow">if</span> path.exists() <span class="keywordflow">and</span> <span class="keywordflow">not</span> force:</div>
-<div class="line"><span class="lineno">  584</span>        <span class="keywordflow">if</span> verbose:</div>
-<div class="line"><span class="lineno">  585</span>            print(f<span class="stringliteral">&quot;[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to retrain)&quot;</span>)</div>
-<div class="line"><span class="lineno">  586</span>        <span class="keywordflow">return</span> load(path)</div>
-<div class="line"><span class="lineno">  587</span>    result = fit()</div>
-<div class="line"><span class="lineno">  588</span>    path.parent.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  589</span>    save(path)</div>
-<div class="line"><span class="lineno">  590</span>    <span class="keywordflow">if</span> verbose:</div>
-<div class="line"><span class="lineno">  591</span>        print(f<span class="stringliteral">&quot;[cache] saved {path.name}&quot;</span>)</div>
-<div class="line"><span class="lineno">  592</span>    <span class="keywordflow">return</span> result</div>
-<div class="line"><span class="lineno">  593</span> </div>
-<div class="line"><span class="lineno">  594</span> </div>
+<div class="line"><span class="lineno">  576</span><span class="stringliteral">    After a fit the result is stored with ``save(path)``. A training step that takes</span></div>
+<div class="line"><span class="lineno">  577</span><span class="stringliteral">    minutes then costs a file read on every later run of the notebook -- and the</span></div>
+<div class="line"><span class="lineno">  578</span><span class="stringliteral">    plots downstream see the very same weights, not a retrained near-copy.</span></div>
+<div class="line"><span class="lineno">  579</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  580</span><span class="stringliteral">    ``force=True`` (or ``KALMAN_CACHE_REFRESH=1`` in the environment) retrains and</span></div>
+<div class="line"><span class="lineno">  581</span><span class="stringliteral">    overwrites, which is what to do after changing the training parameters: the</span></div>
+<div class="line"><span class="lineno">  582</span><span class="stringliteral">    cache is keyed by path alone, on purpose, so that a notebook stays a plain</span></div>
+<div class="line"><span class="lineno">  583</span><span class="stringliteral">    notebook and a stale entry is deleted rather than reasoned about.</span></div>
+<div class="line"><span class="lineno">  584</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  585</span><span class="stringliteral">    Returns whatever ``fit()`` returned, or ``load(path)``&#39;s result on a cache hit.</span></div>
+<div class="line"><span class="lineno">  586</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  587</span>    <span class="keyword">import</span> os</div>
+<div class="line"><span class="lineno">  588</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
+<div class="line"><span class="lineno">  589</span>    path = Path(path)</div>
+<div class="line"><span class="lineno">  590</span>    <span class="keywordflow">if</span> force <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  591</span>        force = os.environ.get(<span class="stringliteral">&quot;KALMAN_CACHE_REFRESH&quot;</span>, <span class="stringliteral">&quot;&quot;</span>).strip() <span class="keywordflow">not</span> <span class="keywordflow">in</span> (<span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;0&quot;</span>, <span class="stringliteral">&quot;false&quot;</span>, <span class="stringliteral">&quot;no&quot;</span>)</div>
+<div class="line"><span class="lineno">  592</span>    <span class="keywordflow">if</span> path.exists() <span class="keywordflow">and</span> <span class="keywordflow">not</span> force:</div>
+<div class="line"><span class="lineno">  593</span>        <span class="keywordflow">if</span> verbose:</div>
+<div class="line"><span class="lineno">  594</span>            print(f<span class="stringliteral">&quot;[cache] loading {path.name} (set KALMAN_CACHE_REFRESH=1 to retrain)&quot;</span>)</div>
+<div class="line"><span class="lineno">  595</span>        <span class="keywordflow">return</span> load(path)</div>
+<div class="line"><span class="lineno">  596</span>    result = fit()</div>
+<div class="line"><span class="lineno">  597</span>    path.parent.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  598</span>    save(path)</div>
+<div class="line"><span class="lineno">  599</span>    <span class="keywordflow">if</span> verbose:</div>
+<div class="line"><span class="lineno">  600</span>        print(f<span class="stringliteral">&quot;[cache] saved {path.name}&quot;</span>)</div>
+<div class="line"><span class="lineno">  601</span>    <span class="keywordflow">return</span> result</div>
+<div class="line"><span class="lineno">  602</span> </div>
+<div class="line"><span class="lineno">  603</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -796,12 +798,12 @@ Returns whatever ``fit()`` returned, or ``load(path)``'s result on a cache hit.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00500">500</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  500</span><span class="keyword">def </span>complexify(v):</div>
-<div class="line"><span class="lineno">  501</span>        z_real, z_imag = v[:, 0], v[:, 1]</div>
-<div class="line"><span class="lineno">  502</span>        <span class="keywordflow">return</span> z_real + 1j * z_imag</div>
-<div class="line"><span class="lineno">  503</span> </div>
-<div class="line"><span class="lineno">  504</span> </div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00509">509</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  509</span><span class="keyword">def </span>complexify(v):</div>
+<div class="line"><span class="lineno">  510</span>        z_real, z_imag = v[:, 0], v[:, 1]</div>
+<div class="line"><span class="lineno">  511</span>        <span class="keywordflow">return</span> z_real + 1j * z_imag</div>
+<div class="line"><span class="lineno">  512</span> </div>
+<div class="line"><span class="lineno">  513</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1217,50 +1219,50 @@ Parameters:
 - xlim : tuple (xmin, xmax), optional
     X-axis limits in seconds.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00505">505</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  505</span><span class="keyword">def </span>kplot(signals, fs, labels=None, xlim=None):</div>
-<div class="line"><span class="lineno">  506</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  507</span><span class="stringliteral">    Plots multiple time-domain signals stacked vertically with legends on the right.</span></div>
-<div class="line"><span class="lineno">  508</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  509</span><span class="stringliteral">    Parameters:</span></div>
-<div class="line"><span class="lineno">  510</span><span class="stringliteral">    - signals : list of np.ndarray</span></div>
-<div class="line"><span class="lineno">  511</span><span class="stringliteral">        List of signals to plot.</span></div>
-<div class="line"><span class="lineno">  512</span><span class="stringliteral">    - fs : float</span></div>
-<div class="line"><span class="lineno">  513</span><span class="stringliteral">        Sampling frequency [Hz].</span></div>
-<div class="line"><span class="lineno">  514</span><span class="stringliteral">    - labels : list of str, optional</span></div>
-<div class="line"><span class="lineno">  515</span><span class="stringliteral">        Legends for each signal.</span></div>
-<div class="line"><span class="lineno">  516</span><span class="stringliteral">    - xlim : tuple (xmin, xmax), optional</span></div>
-<div class="line"><span class="lineno">  517</span><span class="stringliteral">        X-axis limits in seconds.</span></div>
-<div class="line"><span class="lineno">  518</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  519</span> </div>
-<div class="line"><span class="lineno">  520</span>    num_signals = len(signals)</div>
-<div class="line"><span class="lineno">  521</span>    <span class="keywordflow">if</span> labels <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  522</span>        labels = [f<span class="stringliteral">&quot;Signal {i+1}&quot;</span> <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(num_signals)]</div>
-<div class="line"><span class="lineno">  523</span> </div>
-<div class="line"><span class="lineno">  524</span>    t = np.arange(len(signals[0])) / fs</div>
-<div class="line"><span class="lineno">  525</span>    width, height = 10, 2</div>
-<div class="line"><span class="lineno">  526</span>    fig, axes = plt.subplots(nrows=num_signals, sharex=<span class="keyword">True</span>, figsize=(width, height * num_signals))</div>
-<div class="line"><span class="lineno">  527</span> </div>
-<div class="line"><span class="lineno">  528</span>    <span class="keywordflow">if</span> num_signals == 1:</div>
-<div class="line"><span class="lineno">  529</span>        axes = [axes]</div>
-<div class="line"><span class="lineno">  530</span> </div>
-<div class="line"><span class="lineno">  531</span>    <span class="keywordflow">for</span> ax, signal, label <span class="keywordflow">in</span> zip(axes, signals, labels):</div>
-<div class="line"><span class="lineno">  532</span>        ax.plot(t, signal, color=<span class="stringliteral">&#39;#141414&#39;</span>, linewidth=1.1, label=label)</div>
-<div class="line"><span class="lineno">  533</span>        ax.set_ylabel(<span class="stringliteral">&quot;Amplitude&quot;</span>)</div>
-<div class="line"><span class="lineno">  534</span>        ax.grid(<span class="keyword">True</span>, linestyle=<span class="stringliteral">&#39;:&#39;</span>, color=<span class="stringliteral">&#39;gray&#39;</span>, linewidth=1)</div>
-<div class="line"><span class="lineno">  535</span>        ax.legend(loc=<span class="stringliteral">&#39;center left&#39;</span>, bbox_to_anchor=(1.01, 0.5), frameon=<span class="keyword">False</span>)</div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00514">514</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  514</span><span class="keyword">def </span>kplot(signals, fs, labels=None, xlim=None):</div>
+<div class="line"><span class="lineno">  515</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  516</span><span class="stringliteral">    Plots multiple time-domain signals stacked vertically with legends on the right.</span></div>
+<div class="line"><span class="lineno">  517</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  518</span><span class="stringliteral">    Parameters:</span></div>
+<div class="line"><span class="lineno">  519</span><span class="stringliteral">    - signals : list of np.ndarray</span></div>
+<div class="line"><span class="lineno">  520</span><span class="stringliteral">        List of signals to plot.</span></div>
+<div class="line"><span class="lineno">  521</span><span class="stringliteral">    - fs : float</span></div>
+<div class="line"><span class="lineno">  522</span><span class="stringliteral">        Sampling frequency [Hz].</span></div>
+<div class="line"><span class="lineno">  523</span><span class="stringliteral">    - labels : list of str, optional</span></div>
+<div class="line"><span class="lineno">  524</span><span class="stringliteral">        Legends for each signal.</span></div>
+<div class="line"><span class="lineno">  525</span><span class="stringliteral">    - xlim : tuple (xmin, xmax), optional</span></div>
+<div class="line"><span class="lineno">  526</span><span class="stringliteral">        X-axis limits in seconds.</span></div>
+<div class="line"><span class="lineno">  527</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  528</span> </div>
+<div class="line"><span class="lineno">  529</span>    num_signals = len(signals)</div>
+<div class="line"><span class="lineno">  530</span>    <span class="keywordflow">if</span> labels <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  531</span>        labels = [f<span class="stringliteral">&quot;Signal {i+1}&quot;</span> <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(num_signals)]</div>
+<div class="line"><span class="lineno">  532</span> </div>
+<div class="line"><span class="lineno">  533</span>    t = np.arange(len(signals[0])) / fs</div>
+<div class="line"><span class="lineno">  534</span>    width, height = 10, 2</div>
+<div class="line"><span class="lineno">  535</span>    fig, axes = plt.subplots(nrows=num_signals, sharex=<span class="keyword">True</span>, figsize=(width, height * num_signals))</div>
 <div class="line"><span class="lineno">  536</span> </div>
-<div class="line"><span class="lineno">  537</span>        <span class="keywordflow">if</span> xlim <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  538</span>            ax.set_xlim(xlim)</div>
+<div class="line"><span class="lineno">  537</span>    <span class="keywordflow">if</span> num_signals == 1:</div>
+<div class="line"><span class="lineno">  538</span>        axes = [axes]</div>
 <div class="line"><span class="lineno">  539</span> </div>
-<div class="line"><span class="lineno">  540</span>    axes[-1].set_xlabel(<span class="stringliteral">&quot;Temps [s]&quot;</span>)</div>
-<div class="line"><span class="lineno">  541</span>    plt.tight_layout()</div>
-<div class="line"><span class="lineno">  542</span>    plt.subplots_adjust(hspace=0, right=0.85)</div>
-<div class="line"><span class="lineno">  543</span> </div>
-<div class="line"><span class="lineno">  544</span> </div>
-<div class="line"><span class="lineno">  545</span><span class="comment"># ----------------------------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">  546</span><span class="comment">#  Caching a fit -- for notebooks whose training dominates their run time</span></div>
-<div class="line"><span class="lineno">  547</span><span class="comment"># ----------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  540</span>    <span class="keywordflow">for</span> ax, signal, label <span class="keywordflow">in</span> zip(axes, signals, labels):</div>
+<div class="line"><span class="lineno">  541</span>        ax.plot(t, signal, color=<span class="stringliteral">&#39;#141414&#39;</span>, linewidth=1.1, label=label)</div>
+<div class="line"><span class="lineno">  542</span>        ax.set_ylabel(<span class="stringliteral">&quot;Amplitude&quot;</span>)</div>
+<div class="line"><span class="lineno">  543</span>        ax.grid(<span class="keyword">True</span>, linestyle=<span class="stringliteral">&#39;:&#39;</span>, color=<span class="stringliteral">&#39;gray&#39;</span>, linewidth=1)</div>
+<div class="line"><span class="lineno">  544</span>        ax.legend(loc=<span class="stringliteral">&#39;center left&#39;</span>, bbox_to_anchor=(1.01, 0.5), frameon=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  545</span> </div>
+<div class="line"><span class="lineno">  546</span>        <span class="keywordflow">if</span> xlim <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  547</span>            ax.set_xlim(xlim)</div>
+<div class="line"><span class="lineno">  548</span> </div>
+<div class="line"><span class="lineno">  549</span>    axes[-1].set_xlabel(<span class="stringliteral">&quot;Temps [s]&quot;</span>)</div>
+<div class="line"><span class="lineno">  550</span>    plt.tight_layout()</div>
+<div class="line"><span class="lineno">  551</span>    plt.subplots_adjust(hspace=0, right=0.85)</div>
+<div class="line"><span class="lineno">  552</span> </div>
+<div class="line"><span class="lineno">  553</span> </div>
+<div class="line"><span class="lineno">  554</span><span class="comment"># ----------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  555</span><span class="comment">#  Caching a fit -- for notebooks whose training dominates their run time</span></div>
+<div class="line"><span class="lineno">  556</span><span class="comment"># ----------------------------------------------------------------------------</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1342,52 +1344,52 @@ Returns
 zk_out : ndarray, shape (N_base, m_total)
     NaN where the sensor did not fire at that base-rate step.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00452">452</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  452</span><span class="keyword">def </span>make_multirate_input(sensor_data, base_fs):</div>
-<div class="line"><span class="lineno">  453</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  454</span><span class="stringliteral">    Interleave multiple sensors running at different rates into a single</span></div>
-<div class="line"><span class="lineno">  455</span><span class="stringliteral">    NaN-padded measurement matrix at `base_fs`.</span></div>
-<div class="line"><span class="lineno">  456</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  457</span><span class="stringliteral">    Parameters</span></div>
-<div class="line"><span class="lineno">  458</span><span class="stringliteral">    ----------</span></div>
-<div class="line"><span class="lineno">  459</span><span class="stringliteral">    sensor_data : list of (zk, fs_sensor) tuples</span></div>
-<div class="line"><span class="lineno">  460</span><span class="stringliteral">        Each tuple is an (N_i, m_i) measurement array and its sample rate.</span></div>
-<div class="line"><span class="lineno">  461</span><span class="stringliteral">        The duration is inferred from each array&#39;s length and its fs_sensor.</span></div>
-<div class="line"><span class="lineno">  462</span><span class="stringliteral">    base_fs : float</span></div>
-<div class="line"><span class="lineno">  463</span><span class="stringliteral">        The base filter sample rate.</span></div>
-<div class="line"><span class="lineno">  464</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  465</span><span class="stringliteral">    Returns</span></div>
-<div class="line"><span class="lineno">  466</span><span class="stringliteral">    -------</span></div>
-<div class="line"><span class="lineno">  467</span><span class="stringliteral">    zk_out : ndarray, shape (N_base, m_total)</span></div>
-<div class="line"><span class="lineno">  468</span><span class="stringliteral">        NaN where the sensor did not fire at that base-rate step.</span></div>
-<div class="line"><span class="lineno">  469</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  470</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> sensor_data:</div>
-<div class="line"><span class="lineno">  471</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;sensor_data must contain at least one (zk, fs) pair.&quot;</span>)</div>
-<div class="line"><span class="lineno">  472</span> </div>
-<div class="line"><span class="lineno">  473</span>    <span class="comment"># Determine total duration from the longest sensor</span></div>
-<div class="line"><span class="lineno">  474</span>    durations = [len(zk) / fs <span class="keywordflow">for</span> zk, fs <span class="keywordflow">in</span> sensor_data]</div>
-<div class="line"><span class="lineno">  475</span>    duration = max(durations)</div>
-<div class="line"><span class="lineno">  476</span>    N_base = int(round(duration * base_fs))</div>
-<div class="line"><span class="lineno">  477</span> </div>
-<div class="line"><span class="lineno">  478</span>    <span class="comment"># Total observable dimension</span></div>
-<div class="line"><span class="lineno">  479</span>    m_total = sum(zk.shape[1] <span class="keywordflow">if</span> zk.ndim == 2 <span class="keywordflow">else</span> 1 <span class="keywordflow">for</span> zk, _ <span class="keywordflow">in</span> sensor_data)</div>
-<div class="line"><span class="lineno">  480</span> </div>
-<div class="line"><span class="lineno">  481</span>    zk_out = np.full((N_base, m_total), np.nan)</div>
-<div class="line"><span class="lineno">  482</span> </div>
-<div class="line"><span class="lineno">  483</span>    col = 0</div>
-<div class="line"><span class="lineno">  484</span>    <span class="keywordflow">for</span> zk, fs_sensor <span class="keywordflow">in</span> sensor_data:</div>
-<div class="line"><span class="lineno">  485</span>        zk = np.atleast_2d(zk) <span class="keywordflow">if</span> zk.ndim == 1 <span class="keywordflow">else</span> zk</div>
-<div class="line"><span class="lineno">  486</span>        m_i = zk.shape[1]</div>
-<div class="line"><span class="lineno">  487</span>        n_sensor = len(zk)</div>
-<div class="line"><span class="lineno">  488</span>        <span class="comment"># Map each sensor sample index to the nearest base-rate index</span></div>
-<div class="line"><span class="lineno">  489</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_sensor):</div>
-<div class="line"><span class="lineno">  490</span>            base_idx = int(round(k * base_fs / fs_sensor))</div>
-<div class="line"><span class="lineno">  491</span>            <span class="keywordflow">if</span> base_idx &lt; N_base:</div>
-<div class="line"><span class="lineno">  492</span>                zk_out[base_idx, col:col + m_i] = zk[k]</div>
-<div class="line"><span class="lineno">  493</span>        col += m_i</div>
-<div class="line"><span class="lineno">  494</span> </div>
-<div class="line"><span class="lineno">  495</span>    <span class="keywordflow">return</span> zk_out</div>
-<div class="line"><span class="lineno">  496</span> </div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00461">461</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  461</span><span class="keyword">def </span>make_multirate_input(sensor_data, base_fs):</div>
+<div class="line"><span class="lineno">  462</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  463</span><span class="stringliteral">    Interleave multiple sensors running at different rates into a single</span></div>
+<div class="line"><span class="lineno">  464</span><span class="stringliteral">    NaN-padded measurement matrix at `base_fs`.</span></div>
+<div class="line"><span class="lineno">  465</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  466</span><span class="stringliteral">    Parameters</span></div>
+<div class="line"><span class="lineno">  467</span><span class="stringliteral">    ----------</span></div>
+<div class="line"><span class="lineno">  468</span><span class="stringliteral">    sensor_data : list of (zk, fs_sensor) tuples</span></div>
+<div class="line"><span class="lineno">  469</span><span class="stringliteral">        Each tuple is an (N_i, m_i) measurement array and its sample rate.</span></div>
+<div class="line"><span class="lineno">  470</span><span class="stringliteral">        The duration is inferred from each array&#39;s length and its fs_sensor.</span></div>
+<div class="line"><span class="lineno">  471</span><span class="stringliteral">    base_fs : float</span></div>
+<div class="line"><span class="lineno">  472</span><span class="stringliteral">        The base filter sample rate.</span></div>
+<div class="line"><span class="lineno">  473</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  474</span><span class="stringliteral">    Returns</span></div>
+<div class="line"><span class="lineno">  475</span><span class="stringliteral">    -------</span></div>
+<div class="line"><span class="lineno">  476</span><span class="stringliteral">    zk_out : ndarray, shape (N_base, m_total)</span></div>
+<div class="line"><span class="lineno">  477</span><span class="stringliteral">        NaN where the sensor did not fire at that base-rate step.</span></div>
+<div class="line"><span class="lineno">  478</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  479</span>    <span class="keywordflow">if</span> <span class="keywordflow">not</span> sensor_data:</div>
+<div class="line"><span class="lineno">  480</span>        <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;sensor_data must contain at least one (zk, fs) pair.&quot;</span>)</div>
+<div class="line"><span class="lineno">  481</span> </div>
+<div class="line"><span class="lineno">  482</span>    <span class="comment"># Determine total duration from the longest sensor</span></div>
+<div class="line"><span class="lineno">  483</span>    durations = [len(zk) / fs <span class="keywordflow">for</span> zk, fs <span class="keywordflow">in</span> sensor_data]</div>
+<div class="line"><span class="lineno">  484</span>    duration = max(durations)</div>
+<div class="line"><span class="lineno">  485</span>    N_base = int(round(duration * base_fs))</div>
+<div class="line"><span class="lineno">  486</span> </div>
+<div class="line"><span class="lineno">  487</span>    <span class="comment"># Total observable dimension</span></div>
+<div class="line"><span class="lineno">  488</span>    m_total = sum(zk.shape[1] <span class="keywordflow">if</span> zk.ndim == 2 <span class="keywordflow">else</span> 1 <span class="keywordflow">for</span> zk, _ <span class="keywordflow">in</span> sensor_data)</div>
+<div class="line"><span class="lineno">  489</span> </div>
+<div class="line"><span class="lineno">  490</span>    zk_out = np.full((N_base, m_total), np.nan)</div>
+<div class="line"><span class="lineno">  491</span> </div>
+<div class="line"><span class="lineno">  492</span>    col = 0</div>
+<div class="line"><span class="lineno">  493</span>    <span class="keywordflow">for</span> zk, fs_sensor <span class="keywordflow">in</span> sensor_data:</div>
+<div class="line"><span class="lineno">  494</span>        zk = np.atleast_2d(zk) <span class="keywordflow">if</span> zk.ndim == 1 <span class="keywordflow">else</span> zk</div>
+<div class="line"><span class="lineno">  495</span>        m_i = zk.shape[1]</div>
+<div class="line"><span class="lineno">  496</span>        n_sensor = len(zk)</div>
+<div class="line"><span class="lineno">  497</span>        <span class="comment"># Map each sensor sample index to the nearest base-rate index</span></div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_sensor):</div>
+<div class="line"><span class="lineno">  499</span>            base_idx = int(round(k * base_fs / fs_sensor))</div>
+<div class="line"><span class="lineno">  500</span>            <span class="keywordflow">if</span> base_idx &lt; N_base:</div>
+<div class="line"><span class="lineno">  501</span>                zk_out[base_idx, col:col + m_i] = zk[k]</div>
+<div class="line"><span class="lineno">  502</span>        col += m_i</div>
+<div class="line"><span class="lineno">  503</span> </div>
+<div class="line"><span class="lineno">  504</span>    <span class="keywordflow">return</span> zk_out</div>
+<div class="line"><span class="lineno">  505</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1451,23 +1453,23 @@ next to the current working directory -- which is the notebook's own folder
 when run from Jupyter or ``nbconvert``, so ``share/notebooks/cache/&lt;name&gt;/``
 is where the trained artefacts of the shipped notebooks live.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00548">548</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  548</span><span class="keyword">def </span>notebook_cache(name, root=None):</div>
-<div class="line"><span class="lineno">  549</span>    <span class="stringliteral">&quot;&quot;&quot;The cache directory for a notebook: ``&lt;root&gt;/&lt;name&gt;``, created on demand.</span></div>
-<div class="line"><span class="lineno">  550</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  551</span><span class="stringliteral">    ``root`` defaults to ``$KALMAN_NOTEBOOK_CACHE`` or, failing that, ``cache/``</span></div>
-<div class="line"><span class="lineno">  552</span><span class="stringliteral">    next to the current working directory -- which is the notebook&#39;s own folder</span></div>
-<div class="line"><span class="lineno">  553</span><span class="stringliteral">    when run from Jupyter or ``nbconvert``, so ``share/notebooks/cache/&lt;name&gt;/``</span></div>
-<div class="line"><span class="lineno">  554</span><span class="stringliteral">    is where the trained artefacts of the shipped notebooks live.</span></div>
-<div class="line"><span class="lineno">  555</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  556</span>    <span class="keyword">import</span> os</div>
-<div class="line"><span class="lineno">  557</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
-<div class="line"><span class="lineno">  558</span>    base = Path(root <span class="keywordflow">or</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_NOTEBOOK_CACHE&quot;</span>) <span class="keywordflow">or</span> Path.cwd() / <span class="stringliteral">&quot;cache&quot;</span>)</div>
-<div class="line"><span class="lineno">  559</span>    path = base / str(name)</div>
-<div class="line"><span class="lineno">  560</span>    path.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  561</span>    <span class="keywordflow">return</span> path</div>
-<div class="line"><span class="lineno">  562</span> </div>
-<div class="line"><span class="lineno">  563</span> </div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00557">557</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  557</span><span class="keyword">def </span>notebook_cache(name, root=None):</div>
+<div class="line"><span class="lineno">  558</span>    <span class="stringliteral">&quot;&quot;&quot;The cache directory for a notebook: ``&lt;root&gt;/&lt;name&gt;``, created on demand.</span></div>
+<div class="line"><span class="lineno">  559</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  560</span><span class="stringliteral">    ``root`` defaults to ``$KALMAN_NOTEBOOK_CACHE`` or, failing that, ``cache/``</span></div>
+<div class="line"><span class="lineno">  561</span><span class="stringliteral">    next to the current working directory -- which is the notebook&#39;s own folder</span></div>
+<div class="line"><span class="lineno">  562</span><span class="stringliteral">    when run from Jupyter or ``nbconvert``, so ``share/notebooks/cache/&lt;name&gt;/``</span></div>
+<div class="line"><span class="lineno">  563</span><span class="stringliteral">    is where the trained artefacts of the shipped notebooks live.</span></div>
+<div class="line"><span class="lineno">  564</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  565</span>    <span class="keyword">import</span> os</div>
+<div class="line"><span class="lineno">  566</span>    <span class="keyword">from</span> pathlib <span class="keyword">import</span> Path</div>
+<div class="line"><span class="lineno">  567</span>    base = Path(root <span class="keywordflow">or</span> os.environ.get(<span class="stringliteral">&quot;KALMAN_NOTEBOOK_CACHE&quot;</span>) <span class="keywordflow">or</span> Path.cwd() / <span class="stringliteral">&quot;cache&quot;</span>)</div>
+<div class="line"><span class="lineno">  568</span>    path = base / str(name)</div>
+<div class="line"><span class="lineno">  569</span>    path.mkdir(parents=<span class="keyword">True</span>, exist_ok=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  570</span>    <span class="keywordflow">return</span> path</div>
+<div class="line"><span class="lineno">  571</span> </div>
+<div class="line"><span class="lineno">  572</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1591,6 +1593,53 @@ libKalman is loaded and the values are real double precision.
 <div class="line"><span class="lineno">   76</span>    <span class="stringliteral">&quot;&quot;&quot;Generate N distinct colors in a rainbow spectrum.&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">   77</span>    <span class="keywordflow">return</span> [colorsys.hls_to_rgb(i / N, l, s) <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(N)]</div>
 <div class="line"><span class="lineno">   78</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="abf554e11d6aae00af837126404de0850" name="abf554e11d6aae00af837126404de0850"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abf554e11d6aae00af837126404de0850">&#9670;&#160;</a></span>report_steps()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.helpers.report_steps </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rate</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>base_fs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>n_steps</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The steps of a filter running at ``base_fs`` at which a sensor of ``rate``
+reports, among the first ``n_steps``: the step nearest to each of its instants
+(the rule of :func:`make_multirate_input`).</pre> 
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00452">452</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  452</span><span class="keyword">def </span>report_steps(rate, base_fs, n_steps):</div>
+<div class="line"><span class="lineno">  453</span>    <span class="stringliteral">&quot;&quot;&quot;The steps of a filter running at ``base_fs`` at which a sensor of ``rate``</span></div>
+<div class="line"><span class="lineno">  454</span><span class="stringliteral">    reports, among the first ``n_steps``: the step nearest to each of its instants</span></div>
+<div class="line"><span class="lineno">  455</span><span class="stringliteral">    (the rule of :func:`make_multirate_input`).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  456</span>    count = int(np.ceil(n_steps * float(rate) / float(base_fs))) + 1</div>
+<div class="line"><span class="lineno">  457</span>    steps = np.round(np.arange(count) * float(base_fs) / float(rate)).astype(int)</div>
+<div class="line"><span class="lineno">  458</span>    <span class="keywordflow">return</span> np.unique(steps[steps &lt; n_steps])</div>
+<div class="line"><span class="lineno">  459</span> </div>
+<div class="line"><span class="lineno">  460</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2019,10 +2068,10 @@ giving ``F = M22ᵀ`` and ``Q = F·M12``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00497">497</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  497</span><span class="keyword">def </span>vectorize(z):</div>
-<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">return</span> np.stack((z.real, z.imag), axis=-1)</div>
-<div class="line"><span class="lineno">  499</span> </div>
+<p class="definition">Definition at line <a class="el" href="helpers_8py_source.html#l00506">506</a> of file <a class="el" href="helpers_8py_source.html">helpers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  506</span><span class="keyword">def </span>vectorize(z):</div>
+<div class="line"><span class="lineno">  507</span>        <span class="keywordflow">return</span> np.stack((z.real, z.imag), axis=-1)</div>
+<div class="line"><span class="lineno">  508</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

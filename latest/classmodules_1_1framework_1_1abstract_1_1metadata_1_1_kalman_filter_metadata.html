@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -209,7 +209,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00315">315</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00301">301</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a79e864e3b9fea3a0d0acf0a3dc27638a" name="a79e864e3b9fea3a0d0acf0a3dc27638a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a79e864e3b9fea3a0d0acf0a3dc27638a">&#9670;&#160;</a></span>__str__()</h2>
@@ -227,57 +227,57 @@ Static Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00337">337</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>    <span class="keyword">def </span>__str__(self):</div>
-<div class="line"><span class="lineno">  338</span> </div>
-<div class="line"><span class="lineno">  339</span>        <span class="keyword">import</span> textwrap</div>
-<div class="line"><span class="lineno">  340</span>        <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
-<div class="line"><span class="lineno">  341</span>        <span class="keyword">from</span> ...runtime.debug <span class="keyword">import</span> get_debug</div>
-<div class="line"><span class="lineno">  342</span> </div>
-<div class="line"><span class="lineno">  343</span>        spacer = <span class="stringliteral">&quot; &quot;</span> * 4</div>
-<div class="line"><span class="lineno">  344</span>        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)</div>
-<div class="line"><span class="lineno">  345</span>        debug = get_debug()</div>
-<div class="line"><span class="lineno">  346</span> </div>
-<div class="line"><span class="lineno">  347</span>        <span class="keyword">def </span>fmt_arr(a):</div>
-<div class="line"><span class="lineno">  348</span>            <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  349</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;None&quot;</span></div>
-<div class="line"><span class="lineno">  350</span>            a = np.asarray(a)</div>
-<div class="line"><span class="lineno">  351</span>            shape = <span class="stringliteral">&quot;x&quot;</span>.join(map(str, a.shape))</div>
-<div class="line"><span class="lineno">  352</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> debug:</div>
-<div class="line"><span class="lineno">  353</span>                <span class="keywordflow">return</span> f<span class="stringliteral">&quot;{shape}&quot;</span></div>
-<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">return</span> np.array2string(a, precision=3, max_line_width=np.inf)</div>
-<div class="line"><span class="lineno">  355</span> </div>
-<div class="line"><span class="lineno">  356</span>        res  = f<span class="stringliteral">&quot;{self.NAME} (v{self.VERSION})\n&quot;</span></div>
-<div class="line"><span class="lineno">  357</span>        res += f<span class="stringliteral">&quot;{spacer}{desc}\n\n&quot;</span></div>
-<div class="line"><span class="lineno">  358</span>        <span class="keywordflow">if</span> self._model:</div>
-<div class="line"><span class="lineno">  359</span>            res += f<span class="stringliteral">&quot;{spacer}Model.....................: {type(self._model).__name__}\n&quot;</span></div>
-<div class="line"><span class="lineno">  360</span>            res += f<span class="stringliteral">&quot;{spacer}States (n={self._model.n})...........: {self._model.states.repr()}\n&quot;</span></div>
-<div class="line"><span class="lineno">  361</span>            res += f<span class="stringliteral">&quot;{spacer}Observables (m={self._model.m})........: {self._model.observables.repr()}\n&quot;</span></div>
-<div class="line"><span class="lineno">  362</span>            res += f<span class="stringliteral">&quot;{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n&quot;</span></div>
-<div class="line"><span class="lineno">  363</span>        <span class="keywordflow">if</span> self._engine <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  364</span>            res += f<span class="stringliteral">&quot;{spacer}Engine....................: {type(self._engine).__name__}\n&quot;</span></div>
-<div class="line"><span class="lineno">  365</span>        res += f<span class="stringliteral">&quot;{spacer}Precision.................: {self.epsilon:.3e}\n\n&quot;</span></div>
-<div class="line"><span class="lineno">  366</span> </div>
-<div class="line"><span class="lineno">  367</span>        res += f<span class="stringliteral">&quot;{spacer}Microstate variable sizes:\n&quot;</span></div>
-<div class="line"><span class="lineno">  368</span>        res += f<span class="stringliteral">&quot;{2*spacer}x.....................: {fmt_arr(self.x)} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  369</span>        res += f<span class="stringliteral">&quot;{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  370</span> </div>
-<div class="line"><span class="lineno">  371</span>        <span class="comment"># Macrostate logs (prior/posterior/smooth/measurement/control) only exist</span></div>
-<div class="line"><span class="lineno">  372</span>        <span class="comment"># once forward()/backward() has actually run — before that they&#39;re all</span></div>
-<div class="line"><span class="lineno">  373</span>        <span class="comment"># empty, and printing four &quot;0 element(s)&quot; lines is just noise, not</span></div>
-<div class="line"><span class="lineno">  374</span>        <span class="comment"># information. Show the section only once there is something to show.</span></div>
-<div class="line"><span class="lineno">  375</span>        n_prior       = len(self.prior <span class="keywordflow">or</span> [])</div>
-<div class="line"><span class="lineno">  376</span>        n_posterior   = len(self.posterior <span class="keywordflow">or</span> [])</div>
-<div class="line"><span class="lineno">  377</span>        n_measurement = len(self.measurement <span class="keywordflow">or</span> [])</div>
-<div class="line"><span class="lineno">  378</span>        n_control     = len(self.control <span class="keywordflow">or</span> [])</div>
-<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">if</span> n_prior <span class="keywordflow">or</span> n_posterior <span class="keywordflow">or</span> n_measurement <span class="keywordflow">or</span> n_control:</div>
-<div class="line"><span class="lineno">  380</span>            res += f<span class="stringliteral">&quot;\n{spacer}Macrostate variable sizes:\n&quot;</span></div>
-<div class="line"><span class="lineno">  381</span>            res += f<span class="stringliteral">&quot;{2*spacer}Prior.................: {n_prior} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  382</span>            res += f<span class="stringliteral">&quot;{2*spacer}Posterior.............: {n_posterior} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  383</span>            res += f<span class="stringliteral">&quot;{2*spacer}Measurement...........: {n_measurement} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  384</span>            res += f<span class="stringliteral">&quot;{2*spacer}Control...............: {n_control} element(s)\n&quot;</span></div>
-<div class="line"><span class="lineno">  385</span> </div>
-<div class="line"><span class="lineno">  386</span>        <span class="keywordflow">return</span> res</div>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00323">323</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  323</span>    <span class="keyword">def </span>__str__(self):</div>
+<div class="line"><span class="lineno">  324</span> </div>
+<div class="line"><span class="lineno">  325</span>        <span class="keyword">import</span> textwrap</div>
+<div class="line"><span class="lineno">  326</span>        <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  327</span>        <span class="keyword">from</span> ...runtime.debug <span class="keyword">import</span> get_debug</div>
+<div class="line"><span class="lineno">  328</span> </div>
+<div class="line"><span class="lineno">  329</span>        spacer = <span class="stringliteral">&quot; &quot;</span> * 4</div>
+<div class="line"><span class="lineno">  330</span>        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)</div>
+<div class="line"><span class="lineno">  331</span>        debug = get_debug()</div>
+<div class="line"><span class="lineno">  332</span> </div>
+<div class="line"><span class="lineno">  333</span>        <span class="keyword">def </span>fmt_arr(a):</div>
+<div class="line"><span class="lineno">  334</span>            <span class="keywordflow">if</span> a <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  335</span>                <span class="keywordflow">return</span> <span class="stringliteral">&quot;None&quot;</span></div>
+<div class="line"><span class="lineno">  336</span>            a = np.asarray(a)</div>
+<div class="line"><span class="lineno">  337</span>            shape = <span class="stringliteral">&quot;x&quot;</span>.join(map(str, a.shape))</div>
+<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> debug:</div>
+<div class="line"><span class="lineno">  339</span>                <span class="keywordflow">return</span> f<span class="stringliteral">&quot;{shape}&quot;</span></div>
+<div class="line"><span class="lineno">  340</span>            <span class="keywordflow">return</span> np.array2string(a, precision=3, max_line_width=np.inf)</div>
+<div class="line"><span class="lineno">  341</span> </div>
+<div class="line"><span class="lineno">  342</span>        res  = f<span class="stringliteral">&quot;{self.NAME} (v{self.VERSION})\n&quot;</span></div>
+<div class="line"><span class="lineno">  343</span>        res += f<span class="stringliteral">&quot;{spacer}{desc}\n\n&quot;</span></div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">if</span> self._model:</div>
+<div class="line"><span class="lineno">  345</span>            res += f<span class="stringliteral">&quot;{spacer}Model.....................: {type(self._model).__name__}\n&quot;</span></div>
+<div class="line"><span class="lineno">  346</span>            res += f<span class="stringliteral">&quot;{spacer}States (n={self._model.n})...........: {self._model.states.repr()}\n&quot;</span></div>
+<div class="line"><span class="lineno">  347</span>            res += f<span class="stringliteral">&quot;{spacer}Observables (m={self._model.m})........: {self._model.observables.repr()}\n&quot;</span></div>
+<div class="line"><span class="lineno">  348</span>            res += f<span class="stringliteral">&quot;{spacer}Sampling frequency (fs)...: {self._model.fs} Hz\n&quot;</span></div>
+<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">if</span> self._engine <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  350</span>            res += f<span class="stringliteral">&quot;{spacer}Engine....................: {type(self._engine).__name__}\n&quot;</span></div>
+<div class="line"><span class="lineno">  351</span>        res += f<span class="stringliteral">&quot;{spacer}Precision.................: {self.epsilon:.3e}\n\n&quot;</span></div>
+<div class="line"><span class="lineno">  352</span> </div>
+<div class="line"><span class="lineno">  353</span>        res += f<span class="stringliteral">&quot;{spacer}Microstate variable sizes:\n&quot;</span></div>
+<div class="line"><span class="lineno">  354</span>        res += f<span class="stringliteral">&quot;{2*spacer}x.....................: {fmt_arr(self.x)} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  355</span>        res += f<span class="stringliteral">&quot;{2*spacer}P.....................: {fmt_arr(self.P)} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  356</span> </div>
+<div class="line"><span class="lineno">  357</span>        <span class="comment"># Macrostate logs (prior/posterior/smooth/measurement/control) only exist</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="comment"># once forward()/backward() has actually run — before that they&#39;re all</span></div>
+<div class="line"><span class="lineno">  359</span>        <span class="comment"># empty, and printing four &quot;0 element(s)&quot; lines is just noise, not</span></div>
+<div class="line"><span class="lineno">  360</span>        <span class="comment"># information. Show the section only once there is something to show.</span></div>
+<div class="line"><span class="lineno">  361</span>        n_prior       = len(self.prior <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  362</span>        n_posterior   = len(self.posterior <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  363</span>        n_measurement = len(self.measurement <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  364</span>        n_control     = len(self.control <span class="keywordflow">or</span> [])</div>
+<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">if</span> n_prior <span class="keywordflow">or</span> n_posterior <span class="keywordflow">or</span> n_measurement <span class="keywordflow">or</span> n_control:</div>
+<div class="line"><span class="lineno">  366</span>            res += f<span class="stringliteral">&quot;\n{spacer}Macrostate variable sizes:\n&quot;</span></div>
+<div class="line"><span class="lineno">  367</span>            res += f<span class="stringliteral">&quot;{2*spacer}Prior.................: {n_prior} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  368</span>            res += f<span class="stringliteral">&quot;{2*spacer}Posterior.............: {n_posterior} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  369</span>            res += f<span class="stringliteral">&quot;{2*spacer}Measurement...........: {n_measurement} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  370</span>            res += f<span class="stringliteral">&quot;{2*spacer}Control...............: {n_control} element(s)\n&quot;</span></div>
+<div class="line"><span class="lineno">  371</span> </div>
+<div class="line"><span class="lineno">  372</span>        <span class="keywordflow">return</span> res</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -302,7 +302,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00322">322</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00308">308</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -326,7 +326,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00321">321</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00307">307</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -350,7 +350,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00334">334</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00320">320</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -374,7 +374,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00318">318</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00304">304</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -398,7 +398,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00323">323</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00309">309</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -422,7 +422,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00333">333</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00319">319</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -446,7 +446,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00317">317</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00303">303</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -470,7 +470,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00327">327</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00313">313</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -494,7 +494,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00331">331</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00317">317</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -518,7 +518,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00330">330</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00316">316</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -544,7 +544,7 @@ Static Protected Attributes</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a99c6e0c2850f1ad2824d175727353281">modules.framework.filter.BayesFilter</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00332">332</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00318">318</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -568,7 +568,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00335">335</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00321">321</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -592,7 +592,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00319">319</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00305">305</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -616,7 +616,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00326">326</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00312">312</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>

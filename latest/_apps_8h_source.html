@@ -6,12 +6,12 @@
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <!-- BEGIN opengraph metadata -->
-<meta property="og:title" content="apps/include/Kalman/Apps/Apps.h Source File" />
+<meta property="og:title" content="apps/include/Kalman/Apps.h Source File" />
 <meta property="og:image" content="logo.drawio.svg" />
-<meta property="og:description" content="Kalman World: apps/include/Kalman/Apps/Apps.h Source File" />
+<meta property="og:description" content="Kalman World: apps/include/Kalman/Apps.h Source File" />
 <meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
 <!-- END opengraph metadata -->
-<title>apps/include/Kalman/Apps/Apps.h Source File</title>
+<title>apps/include/Kalman/Apps.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -145,52 +145,36 @@ $(document).ready(function(){initNavTree('_apps_8h_source.html',''); initResizab
 </div><!--header-->
 <div class="contents">
 <a href="_apps_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span><span class="preprocessor">#ifndef KALMAN_APPS_APPS_H</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#define KALMAN_APPS_APPS_H</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="preprocessor">#include &quot;<a class="code" href="apps_2include_2_kalman_2_apps_2_model_8h.html">Kalman/Apps/Model.h</a>&quot;</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &quot;<a class="code" href="_rocket_ascent_8h.html">Kalman/Apps/Astro/RocketAscent.h</a>&quot;</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#include &quot;<a class="code" href="_rocket_descent_8h.html">Kalman/Apps/Astro/RocketDescent.h</a>&quot;</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &quot;<a class="code" href="_rocket_landing_8h.html">Kalman/Apps/Astro/RocketLanding.h</a>&quot;</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#include &quot;<a class="code" href="_rocket_liftoff_8h.html">Kalman/Apps/Astro/RocketLiftoff.h</a>&quot;</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#include &quot;<a class="code" href="_interplanetary_8h.html">Kalman/Apps/Astro/Interplanetary.h</a>&quot;</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;<a class="code" href="_trans_lunar_8h.html">Kalman/Apps/Astro/TransLunar.h</a>&quot;</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#include &quot;<a class="code" href="_ballistic_8h.html">Kalman/Apps/Ballistics/Ballistic.h</a>&quot;</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#include &quot;<a class="code" href="_receiver_8h.html">Kalman/Apps/GPS/Receiver.h</a>&quot;</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &quot;<a class="code" href="_polarization_8h.html">Kalman/Apps/Gravitational/Polarization.h</a>&quot;</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="preprocessor">#include &quot;<a class="code" href="apps_2include_2_kalman_2_apps_2_tracking_2_drift_chamber_8h.html">Kalman/Apps/Tracking/DriftChamber.h</a>&quot;</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#include &quot;<a class="code" href="_car_lane_8h.html">Kalman/Apps/Vehicles/CarLane.h</a>&quot;</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#include &quot;<a class="code" href="_car_speed_8h.html">Kalman/Apps/Vehicles/CarSpeed.h</a>&quot;</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="preprocessor">#include &quot;<a class="code" href="_barotropic_flow_8h.html">Kalman/Apps/Weather/BarotropicFlow.h</a>&quot;</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#include &quot;<a class="code" href="_kolmogorov_flow_8h.html">Kalman/Apps/Weather/KolmogorovFlow.h</a>&quot;</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &quot;<a class="code" href="_storm_8h.html">Kalman/Apps/Weather/Storm.h</a>&quot;</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#include &quot;<a class="code" href="_tornado_8h.html">Kalman/Apps/Weather/Tornado.h</a>&quot;</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_APPS_APPS_H</span></div>
-<div class="ttc" id="a_ballistic_8h_html"><div class="ttname"><a href="_ballistic_8h.html">Ballistic.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Ballistics::Ballistic class.</div></div>
-<div class="ttc" id="a_barotropic_flow_8h_html"><div class="ttname"><a href="_barotropic_flow_8h.html">BarotropicFlow.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Weather::BarotropicFlow class.</div></div>
-<div class="ttc" id="a_car_lane_8h_html"><div class="ttname"><a href="_car_lane_8h.html">CarLane.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Vehicles::CarLane class.</div></div>
-<div class="ttc" id="a_car_speed_8h_html"><div class="ttname"><a href="_car_speed_8h.html">CarSpeed.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Vehicles::CarSpeed class.</div></div>
-<div class="ttc" id="a_interplanetary_8h_html"><div class="ttname"><a href="_interplanetary_8h.html">Interplanetary.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::Interplanetary class.</div></div>
-<div class="ttc" id="a_kolmogorov_flow_8h_html"><div class="ttname"><a href="_kolmogorov_flow_8h.html">KolmogorovFlow.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Weather::KolmogorovFlow class.</div></div>
-<div class="ttc" id="a_polarization_8h_html"><div class="ttname"><a href="_polarization_8h.html">Polarization.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Gravitational::Polarization class.</div></div>
-<div class="ttc" id="a_receiver_8h_html"><div class="ttname"><a href="_receiver_8h.html">Receiver.h</a></div><div class="ttdoc">Header of the Kalman::Apps::GPS::Receiver class.</div></div>
-<div class="ttc" id="a_rocket_ascent_8h_html"><div class="ttname"><a href="_rocket_ascent_8h.html">RocketAscent.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::RocketAscent class.</div></div>
-<div class="ttc" id="a_rocket_descent_8h_html"><div class="ttname"><a href="_rocket_descent_8h.html">RocketDescent.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::RocketDescent class.</div></div>
-<div class="ttc" id="a_rocket_landing_8h_html"><div class="ttname"><a href="_rocket_landing_8h.html">RocketLanding.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::RocketLanding class.</div></div>
-<div class="ttc" id="a_rocket_liftoff_8h_html"><div class="ttname"><a href="_rocket_liftoff_8h.html">RocketLiftoff.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::RocketLiftoff class.</div></div>
-<div class="ttc" id="a_storm_8h_html"><div class="ttname"><a href="_storm_8h.html">Storm.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Weather::Storm class.</div></div>
-<div class="ttc" id="a_tornado_8h_html"><div class="ttname"><a href="_tornado_8h.html">Tornado.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Weather::Tornado class.</div></div>
-<div class="ttc" id="a_trans_lunar_8h_html"><div class="ttname"><a href="_trans_lunar_8h.html">TransLunar.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Astro::TransLunar class.</div></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="preprocessor">#ifndef KALMAN_APPS_H</span></div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="preprocessor">#define KALMAN_APPS_H</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="preprocessor">#include &quot;<a class="code" href="apps_2include_2_kalman_2_apps_2_model_8h.html">Kalman/Apps/Model.h</a>&quot;</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="preprocessor">#include &quot;<a class="code" href="_aerospace_8h.html">Kalman/Apps/Aerospace.h</a>&quot;</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="preprocessor">#include &quot;<a class="code" href="_astrophysics_8h.html">Kalman/Apps/Astrophysics.h</a>&quot;</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="preprocessor">#include &quot;<a class="code" href="_ballistics_8h.html">Kalman/Apps/Ballistics.h</a>&quot;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="preprocessor">#include &quot;<a class="code" href="_g_p_s_8h.html">Kalman/Apps/GPS.h</a>&quot;</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#include &quot;<a class="code" href="_gravitational_8h.html">Kalman/Apps/Gravitational.h</a>&quot;</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="preprocessor">#include &quot;<a class="code" href="apps_2include_2_kalman_2_apps_2_tracking_8h.html">Kalman/Apps/Tracking.h</a>&quot;</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#include &quot;<a class="code" href="_vehicles_8h.html">Kalman/Apps/Vehicles.h</a>&quot;</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#include &quot;<a class="code" href="_weather_8h.html">Kalman/Apps/Weather.h</a>&quot;</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif </span><span class="comment">// KALMAN_APPS_H</span></div>
+<div class="ttc" id="a_aerospace_8h_html"><div class="ttname"><a href="_aerospace_8h.html">Aerospace.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Aerospace: a rocket's liftoff, ascent, descent and landing.</div></div>
+<div class="ttc" id="a_astrophysics_8h_html"><div class="ttname"><a href="_astrophysics_8h.html">Astrophysics.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Astrophysics: a spacecraft coasting to the Moon and between t...</div></div>
+<div class="ttc" id="a_ballistics_8h_html"><div class="ttname"><a href="_ballistics_8h.html">Ballistics.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Ballistics.</div></div>
+<div class="ttc" id="a_g_p_s_8h_html"><div class="ttname"><a href="_g_p_s_8h.html">GPS.h</a></div><div class="ttdoc">The application models of Kalman::Apps::GPS.</div></div>
+<div class="ttc" id="a_gravitational_8h_html"><div class="ttname"><a href="_gravitational_8h.html">Gravitational.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Gravitational.</div></div>
+<div class="ttc" id="a_vehicles_8h_html"><div class="ttname"><a href="_vehicles_8h.html">Vehicles.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Vehicles.</div></div>
+<div class="ttc" id="a_weather_8h_html"><div class="ttname"><a href="_weather_8h.html">Weather.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Weather.</div></div>
 <div class="ttc" id="aapps_2include_2_kalman_2_apps_2_model_8h_html"><div class="ttname"><a href="apps_2include_2_kalman_2_apps_2_model_8h.html">Model.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Model class.</div></div>
-<div class="ttc" id="aapps_2include_2_kalman_2_apps_2_tracking_2_drift_chamber_8h_html"><div class="ttname"><a href="apps_2include_2_kalman_2_apps_2_tracking_2_drift_chamber_8h.html">DriftChamber.h</a></div><div class="ttdoc">Header of the Kalman::Apps::Tracking::DriftChamber class.</div></div>
+<div class="ttc" id="aapps_2include_2_kalman_2_apps_2_tracking_8h_html"><div class="ttname"><a href="apps_2include_2_kalman_2_apps_2_tracking_8h.html">Tracking.h</a></div><div class="ttdoc">The application models of Kalman::Apps::Tracking.</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->
 <!-- start footer part -->
     <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
-            <li class="navelem"><a class="el" href="dir_9654b8d08f4bba4e84b362c5fd320bee.html">apps</a></li><li class="navelem"><a class="el" href="dir_0a0d5da700a5a4a1bb9e31860c7b5987.html">include</a></li><li class="navelem"><a class="el" href="dir_4e8fd5c9a93ceb3e9ca4299c66c624ec.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_cbf247c05f87386bf8e5024034e2c23e.html">Apps</a></li><li class="navelem"><a class="el" href="_apps_8h.html">Apps.h</a></li>
+            <li class="navelem"><a class="el" href="dir_9654b8d08f4bba4e84b362c5fd320bee.html">apps</a></li><li class="navelem"><a class="el" href="dir_0a0d5da700a5a4a1bb9e31860c7b5987.html">include</a></li><li class="navelem"><a class="el" href="dir_4e8fd5c9a93ceb3e9ca4299c66c624ec.html">Kalman</a></li><li class="navelem"><a class="el" href="_apps_8h.html">Apps.h</a></li>
             <li class="footer">
             <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
             </li>

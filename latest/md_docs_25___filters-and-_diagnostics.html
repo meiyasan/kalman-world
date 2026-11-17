@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -162,7 +162,7 @@ Choosing a filter</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>CombinatorialKalmanFilter</code>   </td><td class="markdownTableBodyNone"><code>combinatorial</code>   </td><td class="markdownTableBodyNone">many hits per layer, tracks to <em>find</em> not just follow   </td><td class="markdownTableBodyNone">yes    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>InteractiveKalmanFilter</code>   </td><td class="markdownTableBodyNone">(routes M filters)   </td><td class="markdownTableBodyNone">regime switching between several models   </td><td class="markdownTableBodyNone">per-model   </td></tr>
+<td class="markdownTableBodyNone">any, on <code>route(models, Pi)</code>   </td><td class="markdownTableBodyNone">interacting (IMM)   </td><td class="markdownTableBodyNone">regime switching between several models   </td><td class="markdownTableBodyNone">per-model   </td></tr>
 </table>
 <p>The classes fall in two families, by what the belief is taken to be:</p>
 <table class="markdownTable">
@@ -189,7 +189,7 @@ Running one</h1>
 <div class="line">smoothed = kf.backward()                <span class="comment"># RTS smoother over the stored pass</span></div>
 <div class="line">record = kf.filter(zk, smooth=<span class="keyword">True</span>)     <span class="comment"># both, in one call</span></div>
 <div class="line">truth = kf.sample(10.0)                 <span class="comment"># synthetic truth + measurements</span></div>
-</div><!-- fragment --><p><code>forward(gk, uk=None, *, record=True, **kwargs)</code> accepts a control sequence <code>uk</code> — or a <b>callable controller</b>, see <a class="el" href="md_docs_28___control-and-_routing.html">Control and Routing</a>. <code>record=False</code> skips building the <code>KalmanRecord</code> when you only want the run state.</p>
+</div><!-- fragment --><p><code>forward(raw, uk=None, *, record=True, **kwargs)</code> accepts a control sequence <code>uk</code> — or a <b>callable controller</b>, see <a class="el" href="md_docs_28___control-and-_routing.html">Control and Routing</a>. <code>record=False</code> skips building the <code>KalmanRecord</code> when you only want the run state.</p>
 <h2><a class="anchor" id="the-record"></a>
 The record</h2>
 <p>Every run returns a frozen <code>KalmanRecord</code>:</p>
@@ -203,7 +203,7 @@ The record</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>Pk</code>   </td><td class="markdownTableBodyNone"><code>(T, n, n)</code>   </td><td class="markdownTableBodyNone">state covariances    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>zk</code>   </td><td class="markdownTableBodyNone"><code>(T, m)</code>   </td><td class="markdownTableBodyNone">measurements (or reconstructed output after <code>postprocess</code>)   </td></tr>
+<td class="markdownTableBodyNone"><code>zk</code>   </td><td class="markdownTableBodyNone"><code>(T, m)</code>   </td><td class="markdownTableBodyNone">measurements (or reconstructed output after <code>finish_output</code>)   </td></tr>
 </table>
 <p>Plus <code>len()</code>, <code>record[k]</code>, iteration over <code>(t, x, P, z)</code>, and the derived <code>n</code>, <code>m</code>, <code>duration</code>, <code>sample_rate</code>. It validates its own shapes and rejects NaN/Inf on construction, so a corrupted run fails at the boundary rather than three plots later.</p>
 <div class="fragment"><div class="line">fig = model.plot(record, sample=truth, sigma=2)   <span class="comment"># estimate, truth, ±2σ band</span></div>
@@ -216,7 +216,7 @@ EnKF — high-dimensional assimilation</h2>
 <div class="line"> </div>
 <div class="line">enkf = EnsembleKalmanFilter(model, n_members=32, inflation=1.05, seed=0)</div>
 <div class="line">record = enkf.forward(zk)</div>
-</div><!-- fragment --><p>The covariance is carried by the ensemble and never formed densely. If the model defines <code>localization()</code>, it supplies the Gaspari–Cohn tapers; if it defines <code>initial_ensemble(N, rng)</code>, members are seeded from climatology instead of a Gaussian <code>x0/P0</code> draw. <code>backward()</code> raises — there is no RTS smoother.</p>
+</div><!-- fragment --><p>The covariance is carried by the ensemble and never formed densely. If the model is a <code>KalmanEnsembleModel</code>, its <code>covariance_mask()</code> supplies the Gaspari–Cohn tapers (the filter's localization); if it defines the <code>samples=</code> case of <code>initial_state</code>, the members (the initial ensemble) are seeded from what it gives, climatology for a flow, instead of a Gaussian <code>x0/P0</code> draw. <code>backward()</code> raises — there is no RTS smoother.</p>
 <p>For a twin-experiment (OSSE) harness comparing EnKF against a free run, see <code>kalman.apps.weather.TwinExperiment</code> and <code>kalman.api.run_osse()</code>.</p>
 <h2><a class="anchor" id="ckf--track-finding"></a>
 CKF — track finding</h2>
@@ -227,19 +227,20 @@ CKF — track finding</h2>
 <div class="line">tracks = ckf.forward(hits_by_layer, layer_radii=radii)</div>
 </div><!-- fragment --><p><code>chi2_cut=None</code> derives the gate from the measurement dimension at p = 0.99. <code>ckf.backward()</code> then RTS-smooths the found tracks. Alongside the records, <code>ckf.tracks_raw</code> keeps the search bookkeeping the records drop — <code>hit_ids</code>, <code>chi2</code>, <code>holes</code> — which is what you need to score a reconstruction against truth.</p>
 <p>The search itself lives in <code>CombinatorialKalmanEngine</code>, not in the filter: it is the one shipped engine that declares <code>OWNS_PASS</code>, meaning it consumes a whole event and returns finished tracks rather than exposing a single step for the filter to loop over. Two consequences worth knowing: the filter's per-step logs (<code>prior</code>, <code>posterior</code>, <code>innovation</code>) stay empty, so the <code>nis()</code> / <code>gains()</code> diagnostics do not apply; and <code>ckf.sample()</code> raises, because there is no time series to draw — use <code>model.generate_event()</code>.</p>
-<h2><a class="anchor" id="ikf--regime-switching"></a>
-IKF — regime switching</h2>
-<p>Runs M filters in parallel, one per regime, mixing their states each step and re-weighting by likelihood. The <em>routing</em> policy is pluggable.</p>
-<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.filters <span class="keyword">import</span> InteractiveKalmanFilter</div>
+<h2><a class="anchor" id="regime-switching-route"></a>
+Regime switching: &lt;tt&gt;route&lt;/tt&gt;</h2>
+<p>A system that changes regime has no filter of its own. <code>route(models, Pi)</code> makes one model of the models of the regimes, with a probability on each, and the ordinary filter runs it on the interacting engine (the Interacting Multiple Model of the literature): one belief per regime, mixed at each step and weighed by how well each explains the measurement. Who decides the probabilities, the <em>router</em>, is pluggable. There is no smoother.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> route</div>
 <div class="line"><span class="keyword">from</span> kalman.framework.routers <span class="keyword">import</span> BayesianRouter, ThresholdRouter, NeuralRouter</div>
 <div class="line"><span class="keyword">from</span> kalman.framework.routers.nn <span class="keyword">import</span> MLP</div>
 <div class="line"> </div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi)                              <span class="comment"># Bayesian default</span></div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())</div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))</div>
+<div class="line">modes = route(models, Pi)                                              <span class="comment"># Bayesian default</span></div>
+<div class="line">modes = route(models, Pi, router=ThresholdRouter())</div>
+<div class="line">modes = route(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))</div>
 <div class="line"> </div>
-<div class="line">ikf.fit(training_zk_list, labels_list)     <span class="comment"># learning routers only</span></div>
-<div class="line">record = ikf.forward(test_zk)</div>
+<div class="line">modes.fit(training_zk_list, labels_list)   <span class="comment"># learning routers only</span></div>
+<div class="line">record = modes.filter(test_zk)             <span class="comment"># the combined estimate</span></div>
+<div class="line">modes.mode_probabilities                   <span class="comment"># (T, M): which regime, when</span></div>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="diagnostics--is-the-filter-actually-working"></a>
 Diagnostics — is the filter actually working?</h1>

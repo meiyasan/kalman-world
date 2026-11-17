@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -308,11 +308,12 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   92</span>            create = it-&gt;second.create;</div>
 <div class="line"><span class="lineno">   93</span>        }</div>
 <div class="line"><span class="lineno">   94</span>        <span class="comment">// Run the creator outside the lock: a constructor may itself consult the factory.</span></div>
-<div class="line"><span class="lineno">   95</span>        std::unique_ptr&lt;Model&gt; model = create();</div>
+<div class="line"><span class="lineno">   95</span>        std::unique_ptr&lt;Model&gt; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a> = create();</div>
 <div class="line"><span class="lineno">   96</span>        <span class="keywordflow">if</span> (!model) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Factory::Create: the creator for &#39;&quot;</span> + name + <span class="stringliteral">&quot;&#39; returned null.&quot;</span>);</div>
-<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> model;</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>;</div>
 <div class="line"><span class="lineno">   98</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_factory_html_a07e239e0f2762a681e6bfd1cda33c87d"><div class="ttname"><a href="class_kalman_1_1_factory.html#a07e239e0f2762a681e6bfd1cda33c87d">Kalman::Factory::Creator</a></div><div class="ttdeci">std::function&lt; std::unique_ptr&lt; Model &gt;()&gt; Creator</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00069">Factory.h:69</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -342,19 +343,19 @@ Static Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_factory_8cc_source.html#l00100">100</a> of file <a class="el" href="_factory_8cc_source.html">Factory.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  101</span>    {</div>
-<div class="line"><span class="lineno">  102</span>        <span class="keyword">const</span> std::unique_ptr&lt;Model&gt; model = <a class="code hl_function" href="class_kalman_1_1_factory.html#ae2200e2b7cfd57282411754e74e6a298">Create</a>(name);</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keyword">const</span> std::unique_ptr&lt;Model&gt; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a> = <a class="code hl_function" href="class_kalman_1_1_factory.html#ae2200e2b7cfd57282411754e74e6a298">Create</a>(name);</div>
 <div class="line"><span class="lineno">  103</span> </div>
 <div class="line"><span class="lineno">  104</span>        Entry e;</div>
 <div class="line"><span class="lineno">  105</span>        e.name = name;</div>
-<div class="line"><span class="lineno">  106</span>        e.title = model-&gt;Title();</div>
-<div class="line"><span class="lineno">  107</span>        e.description = model-&gt;Description();</div>
-<div class="line"><span class="lineno">  108</span>        e.version = model-&gt;Version();</div>
-<div class="line"><span class="lineno">  109</span>        e.n = model-&gt;NState();</div>
-<div class="line"><span class="lineno">  110</span>        e.m = model-&gt;NMeasure();</div>
-<div class="line"><span class="lineno">  111</span>        e.l = model-&gt;NControl();</div>
-<div class="line"><span class="lineno">  112</span>        e.fs = model-&gt;SampleRate();</div>
-<div class="line"><span class="lineno">  113</span>        e.engine = model-&gt;DefaultEngine();</div>
-<div class="line"><span class="lineno">  114</span>        e.analytic = model-&gt;HasAnalyticJacobian();</div>
+<div class="line"><span class="lineno">  106</span>        e.title = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Title();</div>
+<div class="line"><span class="lineno">  107</span>        e.description = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Description();</div>
+<div class="line"><span class="lineno">  108</span>        e.version = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Version();</div>
+<div class="line"><span class="lineno">  109</span>        e.n = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;NState();</div>
+<div class="line"><span class="lineno">  110</span>        e.m = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;NMeasure();</div>
+<div class="line"><span class="lineno">  111</span>        e.l = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;NControl();</div>
+<div class="line"><span class="lineno">  112</span>        e.fs = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;SampleRate();</div>
+<div class="line"><span class="lineno">  113</span>        e.engine = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;DefaultEngine();</div>
+<div class="line"><span class="lineno">  114</span>        e.analytic = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;HasAnalyticJacobian();</div>
 <div class="line"><span class="lineno">  115</span>        {</div>
 <div class="line"><span class="lineno">  116</span>            std::lock_guard&lt;std::mutex&gt; lock(fMutex);</div>
 <div class="line"><span class="lineno">  117</span>            e.plugin = fModels.at(name).plugin;</div>
@@ -515,7 +516,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  178</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">names</a>;</div>
 <div class="line"><span class="lineno">  179</span>    }</div>
 <div class="ttc" id="anamespacemodules_1_1api_1_1store_html_ac519595302ba25754102619c3911c7bf"><div class="ttname"><a href="namespacemodules_1_1api_1_1store.html#ac519595302ba25754102619c3911c7bf">modules.api.store.path</a></div><div class="ttdeci">str path()</div><div class="ttdef"><b>Definition</b> <a href="store_8py_source.html#l00114">store.py:114</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1framework_1_1native_1_1core_html_a24045744702d33ce7c0ca87dd3f5b990"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">modules.framework.native.core.names</a></div><div class="ttdeci">list[str] names()</div><div class="ttdef"><b>Definition</b> <a href="core_8py_source.html#l00467">core.py:467</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_1_1core_html_a24045744702d33ce7c0ca87dd3f5b990"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">modules.framework.native.core.names</a></div><div class="ttdeci">list[str] names()</div><div class="ttdef"><b>Definition</b> <a href="core_8py_source.html#l00534">core.py:534</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

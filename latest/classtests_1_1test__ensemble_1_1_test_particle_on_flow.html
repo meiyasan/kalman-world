@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -155,7 +155,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00584">584</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00605">605</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac91a6a010b3937a55c947cf4028e8b99" name="ac91a6a010b3937a55c947cf4028e8b99"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac91a6a010b3937a55c947cf4028e8b99">&#9670;&#160;</a></span>test_pf_runs_on_flow_model()</h2>
@@ -173,23 +173,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00586">586</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  586</span>    <span class="keyword">def </span>test_pf_runs_on_flow_model(self):</div>
-<div class="line"><span class="lineno">  587</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  588</span>        w0 = model.equilibrium_state(decorrelate=50)</div>
-<div class="line"><span class="lineno">  589</span>        model.initial_state(w0.reshape(-1, 1), 0.25 * np.eye(model.n))</div>
-<div class="line"><span class="lineno">  590</span>        truth, zs = w0.copy(), []</div>
-<div class="line"><span class="lineno">  591</span>        rng = np.random.default_rng(11)</div>
-<div class="line"><span class="lineno">  592</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3):</div>
-<div class="line"><span class="lineno">  593</span>            truth = model.f(truth)</div>
-<div class="line"><span class="lineno">  594</span>            zs.append(truth[model.obs_idx] + rng.normal(0, model.sig_o, model.m))</div>
-<div class="line"><span class="lineno">  595</span>        pf = ParticleFilter(model, n_particles=20)</div>
-<div class="line"><span class="lineno">  596</span>        rec = pf.forward(np.asarray(zs))</div>
-<div class="line"><span class="lineno">  597</span>        xk = np.asarray(rec.xk)</div>
-<div class="line"><span class="lineno">  598</span>        self.assertEqual(xk.shape, (3, model.n))</div>
-<div class="line"><span class="lineno">  599</span>        self.assertTrue(np.all(np.isfinite(xk)))</div>
-<div class="line"><span class="lineno">  600</span> </div>
-<div class="line"><span class="lineno">  601</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00607">607</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  607</span>    <span class="keyword">def </span>test_pf_runs_on_flow_model(self):</div>
+<div class="line"><span class="lineno">  608</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  609</span>        w0 = model.equilibrium_state(decorrelate=50)</div>
+<div class="line"><span class="lineno">  610</span>        model.initial_state(w0.reshape(-1, 1), 0.25 * np.eye(model.n))</div>
+<div class="line"><span class="lineno">  611</span>        truth, zs = w0.copy(), []</div>
+<div class="line"><span class="lineno">  612</span>        rng = np.random.default_rng(11)</div>
+<div class="line"><span class="lineno">  613</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3):</div>
+<div class="line"><span class="lineno">  614</span>            truth = model.f(truth)</div>
+<div class="line"><span class="lineno">  615</span>            zs.append(truth[model.obs_idx] + rng.normal(0, model.sig_o, model.m))</div>
+<div class="line"><span class="lineno">  616</span>        pf = ParticleFilter(model, n_particles=20)</div>
+<div class="line"><span class="lineno">  617</span>        rec = pf.forward(np.asarray(zs))</div>
+<div class="line"><span class="lineno">  618</span>        xk = np.asarray(rec.xk)</div>
+<div class="line"><span class="lineno">  619</span>        self.assertEqual(xk.shape, (3, model.n))</div>
+<div class="line"><span class="lineno">  620</span>        self.assertTrue(np.all(np.isfinite(xk)))</div>
+<div class="line"><span class="lineno">  621</span> </div>
+<div class="line"><span class="lineno">  622</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

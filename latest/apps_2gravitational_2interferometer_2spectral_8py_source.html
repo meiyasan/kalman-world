@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2s
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">Two-stage workflow</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">------------------</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">Stage 1 -- peak fitting</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    ``InterferometerModel.fit(sensor_id, strain, fs, bands)``</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    ``InterferometerModel.fit(sensor, strain, fs, bands)``</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">    Estimates PSD via Welch, detects spectral peaks per band with</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">    ``scipy.signal.find_peaks``, fits each peak to a Lorentzian profile to</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">    extract (f0, Q, amplitude), and groups nearby peaks into analysis windows.</span></div>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2s
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral">        clean  = model.subtract(strain, record)</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">    ``make_controller()`` returns a ``ViolinBankController`` that attaches one</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    ``AdaptiveQRKalmanController`` per window, self-adjusting each window&#39;s</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    ``AdaptiveQRKalmanTuner`` per window, self-adjusting each window&#39;s</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">    process-noise level (Q) from empirical innovation statistics.</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">Noise sources</span></div>
@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2s
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">from</span> scipy.signal <span class="keyword">import</span> welch <span class="keyword">as</span> scipy_welch, find_peaks <span class="keyword">as</span> scipy_find_peaks</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">from</span> ...resonators.oscillators <span class="keyword">import</span> OscillatorModel, OscillatorBankModel</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">from</span> ....framework.controllers.adaptive_qr <span class="keyword">import</span> AdaptiveQRKalmanController</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">from</span> ....framework.tuners.adaptive_qr <span class="keyword">import</span> AdaptiveQRKalmanTuner</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">from</span> ....framework.control <span class="keyword">import</span> KalmanController</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
@@ -400,7 +400,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2s
 <div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>    <span class="stringliteral">&quot;&quot;&quot;Group nearby fitted peaks into analysis windows.</span></div>
 <div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span><span class="stringliteral">    Peaks separated by less than ``merge_gap_hz`` are placed in the same</span></div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="stringliteral">    ``OscillatorModel`` window (FUSED — they share one demodulated channel,</span></div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span><span class="stringliteral">    ``OscillatorModel`` window (summed — they share one demodulated channel,</span></div>
 <div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span><span class="stringliteral">    matching the Moisset et al. joint filter design).  Each window is</span></div>
 <div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span><span class="stringliteral">    characterised by:</span></div>
 <div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span><span class="stringliteral"></span> </div>

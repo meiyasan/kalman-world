@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -217,11 +217,32 @@ Using a domain model instead</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.api <span class="keyword">import</span> catalog, describe</div>
 <div class="line">catalog()[<span class="stringliteral">&quot;models&quot;</span>]           <span class="comment"># 43 names</span></div>
 <div class="line">describe(<span class="stringliteral">&quot;BallisticModel&quot;</span>)    <span class="comment"># params, version, engine/integrator/solver bindings</span></div>
-</div><!-- fragment --><hr  />
+</div><!-- fragment --><h1><a class="anchor" id="growing-a-model-with-operations"></a>
+Growing a model with operations</h1>
+<p>When the problem grows, the model grows and the filter stays. An <em>operation</em> takes a model and gives back a model:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> KalmanSensor, compose, route</div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># one more sensor on the same state: a velocity reading beside the position</span></div>
+<div class="line">fused = model.add_sensor(KalmanSensor(<span class="stringliteral">&quot;odometer&quot;</span>, G=[[0.0, 1.0]], R=0.01))</div>
+<div class="line">fused.m                                  <span class="comment"># 2</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># a parameter estimated with the state: here the odometer&#39;s unknown offset</span></div>
+<div class="line">gauge = compose(KalmanSensor(<span class="stringliteral">&quot;wheel&quot;</span>, G=[[0.0, 1.0]], R=0.01), name=<span class="stringliteral">&quot;odometer&quot;</span>).calibrate(gain=1.0, offset=0.0)</div>
+<div class="line">tuned = model.add_instrument(gauge).joint({<span class="stringliteral">&quot;odometer.offset&quot;</span>: (0.5, 0.0)})</div>
+<div class="line">tuned.n                                  <span class="comment"># 3: position, velocity, odometer.offset</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment"># two systems in one filter, and one system with two regimes</span></div>
+<div class="line">pair  = compose(model, other)            <span class="comment"># states side by side</span></div>
+<div class="line">modes = route([quiet, shaken], Pi)       <span class="comment"># same state, a probability on each model</span></div>
+<div class="line"> </div>
+<div class="line">record = fused.filter(zk)                <span class="comment"># every one of them runs like any model</span></div>
+</div><!-- fragment --><p><code>lag(L)</code> completes the list (a sensor that reports late). The six are described in <a href="4_Models.md#operations-a-model-made-from-models">Models</a>, and <a href="../examples/python/operations.py"><code>examples/python/operations.py</code></a> runs them one after the other.</p>
+<hr  />
 <h1><a class="anchor" id="where-to-go-next"></a>
 Where to go next</h1>
 <ul>
 <li><b>I want to model my own system</b> → <a class="el" href="md_docs_24___models.html">Models</a></li>
+<li><b>I want more sensors, an unknown parameter, several systems or regimes</b> → <a href="4_Models.md#operations-a-model-made-from-models">operations</a></li>
 <li><b>Which filter should I use?</b> → <a class="el" href="md_docs_25___filters-and-_diagnostics.html">Filters and Diagnostics</a></li>
 <li><b>My dynamics are an ODE/PDE</b> → <a class="el" href="md_docs_26___integrators-and-_solvers.html">Integrators and Solvers</a></li>
 <li><b>I want to drive this from another program</b> → <a class="el" href="md_docs_29___python-_a_p_i.html">Python API</a>, then <a class="el" href="md_docs_210___r_e_s_t-_a_p_i.html">REST API</a> or <a class="el" href="md_docs_211___m_c_p-_server.html">MCP Server</a></li>

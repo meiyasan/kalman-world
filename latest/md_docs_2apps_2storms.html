@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,21 +161,21 @@ The tornado model</h1>
 How they are built</h1>
 <ul>
 <li><b>Time stepping.</b> Neither model uses an integrator. A turn at a constant rate has an exact solution over one step, and the model writes it out.</li>
-<li><b>Regimes.</b> The filter does not know which regime the storm is in. <code>StormModel.ikf_bank()</code> returns one model per regime (straight, recurving, stalled) and the chance of switching between them. The Interactive <a class="el" href="namespace_kalman.html">Kalman</a> Filter (IKF, the Interacting Multiple Model filter of the literature) runs them together and weighs each by how well it explains the fixes. For the tornado model the switching chances come from the season.</li>
+<li><b>Regimes.</b> The filter does not know which regime the storm is in. <code>StormModel.regime_bank()</code> returns one model per regime (straight, recurving, stalled) and the chance of switching between them. <code>route</code> makes one model of them, which the filter runs on the interacting engine (the Interacting Multiple Model of the literature): it steps them together and weighs each by how well it explains the fixes. For the tornado model the switching chances come from the season.</li>
 <li><b>Forecast.</b> <code>forecast_cone</code> runs the model forward with no measurements. The growing covariance is the cone of uncertainty drawn on forecast maps.</li>
 <li><b>Steering and intensity.</b> A steering wind and an intensity trend can be passed as Python functions. The storm then follows the wind and no longer needs a prescribed turn rate.</li>
-<li><b>C++.</b> Both models have twins in <code>libKalmanApps</code>. A steering function keeps the Python step, and so does an intensity function, except the one a <code>LearnedIntensityModel</code> fitted on <code>analytic_environment</code> gives: a ridge regression, whose coefficients the twin takes as arrays.</li>
+<li><b>C++.</b> Both models have counterparts in <code>libKalmanApps</code>. A steering function keeps the Python step, and so does an intensity function, except the one a <code>LearnedIntensityModel</code> fitted on <code>analytic_environment</code> gives: a ridge regression, whose coefficients the counterpart takes as arrays.</li>
 </ul>
-<h1><a class="anchor" id="using-it-11"></a>
+<h1><a class="anchor" id="using-it-12"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> StormModel, synthetic_track</div>
-<div class="line"><span class="keyword">from</span> kalman.framework.filters <span class="keyword">import</span> InteractiveKalmanFilter</div>
+<div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> route</div>
 <div class="line"> </div>
 <div class="line">truth, fixes = synthetic_track(n_steps=40, recurve_at=18, fix_noise=0.3, seed=3)</div>
-<div class="line">models, transition, probabilities = StormModel.ikf_bank(fix_noise=0.3)</div>
-<div class="line">ikf = InteractiveKalmanFilter(models, transition, initial_probs=probabilities)</div>
-<div class="line">estimate = ikf.forward(fixes)</div>
-<div class="line">regimes = ikf.mode_probabilities            <span class="comment"># one column per regime</span></div>
+<div class="line">models, transition, probabilities = StormModel.regime_bank(fix_noise=0.3)</div>
+<div class="line">storm = route(models, transition, probabilities)</div>
+<div class="line">estimate = storm.filter(fixes)</div>
+<div class="line">regimes = storm.mode_probabilities          <span class="comment"># one column per regime</span></div>
 </div><!-- fragment --><p>Notebook: <a href="../../share/notebooks/14_StormTracking.ipynb">14_StormTracking</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -211,13 +211,13 @@ $(document).ready(function(){initNavTree('_dormand_prince_8cc_source.html',''); 
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            }</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordtype">double</span> err = 0.;</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(); ++i)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.Size(); ++i)</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            {</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> scale = fAtol + fRtol * std::max(std::abs(x(i)), std::abs(x5(i)));</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> e = (x5(i) - x4(i)) / scale;</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                err += e * e;</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            err = std::sqrt(err) / std::max(std::sqrt(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>())), 1.);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            err = std::sqrt(err) / std::max(std::sqrt(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(x.Size())), 1.);</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="keywordflow">if</span> (err &lt;= 1. || std::abs(h) &lt;= 1e-14 * std::abs(dt))</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            {</div>
@@ -234,7 +234,6 @@ $(document).ready(function(){initNavTree('_dormand_prince_8cc_source.html',''); 
 <div class="ttc" id="aclass_kalman_1_1_integrators_1_1_dormand_prince_html_a55ae77033de625a97060da52276094a3"><div class="ttname"><a href="class_kalman_1_1_integrators_1_1_dormand_prince.html#a55ae77033de625a97060da52276094a3">Kalman::Integrators::DormandPrince::Step</a></div><div class="ttdeci">Vector Step(const Derivative &amp;f, const Vector &amp;x, const Vector &amp;u, double t, double dt) const override</div><div class="ttdoc">Advance one step of dt; u is held constant across it (zero-order hold).</div><div class="ttdef"><b>Definition</b> <a href="_dormand_prince_8cc_source.html#l00044">DormandPrince.cc:44</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_integrators_1_1_dormand_prince_html_af0a4f331b2ce8225495b6685b1b5cf1c"><div class="ttname"><a href="class_kalman_1_1_integrators_1_1_dormand_prince.html#af0a4f331b2ce8225495b6685b1b5cf1c">Kalman::Integrators::DormandPrince::GetTableau</a></div><div class="ttdeci">Tableau GetTableau() const override</div><div class="ttdoc">The explicit tableau, or an empty one for adaptive / implicit schemes.</div><div class="ttdef"><b>Definition</b> <a href="_dormand_prince_8cc_source.html#l00034">DormandPrince.cc:34</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_integrators_html"><div class="ttname"><a href="namespace_kalman_1_1_integrators.html">Kalman::Integrators</a></div><div class="ttdef"><b>Definition</b> <a href="_integrator_8h_source.html#l00102">Integrator.h:103</a></div></div>
 <div class="ttc" id="anamespace_kalman_html_adc88c52258c5ba65051e3836981eb140"><div class="ttname"><a href="namespace_kalman.html#adc88c52258c5ba65051e3836981eb140">Kalman::Derivative</a></div><div class="ttdeci">std::function&lt; Vector(const Vector &amp;, const Vector &amp;, double)&gt; Derivative</div><div class="ttdoc">xdot = f(x, u, t) — the continuous dynamics an integrator steps.</div><div class="ttdef"><b>Definition</b> <a href="_integrator_8h_source.html#l00043">Integrator.h:43</a></div></div>
 <div class="ttc" id="astruct_kalman_1_1_tableau_html"><div class="ttname"><a href="struct_kalman_1_1_tableau.html">Kalman::Tableau</a></div><div class="ttdoc">Butcher tableau (c, A, b) of an explicit Runge–Kutta method.</div><div class="ttdef"><b>Definition</b> <a href="_integrator_8h_source.html#l00046">Integrator.h:47</a></div></div>

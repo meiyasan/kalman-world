@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -232,7 +232,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Wrap a live source (iterable / generator / callback) of measurement rows.</pre> 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00014">14</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00014">14</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a20663793d910c9f2b1c943ae24e6440f" name="a20663793d910c9f2b1c943ae24e6440f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a20663793d910c9f2b1c943ae24e6440f">&#9670;&#160;</a></span>__init__()</h2>
@@ -274,7 +274,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a4d2260d67ccb20b4d6a936d448109948">modules.framework.provider.KalmanProvider</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00031">31</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00031">31</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   31</span>    <span class="keyword">def </span>__init__(self, source=None, *, max_items=None, **kw):</div>
 <div class="line"><span class="lineno">   32</span>        super().__init__(cache=<span class="keyword">False</span>, **kw)</div>
 <div class="line"><span class="lineno">   33</span>        self.source = source</div>
@@ -324,7 +324,7 @@ Additional Inherited Members</h2></td></tr>
 <pre class="fragment">Drain the stream into a stacked ``zk`` array (bounded by ``max_items``).</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#a5c63744ff727db2bcd14bdf3b3ff5704">modules.framework.provider.KalmanProvider</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00056">56</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00056">56</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   56</span>    <span class="keyword">def </span>fetch(self, source=None, max_items=None, **kw):</div>
 <div class="line"><span class="lineno">   57</span>        <span class="stringliteral">&quot;&quot;&quot;Drain the stream into a stacked ``zk`` array (bounded by ``max_items``).&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">   58</span>        rows = list(self.stream(source=source, max_items=max_items, **kw))</div>
@@ -373,7 +373,7 @@ Additional Inherited Members</h2></td></tr>
 <pre class="fragment">Yield live data items.  Override on streaming providers.</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#aee348abacf7577fff754911a3c904097">modules.framework.provider.KalmanProvider</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00036">36</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00036">36</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   36</span>    <span class="keyword">def </span>stream(self, source=None, max_items=None, **kw):</div>
 <div class="line"><span class="lineno">   37</span>        src = source <span class="keywordflow">if</span> source <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.source</div>
 <div class="line"><span class="lineno">   38</span>        cap = max_items <span class="keywordflow">if</span> max_items <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.max_items</div>
@@ -418,7 +418,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00018">18</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00018">18</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -442,7 +442,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00020">20</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00020">20</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -458,7 +458,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00034">34</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00034">34</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -488,7 +488,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line">                        <span class="stringliteral">&quot;sensor&#39;s own.&quot;</span>},</div>
 <div class="line">    )</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00022">22</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00022">22</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -512,7 +512,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00017">17</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00017">17</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -536,7 +536,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00029">29</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00029">29</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -552,7 +552,7 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00033">33</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00033">33</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
@@ -576,12 +576,12 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="sensor_8py_source.html#l00019">19</a> of file <a class="el" href="sensor_8py_source.html">sensor.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="providers_2sensor_8py_source.html#l00019">19</a> of file <a class="el" href="providers_2sensor_8py_source.html">sensor.py</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>modules/providers/<a class="el" href="sensor_8py_source.html">sensor.py</a></li>
+<li>modules/providers/<a class="el" href="providers_2sensor_8py_source.html">sensor.py</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

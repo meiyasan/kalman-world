@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,6 +161,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aeb513d5a34da7bf005e95d2b8f62c67e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a467f30c65c79e234a498f2f8d7f42cdb" id="r_a467f30c65c79e234a498f2f8d7f42cdb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__routers_1_1_test_neural_router.html#a467f30c65c79e234a498f2f8d7f42cdb">test_trained_returns_prob_vector</a> (self)</td></tr>
 <tr class="separator:a467f30c65c79e234a498f2f8d7f42cdb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70d26c6a8296734fb468c2f3b4daf42e" id="r_a70d26c6a8296734fb468c2f3b4daf42e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__routers_1_1_test_neural_router.html#a70d26c6a8296734fb468c2f3b4daf42e">test_the_answer_is_evidence_weighed_by_what_came_before</a> (self)</td></tr>
+<tr class="separator:a70d26c6a8296734fb468c2f3b4daf42e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1365d86b7f70682b6f9bafb2c4ecaee" id="r_af1365d86b7f70682b6f9bafb2c4ecaee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__routers_1_1_test_neural_router.html#af1365d86b7f70682b6f9bafb2c4ecaee">test_any_callable_model_works</a> (self)</td></tr>
 <tr class="separator:af1365d86b7f70682b6f9bafb2c4ecaee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -235,18 +237,19 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00220">220</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  220</span>    <span class="keyword">def </span>test_any_callable_model_works(self):</div>
-<div class="line"><span class="lineno">  221</span>        model = <span class="keyword">lambda</span> x: np.array([0.9, 0.1])</div>
-<div class="line"><span class="lineno">  222</span>        r = NeuralRouter(model=model, window=3)</div>
-<div class="line"><span class="lineno">  223</span>        r._x_mean = np.zeros(6)</div>
-<div class="line"><span class="lineno">  224</span>        r._x_std  = np.ones(6)</div>
-<div class="line"><span class="lineno">  225</span>        mu = r.route(_dummy_nis(), np.array([0.5, 0.5]), np.array([1.0, 1.0]))</div>
-<div class="line"><span class="lineno">  226</span>        np.testing.assert_allclose(mu, [0.9, 0.1], atol=1e-10)</div>
-<div class="line"><span class="lineno">  227</span> </div>
-<div class="line"><span class="lineno">  228</span> </div>
-<div class="line"><span class="lineno">  229</span><span class="comment"># ── NN Architecture shared checks ─────────────────────────────────────────────</span></div>
-<div class="line"><span class="lineno">  230</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00235">235</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  235</span>    <span class="keyword">def </span>test_any_callable_model_works(self):</div>
+<div class="line"><span class="lineno">  236</span>        model = <span class="keyword">lambda</span> x: np.array([0.9, 0.1])</div>
+<div class="line"><span class="lineno">  237</span>        r = NeuralRouter(model=model, window=3)</div>
+<div class="line"><span class="lineno">  238</span>        r._x_mean = np.zeros(6)</div>
+<div class="line"><span class="lineno">  239</span>        r._x_std  = np.ones(6)</div>
+<div class="line"><span class="lineno">  240</span>        mu = r.route(_dummy_nis(), np.array([0.5, 0.5]), np.array([1.0, 1.0]))</div>
+<div class="line"><span class="lineno">  241</span>        evidence = np.array([0.9, 0.1]) ** (1 / 3)              <span class="comment"># one window of three: counted once</span></div>
+<div class="line"><span class="lineno">  242</span>        np.testing.assert_allclose(mu, evidence / evidence.sum(), atol=1e-10)</div>
+<div class="line"><span class="lineno">  243</span> </div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span><span class="comment"># ── NN Architecture shared checks ─────────────────────────────────────────────</span></div>
+<div class="line"><span class="lineno">  246</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -273,6 +276,41 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  210</span>        r.fit(nis_arrs, lbl_arrs, epochs=10)</div>
 <div class="line"><span class="lineno">  211</span>        self.assertTrue(r._is_trained)</div>
 <div class="line"><span class="lineno">  212</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a70d26c6a8296734fb468c2f3b4daf42e" name="a70d26c6a8296734fb468c2f3b4daf42e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70d26c6a8296734fb468c2f3b4daf42e">&#9670;&#160;</a></span>test_the_answer_is_evidence_weighed_by_what_came_before()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_routers.TestNeuralRouter.test_the_answer_is_evidence_weighed_by_what_came_before </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">mu ∝ c * (p / f) ** (1 / window): the network alone does not decide.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00220">220</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>    <span class="keyword">def </span>test_the_answer_is_evidence_weighed_by_what_came_before(self):</div>
+<div class="line"><span class="lineno">  221</span>        <span class="stringliteral">&quot;&quot;&quot;mu ∝ c * (p / f) ** (1 / window): the network alone does not decide.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  222</span>        r = NeuralRouter(MLP(hidden=4), window=2)</div>
+<div class="line"><span class="lineno">  223</span>        nis_arrs, lbl_arrs = self._make_data()</div>
+<div class="line"><span class="lineno">  224</span>        nis_arrs.append(nis_arrs[0]); lbl_arrs.append(lbl_arrs[0])      <span class="comment"># regime 0 twice as often</span></div>
+<div class="line"><span class="lineno">  225</span>        r.fit(nis_arrs, lbl_arrs, epochs=10)</div>
+<div class="line"><span class="lineno">  226</span>        np.testing.assert_allclose(r._frequencies, [2 / 3, 1 / 3])</div>
+<div class="line"><span class="lineno">  227</span>        nis = _dummy_nis()</div>
+<div class="line"><span class="lineno">  228</span>        p = np.asarray(r.model((r._window_feat(nis) - r._x_mean) / r._x_std), dtype=float).ravel()</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">for</span> c <span class="keywordflow">in</span> ([0.5, 0.5], [0.1, 0.9]):</div>
+<div class="line"><span class="lineno">  230</span>            expected = np.array(c) * (p / r._frequencies) ** 0.5</div>
+<div class="line"><span class="lineno">  231</span>            np.testing.assert_allclose(r.route(nis, np.array(c), np.ones(2)), expected / expected.sum(), rtol=1e-12)</div>
+<div class="line"><span class="lineno">  232</span>        even, held = r.route(nis, np.array([0.5, 0.5]), np.ones(2)), r.route(nis, np.array([0.1, 0.9]), np.ones(2))</div>
+<div class="line"><span class="lineno">  233</span>        self.assertLess(held[0], even[0], <span class="stringliteral">&quot;the probability carried over counts&quot;</span>)</div>
+<div class="line"><span class="lineno">  234</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,10 +1,10 @@
 var classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model =
 [
     [ "__init__", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#a514304c72b925721c058e77c0d97cd91", null ],
-    [ "clip_u", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#a8a1ae01c1f9dce22a972323aa7bde614", null ],
     [ "control_cost", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#a95a82dd6a8512526a0f86b0acbf39d59", null ],
     [ "f", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#a90fa8c5e5329b99c0f3604f85f2437f8", null ],
     [ "h", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#af7da200390dbe8d05a768e63028051cd", null ],
+    [ "limit_control", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#ab65284089b737d1045df6f55488287ac", null ],
     [ "native_name", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#a2b642f9b0c996a81042208666e597a35", null ],
     [ "native_parameters", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#afc1106ffde3705903e1ff9696d3e24d3", null ],
     [ "observables", "classmodules_1_1apps_1_1vehicles_1_1lane_1_1_car_lane_model.html#af8c18712c7c972e6c5fb5b4343ee6948", null ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -238,7 +238,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  186</span>            z = np.cumsum(np.random.default_rng(2).normal(size=(120, model.m)), axis=0) * 0.01</div>
 <div class="line"><span class="lineno">  187</span>            <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
 <div class="line"><span class="lineno">  188</span>                record = model.filter(z)</div>
-<div class="line"><span class="lineno">  189</span>            self.assertEqual(path.last, <span class="stringliteral">&quot;_forward_twin&quot;</span>, name)</div>
+<div class="line"><span class="lineno">  189</span>            self.assertEqual(path.last, <span class="stringliteral">&quot;_forward_counterpart&quot;</span>, name)</div>
 <div class="line"><span class="lineno">  190</span>            whole = native.NativeModel(name).filter_native(z, engine=engine)</div>
 <div class="line"><span class="lineno">  191</span>            np.testing.assert_array_equal(np.asarray(record.xk).reshape(120, -1), np.asarray(whole.xk).reshape(120, -1))</div>
 <div class="line"><span class="lineno">  192</span> </div>

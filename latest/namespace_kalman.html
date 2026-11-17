@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -179,15 +179,22 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_kalman_1_1_routers" id="r_namespace_kalman_1_1_routers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_routers.html">Routers</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_kalman_1_1_sensors" id="r_namespace_kalman_1_1_sensors"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_sensors.html">Sensors</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_kalman_1_1_solvers" id="r_namespace_kalman_1_1_solvers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_solvers.html">Solvers</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_kalman_1_1_tracking" id="r_namespace_kalman_1_1_tracking"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_tracking.html">Tracking</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:namespace_kalman_1_1_tuners" id="r_namespace_kalman_1_1_tuners"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_tuners.html">Tuners</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespace_kalman_1_1_utils" id="r_namespace_kalman_1_1_utils"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_utils.html">Utils</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_component.html">Component</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">One component of a state or of a measurement: what it is and its unit.  <a href="struct_kalman_1_1_component.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controller.html">Controller</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closed-loop control over a <a class="el" href="namespace_kalman.html">Kalman</a> filter — <code>u = ctrl(x_hat, P, t, nu)</code>.  <a href="class_kalman_1_1_controller.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -200,6 +207,9 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engine.html">Engine</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <b>algorithm</b> — HOW to infer under uncertainty, one step at a time.  <a href="class_kalman_1_1_engine.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_estimated_parameter.html">EstimatedParameter</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">One parameter estimated with the state: its name in the model, and its noise.  <a href="struct_kalman_1_1_estimated_parameter.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_factory.html">Factory</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The registry of compiled models — how a C++ model becomes <em>nameable</em>.  <a href="class_kalman_1_1_factory.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -208,6 +218,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_grid.html">Grid</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>(rows, cols)</code> cells of <code>T</code>, row-major, with the arithmetic a Runge–Kutta step needs and nothing else.  <a href="class_kalman_1_1_grid.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A set of sensors, and what they share.  <a href="struct_kalman_1_1_instrument.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_integrator.html">Integrator</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <b>time-stepping scheme</b> — WHEN, within one dt.  <a href="class_kalman_1_1_integrator.html#details">More...</a><br /></td></tr>
@@ -218,14 +231,25 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html">Model</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <b>system</b> — WHAT is being estimated.  <a href="class_kalman_1_1_model.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_observability.html">Observability</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Can the measurements tell the components of the state apart?  <a href="class_kalman_1_1_observability.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_sampler.html">Sampler</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draws truth and measurements <em>from a model</em>, for tests and demos.  <a href="class_kalman_1_1_sampler.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">What acquires a measurement: what it reads of the state, and how well.  <a href="struct_kalman_1_1_sensor.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_sensor_factory.html">SensorFactory</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_solver.html">Solver</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The <b>spatial discretization</b> — HOW, in space.  <a href="class_kalman_1_1_solver.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_kalman_1_1_tableau.html">Tableau</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Butcher tableau <code>(c, A, b)</code> of an explicit Runge–Kutta method.  <a href="struct_kalman_1_1_tableau.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_tuner.html">Tuner</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retunes the filter's own noise model as it runs; commands nothing.  <a href="class_kalman_1_1_tuner.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_vector.html">Vector</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A dense column vector of <code>double</code>.  <a href="class_kalman_1_1_vector.html#details">More...</a><br /></td></tr>
@@ -262,6 +286,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Ensemble</a> = 4
 , <a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Combinatorial</a> = 5
+, <a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76">Interacting</a> = 6
 <br />
  }</td></tr>
 <tr class="memdesc:acbc7aea0a730692732f8c2f3009fc678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which inference algorithm a model wants, and which one an engine provides.  <a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">More...</a><br /></td></tr>
@@ -277,6 +302,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a56226206eb2edf1fbfbf2c17dd4398fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">What a model is made of, which decides what a file can hold of it.  <a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fc">More...</a><br /></td></tr>
 <tr class="separator:a56226206eb2edf1fbfbf2c17dd4398fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad2643f8b394ec61c58806b17ce2402f" id="r_aad2643f8b394ec61c58806b17ce2402f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Readout</a> { <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Stacked</a> = 0
+, <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697">Summed</a> = 1
+ }</td></tr>
+<tr class="memdesc:aad2643f8b394ec61c58806b17ce2402f"><td class="mdescLeft">&#160;</td><td class="mdescRight">How the parts of a composite model are read (Models::Composite).  <a href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">More...</a><br /></td></tr>
+<tr class="separator:aad2643f8b394ec61c58806b17ce2402f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b01e9a934d40a95e17ec5bc26e0a833" id="r_a3b01e9a934d40a95e17ec5bc26e0a833"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">DifferentiatorKind</a> { <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791">Analytic</a> = 0
 , <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Forward</a> = 1
 , <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Central</a> = 2
@@ -331,6 +361,15 @@ Functions</h2></td></tr>
 <tr class="memitem:a0eccc7e2ed823acee8edd2b58d0e0ce4" id="r_a0eccc7e2ed823acee8edd2b58d0e0ce4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#a4057603d141a3b62a377c298da798160">SpectralField</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a0eccc7e2ed823acee8edd2b58d0e0ce4">Complex</a> (const <a class="el" href="namespace_kalman.html#a94c1195d5dfabc598efba670169c258a">Field</a> &amp;f)</td></tr>
 <tr class="memdesc:a0eccc7e2ed823acee8edd2b58d0e0ce4"><td class="mdescLeft">&#160;</td><td class="mdescRight">A real field promoted to a spectrum with zero imaginary part.  <br /></td></tr>
 <tr class="separator:a0eccc7e2ed823acee8edd2b58d0e0ce4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a515660bca766fa9194d650a56d9e83b2" id="r_a515660bca766fa9194d650a56d9e83b2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a515660bca766fa9194d650a56d9e83b2">Compose</a> (std::vector&lt; <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &gt; sensors, std::string name=&quot;&quot;, double rate=0.)</td></tr>
+<tr class="memdesc:a515660bca766fa9194d650a56d9e83b2"><td class="mdescLeft">&#160;</td><td class="mdescRight">An instrument made of <code>sensors</code> (the verb is the one that makes a composite of models).  <br /></td></tr>
+<tr class="separator:a515660bca766fa9194d650a56d9e83b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a601272d70d979281a095cbd961dc9213" id="r_a601272d70d979281a095cbd961dc9213"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a601272d70d979281a095cbd961dc9213">operator|</a> (const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;a, const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;b)</td></tr>
+<tr class="memdesc:a601272d70d979281a095cbd961dc9213"><td class="mdescLeft">&#160;</td><td class="mdescRight">Two sensors make an instrument, named after both.  <br /></td></tr>
+<tr class="separator:a601272d70d979281a095cbd961dc9213"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b71ee6d9408c2370a9f1f0b6de3c49d" id="r_a1b71ee6d9408c2370a9f1f0b6de3c49d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a1b71ee6d9408c2370a9f1f0b6de3c49d">operator|</a> (<a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> instrument, const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;sensor)</td></tr>
+<tr class="memdesc:a1b71ee6d9408c2370a9f1f0b6de3c49d"><td class="mdescLeft">&#160;</td><td class="mdescRight">One more sensor on an instrument.  <br /></td></tr>
+<tr class="separator:a1b71ee6d9408c2370a9f1f0b6de3c49d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e0976e6238904d9b09cbd2d61ab9111" id="r_a6e0976e6238904d9b09cbd2d61ab9111"><td class="memTemplParams" colspan="2">template&lt;typename State , typename RHS &gt; </td></tr>
 <tr class="memitem:a6e0976e6238904d9b09cbd2d61ab9111"><td class="memTemplItemLeft" align="right" valign="top">State&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a6e0976e6238904d9b09cbd2d61ab9111">RungeKuttaStep</a> (const <a class="el" href="struct_kalman_1_1_tableau.html">Tableau</a> &amp;tableau, const RHS &amp;rhs, const State &amp;x, double t, double dt)</td></tr>
 <tr class="memdesc:a6e0976e6238904d9b09cbd2d61ab9111"><td class="mdescLeft">&#160;</td><td class="mdescRight">One explicit Runge–Kutta step of <code>tableau</code> on any additive state.  <br /></td></tr>
@@ -359,6 +398,21 @@ Functions</h2></td></tr>
 <tr class="separator:a1c5da375430fd78322d9d32ae272b3ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f7bcd45e861dfae6a994b5e73d8548f" id="r_a5f7bcd45e861dfae6a994b5e73d8548f"><td class="memItemLeft" align="right" valign="top">std::ostream &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a5f7bcd45e861dfae6a994b5e73d8548f">operator&lt;&lt;</a> (std::ostream &amp;os, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="el" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</td></tr>
 <tr class="separator:a5f7bcd45e861dfae6a994b5e73d8548f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1b6f81c0498ef1dfc3660673f49d19e7" id="r_a1b6f81c0498ef1dfc3660673f49d19e7"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_fusion.html">Models::Fusion</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">AddSensor</a> (std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; model, <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> sensor)</td></tr>
+<tr class="memdesc:a1b6f81c0498ef1dfc3660673f49d19e7"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>model</code> with one more sensor on the same state (<a class="el" href="class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state.">Models::Fusion</a>).  <br /></td></tr>
+<tr class="separator:a1b6f81c0498ef1dfc3660673f49d19e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6da2c71b5ed6f1ff912a5eeb0a8aaaca" id="r_a6da2c71b5ed6f1ff912a5eeb0a8aaaca"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_composite.html">Models::Composite</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a6da2c71b5ed6f1ff912a5eeb0a8aaaca">Compose</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; &gt; parts, <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Readout</a> readout=<a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Readout::Stacked</a>, std::vector&lt; std::string &gt; names={})</td></tr>
+<tr class="separator:a6da2c71b5ed6f1ff912a5eeb0a8aaaca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d2fbfe16bd8e47cc7f3f252b9493749" id="r_a1d2fbfe16bd8e47cc7f3f252b9493749"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_router.html">Models::Router</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a1d2fbfe16bd8e47cc7f3f252b9493749">Route</a> (std::vector&lt; std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; &gt; modes, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pi, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;mu0=<a class="el" href="class_kalman_1_1_vector.html">Vector</a>(), std::vector&lt; std::string &gt; names={})</td></tr>
+<tr class="separator:a1d2fbfe16bd8e47cc7f3f252b9493749"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ac9f8d61464031dff4c5401a027bb25" id="r_a2ac9f8d61464031dff4c5401a027bb25"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a2ac9f8d61464031dff4c5401a027bb25">Lag</a> (std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; model, std::size_t depth)</td></tr>
+<tr class="separator:a2ac9f8d61464031dff4c5401a027bb25"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae3d2949e3766679b55ac2c6df92ac4d2" id="r_ae3d2949e3766679b55ac2c6df92ac4d2"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#ae3d2949e3766679b55ac2c6df92ac4d2">AddInstrument</a> (std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; model, const <a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> &amp;instrument)</td></tr>
+<tr class="memdesc:ae3d2949e3766679b55ac2c6df92ac4d2"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>model</code> read by every sensor of <code>instrument</code> (a chain of <a class="el" href="class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state.">Models::Fusion</a>).  <br /></td></tr>
+<tr class="separator:ae3d2949e3766679b55ac2c6df92ac4d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d47d5d5bdd67e4faf771a3207d2f577" id="r_a2d47d5d5bdd67e4faf771a3207d2f577"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_joint.html">Models::Joint</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a2d47d5d5bdd67e4faf771a3207d2f577">Joint</a> (std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; model, std::vector&lt; <a class="el" href="struct_kalman_1_1_estimated_parameter.html">EstimatedParameter</a> &gt; parameters)</td></tr>
+<tr class="memdesc:a2d47d5d5bdd67e4faf771a3207d2f577"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>model</code> with some of its declared parameters estimated along with its state (<a class="el" href="class_kalman_1_1_models_1_1_joint.html" title="A model whose state carries some of another model&#39;s parameters, so the filter estimates them along wi...">Models::Joint</a>).  <br /></td></tr>
+<tr class="separator:a2d47d5d5bdd67e4faf771a3207d2f577"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Typedef Documentation</h2>
 <a id="adc88c52258c5ba65051e3836981eb140" name="adc88c52258c5ba65051e3836981eb140"></a>
@@ -516,13 +570,13 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00070">70</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>    {</div>
-<div class="line"><span class="lineno">   72</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791">Analytic</a> = 0,   </div>
-<div class="line"><span class="lineno">   73</span>        Forward = 1,    </div>
-<div class="line"><span class="lineno">   74</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Central</a> = 2,    </div>
-<div class="line"><span class="lineno">   75</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a086247a9b57fde6eefee2a0c4752242d">Automatic</a> = 3   </div>
-<div class="line"><span class="lineno">   76</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00080">80</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   81</span>    {</div>
+<div class="line"><span class="lineno">   82</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791">Analytic</a> = 0,   </div>
+<div class="line"><span class="lineno">   83</span>        Forward = 1,    </div>
+<div class="line"><span class="lineno">   84</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Central</a> = 2,    </div>
+<div class="line"><span class="lineno">   85</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a086247a9b57fde6eefee2a0c4752242d">Automatic</a> = 3   </div>
+<div class="line"><span class="lineno">   86</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a086247a9b57fde6eefee2a0c4752242d"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a086247a9b57fde6eefee2a0c4752242d">Kalman::DifferentiatorKind::Automatic</a></div><div class="ttdeci">@ Automatic</div><div class="ttdoc">automatic differentiation: reserved, libKalmanLearn</div></div>
 <div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Kalman::DifferentiatorKind::Central</a></div><div class="ttdeci">@ Central</div><div class="ttdoc">two-sided differences (second order)</div></div>
 <div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791">Kalman::DifferentiatorKind::Analytic</a></div><div class="ttdeci">@ Analytic</div><div class="ttdoc">the model gives the formula</div></div>
@@ -556,11 +610,11 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7" name="a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7"></a>Continuous&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00044">44</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   45</span>    {</div>
-<div class="line"><span class="lineno">   46</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da4984667940802dedc139aa7a430a6553">Discrete</a> = 0,</div>
-<div class="line"><span class="lineno">   47</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7">Continuous</a> = 1</div>
-<div class="line"><span class="lineno">   48</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00045">45</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   46</span>    {</div>
+<div class="line"><span class="lineno">   47</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da4984667940802dedc139aa7a430a6553">Discrete</a> = 0,</div>
+<div class="line"><span class="lineno">   48</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7">Continuous</a> = 1</div>
+<div class="line"><span class="lineno">   49</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a033c9c008a932959edf9ffced601526da4984667940802dedc139aa7a430a6553"><div class="ttname"><a href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da4984667940802dedc139aa7a430a6553">Kalman::DynamicsKind::Discrete</a></div><div class="ttdeci">@ Discrete</div></div>
 <div class="ttc" id="anamespace_kalman_html_a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7"><div class="ttname"><a href="namespace_kalman.html#a033c9c008a932959edf9ffced601526da535863a82f163709557e59e2eb8139a7">Kalman::DynamicsKind::Continuous</a></div><div class="ttdeci">@ Continuous</div></div>
 </div><!-- fragment -->
@@ -602,6 +656,8 @@ Functions</h2></td></tr>
 </td></tr>
 <tr><td class="fieldname"><a id="acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0" name="acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0"></a>Combinatorial&#160;</td><td class="fielddoc"><p>branch-on-ambiguous-hit track finding (CKF) </p>
 </td></tr>
+<tr><td class="fieldname"><a id="acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76" name="acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76"></a>Interacting&#160;</td><td class="fielddoc"><p>several modes of one system, mixed and routed (IMM); see <a class="el" href="class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each.">Models::Router</a> </p>
+</td></tr>
 </table>
 
 <p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00026">26</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
@@ -611,13 +667,15 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   30</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e">Unscented</a> = 2,     </div>
 <div class="line"><span class="lineno">   31</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4">Particle</a> = 3,      </div>
 <div class="line"><span class="lineno">   32</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Ensemble</a> = 4,      </div>
-<div class="line"><span class="lineno">   33</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Combinatorial</a> = 5  </div>
-<div class="line"><span class="lineno">   34</span>    };</div>
+<div class="line"><span class="lineno">   33</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Combinatorial</a> = 5, </div>
+<div class="line"><span class="lineno">   34</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76">Interacting</a> = 6    </div>
+<div class="line"><span class="lineno">   35</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a32a843da6ea40ab3b17a3421ccdf671b">Kalman::EngineKind::Linear</a></div><div class="ttdeci">@ Linear</div><div class="ttdoc">constant-matrix predict/update (KF)</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4">Kalman::EngineKind::Particle</a></div><div class="ttdeci">@ Particle</div><div class="ttdoc">sequential importance resampling (PF)</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e">Kalman::EngineKind::Unscented</a></div><div class="ttdeci">@ Unscented</div><div class="ttdoc">sigma points (UKF)</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Kalman::EngineKind::Combinatorial</a></div><div class="ttdeci">@ Combinatorial</div><div class="ttdoc">branch-on-ambiguous-hit track finding (CKF)</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Kalman::EngineKind::Ensemble</a></div><div class="ttdeci">@ Ensemble</div><div class="ttdoc">perturbed-observation ensemble (EnKF)</div></div>
+<div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76">Kalman::EngineKind::Interacting</a></div><div class="ttdeci">@ Interacting</div><div class="ttdoc">several modes of one system, mixed and routed (IMM); see Models::Router</div></div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af23578fcd2a868168854ab714e7de537">Kalman::EngineKind::Extended</a></div><div class="ttdeci">@ Extended</div><div class="ttdoc">Jacobian linearisation (EKF)</div></div>
 </div><!-- fragment -->
 </div>
@@ -655,17 +713,55 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00085">85</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>    {</div>
-<div class="line"><span class="lineno">   87</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa0a7532036415f2491bf5f952220827b8">Euler</a> = 0,          </div>
-<div class="line"><span class="lineno">   88</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfaf81fe250c66aad887e2086f79364f2a8">RK4</a> = 1,            </div>
-<div class="line"><span class="lineno">   89</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa375dd039810dcecf3db6b2bca3c8d21f">DormandPrince</a> = 2,  </div>
-<div class="line"><span class="lineno">   90</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa1b41e1bf0ba9f22aff9ae08cba5197c5">ImplicitEuler</a> = 3   </div>
-<div class="line"><span class="lineno">   91</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00095">95</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   96</span>    {</div>
+<div class="line"><span class="lineno">   97</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa0a7532036415f2491bf5f952220827b8">Euler</a> = 0,          </div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfaf81fe250c66aad887e2086f79364f2a8">RK4</a> = 1,            </div>
+<div class="line"><span class="lineno">   99</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa375dd039810dcecf3db6b2bca3c8d21f">DormandPrince</a> = 2,  </div>
+<div class="line"><span class="lineno">  100</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa1b41e1bf0ba9f22aff9ae08cba5197c5">ImplicitEuler</a> = 3   </div>
+<div class="line"><span class="lineno">  101</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a3503fe31b36f182744d901d39978fccfa0a7532036415f2491bf5f952220827b8"><div class="ttname"><a href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa0a7532036415f2491bf5f952220827b8">Kalman::IntegratorKind::Euler</a></div><div class="ttdeci">@ Euler</div><div class="ttdoc">explicit forward Euler (first order)</div></div>
 <div class="ttc" id="anamespace_kalman_html_a3503fe31b36f182744d901d39978fccfa1b41e1bf0ba9f22aff9ae08cba5197c5"><div class="ttname"><a href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa1b41e1bf0ba9f22aff9ae08cba5197c5">Kalman::IntegratorKind::ImplicitEuler</a></div><div class="ttdeci">@ ImplicitEuler</div><div class="ttdoc">backward Euler (stiff) — reserved</div></div>
 <div class="ttc" id="anamespace_kalman_html_a3503fe31b36f182744d901d39978fccfa375dd039810dcecf3db6b2bca3c8d21f"><div class="ttname"><a href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfa375dd039810dcecf3db6b2bca3c8d21f">Kalman::IntegratorKind::DormandPrince</a></div><div class="ttdeci">@ DormandPrince</div><div class="ttdoc">RK45 embedded pair, adaptive substeps.</div></div>
 <div class="ttc" id="anamespace_kalman_html_a3503fe31b36f182744d901d39978fccfaf81fe250c66aad887e2086f79364f2a8"><div class="ttname"><a href="namespace_kalman.html#a3503fe31b36f182744d901d39978fccfaf81fe250c66aad887e2086f79364f2a8">Kalman::IntegratorKind::RK4</a></div><div class="ttdeci">@ RK4</div><div class="ttdoc">classic 4-stage Runge-Kutta (fourth order)</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aad2643f8b394ec61c58806b17ce2402f" name="aad2643f8b394ec61c58806b17ce2402f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad2643f8b394ec61c58806b17ce2402f">&#9670;&#160;</a></span>Readout</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Kalman::Readout</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>How the parts of a composite model are read (<a class="el" href="class_kalman_1_1_models_1_1_composite.html" title="Several models side by side, each with its own state.">Models::Composite</a>). </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef" name="aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef"></a>Stacked&#160;</td><td class="fielddoc"><p>each part has its own measurement: z = [h1(x1); h2(x2); ...] </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697" name="aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697"></a>Summed&#160;</td><td class="fielddoc"><p>the parts share one measurement: z = h1(x1) + h2(x2) + ... </p>
+</td></tr>
+</table>
+
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00071">71</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   72</span>    {</div>
+<div class="line"><span class="lineno">   73</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Stacked</a> = 0,       </div>
+<div class="line"><span class="lineno">   74</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697">Summed</a> = 1         </div>
+<div class="line"><span class="lineno">   75</span>    };</div>
+<div class="ttc" id="anamespace_kalman_html_aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef"><div class="ttname"><a href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Kalman::Readout::Stacked</a></div><div class="ttdeci">@ Stacked</div><div class="ttdoc">each part has its own measurement: z = [h1(x1); h2(x2); ...]</div></div>
+<div class="ttc" id="anamespace_kalman_html_aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697"><div class="ttname"><a href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697">Kalman::Readout::Summed</a></div><div class="ttdeci">@ Summed</div><div class="ttdoc">the parts share one measurement: z = h1(x1) + h2(x2) + ...</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -702,13 +798,13 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00100">100</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  101</span>    {</div>
-<div class="line"><span class="lineno">  102</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22ae37975b8856f3f6d3225897f27a442b4">Spectral</a> = 0,          </div>
-<div class="line"><span class="lineno">  103</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22a187530090e204f0fcd551c3c96519e23">FiniteDifference</a> = 1,  </div>
-<div class="line"><span class="lineno">  104</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22acdb5299d40fcd063690f5eca9e63162f">FiniteVolume</a> = 2,      </div>
-<div class="line"><span class="lineno">  105</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22afddd70762b2f8468b171d9b0ffbc283d">FiniteElement</a> = 3      </div>
-<div class="line"><span class="lineno">  106</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00110">110</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span>    {</div>
+<div class="line"><span class="lineno">  112</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22ae37975b8856f3f6d3225897f27a442b4">Spectral</a> = 0,          </div>
+<div class="line"><span class="lineno">  113</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22a187530090e204f0fcd551c3c96519e23">FiniteDifference</a> = 1,  </div>
+<div class="line"><span class="lineno">  114</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22acdb5299d40fcd063690f5eca9e63162f">FiniteVolume</a> = 2,      </div>
+<div class="line"><span class="lineno">  115</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22afddd70762b2f8468b171d9b0ffbc283d">FiniteElement</a> = 3      </div>
+<div class="line"><span class="lineno">  116</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a70a0f9ab37af6e14702d39fad35abc22a187530090e204f0fcd551c3c96519e23"><div class="ttname"><a href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22a187530090e204f0fcd551c3c96519e23">Kalman::SolverKind::FiniteDifference</a></div><div class="ttdeci">@ FiniteDifference</div><div class="ttdoc">central stencils on a rectangular grid</div></div>
 <div class="ttc" id="anamespace_kalman_html_a70a0f9ab37af6e14702d39fad35abc22acdb5299d40fcd063690f5eca9e63162f"><div class="ttname"><a href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22acdb5299d40fcd063690f5eca9e63162f">Kalman::SolverKind::FiniteVolume</a></div><div class="ttdeci">@ FiniteVolume</div><div class="ttdoc">reserved</div></div>
 <div class="ttc" id="anamespace_kalman_html_a70a0f9ab37af6e14702d39fad35abc22ae37975b8856f3f6d3225897f27a442b4"><div class="ttname"><a href="namespace_kalman.html#a70a0f9ab37af6e14702d39fad35abc22ae37975b8856f3f6d3225897f27a442b4">Kalman::SolverKind::Spectral</a></div><div class="ttdeci">@ Spectral</div><div class="ttdoc">pseudo-spectral (FFT) discretization</div></div>
@@ -746,12 +842,12 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00111">111</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  112</span>    {</div>
-<div class="line"><span class="lineno">  113</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e">Prior</a> = 0,      </div>
-<div class="line"><span class="lineno">  114</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e">Posterior</a> = 1,  </div>
-<div class="line"><span class="lineno">  115</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97">Smoothed</a> = 2    </div>
-<div class="line"><span class="lineno">  116</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00121">121</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  122</span>    {</div>
+<div class="line"><span class="lineno">  123</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e">Prior</a> = 0,      </div>
+<div class="line"><span class="lineno">  124</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e">Posterior</a> = 1,  </div>
+<div class="line"><span class="lineno">  125</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97">Smoothed</a> = 2    </div>
+<div class="line"><span class="lineno">  126</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafa2ef7aa4a0614dce80e6372ad51db4c8e">Kalman::StateFlavor::Posterior</a></div><div class="ttdeci">@ Posterior</div><div class="ttdoc">corrected, after the forward update</div></div>
 <div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafac5d48c613aa395e2f92d06e97b85aa97">Kalman::StateFlavor::Smoothed</a></div><div class="ttdeci">@ Smoothed</div><div class="ttdoc">corrected using the whole record (RTS backward pass)</div></div>
 <div class="ttc" id="anamespace_kalman_html_a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e"><div class="ttname"><a href="namespace_kalman.html#a5a1738cf5c9135a63d54608b52a75cafae3d5e88745fd884d551c7f25237a5b5e">Kalman::StateFlavor::Prior</a></div><div class="ttdeci">@ Prior</div><div class="ttdoc">predicted, before the measurement was folded in</div></div>
@@ -786,12 +882,12 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60" name="a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60"></a>TimeVarying&#160;</td><td class="fielddoc"></td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00060">60</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>    {</div>
-<div class="line"><span class="lineno">   62</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Maps</a> = 0,</div>
-<div class="line"><span class="lineno">   63</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a">Matrices</a> = 1,</div>
-<div class="line"><span class="lineno">   64</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">TimeVarying</a> = 2</div>
-<div class="line"><span class="lineno">   65</span>    };</div>
+<p class="definition">Definition at line <a class="el" href="_constants_8h_source.html#l00061">61</a> of file <a class="el" href="_constants_8h_source.html">Constants.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    {</div>
+<div class="line"><span class="lineno">   63</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Maps</a> = 0,</div>
+<div class="line"><span class="lineno">   64</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a">Matrices</a> = 1,</div>
+<div class="line"><span class="lineno">   65</span>        <a class="code hl_enumvalue" href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">TimeVarying</a> = 2</div>
+<div class="line"><span class="lineno">   66</span>    };</div>
 <div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fca91f9d17d94a4c216088b761b6e56ee60">Kalman::StructureKind::TimeVarying</a></div><div class="ttdeci">@ TimeVarying</div></div>
 <div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcaaf51fdf94adbb4b6fe4f1275b07df10d">Kalman::StructureKind::Maps</a></div><div class="ttdeci">@ Maps</div></div>
 <div class="ttc" id="anamespace_kalman_html_a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a"><div class="ttname"><a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fcab77554d30d28b9e2f0d6b3640ff9175a">Kalman::StructureKind::Matrices</a></div><div class="ttdeci">@ Matrices</div></div>
@@ -799,6 +895,80 @@ Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ae3d2949e3766679b55ac2c6df92ac4d2" name="ae3d2949e3766679b55ac2c6df92ac4d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae3d2949e3766679b55ac2c6df92ac4d2">&#9670;&#160;</a></span>AddInstrument()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; Kalman::AddInstrument </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> &amp;&#160;</td>
+          <td class="paramname"><em>instrument</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>model</code> read by every sensor of <code>instrument</code> (a chain of <a class="el" href="class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state.">Models::Fusion</a>). </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00068">68</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>    {</div>
+<div class="line"><span class="lineno">   70</span>        RefuseSequential(<a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>);</div>
+<div class="line"><span class="lineno">   71</span>        <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.Check(model ? model-&gt;NState() : 0);</div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_struct" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;sensor : <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.Sensors())</div>
+<div class="line"><span class="lineno">   73</span>            model = std::make_shared&lt;Models::Fusion&gt;(std::move(model), sensor);</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> model;</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="ttc" id="anamespaceinstrument_html"><div class="ttname"><a href="namespaceinstrument.html">instrument</a></div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00001">instrument.py:1</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_sensor_html"><div class="ttname"><a href="struct_kalman_1_1_sensor.html">Kalman::Sensor</a></div><div class="ttdoc">What acquires a measurement: what it reads of the state, and how well.</div><div class="ttdef"><b>Definition</b> <a href="_sensor_8h_source.html#l00058">Sensor.h:59</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1b6f81c0498ef1dfc3660673f49d19e7" name="a1b6f81c0498ef1dfc3660673f49d19e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b6f81c0498ef1dfc3660673f49d19e7">&#9670;&#160;</a></span>AddSensor()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_fusion.html">Models::Fusion</a> &gt; Kalman::AddSensor </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a>&#160;</td>
+          <td class="paramname"><em>sensor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>model</code> with one more sensor on the same state (<a class="el" href="class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state.">Models::Fusion</a>). </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00023">23</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   24</span>    { <span class="keywordflow">return</span> std::make_shared&lt;Models::Fusion&gt;(std::move(model), std::move(sensor)); }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a0eccc7e2ed823acee8edd2b58d0e0ce4" name="a0eccc7e2ed823acee8edd2b58d0e0ce4"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0eccc7e2ed823acee8edd2b58d0e0ce4">&#9670;&#160;</a></span>Complex()</h2>
 
@@ -836,6 +1006,153 @@ Functions</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_grid_html_a1ac34beb11a08c322416901a5c898bbd"><div class="ttname"><a href="class_kalman_1_1_grid.html#a1ac34beb11a08c322416901a5c898bbd">Kalman::Grid::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_grid_8h_source.html#l00055">Grid.h:55</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_grid_html_a2feaca52da76d230732924988fec250a"><div class="ttname"><a href="class_kalman_1_1_grid.html#a2feaca52da76d230732924988fec250a">Kalman::Grid::Rows</a></div><div class="ttdeci">std::size_t Rows() const</div><div class="ttdef"><b>Definition</b> <a href="_grid_8h_source.html#l00053">Grid.h:53</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_grid_html_a890921e50ce1ff28bfc4de8b4726fb5a"><div class="ttname"><a href="class_kalman_1_1_grid.html#a890921e50ce1ff28bfc4de8b4726fb5a">Kalman::Grid::Cols</a></div><div class="ttdeci">std::size_t Cols() const</div><div class="ttdef"><b>Definition</b> <a href="_grid_8h_source.html#l00054">Grid.h:54</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a515660bca766fa9194d650a56d9e83b2" name="a515660bca766fa9194d650a56d9e83b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a515660bca766fa9194d650a56d9e83b2">&#9670;&#160;</a></span>Compose() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> Kalman::Compose </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &gt;&#160;</td>
+          <td class="paramname"><em>sensors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string&#160;</td>
+          <td class="paramname"><em>name</em> = <code>&quot;&quot;</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>rate</em> = <code>0.</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>An instrument made of <code>sensors</code> (the verb is the one that makes a composite of models). </p>
+
+<p class="definition">Definition at line <a class="el" href="_instrument_8cc_source.html#l00069">69</a> of file <a class="el" href="_instrument_8cc_source.html">Instrument.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>    {</div>
+<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">if</span> (name.empty())</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_struct" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;s : sensors) name += (name.empty() ? <span class="stringliteral">&quot;&quot;</span> : <span class="stringliteral">&quot;+&quot;</span>) + s.name;</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> <a class="code hl_struct" href="struct_kalman_1_1_instrument.html">Instrument</a>(std::move(name), std::move(sensors), rate);</div>
+<div class="line"><span class="lineno">   74</span>    }</div>
+<div class="ttc" id="astruct_kalman_1_1_instrument_html"><div class="ttname"><a href="struct_kalman_1_1_instrument.html">Kalman::Instrument</a></div><div class="ttdoc">A set of sensors, and what they share.</div><div class="ttdef"><b>Definition</b> <a href="_instrument_8h_source.html#l00050">Instrument.h:51</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a6da2c71b5ed6f1ff912a5eeb0a8aaaca" name="a6da2c71b5ed6f1ff912a5eeb0a8aaaca"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6da2c71b5ed6f1ff912a5eeb0a8aaaca">&#9670;&#160;</a></span>Compose() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_composite.html">Models::Composite</a> &gt; Kalman::Compose </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; &gt;&#160;</td>
+          <td class="paramname"><em>parts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Readout</a>&#160;</td>
+          <td class="paramname"><em>readout</em> = <code><a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Readout::Stacked</a></code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>names</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><code>parts</code> side by side, each with its own state (<a class="el" href="class_kalman_1_1_models_1_1_composite.html" title="Several models side by side, each with its own state.">Models::Composite</a>). The verb is the one that makes an instrument of sensors. </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00029">29</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>    { <span class="keywordflow">return</span> std::make_shared&lt;Models::Composite&gt;(std::move(parts), readout, std::move(names)); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2d47d5d5bdd67e4faf771a3207d2f577" name="a2d47d5d5bdd67e4faf771a3207d2f577"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2d47d5d5bdd67e4faf771a3207d2f577">&#9670;&#160;</a></span>Joint()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_joint.html">Models::Joint</a> &gt; Kalman::Joint </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_kalman_1_1_estimated_parameter.html">EstimatedParameter</a> &gt;&#160;</td>
+          <td class="paramname"><em>parameters</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p><code>model</code> with some of its declared parameters estimated along with its state (<a class="el" href="class_kalman_1_1_models_1_1_joint.html" title="A model whose state carries some of another model&#39;s parameters, so the filter estimates them along wi...">Models::Joint</a>). </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00026">26</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   27</span>    { <span class="keywordflow">return</span> std::make_shared&lt;Models::Joint&gt;(std::move(model), std::move(parameters)); }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2ac9f8d61464031dff4c5401a027bb25" name="a2ac9f8d61464031dff4c5401a027bb25"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2ac9f8d61464031dff4c5401a027bb25">&#9670;&#160;</a></span>Lag()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> &gt; Kalman::Lag </td>
+          <td>(</td>
+          <td class="paramtype">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::size_t&#160;</td>
+          <td class="paramname"><em>depth</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p><code>model</code> carrying its last <code>depth</code> states: for sensors that report late, and fixed-lag smoothing. </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00050">50</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>    { <span class="keywordflow">return</span> std::make_shared&lt;Models::Lag&gt;(std::move(model), depth); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -937,7 +1254,7 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_matrix_8cc_source.html#l00216">216</a> of file <a class="el" href="_matrix_8cc_source.html">Matrix.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  217</span>    {</div>
-<div class="line"><span class="lineno">  218</span>        RequireSame(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>(), x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(), <span class="stringliteral">&quot;dimensions differ in matrix-vector product&quot;</span>);</div>
+<div class="line"><span class="lineno">  218</span>        RequireSame(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>(), x.Size(), <span class="stringliteral">&quot;dimensions differ in matrix-vector product&quot;</span>);</div>
 <div class="line"><span class="lineno">  219</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> out(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>(), 0.);</div>
 <div class="line"><span class="lineno">  220</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>(); ++i)</div>
 <div class="line"><span class="lineno">  221</span>        {</div>
@@ -948,7 +1265,6 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  226</span>        <span class="keywordflow">return</span> out;</div>
 <div class="line"><span class="lineno">  227</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1233,6 +1549,76 @@ Functions</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a601272d70d979281a095cbd961dc9213" name="a601272d70d979281a095cbd961dc9213"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a601272d70d979281a095cbd961dc9213">&#9670;&#160;</a></span>operator|() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> Kalman::operator| </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>b</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Two sensors make an instrument, named after both. </p>
+
+<p class="definition">Definition at line <a class="el" href="_instrument_8cc_source.html#l00076">76</a> of file <a class="el" href="_instrument_8cc_source.html">Instrument.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>{ <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_kalman.html#a515660bca766fa9194d650a56d9e83b2">Compose</a>({a, b}); }</div>
+<div class="ttc" id="anamespace_kalman_html_a515660bca766fa9194d650a56d9e83b2"><div class="ttname"><a href="namespace_kalman.html#a515660bca766fa9194d650a56d9e83b2">Kalman::Compose</a></div><div class="ttdeci">Instrument Compose(std::vector&lt; Sensor &gt; sensors, std::string name=&quot;&quot;, double rate=0.)</div><div class="ttdoc">An instrument made of sensors (the verb is the one that makes a composite of models).</div><div class="ttdef"><b>Definition</b> <a href="_instrument_8cc_source.html#l00069">Instrument.cc:69</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1b71ee6d9408c2370a9f1f0b6de3c49d" name="a1b71ee6d9408c2370a9f1f0b6de3c49d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1b71ee6d9408c2370a9f1f0b6de3c49d">&#9670;&#160;</a></span>operator|() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> Kalman::operator| </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a>&#160;</td>
+          <td class="paramname"><em>instrument</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>sensor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>One more sensor on an instrument. </p>
+
+<p class="definition">Definition at line <a class="el" href="_instrument_8cc_source.html#l00078">78</a> of file <a class="el" href="_instrument_8cc_source.html">Instrument.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>    {</div>
+<div class="line"><span class="lineno">   80</span>        <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.sensors.push_back(sensor);</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">return</span> <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>;</div>
+<div class="line"><span class="lineno">   82</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a293e5ee79ab48f522e83c2f1efa9ec7b" name="a293e5ee79ab48f522e83c2f1efa9ec7b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a293e5ee79ab48f522e83c2f1efa9ec7b">&#9670;&#160;</a></span>Real()</h2>
 
@@ -1265,6 +1651,50 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   86</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; s.<a class="code hl_function" href="class_kalman_1_1_grid.html#a1ac34beb11a08c322416901a5c898bbd">Size</a>(); ++i) out.Data()[i] = s.<a class="code hl_function" href="class_kalman_1_1_grid.html#a01a85d985946b4bbc356964d85c01a73">Data</a>()[i].real();</div>
 <div class="line"><span class="lineno">   87</span>        <span class="keywordflow">return</span> out;</div>
 <div class="line"><span class="lineno">   88</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1d2fbfe16bd8e47cc7f3f252b9493749" name="a1d2fbfe16bd8e47cc7f3f252b9493749"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1d2fbfe16bd8e47cc7f3f252b9493749">&#9670;&#160;</a></span>Route()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_models_1_1_router.html">Models::Router</a> &gt; Kalman::Route </td>
+          <td>(</td>
+          <td class="paramtype">std::vector&lt; std::shared_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt; &gt;&#160;</td>
+          <td class="paramname"><em>modes</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
+          <td class="paramname"><em>Pi</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>mu0</em> = <code><a class="el" href="class_kalman_1_1_vector.html">Vector</a>()</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::string &gt;&#160;</td>
+          <td class="paramname"><em>names</em> = <code>{}</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Several models of one system with a probability on each (<a class="el" href="class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each.">Models::Router</a>), for a system that changes regime: <code>Pi</code> is the Markov transition between them. Run by the interacting engine (the IMM of the literature). </p>
+
+<p class="definition">Definition at line <a class="el" href="src_2operations_8cc_source.html#l00039">39</a> of file <a class="el" href="src_2operations_8cc_source.html">Operations.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>    { <span class="keywordflow">return</span> std::make_shared&lt;Models::Router&gt;(std::move(modes), Pi, mu0, std::move(names)); }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1365,17 +1795,17 @@ template&lt;typename State , typename RHS &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00051">51</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>    {</div>
-<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">switch</span> (kind)</div>
-<div class="line"><span class="lineno">   54</span>        {</div>
-<div class="line"><span class="lineno">   55</span>            <span class="keywordflow">case</span> DifferentiatorKind::Analytic:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;analytic&quot;</span>;</div>
-<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">case</span> DifferentiatorKind::Forward:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;forward&quot;</span>;</div>
-<div class="line"><span class="lineno">   57</span>            <span class="keywordflow">case</span> DifferentiatorKind::Central:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;central&quot;</span>;</div>
-<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">case</span> DifferentiatorKind::Automatic: <span class="keywordflow">return</span> <span class="stringliteral">&quot;automatic&quot;</span>;</div>
-<div class="line"><span class="lineno">   59</span>        }</div>
-<div class="line"><span class="lineno">   60</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   61</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00052">52</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   53</span>    {</div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">switch</span> (kind)</div>
+<div class="line"><span class="lineno">   55</span>        {</div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordflow">case</span> DifferentiatorKind::Analytic:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;analytic&quot;</span>;</div>
+<div class="line"><span class="lineno">   57</span>            <span class="keywordflow">case</span> DifferentiatorKind::Forward:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;forward&quot;</span>;</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">case</span> DifferentiatorKind::Central:   <span class="keywordflow">return</span> <span class="stringliteral">&quot;central&quot;</span>;</div>
+<div class="line"><span class="lineno">   59</span>            <span class="keywordflow">case</span> DifferentiatorKind::Automatic: <span class="keywordflow">return</span> <span class="stringliteral">&quot;automatic&quot;</span>;</div>
+<div class="line"><span class="lineno">   60</span>        }</div>
+<div class="line"><span class="lineno">   61</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   62</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1395,10 +1825,10 @@ template&lt;typename State , typename RHS &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00035">35</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   36</span>    {</div>
-<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">return</span> kind == DynamicsKind::Continuous ? <span class="stringliteral">&quot;continuous&quot;</span> : <span class="stringliteral">&quot;discrete&quot;</span>;</div>
-<div class="line"><span class="lineno">   38</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00036">36</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    {</div>
+<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> kind == DynamicsKind::Continuous ? <span class="stringliteral">&quot;continuous&quot;</span> : <span class="stringliteral">&quot;discrete&quot;</span>;</div>
+<div class="line"><span class="lineno">   39</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1430,9 +1860,10 @@ template&lt;typename State , typename RHS &gt; </div>
 <div class="line"><span class="lineno">   28</span>            <span class="keywordflow">case</span> EngineKind::Particle:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Particle&quot;</span>;</div>
 <div class="line"><span class="lineno">   29</span>            <span class="keywordflow">case</span> EngineKind::Ensemble:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Ensemble&quot;</span>;</div>
 <div class="line"><span class="lineno">   30</span>            <span class="keywordflow">case</span> EngineKind::Combinatorial: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Combinatorial&quot;</span>;</div>
-<div class="line"><span class="lineno">   31</span>        }</div>
-<div class="line"><span class="lineno">   32</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   33</span>    }</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keywordflow">case</span> EngineKind::Interacting: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Interacting&quot;</span>;</div>
+<div class="line"><span class="lineno">   32</span>        }</div>
+<div class="line"><span class="lineno">   33</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1454,17 +1885,17 @@ template&lt;typename State , typename RHS &gt; </div>
 
 <p>Human-readable name of an integrator kind (never null). </p>
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00063">63</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>    {</div>
-<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">switch</span> (kind)</div>
-<div class="line"><span class="lineno">   66</span>        {</div>
-<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">case</span> IntegratorKind::Euler:         <span class="keywordflow">return</span> <span class="stringliteral">&quot;Euler&quot;</span>;</div>
-<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">case</span> IntegratorKind::RK4:           <span class="keywordflow">return</span> <span class="stringliteral">&quot;RK4&quot;</span>;</div>
-<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">case</span> IntegratorKind::DormandPrince: <span class="keywordflow">return</span> <span class="stringliteral">&quot;DormandPrince&quot;</span>;</div>
-<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">case</span> IntegratorKind::ImplicitEuler: <span class="keywordflow">return</span> <span class="stringliteral">&quot;ImplicitEuler&quot;</span>;</div>
-<div class="line"><span class="lineno">   71</span>        }</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   73</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00064">64</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>    {</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">switch</span> (kind)</div>
+<div class="line"><span class="lineno">   67</span>        {</div>
+<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">case</span> IntegratorKind::Euler:         <span class="keywordflow">return</span> <span class="stringliteral">&quot;Euler&quot;</span>;</div>
+<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">case</span> IntegratorKind::RK4:           <span class="keywordflow">return</span> <span class="stringliteral">&quot;RK4&quot;</span>;</div>
+<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">case</span> IntegratorKind::DormandPrince: <span class="keywordflow">return</span> <span class="stringliteral">&quot;DormandPrince&quot;</span>;</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">case</span> IntegratorKind::ImplicitEuler: <span class="keywordflow">return</span> <span class="stringliteral">&quot;ImplicitEuler&quot;</span>;</div>
+<div class="line"><span class="lineno">   72</span>        }</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   74</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1486,17 +1917,17 @@ template&lt;typename State , typename RHS &gt; </div>
 
 <p>Human-readable name of a solver kind (never null). </p>
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00075">75</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   76</span>    {</div>
-<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">switch</span> (kind)</div>
-<div class="line"><span class="lineno">   78</span>        {</div>
-<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">case</span> SolverKind::Spectral:         <span class="keywordflow">return</span> <span class="stringliteral">&quot;Spectral&quot;</span>;</div>
-<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">case</span> SolverKind::FiniteDifference: <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteDifference&quot;</span>;</div>
-<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">case</span> SolverKind::FiniteVolume:     <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteVolume&quot;</span>;</div>
-<div class="line"><span class="lineno">   82</span>            <span class="keywordflow">case</span> SolverKind::FiniteElement:    <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteElement&quot;</span>;</div>
-<div class="line"><span class="lineno">   83</span>        }</div>
-<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   85</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00076">76</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   77</span>    {</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">switch</span> (kind)</div>
+<div class="line"><span class="lineno">   79</span>        {</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">case</span> SolverKind::Spectral:         <span class="keywordflow">return</span> <span class="stringliteral">&quot;Spectral&quot;</span>;</div>
+<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">case</span> SolverKind::FiniteDifference: <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteDifference&quot;</span>;</div>
+<div class="line"><span class="lineno">   82</span>            <span class="keywordflow">case</span> SolverKind::FiniteVolume:     <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteVolume&quot;</span>;</div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">case</span> SolverKind::FiniteElement:    <span class="keywordflow">return</span> <span class="stringliteral">&quot;FiniteElement&quot;</span>;</div>
+<div class="line"><span class="lineno">   84</span>        }</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1518,16 +1949,16 @@ template&lt;typename State , typename RHS &gt; </div>
 
 <p>Human-readable name of a state flavour (never null). </p>
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00087">87</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   88</span>    {</div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">switch</span> (flavor)</div>
-<div class="line"><span class="lineno">   90</span>        {</div>
-<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">case</span> StateFlavor::Prior:     <span class="keywordflow">return</span> <span class="stringliteral">&quot;Prior&quot;</span>;</div>
-<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">case</span> StateFlavor::Posterior: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Posterior&quot;</span>;</div>
-<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">case</span> StateFlavor::Smoothed:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Smoothed&quot;</span>;</div>
-<div class="line"><span class="lineno">   94</span>        }</div>
-<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   96</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00088">88</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    {</div>
+<div class="line"><span class="lineno">   90</span>        <span class="keywordflow">switch</span> (flavor)</div>
+<div class="line"><span class="lineno">   91</span>        {</div>
+<div class="line"><span class="lineno">   92</span>            <span class="keywordflow">case</span> StateFlavor::Prior:     <span class="keywordflow">return</span> <span class="stringliteral">&quot;Prior&quot;</span>;</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">case</span> StateFlavor::Posterior: <span class="keywordflow">return</span> <span class="stringliteral">&quot;Posterior&quot;</span>;</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">case</span> StateFlavor::Smoothed:  <span class="keywordflow">return</span> <span class="stringliteral">&quot;Smoothed&quot;</span>;</div>
+<div class="line"><span class="lineno">   95</span>        }</div>
+<div class="line"><span class="lineno">   96</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;Unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   97</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1547,16 +1978,16 @@ template&lt;typename State , typename RHS &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00040">40</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   41</span>    {</div>
-<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">switch</span> (kind)</div>
-<div class="line"><span class="lineno">   43</span>        {</div>
-<div class="line"><span class="lineno">   44</span>            <span class="keywordflow">case</span> StructureKind::Maps:        <span class="keywordflow">return</span> <span class="stringliteral">&quot;maps&quot;</span>;</div>
-<div class="line"><span class="lineno">   45</span>            <span class="keywordflow">case</span> StructureKind::Matrices:    <span class="keywordflow">return</span> <span class="stringliteral">&quot;matrices&quot;</span>;</div>
-<div class="line"><span class="lineno">   46</span>            <span class="keywordflow">case</span> StructureKind::TimeVarying: <span class="keywordflow">return</span> <span class="stringliteral">&quot;time-varying matrices&quot;</span>;</div>
-<div class="line"><span class="lineno">   47</span>        }</div>
-<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_utils_8cc_source.html#l00041">41</a> of file <a class="el" href="_utils_8cc_source.html">Utils.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>    {</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">switch</span> (kind)</div>
+<div class="line"><span class="lineno">   44</span>        {</div>
+<div class="line"><span class="lineno">   45</span>            <span class="keywordflow">case</span> StructureKind::Maps:        <span class="keywordflow">return</span> <span class="stringliteral">&quot;maps&quot;</span>;</div>
+<div class="line"><span class="lineno">   46</span>            <span class="keywordflow">case</span> StructureKind::Matrices:    <span class="keywordflow">return</span> <span class="stringliteral">&quot;matrices&quot;</span>;</div>
+<div class="line"><span class="lineno">   47</span>            <span class="keywordflow">case</span> StructureKind::TimeVarying: <span class="keywordflow">return</span> <span class="stringliteral">&quot;time-varying matrices&quot;</span>;</div>
+<div class="line"><span class="lineno">   48</span>        }</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keywordflow">return</span> <span class="stringliteral">&quot;unknown&quot;</span>;</div>
+<div class="line"><span class="lineno">   50</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

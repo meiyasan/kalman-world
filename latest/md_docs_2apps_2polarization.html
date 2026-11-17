@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -151,7 +151,7 @@ How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The state moves linearly: one fixed matrix per step.</li>
 <li><b>A nonlinear measurement.</b> The channels depend on the state through sines and cosines, so this is an extended <a class="el" href="namespace_kalman.html">Kalman</a> filter. The model gives the derivative of the measurement in closed form.</li>
-<li><b>It runs in C++.</b> <code>filter()</code> hands the whole pass to the C++ twin <code><a class="el" href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational-wave polarization (Jones formalism, Amblard and Michel) – the tw...">Kalman::Apps::Gravitational::Polarization</a></code> (registered <code>polarization</code>; see <code>kalman model polarization</code> for its components and units). The noise matrices and the sample rate are pushed from the Python model; turning a complex signal into four real columns (<code>preprocess</code>) stays in Python.</li>
+<li><b>It runs in C++.</b> <code>filter()</code> hands the whole pass to the C++ counterpart <code><a class="el" href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational-wave polarization (Jones formalism, Amblard and Michel) – the co...">Kalman::Apps::Gravitational::Polarization</a></code> (registered <code>polarization</code>; see <code>kalman model polarization</code> for its components and units). The noise matrices and the sample rate are pushed from the Python model; turning a complex signal into four real columns (<code>prepare_measurements</code>) stays in Python.</li>
 <li><b>The signals are in toy units</b>: an amplitude near 1 and a few hertz. A real wave has a strain near 1e-21 between ten hertz and a kilohertz.</li>
 </ul>
 <h1><a class="anchor" id="using-it-6"></a>

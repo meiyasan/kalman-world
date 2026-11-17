@@ -1,11 +1,11 @@
 var constants_8py =
 [
-    [ "modules.framework.constants.EnumBis", "classmodules_1_1framework_1_1constants_1_1_enum_bis.html", "classmodules_1_1framework_1_1constants_1_1_enum_bis" ],
+    [ "modules.framework.constants.LabelEnum", "classmodules_1_1framework_1_1constants_1_1_label_enum.html", "classmodules_1_1framework_1_1constants_1_1_label_enum" ],
     [ "modules.framework.constants.KalmanState", "classmodules_1_1framework_1_1constants_1_1_kalman_state.html", null ],
     [ "modules.framework.constants.KalmanStateFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_state_flavor.html", null ],
     [ "modules.framework.constants.KalmanObservable", "classmodules_1_1framework_1_1constants_1_1_kalman_observable.html", null ],
     [ "modules.framework.constants.KalmanObservableFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_flavor.html", null ],
-    [ "modules.framework.constants.KalmanObservableReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_readout.html", null ],
+    [ "modules.framework.constants.KalmanReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_readout.html", null ],
     [ "modules.framework.constants.KalmanEngineKind", "classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html", null ],
     [ "modules.framework.constants.KalmanIntegratorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_integrator_kind.html", null ],
     [ "modules.framework.constants.KalmanSolverKind", "classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html", null ],

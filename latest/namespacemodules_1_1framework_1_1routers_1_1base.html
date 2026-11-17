@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -148,9 +148,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">KalmanRouter — base contract for IKF model routing.
+<div class="textblock"><pre class="fragment">KalmanRouter — base contract for the decision layer of a routed model (``route``).
 
-A router maps the per-step IKF quantities to updated mode probabilities::
+A router maps the per-step quantities of the interacting engine to updated mode probabilities::
 
     mu = router(nis_arr, c, likelihoods)
 
@@ -181,7 +181,7 @@ Returns
 mu : ndarray (M,)
     Updated mode probabilities.  Non-negative and summing to 1.
 
-Anatomy of one IKF step::
+Anatomy of one step::
 
     ┌─────────────────────────────────────────────────────┐
     │ 1. Markov prediction:  c_j = Σ_i Π[i,j] μ_i        │

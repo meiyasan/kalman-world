@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -280,7 +280,7 @@ $(document).ready(function(){initNavTree('test__barotropic_8py_source.html','');
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment"># And it must actually be used, not just stored beside a spin-up.</span></div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keyword">assert</span> model.climatology() <span class="keywordflow">is</span> clim</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    ensemble = model.initial_ensemble(4)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    ensemble = model.initial_state(samples=4)</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="keyword">assert</span> ensemble.shape == (32 * 32, 4)</div>
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <span class="keywordflow">for</span> col <span class="keywordflow">in</span> range(4):</div>
 <div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keyword">assert</span> np.any(np.all(np.isclose(clim, ensemble[:, [col]]), axis=0)), \</div>
@@ -305,7 +305,7 @@ $(document).ready(function(){initNavTree('test__barotropic_8py_source.html','');
 <div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__barotropic.html#a2a81dc876308ca927f0dbd0207c34d1d">  140</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__barotropic.html#a2a81dc876308ca927f0dbd0207c34d1d">test_the_model_advances_a_physical_field_without_blowing_up</a>():</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    model = <a class="code hl_class" href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html">BarotropicFlowModel</a>(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    model.climatology(n_snapshots=4, spinup=60, stride=5)</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    state = model.initial_ensemble(2)[:, 0]</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    state = model.initial_state(samples=2)[:, 0]</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(5):</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        state = model.f(state)</div>

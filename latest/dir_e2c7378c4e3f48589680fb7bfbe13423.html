@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -162,8 +162,8 @@ Files</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="04__routers_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="04__routers_8cc.html">04_routers.cc</a></td></tr>
 <tr class="memdesc:04__routers_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The decision layer: normalisation, the rule-based routers, and the blend. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="05__ikf_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="05__ikf_8cc.html">05_ikf.cc</a></td></tr>
-<tr class="memdesc:05__ikf_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The IKF filter: does it actually find the regime, and switch when it changes? <br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="05__route_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="05__route_8cc.html">05_route.cc</a></td></tr>
+<tr class="memdesc:05__route_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models::Router on the interacting engine: does it find the regime, and switch when it changes? <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="06__factory_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="06__factory_8cc.html">06_factory.cc</a></td></tr>
 <tr class="memdesc:06__factory_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The model registry, the plugin loader, and the C surface over both. <br /></td></tr>
@@ -187,7 +187,7 @@ Files</h2></td></tr>
 <tr class="memdesc:12__combinatorial_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">The combinatorial engine: the detector fixture, the gate, finding, arbitration, smoothing. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="13__controllers_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="13__controllers_8cc.html">13_controllers.cc</a></td></tr>
-<tr class="memdesc:13__controllers_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controllers: the closed loop, P / PID / LQR / MPPI, the actuator hook, the adapters. <br /></td></tr>
+<tr class="memdesc:13__controllers_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Controllers: the closed loop, P / PID / LQR / MPC / MPPI, the actuator hook, the adapters. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="14__apps_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="14__apps_8cc.html">14_apps.cc</a></td></tr>
 <tr class="memdesc:14__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">libKalmanApps: the application models, their parameters and their filters. <br /></td></tr>
@@ -208,10 +208,31 @@ Files</h2></td></tr>
 <tr class="memdesc:19__tracking__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html" title="A charged particle in an axial field, sampled on concentric layers.">Kalman::Apps::Tracking::DriftChamber</a>: registered, propagates, and is found tracks in. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="20__gravitational__apps_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="20__gravitational__apps_8cc.html">20_gravitational_apps.cc</a></td></tr>
-<tr class="memdesc:20__gravitational__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational-wave polarization (Jones formalism, Amblard and Michel) – the tw...">Kalman::Apps::Gravitational::Polarization</a>: the Jones measurement, its analytic Jacobian, and a filter that tracks a polarized carrier. <br /></td></tr>
+<tr class="memdesc:20__gravitational__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational-wave polarization (Jones formalism, Amblard and Michel) – the co...">Kalman::Apps::Gravitational::Polarization</a>: the Jones measurement, its analytic Jacobian, and a filter that tracks a polarized carrier. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="21__fields__apps_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="21__fields__apps_8cc.html">21_fields_apps.cc</a></td></tr>
-<tr class="memdesc:21__fields__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" title="A 2-D vorticity field observed at sparse probes — the twin of kalman.apps.weather....">Kalman::Apps::Weather::KolmogorovFlow</a> / BarotropicFlow: a field on the ensemble engine. <br /></td></tr>
+<tr class="memdesc:21__fields__apps_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" title="A 2-D vorticity field observed at sparse probes — the counterpart of kalman.apps.weather....">Kalman::Apps::Weather::KolmogorovFlow</a> / BarotropicFlow: a field on the ensemble engine. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="22__joint_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="22__joint_8cc.html">22_joint.cc</a></td></tr>
+<tr class="memdesc:22__joint_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models::Joint: a declared parameter of another model, estimated with its state. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="23__sensor_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="23__sensor_8cc.html">23_sensor.cc</a></td></tr>
+<tr class="memdesc:23__sensor_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_kalman_1_1_sensor.html" title="What acquires a measurement: what it reads of the state, and how well.">Kalman::Sensor</a> and Models::Fusion: one more sensor on the state of another model. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="24__observability_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="24__observability_8cc.html">24_observability.cc</a></td></tr>
+<tr class="memdesc:24__observability_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_observability.html" title="Can the measurements tell the components of the state apart?">Kalman::Observability</a>, and the tau of Models::Joint. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="25__instrument_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="25__instrument_8cc.html">25_instrument.cc</a></td></tr>
+<tr class="memdesc:25__instrument_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="struct_kalman_1_1_instrument.html" title="A set of sensors, and what they share.">Kalman::Instrument</a>: a set of sensors with one name, one rate and one calibration. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="26__lag_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="26__lag_8cc.html">26_lag.cc</a></td></tr>
+<tr class="memdesc:26__lag_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models::Lag: a model that carries its last states, for late sensors and fixed-lag smoothing. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="27__composite_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="27__composite_8cc.html">27_composite.cc</a></td></tr>
+<tr class="memdesc:27__composite_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Models::Composite: several models side by side, stacked or summed. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="28__sensors_8cc_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="28__sensors_8cc.html">28_sensors.cc</a></td></tr>
+<tr class="memdesc:28__sensors_8cc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="namespace_kalman_1_1_sensors.html">Kalman::Sensors</a>: a position reading, a Doppler reading, a camera; their settings as parameters of the model; the sensor factory. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_check_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_check_8h.html">Check.h</a></td></tr>
 <tr class="memdesc:_check_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">A three-macro assertion helper for the libKalman test binaries. <br /></td></tr>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -175,7 +175,7 @@ Static Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">A controller passed as a function drives the C++ filter loop.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00407">407</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00406">406</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a4b8cd96c583f7e69f3f9addca2ef6d90" name="a4b8cd96c583f7e69f3f9addca2ef6d90"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4b8cd96c583f7e69f3f9addca2ef6d90">&#9670;&#160;</a></span>_both()</h2>
@@ -211,22 +211,22 @@ Static Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00427">427</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  427</span>    <span class="keyword">def </span>_both(self, engine_kind):</div>
-<div class="line"><span class="lineno">  428</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  429</span>        zk = self._measurements()</div>
-<div class="line"><span class="lineno">  430</span>        out = []</div>
-<div class="line"><span class="lineno">  431</span>        <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  432</span>            calls = []</div>
-<div class="line"><span class="lineno">  433</span>            f = KalmanFilter(DrivenPendulum(), engine=engine_kind())</div>
-<div class="line"><span class="lineno">  434</span>            <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  435</span>                <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  436</span>                    f.forward(zk, self._policy(calls), record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  437</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  438</span>                f.forward(zk, self._policy(calls), record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  439</span>            out.append((f, calls))</div>
-<div class="line"><span class="lineno">  440</span>        <span class="keywordflow">return</span> out</div>
-<div class="line"><span class="lineno">  441</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00426">426</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  426</span>    <span class="keyword">def </span>_both(self, engine_kind):</div>
+<div class="line"><span class="lineno">  427</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  428</span>        zk = self._measurements()</div>
+<div class="line"><span class="lineno">  429</span>        out = []</div>
+<div class="line"><span class="lineno">  430</span>        <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  431</span>            calls = []</div>
+<div class="line"><span class="lineno">  432</span>            f = KalmanFilter(DrivenPendulum(), engine=engine_kind())</div>
+<div class="line"><span class="lineno">  433</span>            <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  434</span>                <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  435</span>                    f.forward(zk, self._policy(calls), record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  436</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  437</span>                f.forward(zk, self._policy(calls), record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  438</span>            out.append((f, calls))</div>
+<div class="line"><span class="lineno">  439</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  440</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filter_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a></div><div class="ttdef"><b>Definition</b> <a href="filter_8py_source.html#l00001">filter.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -265,14 +265,14 @@ Static Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00411">411</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  411</span>    <span class="keyword">def </span>_measurements(n=200, seed=4):</div>
-<div class="line"><span class="lineno">  412</span>        rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  413</span>        t = np.arange(n) / 50.0</div>
-<div class="line"><span class="lineno">  414</span>        z = 0.4 * np.cos(3.0 * t) * np.exp(-0.3 * t) + 0.05 * rng.standard_normal(n)</div>
-<div class="line"><span class="lineno">  415</span>        z[60:70] = np.nan                       <span class="comment"># a gap in the sensor</span></div>
-<div class="line"><span class="lineno">  416</span>        <span class="keywordflow">return</span> z.reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  417</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00410">410</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  410</span>    <span class="keyword">def </span>_measurements(n=200, seed=4):</div>
+<div class="line"><span class="lineno">  411</span>        rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  412</span>        t = np.arange(n) / 50.0</div>
+<div class="line"><span class="lineno">  413</span>        z = 0.4 * np.cos(3.0 * t) * np.exp(-0.3 * t) + 0.05 * rng.standard_normal(n)</div>
+<div class="line"><span class="lineno">  414</span>        z[60:70] = np.nan                       <span class="comment"># a gap in the sensor</span></div>
+<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">return</span> z.reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  416</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -300,15 +300,15 @@ Static Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00419">419</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  419</span>    <span class="keyword">def </span>_policy(calls):</div>
-<div class="line"><span class="lineno">  420</span>        <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  421</span>            calls.append((np.shape(x), np.shape(P), np.shape(nu)))</div>
-<div class="line"><span class="lineno">  422</span>            th, om = np.asarray(x).reshape(-1)</div>
-<div class="line"><span class="lineno">  423</span>            feel = 0.0 <span class="keywordflow">if</span> nu <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> <span class="keywordflow">not</span> np.all(np.isfinite(nu)) <span class="keywordflow">else</span> float(np.asarray(nu).reshape(-1)[0])</div>
-<div class="line"><span class="lineno">  424</span>            <span class="keywordflow">return</span> np.array([[-4.0 * th - 1.5 * om + 0.2 * feel]])</div>
-<div class="line"><span class="lineno">  425</span>        <span class="keywordflow">return</span> policy</div>
-<div class="line"><span class="lineno">  426</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00418">418</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  418</span>    <span class="keyword">def </span>_policy(calls):</div>
+<div class="line"><span class="lineno">  419</span>        <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  420</span>            calls.append((np.shape(x), np.shape(P), np.shape(nu)))</div>
+<div class="line"><span class="lineno">  421</span>            th, om = np.asarray(x).reshape(-1)</div>
+<div class="line"><span class="lineno">  422</span>            feel = 0.0 <span class="keywordflow">if</span> nu <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> <span class="keywordflow">not</span> np.all(np.isfinite(nu)) <span class="keywordflow">else</span> float(np.asarray(nu).reshape(-1)[0])</div>
+<div class="line"><span class="lineno">  423</span>            <span class="keywordflow">return</span> np.array([[-4.0 * th - 1.5 * om + 0.2 * feel]])</div>
+<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">return</span> policy</div>
+<div class="line"><span class="lineno">  425</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -328,15 +328,15 @@ Static Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00487">487</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  487</span>    <span class="keyword">def </span>test_a_command_of_the_wrong_size_is_refused(self):</div>
-<div class="line"><span class="lineno">  488</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  489</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
-<div class="line"><span class="lineno">  490</span>            KalmanFilter(DrivenPendulum()).forward(self._measurements(20),</div>
-<div class="line"><span class="lineno">  491</span>                                                   <span class="keyword">lambda</span> x, P, t, nu=<span class="keywordtype">None</span>: np.zeros(3), record=<span class="keyword">False</span>)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00486">486</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  486</span>    <span class="keyword">def </span>test_a_command_of_the_wrong_size_is_refused(self):</div>
+<div class="line"><span class="lineno">  487</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  488</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  489</span>            KalmanFilter(DrivenPendulum()).forward(self._measurements(20),</div>
+<div class="line"><span class="lineno">  490</span>                                                   <span class="keyword">lambda</span> x, P, t, nu=<span class="keywordtype">None</span>: np.zeros(3), record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  491</span> </div>
 <div class="line"><span class="lineno">  492</span> </div>
-<div class="line"><span class="lineno">  493</span> </div>
-<div class="line"><span class="lineno">  494</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman is not built&quot;)</span></div>
+<div class="line"><span class="lineno">  493</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman is not built&quot;)</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -356,14 +356,14 @@ Static Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00480">480</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  480</span>    <span class="keyword">def </span>test_a_controller_error_comes_back_as_itself(self):</div>
-<div class="line"><span class="lineno">  481</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  482</span>        <span class="keyword">def </span>broken(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  483</span>            <span class="keywordflow">raise</span> KeyError(<span class="stringliteral">&quot;no gain table&quot;</span>)</div>
-<div class="line"><span class="lineno">  484</span>        <span class="keyword">with</span> self.assertRaises(KeyError):</div>
-<div class="line"><span class="lineno">  485</span>            KalmanFilter(DrivenPendulum()).forward(self._measurements(20), broken, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  486</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00479">479</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  479</span>    <span class="keyword">def </span>test_a_controller_error_comes_back_as_itself(self):</div>
+<div class="line"><span class="lineno">  480</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  481</span>        <span class="keyword">def </span>broken(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  482</span>            <span class="keywordflow">raise</span> KeyError(<span class="stringliteral">&quot;no gain table&quot;</span>)</div>
+<div class="line"><span class="lineno">  483</span>        <span class="keyword">with</span> self.assertRaises(KeyError):</div>
+<div class="line"><span class="lineno">  484</span>            KalmanFilter(DrivenPendulum()).forward(self._measurements(20), broken, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  485</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -383,28 +383,28 @@ Static Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Adaptive controllers change the model's Q while the filter runs.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00459">459</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  459</span>    <span class="keyword">def </span>test_a_controller_that_retunes_the_model_is_obeyed(self):</div>
-<div class="line"><span class="lineno">  460</span>        <span class="stringliteral">&quot;&quot;&quot;Adaptive controllers change the model&#39;s Q while the filter runs.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  461</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  462</span>        zk = self._measurements(120)</div>
-<div class="line"><span class="lineno">  463</span>        <span class="keyword">def </span>run(boost, reference):</div>
-<div class="line"><span class="lineno">  464</span>            model = DrivenPendulum()</div>
-<div class="line"><span class="lineno">  465</span>            base = model._Q.copy()</div>
-<div class="line"><span class="lineno">  466</span>            <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  467</span>                model._Q = base * (boost <span class="keywordflow">if</span> t &gt; 1.0 <span class="keywordflow">else</span> 1.0)</div>
-<div class="line"><span class="lineno">  468</span>                <span class="keywordflow">return</span> np.zeros((1, 1))</div>
-<div class="line"><span class="lineno">  469</span>            f = KalmanFilter(model)</div>
-<div class="line"><span class="lineno">  470</span>            <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  471</span>                <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  472</span>                    f.forward(zk, policy, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  473</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  474</span>                f.forward(zk, policy, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  475</span>            <span class="keywordflow">return</span> np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> f.posterior])</div>
-<div class="line"><span class="lineno">  476</span>        plain, boosted = run(1.0, <span class="keyword">False</span>), run(1e4, <span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  477</span>        self.assertGreater(boosted[-1][1, 1], 5 * plain[-1][1, 1], <span class="stringliteral">&quot;the larger Q reached the filter&quot;</span>)</div>
-<div class="line"><span class="lineno">  478</span>        np.testing.assert_allclose(boosted, run(1e4, <span class="keyword">True</span>), rtol=1e-7, atol=1e-12)</div>
-<div class="line"><span class="lineno">  479</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00458">458</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  458</span>    <span class="keyword">def </span>test_a_controller_that_retunes_the_model_is_obeyed(self):</div>
+<div class="line"><span class="lineno">  459</span>        <span class="stringliteral">&quot;&quot;&quot;Adaptive controllers change the model&#39;s Q while the filter runs.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  460</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  461</span>        zk = self._measurements(120)</div>
+<div class="line"><span class="lineno">  462</span>        <span class="keyword">def </span>run(boost, reference):</div>
+<div class="line"><span class="lineno">  463</span>            model = DrivenPendulum()</div>
+<div class="line"><span class="lineno">  464</span>            base = model._Q.copy()</div>
+<div class="line"><span class="lineno">  465</span>            <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  466</span>                model._Q = base * (boost <span class="keywordflow">if</span> t &gt; 1.0 <span class="keywordflow">else</span> 1.0)</div>
+<div class="line"><span class="lineno">  467</span>                <span class="keywordflow">return</span> np.zeros((1, 1))</div>
+<div class="line"><span class="lineno">  468</span>            f = KalmanFilter(model)</div>
+<div class="line"><span class="lineno">  469</span>            <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  470</span>                <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  471</span>                    f.forward(zk, policy, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  472</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  473</span>                f.forward(zk, policy, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  474</span>            <span class="keywordflow">return</span> np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> f.posterior])</div>
+<div class="line"><span class="lineno">  475</span>        plain, boosted = run(1.0, <span class="keyword">False</span>), run(1e4, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  476</span>        self.assertGreater(boosted[-1][1, 1], 5 * plain[-1][1, 1], <span class="stringliteral">&quot;the larger Q reached the filter&quot;</span>)</div>
+<div class="line"><span class="lineno">  477</span>        np.testing.assert_allclose(boosted, run(1e4, <span class="keyword">True</span>), rtol=1e-7, atol=1e-12)</div>
+<div class="line"><span class="lineno">  478</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -424,24 +424,24 @@ Static Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00442">442</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  442</span>    <span class="keyword">def </span>test_extended_and_unscented_match_the_python_loop(self):</div>
-<div class="line"><span class="lineno">  443</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1extended.html">modules.framework.engines.extended</a> <span class="keyword">import</span> ExtendedKalmanEngine</div>
-<div class="line"><span class="lineno">  444</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1unscented.html">modules.framework.engines.unscented</a> <span class="keyword">import</span> UnscentedKalmanEngine</div>
-<div class="line"><span class="lineno">  445</span>        <span class="comment"># alpha = 0.5: at the default 1e-3 the sigma-point weights are ~1e6 and</span></div>
-<div class="line"><span class="lineno">  446</span>        <span class="comment"># rounding is amplified (see test_default_spread_on_application_models).</span></div>
-<div class="line"><span class="lineno">  447</span>        <span class="keywordflow">for</span> kind, atol <span class="keywordflow">in</span> ((ExtendedKalmanEngine, 1e-9), (<span class="keyword">lambda</span>: UnscentedKalmanEngine(alpha=0.5), 1e-7)):</div>
-<div class="line"><span class="lineno">  448</span>            (ref, ref_calls), (cxx, cxx_calls) = self._both(kind)</div>
-<div class="line"><span class="lineno">  449</span>            self.assertEqual(len(cxx_calls), len(ref_calls))</div>
-<div class="line"><span class="lineno">  450</span>            self.assertEqual(cxx_calls[0], ref_calls[0])            <span class="comment"># the same shapes reach the controller</span></div>
-<div class="line"><span class="lineno">  451</span>            x_ref = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> ref.posterior]).reshape(len(ref_calls), -1)</div>
-<div class="line"><span class="lineno">  452</span>            x_cxx = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> cxx.posterior]).reshape(len(cxx_calls), -1)</div>
-<div class="line"><span class="lineno">  453</span>            np.testing.assert_allclose(x_cxx, x_ref, atol=atol, err_msg=str(kind))</div>
-<div class="line"><span class="lineno">  454</span>            u_ref = np.array([np.ravel(u) <span class="keywordflow">for</span> u <span class="keywordflow">in</span> ref.control])</div>
-<div class="line"><span class="lineno">  455</span>            u_cxx = np.array([np.ravel(u) <span class="keywordflow">for</span> u <span class="keywordflow">in</span> cxx.control])</div>
-<div class="line"><span class="lineno">  456</span>            np.testing.assert_allclose(u_cxx, u_ref, atol=atol, err_msg=str(kind))</div>
-<div class="line"><span class="lineno">  457</span>            self.assertGreater(np.abs(u_ref).max(), 0.1)             <span class="comment"># the loop was really closed</span></div>
-<div class="line"><span class="lineno">  458</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00441">441</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  441</span>    <span class="keyword">def </span>test_extended_and_unscented_match_the_python_loop(self):</div>
+<div class="line"><span class="lineno">  442</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1extended.html">modules.framework.engines.extended</a> <span class="keyword">import</span> ExtendedKalmanEngine</div>
+<div class="line"><span class="lineno">  443</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1unscented.html">modules.framework.engines.unscented</a> <span class="keyword">import</span> UnscentedKalmanEngine</div>
+<div class="line"><span class="lineno">  444</span>        <span class="comment"># alpha = 0.5: at the default 1e-3 the sigma-point weights are ~1e6 and</span></div>
+<div class="line"><span class="lineno">  445</span>        <span class="comment"># rounding is amplified (see test_default_spread_on_application_models).</span></div>
+<div class="line"><span class="lineno">  446</span>        <span class="keywordflow">for</span> kind, atol <span class="keywordflow">in</span> ((ExtendedKalmanEngine, 1e-9), (<span class="keyword">lambda</span>: UnscentedKalmanEngine(alpha=0.5), 1e-7)):</div>
+<div class="line"><span class="lineno">  447</span>            (ref, ref_calls), (cxx, cxx_calls) = self._both(kind)</div>
+<div class="line"><span class="lineno">  448</span>            self.assertEqual(len(cxx_calls), len(ref_calls))</div>
+<div class="line"><span class="lineno">  449</span>            self.assertEqual(cxx_calls[0], ref_calls[0])            <span class="comment"># the same shapes reach the controller</span></div>
+<div class="line"><span class="lineno">  450</span>            x_ref = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> ref.posterior]).reshape(len(ref_calls), -1)</div>
+<div class="line"><span class="lineno">  451</span>            x_cxx = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> cxx.posterior]).reshape(len(cxx_calls), -1)</div>
+<div class="line"><span class="lineno">  452</span>            np.testing.assert_allclose(x_cxx, x_ref, atol=atol, err_msg=str(kind))</div>
+<div class="line"><span class="lineno">  453</span>            u_ref = np.array([np.ravel(u) <span class="keywordflow">for</span> u <span class="keywordflow">in</span> ref.control])</div>
+<div class="line"><span class="lineno">  454</span>            u_cxx = np.array([np.ravel(u) <span class="keywordflow">for</span> u <span class="keywordflow">in</span> cxx.control])</div>
+<div class="line"><span class="lineno">  455</span>            np.testing.assert_allclose(u_cxx, u_ref, atol=atol, err_msg=str(kind))</div>
+<div class="line"><span class="lineno">  456</span>            self.assertGreater(np.abs(u_ref).max(), 0.1)             <span class="comment"># the loop was really closed</span></div>
+<div class="line"><span class="lineno">  457</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1engines_1_1extended_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1engines_1_1extended.html">modules.framework.engines.extended</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2engines_2extended_8py_source.html#l00001">extended.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1engines_1_1unscented_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1engines_1_1unscented.html">modules.framework.engines.unscented</a></div><div class="ttdef"><b>Definition</b> <a href="engines_2unscented_8py_source.html#l00001">unscented.py:1</a></div></div>
 </div><!-- fragment -->

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_tracking_1_1_detector
 <p>The contract a trackable model adds to <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>.  
  <a href="class_kalman_1_1_tracking_1_1_detector.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_tracking_8h_source.html">Tracking.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>&gt;</code></p>
 <div class="dynheader">
 Inheritance diagram for Kalman::Tracking::Detector:</div>
 <div class="dyncontent">
@@ -163,12 +163,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a1ef13a58e6ebbc02e3baba5d873bf66f" id="r_a1ef13a58e6ebbc02e3baba5d873bf66f"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_tracking_1_1_detector.html#a1ef13a58e6ebbc02e3baba5d873bf66f">SeedState</a> (const <a class="el" href="namespace_kalman_1_1_tracking.html#ab1c733d0aa59f3480de54ec395610422">Hit</a> &amp;hit, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x0, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P0) const =0</td></tr>
 <tr class="memdesc:a1ef13a58e6ebbc02e3baba5d873bf66f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initial <code>(x0, P0)</code> for a track that produced <code>hit</code> on an inner layer.  <br /></td></tr>
 <tr class="separator:a1ef13a58e6ebbc02e3baba5d873bf66f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6f42897f4047c737755bbe44adffc4ee" id="r_a6f42897f4047c737755bbe44adffc4ee"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_tracking_1_1_detector.html#a6f42897f4047c737755bbe44adffc4ee">Layers</a> (const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;reading) const</td></tr>
+<tr class="memdesc:a6f42897f4047c737755bbe44adffc4ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">The detector as an instrument: one sensor per layer, read one after the other (<a class="el" href="struct_kalman_1_1_instrument.html#a451c84bf9c9e568a1a70f0da3a9cb610">Instrument::sequential</a>), innermost first.  <br /></td></tr>
+<tr class="separator:a6f42897f4047c737755bbe44adffc4ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>The contract a trackable model adds to <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>. </p>
 <p>The engine asks for the layer radii once, and for a seed per hit on the innermost populated layer. Everything else it needs — <code>f(x, u, t = r)</code> to propagate to a radius, <code>h</code>, <code>R</code> — is the ordinary model contract. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00065">65</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00066">66</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aa796298b481f1987db22426ae8727754" name="aa796298b481f1987db22426ae8727754"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa796298b481f1987db22426ae8727754">&#9670;&#160;</a></span>~Detector()</h2>
@@ -196,6 +199,51 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6f42897f4047c737755bbe44adffc4ee" name="a6f42897f4047c737755bbe44adffc4ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6f42897f4047c737755bbe44adffc4ee">&#9670;&#160;</a></span>Layers()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> Kalman::Tracking::Detector::Layers </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;&#160;</td>
+          <td class="paramname"><em>reading</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The detector as an instrument: one sensor per layer, read one after the other (<a class="el" href="struct_kalman_1_1_instrument.html#a451c84bf9c9e568a1a70f0da3a9cb610">Instrument::sequential</a>), innermost first. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">reading</td><td>the sensor that reads one layer: the model's own (<code>Sensors().front()</code>).</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>Each layer is <code>reading</code> under the name <code>layer &lt;i&gt;</code>, with its radius as <code>station</code>; the instrument takes the name of <code>reading</code>. A model that is a detector returns this from <a class="el" href="class_kalman_1_1_model.html#a74d8fb2fe3f798744296d2c4ad1f2a01">Model::Instruments()</a>. </p>
+
+<p class="definition">Definition at line <a class="el" href="_tracking_8cc_source.html#l00016">16</a> of file <a class="el" href="_tracking_8cc_source.html">Tracking.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   17</span>    {</div>
+<div class="line"><span class="lineno">   18</span>        Instrument detector;</div>
+<div class="line"><span class="lineno">   19</span>        detector.name = reading.name;</div>
+<div class="line"><span class="lineno">   20</span>        detector.sequential = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   21</span>        <span class="keyword">const</span> std::vector&lt;double&gt; radii = <a class="code hl_function" href="class_kalman_1_1_tracking_1_1_detector.html#af6a6c4a122315b7470bf5039365c5f66">Radii</a>();</div>
+<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; radii.size(); ++i)</div>
+<div class="line"><span class="lineno">   23</span>        {</div>
+<div class="line"><span class="lineno">   24</span>            Sensor layer = reading;</div>
+<div class="line"><span class="lineno">   25</span>            layer.name = <span class="stringliteral">&quot;layer &quot;</span> + std::to_string(i);</div>
+<div class="line"><span class="lineno">   26</span>            layer.instrument = detector.name;</div>
+<div class="line"><span class="lineno">   27</span>            layer.station = radii[i];</div>
+<div class="line"><span class="lineno">   28</span>            detector.sensors.push_back(std::move(layer));</div>
+<div class="line"><span class="lineno">   29</span>        }</div>
+<div class="line"><span class="lineno">   30</span>        <span class="keywordflow">return</span> detector;</div>
+<div class="line"><span class="lineno">   31</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_tracking_1_1_detector_html_af6a6c4a122315b7470bf5039365c5f66"><div class="ttname"><a href="class_kalman_1_1_tracking_1_1_detector.html#af6a6c4a122315b7470bf5039365c5f66">Kalman::Tracking::Detector::Radii</a></div><div class="ttdeci">virtual std::vector&lt; double &gt; Radii() const =0</div><div class="ttdoc">Layer radii, innermost first; the station tag t handed to f() is one of these.</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="af6a6c4a122315b7470bf5039365c5f66" name="af6a6c4a122315b7470bf5039365c5f66"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af6a6c4a122315b7470bf5039365c5f66">&#9670;&#160;</a></span>Radii()</h2>
 
@@ -271,8 +319,9 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/Kalman/<a class="el" href="_tracking_8h_source.html">Tracking.h</a></li>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>include/Kalman/<a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a></li>
+<li>src/<a class="el" href="_tracking_8cc_source.html">Tracking.cc</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

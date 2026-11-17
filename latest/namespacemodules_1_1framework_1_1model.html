@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -152,6 +152,8 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:abbb0e923853947f231bded24d054b19c" id="r_abbb0e923853947f231bded24d054b19c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1model.html#abbb0e923853947f231bded24d054b19c">_recording</a> (init)</td></tr>
 <tr class="separator:abbb0e923853947f231bded24d054b19c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa5a8a9ed938af95989db3b3a0856ff98" id="r_aa5a8a9ed938af95989db3b3a0856ff98"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1model.html#aa5a8a9ed938af95989db3b3a0856ff98">_over_columns</a> (model, name, x, rows, **kwargs)</td></tr>
+<tr class="separator:aa5a8a9ed938af95989db3b3a0856ff98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa678264c14d6e3be45e71b59ae70dfca" id="r_aa678264c14d6e3be45e71b59ae70dfca"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1model.html#aa678264c14d6e3be45e71b59ae70dfca">_decoded_step</a> (self, x, u=None, w=None, t=None)</td></tr>
 <tr class="separator:aa678264c14d6e3be45e71b59ae70dfca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -208,14 +210,92 @@ Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <pre class="fragment">f of a CONTINUOUS model: the decoded step, with the process noise added.</pre> 
-<p class="definition">Definition at line <a class="el" href="framework_2model_8py_source.html#l00583">583</a> of file <a class="el" href="framework_2model_8py_source.html">model.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  583</span><span class="keyword">def </span>_decoded_step(self, x, u=None, w=None, t=None):</div>
-<div class="line"><span class="lineno">  584</span>    <span class="stringliteral">&quot;&quot;&quot;f of a CONTINUOUS model: the decoded step, with the process noise added.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  585</span>    xk = self.decode_step(x, u, t)</div>
-<div class="line"><span class="lineno">  586</span>    <span class="keywordflow">if</span> w <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  587</span>        L = self.L(t=t)</div>
-<div class="line"><span class="lineno">  588</span>        xk = xk + (w <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> L @ w)</div>
-<div class="line"><span class="lineno">  589</span>    <span class="keywordflow">return</span> xk</div>
+<p class="definition">Definition at line <a class="el" href="framework_2model_8py_source.html#l00990">990</a> of file <a class="el" href="framework_2model_8py_source.html">model.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  990</span><span class="keyword">def </span>_decoded_step(self, x, u=None, w=None, t=None):</div>
+<div class="line"><span class="lineno">  991</span>    <span class="stringliteral">&quot;&quot;&quot;f of a CONTINUOUS model: the decoded step, with the process noise added.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  992</span>    xk = self.decode_step(x, u, t)</div>
+<div class="line"><span class="lineno">  993</span>    <span class="keywordflow">if</span> w <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  994</span>        L = self.L(t=t)</div>
+<div class="line"><span class="lineno">  995</span>        xk = xk + (w <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> L @ w)</div>
+<div class="line"><span class="lineno">  996</span>    <span class="keywordflow">return</span> xk</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aa5a8a9ed938af95989db3b3a0856ff98" name="aa5a8a9ed938af95989db3b3a0856ff98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa5a8a9ed938af95989db3b3a0856ff98">&#9670;&#160;</a></span>_over_columns()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.model._over_columns </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>rows</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>kwargs</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">``model.f`` or ``model.h`` on one state or on the columns of ``(n, N)``: in
+one call when the model declares that map ``BATCHED``, column by column
+otherwise. The noise argument (``w`` or ``v``), when given for many states, has
+one column per state. What the engines and ``step`` / ``sense`` share.</pre> 
+<p class="definition">Definition at line <a class="el" href="framework_2model_8py_source.html#l00971">971</a> of file <a class="el" href="framework_2model_8py_source.html">model.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  971</span><span class="keyword">def </span>_over_columns(model, name, x, rows, **kwargs):</div>
+<div class="line"><span class="lineno">  972</span>    <span class="stringliteral">&quot;&quot;&quot;``model.f`` or ``model.h`` on one state or on the columns of ``(n, N)``: in</span></div>
+<div class="line"><span class="lineno">  973</span><span class="stringliteral">    one call when the model declares that map ``BATCHED``, column by column</span></div>
+<div class="line"><span class="lineno">  974</span><span class="stringliteral">    otherwise. The noise argument (``w`` or ``v``), when given for many states, has</span></div>
+<div class="line"><span class="lineno">  975</span><span class="stringliteral">    one column per state. What the engines and ``step`` / ``sense`` share.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  976</span>    fn = getattr(model, name)</div>
+<div class="line"><span class="lineno">  977</span>    X = np.asarray(x)</div>
+<div class="line"><span class="lineno">  978</span>    <span class="keywordflow">if</span> X.ndim != 2 <span class="keywordflow">or</span> X.shape[1] &lt;= 1 <span class="keywordflow">or</span> name <span class="keywordflow">in</span> getattr(model, <span class="stringliteral">&quot;BATCHED&quot;</span>, ()):</div>
+<div class="line"><span class="lineno">  979</span>        <span class="keywordflow">return</span> fn(x, **kwargs)</div>
+<div class="line"><span class="lineno">  980</span>    noise = next((key <span class="keywordflow">for</span> key <span class="keywordflow">in</span> (<span class="stringliteral">&quot;w&quot;</span>, <span class="stringliteral">&quot;v&quot;</span>) <span class="keywordflow">if</span> kwargs.get(key) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>), <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  981</span>    out = np.empty((rows, X.shape[1]), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  982</span>    <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(X.shape[1]):</div>
+<div class="line"><span class="lineno">  983</span>        column = dict(kwargs)</div>
+<div class="line"><span class="lineno">  984</span>        <span class="keywordflow">if</span> noise <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  985</span>            column[noise] = np.asarray(kwargs[noise]).reshape(-1, X.shape[1])[:, i].reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  986</span>        out[:, i] = np.asarray(fn(X[:, i].reshape(-1, 1), **column), dtype=np.float64).reshape(-1)</div>
+<div class="line"><span class="lineno">  987</span>    <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  988</span> </div>
+<div class="line"><span class="lineno">  989</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -274,7 +354,7 @@ calls the constructor with them again.</pre>
 <div class="line"><span class="lineno">   34</span>                    kind = signature.parameters[name].kind</div>
 <div class="line"><span class="lineno">   35</span>                    <span class="keywordflow">if</span> position == 0 <span class="keywordflow">or</span> kind <span class="keywordflow">is</span> inspect.Parameter.VAR_POSITIONAL:</div>
 <div class="line"><span class="lineno">   36</span>                        <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">   37</span>                    <span class="keywordflow">if</span> position == 1 <span class="keywordflow">and</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
+<div class="line"><span class="lineno">   37</span>                    <span class="keywordflow">if</span> position == 1 <span class="keywordflow">and</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
 <div class="line"><span class="lineno">   38</span>                        first = name                    <span class="comment"># the sensor id: the reader gives its own</span></div>
 <div class="line"><span class="lineno">   39</span>                    <span class="keywordflow">if</span> kind <span class="keywordflow">is</span> inspect.Parameter.VAR_KEYWORD:</div>
 <div class="line"><span class="lineno">   40</span>                        recorded.update(value)</div>

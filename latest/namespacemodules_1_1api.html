@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -287,7 +287,7 @@ arrays ↔ nested lists) so any transport can carry them:
 A model is described by a :class:`KalmanSpec` dict::
 
     {"base": "matrices" | "continuous" | "&lt;CatalogClassName&gt;",
-     "sensor_id": ..., "fs": ...,
+     "sensor": ..., "fs": ...,
      "dynamics": {"F":..,"H":..} | {"A":..,"Qc":..} | {"params": {...}},
      "noise": {"Q":.., "R":..}, "initial": {"x0":.., "P0":..},
      "labels": {"states":[...], "observables":[...]},
@@ -1587,7 +1587,7 @@ of them.  Loading executes code, so this is gated by its own scope,
 <div class="line"><span class="lineno">  355</span>    base = spec.get(<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;matrices&quot;</span>)</div>
 <div class="line"><span class="lineno">  356</span>    <span class="keywordflow">if</span> base <span class="keywordflow">in</span> _MODELS:                            <span class="comment"># authored spec referenced by name</span></div>
 <div class="line"><span class="lineno">  357</span>        <span class="keywordflow">return</span> make_model(_MODELS[base])</div>
-<div class="line"><span class="lineno">  358</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;api&quot;</span>)</div>
+<div class="line"><span class="lineno">  358</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;api&quot;</span>)</div>
 <div class="line"><span class="lineno">  359</span>    fs = spec.get(<span class="stringliteral">&quot;fs&quot;</span>, 1.0)</div>
 <div class="line"><span class="lineno">  360</span>    noise = spec.get(<span class="stringliteral">&quot;noise&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
 <div class="line"><span class="lineno">  361</span>    initial = spec.get(<span class="stringliteral">&quot;initial&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
@@ -1621,7 +1621,7 @@ of them.  Loading executes code, so this is gated by its own scope,
 <div class="line"><span class="lineno">  389</span>    <span class="keywordflow">if</span> cls <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><span class="lineno">  390</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;unknown model base {base!r}; see catalog()[&#39;models&#39;].&quot;</span>)</div>
 <div class="line"><span class="lineno">  391</span>    params = dict((spec.get(<span class="stringliteral">&quot;dynamics&quot;</span>, {}) <span class="keywordflow">or</span> {}).get(<span class="stringliteral">&quot;params&quot;</span>, {}) <span class="keywordflow">or</span> {})</div>
-<div class="line"><span class="lineno">  392</span>    <span class="comment"># bind params against the class signature; pass sensor_id/fs when accepted</span></div>
+<div class="line"><span class="lineno">  392</span>    <span class="comment"># bind params against the class signature; pass sensor/fs when accepted</span></div>
 <div class="line"><span class="lineno">  393</span>    <span class="keywordflow">try</span>:</div>
 <div class="line"><span class="lineno">  394</span>        plist = list(inspect.signature(cls.__init__).parameters)   <span class="comment"># ordered</span></div>
 <div class="line"><span class="lineno">  395</span>    <span class="keywordflow">except</span> (TypeError, ValueError):</div>
@@ -1659,7 +1659,7 @@ of them.  Loading executes code, so this is gated by its own scope,
 <div class="line"><span class="lineno">  427</span>        <span class="keywordflow">if</span> k <span class="keywordflow">in</span> accepted <span class="keywordflow">or</span> takes_var_kw:</div>
 <div class="line"><span class="lineno">  428</span>            params.setdefault(k, v)</div>
 <div class="line"><span class="lineno">  429</span>    ordered = [p <span class="keywordflow">for</span> p <span class="keywordflow">in</span> plist <span class="keywordflow">if</span> p != <span class="stringliteral">&quot;self&quot;</span>]</div>
-<div class="line"><span class="lineno">  430</span>    <span class="keywordflow">if</span> ordered <span class="keywordflow">and</span> ordered[0] <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
+<div class="line"><span class="lineno">  430</span>    <span class="keywordflow">if</span> ordered <span class="keywordflow">and</span> ordered[0] <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
 <div class="line"><span class="lineno">  431</span>        <span class="keywordflow">return</span> cls(sensor, **params)</div>
 <div class="line"><span class="lineno">  432</span>    <span class="keywordflow">return</span> cls(**params)</div>
 <div class="line"><span class="lineno">  433</span> </div>
@@ -2201,11 +2201,11 @@ under the ``send_measurement`` scope.</pre>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Twin-experiment OSSE for a field/flow spec (EnKF vs free run).
+<pre class="fragment">Counterpart-experiment OSSE for a field/flow spec (EnKF vs free run).
 Returns the per-cycle RMSE/spread histories.</pre> 
 <p class="definition">Definition at line <a class="el" href="modules_2api_2____init_____8py_source.html#l00503">503</a> of file <a class="el" href="modules_2api_2____init_____8py_source.html">__init__.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  504</span>             inflation: float = 1.06, **kw) -&gt; dict:</div>
-<div class="line"><span class="lineno">  505</span>    <span class="stringliteral">&quot;&quot;&quot;Twin-experiment OSSE for a field/flow spec (EnKF vs free run).</span></div>
+<div class="line"><span class="lineno">  505</span>    <span class="stringliteral">&quot;&quot;&quot;Counterpart-experiment OSSE for a field/flow spec (EnKF vs free run).</span></div>
 <div class="line"><span class="lineno">  506</span><span class="stringliteral">    Returns the per-cycle RMSE/spread histories.&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">  507</span>    <span class="keyword">from</span> ..apps.weather <span class="keyword">import</span> TwinExperiment</div>
 <div class="line"><span class="lineno">  508</span>    model = make_model(spec)</div>
@@ -2549,7 +2549,7 @@ Verifies the token, but checks no scope.</pre>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;dynamics&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>,</div>
+<b>Initial value:</b><div class="fragment"><div class="line"><span class="lineno">    1</span>=  {<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;dynamics&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>,</div>
 <div class="line"><span class="lineno">    2</span>                   <span class="stringliteral">&quot;initial&quot;</span>, <span class="stringliteral">&quot;labels&quot;</span>, <span class="stringliteral">&quot;control&quot;</span>, <span class="stringliteral">&quot;bindings&quot;</span>, <span class="stringliteral">&quot;description&quot;</span>}</div>
 </div><!-- fragment -->
 <p class="definition">Definition at line <a class="el" href="modules_2api_2____init_____8py_source.html#l00296">296</a> of file <a class="el" href="modules_2api_2____init_____8py_source.html">__init__.py</a>.</p>

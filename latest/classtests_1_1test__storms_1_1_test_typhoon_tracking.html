@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -173,7 +173,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00066">66</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00067">67</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ac6d6ec843b16e6d64760b6c760226a1d" name="ac6d6ec843b16e6d64760b6c760226a1d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ac6d6ec843b16e6d64760b6c760226a1d">&#9670;&#160;</a></span>_run()</h2>
@@ -215,18 +215,18 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00068">68</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>_run(self, fix_noise=1.0, seed=1):</div>
-<div class="line"><span class="lineno">   69</span>        truth, fixes = synthetic_track(n_steps=40, recurve_at=18,</div>
-<div class="line"><span class="lineno">   70</span>                                       fix_noise=fix_noise, seed=seed)</div>
-<div class="line"><span class="lineno">   71</span>        models, Pi, probs = StormModel.ikf_bank(fix_noise=fix_noise, stall=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">for</span> m <span class="keywordflow">in</span> models:</div>
-<div class="line"><span class="lineno">   73</span>            m.initial_state(np.array([[138.], [12.], [-20.], [7.], [40.]]),</div>
-<div class="line"><span class="lineno">   74</span>                            np.diag([1., 1., 50., 50., 200.]))</div>
-<div class="line"><span class="lineno">   75</span>        ikf = InteractiveKalmanFilter(models, Pi, probs)</div>
-<div class="line"><span class="lineno">   76</span>        rec = ikf.forward(fixes)</div>
-<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">return</span> truth, fixes, ikf, rec</div>
-<div class="line"><span class="lineno">   78</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00069">69</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>    <span class="keyword">def </span>_run(self, fix_noise=1.0, seed=1):</div>
+<div class="line"><span class="lineno">   70</span>        truth, fixes = synthetic_track(n_steps=40, recurve_at=18,</div>
+<div class="line"><span class="lineno">   71</span>                                       fix_noise=fix_noise, seed=seed)</div>
+<div class="line"><span class="lineno">   72</span>        models, Pi, probs = StormModel.regime_bank(fix_noise=fix_noise, stall=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">for</span> m <span class="keywordflow">in</span> models:</div>
+<div class="line"><span class="lineno">   74</span>            m.initial_state(np.array([[138.], [12.], [-20.], [7.], [40.]]),</div>
+<div class="line"><span class="lineno">   75</span>                            np.diag([1., 1., 50., 50., 200.]))</div>
+<div class="line"><span class="lineno">   76</span>        ikf = route(models, Pi, probs)</div>
+<div class="line"><span class="lineno">   77</span>        rec = ikf.filter(fixes)</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keywordflow">return</span> truth, fixes, ikf, rec</div>
+<div class="line"><span class="lineno">   79</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -246,17 +246,17 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00098">98</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>    <span class="keyword">def </span>test_forecast_cone_grows(self):</div>
-<div class="line"><span class="lineno">   99</span>        truth, _, _, rec = self._run(fix_noise=0.5)</div>
-<div class="line"><span class="lineno">  100</span>        x0 = np.asarray(rec.xk)[15].reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  101</span>        P0 = np.asarray(rec.Pk)[15]</div>
-<div class="line"><span class="lineno">  102</span>        cone = StormModel.ikf_bank()[0][1].forecast_cone(x0, P0, steps=10)</div>
-<div class="line"><span class="lineno">  103</span>        self.assertEqual(len(cone[<span class="stringliteral">&quot;ellipses&quot;</span>]), 10)</div>
-<div class="line"><span class="lineno">  104</span>        semis = np.array([e[2] <span class="keywordflow">for</span> e <span class="keywordflow">in</span> cone[<span class="stringliteral">&quot;ellipses&quot;</span>]])</div>
-<div class="line"><span class="lineno">  105</span>        self.assertTrue(np.all(np.diff(semis) &gt;= -1e-9))     <span class="comment"># monotone growth</span></div>
-<div class="line"><span class="lineno">  106</span>        self.assertTrue(np.all(np.diff(cone[<span class="stringliteral">&quot;I_sigma&quot;</span>]) &gt;= -1e-9))</div>
-<div class="line"><span class="lineno">  107</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00099">99</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   99</span>    <span class="keyword">def </span>test_forecast_cone_grows(self):</div>
+<div class="line"><span class="lineno">  100</span>        truth, _, _, rec = self._run(fix_noise=0.5)</div>
+<div class="line"><span class="lineno">  101</span>        x0 = np.asarray(rec.xk)[15].reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  102</span>        P0 = np.asarray(rec.Pk)[15]</div>
+<div class="line"><span class="lineno">  103</span>        cone = StormModel.regime_bank()[0][1].forecast_cone(x0, P0, steps=10)</div>
+<div class="line"><span class="lineno">  104</span>        self.assertEqual(len(cone[<span class="stringliteral">&quot;ellipses&quot;</span>]), 10)</div>
+<div class="line"><span class="lineno">  105</span>        semis = np.array([e[2] <span class="keywordflow">for</span> e <span class="keywordflow">in</span> cone[<span class="stringliteral">&quot;ellipses&quot;</span>]])</div>
+<div class="line"><span class="lineno">  106</span>        self.assertTrue(np.all(np.diff(semis) &gt;= -1e-9))     <span class="comment"># monotone growth</span></div>
+<div class="line"><span class="lineno">  107</span>        self.assertTrue(np.all(np.diff(cone[<span class="stringliteral">&quot;I_sigma&quot;</span>]) &gt;= -1e-9))</div>
+<div class="line"><span class="lineno">  108</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -276,15 +276,15 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00079">79</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   79</span>    <span class="keyword">def </span>test_imm_beats_raw_fixes(self):</div>
-<div class="line"><span class="lineno">   80</span>        truth, fixes, ikf, rec = self._run(fix_noise=1.2)</div>
-<div class="line"><span class="lineno">   81</span>        xk = np.asarray(rec.xk)</div>
-<div class="line"><span class="lineno">   82</span>        est_km = np.mean(np.hypot(xk[:, 0]-truth[:, 0], xk[:, 1]-truth[:, 1])) * 111.0</div>
-<div class="line"><span class="lineno">   83</span>        fix_km = np.mean(np.hypot(fixes[:, 0]-truth[:, 0], fixes[:, 1]-truth[:, 1])) * 111.0</div>
-<div class="line"><span class="lineno">   84</span>        self.assertLess(est_km, fix_km)                <span class="comment"># filtering reduces track error</span></div>
-<div class="line"><span class="lineno">   85</span>        self.assertLess(est_km, 200.0)</div>
-<div class="line"><span class="lineno">   86</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00080">80</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>    <span class="keyword">def </span>test_imm_beats_raw_fixes(self):</div>
+<div class="line"><span class="lineno">   81</span>        truth, fixes, ikf, rec = self._run(fix_noise=1.2)</div>
+<div class="line"><span class="lineno">   82</span>        xk = np.asarray(rec.xk)</div>
+<div class="line"><span class="lineno">   83</span>        est_km = np.mean(np.hypot(xk[:, 0]-truth[:, 0], xk[:, 1]-truth[:, 1])) * 111.0</div>
+<div class="line"><span class="lineno">   84</span>        fix_km = np.mean(np.hypot(fixes[:, 0]-truth[:, 0], fixes[:, 1]-truth[:, 1])) * 111.0</div>
+<div class="line"><span class="lineno">   85</span>        self.assertLess(est_km, fix_km)                <span class="comment"># filtering reduces track error</span></div>
+<div class="line"><span class="lineno">   86</span>        self.assertLess(est_km, 200.0)</div>
+<div class="line"><span class="lineno">   87</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -304,12 +304,12 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00087">87</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   87</span>    <span class="keyword">def </span>test_intensity_recovered(self):</div>
-<div class="line"><span class="lineno">   88</span>        truth, _, _, rec = self._run(fix_noise=0.5)</div>
-<div class="line"><span class="lineno">   89</span>        xk = np.asarray(rec.xk)</div>
-<div class="line"><span class="lineno">   90</span>        self.assertLess(abs(xk[-1, 4] - truth[-1, 4]), 30.0)</div>
-<div class="line"><span class="lineno">   91</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00088">88</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>    <span class="keyword">def </span>test_intensity_recovered(self):</div>
+<div class="line"><span class="lineno">   89</span>        truth, _, _, rec = self._run(fix_noise=0.5)</div>
+<div class="line"><span class="lineno">   90</span>        xk = np.asarray(rec.xk)</div>
+<div class="line"><span class="lineno">   91</span>        self.assertLess(abs(xk[-1, 4] - truth[-1, 4]), 30.0)</div>
+<div class="line"><span class="lineno">   92</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -329,15 +329,14 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">One storm model: the hemisphere alone sets the poleward drift.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00108">108</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  108</span>    <span class="keyword">def </span>test_one_model_hemisphere_sets_beta_drift(self):</div>
-<div class="line"><span class="lineno">  109</span>        <span class="stringliteral">&quot;&quot;&quot;One storm model: the hemisphere alone sets the poleward drift.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  110</span>        self.assertGreater(StormModel(hemisphere=<span class="stringliteral">&quot;N&quot;</span>).beta_n, 0)</div>
-<div class="line"><span class="lineno">  111</span>        self.assertLess(StormModel(hemisphere=<span class="stringliteral">&quot;S&quot;</span>).beta_n, 0)</div>
-<div class="line"><span class="lineno">  112</span>        self.assertEqual(StormModel(hemisphere=<span class="stringliteral">&quot;s&quot;</span>).hemisphere, <span class="stringliteral">&quot;S&quot;</span>)</div>
-<div class="line"><span class="lineno">  113</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
-<div class="line"><span class="lineno">  114</span>            StormModel(hemisphere=<span class="stringliteral">&quot;E&quot;</span>)</div>
-<div class="line"><span class="lineno">  115</span>        self.assertIs(StormModel.ikf_bank.__func__, StormModel.ikf_bank.__func__)</div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00109">109</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  109</span>    <span class="keyword">def </span>test_one_model_hemisphere_sets_beta_drift(self):</div>
+<div class="line"><span class="lineno">  110</span>        <span class="stringliteral">&quot;&quot;&quot;One storm model: the hemisphere alone sets the poleward drift.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  111</span>        self.assertGreater(StormModel(hemisphere=<span class="stringliteral">&quot;N&quot;</span>).beta_n, 0)</div>
+<div class="line"><span class="lineno">  112</span>        self.assertLess(StormModel(hemisphere=<span class="stringliteral">&quot;S&quot;</span>).beta_n, 0)</div>
+<div class="line"><span class="lineno">  113</span>        self.assertEqual(StormModel(hemisphere=<span class="stringliteral">&quot;s&quot;</span>).hemisphere, <span class="stringliteral">&quot;S&quot;</span>)</div>
+<div class="line"><span class="lineno">  114</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  115</span>            StormModel(hemisphere=<span class="stringliteral">&quot;E&quot;</span>)</div>
 <div class="line"><span class="lineno">  116</span> </div>
 </div><!-- fragment -->
 </div>
@@ -390,13 +389,13 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00092">92</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>    <span class="keyword">def </span>test_recurve_mode_probability_rises(self):</div>
-<div class="line"><span class="lineno">   93</span>        _, _, ikf, _ = self._run(fix_noise=0.4)</div>
-<div class="line"><span class="lineno">   94</span>        mu = ikf.mode_probabilities</div>
-<div class="line"><span class="lineno">   95</span>        <span class="comment"># recurve (index 1) more probable after the turn than before it</span></div>
-<div class="line"><span class="lineno">   96</span>        self.assertGreater(mu[30, 1], mu[8, 1])</div>
-<div class="line"><span class="lineno">   97</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00093">93</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>test_recurve_mode_probability_rises(self):</div>
+<div class="line"><span class="lineno">   94</span>        _, _, ikf, _ = self._run(fix_noise=0.4)</div>
+<div class="line"><span class="lineno">   95</span>        mu = ikf.mode_probabilities</div>
+<div class="line"><span class="lineno">   96</span>        <span class="comment"># recurve (index 1) more probable after the turn than before it</span></div>
+<div class="line"><span class="lineno">   97</span>        self.assertGreater(mu[30, 1], mu[8, 1])</div>
+<div class="line"><span class="lineno">   98</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

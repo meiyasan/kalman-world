@@ -1,6 +1,6 @@
 var classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model =
 [
-    [ "__init__", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a89a95efeb5bfe0915954b97fcb12d1cf", null ],
+    [ "__init__", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#ab875a58f1575517f3e8091ed05de2482", null ],
     [ "_draw_intensity", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a7b8bbdb57aeceaa25862aff826b6edc1", null ],
     [ "_draw_track", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a30399686c4655f765045416e577d7bdc", null ],
     [ "_plot_interactive", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a5deb0fe99e21c776d41e3526dfc74671", null ],
@@ -9,11 +9,11 @@ var classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model =
     [ "f", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a62e45aa1ff97cfabcb68e71ec66b16af", null ],
     [ "forecast_cone", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a0dc6e9b86e094ff5069e3e50c8a78ac9", null ],
     [ "h", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a2f876941bd3ca747ee4a5b7ff5c296cc", null ],
-    [ "ikf_bank", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a033f75eb2ceae7b287936164aec9dead", null ],
     [ "native_arrays", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a0b46fab28828521c84683013e091cefd", null ],
     [ "native_name", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a7f5efbbfe540afa33f9f20fca46f948f", null ],
     [ "native_parameters", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#ab7dc4f6bd334d14191b02194fb5ddc90", null ],
     [ "observables", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a93babccacd5133c47ef07128020cefad", null ],
+    [ "regime_bank", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#ae2f5be5be5dace53572aa76849fbe5b9", null ],
     [ "states", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#ad238df3ad98ee040167b641c59bece92", null ],
     [ "_dt", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#aa4b2c7fb874d18588f35e99d34e9aa50", null ],
     [ "beta_drift", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#ad769ffa02d5a274fd5a163dc6e2042b5", null ],

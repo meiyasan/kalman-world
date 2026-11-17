@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Linear models the fused linear pass does not take still run in C++.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00495">495</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00494">494</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af3d73b6cf4183b46fb8ddd452e59b5c5" name="af3d73b6cf4183b46fb8ddd452e59b5c5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af3d73b6cf4183b46fb8ddd452e59b5c5">&#9670;&#160;</a></span>compare()</h2>
@@ -199,25 +199,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00498">498</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  498</span>    <span class="keyword">def </span>compare(self, make, zk, uk=None):</div>
-<div class="line"><span class="lineno">  499</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  500</span>        out = []</div>
-<div class="line"><span class="lineno">  501</span>        <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  502</span>            f = KalmanFilter(make())</div>
-<div class="line"><span class="lineno">  503</span>            <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  504</span>                <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  505</span>                    f.forward(zk, uk() <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">and</span> uk.__name__ == <span class="stringliteral">&quot;factory&quot;</span> <span class="keywordflow">else</span> uk, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  506</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  507</span>                self.assertTrue(f._callback_eligible(uk <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">else</span> <span class="keywordtype">None</span>) <span class="keywordflow">or</span> uk <span class="keywordflow">is</span> <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  508</span>                f.forward(zk, uk() <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">and</span> uk.__name__ == <span class="stringliteral">&quot;factory&quot;</span> <span class="keywordflow">else</span> uk, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  509</span>            out.append((np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.posterior]).reshape(len(zk), -1),</div>
-<div class="line"><span class="lineno">  510</span>                        np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> f.posterior])))</div>
-<div class="line"><span class="lineno">  511</span>        (x_ref, P_ref), (x_cxx, P_cxx) = out</div>
-<div class="line"><span class="lineno">  512</span>        np.testing.assert_allclose(x_cxx, x_ref, atol=1e-10)</div>
-<div class="line"><span class="lineno">  513</span>        np.testing.assert_allclose(P_cxx, P_ref, atol=1e-10)</div>
-<div class="line"><span class="lineno">  514</span>        <span class="keywordflow">return</span> x_ref</div>
-<div class="line"><span class="lineno">  515</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00497">497</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  497</span>    <span class="keyword">def </span>compare(self, make, zk, uk=None):</div>
+<div class="line"><span class="lineno">  498</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  499</span>        out = []</div>
+<div class="line"><span class="lineno">  500</span>        <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  501</span>            f = KalmanFilter(make())</div>
+<div class="line"><span class="lineno">  502</span>            <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  503</span>                <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  504</span>                    f.forward(zk, uk() <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">and</span> uk.__name__ == <span class="stringliteral">&quot;factory&quot;</span> <span class="keywordflow">else</span> uk, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  505</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  506</span>                self.assertTrue(f._callback_eligible(uk <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">else</span> <span class="keywordtype">None</span>) <span class="keywordflow">or</span> uk <span class="keywordflow">is</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  507</span>                f.forward(zk, uk() <span class="keywordflow">if</span> callable(uk) <span class="keywordflow">and</span> uk.__name__ == <span class="stringliteral">&quot;factory&quot;</span> <span class="keywordflow">else</span> uk, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  508</span>            out.append((np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.posterior]).reshape(len(zk), -1),</div>
+<div class="line"><span class="lineno">  509</span>                        np.array([P <span class="keywordflow">for</span> _, P <span class="keywordflow">in</span> f.posterior])))</div>
+<div class="line"><span class="lineno">  510</span>        (x_ref, P_ref), (x_cxx, P_cxx) = out</div>
+<div class="line"><span class="lineno">  511</span>        np.testing.assert_allclose(x_cxx, x_ref, atol=1e-10)</div>
+<div class="line"><span class="lineno">  512</span>        np.testing.assert_allclose(P_cxx, P_ref, atol=1e-10)</div>
+<div class="line"><span class="lineno">  513</span>        <span class="keywordflow">return</span> x_ref</div>
+<div class="line"><span class="lineno">  514</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filter_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a></div><div class="ttdef"><b>Definition</b> <a href="filter_8py_source.html#l00001">filter.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -238,22 +238,22 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00516">516</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  516</span>    <span class="keyword">def </span>test_a_linear_model_in_closed_loop(self):</div>
-<div class="line"><span class="lineno">  517</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a> <span class="keyword">import</span> KalmanModel</div>
-<div class="line"><span class="lineno">  518</span>        dt = 0.1</div>
-<div class="line"><span class="lineno">  519</span>        <span class="keyword">def </span>make():</div>
-<div class="line"><span class="lineno">  520</span>            <span class="keywordflow">return</span> KalmanModel(<span class="stringliteral">&quot;cart&quot;</span>, F=np.array([[1.0, dt], [0.0, 1.0]]), B=np.array([[0.5 * dt * dt], [dt]]),</div>
-<div class="line"><span class="lineno">  521</span>                               H=np.array([[1.0, 0.0]]), Q=np.diag([1e-5, 1e-3]), R=np.array([[0.04]]),</div>
-<div class="line"><span class="lineno">  522</span>                               L=np.eye(2), fs=1.0 / dt, x0=np.array([[1.0], [0.0]]), P0=np.eye(2))</div>
-<div class="line"><span class="lineno">  523</span>        rng = np.random.default_rng(2)</div>
-<div class="line"><span class="lineno">  524</span>        zk = (np.exp(-0.2 * np.arange(120) * dt) + 0.2 * rng.standard_normal(120)).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  525</span>        zk[40:46] = np.nan</div>
-<div class="line"><span class="lineno">  526</span>        <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
-<div class="line"><span class="lineno">  527</span>            <span class="keywordflow">return</span> np.array([[-3.0 * x[0, 0] - 2.0 * x[1, 0]]])</div>
-<div class="line"><span class="lineno">  528</span>        x = self.compare(make, zk, policy)</div>
-<div class="line"><span class="lineno">  529</span>        self.assertLess(abs(x[-1, 0]), abs(x[0, 0]))               <span class="comment"># the controller did pull it in</span></div>
-<div class="line"><span class="lineno">  530</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00515">515</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  515</span>    <span class="keyword">def </span>test_a_linear_model_in_closed_loop(self):</div>
+<div class="line"><span class="lineno">  516</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a> <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><span class="lineno">  517</span>        dt = 0.1</div>
+<div class="line"><span class="lineno">  518</span>        <span class="keyword">def </span>make():</div>
+<div class="line"><span class="lineno">  519</span>            <span class="keywordflow">return</span> KalmanModel(<span class="stringliteral">&quot;cart&quot;</span>, F=np.array([[1.0, dt], [0.0, 1.0]]), B=np.array([[0.5 * dt * dt], [dt]]),</div>
+<div class="line"><span class="lineno">  520</span>                               H=np.array([[1.0, 0.0]]), Q=np.diag([1e-5, 1e-3]), R=np.array([[0.04]]),</div>
+<div class="line"><span class="lineno">  521</span>                               L=np.eye(2), fs=1.0 / dt, x0=np.array([[1.0], [0.0]]), P0=np.eye(2))</div>
+<div class="line"><span class="lineno">  522</span>        rng = np.random.default_rng(2)</div>
+<div class="line"><span class="lineno">  523</span>        zk = (np.exp(-0.2 * np.arange(120) * dt) + 0.2 * rng.standard_normal(120)).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  524</span>        zk[40:46] = np.nan</div>
+<div class="line"><span class="lineno">  525</span>        <span class="keyword">def </span>policy(x, P, t, nu=None):</div>
+<div class="line"><span class="lineno">  526</span>            <span class="keywordflow">return</span> np.array([[-3.0 * x[0, 0] - 2.0 * x[1, 0]]])</div>
+<div class="line"><span class="lineno">  527</span>        x = self.compare(make, zk, policy)</div>
+<div class="line"><span class="lineno">  528</span>        self.assertLess(abs(x[-1, 0]), abs(x[0, 0]))               <span class="comment"># the controller did pull it in</span></div>
+<div class="line"><span class="lineno">  529</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1model_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00001">model.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -275,29 +275,29 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">A function may count its calls (the calorimeter steps through its layers
 that way): only the Python loop calls it once per step, in order.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00531">531</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  531</span>    <span class="keyword">def </span>test_matrices_given_as_functions_keep_the_python_loop(self):</div>
-<div class="line"><span class="lineno">  532</span>        <span class="stringliteral">&quot;&quot;&quot;A function may count its calls (the calorimeter steps through its layers</span></div>
-<div class="line"><span class="lineno">  533</span><span class="stringliteral">        that way): only the Python loop calls it once per step, in order.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  534</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a> <span class="keyword">import</span> KalmanModel</div>
-<div class="line"><span class="lineno">  535</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  536</span>        calls = []</div>
-<div class="line"><span class="lineno">  537</span>        <span class="keyword">def </span>rotation(t=None):</div>
-<div class="line"><span class="lineno">  538</span>            calls.append(t)</div>
-<div class="line"><span class="lineno">  539</span>            angle = 0.2 + 0.1 * (t <span class="keywordflow">or</span> 0.0)</div>
-<div class="line"><span class="lineno">  540</span>            <span class="keywordflow">return</span> np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])</div>
-<div class="line"><span class="lineno">  541</span>        model = KalmanModel(<span class="stringliteral">&quot;chirp&quot;</span>, F=rotation, H=np.array([[1.0, 0.0]]), Q=np.eye(2) * 1e-4, R=np.array([[0.01]]),</div>
-<div class="line"><span class="lineno">  542</span>                            L=np.eye(2), fs=10.0, x0=np.array([[1.0], [0.0]]), P0=np.eye(2), n=2, m=1)</div>
-<div class="line"><span class="lineno">  543</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1linear.html">modules.framework.engines.linear</a> <span class="keyword">import</span> LinearKalmanEngine</div>
-<div class="line"><span class="lineno">  544</span>        f = KalmanFilter(model, engine=LinearKalmanEngine())</div>
-<div class="line"><span class="lineno">  545</span>        self.assertFalse(f._callback_eligible(<span class="keywordtype">None</span>))</div>
-<div class="line"><span class="lineno">  546</span>        self.assertFalse(f._callback_eligible(<span class="keyword">lambda</span> x, P, t, nu=<span class="keywordtype">None</span>: np.zeros((0, 1))))</div>
-<div class="line"><span class="lineno">  547</span>        calls.clear()</div>
-<div class="line"><span class="lineno">  548</span>        f.forward(np.ones((7, 1)), record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  549</span>        self.assertEqual(len([t <span class="keywordflow">for</span> t <span class="keywordflow">in</span> calls <span class="keywordflow">if</span> t <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>]), 7)        <span class="comment"># once per step</span></div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00530">530</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  530</span>    <span class="keyword">def </span>test_matrices_given_as_functions_keep_the_python_loop(self):</div>
+<div class="line"><span class="lineno">  531</span>        <span class="stringliteral">&quot;&quot;&quot;A function may count its calls (the calorimeter steps through its layers</span></div>
+<div class="line"><span class="lineno">  532</span><span class="stringliteral">        that way): only the Python loop calls it once per step, in order.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  533</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1model.html">modules.framework.model</a> <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><span class="lineno">  534</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  535</span>        calls = []</div>
+<div class="line"><span class="lineno">  536</span>        <span class="keyword">def </span>rotation(t=None):</div>
+<div class="line"><span class="lineno">  537</span>            calls.append(t)</div>
+<div class="line"><span class="lineno">  538</span>            angle = 0.2 + 0.1 * (t <span class="keywordflow">or</span> 0.0)</div>
+<div class="line"><span class="lineno">  539</span>            <span class="keywordflow">return</span> np.array([[np.cos(angle), -np.sin(angle)], [np.sin(angle), np.cos(angle)]])</div>
+<div class="line"><span class="lineno">  540</span>        model = KalmanModel(<span class="stringliteral">&quot;chirp&quot;</span>, F=rotation, H=np.array([[1.0, 0.0]]), Q=np.eye(2) * 1e-4, R=np.array([[0.01]]),</div>
+<div class="line"><span class="lineno">  541</span>                            L=np.eye(2), fs=10.0, x0=np.array([[1.0], [0.0]]), P0=np.eye(2), n=2, m=1)</div>
+<div class="line"><span class="lineno">  542</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines_1_1linear.html">modules.framework.engines.linear</a> <span class="keyword">import</span> LinearKalmanEngine</div>
+<div class="line"><span class="lineno">  543</span>        f = KalmanFilter(model, engine=LinearKalmanEngine())</div>
+<div class="line"><span class="lineno">  544</span>        self.assertFalse(f._callback_eligible(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  545</span>        self.assertFalse(f._callback_eligible(<span class="keyword">lambda</span> x, P, t, nu=<span class="keywordtype">None</span>: np.zeros((0, 1))))</div>
+<div class="line"><span class="lineno">  546</span>        calls.clear()</div>
+<div class="line"><span class="lineno">  547</span>        f.forward(np.ones((7, 1)), record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  548</span>        self.assertEqual(len([t <span class="keywordflow">for</span> t <span class="keywordflow">in</span> calls <span class="keywordflow">if</span> t <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>]), 7)        <span class="comment"># once per step</span></div>
+<div class="line"><span class="lineno">  549</span> </div>
 <div class="line"><span class="lineno">  550</span> </div>
-<div class="line"><span class="lineno">  551</span> </div>
-<div class="line"><span class="lineno">  552</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman is not built&quot;)</span></div>
+<div class="line"><span class="lineno">  551</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman is not built&quot;)</span></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1engines_1_1linear_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1engines_1_1linear.html">modules.framework.engines.linear</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2engines_2linear_8py_source.html#l00001">linear.py:1</a></div></div>
 </div><!-- fragment -->
 </div>

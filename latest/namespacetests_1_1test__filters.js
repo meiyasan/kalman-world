@@ -3,6 +3,7 @@ var namespacetests_1_1test__filters =
     [ "_Projectile", "classtests_1_1test__filters_1_1___projectile.html", "classtests_1_1test__filters_1_1___projectile" ],
     [ "TestCrossEngineAgreement", "classtests_1_1test__filters_1_1_test_cross_engine_agreement.html", "classtests_1_1test__filters_1_1_test_cross_engine_agreement" ],
     [ "TestLinearKalmanFilter", "classtests_1_1test__filters_1_1_test_linear_kalman_filter.html", "classtests_1_1test__filters_1_1_test_linear_kalman_filter" ],
+    [ "TestManyStatesInOneCall", "classtests_1_1test__filters_1_1_test_many_states_in_one_call.html", "classtests_1_1test__filters_1_1_test_many_states_in_one_call" ],
     [ "TestNonlinearFilters", "classtests_1_1test__filters_1_1_test_nonlinear_filters.html", "classtests_1_1test__filters_1_1_test_nonlinear_filters" ],
     [ "_cv_model", "namespacetests_1_1test__filters.html#ac016305ebd6ac2cee17ac999821fe02e", null ],
     [ "_make_track", "namespacetests_1_1test__filters.html#a7c23576598bd78b03f9b348a744ee8ac", null ],

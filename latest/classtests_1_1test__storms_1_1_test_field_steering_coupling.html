@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -222,7 +222,7 @@ Protected Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  283</span>    <span class="keyword">def </span>test_field_ensemble_drives_track_spread(self):</div>
 <div class="line"><span class="lineno">  284</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1storms.html">modules.apps.weather.storms</a> <span class="keyword">import</span> field_steering</div>
 <div class="line"><span class="lineno">  285</span>        flow = self._flow()</div>
-<div class="line"><span class="lineno">  286</span>        ens = flow.initial_ensemble(12, rng=1)</div>
+<div class="line"><span class="lineno">  286</span>        ens = flow.initial_state(samples=12, rng=1)</div>
 <div class="line"><span class="lineno">  287</span>        x0 = np.array([[140.], [20.], [-14.], [6.], [75.]])</div>
 <div class="line"><span class="lineno">  288</span>        ends = []</div>
 <div class="line"><span class="lineno">  289</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(ens.shape[1]):</div>
@@ -262,7 +262,7 @@ Protected Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  273</span>    <span class="keyword">def </span>test_field_steering_composes_base_plus_anomaly(self):</div>
 <div class="line"><span class="lineno">  274</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1storms.html">modules.apps.weather.storms</a> <span class="keyword">import</span> field_steering</div>
 <div class="line"><span class="lineno">  275</span>        flow = self._flow()</div>
-<div class="line"><span class="lineno">  276</span>        field = flow.initial_ensemble(1, rng=0)[:, 0]</div>
+<div class="line"><span class="lineno">  276</span>        field = flow.initial_state(samples=1, rng=0)[:, 0]</div>
 <div class="line"><span class="lineno">  277</span>        samp = flow.velocity_sampler(field, (120., 160., 8., 45.), speed=10.0)</div>
 <div class="line"><span class="lineno">  278</span>        s0 = field_steering(samp, base=japan_steering, weight=0.0)</div>
 <div class="line"><span class="lineno">  279</span>        np.testing.assert_allclose(s0(140, 20), japan_steering(140, 20), atol=1e-9)  <span class="comment"># weight 0 = base</span></div>
@@ -292,7 +292,7 @@ Protected Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  263</span>    <span class="keyword">def </span>test_velocity_sampler_periodic_and_finite(self):</div>
 <div class="line"><span class="lineno">  264</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1storms.html">modules.apps.weather.storms</a> <span class="keyword">import</span> field_steering</div>
 <div class="line"><span class="lineno">  265</span>        flow = self._flow()</div>
-<div class="line"><span class="lineno">  266</span>        field = flow.initial_ensemble(1, rng=0)[:, 0]</div>
+<div class="line"><span class="lineno">  266</span>        field = flow.initial_state(samples=1, rng=0)[:, 0]</div>
 <div class="line"><span class="lineno">  267</span>        samp = flow.velocity_sampler(field, (120., 160., 8., 45.), speed=10.0)</div>
 <div class="line"><span class="lineno">  268</span>        ve, vn = samp(140.0, 20.0)</div>
 <div class="line"><span class="lineno">  269</span>        self.assertTrue(np.isfinite(ve) <span class="keywordflow">and</span> np.isfinite(vn))</div>

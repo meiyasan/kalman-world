@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -149,7 +149,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__routers_1_1_test_errors.html">TestErrors</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__routers_1_1_test_inside_the_i_k_f.html">TestInsideTheIKF</a></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__routers_1_1_test_inside_a_routed_pass.html">TestInsideARoutedPass</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__routers_1_1_test_routers_agree_with_their_reference.html">TestRoutersAgreeWithTheirReference</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,10 +162,10 @@ Functions</h2></td></tr>
 <tr class="separator:a0fed123931b86e7cc6671b19fc7ac7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">The rule-based IKF routers decide in C++ (Kalman::Routers); the Python arithmetic is the reference.
+<div class="textblock"><pre class="fragment">The rule-based mode routers decide in C++ (Kalman::Routers); the Python arithmetic is the reference.
 
 Bayesian, Threshold and Hybrid routers are compared with their Python reference
-on random inputs and inside a whole IKF pass, then the error paths: a Python
+on random inputs and inside a whole pass of a routed model, then the error paths: a Python
 child of a Hybrid called back from C++ and raising, configurations the C++
 classes do not take, and the C API refusing bad arguments.
 

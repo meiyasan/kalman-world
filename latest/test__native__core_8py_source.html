@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -424,7 +424,7 @@ $(document).ready(function(){initNavTree('test__native__core_8py_source.html',''
 </div>
 <div class="foldopen" id="foldopen00226" data-start="" data-end="">
 <div class="line"><a id="l00226" name="l00226"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__core_1_1_test_api_integration.html#af3d8ab95223636c5e4ac1cfd05820313">  226</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__core_1_1_test_api_integration.html#af3d8ab95223636c5e4ac1cfd05820313">test_spec_with_a_native_base_runs_the_filter</a>(self):</div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;constant-velocity&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;cv&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 20,</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;constant-velocity&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;cv&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 20,</div>
 <div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>                <span class="stringliteral">&quot;initial&quot;</span>: {<span class="stringliteral">&quot;x0&quot;</span>: [[0.0], [1.0]]}}</div>
 <div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        sampled = api.sample(spec, 1.0)</div>
 <div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        self.assertEqual(len(sampled[<span class="stringliteral">&quot;zk&quot;</span>]), 20)</div>
@@ -543,7 +543,7 @@ $(document).ready(function(){initNavTree('test__native__core_8py_source.html',''
 </div>
 <div class="foldopen" id="foldopen00323" data-start="" data-end="">
 <div class="line"><a id="l00323" name="l00323"></a><span class="lineno"><a class="line" href="classtests_1_1test__native__core_1_1_test_native_engine.html#a6484e0867b54f06f4dbee2b23cc2f36d">  323</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__native__core_1_1_test_native_engine.html#a6484e0867b54f06f4dbee2b23cc2f36d">test_api_binding_selects_the_native_backend</a>(self):</div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;p&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50,</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;p&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50,</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span>                <span class="stringliteral">&quot;bindings&quot;</span>: {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;extended&quot;</span>, <span class="stringliteral">&quot;backend&quot;</span>: <span class="stringliteral">&quot;native&quot;</span>}}</div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>        filt = api.make_filter(spec)</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>        self.assertEqual(type(filt.engine).__name__, <span class="stringliteral">&quot;NativeEngine&quot;</span>)</div>

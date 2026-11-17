@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -149,7 +149,7 @@ $(document).ready(function(){initNavTree('_constants_8h.html',''); initResizable
 <div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_constants_8h__dep__incl.svg" width="6106" height="696"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_constants_8h__dep__incl.svg" width="8379" height="535"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_constants_8h_source.html">Go to the source code of this file.</a></p>
@@ -169,6 +169,7 @@ Enumerations</h2></td></tr>
 , <br />
 &#160;&#160;<a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Kalman::Ensemble</a> = 4
 , <a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0">Kalman::Combinatorial</a> = 5
+, <a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76">Kalman::Interacting</a> = 6
 <br />
  }</td></tr>
 <tr class="memdesc:acbc7aea0a730692732f8c2f3009fc678"><td class="mdescLeft">&#160;</td><td class="mdescRight">Which inference algorithm a model wants, and which one an engine provides.  <a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">More...</a><br /></td></tr>
@@ -184,6 +185,11 @@ Enumerations</h2></td></tr>
  }</td></tr>
 <tr class="memdesc:a56226206eb2edf1fbfbf2c17dd4398fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">What a model is made of, which decides what a file can hold of it.  <a href="namespace_kalman.html#a56226206eb2edf1fbfbf2c17dd4398fc">More...</a><br /></td></tr>
 <tr class="separator:a56226206eb2edf1fbfbf2c17dd4398fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aad2643f8b394ec61c58806b17ce2402f" id="r_aad2643f8b394ec61c58806b17ce2402f"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Kalman::Readout</a> { <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Kalman::Stacked</a> = 0
+, <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697">Kalman::Summed</a> = 1
+ }</td></tr>
+<tr class="memdesc:aad2643f8b394ec61c58806b17ce2402f"><td class="mdescLeft">&#160;</td><td class="mdescRight">How the parts of a composite model are read (Models::Composite).  <a href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">More...</a><br /></td></tr>
+<tr class="separator:aad2643f8b394ec61c58806b17ce2402f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b01e9a934d40a95e17ec5bc26e0a833" id="r_a3b01e9a934d40a95e17ec5bc26e0a833"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">Kalman::DifferentiatorKind</a> { <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a8503d71dcafbdc254c2bbea2599e5791">Kalman::Analytic</a> = 0
 , <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a67d2f6740a8eaebf4d5c6f79be8da481">Kalman::Forward</a> = 1
 , <a class="el" href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833a4a8c79ddddd6109289084e80aa41cdf2">Kalman::Central</a> = 2

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -192,7 +192,7 @@ Verifying it took effect</h2>
 </div><!-- fragment --><hr  />
 <h1><a class="anchor" id="solvers"></a>
 Solvers</h1>
-<h2><a class="anchor" id="the-contract-2"></a>
+<h2><a class="anchor" id="the-contract-1"></a>
 The contract</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>KalmanSolver:</div>
 <div class="line">    KIND = <span class="keywordtype">None</span></div>
@@ -260,7 +260,7 @@ Differentiators</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>AUTOMATIC</code>   </td><td class="markdownTableBodyNone">automatic differentiation   </td><td class="markdownTableBodyNone">-   </td><td class="markdownTableBodyNone">reserved, for <code>libKalmanLearn</code>   </td></tr>
 </table>
-<p>The differences are computed in C++ (<code><a class="el" href="namespace_kalman_1_1_differentiators.html">Kalman::Differentiators</a></code>), also for a model written in Python, and a C++ twin linearises with the scheme its Python class declares. A model that overrides <code>F()</code> or holds matrices is analytic whatever it declares.</p>
+<p>The differences are computed in C++ (<code><a class="el" href="namespace_kalman_1_1_differentiators.html">Kalman::Differentiators</a></code>), also for a model written in Python, and a C++ counterpart linearises with the scheme its Python class declares. A model that overrides <code>F()</code> or holds matrices is analytic whatever it declares.</p>
 <h1><a class="anchor" id="customization"></a>
 Customization</h1>
 <p>The kind enums are the authority for <b>shipped</b> schemes. Your own scheme does not need a member in them.</p>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -148,8 +148,8 @@ $(document).ready(function(){initNavTree('classmodules_1_1apps_1_1weather_1_1flo
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a451cf4cf8bfe7599e08e87ce5710810b" id="r_a451cf4cf8bfe7599e08e87ce5710810b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html#a451cf4cf8bfe7599e08e87ce5710810b">__init__</a> (self, <a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#afdb3d8594da86675c8e5acd9ab07f01a">model</a>, fn=None, q_std=None)</td></tr>
 <tr class="separator:a451cf4cf8bfe7599e08e87ce5710810b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a210bc5bf2994cdbdb2a5d14c8a7b4cc4" id="r_a210bc5bf2994cdbdb2a5d14c8a7b4cc4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html#a210bc5bf2994cdbdb2a5d14c8a7b4cc4">forecast</a> (self, X, t=None)</td></tr>
-<tr class="separator:a210bc5bf2994cdbdb2a5d14c8a7b4cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a180d6e40928332bcb3a86e10fab389ad" id="r_a180d6e40928332bcb3a86e10fab389ad"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html#a180d6e40928332bcb3a86e10fab389ad">f</a> (self, X, u=None, w=None, t=None)</td></tr>
+<tr class="separator:a180d6e40928332bcb3a86e10fab389ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4e2eaead2db02fcd7c2b5869ca77f2fc" id="r_a4e2eaead2db02fcd7c2b5869ca77f2fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html#a4e2eaead2db02fcd7c2b5869ca77f2fc">Q</a> (self, t=None)</td></tr>
 <tr class="separator:a4e2eaead2db02fcd7c2b5869ca77f2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a437deffa6d9fbb28be0e05c06ada93b3" id="r_a437deffa6d9fbb28be0e05c06ada93b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html#a437deffa6d9fbb28be0e05c06ada93b3">__getattr__</a> (self, name)</td></tr>
@@ -166,7 +166,7 @@ Protected Attributes</h2></td></tr>
 <div class="textblock"><pre class="fragment">Per-method model view: optional surrogate forecast and/or additive
 model-error covariance override (``Q = q_std² I``), everything else
 proxied to the shared model.</pre> 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00566">566</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00584">584</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a451cf4cf8bfe7599e08e87ce5710810b" name="a451cf4cf8bfe7599e08e87ce5710810b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a451cf4cf8bfe7599e08e87ce5710810b">&#9670;&#160;</a></span>__init__()</h2>
@@ -206,11 +206,11 @@ proxied to the shared model.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00570">570</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  570</span>        <span class="keyword">def </span>__init__(self, model, fn=None, q_std=None):</div>
-<div class="line"><span class="lineno">  571</span>            object.__setattr__(self, <span class="stringliteral">&quot;_model&quot;</span>, model)</div>
-<div class="line"><span class="lineno">  572</span>            object.__setattr__(self, <span class="stringliteral">&quot;_fn&quot;</span>, fn)</div>
-<div class="line"><span class="lineno">  573</span>            object.__setattr__(self, <span class="stringliteral">&quot;_q_std&quot;</span>, q_std)</div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00588">588</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  588</span>        <span class="keyword">def </span>__init__(self, model, fn=None, q_std=None):</div>
+<div class="line"><span class="lineno">  589</span>            object.__setattr__(self, <span class="stringliteral">&quot;_model&quot;</span>, model)</div>
+<div class="line"><span class="lineno">  590</span>            object.__setattr__(self, <span class="stringliteral">&quot;_fn&quot;</span>, fn)</div>
+<div class="line"><span class="lineno">  591</span>            object.__setattr__(self, <span class="stringliteral">&quot;_q_std&quot;</span>, q_std)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -241,22 +241,22 @@ proxied to the shared model.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00580">580</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  580</span>        <span class="keyword">def </span>__getattr__(self, name):</div>
-<div class="line"><span class="lineno">  581</span>            <span class="keywordflow">return</span> getattr(self._model, name)</div>
-<div class="line"><span class="lineno">  582</span> </div>
-<div class="line"><span class="lineno">  583</span>    <span class="keyword">def </span>add_method(self, name, engine=None, *, inflation=1.06, forecast=None,</div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00598">598</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  598</span>        <span class="keyword">def </span>__getattr__(self, name):</div>
+<div class="line"><span class="lineno">  599</span>            <span class="keywordflow">return</span> getattr(self._model, name)</div>
+<div class="line"><span class="lineno">  600</span> </div>
+<div class="line"><span class="lineno">  601</span>    <span class="keyword">def </span>add_method(self, name, engine=None, *, inflation=1.06, forecast=None,</div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a210bc5bf2994cdbdb2a5d14c8a7b4cc4" name="a210bc5bf2994cdbdb2a5d14c8a7b4cc4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a210bc5bf2994cdbdb2a5d14c8a7b4cc4">&#9670;&#160;</a></span>forecast()</h2>
+<a id="a180d6e40928332bcb3a86e10fab389ad" name="a180d6e40928332bcb3a86e10fab389ad"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a180d6e40928332bcb3a86e10fab389ad">&#9670;&#160;</a></span>f()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">modules.apps.weather.flow.TwinExperiment._MethodView.forecast </td>
+          <td class="memname">modules.apps.weather.flow.TwinExperiment._MethodView.f </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em>, </td>
@@ -266,6 +266,18 @@ proxied to the shared model.</pre>
           <td></td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>X</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>u</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>w</em> = <code>None</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -281,9 +293,9 @@ proxied to the shared model.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00574">574</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  574</span>        <span class="keyword">def </span>forecast(self, X, t=None):</div>
-<div class="line"><span class="lineno">  575</span>            <span class="keywordflow">return</span> self._fn(X) <span class="keywordflow">if</span> self._fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self._model.forecast(X, t=t)</div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00592">592</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  592</span>        <span class="keyword">def </span>f(self, X, u=None, w=None, t=None):</div>
+<div class="line"><span class="lineno">  593</span>            <span class="keywordflow">return</span> self._fn(X) <span class="keywordflow">if</span> self._fn <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self._model.f(X, u=u, w=w, t=t)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -313,11 +325,11 @@ proxied to the shared model.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00576">576</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  576</span>        <span class="keyword">def </span>Q(self, t=None):</div>
-<div class="line"><span class="lineno">  577</span>            <span class="keywordflow">if</span> self._q_std <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  578</span>                <span class="keywordflow">return</span> self._model.Q(t=t)</div>
-<div class="line"><span class="lineno">  579</span>            <span class="keywordflow">return</span> np.diag(np.full(self._model.n, float(self._q_std) ** 2))</div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00594">594</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  594</span>        <span class="keyword">def </span>Q(self, t=None):</div>
+<div class="line"><span class="lineno">  595</span>            <span class="keywordflow">if</span> self._q_std <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  596</span>                <span class="keywordflow">return</span> self._model.Q(t=t)</div>
+<div class="line"><span class="lineno">  597</span>            <span class="keywordflow">return</span> np.diag(np.full(self._model.n, float(self._q_std) ** 2))</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -342,7 +354,7 @@ proxied to the shared model.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00581">581</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00599">599</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -366,7 +378,7 @@ proxied to the shared model.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00579">579</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00597">597</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>

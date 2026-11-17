@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -258,7 +258,7 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Replans a sampled control sequence at every step by Monte-Carlo rollout of the true <code>f</code>. </p>
-<p>Unlike <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html" title="u = -K (x_hat - x_ref), K from the DARE of the model&#39;s F, B, Qcost, Rcost.">LQR</a> — one gain from one linearisation — <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html" title="Replans a sampled control sequence at every step by Monte-Carlo rollout of the true f.">MPPI</a> resolves <code>argmin E[sum e^T Qcost e + u^T Rcost u]</code> from scratch each tick by rolling <code>nRollouts</code> perturbed sequences through the model's own nonlinear <code>f()</code>, so any actuator limit the model enforces (ClipControl) is respected <em>during</em> planning. Warm-started: the nominal found at step k, shifted by one, seeds step k+1. The random stream is controller-owned and seeded. Mirrors <code><a class="el" href="mppi_8py.html">controllers/mppi.py</a></code>. </p>
+<p>Unlike <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html" title="u = -K (x_hat - x_ref), K from the DARE of the model&#39;s F, B, Qcost, Rcost.">LQR</a> — one gain from one linearisation — <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html" title="Replans a sampled control sequence at every step by Monte-Carlo rollout of the true f.">MPPI</a> resolves <code>argmin E[sum e^T Qcost e + u^T Rcost u]</code> from scratch each tick by rolling <code>nRollouts</code> perturbed sequences through the model's own nonlinear <code>f()</code>, so any actuator limit the model enforces (LimitControl) is respected <em>during</em> planning. Warm-started: the nominal found at step k, shifted by one, seeds step k+1. The random stream is controller-owned and seeded. Mirrors <code><a class="el" href="mppi_8py.html">controllers/mppi.py</a></code>. </p>
 
 <p class="definition">Definition at line <a class="el" href="_m_p_p_i_8h_source.html#l00031">31</a> of file <a class="el" href="_m_p_p_i_8h_source.html">MPPI.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -336,14 +336,14 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00150">150</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  152</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>(nRollouts), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>(horizon),</div>
-<div class="line"><span class="lineno">  153</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ab7ce20cfb22e5b5aeab2723314cde383">fNoiseSigma</a>(noiseSigma), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a117245a983120e3eee0f442f70c931e1">fLambda</a>(lambda), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a>(nIters), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ae1a9edf1971a286bcbde33e00cf60638">fSeed</a>(seed), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>(seed)</div>
-<div class="line"><span class="lineno">  154</span>    {</div>
-<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">if</span> (nRollouts == 0 || horizon == 0) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: rollouts and horizon must be positive.&quot;</span>);</div>
-<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">if</span> (!(lambda &gt; 0.)) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: lambda must be positive.&quot;</span>);</div>
-<div class="line"><span class="lineno">  157</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>.assign(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(<a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), 0.));</div>
-<div class="line"><span class="lineno">  158</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00143">143</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  145</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>(nRollouts), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>(horizon),</div>
+<div class="line"><span class="lineno">  146</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ab7ce20cfb22e5b5aeab2723314cde383">fNoiseSigma</a>(noiseSigma), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a117245a983120e3eee0f442f70c931e1">fLambda</a>(lambda), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a>(nIters), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ae1a9edf1971a286bcbde33e00cf60638">fSeed</a>(seed), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>(seed)</div>
+<div class="line"><span class="lineno">  147</span>    {</div>
+<div class="line"><span class="lineno">  148</span>        <span class="keywordflow">if</span> (nRollouts == 0 || horizon == 0) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: rollouts and horizon must be positive.&quot;</span>);</div>
+<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">if</span> (!(lambda &gt; 0.)) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: lambda must be positive.&quot;</span>);</div>
+<div class="line"><span class="lineno">  150</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>.assign(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(<a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), 0.));</div>
+<div class="line"><span class="lineno">  151</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a2345ad58ed042054aa68aa09930658a7"><div class="ttname"><a href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Kalman::Controller::Controller</a></div><div class="ttdeci">Controller(Model *model, const Vector &amp;xRef=Vector(), const Matrix &amp;Qcost=Matrix(), const Matrix &amp;Rcost=Matrix())</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00018">Controller.cc:18</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_ae3adaa444a54de98bddb9e154e342138"><div class="ttname"><a href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">Kalman::Controller::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdoc">The command dimension, at least 1 so an uncontrolled plant still gets a vector.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00034">Controller.cc:34</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_m_p_p_i_html_a050045e904e8816618cd6ee8052b23b3"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">Kalman::Controllers::MPPI::fNIters</a></div><div class="ttdeci">std::size_t fNIters</div><div class="ttdef"><b>Definition</b> <a href="_m_p_p_i_8h_source.html#l00038">MPPI.h:38</a></div></div>
@@ -435,10 +435,10 @@ Protected Attributes</h2></td></tr>
 
 <p>The number of perturbations one <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a12cbaf5f7de226e52708a56548a9a96a" title="The policy itself. Required.">Policy()</a> call draws, <code>nIters x nRollouts x horizon x l</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00226">226</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  227</span>    {</div>
-<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a> * <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>();</div>
-<div class="line"><span class="lineno">  229</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00219">219</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>    {</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a> * <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>();</div>
+<div class="line"><span class="lineno">  222</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -548,81 +548,82 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e">Kalman::Controller</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00160">160</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  161</span>    {</div>
-<div class="line"><span class="lineno">  162</span>        <span class="keyword">const</span> std::size_t l = <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), n = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>();</div>
-<div class="line"><span class="lineno">  163</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> dt = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">DeltaT</a>();</div>
-<div class="line"><span class="lineno">  164</span>        std::normal_distribution&lt;double&gt; gauss(0., <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ab7ce20cfb22e5b5aeab2723314cde383">fNoiseSigma</a>);</div>
-<div class="line"><span class="lineno">  165</span> </div>
-<div class="line"><span class="lineno">  166</span>        <span class="comment">// The caller&#39;s perturbations, when it gave some, are used once.</span></div>
-<div class="line"><span class="lineno">  167</span>        <span class="keyword">const</span> std::vector&lt;double&gt; draws = std::move(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>);</div>
-<div class="line"><span class="lineno">  168</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>.clear();</div>
-<div class="line"><span class="lineno">  169</span>        std::size_t cursor = 0;</div>
-<div class="line"><span class="lineno">  170</span> </div>
-<div class="line"><span class="lineno">  171</span>        std::vector&lt;Vector&gt; nominal = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>;</div>
-<div class="line"><span class="lineno">  172</span>        std::vector&lt;std::vector&lt;Vector&gt;&gt; trial(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>, std::vector&lt;Vector&gt;(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(l, 0.)));</div>
-<div class="line"><span class="lineno">  173</span>        std::vector&lt;double&gt; costs(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>);</div>
-<div class="line"><span class="lineno">  174</span> </div>
-<div class="line"><span class="lineno">  175</span>        <span class="keywordflow">for</span> (std::size_t iter = 0; iter &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a>; ++iter)</div>
-<div class="line"><span class="lineno">  176</span>        {</div>
-<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i)</div>
-<div class="line"><span class="lineno">  178</span>            {</div>
-<div class="line"><span class="lineno">  179</span>                Vector xi = xHat;</div>
-<div class="line"><span class="lineno">  180</span>                <span class="keywordtype">double</span> cost = 0.;</div>
-<div class="line"><span class="lineno">  181</span>                <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k)</div>
-<div class="line"><span class="lineno">  182</span>                {</div>
-<div class="line"><span class="lineno">  183</span>                    Vector uk = nominal[k];</div>
-<div class="line"><span class="lineno">  184</span>                    <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; l; ++j) uk(j) += draws.empty() ? gauss(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>) : draws[cursor++];</div>
-<div class="line"><span class="lineno">  185</span>                    <span class="comment">// Clip the candidate before rolling it out or costing it, so the</span></div>
-<div class="line"><span class="lineno">  186</span>                    <span class="comment">// averaged nominal stays inside what the actuator can deliver.</span></div>
-<div class="line"><span class="lineno">  187</span>                    uk = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d">ClipControl</a>(uk);</div>
-<div class="line"><span class="lineno">  188</span>                    trial[i][k] = uk;</div>
-<div class="line"><span class="lineno">  189</span> </div>
-<div class="line"><span class="lineno">  190</span>                    xi = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">f</a>(xi, <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uk : Vector(), t + static_cast&lt;double&gt;(k) * dt);</div>
-<div class="line"><span class="lineno">  191</span>                    Vector e = xi;</div>
-<div class="line"><span class="lineno">  192</span>                    e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
-<div class="line"><span class="lineno">  193</span>                    <span class="keywordflow">for</span> (std::size_t a = 0; a &lt; n; ++a)</div>
-<div class="line"><span class="lineno">  194</span>                        <span class="keywordflow">for</span> (std::size_t b = 0; b &lt; n; ++b) cost += e(a) * <a class="code hl_variable" href="class_kalman_1_1_controller.html#a659418d38230261d65a36b1329602be9">fQCost</a>(a, b) * e(b);</div>
-<div class="line"><span class="lineno">  195</span>                    <span class="keywordflow">for</span> (std::size_t a = 0; a &lt; l; ++a)</div>
-<div class="line"><span class="lineno">  196</span>                        <span class="keywordflow">for</span> (std::size_t b = 0; b &lt; l; ++b) cost += uk(a) * <a class="code hl_variable" href="class_kalman_1_1_controller.html#aff5539ce56a36076a0b8f3c5baa57b88">fRCost</a>(a, b) * uk(b);</div>
-<div class="line"><span class="lineno">  197</span>                }</div>
-<div class="line"><span class="lineno">  198</span>                costs[i] = cost;</div>
-<div class="line"><span class="lineno">  199</span>            }</div>
-<div class="line"><span class="lineno">  200</span> </div>
-<div class="line"><span class="lineno">  201</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> best = *std::min_element(costs.begin(), costs.end());</div>
-<div class="line"><span class="lineno">  202</span>            std::vector&lt;double&gt; weights(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>);</div>
-<div class="line"><span class="lineno">  203</span>            <span class="keywordtype">double</span> total = 0.;</div>
-<div class="line"><span class="lineno">  204</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i)</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00153">153</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  154</span>    {</div>
+<div class="line"><span class="lineno">  155</span>        <span class="keyword">const</span> std::size_t l = <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>();</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> dt = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">DeltaT</a>();</div>
+<div class="line"><span class="lineno">  157</span>        std::normal_distribution&lt;double&gt; gauss(0., <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ab7ce20cfb22e5b5aeab2723314cde383">fNoiseSigma</a>);</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment">// The caller&#39;s perturbations, when it gave some, are used once.</span></div>
+<div class="line"><span class="lineno">  160</span>        <span class="keyword">const</span> std::vector&lt;double&gt; draws = std::move(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>);</div>
+<div class="line"><span class="lineno">  161</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>.clear();</div>
+<div class="line"><span class="lineno">  162</span>        std::size_t cursor = 0;</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>        std::vector&lt;Vector&gt; nominal = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>;</div>
+<div class="line"><span class="lineno">  165</span>        std::vector&lt;std::vector&lt;Vector&gt;&gt; trial(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>, std::vector&lt;Vector&gt;(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(l, 0.)));</div>
+<div class="line"><span class="lineno">  166</span>        std::vector&lt;double&gt; costs(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>);</div>
+<div class="line"><span class="lineno">  167</span> </div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">for</span> (std::size_t iter = 0; iter &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a050045e904e8816618cd6ee8052b23b3">fNIters</a>; ++iter)</div>
+<div class="line"><span class="lineno">  169</span>        {</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i)</div>
+<div class="line"><span class="lineno">  171</span>            {</div>
+<div class="line"><span class="lineno">  172</span>                Vector xi = xHat;</div>
+<div class="line"><span class="lineno">  173</span>                <span class="keywordtype">double</span> cost = 0.;</div>
+<div class="line"><span class="lineno">  174</span>                <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k)</div>
+<div class="line"><span class="lineno">  175</span>                {</div>
+<div class="line"><span class="lineno">  176</span>                    Vector uk = nominal[k];</div>
+<div class="line"><span class="lineno">  177</span>                    <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; l; ++j) uk(j) += draws.empty() ? gauss(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>) : draws[cursor++];</div>
+<div class="line"><span class="lineno">  178</span>                    <span class="comment">// Clip the candidate before rolling it out or costing it, so the</span></div>
+<div class="line"><span class="lineno">  179</span>                    <span class="comment">// averaged nominal stays inside what the actuator can deliver.</span></div>
+<div class="line"><span class="lineno">  180</span>                    uk = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711">LimitControl</a>(uk);</div>
+<div class="line"><span class="lineno">  181</span>                    trial[i][k] = uk;</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span>                    xi = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">f</a>(xi, <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uk : Vector(), t + static_cast&lt;double&gt;(k) * dt);</div>
+<div class="line"><span class="lineno">  184</span>                    Vector e = xi;</div>
+<div class="line"><span class="lineno">  185</span>                    e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
+<div class="line"><span class="lineno">  186</span>                    <span class="keywordflow">for</span> (std::size_t a = 0; a &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++a)</div>
+<div class="line"><span class="lineno">  187</span>                        <span class="keywordflow">for</span> (std::size_t b = 0; b &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++b) cost += e(a) * <a class="code hl_variable" href="class_kalman_1_1_controller.html#a659418d38230261d65a36b1329602be9">fQCost</a>(a, b) * e(b);</div>
+<div class="line"><span class="lineno">  188</span>                    <span class="keywordflow">for</span> (std::size_t a = 0; a &lt; l; ++a)</div>
+<div class="line"><span class="lineno">  189</span>                        <span class="keywordflow">for</span> (std::size_t b = 0; b &lt; l; ++b) cost += uk(a) * <a class="code hl_variable" href="class_kalman_1_1_controller.html#aff5539ce56a36076a0b8f3c5baa57b88">fRCost</a>(a, b) * uk(b);</div>
+<div class="line"><span class="lineno">  190</span>                }</div>
+<div class="line"><span class="lineno">  191</span>                costs[i] = cost;</div>
+<div class="line"><span class="lineno">  192</span>            }</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> best = *std::min_element(costs.begin(), costs.end());</div>
+<div class="line"><span class="lineno">  195</span>            std::vector&lt;double&gt; weights(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>);</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordtype">double</span> total = 0.;</div>
+<div class="line"><span class="lineno">  197</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i)</div>
+<div class="line"><span class="lineno">  198</span>            {</div>
+<div class="line"><span class="lineno">  199</span>                weights[i] = std::exp(-(costs[i] - best) / <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a117245a983120e3eee0f442f70c931e1">fLambda</a>);</div>
+<div class="line"><span class="lineno">  200</span>                total += weights[i];</div>
+<div class="line"><span class="lineno">  201</span>            }</div>
+<div class="line"><span class="lineno">  202</span>            total += 1e-12;</div>
+<div class="line"><span class="lineno">  203</span> </div>
+<div class="line"><span class="lineno">  204</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k)</div>
 <div class="line"><span class="lineno">  205</span>            {</div>
-<div class="line"><span class="lineno">  206</span>                weights[i] = std::exp(-(costs[i] - best) / <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a117245a983120e3eee0f442f70c931e1">fLambda</a>);</div>
-<div class="line"><span class="lineno">  207</span>                total += weights[i];</div>
-<div class="line"><span class="lineno">  208</span>            }</div>
-<div class="line"><span class="lineno">  209</span>            total += 1e-12;</div>
-<div class="line"><span class="lineno">  210</span> </div>
-<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k)</div>
-<div class="line"><span class="lineno">  212</span>            {</div>
-<div class="line"><span class="lineno">  213</span>                Vector acc(l, 0.);</div>
-<div class="line"><span class="lineno">  214</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i) acc += (weights[i] / total) * trial[i][k];</div>
-<div class="line"><span class="lineno">  215</span>                nominal[k] = acc;</div>
-<div class="line"><span class="lineno">  216</span>            }</div>
-<div class="line"><span class="lineno">  217</span>        }</div>
-<div class="line"><span class="lineno">  218</span> </div>
-<div class="line"><span class="lineno">  219</span>        <span class="keyword">const</span> Vector u0 = nominal[0];</div>
-<div class="line"><span class="lineno">  220</span>        <span class="comment">// Shift the warm-started sequence for the next call&#39;s receding horizon.</span></div>
-<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k + 1 &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k) <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>[k] = nominal[k + 1];</div>
-<div class="line"><span class="lineno">  222</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>[<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a> - 1] = Vector(l, 0.);</div>
-<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">return</span> u0;</div>
-<div class="line"><span class="lineno">  224</span>    }</div>
+<div class="line"><span class="lineno">  206</span>                Vector acc(l, 0.);</div>
+<div class="line"><span class="lineno">  207</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#abd6e209d5c1eeceb9a38bf40a078d792">fNRollouts</a>; ++i) acc += (weights[i] / total) * trial[i][k];</div>
+<div class="line"><span class="lineno">  208</span>                nominal[k] = acc;</div>
+<div class="line"><span class="lineno">  209</span>            }</div>
+<div class="line"><span class="lineno">  210</span>        }</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>        <span class="keyword">const</span> Vector u0 = nominal[0];</div>
+<div class="line"><span class="lineno">  213</span>        <span class="comment">// Shift the warm-started sequence for the next call&#39;s receding horizon.</span></div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k + 1 &lt; <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>; ++k) <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>[k] = nominal[k + 1];</div>
+<div class="line"><span class="lineno">  215</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>[<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a> - 1] = Vector(l, 0.);</div>
+<div class="line"><span class="lineno">  216</span>        <span class="keywordflow">return</span> u0;</div>
+<div class="line"><span class="lineno">  217</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a42488f3e43226775fd7da46afebbec83"><div class="ttname"><a href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">Kalman::Controller::fXRef</a></div><div class="ttdeci">Vector fXRef</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00048">Controller.h:48</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a659418d38230261d65a36b1329602be9"><div class="ttname"><a href="class_kalman_1_1_controller.html#a659418d38230261d65a36b1329602be9">Kalman::Controller::fQCost</a></div><div class="ttdeci">Matrix fQCost</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00049">Controller.h:49</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a690b08a8bd00fe48eefaf86e0c6a687c"><div class="ttname"><a href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">Kalman::Controller::fModel</a></div><div class="ttdeci">Model * fModel</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00047">Controller.h:47</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_aff5539ce56a36076a0b8f3c5baa57b88"><div class="ttname"><a href="class_kalman_1_1_controller.html#aff5539ce56a36076a0b8f3c5baa57b88">Kalman::Controller::fRCost</a></div><div class="ttdeci">Matrix fRCost</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00050">Controller.h:50</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_m_p_p_i_html_a1ba43d34ab7c715d3da040226b72e2f3"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">Kalman::Controllers::MPPI::fDraws</a></div><div class="ttdeci">std::vector&lt; double &gt; fDraws</div><div class="ttdef"><b>Definition</b> <a href="_m_p_p_i_8h_source.html#l00042">MPPI.h:42</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00152">Model.h:152</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00154">Model.h:154</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a535608273bff5e2bfbd4704709233711"><div class="ttname"><a href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711">Kalman::Model::LimitControl</a></div><div class="ttdeci">virtual Vector LimitControl(const Vector &amp;u) const</div><div class="ttdoc">Actuator-limit hook: the command the plant can actually deliver.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00231">Model.h:231</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00149">Model.h:149</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_aed136bf23ef636d21778c8ccde69714d"><div class="ttname"><a href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d">Kalman::Model::ClipControl</a></div><div class="ttdeci">virtual Vector ClipControl(const Vector &amp;u) const</div><div class="ttdoc">Actuator-limit hook: the command the plant can actually deliver.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00229">Model.h:229</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -653,13 +654,13 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00239">239</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  240</span>    {</div>
-<div class="line"><span class="lineno">  241</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Controller::Reset</a>();</div>
-<div class="line"><span class="lineno">  242</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>.clear();</div>
-<div class="line"><span class="lineno">  243</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>.assign(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(<a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), 0.));</div>
-<div class="line"><span class="lineno">  244</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>.seed(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ae1a9edf1971a286bcbde33e00cf60638">fSeed</a>);</div>
-<div class="line"><span class="lineno">  245</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00232">232</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  233</span>    {</div>
+<div class="line"><span class="lineno">  234</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Controller::Reset</a>();</div>
+<div class="line"><span class="lineno">  235</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a>.clear();</div>
+<div class="line"><span class="lineno">  236</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a632bb862158cd9f60868e4c3da404c8f">fNominal</a>.assign(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a89be65753fa026aae389db1dbf2b40d8">fHorizon</a>, Vector(<a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), 0.));</div>
+<div class="line"><span class="lineno">  237</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4276ef3734af9d513b3647e1b35ddb3c">fRandom</a>.seed(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#ae1a9edf1971a286bcbde33e00cf60638">fSeed</a>);</div>
+<div class="line"><span class="lineno">  238</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a0ad205266e8105f26359bea1882e4d5d"><div class="ttname"><a href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller::Reset</a></div><div class="ttdeci">virtual void Reset()</div><div class="ttdoc">Clear the logs and any internal state; restore what Update() changed.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00069">Controller.cc:69</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -683,14 +684,14 @@ Protected Attributes</h2></td></tr>
 <p>Hand the next <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a12cbaf5f7de226e52708a56548a9a96a" title="The policy itself. Required.">Policy()</a> call its perturbations instead of drawing them. </p>
 <p><code>draws</code> holds <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36" title="The number of perturbations one Policy() call draws, nIters x nRollouts x horizon x l.">NDraws()</a> values, already scaled by the noise sigma, in the order iteration, rollout, horizon step, command component — the order <code><a class="el" href="mppi_8py.html">controllers/mppi.py</a></code> draws them from its numpy generator, so a seeded Python controller makes the same decisions whoever runs the rollouts (as kalman_propagate takes its noise from the caller). Used once. </p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00231">231</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  232</span>    {</div>
-<div class="line"><span class="lineno">  233</span>        <span class="keywordflow">if</span> (!draws.empty() &amp;&amp; draws.size() != <a class="code hl_function" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">NDraws</a>())</div>
-<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: &quot;</span> + std::to_string(draws.size()) + <span class="stringliteral">&quot; draws given, &quot;</span></div>
-<div class="line"><span class="lineno">  235</span>                                        + std::to_string(<a class="code hl_function" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">NDraws</a>()) + <span class="stringliteral">&quot; expected.&quot;</span>);</div>
-<div class="line"><span class="lineno">  236</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a> = std::move(draws);</div>
-<div class="line"><span class="lineno">  237</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_m_p_p_i_html_aaf4abf93fcac003213b63df4f47f4c36"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">Kalman::Controllers::MPPI::NDraws</a></div><div class="ttdeci">std::size_t NDraws() const</div><div class="ttdoc">The number of perturbations one Policy() call draws, nIters x nRollouts x horizon x l.</div><div class="ttdef"><b>Definition</b> <a href="_controllers_8cc_source.html#l00226">Controllers.cc:226</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00224">224</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  225</span>    {</div>
+<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">if</span> (!draws.empty() &amp;&amp; draws.size() != <a class="code hl_function" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">NDraws</a>())</div>
+<div class="line"><span class="lineno">  227</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Controllers::MPPI: &quot;</span> + std::to_string(draws.size()) + <span class="stringliteral">&quot; draws given, &quot;</span></div>
+<div class="line"><span class="lineno">  228</span>                                        + std::to_string(<a class="code hl_function" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">NDraws</a>()) + <span class="stringliteral">&quot; expected.&quot;</span>);</div>
+<div class="line"><span class="lineno">  229</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a1ba43d34ab7c715d3da040226b72e2f3">fDraws</a> = std::move(draws);</div>
+<div class="line"><span class="lineno">  230</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_controllers_1_1_m_p_p_i_html_aaf4abf93fcac003213b63df4f47f4c36"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#aaf4abf93fcac003213b63df4f47f4c36">Kalman::Controllers::MPPI::NDraws</a></div><div class="ttdeci">std::size_t NDraws() const</div><div class="ttdoc">The number of perturbations one Policy() call draws, nIters x nRollouts x horizon x l.</div><div class="ttdef"><b>Definition</b> <a href="_controllers_8cc_source.html#l00219">Controllers.cc:219</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

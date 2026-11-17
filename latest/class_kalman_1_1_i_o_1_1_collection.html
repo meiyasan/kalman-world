@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -555,10 +555,11 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   28</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Record &amp;record : fRecords)</div>
 <div class="line"><span class="lineno">   29</span>        {</div>
 <div class="line"><span class="lineno">   30</span>            os &lt;&lt; <span class="stringliteral">&quot;\n  &quot;</span>;</div>
-<div class="line"><span class="lineno">   31</span>            record.Print(os);</div>
+<div class="line"><span class="lineno">   31</span>            <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>.Print(os);</div>
 <div class="line"><span class="lineno">   32</span>        }</div>
 <div class="line"><span class="lineno">   33</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_collection_html_a925edf9fca433c9cd4174c8be324ffb5"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_collection.html#a925edf9fca433c9cd4174c8be324ffb5">Kalman::IO::Collection::TotalSteps</a></div><div class="ttdeci">std::size_t TotalSteps() const</div><div class="ttdoc">Total number of steps across every record.</div><div class="ttdef"><b>Definition</b> <a href="_collection_8cc_source.html#l00017">Collection.cc:17</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a137e305263d1d3fcef81121b78130bd5"><div class="ttname"><a href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">instrument.record</a></div><div class="ttdeci">record</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00074">instrument.py:74</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -668,7 +669,7 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="_collection_8cc_source.html#l00017">17</a> of file <a class="el" href="_collection_8cc_source.html">Collection.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   18</span>    {</div>
 <div class="line"><span class="lineno">   19</span>        std::size_t total = 0;</div>
-<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Record &amp;record : fRecords) total += record.NSteps();</div>
+<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Record &amp;record : fRecords) total += <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>.NSteps();</div>
 <div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> total;</div>
 <div class="line"><span class="lineno">   22</span>    }</div>
 </div><!-- fragment -->

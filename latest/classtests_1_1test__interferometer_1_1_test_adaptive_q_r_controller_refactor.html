@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -181,7 +181,7 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  333</span>    <span class="keyword">def </span>test_inherits_kalman_controller(self):</div>
 <div class="line"><span class="lineno">  334</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1control.html">modules.framework.control</a> <span class="keyword">import</span> KalmanController</div>
 <div class="line"><span class="lineno">  335</span>        m = AnalyticOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, fs=128, f0=10.0, fc=10.0, Q=100)</div>
-<div class="line"><span class="lineno">  336</span>        a = AdaptiveQRKalmanController(m)</div>
+<div class="line"><span class="lineno">  336</span>        a = AdaptiveQRKalmanTuner(m)</div>
 <div class="line"><span class="lineno">  337</span>        self.assertIsInstance(a, KalmanController)</div>
 <div class="line"><span class="lineno">  338</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1control_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1control.html">modules.framework.control</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2control_8py_source.html#l00001">control.py:1</a></div></div>
@@ -207,7 +207,7 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__interferometer_8py_source.html#l00339">339</a> of file <a class="el" href="test__interferometer_8py_source.html">test_interferometer.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  339</span>    <span class="keyword">def </span>test_policy_returns_zero(self):</div>
 <div class="line"><span class="lineno">  340</span>        m = AnalyticOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, fs=128, f0=10.0, fc=10.0, Q=100)</div>
-<div class="line"><span class="lineno">  341</span>        a = AdaptiveQRKalmanController(m)</div>
+<div class="line"><span class="lineno">  341</span>        a = AdaptiveQRKalmanTuner(m)</div>
 <div class="line"><span class="lineno">  342</span>        u = a._policy(np.zeros((m.n, 1)), np.eye(m.n), 0.0)</div>
 <div class="line"><span class="lineno">  343</span>        np.testing.assert_allclose(u, 0.0)</div>
 <div class="line"><span class="lineno">  344</span> </div>
@@ -239,7 +239,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  350</span>        m.initial_state([5, 0])</div>
 <div class="line"><span class="lineno">  351</span>        s  = m.sample(3.0)</div>
 <div class="line"><span class="lineno">  352</span>        x  = np.asarray(s.zk)</div>
-<div class="line"><span class="lineno">  353</span>        a  = AdaptiveQRKalmanController(m, window=20)</div>
+<div class="line"><span class="lineno">  353</span>        a  = AdaptiveQRKalmanTuner(m, window=20)</div>
 <div class="line"><span class="lineno">  354</span>        kf = KalmanFilter(m)</div>
 <div class="line"><span class="lineno">  355</span>        kf.forward(x, uk=a)</div>
 <div class="line"><span class="lineno">  356</span>        self.assertGreater(len(a.scale_log), 0)</div>

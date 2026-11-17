@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -184,7 +184,7 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__apps__extra_8py_source.html#l00265">265</a> of file <a class="el" href="test__apps__extra_8py_source.html">test_apps_extra.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  265</span>    <span class="keyword">def </span>test_chain_lambert_separates_gravity_from_burn(self):</div>
 <div class="line"><span class="lineno">  266</span>        <span class="keyword">from</span> astropy.time <span class="keyword">import</span> Time</div>
-<div class="line"><span class="lineno">  267</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a> <span class="keyword">import</span> chain_lambert</div>
+<div class="line"><span class="lineno">  267</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astrophysics.html">modules.apps.astrophysics</a> <span class="keyword">import</span> chain_lambert</div>
 <div class="line"><span class="lineno">  268</span>        sequence = [<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>]</div>
 <div class="line"><span class="lineno">  269</span>        dates = [Time(t) <span class="keywordflow">for</span> t <span class="keywordflow">in</span> (<span class="stringliteral">&quot;1997-10-15 08:43&quot;</span>, <span class="stringliteral">&quot;1998-04-26 13:52&quot;</span>,</div>
 <div class="line"><span class="lineno">  270</span>                                   <span class="stringliteral">&quot;1999-06-24 20:30&quot;</span>, <span class="stringliteral">&quot;1999-08-18 03:28&quot;</span>)]</div>
@@ -203,7 +203,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  283</span>        self.assertTrue(100.0 &lt; legs[1][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
 <div class="line"><span class="lineno">  284</span>        self.assertTrue(100.0 &lt; legs[2][<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] &lt; 2000.0)</div>
 <div class="line"><span class="lineno">  285</span> </div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astro_2space_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics.html">modules.apps.astrophysics</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astrophysics_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -310,7 +310,7 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">  286</span>    <span class="keyword">def </span>test_two_body_cruise_ekf(self):</div>
 <div class="line"><span class="lineno">  287</span>        <span class="comment"># No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.</span></div>
 <div class="line"><span class="lineno">  288</span>        m = InterplanetaryModel(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, epoch=<span class="keywordtype">None</span>, dt_s=43200.0, track_Mm=0.02)</div>
-<div class="line"><span class="lineno">  289</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> D_SUN</div>
+<div class="line"><span class="lineno">  289</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics.html">modules.apps.astrophysics.astrodynamics</a> <span class="keyword">import</span> D_SUN</div>
 <div class="line"><span class="lineno">  290</span>        x0 = np.array([[D_SUN], [0], [0], [0], [np.sqrt(GM_SUN / D_SUN)], [0]])</div>
 <div class="line"><span class="lineno">  291</span>        m.initial_state(x0)</div>
 <div class="line"><span class="lineno">  292</span>        s = m.sample(80 * DAY, process_noise=<span class="keyword">False</span>)</div>
@@ -322,7 +322,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  298</span><span class="comment"># ===========================================================================</span></div>
 <div class="line"><span class="lineno">  299</span><span class="comment"># Car straight-line speed test</span></div>
 <div class="line"><span class="lineno">  300</span><span class="comment"># ===========================================================================</span></div>
-<div class="ttc" id="anamespacemodules_1_1runtime_1_1astro_html"><div class="ttname"><a href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></div><div class="ttdef"><b>Definition</b> <a href="astro_8py_source.html#l00001">astro.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics.html">modules.apps.astrophysics.astrodynamics</a></div><div class="ttdef"><b>Definition</b> <a href="astrodynamics_8py_source.html#l00001">astrodynamics.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,8 +161,8 @@ Functions</h2></td></tr>
 <tr class="separator:a7f2542f2ac2775c987b69852738c7cc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa99223cda46427924afaa93a40c1ccc8" id="r_aa99223cda46427924afaa93a40c1ccc8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__fields.html#aa99223cda46427924afaa93a40c1ccc8">measurements</a> (model, steps=12, seed=21)</td></tr>
 <tr class="separator:aa99223cda46427924afaa93a40c1ccc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45316eea5eab2706852bd821d882a216" id="r_a45316eea5eab2706852bd821d882a216"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__fields.html#a45316eea5eab2706852bd821d882a216">filter_pass</a> (make, engine_kw, reference, expect_twin=True)</td></tr>
-<tr class="separator:a45316eea5eab2706852bd821d882a216"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6616f20685a20b699ce90456d58ddc71" id="r_a6616f20685a20b699ce90456d58ddc71"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__fields.html#a6616f20685a20b699ce90456d58ddc71">filter_pass</a> (make, engine_kw, reference, expect_counterpart=True)</td></tr>
+<tr class="separator:a6616f20685a20b699ce90456d58ddc71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -175,21 +175,21 @@ Variables</h2></td></tr>
 <div class="textblock"><pre class="fragment">A field model's ensemble pass runs in C++ (libKalmanApps: Weather::KolmogorovFlow).
 
 With the ensemble engine, ``KolmogorovFlowModel`` and ``BarotropicFlowModel``
-hand the whole pass to their twin: the forecast of every member, the
+hand the whole pass to their counterpart: the forecast of every member, the
 observation of the ensemble, the localization tapers, the analysis and the
 loop over the cycles. The draws stay numpy's (the engine's generator, in the
 order the Python steps take them), so the C++ pass is compared here with the
 Python reference on the same seed, member for member.
 
-How close: the reference steps the field with numpy's FFT and the twin with
+How close: the reference steps the field with numpy's FFT and the counterpart with
 the library's; one solver step agrees to ~1e-16 relative, and the chaotic flow
 grows that to ~1e-13 over the 1,200 steps of notebook 13 (measured, then held
 by the analysis). The tolerances below are 1e-9 relative to the largest entry.
 
 Skipped when libKalmanApps is not built.
 </pre> </div><h2 class="groupheader">Function Documentation</h2>
-<a id="a45316eea5eab2706852bd821d882a216" name="a45316eea5eab2706852bd821d882a216"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a45316eea5eab2706852bd821d882a216">&#9670;&#160;</a></span>filter_pass()</h2>
+<a id="a6616f20685a20b699ce90456d58ddc71" name="a6616f20685a20b699ce90456d58ddc71"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6616f20685a20b699ce90456d58ddc71">&#9670;&#160;</a></span>filter_pass()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -216,7 +216,7 @@ Skipped when libKalmanApps is not built.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>expect_twin</em> = <code>True</code>&#160;</td>
+          <td class="paramname"><em>expect_counterpart</em> = <code>True</code>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -227,13 +227,13 @@ Skipped when libKalmanApps is not built.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__native__fields_8py_source.html#l00062">62</a> of file <a class="el" href="test__native__fields_8py_source.html">test_native_fields.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   62</span><span class="keyword">def </span>filter_pass(make, engine_kw, reference, expect_twin=True):</div>
+<div class="fragment"><div class="line"><span class="lineno">   62</span><span class="keyword">def </span>filter_pass(make, engine_kw, reference, expect_counterpart=True):</div>
 <div class="line"><span class="lineno">   63</span>    <span class="keyword">def </span>go():</div>
 <div class="line"><span class="lineno">   64</span>        model = make()</div>
 <div class="line"><span class="lineno">   65</span>        zs = measurements(model)</div>
 <div class="line"><span class="lineno">   66</span>        f = EnsembleKalmanFilter(model, **engine_kw)</div>
 <div class="line"><span class="lineno">   67</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> reference:</div>
-<div class="line"><span class="lineno">   68</span>            <span class="keyword">assert</span> (f.engine._native_twin(model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>) == expect_twin</div>
+<div class="line"><span class="lineno">   68</span>            <span class="keyword">assert</span> (f.engine._native_counterpart(model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>) == expect_counterpart</div>
 <div class="line"><span class="lineno">   69</span>        rec = f.forward(zs)</div>
 <div class="line"><span class="lineno">   70</span>        <span class="keywordflow">return</span> (np.asarray(rec.xk), np.asarray(rec.Pk), f.engine.members.copy(),</div>
 <div class="line"><span class="lineno">   71</span>                int(f.engine.rng.integers(0, 1 &lt;&lt; 62)), [np.asarray(nu).ravel() <span class="keywordflow">for</span> nu <span class="keywordflow">in</span> f.innovation])</div>

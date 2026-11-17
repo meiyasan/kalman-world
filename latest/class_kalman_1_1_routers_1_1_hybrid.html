@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -201,9 +201,9 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a> bayes;</div>
 <div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a>   learned(<span class="stringliteral">&quot;router.onnx&quot;</span>);</div>
 <div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_hybrid.html">Kalman::Routers::Hybrid</a>   router(&amp;bayes, &amp;learned, 0.3);  <span class="comment">// mostly Bayes</span></div>
-<div class="ttc" id="aclass_kalman_1_1_routers_1_1_bayesian_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a></div><div class="ttdoc">The classical IKF update: mu_j ∝ c_j · L_j.</div><div class="ttdef"><b>Definition</b> <a href="_bayesian_8h_source.html#l00032">Bayesian.h:33</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_bayesian_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_bayesian.html">Kalman::Routers::Bayesian</a></div><div class="ttdoc">The classical interacting-multiple-model update: mu_j ∝ c_j · L_j.</div><div class="ttdef"><b>Definition</b> <a href="_bayesian_8h_source.html#l00032">Bayesian.h:33</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_hybrid_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_hybrid.html">Kalman::Routers::Hybrid</a></div><div class="ttdoc">Geometric blend (log-linear opinion pool) of two routers.</div><div class="ttdef"><b>Definition</b> <a href="_hybrid_8h_source.html#l00042">Hybrid.h:43</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00061">Neural.h:62</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00077">Neural.h:78</a></div></div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Neither child is owned; both must outlive the blend.</dd></dl>
 <hr  />
  
@@ -369,13 +369,14 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> Vector a = <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a>(fA-&gt;<a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a97bc71430d06d942229da75d91815bd3">Route</a>(nis, c, likelihoods));</div>
 <div class="line"><span class="lineno">  123</span>        <span class="keyword">const</span> Vector b = <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a>(fB-&gt;<a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a97bc71430d06d942229da75d91815bd3">Route</a>(nis, c, likelihoods));</div>
 <div class="line"><span class="lineno">  124</span> </div>
-<div class="line"><span class="lineno">  125</span>        Vector mu(a.Size());</div>
+<div class="line"><span class="lineno">  125</span>        Vector <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(a.Size());</div>
 <div class="line"><span class="lineno">  126</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; a.Size(); ++j)</div>
-<div class="line"><span class="lineno">  127</span>            mu(j) = std::pow(a(j), 1. - fAlpha) * std::pow(b(j), fAlpha);</div>
+<div class="line"><span class="lineno">  127</span>            <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(j) = std::pow(a(j), 1. - fAlpha) * std::pow(b(j), fAlpha);</div>
 <div class="line"><span class="lineno">  128</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a>(mu);</div>
 <div class="line"><span class="lineno">  129</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html_a75d5794536f09b2adcbac66213bc9b31"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Kalman::Routers::Router::Normalise</a></div><div class="ttdeci">static Vector Normalise(Vector mu)</div><div class="ttdoc">Clip to a positive floor and normalise to a probability vector.</div><div class="ttdef"><b>Definition</b> <a href="_routers_8cc_source.html#l00023">Routers.cc:23</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html_a97bc71430d06d942229da75d91815bd3"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html#a97bc71430d06d942229da75d91815bd3">Kalman::Routers::Router::Route</a></div><div class="ttdeci">virtual Vector Route(const Matrix &amp;nis, const Vector &amp;c, const Vector &amp;likelihoods) const =0</div><div class="ttdoc">Updated mode probabilities — see the class documentation.</div></div>
+<div class="ttc" id="anamespaceoperations_html_abce6a020b2f062e2f758851ca8368c37"><div class="ttname"><a href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">operations.mu</a></div><div class="ttdeci">mu</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00103">operations.py:103</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

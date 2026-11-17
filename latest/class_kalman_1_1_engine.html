@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -150,7 +150,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_engine.html',''); ini
 <div class="dynheader">
 Inheritance diagram for Kalman::Engine:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_engine__inherit__graph.svg" width="922" height="234"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_engine__inherit__graph.svg" width="923" height="283"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -295,7 +295,7 @@ Public Member Functions</h2></td></tr>
 
 <p>False for engines whose belief is a sample set: <a class="el" href="class_kalman_1_1_filter.html#ac5754a5bb291df7fa6d7ebd30abf2748" title="Rauch–Tung–Striebel smoother over the stored forward pass.">Filter::Backward()</a> then refuses. </p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a54d920872b1fd7440b666b706eef7e61">Kalman::Engines::Ensemble</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a2f1b6326a864ce1df7dd4ca38548c459">Kalman::Engines::Particle</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a54d920872b1fd7440b666b706eef7e61">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#aba6bcc5e1a54e7183d5fb026fd86f123">Kalman::Engines::Interacting</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a2f1b6326a864ce1df7dd4ca38548c459">Kalman::Engines::Particle</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_engine_8h_source.html#l00062">62</a> of file <a class="el" href="_engine_8h_source.html">Engine.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   62</span>{ <span class="keywordflow">return</span> <span class="keyword">true</span>; }</div>
@@ -382,9 +382,10 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   85</span>        nu -= zpred;                                      <span class="comment">// NaN survives where z was missing</span></div>
 <div class="line"><span class="lineno">   86</span> </div>
 <div class="line"><span class="lineno">   87</span>        S = Utils::Similarity(H, P);</div>
-<div class="line"><span class="lineno">   88</span>        S += model.R(t);</div>
+<div class="line"><span class="lineno">   88</span>        S += <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.R(t);</div>
 <div class="line"><span class="lineno">   89</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_engine_html_a7d30a11f4ea09e0bb97efe69b438228b"><div class="ttname"><a href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Kalman::Engine::Measure</a></div><div class="ttdeci">virtual void Measure(const Model &amp;model, const Vector &amp;x, double t, Vector &amp;zpred, Matrix &amp;H) const =0</div><div class="ttdoc">Predict the measurement and report the observation matrix.</div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -411,7 +412,7 @@ Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_combinatorial.html#ab01540d471ff80b630ad5c0c60dd09f3">Kalman::Engines::Combinatorial</a>, <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#adf04fe46752d5e78696ba260113b0bcb">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a7876f7f7e8b7496ad04ef98797ac863d">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#aef522e04518fa7ed4cda4129290a91ee">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a7337d9c405a174d6821a7a761ff5a501">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#ae3df7902cd1d2c0fc9a128d57de079bc">Kalman::Engines::Unscented</a>.</p>
+<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_combinatorial.html#ab01540d471ff80b630ad5c0c60dd09f3">Kalman::Engines::Combinatorial</a>, <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#adf04fe46752d5e78696ba260113b0bcb">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a7876f7f7e8b7496ad04ef98797ac863d">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#a3cb58eed00da2eefd1b6401c00f866be">Kalman::Engines::Interacting</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#aef522e04518fa7ed4cda4129290a91ee">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a7337d9c405a174d6821a7a761ff5a501">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#ae3df7902cd1d2c0fc9a128d57de079bc">Kalman::Engines::Unscented</a>.</p>
 
 </div>
 </div>
@@ -479,7 +480,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a3bfe4d602f11eea0f0339767738fb7d3">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a252048b900a2650dfa7b430cc0c0bc27">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#adb8028f51d9bf196b4dc46eb5c634838">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#aceb35aefe4c355b9b4ffa49542882a21">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#ae1e49a32c029af99c90a94ead49a8406">Kalman::Engines::Unscented</a>.</p>
+<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a3bfe4d602f11eea0f0339767738fb7d3">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a252048b900a2650dfa7b430cc0c0bc27">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#aa07e5b4debb1a46c512d9b9988df172c">Kalman::Engines::Interacting</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#adb8028f51d9bf196b4dc46eb5c634838">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#aceb35aefe4c355b9b4ffa49542882a21">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#ae1e49a32c029af99c90a94ead49a8406">Kalman::Engines::Unscented</a>.</p>
 
 </div>
 </div>
@@ -567,14 +568,14 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#afc8bf640dd48525caf2e19eebc7a0ec3">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a4bac1826a5fd365d2913e3883548b565">Kalman::Engines::Unscented</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#a49620ebf27ec98004136c89eeddcd86b">Kalman::Engines::Interacting</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#afc8bf640dd48525caf2e19eebc7a0ec3">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a4bac1826a5fd365d2913e3883548b565">Kalman::Engines::Unscented</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_engine_8cc_source.html#l00016">16</a> of file <a class="el" href="_engine_8cc_source.html">Engine.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   19</span>    {</div>
 <div class="line"><span class="lineno">   20</span>        <a class="code hl_function" href="class_kalman_1_1_engine.html#aeceb917250c591d8011b374f623e0c3b">Propagate</a>(model, x, u, t, xk, F);</div>
 <div class="line"><span class="lineno">   21</span> </div>
-<div class="line"><span class="lineno">   22</span>        Matrix Q = model.Q(t);</div>
-<div class="line"><span class="lineno">   23</span>        <span class="keyword">const</span> Matrix L = model.L(t);</div>
+<div class="line"><span class="lineno">   22</span>        Matrix Q = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.Q(t);</div>
+<div class="line"><span class="lineno">   23</span>        <span class="keyword">const</span> Matrix L = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.L(t);</div>
 <div class="line"><span class="lineno">   24</span>        <span class="keywordflow">if</span> (!L.Empty()) Q = Utils::Similarity(L, Q);      <span class="comment">// L Q L^T</span></div>
 <div class="line"><span class="lineno">   25</span> </div>
 <div class="line"><span class="lineno">   26</span>        Pk = Utils::Similarity(F, P);                     <span class="comment">// F P F^T</span></div>
@@ -656,7 +657,7 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a8b1ed4dba5ef2e2c8d9a8aa1d39ee6e3">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a6b7c32ba14bc92d09c4900f61ff39a27">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#ad92cb75b6d09d7bbcc6a04336564d240">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a0043a8b8994879ccc4af7f56244ddf15">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a8090e22b58b130baf00f348ad747287a">Kalman::Engines::Unscented</a>.</p>
+<p>Implemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a8b1ed4dba5ef2e2c8d9a8aa1d39ee6e3">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_extended.html#a6b7c32ba14bc92d09c4900f61ff39a27">Kalman::Engines::Extended</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#aad49b6767c794ee9554c35e4b48fec3f">Kalman::Engines::Interacting</a>, <a class="el" href="class_kalman_1_1_engines_1_1_linear.html#ad92cb75b6d09d7bbcc6a04336564d240">Kalman::Engines::Linear</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a0043a8b8994879ccc4af7f56244ddf15">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a8090e22b58b130baf00f348ad747287a">Kalman::Engines::Unscented</a>.</p>
 
 </div>
 </div>
@@ -686,7 +687,7 @@ Public Member Functions</h2></td></tr>
 
 <p>Start a run: a stateless engine ignores it, a stateful one (particle cloud, ensemble) reseeds itself from the model's x0 / P0. <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> calls it whenever a forward pass begins. </p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Kalman::Engines::Ensemble</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a8c70988618a02428c091c432c7bf2554">Kalman::Engines::Particle</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#a1d8a00eafb02a6859842e172a6af5560">Kalman::Engines::Interacting</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#a8c70988618a02428c091c432c7bf2554">Kalman::Engines::Particle</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_engine_8h_source.html#l00059">59</a> of file <a class="el" href="_engine_8h_source.html">Engine.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   59</span>{}</div>
@@ -887,12 +888,12 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>the number of measurement channels actually used (0 when the whole measurement was missing, in which case the belief passes through unchanged — a predict-only step). </dd></dl>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#abe112312439e864c0f7a3e4e2d3b0ec3">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a0e35fcf8d75f45c66817352192c75b60">Kalman::Engines::Unscented</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e">Kalman::Engines::Ensemble</a>, <a class="el" href="class_kalman_1_1_engines_1_1_interacting.html#a4330e20212eae4fd71e34536a0f313ca">Kalman::Engines::Interacting</a>, <a class="el" href="class_kalman_1_1_engines_1_1_particle.html#abe112312439e864c0f7a3e4e2d3b0ec3">Kalman::Engines::Particle</a>, and <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html#a0e35fcf8d75f45c66817352192c75b60">Kalman::Engines::Unscented</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_engine_8cc_source.html#l00031">31</a> of file <a class="el" href="_engine_8cc_source.html">Engine.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   34</span>    {</div>
-<div class="line"><span class="lineno">   35</span>        xOut = x;</div>
-<div class="line"><span class="lineno">   36</span>        POut = P;</div>
+<div class="line"><span class="lineno">   35</span>        xOut = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
+<div class="line"><span class="lineno">   36</span>        POut = <a class="code hl_variable" href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">P</a>;</div>
 <div class="line"><span class="lineno">   37</span> </div>
 <div class="line"><span class="lineno">   38</span>        <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z);</div>
 <div class="line"><span class="lineno">   39</span>        <span class="keywordflow">if</span> (keep.empty()) <span class="keywordflow">return</span> 0;                       <span class="comment">// predict-only step</span></div>
@@ -906,15 +907,17 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   47</span>        Vector y(z);</div>
 <div class="line"><span class="lineno">   48</span>        y -= zpred;</div>
 <div class="line"><span class="lineno">   49</span> </div>
-<div class="line"><span class="lineno">   50</span>        <a class="code hl_function" href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Utils::Correct</a>(<a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Utils::CompressRows</a>(H, keep), <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(model.R(t), keep),</div>
+<div class="line"><span class="lineno">   50</span>        <a class="code hl_function" href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Utils::Correct</a>(<a class="code hl_function" href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Utils::CompressRows</a>(H, keep), <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.R(t), keep),</div>
 <div class="line"><span class="lineno">   51</span>                       <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(y, keep), x, P, xOut, POut);</div>
 <div class="line"><span class="lineno">   52</span>        <span class="keywordflow">return</span> keep.size();</div>
 <div class="line"><span class="lineno">   53</span>    }</div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_addf8edff6b099465eb8a9720e477a96b"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Kalman::Utils::Correct</a></div><div class="ttdeci">void Correct(const Matrix &amp;Hc, const Matrix &amp;Rc, const Vector &amp;yc, const Vector &amp;x, const Matrix &amp;P, Vector &amp;xOut, Matrix &amp;POut)</div><div class="ttdoc">The Kalman correction from a residual: gain, mean, Joseph-form covariance.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00160">Utils.cc:160</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00123">Utils.cc:123</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00103">Utils.cc:103</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00117">Utils.cc:117</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_addf8edff6b099465eb8a9720e477a96b"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#addf8edff6b099465eb8a9720e477a96b">Kalman::Utils::Correct</a></div><div class="ttdeci">void Correct(const Matrix &amp;Hc, const Matrix &amp;Rc, const Vector &amp;yc, const Vector &amp;x, const Matrix &amp;P, Vector &amp;xOut, Matrix &amp;POut)</div><div class="ttdoc">The Kalman correction from a residual: gain, mean, Joseph-form covariance.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00161">Utils.cc:161</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00133">Utils.cc:133</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_af328f6c72ce43e898c580d547397e043"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#af328f6c72ce43e898c580d547397e043">Kalman::Utils::CompressRows</a></div><div class="ttdeci">Matrix CompressRows(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows of M restricted to keep (for the observation matrix H).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00124">Utils.cc:124</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument__data_html_a492bc2b3962d87d8b99a1243915352fe"><div class="ttname"><a href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">tests.test_instrument_data.P</a></div><div class="ttdeci">P</div><div class="ttdef"><b>Definition</b> <a href="test__instrument__data_8py_source.html#l00016">test_instrument_data.py:16</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

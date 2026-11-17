@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -179,18 +179,18 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="test__native__fields_8py_source.html#l00150">150</a> of file <a class="el" href="test__native__fields_8py_source.html">test_native_fields.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  150</span>    <span class="keyword">def </span>test_a_changed_hook_or_a_full_q(self):</div>
-<div class="line"><span class="lineno">  151</span>        <span class="keyword">class </span>Observed(KolmogorovFlowModel):</div>
-<div class="line"><span class="lineno">  152</span>            <span class="keyword">def </span>observe(self, X, t=None):</div>
-<div class="line"><span class="lineno">  153</span>                <span class="keywordflow">return</span> super().observe(X, t) * 1.0</div>
-<div class="line"><span class="lineno">  154</span>        model = Observed(<span class="stringliteral">&quot;o&quot;</span>, grid=16, cycle=4, n_obs=10, seed=1)</div>
-<div class="line"><span class="lineno">  155</span>        self.assertIsNone(model.native_handle(), <span class="stringliteral">&quot;an observe() of its own&quot;</span>)</div>
+<div class="line"><span class="lineno">  151</span>        <span class="keyword">class </span>Rescaled(KolmogorovFlowModel):</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keyword">def </span>h(self, x, v=None, t=None):</div>
+<div class="line"><span class="lineno">  153</span>                <span class="keywordflow">return</span> super().h(x, v=v, t=t) * 1.0</div>
+<div class="line"><span class="lineno">  154</span>        model = Rescaled(<span class="stringliteral">&quot;o&quot;</span>, grid=16, cycle=4, n_obs=10, seed=1)</div>
+<div class="line"><span class="lineno">  155</span>        self.assertIsNone(model.native_handle(), <span class="stringliteral">&quot;an h of its own&quot;</span>)</div>
 <div class="line"><span class="lineno">  156</span> </div>
 <div class="line"><span class="lineno">  157</span>        model = KolmogorovFlowModel(<span class="stringliteral">&quot;q&quot;</span>, grid=8, cycle=4, n_obs=10, seed=1)</div>
 <div class="line"><span class="lineno">  158</span>        Q = 0.01 * np.eye(model.n)</div>
 <div class="line"><span class="lineno">  159</span>        Q[0, 1] = Q[1, 0] = 0.001</div>
 <div class="line"><span class="lineno">  160</span>        model._Q = Q</div>
 <div class="line"><span class="lineno">  161</span>        self.assertIsNone(model.native_handle(), <span class="stringliteral">&quot;a Q with off-diagonal terms&quot;</span>)</div>
-<div class="line"><span class="lineno">  162</span>        self.assertIsNone(EnsembleKalmanEngine(n_members=4)._native_twin(model))</div>
+<div class="line"><span class="lineno">  162</span>        self.assertIsNone(EnsembleKalmanEngine(n_members=4)._native_counterpart(model))</div>
 <div class="line"><span class="lineno">  163</span> </div>
 </div><!-- fragment -->
 </div>
@@ -217,7 +217,7 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  166</span>            model = mini()</div>
 <div class="line"><span class="lineno">  167</span>            model.surrogate = <span class="keyword">lambda</span> X: np.column_stack([model.solver.advance(x, model.cycle) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> X.T])</div>
 <div class="line"><span class="lineno">  168</span>            <span class="keywordflow">return</span> model</div>
-<div class="line"><span class="lineno">  169</span>        got = filter_pass(make, dict(n_members=8, seed=2), <span class="keyword">False</span>, expect_twin=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  169</span>        got = filter_pass(make, dict(n_members=8, seed=2), <span class="keyword">False</span>, expect_counterpart=<span class="keyword">False</span>)</div>
 <div class="line"><span class="lineno">  170</span>        want = filter_pass(make, dict(n_members=8, seed=2), <span class="keyword">True</span>)</div>
 <div class="line"><span class="lineno">  171</span>        self.assertLess(rel(got[0], want[0]), RTOL)</div>
 <div class="line"><span class="lineno">  172</span> </div>

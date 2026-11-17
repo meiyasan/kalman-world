@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -221,20 +221,20 @@ Skipped when libKalman is not built.
 </table>
 </div><div class="memdoc">
 <pre class="fragment">A pendulum trajectory with process noise, and noisy readings of its angle.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00230">230</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  230</span><span class="keyword">def </span>_pendulum_run(seed, steps=150):</div>
-<div class="line"><span class="lineno">  231</span>    <span class="stringliteral">&quot;&quot;&quot;A pendulum trajectory with process noise, and noisy readings of its angle.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  232</span>    rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  233</span>    model = Pendulum()</div>
-<div class="line"><span class="lineno">  234</span>    x = np.array([[0.5], [0.0]])</div>
-<div class="line"><span class="lineno">  235</span>    truth, z = [], []</div>
-<div class="line"><span class="lineno">  236</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(steps):</div>
-<div class="line"><span class="lineno">  237</span>        x = model.f(x) + rng.multivariate_normal(np.zeros(2), model._Q).reshape(2, 1)</div>
-<div class="line"><span class="lineno">  238</span>        truth.append(x.ravel())</div>
-<div class="line"><span class="lineno">  239</span>        z.append(x[0, 0] + rng.normal(0, 0.1))</div>
-<div class="line"><span class="lineno">  240</span>    <span class="keywordflow">return</span> np.array(truth), np.array(z).reshape(-1, 1)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00229">229</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  229</span><span class="keyword">def </span>_pendulum_run(seed, steps=150):</div>
+<div class="line"><span class="lineno">  230</span>    <span class="stringliteral">&quot;&quot;&quot;A pendulum trajectory with process noise, and noisy readings of its angle.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  231</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  232</span>    model = Pendulum()</div>
+<div class="line"><span class="lineno">  233</span>    x = np.array([[0.5], [0.0]])</div>
+<div class="line"><span class="lineno">  234</span>    truth, z = [], []</div>
+<div class="line"><span class="lineno">  235</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(steps):</div>
+<div class="line"><span class="lineno">  236</span>        x = model.f(x) + rng.multivariate_normal(np.zeros(2), model._Q).reshape(2, 1)</div>
+<div class="line"><span class="lineno">  237</span>        truth.append(x.ravel())</div>
+<div class="line"><span class="lineno">  238</span>        z.append(x[0, 0] + rng.normal(0, 0.1))</div>
+<div class="line"><span class="lineno">  239</span>    <span class="keywordflow">return</span> np.array(truth), np.array(z).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  240</span> </div>
 <div class="line"><span class="lineno">  241</span> </div>
-<div class="line"><span class="lineno">  242</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

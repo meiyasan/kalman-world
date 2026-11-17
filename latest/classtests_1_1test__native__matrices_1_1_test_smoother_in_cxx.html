@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -150,21 +150,21 @@ Inheritance diagram for tests.test_native_matrices.TestSmootherInCxx:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a31b08db84bcdea5f7527dd15250ab8a5" id="r_a31b08db84bcdea5f7527dd15250ab8a5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html#a31b08db84bcdea5f7527dd15250ab8a5">test_after_a_twin_and_after_a_time_varying_model</a> (self)</td></tr>
-<tr class="separator:a31b08db84bcdea5f7527dd15250ab8a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a551922b6104582daf05ef17336cea7ab" id="r_a551922b6104582daf05ef17336cea7ab"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html#a551922b6104582daf05ef17336cea7ab">test_after_a_counterpart_and_after_a_time_varying_model</a> (self)</td></tr>
+<tr class="separator:a551922b6104582daf05ef17336cea7ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The RTS sweep runs in C++ after an extended pass too (one Jacobian per step).</pre> 
 <p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00269">269</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a31b08db84bcdea5f7527dd15250ab8a5" name="a31b08db84bcdea5f7527dd15250ab8a5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31b08db84bcdea5f7527dd15250ab8a5">&#9670;&#160;</a></span>test_after_a_twin_and_after_a_time_varying_model()</h2>
+<a id="a551922b6104582daf05ef17336cea7ab" name="a551922b6104582daf05ef17336cea7ab"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a551922b6104582daf05ef17336cea7ab">&#9670;&#160;</a></span>test_after_a_counterpart_and_after_a_time_varying_model()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tests.test_native_matrices.TestSmootherInCxx.test_after_a_twin_and_after_a_time_varying_model </td>
+          <td class="memname">tests.test_native_matrices.TestSmootherInCxx.test_after_a_counterpart_and_after_a_time_varying_model </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -174,7 +174,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00272">272</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  272</span>    <span class="keyword">def </span>test_after_a_twin_and_after_a_time_varying_model(self):</div>
+<div class="fragment"><div class="line"><span class="lineno">  272</span>    <span class="keyword">def </span>test_after_a_counterpart_and_after_a_time_varying_model(self):</div>
 <div class="line"><span class="lineno">  273</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1ballistics.html">modules.apps.ballistics</a> <span class="keyword">import</span> BallisticModel</div>
 <div class="line"><span class="lineno">  274</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization.html">modules.apps.gravitational.gravwave.polarization</a> <span class="keyword">import</span> PolarizationModel</div>
 <div class="line"><span class="lineno">  275</span>        cases = [(<span class="keyword">lambda</span>: BallisticModel(<span class="stringliteral">&quot;s&quot;</span>, fs=100.0), <span class="keywordtype">None</span>),</div>

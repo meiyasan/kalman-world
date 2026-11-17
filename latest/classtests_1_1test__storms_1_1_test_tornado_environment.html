@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -207,9 +207,9 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00321">321</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  321</span>    <span class="keyword">def </span>test_regime_probability_tracks_event(self):</div>
 <div class="line"><span class="lineno">  322</span>        obs, labels = synthetic_environment(n_steps=200, onsets=((70, 110),), seed=2)</div>
-<div class="line"><span class="lineno">  323</span>        models, Pi, probs = TornadoEnvironmentModel.ikf_bank(season=<span class="stringliteral">&quot;peak&quot;</span>)</div>
-<div class="line"><span class="lineno">  324</span>        ikf = InteractiveKalmanFilter(models, Pi, probs)</div>
-<div class="line"><span class="lineno">  325</span>        ikf.forward(obs)</div>
+<div class="line"><span class="lineno">  323</span>        models, Pi, probs = TornadoEnvironmentModel.regime_bank(season=<span class="stringliteral">&quot;peak&quot;</span>)</div>
+<div class="line"><span class="lineno">  324</span>        ikf = route(models, Pi, probs)</div>
+<div class="line"><span class="lineno">  325</span>        ikf.filter(obs)</div>
 <div class="line"><span class="lineno">  326</span>        p_tor = ikf.mode_probabilities[:, 1]</div>
 <div class="line"><span class="lineno">  327</span>        self.assertGreater(p_tor[labels == 1].mean(), p_tor[labels == 0].mean() + 0.2)</div>
 <div class="line"><span class="lineno">  328</span>        self.assertTrue(np.all((p_tor &gt;= 0) &amp; (p_tor &lt;= 1)))</div>
@@ -238,8 +238,8 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00310">310</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  310</span>    <span class="keyword">def </span>test_seasonal_transition_matrices_differ(self):</div>
-<div class="line"><span class="lineno">  311</span>        _, pi_peak, _ = TornadoEnvironmentModel.ikf_bank(season=<span class="stringliteral">&quot;peak&quot;</span>)</div>
-<div class="line"><span class="lineno">  312</span>        _, pi_off, _ = TornadoEnvironmentModel.ikf_bank(season=<span class="stringliteral">&quot;off&quot;</span>)</div>
+<div class="line"><span class="lineno">  311</span>        _, pi_peak, _ = TornadoEnvironmentModel.regime_bank(season=<span class="stringliteral">&quot;peak&quot;</span>)</div>
+<div class="line"><span class="lineno">  312</span>        _, pi_off, _ = TornadoEnvironmentModel.regime_bank(season=<span class="stringliteral">&quot;off&quot;</span>)</div>
 <div class="line"><span class="lineno">  313</span>        np.testing.assert_allclose(pi_peak.sum(axis=1), 1.0)</div>
 <div class="line"><span class="lineno">  314</span>        np.testing.assert_allclose(pi_off.sum(axis=1), 1.0)</div>
 <div class="line"><span class="lineno">  315</span>        <span class="comment"># tornadic-regime persistence higher in peak season</span></div>

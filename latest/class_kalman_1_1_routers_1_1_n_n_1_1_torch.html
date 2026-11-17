@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -206,7 +206,7 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- fragment --><div class="fragment"><div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_torch.html">Kalman::Routers::NN::Torch</a> policy(<span class="stringliteral">&quot;router.pt&quot;</span>);</div>
 <div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a>    router(&amp;policy, 5);</div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_torch_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_torch.html">Kalman::Routers::NN::Torch</a></div><div class="ttdoc">Executes a TorchScript policy through libTorch.</div><div class="ttdef"><b>Definition</b> <a href="_torch_8h_source.html#l00062">Torch.h:63</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00061">Neural.h:62</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00077">Neural.h:78</a></div></div>
 </div><!-- fragment --><h1><a class="anchor" id="torch_vs_onnx"></a>
 Torch or ONNX?</h1>
 <p>Both are optional, both satisfy <a class="el" href="class_kalman_1_1_routers_1_1_n_n_1_1_model.html" title="A learned policy: features in, mode probabilities out.">Kalman::Routers::NN::Model</a>, and the router cannot tell them apart. They differ in what they cost you:</p>

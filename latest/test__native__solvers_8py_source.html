@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -247,16 +247,16 @@ $(document).ready(function(){initNavTree('test__native__solvers_8py_source.html'
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        engine = EnsembleKalmanEngine(n_members=12, inflation=1.05, seed=5)</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        rng = np.random.default_rng(9)</div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="comment"># A small ensemble drawn around a spun-up state (the model&#39;s own</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="comment"># initial_ensemble would spin a 2500-step climatology first).</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="comment"># initial state as samples would spin a 2500-step climatology first).</span></div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        truth = model.solver.advance(model.solver.random_ic(), 200).ravel()</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        start = truth[:, <span class="keywordtype">None</span>] + 0.3 * np.random.default_rng(1).standard_normal((model.n, 12))</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        model.initial_ensemble = <span class="keyword">lambda</span> N, rng=<span class="keywordtype">None</span>: start.copy()</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        model.initial_state = <span class="keyword">lambda</span> x0=<span class="keywordtype">None</span>, P0=<span class="keywordtype">None</span>, *, samples=<span class="keywordtype">None</span>, rng=<span class="keywordtype">None</span>: start.copy()</div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keyword">def </span>go():</div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            engine.reset(model)</div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            x = truth.copy()</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            means = []</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(4):</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                x = np.asarray(model.forecast(x.reshape(-1, 1)), float).ravel()</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                x = np.asarray(model.f(x.reshape(-1, 1)), float).ravel()</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                z = np.asarray(model.h(x.reshape(-1, 1)), float).ravel() + 0.05 * rng.standard_normal(model.m)</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                <span class="keywordflow">if</span> k == 2:</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                    z[::3] = np.nan                       <span class="comment"># some probes silent</span></div>
@@ -295,7 +295,7 @@ $(document).ready(function(){initNavTree('test__native__solvers_8py_source.html'
 </div>
 </div>
 <div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html">modules.apps.weather.barotropic.BetaPlaneNS2D</a></div><div class="ttdef"><b>Definition</b> <a href="barotropic_8py_source.html#l00076">barotropic.py:76</a></div></div>
-<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d.html">modules.apps.weather.flow.NS2D</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00037">flow.py:37</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d_html"><div class="ttname"><a href="classmodules_1_1apps_1_1weather_1_1flow_1_1_n_s2_d.html">modules.apps.weather.flow.NS2D</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00038">flow.py:38</a></div></div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver_html"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1finite__difference_1_1_finite_difference_solver.html">modules.framework.solvers.finite_difference.FiniteDifferenceSolver</a></div><div class="ttdef"><b>Definition</b> <a href="finite__difference_8py_source.html#l00026">finite_difference.py:26</a></div></div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver_html"><div class="ttname"><a href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html">modules.framework.solvers.spectral.SpectralSolver</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2solvers_2spectral_8py_source.html#l00025">spectral.py:25</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__native__solvers_1_1_test_ensemble_analysis_in_cxx_html"><div class="ttname"><a href="classtests_1_1test__native__solvers_1_1_test_ensemble_analysis_in_cxx.html">tests.test_native_solvers.TestEnsembleAnalysisInCxx</a></div><div class="ttdef"><b>Definition</b> <a href="test__native__solvers_8py_source.html#l00080">test_native_solvers.py:80</a></div></div>

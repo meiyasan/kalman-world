@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -166,7 +166,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral">A model is described by a :class:`KalmanSpec` dict::</span></div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    {&quot;base&quot;: &quot;matrices&quot; | &quot;continuous&quot; | &quot;&lt;CatalogClassName&gt;&quot;,</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">     &quot;sensor_id&quot;: ..., &quot;fs&quot;: ...,</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">     &quot;sensor&quot;: ..., &quot;fs&quot;: ...,</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">     &quot;dynamics&quot;: {&quot;F&quot;:..,&quot;H&quot;:..} | {&quot;A&quot;:..,&quot;Qc&quot;:..} | {&quot;params&quot;: {...}},</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">     &quot;noise&quot;: {&quot;Q&quot;:.., &quot;R&quot;:..}, &quot;initial&quot;: {&quot;x0&quot;:.., &quot;P0&quot;:..},</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">     &quot;labels&quot;: {&quot;states&quot;:[...], &quot;observables&quot;:[...]},</span></div>
@@ -473,7 +473,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    <span class="stringliteral">&quot;cost&quot;</span>: <span class="stringliteral">&quot;control&quot;</span>, <span class="stringliteral">&quot;Qcost&quot;</span>: <span class="stringliteral">&quot;control&quot;</span>, <span class="stringliteral">&quot;Rcost&quot;</span>: <span class="stringliteral">&quot;control&quot;</span>, <span class="stringliteral">&quot;x_ref&quot;</span>: <span class="stringliteral">&quot;control&quot;</span>,</div>
 <div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>}</div>
 <div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="namespacemodules_1_1api.html#a7a65e4f344b43cb20037b5f1fcc32382">  296</a></span>_SPEC_TOP_LEVEL = {<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;dynamics&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>,</div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno"><a class="line" href="namespacemodules_1_1api.html#a7a65e4f344b43cb20037b5f1fcc32382">  296</a></span>_SPEC_TOP_LEVEL = {<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>, <span class="stringliteral">&quot;dynamics&quot;</span>, <span class="stringliteral">&quot;noise&quot;</span>,</div>
 <div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>                   <span class="stringliteral">&quot;initial&quot;</span>, <span class="stringliteral">&quot;labels&quot;</span>, <span class="stringliteral">&quot;control&quot;</span>, <span class="stringliteral">&quot;bindings&quot;</span>, <span class="stringliteral">&quot;description&quot;</span>}</div>
 <div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span> </div>
 <div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="comment">#: Names callers reach for that the spec calls something else.  ``model`` is the</span></div>
@@ -538,7 +538,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="line"><a id="l00355" name="l00355"></a><span class="lineno">  355</span>    base = spec.get(<span class="stringliteral">&quot;base&quot;</span>, <span class="stringliteral">&quot;matrices&quot;</span>)</div>
 <div class="line"><a id="l00356" name="l00356"></a><span class="lineno">  356</span>    <span class="keywordflow">if</span> base <span class="keywordflow">in</span> _MODELS:                            <span class="comment"># authored spec referenced by name</span></div>
 <div class="line"><a id="l00357" name="l00357"></a><span class="lineno">  357</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1api.html#a151b0b5a3017807ff2b1616835178226">make_model</a>(_MODELS[base])</div>
-<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;api&quot;</span>)</div>
+<div class="line"><a id="l00358" name="l00358"></a><span class="lineno">  358</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;api&quot;</span>)</div>
 <div class="line"><a id="l00359" name="l00359"></a><span class="lineno">  359</span>    fs = spec.get(<span class="stringliteral">&quot;fs&quot;</span>, 1.0)</div>
 <div class="line"><a id="l00360" name="l00360"></a><span class="lineno">  360</span>    noise = spec.get(<span class="stringliteral">&quot;noise&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
 <div class="line"><a id="l00361" name="l00361"></a><span class="lineno">  361</span>    initial = spec.get(<span class="stringliteral">&quot;initial&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
@@ -572,7 +572,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="line"><a id="l00389" name="l00389"></a><span class="lineno">  389</span>    <span class="keywordflow">if</span> cls <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a id="l00390" name="l00390"></a><span class="lineno">  390</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;unknown model base {base!r}; see catalog()[&#39;models&#39;].&quot;</span>)</div>
 <div class="line"><a id="l00391" name="l00391"></a><span class="lineno">  391</span>    params = dict((spec.get(<span class="stringliteral">&quot;dynamics&quot;</span>, {}) <span class="keywordflow">or</span> {}).get(<span class="stringliteral">&quot;params&quot;</span>, {}) <span class="keywordflow">or</span> {})</div>
-<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="comment"># bind params against the class signature; pass sensor_id/fs when accepted</span></div>
+<div class="line"><a id="l00392" name="l00392"></a><span class="lineno">  392</span>    <span class="comment"># bind params against the class signature; pass sensor/fs when accepted</span></div>
 <div class="line"><a id="l00393" name="l00393"></a><span class="lineno">  393</span>    <span class="keywordflow">try</span>:</div>
 <div class="line"><a id="l00394" name="l00394"></a><span class="lineno">  394</span>        plist = list(inspect.signature(cls.__init__).parameters)   <span class="comment"># ordered</span></div>
 <div class="line"><a id="l00395" name="l00395"></a><span class="lineno">  395</span>    <span class="keywordflow">except</span> (TypeError, ValueError):</div>
@@ -610,7 +610,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="line"><a id="l00427" name="l00427"></a><span class="lineno">  427</span>        <span class="keywordflow">if</span> k <span class="keywordflow">in</span> accepted <span class="keywordflow">or</span> takes_var_kw:</div>
 <div class="line"><a id="l00428" name="l00428"></a><span class="lineno">  428</span>            params.setdefault(k, v)</div>
 <div class="line"><a id="l00429" name="l00429"></a><span class="lineno">  429</span>    ordered = [p <span class="keywordflow">for</span> p <span class="keywordflow">in</span> plist <span class="keywordflow">if</span> p != <span class="stringliteral">&quot;self&quot;</span>]</div>
-<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    <span class="keywordflow">if</span> ordered <span class="keywordflow">and</span> ordered[0] <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
+<div class="line"><a id="l00430" name="l00430"></a><span class="lineno">  430</span>    <span class="keywordflow">if</span> ordered <span class="keywordflow">and</span> ordered[0] <span class="keywordflow">in</span> (<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;name&quot;</span>):</div>
 <div class="line"><a id="l00431" name="l00431"></a><span class="lineno">  431</span>        <span class="keywordflow">return</span> cls(sensor, **params)</div>
 <div class="line"><a id="l00432" name="l00432"></a><span class="lineno">  432</span>    <span class="keywordflow">return</span> cls(**params)</div>
 <div class="line"><a id="l00433" name="l00433"></a><span class="lineno">  433</span> </div>
@@ -695,7 +695,7 @@ $(document).ready(function(){initNavTree('modules_2api_2____init_____8py_source.
 <div class="foldopen" id="foldopen00503" data-start="" data-end="">
 <div class="line"><a id="l00503" name="l00503"></a><span class="lineno"><a class="line" href="namespacemodules_1_1api.html#af3c4ebed1b5aebadf1a9fb8fa077d7d2">  503</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1api.html#af3c4ebed1b5aebadf1a9fb8fa077d7d2">run_osse</a>(spec: dict, *, n_cycles: int = 40, n_members: int = 16,</div>
 <div class="line"><a id="l00504" name="l00504"></a><span class="lineno">  504</span>             inflation: float = 1.06, **kw) -&gt; dict:</div>
-<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>    <span class="stringliteral">&quot;&quot;&quot;Twin-experiment OSSE for a field/flow spec (EnKF vs free run).</span></div>
+<div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span>    <span class="stringliteral">&quot;&quot;&quot;Counterpart-experiment OSSE for a field/flow spec (EnKF vs free run).</span></div>
 <div class="line"><a id="l00506" name="l00506"></a><span class="lineno">  506</span><span class="stringliteral">    Returns the per-cycle RMSE/spread histories.&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="keyword">from</span> ..apps.weather <span class="keyword">import</span> TwinExperiment</div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span>    model = <a class="code hl_function" href="namespacemodules_1_1api.html#a151b0b5a3017807ff2b1616835178226">make_model</a>(spec)</div>

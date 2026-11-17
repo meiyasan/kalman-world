@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -257,11 +257,11 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">preprocess/postprocess are inverse rotations: sample().zk is analytic
+<pre class="fragment">prepare_measurements/finish_output are inverse rotations: sample().zk is analytic
 lab-frame data that can be fed straight back into filter().</pre> 
 <p class="definition">Definition at line <a class="el" href="test__oscillators_8py_source.html#l00048">48</a> of file <a class="el" href="test__oscillators_8py_source.html">test_oscillators.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   48</span>    <span class="keyword">def </span>test_sample_postprocess_roundtrip(self):</div>
-<div class="line"><span class="lineno">   49</span>        <span class="stringliteral">&quot;&quot;&quot;preprocess/postprocess are inverse rotations: sample().zk is analytic</span></div>
+<div class="line"><span class="lineno">   49</span>        <span class="stringliteral">&quot;&quot;&quot;prepare_measurements/finish_output are inverse rotations: sample().zk is analytic</span></div>
 <div class="line"><span class="lineno">   50</span><span class="stringliteral">        lab-frame data that can be fed straight back into filter().&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">   51</span>        m = AnalyticOscillatorModel(<span class="stringliteral">&quot;s&quot;</span>, fs=128, f0=10.0, fc=10.0, Q=1000,</div>
 <div class="line"><span class="lineno">   52</span>                                    measurement_uncertainty=0.5, process_uncertainty=0.01,</div>

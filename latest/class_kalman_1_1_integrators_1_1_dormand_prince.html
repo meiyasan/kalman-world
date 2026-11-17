@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -488,8 +488,8 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_dormand_prince_8cc_source.html#l00044">44</a> of file <a class="el" href="_dormand_prince_8cc_source.html">DormandPrince.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   46</span>    {</div>
-<div class="line"><span class="lineno">   47</span>        Vector x = x0;</div>
-<div class="line"><span class="lineno">   48</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> target = t0 + dt;</div>
+<div class="line"><span class="lineno">   47</span>        Vector <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = x0;</div>
+<div class="line"><span class="lineno">   48</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_function" href="namespacetests_1_1test__instrument__data.html#a36513c336934fdc9f0caaf7a993501b8">target</a> = t0 + dt;</div>
 <div class="line"><span class="lineno">   49</span>        <span class="keywordtype">double</span> t = t0, h = dt;</div>
 <div class="line"><span class="lineno">   50</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> sign = dt &lt; 0. ? -1. : 1.;</div>
 <div class="line"><span class="lineno">   51</span> </div>
@@ -501,13 +501,13 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   57</span> </div>
 <div class="line"><span class="lineno">   58</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 7; ++i)</div>
 <div class="line"><span class="lineno">   59</span>            {</div>
-<div class="line"><span class="lineno">   60</span>                Vector xi = x;</div>
+<div class="line"><span class="lineno">   60</span>                Vector xi = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
 <div class="line"><span class="lineno">   61</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; i; ++j)</div>
 <div class="line"><span class="lineno">   62</span>                    <span class="keywordflow">if</span> (kA[i][j] != 0.) xi += (h * kA[i][j]) * k[j];</div>
 <div class="line"><span class="lineno">   63</span>                k[i] = f(xi, u, t + kC[i] * h);</div>
 <div class="line"><span class="lineno">   64</span>            }</div>
 <div class="line"><span class="lineno">   65</span> </div>
-<div class="line"><span class="lineno">   66</span>            Vector x5 = x, x4 = x;</div>
+<div class="line"><span class="lineno">   66</span>            Vector x5 = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, x4 = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
 <div class="line"><span class="lineno">   67</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 7; ++i)</div>
 <div class="line"><span class="lineno">   68</span>            {</div>
 <div class="line"><span class="lineno">   69</span>                <span class="keywordflow">if</span> (kB5[i] != 0.) x5 += (h * kB5[i]) * k[i];</div>
@@ -515,23 +515,25 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   71</span>            }</div>
 <div class="line"><span class="lineno">   72</span> </div>
 <div class="line"><span class="lineno">   73</span>            <span class="keywordtype">double</span> err = 0.;</div>
-<div class="line"><span class="lineno">   74</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; x.Size(); ++i)</div>
+<div class="line"><span class="lineno">   74</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>.Size(); ++i)</div>
 <div class="line"><span class="lineno">   75</span>            {</div>
-<div class="line"><span class="lineno">   76</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> scale = fAtol + fRtol * std::max(std::abs(x(i)), std::abs(x5(i)));</div>
+<div class="line"><span class="lineno">   76</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> scale = fAtol + fRtol * std::max(std::abs(<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i)), std::abs(x5(i)));</div>
 <div class="line"><span class="lineno">   77</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> e = (x5(i) - x4(i)) / scale;</div>
 <div class="line"><span class="lineno">   78</span>                err += e * e;</div>
 <div class="line"><span class="lineno">   79</span>            }</div>
-<div class="line"><span class="lineno">   80</span>            err = std::sqrt(err) / std::max(std::sqrt(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(x.Size())), 1.);</div>
+<div class="line"><span class="lineno">   80</span>            err = std::sqrt(err) / std::max(std::sqrt(<span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>.Size())), 1.);</div>
 <div class="line"><span class="lineno">   81</span> </div>
 <div class="line"><span class="lineno">   82</span>            <span class="keywordflow">if</span> (err &lt;= 1. || std::abs(h) &lt;= 1e-14 * std::abs(dt))</div>
 <div class="line"><span class="lineno">   83</span>            {</div>
-<div class="line"><span class="lineno">   84</span>                x = x5;</div>
+<div class="line"><span class="lineno">   84</span>                <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = x5;</div>
 <div class="line"><span class="lineno">   85</span>                t += h;</div>
 <div class="line"><span class="lineno">   86</span>            }</div>
 <div class="line"><span class="lineno">   87</span>            h *= std::min(5., std::max(0.2, 0.9 * std::pow(1. / std::max(err, 1e-12), 0.2)));</div>
 <div class="line"><span class="lineno">   88</span>        }</div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">return</span> x;</div>
+<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
 <div class="line"><span class="lineno">   90</span>    }</div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument__data_html_a36513c336934fdc9f0caaf7a993501b8"><div class="ttname"><a href="namespacetests_1_1test__instrument__data.html#a36513c336934fdc9f0caaf7a993501b8">tests.test_instrument_data.target</a></div><div class="ttdeci">target()</div><div class="ttdef"><b>Definition</b> <a href="test__instrument__data_8py_source.html#l00019">test_instrument_data.py:19</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

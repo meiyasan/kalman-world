@@ -17,7 +17,7 @@ var namespacemodules_1_1apps_1_1weather_1_1storms =
     [ "japan_region", "namespacemodules_1_1apps_1_1weather_1_1storms.html#a86d21845e4ea88deb40ed6bddb093ee5", null ],
     [ "japan_steering", "namespacemodules_1_1apps_1_1weather_1_1storms.html#ac9c658e4aa67a59a0a918b641cac66b5", null ],
     [ "landfall_probability", "namespacemodules_1_1apps_1_1weather_1_1storms.html#a5c6a15a38ea5981e0905301003dc2dba", null ],
-    [ "seasonal_tornado_probability", "namespacemodules_1_1apps_1_1weather_1_1storms.html#abb2dc5a56c536044f6e1c4f73de424a3", null ],
+    [ "seasonal_tornado_probability", "namespacemodules_1_1apps_1_1weather_1_1storms.html#ab856e4d8d64a0cf82d0d6b1b6e17ab8e", null ],
     [ "synthetic_environment", "namespacemodules_1_1apps_1_1weather_1_1storms.html#a243211fc58deb394b51c0ee12f6e0933", null ],
     [ "synthetic_steered_track", "namespacemodules_1_1apps_1_1weather_1_1storms.html#af0ff753d9c32235da4daef7eec940a77", null ],
     [ "synthetic_track", "namespacemodules_1_1apps_1_1weather_1_1storms.html#a519b8a451d9fba0872777bd4fe2284db", null ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -166,7 +166,7 @@ How it is built</h1>
 <li><b>Guidance inside the model.</b> The descent and landing models contain their own autopilot: it throttles the engine to follow a braking profile and tilts the booster toward the pad. The filter therefore predicts a controlled vehicle.</li>
 <li><b>Units.</b> Liftoff, descent and landing use metres, seconds and kilograms. The ascent to orbit uses megametres and kiloseconds, so that positions and velocities are numbers of similar size.</li>
 <li><b>Process noise.</b> Each model passes <code>L = I</code>, so the noise acts on every state. Without it the framework finds that the step does not respond to noise and applies none.</li>
-<li><b>C++.</b> All four have a twin in <code>libKalmanApps</code> (<code>rocket-liftoff</code>, <code>rocket-ascent</code>, <code>rocket-descent</code> and <code>rocket-descent-control</code>, <code>rocket-landing</code>): the derivative, the guidance and the closing step (mass kept at the dry mass, a landed stage held on the pad) in C++, so <code>model.filter(z)</code> and, with a thrust or throttle/gimbal program, <code>model.filter(z, uk)</code> run wholly in <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>. A custom integrator, or a subclass that changes the dynamics, keeps the Python physics.</li>
+<li><b>C++.</b> All four have a counterpart in <code>libKalmanApps</code> (<code>rocket-liftoff</code>, <code>rocket-ascent</code>, <code>rocket-descent</code> and <code>rocket-descent-control</code>, <code>rocket-landing</code>): the derivative, the guidance and the closing step (mass kept at the dry mass, a landed stage held on the pad) in C++, so <code>model.filter(z)</code> and, with a thrust or throttle/gimbal program, <code>model.filter(z, uk)</code> run wholly in <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>. A custom integrator, or a subclass that changes the dynamics, keeps the Python physics.</li>
 </ul>
 <h1><a class="anchor" id="using-it-9"></a>
 Using it</h1>

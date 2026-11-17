@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -329,7 +329,7 @@ grid, ``gradient``/``velocity`` operators, RK4 ``advance`` and numpy/torch
 backends live in the base; this subclass only fixes the **Kolmogorov
 physics** (``rhs_hat``: advection − viscosity + forcing).
 </pre> 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00037">37</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00038">38</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aea351e36f1b526e48e88250ed4ec15fa" name="aea351e36f1b526e48e88250ed4ec15fa"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aea351e36f1b526e48e88250ed4ec15fa">&#9670;&#160;</a></span>__init__()</h2>
@@ -414,16 +414,16 @@ irregular grids are the job of the finite-difference/volume/element
 solver kinds.</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a00cd36fb0f703e6de3b597af32492b82">modules.framework.solvers.spectral.SpectralSolver</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00056">56</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   57</span>                 *, backend=<span class="keywordtype">None</span>, device=<span class="keywordtype">None</span>, integrator=<span class="keywordtype">None</span>):</div>
-<div class="line"><span class="lineno">   58</span>        super().__init__(n=n, dt=dt, backend=backend, device=device, seed=seed,</div>
-<div class="line"><span class="lineno">   59</span>                         integrator=integrator)</div>
-<div class="line"><span class="lineno">   60</span>        self.nu, self.kf, self.chi = nu, kf, chi</div>
-<div class="line"><span class="lineno">   61</span>        ny, nx = self.shape</div>
-<div class="line"><span class="lineno">   62</span>        y = self.Ly * np.arange(ny) / ny                     <span class="comment"># forcing varies with y</span></div>
-<div class="line"><span class="lineno">   63</span>        self.F = chi * np.cos(kf * y)[:, <span class="keywordtype">None</span>] * np.ones((1, nx))</div>
-<div class="line"><span class="lineno">   64</span>        self.Fh = np.fft.fft2(self.F)</div>
-<div class="line"><span class="lineno">   65</span> </div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00057">57</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   58</span>                 *, backend=<span class="keywordtype">None</span>, device=<span class="keywordtype">None</span>, integrator=<span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">   59</span>        super().__init__(n=n, dt=dt, backend=backend, device=device, seed=seed,</div>
+<div class="line"><span class="lineno">   60</span>                         integrator=integrator)</div>
+<div class="line"><span class="lineno">   61</span>        self.nu, self.kf, self.chi = nu, kf, chi</div>
+<div class="line"><span class="lineno">   62</span>        ny, nx = self.shape</div>
+<div class="line"><span class="lineno">   63</span>        y = self.Ly * np.arange(ny) / ny                     <span class="comment"># forcing varies with y</span></div>
+<div class="line"><span class="lineno">   64</span>        self.F = chi * np.cos(kf * y)[:, <span class="keywordtype">None</span>] * np.ones((1, nx))</div>
+<div class="line"><span class="lineno">   65</span>        self.Fh = np.fft.fft2(self.F)</div>
+<div class="line"><span class="lineno">   66</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -456,10 +456,10 @@ a dict with ``nu`` and optionally ``beta`` and ``forcing_hat`` (the transform
 of ``F``). ``None`` (the default) when the equation is not of that form.</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#adf18d0e43f2731a29c5433d3157fb225">modules.framework.solvers.spectral.SpectralSolver</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00066">66</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   66</span>    <span class="keyword">def </span>_vorticity_terms(self):</div>
-<div class="line"><span class="lineno">   67</span>        <span class="keywordflow">return</span> dict(nu=self.nu, forcing_hat=self.Fh)</div>
-<div class="line"><span class="lineno">   68</span> </div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00067">67</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>    <span class="keyword">def </span>_vorticity_terms(self):</div>
+<div class="line"><span class="lineno">   68</span>        <span class="keywordflow">return</span> dict(nu=self.nu, forcing_hat=self.Fh)</div>
+<div class="line"><span class="lineno">   69</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -497,14 +497,14 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html#a57df557ca1e54fa6b36620a72abe2b77">modules.framework.solvers.spectral.SpectralSolver</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00069">69</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   69</span>    <span class="keyword">def </span>rhs_hat(self, wh, t=None):</div>
-<div class="line"><span class="lineno">   70</span>        u, v = self._vel_spectral(wh)</div>
-<div class="line"><span class="lineno">   71</span>        wx, wy = self._grad_spectral(wh)</div>
-<div class="line"><span class="lineno">   72</span>        adv = np.fft.fft2(u*wx + v*wy) * self.dealias</div>
-<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> -adv - self.nu*self.k2*wh + self.Fh</div>
-<div class="line"><span class="lineno">   74</span> </div>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00070">70</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>    <span class="keyword">def </span>rhs_hat(self, wh, t=None):</div>
+<div class="line"><span class="lineno">   71</span>        u, v = self._vel_spectral(wh)</div>
+<div class="line"><span class="lineno">   72</span>        wx, wy = self._grad_spectral(wh)</div>
+<div class="line"><span class="lineno">   73</span>        adv = np.fft.fft2(u*wx + v*wy) * self.dealias</div>
+<div class="line"><span class="lineno">   74</span>        <span class="keywordflow">return</span> -adv - self.nu*self.k2*wh + self.Fh</div>
 <div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -521,7 +521,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00060">60</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00061">61</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -545,7 +545,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00054">54</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00055">55</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -561,7 +561,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00063">63</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00064">64</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -577,7 +577,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00064">64</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00065">65</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -593,7 +593,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00060">60</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00061">61</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -617,7 +617,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00053">53</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00054">54</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>
@@ -633,7 +633,7 @@ of ``F``). ``None`` (the default) when the equation is not of that form.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00060">60</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="flow_8py_source.html#l00061">61</a> of file <a class="el" href="flow_8py_source.html">flow.py</a>.</p>
 
 </div>
 </div>

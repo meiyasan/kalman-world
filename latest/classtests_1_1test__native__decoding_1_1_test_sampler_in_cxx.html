@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -155,8 +155,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:acde7148ea20e0ddbaceabcc61b1040ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82f98bac22aa8677685c7ffd0f1d43e1" id="r_a82f98bac22aa8677685c7ffd0f1d43e1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a82f98bac22aa8677685c7ffd0f1d43e1">check</a> (self, a, b)</td></tr>
 <tr class="separator:a82f98bac22aa8677685c7ffd0f1d43e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c88f67129f4f2230ba87d8b540183a8" id="r_a6c88f67129f4f2230ba87d8b540183a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a6c88f67129f4f2230ba87d8b540183a8">test_a_twin_and_a_python_model</a> (self)</td></tr>
-<tr class="separator:a6c88f67129f4f2230ba87d8b540183a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f11ecf1baaa9b4636fec53a2e2a701f" id="r_a9f11ecf1baaa9b4636fec53a2e2a701f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a9f11ecf1baaa9b4636fec53a2e2a701f">test_a_counterpart_and_a_python_model</a> (self)</td></tr>
+<tr class="separator:a9f11ecf1baaa9b4636fec53a2e2a701f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4daf26bd374e866d352729051ab9d4a7" id="r_a4daf26bd374e866d352729051ab9d4a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a4daf26bd374e866d352729051ab9d4a7">test_noise_switches_and_resuming</a> (self)</td></tr>
 <tr class="separator:a4daf26bd374e866d352729051ab9d4a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ea0a3f3803b7d6c6e4f92a1b20b6f24" id="r_a3ea0a3f3803b7d6c6e4f92a1b20b6f24"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a3ea0a3f3803b7d6c6e4f92a1b20b6f24">test_a_python_error_in_the_model_comes_back_as_itself</a> (self)</td></tr>
@@ -258,13 +258,48 @@ Public Attributes</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__native__decoding_8py_source.html#l00190">190</a> of file <a class="el" href="test__native__decoding_8py_source.html">test_native_decoding.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  190</span>    <span class="keyword">def </span>check(self, a, b):</div>
 <div class="line"><span class="lineno">  191</span>        <span class="comment"># The covariance goes through a differenced Jacobian, so it agrees as the</span></div>
-<div class="line"><span class="lineno">  192</span>        <span class="comment"># filter&#39;s does (tests/test_native_twins.py), not to rounding.</span></div>
+<div class="line"><span class="lineno">  192</span>        <span class="comment"># filter&#39;s does (tests/test_native_counterparts.py), not to rounding.</span></div>
 <div class="line"><span class="lineno">  193</span>        <span class="keywordflow">for</span> name, tol <span class="keywordflow">in</span> ((<span class="stringliteral">&quot;xk&quot;</span>, 1e-9), (<span class="stringliteral">&quot;zk&quot;</span>, 1e-9), (<span class="stringliteral">&quot;Pk&quot;</span>, 1e-6)):</div>
 <div class="line"><span class="lineno">  194</span>            x, y = np.asarray(getattr(a, name), float), np.asarray(getattr(b, name), float)</div>
 <div class="line"><span class="lineno">  195</span>            self.assertEqual(x.shape, y.shape, name)</div>
 <div class="line"><span class="lineno">  196</span>            scale = max(1.0, np.nanmax(np.abs(y)))</div>
 <div class="line"><span class="lineno">  197</span>            self.assertLess(np.nanmax(np.abs(x - y)) / scale, tol, name)</div>
 <div class="line"><span class="lineno">  198</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a9f11ecf1baaa9b4636fec53a2e2a701f" name="a9f11ecf1baaa9b4636fec53a2e2a701f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f11ecf1baaa9b4636fec53a2e2a701f">&#9670;&#160;</a></span>test_a_counterpart_and_a_python_model()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_native_decoding.TestSamplerInCxx.test_a_counterpart_and_a_python_model </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__native__decoding_8py_source.html#l00199">199</a> of file <a class="el" href="test__native__decoding_8py_source.html">test_native_decoding.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  199</span>    <span class="keyword">def </span>test_a_counterpart_and_a_python_model(self):</div>
+<div class="line"><span class="lineno">  200</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1ballistics_1_1extended.html">modules.apps.ballistics.extended</a> <span class="keyword">import</span> BallisticModel</div>
+<div class="line"><span class="lineno">  201</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles_1_1lane.html">modules.apps.vehicles.lane</a> <span class="keyword">import</span> CarLaneModel</div>
+<div class="line"><span class="lineno">  202</span> </div>
+<div class="line"><span class="lineno">  203</span>        <span class="keyword">def </span>ballistic():</div>
+<div class="line"><span class="lineno">  204</span>            m = BallisticModel(<span class="stringliteral">&quot;b&quot;</span>, fs=20.0, c_drag=0.02)</div>
+<div class="line"><span class="lineno">  205</span>            m.initial_state([0, 30, 0, 0, 20, 0, 100, 40, -9.81])</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">return</span> m</div>
+<div class="line"><span class="lineno">  207</span>        self.assertIsNotNone(ballistic().native_handle())</div>
+<div class="line"><span class="lineno">  208</span>        self.check(*self.both(ballistic, 5.0))</div>
+<div class="line"><span class="lineno">  209</span>        self.check(*self.both(<span class="keyword">lambda</span>: BallisticModel(<span class="stringliteral">&quot;b&quot;</span>, fs=20.0, drag_uncertainty=0.3, c_drag=0.01), 3.0))   <span class="comment"># no counterpart</span></div>
+<div class="line"><span class="lineno">  210</span>        self.check(*self.both(<span class="keyword">lambda</span>: CarLaneModel(<span class="stringliteral">&quot;lane&quot;</span>), 4.0))</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1ballistics_1_1extended_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1ballistics_1_1extended.html">modules.apps.ballistics.extended</a></div><div class="ttdef"><b>Definition</b> <a href="apps_2ballistics_2extended_8py_source.html#l00001">extended.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1vehicles_1_1lane_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1vehicles_1_1lane.html">modules.apps.vehicles.lane</a></div><div class="ttdef"><b>Definition</b> <a href="lane_8py_source.html#l00001">lane.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -301,41 +336,6 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  243</span>        <span class="keyword">with</span> self.assertRaises(OverflowError):</div>
 <div class="line"><span class="lineno">  244</span>            Breaks().sample(1.0)</div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1models_1_1extended_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1models_1_1extended.html">modules.framework.models.extended</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2extended_8py_source.html#l00001">extended.py:1</a></div></div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a6c88f67129f4f2230ba87d8b540183a8" name="a6c88f67129f4f2230ba87d8b540183a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c88f67129f4f2230ba87d8b540183a8">&#9670;&#160;</a></span>test_a_twin_and_a_python_model()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tests.test_native_decoding.TestSamplerInCxx.test_a_twin_and_a_python_model </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p class="definition">Definition at line <a class="el" href="test__native__decoding_8py_source.html#l00199">199</a> of file <a class="el" href="test__native__decoding_8py_source.html">test_native_decoding.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  199</span>    <span class="keyword">def </span>test_a_twin_and_a_python_model(self):</div>
-<div class="line"><span class="lineno">  200</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1ballistics_1_1extended.html">modules.apps.ballistics.extended</a> <span class="keyword">import</span> BallisticModel</div>
-<div class="line"><span class="lineno">  201</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles_1_1lane.html">modules.apps.vehicles.lane</a> <span class="keyword">import</span> CarLaneModel</div>
-<div class="line"><span class="lineno">  202</span> </div>
-<div class="line"><span class="lineno">  203</span>        <span class="keyword">def </span>ballistic():</div>
-<div class="line"><span class="lineno">  204</span>            m = BallisticModel(<span class="stringliteral">&quot;b&quot;</span>, fs=20.0, c_drag=0.02)</div>
-<div class="line"><span class="lineno">  205</span>            m.initial_state([0, 30, 0, 0, 20, 0, 100, 40, -9.81])</div>
-<div class="line"><span class="lineno">  206</span>            <span class="keywordflow">return</span> m</div>
-<div class="line"><span class="lineno">  207</span>        self.assertIsNotNone(ballistic().native_handle())</div>
-<div class="line"><span class="lineno">  208</span>        self.check(*self.both(ballistic, 5.0))</div>
-<div class="line"><span class="lineno">  209</span>        self.check(*self.both(<span class="keyword">lambda</span>: BallisticModel(<span class="stringliteral">&quot;b&quot;</span>, fs=20.0, drag_uncertainty=0.3, c_drag=0.01), 3.0))   <span class="comment"># no twin</span></div>
-<div class="line"><span class="lineno">  210</span>        self.check(*self.both(<span class="keyword">lambda</span>: CarLaneModel(<span class="stringliteral">&quot;lane&quot;</span>), 4.0))</div>
-<div class="line"><span class="lineno">  211</span> </div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1ballistics_1_1extended_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1ballistics_1_1extended.html">modules.apps.ballistics.extended</a></div><div class="ttdef"><b>Definition</b> <a href="apps_2ballistics_2extended_8py_source.html#l00001">extended.py:1</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1vehicles_1_1lane_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1vehicles_1_1lane.html">modules.apps.vehicles.lane</a></div><div class="ttdef"><b>Definition</b> <a href="lane_8py_source.html#l00001">lane.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

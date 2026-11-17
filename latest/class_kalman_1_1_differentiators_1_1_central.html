@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -223,7 +223,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_differentiator_html_adeee3dafaeca11bc62d56f953294b4d8"><div class="ttname"><a href="class_kalman_1_1_differentiator.html#adeee3dafaeca11bc62d56f953294b4d8">Kalman::Differentiator::Differentiator</a></div><div class="ttdeci">Differentiator(double step)</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8h_source.html#l00053">Differentiator.h:53</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_differentiators_1_1_central_html_a48f5d6f4e9ee2d75b8513e3aec15c43c"><div class="ttname"><a href="class_kalman_1_1_differentiators_1_1_central.html#a48f5d6f4e9ee2d75b8513e3aec15c43c">Kalman::Differentiators::Central::Central</a></div><div class="ttdeci">Central(double step=0.)</div><div class="ttdef"><b>Definition</b> <a href="_central_8h_source.html#l00022">Central.h:22</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_differentiators_html_ab4e5668d487ebb64437b01b032f89449"><div class="ttname"><a href="namespace_kalman_1_1_differentiators.html#ab4e5668d487ebb64437b01b032f89449">Kalman::Differentiators::DefaultStep</a></div><div class="ttdeci">double DefaultStep(DifferentiatorKind kind)</div><div class="ttdoc">The default relative step of each numerical scheme.</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8cc_source.html#l00022">Differentiator.cc:22</a></div></div>
-<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">Kalman::DifferentiatorKind</a></div><div class="ttdeci">DifferentiatorKind</div><div class="ttdoc">Where a model's Jacobians come from (see Kalman::Differentiator).</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00070">Constants.h:71</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a3b01e9a934d40a95e17ec5bc26e0a833"><div class="ttname"><a href="namespace_kalman.html#a3b01e9a934d40a95e17ec5bc26e0a833">Kalman::DifferentiatorKind</a></div><div class="ttdeci">DifferentiatorKind</div><div class="ttdoc">Where a model's Jacobians come from (see Kalman::Differentiator).</div><div class="ttdef"><b>Definition</b> <a href="_constants_8h_source.html#l00080">Constants.h:81</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -314,13 +314,13 @@ Additional Inherited Members</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_differentiator_8cc_source.html#l00045">45</a> of file <a class="el" href="_differentiator_8cc_source.html">Differentiator.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   46</span>    {</div>
-<div class="line"><span class="lineno">   47</span>        <span class="keyword">const</span> std::size_t n = x.Size();</div>
+<div class="line"><span class="lineno">   47</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>.Size();</div>
 <div class="line"><span class="lineno">   48</span>        <span class="comment">// The value at x is not part of the formula; it only gives the number of rows.</span></div>
 <div class="line"><span class="lineno">   49</span>        std::size_t rows = y0 ? y0-&gt;Size() : 0;</div>
 <div class="line"><span class="lineno">   50</span>        Matrix J;</div>
-<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; n; ++j)</div>
+<div class="line"><span class="lineno">   51</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++j)</div>
 <div class="line"><span class="lineno">   52</span>        {</div>
-<div class="line"><span class="lineno">   53</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> step = <a class="code hl_variable" href="class_kalman_1_1_differentiator.html#a62a6c301a485084969ee4df9ceda648e">fStep</a> * std::max(1., std::abs(x(j)));</div>
+<div class="line"><span class="lineno">   53</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> step = <a class="code hl_variable" href="class_kalman_1_1_differentiator.html#a62a6c301a485084969ee4df9ceda648e">fStep</a> * std::max(1., std::abs(<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(j)));</div>
 <div class="line"><span class="lineno">   54</span>            Vector xp(x), xm(x);</div>
 <div class="line"><span class="lineno">   55</span>            xp(j) += step;</div>
 <div class="line"><span class="lineno">   56</span>            xm(j) -= step;</div>
@@ -332,10 +332,12 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   62</span>            }</div>
 <div class="line"><span class="lineno">   63</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; rows; ++i) J(i, j) = (fp(i) - fm(i)) / (2. * step);</div>
 <div class="line"><span class="lineno">   64</span>        }</div>
-<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">if</span> (J.Empty()) J = Matrix(y0 ? y0-&gt;Size() : fn(x).Size(), n, 0.);</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">if</span> (J.Empty()) J = Matrix(y0 ? y0-&gt;Size() : fn(x).Size(), <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>, 0.);</div>
 <div class="line"><span class="lineno">   66</span>        <span class="keywordflow">return</span> J;</div>
 <div class="line"><span class="lineno">   67</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_differentiator_html_a62a6c301a485084969ee4df9ceda648e"><div class="ttname"><a href="class_kalman_1_1_differentiator.html#a62a6c301a485084969ee4df9ceda648e">Kalman::Differentiator::fStep</a></div><div class="ttdeci">double fStep</div><div class="ttdef"><b>Definition</b> <a href="_differentiator_8h_source.html#l00050">Differentiator.h:50</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -1,5 +1,6 @@
 var dir_e05d7e2b1ecd646af5bb94391405f3b5 =
 [
+    [ "adapters", "dir_0bbf8646161768a5e361b0e61aaae062.html", "dir_0bbf8646161768a5e361b0e61aaae062" ],
     [ "api", "dir_cd57d34d9ddb895ce8faa79f2b7a4929.html", "dir_cd57d34d9ddb895ce8faa79f2b7a4929" ],
     [ "apps", "dir_dce2694de84b78c286c90acb0c24216d.html", "dir_dce2694de84b78c286c90acb0c24216d" ],
     [ "framework", "dir_5014b60475d11fcd4fa561d3fbbfd195.html", "dir_5014b60475d11fcd4fa561d3fbbfd195" ],

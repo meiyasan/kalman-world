@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2fusion.html',''); initR
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="sensor-fusion"></a> Several sensors measure the same moving object, each with its own noise and its own rate. One filter combines them into an estimate better than any sensor gives alone.</p>
-<h1><a class="anchor" id="the-model-3"></a>
+<h1><a class="anchor" id="the-model-2"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [position, velocity]</div>
 <div class="line">dynamics     constant velocity, disturbed by a random acceleration</div>
@@ -161,7 +161,22 @@ Using it</h1>
 <div class="line">    SensorSpec(<span class="stringliteral">&quot;gps&quot;</span>,      observes=<span class="stringliteral">&quot;position&quot;</span>, uncertainty=3.0, rate=5.0),</div>
 <div class="line">    SensorSpec(<span class="stringliteral">&quot;odometry&quot;</span>, observes=<span class="stringliteral">&quot;velocity&quot;</span>, uncertainty=0.1, rate=50.0),</div>
 <div class="line">], fs=50.0)</div>
-</div><!-- fragment --><p>Notebook: <a href="../../share/notebooks/09_SensorFusion.ipynb">09_SensorFusion</a>. </p>
+</div><!-- fragment --><h1><a class="anchor" id="the-same-model-from-operations"></a>
+The same model, from operations</h1>
+<p><code>SensorFusionModel</code> is a convenience over the framework's operations, and gives the same record as the model built with them:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> KalmanModel, KalmanSensor, compose</div>
+<div class="line"> </div>
+<div class="line">car = KalmanModel(<span class="stringliteral">&quot;gps&quot;</span>, fs=50.0, F=F, Q=Q, H=[[1.0, 0.0]], R=[[3.0**2]])       <span class="comment"># its own sensor: the GPS</span></div>
+<div class="line">car = car.add_sensor(KalmanSensor(<span class="stringliteral">&quot;odometry&quot;</span>, G=[[0.0, 1.0]], R=0.1**2))       <span class="comment"># one more, on the velocity</span></div>
+</div><!-- fragment --><p>The operations also cover what a list of rows cannot:</p>
+<ul>
+<li><b>An instrument that is not calibrated.</b> <code>compose(sensor, name="lidar").calibrate(gain, offset)</code> gives the model the parameters <code>lidar.gain</code> and <code>lidar.offset</code>, and <code>model.joint({"lidar.offset": (1.0, 0.0)})</code> estimates the offset with the state, as long as another sensor reads the same quantity without it.</li>
+<li><b>A sensor that reports late.</b> <code>KalmanSensor(..., delay=0.2)</code> on a model with <code>.lag(10)</code>: the model carries its last ten states and the sensor reads the oldest. Read as if it were current, a 0.2 s delay on a target at 8 m/s is a 1.6 m error.</li>
+</ul>
+<p>Steps 6 to 8 of the notebook show them one at a time.</p>
+<h1><a class="anchor" id="generic-sensors-1"></a>
+Generic sensors</h1>
+<p><code>PositionSensor</code>, <code>DopplerSensor</code> and <code>CameraSensor</code> are part of the framework (<code>from kalman.framework import ...</code>), for any model: each is told the indices of the state components it reads. They are written in C++ with their Jacobians and described in <a href="../4_Models.md#generic-sensors">Models</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

@@ -6,12 +6,12 @@
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <!-- BEGIN opengraph metadata -->
-<meta property="og:title" content="modules/apps/astro/space/transfers.py Source File" />
+<meta property="og:title" content="modules/apps/astrophysics/transfers.py Source File" />
 <meta property="og:image" content="logo.drawio.svg" />
-<meta property="og:description" content="Kalman World: modules/apps/astro/space/transfers.py Source File" />
+<meta property="og:description" content="Kalman World: modules/apps/astrophysics/transfers.py Source File" />
 <meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
 <!-- END opengraph metadata -->
-<title>modules/apps/astro/space/transfers.py Source File</title>
+<title>modules/apps/astrophysics/transfers.py Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -144,7 +144,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
   <div class="headertitle"><div class="title">transfers.py</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="transfers_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Orbital-transfer toolkit — Lambert, Hohmann, porkchop, gravity assist.&quot;&quot;&quot;</span></div>
+<a href="transfers_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Orbital-transfer toolkit — Lambert, Hohmann, porkchop, gravity assist.&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">Space science — travelling through space (the companion of :mod:`kalman.apps.rocket`,</span></div>
@@ -170,44 +170,44 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">       solution, with impulsive mid-course Δv maneuvers as the control input.</span></div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="stringliteral">Positions are in scaled units (Mm), velocities in km/s; physical constants and the ephemeris</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">come from :mod:`kalman.runtime.astro`.</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="stringliteral">come from :mod:`kalman.apps.astrophysics.astrodynamics`.</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">from</span> ....framework.models.extended <span class="keyword">import</span> ExtendedKalmanModel</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">from</span> ....framework.constants <span class="keyword">import</span> KalmanState, KalmanObservable</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> ....framework.control <span class="keyword">import</span> KalmanController</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> ....runtime.astro <span class="keyword">import</span> (</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">from</span> ...framework.models.extended <span class="keyword">import</span> ExtendedKalmanModel</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">from</span> ...framework.constants <span class="keyword">import</span> KalmanState, KalmanObservable</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> ...framework.control <span class="keyword">import</span> KalmanController</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> .astrodynamics <span class="keyword">import</span> (</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    G0, gm, radius, rk4 <span class="keyword">as</span> _rk4, body_state, planet_positions, ephemeris_samples,</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>)</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="keyword">from</span> .translunar <span class="keyword">import</span> _stumpff_C, _stumpff_S</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#acdea35cb4a406fb2b684d4b8a530ce1d">   41</a></span>_PLANETS = (<span class="stringliteral">&quot;mercury&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, <span class="stringliteral">&quot;jupiter&quot;</span>, <span class="stringliteral">&quot;saturn&quot;</span>, <span class="stringliteral">&quot;uranus&quot;</span>, <span class="stringliteral">&quot;neptune&quot;</span>)</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#ac40a9ca4324dc64c6b7dda66d6832adc">   41</a></span>_PLANETS = (<span class="stringliteral">&quot;mercury&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, <span class="stringliteral">&quot;jupiter&quot;</span>, <span class="stringliteral">&quot;saturn&quot;</span>, <span class="stringliteral">&quot;uranus&quot;</span>, <span class="stringliteral">&quot;neptune&quot;</span>)</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span><span class="comment"># (colour, marker size) per planet — used by plot_solar_system for a non-naive layout.</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#af3a576231e66093a7015803defe260be">   44</a></span>_PLANET_STYLE = {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a428e20d0ab82b148439884b43efc2802">   44</a></span>_PLANET_STYLE = {</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="stringliteral">&quot;mercury&quot;</span>: (<span class="stringliteral">&quot;#9c9c9c&quot;</span>, 5), <span class="stringliteral">&quot;venus&quot;</span>: (<span class="stringliteral">&quot;#d9a066&quot;</span>, 7), <span class="stringliteral">&quot;earth&quot;</span>: (<span class="stringliteral">&quot;#3b6fb6&quot;</span>, 7),</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="stringliteral">&quot;mars&quot;</span>: (<span class="stringliteral">&quot;#c1440e&quot;</span>, 6), <span class="stringliteral">&quot;jupiter&quot;</span>: (<span class="stringliteral">&quot;#caa472&quot;</span>, 12), <span class="stringliteral">&quot;saturn&quot;</span>: (<span class="stringliteral">&quot;#e0c47a&quot;</span>, 11),</div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="stringliteral">&quot;uranus&quot;</span>: (<span class="stringliteral">&quot;#9fd6e0&quot;</span>, 9), <span class="stringliteral">&quot;neptune&quot;</span>: (<span class="stringliteral">&quot;#5b7fd6&quot;</span>, 9),</div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abccfddd8c75b04124e71bc72fe3ef6b0">   49</a></span>_BODY_COLOR = {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#afe21bda3e486ec4e4462bc21949bfa8f">   49</a></span>_BODY_COLOR = {</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="stringliteral">&quot;sun&quot;</span>: <span class="stringliteral">&quot;gold&quot;</span>, <span class="stringliteral">&quot;mercury&quot;</span>: <span class="stringliteral">&quot;#9c9c9c&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>: <span class="stringliteral">&quot;#d9a066&quot;</span>, <span class="stringliteral">&quot;earth&quot;</span>: <span class="stringliteral">&quot;steelblue&quot;</span>,</div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="stringliteral">&quot;mars&quot;</span>: <span class="stringliteral">&quot;#c1440e&quot;</span>, <span class="stringliteral">&quot;jupiter&quot;</span>: <span class="stringliteral">&quot;#caa472&quot;</span>, <span class="stringliteral">&quot;saturn&quot;</span>: <span class="stringliteral">&quot;#e0c47a&quot;</span>,</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="stringliteral">&quot;uranus&quot;</span>: <span class="stringliteral">&quot;#9fd6e0&quot;</span>, <span class="stringliteral">&quot;neptune&quot;</span>: <span class="stringliteral">&quot;#5b7fd6&quot;</span>, <span class="stringliteral">&quot;moon&quot;</span>: <span class="stringliteral">&quot;#aaa&quot;</span>,</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>}</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aef9349acaa50e704f90dd83af82a01b3">   54</a></span>_BODY_MS = {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a66864c6010075776c318d4f1be2d53f4">   54</a></span>_BODY_MS = {</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="stringliteral">&quot;sun&quot;</span>: 20, <span class="stringliteral">&quot;mercury&quot;</span>: 5, <span class="stringliteral">&quot;venus&quot;</span>: 9, <span class="stringliteral">&quot;earth&quot;</span>: 9, <span class="stringliteral">&quot;moon&quot;</span>: 5,</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="stringliteral">&quot;mars&quot;</span>: 7, <span class="stringliteral">&quot;jupiter&quot;</span>: 16, <span class="stringliteral">&quot;saturn&quot;</span>: 14, <span class="stringliteral">&quot;uranus&quot;</span>: 11, <span class="stringliteral">&quot;neptune&quot;</span>: 11,</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>}</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="comment"># Leg colours for multi-leg trajectories (cycles if more than 6 legs)</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a35bbab4d475562c506de1bb719c36602">   60</a></span>_LEG_COLORS = [<span class="stringliteral">&quot;royalblue&quot;</span>, <span class="stringliteral">&quot;darkorange&quot;</span>, <span class="stringliteral">&quot;limegreen&quot;</span>, <span class="stringliteral">&quot;crimson&quot;</span>, <span class="stringliteral">&quot;violet&quot;</span>, <span class="stringliteral">&quot;gold&quot;</span>]</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#abdf7c2c7ca22fd3640be41eb2c83a549">   60</a></span>_LEG_COLORS = [<span class="stringliteral">&quot;royalblue&quot;</span>, <span class="stringliteral">&quot;darkorange&quot;</span>, <span class="stringliteral">&quot;limegreen&quot;</span>, <span class="stringliteral">&quot;crimson&quot;</span>, <span class="stringliteral">&quot;violet&quot;</span>, <span class="stringliteral">&quot;gold&quot;</span>]</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="foldopen" id="foldopen00063" data-start="" data-end="">
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">   63</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(r0, v0, tof_ks, n=200, mu=None):</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">   63</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(r0, v0, tof_ks, n=200, mu=None):</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="stringliteral">&quot;&quot;&quot;Two-body RK4 arc: returns (n+1, 3) position array in Mm.&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keywordflow">if</span> mu <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        mu = GM_SUN</div>
@@ -222,7 +222,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 </div>
 <div class="foldopen" id="foldopen00076" data-start="" data-end="">
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">   76</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">_orbit_ellipse</a>(body, t_ref=None, n=300):</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a74b32743bb8c859928f5dfd458178374">   76</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a74b32743bb8c859928f5dfd458178374">_orbit_ellipse</a>(body, t_ref=None, n=300):</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="stringliteral">&quot;&quot;&quot;True heliocentric orbit path for *body* (one full period, two-body RK4).</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="stringliteral">    Returns an (n+1, 2) array of (x, y) in AU, or ``None`` for hyperbolic orbits.</span></div>
@@ -237,7 +237,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    a    = GM_SUN / denom</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    T_ks = 2.0 * np.pi * np.sqrt(a ** 3 / GM_SUN)</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    pts  = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(r0, v0, T_ks, n=n)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    pts  = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(r0, v0, T_ks, n=n)</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keywordflow">return</span> pts[:, :2] / D_SUN</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
@@ -246,7 +246,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="comment"># ===========================================================================</span></div>
 </div>
 <div class="foldopen" id="foldopen00098" data-start="" data-end="">
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">   98</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">_third_body</a>(r, r_body, GM):</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a3b4a60fd728e9ee3d2a31c1fbdafa31d">   98</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a3b4a60fd728e9ee3d2a31c1fbdafa31d">_third_body</a>(r, r_body, GM):</div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    <span class="stringliteral">&quot;&quot;&quot;Third-body perturbation in a frame centred on the primary: ``GM[(r_b-r)/|r_b-r|³ −</span></div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span><span class="stringliteral">    r_b/|r_b|³]``. The first term is the body&#39;s direct pull on the spacecraft; the second</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span><span class="stringliteral">    (indirect) subtracts its pull on the central body, so a distant body contributes only its</span></div>
@@ -257,7 +257,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
 </div>
 <div class="foldopen" id="foldopen00107" data-start="" data-end="">
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ac6efa0573c6e1d8b47c0f893a4a1d278">  107</a></span><span class="keyword">def </span>gravity(r, t, moon_phase=0.0, sun_phase=0.0, bodies=(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;moon&quot;</span>, <span class="stringliteral">&quot;sun&quot;</span>)):</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a82bce595b5586eb2092453c4b8eb650e">  107</a></span><span class="keyword">def </span>gravity(r, t, moon_phase=0.0, sun_phase=0.0, bodies=(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;moon&quot;</span>, <span class="stringliteral">&quot;sun&quot;</span>)):</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="stringliteral">&quot;&quot;&quot;Geocentric acceleration on a spacecraft at ``r`` (scaled): Earth&#39;s central pull plus</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="stringliteral">    the **third-body perturbations** of the Moon and Sun (analytic circular orbits).&quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    r = np.asarray(r, dtype=float).reshape(3)</div>
@@ -265,9 +265,9 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;earth&quot;</span> <span class="keywordflow">in</span> bodies:</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        a += -GM_EARTH * r / np.linalg.norm(r) ** 3</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;moon&quot;</span> <span class="keywordflow">in</span> bodies:</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        a += <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">_third_body</a>(r, moon_position(t, moon_phase), GM_MOON)</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        a += <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a3b4a60fd728e9ee3d2a31c1fbdafa31d">_third_body</a>(r, moon_position(t, moon_phase), GM_MOON)</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">if</span> <span class="stringliteral">&quot;sun&quot;</span> <span class="keywordflow">in</span> bodies:</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        a += <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">_third_body</a>(r, sun_position(t, sun_phase), GM_SUN)</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        a += <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a3b4a60fd728e9ee3d2a31c1fbdafa31d">_third_body</a>(r, sun_position(t, sun_phase), GM_SUN)</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordflow">return</span> a</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
@@ -277,7 +277,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
 </div>
 <div class="foldopen" id="foldopen00125" data-start="" data-end="">
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5f6d393b21b430188b72b3caa413d2fd">  125</a></span><span class="keyword">def </span>lambert(r1, r2, tof, mu=GM_SUN, prograde=True):</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a6a9f89978593e3b40d86add1553a1857">  125</a></span><span class="keyword">def </span>lambert(r1, r2, tof, mu=GM_SUN, prograde=True):</div>
 <div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <span class="stringliteral">&quot;&quot;&quot;Solve Lambert&#39;s problem (single revolution) by the universal-variable method.</span></div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="stringliteral">    ``r1``, ``r2`` are scaled position vectors [Mm], ``tof`` the time of flight in scaled</span></div>
@@ -346,7 +346,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
 </div>
 <div class="foldopen" id="foldopen00192" data-start="" data-end="">
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5f45fa247f0d50949041a063b26553cd">  192</a></span><span class="keyword">def </span>hohmann_transfer(departure=&quot;earth&quot;, target=&quot;mars&quot;, epoch=None, mu=GM_SUN):</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a2ae08eaa206ea989ddc407ebc6a0f4ac">  192</a></span><span class="keyword">def </span>hohmann_transfer(departure=&quot;earth&quot;, target=&quot;mars&quot;, epoch=None, mu=GM_SUN):</div>
 <div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="stringliteral">&quot;&quot;&quot;Analytic two-impulse Hohmann estimate between two planet orbits, treated as circular</span></div>
 <div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="stringliteral">    and coplanar — the quick first cut.</span></div>
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span><span class="stringliteral"></span> </div>
@@ -392,7 +392,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
 </div>
 <div class="foldopen" id="foldopen00236" data-start="" data-end="">
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#af375c822b7d7402d5c9c884e79ece11e">  236</a></span><span class="keyword">def </span>porkchop(departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *,</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a2ce2b93568b0bfddfad2945fbb126539">  236</a></span><span class="keyword">def </span>porkchop(departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *,</div>
 <div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>             n_dep=40, tof_days=(150.0, 300.0), n_tof=40, mu=GM_SUN, prograde=<span class="keyword">True</span>):</div>
 <div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="stringliteral">&quot;&quot;&quot;Scan a departure-date × time-of-flight grid, solving Lambert against the live ephemeris</span></div>
 <div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span><span class="stringliteral">    at every node, to build a porkchop plot. Returns a dict of 2-D arrays (``dv_depart``,</span></div>
@@ -442,7 +442,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
 </div>
 <div class="foldopen" id="foldopen00284" data-start="" data-end="">
-<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a63bd4940a777679273eb7aea51131e26">  284</a></span><span class="keyword">def </span>best_departure(departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *,</div>
+<div class="line"><a id="l00284" name="l00284"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#ad74731f8af97a850c4e73d0c363fa51a">  284</a></span><span class="keyword">def </span>best_departure(departure=&quot;earth&quot;, target=&quot;mars&quot;, start=None, end=None, *,</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>                   site=None, **kw):</div>
 <div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>    <span class="stringliteral">&quot;&quot;&quot;Minimum-Δv departure for an Earth→target transfer (wraps :func:`porkchop`).</span></div>
 <div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span><span class="stringliteral"></span> </div>
@@ -471,7 +471,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
 </div>
 <div class="foldopen" id="foldopen00311" data-start="" data-end="">
-<div class="line"><a id="l00311" name="l00311"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aca49c2116622aa01ae04055fca9a43f5">  311</a></span><span class="keyword">def </span>gravity_assist(v_in_helio, v_planet_helio, planet, h_periapsis_km=300.0):</div>
+<div class="line"><a id="l00311" name="l00311"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a486bb7d0d84f62789cdfdf8e553a775d">  311</a></span><span class="keyword">def </span>gravity_assist(v_in_helio, v_planet_helio, planet, h_periapsis_km=300.0):</div>
 <div class="line"><a id="l00312" name="l00312"></a><span class="lineno">  312</span>    <span class="stringliteral">&quot;&quot;&quot;Patched-conic gravity-assist flyby.</span></div>
 <div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span><span class="stringliteral">    Given the spacecraft&#39;s heliocentric velocity ``v_in_helio`` [km/s] and the flyby</span></div>
@@ -532,7 +532,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span> </div>
 </div>
 <div class="foldopen" id="foldopen00370" data-start="" data-end="">
-<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a71297fd74fe3a485f43641dbee292661">  370</a></span><span class="keyword">def </span>hohmann_sequence(planets, epoch=None, mu=GM_SUN):</div>
+<div class="line"><a id="l00370" name="l00370"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#af2c16e355c00a7d7b0f5d6534c6fd331">  370</a></span><span class="keyword">def </span>hohmann_sequence(planets, epoch=None, mu=GM_SUN):</div>
 <div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>    <span class="stringliteral">&quot;&quot;&quot;Analytic multi-leg Hohmann estimate with free intermediate gravity assists.</span></div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span><span class="stringliteral">    ``planets`` is an ordered list of body names, e.g.</span></div>
@@ -565,7 +565,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00400" name="l00400"></a><span class="lineno">  400</span> </div>
 </div>
 <div class="foldopen" id="foldopen00401" data-start="" data-end="">
-<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a03c65c5d4e23dce81402e0a0f86e6f5a">  401</a></span><span class="keyword">def </span>flyby_porkchop(departure, flyby, target, dep_date, *,</div>
+<div class="line"><a id="l00401" name="l00401"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#ac3b23e26092d55d40cab6864933c2284">  401</a></span><span class="keyword">def </span>flyby_porkchop(departure, flyby, target, dep_date, *,</div>
 <div class="line"><a id="l00402" name="l00402"></a><span class="lineno">  402</span>                   tof1_range=(80.0, 300.0), tof2_range=(300.0, 1200.0),</div>
 <div class="line"><a id="l00403" name="l00403"></a><span class="lineno">  403</span>                   n_tof1=30, n_tof2=30, h_min_km=300.0, mu=GM_SUN):</div>
 <div class="line"><a id="l00404" name="l00404"></a><span class="lineno">  404</span>    <span class="stringliteral">&quot;&quot;&quot;Two-leg gravity-assist porkchop: ``departure`` → ``flyby`` → ``target``.</span></div>
@@ -672,7 +672,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00505" name="l00505"></a><span class="lineno">  505</span> </div>
 </div>
 <div class="foldopen" id="foldopen00506" data-start="" data-end="">
-<div class="line"><a id="l00506" name="l00506"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a3c1d51e5ec9677438f8afd1e7bd4eec6">  506</a></span><span class="keyword">def </span>plot_flyby_porkchop(grid, *, ax=None, dv_max=None, figsize=(9.5, 5.8)):</div>
+<div class="line"><a id="l00506" name="l00506"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#ac41c3dacb36ca135243f968062ed2d14">  506</a></span><span class="keyword">def </span>plot_flyby_porkchop(grid, *, ax=None, dv_max=None, figsize=(9.5, 5.8)):</div>
 <div class="line"><a id="l00507" name="l00507"></a><span class="lineno">  507</span>    <span class="stringliteral">&quot;&quot;&quot;Render a :func:`flyby_porkchop` ``grid`` as a filled contour map over</span></div>
 <div class="line"><a id="l00508" name="l00508"></a><span class="lineno">  508</span><span class="stringliteral">    (tof-to-flyby) × (tof-flyby-to-target).  The minimum-Δv node is starred.</span></div>
 <div class="line"><a id="l00509" name="l00509"></a><span class="lineno">  509</span><span class="stringliteral">    Returns the figure.&quot;&quot;&quot;</span></div>
@@ -711,7 +711,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00542" name="l00542"></a><span class="lineno">  542</span> </div>
 </div>
 <div class="foldopen" id="foldopen00543" data-start="" data-end="">
-<div class="line"><a id="l00543" name="l00543"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ad89b2429617df566ee8af88bf7fee86b">  543</a></span><span class="keyword">def </span>plot_gravity_assist(ga, planet=&quot;jupiter&quot;, *, n_pts=200, figsize=(8, 7),</div>
+<div class="line"><a id="l00543" name="l00543"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a7b0e3cad58fcffeac3557e9f8d280c17">  543</a></span><span class="keyword">def </span>plot_gravity_assist(ga, planet=&quot;jupiter&quot;, *, n_pts=200, figsize=(8, 7),</div>
 <div class="line"><a id="l00544" name="l00544"></a><span class="lineno">  544</span>                        frames=30, interval=90):</div>
 <div class="line"><a id="l00545" name="l00545"></a><span class="lineno">  545</span>    <span class="stringliteral">&quot;&quot;&quot;Animated patched-conic flyby in the planet&#39;s rest frame.</span></div>
 <div class="line"><a id="l00546" name="l00546"></a><span class="lineno">  546</span><span class="stringliteral"></span> </div>
@@ -723,7 +723,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00552" name="l00552"></a><span class="lineno">  552</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00553" name="l00553"></a><span class="lineno">  553</span>    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
 <div class="line"><a id="l00554" name="l00554"></a><span class="lineno">  554</span>    <span class="keyword">from</span> matplotlib.patches <span class="keyword">import</span> Circle, Arc</div>
-<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>    <span class="keyword">from</span> ....helpers <span class="keyword">import</span> animate</div>
+<div class="line"><a id="l00555" name="l00555"></a><span class="lineno">  555</span>    <span class="keyword">from</span> ...helpers <span class="keyword">import</span> animate</div>
 <div class="line"><a id="l00556" name="l00556"></a><span class="lineno">  556</span> </div>
 <div class="line"><a id="l00557" name="l00557"></a><span class="lineno">  557</span>    v_inf = ga[<span class="stringliteral">&quot;v_inf_mag&quot;</span>]</div>
 <div class="line"><a id="l00558" name="l00558"></a><span class="lineno">  558</span>    r_p   = radius(planet) + 300.0 * KM</div>
@@ -818,7 +818,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00647" name="l00647"></a><span class="lineno">  647</span> </div>
 </div>
 <div class="foldopen" id="foldopen00648" data-start="" data-end="">
-<div class="line"><a id="l00648" name="l00648"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a0629bb5c05a77946a1e8a431b61622f7">  648</a></span><span class="keyword">def </span>plot_two_leg(best, *, planets=(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>),</div>
+<div class="line"><a id="l00648" name="l00648"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a033b613d10489601aa40b95b546b5deb">  648</a></span><span class="keyword">def </span>plot_two_leg(best, *, planets=(<span class="stringliteral">&quot;earth&quot;</span>, <span class="stringliteral">&quot;mars&quot;</span>, <span class="stringliteral">&quot;venus&quot;</span>),</div>
 <div class="line"><a id="l00649" name="l00649"></a><span class="lineno">  649</span>                 n_arc=200, figsize=(7.5, 7.5), frames=30, interval=90):</div>
 <div class="line"><a id="l00650" name="l00650"></a><span class="lineno">  650</span>    <span class="stringliteral">&quot;&quot;&quot;Animated two-leg gravity-assist trajectory from a :func:`flyby_porkchop` ``best`` dict.</span></div>
 <div class="line"><a id="l00651" name="l00651"></a><span class="lineno">  651</span><span class="stringliteral"></span> </div>
@@ -827,7 +827,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00654" name="l00654"></a><span class="lineno">  654</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00655" name="l00655"></a><span class="lineno">  655</span>    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
 <div class="line"><a id="l00656" name="l00656"></a><span class="lineno">  656</span>    <span class="keyword">from</span> astropy.time <span class="keyword">import</span> TimeDelta</div>
-<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>    <span class="keyword">from</span> ....helpers <span class="keyword">import</span> animate</div>
+<div class="line"><a id="l00657" name="l00657"></a><span class="lineno">  657</span>    <span class="keyword">from</span> ...helpers <span class="keyword">import</span> animate</div>
 <div class="line"><a id="l00658" name="l00658"></a><span class="lineno">  658</span> </div>
 <div class="line"><a id="l00659" name="l00659"></a><span class="lineno">  659</span>    dep_name, fly_name, tgt_name = best[<span class="stringliteral">&quot;departure&quot;</span>], best[<span class="stringliteral">&quot;flyby&quot;</span>], best[<span class="stringliteral">&quot;target&quot;</span>]</div>
 <div class="line"><a id="l00660" name="l00660"></a><span class="lineno">  660</span>    t_dep = best[<span class="stringliteral">&quot;dep_date&quot;</span>]</div>
@@ -842,8 +842,8 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00669" name="l00669"></a><span class="lineno">  669</span>    <span class="comment"># Target position at arrival</span></div>
 <div class="line"><a id="l00670" name="l00670"></a><span class="lineno">  670</span>    r_tgt = body_state(tgt_name, t_arr)[0]</div>
 <div class="line"><a id="l00671" name="l00671"></a><span class="lineno">  671</span> </div>
-<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>    arc1 = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(r_dep, v1, best[<span class="stringliteral">&quot;tof1_days&quot;</span>] * DAY, n_arc)</div>
-<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>    arc2 = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(r_fly, v2, best[<span class="stringliteral">&quot;tof2_days&quot;</span>] * DAY, n_arc)</div>
+<div class="line"><a id="l00672" name="l00672"></a><span class="lineno">  672</span>    arc1 = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(r_dep, v1, best[<span class="stringliteral">&quot;tof1_days&quot;</span>] * DAY, n_arc)</div>
+<div class="line"><a id="l00673" name="l00673"></a><span class="lineno">  673</span>    arc2 = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(r_fly, v2, best[<span class="stringliteral">&quot;tof2_days&quot;</span>] * DAY, n_arc)</div>
 <div class="line"><a id="l00674" name="l00674"></a><span class="lineno">  674</span>    traj = np.vstack([arc1, arc2[1:]])</div>
 <div class="line"><a id="l00675" name="l00675"></a><span class="lineno">  675</span>    N_total = len(traj) - 1</div>
 <div class="line"><a id="l00676" name="l00676"></a><span class="lineno">  676</span>    t_total = best[<span class="stringliteral">&quot;tof1_days&quot;</span>] + best[<span class="stringliteral">&quot;tof2_days&quot;</span>]</div>
@@ -867,7 +867,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00694" name="l00694"></a><span class="lineno">  694</span> </div>
 <div class="line"><a id="l00695" name="l00695"></a><span class="lineno">  695</span>    <span class="comment"># True elliptical orbit paths (computed from ephemeris at departure epoch)</span></div>
 <div class="line"><a id="l00696" name="l00696"></a><span class="lineno">  696</span>    <span class="keywordflow">for</span> b <span class="keywordflow">in</span> all_bodies:</div>
-<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        oc = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">_orbit_ellipse</a>(b, t_dep)</div>
+<div class="line"><a id="l00697" name="l00697"></a><span class="lineno">  697</span>        oc = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a74b32743bb8c859928f5dfd458178374">_orbit_ellipse</a>(b, t_dep)</div>
 <div class="line"><a id="l00698" name="l00698"></a><span class="lineno">  698</span>        <span class="keywordflow">if</span> oc <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a id="l00699" name="l00699"></a><span class="lineno">  699</span>            ax.plot(oc[:, 0], oc[:, 1], <span class="stringliteral">&quot;:&quot;</span>, color=_BODY_COLOR.get(b, <span class="stringliteral">&quot;gray&quot;</span>), lw=0.9, alpha=0.4)</div>
 <div class="line"><a id="l00700" name="l00700"></a><span class="lineno">  700</span> </div>
@@ -937,7 +937,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00764" name="l00764"></a><span class="lineno">  764</span> </div>
 </div>
 <div class="foldopen" id="foldopen00765" data-start="" data-end="">
-<div class="line"><a id="l00765" name="l00765"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae886478ec195445b8bb4965fd108ec8e">  765</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae886478ec195445b8bb4965fd108ec8e">_flyby_geometry</a>(body, v_inf_in, v_inf_out):</div>
+<div class="line"><a id="l00765" name="l00765"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a7ab6146f7d1a29fc7516c26a9aef0ae9">  765</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a7ab6146f7d1a29fc7516c26a9aef0ae9">_flyby_geometry</a>(body, v_inf_in, v_inf_out):</div>
 <div class="line"><a id="l00766" name="l00766"></a><span class="lineno">  766</span>    <span class="stringliteral">&quot;&quot;&quot;Turn angle [deg] between two hyperbolic excess velocities at ``body`` and the periapsis</span></div>
 <div class="line"><a id="l00767" name="l00767"></a><span class="lineno">  767</span><span class="stringliteral">    altitude [km] at which the planet&#39;s gravity produces that turn. A negative altitude means</span></div>
 <div class="line"><a id="l00768" name="l00768"></a><span class="lineno">  768</span><span class="stringliteral">    the turn would need a pass below the surface.&quot;&quot;&quot;</span></div>
@@ -958,7 +958,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00783" name="l00783"></a><span class="lineno">  783</span> </div>
 </div>
 <div class="foldopen" id="foldopen00784" data-start="" data-end="">
-<div class="line"><a id="l00784" name="l00784"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a8eb8b650047552bcfdceffc0b2ab91ef">  784</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a8eb8b650047552bcfdceffc0b2ab91ef">_solve_dsm</a>(r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu):</div>
+<div class="line"><a id="l00784" name="l00784"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a5189b61860a38e8a27acfb1d44ce6d23">  784</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a5189b61860a38e8a27acfb1d44ce6d23">_solve_dsm</a>(r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu):</div>
 <div class="line"><a id="l00785" name="l00785"></a><span class="lineno">  785</span>    <span class="stringliteral">&quot;&quot;&quot;Position of a deep-space manoeuvre between two flybys.</span></div>
 <div class="line"><a id="l00786" name="l00786"></a><span class="lineno">  786</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00787" name="l00787"></a><span class="lineno">  787</span><span class="stringliteral">    The leg is flown as two Lambert arcs (``t1`` then ``t2`` [ks]) joined at the manoeuvre.</span></div>
@@ -982,7 +982,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00805" name="l00805"></a><span class="lineno">  805</span>        {<span class="stringliteral">&quot;type&quot;</span>: <span class="stringliteral">&quot;eq&quot;</span>, <span class="stringliteral">&quot;fun&quot;</span>: <span class="keyword">lambda</span> q: np.linalg.norm(arcs(q)[1][1] - v_planet_b) - v_out},</div>
 <div class="line"><a id="l00806" name="l00806"></a><span class="lineno">  806</span>    ]</div>
 <div class="line"><a id="l00807" name="l00807"></a><span class="lineno">  807</span>    v_start, _ = lambert(r_a, r_b, t1 + t2, mu=mu)            <span class="comment"># start on the single arc</span></div>
-<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>    guess = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(r_a, v_start, t1, n=100, mu=mu)[-1] / D_SUN</div>
+<div class="line"><a id="l00808" name="l00808"></a><span class="lineno">  808</span>    guess = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(r_a, v_start, t1, n=100, mu=mu)[-1] / D_SUN</div>
 <div class="line"><a id="l00809" name="l00809"></a><span class="lineno">  809</span>    sol = minimize(burn, guess, method=<span class="stringliteral">&quot;SLSQP&quot;</span>, constraints=free_flybys,</div>
 <div class="line"><a id="l00810" name="l00810"></a><span class="lineno">  810</span>                   options={<span class="stringliteral">&quot;ftol&quot;</span>: 1e-12, <span class="stringliteral">&quot;maxiter&quot;</span>: 500})</div>
 <div class="line"><a id="l00811" name="l00811"></a><span class="lineno">  811</span>    <span class="keywordflow">if</span> max(abs(c[<span class="stringliteral">&quot;fun&quot;</span>](sol.x)) <span class="keywordflow">for</span> c <span class="keywordflow">in</span> free_flybys) &gt; 1e-6:</div>
@@ -993,7 +993,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00816" name="l00816"></a><span class="lineno">  816</span> </div>
 </div>
 <div class="foldopen" id="foldopen00817" data-start="" data-end="">
-<div class="line"><a id="l00817" name="l00817"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#aa31e305995e68f0349651eb6bcc743e1">  817</a></span><span class="keyword">def </span>chain_lambert(sequence, dates, *, dsm=None, mu=GM_SUN):</div>
+<div class="line"><a id="l00817" name="l00817"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#ac0b26f91d80f6158a517664a81297c43">  817</a></span><span class="keyword">def </span>chain_lambert(sequence, dates, *, dsm=None, mu=GM_SUN):</div>
 <div class="line"><a id="l00818" name="l00818"></a><span class="lineno">  818</span>    <span class="stringliteral">&quot;&quot;&quot;Chain Lambert solves for a multi-leg gravity-assist trajectory.</span></div>
 <div class="line"><a id="l00819" name="l00819"></a><span class="lineno">  819</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00820" name="l00820"></a><span class="lineno">  820</span><span class="stringliteral">    Parameters</span></div>
@@ -1051,7 +1051,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00872" name="l00872"></a><span class="lineno">  872</span>    extra = {}</div>
 <div class="line"><a id="l00873" name="l00873"></a><span class="lineno">  873</span>    <span class="keywordflow">for</span> i, t_dsm <span class="keywordflow">in</span> dsm.items():</div>
 <div class="line"><a id="l00874" name="l00874"></a><span class="lineno">  874</span>        t1 = float((t_dsm - dates[i]).to_value(<span class="stringliteral">&quot;jd&quot;</span>)) * DAY</div>
-<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>        r_dsm, first, second = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a8eb8b650047552bcfdceffc0b2ab91ef">_solve_dsm</a>(</div>
+<div class="line"><a id="l00875" name="l00875"></a><span class="lineno">  875</span>        r_dsm, first, second = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a5189b61860a38e8a27acfb1d44ce6d23">_solve_dsm</a>(</div>
 <div class="line"><a id="l00876" name="l00876"></a><span class="lineno">  876</span>            states[i][0], states[i][1], arcs[i - 1][1] - states[i][1], t1,</div>
 <div class="line"><a id="l00877" name="l00877"></a><span class="lineno">  877</span>            states[i + 1][0], states[i + 1][1], arcs[i + 1][0] - states[i + 1][1],</div>
 <div class="line"><a id="l00878" name="l00878"></a><span class="lineno">  878</span>            tofs[i] * DAY - t1, mu)</div>
@@ -1081,7 +1081,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00902" name="l00902"></a><span class="lineno">  902</span>            v_inf_in, v_inf_out = legs[-1][<span class="stringliteral">&quot;v_arr&quot;</span>] - vp_dep, v_dep - vp_dep</div>
 <div class="line"><a id="l00903" name="l00903"></a><span class="lineno">  903</span>            leg[<span class="stringliteral">&quot;dv_gravity_kms&quot;</span>] = float(np.linalg.norm(v_inf_out - v_inf_in))</div>
 <div class="line"><a id="l00904" name="l00904"></a><span class="lineno">  904</span>            leg[<span class="stringliteral">&quot;dv_burn_kms&quot;</span>] = float(abs(np.linalg.norm(v_inf_out) - np.linalg.norm(v_inf_in)))</div>
-<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>            leg[<span class="stringliteral">&quot;turn_angle_deg&quot;</span>], leg[<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae886478ec195445b8bb4965fd108ec8e">_flyby_geometry</a>(</div>
+<div class="line"><a id="l00905" name="l00905"></a><span class="lineno">  905</span>            leg[<span class="stringliteral">&quot;turn_angle_deg&quot;</span>], leg[<span class="stringliteral">&quot;flyby_altitude_km&quot;</span>] = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a7ab6146f7d1a29fc7516c26a9aef0ae9">_flyby_geometry</a>(</div>
 <div class="line"><a id="l00906" name="l00906"></a><span class="lineno">  906</span>                sequence[i], v_inf_in, v_inf_out)</div>
 <div class="line"><a id="l00907" name="l00907"></a><span class="lineno">  907</span>        leg.update(extra.get(i, {}))</div>
 <div class="line"><a id="l00908" name="l00908"></a><span class="lineno">  908</span>        legs.append(leg)</div>
@@ -1090,7 +1090,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00911" name="l00911"></a><span class="lineno">  911</span> </div>
 </div>
 <div class="foldopen" id="foldopen00912" data-start="" data-end="">
-<div class="line"><a id="l00912" name="l00912"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5483521459298695f8e612946f594e7f">  912</a></span><span class="keyword">def </span>plot_multi_leg(legs, *, title=None, extra_planets=(<span class="stringliteral">&quot;mars&quot;</span>,),</div>
+<div class="line"><a id="l00912" name="l00912"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a67022b8ebef28c0ddcf4e60b4edc92a3">  912</a></span><span class="keyword">def </span>plot_multi_leg(legs, *, title=None, extra_planets=(<span class="stringliteral">&quot;mars&quot;</span>,),</div>
 <div class="line"><a id="l00913" name="l00913"></a><span class="lineno">  913</span>                   n_arc=150, figsize=(8.5, 8.5), frames=30, interval=80,</div>
 <div class="line"><a id="l00914" name="l00914"></a><span class="lineno">  914</span>                   zoom_lim=<span class="keywordtype">None</span>):</div>
 <div class="line"><a id="l00915" name="l00915"></a><span class="lineno">  915</span>    <span class="stringliteral">&quot;&quot;&quot;Animated N-leg gravity-assist trajectory from a :func:`chain_lambert` leg list.</span></div>
@@ -1109,19 +1109,19 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00928" name="l00928"></a><span class="lineno">  928</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00929" name="l00929"></a><span class="lineno">  929</span>    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
 <div class="line"><a id="l00930" name="l00930"></a><span class="lineno">  930</span>    <span class="keyword">from</span> astropy.time <span class="keyword">import</span> TimeDelta</div>
-<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>    <span class="keyword">from</span> ....helpers <span class="keyword">import</span> animate</div>
+<div class="line"><a id="l00931" name="l00931"></a><span class="lineno">  931</span>    <span class="keyword">from</span> ...helpers <span class="keyword">import</span> animate</div>
 <div class="line"><a id="l00932" name="l00932"></a><span class="lineno">  932</span> </div>
 <div class="line"><a id="l00933" name="l00933"></a><span class="lineno">  933</span>    AU = D_SUN</div>
 <div class="line"><a id="l00934" name="l00934"></a><span class="lineno">  934</span> </div>
 <div class="line"><a id="l00935" name="l00935"></a><span class="lineno">  935</span>    <span class="comment"># ── Build arcs ──────────────────────────────────────────────────────────</span></div>
 <div class="line"><a id="l00936" name="l00936"></a><span class="lineno">  936</span>    <span class="keyword">def </span>_leg_arc(lg):</div>
 <div class="line"><a id="l00937" name="l00937"></a><span class="lineno">  937</span>        <span class="keywordflow">if</span> <span class="stringliteral">&quot;r_dsm&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> lg:</div>
-<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dep&quot;</span>], lg[<span class="stringliteral">&quot;v_dep&quot;</span>], lg[<span class="stringliteral">&quot;tof_days&quot;</span>] * DAY, n_arc)</div>
+<div class="line"><a id="l00938" name="l00938"></a><span class="lineno">  938</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dep&quot;</span>], lg[<span class="stringliteral">&quot;v_dep&quot;</span>], lg[<span class="stringliteral">&quot;tof_days&quot;</span>] * DAY, n_arc)</div>
 <div class="line"><a id="l00939" name="l00939"></a><span class="lineno">  939</span>        <span class="comment"># two arcs joined at the deep-space manoeuvre, sampled evenly in time</span></div>
 <div class="line"><a id="l00940" name="l00940"></a><span class="lineno">  940</span>        t1 = float((lg[<span class="stringliteral">&quot;dsm_date&quot;</span>] - lg[<span class="stringliteral">&quot;dep_date&quot;</span>]).to_value(<span class="stringliteral">&quot;jd&quot;</span>)) * DAY</div>
 <div class="line"><a id="l00941" name="l00941"></a><span class="lineno">  941</span>        n1 = int(round(n_arc * t1 / (lg[<span class="stringliteral">&quot;tof_days&quot;</span>] * DAY)))</div>
-<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>        first  = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dep&quot;</span>], lg[<span class="stringliteral">&quot;v_dep&quot;</span>], t1, n1)</div>
-<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>        second = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dsm&quot;</span>], lg[<span class="stringliteral">&quot;v_dsm_after&quot;</span>], lg[<span class="stringliteral">&quot;tof_days&quot;</span>] * DAY - t1, n_arc - n1)</div>
+<div class="line"><a id="l00942" name="l00942"></a><span class="lineno">  942</span>        first  = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dep&quot;</span>], lg[<span class="stringliteral">&quot;v_dep&quot;</span>], t1, n1)</div>
+<div class="line"><a id="l00943" name="l00943"></a><span class="lineno">  943</span>        second = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">_kep_arc</a>(lg[<span class="stringliteral">&quot;r_dsm&quot;</span>], lg[<span class="stringliteral">&quot;v_dsm_after&quot;</span>], lg[<span class="stringliteral">&quot;tof_days&quot;</span>] * DAY - t1, n_arc - n1)</div>
 <div class="line"><a id="l00944" name="l00944"></a><span class="lineno">  944</span>        <span class="keywordflow">return</span> np.vstack([first, second[1:]])</div>
 <div class="line"><a id="l00945" name="l00945"></a><span class="lineno">  945</span> </div>
 <div class="line"><a id="l00946" name="l00946"></a><span class="lineno">  946</span>    arcs  = [_leg_arc(lg) <span class="keywordflow">for</span> lg <span class="keywordflow">in</span> legs]</div>
@@ -1166,7 +1166,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l00985" name="l00985"></a><span class="lineno">  985</span>        ax.set_xlabel(<span class="stringliteral">&quot;x [AU]&quot;</span>); ax.set_ylabel(<span class="stringliteral">&quot;y [AU]&quot;</span>); ax.grid(alpha=0.3)</div>
 <div class="line"><a id="l00986" name="l00986"></a><span class="lineno">  986</span> </div>
 <div class="line"><a id="l00987" name="l00987"></a><span class="lineno">  987</span>        <span class="keywordflow">for</span> b <span class="keywordflow">in</span> all_bodies:</div>
-<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>            oc = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">_orbit_ellipse</a>(b, t_dep_global)</div>
+<div class="line"><a id="l00988" name="l00988"></a><span class="lineno">  988</span>            oc = <a class="code hl_function" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a74b32743bb8c859928f5dfd458178374">_orbit_ellipse</a>(b, t_dep_global)</div>
 <div class="line"><a id="l00989" name="l00989"></a><span class="lineno">  989</span>            <span class="keywordflow">if</span> oc <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a id="l00990" name="l00990"></a><span class="lineno">  990</span>                ax.plot(oc[:, 0], oc[:, 1], <span class="stringliteral">&quot;:&quot;</span>, color=_BODY_COLOR.get(b, <span class="stringliteral">&quot;gray&quot;</span>),</div>
 <div class="line"><a id="l00991" name="l00991"></a><span class="lineno">  991</span>                        lw=0.8, alpha=0.35)</div>
@@ -1307,7 +1307,7 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l01126" name="l01126"></a><span class="lineno"> 1126</span> </div>
 </div>
 <div class="foldopen" id="foldopen01127" data-start="" data-end="">
-<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a767d798b2b43c8f5583a5db948764b2e"> 1127</a></span><span class="keyword">def </span>lunar_porkchop(start=None, end=None, *, n_dep=40, tof_days=(3.0, 6.0), n_tof=30,</div>
+<div class="line"><a id="l01127" name="l01127"></a><span class="lineno"><a class="line" href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a19df616934b6454a515b5884f9cb3dfd"> 1127</a></span><span class="keyword">def </span>lunar_porkchop(start=None, end=None, *, n_dep=40, tof_days=(3.0, 6.0), n_tof=30,</div>
 <div class="line"><a id="l01128" name="l01128"></a><span class="lineno"> 1128</span>                   r_park_km=400.0):</div>
 <div class="line"><a id="l01129" name="l01129"></a><span class="lineno"> 1129</span>    <span class="stringliteral">&quot;&quot;&quot;Geocentric departure-date × time-of-flight scan for Earth–Moon transfers.</span></div>
 <div class="line"><a id="l01130" name="l01130"></a><span class="lineno"> 1130</span><span class="stringliteral"></span> </div>
@@ -1389,18 +1389,18 @@ $(document).ready(function(){initNavTree('transfers_8py_source.html',''); initRe
 <div class="line"><a id="l01206" name="l01206"></a><span class="lineno"> 1206</span><span class="comment">#  3) Interplanetary cruise — heliocentric N-body EKF (the end goal)</span></div>
 <div class="line"><a id="l01207" name="l01207"></a><span class="lineno"> 1207</span><span class="comment"># ===========================================================================</span></div>
 </div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html_a5dbd89e1ad22f572807eb90c178353fe"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a5dbd89e1ad22f572807eb90c178353fe">modules.apps.astro.space.transfers._orbit_ellipse</a></div><div class="ttdeci">_orbit_ellipse(body, t_ref=None, n=300)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00076">transfers.py:76</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html_a8eb8b650047552bcfdceffc0b2ab91ef"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#a8eb8b650047552bcfdceffc0b2ab91ef">modules.apps.astro.space.transfers._solve_dsm</a></div><div class="ttdeci">_solve_dsm(r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00784">transfers.py:784</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html_abce2e48d1dd25512bc83e5acf8c76f06"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#abce2e48d1dd25512bc83e5acf8c76f06">modules.apps.astro.space.transfers._third_body</a></div><div class="ttdeci">_third_body(r, r_body, GM)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00098">transfers.py:98</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html_ae525b8f53fd5593b0d9536c0bc341aed"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae525b8f53fd5593b0d9536c0bc341aed">modules.apps.astro.space.transfers._kep_arc</a></div><div class="ttdeci">_kep_arc(r0, v0, tof_ks, n=200, mu=None)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00063">transfers.py:63</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_1_1transfers_html_ae886478ec195445b8bb4965fd108ec8e"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space_1_1transfers.html#ae886478ec195445b8bb4965fd108ec8e">modules.apps.astro.space.transfers._flyby_geometry</a></div><div class="ttdeci">_flyby_geometry(body, v_inf_in, v_inf_out)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00765">transfers.py:765</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1transfers_html_a3b4a60fd728e9ee3d2a31c1fbdafa31d"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a3b4a60fd728e9ee3d2a31c1fbdafa31d">modules.apps.astrophysics.transfers._third_body</a></div><div class="ttdeci">_third_body(r, r_body, GM)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00098">transfers.py:98</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1transfers_html_a5189b61860a38e8a27acfb1d44ce6d23"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a5189b61860a38e8a27acfb1d44ce6d23">modules.apps.astrophysics.transfers._solve_dsm</a></div><div class="ttdeci">_solve_dsm(r_a, v_planet_a, v_inf_in_a, t1, r_b, v_planet_b, v_inf_out_b, t2, mu)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00784">transfers.py:784</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1transfers_html_a74b32743bb8c859928f5dfd458178374"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a74b32743bb8c859928f5dfd458178374">modules.apps.astrophysics.transfers._orbit_ellipse</a></div><div class="ttdeci">_orbit_ellipse(body, t_ref=None, n=300)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00076">transfers.py:76</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1transfers_html_a7ab6146f7d1a29fc7516c26a9aef0ae9"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#a7ab6146f7d1a29fc7516c26a9aef0ae9">modules.apps.astrophysics.transfers._flyby_geometry</a></div><div class="ttdeci">_flyby_geometry(body, v_inf_in, v_inf_out)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00765">transfers.py:765</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1transfers_html_acece961dc7642a55ea3115a36fc5bda5"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1transfers.html#acece961dc7642a55ea3115a36fc5bda5">modules.apps.astrophysics.transfers._kep_arc</a></div><div class="ttdeci">_kep_arc(r0, v0, tof_ks, n=200, mu=None)</div><div class="ttdef"><b>Definition</b> <a href="transfers_8py_source.html#l00063">transfers.py:63</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->
 <!-- start footer part -->
     <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
-            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_17fc734a481c6056d78b62c3e8a9a199.html">astro</a></li><li class="navelem"><a class="el" href="dir_825c94542d7d2888ccac1252d55cd9b3.html">space</a></li><li class="navelem"><a class="el" href="transfers_8py.html">transfers.py</a></li>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_dce2694de84b78c286c90acb0c24216d.html">apps</a></li><li class="navelem"><a class="el" href="dir_5be6dc203a48b52223caf28a7e37541a.html">astrophysics</a></li><li class="navelem"><a class="el" href="transfers_8py.html">transfers.py</a></li>
             <li class="footer">
             <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
             </li>

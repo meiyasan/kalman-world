@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -175,7 +175,7 @@ How it is built</h1>
 <li><b>Time stepping.</b> One RK4 step per sample, or <code>n_sub</code> of them when the spacecraft passes close to a body and the pull changes quickly.</li>
 <li><b>Where the planets are.</b> The Moon and Sun follow circles by default. With <code>use_ephemeris=True</code>, or an <code>epoch</code> for the interplanetary model, their positions come from the real ephemeris.</li>
 <li><b>Course corrections.</b> With <code>control=True</code> the interplanetary model takes a small velocity change as its input. The notebook computes these corrections from the filter's estimate and shows what each one removes.</li>
-<li><b>C++.</b> <code>TransLunarModel</code> and <code>InterplanetaryModel</code> have twins in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_astro_1_1_trans_lunar.html" title="Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the twin of kalman.apps....">Kalman::Apps::Astro::TransLunar</a></code>, <code>::Interplanetary</code>), so <code>model.filter(z)</code> runs wholly in C++, about 10 times faster. The planets' positions the interplanetary model tabulates from the ephemeris are handed to the twin when it runs. A course correction (<code>control=True</code>) and an integrator of your own keep the Python step.</li>
+<li><b>C++.</b> <code>TransLunarModel</code> and <code>InterplanetaryModel</code> have counterparts in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html" title="Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the counterpart of kalman....">Kalman::Apps::Astrophysics::TransLunar</a></code>, <code>::Interplanetary</code>), so <code>model.filter(z)</code> runs wholly in C++, about 10 times faster. The planets' positions the interplanetary model tabulates from the ephemeris are handed to the counterpart when it runs. A course correction (<code>control=True</code>) and an integrator of your own keep the Python step.</li>
 </ul>
 <h1><a class="anchor" id="using-it-10"></a>
 Using it</h1>

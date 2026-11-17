@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,7 +157,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Kalman::Algebra::SolveDARE against scipy.linalg.solve_discrete_are.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00330">330</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00441">441</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ad6bf201b3f97d848416645b35bca2c0a" name="ad6bf201b3f97d848416645b35bca2c0a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6bf201b3f97d848416645b35bca2c0a">&#9670;&#160;</a></span>cases()</h2>
@@ -175,20 +175,20 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00333">333</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  333</span>    <span class="keyword">def </span>cases(self):</div>
-<div class="line"><span class="lineno">  334</span>        rng = np.random.default_rng(3)</div>
-<div class="line"><span class="lineno">  335</span>        out = [(np.array([[1, 0.02], [0, 1]]), np.array([[2e-4], [0.02]]), np.eye(2), np.eye(1)),</div>
-<div class="line"><span class="lineno">  336</span>               (np.array([[1, 0.1], [0, 1]]), np.array([[0.005], [0.1]]), np.diag([1.0, 0.0]), np.array([[100.0]])),</div>
-<div class="line"><span class="lineno">  337</span>               (np.array([[0.999, 0.01], [0, 0.999]]), np.array([[0.0], [0.01]]), np.eye(2), np.array([[1e3]]))]</div>
-<div class="line"><span class="lineno">  338</span>        m = lane()</div>
-<div class="line"><span class="lineno">  339</span>        out.append((m.F(), m.B(), np.diag([1.0, 0.0, 0.0]), np.array([[100.0]])))</div>
-<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">for</span> n, l <span class="keywordflow">in</span> ((4, 2), (6, 1), (8, 3)):</div>
-<div class="line"><span class="lineno">  341</span>            A = rng.normal(size=(n, n))</div>
-<div class="line"><span class="lineno">  342</span>            A /= max(abs(np.linalg.eigvals(A))) / 1.05</div>
-<div class="line"><span class="lineno">  343</span>            out.append((A, rng.normal(size=(n, l)), np.eye(n), np.eye(l)))</div>
-<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">return</span> out</div>
-<div class="line"><span class="lineno">  345</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00444">444</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  444</span>    <span class="keyword">def </span>cases(self):</div>
+<div class="line"><span class="lineno">  445</span>        rng = np.random.default_rng(3)</div>
+<div class="line"><span class="lineno">  446</span>        out = [(np.array([[1, 0.02], [0, 1]]), np.array([[2e-4], [0.02]]), np.eye(2), np.eye(1)),</div>
+<div class="line"><span class="lineno">  447</span>               (np.array([[1, 0.1], [0, 1]]), np.array([[0.005], [0.1]]), np.diag([1.0, 0.0]), np.array([[100.0]])),</div>
+<div class="line"><span class="lineno">  448</span>               (np.array([[0.999, 0.01], [0, 0.999]]), np.array([[0.0], [0.01]]), np.eye(2), np.array([[1e3]]))]</div>
+<div class="line"><span class="lineno">  449</span>        m = lane()</div>
+<div class="line"><span class="lineno">  450</span>        out.append((m.F(), m.B(), np.diag([1.0, 0.0, 0.0]), np.array([[100.0]])))</div>
+<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">for</span> n, l <span class="keywordflow">in</span> ((4, 2), (6, 1), (8, 3)):</div>
+<div class="line"><span class="lineno">  452</span>            A = rng.normal(size=(n, n))</div>
+<div class="line"><span class="lineno">  453</span>            A /= max(abs(np.linalg.eigvals(A))) / 1.05</div>
+<div class="line"><span class="lineno">  454</span>            out.append((A, rng.normal(size=(n, l)), np.eye(n), np.eye(l)))</div>
+<div class="line"><span class="lineno">  455</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  456</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -208,23 +208,23 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00346">346</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  346</span>    <span class="keyword">def </span>test_agrees_with_scipy(self):</div>
-<div class="line"><span class="lineno">  347</span>        <span class="keyword">from</span> scipy.linalg <span class="keyword">import</span> solve_discrete_are</div>
-<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">for</span> A, B, Q, R <span class="keywordflow">in</span> self.cases():</div>
-<div class="line"><span class="lineno">  349</span>            P_ref = solve_discrete_are(A, B, Q, R)</div>
-<div class="line"><span class="lineno">  350</span>            K_ref = np.linalg.solve(R + B.T @ P_ref @ B, B.T @ P_ref @ A)</div>
-<div class="line"><span class="lineno">  351</span>            P, K = core.solve_dare(A, B, Q, R)</div>
-<div class="line"><span class="lineno">  352</span>            <span class="comment"># Measured: 1.4e-11 for the pole at 0.999 (where scipy&#39;s own residual is the</span></div>
-<div class="line"><span class="lineno">  353</span>            <span class="comment"># larger one, 2.4e-14 against 1.9e-16), 4e-14 or better elsewhere.</span></div>
-<div class="line"><span class="lineno">  354</span>            self.assertLess(np.abs(K - K_ref).max() / np.abs(K_ref).max(), 1e-10)</div>
-<div class="line"><span class="lineno">  355</span>            self.assertLess(np.abs(P - P_ref).max() / np.abs(P_ref).max(), 1e-10)</div>
-<div class="line"><span class="lineno">  356</span>            G = np.linalg.solve(R + B.T @ P @ B, B.T @ P @ A)</div>
-<div class="line"><span class="lineno">  357</span>            residual = np.abs(A.T @ P @ A - A.T @ P @ B @ G + Q - P).max() / np.abs(P).max()</div>
-<div class="line"><span class="lineno">  358</span>            self.assertLess(residual, 1e-13)</div>
-<div class="line"><span class="lineno">  359</span> </div>
-<div class="line"><span class="lineno">  360</span> </div>
-<div class="line"><span class="lineno">  361</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman not built&quot;)</span></div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00457">457</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  457</span>    <span class="keyword">def </span>test_agrees_with_scipy(self):</div>
+<div class="line"><span class="lineno">  458</span>        <span class="keyword">from</span> scipy.linalg <span class="keyword">import</span> solve_discrete_are</div>
+<div class="line"><span class="lineno">  459</span>        <span class="keywordflow">for</span> A, B, Q, R <span class="keywordflow">in</span> self.cases():</div>
+<div class="line"><span class="lineno">  460</span>            P_ref = solve_discrete_are(A, B, Q, R)</div>
+<div class="line"><span class="lineno">  461</span>            K_ref = np.linalg.solve(R + B.T @ P_ref @ B, B.T @ P_ref @ A)</div>
+<div class="line"><span class="lineno">  462</span>            P, K = core.solve_dare(A, B, Q, R)</div>
+<div class="line"><span class="lineno">  463</span>            <span class="comment"># Measured: 1.4e-11 for the pole at 0.999 (where scipy&#39;s own residual is the</span></div>
+<div class="line"><span class="lineno">  464</span>            <span class="comment"># larger one, 2.4e-14 against 1.9e-16), 4e-14 or better elsewhere.</span></div>
+<div class="line"><span class="lineno">  465</span>            self.assertLess(np.abs(K - K_ref).max() / np.abs(K_ref).max(), 1e-10)</div>
+<div class="line"><span class="lineno">  466</span>            self.assertLess(np.abs(P - P_ref).max() / np.abs(P_ref).max(), 1e-10)</div>
+<div class="line"><span class="lineno">  467</span>            G = np.linalg.solve(R + B.T @ P @ B, B.T @ P @ A)</div>
+<div class="line"><span class="lineno">  468</span>            residual = np.abs(A.T @ P @ A - A.T @ P @ B @ G + Q - P).max() / np.abs(P).max()</div>
+<div class="line"><span class="lineno">  469</span>            self.assertLess(residual, 1e-13)</div>
+<div class="line"><span class="lineno">  470</span> </div>
+<div class="line"><span class="lineno">  471</span> </div>
+<div class="line"><span class="lineno">  472</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman not built&quot;)</span></div>
 </div><!-- fragment -->
 </div>
 </div>

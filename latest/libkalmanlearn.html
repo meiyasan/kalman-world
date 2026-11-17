@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,16 +161,16 @@ $(document).ready(function(){initNavTree('libkalmanlearn.html',''); initResizabl
 </table>
 <p>Training stays in Python, where the optimiser and the data are. What crosses to C++ is the trained policy, as one self-contained file.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_kalman_8h.html">Kalman/Kalman.h</a>&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_learn_8h.html">Kalman/Learn/Learn.h</a>&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &lt;<a class="code" href="_learn_8h.html">Kalman/Learn.h</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_n_n_1_1_onnx.html">Kalman::Routers::NN::Onnx</a> policy(<span class="stringliteral">&quot;router.onnx&quot;</span>);</div>
 <div class="line"><a class="code hl_class" href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a>   router(&amp;policy, window, mean, scale);</div>
-<div class="line"><a class="code hl_class" href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a>      ikf({&amp;cruise, &amp;manoeuvre}, Pi, &amp;router);</div>
+<div class="line"><span class="keyword">auto</span> modes = <a class="code hl_function" href="class_kalman_1_1_model.html#ad65a9a81d4bb4c6599d8966a809ca93a">Kalman::Model::Route</a>({&amp;cruise, &amp;manoeuvre}, Pi);   <span class="comment">// then SetDecision(&amp;router)</span></div>
 <div class="ttc" id="a_kalman_8h_html"><div class="ttname"><a href="_kalman_8h.html">Kalman.h</a></div><div class="ttdoc">Umbrella header for libKalman.</div></div>
 <div class="ttc" id="a_learn_8h_html"><div class="ttname"><a href="_learn_8h.html">Learn.h</a></div><div class="ttdoc">Umbrella header for libKalmanLearn.</div></div>
-<div class="ttc" id="aclass_kalman_1_1_filters_1_1_i_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_i_k_f.html">Kalman::Filters::IKF</a></div><div class="ttdoc">Interactive Kalman Filter — several models, one estimate.</div><div class="ttdef"><b>Definition</b> <a href="_i_k_f_8h_source.html#l00067">IKF.h:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ad65a9a81d4bb4c6599d8966a809ca93a"><div class="ttname"><a href="class_kalman_1_1_model.html#ad65a9a81d4bb4c6599d8966a809ca93a">Kalman::Model::Route</a></div><div class="ttdeci">static std::unique_ptr&lt; Model &gt; Route(const std::vector&lt; Model * &gt; &amp;modes, const Matrix &amp;Pi, const Vector &amp;mu0=Vector())</div><div class="ttdef"><b>Definition</b> <a href="src_2operations_8cc_source.html#l00043">Operations.cc:43</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_n_n_1_1_onnx_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_n_n_1_1_onnx.html">Kalman::Routers::NN::Onnx</a></div><div class="ttdoc">Executes a policy exported from the Python framework.</div><div class="ttdef"><b>Definition</b> <a href="_onnx_8h_source.html#l00053">Onnx.h:54</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00061">Neural.h:62</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_routers_1_1_neural_html"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_neural.html">Kalman::Routers::Neural</a></div><div class="ttdoc">Delegates the mode decision to a learned policy.</div><div class="ttdef"><b>Definition</b> <a href="_neural_8h_source.html#l00077">Neural.h:78</a></div></div>
 </div><!-- fragment --><p>Link <code>libKalmanLearn</code> as well as <code>libKalman</code>. Both runtimes are optional: <code>NN::Onnx::HasRuntime()</code> and <code>NN::Torch::HasRuntime()</code> say which were built in, and a backend without its runtime refuses to load a file instead of failing to link.</p>
 <p>The library also holds the field solver that runs on libTorch, <a class="el" href="class_kalman_1_1_learn_1_1_solvers_1_1_vorticity.html" title="Batched pseudo-spectral 2-D vorticity solver on libTorch (CPU, CUDA, MPS).">Kalman::Learn::Solvers::Vorticity</a>: many 2-D vorticity fields stepped in one call, on the CPU or a GPU. It is what <code>SpectralSolver(backend="torch")</code> runs in the Python package.</p>
 <div class="fragment"><div class="line"><a class="code hl_class" href="class_kalman_1_1_learn_1_1_solvers_1_1_vorticity.html">Kalman::Learn::Solvers::Vorticity</a> flow(grid, nu, beta, forcingRe, forcingIm, <span class="stringliteral">&quot;mps&quot;</span>);</div>

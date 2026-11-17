@@ -12,13 +12,12 @@ var hierarchy =
       [ "tests.test_registry.TestRestRegistry", "classtests_1_1test__registry_1_1_test_rest_registry.html", null ],
       [ "tests.test_registry.TestScopesAndOwnership", "classtests_1_1test__registry_1_1_test_scopes_and_ownership.html", null ]
     ] ],
-    [ "modules.framework.models.composite.CompositeKalmanModel._EngineOfParts", "classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model_1_1___engine_of_parts.html", null ],
     [ "modules.framework.routers.hybrid._Errors", "classmodules_1_1framework_1_1routers_1_1hybrid_1_1___errors.html", null ],
     [ "modules.apps.gravitational.interferometer.control._LeafAdaptiveQR", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html", null ],
     [ "modules.apps.weather.flow.TwinExperiment._MethodView", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html", null ],
     [ "tests.test_providers._MockClient", "classtests_1_1test__providers_1_1___mock_client.html", null ],
     [ "tests.test_providers._MockResp", "classtests_1_1test__providers_1_1___mock_resp.html", null ],
-    [ "modules.apps.astro.space.interplanetary._PerturberField", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1___perturber_field.html", null ],
+    [ "modules.apps.astrophysics.interplanetary._PerturberField", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1___perturber_field.html", null ],
     [ "Kalman::Net::Api", "class_kalman_1_1_net_1_1_api.html", null ],
     [ "Kalman::IO::Archive", "class_kalman_1_1_i_o_1_1_archive.html", null ],
     [ "Kalman::Net::Auth", "class_kalman_1_1_net_1_1_auth.html", null ],
@@ -29,7 +28,7 @@ var hierarchy =
     [ "Kalman::Net::Claims", "struct_kalman_1_1_net_1_1_claims.html", null ],
     [ "modules.framework.routers.nn.cnn.CNN", "classmodules_1_1framework_1_1routers_1_1nn_1_1cnn_1_1_c_n_n.html", null ],
     [ "Kalman::IO::Collection", "class_kalman_1_1_i_o_1_1_collection.html", null ],
-    [ "Kalman::Model::Component", "struct_kalman_1_1_model_1_1_component.html", null ],
+    [ "Kalman::Component", "struct_kalman_1_1_component.html", null ],
     [ "Kalman::Filters::EnKF::Cycles", "struct_kalman_1_1_filters_1_1_en_k_f_1_1_cycles.html", null ],
     [ "Kalman::Tracking::Detector", "class_kalman_1_1_tracking_1_1_detector.html", [
       [ "Fixture::DriftChamber", "class_fixture_1_1_drift_chamber.html", null ],
@@ -43,6 +42,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "Kalman::Factory::Entry", "struct_kalman_1_1_factory_1_1_entry.html", null ],
+    [ "Kalman::EstimatedParameter", "struct_kalman_1_1_estimated_parameter.html", null ],
     [ "Exception", null, [
       [ "modules.api.store.ConflictError", "classmodules_1_1api_1_1store_1_1_conflict_error.html", null ],
       [ "modules.mcp.backend.RemoteError", "classmodules_1_1mcp_1_1backend_1_1_remote_error.html", null ]
@@ -66,7 +66,7 @@ var hierarchy =
     [ "modules.runtime.timer.ImportTimer", "classmodules_1_1runtime_1_1timer_1_1_import_timer.html", [
       [ "modules.runtime.timer.Timer", "classmodules_1_1runtime_1_1timer_1_1_timer.html", null ]
     ] ],
-    [ "modules.framework.filters.ikf.InteractiveKalmanFilter", "classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html", null ],
+    [ "Kalman::Instrument", "struct_kalman_1_1_instrument.html", null ],
     [ "Kalman::IO::Json", "class_kalman_1_1_i_o_1_1_json.html", null ],
     [ "modules.mcp.server.JwtVerifier", "classmodules_1_1mcp_1_1server_1_1_jwt_verifier.html", null ],
     [ "kalman_controller", "structkalman__controller.html", null ],
@@ -74,50 +74,43 @@ var hierarchy =
     [ "kalman_model", "structkalman__model.html", null ],
     [ "kalman_model_info", "structkalman__model__info.html", null ],
     [ "kalman_router", "structkalman__router.html", null ],
+    [ "kalman_sensor", "structkalman__sensor.html", null ],
     [ "kalman_tracks", "structkalman__tracks.html", null ],
     [ "modules.framework.control.KalmanController", "classmodules_1_1framework_1_1control_1_1_kalman_controller.html", [
-      [ "modules.apps.astro.space.interplanetary.TrajectoryControlManeuver", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html", null ],
+      [ "modules.apps.astrophysics.interplanetary.TrajectoryControlManeuver", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_trajectory_control_maneuver.html", null ],
       [ "modules.apps.gravitational.interferometer.control.ViolinBankController", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller.html", null ],
-      [ "modules.framework.controllers.adaptive_qr.AdaptiveQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller.html", null ],
-      [ "modules.framework.controllers.boost.BoostKalmanController", "classmodules_1_1framework_1_1controllers_1_1boost_1_1_boost_kalman_controller.html", null ],
       [ "modules.framework.controllers.lqr.LQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1lqr_1_1_l_q_r_kalman_controller.html", null ],
+      [ "modules.framework.controllers.mpc.MPCKalmanController", "classmodules_1_1framework_1_1controllers_1_1mpc_1_1_m_p_c_kalman_controller.html", null ],
       [ "modules.framework.controllers.mppi.MPPIKalmanController", "classmodules_1_1framework_1_1controllers_1_1mppi_1_1_m_p_p_i_kalman_controller.html", null ],
       [ "modules.framework.controllers.neural.NeuralKalmanController", "classmodules_1_1framework_1_1controllers_1_1neural_1_1_neural_kalman_controller.html", null ],
-      [ "modules.framework.controllers.neural_qr.NeuralAdaptiveQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_controller.html", null ],
       [ "modules.framework.controllers.pid.PIDKalmanController", "classmodules_1_1framework_1_1controllers_1_1pid_1_1_p_i_d_kalman_controller.html", null ],
-      [ "modules.framework.controllers.proportional.ProportionalKalmanController", "classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html", null ]
+      [ "modules.framework.controllers.proportional.ProportionalKalmanController", "classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html", null ],
+      [ "modules.framework.tuner.KalmanTuner", "classmodules_1_1framework_1_1tuner_1_1_kalman_tuner.html", [
+        [ "modules.framework.tuners.adaptive_qr.AdaptiveQRKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner.html", null ],
+        [ "modules.framework.tuners.boost.BoostKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1boost_1_1_boost_kalman_tuner.html", null ],
+        [ "modules.framework.tuners.neural_qr.NeuralAdaptiveQRKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner.html", null ]
+      ] ]
+    ] ],
+    [ "modules.framework.engine_models.KalmanDetectorModel", "classmodules_1_1framework_1_1engine__models_1_1_kalman_detector_model.html", [
+      [ "modules.apps.tracking.driftchamber.DriftChamberModel", "classmodules_1_1apps_1_1tracking_1_1driftchamber_1_1_drift_chamber_model.html", null ]
     ] ],
     [ "modules.framework.diagnostics.KalmanDiagnostics", "classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html", null ],
+    [ "modules.framework.engine_models.KalmanEnsembleModel", "classmodules_1_1framework_1_1engine__models_1_1_kalman_ensemble_model.html", [
+      [ "modules.apps.weather.flow.KolmogorovFlowModel", "classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html", [
+        [ "modules.apps.weather.barotropic.BarotropicFlowModel", "classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html", null ]
+      ] ]
+    ] ],
     [ "modules.framework.abstract.mixins.KalmanInferenceMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html", [
       [ "modules.framework.abstract.mixins.KalmanModelMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html", [
         [ "modules.framework.model.KalmanModel", "classmodules_1_1framework_1_1model_1_1_kalman_model.html", [
-          [ "modules.apps.weather.flow.KolmogorovFlowModel", "classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html", [
-            [ "modules.apps.weather.barotropic.BarotropicFlowModel", "classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html", null ]
-          ] ],
-          [ "modules.framework.models.composite.CompositeKalmanModel", "classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html", [
-            [ "modules.apps.resonators.oscillators.bank.OscillatorBankModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1bank_1_1_oscillator_bank_model.html", [
-              [ "modules.apps.gravitational.interferometer.model.InterferometerModel", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1model_1_1_interferometer_model.html", [
-                [ "modules.apps.gravitational.interferometer.model._DetectorBase", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1model_1_1___detector_base.html", [
-                  [ "modules.apps.gravitational.interferometer.detectors.InterferometerH1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_h1.html", null ],
-                  [ "modules.apps.gravitational.interferometer.detectors.InterferometerK1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_k1.html", null ],
-                  [ "modules.apps.gravitational.interferometer.detectors.InterferometerL1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_l1.html", null ],
-                  [ "modules.apps.gravitational.interferometer.detectors.InterferometerV1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_v1.html", null ]
-                ] ]
-              ] ]
-            ] ],
-            [ "modules.apps.resonators.oscillators.composite.OscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html", [
-              [ "modules.apps.resonators.oscillators.harmonic.InharmonicOscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1harmonic_1_1_inharmonic_oscillator_model.html", [
-                [ "modules.apps.resonators.oscillators.harmonic.HarmonicOscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1harmonic_1_1_harmonic_oscillator_model.html", null ]
-              ] ]
-            ] ]
-          ] ],
+          [ "modules.apps.weather.flow.KolmogorovFlowModel", "classmodules_1_1apps_1_1weather_1_1flow_1_1_kolmogorov_flow_model.html", null ],
           [ "modules.framework.models.extended.ExtendedKalmanModel", "classmodules_1_1framework_1_1models_1_1extended_1_1_extended_kalman_model.html", [
-            [ "modules.apps.astro.rocket.ascent.RocketAscentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html", null ],
-            [ "modules.apps.astro.rocket.descent.RocketDescentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html", null ],
-            [ "modules.apps.astro.rocket.landing.RocketLandingModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html", null ],
-            [ "modules.apps.astro.rocket.liftoff.RocketLiftoffModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html", null ],
-            [ "modules.apps.astro.space.interplanetary.InterplanetaryModel", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model.html", null ],
-            [ "modules.apps.astro.space.translunar.TransLunarModel", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html", null ],
+            [ "modules.apps.aerospace.ascent.RocketAscentModel", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model.html", null ],
+            [ "modules.apps.aerospace.descent.RocketDescentModel", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_model.html", null ],
+            [ "modules.apps.aerospace.landing.RocketLandingModel", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_model.html", null ],
+            [ "modules.apps.aerospace.liftoff.RocketLiftoffModel", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html", null ],
+            [ "modules.apps.astrophysics.interplanetary.InterplanetaryModel", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_model.html", null ],
+            [ "modules.apps.astrophysics.translunar.TransLunarModel", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model.html", null ],
             [ "modules.apps.ballistics.extended.BallisticModel", "classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html", null ],
             [ "modules.apps.gps.model.GPSModel", "classmodules_1_1apps_1_1gps_1_1model_1_1_g_p_s_model.html", null ],
             [ "modules.apps.gravitational.gravwave.polarization.PolarizationModel", "classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_model.html", null ],
@@ -150,22 +143,61 @@ var hierarchy =
             [ "modules.apps.vision.boxtrack.BoxTrackModel", "classmodules_1_1apps_1_1vision_1_1boxtrack_1_1_box_track_model.html", null ],
             [ "modules.apps.vision.detection.DetectionModel", "classmodules_1_1apps_1_1vision_1_1detection_1_1_detection_model.html", null ]
           ] ],
-          [ "modules.framework.models.native.NativeModel", "classmodules_1_1framework_1_1models_1_1native_1_1_native_model.html", null ],
+          [ "modules.framework.models.native.NativeModel", "classmodules_1_1framework_1_1models_1_1native_1_1_native_model.html", [
+            [ "modules.framework.models.operation.OperationModel", "classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html", [
+              [ "modules.framework.models.compose.Composite", "classmodules_1_1framework_1_1models_1_1compose_1_1_composite.html", [
+                [ "modules.apps.resonators.oscillators.bank.OscillatorBankModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1bank_1_1_oscillator_bank_model.html", [
+                  [ "modules.apps.gravitational.interferometer.model.InterferometerModel", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1model_1_1_interferometer_model.html", [
+                    [ "modules.apps.gravitational.interferometer.model._DetectorBase", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1model_1_1___detector_base.html", [
+                      [ "modules.apps.gravitational.interferometer.detectors.InterferometerH1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_h1.html", null ],
+                      [ "modules.apps.gravitational.interferometer.detectors.InterferometerK1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_k1.html", null ],
+                      [ "modules.apps.gravitational.interferometer.detectors.InterferometerL1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_l1.html", null ],
+                      [ "modules.apps.gravitational.interferometer.detectors.InterferometerV1", "classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_v1.html", null ]
+                    ] ]
+                  ] ]
+                ] ],
+                [ "modules.apps.resonators.oscillators.composite.OscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html", [
+                  [ "modules.apps.resonators.oscillators.harmonic.InharmonicOscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1harmonic_1_1_inharmonic_oscillator_model.html", [
+                    [ "modules.apps.resonators.oscillators.harmonic.HarmonicOscillatorModel", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1harmonic_1_1_harmonic_oscillator_model.html", null ]
+                  ] ]
+                ] ]
+              ] ],
+              [ "modules.framework.models.fusion.Fusion", "classmodules_1_1framework_1_1models_1_1fusion_1_1_fusion.html", null ],
+              [ "modules.framework.models.joint.Joint", "classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html", null ],
+              [ "modules.framework.models.lag.Lag", "classmodules_1_1framework_1_1models_1_1lag_1_1_lag.html", null ],
+              [ "modules.framework.models.route.Router", "classmodules_1_1framework_1_1models_1_1route_1_1_router.html", null ]
+            ] ]
+          ] ],
           [ "modules.framework.models.unscented.UnscentedKalmanModel", "classmodules_1_1framework_1_1models_1_1unscented_1_1_unscented_kalman_model.html", null ],
-          [ "tests.test_integrators._Decay", "classtests_1_1test__integrators_1_1___decay.html", null ]
+          [ "tests.test_integrators._Decay", "classtests_1_1test__integrators_1_1___decay.html", null ],
+          [ "tests.test_joint.Gauge", "classtests_1_1test__joint_1_1_gauge.html", null ],
+          [ "tests.test_joint.Oscillator", "classtests_1_1test__joint_1_1_oscillator.html", [
+            [ "tests.test_joint.Frozen", "classtests_1_1test__joint_1_1_frozen.html", null ]
+          ] ]
         ] ]
       ] ]
+    ] ],
+    [ "modules.framework.instrument.KalmanInstrument", "classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html", [
+      [ "tests.test_instrument_data.BenchRadar", "classtests_1_1test__instrument__data_1_1_bench_radar.html", null ]
     ] ],
     [ "KalmanObservable", null, [
       [ "toy_model.CoffeeObservable", "classtoy__model_1_1_coffee_observable.html", null ]
     ] ],
-    [ "modules.framework.abstract.mixins.KalmanProxyMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_proxy_mixin.html", [
-      [ "modules.framework.abstract.mixins.KalmanModelMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html", null ]
-    ] ],
     [ "modules.framework.io.record.KalmanRecord", "classmodules_1_1framework_1_1io_1_1record_1_1_kalman_record.html", [
       [ "modules.framework.io.collection.KalmanRecordCollection", "classmodules_1_1framework_1_1io_1_1collection_1_1_kalman_record_collection.html", null ]
     ] ],
+    [ "modules.framework.abstract.mixins.KalmanRunMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html", [
+      [ "modules.framework.abstract.mixins.KalmanModelMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html", null ]
+    ] ],
     [ "modules.framework.sampler.KalmanSampler", "classmodules_1_1framework_1_1sampler_1_1_kalman_sampler.html", null ],
+    [ "modules.framework.sensor.KalmanSensor", "classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html", [
+      [ "modules.apps.fusion.model.SensorSpec", "classmodules_1_1apps_1_1fusion_1_1model_1_1_sensor_spec.html", null ],
+      [ "modules.framework.sensors.base.NativeSensor", "classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html", [
+        [ "modules.framework.sensors.camera.CameraSensor", "classmodules_1_1framework_1_1sensors_1_1camera_1_1_camera_sensor.html", null ],
+        [ "modules.framework.sensors.doppler.DopplerSensor", "classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor.html", null ],
+        [ "modules.framework.sensors.position.PositionSensor", "classmodules_1_1framework_1_1sensors_1_1position_1_1_position_sensor.html", null ]
+      ] ]
+    ] ],
     [ "modules.framework.abstract.mixins.KalmanShapeMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin.html", [
       [ "modules.framework.abstract.mixins.KalmanModelMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html", null ]
     ] ],
@@ -196,12 +228,15 @@ var hierarchy =
     [ "Kalman::Net::McpServer", "class_kalman_1_1_net_1_1_mcp_server.html", null ],
     [ "Kalman::Abstract::Metadata", "class_kalman_1_1_abstract_1_1_metadata.html", [
       [ "Kalman::Controller", "class_kalman_1_1_controller.html", [
-        [ "Kalman::Controllers::AdaptiveQR", "class_kalman_1_1_controllers_1_1_adaptive_q_r.html", null ],
-        [ "Kalman::Controllers::Boost", "class_kalman_1_1_controllers_1_1_boost.html", null ],
         [ "Kalman::Controllers::LQR", "class_kalman_1_1_controllers_1_1_l_q_r.html", null ],
+        [ "Kalman::Controllers::MPC", "class_kalman_1_1_controllers_1_1_m_p_c.html", null ],
         [ "Kalman::Controllers::MPPI", "class_kalman_1_1_controllers_1_1_m_p_p_i.html", null ],
         [ "Kalman::Controllers::PID", "class_kalman_1_1_controllers_1_1_p_i_d.html", null ],
-        [ "Kalman::Controllers::Proportional", "class_kalman_1_1_controllers_1_1_proportional.html", null ]
+        [ "Kalman::Controllers::Proportional", "class_kalman_1_1_controllers_1_1_proportional.html", null ],
+        [ "Kalman::Tuner", "class_kalman_1_1_tuner.html", [
+          [ "Kalman::Tuners::AdaptiveQR", "class_kalman_1_1_tuners_1_1_adaptive_q_r.html", null ],
+          [ "Kalman::Tuners::Boost", "class_kalman_1_1_tuners_1_1_boost.html", null ]
+        ] ]
       ] ],
       [ "Kalman::Differentiator", "class_kalman_1_1_differentiator.html", [
         [ "Kalman::Differentiators::Central", "class_kalman_1_1_differentiators_1_1_central.html", null ],
@@ -212,6 +247,7 @@ var hierarchy =
         [ "Kalman::Engines::Extended", "class_kalman_1_1_engines_1_1_extended.html", [
           [ "Kalman::Engines::Combinatorial", "class_kalman_1_1_engines_1_1_combinatorial.html", null ]
         ] ],
+        [ "Kalman::Engines::Interacting", "class_kalman_1_1_engines_1_1_interacting.html", null ],
         [ "Kalman::Engines::Linear", "class_kalman_1_1_engines_1_1_linear.html", null ],
         [ "Kalman::Engines::Particle", "class_kalman_1_1_engines_1_1_particle.html", null ],
         [ "Kalman::Engines::Unscented", "class_kalman_1_1_engines_1_1_unscented.html", null ]
@@ -224,13 +260,13 @@ var hierarchy =
         [ "Kalman::Filters::UKF", "class_kalman_1_1_filters_1_1_u_k_f.html", null ]
       ] ],
       [ "Kalman::Filters::CKF", "class_kalman_1_1_filters_1_1_c_k_f.html", null ],
-      [ "Kalman::Filters::IKF", "class_kalman_1_1_filters_1_1_i_k_f.html", null ],
       [ "Kalman::Integrator", "class_kalman_1_1_integrator.html", [
         [ "Kalman::Integrators::DormandPrince", "class_kalman_1_1_integrators_1_1_dormand_prince.html", null ],
         [ "Kalman::Integrators::Euler", "class_kalman_1_1_integrators_1_1_euler.html", null ],
         [ "Kalman::Integrators::RK4", "class_kalman_1_1_integrators_1_1_r_k4.html", null ]
       ] ],
       [ "Kalman::Model", "class_kalman_1_1_model.html", [
+        [ "Kalman::Models::Composite", "class_kalman_1_1_models_1_1_composite.html", null ],
         [ "Kalman::Models::Extended", "class_kalman_1_1_models_1_1_extended.html", [
           [ "Ballistics", "class_ballistics.html", null ],
           [ "Fixture::DriftChamber", "class_fixture_1_1_drift_chamber.html", null ],
@@ -238,13 +274,13 @@ var hierarchy =
             [ "Fixture::PendulumODE", "class_fixture_1_1_pendulum_o_d_e.html", null ]
           ] ],
           [ "Kalman::Apps::Model", "class_kalman_1_1_apps_1_1_model.html", [
-            [ "Kalman::Apps::Astro::Interplanetary", "class_kalman_1_1_apps_1_1_astro_1_1_interplanetary.html", null ],
-            [ "Kalman::Apps::Astro::RocketAscent", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_ascent.html", null ],
-            [ "Kalman::Apps::Astro::RocketDescent", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_descent.html", null ],
-            [ "Kalman::Apps::Astro::RocketLanding", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_landing.html", null ],
-            [ "Kalman::Apps::Astro::RocketLiftoff", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_liftoff.html", null ],
-            [ "Kalman::Apps::Astro::TransLunar", "class_kalman_1_1_apps_1_1_astro_1_1_trans_lunar.html", null ],
-            [ "Kalman::Apps::Ballistics::Ballistic", "class_kalman_1_1_apps_1_1_ballistics_1_1_ballistic.html", null ],
+            [ "Kalman::Apps::Aerospace::RocketAscent", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_ascent.html", null ],
+            [ "Kalman::Apps::Aerospace::RocketDescent", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_descent.html", null ],
+            [ "Kalman::Apps::Aerospace::RocketLanding", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_landing.html", null ],
+            [ "Kalman::Apps::Aerospace::RocketLiftoff", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_liftoff.html", null ],
+            [ "Kalman::Apps::Astrophysics::Interplanetary", "class_kalman_1_1_apps_1_1_astrophysics_1_1_interplanetary.html", null ],
+            [ "Kalman::Apps::Astrophysics::TransLunar", "class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html", null ],
+            [ "Kalman::Apps::Ballistics::ExtendedModel", "class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model.html", null ],
             [ "Kalman::Apps::GPS::Receiver", "class_kalman_1_1_apps_1_1_g_p_s_1_1_receiver.html", null ],
             [ "Kalman::Apps::Gravitational::Polarization", "class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html", null ],
             [ "Kalman::Apps::Tracking::DriftChamber", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html", null ],
@@ -256,14 +292,19 @@ var hierarchy =
           ] ],
           [ "Kalman::Models::Callback", "class_kalman_1_1_models_1_1_callback.html", null ]
         ] ],
+        [ "Kalman::Models::Fusion", "class_kalman_1_1_models_1_1_fusion.html", null ],
+        [ "Kalman::Models::Joint", "class_kalman_1_1_models_1_1_joint.html", null ],
+        [ "Kalman::Models::Lag", "class_kalman_1_1_models_1_1_lag.html", null ],
         [ "Kalman::Models::Linear", "class_kalman_1_1_models_1_1_linear.html", [
           [ "ConstantVelocity", "class_constant_velocity.html", null ],
           [ "ConstantVelocity", "class_constant_velocity.html", null ],
           [ "Fixture::ConstantVelocity", "class_fixture_1_1_constant_velocity.html", [
             [ "Fixture::ControlledVelocity", "class_fixture_1_1_controlled_velocity.html", null ]
           ] ],
+          [ "Kalman::Apps::Ballistics::LinearModel", "class_kalman_1_1_apps_1_1_ballistics_1_1_linear_model.html", null ],
           [ "Kalman::Models::Tabulated", "class_kalman_1_1_models_1_1_tabulated.html", null ]
-        ] ]
+        ] ],
+        [ "Kalman::Models::Router", "class_kalman_1_1_models_1_1_router.html", null ]
       ] ],
       [ "Kalman::Routers::NN::Model", "class_kalman_1_1_routers_1_1_n_n_1_1_model.html", [
         [ "Kalman::Routers::NN::MLP", "class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html", null ],
@@ -291,13 +332,13 @@ var hierarchy =
       [ "modules.apps.weather.surrogate.ResBlock", "classmodules_1_1apps_1_1weather_1_1surrogate_1_1_res_block.html", null ],
       [ "modules.framework.routers.nn.transformer._Block", "classmodules_1_1framework_1_1routers_1_1nn_1_1transformer_1_1___block.html", null ]
     ] ],
-    [ "modules.framework.models.native.NativeTwin", "classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html", [
-      [ "modules.apps.astro.rocket.ascent.RocketAscentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html", null ],
-      [ "modules.apps.astro.rocket.descent.RocketDescentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html", null ],
-      [ "modules.apps.astro.rocket.landing.RocketLandingModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html", null ],
-      [ "modules.apps.astro.rocket.liftoff.RocketLiftoffModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html", null ],
-      [ "modules.apps.astro.space.interplanetary.InterplanetaryModel", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model.html", null ],
-      [ "modules.apps.astro.space.translunar.TransLunarModel", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html", null ],
+    [ "modules.framework.models.native.NativeCounterpart", "classmodules_1_1framework_1_1models_1_1native_1_1_native_counterpart.html", [
+      [ "modules.apps.aerospace.ascent.RocketAscentModel", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model.html", null ],
+      [ "modules.apps.aerospace.descent.RocketDescentModel", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_model.html", null ],
+      [ "modules.apps.aerospace.landing.RocketLandingModel", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_model.html", null ],
+      [ "modules.apps.aerospace.liftoff.RocketLiftoffModel", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html", null ],
+      [ "modules.apps.astrophysics.interplanetary.InterplanetaryModel", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_model.html", null ],
+      [ "modules.apps.astrophysics.translunar.TransLunarModel", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model.html", null ],
       [ "modules.apps.ballistics.extended.BallisticModel", "classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html", null ],
       [ "modules.apps.gps.model.GPSModel", "classmodules_1_1apps_1_1gps_1_1model_1_1_g_p_s_model.html", null ],
       [ "modules.apps.gravitational.gravwave.polarization.PolarizationModel", "classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_model.html", null ],
@@ -308,6 +349,7 @@ var hierarchy =
       [ "modules.apps.weather.storms.StormModel", "classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html", null ],
       [ "modules.apps.weather.storms.TornadoEnvironmentModel", "classmodules_1_1apps_1_1weather_1_1storms_1_1_tornado_environment_model.html", null ]
     ] ],
+    [ "Kalman::Observability", "class_kalman_1_1_observability.html", null ],
     [ "Kalman::IO::ModelFile::Opened", "struct_kalman_1_1_i_o_1_1_model_file_1_1_opened.html", null ],
     [ "Kalman::IO::ModelFile::Options", "struct_kalman_1_1_i_o_1_1_model_file_1_1_options.html", null ],
     [ "Kalman::Net::Api::Options", "struct_kalman_1_1_net_1_1_api_1_1_options.html", null ],
@@ -320,6 +362,7 @@ var hierarchy =
       ] ]
     ] ],
     [ "modules.framework.models.native.python_reference", "classmodules_1_1framework_1_1models_1_1native_1_1python__reference.html", null ],
+    [ "Kalman::Sensors::Detail::Reader", "struct_kalman_1_1_sensors_1_1_detail_1_1_reader.html", null ],
     [ "modules.apps.weather.surrogate.ReanchoredForecast", "classmodules_1_1apps_1_1weather_1_1surrogate_1_1_reanchored_forecast.html", null ],
     [ "Kalman::IO::Record", "class_kalman_1_1_i_o_1_1_record.html", null ],
     [ "modules.mcp.watch.RegistryWatcher", "classmodules_1_1mcp_1_1watch_1_1_registry_watcher.html", null ],
@@ -332,12 +375,25 @@ var hierarchy =
       [ "modules.framework.native.net.NetError", "classmodules_1_1framework_1_1native_1_1net_1_1_net_error.html", null ]
     ] ],
     [ "Kalman::Sampler", "class_kalman_1_1_sampler.html", null ],
-    [ "modules.apps.fusion.model.SensorSpec", "classmodules_1_1apps_1_1fusion_1_1model_1_1_sensor_spec.html", null ],
+    [ "Kalman::Sensor", "struct_kalman_1_1_sensor.html", [
+      [ "Kalman::Sensors::Camera", "class_kalman_1_1_sensors_1_1_camera.html", null ],
+      [ "Kalman::Sensors::Doppler", "class_kalman_1_1_sensors_1_1_doppler.html", null ],
+      [ "Kalman::Sensors::Position", "class_kalman_1_1_sensors_1_1_position.html", null ]
+    ] ],
+    [ "Kalman::SensorFactory", "class_kalman_1_1_sensor_factory.html", null ],
     [ "tests.test_net_server.Server", "classtests_1_1test__net__server_1_1_server.html", null ],
     [ "modules.apps.vision.boxtrack.SortTracker", "classmodules_1_1apps_1_1vision_1_1boxtrack_1_1_sort_tracker.html", null ],
     [ "Kalman::Learn::Solvers::Vorticity::Tableau", "struct_kalman_1_1_learn_1_1_solvers_1_1_vorticity_1_1_tableau.html", null ],
     [ "Kalman::Tableau", "struct_kalman_1_1_tableau.html", null ],
     [ "unittest.TestCase", null, [
+      [ "tests.test_add_sensor.TestBallisticDoppler", "classtests_1_1test__add__sensor_1_1_test_ballistic_doppler.html", null ],
+      [ "tests.test_add_sensor.TestCameras", "classtests_1_1test__add__sensor_1_1_test_cameras.html", null ],
+      [ "tests.test_add_sensor.TestConstruction", "classtests_1_1test__add__sensor_1_1_test_construction.html", null ],
+      [ "tests.test_add_sensor.TestEstimation", "classtests_1_1test__add__sensor_1_1_test_estimation.html", null ],
+      [ "tests.test_add_sensor.TestFirstArgument", "classtests_1_1test__add__sensor_1_1_test_first_argument.html", null ],
+      [ "tests.test_add_sensor.TestMatrices", "classtests_1_1test__add__sensor_1_1_test_matrices.html", null ],
+      [ "tests.test_add_sensor.TestRates", "classtests_1_1test__add__sensor_1_1_test_rates.html", null ],
+      [ "tests.test_add_sensor.TestSensor", "classtests_1_1test__add__sensor_1_1_test_sensor.html", null ],
       [ "tests.test_api.TestAuth", "classtests_1_1test__api_1_1_test_auth.html", null ],
       [ "tests.test_api.TestAuthoring", "classtests_1_1test__api_1_1_test_authoring.html", null ],
       [ "tests.test_api.TestDiagnosticsUseTheMeasurements", "classtests_1_1test__api_1_1_test_diagnostics_use_the_measurements.html", null ],
@@ -355,6 +411,9 @@ var hierarchy =
       [ "tests.test_apps_extra.TestRocketDescent", "classtests_1_1test__apps__extra_1_1_test_rocket_descent.html", null ],
       [ "tests.test_apps_extra.TestRocketLanding", "classtests_1_1test__apps__extra_1_1_test_rocket_landing.html", null ],
       [ "tests.test_apps_extra.TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", null ],
+      [ "tests.test_compose.TestCompose", "classtests_1_1test__compose_1_1_test_compose.html", null ],
+      [ "tests.test_contract_parity.TestJoint", "classtests_1_1test__contract__parity_1_1_test_joint.html", null ],
+      [ "tests.test_contract_parity.TestSensors", "classtests_1_1test__contract__parity_1_1_test_sensors.html", null ],
       [ "tests.test_engines.TestCombinatorialKalmanEngine", "classtests_1_1test__engines_1_1_test_combinatorial_kalman_engine.html", null ],
       [ "tests.test_engines.TestCrossEngineFullStep", "classtests_1_1test__engines_1_1_test_cross_engine_full_step.html", null ],
       [ "tests.test_engines.TestExtendedKalmanEngine", "classtests_1_1test__engines_1_1_test_extended_kalman_engine.html", null ],
@@ -373,6 +432,7 @@ var hierarchy =
       [ "tests.test_ensemble.TestTruthReplay", "classtests_1_1test__ensemble_1_1_test_truth_replay.html", null ],
       [ "tests.test_ensemble.TestTurbulenceTruth", "classtests_1_1test__ensemble_1_1_test_turbulence_truth.html", null ],
       [ "tests.test_ensemble.TestTwinExperiment", "classtests_1_1test__ensemble_1_1_test_twin_experiment.html", null ],
+      [ "tests.test_examples.TestOperationsDemonstration", "classtests_1_1test__examples_1_1_test_operations_demonstration.html", null ],
       [ "tests.test_examples.TestToyDemonstration", "classtests_1_1test__examples_1_1_test_toy_demonstration.html", null ],
       [ "tests.test_filtering.TestDetection", "classtests_1_1test__filtering_1_1_test_detection.html", null ],
       [ "tests.test_filtering.TestGPS", "classtests_1_1test__filtering_1_1_test_g_p_s.html", null ],
@@ -381,6 +441,7 @@ var hierarchy =
       [ "tests.test_filtering.TestSensorFusion", "classtests_1_1test__filtering_1_1_test_sensor_fusion.html", null ],
       [ "tests.test_filters.TestCrossEngineAgreement", "classtests_1_1test__filters_1_1_test_cross_engine_agreement.html", null ],
       [ "tests.test_filters.TestLinearKalmanFilter", "classtests_1_1test__filters_1_1_test_linear_kalman_filter.html", null ],
+      [ "tests.test_filters.TestManyStatesInOneCall", "classtests_1_1test__filters_1_1_test_many_states_in_one_call.html", null ],
       [ "tests.test_filters.TestNonlinearFilters", "classtests_1_1test__filters_1_1_test_nonlinear_filters.html", null ],
       [ "tests.test_framework.TestCompositeModel", "classtests_1_1test__framework_1_1_test_composite_model.html", null ],
       [ "tests.test_framework.TestEngineBinding", "classtests_1_1test__framework_1_1_test_engine_binding.html", null ],
@@ -393,10 +454,11 @@ var hierarchy =
       [ "tests.test_helpers.TestEnumAndCrop", "classtests_1_1test__helpers_1_1_test_enum_and_crop.html", null ],
       [ "tests.test_helpers.TestJacobianAndShapes", "classtests_1_1test__helpers_1_1_test_jacobian_and_shapes.html", null ],
       [ "tests.test_helpers.TestSignalHelpers", "classtests_1_1test__helpers_1_1_test_signal_helpers.html", null ],
-      [ "tests.test_ikf.TestIKFBasicAPI", "classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html", null ],
-      [ "tests.test_ikf.TestIKFFitAPI", "classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html", null ],
-      [ "tests.test_ikf.TestIKFWithControl", "classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html", null ],
-      [ "tests.test_ikf.TestRoutingAccuracy", "classtests_1_1test__ikf_1_1_test_routing_accuracy.html", null ],
+      [ "tests.test_instrument.TestAddInstrument", "classtests_1_1test__instrument_1_1_test_add_instrument.html", null ],
+      [ "tests.test_instrument.TestCalibratingWhileMeasuring", "classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html", null ],
+      [ "tests.test_instrument.TestCompose", "classtests_1_1test__instrument_1_1_test_compose.html", null ],
+      [ "tests.test_instrument_data.TestADetectorIsAnInstrument", "classtests_1_1test__instrument__data_1_1_test_a_detector_is_an_instrument.html", null ],
+      [ "tests.test_instrument_data.TestProvider", "classtests_1_1test__instrument__data_1_1_test_provider.html", null ],
       [ "tests.test_integrators.TestCustomSchemes", "classtests_1_1test__integrators_1_1_test_custom_schemes.html", null ],
       [ "tests.test_integrators.TestFiniteDifferenceSolver", "classtests_1_1test__integrators_1_1_test_finite_difference_solver.html", null ],
       [ "tests.test_integrators.TestIntegrators", "classtests_1_1test__integrators_1_1_test_integrators.html", null ],
@@ -414,6 +476,15 @@ var hierarchy =
       [ "tests.test_interferometer.TestLorentzian", "classtests_1_1test__interferometer_1_1_test_lorentzian.html", null ],
       [ "tests.test_interferometer.TestViolinBankController", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller.html", null ],
       [ "tests.test_interferometer.TestWelchPSD", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d.html", null ],
+      [ "tests.test_joint.TestBallisticCounterpart", "classtests_1_1test__joint_1_1_test_ballistic_counterpart.html", null ],
+      [ "tests.test_joint.TestCAPI", "classtests_1_1test__joint_1_1_test_c_a_p_i.html", null ],
+      [ "tests.test_joint.TestConstruction", "classtests_1_1test__joint_1_1_test_construction.html", null ],
+      [ "tests.test_joint.TestEstimation", "classtests_1_1test__joint_1_1_test_estimation.html", null ],
+      [ "tests.test_joint.TestMaps", "classtests_1_1test__joint_1_1_test_maps.html", null ],
+      [ "tests.test_joint.TestObservability", "classtests_1_1test__joint_1_1_test_observability.html", null ],
+      [ "tests.test_joint.TestTau", "classtests_1_1test__joint_1_1_test_tau.html", null ],
+      [ "tests.test_lag.TestLag", "classtests_1_1test__lag_1_1_test_lag.html", null ],
+      [ "tests.test_lag.TestLateSensor", "classtests_1_1test__lag_1_1_test_late_sensor.html", null ],
       [ "tests.test_module.TestFilterConvergence", "classtests_1_1test__module_1_1_test_filter_convergence.html", null ],
       [ "tests.test_module.TestKalmanFilter", "classtests_1_1test__module_1_1_test_kalman_filter.html", null ],
       [ "tests.test_module.TestModelDimensions", "classtests_1_1test__module_1_1_test_model_dimensions.html", null ],
@@ -445,8 +516,10 @@ var hierarchy =
       [ "tests.test_native_composite.TestSamplingMatrices", "classtests_1_1test__native__composite_1_1_test_sampling_matrices.html", null ],
       [ "tests.test_native_controllers.TestErrors", "classtests_1_1test__native__controllers_1_1_test_errors.html", null ],
       [ "tests.test_native_controllers.TestEveryControllerAgreesWithItsReference", "classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference.html", null ],
+      [ "tests.test_native_controllers.TestModelPredictiveControl", "classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html", null ],
       [ "tests.test_native_controllers.TestNotebook12", "classtests_1_1test__native__controllers_1_1_test_notebook12.html", null ],
       [ "tests.test_native_controllers.TestRiccati", "classtests_1_1test__native__controllers_1_1_test_riccati.html", null ],
+      [ "tests.test_native_controllers.TestTunerRole", "classtests_1_1test__native__controllers_1_1_test_tuner_role.html", null ],
       [ "tests.test_native_core.TestApiBuildsNativeModels", "classtests_1_1test__native__core_1_1_test_api_builds_native_models.html", null ],
       [ "tests.test_native_core.TestApiIntegration", "classtests_1_1test__native__core_1_1_test_api_integration.html", null ],
       [ "tests.test_native_core.TestFactory", "classtests_1_1test__native__core_1_1_test_factory.html", null ],
@@ -456,6 +529,18 @@ var hierarchy =
       [ "tests.test_native_core.TestNativeModel", "classtests_1_1test__native__core_1_1_test_native_model.html", null ],
       [ "tests.test_native_core.TestPluginPolicy", "classtests_1_1test__native__core_1_1_test_plugin_policy.html", null ],
       [ "tests.test_native_core.TestPublicNativeModule", "classtests_1_1test__native__core_1_1_test_public_native_module.html", null ],
+      [ "tests.test_native_counterparts.TestBallisticCounterpart", "classtests_1_1test__native__counterparts_1_1_test_ballistic_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestBallisticLinearModel", "classtests_1_1test__native__counterparts_1_1_test_ballistic_linear_model.html", null ],
+      [ "tests.test_native_counterparts.TestCarLaneCounterpart", "classtests_1_1test__native__counterparts_1_1_test_car_lane_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestCarSpeedCounterpart", "classtests_1_1test__native__counterparts_1_1_test_car_speed_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestCounterpartContract", "classtests_1_1test__native__counterparts_1_1_test_counterpart_contract.html", null ],
+      [ "tests.test_native_counterparts.TestInterplanetaryCounterpart", "classtests_1_1test__native__counterparts_1_1_test_interplanetary_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestPolarizationCounterpart", "classtests_1_1test__native__counterparts_1_1_test_polarization_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestRocketCounterparts", "classtests_1_1test__native__counterparts_1_1_test_rocket_counterparts.html", null ],
+      [ "tests.test_native_counterparts.TestSmootherUsesEachStepsTransition", "classtests_1_1test__native__counterparts_1_1_test_smoother_uses_each_steps_transition.html", null ],
+      [ "tests.test_native_counterparts.TestStormCounterpart", "classtests_1_1test__native__counterparts_1_1_test_storm_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestTornadoCounterpart", "classtests_1_1test__native__counterparts_1_1_test_tornado_counterpart.html", null ],
+      [ "tests.test_native_counterparts.TestTransLunarCounterpart", "classtests_1_1test__native__counterparts_1_1_test_trans_lunar_counterpart.html", null ],
       [ "tests.test_native_decoding.TestDecodingInCxx", "classtests_1_1test__native__decoding_1_1_test_decoding_in_cxx.html", null ],
       [ "tests.test_native_decoding.TestDifferentiators", "classtests_1_1test__native__decoding_1_1_test_differentiators.html", null ],
       [ "tests.test_native_decoding.TestSamplerInCxx", "classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html", null ],
@@ -463,36 +548,25 @@ var hierarchy =
       [ "tests.test_native_fields.TestFieldFallbacks", "classtests_1_1test__native__fields_1_1_test_field_fallbacks.html", null ],
       [ "tests.test_native_fields.TestFieldFilterPass", "classtests_1_1test__native__fields_1_1_test_field_filter_pass.html", null ],
       [ "tests.test_native_fields.TestTwinExperiment", "classtests_1_1test__native__fields_1_1_test_twin_experiment.html", null ],
-      [ "tests.test_native_gps.TestGPSTwin", "classtests_1_1test__native__gps_1_1_test_g_p_s_twin.html", null ],
+      [ "tests.test_native_gps.TestGPSCounterpart", "classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html", null ],
       [ "tests.test_native_gps.TestNamedArrays", "classtests_1_1test__native__gps_1_1_test_named_arrays.html", null ],
       [ "tests.test_native_integrators.TestIntegratorsRunInCxx", "classtests_1_1test__native__integrators_1_1_test_integrators_run_in_cxx.html", null ],
       [ "tests.test_native_learn.TestHeaderContract", "classtests_1_1test__native__learn_1_1_test_header_contract.html", null ],
       [ "tests.test_native_learn.TestTorchSolver", "classtests_1_1test__native__learn_1_1_test_torch_solver.html", null ],
       [ "tests.test_native_matrices.TestCalorimeter", "classtests_1_1test__native__matrices_1_1_test_calorimeter.html", null ],
+      [ "tests.test_native_matrices.TestCounterpartsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines.html", null ],
       [ "tests.test_native_matrices.TestFilterFamilies", "classtests_1_1test__native__matrices_1_1_test_filter_families.html", null ],
       [ "tests.test_native_matrices.TestNativeModelPass", "classtests_1_1test__native__matrices_1_1_test_native_model_pass.html", null ],
       [ "tests.test_native_matrices.TestNoModelFallsBackToThePythonLoop", "classtests_1_1test__native__matrices_1_1_test_no_model_falls_back_to_the_python_loop.html", null ],
       [ "tests.test_native_matrices.TestParticleFilterOnNumpysDraws", "classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws.html", null ],
       [ "tests.test_native_matrices.TestSmootherInCxx", "classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html", null ],
       [ "tests.test_native_matrices.TestTimeVaryingMatrices", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices.html", null ],
-      [ "tests.test_native_matrices.TestTwinsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines.html", null ],
       [ "tests.test_native_routers.TestErrors", "classtests_1_1test__native__routers_1_1_test_errors.html", null ],
-      [ "tests.test_native_routers.TestInsideTheIKF", "classtests_1_1test__native__routers_1_1_test_inside_the_i_k_f.html", null ],
+      [ "tests.test_native_routers.TestInsideARoutedPass", "classtests_1_1test__native__routers_1_1_test_inside_a_routed_pass.html", null ],
       [ "tests.test_native_routers.TestRoutersAgreeWithTheirReference", "classtests_1_1test__native__routers_1_1_test_routers_agree_with_their_reference.html", null ],
       [ "tests.test_native_solvers.TestEnsembleAnalysisInCxx", "classtests_1_1test__native__solvers_1_1_test_ensemble_analysis_in_cxx.html", null ],
       [ "tests.test_native_solvers.TestSolversInCxx", "classtests_1_1test__native__solvers_1_1_test_solvers_in_cxx.html", null ],
-      [ "tests.test_native_tracking.TestDriftChamberTwin", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_twin.html", null ],
-      [ "tests.test_native_twins.TestBallisticTwin", "classtests_1_1test__native__twins_1_1_test_ballistic_twin.html", null ],
-      [ "tests.test_native_twins.TestCarLaneTwin", "classtests_1_1test__native__twins_1_1_test_car_lane_twin.html", null ],
-      [ "tests.test_native_twins.TestCarSpeedTwin", "classtests_1_1test__native__twins_1_1_test_car_speed_twin.html", null ],
-      [ "tests.test_native_twins.TestInterplanetaryTwin", "classtests_1_1test__native__twins_1_1_test_interplanetary_twin.html", null ],
-      [ "tests.test_native_twins.TestPolarizationTwin", "classtests_1_1test__native__twins_1_1_test_polarization_twin.html", null ],
-      [ "tests.test_native_twins.TestRocketTwins", "classtests_1_1test__native__twins_1_1_test_rocket_twins.html", null ],
-      [ "tests.test_native_twins.TestSmootherUsesEachStepsTransition", "classtests_1_1test__native__twins_1_1_test_smoother_uses_each_steps_transition.html", null ],
-      [ "tests.test_native_twins.TestStormTwin", "classtests_1_1test__native__twins_1_1_test_storm_twin.html", null ],
-      [ "tests.test_native_twins.TestTornadoTwin", "classtests_1_1test__native__twins_1_1_test_tornado_twin.html", null ],
-      [ "tests.test_native_twins.TestTransLunarTwin", "classtests_1_1test__native__twins_1_1_test_trans_lunar_twin.html", null ],
-      [ "tests.test_native_twins.TestTwinContract", "classtests_1_1test__native__twins_1_1_test_twin_contract.html", null ],
+      [ "tests.test_native_tracking.TestDriftChamberCounterpart", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_counterpart.html", null ],
       [ "tests.test_net_server.TestHeaderContract", "classtests_1_1test__net__server_1_1_test_header_contract.html", null ],
       [ "tests.test_net_server.TestMcpStdio", "classtests_1_1test__net__server_1_1_test_mcp_stdio.html", null ],
       [ "tests.test_net_server.TestRestAgainstFacade", "classtests_1_1test__net__server_1_1_test_rest_against_facade.html", null ],
@@ -533,7 +607,12 @@ var hierarchy =
       [ "tests.test_rest.TestMcp", "classtests_1_1test__rest_1_1_test_mcp.html", null ],
       [ "tests.test_rest.TestRest", "classtests_1_1test__rest_1_1_test_rest.html", null ],
       [ "tests.test_rest.TestRestMainHint", "classtests_1_1test__rest_1_1_test_rest_main_hint.html", null ],
+      [ "tests.test_route.TestRouteBasicAPI", "classtests_1_1test__route_1_1_test_route_basic_a_p_i.html", null ],
+      [ "tests.test_route.TestRouteFitAPI", "classtests_1_1test__route_1_1_test_route_fit_a_p_i.html", null ],
+      [ "tests.test_route.TestRouteWithControl", "classtests_1_1test__route_1_1_test_route_with_control.html", null ],
+      [ "tests.test_route.TestRoutingAccuracy", "classtests_1_1test__route_1_1_test_routing_accuracy.html", null ],
       [ "tests.test_router_export.TestNeuralRouterExport", "classtests_1_1test__router__export_1_1_test_neural_router_export.html", null ],
+      [ "tests.test_router_export.TestTorchScriptExport", "classtests_1_1test__router__export_1_1_test_torch_script_export.html", null ],
       [ "tests.test_routers.TestBayesianRouter", "classtests_1_1test__routers_1_1_test_bayesian_router.html", null ],
       [ "tests.test_routers.TestCNNArchitecture", "classtests_1_1test__routers_1_1_test_c_n_n_architecture.html", null ],
       [ "tests.test_routers.TestHybridRouter", "classtests_1_1test__routers_1_1_test_hybrid_router.html", null ],
@@ -544,6 +623,9 @@ var hierarchy =
       [ "tests.test_routers.TestRouterPersistence", "classtests_1_1test__routers_1_1_test_router_persistence.html", null ],
       [ "tests.test_routers.TestThresholdRouter", "classtests_1_1test__routers_1_1_test_threshold_router.html", null ],
       [ "tests.test_routers.TestTransformerArchitecture", "classtests_1_1test__routers_1_1_test_transformer_architecture.html", null ],
+      [ "tests.test_sensors.TestReadings", "classtests_1_1test__sensors_1_1_test_readings.html", null ],
+      [ "tests.test_sensors.TestSettingsAreParameters", "classtests_1_1test__sensors_1_1_test_settings_are_parameters.html", null ],
+      [ "tests.test_sensors.TestTheModelTakesTheCxxSensor", "classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html", null ],
       [ "tests.test_site_search.TestSiteSearchIndex", "classtests_1_1test__site__search_1_1_test_site_search_index.html", null ],
       [ "tests.test_site_versions.TestSiteVersions", "classtests_1_1test__site__versions_1_1_test_site_versions.html", null ],
       [ "tests.test_storms.TestBrazilTornado", "classtests_1_1test__storms_1_1_test_brazil_tornado.html", null ],
@@ -554,8 +636,11 @@ var hierarchy =
       [ "tests.test_storms.TestTornadoEnvironment", "classtests_1_1test__storms_1_1_test_tornado_environment.html", null ],
       [ "tests.test_storms.TestTyphoonTracking", "classtests_1_1test__storms_1_1_test_typhoon_tracking.html", null ],
       [ "tests.test_structure.TestAppsAreUniformPackages", "classtests_1_1test__structure_1_1_test_apps_are_uniform_packages.html", null ],
+      [ "tests.test_structure.TestCxxHeadersHaveOneLayout", "classtests_1_1test__structure_1_1_test_cxx_headers_have_one_layout.html", null ],
       [ "tests.test_structure.TestFrameworkOwnsContracts", "classtests_1_1test__structure_1_1_test_framework_owns_contracts.html", null ],
       [ "tests.test_structure.TestRegistriesCoverTheirKinds", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds.html", null ],
+      [ "tests.test_structure.TestReservedNames", "classtests_1_1test__structure_1_1_test_reserved_names.html", null ],
+      [ "tests.test_terminology.TestTerminology", "classtests_1_1test__terminology_1_1_test_terminology.html", null ],
       [ "tests.test_tracking.TestCKFFinding", "classtests_1_1test__tracking_1_1_test_c_k_f_finding.html", null ],
       [ "tests.test_tracking.TestCKFSmooth", "classtests_1_1test__tracking_1_1_test_c_k_f_smooth.html", null ],
       [ "tests.test_tracking.TestGate", "classtests_1_1test__tracking_1_1_test_gate.html", null ],
@@ -579,6 +664,7 @@ var hierarchy =
             [ "modules.framework.engines.extended.ExtendedKalmanEngine", "classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html", [
               [ "modules.framework.engines.combinatorial.CombinatorialKalmanEngine", "classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html", null ]
             ] ],
+            [ "modules.framework.engines.interacting.InteractingKalmanEngine", "classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine.html", null ],
             [ "modules.framework.engines.linear.LinearKalmanEngine", "classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html", null ],
             [ "modules.framework.engines.native.NativeEngine", "classmodules_1_1framework_1_1engines_1_1native_1_1_native_engine.html", null ],
             [ "modules.framework.engines.particle.ParticleEngine", "classmodules_1_1framework_1_1engines_1_1particle_1_1_particle_engine.html", null ],
@@ -656,15 +742,23 @@ var hierarchy =
       [ "modules.runtime.usage.Usage", "classmodules_1_1runtime_1_1usage_1_1_usage.html", null ]
     ] ],
     [ "Enum", null, [
-      [ "modules.framework.constants.EnumBis", "classmodules_1_1framework_1_1constants_1_1_enum_bis.html", [
+      [ "modules.framework.constants.KalmanDifferentiatorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_differentiator_kind.html", null ],
+      [ "modules.framework.constants.KalmanDynamicsKind", "classmodules_1_1framework_1_1constants_1_1_kalman_dynamics_kind.html", null ],
+      [ "modules.framework.constants.KalmanEngineKind", "classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html", null ],
+      [ "modules.framework.constants.KalmanIntegratorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_integrator_kind.html", null ],
+      [ "modules.framework.constants.KalmanProviderKind", "classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html", null ],
+      [ "modules.framework.constants.KalmanReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_readout.html", null ],
+      [ "modules.framework.constants.KalmanSolverKind", "classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html", null ],
+      [ "modules.framework.constants.KalmanStructureKind", "classmodules_1_1framework_1_1constants_1_1_kalman_structure_kind.html", null ],
+      [ "modules.framework.constants.LabelEnum", "classmodules_1_1framework_1_1constants_1_1_label_enum.html", [
         [ "modules.apps.ballistics.base.BallisticNoise", "classmodules_1_1apps_1_1ballistics_1_1base_1_1_ballistic_noise.html", null ],
         [ "modules.framework.constants.KalmanObservable", "classmodules_1_1framework_1_1constants_1_1_kalman_observable.html", [
-          [ "modules.apps.astro.rocket.ascent.RocketAscentObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html", null ],
-          [ "modules.apps.astro.rocket.descent.RocketDescentObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_observable.html", null ],
-          [ "modules.apps.astro.rocket.landing.RocketLandingObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_observable.html", null ],
-          [ "modules.apps.astro.rocket.liftoff.RocketLiftoffObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_observable.html", null ],
-          [ "modules.apps.astro.space.interplanetary.InterplanetaryObservable", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_observable.html", null ],
-          [ "modules.apps.astro.space.translunar.TransLunarObservable", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_observable.html", null ],
+          [ "modules.apps.aerospace.ascent.RocketAscentObservable", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_observable.html", null ],
+          [ "modules.apps.aerospace.descent.RocketDescentObservable", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_observable.html", null ],
+          [ "modules.apps.aerospace.landing.RocketLandingObservable", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_observable.html", null ],
+          [ "modules.apps.aerospace.liftoff.RocketLiftoffObservable", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_observable.html", null ],
+          [ "modules.apps.astrophysics.interplanetary.InterplanetaryObservable", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_observable.html", null ],
+          [ "modules.apps.astrophysics.translunar.TransLunarObservable", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_observable.html", null ],
           [ "modules.apps.ballistics.base.BallisticObservable", "classmodules_1_1apps_1_1ballistics_1_1base_1_1_ballistic_observable.html", null ],
           [ "modules.apps.calorimeter.geometry.CalorimeterObservable2", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calorimeter_observable2.html", null ],
           [ "modules.apps.calorimeter.geometry.CalorimeterObservable3", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calorimeter_observable3.html", null ],
@@ -686,12 +780,12 @@ var hierarchy =
         ] ],
         [ "modules.framework.constants.KalmanObservableFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_flavor.html", null ],
         [ "modules.framework.constants.KalmanState", "classmodules_1_1framework_1_1constants_1_1_kalman_state.html", [
-          [ "modules.apps.astro.rocket.ascent.RocketAscentState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html", null ],
-          [ "modules.apps.astro.rocket.descent.RocketDescentState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_state.html", null ],
-          [ "modules.apps.astro.rocket.landing.RocketLandingState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_state.html", null ],
-          [ "modules.apps.astro.rocket.liftoff.RocketLiftoffState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_state.html", null ],
-          [ "modules.apps.astro.space.interplanetary.InterplanetaryState", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_state.html", null ],
-          [ "modules.apps.astro.space.translunar.TransLunarState", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_state.html", null ],
+          [ "modules.apps.aerospace.ascent.RocketAscentState", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_state.html", null ],
+          [ "modules.apps.aerospace.descent.RocketDescentState", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_state.html", null ],
+          [ "modules.apps.aerospace.landing.RocketLandingState", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_state.html", null ],
+          [ "modules.apps.aerospace.liftoff.RocketLiftoffState", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_state.html", null ],
+          [ "modules.apps.astrophysics.interplanetary.InterplanetaryState", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_state.html", null ],
+          [ "modules.apps.astrophysics.translunar.TransLunarState", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_state.html", null ],
           [ "modules.apps.ballistics.base.BallisticState", "classmodules_1_1apps_1_1ballistics_1_1base_1_1_ballistic_state.html", null ],
           [ "modules.apps.calorimeter.geometry.CalorimeterState4", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calorimeter_state4.html", null ],
           [ "modules.apps.calorimeter.geometry.CalorimeterState5", "classmodules_1_1apps_1_1calorimeter_1_1geometry_1_1_calorimeter_state5.html", null ],
@@ -710,15 +804,7 @@ var hierarchy =
           [ "modules.apps.weather.storms.TornadoState", "classmodules_1_1apps_1_1weather_1_1storms_1_1_tornado_state.html", null ]
         ] ],
         [ "modules.framework.constants.KalmanStateFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_state_flavor.html", null ]
-      ] ],
-      [ "modules.framework.constants.KalmanDifferentiatorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_differentiator_kind.html", null ],
-      [ "modules.framework.constants.KalmanDynamicsKind", "classmodules_1_1framework_1_1constants_1_1_kalman_dynamics_kind.html", null ],
-      [ "modules.framework.constants.KalmanEngineKind", "classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html", null ],
-      [ "modules.framework.constants.KalmanIntegratorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_integrator_kind.html", null ],
-      [ "modules.framework.constants.KalmanObservableReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_readout.html", null ],
-      [ "modules.framework.constants.KalmanProviderKind", "classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html", null ],
-      [ "modules.framework.constants.KalmanSolverKind", "classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html", null ],
-      [ "modules.framework.constants.KalmanStructureKind", "classmodules_1_1framework_1_1constants_1_1_kalman_structure_kind.html", null ]
+      ] ]
     ] ],
     [ "ExtendedKalmanModel", null, [
       [ "toy_model.CoolingCoffeeModel", "classtoy__model_1_1_cooling_coffee_model.html", null ]
@@ -730,6 +816,9 @@ var hierarchy =
     ] ],
     [ "Mapping", null, [
       [ "modules.api._Registered", "classmodules_1_1api_1_1___registered.html", null ]
+    ] ],
+    [ "MutableMapping", null, [
+      [ "modules.framework.sensors.base._Settings", "classmodules_1_1framework_1_1sensors_1_1base_1_1___settings.html", null ]
     ] ],
     [ "Sequence", null, [
       [ "modules.framework.io.collection.KalmanRecordCollection", "classmodules_1_1framework_1_1io_1_1collection_1_1_kalman_record_collection.html", null ]

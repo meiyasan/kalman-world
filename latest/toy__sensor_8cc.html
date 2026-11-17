@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -154,7 +154,7 @@ $(document).ready(function(){initNavTree('toy__sensor_8cc.html',''); initResizab
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for toy_sensor.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="toy__sensor_8cc__incl.svg" width="5775" height="740"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="toy__sensor_8cc__incl.svg" width="6847" height="799"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="toy__sensor_8cc_source.html">Go to the source code of this file.</a></p>
@@ -249,7 +249,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   55</span> </div>
 <div class="line"><span class="lineno">   56</span>    <span class="comment">// --- the filter --------------------------------------------------------------</span></div>
 <div class="line"><span class="lineno">   57</span>    <a class="code hl_class" href="class_kalman_1_1_filters_1_1_e_k_f.html">Kalman::Filters::EKF</a> ekf(coffee.get());</div>
-<div class="line"><span class="lineno">   58</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Kalman::Record</a> estimate = ekf.Forward(sensor.Measurements());</div>
+<div class="line"><span class="lineno">   58</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Kalman::Record</a> <a class="code hl_variable" href="namespaceinstrument.html#aba611afdfd59c075d524f72383346d3a">estimate</a> = ekf.Forward(sensor.Measurements());</div>
 <div class="line"><span class="lineno">   59</span> </div>
 <div class="line"><span class="lineno">   60</span>    <span class="comment">// --- save the readings and the estimate ---------------------------------------</span></div>
 <div class="line"><span class="lineno">   61</span>    <span class="keyword">const</span> std::string sensorFile = outdir + <span class="stringliteral">&quot;/toy_sensor.csv&quot;</span>;</div>
@@ -266,12 +266,12 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   72</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> dt = coffee-&gt;DeltaT();</div>
 <div class="line"><span class="lineno">   73</span>    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; steps; ++i)</div>
 <div class="line"><span class="lineno">   74</span>    {</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> &amp;x = ekf.PosteriorStates()[i];</div>
-<div class="line"><span class="lineno">   76</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Kalman::Matrix</a> &amp;P = ekf.PosteriorCovariances()[i];</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> &amp;<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = ekf.PosteriorStates()[i];</div>
+<div class="line"><span class="lineno">   76</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Kalman::Matrix</a> &amp;<a class="code hl_variable" href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">P</a> = ekf.PosteriorCovariances()[i];</div>
 <div class="line"><span class="lineno">   77</span>        std::fprintf(fs, <span class="stringliteral">&quot;%.17g,%.17g,%.17g,%.17g\n&quot;</span>, i * dt, sensor.Truth()[i](0), sensor.Truth()[i](1),</div>
 <div class="line"><span class="lineno">   78</span>                     sensor.Measurements()[i](0));</div>
-<div class="line"><span class="lineno">   79</span>        std::fprintf(fe, <span class="stringliteral">&quot;%.17g,%.17g,%.17g,%.17g,%.17g\n&quot;</span>, i * dt, x(0), x(1), std::sqrt(P(0, 0)),</div>
-<div class="line"><span class="lineno">   80</span>                     std::sqrt(P(1, 1)));</div>
+<div class="line"><span class="lineno">   79</span>        std::fprintf(fe, <span class="stringliteral">&quot;%.17g,%.17g,%.17g,%.17g,%.17g\n&quot;</span>, i * dt, <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(0), <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(1), std::sqrt(<a class="code hl_variable" href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">P</a>(0, 0)),</div>
+<div class="line"><span class="lineno">   80</span>                     std::sqrt(<a class="code hl_variable" href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">P</a>(1, 1)));</div>
 <div class="line"><span class="lineno">   81</span>    }</div>
 <div class="line"><span class="lineno">   82</span>    std::fclose(fs);</div>
 <div class="line"><span class="lineno">   83</span>    std::fclose(fe);</div>
@@ -286,7 +286,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   92</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Kalman::Matrix</a> &amp;lastP = ekf.PosteriorCovariances().back();</div>
 <div class="line"><span class="lineno">   93</span>    std::printf(<span class="stringliteral">&quot;sensor  : %zu readings, thermometer error %.3f degC (RMS)\n&quot;</span>, steps, raw);</div>
 <div class="line"><span class="lineno">   94</span>    std::printf(<span class="stringliteral">&quot;filter  : temperature error %.3f degC (RMS), mean NIS %.2f (1 is ideal)\n&quot;</span>,</div>
-<div class="line"><span class="lineno">   95</span>                estimate.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sensor.Truth()), ekf.MeanNIS());</div>
+<div class="line"><span class="lineno">   95</span>                <a class="code hl_variable" href="namespaceinstrument.html#aba611afdfd59c075d524f72383346d3a">estimate</a>.RMSE(0, sensor.Truth()), ekf.MeanNIS());</div>
 <div class="line"><span class="lineno">   96</span>    std::printf(<span class="stringliteral">&quot;learned : k = %.6f +/- %.6f /s   (truth %.6f, first guess %.6f)\n&quot;</span>, last(1),</div>
 <div class="line"><span class="lineno">   97</span>                std::sqrt(lastP(1, 1)), sensor.Truth().back()(1), coffee-&gt;X0()(1));</div>
 <div class="line"><span class="lineno">   98</span>    std::printf(<span class="stringliteral">&quot;wrote   : %s\n          %s\n&quot;</span>, sensorFile.c_str(), estimateFile.c_str());</div>
@@ -298,10 +298,12 @@ Functions</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_factory_html_ae2200e2b7cfd57282411754e74e6a298"><div class="ttname"><a href="class_kalman_1_1_factory.html#ae2200e2b7cfd57282411754e74e6a298">Kalman::Factory::Create</a></div><div class="ttdeci">std::unique_ptr&lt; Model &gt; Create(const std::string &amp;name) const</div><div class="ttdoc">Construct a fresh instance of name.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8cc_source.html#l00077">Factory.cc:77</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_filters_1_1_e_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_e_k_f.html">Kalman::Filters::EKF</a></div><div class="ttdoc">The extended Kalman filter — a model driven by Kalman::Engines::Extended.</div><div class="ttdef"><b>Definition</b> <a href="_e_k_f_8h_source.html#l00034">EKF.h:35</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_aa5dbe9f7404420162e4f451917c5f788"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">Kalman::IO::Record::RMSE</a></div><div class="ttdeci">double RMSE(std::size_t i, const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Root-mean-square difference between component i and truth.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00115">Record.cc:115</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_sampler_html"><div class="ttname"><a href="class_kalman_1_1_sampler.html">Kalman::Sampler</a></div><div class="ttdoc">Draws truth and measurements from a model, for tests and demos.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8h_source.html#l00047">Sampler.h:48</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aba611afdfd59c075d524f72383346d3a"><div class="ttname"><a href="namespaceinstrument.html#aba611afdfd59c075d524f72383346d3a">instrument.estimate</a></div><div class="ttdeci">estimate</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00075">instrument.py:75</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument__data_html_a492bc2b3962d87d8b99a1243915352fe"><div class="ttname"><a href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">tests.test_instrument_data.P</a></div><div class="ttdeci">P</div><div class="ttdef"><b>Definition</b> <a href="test__instrument__data_8py_source.html#l00016">test_instrument_data.py:16</a></div></div>
 <div class="ttc" id="atoy__sensor_8cc_html_a4cef43a415e91413261695076e2f203d"><div class="ttname"><a href="toy__sensor_8cc.html#a4cef43a415e91413261695076e2f203d">KALMAN_TOY_PLUGIN</a></div><div class="ttdeci">#define KALMAN_TOY_PLUGIN</div><div class="ttdef"><b>Definition</b> <a href="toy__sensor_8cc_source.html#l00031">toy_sensor.cc:31</a></div></div>
 </div><!-- fragment -->
 </div>

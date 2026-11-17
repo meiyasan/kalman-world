@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -164,7 +164,7 @@ The contract</h2>
 <p>Subclasses override <code>_policy</code> (required) and <code>_update</code> (optional — returning a new <code>B</code> rebinds the model's input matrix as a side effect).</p>
 <h2><a class="anchor" id="cost-accounting"></a>
 Cost accounting</h2>
-<p>Cost is charged against the command the actuator can <b>actually deliver</b> (<code>model.clip_u(u)</code>), not the controller's raw ask. A fixed-gain controller with no notion of an actuator limit can request far more effort than the plant ever receives; charging <code>Rcost</code> against that fictitious effort would unfairly inflate its cost relative to a controller whose raw output already respects the limit. <code>u_log</code> still keeps the raw command for diagnostics.</p>
+<p>Cost is charged against the command the actuator can <b>actually deliver</b> (<code>model.limit_control(u)</code>), not the controller's raw ask. A fixed-gain controller with no notion of an actuator limit can request far more effort than the plant ever receives; charging <code>Rcost</code> against that fictitious effort would unfairly inflate its cost relative to a controller whose raw output already respects the limit. <code>u_log</code> still keeps the raw command for diagnostics.</p>
 <h2><a class="anchor" id="shipped-controllers"></a>
 Shipped controllers</h2>
 <table class="markdownTable">
@@ -177,17 +177,67 @@ Shipped controllers</h2>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>LQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Qcost</code>, <code>Rcost</code> (+ <code>fit()</code>)   </td><td class="markdownTableBodyNone">optimal linear-quadratic gain    </td></tr>
 <tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>MPCKalmanController</code>   </td><td class="markdownTableBodyNone"><code>horizon</code>, <code>u_min</code>, <code>u_max</code>, <code>du_max</code>, <code>n_iterations</code>   </td><td class="markdownTableBodyNone">model predictive control: a plan under limits, remade at every step    </td></tr>
+<tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>MPPIKalmanController</code>   </td><td class="markdownTableBodyNone"><code>n_rollouts</code>, <code>horizon</code>, <code>noise_sigma</code>, <code>lam</code>   </td><td class="markdownTableBodyNone">sampling-based MPC, honours actuator limits natively    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>NeuralKalmanController</code>   </td><td class="markdownTableBodyNone"><code>hidden</code>, <code>features</code> (+ <code>fit()</code> / <code>fit_mppi()</code>)   </td><td class="markdownTableBodyNone">learned policy, can distil MPPI    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>BoostKalmanController</code>   </td><td class="markdownTableBodyNone"><code>boost_factor</code>, <code>threshold</code>, <code>window</code>   </td><td class="markdownTableBodyNone">transient response boost on innovation spikes    </td></tr>
-<tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>AdaptiveQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">retunes <code>Q</code>/<code>R</code> online from innovation statistics    </td></tr>
-<tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>NeuralAdaptiveQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>hidden</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">learned <code>Q</code>/<code>R</code> adaptation across regimes   </td></tr>
+<td class="markdownTableBodyNone"><code>NeuralKalmanController</code>   </td><td class="markdownTableBodyNone"><code>hidden</code>, <code>features</code> (+ <code>fit()</code> / <code>fit_mppi()</code>)   </td><td class="markdownTableBodyNone">learned policy, can distil MPPI   </td></tr>
 </table>
-<p>The last two are <em>not</em> control in the actuator sense — they act on the filter's own noise model. That is deliberate: the same callable hook is the natural place to adapt tuning online.</p>
+<h2><a class="anchor" id="model-predictive-control"></a>
+Model predictive control</h2>
+<p><code>MPCKalmanController</code> plans <code>horizon</code> commands ahead at every step, applies the first, and plans again. Limits on the command are constraints of the plan, not a clip applied after it:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> MPCKalmanController</div>
+<div class="line"> </div>
+<div class="line">model = CarLaneModel(<span class="stringliteral">&quot;camera&quot;</span>, fs=50, x0=x0)</div>
+<div class="line">Qcost, Rcost, x_ref = model.control_cost()</div>
+<div class="line">mpc = MPCKalmanController(model, horizon=40,</div>
+<div class="line">                          u_min=-model.steer_limit, u_max=model.steer_limit,   <span class="comment"># steering within 0.1 rad</span></div>
+<div class="line">                          du_max=0.01,                                         <span class="comment"># and at most 0.01 rad per step</span></div>
+<div class="line">                          Qcost=Qcost, Rcost=Rcost, x_ref=x_ref)</div>
+<div class="line">u = mpc(x_hat, P, t)          <span class="comment"># the first command of the plan</span></div>
+<div class="line">mpc.plan()                    <span class="comment"># the whole plan, (horizon, l)</span></div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone"></th><th class="markdownTableHeadNone"></th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Cost   </td><td class="markdownTableBodyNone">the same <code>Qcost</code>, <code>Rcost</code>, <code>x_ref</code> as every controller, summed over the horizon, plus a terminal cost: the Riccati solution, so that with no limit in the way the command is the LQR command whatever the horizon    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Limits   </td><td class="markdownTableBodyNone"><code>u_min</code>, <code>u_max</code> on the command and <code>du_max</code> on its change per step (a number, or one per command)    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">Prediction   </td><td class="markdownTableBodyNone">the model's own <code>f</code>: exact for a model of matrices, linearised along the previous plan otherwise, <code>n_iterations</code> passes per step    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">Solver   </td><td class="markdownTableBodyNone">Hildreth's method on the dual of the quadratic programme: no dependency, the same answer for the same input   </td></tr>
+</table>
+<p>Beside the others: LQR is one gain and knows no limit; MPPI replans by rolling random command sequences through <code>f</code>; MPC replans deterministically. On the lane-keeping car started 3 m off the lane centre (250 steps, no noise):</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Controller   </th><th class="markdownTableHeadNone">Cost   </th><th class="markdownTableHeadNone">Largest steering asked   </th><th class="markdownTableHeadNone">Per step    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">LQR, clipped by the actuator   </td><td class="markdownTableBodyNone">257.2   </td><td class="markdownTableBodyNone">0.288 rad   </td><td class="markdownTableBodyNone">0.07 ms    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone">MPC, horizon 40   </td><td class="markdownTableBodyNone">257.2   </td><td class="markdownTableBodyNone">0.100 rad   </td><td class="markdownTableBodyNone">9 ms    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone">MPPI, 100 rollouts, horizon 15   </td><td class="markdownTableBodyNone">454.6   </td><td class="markdownTableBodyNone">0.093 rad   </td><td class="markdownTableBodyNone">141 ms   </td></tr>
+</table>
+<p>For this car, LQR clipped after the fact happens to be as good as planning with the limit: the two costs agree. MPC never asks for more than the actuator gives, and it is the one that takes a rate limit. Where clipping does cost, MPC is ahead: a mass driven by a limited force from 6 m away costs 404.5 under MPC against 412.2 under clipped LQR (<code><a class="el" href="13__controllers_8cc.html" title="Controllers: the closed loop, P / PID / LQR / MPC / MPPI, the actuator hook, the adapters.">tests/cxx/13_controllers.cc</a></code>).</p>
+<p>Notebook 12 (section 5b) runs it on the same car with cheaper steering, where LQR asks for ten times the limit: MPC then has the lowest cost of the three (327.2, against 331.6 for LQR and 341.7 for MPPI) and the smallest overshoot.</p>
+<p>The planner is <code><a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html" title="Plans horizon commands ahead at every step, honouring limits on the command while it plans,...">Kalman::Controllers::MPC</a></code>; the Python class forwards to it and has no implementation of its own, so it needs libKalman.</p>
+<h2><a class="anchor" id="tuners"></a>
+Tuners</h2>
+<p>A tuner is a different role: it acts on the <em>filter</em>, not on the system. Once per step, with the innovation in hand, it retunes the model's <code>Q</code> or <code>R</code>, and it commands nothing. A filter takes a controller and a tuner separately:</p>
+<div class="fragment"><div class="line">filter.forward(zk, uk=lqr, tuner=adaptive)     <span class="comment"># a command from lqr, the noise retuned by adaptive</span></div>
+<div class="line">filter.forward(zk, tuner=adaptive)             <span class="comment"># no command, the noise retuned</span></div>
+</div><!-- fragment --><table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Class   </th><th class="markdownTableHeadNone">Key parameters   </th><th class="markdownTableHeadNone">Character    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>BoostKalmanTuner</code>   </td><td class="markdownTableBodyNone"><code>boost_factor</code>, <code>threshold</code>, <code>window</code>   </td><td class="markdownTableBodyNone">transient response boost on innovation spikes    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>AdaptiveQRKalmanTuner</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">retunes <code>Q</code>/<code>R</code> online from innovation statistics    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>NeuralAdaptiveQRKalmanTuner</code>   </td><td class="markdownTableBodyNone"><code>window</code>, <code>hidden</code>, <code>q_min</code>, <code>q_max</code>   </td><td class="markdownTableBodyNone">learned <code>Q</code>/<code>R</code> adaptation across regimes   </td></tr>
+</table>
+<p>They derive from <code>KalmanTuner</code> (<code><a class="el" href="class_kalman_1_1_tuner.html" title="Retunes the filter&#39;s own noise model as it runs; commands nothing.">Kalman::Tuner</a></code> in C++, with <code>Tuners::Boost</code> and <code>Tuners::AdaptiveQR</code>), which is a controller whose command is fixed at zero: what a tuner writes is its update.</p>
 <p>All take <code>model</code> first and accept <code>x_ref</code>, <code>Qcost</code>, <code>Rcost</code>. Defaults come from <code>model.control_cost()</code> when the model defines it, else identity matrices.</p>
 <h2><a class="anchor" id="through-the-api-1"></a>
 Through the API</h2>
@@ -201,40 +251,42 @@ Through the API</h2>
 <div class="line"><span class="comment"># {&quot;run_id&quot;: …, &quot;xk&quot;: [...], &quot;cost&quot;: 2026.5, &quot;cost_log&quot;: [...]}</span></div>
 </div><!-- fragment --><p>The controller name is matched by prefix, so <code>"lqr"</code>, <code>"LQR"</code> and <code>"LQRKalmanController"</code> all resolve. <code>fit()</code> is called automatically when the controller defines it.</p>
 <hr  />
-<h1><a class="anchor" id="routers-ikf"></a>
-Routers (IKF)</h1>
-<p>A router decides how much weight each model in a bank deserves right now. <code>InteractiveKalmanFilter</code> runs M filters in parallel — one per regime — and each step: mixes their states, runs every model's <a class="el" href="namespace_kalman.html">Kalman</a> step, logs each model's NIS, asks the router for updated probabilities, and recombines <code>x̂ = Σ μⱼ x̂ⱼ</code>.</p>
-<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.filters <span class="keyword">import</span> InteractiveKalmanFilter</div>
+<h1><a class="anchor" id="routers"></a>
+Routers</h1>
+<p>A router decides how much weight each model in a bank deserves right now. <code>route(models, Pi)</code> makes one model of the models of the regimes; the filter then runs it on the interacting engine (<code><a class="el" href="class_kalman_1_1_engines_1_1_interacting.html" title="The predict/update step for a model with several modes (Models::Router): the Interacting Multiple Mod...">Kalman::Engines::Interacting</a></code>, the IMM of the literature), which keeps one belief per regime and at each step: mixes them, runs every mode's <a class="el" href="namespace_kalman.html">Kalman</a> step, logs each mode's NIS, asks the router for updated probabilities, and recombines <code>x̂ = Σ μⱼ x̂ⱼ</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework <span class="keyword">import</span> route</div>
 <div class="line"><span class="keyword">from</span> kalman.framework.routers <span class="keyword">import</span> BayesianRouter, ThresholdRouter, NeuralRouter, HybridRouter</div>
 <div class="line"><span class="keyword">from</span> kalman.framework.routers.nn <span class="keyword">import</span> MLP</div>
 <div class="line"> </div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi)                              <span class="comment"># Bayesian default</span></div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=ThresholdRouter())</div>
-<div class="line">ikf = InteractiveKalmanFilter(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))</div>
-<div class="line">record = ikf.forward(zk)</div>
+<div class="line">modes = route(models, Pi)                                              <span class="comment"># Bayesian default</span></div>
+<div class="line">modes = route(models, Pi, router=ThresholdRouter())</div>
+<div class="line">modes = route(models, Pi, router=NeuralRouter(model=MLP(hidden=32)))</div>
+<div class="line">record = modes.filter(zk)</div>
+<div class="line">modes.mode_probabilities                   <span class="comment"># (T, M)</span></div>
 </div><!-- fragment --><p><code>Pi</code> is the Markov transition matrix between regimes.</p>
 <table class="markdownTable">
 <tr class="markdownTableHead">
 <th class="markdownTableHeadNone">Router   </th><th class="markdownTableHeadNone">Decides from   </th><th class="markdownTableHeadNone">Needs training    </th></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>BayesianRouter</code>   </td><td class="markdownTableBodyNone">model likelihoods (the textbook IKF update)   </td><td class="markdownTableBodyNone">no    </td></tr>
+<td class="markdownTableBodyNone"><code>BayesianRouter</code>   </td><td class="markdownTableBodyNone">model likelihoods (the textbook update)   </td><td class="markdownTableBodyNone">no    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>ThresholdRouter</code>   </td><td class="markdownTableBodyNone">NIS crossing a threshold   </td><td class="markdownTableBodyNone">no    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>NeuralRouter</code>   </td><td class="markdownTableBodyNone">a learned function of the NIS/likelihood features   </td><td class="markdownTableBodyNone">yes    </td></tr>
+<td class="markdownTableBodyNone"><code>NeuralRouter</code>   </td><td class="markdownTableBodyNone">a network's reading of the last NIS values, weighed by the probability carried over from the step before   </td><td class="markdownTableBodyNone">yes    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>HybridRouter</code>   </td><td class="markdownTableBodyNone">Bayesian prior blended with a learned correction   </td><td class="markdownTableBodyNone">yes   </td></tr>
 </table>
+<p>A network sees one window of readings and nothing of the step before, so its answer <code>p</code> is taken as evidence, the way the Bayesian router takes its likelihoods: <code>mu ∝ c · (p / f)^(1 / window)</code>, with <code>c</code> the probability carried over through <code>Pi</code> and <code>f</code> how often each regime appeared in training. The exponent is there because consecutive windows share all but one reading. A router that followed the network alone would flip on any window that looks like the other regime.</p>
 <p>Learning routers are trained on labelled regime sequences:</p>
-<div class="fragment"><div class="line">ikf.fit(training_zk_list, labels_list)     <span class="comment"># collects NIS features, trains the router</span></div>
-<div class="line">record = ikf.forward(test_zk)</div>
+<div class="fragment"><div class="line">modes.fit(training_zk_list, labels_list)   <span class="comment"># collects NIS features, trains the router</span></div>
+<div class="line">record = modes.filter(test_zk)</div>
 </div><!-- fragment --><p>Swapping the router never touches the filter — that is the point of the split. Network architectures are pluggable through <code>kalman.framework.routers.nn</code>.</p>
 <hr  />
 <h1><a class="anchor" id="worked-examples"></a>
 Worked examples</h1>
 <ul>
-<li><a href="../share/notebooks/12_KalmanAI.ipynb"><code>12_KalmanAI.ipynb</code></a> — the control and routing layer end to end: P/PID/LQR/MPPI/neural comparison, adaptive <code>Q</code>/<code>R</code>, IKF routing.</li>
-<li><a href="../share/notebooks/14_StormTracking.ipynb"><code>14_StormTracking.ipynb</code></a> — IKF over storm recurvature regimes. </li>
+<li><a href="../share/notebooks/12_KalmanAI.ipynb"><code>12_KalmanAI.ipynb</code></a> — the control and routing layer end to end: P/PID/LQR/MPPI/neural comparison, adaptive <code>Q</code>/<code>R</code>, routing.</li>
+<li><a href="../share/notebooks/14_StormTracking.ipynb"><code>14_StormTracking.ipynb</code></a> — routing over storm recurvature regimes. </li>
 </ul>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

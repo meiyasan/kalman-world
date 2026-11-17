@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['processnoisefn_0',['ProcessNoiseFn',['../class_kalman_1_1_models_1_1_callback.html#a0bad3d44e50a277cc949241ff24b1103',1,'Kalman::Models::Callback']]]
+  ['record_0',['Record',['../namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2',1,'Kalman']]],
+  ['recordcollection_1',['RecordCollection',['../namespace_kalman.html#a9f1018ab0553eeb9ec41f13322efddad',1,'Kalman']]]
 ];

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -399,13 +399,14 @@ Static Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_matrix_8cc_source.html#l00107">107</a> of file <a class="el" href="_matrix_8cc_source.html">Matrix.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  108</span>    {</div>
-<div class="line"><span class="lineno">  109</span>        <span class="keyword">const</span> std::size_t n = diagonal.Size();</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = diagonal.Size();</div>
 <div class="line"><span class="lineno">  110</span>        <a class="code hl_function" href="class_kalman_1_1_matrix.html#a7616c640ec3f218ad47e6ecb757c11f8">Matrix</a> <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(n, n, 0.);</div>
-<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(i, i) = diagonal(i);</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(i, i) = diagonal(i);</div>
 <div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>;</div>
 <div class="line"><span class="lineno">  113</span>    }</div>
 <div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_a7616c640ec3f218ad47e6ecb757c11f8"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a7616c640ec3f218ad47e6ecb757c11f8">Kalman::Matrix::Matrix</a></div><div class="ttdeci">Matrix()=default</div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -464,7 +465,7 @@ Static Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="_matrix_8cc_source.html#l00100">100</a> of file <a class="el" href="_matrix_8cc_source.html">Matrix.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  101</span>    {</div>
 <div class="line"><span class="lineno">  102</span>        <a class="code hl_function" href="class_kalman_1_1_matrix.html#a7616c640ec3f218ad47e6ecb757c11f8">Matrix</a> <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(n, n, 0.);</div>
-<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(i, i) = 1.;</div>
+<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>(i, i) = 1.;</div>
 <div class="line"><span class="lineno">  104</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>;</div>
 <div class="line"><span class="lineno">  105</span>    }</div>
 </div><!-- fragment -->

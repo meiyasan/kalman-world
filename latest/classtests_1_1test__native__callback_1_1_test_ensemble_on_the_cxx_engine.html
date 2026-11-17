@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -158,7 +158,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The ensemble filter on a Python model with per-member f and h runs in C++.
 Different random generators, so the two engines are compared over many runs.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00352">352</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00351">351</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a18239c7e9d4aac6ef38952cbb15a97c1" name="a18239c7e9d4aac6ef38952cbb15a97c1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a18239c7e9d4aac6ef38952cbb15a97c1">&#9670;&#160;</a></span>test_a_seeded_run_repeats()</h2>
@@ -176,15 +176,15 @@ Different random generators, so the two engines are compared over many runs.</pr
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00380">380</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  380</span>    <span class="keyword">def </span>test_a_seeded_run_repeats(self):</div>
-<div class="line"><span class="lineno">  381</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> EnsembleKalmanFilter</div>
-<div class="line"><span class="lineno">  382</span>        _, z = _pendulum_run(0)</div>
-<div class="line"><span class="lineno">  383</span>        first = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk).copy()</div>
-<div class="line"><span class="lineno">  384</span>        again = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk)</div>
-<div class="line"><span class="lineno">  385</span>        np.testing.assert_array_equal(first, again)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00379">379</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  379</span>    <span class="keyword">def </span>test_a_seeded_run_repeats(self):</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> EnsembleKalmanFilter</div>
+<div class="line"><span class="lineno">  381</span>        _, z = _pendulum_run(0)</div>
+<div class="line"><span class="lineno">  382</span>        first = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk).copy()</div>
+<div class="line"><span class="lineno">  383</span>        again = np.asarray(EnsembleKalmanFilter(Pendulum(), n_members=40, seed=5).forward(z).xk)</div>
+<div class="line"><span class="lineno">  384</span>        np.testing.assert_array_equal(first, again)</div>
+<div class="line"><span class="lineno">  385</span> </div>
 <div class="line"><span class="lineno">  386</span> </div>
-<div class="line"><span class="lineno">  387</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -205,31 +205,31 @@ Different random generators, so the two engines are compared over many runs.</pr
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00356">356</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  356</span>    <span class="keyword">def </span>test_same_accuracy_and_spread_as_the_python_engine(self):</div>
-<div class="line"><span class="lineno">  357</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> EnsembleKalmanFilter</div>
-<div class="line"><span class="lineno">  358</span>        errors = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
-<div class="line"><span class="lineno">  359</span>        sigmas = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
-<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">for</span> run <span class="keywordflow">in</span> range(24):</div>
-<div class="line"><span class="lineno">  361</span>            truth, z = _pendulum_run(run)</div>
-<div class="line"><span class="lineno">  362</span>            <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  363</span>                <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  364</span>                    <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  365</span>                        record = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run).forward(z)</div>
-<div class="line"><span class="lineno">  366</span>                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  367</span>                    flt = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run)</div>
-<div class="line"><span class="lineno">  368</span>                    self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
-<div class="line"><span class="lineno">  369</span>                    record = flt.forward(z)</div>
-<div class="line"><span class="lineno">  370</span>                x, P = np.asarray(record.xk), np.asarray(record.Pk)</div>
-<div class="line"><span class="lineno">  371</span>                errors[reference].append(np.sqrt(np.mean((x[40:, 0] - truth[40:, 0]) ** 2)))</div>
-<div class="line"><span class="lineno">  372</span>                sigmas[reference].append(np.sqrt(np.mean(P[40:, 0, 0])))</div>
-<div class="line"><span class="lineno">  373</span>        python, cxx = np.array(errors[<span class="keyword">True</span>]), np.array(errors[<span class="keyword">False</span>])</div>
-<div class="line"><span class="lineno">  374</span>        spread = np.sqrt((python.var() + cxx.var()) / len(python))</div>
-<div class="line"><span class="lineno">  375</span>        self.assertLess(abs(python.mean() - cxx.mean()), 4 * spread,</div>
-<div class="line"><span class="lineno">  376</span>                        f<span class="stringliteral">&quot;RMS error: Python {python.mean():.4f}, C++ {cxx.mean():.4f}&quot;</span>)</div>
-<div class="line"><span class="lineno">  377</span>        python, cxx = np.mean(sigmas[<span class="keyword">True</span>]), np.mean(sigmas[<span class="keyword">False</span>])</div>
-<div class="line"><span class="lineno">  378</span>        self.assertLess(abs(python - cxx) / python, 0.1, f<span class="stringliteral">&quot;reported sigma: Python {python:.4f}, C++ {cxx:.4f}&quot;</span>)</div>
-<div class="line"><span class="lineno">  379</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00355">355</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  355</span>    <span class="keyword">def </span>test_same_accuracy_and_spread_as_the_python_engine(self):</div>
+<div class="line"><span class="lineno">  356</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> EnsembleKalmanFilter</div>
+<div class="line"><span class="lineno">  357</span>        errors = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
+<div class="line"><span class="lineno">  358</span>        sigmas = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
+<div class="line"><span class="lineno">  359</span>        <span class="keywordflow">for</span> run <span class="keywordflow">in</span> range(24):</div>
+<div class="line"><span class="lineno">  360</span>            truth, z = _pendulum_run(run)</div>
+<div class="line"><span class="lineno">  361</span>            <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  362</span>                <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  363</span>                    <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  364</span>                        record = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run).forward(z)</div>
+<div class="line"><span class="lineno">  365</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  366</span>                    flt = EnsembleKalmanFilter(Pendulum(), n_members=60, seed=run)</div>
+<div class="line"><span class="lineno">  367</span>                    self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  368</span>                    record = flt.forward(z)</div>
+<div class="line"><span class="lineno">  369</span>                x, P = np.asarray(record.xk), np.asarray(record.Pk)</div>
+<div class="line"><span class="lineno">  370</span>                errors[reference].append(np.sqrt(np.mean((x[40:, 0] - truth[40:, 0]) ** 2)))</div>
+<div class="line"><span class="lineno">  371</span>                sigmas[reference].append(np.sqrt(np.mean(P[40:, 0, 0])))</div>
+<div class="line"><span class="lineno">  372</span>        python, cxx = np.array(errors[<span class="keyword">True</span>]), np.array(errors[<span class="keyword">False</span>])</div>
+<div class="line"><span class="lineno">  373</span>        spread = np.sqrt((python.var() + cxx.var()) / len(python))</div>
+<div class="line"><span class="lineno">  374</span>        self.assertLess(abs(python.mean() - cxx.mean()), 4 * spread,</div>
+<div class="line"><span class="lineno">  375</span>                        f<span class="stringliteral">&quot;RMS error: Python {python.mean():.4f}, C++ {cxx.mean():.4f}&quot;</span>)</div>
+<div class="line"><span class="lineno">  376</span>        python, cxx = np.mean(sigmas[<span class="keyword">True</span>]), np.mean(sigmas[<span class="keyword">False</span>])</div>
+<div class="line"><span class="lineno">  377</span>        self.assertLess(abs(python - cxx) / python, 0.1, f<span class="stringliteral">&quot;reported sigma: Python {python:.4f}, C++ {cxx:.4f}&quot;</span>)</div>
+<div class="line"><span class="lineno">  378</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

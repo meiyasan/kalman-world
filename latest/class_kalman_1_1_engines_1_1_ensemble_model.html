@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_engines_1_1_ensemble_
 </div><!--header-->
 <div class="contents">
 
-<p>What a model offers the ensemble engine beyond <code>f</code> and <code>h</code>.  
+<p>What a field model offers the ensemble engine beyond the model contract.  
  <a href="class_kalman_1_1_engines_1_1_ensemble_model.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>&gt;</code></p>
@@ -157,24 +157,18 @@ Inheritance diagram for Kalman::Engines::EnsembleModel:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a85179a6232bd831e2d17f31806bb38d1" id="r_a85179a6232bd831e2d17f31806bb38d1"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a85179a6232bd831e2d17f31806bb38d1">~EnsembleModel</a> ()=default</td></tr>
 <tr class="separator:a85179a6232bd831e2d17f31806bb38d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43b1ef2182a7d79535787fdb5ef3a923" id="r_a43b1ef2182a7d79535787fdb5ef3a923"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a43b1ef2182a7d79535787fdb5ef3a923">Forecast</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;members, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, double t) const</td></tr>
-<tr class="memdesc:a43b1ef2182a7d79535787fdb5ef3a923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Advance every member one step, in place (<code>model.forecast(X)</code>).  <br /></td></tr>
-<tr class="separator:a43b1ef2182a7d79535787fdb5ef3a923"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9414b99418176b7eab83b478d5bfb8e6" id="r_a9414b99418176b7eab83b478d5bfb8e6"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a9414b99418176b7eab83b478d5bfb8e6">Observe</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;members, double t, std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;out) const</td></tr>
-<tr class="memdesc:a9414b99418176b7eab83b478d5bfb8e6"><td class="mdescLeft">&#160;</td><td class="mdescRight">The measurement of every member (<code>model.observe(X)</code>): out[s] = h(members[s]).  <br /></td></tr>
-<tr class="separator:a9414b99418176b7eab83b478d5bfb8e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a51433dbf1a74d424a9ea78c63142b88e" id="r_a51433dbf1a74d424a9ea78c63142b88e"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a51433dbf1a74d424a9ea78c63142b88e">Localization</a> (<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoXY, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoYY) const</td></tr>
-<tr class="memdesc:a51433dbf1a74d424a9ea78c63142b88e"><td class="mdescLeft">&#160;</td><td class="mdescRight">The tapers on <code>P H^T</code> (n x m) and <code>H P H^T</code> (m x m); false for none.  <br /></td></tr>
-<tr class="separator:a51433dbf1a74d424a9ea78c63142b88e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4849448dd75d6d48d6145a85693f6211" id="r_a4849448dd75d6d48d6145a85693f6211"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a4849448dd75d6d48d6145a85693f6211">CovarianceMask</a> (<a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoXY, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;rhoYY) const</td></tr>
+<tr class="separator:a4849448dd75d6d48d6145a85693f6211"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab49b20efc7fbbedc7c54aed666d95371" id="r_ab49b20efc7fbbedc7c54aed666d95371"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#ab49b20efc7fbbedc7c54aed666d95371">ProcessNoiseVariances</a> (double t, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;variances) const</td></tr>
 <tr class="memdesc:ab49b20efc7fbbedc7c54aed666d95371"><td class="mdescLeft">&#160;</td><td class="mdescRight">The variances of a diagonal <code>Q</code>, without forming it; false to use <code>Q(t)</code>.  <br /></td></tr>
 <tr class="separator:ab49b20efc7fbbedc7c54aed666d95371"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>What a model offers the ensemble engine beyond <code>f</code> and <code>h</code>. </p>
-<p>A model implements this next to <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>, the way a trackable model implements <a class="el" href="class_kalman_1_1_tracking_1_1_detector.html" title="The contract a trackable model adds to Kalman::Model.">Tracking::Detector</a>, and the engine finds it with a <code>dynamic_cast</code>. The Python hooks of the same names are <code>forecast(X)</code>, <code>observe(X)</code>, <code>localization()</code> and the noise the engine draws from <code>Q</code>. Each default does what the engine does without the hook. </p>
+<div class="textblock"><p>What a field model offers the ensemble engine beyond the model contract. </p>
+<p>A model implements this next to <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>, the way a trackable model implements <a class="el" href="class_kalman_1_1_tracking_1_1_detector.html" title="The contract a trackable model adds to Kalman::Model.">Tracking::Detector</a>, and the engine finds it with a <code>dynamic_cast</code>. The Python class is <code>KalmanEnsembleModel</code>, with <code>covariance_mask()</code> and the noise the engine draws from <code>Q</code>. Each default does what the engine does without the hook.</p>
+<p><code>f</code> and <code>h</code> over every member are part of the contract of every model (<a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>: <code>f</code> and <code>h</code> take one state or many), not of this interface. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00079">79</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00082">82</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a85179a6232bd831e2d17f31806bb38d1" name="a85179a6232bd831e2d17f31806bb38d1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a85179a6232bd831e2d17f31806bb38d1">&#9670;&#160;</a></span>~EnsembleModel()</h2>
@@ -202,8 +196,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a43b1ef2182a7d79535787fdb5ef3a923" name="a43b1ef2182a7d79535787fdb5ef3a923"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a43b1ef2182a7d79535787fdb5ef3a923">&#9670;&#160;</a></span>Forecast()</h2>
+<a id="a4849448dd75d6d48d6145a85693f6211" name="a4849448dd75d6d48d6145a85693f6211"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4849448dd75d6d48d6145a85693f6211">&#9670;&#160;</a></span>CovarianceMask()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -212,64 +206,7 @@ Public Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Kalman::Engines::EnsembleModel::Forecast </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
-          <td class="paramname"><em>model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>members</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>u</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Advance every member one step, in place (<code>model.forecast(X)</code>). </p>
-
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#a3b54304a198a2ee022f619ecf4eb77a1">Kalman::Apps::Weather::KolmogorovFlow</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00048">48</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>    {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">for</span> (Vector &amp;x : members) x = model.f(x, u, t);</div>
-<div class="line"><span class="lineno">   51</span>    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a51433dbf1a74d424a9ea78c63142b88e" name="a51433dbf1a74d424a9ea78c63142b88e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51433dbf1a74d424a9ea78c63142b88e">&#9670;&#160;</a></span>Localization()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Kalman::Engines::EnsembleModel::Localization </td>
+          <td class="memname">bool Kalman::Engines::EnsembleModel::CovarianceMask </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;&#160;</td>
           <td class="paramname"><em>rhoXY</em>, </td>
@@ -292,72 +229,12 @@ Public Member Functions</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+<p>The tapers on <code>P H^T</code> (n x m) and <code>H P H^T</code> (m x m); false for none. (The ensemble literature calls it covariance localization; the engine keeps that word for its own setting, SetLocalization().) </p>
 
-<p>The tapers on <code>P H^T</code> (n x m) and <code>H P H^T</code> (m x m); false for none. </p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#a99a53da9e79a2b46f2fe90521f95527f">Kalman::Apps::Weather::KolmogorovFlow</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#acbddb5ff2077648fe9239cc29dbaecdf">Kalman::Apps::Weather::KolmogorovFlow</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00061">61</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   61</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a9414b99418176b7eab83b478d5bfb8e6" name="a9414b99418176b7eab83b478d5bfb8e6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9414b99418176b7eab83b478d5bfb8e6">&#9670;&#160;</a></span>Observe()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Kalman::Engines::EnsembleModel::Observe </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
-          <td class="paramname"><em>model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>members</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>t</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>out</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>The measurement of every member (<code>model.observe(X)</code>): out[s] = h(members[s]). </p>
-
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#aed8fd97d6b0e6244af597256bcfa5c79">Kalman::Apps::Weather::KolmogorovFlow</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00053">53</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>    {</div>
-<div class="line"><span class="lineno">   56</span>        out.clear();</div>
-<div class="line"><span class="lineno">   57</span>        out.reserve(members.size());</div>
-<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : members) out.push_back(model.h(x, t));</div>
-<div class="line"><span class="lineno">   59</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00048">48</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   48</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -399,8 +276,8 @@ Public Member Functions</h2></td></tr>
 
 <p>Reimplemented in <a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#afd2bd3e37ca0999ccf25c99c7bafae3d">Kalman::Apps::Weather::KolmogorovFlow</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00063">63</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   63</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00050">50</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>

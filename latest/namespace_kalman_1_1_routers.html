@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -151,7 +151,7 @@ Namespaces</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html">Bayesian</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The classical IKF update: <code>mu_j ∝ c_j · L_j</code>.  <a href="class_kalman_1_1_routers_1_1_bayesian.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The classical interacting-multiple-model update: <code>mu_j ∝ c_j · L_j</code>.  <a href="class_kalman_1_1_routers_1_1_bayesian.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_hybrid.html">Hybrid</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Geometric blend (log-linear opinion pool) of two routers.  <a href="class_kalman_1_1_routers_1_1_hybrid.html#details">More...</a><br /></td></tr>
@@ -160,7 +160,7 @@ Classes</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Delegates the mode decision to a learned policy.  <a href="class_kalman_1_1_routers_1_1_neural.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_router.html">Router</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decides <em>which model is right now</em> — the IKF decision layer.  <a href="class_kalman_1_1_routers_1_1_router.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decides <em>which model is right now</em> — the decision layer of a model with several modes (<a class="el" href="class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each.">Models::Router</a>).  <a href="class_kalman_1_1_routers_1_1_router.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_routers_1_1_threshold.html">Threshold</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Routes to whichever model's recent NIS sits closest to <code>m</code>.  <a href="class_kalman_1_1_routers_1_1_threshold.html#details">More...</a><br /></td></tr>

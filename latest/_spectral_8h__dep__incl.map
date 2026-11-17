@@ -1,75 +1,95 @@
 <map id="include/Kalman/Solvers/Spectral.h" name="include/Kalman/Solvers/Spectral.h">
-<area shape="rect" id="Node000001" title="Header of the Kalman::Solvers::Spectral class." alt="" coords="3431,5,3606,45"/>
-<area shape="rect" id="Node000002" href="$_kalman_8h.html" title="Umbrella header for libKalman." alt="" coords="2540,365,2729,390"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="3455,53,3340,96,2938,255,2664,367,2662,362,2936,250,3338,91,3453,48"/>
-<area shape="rect" id="Node000027" href="$include_2_kalman_2_solvers_2_vorticity_8h.html" title="Header of the Kalman::Solvers::Vorticity class." alt="" coords="3350,93,3525,133"/>
-<area shape="poly" id="edge26_Node000001_Node000027" title=" " alt="" coords="3493,57,3457,95,3453,91,3489,54"/>
-<area shape="rect" id="Node000033" href="$_solver_8cc.html" title="Implementation of the Kalman::Solver base and the kind resolver." alt="" coords="3549,101,3651,126"/>
-<area shape="poly" id="edge38_Node000001_Node000033" title=" " alt="" coords="3548,54,3591,98,3587,102,3544,57"/>
-<area shape="rect" id="Node000034" href="$_spectral_8cc.html" title="Implementation of the Kalman::Solvers::Spectral class." alt="" coords="3676,101,3844,126"/>
-<area shape="poly" id="edge39_Node000001_Node000034" title=" " alt="" coords="3585,47,3729,98,3727,103,3583,52"/>
-<area shape="rect" id="Node000003" href="$ballistics__root_8cc.html" title="libKalman driven from a ROOT program — the integration demonstrator." alt="" coords="1630,445,1805,485"/>
-<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="2527,386,2208,408,2012,425,1816,448,1805,450,1805,444,1816,443,2012,420,2207,402,2526,381"/>
-<area shape="rect" id="Node000004" href="$kalman101_8cc.html" title="The whole library in one program: simulate, filter, smooth, check." alt="" coords="1829,453,2035,478"/>
-<area shape="poly" id="edge3_Node000002_Node000004" title=" " alt="" coords="2526,392,2306,416,2048,448,2000,455,1999,450,2048,443,2305,411,2526,387"/>
-<area shape="rect" id="Node000005" href="$toy__sensor_8cc.html" title="The toy model in C++: simulate a test sensor, filter it, save both." alt="" coords="2060,453,2265,478"/>
-<area shape="poly" id="edge4_Node000002_Node000005" title=" " alt="" coords="2559,395,2226,455,2225,450,2558,390"/>
-<area shape="rect" id="Node000006" href="$01__linear_8cc.html" title="Linear filter + RTS smoother: consistency, dropouts, multi&#45;axis." alt="" coords="2289,453,2452,478"/>
-<area shape="poly" id="edge5_Node000002_Node000006" title=" " alt="" coords="2587,397,2407,455,2405,450,2585,392"/>
-<area shape="rect" id="Node000007" href="$02__extended_8cc.html" title="Extended engine: nonlinear tracking, numerical Jacobians, KF equivalence." alt="" coords="2476,453,2663,478"/>
-<area shape="poly" id="edge6_Node000002_Node000007" title=" " alt="" coords="2620,403,2581,454,2576,451,2615,399"/>
-<area shape="rect" id="Node000008" href="$03__record_8cc.html" title="The record&#39;s derived views, the prior pass, and error reporting." alt="" coords="2687,453,2854,478"/>
-<area shape="poly" id="edge7_Node000002_Node000008" title=" " alt="" coords="2666,395,2754,450,2751,455,2663,400"/>
-<area shape="rect" id="Node000009" href="$04__routers_8cc.html" title="The decision layer: normalisation, the rule&#45;based routers, and the blend." alt="" coords="2878,453,3050,478"/>
-<area shape="poly" id="edge8_Node000002_Node000009" title=" " alt="" coords="2693,391,2921,450,2920,455,2691,396"/>
-<area shape="rect" id="Node000010" href="$05__ikf_8cc.html" title="The IKF filter: does it actually find the regime, and switch when it changes?" alt="" coords="3074,453,3217,478"/>
-<area shape="poly" id="edge9_Node000002_Node000010" title=" " alt="" coords="2733,389,2888,413,3063,443,3098,450,3097,455,3062,448,2887,418,2732,395"/>
-<area shape="rect" id="Node000011" href="$06__factory_8cc.html" title="The model registry, the plugin loader, and the C surface over both." alt="" coords="3241,453,3412,478"/>
-<area shape="poly" id="edge10_Node000002_Node000011" title=" " alt="" coords="2743,386,2968,409,3230,443,3272,450,3271,455,3229,448,2967,414,2743,391"/>
-<area shape="rect" id="Node000012" href="$07__unscented_8cc.html" title="Unscented engine: KF equivalence on a linear model, nonlinear tracking, gaps, smoother." alt="" coords="3437,453,3630,478"/>
-<area shape="poly" id="edge11_Node000002_Node000012" title=" " alt="" coords="2743,382,3050,404,3237,422,3424,443,3473,450,3472,455,3424,448,3237,427,3050,410,2743,388"/>
-<area shape="rect" id="Node000013" href="$08__particle_8cc.html" title="Particle engine: the cloud, resampling, tracking, determinism, and no smoother." alt="" coords="3654,453,3829,478"/>
-<area shape="poly" id="edge12_Node000002_Node000013" title=" " alt="" coords="2743,379,3140,397,3391,416,3643,443,3688,450,3687,455,3642,448,3390,421,3140,403,2743,384"/>
-<area shape="rect" id="Node000014" href="$09__ensemble_8cc.html" title="Ensemble engine: members, inflation, localization, tracking, and no smoother." alt="" coords="3853,453,4043,478"/>
-<area shape="poly" id="edge13_Node000002_Node000014" title=" " alt="" coords="2743,378,2947,383,3221,394,3530,414,3842,443,3890,450,3890,455,3841,448,3529,419,3220,400,2947,388,2743,383"/>
-<area shape="rect" id="Node000015" href="$10__integrators_8cc.html" title="Integrators: accuracy ordering, energy, the reserved kind, and a model that steps an ODE." alt="" coords="5,453,203,478"/>
-<area shape="poly" id="edge14_Node000002_Node000015" title=" " alt="" coords="2526,382,2057,388,1389,400,712,419,429,432,215,448,163,455,162,450,214,443,429,427,712,414,1389,395,2057,383,2526,377"/>
-<area shape="rect" id="Node000016" href="$11__solvers_8cc.html" title="The FFT, the spectral and finite&#45;difference solvers, and the reserved kinds." alt="" coords="227,453,400,478"/>
-<area shape="poly" id="edge15_Node000002_Node000016" title=" " alt="" coords="2526,382,2091,388,1481,400,864,419,607,432,412,448,366,455,365,450,412,443,607,427,864,414,1480,394,2091,383,2526,377"/>
-<area shape="rect" id="Node000017" href="$12__combinatorial_8cc.html" title="The combinatorial engine: the detector fixture, the gate, finding, arbitration, smoothing." alt="" coords="424,453,640,478"/>
-<area shape="poly" id="edge16_Node000002_Node000017" title=" " alt="" coords="2527,380,2208,381,1745,388,1204,409,925,426,652,448,596,455,596,450,652,443,925,420,1204,404,1745,383,2208,375,2527,375"/>
-<area shape="rect" id="Node000018" href="$13__controllers_8cc.html" title="Controllers: the closed loop, P / PID / LQR / MPPI, the actuator hook, the adapters." alt="" coords="664,453,859,478"/>
-<area shape="poly" id="edge17_Node000002_Node000018" title=" " alt="" coords="2526,380,2238,381,1829,390,1354,410,1110,426,871,448,820,455,819,450,870,443,1109,421,1354,405,1829,384,2238,376,2526,375"/>
-<area shape="rect" id="Node000019" href="$14__apps_8cc.html" title="libKalmanApps: the application models, their parameters and their filters." alt="" coords="883,453,1040,478"/>
-<area shape="poly" id="edge18_Node000002_Node000019" title=" " alt="" coords="2526,384,1781,405,1360,424,1185,435,1052,448,1010,455,1009,450,1052,443,1185,430,1360,419,1781,400,2526,378"/>
-<area shape="rect" id="Node000020" href="$15__learn_8cc.html" title="libKalmanLearn: the ONNX and TorchScript backends and the libTorch field solver, with or without thei..." alt="" coords="1065,453,1223,478"/>
-<area shape="poly" id="edge19_Node000002_Node000020" title=" " alt="" coords="2526,381,2293,383,1972,392,1606,412,1419,428,1236,448,1193,455,1193,450,1236,443,1419,423,1606,407,1972,387,2293,378,2526,376"/>
-<area shape="rect" id="Node000021" href="$16__net_8cc.html" title="libKalmanNet: the JSON verbs on a registered model, the error replies, the REST routes and the MCP ex..." alt="" coords="1248,453,1395,478"/>
-<area shape="poly" id="edge20_Node000002_Node000021" title=" " alt="" coords="2526,381,2318,385,2040,394,1725,414,1564,429,1407,448,1367,455,1366,450,1406,443,1564,424,1724,409,2040,389,2318,379,2526,376"/>
-<area shape="rect" id="Node000022" href="$17__modelfile_8cc.html" title="Kalman::IO::ModelFile: a model written to one file and read back." alt="" coords="1419,453,1605,478"/>
-<area shape="poly" id="edge21_Node000002_Node000022" title=" " alt="" coords="2526,385,2126,404,1872,422,1618,448,1570,455,1569,450,1617,443,1872,417,2125,398,2526,379"/>
-<area shape="rect" id="Node000023" href="$18__gps__apps_8cc.html" title="Kalman::Apps::GPS::Receiver, and the named arrays it is configured with." alt="" coords="4449,453,4636,478"/>
-<area shape="poly" id="edge22_Node000002_Node000023" title=" " alt="" coords="2743,378,3592,400,4080,419,4283,430,4438,443,4487,450,4486,455,4437,448,4283,435,4080,424,3592,405,2743,383"/>
-<area shape="rect" id="Node000024" href="$19__tracking__apps_8cc.html" title="Kalman::Apps::Tracking::DriftChamber: registered, propagates, and is found tracks in." alt="" coords="4661,445,4822,485"/>
-<area shape="poly" id="edge23_Node000002_Node000024" title=" " alt="" coords="2743,377,3141,383,3691,395,4244,415,4474,428,4648,443,4661,444,4660,450,4648,448,4473,433,4244,420,3691,401,3141,389,2743,383"/>
-<area shape="rect" id="Node000025" href="$20__gravitational__apps_8cc.html" title="Kalman::Apps::Gravitational::Polarization: the Jones measurement, its analytic Jacobian,..." alt="" coords="4067,445,4258,485"/>
-<area shape="poly" id="edge24_Node000002_Node000025" title=" " alt="" coords="2743,376,2980,380,3306,390,3679,410,3869,424,4056,443,4067,444,4066,449,4056,448,3869,430,3678,415,3306,395,2980,385,2743,382"/>
-<area shape="rect" id="Node000026" href="$21__fields__apps_8cc.html" title="Kalman::Apps::Weather::KolmogorovFlow / BarotropicFlow: a field on the ensemble engine." alt="" coords="4282,445,4425,485"/>
-<area shape="poly" id="edge25_Node000002_Node000026" title=" " alt="" coords="2743,378,3074,385,3514,398,3951,417,4133,429,4271,443,4282,444,4281,450,4270,448,4133,434,3951,422,3514,403,3073,390,2743,383"/>
-<area shape="poly" id="edge35_Node000027_Node000002" title=" " alt="" coords="3441,147,3435,187,3427,206,3414,223,3392,240,3364,256,3292,284,3203,308,3105,328,2901,356,2730,372,2729,367,2901,351,3104,322,3202,303,3290,279,3361,251,3389,236,3410,219,3422,204,3430,185,3436,146"/>
-<area shape="rect" id="Node000028" href="$_kolmogorov_flow_8h.html" title="Header of the Kalman::Apps::Weather::KolmogorovFlow class." alt="" coords="3735,181,3975,221"/>
-<area shape="poly" id="edge27_Node000027_Node000028" title=" " alt="" coords="3539,133,3764,179,3763,184,3538,138"/>
-<area shape="rect" id="Node000031" href="$_c_a_p_i_8cc.html" title="Implementation of the C interface." alt="" coords="3999,189,4092,214"/>
-<area shape="poly" id="edge36_Node000027_Node000031" title=" " alt="" coords="3539,131,3666,144,3766,150,3864,158,3987,179,4014,186,4013,191,3986,184,3863,163,3765,155,3666,150,3538,136"/>
-<area shape="rect" id="Node000032" href="$_vorticity_8cc.html" title="Implementation of the Kalman::Solvers::Vorticity class." alt="" coords="3233,189,3399,214"/>
-<area shape="poly" id="edge37_Node000027_Node000032" title=" " alt="" coords="3401,144,3334,191,3331,186,3398,139"/>
-<area shape="rect" id="Node000029" href="$_apps_8h.html" title="Umbrella header for libKalmanApps." alt="" coords="4178,357,4337,397"/>
-<area shape="poly" id="edge28_Node000028_Node000029" title=" " alt="" coords="3908,225,4092,307,4210,355,4208,360,4090,312,3906,230"/>
-<area shape="rect" id="Node000030" href="$_barotropic_flow_8h.html" title="Header of the Kalman::Apps::Weather::BarotropicFlow class." alt="" coords="4103,269,4332,309"/>
-<area shape="poly" id="edge33_Node000028_Node000030" title=" " alt="" coords="3948,222,4139,267,4137,272,3947,227"/>
-<area shape="poly" id="edge29_Node000029_Node000023" title=" " alt="" coords="4334,399,4505,450,4504,455,4332,404"/>
-<area shape="poly" id="edge30_Node000029_Node000024" title=" " alt="" coords="4351,391,4648,443,4661,445,4660,450,4648,448,4350,396"/>
-<area shape="poly" id="edge31_Node000029_Node000025" title=" " alt="" coords="4228,409,4185,447,4182,443,4224,405"/>
-<area shape="poly" id="edge32_Node000029_Node000026" title=" " alt="" coords="4291,405,4334,443,4330,447,4287,409"/>
-<area shape="poly" id="edge34_Node000030_Node000029" title=" " alt="" coords="4234,321,4251,356,4246,358,4229,323"/>
+<area shape="rect" id="Node000001" title="Header of the Kalman::Solvers::Spectral class." alt="" coords="5288,5,5463,45"/>
+<area shape="rect" id="Node000002" href="$include_2_kalman_2_solvers_8h.html" title="Every spatial solver." alt="" coords="4963,189,5150,214"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="5298,52,5246,71,5195,96,5158,119,5123,146,5070,191,5067,187,5119,141,5155,115,5193,91,5244,66,5296,47"/>
+<area shape="rect" id="Node000036" href="$include_2_kalman_2_solvers_2_vorticity_8h.html" title="Header of the Kalman::Solvers::Vorticity class." alt="" coords="5207,93,5381,133"/>
+<area shape="poly" id="edge35_Node000001_Node000036" title=" " alt="" coords="5350,57,5314,95,5310,91,5346,54"/>
+<area shape="rect" id="Node000043" href="$_solver_8cc.html" title="Implementation of the Kalman::Solver base and the kind resolver." alt="" coords="5405,101,5508,126"/>
+<area shape="poly" id="edge48_Node000001_Node000043" title=" " alt="" coords="5405,54,5447,98,5443,102,5401,57"/>
+<area shape="rect" id="Node000044" href="$_spectral_8cc.html" title="Implementation of the Kalman::Solvers::Spectral class." alt="" coords="5533,101,5701,126"/>
+<area shape="poly" id="edge49_Node000001_Node000044" title=" " alt="" coords="5442,47,5585,98,5584,103,5440,52"/>
+<area shape="rect" id="Node000003" href="$_kalman_8h.html" title="Umbrella header for libKalman." alt="" coords="3254,453,3443,478"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="4969,219,3423,455,3423,450,4969,213"/>
+<area shape="rect" id="Node000004" href="$ballistics__root_8cc.html" title="libKalman driven from a ROOT program — the integration demonstrator." alt="" coords="3261,533,3436,573"/>
+<area shape="poly" id="edge3_Node000003_Node000004" title=" " alt="" coords="3351,492,3351,533,3346,533,3346,492"/>
+<area shape="rect" id="Node000005" href="$kalman101_8cc.html" title="The whole library in one program: simulate, filter, smooth, check." alt="" coords="3460,541,3667,566"/>
+<area shape="poly" id="edge4_Node000003_Node000005" title=" " alt="" coords="3392,481,3535,538,3534,543,3390,486"/>
+<area shape="rect" id="Node000006" href="$examples_2cxx_2operations_8cc.html" title="The model operations, one after the other, on a cart." alt="" coords="3691,541,3895,566"/>
+<area shape="poly" id="edge5_Node000003_Node000006" title=" " alt="" coords="3422,478,3734,538,3733,543,3421,483"/>
+<area shape="rect" id="Node000007" href="$toy__sensor_8cc.html" title="The toy model in C++: simulate a test sensor, filter it, save both." alt="" coords="3919,541,4125,566"/>
+<area shape="poly" id="edge6_Node000003_Node000007" title=" " alt="" coords="3457,476,3665,500,3906,531,3954,538,3954,543,3906,536,3665,505,3457,481"/>
+<area shape="rect" id="Node000008" href="$01__linear_8cc.html" title="Linear filter + RTS smoother: consistency, dropouts, multi&#45;axis." alt="" coords="4149,541,4311,566"/>
+<area shape="poly" id="edge7_Node000003_Node000008" title=" " alt="" coords="3457,469,3764,490,3950,508,4137,531,4179,538,4178,543,4136,536,3950,513,3763,496,3457,475"/>
+<area shape="rect" id="Node000009" href="$02__extended_8cc.html" title="Extended engine: nonlinear tracking, numerical Jacobians, KF equivalence." alt="" coords="4335,541,4522,566"/>
+<area shape="poly" id="edge8_Node000003_Node000009" title=" " alt="" coords="3457,468,3841,487,4081,506,4324,531,4371,538,4370,543,4323,536,4081,511,3840,493,3457,473"/>
+<area shape="rect" id="Node000010" href="$03__record_8cc.html" title="The record&#39;s derived views, the prior pass, and error reporting." alt="" coords="4547,541,4713,566"/>
+<area shape="poly" id="edge9_Node000003_Node000010" title=" " alt="" coords="3457,465,3658,470,3926,481,4229,500,4534,531,4579,538,4578,543,4534,536,4228,505,3926,486,3658,475,3457,471"/>
+<area shape="rect" id="Node000011" href="$04__routers_8cc.html" title="The decision layer: normalisation, the rule&#45;based routers, and the blend." alt="" coords="4737,541,4909,566"/>
+<area shape="poly" id="edge10_Node000003_Node000011" title=" " alt="" coords="3457,464,3688,467,4002,477,4361,497,4545,512,4725,531,4771,538,4770,543,4724,536,4545,517,4361,502,4002,482,3687,473,3457,469"/>
+<area shape="rect" id="Node000012" href="$05__route_8cc.html" title="Models::Router on the interacting engine: does it find the regime, and switch when it changes?" alt="" coords="4934,541,5094,566"/>
+<area shape="poly" id="edge11_Node000003_Node000012" title=" " alt="" coords="3457,466,4198,488,4615,507,4789,518,4921,531,4965,538,4964,543,4920,536,4789,524,4615,513,4197,494,3457,472"/>
+<area shape="rect" id="Node000013" href="$06__factory_8cc.html" title="The model registry, the plugin loader, and the C surface over both." alt="" coords="5118,541,5289,566"/>
+<area shape="poly" id="edge12_Node000003_Node000013" title=" " alt="" coords="3457,466,4285,487,4759,506,4957,518,5106,531,5152,538,5152,543,5106,536,4956,523,4759,511,4285,492,3457,471"/>
+<area shape="rect" id="Node000014" href="$07__unscented_8cc.html" title="Unscented engine: KF equivalence on a linear model, nonlinear tracking, gaps, smoother." alt="" coords="5313,541,5507,566"/>
+<area shape="poly" id="edge13_Node000003_Node000014" title=" " alt="" coords="3457,466,4377,487,4910,506,5132,518,5301,531,5353,538,5352,543,5300,536,5132,523,4910,511,4377,492,3457,471"/>
+<area shape="rect" id="Node000015" href="$08__particle_8cc.html" title="Particle engine: the cloud, resampling, tracking, determinism, and no smoother." alt="" coords="5531,541,5705,566"/>
+<area shape="poly" id="edge14_Node000003_Node000015" title=" " alt="" coords="3457,465,3883,471,4479,483,5079,502,5330,515,5520,531,5566,538,5566,543,5519,536,5330,521,5079,508,4479,488,3883,476,3457,470"/>
+<area shape="rect" id="Node000016" href="$09__ensemble_8cc.html" title="Ensemble engine: members, inflation, localization, tracking, and no smoother." alt="" coords="5,541,196,566"/>
+<area shape="poly" id="edge15_Node000003_Node000016" title=" " alt="" coords="3240,469,2649,472,1772,481,1308,489,871,501,494,516,209,536,157,543,157,538,208,531,493,511,871,496,1308,484,1772,476,2649,467,3240,464"/>
+<area shape="rect" id="Node000017" href="$10__integrators_8cc.html" title="Integrators: accuracy ordering, energy, the reserved kind, and a model that steps an ODE." alt="" coords="221,541,418,566"/>
+<area shape="poly" id="edge16_Node000003_Node000017" title=" " alt="" coords="3240,470,2686,473,1873,484,1041,503,693,518,430,536,377,543,377,538,430,531,693,513,1041,498,1873,478,2686,468,3240,464"/>
+<area shape="rect" id="Node000018" href="$11__solvers_8cc.html" title="The FFT, the spectral and finite&#45;difference solvers, and the reserved kinds." alt="" coords="442,541,615,566"/>
+<area shape="poly" id="edge17_Node000003_Node000018" title=" " alt="" coords="3240,470,2719,473,1964,483,1193,503,871,517,628,536,581,543,580,538,627,531,871,512,1193,497,1963,477,2719,468,3240,464"/>
+<area shape="rect" id="Node000019" href="$12__combinatorial_8cc.html" title="The combinatorial engine: the detector fixture, the gate, finding, arbitration, smoothing." alt="" coords="639,541,855,566"/>
+<area shape="poly" id="edge18_Node000003_Node000019" title=" " alt="" coords="3240,470,2761,476,2075,489,1378,508,1088,521,868,536,811,543,810,538,867,531,1087,516,1378,503,2075,483,2760,471,3240,465"/>
+<area shape="rect" id="Node000020" href="$13__controllers_8cc.html" title="Controllers: the closed loop, P / PID / LQR / MPC / MPPI, the actuator hook, the adapters." alt="" coords="879,541,1074,566"/>
+<area shape="poly" id="edge19_Node000003_Node000020" title=" " alt="" coords="3240,471,2799,477,2176,489,1547,509,1285,521,1086,536,1035,543,1034,538,1086,531,1285,516,1547,503,2176,484,2799,471,3240,465"/>
+<area shape="rect" id="Node000021" href="$14__apps_8cc.html" title="libKalmanApps: the application models, their parameters and their filters." alt="" coords="1098,541,1255,566"/>
+<area shape="poly" id="edge20_Node000003_Node000021" title=" " alt="" coords="3240,470,2830,476,2260,487,1687,507,1448,520,1268,536,1225,543,1224,538,1267,531,1448,515,1687,502,2260,482,2830,470,3240,465"/>
+<area shape="rect" id="Node000022" href="$15__learn_8cc.html" title="libKalmanLearn: the ONNX and TorchScript backends and the libTorch field solver, with or without thei..." alt="" coords="1280,541,1439,566"/>
+<area shape="poly" id="edge21_Node000003_Node000022" title=" " alt="" coords="3240,471,2863,477,2346,490,1830,509,1615,522,1452,536,1408,543,1407,538,1451,531,1614,516,1829,504,2346,484,2862,472,3240,465"/>
+<area shape="rect" id="Node000023" href="$16__net_8cc.html" title="libKalmanNet: the JSON verbs on a registered model, the error replies, the REST routes and the MCP ex..." alt="" coords="1463,541,1610,566"/>
+<area shape="poly" id="edge22_Node000003_Node000023" title=" " alt="" coords="3240,471,2893,478,2426,490,1962,510,1769,522,1622,536,1582,543,1581,538,1622,531,1768,517,1961,504,2426,485,2893,472,3240,466"/>
+<area shape="rect" id="Node000024" href="$17__modelfile_8cc.html" title="Kalman::IO::ModelFile: a model written to one file and read back." alt="" coords="1634,541,1821,566"/>
+<area shape="poly" id="edge23_Node000003_Node000024" title=" " alt="" coords="3241,469,2989,472,2640,481,2239,501,2034,517,1833,536,1784,543,1783,538,1832,531,2034,511,2239,496,2640,476,2989,467,3240,464"/>
+<area shape="rect" id="Node000025" href="$18__gps__apps_8cc.html" title="Kalman::Apps::GPS::Receiver, and the named arrays it is configured with." alt="" coords="6111,541,6298,566"/>
+<area shape="poly" id="edge24_Node000003_Node000025" title=" " alt="" coords="3457,464,3983,468,4747,479,5527,498,5853,513,6100,531,6150,538,6149,543,6099,536,5853,518,5527,504,4747,484,3983,474,3457,470"/>
+<area shape="rect" id="Node000026" href="$19__tracking__apps_8cc.html" title="Kalman::Apps::Tracking::DriftChamber: registered, propagates, and is found tracks in." alt="" coords="6323,533,6484,573"/>
+<area shape="poly" id="edge25_Node000003_Node000026" title=" " alt="" coords="3457,464,4019,465,4844,474,5280,482,5689,494,6043,510,6310,531,6323,532,6322,538,6310,536,6043,515,5689,499,5280,487,4844,479,4019,471,3457,469"/>
+<area shape="rect" id="Node000027" href="$20__gravitational__apps_8cc.html" title="Kalman::Apps::Gravitational::Polarization: the Jones measurement, its analytic Jacobian,..." alt="" coords="5729,533,5920,573"/>
+<area shape="poly" id="edge26_Node000003_Node000027" title=" " alt="" coords="3457,465,3918,471,4571,482,5233,502,5509,515,5718,531,5729,532,5729,537,5718,536,5509,520,5233,507,4571,488,3918,476,3457,470"/>
+<area shape="rect" id="Node000028" href="$21__fields__apps_8cc.html" title="Kalman::Apps::Weather::KolmogorovFlow / BarotropicFlow: a field on the ensemble engine." alt="" coords="5944,533,6087,573"/>
+<area shape="poly" id="edge27_Node000003_Node000028" title=" " alt="" coords="3457,464,3954,466,4670,475,5046,483,5399,495,5703,510,5933,531,5944,532,5943,538,5932,536,5703,516,5399,500,5046,488,4670,480,3954,471,3457,469"/>
+<area shape="rect" id="Node000029" href="$22__joint_8cc.html" title="Models::Joint: a declared parameter of another model, estimated with its state." alt="" coords="1845,541,1999,566"/>
+<area shape="poly" id="edge28_Node000003_Node000029" title=" " alt="" coords="3240,469,3016,472,2710,481,2363,501,2185,516,2012,536,1970,543,1969,538,2011,531,2185,511,2363,496,2710,476,3016,466,3240,464"/>
+<area shape="rect" id="Node000030" href="$23__sensor_8cc.html" title="Kalman::Sensor and Models::Fusion: one more sensor on the state of another model." alt="" coords="2023,541,2191,566"/>
+<area shape="poly" id="edge29_Node000003_Node000030" title=" " alt="" coords="3240,471,3046,476,2788,487,2497,506,2204,536,2159,543,2159,538,2203,531,2496,501,2787,482,3046,471,3240,465"/>
+<area shape="rect" id="Node000031" href="$24__observability_8cc.html" title="Kalman::Observability, and the tau of Models::Joint." alt="" coords="2216,541,2425,566"/>
+<area shape="poly" id="edge30_Node000003_Node000031" title=" " alt="" coords="3240,474,2883,496,2661,513,2438,536,2386,543,2385,538,2438,531,2661,508,2883,490,3240,469"/>
+<area shape="rect" id="Node000032" href="$25__instrument_8cc.html" title="Kalman::Instrument: a set of sensors with one name, one rate and one calibration." alt="" coords="2450,541,2647,566"/>
+<area shape="poly" id="edge31_Node000003_Node000032" title=" " alt="" coords="3240,477,2976,501,2660,536,2612,543,2611,538,2659,531,2975,495,3240,472"/>
+<area shape="rect" id="Node000033" href="$26__lag_8cc.html" title="Models::Lag: a model that carries its last states, for late sensors and fixed&#45;lag smoothing." alt="" coords="2671,541,2818,566"/>
+<area shape="poly" id="edge32_Node000003_Node000033" title=" " alt="" coords="3240,480,3049,503,2830,536,2794,543,2793,538,2830,531,3048,498,3240,475"/>
+<area shape="rect" id="Node000034" href="$27__composite_8cc.html" title="Models::Composite: several models side by side, stacked or summed." alt="" coords="2842,541,3037,566"/>
+<area shape="poly" id="edge33_Node000003_Node000034" title=" " alt="" coords="3281,483,2994,543,2993,538,3280,478"/>
+<area shape="rect" id="Node000035" href="$28__sensors_8cc.html" title="Kalman::Sensors: a position reading, a Doppler reading, a camera; their settings as parameters of the..." alt="" coords="3061,541,3237,566"/>
+<area shape="poly" id="edge34_Node000003_Node000035" title=" " alt="" coords="3310,486,3177,543,3175,538,3308,481"/>
+<area shape="poly" id="edge45_Node000036_Node000002" title=" " alt="" coords="5230,141,5089,191,5087,186,5228,136"/>
+<area shape="rect" id="Node000037" href="$_kolmogorov_flow_8h.html" title="Header of the Kalman::Apps::Weather::KolmogorovFlow class." alt="" coords="5174,181,5414,221"/>
+<area shape="poly" id="edge36_Node000036_Node000037" title=" " alt="" coords="5297,147,5297,181,5291,181,5291,147"/>
+<area shape="rect" id="Node000041" href="$_c_a_p_i_8cc.html" title="Implementation of the C interface." alt="" coords="5438,189,5531,214"/>
+<area shape="poly" id="edge46_Node000036_Node000041" title=" " alt="" coords="5349,137,5460,186,5458,191,5347,141"/>
+<area shape="rect" id="Node000042" href="$_vorticity_8cc.html" title="Implementation of the Kalman::Solvers::Vorticity class." alt="" coords="5556,189,5723,214"/>
+<area shape="poly" id="edge47_Node000036_Node000042" title=" " alt="" coords="5384,134,5594,186,5593,191,5382,139"/>
+<area shape="rect" id="Node000038" href="$_weather_8h.html" title="The application models of Kalman::Apps::Weather." alt="" coords="5367,357,5525,397"/>
+<area shape="poly" id="edge37_Node000037_Node000038" title=" " alt="" coords="5297,235,5304,272,5311,291,5321,308,5352,335,5388,355,5386,360,5349,340,5317,311,5306,293,5299,274,5292,236"/>
+<area shape="rect" id="Node000040" href="$_barotropic_flow_8h.html" title="Header of the Kalman::Apps::Weather::BarotropicFlow class." alt="" coords="5331,269,5561,309"/>
+<area shape="poly" id="edge43_Node000037_Node000040" title=" " alt="" coords="5341,226,5414,267,5411,272,5338,230"/>
+<area shape="rect" id="Node000039" href="$_apps_8h.html" title="Umbrella header for libKalmanApps." alt="" coords="5936,445,6095,485"/>
+<area shape="poly" id="edge38_Node000038_Node000039" title=" " alt="" coords="5540,390,5936,449,5935,455,5539,395"/>
+<area shape="poly" id="edge39_Node000039_Node000025" title=" " alt="" coords="6070,489,6181,538,6178,543,6068,493"/>
+<area shape="poly" id="edge40_Node000039_Node000026" title=" " alt="" coords="6109,484,6323,532,6322,537,6107,490"/>
+<area shape="poly" id="edge41_Node000039_Node000027" title=" " alt="" coords="5962,493,5868,536,5865,531,5960,489"/>
+<area shape="poly" id="edge42_Node000039_Node000028" title=" " alt="" coords="6018,499,6018,533,6013,533,6013,499"/>
+<area shape="poly" id="edge44_Node000040_Node000038" title=" " alt="" coords="5449,323,5449,357,5443,357,5443,323"/>
 </map>

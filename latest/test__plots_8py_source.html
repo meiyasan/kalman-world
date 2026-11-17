@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,8 +163,8 @@ $(document).ready(function(){initNavTree('test__plots_8py_source.html',''); init
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    BallisticLinearModel, SuspensionModel, PowerGridStateModel,</div>
 <div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    PolarizationModel, jones_signal,</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>)</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a> <span class="keyword">import</span> TransLunarModel</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a> <span class="keyword">import</span> R_EARTH, KM, D_MOON, GM_EARTH</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astrophysics.html">modules.apps.astrophysics</a> <span class="keyword">import</span> TransLunarModel</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics.html">modules.apps.astrophysics.astrodynamics</a> <span class="keyword">import</span> R_EARTH, KM, D_MOON, GM_EARTH</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ExtendedKalmanFilter</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
@@ -234,7 +234,7 @@ $(document).ready(function(){initNavTree('test__plots_8py_source.html',''); init
 </div>
 <div class="foldopen" id="foldopen00074" data-start="" data-end="">
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno"><a class="line" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a118354dc58ab5ca9e2f857703f4dfbdc">   74</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__plots_1_1_test_signature_figures.html#a118354dc58ab5ca9e2f857703f4dfbdc">test_rocket_trajectory_figure</a>(self):</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        tl = <a class="code hl_class" href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a>(dt_s=120.0, track_km=5.0)</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        tl = <a class="code hl_class" href="classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model.html">TransLunarModel</a>(dt_s=120.0, track_km=5.0)</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        r0 = R_EARTH + 400 * KM</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        a_tx = 0.5 * (r0 + D_MOON)</div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        v_tli = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / a_tx)) + 0.034</div>
@@ -249,7 +249,7 @@ $(document).ready(function(){initNavTree('test__plots_8py_source.html',''); init
 </div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    unittest.main()</div>
-<div class="ttc" id="aclassmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html">modules.apps.astro.space.translunar.TransLunarModel</a></div><div class="ttdef"><b>Definition</b> <a href="translunar_8py_source.html#l00158">translunar.py:158</a></div></div>
+<div class="ttc" id="aclassmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model_html"><div class="ttname"><a href="classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model.html">modules.apps.astrophysics.translunar.TransLunarModel</a></div><div class="ttdef"><b>Definition</b> <a href="translunar_8py_source.html#l00158">translunar.py:158</a></div></div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter_html"><div class="ttname"><a href="classmodules_1_1framework_1_1filters_1_1ekf_1_1_extended_kalman_filter.html">modules.framework.filters.ekf.ExtendedKalmanFilter</a></div><div class="ttdef"><b>Definition</b> <a href="ekf_8py_source.html#l00006">ekf.py:6</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__plots_1_1_test_signature_figures_html"><div class="ttname"><a href="classtests_1_1test__plots_1_1_test_signature_figures.html">tests.test_plots.TestSignatureFigures</a></div><div class="ttdef"><b>Definition</b> <a href="test__plots_8py_source.html#l00025">test_plots.py:25</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__plots_1_1_test_signature_figures_html_a0394ac263e5c59f581eff596e2361239"><div class="ttname"><a href="classtests_1_1test__plots_1_1_test_signature_figures.html#a0394ac263e5c59f581eff596e2361239">tests.test_plots.TestSignatureFigures._assert_figure</a></div><div class="ttdeci">_assert_figure(self, fig)</div><div class="ttdef"><b>Definition</b> <a href="test__plots_8py_source.html#l00037">test_plots.py:37</a></div></div>
@@ -261,10 +261,10 @@ $(document).ready(function(){initNavTree('test__plots_8py_source.html',''); init
 <div class="ttc" id="aclasstests_1_1test__plots_1_1_test_signature_figures_html_abc18bc0f45f532e86e356557989b66ce"><div class="ttname"><a href="classtests_1_1test__plots_1_1_test_signature_figures.html#abc18bc0f45f532e86e356557989b66ce">tests.test_plots.TestSignatureFigures.test_powergrid_signature_figure</a></div><div class="ttdeci">test_powergrid_signature_figure(self)</div><div class="ttdef"><b>Definition</b> <a href="test__plots_8py_source.html#l00053">test_plots.py:53</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__plots_1_1_test_signature_figures_html_ad7f1a851190d952308a2aba8cc975d12"><div class="ttname"><a href="classtests_1_1test__plots_1_1_test_signature_figures.html#ad7f1a851190d952308a2aba8cc975d12">tests.test_plots.TestSignatureFigures.test_gravwave_signature_figure</a></div><div class="ttdeci">test_gravwave_signature_figure(self)</div><div class="ttdef"><b>Definition</b> <a href="test__plots_8py_source.html#l00060">test_plots.py:60</a></div></div>
 <div class="ttc" id="aclasstests_1_1test__plots_1_1_test_signature_figures_html_aebf073f2e14d304728b1bed284c1ff2c"><div class="ttname"><a href="classtests_1_1test__plots_1_1_test_signature_figures.html#aebf073f2e14d304728b1bed284c1ff2c">tests.test_plots.TestSignatureFigures.test_suspension_signature_figure</a></div><div class="ttdeci">test_suspension_signature_figure(self)</div><div class="ttdef"><b>Definition</b> <a href="test__plots_8py_source.html#l00048">test_plots.py:48</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1apps_1_1astro_1_1space_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astro_1_1space.html">modules.apps.astro.space</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astro_2space_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics_1_1astrodynamics.html">modules.apps.astrophysics.astrodynamics</a></div><div class="ttdef"><b>Definition</b> <a href="astrodynamics_8py_source.html#l00001">astrodynamics.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1apps_1_1astrophysics_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1astrophysics.html">modules.apps.astrophysics</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2astrophysics_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1apps_html"><div class="ttname"><a href="namespacemodules_1_1apps.html">modules.apps</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
-<div class="ttc" id="anamespacemodules_1_1runtime_1_1astro_html"><div class="ttname"><a href="namespacemodules_1_1runtime_1_1astro.html">modules.runtime.astro</a></div><div class="ttdef"><b>Definition</b> <a href="astro_8py_source.html#l00001">astro.py:1</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

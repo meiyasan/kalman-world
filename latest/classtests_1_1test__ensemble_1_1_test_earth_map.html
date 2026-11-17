@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00432">432</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00453">453</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2238b06b1bb4c27f6c2327bec01dee60" name="a2238b06b1bb4c27f6c2327bec01dee60"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2238b06b1bb4c27f6c2327bec01dee60">&#9670;&#160;</a></span>test_geometry_loads()</h2>
@@ -177,17 +177,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00434">434</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  434</span>    <span class="keyword">def </span>test_geometry_loads(self):</div>
-<div class="line"><span class="lineno">  435</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> earth_geometry</div>
-<div class="line"><span class="lineno">  436</span>        land = earth_geometry(<span class="stringliteral">&quot;land&quot;</span>)</div>
-<div class="line"><span class="lineno">  437</span>        coast = earth_geometry(<span class="stringliteral">&quot;coastline&quot;</span>)</div>
-<div class="line"><span class="lineno">  438</span>        self.assertGreater(len(land), 100)</div>
-<div class="line"><span class="lineno">  439</span>        self.assertGreater(len(coast), 100)</div>
-<div class="line"><span class="lineno">  440</span>        allv = np.vstack(land)</div>
-<div class="line"><span class="lineno">  441</span>        self.assertTrue((-180.1 &lt;= allv[:, 0]).all() <span class="keywordflow">and</span> (allv[:, 0] &lt;= 180.1).all())</div>
-<div class="line"><span class="lineno">  442</span>        self.assertTrue((-90.1 &lt;= allv[:, 1]).all() <span class="keywordflow">and</span> (allv[:, 1] &lt;= 90.1).all())</div>
-<div class="line"><span class="lineno">  443</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00455">455</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  455</span>    <span class="keyword">def </span>test_geometry_loads(self):</div>
+<div class="line"><span class="lineno">  456</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> earth_geometry</div>
+<div class="line"><span class="lineno">  457</span>        land = earth_geometry(<span class="stringliteral">&quot;land&quot;</span>)</div>
+<div class="line"><span class="lineno">  458</span>        coast = earth_geometry(<span class="stringliteral">&quot;coastline&quot;</span>)</div>
+<div class="line"><span class="lineno">  459</span>        self.assertGreater(len(land), 100)</div>
+<div class="line"><span class="lineno">  460</span>        self.assertGreater(len(coast), 100)</div>
+<div class="line"><span class="lineno">  461</span>        allv = np.vstack(land)</div>
+<div class="line"><span class="lineno">  462</span>        self.assertTrue((-180.1 &lt;= allv[:, 0]).all() <span class="keywordflow">and</span> (allv[:, 0] &lt;= 180.1).all())</div>
+<div class="line"><span class="lineno">  463</span>        self.assertTrue((-90.1 &lt;= allv[:, 1]).all() <span class="keywordflow">and</span> (allv[:, 1] &lt;= 90.1).all())</div>
+<div class="line"><span class="lineno">  464</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1geo_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a></div><div class="ttdef"><b>Definition</b> <a href="geo_8py_source.html#l00001">geo.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -208,17 +208,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00444">444</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  444</span>    <span class="keyword">def </span>test_land_mask_known_points(self):</div>
-<div class="line"><span class="lineno">  445</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> land_mask</div>
-<div class="line"><span class="lineno">  446</span>        lat = np.array([55.7, 23.0, -30.0, 40.0])       <span class="comment"># Moscow, Sahara, S-Pacific, N-Atlantic</span></div>
-<div class="line"><span class="lineno">  447</span>        lon = np.array([37.6, 10.0, -120.0, -40.0])</div>
-<div class="line"><span class="lineno">  448</span>        m = land_mask(lat, lon)                          <span class="comment"># (4, 4) grid; diagonal = the pairs</span></div>
-<div class="line"><span class="lineno">  449</span>        self.assertTrue(m[0, 0])                         <span class="comment"># Moscow: ground</span></div>
-<div class="line"><span class="lineno">  450</span>        self.assertTrue(m[1, 1])                         <span class="comment"># Sahara: ground</span></div>
-<div class="line"><span class="lineno">  451</span>        self.assertFalse(m[2, 2])                        <span class="comment"># South Pacific: sea</span></div>
-<div class="line"><span class="lineno">  452</span>        self.assertFalse(m[3, 3])                        <span class="comment"># North Atlantic: sea</span></div>
-<div class="line"><span class="lineno">  453</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00465">465</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  465</span>    <span class="keyword">def </span>test_land_mask_known_points(self):</div>
+<div class="line"><span class="lineno">  466</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> land_mask</div>
+<div class="line"><span class="lineno">  467</span>        lat = np.array([55.7, 23.0, -30.0, 40.0])       <span class="comment"># Moscow, Sahara, S-Pacific, N-Atlantic</span></div>
+<div class="line"><span class="lineno">  468</span>        lon = np.array([37.6, 10.0, -120.0, -40.0])</div>
+<div class="line"><span class="lineno">  469</span>        m = land_mask(lat, lon)                          <span class="comment"># (4, 4) grid; diagonal = the pairs</span></div>
+<div class="line"><span class="lineno">  470</span>        self.assertTrue(m[0, 0])                         <span class="comment"># Moscow: ground</span></div>
+<div class="line"><span class="lineno">  471</span>        self.assertTrue(m[1, 1])                         <span class="comment"># Sahara: ground</span></div>
+<div class="line"><span class="lineno">  472</span>        self.assertFalse(m[2, 2])                        <span class="comment"># South Pacific: sea</span></div>
+<div class="line"><span class="lineno">  473</span>        self.assertFalse(m[3, 3])                        <span class="comment"># North Atlantic: sea</span></div>
+<div class="line"><span class="lineno">  474</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -238,27 +238,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00454">454</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  454</span>    <span class="keyword">def </span>test_plot_global_field_smoke(self):</div>
-<div class="line"><span class="lineno">  455</span>        <span class="keyword">import</span> matplotlib</div>
-<div class="line"><span class="lineno">  456</span>        matplotlib.use(<span class="stringliteral">&quot;Agg&quot;</span>, force=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  457</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> plot_global_field, band_coordinates</div>
-<div class="line"><span class="lineno">  458</span>        fig, ax = plot_global_field()                    <span class="comment"># plain planet: sea + ground</span></div>
-<div class="line"><span class="lineno">  459</span>        self.assertIsNotNone(fig)</div>
-<div class="line"><span class="lineno">  460</span>        lat = np.linspace(-90, 90, 46)</div>
-<div class="line"><span class="lineno">  461</span>        lon = np.arange(0, 360, 4.0)</div>
-<div class="line"><span class="lineno">  462</span>        field = np.random.default_rng(0).standard_normal((46, 90))</div>
-<div class="line"><span class="lineno">  463</span>        geo = band_coordinates(_tiny_flow(), lat_range=(10, 50))</div>
-<div class="line"><span class="lineno">  464</span>        fig2, ax2 = plot_global_field(field, lat, lon, central_longitude=180,</div>
-<div class="line"><span class="lineno">  465</span>                                      band=(10, 50),</div>
-<div class="line"><span class="lineno">  466</span>                                      probes=(geo[<span class="stringliteral">&quot;probe_lat&quot;</span>], geo[<span class="stringliteral">&quot;probe_lon&quot;</span>]))</div>
-<div class="line"><span class="lineno">  467</span>        self.assertIsNotNone(fig2)</div>
-<div class="line"><span class="lineno">  468</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
-<div class="line"><span class="lineno">  469</span>        plt.close(<span class="stringliteral">&quot;all&quot;</span>)</div>
-<div class="line"><span class="lineno">  470</span> </div>
-<div class="line"><span class="lineno">  471</span> </div>
-<div class="line"><span class="lineno">  472</span><span class="comment"># ── Kraichnan-turbulence chain (doubly-periodic Cartesian data) ──────────────</span></div>
-<div class="line"><span class="lineno">  473</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00475">475</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  475</span>    <span class="keyword">def </span>test_plot_global_field_smoke(self):</div>
+<div class="line"><span class="lineno">  476</span>        <span class="keyword">import</span> matplotlib</div>
+<div class="line"><span class="lineno">  477</span>        matplotlib.use(<span class="stringliteral">&quot;Agg&quot;</span>, force=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  478</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> plot_global_field, band_coordinates</div>
+<div class="line"><span class="lineno">  479</span>        fig, ax = plot_global_field()                    <span class="comment"># plain planet: sea + ground</span></div>
+<div class="line"><span class="lineno">  480</span>        self.assertIsNotNone(fig)</div>
+<div class="line"><span class="lineno">  481</span>        lat = np.linspace(-90, 90, 46)</div>
+<div class="line"><span class="lineno">  482</span>        lon = np.arange(0, 360, 4.0)</div>
+<div class="line"><span class="lineno">  483</span>        field = np.random.default_rng(0).standard_normal((46, 90))</div>
+<div class="line"><span class="lineno">  484</span>        geo = band_coordinates(_tiny_flow(), lat_range=(10, 50))</div>
+<div class="line"><span class="lineno">  485</span>        fig2, ax2 = plot_global_field(field, lat, lon, central_longitude=180,</div>
+<div class="line"><span class="lineno">  486</span>                                      band=(10, 50),</div>
+<div class="line"><span class="lineno">  487</span>                                      probes=(geo[<span class="stringliteral">&quot;probe_lat&quot;</span>], geo[<span class="stringliteral">&quot;probe_lon&quot;</span>]))</div>
+<div class="line"><span class="lineno">  488</span>        self.assertIsNotNone(fig2)</div>
+<div class="line"><span class="lineno">  489</span>        <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div>
+<div class="line"><span class="lineno">  490</span>        plt.close(<span class="stringliteral">&quot;all&quot;</span>)</div>
+<div class="line"><span class="lineno">  491</span> </div>
+<div class="line"><span class="lineno">  492</span> </div>
+<div class="line"><span class="lineno">  493</span><span class="comment"># ── Kraichnan-turbulence chain (doubly-periodic Cartesian data) ──────────────</span></div>
+<div class="line"><span class="lineno">  494</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

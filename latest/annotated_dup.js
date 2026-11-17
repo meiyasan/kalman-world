@@ -13,16 +13,19 @@ var annotated_dup =
         [ "Metadata", "class_kalman_1_1_abstract_1_1_metadata.html", "class_kalman_1_1_abstract_1_1_metadata" ]
       ] ],
       [ "Apps", "namespace_kalman_1_1_apps.html", [
-        [ "Astro", "namespace_kalman_1_1_apps_1_1_astro.html", [
-          [ "Interplanetary", "class_kalman_1_1_apps_1_1_astro_1_1_interplanetary.html", "class_kalman_1_1_apps_1_1_astro_1_1_interplanetary" ],
-          [ "RocketAscent", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_ascent.html", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_ascent" ],
-          [ "RocketDescent", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_descent.html", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_descent" ],
-          [ "RocketLanding", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_landing.html", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_landing" ],
-          [ "RocketLiftoff", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_liftoff.html", "class_kalman_1_1_apps_1_1_astro_1_1_rocket_liftoff" ],
-          [ "TransLunar", "class_kalman_1_1_apps_1_1_astro_1_1_trans_lunar.html", "class_kalman_1_1_apps_1_1_astro_1_1_trans_lunar" ]
+        [ "Aerospace", "namespace_kalman_1_1_apps_1_1_aerospace.html", [
+          [ "RocketAscent", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_ascent.html", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_ascent" ],
+          [ "RocketDescent", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_descent.html", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_descent" ],
+          [ "RocketLanding", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_landing.html", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_landing" ],
+          [ "RocketLiftoff", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_liftoff.html", "class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_liftoff" ]
+        ] ],
+        [ "Astrophysics", "namespace_kalman_1_1_apps_1_1_astrophysics.html", [
+          [ "Interplanetary", "class_kalman_1_1_apps_1_1_astrophysics_1_1_interplanetary.html", "class_kalman_1_1_apps_1_1_astrophysics_1_1_interplanetary" ],
+          [ "TransLunar", "class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html", "class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar" ]
         ] ],
         [ "Ballistics", "namespace_kalman_1_1_apps_1_1_ballistics.html", [
-          [ "Ballistic", "class_kalman_1_1_apps_1_1_ballistics_1_1_ballistic.html", "class_kalman_1_1_apps_1_1_ballistics_1_1_ballistic" ]
+          [ "ExtendedModel", "class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model.html", "class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model" ],
+          [ "LinearModel", "class_kalman_1_1_apps_1_1_ballistics_1_1_linear_model.html", "class_kalman_1_1_apps_1_1_ballistics_1_1_linear_model" ]
         ] ],
         [ "GPS", "namespace_kalman_1_1_apps_1_1_g_p_s.html", [
           [ "Receiver", "class_kalman_1_1_apps_1_1_g_p_s_1_1_receiver.html", "class_kalman_1_1_apps_1_1_g_p_s_1_1_receiver" ]
@@ -46,9 +49,8 @@ var annotated_dup =
         [ "Model", "class_kalman_1_1_apps_1_1_model.html", "class_kalman_1_1_apps_1_1_model" ]
       ] ],
       [ "Controllers", "namespace_kalman_1_1_controllers.html", [
-        [ "AdaptiveQR", "class_kalman_1_1_controllers_1_1_adaptive_q_r.html", "class_kalman_1_1_controllers_1_1_adaptive_q_r" ],
-        [ "Boost", "class_kalman_1_1_controllers_1_1_boost.html", "class_kalman_1_1_controllers_1_1_boost" ],
         [ "LQR", "class_kalman_1_1_controllers_1_1_l_q_r.html", "class_kalman_1_1_controllers_1_1_l_q_r" ],
+        [ "MPC", "class_kalman_1_1_controllers_1_1_m_p_c.html", "class_kalman_1_1_controllers_1_1_m_p_c" ],
         [ "MPPI", "class_kalman_1_1_controllers_1_1_m_p_p_i.html", "class_kalman_1_1_controllers_1_1_m_p_p_i" ],
         [ "PID", "class_kalman_1_1_controllers_1_1_p_i_d.html", "class_kalman_1_1_controllers_1_1_p_i_d" ],
         [ "Proportional", "class_kalman_1_1_controllers_1_1_proportional.html", "class_kalman_1_1_controllers_1_1_proportional" ]
@@ -62,6 +64,7 @@ var annotated_dup =
         [ "Ensemble", "class_kalman_1_1_engines_1_1_ensemble.html", "class_kalman_1_1_engines_1_1_ensemble" ],
         [ "EnsembleModel", "class_kalman_1_1_engines_1_1_ensemble_model.html", "class_kalman_1_1_engines_1_1_ensemble_model" ],
         [ "Extended", "class_kalman_1_1_engines_1_1_extended.html", "class_kalman_1_1_engines_1_1_extended" ],
+        [ "Interacting", "class_kalman_1_1_engines_1_1_interacting.html", "class_kalman_1_1_engines_1_1_interacting" ],
         [ "Linear", "class_kalman_1_1_engines_1_1_linear.html", "class_kalman_1_1_engines_1_1_linear" ],
         [ "Particle", "class_kalman_1_1_engines_1_1_particle.html", "class_kalman_1_1_engines_1_1_particle" ],
         [ "Unscented", "class_kalman_1_1_engines_1_1_unscented.html", "class_kalman_1_1_engines_1_1_unscented" ]
@@ -70,7 +73,6 @@ var annotated_dup =
         [ "CKF", "class_kalman_1_1_filters_1_1_c_k_f.html", "class_kalman_1_1_filters_1_1_c_k_f" ],
         [ "EKF", "class_kalman_1_1_filters_1_1_e_k_f.html", "class_kalman_1_1_filters_1_1_e_k_f" ],
         [ "EnKF", "class_kalman_1_1_filters_1_1_en_k_f.html", "class_kalman_1_1_filters_1_1_en_k_f" ],
-        [ "IKF", "class_kalman_1_1_filters_1_1_i_k_f.html", "class_kalman_1_1_filters_1_1_i_k_f" ],
         [ "KF", "class_kalman_1_1_filters_1_1_k_f.html", "class_kalman_1_1_filters_1_1_k_f" ],
         [ "PF", "class_kalman_1_1_filters_1_1_p_f.html", "class_kalman_1_1_filters_1_1_p_f" ],
         [ "UKF", "class_kalman_1_1_filters_1_1_u_k_f.html", "class_kalman_1_1_filters_1_1_u_k_f" ]
@@ -94,8 +96,13 @@ var annotated_dup =
       ] ],
       [ "Models", "namespace_kalman_1_1_models.html", [
         [ "Callback", "class_kalman_1_1_models_1_1_callback.html", "class_kalman_1_1_models_1_1_callback" ],
+        [ "Composite", "class_kalman_1_1_models_1_1_composite.html", "class_kalman_1_1_models_1_1_composite" ],
         [ "Extended", "class_kalman_1_1_models_1_1_extended.html", "class_kalman_1_1_models_1_1_extended" ],
+        [ "Fusion", "class_kalman_1_1_models_1_1_fusion.html", "class_kalman_1_1_models_1_1_fusion" ],
+        [ "Joint", "class_kalman_1_1_models_1_1_joint.html", "class_kalman_1_1_models_1_1_joint" ],
+        [ "Lag", "class_kalman_1_1_models_1_1_lag.html", "class_kalman_1_1_models_1_1_lag" ],
         [ "Linear", "class_kalman_1_1_models_1_1_linear.html", "class_kalman_1_1_models_1_1_linear" ],
+        [ "Router", "class_kalman_1_1_models_1_1_router.html", "class_kalman_1_1_models_1_1_router" ],
         [ "Tabulated", "class_kalman_1_1_models_1_1_tabulated.html", "class_kalman_1_1_models_1_1_tabulated" ]
       ] ],
       [ "Net", "namespace_kalman_1_1_net.html", [
@@ -119,6 +126,14 @@ var annotated_dup =
         [ "Router", "class_kalman_1_1_routers_1_1_router.html", "class_kalman_1_1_routers_1_1_router" ],
         [ "Threshold", "class_kalman_1_1_routers_1_1_threshold.html", "class_kalman_1_1_routers_1_1_threshold" ]
       ] ],
+      [ "Sensors", "namespace_kalman_1_1_sensors.html", [
+        [ "Detail", "namespace_kalman_1_1_sensors_1_1_detail.html", [
+          [ "Reader", "struct_kalman_1_1_sensors_1_1_detail_1_1_reader.html", "struct_kalman_1_1_sensors_1_1_detail_1_1_reader" ]
+        ] ],
+        [ "Camera", "class_kalman_1_1_sensors_1_1_camera.html", "class_kalman_1_1_sensors_1_1_camera" ],
+        [ "Doppler", "class_kalman_1_1_sensors_1_1_doppler.html", "class_kalman_1_1_sensors_1_1_doppler" ],
+        [ "Position", "class_kalman_1_1_sensors_1_1_position.html", "class_kalman_1_1_sensors_1_1_position" ]
+      ] ],
       [ "Solvers", "namespace_kalman_1_1_solvers.html", [
         [ "FiniteDifference", "class_kalman_1_1_solvers_1_1_finite_difference.html", "class_kalman_1_1_solvers_1_1_finite_difference" ],
         [ "Spectral", "class_kalman_1_1_solvers_1_1_spectral.html", "class_kalman_1_1_solvers_1_1_spectral" ],
@@ -130,19 +145,30 @@ var annotated_dup =
         [ "GateContext", "struct_kalman_1_1_tracking_1_1_gate_context.html", "struct_kalman_1_1_tracking_1_1_gate_context" ],
         [ "HitId", "struct_kalman_1_1_tracking_1_1_hit_id.html", "struct_kalman_1_1_tracking_1_1_hit_id" ]
       ] ],
+      [ "Tuners", "namespace_kalman_1_1_tuners.html", [
+        [ "AdaptiveQR", "class_kalman_1_1_tuners_1_1_adaptive_q_r.html", "class_kalman_1_1_tuners_1_1_adaptive_q_r" ],
+        [ "Boost", "class_kalman_1_1_tuners_1_1_boost.html", "class_kalman_1_1_tuners_1_1_boost" ]
+      ] ],
+      [ "Component", "struct_kalman_1_1_component.html", "struct_kalman_1_1_component" ],
       [ "Controller", "class_kalman_1_1_controller.html", "class_kalman_1_1_controller" ],
       [ "Diagnostics", "class_kalman_1_1_diagnostics.html", "class_kalman_1_1_diagnostics" ],
       [ "Differentiator", "class_kalman_1_1_differentiator.html", "class_kalman_1_1_differentiator" ],
       [ "Engine", "class_kalman_1_1_engine.html", "class_kalman_1_1_engine" ],
+      [ "EstimatedParameter", "struct_kalman_1_1_estimated_parameter.html", "struct_kalman_1_1_estimated_parameter" ],
       [ "Factory", "class_kalman_1_1_factory.html", "class_kalman_1_1_factory" ],
       [ "Filter", "class_kalman_1_1_filter.html", "class_kalman_1_1_filter" ],
       [ "Grid", "class_kalman_1_1_grid.html", "class_kalman_1_1_grid" ],
+      [ "Instrument", "struct_kalman_1_1_instrument.html", "struct_kalman_1_1_instrument" ],
       [ "Integrator", "class_kalman_1_1_integrator.html", "class_kalman_1_1_integrator" ],
       [ "Matrix", "class_kalman_1_1_matrix.html", "class_kalman_1_1_matrix" ],
       [ "Model", "class_kalman_1_1_model.html", "class_kalman_1_1_model" ],
+      [ "Observability", "class_kalman_1_1_observability.html", "class_kalman_1_1_observability" ],
       [ "Sampler", "class_kalman_1_1_sampler.html", "class_kalman_1_1_sampler" ],
+      [ "Sensor", "struct_kalman_1_1_sensor.html", "struct_kalman_1_1_sensor" ],
+      [ "SensorFactory", "class_kalman_1_1_sensor_factory.html", "class_kalman_1_1_sensor_factory" ],
       [ "Solver", "class_kalman_1_1_solver.html", "class_kalman_1_1_solver" ],
       [ "Tableau", "struct_kalman_1_1_tableau.html", "struct_kalman_1_1_tableau" ],
+      [ "Tuner", "class_kalman_1_1_tuner.html", "class_kalman_1_1_tuner" ],
       [ "Vector", "class_kalman_1_1_vector.html", "class_kalman_1_1_vector" ]
     ] ],
     [ "modules", "namespacemodules.html", [
@@ -159,42 +185,40 @@ var annotated_dup =
         [ "_Registered", "classmodules_1_1api_1_1___registered.html", "classmodules_1_1api_1_1___registered" ]
       ] ],
       [ "apps", "namespacemodules_1_1apps.html", [
-        [ "astro", "namespacemodules_1_1apps_1_1astro.html", [
-          [ "rocket", "namespacemodules_1_1apps_1_1astro_1_1rocket.html", [
-            [ "ascent", "namespacemodules_1_1apps_1_1astro_1_1rocket_1_1ascent.html", [
-              [ "RocketAscentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model" ],
-              [ "RocketAscentObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_observable.html", null ],
-              [ "RocketAscentState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_state.html", null ]
-            ] ],
-            [ "descent", "namespacemodules_1_1apps_1_1astro_1_1rocket_1_1descent.html", [
-              [ "RocketDescentModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model.html", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_model" ],
-              [ "RocketDescentObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_observable.html", null ],
-              [ "RocketDescentState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1descent_1_1_rocket_descent_state.html", null ]
-            ] ],
-            [ "landing", "namespacemodules_1_1apps_1_1astro_1_1rocket_1_1landing.html", [
-              [ "RocketLandingModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model.html", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_model" ],
-              [ "RocketLandingObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_observable.html", null ],
-              [ "RocketLandingState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1landing_1_1_rocket_landing_state.html", null ]
-            ] ],
-            [ "liftoff", "namespacemodules_1_1apps_1_1astro_1_1rocket_1_1liftoff.html", [
-              [ "RocketLiftoffModel", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model.html", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_model" ],
-              [ "RocketLiftoffObservable", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_observable.html", null ],
-              [ "RocketLiftoffState", "classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_state.html", null ]
-            ] ]
+        [ "aerospace", "namespacemodules_1_1apps_1_1aerospace.html", [
+          [ "ascent", "namespacemodules_1_1apps_1_1aerospace_1_1ascent.html", [
+            [ "RocketAscentModel", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model.html", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model" ],
+            [ "RocketAscentObservable", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_observable.html", null ],
+            [ "RocketAscentState", "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_state.html", null ]
           ] ],
-          [ "space", "namespacemodules_1_1apps_1_1astro_1_1space.html", [
-            [ "interplanetary", "namespacemodules_1_1apps_1_1astro_1_1space_1_1interplanetary.html", [
-              [ "_PerturberField", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1___perturber_field.html", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1___perturber_field" ],
-              [ "InterplanetaryModel", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model.html", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_model" ],
-              [ "InterplanetaryObservable", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_observable.html", null ],
-              [ "InterplanetaryState", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_interplanetary_state.html", null ],
-              [ "TrajectoryControlManeuver", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver.html", "classmodules_1_1apps_1_1astro_1_1space_1_1interplanetary_1_1_trajectory_control_maneuver" ]
-            ] ],
-            [ "translunar", "namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html", [
-              [ "TransLunarModel", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model.html", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_model" ],
-              [ "TransLunarObservable", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_observable.html", null ],
-              [ "TransLunarState", "classmodules_1_1apps_1_1astro_1_1space_1_1translunar_1_1_trans_lunar_state.html", null ]
-            ] ]
+          [ "descent", "namespacemodules_1_1apps_1_1aerospace_1_1descent.html", [
+            [ "RocketDescentModel", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_model.html", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_model" ],
+            [ "RocketDescentObservable", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_observable.html", null ],
+            [ "RocketDescentState", "classmodules_1_1apps_1_1aerospace_1_1descent_1_1_rocket_descent_state.html", null ]
+          ] ],
+          [ "landing", "namespacemodules_1_1apps_1_1aerospace_1_1landing.html", [
+            [ "RocketLandingModel", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_model.html", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_model" ],
+            [ "RocketLandingObservable", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_observable.html", null ],
+            [ "RocketLandingState", "classmodules_1_1apps_1_1aerospace_1_1landing_1_1_rocket_landing_state.html", null ]
+          ] ],
+          [ "liftoff", "namespacemodules_1_1apps_1_1aerospace_1_1liftoff.html", [
+            [ "RocketLiftoffModel", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model" ],
+            [ "RocketLiftoffObservable", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_observable.html", null ],
+            [ "RocketLiftoffState", "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_state.html", null ]
+          ] ]
+        ] ],
+        [ "astrophysics", "namespacemodules_1_1apps_1_1astrophysics.html", [
+          [ "interplanetary", "namespacemodules_1_1apps_1_1astrophysics_1_1interplanetary.html", [
+            [ "_PerturberField", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1___perturber_field.html", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1___perturber_field" ],
+            [ "InterplanetaryModel", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_model.html", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_model" ],
+            [ "InterplanetaryObservable", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_observable.html", null ],
+            [ "InterplanetaryState", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_interplanetary_state.html", null ],
+            [ "TrajectoryControlManeuver", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_trajectory_control_maneuver.html", "classmodules_1_1apps_1_1astrophysics_1_1interplanetary_1_1_trajectory_control_maneuver" ]
+          ] ],
+          [ "translunar", "namespacemodules_1_1apps_1_1astrophysics_1_1translunar.html", [
+            [ "TransLunarModel", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model.html", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_model" ],
+            [ "TransLunarObservable", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_observable.html", null ],
+            [ "TransLunarState", "classmodules_1_1apps_1_1astrophysics_1_1translunar_1_1_trans_lunar_state.html", null ]
           ] ]
         ] ],
         [ "ballistics", "namespacemodules_1_1apps_1_1ballistics.html", [
@@ -404,47 +428,41 @@ var annotated_dup =
             [ "KalmanFilterMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_filter_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_filter_mixin" ],
             [ "KalmanInferenceMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_inference_mixin" ],
             [ "KalmanModelMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin" ],
-            [ "KalmanProxyMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_proxy_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_proxy_mixin" ],
+            [ "KalmanRunMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_run_mixin" ],
             [ "KalmanShapeMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin" ],
             [ "KalmanStateMixin", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin" ]
           ] ]
         ] ],
         [ "constants", "namespacemodules_1_1framework_1_1constants.html", [
-          [ "EnumBis", "classmodules_1_1framework_1_1constants_1_1_enum_bis.html", "classmodules_1_1framework_1_1constants_1_1_enum_bis" ],
           [ "KalmanDifferentiatorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_differentiator_kind.html", null ],
           [ "KalmanDynamicsKind", "classmodules_1_1framework_1_1constants_1_1_kalman_dynamics_kind.html", null ],
           [ "KalmanEngineKind", "classmodules_1_1framework_1_1constants_1_1_kalman_engine_kind.html", null ],
           [ "KalmanIntegratorKind", "classmodules_1_1framework_1_1constants_1_1_kalman_integrator_kind.html", null ],
           [ "KalmanObservable", "classmodules_1_1framework_1_1constants_1_1_kalman_observable.html", null ],
           [ "KalmanObservableFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_flavor.html", null ],
-          [ "KalmanObservableReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_observable_readout.html", null ],
           [ "KalmanProviderKind", "classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html", null ],
+          [ "KalmanReadout", "classmodules_1_1framework_1_1constants_1_1_kalman_readout.html", null ],
           [ "KalmanSolverKind", "classmodules_1_1framework_1_1constants_1_1_kalman_solver_kind.html", null ],
           [ "KalmanState", "classmodules_1_1framework_1_1constants_1_1_kalman_state.html", null ],
           [ "KalmanStateFlavor", "classmodules_1_1framework_1_1constants_1_1_kalman_state_flavor.html", null ],
-          [ "KalmanStructureKind", "classmodules_1_1framework_1_1constants_1_1_kalman_structure_kind.html", null ]
+          [ "KalmanStructureKind", "classmodules_1_1framework_1_1constants_1_1_kalman_structure_kind.html", null ],
+          [ "LabelEnum", "classmodules_1_1framework_1_1constants_1_1_label_enum.html", "classmodules_1_1framework_1_1constants_1_1_label_enum" ]
         ] ],
         [ "control", "namespacemodules_1_1framework_1_1control.html", [
           [ "KalmanController", "classmodules_1_1framework_1_1control_1_1_kalman_controller.html", "classmodules_1_1framework_1_1control_1_1_kalman_controller" ]
         ] ],
         [ "controllers", "namespacemodules_1_1framework_1_1controllers.html", [
-          [ "adaptive_qr", "namespacemodules_1_1framework_1_1controllers_1_1adaptive__qr.html", [
-            [ "AdaptiveQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller" ]
-          ] ],
-          [ "boost", "namespacemodules_1_1framework_1_1controllers_1_1boost.html", [
-            [ "BoostKalmanController", "classmodules_1_1framework_1_1controllers_1_1boost_1_1_boost_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1boost_1_1_boost_kalman_controller" ]
-          ] ],
           [ "lqr", "namespacemodules_1_1framework_1_1controllers_1_1lqr.html", [
             [ "LQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1lqr_1_1_l_q_r_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1lqr_1_1_l_q_r_kalman_controller" ]
+          ] ],
+          [ "mpc", "namespacemodules_1_1framework_1_1controllers_1_1mpc.html", [
+            [ "MPCKalmanController", "classmodules_1_1framework_1_1controllers_1_1mpc_1_1_m_p_c_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1mpc_1_1_m_p_c_kalman_controller" ]
           ] ],
           [ "mppi", "namespacemodules_1_1framework_1_1controllers_1_1mppi.html", [
             [ "MPPIKalmanController", "classmodules_1_1framework_1_1controllers_1_1mppi_1_1_m_p_p_i_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1mppi_1_1_m_p_p_i_kalman_controller" ]
           ] ],
           [ "neural", "namespacemodules_1_1framework_1_1controllers_1_1neural.html", [
             [ "NeuralKalmanController", "classmodules_1_1framework_1_1controllers_1_1neural_1_1_neural_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1neural_1_1_neural_kalman_controller" ]
-          ] ],
-          [ "neural_qr", "namespacemodules_1_1framework_1_1controllers_1_1neural__qr.html", [
-            [ "NeuralAdaptiveQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_controller" ]
           ] ],
           [ "pid", "namespacemodules_1_1framework_1_1controllers_1_1pid.html", [
             [ "PIDKalmanController", "classmodules_1_1framework_1_1controllers_1_1pid_1_1_p_i_d_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1pid_1_1_p_i_d_kalman_controller" ]
@@ -459,6 +477,10 @@ var annotated_dup =
         [ "engine", "namespacemodules_1_1framework_1_1engine.html", [
           [ "KalmanEngine", "classmodules_1_1framework_1_1engine_1_1_kalman_engine.html", "classmodules_1_1framework_1_1engine_1_1_kalman_engine" ]
         ] ],
+        [ "engine_models", "namespacemodules_1_1framework_1_1engine__models.html", [
+          [ "KalmanDetectorModel", "classmodules_1_1framework_1_1engine__models_1_1_kalman_detector_model.html", "classmodules_1_1framework_1_1engine__models_1_1_kalman_detector_model" ],
+          [ "KalmanEnsembleModel", "classmodules_1_1framework_1_1engine__models_1_1_kalman_ensemble_model.html", "classmodules_1_1framework_1_1engine__models_1_1_kalman_ensemble_model" ]
+        ] ],
         [ "engines", "namespacemodules_1_1framework_1_1engines.html", [
           [ "combinatorial", "namespacemodules_1_1framework_1_1engines_1_1combinatorial.html", [
             [ "CombinatorialKalmanEngine", "classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html", "classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine" ],
@@ -470,6 +492,9 @@ var annotated_dup =
           ] ],
           [ "extended", "namespacemodules_1_1framework_1_1engines_1_1extended.html", [
             [ "ExtendedKalmanEngine", "classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html", "classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine" ]
+          ] ],
+          [ "interacting", "namespacemodules_1_1framework_1_1engines_1_1interacting.html", [
+            [ "InteractingKalmanEngine", "classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine.html", "classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine" ]
           ] ],
           [ "linear", "namespacemodules_1_1framework_1_1engines_1_1linear.html", [
             [ "LinearKalmanEngine", "classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html", "classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine" ]
@@ -498,9 +523,6 @@ var annotated_dup =
           [ "enkf", "namespacemodules_1_1framework_1_1filters_1_1enkf.html", [
             [ "EnsembleKalmanFilter", "classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter.html", "classmodules_1_1framework_1_1filters_1_1enkf_1_1_ensemble_kalman_filter" ]
           ] ],
-          [ "ikf", "namespacemodules_1_1framework_1_1filters_1_1ikf.html", [
-            [ "InteractiveKalmanFilter", "classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter.html", "classmodules_1_1framework_1_1filters_1_1ikf_1_1_interactive_kalman_filter" ]
-          ] ],
           [ "kf", "namespacemodules_1_1framework_1_1filters_1_1kf.html", [
             [ "LinearKalmanFilter", "classmodules_1_1framework_1_1filters_1_1kf_1_1_linear_kalman_filter.html", null ]
           ] ],
@@ -510,6 +532,9 @@ var annotated_dup =
           [ "ukf", "namespacemodules_1_1framework_1_1filters_1_1ukf.html", [
             [ "UnscentedKalmanFilter", "classmodules_1_1framework_1_1filters_1_1ukf_1_1_unscented_kalman_filter.html", "classmodules_1_1framework_1_1filters_1_1ukf_1_1_unscented_kalman_filter" ]
           ] ]
+        ] ],
+        [ "instrument", "namespacemodules_1_1framework_1_1instrument.html", [
+          [ "KalmanInstrument", "classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html", "classmodules_1_1framework_1_1instrument_1_1_kalman_instrument" ]
         ] ],
         [ "integrator", "namespacemodules_1_1framework_1_1integrator.html", [
           [ "KalmanIntegrator", "classmodules_1_1framework_1_1integrator_1_1_kalman_integrator.html", "classmodules_1_1framework_1_1integrator_1_1_kalman_integrator" ]
@@ -538,19 +563,34 @@ var annotated_dup =
           [ "KalmanModel", "classmodules_1_1framework_1_1model_1_1_kalman_model.html", "classmodules_1_1framework_1_1model_1_1_kalman_model" ]
         ] ],
         [ "models", "namespacemodules_1_1framework_1_1models.html", [
-          [ "composite", "namespacemodules_1_1framework_1_1models_1_1composite.html", [
-            [ "CompositeKalmanModel", "classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model.html", "classmodules_1_1framework_1_1models_1_1composite_1_1_composite_kalman_model" ]
+          [ "compose", "namespacemodules_1_1framework_1_1models_1_1compose.html", [
+            [ "Composite", "classmodules_1_1framework_1_1models_1_1compose_1_1_composite.html", "classmodules_1_1framework_1_1models_1_1compose_1_1_composite" ]
           ] ],
           [ "extended", "namespacemodules_1_1framework_1_1models_1_1extended.html", [
             [ "ExtendedKalmanModel", "classmodules_1_1framework_1_1models_1_1extended_1_1_extended_kalman_model.html", null ]
+          ] ],
+          [ "fusion", "namespacemodules_1_1framework_1_1models_1_1fusion.html", [
+            [ "Fusion", "classmodules_1_1framework_1_1models_1_1fusion_1_1_fusion.html", "classmodules_1_1framework_1_1models_1_1fusion_1_1_fusion" ]
+          ] ],
+          [ "joint", "namespacemodules_1_1framework_1_1models_1_1joint.html", [
+            [ "Joint", "classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html", "classmodules_1_1framework_1_1models_1_1joint_1_1_joint" ]
+          ] ],
+          [ "lag", "namespacemodules_1_1framework_1_1models_1_1lag.html", [
+            [ "Lag", "classmodules_1_1framework_1_1models_1_1lag_1_1_lag.html", "classmodules_1_1framework_1_1models_1_1lag_1_1_lag" ]
           ] ],
           [ "linear", "namespacemodules_1_1framework_1_1models_1_1linear.html", [
             [ "LinearKalmanModel", "classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html", "classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model" ]
           ] ],
           [ "native", "namespacemodules_1_1framework_1_1models_1_1native.html", [
+            [ "NativeCounterpart", "classmodules_1_1framework_1_1models_1_1native_1_1_native_counterpart.html", "classmodules_1_1framework_1_1models_1_1native_1_1_native_counterpart" ],
             [ "NativeModel", "classmodules_1_1framework_1_1models_1_1native_1_1_native_model.html", "classmodules_1_1framework_1_1models_1_1native_1_1_native_model" ],
-            [ "NativeTwin", "classmodules_1_1framework_1_1models_1_1native_1_1_native_twin.html", "classmodules_1_1framework_1_1models_1_1native_1_1_native_twin" ],
             [ "python_reference", "classmodules_1_1framework_1_1models_1_1native_1_1python__reference.html", "classmodules_1_1framework_1_1models_1_1native_1_1python__reference" ]
+          ] ],
+          [ "operation", "namespacemodules_1_1framework_1_1models_1_1operation.html", [
+            [ "OperationModel", "classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html", "classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model" ]
+          ] ],
+          [ "route", "namespacemodules_1_1framework_1_1models_1_1route.html", [
+            [ "Router", "classmodules_1_1framework_1_1models_1_1route_1_1_router.html", "classmodules_1_1framework_1_1models_1_1route_1_1_router" ]
           ] ],
           [ "unscented", "namespacemodules_1_1framework_1_1models_1_1unscented.html", [
             [ "UnscentedKalmanModel", "classmodules_1_1framework_1_1models_1_1unscented_1_1_unscented_kalman_model.html", null ]
@@ -606,6 +646,24 @@ var annotated_dup =
         [ "sampler", "namespacemodules_1_1framework_1_1sampler.html", [
           [ "KalmanSampler", "classmodules_1_1framework_1_1sampler_1_1_kalman_sampler.html", "classmodules_1_1framework_1_1sampler_1_1_kalman_sampler" ]
         ] ],
+        [ "sensor", "namespacemodules_1_1framework_1_1sensor.html", [
+          [ "KalmanSensor", "classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html", "classmodules_1_1framework_1_1sensor_1_1_kalman_sensor" ]
+        ] ],
+        [ "sensors", "namespacemodules_1_1framework_1_1sensors.html", [
+          [ "base", "namespacemodules_1_1framework_1_1sensors_1_1base.html", [
+            [ "_Settings", "classmodules_1_1framework_1_1sensors_1_1base_1_1___settings.html", "classmodules_1_1framework_1_1sensors_1_1base_1_1___settings" ],
+            [ "NativeSensor", "classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html", "classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor" ]
+          ] ],
+          [ "camera", "namespacemodules_1_1framework_1_1sensors_1_1camera.html", [
+            [ "CameraSensor", "classmodules_1_1framework_1_1sensors_1_1camera_1_1_camera_sensor.html", "classmodules_1_1framework_1_1sensors_1_1camera_1_1_camera_sensor" ]
+          ] ],
+          [ "doppler", "namespacemodules_1_1framework_1_1sensors_1_1doppler.html", [
+            [ "DopplerSensor", "classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor.html", "classmodules_1_1framework_1_1sensors_1_1doppler_1_1_doppler_sensor" ]
+          ] ],
+          [ "position", "namespacemodules_1_1framework_1_1sensors_1_1position.html", [
+            [ "PositionSensor", "classmodules_1_1framework_1_1sensors_1_1position_1_1_position_sensor.html", "classmodules_1_1framework_1_1sensors_1_1position_1_1_position_sensor" ]
+          ] ]
+        ] ],
         [ "solver", "namespacemodules_1_1framework_1_1solver.html", [
           [ "KalmanSolver", "classmodules_1_1framework_1_1solver_1_1_kalman_solver.html", "classmodules_1_1framework_1_1solver_1_1_kalman_solver" ]
         ] ],
@@ -615,6 +673,20 @@ var annotated_dup =
           ] ],
           [ "spectral", "namespacemodules_1_1framework_1_1solvers_1_1spectral.html", [
             [ "SpectralSolver", "classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver.html", "classmodules_1_1framework_1_1solvers_1_1spectral_1_1_spectral_solver" ]
+          ] ]
+        ] ],
+        [ "tuner", "namespacemodules_1_1framework_1_1tuner.html", [
+          [ "KalmanTuner", "classmodules_1_1framework_1_1tuner_1_1_kalman_tuner.html", "classmodules_1_1framework_1_1tuner_1_1_kalman_tuner" ]
+        ] ],
+        [ "tuners", "namespacemodules_1_1framework_1_1tuners.html", [
+          [ "adaptive_qr", "namespacemodules_1_1framework_1_1tuners_1_1adaptive__qr.html", [
+            [ "AdaptiveQRKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner.html", "classmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner" ]
+          ] ],
+          [ "boost", "namespacemodules_1_1framework_1_1tuners_1_1boost.html", [
+            [ "BoostKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1boost_1_1_boost_kalman_tuner.html", "classmodules_1_1framework_1_1tuners_1_1boost_1_1_boost_kalman_tuner" ]
+          ] ],
+          [ "neural_qr", "namespacemodules_1_1framework_1_1tuners_1_1neural__qr.html", [
+            [ "NeuralAdaptiveQRKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner.html", "classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner" ]
           ] ]
         ] ]
       ] ],
@@ -665,6 +737,16 @@ var annotated_dup =
       ] ]
     ] ],
     [ "tests", "namespacetests.html", [
+      [ "test_add_sensor", "namespacetests_1_1test__add__sensor.html", [
+        [ "TestBallisticDoppler", "classtests_1_1test__add__sensor_1_1_test_ballistic_doppler.html", "classtests_1_1test__add__sensor_1_1_test_ballistic_doppler" ],
+        [ "TestCameras", "classtests_1_1test__add__sensor_1_1_test_cameras.html", "classtests_1_1test__add__sensor_1_1_test_cameras" ],
+        [ "TestConstruction", "classtests_1_1test__add__sensor_1_1_test_construction.html", "classtests_1_1test__add__sensor_1_1_test_construction" ],
+        [ "TestEstimation", "classtests_1_1test__add__sensor_1_1_test_estimation.html", "classtests_1_1test__add__sensor_1_1_test_estimation" ],
+        [ "TestFirstArgument", "classtests_1_1test__add__sensor_1_1_test_first_argument.html", "classtests_1_1test__add__sensor_1_1_test_first_argument" ],
+        [ "TestMatrices", "classtests_1_1test__add__sensor_1_1_test_matrices.html", "classtests_1_1test__add__sensor_1_1_test_matrices" ],
+        [ "TestRates", "classtests_1_1test__add__sensor_1_1_test_rates.html", "classtests_1_1test__add__sensor_1_1_test_rates" ],
+        [ "TestSensor", "classtests_1_1test__add__sensor_1_1_test_sensor.html", "classtests_1_1test__add__sensor_1_1_test_sensor" ]
+      ] ],
       [ "test_api", "namespacetests_1_1test__api.html", [
         [ "TestAuth", "classtests_1_1test__api_1_1_test_auth.html", "classtests_1_1test__api_1_1_test_auth" ],
         [ "TestAuthoring", "classtests_1_1test__api_1_1_test_authoring.html", "classtests_1_1test__api_1_1_test_authoring" ],
@@ -685,6 +767,13 @@ var annotated_dup =
         [ "TestRocketDescent", "classtests_1_1test__apps__extra_1_1_test_rocket_descent.html", "classtests_1_1test__apps__extra_1_1_test_rocket_descent" ],
         [ "TestRocketLanding", "classtests_1_1test__apps__extra_1_1_test_rocket_landing.html", "classtests_1_1test__apps__extra_1_1_test_rocket_landing" ],
         [ "TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff" ]
+      ] ],
+      [ "test_compose", "namespacetests_1_1test__compose.html", [
+        [ "TestCompose", "classtests_1_1test__compose_1_1_test_compose.html", "classtests_1_1test__compose_1_1_test_compose" ]
+      ] ],
+      [ "test_contract_parity", "namespacetests_1_1test__contract__parity.html", [
+        [ "TestJoint", "classtests_1_1test__contract__parity_1_1_test_joint.html", "classtests_1_1test__contract__parity_1_1_test_joint" ],
+        [ "TestSensors", "classtests_1_1test__contract__parity_1_1_test_sensors.html", "classtests_1_1test__contract__parity_1_1_test_sensors" ]
       ] ],
       [ "test_engines", "namespacetests_1_1test__engines.html", [
         [ "_NonlinearModel", "classtests_1_1test__engines_1_1___nonlinear_model.html", "classtests_1_1test__engines_1_1___nonlinear_model" ],
@@ -710,6 +799,7 @@ var annotated_dup =
         [ "TestTwinExperiment", "classtests_1_1test__ensemble_1_1_test_twin_experiment.html", "classtests_1_1test__ensemble_1_1_test_twin_experiment" ]
       ] ],
       [ "test_examples", "namespacetests_1_1test__examples.html", [
+        [ "TestOperationsDemonstration", "classtests_1_1test__examples_1_1_test_operations_demonstration.html", "classtests_1_1test__examples_1_1_test_operations_demonstration" ],
         [ "TestToyDemonstration", "classtests_1_1test__examples_1_1_test_toy_demonstration.html", "classtests_1_1test__examples_1_1_test_toy_demonstration" ]
       ] ],
       [ "test_filtering", "namespacetests_1_1test__filtering.html", [
@@ -723,6 +813,7 @@ var annotated_dup =
         [ "_Projectile", "classtests_1_1test__filters_1_1___projectile.html", "classtests_1_1test__filters_1_1___projectile" ],
         [ "TestCrossEngineAgreement", "classtests_1_1test__filters_1_1_test_cross_engine_agreement.html", "classtests_1_1test__filters_1_1_test_cross_engine_agreement" ],
         [ "TestLinearKalmanFilter", "classtests_1_1test__filters_1_1_test_linear_kalman_filter.html", "classtests_1_1test__filters_1_1_test_linear_kalman_filter" ],
+        [ "TestManyStatesInOneCall", "classtests_1_1test__filters_1_1_test_many_states_in_one_call.html", "classtests_1_1test__filters_1_1_test_many_states_in_one_call" ],
         [ "TestNonlinearFilters", "classtests_1_1test__filters_1_1_test_nonlinear_filters.html", "classtests_1_1test__filters_1_1_test_nonlinear_filters" ]
       ] ],
       [ "test_framework", "namespacetests_1_1test__framework.html", [
@@ -741,11 +832,15 @@ var annotated_dup =
         [ "TestJacobianAndShapes", "classtests_1_1test__helpers_1_1_test_jacobian_and_shapes.html", "classtests_1_1test__helpers_1_1_test_jacobian_and_shapes" ],
         [ "TestSignalHelpers", "classtests_1_1test__helpers_1_1_test_signal_helpers.html", "classtests_1_1test__helpers_1_1_test_signal_helpers" ]
       ] ],
-      [ "test_ikf", "namespacetests_1_1test__ikf.html", [
-        [ "TestIKFBasicAPI", "classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i.html", "classtests_1_1test__ikf_1_1_test_i_k_f_basic_a_p_i" ],
-        [ "TestIKFFitAPI", "classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i.html", "classtests_1_1test__ikf_1_1_test_i_k_f_fit_a_p_i" ],
-        [ "TestIKFWithControl", "classtests_1_1test__ikf_1_1_test_i_k_f_with_control.html", "classtests_1_1test__ikf_1_1_test_i_k_f_with_control" ],
-        [ "TestRoutingAccuracy", "classtests_1_1test__ikf_1_1_test_routing_accuracy.html", "classtests_1_1test__ikf_1_1_test_routing_accuracy" ]
+      [ "test_instrument", "namespacetests_1_1test__instrument.html", [
+        [ "TestAddInstrument", "classtests_1_1test__instrument_1_1_test_add_instrument.html", "classtests_1_1test__instrument_1_1_test_add_instrument" ],
+        [ "TestCalibratingWhileMeasuring", "classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html", "classtests_1_1test__instrument_1_1_test_calibrating_while_measuring" ],
+        [ "TestCompose", "classtests_1_1test__instrument_1_1_test_compose.html", "classtests_1_1test__instrument_1_1_test_compose" ]
+      ] ],
+      [ "test_instrument_data", "namespacetests_1_1test__instrument__data.html", [
+        [ "BenchRadar", "classtests_1_1test__instrument__data_1_1_bench_radar.html", "classtests_1_1test__instrument__data_1_1_bench_radar" ],
+        [ "TestADetectorIsAnInstrument", "classtests_1_1test__instrument__data_1_1_test_a_detector_is_an_instrument.html", "classtests_1_1test__instrument__data_1_1_test_a_detector_is_an_instrument" ],
+        [ "TestProvider", "classtests_1_1test__instrument__data_1_1_test_provider.html", "classtests_1_1test__instrument__data_1_1_test_provider" ]
       ] ],
       [ "test_integrators", "namespacetests_1_1test__integrators.html", [
         [ "_Decay", "classtests_1_1test__integrators_1_1___decay.html", "classtests_1_1test__integrators_1_1___decay" ],
@@ -770,6 +865,22 @@ var annotated_dup =
         [ "TestLorentzian", "classtests_1_1test__interferometer_1_1_test_lorentzian.html", "classtests_1_1test__interferometer_1_1_test_lorentzian" ],
         [ "TestViolinBankController", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller.html", "classtests_1_1test__interferometer_1_1_test_violin_bank_controller" ],
         [ "TestWelchPSD", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d.html", "classtests_1_1test__interferometer_1_1_test_welch_p_s_d" ]
+      ] ],
+      [ "test_joint", "namespacetests_1_1test__joint.html", [
+        [ "Frozen", "classtests_1_1test__joint_1_1_frozen.html", "classtests_1_1test__joint_1_1_frozen" ],
+        [ "Gauge", "classtests_1_1test__joint_1_1_gauge.html", "classtests_1_1test__joint_1_1_gauge" ],
+        [ "Oscillator", "classtests_1_1test__joint_1_1_oscillator.html", "classtests_1_1test__joint_1_1_oscillator" ],
+        [ "TestBallisticCounterpart", "classtests_1_1test__joint_1_1_test_ballistic_counterpart.html", "classtests_1_1test__joint_1_1_test_ballistic_counterpart" ],
+        [ "TestCAPI", "classtests_1_1test__joint_1_1_test_c_a_p_i.html", "classtests_1_1test__joint_1_1_test_c_a_p_i" ],
+        [ "TestConstruction", "classtests_1_1test__joint_1_1_test_construction.html", "classtests_1_1test__joint_1_1_test_construction" ],
+        [ "TestEstimation", "classtests_1_1test__joint_1_1_test_estimation.html", "classtests_1_1test__joint_1_1_test_estimation" ],
+        [ "TestMaps", "classtests_1_1test__joint_1_1_test_maps.html", "classtests_1_1test__joint_1_1_test_maps" ],
+        [ "TestObservability", "classtests_1_1test__joint_1_1_test_observability.html", "classtests_1_1test__joint_1_1_test_observability" ],
+        [ "TestTau", "classtests_1_1test__joint_1_1_test_tau.html", "classtests_1_1test__joint_1_1_test_tau" ]
+      ] ],
+      [ "test_lag", "namespacetests_1_1test__lag.html", [
+        [ "TestLag", "classtests_1_1test__lag_1_1_test_lag.html", "classtests_1_1test__lag_1_1_test_lag" ],
+        [ "TestLateSensor", "classtests_1_1test__lag_1_1_test_late_sensor.html", "classtests_1_1test__lag_1_1_test_late_sensor" ]
       ] ],
       [ "test_module", "namespacetests_1_1test__module.html", [
         [ "TestFilterConvergence", "classtests_1_1test__module_1_1_test_filter_convergence.html", "classtests_1_1test__module_1_1_test_filter_convergence" ],
@@ -815,8 +926,10 @@ var annotated_dup =
         [ "_Unstable", "classtests_1_1test__native__controllers_1_1___unstable.html", "classtests_1_1test__native__controllers_1_1___unstable" ],
         [ "TestErrors", "classtests_1_1test__native__controllers_1_1_test_errors.html", "classtests_1_1test__native__controllers_1_1_test_errors" ],
         [ "TestEveryControllerAgreesWithItsReference", "classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference.html", "classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference" ],
+        [ "TestModelPredictiveControl", "classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html", "classtests_1_1test__native__controllers_1_1_test_model_predictive_control" ],
         [ "TestNotebook12", "classtests_1_1test__native__controllers_1_1_test_notebook12.html", "classtests_1_1test__native__controllers_1_1_test_notebook12" ],
-        [ "TestRiccati", "classtests_1_1test__native__controllers_1_1_test_riccati.html", "classtests_1_1test__native__controllers_1_1_test_riccati" ]
+        [ "TestRiccati", "classtests_1_1test__native__controllers_1_1_test_riccati.html", "classtests_1_1test__native__controllers_1_1_test_riccati" ],
+        [ "TestTunerRole", "classtests_1_1test__native__controllers_1_1_test_tuner_role.html", "classtests_1_1test__native__controllers_1_1_test_tuner_role" ]
       ] ],
       [ "test_native_core", "namespacetests_1_1test__native__core.html", [
         [ "TestApiBuildsNativeModels", "classtests_1_1test__native__core_1_1_test_api_builds_native_models.html", "classtests_1_1test__native__core_1_1_test_api_builds_native_models" ],
@@ -828,6 +941,20 @@ var annotated_dup =
         [ "TestNativeModel", "classtests_1_1test__native__core_1_1_test_native_model.html", "classtests_1_1test__native__core_1_1_test_native_model" ],
         [ "TestPluginPolicy", "classtests_1_1test__native__core_1_1_test_plugin_policy.html", "classtests_1_1test__native__core_1_1_test_plugin_policy" ],
         [ "TestPublicNativeModule", "classtests_1_1test__native__core_1_1_test_public_native_module.html", "classtests_1_1test__native__core_1_1_test_public_native_module" ]
+      ] ],
+      [ "test_native_counterparts", "namespacetests_1_1test__native__counterparts.html", [
+        [ "TestBallisticCounterpart", "classtests_1_1test__native__counterparts_1_1_test_ballistic_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_ballistic_counterpart" ],
+        [ "TestBallisticLinearModel", "classtests_1_1test__native__counterparts_1_1_test_ballistic_linear_model.html", "classtests_1_1test__native__counterparts_1_1_test_ballistic_linear_model" ],
+        [ "TestCarLaneCounterpart", "classtests_1_1test__native__counterparts_1_1_test_car_lane_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_car_lane_counterpart" ],
+        [ "TestCarSpeedCounterpart", "classtests_1_1test__native__counterparts_1_1_test_car_speed_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_car_speed_counterpart" ],
+        [ "TestCounterpartContract", "classtests_1_1test__native__counterparts_1_1_test_counterpart_contract.html", "classtests_1_1test__native__counterparts_1_1_test_counterpart_contract" ],
+        [ "TestInterplanetaryCounterpart", "classtests_1_1test__native__counterparts_1_1_test_interplanetary_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_interplanetary_counterpart" ],
+        [ "TestPolarizationCounterpart", "classtests_1_1test__native__counterparts_1_1_test_polarization_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_polarization_counterpart" ],
+        [ "TestRocketCounterparts", "classtests_1_1test__native__counterparts_1_1_test_rocket_counterparts.html", "classtests_1_1test__native__counterparts_1_1_test_rocket_counterparts" ],
+        [ "TestSmootherUsesEachStepsTransition", "classtests_1_1test__native__counterparts_1_1_test_smoother_uses_each_steps_transition.html", "classtests_1_1test__native__counterparts_1_1_test_smoother_uses_each_steps_transition" ],
+        [ "TestStormCounterpart", "classtests_1_1test__native__counterparts_1_1_test_storm_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_storm_counterpart" ],
+        [ "TestTornadoCounterpart", "classtests_1_1test__native__counterparts_1_1_test_tornado_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_tornado_counterpart" ],
+        [ "TestTransLunarCounterpart", "classtests_1_1test__native__counterparts_1_1_test_trans_lunar_counterpart.html", "classtests_1_1test__native__counterparts_1_1_test_trans_lunar_counterpart" ]
       ] ],
       [ "test_native_decoding", "namespacetests_1_1test__native__decoding.html", [
         [ "TestDecodingInCxx", "classtests_1_1test__native__decoding_1_1_test_decoding_in_cxx.html", "classtests_1_1test__native__decoding_1_1_test_decoding_in_cxx" ],
@@ -841,7 +968,7 @@ var annotated_dup =
         [ "TestTwinExperiment", "classtests_1_1test__native__fields_1_1_test_twin_experiment.html", "classtests_1_1test__native__fields_1_1_test_twin_experiment" ]
       ] ],
       [ "test_native_gps", "namespacetests_1_1test__native__gps.html", [
-        [ "TestGPSTwin", "classtests_1_1test__native__gps_1_1_test_g_p_s_twin.html", "classtests_1_1test__native__gps_1_1_test_g_p_s_twin" ],
+        [ "TestGPSCounterpart", "classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html", "classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart" ],
         [ "TestNamedArrays", "classtests_1_1test__native__gps_1_1_test_named_arrays.html", "classtests_1_1test__native__gps_1_1_test_named_arrays" ]
       ] ],
       [ "test_native_integrators", "namespacetests_1_1test__native__integrators.html", [
@@ -854,18 +981,18 @@ var annotated_dup =
       [ "test_native_matrices", "namespacetests_1_1test__native__matrices.html", [
         [ "path_taken", "classtests_1_1test__native__matrices_1_1path__taken.html", "classtests_1_1test__native__matrices_1_1path__taken" ],
         [ "TestCalorimeter", "classtests_1_1test__native__matrices_1_1_test_calorimeter.html", "classtests_1_1test__native__matrices_1_1_test_calorimeter" ],
+        [ "TestCounterpartsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines.html", "classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines" ],
         [ "TestFilterFamilies", "classtests_1_1test__native__matrices_1_1_test_filter_families.html", "classtests_1_1test__native__matrices_1_1_test_filter_families" ],
         [ "TestNativeModelPass", "classtests_1_1test__native__matrices_1_1_test_native_model_pass.html", "classtests_1_1test__native__matrices_1_1_test_native_model_pass" ],
         [ "TestNoModelFallsBackToThePythonLoop", "classtests_1_1test__native__matrices_1_1_test_no_model_falls_back_to_the_python_loop.html", "classtests_1_1test__native__matrices_1_1_test_no_model_falls_back_to_the_python_loop" ],
         [ "TestParticleFilterOnNumpysDraws", "classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws.html", "classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws" ],
         [ "TestSmootherInCxx", "classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html", "classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx" ],
-        [ "TestTimeVaryingMatrices", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices.html", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices" ],
-        [ "TestTwinsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines.html", "classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines" ]
+        [ "TestTimeVaryingMatrices", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices.html", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices" ]
       ] ],
       [ "test_native_routers", "namespacetests_1_1test__native__routers.html", [
         [ "_Softmax", "classtests_1_1test__native__routers_1_1___softmax.html", "classtests_1_1test__native__routers_1_1___softmax" ],
         [ "TestErrors", "classtests_1_1test__native__routers_1_1_test_errors.html", "classtests_1_1test__native__routers_1_1_test_errors" ],
-        [ "TestInsideTheIKF", "classtests_1_1test__native__routers_1_1_test_inside_the_i_k_f.html", "classtests_1_1test__native__routers_1_1_test_inside_the_i_k_f" ],
+        [ "TestInsideARoutedPass", "classtests_1_1test__native__routers_1_1_test_inside_a_routed_pass.html", "classtests_1_1test__native__routers_1_1_test_inside_a_routed_pass" ],
         [ "TestRoutersAgreeWithTheirReference", "classtests_1_1test__native__routers_1_1_test_routers_agree_with_their_reference.html", "classtests_1_1test__native__routers_1_1_test_routers_agree_with_their_reference" ]
       ] ],
       [ "test_native_solvers", "namespacetests_1_1test__native__solvers.html", [
@@ -873,20 +1000,7 @@ var annotated_dup =
         [ "TestSolversInCxx", "classtests_1_1test__native__solvers_1_1_test_solvers_in_cxx.html", "classtests_1_1test__native__solvers_1_1_test_solvers_in_cxx" ]
       ] ],
       [ "test_native_tracking", "namespacetests_1_1test__native__tracking.html", [
-        [ "TestDriftChamberTwin", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_twin.html", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_twin" ]
-      ] ],
-      [ "test_native_twins", "namespacetests_1_1test__native__twins.html", [
-        [ "TestBallisticTwin", "classtests_1_1test__native__twins_1_1_test_ballistic_twin.html", "classtests_1_1test__native__twins_1_1_test_ballistic_twin" ],
-        [ "TestCarLaneTwin", "classtests_1_1test__native__twins_1_1_test_car_lane_twin.html", "classtests_1_1test__native__twins_1_1_test_car_lane_twin" ],
-        [ "TestCarSpeedTwin", "classtests_1_1test__native__twins_1_1_test_car_speed_twin.html", "classtests_1_1test__native__twins_1_1_test_car_speed_twin" ],
-        [ "TestInterplanetaryTwin", "classtests_1_1test__native__twins_1_1_test_interplanetary_twin.html", "classtests_1_1test__native__twins_1_1_test_interplanetary_twin" ],
-        [ "TestPolarizationTwin", "classtests_1_1test__native__twins_1_1_test_polarization_twin.html", "classtests_1_1test__native__twins_1_1_test_polarization_twin" ],
-        [ "TestRocketTwins", "classtests_1_1test__native__twins_1_1_test_rocket_twins.html", "classtests_1_1test__native__twins_1_1_test_rocket_twins" ],
-        [ "TestSmootherUsesEachStepsTransition", "classtests_1_1test__native__twins_1_1_test_smoother_uses_each_steps_transition.html", "classtests_1_1test__native__twins_1_1_test_smoother_uses_each_steps_transition" ],
-        [ "TestStormTwin", "classtests_1_1test__native__twins_1_1_test_storm_twin.html", "classtests_1_1test__native__twins_1_1_test_storm_twin" ],
-        [ "TestTornadoTwin", "classtests_1_1test__native__twins_1_1_test_tornado_twin.html", "classtests_1_1test__native__twins_1_1_test_tornado_twin" ],
-        [ "TestTransLunarTwin", "classtests_1_1test__native__twins_1_1_test_trans_lunar_twin.html", "classtests_1_1test__native__twins_1_1_test_trans_lunar_twin" ],
-        [ "TestTwinContract", "classtests_1_1test__native__twins_1_1_test_twin_contract.html", "classtests_1_1test__native__twins_1_1_test_twin_contract" ]
+        [ "TestDriftChamberCounterpart", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_counterpart.html", "classtests_1_1test__native__tracking_1_1_test_drift_chamber_counterpart" ]
       ] ],
       [ "test_net_server", "namespacetests_1_1test__net__server.html", [
         [ "Server", "classtests_1_1test__net__server_1_1_server.html", "classtests_1_1test__net__server_1_1_server" ],
@@ -948,8 +1062,15 @@ var annotated_dup =
         [ "TestRest", "classtests_1_1test__rest_1_1_test_rest.html", "classtests_1_1test__rest_1_1_test_rest" ],
         [ "TestRestMainHint", "classtests_1_1test__rest_1_1_test_rest_main_hint.html", "classtests_1_1test__rest_1_1_test_rest_main_hint" ]
       ] ],
+      [ "test_route", "namespacetests_1_1test__route.html", [
+        [ "TestRouteBasicAPI", "classtests_1_1test__route_1_1_test_route_basic_a_p_i.html", "classtests_1_1test__route_1_1_test_route_basic_a_p_i" ],
+        [ "TestRouteFitAPI", "classtests_1_1test__route_1_1_test_route_fit_a_p_i.html", "classtests_1_1test__route_1_1_test_route_fit_a_p_i" ],
+        [ "TestRouteWithControl", "classtests_1_1test__route_1_1_test_route_with_control.html", "classtests_1_1test__route_1_1_test_route_with_control" ],
+        [ "TestRoutingAccuracy", "classtests_1_1test__route_1_1_test_routing_accuracy.html", "classtests_1_1test__route_1_1_test_routing_accuracy" ]
+      ] ],
       [ "test_router_export", "namespacetests_1_1test__router__export.html", [
-        [ "TestNeuralRouterExport", "classtests_1_1test__router__export_1_1_test_neural_router_export.html", "classtests_1_1test__router__export_1_1_test_neural_router_export" ]
+        [ "TestNeuralRouterExport", "classtests_1_1test__router__export_1_1_test_neural_router_export.html", "classtests_1_1test__router__export_1_1_test_neural_router_export" ],
+        [ "TestTorchScriptExport", "classtests_1_1test__router__export_1_1_test_torch_script_export.html", "classtests_1_1test__router__export_1_1_test_torch_script_export" ]
       ] ],
       [ "test_routers", "namespacetests_1_1test__routers.html", [
         [ "_ArchitectureTrainingMixin", "classtests_1_1test__routers_1_1___architecture_training_mixin.html", "classtests_1_1test__routers_1_1___architecture_training_mixin" ],
@@ -963,6 +1084,11 @@ var annotated_dup =
         [ "TestRouterPersistence", "classtests_1_1test__routers_1_1_test_router_persistence.html", "classtests_1_1test__routers_1_1_test_router_persistence" ],
         [ "TestThresholdRouter", "classtests_1_1test__routers_1_1_test_threshold_router.html", "classtests_1_1test__routers_1_1_test_threshold_router" ],
         [ "TestTransformerArchitecture", "classtests_1_1test__routers_1_1_test_transformer_architecture.html", "classtests_1_1test__routers_1_1_test_transformer_architecture" ]
+      ] ],
+      [ "test_sensors", "namespacetests_1_1test__sensors.html", [
+        [ "TestReadings", "classtests_1_1test__sensors_1_1_test_readings.html", "classtests_1_1test__sensors_1_1_test_readings" ],
+        [ "TestSettingsAreParameters", "classtests_1_1test__sensors_1_1_test_settings_are_parameters.html", "classtests_1_1test__sensors_1_1_test_settings_are_parameters" ],
+        [ "TestTheModelTakesTheCxxSensor", "classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html", "classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor" ]
       ] ],
       [ "test_site_search", "namespacetests_1_1test__site__search.html", [
         [ "TestSiteSearchIndex", "classtests_1_1test__site__search_1_1_test_site_search_index.html", "classtests_1_1test__site__search_1_1_test_site_search_index" ]
@@ -981,8 +1107,13 @@ var annotated_dup =
       ] ],
       [ "test_structure", "namespacetests_1_1test__structure.html", [
         [ "TestAppsAreUniformPackages", "classtests_1_1test__structure_1_1_test_apps_are_uniform_packages.html", "classtests_1_1test__structure_1_1_test_apps_are_uniform_packages" ],
+        [ "TestCxxHeadersHaveOneLayout", "classtests_1_1test__structure_1_1_test_cxx_headers_have_one_layout.html", "classtests_1_1test__structure_1_1_test_cxx_headers_have_one_layout" ],
         [ "TestFrameworkOwnsContracts", "classtests_1_1test__structure_1_1_test_framework_owns_contracts.html", "classtests_1_1test__structure_1_1_test_framework_owns_contracts" ],
-        [ "TestRegistriesCoverTheirKinds", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds.html", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds" ]
+        [ "TestRegistriesCoverTheirKinds", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds.html", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds" ],
+        [ "TestReservedNames", "classtests_1_1test__structure_1_1_test_reserved_names.html", "classtests_1_1test__structure_1_1_test_reserved_names" ]
+      ] ],
+      [ "test_terminology", "namespacetests_1_1test__terminology.html", [
+        [ "TestTerminology", "classtests_1_1test__terminology_1_1_test_terminology.html", "classtests_1_1test__terminology_1_1_test_terminology" ]
       ] ],
       [ "test_tracking", "namespacetests_1_1test__tracking.html", [
         [ "TestCKFFinding", "classtests_1_1test__tracking_1_1_test_c_k_f_finding.html", "classtests_1_1test__tracking_1_1_test_c_k_f_finding" ],
@@ -1004,5 +1135,6 @@ var annotated_dup =
     [ "kalman_model", "structkalman__model.html", "structkalman__model" ],
     [ "kalman_model_info", "structkalman__model__info.html", "structkalman__model__info" ],
     [ "kalman_router", "structkalman__router.html", "structkalman__router" ],
+    [ "kalman_sensor", "structkalman__sensor.html", "structkalman__sensor" ],
     [ "kalman_tracks", "structkalman__tracks.html", "structkalman__tracks" ]
 ];

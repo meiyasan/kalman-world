@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -192,8 +192,8 @@ Variables</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Composite models run as models of matrices, in C++.
 
-A :class:`CompositeKalmanModel` stacks its parts: block-diagonal F and Q, and an
-H that stacks (INDEPENDENT) or sums (FUSED) the parts' readouts. When every part
+A :class:`Composite` (``compose``) puts its parts side by side: block-diagonal F and Q, and an
+H that stacks (STACKED) or sums (SUMMED) the parts' readouts. When every part
 is constant matrices the composite is too, and says so (``structure`` is
 MATRICES), so its filtering pass and its smoother run in C++ on those matrices
 (``kf_forward_linear`` / ``kf_backward_rts``) instead of the C++ loop calling the
@@ -219,15 +219,15 @@ linear pass switched off as well).
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00110">110</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  110</span><span class="keyword">def </span>bank():</div>
-<div class="line"><span class="lineno">  111</span>    <span class="keywordflow">return</span> OscillatorBankModel(*[</div>
-<div class="line"><span class="lineno">  112</span>        InharmonicOscillatorModel(f<span class="stringliteral">&quot;ih_{k}&quot;</span>, f0=170.0, fc=fk, dfc=8.0, n_harmonics=3, B=0.13, Q=q, fs=FS,</div>
-<div class="line"><span class="lineno">  113</span>                                  measurement_uncertainty=0.05, process_uncertainty=1e-5)</div>
-<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">for</span> k, (fk, q) <span class="keywordflow">in</span> enumerate(zip(PARTIALS, [1.3e4, 1.8e4, 2.1e4]))])</div>
-<div class="line"><span class="lineno">  115</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00111">111</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  111</span><span class="keyword">def </span>bank():</div>
+<div class="line"><span class="lineno">  112</span>    <span class="keywordflow">return</span> OscillatorBankModel(*[</div>
+<div class="line"><span class="lineno">  113</span>        InharmonicOscillatorModel(f<span class="stringliteral">&quot;ih_{k}&quot;</span>, f0=170.0, fc=fk, dfc=8.0, n_harmonics=3, B=0.13, Q=q, fs=FS,</div>
+<div class="line"><span class="lineno">  114</span>                                  measurement_uncertainty=0.05, process_uncertainty=1e-5)</div>
+<div class="line"><span class="lineno">  115</span>        <span class="keywordflow">for</span> k, (fk, q) <span class="keywordflow">in</span> enumerate(zip(PARTIALS, [1.3e4, 1.8e4, 2.1e4]))])</div>
 <div class="line"><span class="lineno">  116</span> </div>
-<div class="line"><span class="lineno">  117</span><span class="preprocessor">@needs_kernels</span></div>
+<div class="line"><span class="lineno">  117</span> </div>
+<div class="line"><span class="lineno">  118</span><span class="preprocessor">@needs_kernels</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -369,12 +369,12 @@ against the forward scale both stay below 1e-7.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00102">102</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  102</span><span class="keyword">def </span>cluster():</div>
-<div class="line"><span class="lineno">  103</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;cluster&quot;</span>, [178.0, 180.1, 182.5], fc=180.0, dfc=8.0, Q=[1.3e4] * 3, fs=FS,</div>
-<div class="line"><span class="lineno">  104</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
-<div class="line"><span class="lineno">  105</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00103">103</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  103</span><span class="keyword">def </span>cluster():</div>
+<div class="line"><span class="lineno">  104</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;cluster&quot;</span>, [178.0, 180.1, 182.5], fc=180.0, dfc=8.0, Q=[1.3e4] * 3, fs=FS,</div>
+<div class="line"><span class="lineno">  105</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
 <div class="line"><span class="lineno">  106</span> </div>
+<div class="line"><span class="lineno">  107</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -415,23 +415,25 @@ against the forward scale both stay below 1e-7.</pre>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">The default pass, asserting it is the fused C++ one.</pre> 
+<pre class="fragment">The default pass, asserting it is the C++ one on the C++ composite: the
+whole loop in Kalman::Filter, no Python called back.</pre> 
 <p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00082">82</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   82</span><span class="keyword">def </span>on_cpp(test, make, z, smooth=False):</div>
-<div class="line"><span class="lineno">   83</span>    <span class="stringliteral">&quot;&quot;&quot;The default pass, asserting it is the fused C++ one.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   84</span>    <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_native&quot;</span>, autospec=<span class="keyword">True</span>,</div>
-<div class="line"><span class="lineno">   85</span>                           side_effect=KalmanFilter._forward_native) <span class="keyword">as</span> fused, \</div>
-<div class="line"><span class="lineno">   86</span>            mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_callback&quot;</span>, autospec=<span class="keyword">True</span>,</div>
-<div class="line"><span class="lineno">   87</span>                              side_effect=KalmanFilter._forward_callback) <span class="keyword">as</span> callback:</div>
-<div class="line"><span class="lineno">   88</span>        model = make()</div>
-<div class="line"><span class="lineno">   89</span>        record = model.filter(z, smooth=smooth)</div>
-<div class="line"><span class="lineno">   90</span>    test.assertEqual(fused.call_count, 1, <span class="stringliteral">&quot;the pass ran in kf_forward_linear&quot;</span>)</div>
-<div class="line"><span class="lineno">   91</span>    test.assertEqual(callback.call_count, 0, <span class="stringliteral">&quot;no Python callbacks&quot;</span>)</div>
-<div class="line"><span class="lineno">   92</span>    test.assertIsInstance(model._filter.engine, LinearKalmanEngine)</div>
-<div class="line"><span class="lineno">   93</span>    test.last_model = model</div>
-<div class="line"><span class="lineno">   94</span>    <span class="keywordflow">return</span> record</div>
-<div class="line"><span class="lineno">   95</span> </div>
+<div class="line"><span class="lineno">   83</span>    <span class="stringliteral">&quot;&quot;&quot;The default pass, asserting it is the C++ one on the C++ composite: the</span></div>
+<div class="line"><span class="lineno">   84</span><span class="stringliteral">    whole loop in Kalman::Filter, no Python called back.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   85</span>    <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_counterpart&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">   86</span>                           side_effect=KalmanFilter._forward_counterpart) <span class="keyword">as</span> cxx, \</div>
+<div class="line"><span class="lineno">   87</span>            mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_callback&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">   88</span>                              side_effect=KalmanFilter._forward_callback) <span class="keyword">as</span> callback:</div>
+<div class="line"><span class="lineno">   89</span>        model = make()</div>
+<div class="line"><span class="lineno">   90</span>        record = model.filter(z, smooth=smooth)</div>
+<div class="line"><span class="lineno">   91</span>    test.assertEqual(cxx.call_count, 1, <span class="stringliteral">&quot;the pass ran in Kalman::Filter on the C++ composite&quot;</span>)</div>
+<div class="line"><span class="lineno">   92</span>    test.assertEqual(callback.call_count, 0, <span class="stringliteral">&quot;no Python callbacks&quot;</span>)</div>
+<div class="line"><span class="lineno">   93</span>    test.assertIsInstance(model._filter.engine, LinearKalmanEngine)</div>
+<div class="line"><span class="lineno">   94</span>    test.last_model = model</div>
+<div class="line"><span class="lineno">   95</span>    <span class="keywordflow">return</span> record</div>
 <div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -450,12 +452,12 @@ against the forward scale both stay below 1e-7.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00097">97</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   97</span><span class="keyword">def </span>one_line():</div>
-<div class="line"><span class="lineno">   98</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;mode&quot;</span>, [180.1], fc=180.1, dfc=5.0, Q=1.3e4, fs=FS,</div>
-<div class="line"><span class="lineno">   99</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
-<div class="line"><span class="lineno">  100</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00098">98</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   98</span><span class="keyword">def </span>one_line():</div>
+<div class="line"><span class="lineno">   99</span>    <span class="keywordflow">return</span> OscillatorModel(<span class="stringliteral">&quot;mode&quot;</span>, [180.1], fc=180.1, dfc=5.0, Q=1.3e4, fs=FS,</div>
+<div class="line"><span class="lineno">  100</span>                           measurement_uncertainty=0.1, process_uncertainty=1e-4)</div>
 <div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -490,10 +492,10 @@ against the forward scale both stay below 1e-7.</pre>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">The Python loop: no C++ loop, no twin, no fused linear pass.</pre> 
+<pre class="fragment">The Python loop: no C++ loop, no counterpart, no fused linear pass.</pre> 
 <p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00061">61</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   61</span><span class="keyword">def </span>reference(make, z, smooth=False):</div>
-<div class="line"><span class="lineno">   62</span>    <span class="stringliteral">&quot;&quot;&quot;The Python loop: no C++ loop, no twin, no fused linear pass.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   62</span>    <span class="stringliteral">&quot;&quot;&quot;The Python loop: no C++ loop, no counterpart, no fused linear pass.&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">   63</span>    <span class="keyword">with</span> native.python_reference(), \</div>
 <div class="line"><span class="lineno">   64</span>            mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_native_forward_eligible&quot;</span>, return_value=<span class="keyword">False</span>):</div>
 <div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> make().filter(z, smooth=smooth)</div>
@@ -626,7 +628,7 @@ against the forward scale both stay below 1e-7.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00107">107</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00108">108</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 
 </div>
 </div>

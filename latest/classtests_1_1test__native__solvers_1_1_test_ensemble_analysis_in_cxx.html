@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -252,16 +252,16 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   87</span>        engine = EnsembleKalmanEngine(n_members=12, inflation=1.05, seed=5)</div>
 <div class="line"><span class="lineno">   88</span>        rng = np.random.default_rng(9)</div>
 <div class="line"><span class="lineno">   89</span>        <span class="comment"># A small ensemble drawn around a spun-up state (the model&#39;s own</span></div>
-<div class="line"><span class="lineno">   90</span>        <span class="comment"># initial_ensemble would spin a 2500-step climatology first).</span></div>
+<div class="line"><span class="lineno">   90</span>        <span class="comment"># initial state as samples would spin a 2500-step climatology first).</span></div>
 <div class="line"><span class="lineno">   91</span>        truth = model.solver.advance(model.solver.random_ic(), 200).ravel()</div>
 <div class="line"><span class="lineno">   92</span>        start = truth[:, <span class="keywordtype">None</span>] + 0.3 * np.random.default_rng(1).standard_normal((model.n, 12))</div>
-<div class="line"><span class="lineno">   93</span>        model.initial_ensemble = <span class="keyword">lambda</span> N, rng=<span class="keywordtype">None</span>: start.copy()</div>
+<div class="line"><span class="lineno">   93</span>        model.initial_state = <span class="keyword">lambda</span> x0=<span class="keywordtype">None</span>, P0=<span class="keywordtype">None</span>, *, samples=<span class="keywordtype">None</span>, rng=<span class="keywordtype">None</span>: start.copy()</div>
 <div class="line"><span class="lineno">   94</span>        <span class="keyword">def </span>go():</div>
 <div class="line"><span class="lineno">   95</span>            engine.reset(model)</div>
 <div class="line"><span class="lineno">   96</span>            x = truth.copy()</div>
 <div class="line"><span class="lineno">   97</span>            means = []</div>
 <div class="line"><span class="lineno">   98</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(4):</div>
-<div class="line"><span class="lineno">   99</span>                x = np.asarray(model.forecast(x.reshape(-1, 1)), float).ravel()</div>
+<div class="line"><span class="lineno">   99</span>                x = np.asarray(model.f(x.reshape(-1, 1)), float).ravel()</div>
 <div class="line"><span class="lineno">  100</span>                z = np.asarray(model.h(x.reshape(-1, 1)), float).ravel() + 0.05 * rng.standard_normal(model.m)</div>
 <div class="line"><span class="lineno">  101</span>                <span class="keywordflow">if</span> k == 2:</div>
 <div class="line"><span class="lineno">  102</span>                    z[::3] = np.nan                       <span class="comment"># some probes silent</span></div>

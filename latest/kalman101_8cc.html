@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('kalman101_8cc.html',''); initResizable
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for kalman101.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="kalman101_8cc__incl.svg" width="5871" height="740"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="kalman101_8cc__incl.svg" width="6420" height="799"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="kalman101_8cc_source.html">Go to the source code of this file.</a></p>
@@ -194,14 +194,14 @@ Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="kalman101_8cc_source.html#l00061">61</a> of file <a class="el" href="kalman101_8cc_source.html">kalman101.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   62</span>{</div>
 <div class="line"><span class="lineno">   63</span>    <span class="comment">// --- the system ------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">   64</span>    ConstantVelocity model(<span class="comment">/* fs */</span> 100., <span class="comment">/* sigma_a */</span> 0.5, <span class="comment">/* sigma_z */</span> 0.2);</div>
+<div class="line"><span class="lineno">   64</span>    ConstantVelocity <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>(<span class="comment">/* fs */</span> 100., <span class="comment">/* sigma_a */</span> 0.5, <span class="comment">/* sigma_z */</span> 0.2);</div>
 <div class="line"><span class="lineno">   65</span> </div>
 <div class="line"><span class="lineno">   66</span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Kalman::Vector</a> x0(2);</div>
 <div class="line"><span class="lineno">   67</span>    x0(0) = 0.;                                 <span class="comment">// start at the origin</span></div>
 <div class="line"><span class="lineno">   68</span>    x0(1) = 1.;                                 <span class="comment">// moving at 1 m/s</span></div>
-<div class="line"><span class="lineno">   69</span>    model.SetInitialState(x0);</div>
+<div class="line"><span class="lineno">   69</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetInitialState(x0);</div>
 <div class="line"><span class="lineno">   70</span> </div>
-<div class="line"><span class="lineno">   71</span>    std::fprintf(stderr, <span class="stringliteral">&quot;%s\n&quot;</span>, model.Describe().c_str());</div>
+<div class="line"><span class="lineno">   71</span>    std::fprintf(stderr, <span class="stringliteral">&quot;%s\n&quot;</span>, <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.Describe().c_str());</div>
 <div class="line"><span class="lineno">   72</span> </div>
 <div class="line"><span class="lineno">   73</span>    <span class="comment">// --- the data --------------------------------------------------------</span></div>
 <div class="line"><span class="lineno">   74</span>    <a class="code hl_class" href="class_kalman_1_1_sampler.html">Kalman::Sampler</a> sampler(&amp;model, 20260804);</div>
@@ -213,9 +213,9 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   80</span>    <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Kalman::Record</a> smoothed = filter.Backward();</div>
 <div class="line"><span class="lineno">   81</span> </div>
 <div class="line"><span class="lineno">   82</span>    std::fprintf(stderr, <span class="stringliteral">&quot;mean NIS  = %.3f   (consistent when close to m = %zu)\n&quot;</span>,</div>
-<div class="line"><span class="lineno">   83</span>                 filter.MeanNIS(), model.NMeasure());</div>
+<div class="line"><span class="lineno">   83</span>                 filter.MeanNIS(), <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NMeasure());</div>
 <div class="line"><span class="lineno">   84</span>    std::fprintf(stderr, <span class="stringliteral">&quot;mean NEES = %.3f   (consistent when close to n = %zu)\n&quot;</span>,</div>
-<div class="line"><span class="lineno">   85</span>                 filter.MeanNEES(sampler.Truth()), model.NState());</div>
+<div class="line"><span class="lineno">   85</span>                 filter.MeanNEES(sampler.Truth()), <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState());</div>
 <div class="line"><span class="lineno">   86</span>    std::fprintf(stderr, <span class="stringliteral">&quot;RMSE  raw = %.5f   filtered = %.5f   smoothed = %.5f\n&quot;</span>,</div>
 <div class="line"><span class="lineno">   87</span>                 [&amp;] {</div>
 <div class="line"><span class="lineno">   88</span>                     <span class="keywordtype">double</span> e = 0.;</div>
@@ -230,7 +230,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   97</span>    <span class="comment">// Deliberately a plain table on stdout: the record holds the +/- sigma band,</span></div>
 <div class="line"><span class="lineno">   98</span>    <span class="comment">// and whether that becomes a TGraph, a matplotlib axis or a gnuplot file is</span></div>
 <div class="line"><span class="lineno">   99</span>    <span class="comment">// the caller&#39;s business, not the library&#39;s.</span></div>
-<div class="line"><span class="lineno">  100</span>    <span class="keyword">const</span> std::vector&lt;double&gt; sigma = forward.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
+<div class="line"><span class="lineno">  100</span>    <span class="keyword">const</span> std::vector&lt;double&gt; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a> = forward.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
 <div class="line"><span class="lineno">  101</span>    std::printf(<span class="stringliteral">&quot;# t\ttruth\tmeasured\tfiltered\tsigma\tsmoothed\n&quot;</span>);</div>
 <div class="line"><span class="lineno">  102</span>    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; forward.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a6a63684cdccc0f1341ab7d4979891510">NSteps</a>(); ++k)</div>
 <div class="line"><span class="lineno">  103</span>        std::printf(<span class="stringliteral">&quot;%.4f\t%.6f\t%.6f\t%.6f\t%.6f\t%.6f\n&quot;</span>,</div>
@@ -249,6 +249,8 @@ Functions</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_aa5dbe9f7404420162e4f451917c5f788"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">Kalman::IO::Record::RMSE</a></div><div class="ttdeci">double RMSE(std::size_t i, const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Root-mean-square difference between component i and truth.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00115">Record.cc:115</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_sampler_html"><div class="ttname"><a href="class_kalman_1_1_sampler.html">Kalman::Sampler</a></div><div class="ttdoc">Draws truth and measurements from a model, for tests and demos.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8h_source.html#l00047">Sampler.h:48</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a2defcfb1809fbc48c528a4842b379e81"><div class="ttname"><a href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">instrument.sigma</a></div><div class="ttdeci">sigma</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00075">instrument.py:75</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -12,6 +12,7 @@ var namespacetests =
     [ "conftest", "namespacetests_1_1conftest.html", [
       [ "_STATE", "namespacetests_1_1conftest.html#ac03dfeda033a6f512ee2d6fa13209dca", null ]
     ] ],
+    [ "test_add_sensor", "namespacetests_1_1test__add__sensor.html", "namespacetests_1_1test__add__sensor" ],
     [ "test_api", "namespacetests_1_1test__api.html", "namespacetests_1_1test__api" ],
     [ "test_apps_extra", "namespacetests_1_1test__apps__extra.html", "namespacetests_1_1test__apps__extra" ],
     [ "test_barotropic", "namespacetests_1_1test__barotropic.html", [
@@ -28,6 +29,8 @@ var namespacetests =
       [ "LX", "namespacetests_1_1test__barotropic.html#a77863973bbf8cf8c7b1d9b34a45a34b0", null ],
       [ "LY", "namespacetests_1_1test__barotropic.html#ac45be815b1c24a1cf640fcd06b97a03c", null ]
     ] ],
+    [ "test_compose", "namespacetests_1_1test__compose.html", "namespacetests_1_1test__compose" ],
+    [ "test_contract_parity", "namespacetests_1_1test__contract__parity.html", "namespacetests_1_1test__contract__parity" ],
     [ "test_engines", "namespacetests_1_1test__engines.html", "namespacetests_1_1test__engines" ],
     [ "test_ensemble", "namespacetests_1_1test__ensemble.html", "namespacetests_1_1test__ensemble" ],
     [ "test_examples", "namespacetests_1_1test__examples.html", "namespacetests_1_1test__examples" ],
@@ -35,9 +38,11 @@ var namespacetests =
     [ "test_filters", "namespacetests_1_1test__filters.html", "namespacetests_1_1test__filters" ],
     [ "test_framework", "namespacetests_1_1test__framework.html", "namespacetests_1_1test__framework" ],
     [ "test_helpers", "namespacetests_1_1test__helpers.html", "namespacetests_1_1test__helpers" ],
-    [ "test_ikf", "namespacetests_1_1test__ikf.html", "namespacetests_1_1test__ikf" ],
+    [ "test_instrument", "namespacetests_1_1test__instrument.html", "namespacetests_1_1test__instrument" ],
+    [ "test_instrument_data", "namespacetests_1_1test__instrument__data.html", "namespacetests_1_1test__instrument__data" ],
     [ "test_integrators", "namespacetests_1_1test__integrators.html", "namespacetests_1_1test__integrators" ],
     [ "test_interferometer", "namespacetests_1_1test__interferometer.html", "namespacetests_1_1test__interferometer" ],
+    [ "test_joint", "namespacetests_1_1test__joint.html", "namespacetests_1_1test__joint" ],
     [ "test_kalman_cli", "namespacetests_1_1test__kalman__cli.html", [
       [ "_binary", "namespacetests_1_1test__kalman__cli.html#ac53895c93e25f1a2dfe6943801a4d3eb", null ],
       [ "_example_plugin", "namespacetests_1_1test__kalman__cli.html#a6b03471dc0a0ae85b8c3427440d60958", null ],
@@ -62,12 +67,14 @@ var namespacetests =
       [ "pytestmark", "namespacetests_1_1test__kalman__cli.html#a1ab552dccc82f2612b2babae3bbaf5b6", null ],
       [ "REPO", "namespacetests_1_1test__kalman__cli.html#a3e8828ad180e7f22b275c0430562030a", null ]
     ] ],
+    [ "test_lag", "namespacetests_1_1test__lag.html", "namespacetests_1_1test__lag" ],
     [ "test_module", "namespacetests_1_1test__module.html", "namespacetests_1_1test__module" ],
     [ "test_native", "namespacetests_1_1test__native.html", "namespacetests_1_1test__native" ],
     [ "test_native_callback", "namespacetests_1_1test__native__callback.html", "namespacetests_1_1test__native__callback" ],
     [ "test_native_composite", "namespacetests_1_1test__native__composite.html", "namespacetests_1_1test__native__composite" ],
     [ "test_native_controllers", "namespacetests_1_1test__native__controllers.html", "namespacetests_1_1test__native__controllers" ],
     [ "test_native_core", "namespacetests_1_1test__native__core.html", "namespacetests_1_1test__native__core" ],
+    [ "test_native_counterparts", "namespacetests_1_1test__native__counterparts.html", "namespacetests_1_1test__native__counterparts" ],
     [ "test_native_decoding", "namespacetests_1_1test__native__decoding.html", "namespacetests_1_1test__native__decoding" ],
     [ "test_native_fields", "namespacetests_1_1test__native__fields.html", "namespacetests_1_1test__native__fields" ],
     [ "test_native_gps", "namespacetests_1_1test__native__gps.html", "namespacetests_1_1test__native__gps" ],
@@ -77,7 +84,6 @@ var namespacetests =
     [ "test_native_routers", "namespacetests_1_1test__native__routers.html", "namespacetests_1_1test__native__routers" ],
     [ "test_native_solvers", "namespacetests_1_1test__native__solvers.html", "namespacetests_1_1test__native__solvers" ],
     [ "test_native_tracking", "namespacetests_1_1test__native__tracking.html", "namespacetests_1_1test__native__tracking" ],
-    [ "test_native_twins", "namespacetests_1_1test__native__twins.html", "namespacetests_1_1test__native__twins" ],
     [ "test_net_server", "namespacetests_1_1test__net__server.html", "namespacetests_1_1test__net__server" ],
     [ "test_oscillators", "namespacetests_1_1test__oscillators.html", "namespacetests_1_1test__oscillators" ],
     [ "test_plots", "namespacetests_1_1test__plots.html", "namespacetests_1_1test__plots" ],
@@ -86,11 +92,14 @@ var namespacetests =
     [ "test_record", "namespacetests_1_1test__record.html", "namespacetests_1_1test__record" ],
     [ "test_registry", "namespacetests_1_1test__registry.html", "namespacetests_1_1test__registry" ],
     [ "test_rest", "namespacetests_1_1test__rest.html", "namespacetests_1_1test__rest" ],
+    [ "test_route", "namespacetests_1_1test__route.html", "namespacetests_1_1test__route" ],
     [ "test_router_export", "namespacetests_1_1test__router__export.html", "namespacetests_1_1test__router__export" ],
     [ "test_routers", "namespacetests_1_1test__routers.html", "namespacetests_1_1test__routers" ],
+    [ "test_sensors", "namespacetests_1_1test__sensors.html", "namespacetests_1_1test__sensors" ],
     [ "test_site_search", "namespacetests_1_1test__site__search.html", "namespacetests_1_1test__site__search" ],
     [ "test_site_versions", "namespacetests_1_1test__site__versions.html", "namespacetests_1_1test__site__versions" ],
     [ "test_storms", "namespacetests_1_1test__storms.html", "namespacetests_1_1test__storms" ],
     [ "test_structure", "namespacetests_1_1test__structure.html", "namespacetests_1_1test__structure" ],
+    [ "test_terminology", "namespacetests_1_1test__terminology.html", "namespacetests_1_1test__terminology" ],
     [ "test_tracking", "namespacetests_1_1test__tracking.html", "namespacetests_1_1test__tracking" ]
 ];

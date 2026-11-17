@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -404,13 +404,13 @@ unchanged. No RTS smoother (forward-only).
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00100">100</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  100</span>    <span class="keyword">def </span>_f_plain(model, x, u, t):</div>
-<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> model.f(x, u=u, w=<span class="keywordtype">None</span>, t=t)</div>
-<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">except</span> TypeError:</div>
-<div class="line"><span class="lineno">  104</span>            <span class="keywordflow">return</span> model.f(x, u=u, t=t)</div>
-<div class="line"><span class="lineno">  105</span> </div>
+<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00107">107</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    <span class="keyword">def </span>_f_plain(model, x, u, t):</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  109</span>            <span class="keywordflow">return</span> model.f(x, u=u, w=<span class="keywordtype">None</span>, t=t)</div>
+<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">return</span> model.f(x, u=u, t=t)</div>
+<div class="line"><span class="lineno">  112</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -509,19 +509,26 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 <div class="line"><span class="lineno">   83</span>                Q = L @ Q @ L.T</div>
 <div class="line"><span class="lineno">   84</span>        noise = np.random.multivariate_normal(np.zeros(n), Q, size=self.n_particles)</div>
 <div class="line"><span class="lineno">   85</span> </div>
-<div class="line"><span class="lineno">   86</span>        prop = np.empty_like(self._particles)</div>
-<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">for</span> i, xp <span class="keywordflow">in</span> enumerate(self._particles):</div>
-<div class="line"><span class="lineno">   88</span>            xi = xp.reshape(-1, 1)</div>
-<div class="line"><span class="lineno">   89</span>            <span class="keywordflow">if</span> accepts_w:</div>
-<div class="line"><span class="lineno">   90</span>                xi2 = model.f(xi, u=u, w=noise[i].reshape(-1, 1), t=t)</div>
-<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">   92</span>                xi2 = np.asarray(self._f_plain(model, xi, u, t)).reshape(-1, 1) + noise[i].reshape(-1, 1)</div>
-<div class="line"><span class="lineno">   93</span>            prop[i] = np.asarray(xi2, dtype=np.float64).reshape(-1)</div>
-<div class="line"><span class="lineno">   94</span>        self._particles = prop</div>
-<div class="line"><span class="lineno">   95</span> </div>
-<div class="line"><span class="lineno">   96</span>        x_mean, P_cov = self._estimate()</div>
-<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> x_mean, P_cov, np.eye(n)</div>
-<div class="line"><span class="lineno">   98</span> </div>
+<div class="line"><span class="lineno">   86</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> accepts_w <span class="keywordflow">and</span> model.batched(<span class="stringliteral">&quot;f&quot;</span>):</div>
+<div class="line"><span class="lineno">   87</span>            <span class="comment"># f of every particle in one call (the model&#39;s f is BATCHED), then the noise.</span></div>
+<div class="line"><span class="lineno">   88</span>            self._particles = np.ascontiguousarray(</div>
+<div class="line"><span class="lineno">   89</span>                np.asarray(model.f(self._particles.T, u=u, t=t), dtype=np.float64).T + noise)</div>
+<div class="line"><span class="lineno">   90</span>            x_mean, P_cov = self._estimate()</div>
+<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">return</span> x_mean, P_cov, np.eye(n)</div>
+<div class="line"><span class="lineno">   92</span> </div>
+<div class="line"><span class="lineno">   93</span>        prop = np.empty_like(self._particles)</div>
+<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">for</span> i, xp <span class="keywordflow">in</span> enumerate(self._particles):</div>
+<div class="line"><span class="lineno">   95</span>            xi = xp.reshape(-1, 1)</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">if</span> accepts_w:</div>
+<div class="line"><span class="lineno">   97</span>                xi2 = model.f(xi, u=u, w=noise[i].reshape(-1, 1), t=t)</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">   99</span>                xi2 = np.asarray(self._f_plain(model, xi, u, t)).reshape(-1, 1) + noise[i].reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  100</span>            prop[i] = np.asarray(xi2, dtype=np.float64).reshape(-1)</div>
+<div class="line"><span class="lineno">  101</span>        self._particles = prop</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>        x_mean, P_cov = self._estimate()</div>
+<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">return</span> x_mean, P_cov, np.eye(n)</div>
+<div class="line"><span class="lineno">  105</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -623,9 +630,9 @@ where ``F_k`` is the transition matrix stored during the forward pass at step ``
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#adae1de090b011a815fb9790b8bcbc96b">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00147">147</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  147</span>    <span class="keyword">def </span>_smooth(self, *args, **kwargs):</div>
-<div class="line"><span class="lineno">  148</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;Particle filter has no RTS smoother; use forward() only.&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00157">157</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>    <span class="keyword">def </span>_smooth(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;Particle filter has no RTS smoother; use forward() only.&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -708,48 +715,51 @@ even under numerical round-off.
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a626868626195a67c30107b9ba868e2e3">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00106">106</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
-<div class="line"><span class="lineno">  107</span>        z = np.asarray(z, dtype=np.float64).reshape(-1)</div>
-<div class="line"><span class="lineno">  108</span>        keep = ~np.isnan(z)</div>
-<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
-<div class="line"><span class="lineno">  110</span>            <span class="keywordflow">return</span> self._estimate()</div>
-<div class="line"><span class="lineno">  111</span> </div>
-<div class="line"><span class="lineno">  112</span>        idx = np.where(keep)[0]</div>
-<div class="line"><span class="lineno">  113</span>        mv = len(idx)</div>
-<div class="line"><span class="lineno">  114</span>        R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]</div>
-<div class="line"><span class="lineno">  115</span>        Rinv = np.linalg.pinv(R)</div>
-<div class="line"><span class="lineno">  116</span>        zc = z[idx]</div>
-<div class="line"><span class="lineno">  117</span> </div>
-<div class="line"><span class="lineno">  118</span>        <span class="comment"># model.h() is unavoidable Python (per-particle nonlinear map); only the</span></div>
-<div class="line"><span class="lineno">  119</span>        <span class="comment"># quadratic-form reduction below is pushed into C.</span></div>
-<div class="line"><span class="lineno">  120</span>        zp = np.empty((self.n_particles, mv), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">for</span> i, xp <span class="keywordflow">in</span> enumerate(self._particles):</div>
-<div class="line"><span class="lineno">  122</span>            zp[i] = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]</div>
-<div class="line"><span class="lineno">  123</span> </div>
-<div class="line"><span class="lineno">  124</span>        logw = np.log(self._weights + 1e-300)</div>
-<div class="line"><span class="lineno">  125</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> HAS_C_ACCEL</div>
-<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
-<div class="line"><span class="lineno">  127</span>            <span class="keyword">from</span> ..native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
-<div class="line"><span class="lineno">  128</span>            lib.pf_weight_update(</div>
-<div class="line"><span class="lineno">  129</span>                self.n_particles, mv,</div>
-<div class="line"><span class="lineno">  130</span>                dptr(as_contiguous(zc)), dptr(as_contiguous(zp)), dptr(as_contiguous(Rinv)), dptr(logw),</div>
-<div class="line"><span class="lineno">  131</span>            )</div>
-<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(self.n_particles):</div>
-<div class="line"><span class="lineno">  134</span>                dz = zc - zp[i]</div>
-<div class="line"><span class="lineno">  135</span>                logw[i] += -0.5 * dz @ Rinv @ dz</div>
-<div class="line"><span class="lineno">  136</span>        logw -= logw.max()</div>
-<div class="line"><span class="lineno">  137</span>        wts = np.exp(logw)</div>
-<div class="line"><span class="lineno">  138</span>        wts /= wts.sum()</div>
-<div class="line"><span class="lineno">  139</span>        self._weights = wts</div>
-<div class="line"><span class="lineno">  140</span> </div>
-<div class="line"><span class="lineno">  141</span>        ess = 1.0 / np.sum(wts ** 2)</div>
-<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">if</span> ess &lt; self.resample_threshold * self.n_particles:</div>
-<div class="line"><span class="lineno">  143</span>            self._resample()</div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>        <span class="keywordflow">return</span> self._estimate()</div>
-<div class="line"><span class="lineno">  146</span> </div>
+<p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00113">113</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
+<div class="line"><span class="lineno">  114</span>        z = np.asarray(z, dtype=np.float64).reshape(-1)</div>
+<div class="line"><span class="lineno">  115</span>        keep = ~np.isnan(z)</div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">return</span> self._estimate()</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span>        idx = np.where(keep)[0]</div>
+<div class="line"><span class="lineno">  120</span>        mv = len(idx)</div>
+<div class="line"><span class="lineno">  121</span>        R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]</div>
+<div class="line"><span class="lineno">  122</span>        Rinv = np.linalg.pinv(R)</div>
+<div class="line"><span class="lineno">  123</span>        zc = z[idx]</div>
+<div class="line"><span class="lineno">  124</span> </div>
+<div class="line"><span class="lineno">  125</span>        <span class="comment"># model.h() is unavoidable Python (per-particle nonlinear map); only the</span></div>
+<div class="line"><span class="lineno">  126</span>        <span class="comment"># quadratic-form reduction below is pushed into C.</span></div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">if</span> model.batched(<span class="stringliteral">&quot;h&quot;</span>):                          <span class="comment"># h of every particle in one call</span></div>
+<div class="line"><span class="lineno">  128</span>            zp = np.ascontiguousarray(np.asarray(model.h(self._particles.T, t=t), dtype=np.float64).T[:, idx])</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  130</span>            zp = np.empty((self.n_particles, mv), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">for</span> i, xp <span class="keywordflow">in</span> enumerate(self._particles):</div>
+<div class="line"><span class="lineno">  132</span>                zp[i] = np.asarray(model.h(xp.reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>        logw = np.log(self._weights + 1e-300)</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> HAS_C_ACCEL</div>
+<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">if</span> HAS_C_ACCEL:</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keyword">from</span> ..native <span class="keyword">import</span> lib, as_contiguous, dptr</div>
+<div class="line"><span class="lineno">  138</span>            lib.pf_weight_update(</div>
+<div class="line"><span class="lineno">  139</span>                self.n_particles, mv,</div>
+<div class="line"><span class="lineno">  140</span>                dptr(as_contiguous(zc)), dptr(as_contiguous(zp)), dptr(as_contiguous(Rinv)), dptr(logw),</div>
+<div class="line"><span class="lineno">  141</span>            )</div>
+<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(self.n_particles):</div>
+<div class="line"><span class="lineno">  144</span>                dz = zc - zp[i]</div>
+<div class="line"><span class="lineno">  145</span>                logw[i] += -0.5 * dz @ Rinv @ dz</div>
+<div class="line"><span class="lineno">  146</span>        logw -= logw.max()</div>
+<div class="line"><span class="lineno">  147</span>        wts = np.exp(logw)</div>
+<div class="line"><span class="lineno">  148</span>        wts /= wts.sum()</div>
+<div class="line"><span class="lineno">  149</span>        self._weights = wts</div>
+<div class="line"><span class="lineno">  150</span> </div>
+<div class="line"><span class="lineno">  151</span>        ess = 1.0 / np.sum(wts ** 2)</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">if</span> ess &lt; self.resample_threshold * self.n_particles:</div>
+<div class="line"><span class="lineno">  153</span>            self._resample()</div>
+<div class="line"><span class="lineno">  154</span> </div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">return</span> self._estimate()</div>
+<div class="line"><span class="lineno">  156</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -783,10 +793,10 @@ even under numerical round-off.
 
 <p class="definition">Definition at line <a class="el" href="particle_8py_source.html#l00036">36</a> of file <a class="el" href="particle_8py_source.html">particle.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   36</span>    <span class="keyword">def </span>reset(self, model):</div>
-<div class="line"><span class="lineno">   37</span>        n = model.n</div>
-<div class="line"><span class="lineno">   38</span>        x0 = np.asarray(model.x0, dtype=np.float64).reshape(-1)</div>
-<div class="line"><span class="lineno">   39</span>        P0 = np.asarray(model.P0, dtype=np.float64)</div>
-<div class="line"><span class="lineno">   40</span>        self._particles = np.random.multivariate_normal(x0, P0, size=self.n_particles)</div>
+<div class="line"><span class="lineno">   37</span>        <span class="comment"># The cloud a run starts from: the model&#39;s initial state as samples (drawn</span></div>
+<div class="line"><span class="lineno">   38</span>        <span class="comment"># from numpy&#39;s global stream, as the rest of this engine&#39;s noise is).</span></div>
+<div class="line"><span class="lineno">   39</span>        self._particles = np.ascontiguousarray(</div>
+<div class="line"><span class="lineno">   40</span>            np.asarray(model.initial_state(samples=self.n_particles), dtype=np.float64).T)</div>
 <div class="line"><span class="lineno">   41</span>        self._weights = np.full(self.n_particles, 1.0 / self.n_particles)</div>
 <div class="line"><span class="lineno">   42</span>        <span class="keywordflow">return</span> self</div>
 <div class="line"><span class="lineno">   43</span> </div>

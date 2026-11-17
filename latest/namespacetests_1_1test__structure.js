@@ -1,8 +1,10 @@
 var namespacetests_1_1test__structure =
 [
     [ "TestAppsAreUniformPackages", "classtests_1_1test__structure_1_1_test_apps_are_uniform_packages.html", "classtests_1_1test__structure_1_1_test_apps_are_uniform_packages" ],
+    [ "TestCxxHeadersHaveOneLayout", "classtests_1_1test__structure_1_1_test_cxx_headers_have_one_layout.html", "classtests_1_1test__structure_1_1_test_cxx_headers_have_one_layout" ],
     [ "TestFrameworkOwnsContracts", "classtests_1_1test__structure_1_1_test_framework_owns_contracts.html", "classtests_1_1test__structure_1_1_test_framework_owns_contracts" ],
     [ "TestRegistriesCoverTheirKinds", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds.html", "classtests_1_1test__structure_1_1_test_registries_cover_their_kinds" ],
+    [ "TestReservedNames", "classtests_1_1test__structure_1_1_test_reserved_names.html", "classtests_1_1test__structure_1_1_test_reserved_names" ],
     [ "_domain_packages", "namespacetests_1_1test__structure.html#abfe44aced8f4f93b6cbe5d27ab7007a0", null ],
     [ "APPS_DIR", "namespacetests_1_1test__structure.html#a6b2b51454d4c001531de2a6d8874ba5a", null ],
     [ "FAMILIES", "namespacetests_1_1test__structure.html#abc34b36d7812912c879b5f66c750de63", null ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -340,11 +340,13 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">  134</span>                    block = np.vstack([np.ones((self.window - len(block), nis.shape[1])), block])</div>
 <div class="line"><span class="lineno">  135</span>                feat = block.ravel().astype(np.float32)[<span class="keywordtype">None</span>, :]</div>
 <div class="line"><span class="lineno">  136</span> </div>
-<div class="line"><span class="lineno">  137</span>                got = session.run(<span class="keywordtype">None</span>, {name: feat})[0].ravel()</div>
-<div class="line"><span class="lineno">  138</span>                worst = max(worst, float(np.max(np.abs(got - expected))))</div>
-<div class="line"><span class="lineno">  139</span> </div>
-<div class="line"><span class="lineno">  140</span>            self.assertLess(worst, 1e-5, f<span class="stringliteral">&quot;graph and router disagree by {worst:.2e}&quot;</span>)</div>
+<div class="line"><span class="lineno">  137</span>                <span class="comment"># What Kalman::Routers::Neural does with the graph&#39;s answer.</span></div>
+<div class="line"><span class="lineno">  138</span>                got = c * session.run(<span class="keywordtype">None</span>, {name: feat})[0].ravel() ** (1.0 / self.window)</div>
+<div class="line"><span class="lineno">  139</span>                got = got / got.sum()</div>
+<div class="line"><span class="lineno">  140</span>                worst = max(worst, float(np.max(np.abs(got - expected))))</div>
 <div class="line"><span class="lineno">  141</span> </div>
+<div class="line"><span class="lineno">  142</span>            self.assertLess(worst, 1e-5, f<span class="stringliteral">&quot;graph and router disagree by {worst:.2e}&quot;</span>)</div>
+<div class="line"><span class="lineno">  143</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -428,19 +430,19 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__router__export_8py_source.html#l00142">142</a> of file <a class="el" href="test__router__export_8py_source.html">test_router_export.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  142</span>    <span class="keyword">def </span>test_unbaked_export_carries_its_normalisation(self):</div>
-<div class="line"><span class="lineno">  143</span>        <span class="keyword">import</span> tempfile</div>
-<div class="line"><span class="lineno">  144</span> </div>
-<div class="line"><span class="lineno">  145</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> tmp:</div>
-<div class="line"><span class="lineno">  146</span>            _, meta = self._export(tmp, bake_normalisation=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  147</span>            self.assertFalse(meta[<span class="stringliteral">&quot;normalisation_baked&quot;</span>])</div>
-<div class="line"><span class="lineno">  148</span>            <span class="comment"># Without it in the graph, the consumer needs it explicitly — so it</span></div>
-<div class="line"><span class="lineno">  149</span>            <span class="comment"># must travel in the sidecar rather than being lost.</span></div>
-<div class="line"><span class="lineno">  150</span>            self.assertEqual(len(meta[<span class="stringliteral">&quot;mean&quot;</span>]), 2 * self.window)</div>
-<div class="line"><span class="lineno">  151</span>            self.assertEqual(len(meta[<span class="stringliteral">&quot;scale&quot;</span>]), 2 * self.window)</div>
-<div class="line"><span class="lineno">  152</span> </div>
-<div class="line"><span class="lineno">  153</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__router__export_8py_source.html#l00144">144</a> of file <a class="el" href="test__router__export_8py_source.html">test_router_export.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  144</span>    <span class="keyword">def </span>test_unbaked_export_carries_its_normalisation(self):</div>
+<div class="line"><span class="lineno">  145</span>        <span class="keyword">import</span> tempfile</div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> tmp:</div>
+<div class="line"><span class="lineno">  148</span>            _, meta = self._export(tmp, bake_normalisation=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  149</span>            self.assertFalse(meta[<span class="stringliteral">&quot;normalisation_baked&quot;</span>])</div>
+<div class="line"><span class="lineno">  150</span>            <span class="comment"># Without it in the graph, the consumer needs it explicitly — so it</span></div>
+<div class="line"><span class="lineno">  151</span>            <span class="comment"># must travel in the sidecar rather than being lost.</span></div>
+<div class="line"><span class="lineno">  152</span>            self.assertEqual(len(meta[<span class="stringliteral">&quot;mean&quot;</span>]), 2 * self.window)</div>
+<div class="line"><span class="lineno">  153</span>            self.assertEqual(len(meta[<span class="stringliteral">&quot;scale&quot;</span>]), 2 * self.window)</div>
+<div class="line"><span class="lineno">  154</span> </div>
+<div class="line"><span class="lineno">  155</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

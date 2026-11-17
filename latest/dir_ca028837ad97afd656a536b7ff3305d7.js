@@ -5,5 +5,6 @@ var dir_ca028837ad97afd656a536b7ff3305d7 =
     [ "Bayesian.h", "_bayesian_8h.html", "_bayesian_8h" ],
     [ "Hybrid.h", "_hybrid_8h.html", "_hybrid_8h" ],
     [ "Neural.h", "_neural_8h.html", "_neural_8h" ],
+    [ "NN.h", "_n_n_8h.html", null ],
     [ "Threshold.h", "_threshold_8h.html", "_threshold_8h" ]
 ];

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00021">21</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00022">22</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af6e00620108fc7d24d1c3c9af457868d" name="af6e00620108fc7d24d1c3c9af457868d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af6e00620108fc7d24d1c3c9af457868d">&#9670;&#160;</a></span>test_dimensions_and_observe()</h2>
@@ -181,14 +181,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00023">23</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   23</span>    <span class="keyword">def </span>test_dimensions_and_observe(self):</div>
-<div class="line"><span class="lineno">   24</span>        m = StormModel()</div>
-<div class="line"><span class="lineno">   25</span>        self.assertEqual((m.n, m.m, m.l), (5, 3, 0))</div>
-<div class="line"><span class="lineno">   26</span>        m2 = StormModel(observe_intensity=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">   27</span>        self.assertEqual(m2.m, 2)</div>
-<div class="line"><span class="lineno">   28</span>        self.assertEqual(np.asarray(m2.h(np.zeros((5, 1)))).shape, (2, 1))</div>
-<div class="line"><span class="lineno">   29</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00024">24</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   24</span>    <span class="keyword">def </span>test_dimensions_and_observe(self):</div>
+<div class="line"><span class="lineno">   25</span>        m = StormModel()</div>
+<div class="line"><span class="lineno">   26</span>        self.assertEqual((m.n, m.m, m.l), (5, 3, 0))</div>
+<div class="line"><span class="lineno">   27</span>        m2 = StormModel(observe_intensity=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">   28</span>        self.assertEqual(m2.m, 2)</div>
+<div class="line"><span class="lineno">   29</span>        self.assertEqual(np.asarray(m2.h(np.zeros((5, 1)))).shape, (2, 1))</div>
+<div class="line"><span class="lineno">   30</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -208,12 +208,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00049">49</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   49</span>    <span class="keyword">def </span>test_hemisphere_beta_sign(self):</div>
-<div class="line"><span class="lineno">   50</span>        n = StormModel(hemisphere=<span class="stringliteral">&quot;N&quot;</span>); s = StormModel(hemisphere=<span class="stringliteral">&quot;S&quot;</span>)</div>
-<div class="line"><span class="lineno">   51</span>        self.assertGreater(n.beta_n, 0)    <span class="comment"># NH beta drifts poleward (north)</span></div>
-<div class="line"><span class="lineno">   52</span>        self.assertLess(s.beta_n, 0)       <span class="comment"># SH beta drifts poleward (south)</span></div>
-<div class="line"><span class="lineno">   53</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00050">50</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   50</span>    <span class="keyword">def </span>test_hemisphere_beta_sign(self):</div>
+<div class="line"><span class="lineno">   51</span>        n = StormModel(hemisphere=<span class="stringliteral">&quot;N&quot;</span>); s = StormModel(hemisphere=<span class="stringliteral">&quot;S&quot;</span>)</div>
+<div class="line"><span class="lineno">   52</span>        self.assertGreater(n.beta_n, 0)    <span class="comment"># NH beta drifts poleward (north)</span></div>
+<div class="line"><span class="lineno">   53</span>        self.assertLess(s.beta_n, 0)       <span class="comment"># SH beta drifts poleward (south)</span></div>
+<div class="line"><span class="lineno">   54</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -233,19 +233,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00054">54</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   54</span>    <span class="keyword">def </span>test_imm_bank_structure(self):</div>
-<div class="line"><span class="lineno">   55</span>        models, Pi, probs = StormModel.ikf_bank(stall=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">   56</span>        self.assertEqual(len(models), 3)</div>
-<div class="line"><span class="lineno">   57</span>        self.assertEqual(Pi.shape, (3, 3))</div>
-<div class="line"><span class="lineno">   58</span>        np.testing.assert_allclose(Pi.sum(axis=1), 1.0)</div>
-<div class="line"><span class="lineno">   59</span>        self.assertAlmostEqual(probs.sum(), 1.0)</div>
-<div class="line"><span class="lineno">   60</span>        self.assertEqual(models[0].omega, 0.0)</div>
-<div class="line"><span class="lineno">   61</span>        self.assertLess(models[1].omega, 0.0)          <span class="comment"># NH recurve = clockwise</span></div>
-<div class="line"><span class="lineno">   62</span>        models2, Pi2, _ = StormModel.ikf_bank(stall=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">   63</span>        self.assertEqual(len(models2), 2)</div>
-<div class="line"><span class="lineno">   64</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00055">55</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>    <span class="keyword">def </span>test_imm_bank_structure(self):</div>
+<div class="line"><span class="lineno">   56</span>        models, Pi, probs = StormModel.regime_bank(stall=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">   57</span>        self.assertEqual(len(models), 3)</div>
+<div class="line"><span class="lineno">   58</span>        self.assertEqual(Pi.shape, (3, 3))</div>
+<div class="line"><span class="lineno">   59</span>        np.testing.assert_allclose(Pi.sum(axis=1), 1.0)</div>
+<div class="line"><span class="lineno">   60</span>        self.assertAlmostEqual(probs.sum(), 1.0)</div>
+<div class="line"><span class="lineno">   61</span>        self.assertEqual(models[0].omega, 0.0)</div>
+<div class="line"><span class="lineno">   62</span>        self.assertLess(models[1].omega, 0.0)          <span class="comment"># NH recurve = clockwise</span></div>
+<div class="line"><span class="lineno">   63</span>        models2, Pi2, _ = StormModel.regime_bank(stall=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">   64</span>        self.assertEqual(len(models2), 2)</div>
 <div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -265,16 +265,16 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Nonzero omega rotates the translation velocity vector.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00040">40</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   40</span>    <span class="keyword">def </span>test_recurve_rotates_velocity(self):</div>
-<div class="line"><span class="lineno">   41</span>        <span class="stringliteral">&quot;&quot;&quot;Nonzero omega rotates the translation velocity vector.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   42</span>        m = StormModel(omega=-0.05, hemisphere=<span class="stringliteral">&quot;N&quot;</span>,</div>
-<div class="line"><span class="lineno">   43</span>                         x0=np.array([[140.], [15.], [-20.], [0.], [80.]]))</div>
-<div class="line"><span class="lineno">   44</span>        v0 = m.x0.ravel()[2:4]</div>
-<div class="line"><span class="lineno">   45</span>        v1 = m.f(m.x0).ravel()[2:4]</div>
-<div class="line"><span class="lineno">   46</span>        self.assertFalse(np.allclose(v0, v1))</div>
-<div class="line"><span class="lineno">   47</span>        np.testing.assert_allclose(np.hypot(*v1), np.hypot(*v0), rtol=1e-6)  <span class="comment"># speed preserved</span></div>
-<div class="line"><span class="lineno">   48</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00041">41</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   41</span>    <span class="keyword">def </span>test_recurve_rotates_velocity(self):</div>
+<div class="line"><span class="lineno">   42</span>        <span class="stringliteral">&quot;&quot;&quot;Nonzero omega rotates the translation velocity vector.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   43</span>        m = StormModel(omega=-0.05, hemisphere=<span class="stringliteral">&quot;N&quot;</span>,</div>
+<div class="line"><span class="lineno">   44</span>                         x0=np.array([[140.], [15.], [-20.], [0.], [80.]]))</div>
+<div class="line"><span class="lineno">   45</span>        v0 = m.x0.ravel()[2:4]</div>
+<div class="line"><span class="lineno">   46</span>        v1 = m.f(m.x0).ravel()[2:4]</div>
+<div class="line"><span class="lineno">   47</span>        self.assertFalse(np.allclose(v0, v1))</div>
+<div class="line"><span class="lineno">   48</span>        np.testing.assert_allclose(np.hypot(*v1), np.hypot(*v0), rtol=1e-6)  <span class="comment"># speed preserved</span></div>
+<div class="line"><span class="lineno">   49</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -294,17 +294,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Zero turn rate + NH beta: the centre moves west and poleward.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00030">30</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   30</span>    <span class="keyword">def </span>test_straight_motion_wnw(self):</div>
-<div class="line"><span class="lineno">   31</span>        <span class="stringliteral">&quot;&quot;&quot;Zero turn rate + NH beta: the centre moves west and poleward.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   32</span>        m = StormModel(omega=0.0, hemisphere=<span class="stringliteral">&quot;N&quot;</span>,</div>
-<div class="line"><span class="lineno">   33</span>                         x0=np.array([[140.], [15.], [-20.], [5.], [80.]]))</div>
-<div class="line"><span class="lineno">   34</span>        x1 = m.f(m.x0).ravel()</div>
-<div class="line"><span class="lineno">   35</span>        self.assertLess(x1[0], 140.0)      <span class="comment"># lon decreases (westward)</span></div>
-<div class="line"><span class="lineno">   36</span>        self.assertGreater(x1[1], 15.0)    <span class="comment"># lat increases (poleward, NH)</span></div>
-<div class="line"><span class="lineno">   37</span>        np.testing.assert_allclose(x1[2:4], [-20., 5.], atol=1e-9)   <span class="comment"># velocity unchanged</span></div>
-<div class="line"><span class="lineno">   38</span>        self.assertAlmostEqual(x1[4], 80.0)                          <span class="comment"># intensity persists</span></div>
-<div class="line"><span class="lineno">   39</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__storms_8py_source.html#l00031">31</a> of file <a class="el" href="test__storms_8py_source.html">test_storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   31</span>    <span class="keyword">def </span>test_straight_motion_wnw(self):</div>
+<div class="line"><span class="lineno">   32</span>        <span class="stringliteral">&quot;&quot;&quot;Zero turn rate + NH beta: the centre moves west and poleward.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   33</span>        m = StormModel(omega=0.0, hemisphere=<span class="stringliteral">&quot;N&quot;</span>,</div>
+<div class="line"><span class="lineno">   34</span>                         x0=np.array([[140.], [15.], [-20.], [5.], [80.]]))</div>
+<div class="line"><span class="lineno">   35</span>        x1 = m.f(m.x0).ravel()</div>
+<div class="line"><span class="lineno">   36</span>        self.assertLess(x1[0], 140.0)      <span class="comment"># lon decreases (westward)</span></div>
+<div class="line"><span class="lineno">   37</span>        self.assertGreater(x1[1], 15.0)    <span class="comment"># lat increases (poleward, NH)</span></div>
+<div class="line"><span class="lineno">   38</span>        np.testing.assert_allclose(x1[2:4], [-20., 5.], atol=1e-9)   <span class="comment"># velocity unchanged</span></div>
+<div class="line"><span class="lineno">   39</span>        self.assertAlmostEqual(x1[4], 80.0)                          <span class="comment"># intensity persists</span></div>
+<div class="line"><span class="lineno">   40</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

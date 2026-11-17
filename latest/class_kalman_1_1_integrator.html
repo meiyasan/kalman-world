@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -337,8 +337,8 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_integrator_8cc_source.html#l00021">21</a> of file <a class="el" href="_integrator_8cc_source.html">Integrator.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   23</span>    {</div>
-<div class="line"><span class="lineno">   24</span>        Vector out = x;</div>
-<div class="line"><span class="lineno">   25</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
+<div class="line"><span class="lineno">   24</span>        Vector out = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
+<div class="line"><span class="lineno">   25</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
 <div class="line"><span class="lineno">   26</span>        {</div>
 <div class="line"><span class="lineno">   27</span>            out = <a class="code hl_function" href="class_kalman_1_1_integrator.html#a063dec575025ef630fcdbaf55897c0d9">Step</a>(f, out, u, t, dt);</div>
 <div class="line"><span class="lineno">   28</span>            t += dt;</div>
@@ -346,6 +346,8 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   30</span>        <span class="keywordflow">return</span> out;</div>
 <div class="line"><span class="lineno">   31</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_integrator_html_a063dec575025ef630fcdbaf55897c0d9"><div class="ttname"><a href="class_kalman_1_1_integrator.html#a063dec575025ef630fcdbaf55897c0d9">Kalman::Integrator::Step</a></div><div class="ttdeci">virtual Vector Step(const Derivative &amp;f, const Vector &amp;x, const Vector &amp;u, double t, double dt) const =0</div><div class="ttdoc">Advance one step of dt; u is held constant across it (zero-order hold).</div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

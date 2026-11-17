@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -156,8 +156,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aa7fd82a2acf61d534839e3b5547dcce7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9785f0fd6d4122dbaef9896dd970d555" id="r_a9785f0fd6d4122dbaef9896dd970d555"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#a9785f0fd6d4122dbaef9896dd970d555">observables</a> (self)</td></tr>
 <tr class="separator:a9785f0fd6d4122dbaef9896dd970d555"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac843b5540d973c74d679c41d3d2df812" id="r_ac843b5540d973c74d679c41d3d2df812"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#ac843b5540d973c74d679c41d3d2df812">__init__</a> (self, sensor_id=&quot;thermometer&quot;, <a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#af86c855948494fbc27739218673f66cc">room</a>=21.0, fs=1.0, **kwargs)</td></tr>
-<tr class="separator:ac843b5540d973c74d679c41d3d2df812"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a94f90bba5cab74306a2297aa7262f42c" id="r_a94f90bba5cab74306a2297aa7262f42c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#a94f90bba5cab74306a2297aa7262f42c">__init__</a> (self, sensor=&quot;thermometer&quot;, <a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#af86c855948494fbc27739218673f66cc">room</a>=21.0, fs=1.0, **kwargs)</td></tr>
+<tr class="separator:a94f90bba5cab74306a2297aa7262f42c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6f2a64dbaf522a9ddde3cca439396dc" id="r_ac6f2a64dbaf522a9ddde3cca439396dc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#ac6f2a64dbaf522a9ddde3cca439396dc">f</a> (self, x, u=None, w=None, t=None)</td></tr>
 <tr class="separator:ac6f2a64dbaf522a9ddde3cca439396dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a039f5103e2ff057e523c31021eaface3" id="r_a039f5103e2ff057e523c31021eaface3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtoy__model_1_1_cooling_coffee_model.html#a039f5103e2ff057e523c31021eaface3">h</a> (self, x, v=None, t=None)</td></tr>
@@ -187,8 +187,8 @@ Static Public Attributes</h2></td></tr>
 <div class="textblock"><pre class="fragment">Newton's law of cooling with an unknown rate; a thermometer reads the temperature.</pre> 
 <p class="definition">Definition at line <a class="el" href="toy__model_8py_source.html#l00057">57</a> of file <a class="el" href="toy__model_8py_source.html">toy_model.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ac843b5540d973c74d679c41d3d2df812" name="ac843b5540d973c74d679c41d3d2df812"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac843b5540d973c74d679c41d3d2df812">&#9670;&#160;</a></span>__init__()</h2>
+<a id="a94f90bba5cab74306a2297aa7262f42c" name="a94f90bba5cab74306a2297aa7262f42c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a94f90bba5cab74306a2297aa7262f42c">&#9670;&#160;</a></span>__init__()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -203,7 +203,7 @@ Static Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>sensor_id</em> = <code>&quot;thermometer&quot;</code>, </td>
+          <td class="paramname"><em>sensor</em> = <code>&quot;thermometer&quot;</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -232,7 +232,7 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="toy__model_8py_source.html#l00074">74</a> of file <a class="el" href="toy__model_8py_source.html">toy_model.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>__init__(self, sensor_id=&quot;thermometer&quot;, room=21.0, fs=1.0, **kwargs):</div>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>__init__(self, sensor=&quot;thermometer&quot;, room=21.0, fs=1.0, **kwargs):</div>
 <div class="line"><span class="lineno">   75</span>        self.room = float(room)                    <span class="comment"># degC</span></div>
 <div class="line"><span class="lineno">   76</span>        self.n, self.m, self.l = 2, 1, 0</div>
 <div class="line"><span class="lineno">   77</span>        <span class="comment"># The model is nearly exact: a little slack on T, and a very slow</span></div>
@@ -243,7 +243,7 @@ Static Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   82</span>        <span class="comment"># cooling rate that is only a guess.</span></div>
 <div class="line"><span class="lineno">   83</span>        kwargs.setdefault(<span class="stringliteral">&quot;x0&quot;</span>, np.array([[80.0], [1e-3]]))</div>
 <div class="line"><span class="lineno">   84</span>        kwargs.setdefault(<span class="stringliteral">&quot;P0&quot;</span>, np.diag([25.0, 1e-6]))</div>
-<div class="line"><span class="lineno">   85</span>        super().__init__(sensor_id, fs=fs, L=np.eye(2), **kwargs)</div>
+<div class="line"><span class="lineno">   85</span>        super().__init__(sensor, fs=fs, L=np.eye(2), **kwargs)</div>
 <div class="line"><span class="lineno">   86</span> </div>
 </div><!-- fragment -->
 </div>

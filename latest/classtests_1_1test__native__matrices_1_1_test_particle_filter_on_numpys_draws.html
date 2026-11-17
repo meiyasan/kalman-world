@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -152,8 +152,8 @@ Inheritance diagram for tests.test_native_matrices.TestParticleFilterOnNumpysDra
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab39c48f41ff1aead84e1a01d02b784f7" id="r_ab39c48f41ff1aead84e1a01d02b784f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws.html#ab39c48f41ff1aead84e1a01d02b784f7">run_pf</a> (self, make, z, reference)</td></tr>
 <tr class="separator:ab39c48f41ff1aead84e1a01d02b784f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e5f7e8b8fe9eebf72a98600cbd33865" id="r_a1e5f7e8b8fe9eebf72a98600cbd33865"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws.html#a1e5f7e8b8fe9eebf72a98600cbd33865">test_twin_and_python_model</a> (self)</td></tr>
-<tr class="separator:a1e5f7e8b8fe9eebf72a98600cbd33865"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1692ae03a0068f68e2d2bd95fd7f273" id="r_ab1692ae03a0068f68e2d2bd95fd7f273"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_particle_filter_on_numpys_draws.html#ab1692ae03a0068f68e2d2bd95fd7f273">test_counterpart_and_python_model</a> (self)</td></tr>
+<tr class="separator:ab1692ae03a0068f68e2d2bd95fd7f273"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The C++ particle engine starts from the cloud the Python engine drew and takes
@@ -209,21 +209,21 @@ Python run, and numpy's generator ends in the same state.</pre>
 <div class="line"><span class="lineno">  342</span>        <span class="keywordflow">else</span>:</div>
 <div class="line"><span class="lineno">  343</span>            <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
 <div class="line"><span class="lineno">  344</span>                record = ParticleFilter(make(), n_particles=300).forward(z)</div>
-<div class="line"><span class="lineno">  345</span>            self.assertIn(path.last, (<span class="stringliteral">&quot;_forward_twin&quot;</span>, <span class="stringliteral">&quot;_forward_callback&quot;</span>))</div>
+<div class="line"><span class="lineno">  345</span>            self.assertIn(path.last, (<span class="stringliteral">&quot;_forward_counterpart&quot;</span>, <span class="stringliteral">&quot;_forward_callback&quot;</span>))</div>
 <div class="line"><span class="lineno">  346</span>        <span class="keywordflow">return</span> np.asarray(record.xk, float), np.random.uniform()</div>
 <div class="line"><span class="lineno">  347</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a1e5f7e8b8fe9eebf72a98600cbd33865" name="a1e5f7e8b8fe9eebf72a98600cbd33865"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e5f7e8b8fe9eebf72a98600cbd33865">&#9670;&#160;</a></span>test_twin_and_python_model()</h2>
+<a id="ab1692ae03a0068f68e2d2bd95fd7f273" name="ab1692ae03a0068f68e2d2bd95fd7f273"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab1692ae03a0068f68e2d2bd95fd7f273">&#9670;&#160;</a></span>test_counterpart_and_python_model()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tests.test_native_matrices.TestParticleFilterOnNumpysDraws.test_twin_and_python_model </td>
+          <td class="memname">tests.test_native_matrices.TestParticleFilterOnNumpysDraws.test_counterpart_and_python_model </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -233,7 +233,7 @@ Python run, and numpy's generator ends in the same state.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00348">348</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  348</span>    <span class="keyword">def </span>test_twin_and_python_model(self):</div>
+<div class="fragment"><div class="line"><span class="lineno">  348</span>    <span class="keyword">def </span>test_counterpart_and_python_model(self):</div>
 <div class="line"><span class="lineno">  349</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a> <span class="keyword">import</span> CarSpeedModel</div>
 <div class="line"><span class="lineno">  350</span>        cases = [(<span class="keyword">lambda</span>: CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>), np.asarray(CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>).sample(5.0, seed=1).zk)),</div>
 <div class="line"><span class="lineno">  351</span>                 (<span class="keyword">lambda</span>: KalmanModel(<span class="stringliteral">&quot;s&quot;</span>, F=F0, Q=Q0, R=np.array([[0.04]]), **KW), Z[:60])]</div>

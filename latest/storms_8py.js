@@ -17,7 +17,7 @@ var storms_8py =
     [ "japan_region", "storms_8py.html#a86d21845e4ea88deb40ed6bddb093ee5", null ],
     [ "japan_steering", "storms_8py.html#ac9c658e4aa67a59a0a918b641cac66b5", null ],
     [ "landfall_probability", "storms_8py.html#a5c6a15a38ea5981e0905301003dc2dba", null ],
-    [ "seasonal_tornado_probability", "storms_8py.html#abb2dc5a56c536044f6e1c4f73de424a3", null ],
+    [ "seasonal_tornado_probability", "storms_8py.html#ab856e4d8d64a0cf82d0d6b1b6e17ab8e", null ],
     [ "synthetic_environment", "storms_8py.html#a243211fc58deb394b51c0ee12f6e0933", null ],
     [ "synthetic_steered_track", "storms_8py.html#af0ff753d9c32235da4daef7eec940a77", null ],
     [ "synthetic_track", "storms_8py.html#a519b8a451d9fba0872777bd4fe2284db", null ],

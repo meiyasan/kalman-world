@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('classmodules_1_1framework_1_1abstract_
 <div class="dynheader">
 Inheritance diagram for modules.framework.abstract.mixins.KalmanEngineMixin:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin__inherit__graph.svg" width="1636" height="371"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin__inherit__graph.svg" width="1640" height="435"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -178,7 +178,7 @@ Engines are stateless w.r.t. run state — they receive ``(model, x, P, …)`` p
 step and return the new belief. The only optional per-run hook is
 ``reset(model)`` for engines that carry their own state (e.g. ``ParticleEngine``).
 </pre> 
-<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00461">461</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00472">472</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3fda55509d1cd996238350ea5b05fd57" name="a3fda55509d1cd996238350ea5b05fd57"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3fda55509d1cd996238350ea5b05fd57">&#9670;&#160;</a></span>infer()</h2>
@@ -245,16 +245,16 @@ step and return the new belief. The only optional per-run hook is
 
 Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00475">475</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  475</span>    <span class="keyword">def </span>infer(self, model, x, P, z, u=None, t=None, **kwargs):</div>
-<div class="line"><span class="lineno">  476</span>        <span class="stringliteral">&quot;&quot;&quot;One full step: predict then (missing-measurement-aware) update.</span></div>
-<div class="line"><span class="lineno">  477</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  478</span><span class="stringliteral">        Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.</span></div>
-<div class="line"><span class="lineno">  479</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  480</span>        xp, Pp, F = self._predict(model, x, P, u=u, t=t, **kwargs)</div>
-<div class="line"><span class="lineno">  481</span>        xpost, Ppost = self._update(model, xp, Pp, z, t=t, **kwargs)</div>
-<div class="line"><span class="lineno">  482</span>        <span class="keywordflow">return</span> (xp, Pp), (xpost, Ppost), F</div>
-<div class="line"><span class="lineno">  483</span> </div>
+<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00486">486</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  486</span>    <span class="keyword">def </span>infer(self, model, x, P, z, u=None, t=None, **kwargs):</div>
+<div class="line"><span class="lineno">  487</span>        <span class="stringliteral">&quot;&quot;&quot;One full step: predict then (missing-measurement-aware) update.</span></div>
+<div class="line"><span class="lineno">  488</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  489</span><span class="stringliteral">        Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.</span></div>
+<div class="line"><span class="lineno">  490</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  491</span>        xp, Pp, F = self._predict(model, x, P, u=u, t=t, **kwargs)</div>
+<div class="line"><span class="lineno">  492</span>        xpost, Ppost = self._update(model, xp, Pp, z, t=t, **kwargs)</div>
+<div class="line"><span class="lineno">  493</span>        <span class="keywordflow">return</span> (xp, Pp), (xpost, Ppost), F</div>
+<div class="line"><span class="lineno">  494</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -286,11 +286,11 @@ Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.
 <pre class="fragment">No-op for stateless engines; stateful engines (PF) override to (re)seed.</pre> 
 <p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a39175d0d8e6517e3632e48d6cf59b94f">modules.framework.engines.ensemble.EnsembleKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1native_1_1_native_engine.html#ac0fd1a4b177c9d57598770be2fb31ee6">modules.framework.engines.native.NativeEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1particle_1_1_particle_engine.html#a591ccdc2b70e2ece2f4648f22882cb5d">modules.framework.engines.particle.ParticleEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00471">471</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  471</span>    <span class="keyword">def </span>reset(self, model):</div>
-<div class="line"><span class="lineno">  472</span>        <span class="stringliteral">&quot;&quot;&quot;No-op for stateless engines; stateful engines (PF) override to (re)seed.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  473</span>        <span class="keywordflow">return</span> self</div>
-<div class="line"><span class="lineno">  474</span> </div>
+<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00482">482</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  482</span>    <span class="keyword">def </span>reset(self, model):</div>
+<div class="line"><span class="lineno">  483</span>        <span class="stringliteral">&quot;&quot;&quot;No-op for stateless engines; stateful engines (PF) override to (re)seed.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  484</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  485</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -315,7 +315,7 @@ Returns ``(prior, posterior, F)`` where prior/posterior are ``(x, P)`` tuples.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00469">469</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="mixins_8py_source.html#l00480">480</a> of file <a class="el" href="mixins_8py_source.html">mixins.py</a>.</p>
 
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -146,7 +146,7 @@ $(document).ready(function(){initNavTree('classmodules_1_1framework_1_1abstract_
 <div class="dynheader">
 Inheritance diagram for modules.framework.abstract.metadata.KalmanEngineMetadata:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata__inherit__graph.svg" width="1658" height="371"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_engine_metadata__inherit__graph.svg" width="1662" height="435"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -190,7 +190,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00260">260</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00246">246</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a399ef102842c09acc20ead84ddd3a6b2" name="a399ef102842c09acc20ead84ddd3a6b2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a399ef102842c09acc20ead84ddd3a6b2">&#9670;&#160;</a></span>__str__()</h2>
@@ -208,19 +208,19 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00268">268</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  268</span>    <span class="keyword">def </span>__str__(self):</div>
-<div class="line"><span class="lineno">  269</span>        <span class="keyword">import</span> textwrap</div>
-<div class="line"><span class="lineno">  270</span>        spacer = <span class="stringliteral">&quot; &quot;</span> * 4</div>
-<div class="line"><span class="lineno">  271</span>        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)</div>
-<div class="line"><span class="lineno">  272</span>        kind = getattr(self, <span class="stringliteral">&quot;KIND&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  273</span>        res  = f<span class="stringliteral">&quot;{self.NAME} (v{self.VERSION})\n&quot;</span></div>
-<div class="line"><span class="lineno">  274</span>        res += f<span class="stringliteral">&quot;{spacer}{desc}\n&quot;</span></div>
-<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">if</span> kind <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  276</span>            res += f<span class="stringliteral">&quot;{spacer}Kind......................: {kind}\n&quot;</span></div>
-<div class="line"><span class="lineno">  277</span>        res += f<span class="stringliteral">&quot;{spacer}Precision.................: {self.epsilon:.3e}\n&quot;</span></div>
-<div class="line"><span class="lineno">  278</span>        <span class="keywordflow">return</span> res</div>
-<div class="line"><span class="lineno">  279</span> </div>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00254">254</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  254</span>    <span class="keyword">def </span>__str__(self):</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keyword">import</span> textwrap</div>
+<div class="line"><span class="lineno">  256</span>        spacer = <span class="stringliteral">&quot; &quot;</span> * 4</div>
+<div class="line"><span class="lineno">  257</span>        desc = textwrap.fill(self.DESCRIPTION, width=60, subsequent_indent=2*spacer)</div>
+<div class="line"><span class="lineno">  258</span>        kind = getattr(self, <span class="stringliteral">&quot;KIND&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  259</span>        res  = f<span class="stringliteral">&quot;{self.NAME} (v{self.VERSION})\n&quot;</span></div>
+<div class="line"><span class="lineno">  260</span>        res += f<span class="stringliteral">&quot;{spacer}{desc}\n&quot;</span></div>
+<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">if</span> kind <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  262</span>            res += f<span class="stringliteral">&quot;{spacer}Kind......................: {kind}\n&quot;</span></div>
+<div class="line"><span class="lineno">  263</span>        res += f<span class="stringliteral">&quot;{spacer}Precision.................: {self.epsilon:.3e}\n&quot;</span></div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">return</span> res</div>
+<div class="line"><span class="lineno">  265</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -245,7 +245,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00263">263</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00249">249</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -269,7 +269,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00266">266</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00252">252</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -293,7 +293,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00262">262</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00248">248</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>
@@ -317,7 +317,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00264">264</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="metadata_8py_source.html#l00250">250</a> of file <a class="el" href="metadata_8py_source.html">metadata.py</a>.</p>
 
 </div>
 </div>

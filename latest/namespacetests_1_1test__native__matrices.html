@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -150,6 +150,8 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_calorimeter.html">TestCalorimeter</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines.html">TestCounterpartsOnTheSigmaPointEngines</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_filter_families.html">TestFilterFamilies</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_native_model_pass.html">TestNativeModelPass</a></td></tr>
@@ -161,8 +163,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html">TestSmootherInCxx</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_time_varying_matrices.html">TestTimeVaryingMatrices</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines.html">TestTwinsOnTheSigmaPointEngines</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
@@ -176,7 +176,7 @@ Functions</h2></td></tr>
 Variables</h2></td></tr>
 <tr class="memitem:a2778c91bd8db7cfd4e748b48dc124226" id="r_a2778c91bd8db7cfd4e748b48dc124226"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__matrices.html#a2778c91bd8db7cfd4e748b48dc124226">needs_core</a> = unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman is not built&quot;)</td></tr>
 <tr class="separator:a2778c91bd8db7cfd4e748b48dc124226"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a318ba82115b27a551f89a8cd930ce5e4" id="r_a318ba82115b27a551f89a8cd930ce5e4"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__matrices.html#a318ba82115b27a551f89a8cd930ce5e4">PATHS</a> = (&quot;_forward_twin&quot;, &quot;_forward_matrices&quot;, &quot;_forward_native&quot;, &quot;_forward_callback&quot;)</td></tr>
+<tr class="memitem:a318ba82115b27a551f89a8cd930ce5e4" id="r_a318ba82115b27a551f89a8cd930ce5e4"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__matrices.html#a318ba82115b27a551f89a8cd930ce5e4">PATHS</a> = (&quot;_forward_counterpart&quot;, &quot;_forward_matrices&quot;, &quot;_forward_native&quot;, &quot;_forward_callback&quot;)</td></tr>
 <tr class="separator:a318ba82115b27a551f89a8cd930ce5e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a954f5c17e013c43066e1b5e3549d0d1e" id="r_a954f5c17e013c43066e1b5e3549d0d1e"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacetests_1_1test__native__matrices.html#a954f5c17e013c43066e1b5e3549d0d1e">DT</a> = 0.1</td></tr>
 <tr class="separator:a954f5c17e013c43066e1b5e3549d0d1e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -346,7 +346,7 @@ Skipped when libKalman is not built.
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tuple tests.test_native_matrices.PATHS = (&quot;_forward_twin&quot;, &quot;_forward_matrices&quot;, &quot;_forward_native&quot;, &quot;_forward_callback&quot;)</td>
+          <td class="memname">tuple tests.test_native_matrices.PATHS = (&quot;_forward_counterpart&quot;, &quot;_forward_matrices&quot;, &quot;_forward_native&quot;, &quot;_forward_callback&quot;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

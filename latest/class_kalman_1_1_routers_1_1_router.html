@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -145,7 +145,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_routers_1_1_router.ht
 </div><!--header-->
 <div class="contents">
 
-<p>Decides <em>which model is right now</em> — the IKF decision layer.  
+<p>Decides <em>which model is right now</em> — the decision layer of a model with several modes (<a class="el" href="class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each.">Models::Router</a>).  
  <a href="class_kalman_1_1_routers_1_1_router.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_base_8h_source.html">Base.h</a>&gt;</code></p>
@@ -190,7 +190,7 @@ Static Protected Member Functions</h2></td></tr>
 <tr class="separator:a13e536ac3ef367956d932cba7a2b4d46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Decides <em>which model is right now</em> — the IKF decision layer. </p>
+<div class="textblock"><p>Decides <em>which model is right now</em> — the decision layer of a model with several modes (<a class="el" href="class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each.">Models::Router</a>). </p>
 <p>When one model cannot describe a system across all of its regimes — a manoeuvring target, a storm that recurves, a suspension that goes nonlinear — the answer is several models running in parallel with a probability on each. A router owns that probability update, and only that:</p>
 <div class="fragment"><div class="line">mu = router.Route(nis, c, likelihoods)</div>
 </div><!-- fragment --><dl class="params"><dt>Parameters</dt><dd>
@@ -202,13 +202,13 @@ Static Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd><code>(M)</code> updated mode probabilities: non-negative, summing to 1.</dd></dl>
-<p>One IKF step, with the router as the only pluggable part:</p>
+<p>One step of the interacting engine, with the router as the only pluggable part:</p>
 <div class="fragment"><div class="line">1. Markov prediction   c_j = sum_i Pi(i,j) mu_i</div>
 <div class="line">2. State mixing        x0_j, P0_j from every mode</div>
 <div class="line">3. Per model           predict + update  -&gt;  nu_j, S_j, NIS_j, L_j</div>
 <div class="line">4. Router              mu = Route(nis, c, likelihoods)      &lt;- pluggable</div>
 <div class="line">5. Combination         x = sum_j mu_j x_j</div>
-</div><!-- fragment --><p><a class="el" href="class_kalman_1_1_filters_1_1_i_k_f.html" title="Interactive Kalman Filter — several models, one estimate.">Kalman::Filters::IKF</a> passes those three quantities and never looks inside. Implementations here mirror <code>modules/framework/routers/</code> one for one: <a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html" title="The classical IKF update: mu_j ∝ c_j · L_j.">Kalman::Routers::Bayesian</a> (classical), <a class="el" href="class_kalman_1_1_routers_1_1_threshold.html" title="Routes to whichever model&#39;s recent NIS sits closest to m.">Kalman::Routers::Threshold</a> (rule-based), <a class="el" href="class_kalman_1_1_routers_1_1_hybrid.html" title="Geometric blend (log-linear opinion pool) of two routers.">Kalman::Routers::Hybrid</a> (a blend) and <a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a> (a policy trained in Python and executed here through ONNX Runtime).</p>
+</div><!-- fragment --><p><a class="el" href="class_kalman_1_1_engines_1_1_interacting.html" title="The predict/update step for a model with several modes (Models::Router): the Interacting Multiple Mod...">Kalman::Engines::Interacting</a> passes those three quantities and never looks inside. Implementations here mirror <code>modules/framework/routers/</code> one for one: <a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html" title="The classical interacting-multiple-model update: mu_j ∝ c_j · L_j.">Kalman::Routers::Bayesian</a> (classical), <a class="el" href="class_kalman_1_1_routers_1_1_threshold.html" title="Routes to whichever model&#39;s recent NIS sits closest to m.">Kalman::Routers::Threshold</a> (rule-based), <a class="el" href="class_kalman_1_1_routers_1_1_hybrid.html" title="Geometric blend (log-linear opinion pool) of two routers.">Kalman::Routers::Hybrid</a> (a blend) and <a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a> (a policy trained in Python and executed here through ONNX Runtime).</p>
 <hr  />
  
 <p class="definition">Definition at line <a class="el" href="_base_8h_source.html#l00058">58</a> of file <a class="el" href="_base_8h_source.html">Base.h</a>.</p>
@@ -315,25 +315,26 @@ Static Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clip to a positive floor and normalise to a probability vector. </p>
-<p>The floor matters: a mode that reaches exactly zero can never recover, because every subsequent update multiplies it by something finite. An IKF that has written off a regime cannot switch back to it. </p>
+<p>The floor matters: a mode that reaches exactly zero can never recover, because every subsequent update multiplies it by something finite. An filter that has written off a regime cannot switch back to it. </p>
 
 <p class="definition">Definition at line <a class="el" href="_routers_8cc_source.html#l00023">23</a> of file <a class="el" href="_routers_8cc_source.html">Routers.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   24</span>    {</div>
 <div class="line"><span class="lineno">   25</span>        <span class="keywordtype">double</span> sum = 0.;</div>
-<div class="line"><span class="lineno">   26</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; mu.Size(); ++i)</div>
+<div class="line"><span class="lineno">   26</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>.Size(); ++i)</div>
 <div class="line"><span class="lineno">   27</span>        {</div>
 <div class="line"><span class="lineno">   28</span>            <span class="comment">// A mode that reaches exactly zero can never come back: every later</span></div>
 <div class="line"><span class="lineno">   29</span>            <span class="comment">// update multiplies it by something finite. The floor is what keeps a</span></div>
 <div class="line"><span class="lineno">   30</span>            <span class="comment">// regime recoverable after the filter has stopped believing in it.</span></div>
-<div class="line"><span class="lineno">   31</span>            <span class="keywordflow">if</span> (!(mu(i) &gt; 1e-12)) mu(i) = 1e-12;</div>
-<div class="line"><span class="lineno">   32</span>            sum += mu(i);</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keywordflow">if</span> (!(<a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(i) &gt; 1e-12)) <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(i) = 1e-12;</div>
+<div class="line"><span class="lineno">   32</span>            sum += <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(i);</div>
 <div class="line"><span class="lineno">   33</span>        }</div>
 <div class="line"><span class="lineno">   34</span>        <span class="keywordflow">if</span> (!(sum &gt; 0.))                       <span class="comment">// every entry was NaN</span></div>
-<div class="line"><span class="lineno">   35</span>            <span class="keywordflow">return</span> Vector(mu.Size(), 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(mu.Size()));</div>
+<div class="line"><span class="lineno">   35</span>            <span class="keywordflow">return</span> Vector(<a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>.Size(), 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>.Size()));</div>
 <div class="line"><span class="lineno">   36</span> </div>
-<div class="line"><span class="lineno">   37</span>        mu *= 1. / sum;</div>
-<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> mu;</div>
+<div class="line"><span class="lineno">   37</span>        <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a> *= 1. / sum;</div>
+<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>;</div>
 <div class="line"><span class="lineno">   39</span>    }</div>
+<div class="ttc" id="anamespaceoperations_html_abce6a020b2f062e2f758851ca8368c37"><div class="ttname"><a href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">operations.mu</a></div><div class="ttdeci">mu</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00103">operations.py:103</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

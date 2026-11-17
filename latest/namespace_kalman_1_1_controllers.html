@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -144,14 +144,11 @@ $(document).ready(function(){initNavTree('namespace_kalman_1_1_controllers.html'
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html">AdaptiveQR</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the empirical innovation covariance with the model's S; scale Q by the ratio. Clipped to <code>[qMin, qMax]</code>. Mirrors <code><a class="el" href="adaptive__qr_8py.html">controllers/adaptive_qr.py</a></code>.  <a href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html">Boost</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows. Mirrors <code><a class="el" href="boost_8py.html">controllers/boost.py</a></code>.  <a href="class_kalman_1_1_controllers_1_1_boost.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html">LQR</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>u = -K (x_hat - x_ref)</code>, <code>K</code> from the DARE of the model's <code>F</code>, <code>B</code>, <code>Qcost</code>, <code>Rcost</code>.  <a href="class_kalman_1_1_controllers_1_1_l_q_r.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html">MPC</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Plans <code>horizon</code> commands ahead at every step, honouring limits on the command while it plans, applies the first one, and plans again.  <a href="class_kalman_1_1_controllers_1_1_m_p_c.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html">MPPI</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Replans a sampled control sequence at every step by Monte-Carlo rollout of the true <code>f</code>.  <a href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#details">More...</a><br /></td></tr>

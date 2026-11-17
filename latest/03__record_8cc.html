@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -153,7 +153,7 @@ $(document).ready(function(){initNavTree('03__record_8cc.html',''); initResizabl
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for 03_record.cc:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="03__record_8cc__incl.svg" width="6176" height="755"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="03__record_8cc__incl.svg" width="5719" height="726"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="03__record_8cc_source.html">Go to the source code of this file.</a></p>
@@ -185,9 +185,9 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="03__record_8cc_source.html#l00015">15</a> of file <a class="el" href="03__record_8cc_source.html">03_record.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   16</span>{</div>
-<div class="line"><span class="lineno">   17</span>    <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> model(1, 100.);</div>
-<div class="line"><span class="lineno">   18</span>    model.SetProcessNoise(0.5);</div>
-<div class="line"><span class="lineno">   19</span>    model.SetMeasurementNoise(0.2);</div>
+<div class="line"><span class="lineno">   17</span>    <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>(1, 100.);</div>
+<div class="line"><span class="lineno">   18</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetProcessNoise(0.5);</div>
+<div class="line"><span class="lineno">   19</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetMeasurementNoise(0.2);</div>
 <div class="line"><span class="lineno">   20</span> </div>
 <div class="line"><span class="lineno">   21</span>    <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(&amp;model, 31337);</div>
 <div class="line"><span class="lineno">   22</span>    sampler.Generate(400);</div>
@@ -202,7 +202,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   31</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(t.front(), 0., 1e-12, <span class="stringliteral">&quot;record: starts at t0&quot;</span>);</div>
 <div class="line"><span class="lineno">   32</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(t.back(), 3.99, 1e-9, <span class="stringliteral">&quot;record: ends at (N-1)/fs&quot;</span>);</div>
 <div class="line"><span class="lineno">   33</span> </div>
-<div class="line"><span class="lineno">   34</span>        <span class="keyword">const</span> std::vector&lt;double&gt; sigma = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
+<div class="line"><span class="lineno">   34</span>        <span class="keyword">const</span> std::vector&lt;double&gt; <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a> = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a665355072cd1a113780559c56079ca7f">Sigma</a>(0);</div>
 <div class="line"><span class="lineno">   35</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(sigma[10], std::sqrt(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a5a09574163910f13b9a02d7fcbe0e403">Covariance</a>(10)(0, 0)), 1e-12,</div>
 <div class="line"><span class="lineno">   36</span>                    <span class="stringliteral">&quot;record: sigma is sqrt(P_ii)&quot;</span>);</div>
 <div class="line"><span class="lineno">   37</span> </div>
@@ -237,7 +237,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   66</span>        <span class="keywordflow">try</span></div>
 <div class="line"><span class="lineno">   67</span>        {</div>
 <div class="line"><span class="lineno">   68</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> bad(3, 3, 0.);</div>
-<div class="line"><span class="lineno">   69</span>            model.SetF(bad);</div>
+<div class="line"><span class="lineno">   69</span>            <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.SetF(bad);</div>
 <div class="line"><span class="lineno">   70</span>        }</div>
 <div class="line"><span class="lineno">   71</span>        <span class="keywordflow">catch</span> (<span class="keyword">const</span> std::runtime_error &amp;) { threw = <span class="keyword">true</span>; }</div>
 <div class="line"><span class="lineno">   72</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(threw, <span class="stringliteral">&quot;errors: a wrong-shaped F throws&quot;</span>);</div>
@@ -280,7 +280,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="a_check_8h_html_af78f878a664d9956c852a668fc3419ab"><div class="ttname"><a href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a></div><div class="ttdeci">#define CHECK(cond, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00048">Check.h:48</a></div></div>
 <div class="ttc" id="a_json_8cc_html_a6405fbfcfdc2b54a82e2529f383b9fab"><div class="ttname"><a href="_json_8cc.html#a6405fbfcfdc2b54a82e2529f383b9fab">text</a></div><div class="ttdeci">const std::string &amp; text</div><div class="ttdef"><b>Definition</b> <a href="_json_8cc_source.html#l00081">Json.cc:81</a></div></div>
 <div class="ttc" id="aclass_fixture_1_1_constant_velocity_html"><div class="ttname"><a href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a></div><div class="ttdoc">Constant velocity with white-noise acceleration — the canonical linear model.</div><div class="ttdef"><b>Definition</b> <a href="_fixtures_8h_source.html#l00043">Fixtures.h:44</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_filter_html"><div class="ttname"><a href="class_kalman_1_1_filter.html">Kalman::Filter</a></div><div class="ttdoc">The workflow — WHEN each step runs, and what is kept.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00054">Filter.h:55</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html"><div class="ttname"><a href="class_kalman_1_1_filter.html">Kalman::Filter</a></div><div class="ttdoc">The workflow — WHEN each step runs, and what is kept.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00055">Filter.h:56</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a0bb8b5165ffff79c2830383ebccd3a77"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a0bb8b5165ffff79c2830383ebccd3a77">Kalman::IO::Record::Flavor</a></div><div class="ttdeci">StateFlavor Flavor() const</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00065">Record.h:65</a></div></div>
@@ -295,6 +295,8 @@ Functions</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_sampler_html"><div class="ttname"><a href="class_kalman_1_1_sampler.html">Kalman::Sampler</a></div><div class="ttdoc">Draws truth and measurements from a model, for tests and demos.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8h_source.html#l00047">Sampler.h:48</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
 <div class="ttc" id="anamespace_check_html_a9ed42acec2d36cf39daa24ede8a31f95"><div class="ttname"><a href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a></div><div class="ttdeci">int Summary(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00040">Check.h:40</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a2defcfb1809fbc48c528a4842b379e81"><div class="ttname"><a href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">instrument.sigma</a></div><div class="ttdeci">sigma</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00075">instrument.py:75</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

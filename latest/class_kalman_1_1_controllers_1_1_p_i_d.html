@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -299,16 +299,16 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00062">62</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a>(Kp),</div>
-<div class="line"><span class="lineno">   65</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a>(Ki.Empty() ? Matrix(Kp.Rows(), Kp.Cols(), 0.) : Ki),</div>
-<div class="line"><span class="lineno">   66</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a>(Kd.Empty() ? Matrix(Kp.Rows(), Kp.Cols(), 0.) : Kd),</div>
-<div class="line"><span class="lineno">   67</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a>(model-&gt;NState(), 0.), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a>(model-&gt;NState(), 0.), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a>(model-&gt;DeltaT())</div>
-<div class="line"><span class="lineno">   68</span>    {</div>
-<div class="line"><span class="lineno">   69</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kp&quot;</span>);</div>
-<div class="line"><span class="lineno">   70</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Ki&quot;</span>);</div>
-<div class="line"><span class="lineno">   71</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kd&quot;</span>);</div>
-<div class="line"><span class="lineno">   72</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00055">55</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   57</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a>(Kp),</div>
+<div class="line"><span class="lineno">   58</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a>(Ki.Empty() ? Matrix(Kp.Rows(), Kp.Cols(), 0.) : Ki),</div>
+<div class="line"><span class="lineno">   59</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a>(Kd.Empty() ? Matrix(Kp.Rows(), Kp.Cols(), 0.) : Kd),</div>
+<div class="line"><span class="lineno">   60</span>          <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;NState(), 0.), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;NState(), 0.), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;DeltaT())</div>
+<div class="line"><span class="lineno">   61</span>    {</div>
+<div class="line"><span class="lineno">   62</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kp&quot;</span>);</div>
+<div class="line"><span class="lineno">   63</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Ki&quot;</span>);</div>
+<div class="line"><span class="lineno">   64</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kd&quot;</span>);</div>
+<div class="line"><span class="lineno">   65</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a2345ad58ed042054aa68aa09930658a7"><div class="ttname"><a href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Kalman::Controller::Controller</a></div><div class="ttdeci">Controller(Model *model, const Vector &amp;xRef=Vector(), const Matrix &amp;Qcost=Matrix(), const Matrix &amp;Rcost=Matrix())</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00018">Controller.cc:18</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a690b08a8bd00fe48eefaf86e0c6a687c"><div class="ttname"><a href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">Kalman::Controller::fModel</a></div><div class="ttdeci">Model * fModel</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00047">Controller.h:47</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_ae3adaa444a54de98bddb9e154e342138"><div class="ttname"><a href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">Kalman::Controller::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdoc">The command dimension, at least 1 so an uncontrolled plant still gets a vector.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00034">Controller.cc:34</a></div></div>
@@ -318,7 +318,8 @@ Protected Attributes</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_p_i_d_html_a8bbcf5507cab34f9e04644b4bbae2f8a"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">Kalman::Controllers::PID::fIntegral</a></div><div class="ttdeci">Vector fIntegral</div><div class="ttdef"><b>Definition</b> <a href="_p_i_d_8h_source.html#l00023">PID.h:23</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_p_i_d_html_a8e4c012236b385fb4ffa67c1f7592169"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">Kalman::Controllers::PID::fKi</a></div><div class="ttdeci">Matrix fKi</div><div class="ttdef"><b>Definition</b> <a href="_p_i_d_8h_source.html#l00022">PID.h:22</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_p_i_d_html_ac7d3ff70fab010c4f98a5474d1c0238e"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">Kalman::Controllers::PID::fPrevError</a></div><div class="ttdeci">Vector fPrevError</div><div class="ttdef"><b>Definition</b> <a href="_p_i_d_8h_source.html#l00024">PID.h:24</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -405,22 +406,22 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e">Kalman::Controller</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00074">74</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>    {</div>
-<div class="line"><span class="lineno">   76</span>        Vector e = xHat;</div>
-<div class="line"><span class="lineno">   77</span>        e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
-<div class="line"><span class="lineno">   78</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a> += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a> * e;</div>
-<div class="line"><span class="lineno">   79</span>        Vector de = e;</div>
-<div class="line"><span class="lineno">   80</span>        de -= <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a>;</div>
-<div class="line"><span class="lineno">   81</span>        de *= 1. / <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a>;</div>
-<div class="line"><span class="lineno">   82</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a> = e;</div>
-<div class="line"><span class="lineno">   83</span> </div>
-<div class="line"><span class="lineno">   84</span>        Vector u = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a> * e;</div>
-<div class="line"><span class="lineno">   85</span>        u += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a>;</div>
-<div class="line"><span class="lineno">   86</span>        u += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a> * de;</div>
-<div class="line"><span class="lineno">   87</span>        u *= -1.;</div>
-<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">return</span> u;</div>
-<div class="line"><span class="lineno">   89</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00067">67</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    {</div>
+<div class="line"><span class="lineno">   69</span>        Vector e = xHat;</div>
+<div class="line"><span class="lineno">   70</span>        e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
+<div class="line"><span class="lineno">   71</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a> += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a> * e;</div>
+<div class="line"><span class="lineno">   72</span>        Vector de = e;</div>
+<div class="line"><span class="lineno">   73</span>        de -= <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a>;</div>
+<div class="line"><span class="lineno">   74</span>        de *= 1. / <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a39bcd4a404e103597c32207685c197ac">fDt</a>;</div>
+<div class="line"><span class="lineno">   75</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a> = e;</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>        Vector u = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a0d8f1054c1c460e633ee17dc875b58c5">fKp</a> * e;</div>
+<div class="line"><span class="lineno">   78</span>        u += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8e4c012236b385fb4ffa67c1f7592169">fKi</a> * <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a>;</div>
+<div class="line"><span class="lineno">   79</span>        u += <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a00064ec367cf65c5a2ddc118a1f0914b">fKd</a> * de;</div>
+<div class="line"><span class="lineno">   80</span>        u *= -1.;</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">return</span> u;</div>
+<div class="line"><span class="lineno">   82</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a42488f3e43226775fd7da46afebbec83"><div class="ttname"><a href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">Kalman::Controller::fXRef</a></div><div class="ttdeci">Vector fXRef</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00048">Controller.h:48</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -452,12 +453,12 @@ Protected Attributes</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00091">91</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   92</span>    {</div>
-<div class="line"><span class="lineno">   93</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Controller::Reset</a>();</div>
-<div class="line"><span class="lineno">   94</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a> = Vector(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), 0.);</div>
-<div class="line"><span class="lineno">   95</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a> = Vector(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), 0.);</div>
-<div class="line"><span class="lineno">   96</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00084">84</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>    {</div>
+<div class="line"><span class="lineno">   86</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Controller::Reset</a>();</div>
+<div class="line"><span class="lineno">   87</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a8bbcf5507cab34f9e04644b4bbae2f8a">fIntegral</a> = Vector(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), 0.);</div>
+<div class="line"><span class="lineno">   88</span>        <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_p_i_d.html#ac7d3ff70fab010c4f98a5474d1c0238e">fPrevError</a> = Vector(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), 0.);</div>
+<div class="line"><span class="lineno">   89</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a0ad205266e8105f26359bea1882e4d5d"><div class="ttname"><a href="class_kalman_1_1_controller.html#a0ad205266e8105f26359bea1882e4d5d">Kalman::Controller::Reset</a></div><div class="ttdeci">virtual void Reset()</div><div class="ttdoc">Clear the logs and any internal state; restore what Update() changed.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00069">Controller.cc:69</a></div></div>
 </div><!-- fragment -->
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -187,7 +187,7 @@ $(document).ready(function(){initNavTree('_riccati_8cc_source.html',''); initRes
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordtype">void</span> CheckShapes(<span class="keyword">const</span> Matrix &amp;A, <span class="keyword">const</span> Matrix &amp;B, <span class="keyword">const</span> Matrix &amp;Q, <span class="keyword">const</span> Matrix &amp;R)</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keyword">const</span> std::size_t n = A.Rows(), l = B.Cols();</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = A.Rows(), l = B.Cols();</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="keywordflow">if</span> (A.Cols() != n || B.Rows() != n || l == 0 || Q.Rows() != n || Q.Cols() != n</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                || R.Rows() != l || R.Cols() != l)</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Algebra::SolveDARE: shapes must be A (n, n), B (n, l), Q (n, n), R (l, l).&quot;</span>);</div>
@@ -253,7 +253,7 @@ $(document).ready(function(){initNavTree('_riccati_8cc_source.html',''); initRes
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                <span class="comment">// Rounding reached, or, close to it, no more progress.</span></div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                <span class="keywordflow">if</span> (delta &lt;= 8. * eps * scale || (delta &gt;= previous &amp;&amp; delta &lt;= 1e-10 * scale))</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>                {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                    P = current;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                    <a class="code hl_variable" href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">P</a> = current;</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                }</div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                previous = delta;</div>
@@ -320,6 +320,8 @@ $(document).ready(function(){initNavTree('_riccati_8cc_source.html',''); initRes
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_a46d2863c4e38166ed287911a0d395de8"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a46d2863c4e38166ed287911a0d395de8">Kalman::Algebra::RiccatiGain</a></div><div class="ttdeci">Matrix RiccatiGain(const Matrix &amp;A, const Matrix &amp;B, const Matrix &amp;R, const Matrix &amp;P)</div><div class="ttdoc">The gain K = (R + B^T P B)^-1 B^T P A of a Riccati solution P.</div><div class="ttdef"><b>Definition</b> <a href="_riccati_8cc_source.html#l00082">Riccati.cc:82</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_a52f5f083ed7f8c197f025efadf2f0b4f"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a52f5f083ed7f8c197f025efadf2f0b4f">Kalman::Algebra::SolveDARE</a></div><div class="ttdeci">Matrix SolveDARE(const Matrix &amp;A, const Matrix &amp;B, const Matrix &amp;Q, const Matrix &amp;R, double tolerance=1e-10, std::size_t maxIterations=100000)</div><div class="ttdoc">The stabilising solution of the discrete algebraic Riccati equation.</div><div class="ttdef"><b>Definition</b> <a href="_riccati_8cc_source.html#l00129">Riccati.cc:129</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_ae107c06a0bd680a3800f860c319b6e8b"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#ae107c06a0bd680a3800f860c319b6e8b">Kalman::Algebra::Symmetrize</a></div><div class="ttdeci">void Symmetrize(Matrix &amp;P)</div><div class="ttdoc">Average a matrix with its transpose, killing round-off asymmetry in place.</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00035">Symmetric.cc:35</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument__data_html_a492bc2b3962d87d8b99a1243915352fe"><div class="ttname"><a href="namespacetests_1_1test__instrument__data.html#a492bc2b3962d87d8b99a1243915352fe">tests.test_instrument_data.P</a></div><div class="ttdeci">P</div><div class="ttdef"><b>Definition</b> <a href="test__instrument__data_8py_source.html#l00016">test_instrument_data.py:16</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

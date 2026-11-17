@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00130">130</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00129">129</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a08f7787f73c56aeaf1501533762766e5" name="a08f7787f73c56aeaf1501533762766e5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a08f7787f73c56aeaf1501533762766e5">&#9670;&#160;</a></span>test_a_child_returning_the_wrong_size()</h2>
@@ -179,12 +179,12 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00139">139</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  139</span>    <span class="keyword">def </span>test_a_child_returning_the_wrong_size(self):</div>
-<div class="line"><span class="lineno">  140</span>        router = HybridRouter(BayesianRouter(), <span class="keyword">lambda</span> nis, c, L: np.ones(5), alpha=0.5)</div>
-<div class="line"><span class="lineno">  141</span>        <span class="keyword">with</span> self.assertRaisesRegex(ValueError, <span class="stringliteral">&quot;5 probabilities for 2 models&quot;</span>):</div>
-<div class="line"><span class="lineno">  142</span>            router(*inputs(3, 2))</div>
-<div class="line"><span class="lineno">  143</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00138">138</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>    <span class="keyword">def </span>test_a_child_returning_the_wrong_size(self):</div>
+<div class="line"><span class="lineno">  139</span>        router = HybridRouter(BayesianRouter(), <span class="keyword">lambda</span> nis, c, L: np.ones(5), alpha=0.5)</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keyword">with</span> self.assertRaisesRegex(ValueError, <span class="stringliteral">&quot;5 probabilities for 2 models&quot;</span>):</div>
+<div class="line"><span class="lineno">  141</span>            router(*inputs(3, 2))</div>
+<div class="line"><span class="lineno">  142</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -204,14 +204,14 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00132">132</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  132</span>    <span class="keyword">def </span>test_a_python_child_error_comes_back_as_itself(self):</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keyword">def </span>broken(nis, c, L):</div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">raise</span> ArithmeticError(<span class="stringliteral">&quot;the child gave up&quot;</span>)</div>
-<div class="line"><span class="lineno">  135</span>        router = HybridRouter(BayesianRouter(), broken, alpha=0.5)</div>
-<div class="line"><span class="lineno">  136</span>        <span class="keyword">with</span> self.assertRaisesRegex(ArithmeticError, <span class="stringliteral">&quot;the child gave up&quot;</span>):</div>
-<div class="line"><span class="lineno">  137</span>            router(*inputs(3, 2))</div>
-<div class="line"><span class="lineno">  138</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00131">131</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  131</span>    <span class="keyword">def </span>test_a_python_child_error_comes_back_as_itself(self):</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keyword">def </span>broken(nis, c, L):</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">raise</span> ArithmeticError(<span class="stringliteral">&quot;the child gave up&quot;</span>)</div>
+<div class="line"><span class="lineno">  134</span>        router = HybridRouter(BayesianRouter(), broken, alpha=0.5)</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keyword">with</span> self.assertRaisesRegex(ArithmeticError, <span class="stringliteral">&quot;the child gave up&quot;</span>):</div>
+<div class="line"><span class="lineno">  136</span>            router(*inputs(3, 2))</div>
+<div class="line"><span class="lineno">  137</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -231,28 +231,28 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00156">156</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  156</span>    <span class="keyword">def </span>test_c_api_refuses_bad_arguments(self):</div>
-<div class="line"><span class="lineno">  157</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;M must be positive&quot;</span>):</div>
-<div class="line"><span class="lineno">  158</span>            core.check(core.lib.kalman_router_route(core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>), 0, 0, core.ffi.NULL,</div>
-<div class="line"><span class="lineno">  159</span>                                                    core.ffi.NULL, core.ffi.NULL, core.ffi.NULL), <span class="stringliteral">&quot;route&quot;</span>)</div>
-<div class="line"><span class="lineno">  160</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;alpha must lie in&quot;</span>):</div>
-<div class="line"><span class="lineno">  161</span>            a = core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>)</div>
-<div class="line"><span class="lineno">  162</span>            core.create_router(<span class="stringliteral">&quot;hybrid&quot;</span>, a=a, b=a, alpha=2.0)</div>
-<div class="line"><span class="lineno">  163</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null kalman_router_t&quot;</span>):</div>
-<div class="line"><span class="lineno">  164</span>            core.create_router(<span class="stringliteral">&quot;hybrid&quot;</span>, a=core.ffi.NULL, b=core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>), alpha=0.5)</div>
-<div class="line"><span class="lineno">  165</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;must not be negative&quot;</span>):</div>
-<div class="line"><span class="lineno">  166</span>            core.create_router(<span class="stringliteral">&quot;threshold&quot;</span>, m=1, window=-1, soft=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  167</span>        c = core.ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.5, 0.5])</div>
-<div class="line"><span class="lineno">  168</span>        h = core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>)</div>
-<div class="line"><span class="lineno">  169</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null output buffer for mu&quot;</span>):</div>
-<div class="line"><span class="lineno">  170</span>            core.check(core.lib.kalman_router_route(h, 0, 2, core.ffi.NULL, c, c, core.ffi.NULL), <span class="stringliteral">&quot;route&quot;</span>)</div>
-<div class="line"><span class="lineno">  171</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null input for nis&quot;</span>):</div>
-<div class="line"><span class="lineno">  172</span>            core.check(core.lib.kalman_router_route(h, 3, 2, core.ffi.NULL, c, c, core.ffi.new(<span class="stringliteral">&quot;double[2]&quot;</span>)), <span class="stringliteral">&quot;route&quot;</span>)</div>
-<div class="line"><span class="lineno">  173</span>        <span class="keyword">with</span> self.assertRaisesRegex(KeyError, <span class="stringliteral">&quot;no C\\+\\+ router&quot;</span>):</div>
-<div class="line"><span class="lineno">  174</span>            core.create_router(<span class="stringliteral">&quot;oracle&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00155">155</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>    <span class="keyword">def </span>test_c_api_refuses_bad_arguments(self):</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;M must be positive&quot;</span>):</div>
+<div class="line"><span class="lineno">  157</span>            core.check(core.lib.kalman_router_route(core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>), 0, 0, core.ffi.NULL,</div>
+<div class="line"><span class="lineno">  158</span>                                                    core.ffi.NULL, core.ffi.NULL, core.ffi.NULL), <span class="stringliteral">&quot;route&quot;</span>)</div>
+<div class="line"><span class="lineno">  159</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;alpha must lie in&quot;</span>):</div>
+<div class="line"><span class="lineno">  160</span>            a = core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>)</div>
+<div class="line"><span class="lineno">  161</span>            core.create_router(<span class="stringliteral">&quot;hybrid&quot;</span>, a=a, b=a, alpha=2.0)</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null kalman_router_t&quot;</span>):</div>
+<div class="line"><span class="lineno">  163</span>            core.create_router(<span class="stringliteral">&quot;hybrid&quot;</span>, a=core.ffi.NULL, b=core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>), alpha=0.5)</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;must not be negative&quot;</span>):</div>
+<div class="line"><span class="lineno">  165</span>            core.create_router(<span class="stringliteral">&quot;threshold&quot;</span>, m=1, window=-1, soft=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  166</span>        c = core.ffi.new(<span class="stringliteral">&quot;double[]&quot;</span>, [0.5, 0.5])</div>
+<div class="line"><span class="lineno">  167</span>        h = core.create_router(<span class="stringliteral">&quot;bayesian&quot;</span>)</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null output buffer for mu&quot;</span>):</div>
+<div class="line"><span class="lineno">  169</span>            core.check(core.lib.kalman_router_route(h, 0, 2, core.ffi.NULL, c, c, core.ffi.NULL), <span class="stringliteral">&quot;route&quot;</span>)</div>
+<div class="line"><span class="lineno">  170</span>        <span class="keyword">with</span> self.assertRaisesRegex(RuntimeError, <span class="stringliteral">&quot;null input for nis&quot;</span>):</div>
+<div class="line"><span class="lineno">  171</span>            core.check(core.lib.kalman_router_route(h, 3, 2, core.ffi.NULL, c, c, core.ffi.new(<span class="stringliteral">&quot;double[2]&quot;</span>)), <span class="stringliteral">&quot;route&quot;</span>)</div>
+<div class="line"><span class="lineno">  172</span>        <span class="keyword">with</span> self.assertRaisesRegex(KeyError, <span class="stringliteral">&quot;no C\\+\\+ router&quot;</span>):</div>
+<div class="line"><span class="lineno">  173</span>            core.create_router(<span class="stringliteral">&quot;oracle&quot;</span>)</div>
+<div class="line"><span class="lineno">  174</span> </div>
 <div class="line"><span class="lineno">  175</span> </div>
-<div class="line"><span class="lineno">  176</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -272,19 +272,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00144">144</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  144</span>    <span class="keyword">def </span>test_what_cxx_does_not_take_runs_the_reference(self):</div>
-<div class="line"><span class="lineno">  145</span>        nis, c, L = inputs(3, 2)</div>
-<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">for</span> router <span class="keywordflow">in</span> (HybridRouter(BayesianRouter(), BayesianRouter(), alpha=1.5),   <span class="comment"># outside [0, 1]</span></div>
-<div class="line"><span class="lineno">  147</span>                       ThresholdRouter(m=1, window=-2)):</div>
-<div class="line"><span class="lineno">  148</span>            router(nis, c, L)</div>
-<div class="line"><span class="lineno">  149</span>            self.assertIsNone(router.__dict__.get(<span class="stringliteral">&quot;_native_state&quot;</span>))</div>
-<div class="line"><span class="lineno">  150</span>        bayes = BayesianRouter()</div>
-<div class="line"><span class="lineno">  151</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
-<div class="line"><span class="lineno">  152</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)                     <span class="comment"># the reference casts it</span></div>
-<div class="line"><span class="lineno">  153</span>            bayes(nis, c.astype(complex), L)                    <span class="comment"># not real</span></div>
-<div class="line"><span class="lineno">  154</span>        self.assertIsNone(bayes.__dict__.get(<span class="stringliteral">&quot;_native_state&quot;</span>))</div>
-<div class="line"><span class="lineno">  155</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__routers_8py_source.html#l00143">143</a> of file <a class="el" href="test__native__routers_8py_source.html">test_native_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>test_what_cxx_does_not_take_runs_the_reference(self):</div>
+<div class="line"><span class="lineno">  144</span>        nis, c, L = inputs(3, 2)</div>
+<div class="line"><span class="lineno">  145</span>        <span class="keywordflow">for</span> router <span class="keywordflow">in</span> (HybridRouter(BayesianRouter(), BayesianRouter(), alpha=1.5),   <span class="comment"># outside [0, 1]</span></div>
+<div class="line"><span class="lineno">  146</span>                       ThresholdRouter(m=1, window=-2)):</div>
+<div class="line"><span class="lineno">  147</span>            router(nis, c, L)</div>
+<div class="line"><span class="lineno">  148</span>            self.assertIsNone(router.__dict__.get(<span class="stringliteral">&quot;_native_state&quot;</span>))</div>
+<div class="line"><span class="lineno">  149</span>        bayes = BayesianRouter()</div>
+<div class="line"><span class="lineno">  150</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
+<div class="line"><span class="lineno">  151</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)                     <span class="comment"># the reference casts it</span></div>
+<div class="line"><span class="lineno">  152</span>            bayes(nis, c.astype(complex), L)                    <span class="comment"># not real</span></div>
+<div class="line"><span class="lineno">  153</span>        self.assertIsNone(bayes.__dict__.get(<span class="stringliteral">&quot;_native_state&quot;</span>))</div>
+<div class="line"><span class="lineno">  154</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

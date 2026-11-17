@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -143,7 +143,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_routers_1_1_bayesian.
 </div><!--header-->
 <div class="contents">
 
-<p>The classical IKF update: <code>mu_j ∝ c_j · L_j</code>.  
+<p>The classical interacting-multiple-model update: <code>mu_j ∝ c_j · L_j</code>.  
  <a href="class_kalman_1_1_routers_1_1_bayesian.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="_bayesian_8h_source.html">Bayesian.h</a>&gt;</code></p>
@@ -188,7 +188,7 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a13e536ac3ef367956d932cba7a2b4d46 inherit pro_static_methods_class_kalman_1_1_routers_1_1_router"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The classical IKF update: <code>mu_j ∝ c_j · L_j</code>. </p>
+<div class="textblock"><p>The classical interacting-multiple-model update: <code>mu_j ∝ c_j · L_j</code>. </p>
 <p>Combines the Markov transition prior with the Gaussian innovation likelihood — Bayes' theorem, nothing more. Optimal when every model is a correctly specified Gaussian, and the right default in almost every case: it needs no training data, no export pipeline and no runtime dependency, and each update can be explained.</p>
 <p>Reach for <a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a> only when the regime structure is genuinely not Markov, or the switching signature is one a likelihood ratio cannot see.</p>
 <hr  />
@@ -223,7 +223,7 @@ Additional Inherited Members</h2></td></tr>
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_bayesian_8h_source.html#l00036">36</a> of file <a class="el" href="_bayesian_8h_source.html">Bayesian.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   37</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Classical IKF mode update: mu proportional to c * likelihood.&quot;</span>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Classical mode update: mu proportional to c * likelihood.&quot;</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -276,11 +276,12 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   58</span>        <span class="keywordflow">if</span> (c.Size() != likelihoods.Size())</div>
 <div class="line"><span class="lineno">   59</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Routers::Bayesian: c and likelihoods differ in length.&quot;</span>);</div>
 <div class="line"><span class="lineno">   60</span> </div>
-<div class="line"><span class="lineno">   61</span>        Vector mu(c.Size());</div>
-<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; c.Size(); ++j) mu(j) = c(j) * likelihoods(j);</div>
+<div class="line"><span class="lineno">   61</span>        Vector <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(c.Size());</div>
+<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; c.Size(); ++j) <a class="code hl_variable" href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">mu</a>(j) = c(j) * likelihoods(j);</div>
 <div class="line"><span class="lineno">   63</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Normalise</a>(mu);</div>
 <div class="line"><span class="lineno">   64</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_routers_1_1_router_html_a75d5794536f09b2adcbac66213bc9b31"><div class="ttname"><a href="class_kalman_1_1_routers_1_1_router.html#a75d5794536f09b2adcbac66213bc9b31">Kalman::Routers::Router::Normalise</a></div><div class="ttdeci">static Vector Normalise(Vector mu)</div><div class="ttdoc">Clip to a positive floor and normalise to a probability vector.</div><div class="ttdef"><b>Definition</b> <a href="_routers_8cc_source.html#l00023">Routers.cc:23</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_abce6a020b2f062e2f758851ca8368c37"><div class="ttname"><a href="namespaceoperations.html#abce6a020b2f062e2f758851ca8368c37">operations.mu</a></div><div class="ttdeci">mu</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00103">operations.py:103</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

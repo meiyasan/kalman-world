@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -734,14 +734,18 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 <div class="line"><span class="lineno">  185</span>        <span class="keywordflow">else</span>:</div>
 <div class="line"><span class="lineno">  186</span>            gamma, Wm, Wc = self._ut_weights(n)</div>
 <div class="line"><span class="lineno">  187</span>            sig = self._sigmas(x_vec, P, gamma)</div>
-<div class="line"><span class="lineno">  188</span>            Y = np.array([self._f_call(model, sp, u=u, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
-<div class="line"><span class="lineno">  189</span>            x_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Y)</div>
-<div class="line"><span class="lineno">  190</span>            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)</div>
-<div class="line"><span class="lineno">  191</span>            L = self._L(model, x_vec.reshape(-1, 1), u, t)</div>
-<div class="line"><span class="lineno">  192</span>            P_pred = self._sym_psd(P_pred + self._sym_psd(L @ self._Q(model, t) @ L.T))</div>
-<div class="line"><span class="lineno">  193</span> </div>
-<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">return</span> x_pred.reshape(-1, 1), P_pred, np.eye(n)</div>
-<div class="line"><span class="lineno">  195</span> </div>
+<div class="line"><span class="lineno">  188</span>            <span class="comment"># f of every sigma point: in one call when the model&#39;s f is BATCHED.</span></div>
+<div class="line"><span class="lineno">  189</span>            <span class="keywordflow">if</span> model.batched(<span class="stringliteral">&quot;f&quot;</span>):</div>
+<div class="line"><span class="lineno">  190</span>                Y = np.asarray(model.f(sig.T, u=u, t=t), dtype=np.float64).T</div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  192</span>                Y = np.array([self._f_call(model, sp, u=u, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
+<div class="line"><span class="lineno">  193</span>            x_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Y)</div>
+<div class="line"><span class="lineno">  194</span>            P_pred = self._weighted_outer_sum(Wc, Y, x_pred)</div>
+<div class="line"><span class="lineno">  195</span>            L = self._L(model, x_vec.reshape(-1, 1), u, t)</div>
+<div class="line"><span class="lineno">  196</span>            P_pred = self._sym_psd(P_pred + self._sym_psd(L @ self._Q(model, t) @ L.T))</div>
+<div class="line"><span class="lineno">  197</span> </div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">return</span> x_pred.reshape(-1, 1), P_pred, np.eye(n)</div>
+<div class="line"><span class="lineno">  199</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1032,50 +1036,54 @@ even under numerical round-off.
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a626868626195a67c30107b9ba868e2e3">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00196">196</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  196</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
-<div class="line"><span class="lineno">  197</span>        n = model.n</div>
-<div class="line"><span class="lineno">  198</span>        x_pred = self._to_vec(x)</div>
-<div class="line"><span class="lineno">  199</span>        P_pred = np.asarray(P, dtype=np.float64)</div>
-<div class="line"><span class="lineno">  200</span>        z = self._to_vec(z)</div>
-<div class="line"><span class="lineno">  201</span>        keep = ~np.isnan(z)</div>
-<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
-<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">return</span> np.asarray(x).reshape(-1, 1), P_pred</div>
-<div class="line"><span class="lineno">  204</span> </div>
-<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">if</span> self._noise_through_h(model):</div>
-<div class="line"><span class="lineno">  206</span>            Rv = self._R(model, t)</div>
-<div class="line"><span class="lineno">  207</span>            n_a = n + Rv.shape[0]</div>
-<div class="line"><span class="lineno">  208</span>            gamma, Wm, Wc = self._ut_weights(n_a)</div>
-<div class="line"><span class="lineno">  209</span>            mean_a = np.zeros(n_a); mean_a[:n] = x_pred</div>
-<div class="line"><span class="lineno">  210</span>            P_a = np.zeros((n_a, n_a)); P_a[:n, :n] = P_pred; P_a[n:, n:] = Rv</div>
-<div class="line"><span class="lineno">  211</span>            sig_a = self._sigmas(mean_a, P_a, gamma)</div>
-<div class="line"><span class="lineno">  212</span>            Z = np.array([self._h_call(model, sp[:n], t=t, v=sp[n:]) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig_a])</div>
-<div class="line"><span class="lineno">  213</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
-<div class="line"><span class="lineno">  214</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
-<div class="line"><span class="lineno">  215</span>            Pxz = self._weighted_cross_sum(Wc, sig_a[:, :n] - x_pred, Z - z_pred)</div>
-<div class="line"><span class="lineno">  216</span>            S = self._sym_psd(S)</div>
-<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  218</span>            gamma, Wm, Wc = self._ut_weights(n)</div>
-<div class="line"><span class="lineno">  219</span>            sig = self._sigmas(x_pred, P_pred, gamma)</div>
-<div class="line"><span class="lineno">  220</span>            Z = np.array([self._h_call(model, sp, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
-<div class="line"><span class="lineno">  221</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
-<div class="line"><span class="lineno">  222</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
-<div class="line"><span class="lineno">  223</span>            Pxz = self._weighted_cross_sum(Wc, sig - x_pred, Z - z_pred)</div>
-<div class="line"><span class="lineno">  224</span>            M = self._M(model, x_pred.reshape(-1, 1), t)</div>
-<div class="line"><span class="lineno">  225</span>            S = self._sym_psd(S + self._sym_psd(M @ self._R(model, t) @ M.T))</div>
-<div class="line"><span class="lineno">  226</span> </div>
-<div class="line"><span class="lineno">  227</span>        <span class="comment"># Multi-rate: restrict the update to the available measurement channels.</span></div>
-<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.all():</div>
-<div class="line"><span class="lineno">  229</span>            idx = np.where(keep)[0]</div>
-<div class="line"><span class="lineno">  230</span>            S = S[np.ix_(idx, idx)]</div>
-<div class="line"><span class="lineno">  231</span>            Pxz = Pxz[:, idx]</div>
-<div class="line"><span class="lineno">  232</span>            z = z[idx]</div>
-<div class="line"><span class="lineno">  233</span>            z_pred = z_pred[idx]</div>
+<p class="definition">Definition at line <a class="el" href="engines_2unscented_8py_source.html#l00200">200</a> of file <a class="el" href="engines_2unscented_8py_source.html">unscented.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  200</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
+<div class="line"><span class="lineno">  201</span>        n = model.n</div>
+<div class="line"><span class="lineno">  202</span>        x_pred = self._to_vec(x)</div>
+<div class="line"><span class="lineno">  203</span>        P_pred = np.asarray(P, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  204</span>        z = self._to_vec(z)</div>
+<div class="line"><span class="lineno">  205</span>        keep = ~np.isnan(z)</div>
+<div class="line"><span class="lineno">  206</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
+<div class="line"><span class="lineno">  207</span>            <span class="keywordflow">return</span> np.asarray(x).reshape(-1, 1), P_pred</div>
+<div class="line"><span class="lineno">  208</span> </div>
+<div class="line"><span class="lineno">  209</span>        <span class="keywordflow">if</span> self._noise_through_h(model):</div>
+<div class="line"><span class="lineno">  210</span>            Rv = self._R(model, t)</div>
+<div class="line"><span class="lineno">  211</span>            n_a = n + Rv.shape[0]</div>
+<div class="line"><span class="lineno">  212</span>            gamma, Wm, Wc = self._ut_weights(n_a)</div>
+<div class="line"><span class="lineno">  213</span>            mean_a = np.zeros(n_a); mean_a[:n] = x_pred</div>
+<div class="line"><span class="lineno">  214</span>            P_a = np.zeros((n_a, n_a)); P_a[:n, :n] = P_pred; P_a[n:, n:] = Rv</div>
+<div class="line"><span class="lineno">  215</span>            sig_a = self._sigmas(mean_a, P_a, gamma)</div>
+<div class="line"><span class="lineno">  216</span>            Z = np.array([self._h_call(model, sp[:n], t=t, v=sp[n:]) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig_a])</div>
+<div class="line"><span class="lineno">  217</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
+<div class="line"><span class="lineno">  218</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
+<div class="line"><span class="lineno">  219</span>            Pxz = self._weighted_cross_sum(Wc, sig_a[:, :n] - x_pred, Z - z_pred)</div>
+<div class="line"><span class="lineno">  220</span>            S = self._sym_psd(S)</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  222</span>            gamma, Wm, Wc = self._ut_weights(n)</div>
+<div class="line"><span class="lineno">  223</span>            sig = self._sigmas(x_pred, P_pred, gamma)</div>
+<div class="line"><span class="lineno">  224</span>            <span class="comment"># h of every sigma point: in one call when the model&#39;s h is BATCHED.</span></div>
+<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">if</span> model.batched(<span class="stringliteral">&quot;h&quot;</span>):</div>
+<div class="line"><span class="lineno">  226</span>                Z = np.asarray(model.h(sig.T, t=t), dtype=np.float64).T</div>
+<div class="line"><span class="lineno">  227</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  228</span>                Z = np.array([self._h_call(model, sp, t=t) <span class="keywordflow">for</span> sp <span class="keywordflow">in</span> sig])</div>
+<div class="line"><span class="lineno">  229</span>            z_pred = np.einsum(<span class="stringliteral">&quot;i,ij-&gt;j&quot;</span>, Wm, Z)</div>
+<div class="line"><span class="lineno">  230</span>            S = self._weighted_outer_sum(Wc, Z, z_pred)</div>
+<div class="line"><span class="lineno">  231</span>            Pxz = self._weighted_cross_sum(Wc, sig - x_pred, Z - z_pred)</div>
+<div class="line"><span class="lineno">  232</span>            M = self._M(model, x_pred.reshape(-1, 1), t)</div>
+<div class="line"><span class="lineno">  233</span>            S = self._sym_psd(S + self._sym_psd(M @ self._R(model, t) @ M.T))</div>
 <div class="line"><span class="lineno">  234</span> </div>
-<div class="line"><span class="lineno">  235</span>        K = Pxz @ np.linalg.pinv(S)</div>
-<div class="line"><span class="lineno">  236</span>        x_new = (x_pred + K @ (z - z_pred)).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  237</span>        P_new = self._sym_psd(P_pred - K @ S @ K.T)</div>
-<div class="line"><span class="lineno">  238</span>        <span class="keywordflow">return</span> x_new, P_new</div>
+<div class="line"><span class="lineno">  235</span>        <span class="comment"># Multi-rate: restrict the update to the available measurement channels.</span></div>
+<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.all():</div>
+<div class="line"><span class="lineno">  237</span>            idx = np.where(keep)[0]</div>
+<div class="line"><span class="lineno">  238</span>            S = S[np.ix_(idx, idx)]</div>
+<div class="line"><span class="lineno">  239</span>            Pxz = Pxz[:, idx]</div>
+<div class="line"><span class="lineno">  240</span>            z = z[idx]</div>
+<div class="line"><span class="lineno">  241</span>            z_pred = z_pred[idx]</div>
+<div class="line"><span class="lineno">  242</span> </div>
+<div class="line"><span class="lineno">  243</span>        K = Pxz @ np.linalg.pinv(S)</div>
+<div class="line"><span class="lineno">  244</span>        x_new = (x_pred + K @ (z - z_pred)).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  245</span>        P_new = self._sym_psd(P_pred - K @ S @ K.T)</div>
+<div class="line"><span class="lineno">  246</span>        <span class="keywordflow">return</span> x_new, P_new</div>
 </div><!-- fragment -->
 </div>
 </div>

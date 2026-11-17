@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,7 +157,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00356">356</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00377">377</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae6e9c7230032b48a260ffa055f419152" name="ae6e9c7230032b48a260ffa055f419152"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae6e9c7230032b48a260ffa055f419152">&#9670;&#160;</a></span>test_replay_beats_free_run_under_model_error()</h2>
@@ -175,26 +175,26 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Truth from different physics (nature run), forecasts from the model.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00358">358</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  358</span>    <span class="keyword">def </span>test_replay_beats_free_run_under_model_error(self):</div>
-<div class="line"><span class="lineno">  359</span>        <span class="stringliteral">&quot;&quot;&quot;Truth from different physics (nature run), forecasts from the model.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  360</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  361</span>        nature = KolmogorovFlowModel(<span class="stringliteral">&quot;nature&quot;</span>, grid=16, cycle=10, dt=0.01,</div>
-<div class="line"><span class="lineno">  362</span>                                     nu=1 / 80., n_obs=40, obs_idx=model.obs_idx,</div>
-<div class="line"><span class="lineno">  363</span>                                     sig_o=0.30, loc_radius=4.0, seed=7)</div>
-<div class="line"><span class="lineno">  364</span>        w, traj = model.equilibrium_state(decorrelate=50), []</div>
-<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(8):</div>
-<div class="line"><span class="lineno">  366</span>            w = nature.f(w)</div>
-<div class="line"><span class="lineno">  367</span>            traj.append(w.copy())</div>
-<div class="line"><span class="lineno">  368</span>        osse = TwinExperiment(model, n_cycles=8, n_members=8,</div>
-<div class="line"><span class="lineno">  369</span>                              truth_trajectory=np.asarray(traj))</div>
-<div class="line"><span class="lineno">  370</span>        osse.add_method(<span class="stringliteral">&quot;enkf&quot;</span>, inflation=1.10)</div>
-<div class="line"><span class="lineno">  371</span>        osse.add_free_run()</div>
-<div class="line"><span class="lineno">  372</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  373</span>        self.assertLess(np.mean(hist[<span class="stringliteral">&quot;enkf&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]),</div>
-<div class="line"><span class="lineno">  374</span>                        np.mean(hist[<span class="stringliteral">&quot;free&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]))</div>
-<div class="line"><span class="lineno">  375</span>        np.testing.assert_allclose(osse.truth, traj[-1])     <span class="comment"># replayed, not re-evolved</span></div>
-<div class="line"><span class="lineno">  376</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00379">379</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  379</span>    <span class="keyword">def </span>test_replay_beats_free_run_under_model_error(self):</div>
+<div class="line"><span class="lineno">  380</span>        <span class="stringliteral">&quot;&quot;&quot;Truth from different physics (nature run), forecasts from the model.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  381</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  382</span>        nature = KolmogorovFlowModel(<span class="stringliteral">&quot;nature&quot;</span>, grid=16, cycle=10, dt=0.01,</div>
+<div class="line"><span class="lineno">  383</span>                                     nu=1 / 80., n_obs=40, obs_idx=model.obs_idx,</div>
+<div class="line"><span class="lineno">  384</span>                                     sig_o=0.30, loc_radius=4.0, seed=7)</div>
+<div class="line"><span class="lineno">  385</span>        w, traj = model.equilibrium_state(decorrelate=50), []</div>
+<div class="line"><span class="lineno">  386</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(8):</div>
+<div class="line"><span class="lineno">  387</span>            w = nature.f(w)</div>
+<div class="line"><span class="lineno">  388</span>            traj.append(w.copy())</div>
+<div class="line"><span class="lineno">  389</span>        osse = TwinExperiment(model, n_cycles=8, n_members=8,</div>
+<div class="line"><span class="lineno">  390</span>                              truth_trajectory=np.asarray(traj))</div>
+<div class="line"><span class="lineno">  391</span>        osse.add_method(<span class="stringliteral">&quot;enkf&quot;</span>, inflation=1.10)</div>
+<div class="line"><span class="lineno">  392</span>        osse.add_free_run()</div>
+<div class="line"><span class="lineno">  393</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  394</span>        self.assertLess(np.mean(hist[<span class="stringliteral">&quot;enkf&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]),</div>
+<div class="line"><span class="lineno">  395</span>                        np.mean(hist[<span class="stringliteral">&quot;free&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]))</div>
+<div class="line"><span class="lineno">  396</span>        np.testing.assert_allclose(osse.truth, traj[-1])     <span class="comment"># replayed, not re-evolved</span></div>
+<div class="line"><span class="lineno">  397</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -214,21 +214,21 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00377">377</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  377</span>    <span class="keyword">def </span>test_replay_clamps_cycles_and_validates_shape(self):</div>
-<div class="line"><span class="lineno">  378</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  379</span>        traj = model.initial_ensemble(4, rng=0).T            <span class="comment"># (4, n): 4 cycles worth</span></div>
-<div class="line"><span class="lineno">  380</span>        osse = TwinExperiment(model, n_cycles=99, n_members=6, truth_trajectory=traj)</div>
-<div class="line"><span class="lineno">  381</span>        self.assertEqual(osse.n_cycles, 4)</div>
-<div class="line"><span class="lineno">  382</span>        grid_shaped = traj.reshape(4, model.grid, model.grid)  <span class="comment"># (T, g, g) accepted too</span></div>
-<div class="line"><span class="lineno">  383</span>        self.assertEqual(TwinExperiment(model, n_members=6,</div>
-<div class="line"><span class="lineno">  384</span>                                        truth_trajectory=grid_shaped).n_cycles, 4)</div>
-<div class="line"><span class="lineno">  385</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
-<div class="line"><span class="lineno">  386</span>            TwinExperiment(model, n_members=6, truth_trajectory=traj[:, :100])</div>
-<div class="line"><span class="lineno">  387</span> </div>
-<div class="line"><span class="lineno">  388</span> </div>
-<div class="line"><span class="lineno">  389</span><span class="comment"># ── Reanalysis chain (numpy core; file I/O needs optional xarray) ────────────</span></div>
-<div class="line"><span class="lineno">  390</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00398">398</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  398</span>    <span class="keyword">def </span>test_replay_clamps_cycles_and_validates_shape(self):</div>
+<div class="line"><span class="lineno">  399</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  400</span>        traj = model.initial_state(samples=4, rng=0).T            <span class="comment"># (4, n): 4 cycles worth</span></div>
+<div class="line"><span class="lineno">  401</span>        osse = TwinExperiment(model, n_cycles=99, n_members=6, truth_trajectory=traj)</div>
+<div class="line"><span class="lineno">  402</span>        self.assertEqual(osse.n_cycles, 4)</div>
+<div class="line"><span class="lineno">  403</span>        grid_shaped = traj.reshape(4, model.grid, model.grid)  <span class="comment"># (T, g, g) accepted too</span></div>
+<div class="line"><span class="lineno">  404</span>        self.assertEqual(TwinExperiment(model, n_members=6,</div>
+<div class="line"><span class="lineno">  405</span>                                        truth_trajectory=grid_shaped).n_cycles, 4)</div>
+<div class="line"><span class="lineno">  406</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  407</span>            TwinExperiment(model, n_members=6, truth_trajectory=traj[:, :100])</div>
+<div class="line"><span class="lineno">  408</span> </div>
+<div class="line"><span class="lineno">  409</span> </div>
+<div class="line"><span class="lineno">  410</span><span class="comment"># ── Reanalysis chain (numpy core; file I/O needs optional xarray) ────────────</span></div>
+<div class="line"><span class="lineno">  411</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

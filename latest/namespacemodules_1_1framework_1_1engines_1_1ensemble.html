@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -187,25 +187,25 @@ scale ``L`` but exactly zero beyond ``2L``, so spurious long-range sample
 correlations from a small ensemble are cut off instead of merely damped.
 ``dist`` is any array of distances; returns the taper with the same shape.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00009">9</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">    9</span><span class="keyword">def </span>gaspari_cohn(dist: np.ndarray, L: float) -&gt; np.ndarray:</div>
-<div class="line"><span class="lineno">   10</span>    <span class="stringliteral">&quot;&quot;&quot;Gaspari–Cohn 5th-order compactly-supported correlation function.</span></div>
-<div class="line"><span class="lineno">   11</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">   12</span><span class="stringliteral">    Standard covariance-localization taper for ensemble filters: ≈ Gaussian of</span></div>
-<div class="line"><span class="lineno">   13</span><span class="stringliteral">    scale ``L`` but exactly zero beyond ``2L``, so spurious long-range sample</span></div>
-<div class="line"><span class="lineno">   14</span><span class="stringliteral">    correlations from a small ensemble are cut off instead of merely damped.</span></div>
-<div class="line"><span class="lineno">   15</span><span class="stringliteral">    ``dist`` is any array of distances; returns the taper with the same shape.</span></div>
-<div class="line"><span class="lineno">   16</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">   17</span>    r = np.asarray(dist, dtype=float) / float(L)</div>
-<div class="line"><span class="lineno">   18</span>    C = np.zeros_like(r)</div>
-<div class="line"><span class="lineno">   19</span>    m1 = r &lt;= 1</div>
-<div class="line"><span class="lineno">   20</span>    C[m1] = 1 - 5/3*r[m1]**2 + 5/8*r[m1]**3 + 0.5*r[m1]**4 - 0.25*r[m1]**5</div>
-<div class="line"><span class="lineno">   21</span>    m2 = (r &gt; 1) &amp; (r &lt;= 2)</div>
-<div class="line"><span class="lineno">   22</span>    rr = r[m2]</div>
-<div class="line"><span class="lineno">   23</span>    C[m2] = 4 - 5*rr + 5/3*rr**2 + 5/8*rr**3 - 0.5*rr**4 + 1/12*rr**5 - 2/(3*rr)</div>
-<div class="line"><span class="lineno">   24</span>    <span class="keywordflow">return</span> np.maximum(C, 0.0)</div>
-<div class="line"><span class="lineno">   25</span> </div>
-<div class="line"><span class="lineno">   26</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00011">11</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   11</span><span class="keyword">def </span>gaspari_cohn(dist: np.ndarray, L: float) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">   12</span>    <span class="stringliteral">&quot;&quot;&quot;Gaspari–Cohn 5th-order compactly-supported correlation function.</span></div>
+<div class="line"><span class="lineno">   13</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   14</span><span class="stringliteral">    Standard covariance-localization taper for ensemble filters: ≈ Gaussian of</span></div>
+<div class="line"><span class="lineno">   15</span><span class="stringliteral">    scale ``L`` but exactly zero beyond ``2L``, so spurious long-range sample</span></div>
+<div class="line"><span class="lineno">   16</span><span class="stringliteral">    correlations from a small ensemble are cut off instead of merely damped.</span></div>
+<div class="line"><span class="lineno">   17</span><span class="stringliteral">    ``dist`` is any array of distances; returns the taper with the same shape.</span></div>
+<div class="line"><span class="lineno">   18</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   19</span>    r = np.asarray(dist, dtype=float) / float(L)</div>
+<div class="line"><span class="lineno">   20</span>    C = np.zeros_like(r)</div>
+<div class="line"><span class="lineno">   21</span>    m1 = r &lt;= 1</div>
+<div class="line"><span class="lineno">   22</span>    C[m1] = 1 - 5/3*r[m1]**2 + 5/8*r[m1]**3 + 0.5*r[m1]**4 - 0.25*r[m1]**5</div>
+<div class="line"><span class="lineno">   23</span>    m2 = (r &gt; 1) &amp; (r &lt;= 2)</div>
+<div class="line"><span class="lineno">   24</span>    rr = r[m2]</div>
+<div class="line"><span class="lineno">   25</span>    C[m2] = 4 - 5*rr + 5/3*rr**2 + 5/8*rr**3 - 0.5*rr**4 + 1/12*rr**5 - 2/(3*rr)</div>
+<div class="line"><span class="lineno">   26</span>    <span class="keywordflow">return</span> np.maximum(C, 0.0)</div>
+<div class="line"><span class="lineno">   27</span> </div>
+<div class="line"><span class="lineno">   28</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><pre class="fragment">``sample()`` of a model of constant matrices on the linear engine: the
 state chain runs in C++ on those matrices (kalman_propagate), with the noise
 drawn by numpy, so a seeded run gives the Python run's numbers.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00282">282</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00256">256</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a6c710a31a9f9f71c061eb7d2459e1f40" name="a6c710a31a9f9f71c061eb7d2459e1f40"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c710a31a9f9f71c061eb7d2459e1f40">&#9670;&#160;</a></span>check()</h2>
@@ -205,23 +205,23 @@ drawn by numpy, so a seeded run gives the Python run's numbers.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00287">287</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  287</span>    <span class="keyword">def </span>check(self, make, T, uk=None):</div>
-<div class="line"><span class="lineno">  288</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1sampler.html">modules.framework.sampler</a> <span class="keyword">import</span> KalmanSampler</div>
-<div class="line"><span class="lineno">  289</span>        <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  290</span>            np.random.seed(3)</div>
-<div class="line"><span class="lineno">  291</span>            py = make().sample(T, uk=uk)</div>
-<div class="line"><span class="lineno">  292</span>        model = make()</div>
-<div class="line"><span class="lineno">  293</span>        self.assertIsNotNone(KalmanSampler(model)._matrices_handle())</div>
-<div class="line"><span class="lineno">  294</span>        np.random.seed(3)</div>
-<div class="line"><span class="lineno">  295</span>        <span class="keyword">with</span> mock.patch(<span class="stringliteral">&quot;modules.framework.native.core.propagate&quot;</span>,</div>
-<div class="line"><span class="lineno">  296</span>                        side_effect=__import__(<span class="stringliteral">&quot;modules.framework.native.core&quot;</span>, fromlist=[<span class="stringliteral">&quot;x&quot;</span>]).propagate) <span class="keyword">as</span> chain:</div>
-<div class="line"><span class="lineno">  297</span>            cx = model.sample(T, uk=uk)</div>
-<div class="line"><span class="lineno">  298</span>        self.assertEqual(chain.call_count, 1, <span class="stringliteral">&quot;the chain ran in C++&quot;</span>)</div>
-<div class="line"><span class="lineno">  299</span>        close(self, py.xk, cx.xk, 1e-12, <span class="stringliteral">&quot;sampled state&quot;</span>)</div>
-<div class="line"><span class="lineno">  300</span>        close(self, py.Pk, cx.Pk, 1e-12, <span class="stringliteral">&quot;sampled covariance&quot;</span>)</div>
-<div class="line"><span class="lineno">  301</span>        close(self, py.zk, cx.zk, 1e-12, <span class="stringliteral">&quot;sampled measurement&quot;</span>)</div>
-<div class="line"><span class="lineno">  302</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00261">261</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  261</span>    <span class="keyword">def </span>check(self, make, T, uk=None):</div>
+<div class="line"><span class="lineno">  262</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1sampler.html">modules.framework.sampler</a> <span class="keyword">import</span> KalmanSampler</div>
+<div class="line"><span class="lineno">  263</span>        <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  264</span>            np.random.seed(3)</div>
+<div class="line"><span class="lineno">  265</span>            py = make().sample(T, uk=uk)</div>
+<div class="line"><span class="lineno">  266</span>        model = make()</div>
+<div class="line"><span class="lineno">  267</span>        self.assertIsNotNone(KalmanSampler(model)._matrices_handle())</div>
+<div class="line"><span class="lineno">  268</span>        np.random.seed(3)</div>
+<div class="line"><span class="lineno">  269</span>        <span class="keyword">with</span> mock.patch(<span class="stringliteral">&quot;modules.framework.native.core.propagate&quot;</span>,</div>
+<div class="line"><span class="lineno">  270</span>                        side_effect=__import__(<span class="stringliteral">&quot;modules.framework.native.core&quot;</span>, fromlist=[<span class="stringliteral">&quot;x&quot;</span>]).propagate) <span class="keyword">as</span> chain:</div>
+<div class="line"><span class="lineno">  271</span>            cx = model.sample(T, uk=uk)</div>
+<div class="line"><span class="lineno">  272</span>        self.assertEqual(chain.call_count, 1, <span class="stringliteral">&quot;the chain ran in C++&quot;</span>)</div>
+<div class="line"><span class="lineno">  273</span>        close(self, py.xk, cx.xk, 1e-12, <span class="stringliteral">&quot;sampled state&quot;</span>)</div>
+<div class="line"><span class="lineno">  274</span>        close(self, py.Pk, cx.Pk, 1e-12, <span class="stringliteral">&quot;sampled covariance&quot;</span>)</div>
+<div class="line"><span class="lineno">  275</span>        close(self, py.zk, cx.zk, 1e-12, <span class="stringliteral">&quot;sampled measurement&quot;</span>)</div>
+<div class="line"><span class="lineno">  276</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1sampler_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1sampler.html">modules.framework.sampler</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2sampler_8py_source.html#l00001">sampler.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -242,11 +242,11 @@ drawn by numpy, so a seeded run gives the Python run's numbers.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00303">303</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  303</span>    <span class="keyword">def </span>test_analytic_oscillator(self):</div>
-<div class="line"><span class="lineno">  304</span>        self.check(<span class="keyword">lambda</span>: AnalyticOscillatorModel(<span class="stringliteral">&quot;A&quot;</span>, fs=256.0, f0=10.0, fc=8.0, Q=1e4, measurement_uncertainty=2.0,</div>
-<div class="line"><span class="lineno">  305</span>                                                   process_uncertainty=0.01), 8.0)</div>
-<div class="line"><span class="lineno">  306</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00277">277</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>    <span class="keyword">def </span>test_analytic_oscillator(self):</div>
+<div class="line"><span class="lineno">  278</span>        self.check(<span class="keyword">lambda</span>: AnalyticOscillatorModel(<span class="stringliteral">&quot;A&quot;</span>, fs=256.0, f0=10.0, fc=8.0, Q=1e4, measurement_uncertainty=2.0,</div>
+<div class="line"><span class="lineno">  279</span>                                                   process_uncertainty=0.01), 8.0)</div>
+<div class="line"><span class="lineno">  280</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -266,12 +266,12 @@ drawn by numpy, so a seeded run gives the Python run's numbers.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00311">311</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  311</span>    <span class="keyword">def </span>test_suspension_with_its_road(self):</div>
-<div class="line"><span class="lineno">  312</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1resonators_1_1suspensions_1_1model.html">modules.apps.resonators.suspensions.model</a> <span class="keyword">import</span> SuspensionModel</div>
-<div class="line"><span class="lineno">  313</span>        road = np.sin(np.arange(1000) / 50.0).reshape(-1, 1, 1)</div>
-<div class="line"><span class="lineno">  314</span>        self.check(<span class="keyword">lambda</span>: SuspensionModel(<span class="stringliteral">&quot;s&quot;</span>, fs=100.0), 10.0, uk=road)</div>
-<div class="line"><span class="lineno">  315</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00285">285</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  285</span>    <span class="keyword">def </span>test_suspension_with_its_road(self):</div>
+<div class="line"><span class="lineno">  286</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1resonators_1_1suspensions_1_1model.html">modules.apps.resonators.suspensions.model</a> <span class="keyword">import</span> SuspensionModel</div>
+<div class="line"><span class="lineno">  287</span>        road = np.sin(np.arange(1000) / 50.0).reshape(-1, 1, 1)</div>
+<div class="line"><span class="lineno">  288</span>        self.check(<span class="keyword">lambda</span>: SuspensionModel(<span class="stringliteral">&quot;s&quot;</span>, fs=100.0), 10.0, uk=road)</div>
+<div class="line"><span class="lineno">  289</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1resonators_1_1suspensions_1_1model_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1resonators_1_1suspensions_1_1model.html">modules.apps.resonators.suspensions.model</a></div><div class="ttdef"><b>Definition</b> <a href="apps_2resonators_2suspensions_2model_8py_source.html#l00001">model.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -292,12 +292,12 @@ drawn by numpy, so a seeded run gives the Python run's numbers.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00316">316</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  316</span>    <span class="keyword">def </span>test_what_is_not_matrices_samples_as_before(self):</div>
-<div class="line"><span class="lineno">  317</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1sampler.html">modules.framework.sampler</a> <span class="keyword">import</span> KalmanSampler</div>
-<div class="line"><span class="lineno">  318</span>        self.assertIsNone(KalmanSampler(PhasorOscillatorModel(<span class="stringliteral">&quot;p&quot;</span>, [50.0], fs=1000.0))._matrices_handle())</div>
-<div class="line"><span class="lineno">  319</span> </div>
-<div class="line"><span class="lineno">  320</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00290">290</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  290</span>    <span class="keyword">def </span>test_what_is_not_matrices_samples_as_before(self):</div>
+<div class="line"><span class="lineno">  291</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1sampler.html">modules.framework.sampler</a> <span class="keyword">import</span> KalmanSampler</div>
+<div class="line"><span class="lineno">  292</span>        self.assertIsNone(KalmanSampler(PhasorOscillatorModel(<span class="stringliteral">&quot;p&quot;</span>, [50.0], fs=1000.0))._matrices_handle())</div>
+<div class="line"><span class="lineno">  293</span> </div>
+<div class="line"><span class="lineno">  294</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,11 +317,11 @@ drawn by numpy, so a seeded run gives the Python run's numbers.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00307">307</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  307</span>    <span class="keyword">def </span>test_window_of_three_modes(self):</div>
-<div class="line"><span class="lineno">  308</span>        <span class="comment"># Two in-band modes and more share one measured envelope: its noise is added once.</span></div>
-<div class="line"><span class="lineno">  309</span>        self.check(cluster, 4.0)</div>
-<div class="line"><span class="lineno">  310</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00281">281</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>    <span class="keyword">def </span>test_window_of_three_modes(self):</div>
+<div class="line"><span class="lineno">  282</span>        <span class="comment"># Two in-band modes and more share one measured envelope: its noise is added once.</span></div>
+<div class="line"><span class="lineno">  283</span>        self.check(cluster, 4.0)</div>
+<div class="line"><span class="lineno">  284</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

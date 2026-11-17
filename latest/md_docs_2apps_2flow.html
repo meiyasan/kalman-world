@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -141,7 +141,7 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2flow.html',''); initRes
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="turbulent-flow"></a> A two-dimensional turbulent fluid, known only through a hundred scattered probes. The state is the whole vorticity field on a 64 × 64 grid: 4096 numbers. The filter rebuilds the field between the probes.</p>
 <p>This is the application where the difference between a <b>solver</b> and an <b>integrator</b> matters, so this page explains it.</p>
-<h1><a class="anchor" id="the-model-2"></a>
+<h1><a class="anchor" id="the-model-3"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = the vorticity ω at every grid point           (n = 64 × 64 = 4096)</div>
 <div class="line">dynamics     ∂ω/∂t = -u·∇ω + ν ∇²ω + χ cos(k_f y)              (Navier-Stokes, Kolmogorov forcing)</div>
@@ -183,7 +183,7 @@ How it is built</h1>
 <li><b>One filter step is many solver steps.</b> <code>f</code> advances the field by one assimilation cycle, which is <code>cycle</code> RK4 steps of the solver (30 by default).</li>
 <li><b>Localisation.</b> With few copies, two distant points can look correlated by chance. A taper that falls to zero with distance stops a probe from changing the field far away from it.</li>
 <li><b>A learned forecast can stand in for the solver.</b> <code>model.surrogate = fn</code> replaces the solver with a trained network inside the same filter. On its own the network drifts; restarting it from the solver every few cycles keeps it accurate. Notebook 13 measures both.</li>
-<li><b>C++.</b> With the ensemble engine the whole pass runs in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" title="A 2-D vorticity field observed at sparse probes — the twin of kalman.apps.weather....">Kalman::Apps::Weather::KolmogorovFlow</a></code>, <code>kolmogorov-flow</code>, and <code>BarotropicFlow</code>, <code>barotropic-flow</code>): the forecast of every member, in parallel, the observation, the tapers, the analysis and the loop over the cycles, for <code>model.filter</code> and for <code>TwinExperiment</code> alike. The draws are still numpy's, so a seeded run gives the numbers it gave before. A surrogate, a solver on libTorch (<code>backend="torch"</code>), a <code>Q</code> with off-diagonal terms or a changed hook keeps the Python pass.</li>
+<li><b>C++.</b> With the ensemble engine the whole pass runs in <code>libKalmanApps</code> (<code><a class="el" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" title="A 2-D vorticity field observed at sparse probes — the counterpart of kalman.apps.weather....">Kalman::Apps::Weather::KolmogorovFlow</a></code>, <code>kolmogorov-flow</code>, and <code>BarotropicFlow</code>, <code>barotropic-flow</code>): the forecast of every member, in parallel, the observation, the tapers, the analysis and the loop over the cycles, for <code>model.filter</code> and for <code>TwinExperiment</code> alike. The draws are still numpy's, so a seeded run gives the numbers it gave before. A surrogate, a solver on libTorch (<code>backend="torch"</code>), a <code>Q</code> with off-diagonal terms or a changed hook keeps the Python pass.</li>
 </ul>
 <h1><a class="anchor" id="using-it-4"></a>
 Using it</h1>

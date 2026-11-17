@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -189,7 +189,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00280">280</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00296">296</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af5e3ed3d39972e558756bcf4af73efe1" name="af5e3ed3d39972e558756bcf4af73efe1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af5e3ed3d39972e558756bcf4af73efe1">&#9670;&#160;</a></span>test_call_before_build_raises()</h2>
@@ -207,11 +207,11 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00289">289</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  289</span>    <span class="keyword">def </span>test_call_before_build_raises(self):</div>
-<div class="line"><span class="lineno">  290</span>        <span class="keyword">with</span> self.assertRaises((RuntimeError, TypeError, AttributeError)):</div>
-<div class="line"><span class="lineno">  291</span>            MLP()(np.zeros(10))</div>
-<div class="line"><span class="lineno">  292</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00305">305</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  305</span>    <span class="keyword">def </span>test_call_before_build_raises(self):</div>
+<div class="line"><span class="lineno">  306</span>        <span class="keyword">with</span> self.assertRaises((RuntimeError, TypeError, AttributeError)):</div>
+<div class="line"><span class="lineno">  307</span>            MLP()(np.zeros(10))</div>
+<div class="line"><span class="lineno">  308</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -231,12 +231,12 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00293">293</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  293</span>    <span class="keyword">def </span>test_fit_before_build_raises(self):</div>
-<div class="line"><span class="lineno">  294</span>        <span class="keyword">with</span> self.assertRaises((RuntimeError, TypeError, AttributeError)):</div>
-<div class="line"><span class="lineno">  295</span>            MLP().fit(np.zeros((5, 10)), np.zeros(5, int))</div>
-<div class="line"><span class="lineno">  296</span> </div>
-<div class="line"><span class="lineno">  297</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00309">309</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  309</span>    <span class="keyword">def </span>test_fit_before_build_raises(self):</div>
+<div class="line"><span class="lineno">  310</span>        <span class="keyword">with</span> self.assertRaises((RuntimeError, TypeError, AttributeError)):</div>
+<div class="line"><span class="lineno">  311</span>            MLP().fit(np.zeros((5, 10)), np.zeros(5, int))</div>
+<div class="line"><span class="lineno">  312</span> </div>
+<div class="line"><span class="lineno">  313</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -256,12 +256,12 @@ Additional Inherited Members</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00284">284</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  284</span>    <span class="keyword">def </span>test_net_created_after_build(self):</div>
-<div class="line"><span class="lineno">  285</span>        m = MLP(hidden=8)</div>
-<div class="line"><span class="lineno">  286</span>        m.build(10, 3, seed=0)</div>
-<div class="line"><span class="lineno">  287</span>        self.assertIsNotNone(m._net)</div>
-<div class="line"><span class="lineno">  288</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00300">300</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  300</span>    <span class="keyword">def </span>test_net_created_after_build(self):</div>
+<div class="line"><span class="lineno">  301</span>        m = MLP(hidden=8)</div>
+<div class="line"><span class="lineno">  302</span>        m.build(10, 3, seed=0)</div>
+<div class="line"><span class="lineno">  303</span>        self.assertIsNotNone(m._net)</div>
+<div class="line"><span class="lineno">  304</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -286,7 +286,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00281">281</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00297">297</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
 
 </div>
 </div>
@@ -310,7 +310,7 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00282">282</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00298">298</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
 
 </div>
 </div>

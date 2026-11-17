@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -169,11 +169,11 @@ $(document).ready(function(){initNavTree('framework_2models_2linear_8py_source.h
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html#aff5f88015ce82141192331adf6255557">   22</a></span>    ALLOWED_ENGINES = ALL_ENGINES</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="foldopen" id="foldopen00024" data-start="" data-end="">
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html#ab11432a68fcad066286ed80fceb1c7c7">   24</a></span>    <span class="keyword">def </span>__init__(self, sensor_id, **kwargs):</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html#aa7d30e5272e6f71d67849f41f976df88">   24</a></span>    <span class="keyword">def </span>__init__(self, sensor, **kwargs):</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        has_F = kwargs.get(<span class="stringliteral">&quot;F&quot;</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> kwargs.get(<span class="stringliteral">&quot;A&quot;</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span></div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> has_F <span class="keywordflow">or</span> kwargs.get(<span class="stringliteral">&quot;H&quot;</span>) <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;LinearKalmanModel requires H= and either F= or A= (guaranteed-linear model).&quot;</span>)</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        super().__init__(sensor_id, **kwargs)</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        super().__init__(sensor, **kwargs)</div>
 </div>
 </div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00053">model.py:53</a></div></div>

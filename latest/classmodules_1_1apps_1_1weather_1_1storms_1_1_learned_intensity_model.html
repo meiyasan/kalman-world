@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -193,7 +193,7 @@ SST/shear→intensification relationship from past storms and plugs into
 Deliberately dependency-free (numpy least squares) so it runs anywhere; a
 torch MLP is the drop-in scale-up when the relationship is nonlinear.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00550">550</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00549">549</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a9d13407d62b5df2e4a78dbd1b89af906" name="a9d13407d62b5df2e4a78dbd1b89af906"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9d13407d62b5df2e4a78dbd1b89af906">&#9670;&#160;</a></span>__init__()</h2>
@@ -227,13 +227,13 @@ torch MLP is the drop-in scale-up when the relationship is nonlinear.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00564">564</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  564</span>    <span class="keyword">def </span>__init__(self, ridge=1e-3, env=analytic_environment):</div>
-<div class="line"><span class="lineno">  565</span>        self.ridge = float(ridge)</div>
-<div class="line"><span class="lineno">  566</span>        self.env = env</div>
-<div class="line"><span class="lineno">  567</span>        self.coef_ = <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  568</span>        self._mu = self._sd = <span class="keywordtype">None</span>                      <span class="comment"># feature standardisation</span></div>
-<div class="line"><span class="lineno">  569</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00563">563</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  563</span>    <span class="keyword">def </span>__init__(self, ridge=1e-3, env=analytic_environment):</div>
+<div class="line"><span class="lineno">  564</span>        self.ridge = float(ridge)</div>
+<div class="line"><span class="lineno">  565</span>        self.env = env</div>
+<div class="line"><span class="lineno">  566</span>        self.coef_ = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  567</span>        self._mu = self._sd = <span class="keywordtype">None</span>                      <span class="comment"># feature standardisation</span></div>
+<div class="line"><span class="lineno">  568</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -278,10 +278,10 @@ torch MLP is the drop-in scale-up when the relationship is nonlinear.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00571">571</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  571</span>    <span class="keyword">def </span>_features(sst_warmth, shear, I):</div>
-<div class="line"><span class="lineno">  572</span>        <span class="keywordflow">return</span> np.array([sst_warmth, shear, I])</div>
-<div class="line"><span class="lineno">  573</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00570">570</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  570</span>    <span class="keyword">def </span>_features(sst_warmth, shear, I):</div>
+<div class="line"><span class="lineno">  571</span>        <span class="keywordflow">return</span> np.array([sst_warmth, shear, I])</div>
+<div class="line"><span class="lineno">  572</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -313,27 +313,27 @@ an intensity tendency ``fn``, or ``None`` when it has no C++ counterpart.
 Only this class's own ``tendency`` of a fitted model on
 :func:`analytic_environment` has one: another environment, another
 function, or a subclass that changes the regression stays in Python.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00613">613</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  613</span>    <span class="keyword">def </span>_native_arrays(fn):</div>
-<div class="line"><span class="lineno">  614</span>        <span class="stringliteral">&quot;&quot;&quot;The arrays of the C++ storm model (``Kalman::Apps::Weather::Storm``) for</span></div>
-<div class="line"><span class="lineno">  615</span><span class="stringliteral">        an intensity tendency ``fn``, or ``None`` when it has no C++ counterpart.</span></div>
-<div class="line"><span class="lineno">  616</span><span class="stringliteral">        Only this class&#39;s own ``tendency`` of a fitted model on</span></div>
-<div class="line"><span class="lineno">  617</span><span class="stringliteral">        :func:`analytic_environment` has one: another environment, another</span></div>
-<div class="line"><span class="lineno">  618</span><span class="stringliteral">        function, or a subclass that changes the regression stays in Python.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  619</span>        owner = getattr(fn, <span class="stringliteral">&quot;__self__&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  620</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(owner, LearnedIntensityModel) <span class="keywordflow">or</span> getattr(fn, <span class="stringliteral">&quot;__func__&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> LearnedIntensityModel.tendency:</div>
-<div class="line"><span class="lineno">  621</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  622</span>        <span class="keywordflow">if</span> owner.env <span class="keywordflow">is</span> <span class="keywordflow">not</span> analytic_environment <span class="keywordflow">or</span> owner.coef_ <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  623</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  624</span>        cls = type(owner)</div>
-<div class="line"><span class="lineno">  625</span>        <span class="keywordflow">if</span> any(getattr(cls, name) <span class="keywordflow">is</span> <span class="keywordflow">not</span> getattr(LearnedIntensityModel, name) <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;tendency&quot;</span>, <span class="stringliteral">&quot;_features&quot;</span>)):</div>
-<div class="line"><span class="lineno">  626</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  627</span>        coef, mu, sd = (np.asarray(a, dtype=float).ravel() <span class="keywordflow">for</span> a <span class="keywordflow">in</span> (owner.coef_, owner._mu, owner._sd))</div>
-<div class="line"><span class="lineno">  628</span>        <span class="keywordflow">if</span> (coef.size, mu.size, sd.size) != (4, 3, 3):</div>
-<div class="line"><span class="lineno">  629</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  630</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;intensity_coef&quot;</span>: coef, <span class="stringliteral">&quot;intensity_mean&quot;</span>: mu, <span class="stringliteral">&quot;intensity_scale&quot;</span>: sd}</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00612">612</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  612</span>    <span class="keyword">def </span>_native_arrays(fn):</div>
+<div class="line"><span class="lineno">  613</span>        <span class="stringliteral">&quot;&quot;&quot;The arrays of the C++ storm model (``Kalman::Apps::Weather::Storm``) for</span></div>
+<div class="line"><span class="lineno">  614</span><span class="stringliteral">        an intensity tendency ``fn``, or ``None`` when it has no C++ counterpart.</span></div>
+<div class="line"><span class="lineno">  615</span><span class="stringliteral">        Only this class&#39;s own ``tendency`` of a fitted model on</span></div>
+<div class="line"><span class="lineno">  616</span><span class="stringliteral">        :func:`analytic_environment` has one: another environment, another</span></div>
+<div class="line"><span class="lineno">  617</span><span class="stringliteral">        function, or a subclass that changes the regression stays in Python.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  618</span>        owner = getattr(fn, <span class="stringliteral">&quot;__self__&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  619</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(owner, LearnedIntensityModel) <span class="keywordflow">or</span> getattr(fn, <span class="stringliteral">&quot;__func__&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordflow">not</span> LearnedIntensityModel.tendency:</div>
+<div class="line"><span class="lineno">  620</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  621</span>        <span class="keywordflow">if</span> owner.env <span class="keywordflow">is</span> <span class="keywordflow">not</span> analytic_environment <span class="keywordflow">or</span> owner.coef_ <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  622</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  623</span>        cls = type(owner)</div>
+<div class="line"><span class="lineno">  624</span>        <span class="keywordflow">if</span> any(getattr(cls, name) <span class="keywordflow">is</span> <span class="keywordflow">not</span> getattr(LearnedIntensityModel, name) <span class="keywordflow">for</span> name <span class="keywordflow">in</span> (<span class="stringliteral">&quot;tendency&quot;</span>, <span class="stringliteral">&quot;_features&quot;</span>)):</div>
+<div class="line"><span class="lineno">  625</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  626</span>        coef, mu, sd = (np.asarray(a, dtype=float).ravel() <span class="keywordflow">for</span> a <span class="keywordflow">in</span> (owner.coef_, owner._mu, owner._sd))</div>
+<div class="line"><span class="lineno">  627</span>        <span class="keywordflow">if</span> (coef.size, mu.size, sd.size) != (4, 3, 3):</div>
+<div class="line"><span class="lineno">  628</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  629</span>        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;intensity_coef&quot;</span>: coef, <span class="stringliteral">&quot;intensity_mean&quot;</span>: mu, <span class="stringliteral">&quot;intensity_scale&quot;</span>: sd}</div>
+<div class="line"><span class="lineno">  630</span> </div>
 <div class="line"><span class="lineno">  631</span> </div>
-<div class="line"><span class="lineno">  632</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -353,13 +353,13 @@ function, or a subclass that changes the regression stays in Python.</pre>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Return the ``intensity_fn(lon, lat, I, t)`` closure for StormModel.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00606">606</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  606</span>    <span class="keyword">def </span>as_intensity_fn(self):</div>
-<div class="line"><span class="lineno">  607</span>        <span class="stringliteral">&quot;&quot;&quot;Return the ``intensity_fn(lon, lat, I, t)`` closure for StormModel.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  608</span>        <span class="keywordflow">if</span> self.coef_ <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  609</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;fit() the LearnedIntensityModel first.&quot;</span>)</div>
-<div class="line"><span class="lineno">  610</span>        <span class="keywordflow">return</span> self.tendency</div>
-<div class="line"><span class="lineno">  611</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00605">605</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  605</span>    <span class="keyword">def </span>as_intensity_fn(self):</div>
+<div class="line"><span class="lineno">  606</span>        <span class="stringliteral">&quot;&quot;&quot;Return the ``intensity_fn(lon, lat, I, t)`` closure for StormModel.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  607</span>        <span class="keywordflow">if</span> self.coef_ <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  608</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;fit() the LearnedIntensityModel first.&quot;</span>)</div>
+<div class="line"><span class="lineno">  609</span>        <span class="keywordflow">return</span> self.tendency</div>
+<div class="line"><span class="lineno">  610</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -409,34 +409,34 @@ implicitly penalised more than another.
 Steps that end at or below ``floor`` [kt] are left out: a dissipated
 storm is held at that value (see :func:`synthetic_steered_track`), so
 its intensity change there says nothing about the tendency.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00574">574</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  574</span>    <span class="keyword">def </span>fit(self, tracks, dt_hours=6.0, floor=15.0):</div>
-<div class="line"><span class="lineno">  575</span>        <span class="stringliteral">&quot;&quot;&quot;Fit on a list of truth tracks ``(T, 5)`` — builds ``(features, dI/dt)``</span></div>
-<div class="line"><span class="lineno">  576</span><span class="stringliteral">        pairs from consecutive intensities and their environment.  Features are</span></div>
-<div class="line"><span class="lineno">  577</span><span class="stringliteral">        **standardised** before the ridge solve (they span very different</span></div>
-<div class="line"><span class="lineno">  578</span><span class="stringliteral">        scales: SST ~0–30, shear ~3–30, intensity ~15–120), so no predictor is</span></div>
-<div class="line"><span class="lineno">  579</span><span class="stringliteral">        implicitly penalised more than another.</span></div>
-<div class="line"><span class="lineno">  580</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  581</span><span class="stringliteral">        Steps that end at or below ``floor`` [kt] are left out: a dissipated</span></div>
-<div class="line"><span class="lineno">  582</span><span class="stringliteral">        storm is held at that value (see :func:`synthetic_steered_track`), so</span></div>
-<div class="line"><span class="lineno">  583</span><span class="stringliteral">        its intensity change there says nothing about the tendency.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  584</span>        X, y = [], []</div>
-<div class="line"><span class="lineno">  585</span>        <span class="keywordflow">for</span> tr <span class="keywordflow">in</span> tracks:</div>
-<div class="line"><span class="lineno">  586</span>            tr = np.asarray(tr, float)</div>
-<div class="line"><span class="lineno">  587</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(tr) - 1):</div>
-<div class="line"><span class="lineno">  588</span>                <span class="keywordflow">if</span> tr[k + 1, 4] &lt;= floor:</div>
-<div class="line"><span class="lineno">  589</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  590</span>                lon, lat, I = tr[k, 0], tr[k, 1], tr[k, 4]</div>
-<div class="line"><span class="lineno">  591</span>                sst, shear = self.env(lon, lat)</div>
-<div class="line"><span class="lineno">  592</span>                X.append(self._features(sst, shear, I))</div>
-<div class="line"><span class="lineno">  593</span>                y.append((tr[k + 1, 4] - I) / dt_hours)</div>
-<div class="line"><span class="lineno">  594</span>        X, y = np.asarray(X), np.asarray(y)</div>
-<div class="line"><span class="lineno">  595</span>        self._mu, self._sd = X.mean(0), X.std(0) + 1e-9</div>
-<div class="line"><span class="lineno">  596</span>        Xs = np.column_stack([(X - self._mu) / self._sd, np.ones(len(X))])</div>
-<div class="line"><span class="lineno">  597</span>        A = Xs.T @ Xs + self.ridge * np.eye(Xs.shape[1])</div>
-<div class="line"><span class="lineno">  598</span>        self.coef_ = np.linalg.solve(A, Xs.T @ y)</div>
-<div class="line"><span class="lineno">  599</span>        <span class="keywordflow">return</span> self</div>
-<div class="line"><span class="lineno">  600</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00573">573</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  573</span>    <span class="keyword">def </span>fit(self, tracks, dt_hours=6.0, floor=15.0):</div>
+<div class="line"><span class="lineno">  574</span>        <span class="stringliteral">&quot;&quot;&quot;Fit on a list of truth tracks ``(T, 5)`` — builds ``(features, dI/dt)``</span></div>
+<div class="line"><span class="lineno">  575</span><span class="stringliteral">        pairs from consecutive intensities and their environment.  Features are</span></div>
+<div class="line"><span class="lineno">  576</span><span class="stringliteral">        **standardised** before the ridge solve (they span very different</span></div>
+<div class="line"><span class="lineno">  577</span><span class="stringliteral">        scales: SST ~0–30, shear ~3–30, intensity ~15–120), so no predictor is</span></div>
+<div class="line"><span class="lineno">  578</span><span class="stringliteral">        implicitly penalised more than another.</span></div>
+<div class="line"><span class="lineno">  579</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  580</span><span class="stringliteral">        Steps that end at or below ``floor`` [kt] are left out: a dissipated</span></div>
+<div class="line"><span class="lineno">  581</span><span class="stringliteral">        storm is held at that value (see :func:`synthetic_steered_track`), so</span></div>
+<div class="line"><span class="lineno">  582</span><span class="stringliteral">        its intensity change there says nothing about the tendency.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  583</span>        X, y = [], []</div>
+<div class="line"><span class="lineno">  584</span>        <span class="keywordflow">for</span> tr <span class="keywordflow">in</span> tracks:</div>
+<div class="line"><span class="lineno">  585</span>            tr = np.asarray(tr, float)</div>
+<div class="line"><span class="lineno">  586</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(len(tr) - 1):</div>
+<div class="line"><span class="lineno">  587</span>                <span class="keywordflow">if</span> tr[k + 1, 4] &lt;= floor:</div>
+<div class="line"><span class="lineno">  588</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  589</span>                lon, lat, I = tr[k, 0], tr[k, 1], tr[k, 4]</div>
+<div class="line"><span class="lineno">  590</span>                sst, shear = self.env(lon, lat)</div>
+<div class="line"><span class="lineno">  591</span>                X.append(self._features(sst, shear, I))</div>
+<div class="line"><span class="lineno">  592</span>                y.append((tr[k + 1, 4] - I) / dt_hours)</div>
+<div class="line"><span class="lineno">  593</span>        X, y = np.asarray(X), np.asarray(y)</div>
+<div class="line"><span class="lineno">  594</span>        self._mu, self._sd = X.mean(0), X.std(0) + 1e-9</div>
+<div class="line"><span class="lineno">  595</span>        Xs = np.column_stack([(X - self._mu) / self._sd, np.ones(len(X))])</div>
+<div class="line"><span class="lineno">  596</span>        A = Xs.T @ Xs + self.ridge * np.eye(Xs.shape[1])</div>
+<div class="line"><span class="lineno">  597</span>        self.coef_ = np.linalg.solve(A, Xs.T @ y)</div>
+<div class="line"><span class="lineno">  598</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  599</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -484,12 +484,12 @@ its intensity change there says nothing about the tendency.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00601">601</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  601</span>    <span class="keyword">def </span>tendency(self, lon, lat, I, t=None):</div>
-<div class="line"><span class="lineno">  602</span>        sst, shear = self.env(lon, lat, t)</div>
-<div class="line"><span class="lineno">  603</span>        fs = (self._features(sst, shear, I) - self._mu) / self._sd</div>
-<div class="line"><span class="lineno">  604</span>        <span class="keywordflow">return</span> float(np.append(fs, 1.0) @ self.coef_)</div>
-<div class="line"><span class="lineno">  605</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00600">600</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  600</span>    <span class="keyword">def </span>tendency(self, lon, lat, I, t=None):</div>
+<div class="line"><span class="lineno">  601</span>        sst, shear = self.env(lon, lat, t)</div>
+<div class="line"><span class="lineno">  602</span>        fs = (self._features(sst, shear, I) - self._mu) / self._sd</div>
+<div class="line"><span class="lineno">  603</span>        <span class="keywordflow">return</span> float(np.append(fs, 1.0) @ self.coef_)</div>
+<div class="line"><span class="lineno">  604</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -514,7 +514,7 @@ its intensity change there says nothing about the tendency.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00568">568</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00567">567</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -538,7 +538,7 @@ its intensity change there says nothing about the tendency.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00595">595</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00594">594</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -554,7 +554,7 @@ its intensity change there says nothing about the tendency.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00567">567</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00566">566</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -570,7 +570,7 @@ its intensity change there says nothing about the tendency.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00566">566</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00565">565</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -586,7 +586,7 @@ its intensity change there says nothing about the tendency.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00565">565</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00564">564</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>

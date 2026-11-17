@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">Two-stage workflow</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">------------------</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">Stage 1 -- peak fitting</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    ``InterferometerModel.fit(sensor_id, strain, fs, bands)``</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    ``InterferometerModel.fit(sensor, strain, fs, bands)``</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">    Estimates PSD via Welch, detects spectral peaks per band with</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">    ``scipy.signal.find_peaks``, fits each peak to a Lorentzian profile to</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">    extract (f0, Q, amplitude), and groups nearby peaks into analysis windows.</span></div>
@@ -165,7 +165,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral">        clean  = model.subtract(strain, record)</span></div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">    ``make_controller()`` returns a ``ViolinBankController`` that attaches one</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    ``AdaptiveQRKalmanController`` per window, self-adjusting each window&#39;s</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    ``AdaptiveQRKalmanTuner`` per window, self-adjusting each window&#39;s</span></div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">    process-noise level (Q) from empirical innovation statistics.</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="stringliteral">Noise sources</span></div>
@@ -203,7 +203,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="keyword">from</span> scipy.signal <span class="keyword">import</span> welch <span class="keyword">as</span> scipy_welch, find_peaks <span class="keyword">as</span> scipy_find_peaks</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="keyword">from</span> ...resonators.oscillators <span class="keyword">import</span> OscillatorModel, OscillatorBankModel</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">from</span> ....framework.controllers.adaptive_qr <span class="keyword">import</span> AdaptiveQRKalmanController</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="keyword">from</span> ....framework.tuners.adaptive_qr <span class="keyword">import</span> AdaptiveQRKalmanTuner</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="keyword">from</span> ....framework.control <span class="keyword">import</span> KalmanController</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="keyword">from</span> typing <span class="keyword">import</span> TYPE_CHECKING</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="keywordflow">if</span> TYPE_CHECKING:                      <span class="comment"># model.py imports this module; the name is only an annotation here</span></div>
@@ -216,13 +216,13 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="foldopen" id="foldopen00071" data-start="" data-end="">
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html">   71</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html">_LeafAdaptiveQR</a>:</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="stringliteral">&quot;&quot;&quot;Drives one ``AdaptiveQRKalmanController`` per leaf inside an ``OscillatorModel``.</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="stringliteral">&quot;&quot;&quot;Drives one ``AdaptiveQRKalmanTuner`` per leaf inside an ``OscillatorModel``.</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="stringliteral">    ``OscillatorModel`` is a ``CompositeKalmanModel`` whose ``Q()`` is bound as</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="stringliteral">    a closure over its leaf submodels — mutating ``window._Q`` has no effect.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="stringliteral">    ``OscillatorModel`` is a composite: its ``Q()`` is its parts&#39; in blocks,</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="stringliteral">    so mutating ``window._Q`` has no effect.</span></div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span><span class="stringliteral">    This class targets each ``AnalyticOscillatorModel`` leaf directly so that the</span></div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="stringliteral">    ``model._Q`` mutations performed by ``AdaptiveQRKalmanController._update``</span></div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="stringliteral">    actually propagate through ``CompositeKalmanModel.Q()``.</span></div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span><span class="stringliteral">    ``model._Q`` mutations performed by ``AdaptiveQRKalmanTuner._update``</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span><span class="stringliteral">    reach the composite ``Q()``.</span></div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="foldopen" id="foldopen00081" data-start="" data-end="">
@@ -230,7 +230,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                 q_min: float = 0.1, q_max: float = 10.0):</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#a5bd00499ea72294ff67669e3ab1c7e86">   83</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#a5bd00499ea72294ff67669e3ab1c7e86">_leaves</a> = window.models  <span class="comment"># list[AnalyticOscillatorModel]</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#acec76dfc48a35cdfc74574c402aa5abd">   84</a></span>        self.<a class="code hl_variable" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#acec76dfc48a35cdfc74574c402aa5abd">_ctrls</a>  = [</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <a class="code hl_class" href="classmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller.html">AdaptiveQRKalmanController</a>(leaf, window=window_len,</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <a class="code hl_class" href="classmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner.html">AdaptiveQRKalmanTuner</a>(leaf, window=window_len,</div>
 <div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                                       q_min=q_min, q_max=q_max)</div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordflow">for</span> leaf <span class="keywordflow">in</span> self.<a class="code hl_variable" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#a5bd00499ea72294ff67669e3ab1c7e86">_leaves</a></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        ]</div>
@@ -240,7 +240,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno"><a class="line" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#a0fb8cea17f76c2f914772807c216c4b1">   90</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1___leaf_adaptive_q_r.html#a0fb8cea17f76c2f914772807c216c4b1">update</a>(self, x_hat_win, P_win, t, nu_win):</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        <span class="stringliteral">&quot;&quot;&quot;Scale each leaf&#39;s Q from the window-level innovation ``nu_win`` (shape (2,1)).</span></div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="stringliteral">        All leaves in a FUSED window share the same 2-element [Re, Im] innovation</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="stringliteral">        All leaves in a summed window share the same 2-element [Re, Im] innovation</span></div>
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span><span class="stringliteral">        channel, so each leaf receives the same ``nu_win``.  State/covariance are</span></div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="stringliteral">        sliced to match each leaf&#39;s own ``n=2`` state block.</span></div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
@@ -305,9 +305,9 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            o    = self.<a class="code hl_variable" href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller.html#af97328280412b7255e82be0158fea399">_state_offsets</a>[i]</div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            x_i  = x_hat[o:o + win.n]</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            P_i  = P[o:o + win.n, o:o + win.n]</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="comment"># OscillatorBankModel uses INDEPENDENT composition →</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="comment"># OscillatorBankModel uses stacked composition →</span></div>
 <div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            <span class="comment"># bank nu = [nu_win0; nu_win1; ...], each window contributes 2 elements</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            <span class="comment"># (FUSED internally → single 2-D [Re,Im] observation channel per window).</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            <span class="comment"># (summed internally → single 2-D [Re,Im] observation channel per window).</span></div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            nu_i = nu[2 * i: 2 * i + 2]</div>
 <div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            aqr.update(x_i, P_i, t, nu_i)</div>
 <div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
@@ -341,7 +341,7 @@ $(document).ready(function(){initNavTree('apps_2gravitational_2interferometer_2c
 <div class="ttc" id="aclassmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller_html_af97328280412b7255e82be0158fea399"><div class="ttname"><a href="classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller.html#af97328280412b7255e82be0158fea399">modules.apps.gravitational.interferometer.control.ViolinBankController._state_offsets</a></div><div class="ttdeci">_state_offsets</div><div class="ttdef"><b>Definition</b> <a href="apps_2gravitational_2interferometer_2control_8py_source.html#l00135">control.py:135</a></div></div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1control_1_1_kalman_controller_html"><div class="ttname"><a href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html">modules.framework.control.KalmanController</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2control_8py_source.html#l00006">control.py:6</a></div></div>
 <div class="ttc" id="aclassmodules_1_1framework_1_1control_1_1_kalman_controller_html_abc706491fa7e1571bb9bf4a04b756e6f"><div class="ttname"><a href="classmodules_1_1framework_1_1control_1_1_kalman_controller.html#abc706491fa7e1571bb9bf4a04b756e6f">modules.framework.control.KalmanController.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="framework_2control_8py_source.html#l00030">control.py:30</a></div></div>
-<div class="ttc" id="aclassmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller_html"><div class="ttname"><a href="classmodules_1_1framework_1_1controllers_1_1adaptive__qr_1_1_adaptive_q_r_kalman_controller.html">modules.framework.controllers.adaptive_qr.AdaptiveQRKalmanController</a></div><div class="ttdef"><b>Definition</b> <a href="adaptive__qr_8py_source.html#l00008">adaptive_qr.py:8</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner_html"><div class="ttname"><a href="classmodules_1_1framework_1_1tuners_1_1adaptive__qr_1_1_adaptive_q_r_kalman_tuner.html">modules.framework.tuners.adaptive_qr.AdaptiveQRKalmanTuner</a></div><div class="ttdef"><b>Definition</b> <a href="adaptive__qr_8py_source.html#l00008">adaptive_qr.py:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

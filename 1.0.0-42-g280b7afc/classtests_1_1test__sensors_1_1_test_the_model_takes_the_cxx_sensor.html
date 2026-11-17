@@ -1,0 +1,447 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests.test_sensors.TestTheModelTakesTheCxxSensor Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests.test_sensors.TestTheModelTakesTheCxxSensor Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests.test_sensors.TestTheModelTakesTheCxxSensor Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">tests.test_sensors.TestTheModelTakesTheCxxSensor Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for tests.test_sensors.TestTheModelTakesTheCxxSensor:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor__inherit__graph.svg" width="206" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a1a0cde7a114f307d885b3871b54a000f" id="r_a1a0cde7a114f307d885b3871b54a000f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#a1a0cde7a114f307d885b3871b54a000f">setUp</a> (self)</td></tr>
+<tr class="separator:a1a0cde7a114f307d885b3871b54a000f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79588256afb0236748cd4b942cfa4cb1" id="r_a79588256afb0236748cd4b942cfa4cb1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#a79588256afb0236748cd4b942cfa4cb1">sensors</a> (self)</td></tr>
+<tr class="separator:a79588256afb0236748cd4b942cfa4cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ba5286efbceb39122b77813b1bb19d" id="r_ad5ba5286efbceb39122b77813b1bb19d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#ad5ba5286efbceb39122b77813b1bb19d">build</a> (self)</td></tr>
+<tr class="separator:ad5ba5286efbceb39122b77813b1bb19d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac965a22e49ed7f6227f31c00596b21c4" id="r_ac965a22e49ed7f6227f31c00596b21c4"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#ac965a22e49ed7f6227f31c00596b21c4">test_the_three_kinds_are_registered_by_the_core</a> (self)</td></tr>
+<tr class="separator:ac965a22e49ed7f6227f31c00596b21c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b91c20f6031184cb374b991408316a7" id="r_a5b91c20f6031184cb374b991408316a7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#a5b91c20f6031184cb374b991408316a7">test_the_cxx_readings_are_the_python_ones</a> (self)</td></tr>
+<tr class="separator:a5b91c20f6031184cb374b991408316a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1df3b7628ccd218a547ecc01fe899945" id="r_a1df3b7628ccd218a547ecc01fe899945"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#a1df3b7628ccd218a547ecc01fe899945">test_nothing_is_called_back_during_a_pass</a> (self)</td></tr>
+<tr class="separator:a1df3b7628ccd218a547ecc01fe899945"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc19380a2fdedb402c18e0f081dc35bd" id="r_adc19380a2fdedb402c18e0f081dc35bd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#adc19380a2fdedb402c18e0f081dc35bd">test_taken_as_it_is_or_called_back_the_pass_is_the_same</a> (self)</td></tr>
+<tr class="separator:adc19380a2fdedb402c18e0f081dc35bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adc862ed64796e7120ed0514d02656336" id="r_adc862ed64796e7120ed0514d02656336"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#adc862ed64796e7120ed0514d02656336">test_a_matrix_sensor_keeps_a_model_of_matrices</a> (self)</td></tr>
+<tr class="separator:adc862ed64796e7120ed0514d02656336"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8385abda771345df7fa6091bdb8e89" id="r_a7b8385abda771345df7fa6091bdb8e89"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html#a7b8385abda771345df7fa6091bdb8e89">test_the_doppler_reading_gives_the_velocity</a> (self)</td></tr>
+<tr class="separator:a7b8385abda771345df7fa6091bdb8e89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock">
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00114">114</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ad5ba5286efbceb39122b77813b1bb19d" name="ad5ba5286efbceb39122b77813b1bb19d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5ba5286efbceb39122b77813b1bb19d">&#9670;&#160;</a></span>build()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.build </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00123">123</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  123</span>    <span class="keyword">def </span>build(self):</div>
+<div class="line"><span class="lineno">  124</span>        doppler, camera = self.sensors()</div>
+<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">return</span> target().add_sensor(PositionSensor(<span class="stringliteral">&quot;second&quot;</span>, 6, P, 2.0)).add_sensor(doppler).add_sensor(camera)</div>
+<div class="line"><span class="lineno">  126</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a79588256afb0236748cd4b942cfa4cb1" name="a79588256afb0236748cd4b942cfa4cb1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79588256afb0236748cd4b942cfa4cb1">&#9670;&#160;</a></span>sensors()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.sensors </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00119">119</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>    <span class="keyword">def </span>sensors(self):</div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">return</span> (DopplerSensor(<span class="stringliteral">&quot;doppler&quot;</span>, 6, P, V, 0.2, at=[10.0, -20.0, 0.0]),</div>
+<div class="line"><span class="lineno">  121</span>                CameraSensor(<span class="stringliteral">&quot;camera&quot;</span>, 6, P, 800.0, 1.5, at=[0.0, 0.0, -50.0]))</div>
+<div class="line"><span class="lineno">  122</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1a0cde7a114f307d885b3871b54a000f" name="a1a0cde7a114f307d885b3871b54a000f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1a0cde7a114f307d885b3871b54a000f">&#9670;&#160;</a></span>setUp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.setUp </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00116">116</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>    <span class="keyword">def </span>setUp(self):</div>
+<div class="line"><span class="lineno">  117</span>        warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><span class="lineno">  118</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adc862ed64796e7120ed0514d02656336" name="adc862ed64796e7120ed0514d02656336"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc862ed64796e7120ed0514d02656336">&#9670;&#160;</a></span>test_a_matrix_sensor_keeps_a_model_of_matrices()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_a_matrix_sensor_keeps_a_model_of_matrices </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00170">170</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>    <span class="keyword">def </span>test_a_matrix_sensor_keeps_a_model_of_matrices(self):</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a> <span class="keyword">import</span> KalmanEngineKind</div>
+<div class="line"><span class="lineno">  172</span>        model = target().add_sensor(PositionSensor(<span class="stringliteral">&quot;second&quot;</span>, 6, P, 2.0))</div>
+<div class="line"><span class="lineno">  173</span>        self.assertEqual(model.DEFAULT_ENGINE, KalmanEngineKind.LINEAR)</div>
+<div class="line"><span class="lineno">  174</span> </div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1constants_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00001">constants.py:1</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a1df3b7628ccd218a547ecc01fe899945" name="a1df3b7628ccd218a547ecc01fe899945"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1df3b7628ccd218a547ecc01fe899945">&#9670;&#160;</a></span>test_nothing_is_called_back_during_a_pass()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_nothing_is_called_back_during_a_pass </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00144">144</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  144</span>    <span class="keyword">def </span>test_nothing_is_called_back_during_a_pass(self):</div>
+<div class="line"><span class="lineno">  145</span>        doppler, camera = self.sensors()</div>
+<div class="line"><span class="lineno">  146</span>        calls = [0]</div>
+<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">for</span> sensor <span class="keywordflow">in</span> (doppler, camera):</div>
+<div class="line"><span class="lineno">  148</span>            g = sensor.g</div>
+<div class="line"><span class="lineno">  149</span> </div>
+<div class="line"><span class="lineno">  150</span>            <span class="keyword">def </span>counted(x, g=g):</div>
+<div class="line"><span class="lineno">  151</span>                calls[0] += 1</div>
+<div class="line"><span class="lineno">  152</span>                <span class="keywordflow">return</span> g(x)</div>
+<div class="line"><span class="lineno">  153</span>            sensor.g = counted</div>
+<div class="line"><span class="lineno">  154</span>        model = target().add_sensor(doppler).add_sensor(camera)</div>
+<div class="line"><span class="lineno">  155</span>        data = model.sample(5.0, seed=3)</div>
+<div class="line"><span class="lineno">  156</span>        calls[0] = 0</div>
+<div class="line"><span class="lineno">  157</span>        model.filter(data.zk, reset=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  158</span>        self.assertEqual(calls[0], 0)</div>
+<div class="line"><span class="lineno">  159</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="adc19380a2fdedb402c18e0f081dc35bd" name="adc19380a2fdedb402c18e0f081dc35bd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#adc19380a2fdedb402c18e0f081dc35bd">&#9670;&#160;</a></span>test_taken_as_it_is_or_called_back_the_pass_is_the_same()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_taken_as_it_is_or_called_back_the_pass_is_the_same </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Inside ``python_reference`` the model calls ``sensor.g`` back at every step.</pre> 
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00160">160</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  160</span>    <span class="keyword">def </span>test_taken_as_it_is_or_called_back_the_pass_is_the_same(self):</div>
+<div class="line"><span class="lineno">  161</span>        <span class="stringliteral">&quot;&quot;&quot;Inside ``python_reference`` the model calls ``sensor.g`` back at every step.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  162</span>        model = self.build()</div>
+<div class="line"><span class="lineno">  163</span>        data = model.sample(10.0, seed=3)</div>
+<div class="line"><span class="lineno">  164</span>        record = model.filter(data.zk, reset=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  166</span>            reference = self.build().filter(data.zk, reset=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  167</span>        np.testing.assert_allclose(record.xk, reference.xk, atol=1e-9)</div>
+<div class="line"><span class="lineno">  168</span>        np.testing.assert_allclose(record.Pk, reference.Pk, atol=1e-9)</div>
+<div class="line"><span class="lineno">  169</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5b91c20f6031184cb374b991408316a7" name="a5b91c20f6031184cb374b991408316a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5b91c20f6031184cb374b991408316a7">&#9670;&#160;</a></span>test_the_cxx_readings_are_the_python_ones()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_the_cxx_readings_are_the_python_ones </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00132">132</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  132</span>    <span class="keyword">def </span>test_the_cxx_readings_are_the_python_ones(self):</div>
+<div class="line"><span class="lineno">  133</span>        model = self.build()</div>
+<div class="line"><span class="lineno">  134</span>        doppler, camera = self.sensors()</div>
+<div class="line"><span class="lineno">  135</span>        z = model.h(X.reshape(-1, 1)).ravel()</div>
+<div class="line"><span class="lineno">  136</span>        np.testing.assert_allclose(z[3:6], X[P], rtol=0, atol=0)</div>
+<div class="line"><span class="lineno">  137</span>        np.testing.assert_allclose(z[6], doppler.g(X)[0], rtol=1e-14)</div>
+<div class="line"><span class="lineno">  138</span>        np.testing.assert_allclose(z[7:], camera.g(X), rtol=1e-14)</div>
+<div class="line"><span class="lineno">  139</span>        H = np.asarray(model.H(X.reshape(-1, 1)))</div>
+<div class="line"><span class="lineno">  140</span>        np.testing.assert_allclose(H[6:7], doppler.jacobian(X), atol=1e-13)</div>
+<div class="line"><span class="lineno">  141</span>        np.testing.assert_allclose(H[7:], camera.jacobian(X), atol=1e-11)</div>
+<div class="line"><span class="lineno">  142</span>        np.testing.assert_array_equal(np.diag(model.R())[3:], [4.0, 4.0, 4.0, 0.2 * 0.2, 2.25, 2.25])</div>
+<div class="line"><span class="lineno">  143</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7b8385abda771345df7fa6091bdb8e89" name="a7b8385abda771345df7fa6091bdb8e89"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b8385abda771345df7fa6091bdb8e89">&#9670;&#160;</a></span>test_the_doppler_reading_gives_the_velocity()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_the_doppler_reading_gives_the_velocity </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00175">175</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>    <span class="keyword">def </span>test_the_doppler_reading_gives_the_velocity(self):</div>
+<div class="line"><span class="lineno">  176</span>        doppler, _ = self.sensors()</div>
+<div class="line"><span class="lineno">  177</span>        model = target().add_sensor(doppler)</div>
+<div class="line"><span class="lineno">  178</span>        data = model.sample(30.0, seed=11)</div>
+<div class="line"><span class="lineno">  179</span>        with_doppler = model.filter(data.zk, reset=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  180</span>        without = target().filter(data.zk[:, :3], reset=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  181</span>        self.assertLess(rmse(with_doppler.xk[:, 1], data.xk[:, 1]), 0.8 * rmse(without.xk[:, 1], data.xk[:, 1]))</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;needs the C++ core&quot;)</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ac965a22e49ed7f6227f31c00596b21c4" name="ac965a22e49ed7f6227f31c00596b21c4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac965a22e49ed7f6227f31c00596b21c4">&#9670;&#160;</a></span>test_the_three_kinds_are_registered_by_the_core()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">tests.test_sensors.TestTheModelTakesTheCxxSensor.test_the_three_kinds_are_registered_by_the_core </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="test__sensors_8py_source.html#l00127">127</a> of file <a class="el" href="test__sensors_8py_source.html">test_sensors.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>    <span class="keyword">def </span>test_the_three_kinds_are_registered_by_the_core(self):</div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">for</span> kind <span class="keywordflow">in</span> (b<span class="stringliteral">&quot;position&quot;</span>, b<span class="stringliteral">&quot;doppler&quot;</span>, b<span class="stringliteral">&quot;camera&quot;</span>):</div>
+<div class="line"><span class="lineno">  129</span>            self.assertEqual(core.lib.kalman_sensor_kind_exists(kind), 1)</div>
+<div class="line"><span class="lineno">  130</span>        self.assertEqual(core.lib.kalman_sensor_kind_exists(b<span class="stringliteral">&quot;sonar&quot;</span>), 0)</div>
+<div class="line"><span class="lineno">  131</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>tests/<a class="el" href="test__sensors_8py_source.html">test_sensors.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacetests.html">tests</a></li><li class="navelem"><a class="el" href="namespacetests_1_1test__sensors.html">test_sensors</a></li><li class="navelem"><a class="el" href="classtests_1_1test__sensors_1_1_test_the_model_takes_the_cxx_sensor.html">TestTheModelTakesTheCxxSensor</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -179,7 +179,7 @@ $(document).ready(function(){initNavTree('mppi_8py_source.html',''); initResizab
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="stringliteral">    each step only has to refine an already-good guess rather than search from scratch.</span></div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="stringliteral">    With libKalman installed the rollouts run in ``Kalman::Controllers::MPPI``, which then</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">    holds the warm-started sequence: ``model.f`` and ``model.clip_u`` are called back from</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="stringliteral">    holds the warm-started sequence: ``model.f`` and ``model.limit_control`` are called back from</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral">    C++ for a model written in Python (and not at all for a model written in C++). The</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="stringliteral">    perturbations are still drawn here, from the same seeded numpy generator in the same</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="stringliteral">    order, so a seeded controller makes the same decisions on either path.</span></div>
@@ -239,7 +239,7 @@ $(document).ready(function(){initNavTree('mppi_8py_source.html',''); initResizab
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                    <span class="comment"># every candidate, and so the weighted-average nominal, inside the box</span></div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                    <span class="comment"># the actuator can actually reach -- matching real MPC practice, and</span></div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                    <span class="comment"># keeping u_try consistent with what u_nom will be averaged from.</span></div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    u_k = np.asarray(model.clip_u(u_try[i, k].reshape(-1, 1)), dtype=float).reshape(-1)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                    u_k = np.asarray(model.limit_control(u_try[i, k].reshape(-1, 1)), dtype=float).reshape(-1)</div>
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>                    u_try[i, k] = u_k</div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                    u_k = u_k.reshape(-1, 1)</div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                    xi = np.asarray(model.f(xi, u=u_k, t=t + k * dt), dtype=float).reshape(-1, 1)</div>

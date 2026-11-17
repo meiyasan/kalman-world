@@ -1,3 +1,166 @@
 <map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
-<area shape="rect" id="Node000000" href="$structkalman__model.html" title=" " alt="" coords="5,5,124,31"/>
+<area shape="rect" id="Node000000" href="$class_kalman_1_1_tracking_1_1_detector.html" title="The contract a trackable model adds to Kalman::Model." alt="" coords="507,201,705,226"/>
+<area shape="rect" id="Node000001" href="$class_fixture_1_1_drift_chamber.html" title=" " alt="" coords="807,270,970,295"/>
+<area shape="poly" id="edge72_Node000000_Node000001" title=" " alt="" coords="673,227,836,267,835,273,672,232"/>
+<area shape="rect" id="Node000016" href="$class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html" title="A charged particle in an axial field, sampled on concentric layers." alt="" coords="1067,5,1242,45"/>
+<area shape="poly" id="edge73_Node000000_Node000016" title=" " alt="" coords="654,194,1051,55,1088,43,1090,48,1053,60,656,199"/>
+<area shape="rect" id="Node000021" href="$class_kalman_1_1_engines_1_1_ensemble_model.html" title="What a field model offers the ensemble engine beyond the model contract." alt="" coords="787,827,990,867"/>
+<area shape="rect" id="Node000019" href="$class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" title="A 2&#45;D vorticity field observed at sparse probes — the counterpart of kalman.apps.weather...." alt="" coords="1067,901,1242,941"/>
+<area shape="poly" id="edge74_Node000021_Node000019" title=" " alt="" coords="976,868,1005,876,1084,899,1083,904,1003,881,974,873"/>
+<area shape="rect" id="Node000020" href="$class_kalman_1_1_apps_1_1_weather_1_1_barotropic_flow.html" title="Barotropic vorticity on a mid&#45;latitude beta&#45;plane — the counterpart of kalman.apps...." alt="" coords="1305,901,1480,941"/>
+<area shape="poly" id="edge75_Node000019_Node000020" title=" " alt="" coords="1256,919,1305,919,1305,924,1256,924"/>
+<area shape="rect" id="Node000037" href="$class_kalman_1_1_abstract_1_1_metadata.html" title="What a model, engine or filter says about itself." alt="" coords="5,1966,209,1991"/>
+<area shape="rect" id="Node000038" href="$class_kalman_1_1_controller.html" title="Closed&#45;loop control over a Kalman filter — u = ctrl(x_hat, P, t, nu)." alt="" coords="276,1253,420,1278"/>
+<area shape="poly" id="edge76_Node000037_Node000038" title=" " alt="" coords="113,1952,167,1753,208,1615,255,1475,301,1360,338,1277,343,1280,306,1362,260,1477,213,1616,172,1754,118,1953"/>
+<area shape="rect" id="Node000047" href="$class_kalman_1_1_differentiator.html" title="Where a Jacobian comes from." alt="" coords="265,1489,431,1514"/>
+<area shape="poly" id="edge85_Node000037_Node000047" title=" " alt="" coords="119,1953,338,1513,343,1516,123,1955"/>
+<area shape="rect" id="Node000050" href="$class_kalman_1_1_engine.html" title="The algorithm — HOW to infer under uncertainty, one step at a time." alt="" coords="286,1694,410,1719"/>
+<area shape="poly" id="edge88_Node000037_Node000050" title=" " alt="" coords="127,1954,333,1718,337,1721,131,1958"/>
+<area shape="rect" id="Node000058" href="$class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept." alt="" coords="291,1941,405,1966"/>
+<area shape="poly" id="edge96_Node000037_Node000058" title=" " alt="" coords="223,1964,291,1957,291,1962,224,1969"/>
+<area shape="rect" id="Node000064" href="$class_kalman_1_1_filters_1_1_c_k_f.html" title="The combinatorial Kalman filter — track finding over an event." alt="" coords="271,1990,425,2015"/>
+<area shape="poly" id="edge102_Node000037_Node000064" title=" " alt="" coords="223,1988,271,1992,270,1998,223,1993"/>
+<area shape="rect" id="Node000065" href="$class_kalman_1_1_integrator.html" title="The time&#45;stepping scheme — WHEN, within one dt." alt="" coords="276,2129,420,2154"/>
+<area shape="poly" id="edge103_Node000037_Node000065" title=" " alt="" coords="140,1997,330,2126,327,2131,137,2002"/>
+<area shape="rect" id="Node000025" href="$class_kalman_1_1_model.html" title="The system — WHAT is being estimated." alt="" coords="288,917,408,942"/>
+<area shape="poly" id="edge107_Node000037_Node000025" title=" " alt="" coords="110,1952,163,1664,206,1454,255,1239,303,1063,340,941,345,943,308,1064,260,1241,211,1455,169,1665,116,1953"/>
+<area shape="rect" id="Node000069" href="$class_kalman_1_1_routers_1_1_n_n_1_1_model.html" title="A learned policy: features in, mode probabilities out." alt="" coords="269,2289,427,2329"/>
+<area shape="poly" id="edge141_Node000037_Node000069" title=" " alt="" coords="128,2001,334,2288,330,2291,124,2004"/>
+<area shape="rect" id="Node000073" href="$class_kalman_1_1_routers_1_1_router.html" title="Decides which model is right now — the decision layer of a model with several modes (Models::Router)." alt="" coords="257,2495,439,2521"/>
+<area shape="poly" id="edge145_Node000037_Node000073" title=" " alt="" coords="121,2003,177,2148,260,2340,305,2429,342,2494,337,2497,300,2431,255,2342,172,2150,116,2005"/>
+<area shape="rect" id="Node000078" href="$class_kalman_1_1_solver.html" title="The spatial discretization — HOW, in space." alt="" coords="287,2643,409,2669"/>
+<area shape="poly" id="edge150_Node000037_Node000078" title=" " alt="" coords="115,2005,130,2095,158,2227,201,2380,228,2457,260,2531,278,2564,299,2595,337,2642,333,2645,295,2598,273,2567,255,2533,223,2459,196,2382,153,2229,125,2096,110,2006"/>
+<area shape="rect" id="Node000039" href="$class_kalman_1_1_controllers_1_1_l_q_r.html" title="u = &#45;K (x_hat &#45; x_ref), K from the DARE of the model&#39;s F, B, Qcost, Rcost." alt="" coords="513,1089,699,1114"/>
+<area shape="poly" id="edge77_Node000038_Node000039" title=" " alt="" coords="364,1240,413,1180,447,1149,485,1123,513,1112,515,1116,488,1128,450,1153,417,1184,368,1243"/>
+<area shape="rect" id="Node000040" href="$class_kalman_1_1_controllers_1_1_m_p_c.html" title="Plans horizon commands ahead at every step, honouring limits on the command while it plans,..." alt="" coords="512,1138,700,1163"/>
+<area shape="poly" id="edge78_Node000038_Node000040" title=" " alt="" coords="374,1242,424,1207,486,1174,525,1161,527,1166,488,1178,427,1211,377,1246"/>
+<area shape="rect" id="Node000041" href="$class_kalman_1_1_controllers_1_1_m_p_p_i.html" title="Replans a sampled control sequence at every step by Monte&#45;Carlo rollout of the true f." alt="" coords="531,1188,681,1228"/>
+<area shape="poly" id="edge79_Node000038_Node000041" title=" " alt="" coords="419,1247,530,1222,531,1227,420,1252"/>
+<area shape="rect" id="Node000042" href="$class_kalman_1_1_controllers_1_1_p_i_d.html" title="PID on e = x_hat &#45; x_ref; an empty Ki or Kd is zero (P, PD, PI ...). Mirrors controllers/pid...." alt="" coords="515,1253,697,1278"/>
+<area shape="poly" id="edge80_Node000038_Node000042" title=" " alt="" coords="434,1263,515,1263,515,1268,434,1268"/>
+<area shape="rect" id="Node000043" href="$class_kalman_1_1_controllers_1_1_proportional.html" title="Proportional feedback on the state error. Mirrors controllers/proportional.py." alt="" coords="531,1303,681,1343"/>
+<area shape="poly" id="edge81_Node000038_Node000043" title=" " alt="" coords="420,1278,531,1303,530,1309,419,1284"/>
+<area shape="rect" id="Node000044" href="$class_kalman_1_1_tuner.html" title="Retunes the filter&#39;s own noise model as it runs; commands nothing." alt="" coords="549,1367,663,1393"/>
+<area shape="poly" id="edge82_Node000038_Node000044" title=" " alt="" coords="377,1284,427,1319,488,1352,549,1370,547,1375,486,1357,424,1324,374,1289"/>
+<area shape="rect" id="Node000045" href="$class_kalman_1_1_tuners_1_1_adaptive_q_r.html" title="Compare the empirical innovation covariance with the model&#39;s S; scale Q by the ratio...." alt="" coords="785,1343,992,1369"/>
+<area shape="poly" id="edge83_Node000044_Node000045" title=" " alt="" coords="677,1371,785,1362,785,1367,677,1377"/>
+<area shape="rect" id="Node000046" href="$class_kalman_1_1_tuners_1_1_boost.html" title="When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows...." alt="" coords="805,1393,972,1418"/>
+<area shape="poly" id="edge84_Node000044_Node000046" title=" " alt="" coords="677,1384,805,1395,805,1401,677,1389"/>
+<area shape="rect" id="Node000048" href="$class_kalman_1_1_differentiators_1_1_central.html" title="Two&#45;sided differences: (f(x + s e_j) &#45; f(x &#45; s e_j)) / 2s. Second order, two evaluations per componen..." alt="" coords="519,1417,693,1457"/>
+<area shape="poly" id="edge86_Node000047_Node000048" title=" " alt="" coords="413,1483,524,1455,525,1460,414,1488"/>
+<area shape="rect" id="Node000049" href="$class_kalman_1_1_differentiators_1_1_forward.html" title="One&#45;sided differences: (f(x + s e_j) &#45; f(x)) / s. First order, one evaluation per component." alt="" coords="519,1481,693,1521"/>
+<area shape="poly" id="edge87_Node000047_Node000049" title=" " alt="" coords="445,1499,518,1499,518,1504,445,1504"/>
+<area shape="rect" id="Node000051" href="$class_kalman_1_1_engines_1_1_ensemble.html" title="Perturbed&#45;observation ensemble Kalman filter (Evensen)." alt="" coords="505,1546,707,1571"/>
+<area shape="poly" id="edge89_Node000050_Node000051" title=" " alt="" coords="366,1681,416,1630,449,1603,485,1580,514,1569,516,1574,488,1585,452,1607,420,1633,370,1685"/>
+<area shape="rect" id="Node000052" href="$class_kalman_1_1_engines_1_1_extended.html" title="Jacobian&#45;linearised Kalman step for nonlinear models." alt="" coords="506,1595,706,1621"/>
+<area shape="poly" id="edge90_Node000050_Node000052" title=" " alt="" coords="379,1684,428,1656,486,1629,525,1618,526,1623,488,1635,430,1661,381,1689"/>
+<area shape="rect" id="Node000054" href="$class_kalman_1_1_engines_1_1_interacting.html" title="The predict/update step for a model with several modes (Models::Router): the Interacting Multiple Mod..." alt="" coords="501,1645,711,1670"/>
+<area shape="poly" id="edge92_Node000050_Node000054" title=" " alt="" coords="423,1690,539,1667,540,1673,424,1695"/>
+<area shape="rect" id="Node000055" href="$class_kalman_1_1_engines_1_1_linear.html" title="Standard linear Kalman step, using the model&#39;s matrices directly." alt="" coords="517,1694,695,1719"/>
+<area shape="poly" id="edge93_Node000050_Node000055" title=" " alt="" coords="424,1704,516,1704,516,1709,424,1709"/>
+<area shape="rect" id="Node000056" href="$class_kalman_1_1_engines_1_1_particle.html" title="Sequential importance resampling (the bootstrap particle filter)." alt="" coords="513,1743,699,1769"/>
+<area shape="poly" id="edge94_Node000050_Node000056" title=" " alt="" coords="424,1718,540,1741,539,1746,423,1724"/>
+<area shape="rect" id="Node000057" href="$class_kalman_1_1_engines_1_1_unscented.html" title="The sigma&#45;point engine (UKF) — nonlinear moments without a Jacobian." alt="" coords="502,1793,710,1818"/>
+<area shape="poly" id="edge95_Node000050_Node000057" title=" " alt="" coords="382,1724,431,1752,488,1777,531,1790,529,1795,486,1783,428,1757,379,1729"/>
+<area shape="rect" id="Node000053" href="$class_kalman_1_1_engines_1_1_combinatorial.html" title="Track finding by track following — the Belle II CKF in miniature." alt="" coords="773,1595,1004,1621"/>
+<area shape="poly" id="edge91_Node000052_Node000053" title=" " alt="" coords="719,1605,773,1605,773,1611,719,1611"/>
+<area shape="rect" id="Node000059" href="$class_kalman_1_1_filters_1_1_e_k_f.html" title="The extended Kalman filter — a model driven by Kalman::Engines::Extended." alt="" coords="529,1990,683,2015"/>
+<area shape="poly" id="edge97_Node000058_Node000059" title=" " alt="" coords="419,1964,539,1987,538,1993,418,1969"/>
+<area shape="rect" id="Node000060" href="$class_kalman_1_1_filters_1_1_en_k_f.html" title="The ensemble Kalman filter — Kalman::Filter driven by Engines::Ensemble." alt="" coords="525,2039,687,2065"/>
+<area shape="poly" id="edge98_Node000058_Node000060" title=" " alt="" coords="419,1965,440,1975,455,1988,465,2001,474,2013,488,2024,526,2039,524,2044,485,2029,470,2017,460,2004,452,1991,437,1980,417,1970"/>
+<area shape="rect" id="Node000061" href="$class_kalman_1_1_filters_1_1_k_f.html" title="The standard Kalman filter — a model driven by Kalman::Engines::Linear." alt="" coords="533,1842,679,1867"/>
+<area shape="poly" id="edge99_Node000058_Node000061" title=" " alt="" coords="379,1931,428,1903,486,1876,532,1863,534,1868,488,1881,430,1907,381,1936"/>
+<area shape="rect" id="Node000062" href="$class_kalman_1_1_filters_1_1_p_f.html" title="The particle filter — Kalman::Filter driven by Engines::Particle." alt="" coords="534,1891,678,1917"/>
+<area shape="poly" id="edge100_Node000058_Node000062" title=" " alt="" coords="418,1937,538,1914,539,1919,419,1943"/>
+<area shape="rect" id="Node000063" href="$class_kalman_1_1_filters_1_1_u_k_f.html" title="The unscented Kalman filter — Kalman::Filter driven by Engines::Unscented." alt="" coords="529,1941,683,1966"/>
+<area shape="poly" id="edge101_Node000058_Node000063" title=" " alt="" coords="418,1951,529,1951,529,1956,418,1956"/>
+<area shape="rect" id="Node000066" href="$class_kalman_1_1_integrators_1_1_dormand_prince.html" title="Adaptive RK45." alt="" coords="531,2089,681,2129"/>
+<area shape="poly" id="edge104_Node000065_Node000066" title=" " alt="" coords="433,2128,530,2116,531,2121,434,2133"/>
+<area shape="rect" id="Node000067" href="$class_kalman_1_1_integrators_1_1_euler.html" title="x(t + dt) = x + dt f(x, u, t). Mirrors integrators/euler.py." alt="" coords="531,2153,681,2193"/>
+<area shape="poly" id="edge105_Node000065_Node000067" title=" " alt="" coords="434,2149,531,2161,530,2167,433,2155"/>
+<area shape="rect" id="Node000068" href="$class_kalman_1_1_integrators_1_1_r_k4.html" title="The one home for the RK4 arithmetic; the control is held across the step. Mirrors integrators/rk4...." alt="" coords="513,2218,699,2243"/>
+<area shape="poly" id="edge106_Node000065_Node000068" title=" " alt="" coords="386,2158,433,2181,488,2203,534,2215,532,2221,486,2208,431,2186,383,2163"/>
+<area shape="rect" id="Node000026" href="$class_kalman_1_1_models_1_1_composite.html" title="Several models side by side, each with its own state." alt="" coords="503,842,709,867"/>
+<area shape="poly" id="edge108_Node000025_Node000026" title=" " alt="" coords="392,909,486,876,532,865,534,870,487,881,393,914"/>
+<area shape="rect" id="Node000002" href="$class_kalman_1_1_models_1_1_extended.html" title="A model that is nonlinear by declaration — override f() and/or h()." alt="" coords="508,793,704,818"/>
+<area shape="poly" id="edge109_Node000025_Node000002" title=" " alt="" coords="371,906,421,865,452,844,486,827,519,816,520,821,488,832,455,849,424,869,374,910"/>
+<area shape="rect" id="Node000027" href="$class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state." alt="" coords="517,891,695,917"/>
+<area shape="poly" id="edge131_Node000025_Node000027" title=" " alt="" coords="422,919,517,910,517,915,422,925"/>
+<area shape="rect" id="Node000028" href="$class_kalman_1_1_models_1_1_joint.html" title="A model whose state carries some of another model&#39;s parameters, so the filter estimates them along wi..." alt="" coords="524,941,688,966"/>
+<area shape="poly" id="edge132_Node000025_Node000028" title=" " alt="" coords="422,934,524,943,523,948,422,939"/>
+<area shape="rect" id="Node000029" href="$class_kalman_1_1_models_1_1_lag.html" title="A model that carries its last L states along with the present one." alt="" coords="527,990,685,1015"/>
+<area shape="poly" id="edge133_Node000025_Node000029" title=" " alt="" coords="396,944,487,975,539,987,538,992,486,980,394,949"/>
+<area shape="rect" id="Node000030" href="$class_kalman_1_1_models_1_1_linear.html" title="A model that is linear by declaration — matrices only, no f()/h()." alt="" coords="519,1039,693,1065"/>
+<area shape="poly" id="edge134_Node000025_Node000030" title=" " alt="" coords="375,949,425,988,488,1024,525,1037,523,1042,486,1029,422,992,372,953"/>
+<area shape="rect" id="Node000036" href="$class_kalman_1_1_models_1_1_router.html" title="Several models of one system, with a probability on each." alt="" coords="517,743,695,769"/>
+<area shape="poly" id="edge140_Node000025_Node000036" title=" " alt="" coords="362,903,411,840,446,806,485,778,515,765,517,770,488,782,449,810,415,843,367,907"/>
+<area shape="poly" id="edge111_Node000002_Node000001" title=" " alt="" coords="714,786,723,778,750,743,763,709,767,676,765,641,757,567,759,525,771,479,795,423,825,370,875,294,880,297,829,373,800,425,776,481,765,526,763,567,770,641,772,676,768,710,755,745,727,782,718,790"/>
+<area shape="rect" id="Node000003" href="$class_ballistics.html" title="Projectile with gravity and quadratic drag — an application model." alt="" coords="848,777,929,802"/>
+<area shape="poly" id="edge110_Node000002_Node000003" title=" " alt="" coords="717,796,848,789,848,794,718,802"/>
+<area shape="rect" id="Node000004" href="$class_fixture_1_1_pendulum.html" title="Damped pendulum — the smallest genuinely nonlinear model." alt="" coords="819,891,959,917"/>
+<area shape="poly" id="edge112_Node000002_Node000004" title=" " alt="" coords="713,820,727,827,742,839,752,852,760,865,775,876,820,893,818,898,772,881,756,869,747,855,738,843,724,832,710,825"/>
+<area shape="rect" id="Node000006" href="$class_kalman_1_1_apps_1_1_model.html" title="Base of the application models in libKalmanApps." alt="" coords="809,493,969,518"/>
+<area shape="poly" id="edge114_Node000002_Node000006" title=" " alt="" coords="713,785,724,778,758,749,787,714,812,677,834,638,865,567,881,517,886,519,870,569,839,641,817,680,791,717,761,752,727,782,715,789"/>
+<area shape="rect" id="Node000024" href="$class_kalman_1_1_models_1_1_callback.html" title="A model whose maps are functions supplied by the caller." alt="" coords="793,941,984,966"/>
+<area shape="poly" id="edge130_Node000002_Node000024" title=" " alt="" coords="718,821,727,827,739,839,746,852,752,878,758,903,764,915,775,926,796,938,794,943,772,930,760,918,753,905,747,879,741,854,735,843,724,831,715,826"/>
+<area shape="rect" id="Node000005" href="$class_fixture_1_1_pendulum_o_d_e.html" title="The same pendulum written as an ODE: Derivative() plus the model&#39;s integrator, instead of a hand&#45;writ..." alt="" coords="1071,966,1239,991"/>
+<area shape="poly" id="edge113_Node000004_Node000005" title=" " alt="" coords="973,916,1005,926,1029,938,1053,951,1093,963,1091,968,1051,956,1027,943,1003,930,971,921"/>
+<area shape="poly" id="edge124_Node000006_Node000016" title=" " alt="" coords="905,480,953,404,979,356,1001,306,1012,269,1015,235,1012,174,1012,145,1016,116,1028,87,1050,56,1066,43,1069,47,1054,59,1032,89,1021,118,1017,146,1017,174,1020,235,1017,270,1007,308,984,358,958,407,910,483"/>
+<area shape="poly" id="edge127_Node000006_Node000019" title=" " alt="" coords="904,530,1007,763,1018,801,1023,831,1032,859,1054,887,1070,899,1067,903,1050,891,1027,862,1018,833,1012,802,1001,765,899,532"/>
+<area shape="rect" id="Node000007" href="$class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_ascent.html" title="Planar guided ascent, thrust as the control input &#45; the counterpart of kalman.apps...." alt="" coords="1061,517,1249,557"/>
+<area shape="poly" id="edge115_Node000006_Node000007" title=" " alt="" coords="983,514,1061,523,1060,529,982,519"/>
+<area shape="rect" id="Node000008" href="$class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_descent.html" title="Planar powered descent of a gimballed rigid booster &#45; the counterpart of kalman.apps...." alt="" coords="1061,581,1249,621"/>
+<area shape="poly" id="edge116_Node000006_Node000008" title=" " alt="" coords="934,521,1053,567,1088,579,1086,584,1051,572,932,526"/>
+<area shape="rect" id="Node000009" href="$class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_landing.html" title="Vertical propulsive landing (a hoverslam) &#45; the counterpart of kalman.apps.aerospace...." alt="" coords="1061,645,1249,685"/>
+<area shape="poly" id="edge117_Node000006_Node000009" title=" " alt="" coords="914,525,974,578,1013,606,1053,631,1080,643,1078,648,1051,636,1010,611,971,582,911,529"/>
+<area shape="rect" id="Node000010" href="$class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_liftoff.html" title="Vertical liftoff with a finite propellant load &#45; the counterpart of kalman.apps.aerospace...." alt="" coords="1061,709,1249,749"/>
+<area shape="poly" id="edge118_Node000006_Node000010" title=" " alt="" coords="906,528,930,565,964,610,1006,656,1053,695,1075,707,1073,711,1051,700,1002,660,960,614,926,568,902,531"/>
+<area shape="rect" id="Node000011" href="$class_kalman_1_1_apps_1_1_astrophysics_1_1_interplanetary.html" title="Heliocentric N&#45;body cruise — the counterpart of kalman.apps.astrophysics.InterplanetaryModel." alt="" coords="1053,773,1256,813"/>
+<area shape="poly" id="edge119_Node000006_Node000011" title=" " alt="" coords="902,530,922,579,955,640,999,704,1025,734,1054,759,1073,771,1070,776,1050,763,1021,737,994,708,950,643,918,581,897,532"/>
+<area shape="rect" id="Node000012" href="$class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html" title="Restricted four&#45;body trans&#45;lunar coast (Earth + Moon + Sun) — the counterpart of kalman...." alt="" coords="1053,837,1256,877"/>
+<area shape="poly" id="edge120_Node000006_Node000012" title=" " alt="" coords="902,530,970,687,1014,770,1035,802,1054,823,1071,835,1068,839,1050,827,1030,805,1009,773,965,689,897,532"/>
+<area shape="rect" id="Node000013" href="$class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model.html" title="Nonlinear 3&#45;D ballistic model — the counterpart of kalman.apps.ballistics.BallisticModel." alt="" coords="1065,69,1244,109"/>
+<area shape="poly" id="edge121_Node000006_Node000013" title=" " alt="" coords="904,480,952,404,978,356,1002,306,1010,278,1014,253,1015,207,1022,164,1032,142,1050,119,1065,107,1068,112,1054,123,1037,145,1027,166,1021,208,1019,253,1015,279,1006,308,983,358,957,407,909,483"/>
+<area shape="rect" id="Node000014" href="$class_kalman_1_1_apps_1_1_g_p_s_1_1_receiver.html" title="A GPS receiver solving for its position and clock from pseudoranges." alt="" coords="1077,133,1232,173"/>
+<area shape="poly" id="edge122_Node000006_Node000014" title=" " alt="" coords="903,480,949,403,1002,306,1014,271,1019,241,1028,212,1050,183,1076,167,1079,171,1054,187,1033,215,1024,242,1019,272,1006,308,954,406,908,483"/>
+<area shape="rect" id="Node000015" href="$class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" title="Online estimation of a gravitational&#45;wave polarization (Jones formalism, Amblard and Michel) – the co..." alt="" coords="1052,197,1257,237"/>
+<area shape="poly" id="edge123_Node000006_Node000015" title=" " alt="" coords="901,479,971,354,1013,289,1050,247,1070,235,1073,240,1054,251,1017,293,975,357,905,482"/>
+<area shape="rect" id="Node000017" href="$class_kalman_1_1_apps_1_1_vehicles_1_1_car_lane.html" title="Lateral lane keeping with steering control &#45; the counterpart of kalman.apps.vehicles...." alt="" coords="1067,261,1242,301"/>
+<area shape="poly" id="edge125_Node000006_Node000017" title=" " alt="" coords="902,479,926,442,960,397,1002,351,1051,311,1073,299,1075,304,1053,316,1006,355,964,400,930,445,906,482"/>
+<area shape="rect" id="Node000018" href="$class_kalman_1_1_apps_1_1_vehicles_1_1_car_speed.html" title="Straight&#45;line acceleration run of one car — the counterpart of kalman.apps.vehicles...." alt="" coords="1067,325,1242,365"/>
+<area shape="poly" id="edge126_Node000006_Node000018" title=" " alt="" coords="911,481,971,429,1010,400,1051,375,1078,363,1080,368,1053,380,1013,404,974,433,914,485"/>
+<area shape="rect" id="Node000022" href="$class_kalman_1_1_apps_1_1_weather_1_1_storm.html" title="Reduced tropical&#45;cyclone track and intensity model — the counterpart of kalman.apps...." alt="" coords="1067,389,1242,429"/>
+<area shape="poly" id="edge128_Node000006_Node000022" title=" " alt="" coords="932,485,1051,439,1086,427,1088,432,1053,444,934,490"/>
+<area shape="rect" id="Node000023" href="$class_kalman_1_1_apps_1_1_weather_1_1_tornado.html" title="Mean&#45;reverting tornado&#45;environment latent — the counterpart of kalman.apps.weather...." alt="" coords="1067,453,1242,493"/>
+<area shape="poly" id="edge129_Node000006_Node000023" title=" " alt="" coords="982,491,1067,481,1067,486,983,497"/>
+<area shape="rect" id="Node000031" href="$class_constant_velocity.html" title="Constant velocity in 1&#45;D with white&#45;noise acceleration: state (position, velocity)." alt="" coords="823,990,955,1015"/>
+<area shape="poly" id="edge135_Node000030_Node000031" title=" " alt="" coords="692,1034,822,1011,823,1017,693,1040"/>
+<area shape="rect" id="Node000032" href="$class_fixture_1_1_constant_velocity.html" title="Constant velocity with white&#45;noise acceleration — the canonical linear model." alt="" coords="796,1089,981,1114"/>
+<area shape="poly" id="edge136_Node000030_Node000032" title=" " alt="" coords="693,1064,815,1086,815,1091,692,1070"/>
+<area shape="rect" id="Node000034" href="$class_kalman_1_1_apps_1_1_ballistics_1_1_linear_model.html" title="One axis at constant acceleration: position, velocity, acceleration." alt="" coords="799,1139,978,1179"/>
+<area shape="poly" id="edge138_Node000030_Node000034" title=" " alt="" coords="708,1065,727,1074,742,1086,752,1099,761,1111,775,1123,802,1136,799,1141,772,1128,757,1115,747,1102,739,1090,724,1078,706,1070"/>
+<area shape="rect" id="Node000035" href="$class_kalman_1_1_models_1_1_tabulated.html" title="A linear model given by its matrices, constant or one per sample." alt="" coords="789,1039,988,1065"/>
+<area shape="poly" id="edge139_Node000030_Node000035" title=" " alt="" coords="707,1049,789,1049,789,1055,707,1055"/>
+<area shape="rect" id="Node000033" href="$class_fixture_1_1_controlled_velocity.html" title="Constant velocity with an acceleration command — the controlled plant." alt="" coords="1057,1089,1252,1114"/>
+<area shape="poly" id="edge137_Node000032_Node000033" title=" " alt="" coords="995,1099,1057,1099,1057,1104,995,1104"/>
+<area shape="rect" id="Node000070" href="$class_kalman_1_1_routers_1_1_n_n_1_1_m_l_p.html" title="A tanh multilayer perceptron with a softmax head, evaluated directly." alt="" coords="509,2267,703,2293"/>
+<area shape="poly" id="edge142_Node000069_Node000070" title=" " alt="" coords="441,2296,509,2288,509,2294,441,2301"/>
+<area shape="rect" id="Node000071" href="$class_kalman_1_1_routers_1_1_n_n_1_1_onnx.html" title="Executes a policy exported from the Python framework." alt="" coords="527,2317,685,2357"/>
+<area shape="poly" id="edge143_Node000069_Node000071" title=" " alt="" coords="441,2317,527,2326,526,2331,441,2322"/>
+<area shape="rect" id="Node000072" href="$class_kalman_1_1_routers_1_1_n_n_1_1_torch.html" title="Executes a TorchScript policy through libTorch." alt="" coords="527,2381,685,2421"/>
+<area shape="poly" id="edge144_Node000069_Node000072" title=" " alt="" coords="404,2332,488,2367,527,2379,525,2384,486,2372,402,2337"/>
+<area shape="rect" id="Node000074" href="$class_kalman_1_1_routers_1_1_bayesian.html" title="The classical interacting&#45;multiple&#45;model update: mu_j ∝ c_j · L_j." alt="" coords="507,2545,705,2570"/>
+<area shape="poly" id="edge146_Node000073_Node000074" title=" " alt="" coords="429,2521,539,2542,538,2547,428,2526"/>
+<area shape="rect" id="Node000075" href="$class_kalman_1_1_routers_1_1_hybrid.html" title="Geometric blend (log&#45;linear opinion pool) of two routers." alt="" coords="515,2594,697,2619"/>
+<area shape="poly" id="edge147_Node000073_Node000075" title=" " alt="" coords="382,2526,431,2553,488,2579,531,2591,529,2597,486,2584,428,2558,379,2530"/>
+<area shape="rect" id="Node000076" href="$class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy." alt="" coords="515,2446,697,2471"/>
+<area shape="poly" id="edge148_Node000073_Node000076" title=" " alt="" coords="428,2490,538,2469,539,2474,429,2495"/>
+<area shape="rect" id="Node000077" href="$class_kalman_1_1_routers_1_1_threshold.html" title="Routes to whichever model&#39;s recent NIS sits closest to m." alt="" coords="505,2495,707,2521"/>
+<area shape="poly" id="edge149_Node000073_Node000077" title=" " alt="" coords="453,2505,504,2505,504,2511,453,2511"/>
+<area shape="rect" id="Node000079" href="$class_kalman_1_1_solvers_1_1_finite_difference.html" title="Second&#45;order finite&#45;difference 2&#45;D field solver — the bounded&#45;domain kind." alt="" coords="487,2643,725,2669"/>
+<area shape="poly" id="edge151_Node000078_Node000079" title=" " alt="" coords="423,2653,486,2653,486,2659,423,2659"/>
+<area shape="rect" id="Node000080" href="$class_kalman_1_1_solvers_1_1_spectral.html" title="Pseudo&#45;spectral 2&#45;D field solver: FFT discretization, composed time march." alt="" coords="511,2693,701,2718"/>
+<area shape="poly" id="edge152_Node000078_Node000080" title=" " alt="" coords="423,2667,539,2690,538,2695,422,2673"/>
+<area shape="rect" id="Node000081" href="$class_kalman_1_1_solvers_1_1_vorticity.html" title="The 2&#45;D vorticity equation on the spectral solver." alt="" coords="793,2693,984,2718"/>
+<area shape="poly" id="edge153_Node000080_Node000081" title=" " alt="" coords="714,2703,793,2703,793,2708,714,2708"/>
 </map>

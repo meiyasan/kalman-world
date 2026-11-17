@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -189,8 +189,8 @@ Functions</h2></td></tr>
 <tr class="separator:ae1cc7b1f10c1ca3c20db3ee07e80014e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a90feb79dd5b92f56128f9999d52cbc9c" id="r_a90feb79dd5b92f56128f9999d52cbc9c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1weather_1_1storms.html#a90feb79dd5b92f56128f9999d52cbc9c">brazil_tornado_scenario</a> (n_days=360, *start_month=7, seed=0, mu_benign=0.3, mu_tornadic=3.0, obs_noise=0.4, base_rate=0.006, peak_rate=0.05)</td></tr>
 <tr class="separator:a90feb79dd5b92f56128f9999d52cbc9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abb2dc5a56c536044f6e1c4f73de424a3" id="r_abb2dc5a56c536044f6e1c4f73de424a3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1weather_1_1storms.html#abb2dc5a56c536044f6e1c4f73de424a3">seasonal_tornado_probability</a> (obs, months, *season_fn=<a class="el" href="namespacemodules_1_1apps_1_1weather_1_1storms.html#ae1cc7b1f10c1ca3c20db3ee07e80014e">brazil_season</a>, model_cls=None, **ikf_kw)</td></tr>
-<tr class="separator:abb2dc5a56c536044f6e1c4f73de424a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab856e4d8d64a0cf82d0d6b1b6e17ab8e" id="r_ab856e4d8d64a0cf82d0d6b1b6e17ab8e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1weather_1_1storms.html#ab856e4d8d64a0cf82d0d6b1b6e17ab8e">seasonal_tornado_probability</a> (obs, months, *season_fn=<a class="el" href="namespacemodules_1_1apps_1_1weather_1_1storms.html#ae1cc7b1f10c1ca3c20db3ee07e80014e">brazil_season</a>, model_cls=None, **bank_kw)</td></tr>
+<tr class="separator:ab856e4d8d64a0cf82d0d6b1b6e17ab8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -219,9 +219,9 @@ local phenomenon and — crucially — its **covariance**.
   ``[lon, lat, v_e, v_n, I]`` (centre, translation velocity, intensity); the
   dynamics are the textbook **steering flow + beta drift + coordinated turn**,
   so the motion has genuine *regimes* (straight-running vs. recurving).  That
-  regime structure is exactly what an :class:`~kalman.framework.filters.InteractiveKalmanFilter`
-  (IKF) is for — recurvature is the "manoeuvre".  Use
-  :meth:`StormModel.ikf_bank` to get the ready-made model bank + transition
+  regime structure is exactly what ``route`` (several models of one system, on
+  the interacting engine) is for — recurvature is the "manoeuvre".  Use
+  :meth:`StormModel.regime_bank` to get the ready-made model bank + transition
   matrix.  The ensemble/covariance gives the track **cone of uncertainty**
   (:meth:`forecast_cone`) and an intensity error bar for free.
 
@@ -229,8 +229,8 @@ local phenomenon and — crucially — its **covariance**.
   deterministic tracker (a tornado is sub-grid and minutes-predictable); the
   actionable quantity is the **probability the environment is in the tornadic
   regime**.  This is a mean-reverting significant-tornado-parameter latent with
-  a benign and a tornadic regime; IKF returns the regime probability, and the
-  **seasonal climatology enters as the IKF transition matrix** (``season=``).
+  a benign and a tornadic regime; ``route`` returns the regime probability, and the
+  **seasonal climatology enters as the transition matrix** (``season=``).
 
 Neither needs training data; both deliver calibrated covariance/probability
 from physics + the filter, which is the point (see the notebook 13 discussion
@@ -260,25 +260,25 @@ of EnKF-vs-ML).
 </div><div class="memdoc">
 <pre class="fragment">Cached matplotlib Path of the Natural Earth land polygons (for pointwise
 land tests); None if the coastline data / matplotlib is unavailable.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00703">703</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  703</span><span class="keyword">def </span>_land_path():</div>
-<div class="line"><span class="lineno">  704</span>    <span class="stringliteral">&quot;&quot;&quot;Cached matplotlib Path of the Natural Earth land polygons (for pointwise</span></div>
-<div class="line"><span class="lineno">  705</span><span class="stringliteral">    land tests); None if the coastline data / matplotlib is unavailable.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  706</span>    <span class="keyword">global</span> _LAND_PATH</div>
-<div class="line"><span class="lineno">  707</span>    <span class="keywordflow">if</span> _LAND_PATH <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  708</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  709</span>            <span class="keyword">from</span> matplotlib.path <span class="keyword">import</span> Path <span class="keyword">as</span> MPath</div>
-<div class="line"><span class="lineno">  710</span>            <span class="keyword">from</span> .geo <span class="keyword">import</span> earth_geometry</div>
-<div class="line"><span class="lineno">  711</span>            verts, codes = [], []</div>
-<div class="line"><span class="lineno">  712</span>            <span class="keywordflow">for</span> ring <span class="keywordflow">in</span> earth_geometry(<span class="stringliteral">&quot;land&quot;</span>):</div>
-<div class="line"><span class="lineno">  713</span>                verts.append(ring)</div>
-<div class="line"><span class="lineno">  714</span>                codes += [MPath.MOVETO] + [MPath.LINETO] * (len(ring) - 1)</div>
-<div class="line"><span class="lineno">  715</span>            _LAND_PATH = MPath(np.vstack(verts), np.asarray(codes, dtype=np.uint8))</div>
-<div class="line"><span class="lineno">  716</span>        <span class="keywordflow">except</span> Exception:</div>
-<div class="line"><span class="lineno">  717</span>            _LAND_PATH = <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  718</span>    <span class="keywordflow">return</span> _LAND_PATH <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00702">702</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  702</span><span class="keyword">def </span>_land_path():</div>
+<div class="line"><span class="lineno">  703</span>    <span class="stringliteral">&quot;&quot;&quot;Cached matplotlib Path of the Natural Earth land polygons (for pointwise</span></div>
+<div class="line"><span class="lineno">  704</span><span class="stringliteral">    land tests); None if the coastline data / matplotlib is unavailable.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  705</span>    <span class="keyword">global</span> _LAND_PATH</div>
+<div class="line"><span class="lineno">  706</span>    <span class="keywordflow">if</span> _LAND_PATH <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  707</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  708</span>            <span class="keyword">from</span> matplotlib.path <span class="keyword">import</span> Path <span class="keyword">as</span> MPath</div>
+<div class="line"><span class="lineno">  709</span>            <span class="keyword">from</span> .geo <span class="keyword">import</span> earth_geometry</div>
+<div class="line"><span class="lineno">  710</span>            verts, codes = [], []</div>
+<div class="line"><span class="lineno">  711</span>            <span class="keywordflow">for</span> ring <span class="keywordflow">in</span> earth_geometry(<span class="stringliteral">&quot;land&quot;</span>):</div>
+<div class="line"><span class="lineno">  712</span>                verts.append(ring)</div>
+<div class="line"><span class="lineno">  713</span>                codes += [MPath.MOVETO] + [MPath.LINETO] * (len(ring) - 1)</div>
+<div class="line"><span class="lineno">  714</span>            _LAND_PATH = MPath(np.vstack(verts), np.asarray(codes, dtype=np.uint8))</div>
+<div class="line"><span class="lineno">  715</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  716</span>            _LAND_PATH = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  717</span>    <span class="keywordflow">return</span> _LAND_PATH <span class="keywordflow">or</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  718</span> </div>
 <div class="line"><span class="lineno">  719</span> </div>
-<div class="line"><span class="lineno">  720</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -335,17 +335,17 @@ land tests); None if the coastline data / matplotlib is unavailable.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Ground-truth intensity physics used to synthesise data: relaxation toward
 a maximum potential intensity set by SST, penalised by shear.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00540">540</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  540</span><span class="keyword">def </span>_true_intensity_tendency(lon, lat, I, t=None, env=analytic_environment):</div>
-<div class="line"><span class="lineno">  541</span>    <span class="stringliteral">&quot;&quot;&quot;Ground-truth intensity physics used to synthesise data: relaxation toward</span></div>
-<div class="line"><span class="lineno">  542</span><span class="stringliteral">    a maximum potential intensity set by SST, penalised by shear.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  543</span>    sst_warmth, shear = env(lon, lat, t)</div>
-<div class="line"><span class="lineno">  544</span>    mpi = 25.0 + 3.0 * sst_warmth                       <span class="comment"># max potential intensity [kt]</span></div>
-<div class="line"><span class="lineno">  545</span>    <span class="comment"># Slow relaxation (~1.5-day e-folding) so intensification is a multi-day</span></div>
-<div class="line"><span class="lineno">  546</span>    <span class="comment"># process a persistence forecast visibly fails to capture — realistic RI.</span></div>
-<div class="line"><span class="lineno">  547</span>    <span class="keywordflow">return</span> 0.025 * (mpi - I) - 0.30 * shear</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00539">539</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  539</span><span class="keyword">def </span>_true_intensity_tendency(lon, lat, I, t=None, env=analytic_environment):</div>
+<div class="line"><span class="lineno">  540</span>    <span class="stringliteral">&quot;&quot;&quot;Ground-truth intensity physics used to synthesise data: relaxation toward</span></div>
+<div class="line"><span class="lineno">  541</span><span class="stringliteral">    a maximum potential intensity set by SST, penalised by shear.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  542</span>    sst_warmth, shear = env(lon, lat, t)</div>
+<div class="line"><span class="lineno">  543</span>    mpi = 25.0 + 3.0 * sst_warmth                       <span class="comment"># max potential intensity [kt]</span></div>
+<div class="line"><span class="lineno">  544</span>    <span class="comment"># Slow relaxation (~1.5-day e-folding) so intensification is a multi-day</span></div>
+<div class="line"><span class="lineno">  545</span>    <span class="comment"># process a persistence forecast visibly fails to capture — realistic RI.</span></div>
+<div class="line"><span class="lineno">  546</span>    <span class="keywordflow">return</span> 0.025 * (mpi - I) - 0.30 * shear</div>
+<div class="line"><span class="lineno">  547</span> </div>
 <div class="line"><span class="lineno">  548</span> </div>
-<div class="line"><span class="lineno">  549</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -389,23 +389,23 @@ learned intensity model can separate their effects, as a real one must.
 Stand-in for the satellite SST / analysis wind-shear predictors that
 operational statistical intensity schemes consume.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00524">524</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  524</span><span class="keyword">def </span>analytic_environment(lon, lat, t=None):</div>
-<div class="line"><span class="lineno">  525</span>    <span class="stringliteral">&quot;&quot;&quot;Idealised intensity environment at a point → ``(sst_warmth, shear)``.</span></div>
-<div class="line"><span class="lineno">  526</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  527</span><span class="stringliteral">    ``sst_warmth`` is a 2-D **warm pool** (peaks near 135°E, 10°N and falls off</span></div>
-<div class="line"><span class="lineno">  528</span><span class="stringliteral">    in both lon and lat), ``shear`` grows toward mid-latitudes.  The two vary</span></div>
-<div class="line"><span class="lineno">  529</span><span class="stringliteral">    along different directions, so they are *not* collinear along a track — a</span></div>
-<div class="line"><span class="lineno">  530</span><span class="stringliteral">    learned intensity model can separate their effects, as a real one must.</span></div>
-<div class="line"><span class="lineno">  531</span><span class="stringliteral">    Stand-in for the satellite SST / analysis wind-shear predictors that</span></div>
-<div class="line"><span class="lineno">  532</span><span class="stringliteral">    operational statistical intensity schemes consume.</span></div>
-<div class="line"><span class="lineno">  533</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  534</span>    sst_warmth = float(30.0 * np.exp(-((lon - 135.0) / 45.0) ** 2</div>
-<div class="line"><span class="lineno">  535</span>                                     - ((lat - 10.0) / 14.0) ** 2))</div>
-<div class="line"><span class="lineno">  536</span>    shear = float(3.0 + 0.9 * max(abs(lat) - 15.0, 0.0))</div>
-<div class="line"><span class="lineno">  537</span>    <span class="keywordflow">return</span> sst_warmth, shear</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00523">523</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  523</span><span class="keyword">def </span>analytic_environment(lon, lat, t=None):</div>
+<div class="line"><span class="lineno">  524</span>    <span class="stringliteral">&quot;&quot;&quot;Idealised intensity environment at a point → ``(sst_warmth, shear)``.</span></div>
+<div class="line"><span class="lineno">  525</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  526</span><span class="stringliteral">    ``sst_warmth`` is a 2-D **warm pool** (peaks near 135°E, 10°N and falls off</span></div>
+<div class="line"><span class="lineno">  527</span><span class="stringliteral">    in both lon and lat), ``shear`` grows toward mid-latitudes.  The two vary</span></div>
+<div class="line"><span class="lineno">  528</span><span class="stringliteral">    along different directions, so they are *not* collinear along a track — a</span></div>
+<div class="line"><span class="lineno">  529</span><span class="stringliteral">    learned intensity model can separate their effects, as a real one must.</span></div>
+<div class="line"><span class="lineno">  530</span><span class="stringliteral">    Stand-in for the satellite SST / analysis wind-shear predictors that</span></div>
+<div class="line"><span class="lineno">  531</span><span class="stringliteral">    operational statistical intensity schemes consume.</span></div>
+<div class="line"><span class="lineno">  532</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  533</span>    sst_warmth = float(30.0 * np.exp(-((lon - 135.0) / 45.0) ** 2</div>
+<div class="line"><span class="lineno">  534</span>                                     - ((lat - 10.0) / 14.0) ** 2))</div>
+<div class="line"><span class="lineno">  535</span>    shear = float(3.0 + 0.9 * max(abs(lat) - 15.0, 0.0))</div>
+<div class="line"><span class="lineno">  536</span>    <span class="keywordflow">return</span> sst_warmth, shear</div>
+<div class="line"><span class="lineno">  537</span> </div>
 <div class="line"><span class="lineno">  538</span> </div>
-<div class="line"><span class="lineno">  539</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -495,28 +495,28 @@ recurvature as physics, not a fitted turn rate.  In the real system this
 callable is replaced by the deep-layer mean flow diagnosed from the field
 EnKF (``kalman.apps.weather.flow``); the signature is identical.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00501">501</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  503</span>                      hemisphere=<span class="stringliteral">&quot;N&quot;</span>, width=5.0):</div>
-<div class="line"><span class="lineno">  504</span>    <span class="stringliteral">&quot;&quot;&quot;Idealised deep-layer steering flow [km/h] for a beta-advection tracker.</span></div>
-<div class="line"><span class="lineno">  505</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  506</span><span class="stringliteral">    Trade-wind **easterlies** equatorward of the subtropical ridge</span></div>
-<div class="line"><span class="lineno">  507</span><span class="stringliteral">    (``ridge_lat``) smoothly giving way to mid-latitude **westerlies** poleward</span></div>
-<div class="line"><span class="lineno">  508</span><span class="stringliteral">    of it (``tanh`` transition of scale ``width``).  The westerlies steer</span></div>
-<div class="line"><span class="lineno">  509</span><span class="stringliteral">    **poleward-eastward** (``poleward_mid``), so a recurving storm accelerates</span></div>
-<div class="line"><span class="lineno">  510</span><span class="stringliteral">    toward higher latitudes — the NE sweep that carries Northwest-Pacific</span></div>
-<div class="line"><span class="lineno">  511</span><span class="stringliteral">    typhoons toward Japan.  A storm born in the tropics runs west, drifts</span></div>
-<div class="line"><span class="lineno">  512</span><span class="stringliteral">    poleward (beta), crosses the ridge into the westerlies and **recurves** —</span></div>
-<div class="line"><span class="lineno">  513</span><span class="stringliteral">    recurvature as physics, not a fitted turn rate.  In the real system this</span></div>
-<div class="line"><span class="lineno">  514</span><span class="stringliteral">    callable is replaced by the deep-layer mean flow diagnosed from the field</span></div>
-<div class="line"><span class="lineno">  515</span><span class="stringliteral">    EnKF (``kalman.apps.weather.flow``); the signature is identical.</span></div>
-<div class="line"><span class="lineno">  516</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  517</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
-<div class="line"><span class="lineno">  518</span>    frac = 0.5 * (1.0 + np.tanh(pole * (lat - ridge_lat) / width))   <span class="comment"># 0 tropics → 1 mid-lat</span></div>
-<div class="line"><span class="lineno">  519</span>    ve = (1 - frac) * easterly + frac * westerly</div>
-<div class="line"><span class="lineno">  520</span>    vn = pole * (poleward * (1 - frac) + poleward_mid * frac)         <span class="comment"># NE sweep in the westerlies</span></div>
-<div class="line"><span class="lineno">  521</span>    <span class="keywordflow">return</span> float(ve), float(vn)</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00500">500</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  502</span>                      hemisphere=<span class="stringliteral">&quot;N&quot;</span>, width=5.0):</div>
+<div class="line"><span class="lineno">  503</span>    <span class="stringliteral">&quot;&quot;&quot;Idealised deep-layer steering flow [km/h] for a beta-advection tracker.</span></div>
+<div class="line"><span class="lineno">  504</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  505</span><span class="stringliteral">    Trade-wind **easterlies** equatorward of the subtropical ridge</span></div>
+<div class="line"><span class="lineno">  506</span><span class="stringliteral">    (``ridge_lat``) smoothly giving way to mid-latitude **westerlies** poleward</span></div>
+<div class="line"><span class="lineno">  507</span><span class="stringliteral">    of it (``tanh`` transition of scale ``width``).  The westerlies steer</span></div>
+<div class="line"><span class="lineno">  508</span><span class="stringliteral">    **poleward-eastward** (``poleward_mid``), so a recurving storm accelerates</span></div>
+<div class="line"><span class="lineno">  509</span><span class="stringliteral">    toward higher latitudes — the NE sweep that carries Northwest-Pacific</span></div>
+<div class="line"><span class="lineno">  510</span><span class="stringliteral">    typhoons toward Japan.  A storm born in the tropics runs west, drifts</span></div>
+<div class="line"><span class="lineno">  511</span><span class="stringliteral">    poleward (beta), crosses the ridge into the westerlies and **recurves** —</span></div>
+<div class="line"><span class="lineno">  512</span><span class="stringliteral">    recurvature as physics, not a fitted turn rate.  In the real system this</span></div>
+<div class="line"><span class="lineno">  513</span><span class="stringliteral">    callable is replaced by the deep-layer mean flow diagnosed from the field</span></div>
+<div class="line"><span class="lineno">  514</span><span class="stringliteral">    EnKF (``kalman.apps.weather.flow``); the signature is identical.</span></div>
+<div class="line"><span class="lineno">  515</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  516</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
+<div class="line"><span class="lineno">  517</span>    frac = 0.5 * (1.0 + np.tanh(pole * (lat - ridge_lat) / width))   <span class="comment"># 0 tropics → 1 mid-lat</span></div>
+<div class="line"><span class="lineno">  518</span>    ve = (1 - frac) * easterly + frac * westerly</div>
+<div class="line"><span class="lineno">  519</span>    vn = pole * (poleward * (1 - frac) + poleward_mid * frac)         <span class="comment"># NE sweep in the westerlies</span></div>
+<div class="line"><span class="lineno">  520</span>    <span class="keywordflow">return</span> float(ve), float(vn)</div>
+<div class="line"><span class="lineno">  521</span> </div>
 <div class="line"><span class="lineno">  522</span> </div>
-<div class="line"><span class="lineno">  523</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -537,13 +537,13 @@ EnKF (``kalman.apps.weather.flow``); the signature is identical.
 </div><div class="memdoc">
 <pre class="fragment">Season key ('peak' | 'shoulder' | 'off') for a calendar ``month`` (1–12)
 over southern Brazil — SH spring–summer (Sep–Feb) is peak tornado season.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00894">894</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  894</span><span class="keyword">def </span>brazil_season(month):</div>
-<div class="line"><span class="lineno">  895</span>    <span class="stringliteral">&quot;&quot;&quot;Season key (&#39;peak&#39; | &#39;shoulder&#39; | &#39;off&#39;) for a calendar ``month`` (1–12)</span></div>
-<div class="line"><span class="lineno">  896</span><span class="stringliteral">    over southern Brazil — SH spring–summer (Sep–Feb) is peak tornado season.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  897</span>    <span class="keywordflow">return</span> _BRAZIL_SEASON[int(month) % 12 <span class="keywordflow">or</span> 12]</div>
-<div class="line"><span class="lineno">  898</span> </div>
-<div class="line"><span class="lineno">  899</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00892">892</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  892</span><span class="keyword">def </span>brazil_season(month):</div>
+<div class="line"><span class="lineno">  893</span>    <span class="stringliteral">&quot;&quot;&quot;Season key (&#39;peak&#39; | &#39;shoulder&#39; | &#39;off&#39;) for a calendar ``month`` (1–12)</span></div>
+<div class="line"><span class="lineno">  894</span><span class="stringliteral">    over southern Brazil — SH spring–summer (Sep–Feb) is peak tornado season.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  895</span>    <span class="keywordflow">return</span> _BRAZIL_SEASON[int(month) % 12 <span class="keywordflow">or</span> 12]</div>
+<div class="line"><span class="lineno">  896</span> </div>
+<div class="line"><span class="lineno">  897</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -615,36 +615,36 @@ Tornadic episodes (2–4 days each, front passages) are sampled with a
 — so the same STP excursion carries a very different climatological prior
 depending when it lands.  Returns ``(obs (T,1), labels (T,), months (T,))``.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00900">900</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  902</span>                            base_rate=0.006, peak_rate=0.05):</div>
-<div class="line"><span class="lineno">  903</span>    <span class="stringliteral">&quot;&quot;&quot;A year of daily tornado-environment observations over southern Brazil.</span></div>
-<div class="line"><span class="lineno">  904</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  905</span><span class="stringliteral">    Tornadic episodes (2–4 days each, front passages) are sampled with a</span></div>
-<div class="line"><span class="lineno">  906</span><span class="stringliteral">    **seasonally varying rate** — frequent in the Sep–Feb peak, rare off-season</span></div>
-<div class="line"><span class="lineno">  907</span><span class="stringliteral">    — so the same STP excursion carries a very different climatological prior</span></div>
-<div class="line"><span class="lineno">  908</span><span class="stringliteral">    depending when it lands.  Returns ``(obs (T,1), labels (T,), months (T,))``.</span></div>
-<div class="line"><span class="lineno">  909</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  910</span>    rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  911</span>    months = ((start_month - 1 + np.arange(n_days) * 12 // n_days) % 12) + 1</div>
-<div class="line"><span class="lineno">  912</span>    rate = {<span class="stringliteral">&quot;peak&quot;</span>: peak_rate, <span class="stringliteral">&quot;shoulder&quot;</span>: 0.5 * (peak_rate + base_rate), <span class="stringliteral">&quot;off&quot;</span>: base_rate}</div>
-<div class="line"><span class="lineno">  913</span>    labels = np.zeros(n_days, dtype=int)</div>
-<div class="line"><span class="lineno">  914</span>    k = 0</div>
-<div class="line"><span class="lineno">  915</span>    <span class="keywordflow">while</span> k &lt; n_days:</div>
-<div class="line"><span class="lineno">  916</span>        <span class="keywordflow">if</span> rng.random() &lt; rate[brazil_season(months[k])]:</div>
-<div class="line"><span class="lineno">  917</span>            dur = rng.integers(2, 5)</div>
-<div class="line"><span class="lineno">  918</span>            labels[k:k + dur] = 1</div>
-<div class="line"><span class="lineno">  919</span>            k += dur</div>
-<div class="line"><span class="lineno">  920</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  921</span>            k += 1</div>
-<div class="line"><span class="lineno">  922</span>    x = mu_benign</div>
-<div class="line"><span class="lineno">  923</span>    obs = []</div>
-<div class="line"><span class="lineno">  924</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_days):</div>
-<div class="line"><span class="lineno">  925</span>        mu, a, q = ((mu_tornadic, 0.9, 0.5) <span class="keywordflow">if</span> labels[k] <span class="keywordflow">else</span> (mu_benign, 0.7, 0.10))</div>
-<div class="line"><span class="lineno">  926</span>        x = mu + a * (x - mu) + rng.normal(0, q)</div>
-<div class="line"><span class="lineno">  927</span>        obs.append([x + rng.normal(0, obs_noise)])</div>
-<div class="line"><span class="lineno">  928</span>    <span class="keywordflow">return</span> np.array(obs), labels, months</div>
-<div class="line"><span class="lineno">  929</span> </div>
-<div class="line"><span class="lineno">  930</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00898">898</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  900</span>                            base_rate=0.006, peak_rate=0.05):</div>
+<div class="line"><span class="lineno">  901</span>    <span class="stringliteral">&quot;&quot;&quot;A year of daily tornado-environment observations over southern Brazil.</span></div>
+<div class="line"><span class="lineno">  902</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  903</span><span class="stringliteral">    Tornadic episodes (2–4 days each, front passages) are sampled with a</span></div>
+<div class="line"><span class="lineno">  904</span><span class="stringliteral">    **seasonally varying rate** — frequent in the Sep–Feb peak, rare off-season</span></div>
+<div class="line"><span class="lineno">  905</span><span class="stringliteral">    — so the same STP excursion carries a very different climatological prior</span></div>
+<div class="line"><span class="lineno">  906</span><span class="stringliteral">    depending when it lands.  Returns ``(obs (T,1), labels (T,), months (T,))``.</span></div>
+<div class="line"><span class="lineno">  907</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  908</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  909</span>    months = ((start_month - 1 + np.arange(n_days) * 12 // n_days) % 12) + 1</div>
+<div class="line"><span class="lineno">  910</span>    rate = {<span class="stringliteral">&quot;peak&quot;</span>: peak_rate, <span class="stringliteral">&quot;shoulder&quot;</span>: 0.5 * (peak_rate + base_rate), <span class="stringliteral">&quot;off&quot;</span>: base_rate}</div>
+<div class="line"><span class="lineno">  911</span>    labels = np.zeros(n_days, dtype=int)</div>
+<div class="line"><span class="lineno">  912</span>    k = 0</div>
+<div class="line"><span class="lineno">  913</span>    <span class="keywordflow">while</span> k &lt; n_days:</div>
+<div class="line"><span class="lineno">  914</span>        <span class="keywordflow">if</span> rng.random() &lt; rate[brazil_season(months[k])]:</div>
+<div class="line"><span class="lineno">  915</span>            dur = rng.integers(2, 5)</div>
+<div class="line"><span class="lineno">  916</span>            labels[k:k + dur] = 1</div>
+<div class="line"><span class="lineno">  917</span>            k += dur</div>
+<div class="line"><span class="lineno">  918</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  919</span>            k += 1</div>
+<div class="line"><span class="lineno">  920</span>    x = mu_benign</div>
+<div class="line"><span class="lineno">  921</span>    obs = []</div>
+<div class="line"><span class="lineno">  922</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_days):</div>
+<div class="line"><span class="lineno">  923</span>        mu, a, q = ((mu_tornadic, 0.9, 0.5) <span class="keywordflow">if</span> labels[k] <span class="keywordflow">else</span> (mu_benign, 0.7, 0.10))</div>
+<div class="line"><span class="lineno">  924</span>        x = mu + a * (x - mu) + rng.normal(0, q)</div>
+<div class="line"><span class="lineno">  925</span>        obs.append([x + rng.normal(0, obs_noise)])</div>
+<div class="line"><span class="lineno">  926</span>    <span class="keywordflow">return</span> np.array(obs), labels, months</div>
+<div class="line"><span class="lineno">  927</span> </div>
+<div class="line"><span class="lineno">  928</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -693,29 +693,29 @@ field-EnKF analysis (or one ensemble member) of notebook 13.  The returned
   *environmental* uncertainty into **track-cone** uncertainty, the real
   coupling between the field filter and the vortex tracker.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00681">681</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  681</span><span class="keyword">def </span>field_steering(velocity_sampler, *, base=japan_steering, weight=1.0):</div>
-<div class="line"><span class="lineno">  682</span>    <span class="stringliteral">&quot;&quot;&quot;Compose a climatological steering with a **field-diagnosed flow anomaly**.</span></div>
-<div class="line"><span class="lineno">  683</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  684</span><span class="stringliteral">    ``velocity_sampler`` is a ``(lon, lat) → (v_e, v_n)`` callable — in practice</span></div>
-<div class="line"><span class="lineno">  685</span><span class="stringliteral">    ``KolmogorovFlowModel.velocity_sampler(field, region)`` built from the</span></div>
-<div class="line"><span class="lineno">  686</span><span class="stringliteral">    field-EnKF analysis (or one ensemble member) of notebook 13.  The returned</span></div>
-<div class="line"><span class="lineno">  687</span><span class="stringliteral">    ``steering(lon, lat, t)`` adds ``weight × anomaly`` to the mean ridge</span></div>
-<div class="line"><span class="lineno">  688</span><span class="stringliteral">    ``base``, so:</span></div>
-<div class="line"><span class="lineno">  689</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  690</span><span class="stringliteral">    - the **mean** flow still gives physical recurvature, and</span></div>
-<div class="line"><span class="lineno">  691</span><span class="stringliteral">    - flow-dependent steering **anomalies from the field EnKF perturb the</span></div>
-<div class="line"><span class="lineno">  692</span><span class="stringliteral">      track** — feed one sampler per field-ensemble member to turn the</span></div>
-<div class="line"><span class="lineno">  693</span><span class="stringliteral">      *environmental* uncertainty into **track-cone** uncertainty, the real</span></div>
-<div class="line"><span class="lineno">  694</span><span class="stringliteral">      coupling between the field filter and the vortex tracker.</span></div>
-<div class="line"><span class="lineno">  695</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  696</span>    <span class="keyword">def </span>steering(lon, lat, t=None):</div>
-<div class="line"><span class="lineno">  697</span>        be, bn = base(lon, lat, t)</div>
-<div class="line"><span class="lineno">  698</span>        ae, an = velocity_sampler(lon, lat)</div>
-<div class="line"><span class="lineno">  699</span>        <span class="keywordflow">return</span> be + weight * ae, bn + weight * an</div>
-<div class="line"><span class="lineno">  700</span>    <span class="keywordflow">return</span> steering</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00680">680</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  680</span><span class="keyword">def </span>field_steering(velocity_sampler, *, base=japan_steering, weight=1.0):</div>
+<div class="line"><span class="lineno">  681</span>    <span class="stringliteral">&quot;&quot;&quot;Compose a climatological steering with a **field-diagnosed flow anomaly**.</span></div>
+<div class="line"><span class="lineno">  682</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  683</span><span class="stringliteral">    ``velocity_sampler`` is a ``(lon, lat) → (v_e, v_n)`` callable — in practice</span></div>
+<div class="line"><span class="lineno">  684</span><span class="stringliteral">    ``KolmogorovFlowModel.velocity_sampler(field, region)`` built from the</span></div>
+<div class="line"><span class="lineno">  685</span><span class="stringliteral">    field-EnKF analysis (or one ensemble member) of notebook 13.  The returned</span></div>
+<div class="line"><span class="lineno">  686</span><span class="stringliteral">    ``steering(lon, lat, t)`` adds ``weight × anomaly`` to the mean ridge</span></div>
+<div class="line"><span class="lineno">  687</span><span class="stringliteral">    ``base``, so:</span></div>
+<div class="line"><span class="lineno">  688</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  689</span><span class="stringliteral">    - the **mean** flow still gives physical recurvature, and</span></div>
+<div class="line"><span class="lineno">  690</span><span class="stringliteral">    - flow-dependent steering **anomalies from the field EnKF perturb the</span></div>
+<div class="line"><span class="lineno">  691</span><span class="stringliteral">      track** — feed one sampler per field-ensemble member to turn the</span></div>
+<div class="line"><span class="lineno">  692</span><span class="stringliteral">      *environmental* uncertainty into **track-cone** uncertainty, the real</span></div>
+<div class="line"><span class="lineno">  693</span><span class="stringliteral">      coupling between the field filter and the vortex tracker.</span></div>
+<div class="line"><span class="lineno">  694</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  695</span>    <span class="keyword">def </span>steering(lon, lat, t=None):</div>
+<div class="line"><span class="lineno">  696</span>        be, bn = base(lon, lat, t)</div>
+<div class="line"><span class="lineno">  697</span>        ae, an = velocity_sampler(lon, lat)</div>
+<div class="line"><span class="lineno">  698</span>        <span class="keywordflow">return</span> be + weight * ae, bn + weight * an</div>
+<div class="line"><span class="lineno">  699</span>    <span class="keywordflow">return</span> steering</div>
+<div class="line"><span class="lineno">  700</span> </div>
 <div class="line"><span class="lineno">  701</span> </div>
-<div class="line"><span class="lineno">  702</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -751,26 +751,26 @@ strike means actually crossing the coastline, not just entering a box; if
 that data is unavailable it degrades to the bounding box alone.  Accepts
 scalars or arrays.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00721">721</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  721</span><span class="keyword">def </span>japan_region(lon, lat):</div>
-<div class="line"><span class="lineno">  722</span>    <span class="stringliteral">&quot;&quot;&quot;True where ``(lon, lat)`` is land inside the Japan bounding box.</span></div>
-<div class="line"><span class="lineno">  723</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  724</span><span class="stringliteral">    Uses the Natural Earth land polygons (shipped with ``reanalysis``) so a</span></div>
-<div class="line"><span class="lineno">  725</span><span class="stringliteral">    strike means actually crossing the coastline, not just entering a box; if</span></div>
-<div class="line"><span class="lineno">  726</span><span class="stringliteral">    that data is unavailable it degrades to the bounding box alone.  Accepts</span></div>
-<div class="line"><span class="lineno">  727</span><span class="stringliteral">    scalars or arrays.</span></div>
-<div class="line"><span class="lineno">  728</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  729</span>    lon = np.asarray(lon, float); lat = np.asarray(lat, float)</div>
-<div class="line"><span class="lineno">  730</span>    lo_min, lo_max, la_min, la_max = JAPAN_BBOX</div>
-<div class="line"><span class="lineno">  731</span>    inbox = (lon &gt;= lo_min) &amp; (lon &lt;= lo_max) &amp; (lat &gt;= la_min) &amp; (lat &lt;= la_max)</div>
-<div class="line"><span class="lineno">  732</span>    path = _land_path()</div>
-<div class="line"><span class="lineno">  733</span>    <span class="keywordflow">if</span> path <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  734</span>        <span class="keywordflow">return</span> inbox</div>
-<div class="line"><span class="lineno">  735</span>    pts = np.column_stack([np.ravel(lon), np.ravel(lat)])</div>
-<div class="line"><span class="lineno">  736</span>    on_land = path.contains_points(pts).reshape(np.shape(lon))</div>
-<div class="line"><span class="lineno">  737</span>    <span class="keywordflow">return</span> inbox &amp; on_land</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00720">720</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  720</span><span class="keyword">def </span>japan_region(lon, lat):</div>
+<div class="line"><span class="lineno">  721</span>    <span class="stringliteral">&quot;&quot;&quot;True where ``(lon, lat)`` is land inside the Japan bounding box.</span></div>
+<div class="line"><span class="lineno">  722</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  723</span><span class="stringliteral">    Uses the Natural Earth land polygons (shipped with ``reanalysis``) so a</span></div>
+<div class="line"><span class="lineno">  724</span><span class="stringliteral">    strike means actually crossing the coastline, not just entering a box; if</span></div>
+<div class="line"><span class="lineno">  725</span><span class="stringliteral">    that data is unavailable it degrades to the bounding box alone.  Accepts</span></div>
+<div class="line"><span class="lineno">  726</span><span class="stringliteral">    scalars or arrays.</span></div>
+<div class="line"><span class="lineno">  727</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  728</span>    lon = np.asarray(lon, float); lat = np.asarray(lat, float)</div>
+<div class="line"><span class="lineno">  729</span>    lo_min, lo_max, la_min, la_max = JAPAN_BBOX</div>
+<div class="line"><span class="lineno">  730</span>    inbox = (lon &gt;= lo_min) &amp; (lon &lt;= lo_max) &amp; (lat &gt;= la_min) &amp; (lat &lt;= la_max)</div>
+<div class="line"><span class="lineno">  731</span>    path = _land_path()</div>
+<div class="line"><span class="lineno">  732</span>    <span class="keywordflow">if</span> path <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  733</span>        <span class="keywordflow">return</span> inbox</div>
+<div class="line"><span class="lineno">  734</span>    pts = np.column_stack([np.ravel(lon), np.ravel(lat)])</div>
+<div class="line"><span class="lineno">  735</span>    on_land = path.contains_points(pts).reshape(np.shape(lon))</div>
+<div class="line"><span class="lineno">  736</span>    <span class="keywordflow">return</span> inbox &amp; on_land</div>
+<div class="line"><span class="lineno">  737</span> </div>
 <div class="line"><span class="lineno">  738</span> </div>
-<div class="line"><span class="lineno">  739</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -808,15 +808,15 @@ scalars or arrays.
 <pre class="fragment">Northwest-Pacific steering tuned so a tropical-genesis storm recurves
 into the Japan region (subtropical ridge ~25°N; the westerlies sweep it NE
 toward Honshu).  Drop-in ``steering`` for :class:`StormModel`.</pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00673">673</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  673</span><span class="keyword">def </span>japan_steering(lon, lat, t=None):</div>
-<div class="line"><span class="lineno">  674</span>    <span class="stringliteral">&quot;&quot;&quot;Northwest-Pacific steering tuned so a tropical-genesis storm recurves</span></div>
-<div class="line"><span class="lineno">  675</span><span class="stringliteral">    into the Japan region (subtropical ridge ~25°N; the westerlies sweep it NE</span></div>
-<div class="line"><span class="lineno">  676</span><span class="stringliteral">    toward Honshu).  Drop-in ``steering`` for :class:`StormModel`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  677</span>    <span class="keywordflow">return</span> analytic_steering(lon, lat, ridge_lat=27.0, easterly=-15.0,</div>
-<div class="line"><span class="lineno">  678</span>                             westerly=27.0, hemisphere=<span class="stringliteral">&quot;N&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00672">672</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  672</span><span class="keyword">def </span>japan_steering(lon, lat, t=None):</div>
+<div class="line"><span class="lineno">  673</span>    <span class="stringliteral">&quot;&quot;&quot;Northwest-Pacific steering tuned so a tropical-genesis storm recurves</span></div>
+<div class="line"><span class="lineno">  674</span><span class="stringliteral">    into the Japan region (subtropical ridge ~25°N; the westerlies sweep it NE</span></div>
+<div class="line"><span class="lineno">  675</span><span class="stringliteral">    toward Honshu).  Drop-in ``steering`` for :class:`StormModel`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  676</span>    <span class="keywordflow">return</span> analytic_steering(lon, lat, ridge_lat=27.0, easterly=-15.0,</div>
+<div class="line"><span class="lineno">  677</span>                             westerly=27.0, hemisphere=<span class="stringliteral">&quot;N&quot;</span>)</div>
+<div class="line"><span class="lineno">  678</span> </div>
 <div class="line"><span class="lineno">  679</span> </div>
-<div class="line"><span class="lineno">  680</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -852,28 +852,28 @@ toward Honshu).  Drop-in ``steering`` for :class:`StormModel`.</pre>
 hit_per_track)`` — the operational **strike probability** read straight off
 the forecast covariance, plus the boolean per-member landfall flag.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00740">740</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  740</span><span class="keyword">def </span>landfall_probability(tracks, region=japan_region):</div>
-<div class="line"><span class="lineno">  741</span>    <span class="stringliteral">&quot;&quot;&quot;Fraction of forecast ensemble tracks that make landfall in ``region``.</span></div>
-<div class="line"><span class="lineno">  742</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  743</span><span class="stringliteral">    ``tracks`` is ``(n_samples, steps, ≥2)`` from</span></div>
-<div class="line"><span class="lineno">  744</span><span class="stringliteral">    :meth:`StormModel.ensemble_forecast`.  Returns ``(probability,</span></div>
-<div class="line"><span class="lineno">  745</span><span class="stringliteral">    hit_per_track)`` — the operational **strike probability** read straight off</span></div>
-<div class="line"><span class="lineno">  746</span><span class="stringliteral">    the forecast covariance, plus the boolean per-member landfall flag.</span></div>
-<div class="line"><span class="lineno">  747</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  748</span>    tracks = np.asarray(tracks, float)</div>
-<div class="line"><span class="lineno">  749</span>    hit = np.array([np.any(region(tr[:, 0], tr[:, 1])) <span class="keywordflow">for</span> tr <span class="keywordflow">in</span> tracks])</div>
-<div class="line"><span class="lineno">  750</span>    <span class="keywordflow">return</span> float(hit.mean()), hit</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00739">739</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  739</span><span class="keyword">def </span>landfall_probability(tracks, region=japan_region):</div>
+<div class="line"><span class="lineno">  740</span>    <span class="stringliteral">&quot;&quot;&quot;Fraction of forecast ensemble tracks that make landfall in ``region``.</span></div>
+<div class="line"><span class="lineno">  741</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  742</span><span class="stringliteral">    ``tracks`` is ``(n_samples, steps, ≥2)`` from</span></div>
+<div class="line"><span class="lineno">  743</span><span class="stringliteral">    :meth:`StormModel.ensemble_forecast`.  Returns ``(probability,</span></div>
+<div class="line"><span class="lineno">  744</span><span class="stringliteral">    hit_per_track)`` — the operational **strike probability** read straight off</span></div>
+<div class="line"><span class="lineno">  745</span><span class="stringliteral">    the forecast covariance, plus the boolean per-member landfall flag.</span></div>
+<div class="line"><span class="lineno">  746</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  747</span>    tracks = np.asarray(tracks, float)</div>
+<div class="line"><span class="lineno">  748</span>    hit = np.array([np.any(region(tr[:, 0], tr[:, 1])) <span class="keywordflow">for</span> tr <span class="keywordflow">in</span> tracks])</div>
+<div class="line"><span class="lineno">  749</span>    <span class="keywordflow">return</span> float(hit.mean()), hit</div>
+<div class="line"><span class="lineno">  750</span> </div>
 <div class="line"><span class="lineno">  751</span> </div>
-<div class="line"><span class="lineno">  752</span> </div>
-<div class="line"><span class="lineno">  753</span><span class="comment"># ======================================================================</span></div>
-<div class="line"><span class="lineno">  754</span><span class="comment"># Tornado-environment regime model (probabilistic, IKF)</span></div>
-<div class="line"><span class="lineno">  755</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  752</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  753</span><span class="comment"># Tornado-environment regime model (probabilistic, routed)</span></div>
+<div class="line"><span class="lineno">  754</span><span class="comment"># ======================================================================</span></div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="abb2dc5a56c536044f6e1c4f73de424a3" name="abb2dc5a56c536044f6e1c4f73de424a3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abb2dc5a56c536044f6e1c4f73de424a3">&#9670;&#160;</a></span>seasonal_tornado_probability()</h2>
+<a id="ab856e4d8d64a0cf82d0d6b1b6e17ab8e" name="ab856e4d8d64a0cf82d0d6b1b6e17ab8e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab856e4d8d64a0cf82d0d6b1b6e17ab8e">&#9670;&#160;</a></span>seasonal_tornado_probability()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -906,7 +906,7 @@ the forecast covariance, plus the boolean per-member landfall flag.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">**&#160;</td>
-          <td class="paramname"><em>ikf_kw</em>&#160;</td>
+          <td class="paramname"><em>bank_kw</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -917,37 +917,37 @@ the forecast covariance, plus the boolean per-member landfall flag.
 </div><div class="memdoc">
 <pre class="fragment">Per-step P(tornadic) with a **season-dependent prior**.
 
-Runs the IKF once per season (each with that season's transition matrix from
-:meth:`TornadoEnvironmentModel.ikf_bank`) and, at every step, returns the
+Runs the routed model once per season (each with that season's transition matrix from
+:meth:`TornadoEnvironmentModel.regime_bank`) and, at every step, returns the
 probability from the filter whose season matches that step's month.  So an
 identical environmental signal reads as a confident warning in the peak
 season and a hedged one off-season — the Bayesian-correct way to fold the
 Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00931">931</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  932</span>                                 model_cls=<span class="keywordtype">None</span>, **ikf_kw):</div>
-<div class="line"><span class="lineno">  933</span>    <span class="stringliteral">&quot;&quot;&quot;Per-step P(tornadic) with a **season-dependent prior**.</span></div>
-<div class="line"><span class="lineno">  934</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  935</span><span class="stringliteral">    Runs the IKF once per season (each with that season&#39;s transition matrix from</span></div>
-<div class="line"><span class="lineno">  936</span><span class="stringliteral">    :meth:`TornadoEnvironmentModel.ikf_bank`) and, at every step, returns the</span></div>
-<div class="line"><span class="lineno">  937</span><span class="stringliteral">    probability from the filter whose season matches that step&#39;s month.  So an</span></div>
-<div class="line"><span class="lineno">  938</span><span class="stringliteral">    identical environmental signal reads as a confident warning in the peak</span></div>
-<div class="line"><span class="lineno">  939</span><span class="stringliteral">    season and a hedged one off-season — the Bayesian-correct way to fold the</span></div>
-<div class="line"><span class="lineno">  940</span><span class="stringliteral">    Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.</span></div>
-<div class="line"><span class="lineno">  941</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  942</span>    <span class="keyword">from</span> ...framework.filters <span class="keyword">import</span> InteractiveKalmanFilter</div>
-<div class="line"><span class="lineno">  943</span>    cls = model_cls <span class="keywordflow">or</span> TornadoEnvironmentModel</div>
-<div class="line"><span class="lineno">  944</span>    obs = np.asarray(obs, float)</div>
-<div class="line"><span class="lineno">  945</span>    months = np.asarray(months)</div>
-<div class="line"><span class="lineno">  946</span>    seasons = np.array([season_fn(mo) <span class="keywordflow">for</span> mo <span class="keywordflow">in</span> months])</div>
-<div class="line"><span class="lineno">  947</span>    prob = np.zeros(len(obs))</div>
-<div class="line"><span class="lineno">  948</span>    <span class="keywordflow">for</span> s <span class="keywordflow">in</span> np.unique(seasons):</div>
-<div class="line"><span class="lineno">  949</span>        models, Pi, p0 = cls.ikf_bank(season=str(s), **ikf_kw)</div>
-<div class="line"><span class="lineno">  950</span>        ikf = InteractiveKalmanFilter(models, Pi, p0)</div>
-<div class="line"><span class="lineno">  951</span>        ikf.forward(obs)</div>
-<div class="line"><span class="lineno">  952</span>        p_s = ikf.mode_probabilities[:, 1]</div>
-<div class="line"><span class="lineno">  953</span>        prob[seasons == s] = p_s[seasons == s]</div>
-<div class="line"><span class="lineno">  954</span>    <span class="keywordflow">return</span> prob</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00929">929</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  930</span>                                 model_cls=<span class="keywordtype">None</span>, **bank_kw):</div>
+<div class="line"><span class="lineno">  931</span>    <span class="stringliteral">&quot;&quot;&quot;Per-step P(tornadic) with a **season-dependent prior**.</span></div>
+<div class="line"><span class="lineno">  932</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  933</span><span class="stringliteral">    Runs the routed model once per season (each with that season&#39;s transition matrix from</span></div>
+<div class="line"><span class="lineno">  934</span><span class="stringliteral">    :meth:`TornadoEnvironmentModel.regime_bank`) and, at every step, returns the</span></div>
+<div class="line"><span class="lineno">  935</span><span class="stringliteral">    probability from the filter whose season matches that step&#39;s month.  So an</span></div>
+<div class="line"><span class="lineno">  936</span><span class="stringliteral">    identical environmental signal reads as a confident warning in the peak</span></div>
+<div class="line"><span class="lineno">  937</span><span class="stringliteral">    season and a hedged one off-season — the Bayesian-correct way to fold the</span></div>
+<div class="line"><span class="lineno">  938</span><span class="stringliteral">    Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.</span></div>
+<div class="line"><span class="lineno">  939</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  940</span>    <span class="keyword">from</span> ...framework.operations <span class="keyword">import</span> route</div>
+<div class="line"><span class="lineno">  941</span>    cls = model_cls <span class="keywordflow">or</span> TornadoEnvironmentModel</div>
+<div class="line"><span class="lineno">  942</span>    obs = np.asarray(obs, float)</div>
+<div class="line"><span class="lineno">  943</span>    months = np.asarray(months)</div>
+<div class="line"><span class="lineno">  944</span>    seasons = np.array([season_fn(mo) <span class="keywordflow">for</span> mo <span class="keywordflow">in</span> months])</div>
+<div class="line"><span class="lineno">  945</span>    prob = np.zeros(len(obs))</div>
+<div class="line"><span class="lineno">  946</span>    <span class="keywordflow">for</span> s <span class="keywordflow">in</span> np.unique(seasons):</div>
+<div class="line"><span class="lineno">  947</span>        models, Pi, p0 = cls.regime_bank(season=str(s), **bank_kw)</div>
+<div class="line"><span class="lineno">  948</span>        modes = route(models, Pi, p0)</div>
+<div class="line"><span class="lineno">  949</span>        modes.filter(obs)</div>
+<div class="line"><span class="lineno">  950</span>        p_s = modes.mode_probabilities[:, 1]</div>
+<div class="line"><span class="lineno">  951</span>        prob[seasons == s] = p_s[seasons == s]</div>
+<div class="line"><span class="lineno">  952</span>    <span class="keywordflow">return</span> prob</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1009,38 +1009,38 @@ Brazil climatology into a nowcast.  Returns the ``(T,)`` probability array.
 <pre class="fragment">Synthetic STP time series that spends ``onsets`` cycle-windows in the
 tornadic regime, plus noisy observations and the true regime labels.
 
-Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the IKF tracker and
+Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the routed model and
 compare ``mode_probabilities[:, 1]`` against ``labels``.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00860">860</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  861</span>                          mu_benign=0.3, mu_tornadic=3.0, obs_noise=0.4, seed=0):</div>
-<div class="line"><span class="lineno">  862</span>    <span class="stringliteral">&quot;&quot;&quot;Synthetic STP time series that spends ``onsets`` cycle-windows in the</span></div>
-<div class="line"><span class="lineno">  863</span><span class="stringliteral">    tornadic regime, plus noisy observations and the true regime labels.</span></div>
-<div class="line"><span class="lineno">  864</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  865</span><span class="stringliteral">    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the IKF tracker and</span></div>
-<div class="line"><span class="lineno">  866</span><span class="stringliteral">    compare ``mode_probabilities[:, 1]`` against ``labels``.</span></div>
-<div class="line"><span class="lineno">  867</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  868</span>    rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  869</span>    labels = np.zeros(n_steps, dtype=int)</div>
-<div class="line"><span class="lineno">  870</span>    <span class="keywordflow">for</span> lo, hi <span class="keywordflow">in</span> onsets:</div>
-<div class="line"><span class="lineno">  871</span>        labels[lo:hi] = 1</div>
-<div class="line"><span class="lineno">  872</span>    x = mu_benign</div>
-<div class="line"><span class="lineno">  873</span>    obs = []</div>
-<div class="line"><span class="lineno">  874</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
-<div class="line"><span class="lineno">  875</span>        mu, a, q = ((mu_tornadic, 0.9, 0.5) <span class="keywordflow">if</span> labels[k] <span class="keywordflow">else</span> (mu_benign, 0.7, 0.10))</div>
-<div class="line"><span class="lineno">  876</span>        x = mu + a * (x - mu) + rng.normal(0, q)</div>
-<div class="line"><span class="lineno">  877</span>        obs.append([x + rng.normal(0, obs_noise)])</div>
-<div class="line"><span class="lineno">  878</span>    <span class="keywordflow">return</span> np.array(obs), labels</div>
-<div class="line"><span class="lineno">  879</span> </div>
-<div class="line"><span class="lineno">  880</span> </div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00858">858</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  859</span>                          mu_benign=0.3, mu_tornadic=3.0, obs_noise=0.4, seed=0):</div>
+<div class="line"><span class="lineno">  860</span>    <span class="stringliteral">&quot;&quot;&quot;Synthetic STP time series that spends ``onsets`` cycle-windows in the</span></div>
+<div class="line"><span class="lineno">  861</span><span class="stringliteral">    tornadic regime, plus noisy observations and the true regime labels.</span></div>
+<div class="line"><span class="lineno">  862</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  863</span><span class="stringliteral">    Returns ``(obs (T, 1), labels (T,))`` — feed ``obs`` to the routed model and</span></div>
+<div class="line"><span class="lineno">  864</span><span class="stringliteral">    compare ``mode_probabilities[:, 1]`` against ``labels``.</span></div>
+<div class="line"><span class="lineno">  865</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  866</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  867</span>    labels = np.zeros(n_steps, dtype=int)</div>
+<div class="line"><span class="lineno">  868</span>    <span class="keywordflow">for</span> lo, hi <span class="keywordflow">in</span> onsets:</div>
+<div class="line"><span class="lineno">  869</span>        labels[lo:hi] = 1</div>
+<div class="line"><span class="lineno">  870</span>    x = mu_benign</div>
+<div class="line"><span class="lineno">  871</span>    obs = []</div>
+<div class="line"><span class="lineno">  872</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
+<div class="line"><span class="lineno">  873</span>        mu, a, q = ((mu_tornadic, 0.9, 0.5) <span class="keywordflow">if</span> labels[k] <span class="keywordflow">else</span> (mu_benign, 0.7, 0.10))</div>
+<div class="line"><span class="lineno">  874</span>        x = mu + a * (x - mu) + rng.normal(0, q)</div>
+<div class="line"><span class="lineno">  875</span>        obs.append([x + rng.normal(0, obs_noise)])</div>
+<div class="line"><span class="lineno">  876</span>    <span class="keywordflow">return</span> np.array(obs), labels</div>
+<div class="line"><span class="lineno">  877</span> </div>
+<div class="line"><span class="lineno">  878</span> </div>
+<div class="line"><span class="lineno">  879</span><span class="comment"># ----------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  880</span><span class="comment"># Brazil (southern) tornado configuration — SH severe-weather calendar</span></div>
 <div class="line"><span class="lineno">  881</span><span class="comment"># ----------------------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">  882</span><span class="comment"># Brazil (southern) tornado configuration — SH severe-weather calendar</span></div>
-<div class="line"><span class="lineno">  883</span><span class="comment"># ----------------------------------------------------------------------</span></div>
-<div class="line"><span class="lineno">  884</span><span class="comment"># Southern Brazil (Rio Grande do Sul, Santa Catarina, Paraná) is a genuine</span></div>
-<div class="line"><span class="lineno">  885</span><span class="comment"># tornado hot-spot: the South American Low-Level Jet feeds warm moist Amazonian</span></div>
-<div class="line"><span class="lineno">  886</span><span class="comment"># air into cold fronts sweeping up from the south, spiking shear + instability</span></div>
-<div class="line"><span class="lineno">  887</span><span class="comment"># in the SH spring–summer.  The *season* is the physically-honest prior — it</span></div>
-<div class="line"><span class="lineno">  888</span><span class="comment"># sets the IKF transition matrix, not a hand-tuned threshold.</span></div>
+<div class="line"><span class="lineno">  882</span><span class="comment"># Southern Brazil (Rio Grande do Sul, Santa Catarina, Paraná) is a genuine</span></div>
+<div class="line"><span class="lineno">  883</span><span class="comment"># tornado hot-spot: the South American Low-Level Jet feeds warm moist Amazonian</span></div>
+<div class="line"><span class="lineno">  884</span><span class="comment"># air into cold fronts sweeping up from the south, spiking shear + instability</span></div>
+<div class="line"><span class="lineno">  885</span><span class="comment"># in the SH spring–summer.  The *season* is the physically-honest prior — it</span></div>
+<div class="line"><span class="lineno">  886</span><span class="comment"># sets the transition matrix, not a hand-tuned threshold.</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1138,40 +1138,40 @@ Unlike :func:`synthetic_track` (which prescribes a turn), motion here is
 predict the recurvature, and a learned intensity model has a real
 SST/shear signal to capture.  Returns ``(truth (T,5), fixes (T,3))``.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00633">633</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  636</span>                            dt_hours=6.0, I0=35.0, seed=0):</div>
-<div class="line"><span class="lineno">  637</span>    <span class="stringliteral">&quot;&quot;&quot;Truth track advected by a **steering field** (recurvature emerges) with</span></div>
-<div class="line"><span class="lineno">  638</span><span class="stringliteral">    environment-driven intensity, plus noisy fixes.</span></div>
-<div class="line"><span class="lineno">  639</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  640</span><span class="stringliteral">    Unlike :func:`synthetic_track` (which prescribes a turn), motion here is</span></div>
-<div class="line"><span class="lineno">  641</span><span class="stringliteral">    ``steering + beta + eddy`` and intensity follows</span></div>
-<div class="line"><span class="lineno">  642</span><span class="stringliteral">    :func:`_true_intensity_tendency` — so a steering-coupled physics tracker can</span></div>
-<div class="line"><span class="lineno">  643</span><span class="stringliteral">    predict the recurvature, and a learned intensity model has a real</span></div>
-<div class="line"><span class="lineno">  644</span><span class="stringliteral">    SST/shear signal to capture.  Returns ``(truth (T,5), fixes (T,3))``.</span></div>
-<div class="line"><span class="lineno">  645</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  646</span>    rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  647</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
-<div class="line"><span class="lineno">  648</span>    beta = 5.0</div>
-<div class="line"><span class="lineno">  649</span>    be, bn = -beta * np.cos(np.deg2rad(20)), pole * beta * np.sin(np.deg2rad(20))</div>
-<div class="line"><span class="lineno">  650</span>    lon, lat, I = lon0, lat0, I0</div>
-<div class="line"><span class="lineno">  651</span>    truth, fixes = [], []</div>
-<div class="line"><span class="lineno">  652</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
-<div class="line"><span class="lineno">  653</span>        se, sn = steering(lon, lat, hemisphere=hemisphere) <span class="keywordflow">if</span> steering.__name__ == <span class="stringliteral">&quot;analytic_steering&quot;</span> <span class="keywordflow">else</span> steering(lon, lat)</div>
-<div class="line"><span class="lineno">  654</span>        ve, vn = se, sn</div>
-<div class="line"><span class="lineno">  655</span>        truth.append([lon, lat, ve, vn, I])</div>
-<div class="line"><span class="lineno">  656</span>        fixes.append([lon + rng.normal(0, fix_noise), lat + rng.normal(0, fix_noise),</div>
-<div class="line"><span class="lineno">  657</span>                      I + rng.normal(0, intensity_noise)])</div>
-<div class="line"><span class="lineno">  658</span>        vte = se + be + rng.normal(0, eddy)</div>
-<div class="line"><span class="lineno">  659</span>        vtn = sn + bn + rng.normal(0, eddy)</div>
-<div class="line"><span class="lineno">  660</span>        lat += vtn * dt_hours / KM_PER_DEG_LAT</div>
-<div class="line"><span class="lineno">  661</span>        lon += vte * dt_hours / (KM_PER_DEG_LON * np.cos(np.deg2rad(lat)))</div>
-<div class="line"><span class="lineno">  662</span>        I = max(15.0, I + _true_intensity_tendency(lon, lat, I, env=intensity_env) * dt_hours)</div>
-<div class="line"><span class="lineno">  663</span>    <span class="keywordflow">return</span> np.array(truth), np.array(fixes)</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00632">632</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  635</span>                            dt_hours=6.0, I0=35.0, seed=0):</div>
+<div class="line"><span class="lineno">  636</span>    <span class="stringliteral">&quot;&quot;&quot;Truth track advected by a **steering field** (recurvature emerges) with</span></div>
+<div class="line"><span class="lineno">  637</span><span class="stringliteral">    environment-driven intensity, plus noisy fixes.</span></div>
+<div class="line"><span class="lineno">  638</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  639</span><span class="stringliteral">    Unlike :func:`synthetic_track` (which prescribes a turn), motion here is</span></div>
+<div class="line"><span class="lineno">  640</span><span class="stringliteral">    ``steering + beta + eddy`` and intensity follows</span></div>
+<div class="line"><span class="lineno">  641</span><span class="stringliteral">    :func:`_true_intensity_tendency` — so a steering-coupled physics tracker can</span></div>
+<div class="line"><span class="lineno">  642</span><span class="stringliteral">    predict the recurvature, and a learned intensity model has a real</span></div>
+<div class="line"><span class="lineno">  643</span><span class="stringliteral">    SST/shear signal to capture.  Returns ``(truth (T,5), fixes (T,3))``.</span></div>
+<div class="line"><span class="lineno">  644</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  645</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  646</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
+<div class="line"><span class="lineno">  647</span>    beta = 5.0</div>
+<div class="line"><span class="lineno">  648</span>    be, bn = -beta * np.cos(np.deg2rad(20)), pole * beta * np.sin(np.deg2rad(20))</div>
+<div class="line"><span class="lineno">  649</span>    lon, lat, I = lon0, lat0, I0</div>
+<div class="line"><span class="lineno">  650</span>    truth, fixes = [], []</div>
+<div class="line"><span class="lineno">  651</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
+<div class="line"><span class="lineno">  652</span>        se, sn = steering(lon, lat, hemisphere=hemisphere) <span class="keywordflow">if</span> steering.__name__ == <span class="stringliteral">&quot;analytic_steering&quot;</span> <span class="keywordflow">else</span> steering(lon, lat)</div>
+<div class="line"><span class="lineno">  653</span>        ve, vn = se, sn</div>
+<div class="line"><span class="lineno">  654</span>        truth.append([lon, lat, ve, vn, I])</div>
+<div class="line"><span class="lineno">  655</span>        fixes.append([lon + rng.normal(0, fix_noise), lat + rng.normal(0, fix_noise),</div>
+<div class="line"><span class="lineno">  656</span>                      I + rng.normal(0, intensity_noise)])</div>
+<div class="line"><span class="lineno">  657</span>        vte = se + be + rng.normal(0, eddy)</div>
+<div class="line"><span class="lineno">  658</span>        vtn = sn + bn + rng.normal(0, eddy)</div>
+<div class="line"><span class="lineno">  659</span>        lat += vtn * dt_hours / KM_PER_DEG_LAT</div>
+<div class="line"><span class="lineno">  660</span>        lon += vte * dt_hours / (KM_PER_DEG_LON * np.cos(np.deg2rad(lat)))</div>
+<div class="line"><span class="lineno">  661</span>        I = max(15.0, I + _true_intensity_tendency(lon, lat, I, env=intensity_env) * dt_hours)</div>
+<div class="line"><span class="lineno">  662</span>    <span class="keywordflow">return</span> np.array(truth), np.array(fixes)</div>
+<div class="line"><span class="lineno">  663</span> </div>
 <div class="line"><span class="lineno">  664</span> </div>
-<div class="line"><span class="lineno">  665</span> </div>
-<div class="line"><span class="lineno">  666</span><span class="comment"># ======================================================================</span></div>
-<div class="line"><span class="lineno">  667</span><span class="comment"># Japan / Northwest-Pacific configuration + probabilistic landfall</span></div>
-<div class="line"><span class="lineno">  668</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  665</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  666</span><span class="comment"># Japan / Northwest-Pacific configuration + probabilistic landfall</span></div>
+<div class="line"><span class="lineno">  667</span><span class="comment"># ======================================================================</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1252,47 +1252,47 @@ SST/shear signal to capture.  Returns ``(truth (T,5), fixes (T,3))``.
 a rise-and-decay intensity — plus noisy centre/intensity fixes.
 
 Returns ``(truth (T, 5), fixes (T, 3))`` — feed ``truth`` as the OSSE truth
-and ``fixes`` as observations to an IKF tracker.  Exercises the regime
+and ``fixes`` as observations to a routed model.  Exercises the regime
 switch at ``recurve_at``.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00462">462</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  464</span>                    intensity_noise=10.0, peak_intensity=120.0, seed=0):</div>
-<div class="line"><span class="lineno">  465</span>    <span class="stringliteral">&quot;&quot;&quot;Generate a synthetic best-track: straight WNW run, then recurvature, with</span></div>
-<div class="line"><span class="lineno">  466</span><span class="stringliteral">    a rise-and-decay intensity — plus noisy centre/intensity fixes.</span></div>
-<div class="line"><span class="lineno">  467</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  468</span><span class="stringliteral">    Returns ``(truth (T, 5), fixes (T, 3))`` — feed ``truth`` as the OSSE truth</span></div>
-<div class="line"><span class="lineno">  469</span><span class="stringliteral">    and ``fixes`` as observations to an IKF tracker.  Exercises the regime</span></div>
-<div class="line"><span class="lineno">  470</span><span class="stringliteral">    switch at ``recurve_at``.</span></div>
-<div class="line"><span class="lineno">  471</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  472</span>    rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  473</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
-<div class="line"><span class="lineno">  474</span>    lon, lat = 138.0, 12.0</div>
-<div class="line"><span class="lineno">  475</span>    ang = np.deg2rad(20.0)</div>
-<div class="line"><span class="lineno">  476</span>    ve, vn = -speed * np.cos(ang), pole * speed * np.sin(ang)</div>
-<div class="line"><span class="lineno">  477</span>    w = pole * -abs(omega_recurve)</div>
-<div class="line"><span class="lineno">  478</span>    truth, fixes = [], []</div>
-<div class="line"><span class="lineno">  479</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
-<div class="line"><span class="lineno">  480</span>        frac = k / max(1, n_steps - 1)</div>
-<div class="line"><span class="lineno">  481</span>        I = peak_intensity * np.sin(np.pi * min(frac / 0.7, 1.0)) + 40.0</div>
-<div class="line"><span class="lineno">  482</span>        truth.append([lon, lat, ve, vn, I])</div>
-<div class="line"><span class="lineno">  483</span>        fixes.append([lon + rng.normal(0, fix_noise),</div>
-<div class="line"><span class="lineno">  484</span>                      lat + rng.normal(0, fix_noise),</div>
-<div class="line"><span class="lineno">  485</span>                      I + rng.normal(0, intensity_noise)])</div>
-<div class="line"><span class="lineno">  486</span>        turn = w <span class="keywordflow">if</span> k &gt;= recurve_at <span class="keywordflow">else</span> 0.0</div>
-<div class="line"><span class="lineno">  487</span>        <span class="keywordflow">if</span> abs(turn) &lt; 1e-9:</div>
-<div class="line"><span class="lineno">  488</span>            de, dn = ve * dt_hours, vn * dt_hours</div>
-<div class="line"><span class="lineno">  489</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  490</span>            s, c = np.sin(turn*dt_hours), np.cos(turn*dt_hours)</div>
-<div class="line"><span class="lineno">  491</span>            de = (ve*s - vn*(1-c))/turn; dn = (ve*(1-c) + vn*s)/turn</div>
-<div class="line"><span class="lineno">  492</span>            ve, vn = ve*c - vn*s, ve*s + vn*c</div>
-<div class="line"><span class="lineno">  493</span>        lat += dn / KM_PER_DEG_LAT</div>
-<div class="line"><span class="lineno">  494</span>        lon += de / (KM_PER_DEG_LON * np.cos(np.deg2rad(lat)))</div>
-<div class="line"><span class="lineno">  495</span>    <span class="keywordflow">return</span> np.array(truth), np.array(fixes)</div>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00461">461</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  463</span>                    intensity_noise=10.0, peak_intensity=120.0, seed=0):</div>
+<div class="line"><span class="lineno">  464</span>    <span class="stringliteral">&quot;&quot;&quot;Generate a synthetic best-track: straight WNW run, then recurvature, with</span></div>
+<div class="line"><span class="lineno">  465</span><span class="stringliteral">    a rise-and-decay intensity — plus noisy centre/intensity fixes.</span></div>
+<div class="line"><span class="lineno">  466</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  467</span><span class="stringliteral">    Returns ``(truth (T, 5), fixes (T, 3))`` — feed ``truth`` as the OSSE truth</span></div>
+<div class="line"><span class="lineno">  468</span><span class="stringliteral">    and ``fixes`` as observations to a routed model.  Exercises the regime</span></div>
+<div class="line"><span class="lineno">  469</span><span class="stringliteral">    switch at ``recurve_at``.</span></div>
+<div class="line"><span class="lineno">  470</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  471</span>    rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  472</span>    pole = 1.0 <span class="keywordflow">if</span> str(hemisphere).upper() == <span class="stringliteral">&quot;N&quot;</span> <span class="keywordflow">else</span> -1.0</div>
+<div class="line"><span class="lineno">  473</span>    lon, lat = 138.0, 12.0</div>
+<div class="line"><span class="lineno">  474</span>    ang = np.deg2rad(20.0)</div>
+<div class="line"><span class="lineno">  475</span>    ve, vn = -speed * np.cos(ang), pole * speed * np.sin(ang)</div>
+<div class="line"><span class="lineno">  476</span>    w = pole * -abs(omega_recurve)</div>
+<div class="line"><span class="lineno">  477</span>    truth, fixes = [], []</div>
+<div class="line"><span class="lineno">  478</span>    <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(n_steps):</div>
+<div class="line"><span class="lineno">  479</span>        frac = k / max(1, n_steps - 1)</div>
+<div class="line"><span class="lineno">  480</span>        I = peak_intensity * np.sin(np.pi * min(frac / 0.7, 1.0)) + 40.0</div>
+<div class="line"><span class="lineno">  481</span>        truth.append([lon, lat, ve, vn, I])</div>
+<div class="line"><span class="lineno">  482</span>        fixes.append([lon + rng.normal(0, fix_noise),</div>
+<div class="line"><span class="lineno">  483</span>                      lat + rng.normal(0, fix_noise),</div>
+<div class="line"><span class="lineno">  484</span>                      I + rng.normal(0, intensity_noise)])</div>
+<div class="line"><span class="lineno">  485</span>        turn = w <span class="keywordflow">if</span> k &gt;= recurve_at <span class="keywordflow">else</span> 0.0</div>
+<div class="line"><span class="lineno">  486</span>        <span class="keywordflow">if</span> abs(turn) &lt; 1e-9:</div>
+<div class="line"><span class="lineno">  487</span>            de, dn = ve * dt_hours, vn * dt_hours</div>
+<div class="line"><span class="lineno">  488</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  489</span>            s, c = np.sin(turn*dt_hours), np.cos(turn*dt_hours)</div>
+<div class="line"><span class="lineno">  490</span>            de = (ve*s - vn*(1-c))/turn; dn = (ve*(1-c) + vn*s)/turn</div>
+<div class="line"><span class="lineno">  491</span>            ve, vn = ve*c - vn*s, ve*s + vn*c</div>
+<div class="line"><span class="lineno">  492</span>        lat += dn / KM_PER_DEG_LAT</div>
+<div class="line"><span class="lineno">  493</span>        lon += de / (KM_PER_DEG_LON * np.cos(np.deg2rad(lat)))</div>
+<div class="line"><span class="lineno">  494</span>    <span class="keywordflow">return</span> np.array(truth), np.array(fixes)</div>
+<div class="line"><span class="lineno">  495</span> </div>
 <div class="line"><span class="lineno">  496</span> </div>
-<div class="line"><span class="lineno">  497</span> </div>
-<div class="line"><span class="lineno">  498</span><span class="comment"># ======================================================================</span></div>
-<div class="line"><span class="lineno">  499</span><span class="comment"># Realistic physics coupling: environmental steering + statistical intensity</span></div>
-<div class="line"><span class="lineno">  500</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  497</span><span class="comment"># ======================================================================</span></div>
+<div class="line"><span class="lineno">  498</span><span class="comment"># Realistic physics coupling: environmental steering + statistical intensity</span></div>
+<div class="line"><span class="lineno">  499</span><span class="comment"># ======================================================================</span></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1320,7 +1320,7 @@ switch at ``recurve_at``.
 <div class="line"><span class="lineno">    2</span>                  3: <span class="stringliteral">&quot;shoulder&quot;</span>, 8: <span class="stringliteral">&quot;shoulder&quot;</span>,</div>
 <div class="line"><span class="lineno">    3</span>                  4: <span class="stringliteral">&quot;off&quot;</span>, 5: <span class="stringliteral">&quot;off&quot;</span>, 6: <span class="stringliteral">&quot;off&quot;</span>, 7: <span class="stringliteral">&quot;off&quot;</span>}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00889">889</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00887">887</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -1344,7 +1344,7 @@ switch at ``recurve_at``.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00670">670</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00669">669</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -1373,7 +1373,7 @@ switch at ``recurve_at``.
 <div class="line"><span class="lineno">    4</span>    <span class="stringliteral">&quot;off&quot;</span>:    (0.985, 0.30),  <span class="comment"># rare, short-lived excursions</span></div>
 <div class="line"><span class="lineno">    5</span>}</div>
 </div><!-- fragment -->
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00766">766</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00765">765</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>
@@ -1389,7 +1389,7 @@ switch at ``recurve_at``.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00669">669</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="storms_8py_source.html#l00668">668</a> of file <a class="el" href="storms_8py_source.html">storms.py</a>.</p>
 
 </div>
 </div>

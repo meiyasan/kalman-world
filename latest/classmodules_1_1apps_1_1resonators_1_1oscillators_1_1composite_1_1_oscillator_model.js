@@ -1,6 +1,6 @@
 var classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model =
 [
-    [ "__init__", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a1f71c63307295d9f6f9e3dfeaf27542d", null ],
+    [ "__init__", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa1dcabe65fc5fca9fcc5babff56dadd0", null ],
     [ "_band_limit_phasor", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a5c57aad7ad41a4264e411b9377896658", null ],
     [ "_demod_preprocess", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aeecb405e44783370b59e75a084ba0606", null ],
     [ "_reconstruct_postprocess", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#aa83e5367a38f5f484e96b66fa13ec0a0", null ],
@@ -15,8 +15,8 @@ var classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillato
     [ "_wc", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#af09fb1961be18783606e7cc93163aca8", null ],
     [ "dfc", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ac333ea0d72c7d3f593b82de774ef5e16", null ],
     [ "fc", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a3ab83570d5f531b4d57931001aff74d7", null ],
+    [ "finish_output", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ad37d8c60f720a72ff08eabec7707aeef", null ],
     [ "frequencies", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#afd68537bd8663783582d837418cbfed2", null ],
     [ "fs", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#ab4cd752986a57689a245a6915234aa33", null ],
-    [ "postprocess", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a6aebe82bc5ce19a016aef47d5f962861", null ],
-    [ "preprocess", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a50cfe08d4122bbc43dcd26ac93e1f7cc", null ]
+    [ "prepare_measurements", "classmodules_1_1apps_1_1resonators_1_1oscillators_1_1composite_1_1_oscillator_model.html#a862e83919cdeea58e4ed96df1ccab457", null ]
 ];

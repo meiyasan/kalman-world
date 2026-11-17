@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -184,12 +184,12 @@ Optional extras</h2>
 <td class="markdownTableBodyNone"><code>all</code>   </td><td class="markdownTableBodyNone"><code>pip install "kalman[all]"</code>   </td><td class="markdownTableBodyNone">all of the above   </td></tr>
 </table>
 <p>Extras not installed are never fatal. <code>python -m kalman.mcp</code> without the SDK prints an install hint and exits 0 rather than crashing.</p>
-<p>Deeper optional dependencies are not packaged as extras and are installed on demand: <code>torch</code> (GPU solver backends, neural controllers/routers), <code>cdsapi</code>/<code>xarray</code>/<code>h5py</code> (ERA5 and turbulence providers), <code>motmetrics</code> (MOT tracking evaluation).</p>
-<h2><a class="anchor" id="conda"></a>
-Conda</h2>
+<p><code>requirements.txt</code> installs everything the package, its tests and the notebooks use, including the deeper optional parts: <code>torch</code> (GPU solver backends, neural controllers and routers), <code>onnx</code>/<code>onnxscript</code>/<code>onnxruntime</code> (router export), <code>cdsapi</code>/<code>xarray</code>/<code>h5py</code> (ERA5 and turbulence providers), <code>gwpy</code> (notebook 05), <code>opencv</code>, <code>kagglehub</code> and <code>motmetrics</code> (notebook 10).</p>
+<h2><a class="anchor" id="conda-recommended-with-the-c-libraries"></a>
+Conda (recommended with the C++ libraries)</h2>
 <div class="fragment"><div class="line">$ make env          # builds from environment.yml</div>
-<div class="line">$ make conda</div>
-</div><!-- fragment --><p><code>environment.x86_64.yml</code> is the pinned x86 variant used by CI.</p>
+<div class="line">$ conda activate kalman &amp;&amp; pip install --no-deps -e .</div>
+</div><!-- fragment --><p><code>environment.yml</code> takes everything from conda-forge, Python 3.12: the Python packages and the libraries the C++ side links to (libtorch, ONNX Runtime, nlohmann_json, cpp-httplib, OpenSSL, SQLite), so that both share one compiler, one libstdc++, one BLAS and one libtorch. The only pip package is <code>motmetrics</code>, whose conda-forge build is too old. PyTorch, libtorch and ONNX Runtime are the CPU builds; for a GPU, the file says which four lines to change. In this environment all four C++ libraries build, libKalmanNet included. <code>environment.x86_64.yml</code> adds the hep-forge channel on x86_64.</p>
 <hr  />
 <h1><a class="anchor" id="native-acceleration-optional"></a>
 Native acceleration (optional)</h1>
@@ -202,7 +202,7 @@ Verify the install</h1>
 <div class="fragment"><div class="line">$ make tests                                   # full suite + coverage + native bench</div>
 <div class="line">$ python -m pytest tests/test_structure.py -q  # architecture invariants only</div>
 <div class="line">$ make linter                                  # ruff, correctness-focused</div>
-</div><!-- fragment --><p>The expected baseline is <b>453 passed, 2 skipped</b> — the skips are optional-dependency gates. A red suite is never "expected"; see <a class="el" href="md_docs_214___troubleshooting.html">Troubleshooting</a>.</p>
+</div><!-- fragment --><p>The expected baseline is <b>953 passed, 28 skipped</b> — the skips are optional-dependency gates. A red suite is never "expected"; see <a class="el" href="md_docs_214___troubleshooting.html">Troubleshooting</a>.</p>
 <p>A five-second smoke check that the package resolves:</p>
 <div class="fragment"><div class="line">$ python -c &quot;from kalman.api import catalog; print(len(catalog()[&#39;models&#39;]), &#39;models&#39;)&quot;</div>
 <div class="line">46 models</div>

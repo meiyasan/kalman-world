@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -201,7 +201,7 @@ bias and clock drift, all in metres / m·s⁻¹). The measurement is the per-sat
 pseudorange ``ρ_i = |s_i(t) − p| + b`` (nonlinear → analytic line-of-sight Jacobian). The
 relativistic terms are baked into the simulated pseudoranges; toggling
 ``model.apply_relativistic`` decides whether the receiver removes them in
-:meth:`GPSModel.preprocess`, giving a clean **before/after** comparison.
+:meth:`GPSModel.prepare_measurements`, giving a clean **before/after** comparison.
 
 The famous secular rate is *common-mode* and is absorbed by the estimated clock drift
 ``ḃ`` (which is exactly why a 4th satellite is needed — to solve for the clock); the part

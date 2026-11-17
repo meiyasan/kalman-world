@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -199,16 +199,22 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a3bfe4d602f11eea0f0339767738fb7d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predict the measurement and report the observation matrix.  <br /></td></tr>
 <tr class="separator:a3bfe4d602f11eea0f0339767738fb7d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a06db3e0df8074d18bf426beeefececfb" id="r_a06db3e0df8074d18bf426beeefececfb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb">Predict</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *u, double t, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xk, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pk, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F) const override</td></tr>
-<tr class="memdesc:a06db3e0df8074d18bf426beeefececfb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077" title="Propagate every member; returns the new mean.">Forecast()</a>: every member through <code>f</code> plus a <code>Q</code> draw; returns the moments.  <br /></td></tr>
+<tr class="memdesc:a06db3e0df8074d18bf426beeefececfb"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077" title="Forecast: advance every member one step; returns the new mean.">Forecast()</a>: every member through <code>f</code> plus a <code>Q</code> draw; returns the moments.  <br /></td></tr>
 <tr class="separator:a06db3e0df8074d18bf426beeefececfb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae864eeb9b4cebb9d6db8601a1a91938e" id="r_ae864eeb9b4cebb9d6db8601a1a91938e"><td class="memItemLeft" align="right" valign="top">std::size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e">Update</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;P, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, double t, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xOut, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;POut) const override</td></tr>
 <tr class="memdesc:ae864eeb9b4cebb9d6db8601a1a91938e"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1" title="Perturbed-observation analysis; NaN channels skipped; returns the mean.">Analyze()</a>: the perturbed-observation update; returns the moments.  <br /></td></tr>
 <tr class="separator:ae864eeb9b4cebb9d6db8601a1a91938e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2494ec24c21ebf25945f73748c19f51f" id="r_a2494ec24c21ebf25945f73748c19f51f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a2494ec24c21ebf25945f73748c19f51f">Smooth</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPost, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPost, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xPriorNext, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PPriorNext, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmoothNext, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmoothNext, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;F, <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;xSmooth, <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;PSmooth) const override</td></tr>
 <tr class="separator:a2494ec24c21ebf25945f73748c19f51f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d9936b946b7eab1de86763f87fa320f" id="r_a0d9936b946b7eab1de86763f87fa320f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a0d9936b946b7eab1de86763f87fa320f">InitialEnsemble</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model) const</td></tr>
+<tr class="memdesc:a0d9936b946b7eab1de86763f87fa320f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The members a run starts from when none were handed in.  <br /></td></tr>
+<tr class="separator:a0d9936b946b7eab1de86763f87fa320f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a940348d3da4d80ab9e325d2ed21a8077" id="r_a940348d3da4d80ab9e325d2ed21a8077"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Forecast</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> *u, double t) const</td></tr>
-<tr class="memdesc:a940348d3da4d80ab9e325d2ed21a8077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Propagate every member; returns the new mean.  <br /></td></tr>
+<tr class="memdesc:a940348d3da4d80ab9e325d2ed21a8077"><td class="mdescLeft">&#160;</td><td class="mdescRight">Forecast: advance every member one step; returns the new mean.  <br /></td></tr>
 <tr class="separator:a940348d3da4d80ab9e325d2ed21a8077"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7db09d38c0d537e7da7a64076bffb700" id="r_a7db09d38c0d537e7da7a64076bffb700"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a7db09d38c0d537e7da7a64076bffb700">Project</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, double t, std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;Y) const</td></tr>
+<tr class="memdesc:a7db09d38c0d537e7da7a64076bffb700"><td class="mdescLeft">&#160;</td><td class="mdescRight">Project the members into measurement space: <code>Y[s] = h(member s, t)</code>.  <br /></td></tr>
+<tr class="separator:a7db09d38c0d537e7da7a64076bffb700"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab0943c875d1e36b9e7e621c8189675f1" id="r_ab0943c875d1e36b9e7e621c8189675f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Analyze</a> (const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;model, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;z, double t) const</td></tr>
 <tr class="memdesc:ab0943c875d1e36b9e7e621c8189675f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Perturbed-observation analysis; NaN channels skipped; returns the mean.  <br /></td></tr>
 <tr class="separator:ab0943c875d1e36b9e7e621c8189675f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -253,11 +259,11 @@ Static Public Member Functions</h2></td></tr>
 </div><!-- fragment --><p>Multiplicative <b>inflation</b> scales the anomalies before each analysis to make up for sampling error; optional <b>localization</b> tapers (<code>rho_xy</code>, <code>rho_yy</code>, e.g. Gaspari–Cohn of the state/observation distances) cut spurious long-range correlations from a small ensemble. <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a06db3e0df8074d18bf426beeefececfb" title="Forecast(): every member through f plus a Q draw; returns the moments.">Predict()</a> and <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ae864eeb9b4cebb9d6db8601a1a91938e" title="Analyze(): the perturbed-observation update; returns the moments.">Update()</a> hand back the ensemble mean and sample covariance so the record and the diagnostics are unchanged; <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a6d16a79234fcc348b1d96e59a0125a3a">Members()</a> exposes the raw ensemble for workflows that never want the dense <code>n x n</code>.</p>
 <p>Stateful, like <a class="el" href="class_kalman_1_1_engines_1_1_particle.html" title="Sequential importance resampling (the bootstrap particle filter).">Engines::Particle</a>: it holds the ensemble across a forward pass and <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> calls <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74" title="(Re)seed the members: the ensemble handed in, else a draw from the model&#39;s x0 / P0.">Reset()</a> at the start of a run. No RTS smoother.</p>
 <p>The random stream is engine-owned and seeded in the constructor — the RNG discipline that lets several filter variants run side by side without one changing another's draws. A caller that draws elsewhere (Python, whose numpy generator makes a seeded run repeatable) hands the standard normals in with <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a916f154ac780663f3eab1f69368afc80" title="Standard normal draws to use in place of the engine&#39;s own stream.">SetNormals()</a>, and the engine reads them in place of its own stream.</p>
-<p>A model whose state is a field implements <a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html" title="What a model offers the ensemble engine beyond f and h.">Engines::EnsembleModel</a> beside <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>: the forecast and the observation of the whole ensemble at once, its localization tapers, and its process noise as a diagonal, so that nothing of size <code>n x n</code> is formed during a cycle.</p>
+<p>A model whose state is a field implements <a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html" title="What a field model offers the ensemble engine beyond the model contract.">Engines::EnsembleModel</a> beside <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a>: the forecast and the observation of the whole ensemble at once, its localization tapers, and its process noise as a diagonal, so that nothing of size <code>n x n</code> is formed during a cycle.</p>
 <p>Mirrors <code><a class="el" href="ensemble_8py.html">modules/framework/engines/ensemble.py</a></code>.</p>
 <hr  />
  
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00096">96</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00095">95</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="afd2cf95925c5b3ea93d53faa1782677d" name="afd2cf95925c5b3ea93d53faa1782677d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afd2cf95925c5b3ea93d53faa1782677d">&#9670;&#160;</a></span>Ensemble()</h2>
@@ -307,12 +313,12 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00067">67</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   68</span>        : fNMembers(nMembers), fInflation(inflation), fRandom(seed)</div>
-<div class="line"><span class="lineno">   69</span>    {</div>
-<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> (nMembers &lt; 2) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: at least two members.&quot;</span>);</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keywordflow">if</span> (!(inflation &gt; 0.)) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: inflation must be positive.&quot;</span>);</div>
-<div class="line"><span class="lineno">   72</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00054">54</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>        : fNMembers(nMembers), fInflation(inflation), fRandom(seed)</div>
+<div class="line"><span class="lineno">   56</span>    {</div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">if</span> (nMembers &lt; 2) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: at least two members.&quot;</span>);</div>
+<div class="line"><span class="lineno">   58</span>        <span class="keywordflow">if</span> (!(inflation &gt; 0.)) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: inflation must be positive.&quot;</span>);</div>
+<div class="line"><span class="lineno">   59</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -409,51 +415,54 @@ Static Public Member Functions</h2></td></tr>
 <p>The analysis arithmetic, <code>X + K (z + eps - Y)</code>. </p>
 <p><code>X</code> (n x N) the members as columns, <code>Y</code> (p x N) their measurements, <code>R</code> (p x p), <code>z</code> (p), <code>eps</code> (p x N) the perturbations, and the tapers already cut to the p channels (null for none). The one implementation behind <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1" title="Perturbed-observation analysis; NaN channels skipped; returns the mean.">Analyze()</a> and the <code>enkf_analysis</code> kernel that the Python engine calls. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00265">265</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  267</span>    {</div>
-<div class="line"><span class="lineno">  268</span>        <span class="keyword">const</span> std::size_t n = X.Rows(), N = X.Cols(), p = Y.Rows();</div>
-<div class="line"><span class="lineno">  269</span>        <span class="keywordflow">if</span> (N &lt; 2 || Y.Cols() != N || eps.Rows() != p || eps.Cols() != N || R.Rows() != p || R.Cols() != p || z.Size() != p)</div>
-<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble::Analysis: inconsistent shapes.&quot;</span>);</div>
-<div class="line"><span class="lineno">  271</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> norm = 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(N - 1);</div>
-<div class="line"><span class="lineno">  272</span> </div>
-<div class="line"><span class="lineno">  273</span>        <span class="comment">// Anomalies: X&#39; (n x N) and Y&#39;^T (N x p).</span></div>
-<div class="line"><span class="lineno">  274</span>        Matrix Xa(n, N), YaT(N, p);</div>
-<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
-<div class="line"><span class="lineno">  276</span>        {</div>
-<div class="line"><span class="lineno">  277</span>            <span class="keywordtype">double</span> mean = 0.;</div>
-<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s) mean += X(i, s);</div>
-<div class="line"><span class="lineno">  279</span>            mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(N);</div>
-<div class="line"><span class="lineno">  280</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s) Xa(i, s) = X(i, s) - mean;</div>
-<div class="line"><span class="lineno">  281</span>        }</div>
-<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
-<div class="line"><span class="lineno">  283</span>        {</div>
-<div class="line"><span class="lineno">  284</span>            <span class="keywordtype">double</span> mean = 0.;</div>
-<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s) mean += Y(j, s);</div>
-<div class="line"><span class="lineno">  286</span>            mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(N);</div>
-<div class="line"><span class="lineno">  287</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s) YaT(s, j) = Y(j, s) - mean;</div>
-<div class="line"><span class="lineno">  288</span>        }</div>
-<div class="line"><span class="lineno">  289</span> </div>
-<div class="line"><span class="lineno">  290</span>        Matrix PHt = Xa * YaT;                        <span class="comment">// (n, p)</span></div>
-<div class="line"><span class="lineno">  291</span>        PHt *= norm;</div>
-<div class="line"><span class="lineno">  292</span>        Matrix S = YaT.Transpose() * YaT;             <span class="comment">// (p, p)</span></div>
-<div class="line"><span class="lineno">  293</span>        S *= norm;</div>
-<div class="line"><span class="lineno">  294</span>        <span class="keywordflow">if</span> (rhoXY)</div>
-<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
-<div class="line"><span class="lineno">  296</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) PHt(i, j) *= (*rhoXY)(i, j);</div>
-<div class="line"><span class="lineno">  297</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; p; ++i)</div>
-<div class="line"><span class="lineno">  298</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
-<div class="line"><span class="lineno">  299</span>                S(i, j) = S(i, j) * (rhoYY ? (*rhoYY)(i, j) : 1.) + R(i, j);</div>
-<div class="line"><span class="lineno">  300</span> </div>
-<div class="line"><span class="lineno">  301</span>        <span class="keyword">const</span> Matrix K = PHt * Utils::Inverse(S);    <span class="comment">// (n, p)</span></div>
-<div class="line"><span class="lineno">  302</span> </div>
-<div class="line"><span class="lineno">  303</span>        <span class="comment">// D = z + eps - Y (p x N), then X + K D.</span></div>
-<div class="line"><span class="lineno">  304</span>        Matrix D(p, N);</div>
-<div class="line"><span class="lineno">  305</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
-<div class="line"><span class="lineno">  306</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s) D(j, s) = z(j) + eps(j, s) - Y(j, s);</div>
-<div class="line"><span class="lineno">  307</span>        Matrix out = K * D;</div>
-<div class="line"><span class="lineno">  308</span>        out += X;</div>
-<div class="line"><span class="lineno">  309</span>        <span class="keywordflow">return</span> out;</div>
-<div class="line"><span class="lineno">  310</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00251">251</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  253</span>    {</div>
+<div class="line"><span class="lineno">  254</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>.Rows(), <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>.Cols(), p = Y.Rows();</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">if</span> (N &lt; 2 || Y.Cols() != N || eps.Rows() != p || eps.Cols() != N || R.Rows() != p || R.Cols() != p || z.Size() != p)</div>
+<div class="line"><span class="lineno">  256</span>            <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble::Analysis: inconsistent shapes.&quot;</span>);</div>
+<div class="line"><span class="lineno">  257</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> norm = 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> - 1);</div>
+<div class="line"><span class="lineno">  258</span> </div>
+<div class="line"><span class="lineno">  259</span>        <span class="comment">// Anomalies: X&#39; (n x N) and Y&#39;^T (N x p).</span></div>
+<div class="line"><span class="lineno">  260</span>        Matrix Xa(n, N), YaT(N, p);</div>
+<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  262</span>        {</div>
+<div class="line"><span class="lineno">  263</span>            <span class="keywordtype">double</span> mean = 0.;</div>
+<div class="line"><span class="lineno">  264</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s) mean += <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>(i, s);</div>
+<div class="line"><span class="lineno">  265</span>            mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>);</div>
+<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s) Xa(i, s) = <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>(i, s) - mean;</div>
+<div class="line"><span class="lineno">  267</span>        }</div>
+<div class="line"><span class="lineno">  268</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
+<div class="line"><span class="lineno">  269</span>        {</div>
+<div class="line"><span class="lineno">  270</span>            <span class="keywordtype">double</span> mean = 0.;</div>
+<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s) mean += Y(j, s);</div>
+<div class="line"><span class="lineno">  272</span>            mean /= <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>);</div>
+<div class="line"><span class="lineno">  273</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s) YaT(s, j) = Y(j, s) - mean;</div>
+<div class="line"><span class="lineno">  274</span>        }</div>
+<div class="line"><span class="lineno">  275</span> </div>
+<div class="line"><span class="lineno">  276</span>        Matrix PHt = Xa * YaT;                        <span class="comment">// (n, p)</span></div>
+<div class="line"><span class="lineno">  277</span>        PHt *= norm;</div>
+<div class="line"><span class="lineno">  278</span>        Matrix S = YaT.Transpose() * YaT;             <span class="comment">// (p, p)</span></div>
+<div class="line"><span class="lineno">  279</span>        S *= norm;</div>
+<div class="line"><span class="lineno">  280</span>        <span class="keywordflow">if</span> (rhoXY)</div>
+<div class="line"><span class="lineno">  281</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  282</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) PHt(i, j) *= (*rhoXY)(i, j);</div>
+<div class="line"><span class="lineno">  283</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; p; ++i)</div>
+<div class="line"><span class="lineno">  284</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
+<div class="line"><span class="lineno">  285</span>                S(i, j) = S(i, j) * (rhoYY ? (*rhoYY)(i, j) : 1.) + R(i, j);</div>
+<div class="line"><span class="lineno">  286</span> </div>
+<div class="line"><span class="lineno">  287</span>        <span class="keyword">const</span> Matrix K = PHt * Utils::Inverse(S);    <span class="comment">// (n, p)</span></div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>        <span class="comment">// D = z + eps - Y (p x N), then X + K D.</span></div>
+<div class="line"><span class="lineno">  290</span>        Matrix D(p, N);</div>
+<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j)</div>
+<div class="line"><span class="lineno">  292</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s) D(j, s) = z(j) + eps(j, s) - Y(j, s);</div>
+<div class="line"><span class="lineno">  293</span>        Matrix out = K * D;</div>
+<div class="line"><span class="lineno">  294</span>        out += <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>;</div>
+<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">return</span> out;</div>
+<div class="line"><span class="lineno">  296</span>    }</div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a8db6bc47bdd5d71f617d8c4ba59f4a1b"><div class="ttname"><a href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">operations.N</a></div><div class="ttdeci">int N</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00064">operations.py:64</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__sensors_html_a699a4c3d626574df29c0191f6619c42d"><div class="ttname"><a href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">tests.test_sensors.X</a></div><div class="ttdeci">X</div><div class="ttdef"><b>Definition</b> <a href="test__sensors_8py_source.html#l00024">test_sensors.py:24</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -491,87 +500,90 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Perturbed-observation analysis; NaN channels skipped; returns the mean. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00312">312</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  313</span>    {</div>
-<div class="line"><span class="lineno">  314</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keyword">const_cast&lt;</span><a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Ensemble</a> *<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Reset</a>(model);</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00298">298</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  299</span>    {</div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keyword">const_cast&lt;</span><a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Ensemble</a> *<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Reset</a>(model);</div>
+<div class="line"><span class="lineno">  301</span> </div>
+<div class="line"><span class="lineno">  302</span>        <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z);</div>
+<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">if</span> (keep.empty()) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  304</span> </div>
+<div class="line"><span class="lineno">  305</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState();</div>
+<div class="line"><span class="lineno">  306</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NMeasure();</div>
+<div class="line"><span class="lineno">  307</span>        <span class="keyword">const</span> std::size_t p = keep.size();</div>
+<div class="line"><span class="lineno">  308</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = fMembers.size();</div>
+<div class="line"><span class="lineno">  309</span> </div>
+<div class="line"><span class="lineno">  310</span>        <span class="comment">// Inflate the anomalies before the analysis.</span></div>
+<div class="line"><span class="lineno">  311</span>        <span class="keyword">const</span> Vector mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  312</span>        <span class="keywordflow">if</span> (fInflation != 1.)</div>
+<div class="line"><span class="lineno">  313</span>            <span class="keywordflow">for</span> (Vector &amp;x : fMembers)</div>
+<div class="line"><span class="lineno">  314</span>                for (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) = mean(i) + fInflation * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) - mean(i));</div>
 <div class="line"><span class="lineno">  315</span> </div>
-<div class="line"><span class="lineno">  316</span>        <span class="keyword">const</span> std::vector&lt;std::size_t&gt; keep = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z);</div>
-<div class="line"><span class="lineno">  317</span>        <span class="keywordflow">if</span> (keep.empty()) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  318</span> </div>
-<div class="line"><span class="lineno">  319</span>        <span class="keyword">const</span> std::size_t n = model.NState();</div>
-<div class="line"><span class="lineno">  320</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> = model.NMeasure();</div>
-<div class="line"><span class="lineno">  321</span>        <span class="keyword">const</span> std::size_t p = keep.size();</div>
-<div class="line"><span class="lineno">  322</span>        <span class="keyword">const</span> std::size_t N = fMembers.size();</div>
-<div class="line"><span class="lineno">  323</span> </div>
-<div class="line"><span class="lineno">  324</span>        <span class="comment">// Inflate the anomalies before the analysis.</span></div>
-<div class="line"><span class="lineno">  325</span>        <span class="keyword">const</span> Vector mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  326</span>        <span class="keywordflow">if</span> (fInflation != 1.)</div>
-<div class="line"><span class="lineno">  327</span>            <span class="keywordflow">for</span> (Vector &amp;x : fMembers)</div>
-<div class="line"><span class="lineno">  328</span>                for (std::size_t i = 0; i &lt; n; ++i) x(i) = mean(i) + fInflation * (x(i) - mean(i));</div>
-<div class="line"><span class="lineno">  329</span> </div>
-<div class="line"><span class="lineno">  330</span>        <span class="comment">// Observation-space ensemble, restricted to the channels that arrived.</span></div>
-<div class="line"><span class="lineno">  331</span>        std::vector&lt;Vector&gt; Yfull;</div>
-<div class="line"><span class="lineno">  332</span>        Observations(model, t, Yfull);</div>
-<div class="line"><span class="lineno">  333</span> </div>
-<div class="line"><span class="lineno">  334</span>        Matrix X(n, N), Y(p, N);</div>
-<div class="line"><span class="lineno">  335</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s)</div>
-<div class="line"><span class="lineno">  336</span>        {</div>
-<div class="line"><span class="lineno">  337</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) X(i, s) = fMembers[s](i);</div>
-<div class="line"><span class="lineno">  338</span>            <span class="keywordflow">if</span> (Yfull[s].Size() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: a member&#39;s measurement is not m long.&quot;</span>);</div>
-<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) Y(j, s) = Yfull[s](keep[j]);</div>
-<div class="line"><span class="lineno">  340</span>        }</div>
-<div class="line"><span class="lineno">  341</span> </div>
-<div class="line"><span class="lineno">  342</span>        <span class="comment">// The tapers: those set on the engine, else the model&#39;s.</span></div>
-<div class="line"><span class="lineno">  343</span>        <span class="keyword">const</span> Matrix &amp;rhoXY = fRhoXY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() &amp;&amp; fRhoYY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() ? fModelRhoXY : fRhoXY;</div>
-<div class="line"><span class="lineno">  344</span>        <span class="keyword">const</span> Matrix &amp;rhoYY = fRhoXY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() &amp;&amp; fRhoYY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() ? fModelRhoYY : fRhoYY;</div>
-<div class="line"><span class="lineno">  345</span>        Matrix rxy, ryy;</div>
-<div class="line"><span class="lineno">  346</span>        <span class="keywordflow">if</span> (!rhoXY.Empty())</div>
-<div class="line"><span class="lineno">  347</span>        {</div>
-<div class="line"><span class="lineno">  348</span>            <span class="keywordflow">if</span> (rhoXY.Rows() != n || rhoXY.Cols() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</div>
-<div class="line"><span class="lineno">  349</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: rho_xy must be (n, m).&quot;</span>);</div>
-<div class="line"><span class="lineno">  350</span>            rxy = Matrix(n, p);</div>
-<div class="line"><span class="lineno">  351</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
-<div class="line"><span class="lineno">  352</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) rxy(i, j) = rhoXY(i, keep[j]);</div>
-<div class="line"><span class="lineno">  353</span>        }</div>
-<div class="line"><span class="lineno">  354</span>        <span class="keywordflow">if</span> (!rhoYY.Empty())</div>
-<div class="line"><span class="lineno">  355</span>        {</div>
-<div class="line"><span class="lineno">  356</span>            <span class="keywordflow">if</span> (rhoYY.Rows() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> || rhoYY.Cols() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</div>
-<div class="line"><span class="lineno">  357</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: rho_yy must be (m, m).&quot;</span>);</div>
-<div class="line"><span class="lineno">  358</span>            ryy = Matrix(p, p);</div>
-<div class="line"><span class="lineno">  359</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; p; ++i)</div>
-<div class="line"><span class="lineno">  360</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) ryy(i, j) = rhoYY(keep[i], keep[j]);</div>
+<div class="line"><span class="lineno">  316</span>        <span class="comment">// Observation-space ensemble, restricted to the channels that arrived.</span></div>
+<div class="line"><span class="lineno">  317</span>        std::vector&lt;Vector&gt; Yfull;</div>
+<div class="line"><span class="lineno">  318</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a7db09d38c0d537e7da7a64076bffb700">Project</a>(model, t, Yfull);</div>
+<div class="line"><span class="lineno">  319</span> </div>
+<div class="line"><span class="lineno">  320</span>        Matrix <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>(n, N), Y(p, N);</div>
+<div class="line"><span class="lineno">  321</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s)</div>
+<div class="line"><span class="lineno">  322</span>        {</div>
+<div class="line"><span class="lineno">  323</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) <a class="code hl_variable" href="namespacetests_1_1test__sensors.html#a699a4c3d626574df29c0191f6619c42d">X</a>(i, s) = fMembers[s](i);</div>
+<div class="line"><span class="lineno">  324</span>            <span class="keywordflow">if</span> (Yfull[s].Size() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: a member&#39;s measurement is not m long.&quot;</span>);</div>
+<div class="line"><span class="lineno">  325</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) Y(j, s) = Yfull[s](keep[j]);</div>
+<div class="line"><span class="lineno">  326</span>        }</div>
+<div class="line"><span class="lineno">  327</span> </div>
+<div class="line"><span class="lineno">  328</span>        <span class="comment">// The tapers: those set on the engine, else the model&#39;s.</span></div>
+<div class="line"><span class="lineno">  329</span>        <span class="keyword">const</span> Matrix &amp;rhoXY = fRhoXY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() &amp;&amp; fRhoYY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() ? fModelRhoXY : fRhoXY;</div>
+<div class="line"><span class="lineno">  330</span>        <span class="keyword">const</span> Matrix &amp;rhoYY = fRhoXY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() &amp;&amp; fRhoYY.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Empty</a>() ? fModelRhoYY : fRhoYY;</div>
+<div class="line"><span class="lineno">  331</span>        Matrix rxy, ryy;</div>
+<div class="line"><span class="lineno">  332</span>        <span class="keywordflow">if</span> (!rhoXY.Empty())</div>
+<div class="line"><span class="lineno">  333</span>        {</div>
+<div class="line"><span class="lineno">  334</span>            <span class="keywordflow">if</span> (rhoXY.Rows() != <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> || rhoXY.Cols() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</div>
+<div class="line"><span class="lineno">  335</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: rho_xy must be (n, m).&quot;</span>);</div>
+<div class="line"><span class="lineno">  336</span>            rxy = Matrix(n, p);</div>
+<div class="line"><span class="lineno">  337</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  338</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) rxy(i, j) = rhoXY(i, keep[j]);</div>
+<div class="line"><span class="lineno">  339</span>        }</div>
+<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">if</span> (!rhoYY.Empty())</div>
+<div class="line"><span class="lineno">  341</span>        {</div>
+<div class="line"><span class="lineno">  342</span>            <span class="keywordflow">if</span> (rhoYY.Rows() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a> || rhoYY.Cols() != <a class="code hl_variable" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</div>
+<div class="line"><span class="lineno">  343</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: rho_yy must be (m, m).&quot;</span>);</div>
+<div class="line"><span class="lineno">  344</span>            ryy = Matrix(p, p);</div>
+<div class="line"><span class="lineno">  345</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; p; ++i)</div>
+<div class="line"><span class="lineno">  346</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) ryy(i, j) = rhoYY(keep[i], keep[j]);</div>
+<div class="line"><span class="lineno">  347</span>        }</div>
+<div class="line"><span class="lineno">  348</span> </div>
+<div class="line"><span class="lineno">  349</span>        <span class="comment">// The perturbations: one (p, N) block of draws through the factor of R.</span></div>
+<div class="line"><span class="lineno">  350</span>        <span class="keyword">const</span> Matrix R = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.R(t), keep);</div>
+<div class="line"><span class="lineno">  351</span>        <span class="keyword">const</span> Matrix Rfac = Utils::CholeskyFactor(R, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  352</span>        Matrix eps(p, N, 0.);</div>
+<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">if</span> (!Rfac.Empty())</div>
+<div class="line"><span class="lineno">  354</span>        {</div>
+<div class="line"><span class="lineno">  355</span>            <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(Rfac.Cols());</div>
+<div class="line"><span class="lineno">  356</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s)</div>
+<div class="line"><span class="lineno">  357</span>            {</div>
+<div class="line"><span class="lineno">  358</span>                <span class="keyword">const</span> Vector e = Rfac * w[s];</div>
+<div class="line"><span class="lineno">  359</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) eps(j, s) = e(j);</div>
+<div class="line"><span class="lineno">  360</span>            }</div>
 <div class="line"><span class="lineno">  361</span>        }</div>
 <div class="line"><span class="lineno">  362</span> </div>
-<div class="line"><span class="lineno">  363</span>        <span class="comment">// The perturbations: one (p, N) block of draws through the factor of R.</span></div>
-<div class="line"><span class="lineno">  364</span>        <span class="keyword">const</span> Matrix R = <a class="code hl_function" href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Utils::CompressBoth</a>(model.R(t), keep);</div>
-<div class="line"><span class="lineno">  365</span>        <span class="keyword">const</span> Matrix Rfac = Utils::CholeskyFactor(R, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  366</span>        Matrix eps(p, N, 0.);</div>
-<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">if</span> (!Rfac.Empty())</div>
-<div class="line"><span class="lineno">  368</span>        {</div>
-<div class="line"><span class="lineno">  369</span>            <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(Rfac.Cols());</div>
-<div class="line"><span class="lineno">  370</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s)</div>
-<div class="line"><span class="lineno">  371</span>            {</div>
-<div class="line"><span class="lineno">  372</span>                <span class="keyword">const</span> Vector e = Rfac * w[s];</div>
-<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; p; ++j) eps(j, s) = e(j);</div>
-<div class="line"><span class="lineno">  374</span>            }</div>
-<div class="line"><span class="lineno">  375</span>        }</div>
-<div class="line"><span class="lineno">  376</span> </div>
-<div class="line"><span class="lineno">  377</span>        <span class="keyword">const</span> Matrix Xa = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Analysis</a>(X, Y, R, <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(z, keep), eps,</div>
-<div class="line"><span class="lineno">  378</span>                                   rxy.<a class="code hl_function" href="class_kalman_1_1_vector.html#a5474796c2482376c1b213ac3491105a6">Empty</a>() ? <span class="keyword">nullptr</span> : &amp;rxy, ryy.Empty() ? nullptr : &amp;ryy);</div>
-<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s)</div>
-<div class="line"><span class="lineno">  380</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) fMembers[s](i) = Xa(i, s);</div>
-<div class="line"><span class="lineno">  381</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  382</span>    }</div>
+<div class="line"><span class="lineno">  363</span>        <span class="keyword">const</span> Matrix Xa = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Analysis</a>(X, Y, R, <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Utils::Compress</a>(z, keep), eps,</div>
+<div class="line"><span class="lineno">  364</span>                                   rxy.<a class="code hl_function" href="class_kalman_1_1_vector.html#a5474796c2482376c1b213ac3491105a6">Empty</a>() ? <span class="keyword">nullptr</span> : &amp;rxy, ryy.Empty() ? nullptr : &amp;ryy);</div>
+<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s)</div>
+<div class="line"><span class="lineno">  366</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) fMembers[s](i) = Xa(i, s);</div>
+<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  368</span>    }</div>
 <div class="ttc" id="a_f_f_t_8cc_html_a64c6389273788a3c6349b8f7db98de06"><div class="ttname"><a href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdef"><b>Definition</b> <a href="_f_f_t_8cc_source.html#l00155">FFT.cc:155</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a34a1b54a3b5df170771d7b0eddcd3fad"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Kalman::Engines::Ensemble::Analysis</a></div><div class="ttdeci">static Matrix Analysis(const Matrix &amp;X, const Matrix &amp;Y, const Matrix &amp;R, const Vector &amp;z, const Matrix &amp;eps, const Matrix *rhoXY, const Matrix *rhoYY)</div><div class="ttdoc">The analysis arithmetic, X + K (z + eps - Y).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00265">Ensemble.cc:265</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a4de9e496676833e6cf3dd015a0704f74"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Kalman::Engines::Ensemble::Reset</a></div><div class="ttdeci">void Reset(const Model &amp;model) override</div><div class="ttdoc">(Re)seed the members: the ensemble handed in, else a draw from the model's x0 / P0.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00139">Ensemble.cc:139</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_af0ad80298c85abe40e4447f033faa451"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Kalman::Engines::Ensemble::Mean</a></div><div class="ttdeci">Vector Mean() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00163">Ensemble.cc:163</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_afd2cf95925c5b3ea93d53faa1782677d"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Kalman::Engines::Ensemble::Ensemble</a></div><div class="ttdeci">Ensemble(std::size_t nMembers=50, double inflation=1., std::uint64_t seed=0)</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00067">Ensemble.cc:67</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a34a1b54a3b5df170771d7b0eddcd3fad"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a34a1b54a3b5df170771d7b0eddcd3fad">Kalman::Engines::Ensemble::Analysis</a></div><div class="ttdeci">static Matrix Analysis(const Matrix &amp;X, const Matrix &amp;Y, const Matrix &amp;R, const Vector &amp;z, const Matrix &amp;eps, const Matrix *rhoXY, const Matrix *rhoYY)</div><div class="ttdoc">The analysis arithmetic, X + K (z + eps - Y).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00251">Ensemble.cc:251</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a4de9e496676833e6cf3dd015a0704f74"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Kalman::Engines::Ensemble::Reset</a></div><div class="ttdeci">void Reset(const Model &amp;model) override</div><div class="ttdoc">(Re)seed the members: the ensemble handed in, else a draw from the model's x0 / P0.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00126">Ensemble.cc:126</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a7db09d38c0d537e7da7a64076bffb700"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a7db09d38c0d537e7da7a64076bffb700">Kalman::Engines::Ensemble::Project</a></div><div class="ttdeci">void Project(const Model &amp;model, double t, std::vector&lt; Vector &gt; &amp;Y) const</div><div class="ttdoc">Project the members into measurement space: Y[s] = h(member s, t).</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00243">Ensemble.cc:243</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_af0ad80298c85abe40e4447f033faa451"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Kalman::Engines::Ensemble::Mean</a></div><div class="ttdeci">Vector Mean() const</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00154">Ensemble.cc:154</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_afd2cf95925c5b3ea93d53faa1782677d"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Kalman::Engines::Ensemble::Ensemble</a></div><div class="ttdeci">Ensemble(std::size_t nMembers=50, double inflation=1., std::uint64_t seed=0)</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00054">Ensemble.cc:54</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_a00851e44671a15d861d1eefb682b8cf7"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a00851e44671a15d861d1eefb682b8cf7">Kalman::Matrix::Empty</a></div><div class="ttdeci">bool Empty() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00099">Matrix.h:99</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_a5474796c2482376c1b213ac3491105a6"><div class="ttname"><a href="class_kalman_1_1_vector.html#a5474796c2482376c1b213ac3491105a6">Kalman::Vector::Empty</a></div><div class="ttdeci">bool Empty() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00051">Matrix.h:51</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00102">Utils.cc:102</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00116">Utils.cc:116</a></div></div>
-<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00132">Utils.cc:132</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a01506e8a11d5354a15de55a324751333"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Kalman::Utils::ValidChannels</a></div><div class="ttdeci">std::vector&lt; std::size_t &gt; ValidChannels(const Vector &amp;z)</div><div class="ttdoc">Indices of the channels of z that are present (not NaN).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00103">Utils.cc:103</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_a0a5d86066fd916afd34e2a3f24e60196"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#a0a5d86066fd916afd34e2a3f24e60196">Kalman::Utils::Compress</a></div><div class="ttdeci">Vector Compress(const Vector &amp;v, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">v restricted to keep.</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00117">Utils.cc:117</a></div></div>
+<div class="ttc" id="anamespace_kalman_1_1_utils_html_aea77fb26b2d9882beca773278ecd1bee"><div class="ttname"><a href="namespace_kalman_1_1_utils.html#aea77fb26b2d9882beca773278ecd1bee">Kalman::Utils::CompressBoth</a></div><div class="ttdeci">Matrix CompressBoth(const Matrix &amp;M, const std::vector&lt; std::size_t &gt; &amp;keep)</div><div class="ttdoc">Rows and columns of M restricted to keep (for the noise matrix R).</div><div class="ttdef"><b>Definition</b> <a href="_utils_8cc_source.html#l00133">Utils.cc:133</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -602,8 +614,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00123">123</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  124</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Perturbed-observation EnKF: localized, inflated ensemble analysis (forward-only).&quot;</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00122">122</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  123</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Perturbed-observation EnKF: localized, inflated ensemble analysis (forward-only).&quot;</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -635,27 +647,27 @@ Static Public Member Functions</h2></td></tr>
 
 <p><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html" title="Perturbed-observation ensemble Kalman filter (Evensen).">Ensemble</a> mean and sample covariance. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00172">172</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  173</span>    {</div>
-<div class="line"><span class="lineno">  174</span>        mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  175</span>        <span class="keyword">const</span> std::size_t n = mean.Size();</div>
-<div class="line"><span class="lineno">  176</span>        <span class="keyword">const</span> std::size_t N = fMembers.size();</div>
-<div class="line"><span class="lineno">  177</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> norm = 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::max&lt;std::size_t&gt;(N - 1, 1));</div>
-<div class="line"><span class="lineno">  178</span> </div>
-<div class="line"><span class="lineno">  179</span>        <span class="comment">// (A A^T) / (N - 1) with A the anomalies, as one product (BLAS when it pays).</span></div>
-<div class="line"><span class="lineno">  180</span>        Matrix A(n, N), AT(N, n);</div>
-<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; N; ++s)</div>
-<div class="line"><span class="lineno">  182</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
-<div class="line"><span class="lineno">  183</span>            {</div>
-<div class="line"><span class="lineno">  184</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> a = fMembers[s](i) - mean(i);</div>
-<div class="line"><span class="lineno">  185</span>                A(i, s) = a;</div>
-<div class="line"><span class="lineno">  186</span>                AT(s, i) = a;</div>
-<div class="line"><span class="lineno">  187</span>            }</div>
-<div class="line"><span class="lineno">  188</span>        cov = A * AT;</div>
-<div class="line"><span class="lineno">  189</span>        cov *= norm;</div>
-<div class="line"><span class="lineno">  190</span>        Utils::Symmetrize(cov);</div>
-<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) cov(i, i) += 1e-12;</div>
-<div class="line"><span class="lineno">  192</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00163">163</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  164</span>    {</div>
+<div class="line"><span class="lineno">  165</span>        mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  166</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = mean.Size();</div>
+<div class="line"><span class="lineno">  167</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = fMembers.size();</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> norm = 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(std::max&lt;std::size_t&gt;(N - 1, 1));</div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>        <span class="comment">// (A A^T) / (N - 1) with A the anomalies, as one product (BLAS when it pays).</span></div>
+<div class="line"><span class="lineno">  171</span>        Matrix A(n, N), AT(N, n);</div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++s)</div>
+<div class="line"><span class="lineno">  173</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  174</span>            {</div>
+<div class="line"><span class="lineno">  175</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> a = fMembers[s](i) - mean(i);</div>
+<div class="line"><span class="lineno">  176</span>                A(i, s) = a;</div>
+<div class="line"><span class="lineno">  177</span>                AT(s, i) = a;</div>
+<div class="line"><span class="lineno">  178</span>            }</div>
+<div class="line"><span class="lineno">  179</span>        cov = A * AT;</div>
+<div class="line"><span class="lineno">  180</span>        cov *= norm;</div>
+<div class="line"><span class="lineno">  181</span>        Utils::Symmetrize(cov);</div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) cov(i, i) += 1e-12;</div>
+<div class="line"><span class="lineno">  183</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -691,51 +703,53 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Propagate every member; returns the new mean. </p>
+<p>Forecast: advance every member one step; returns the new mean. </p>
+<p>"Forecast" is the ensemble filter's word for the predict step. It is the model's <code>f</code> given every member at once (<a class="el" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede" title="One step of the dynamics.">Kalman::Model::f</a> for many states), followed by a draw of the process noise for each. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00208">208</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  209</span>    {</div>
-<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keyword">const_cast&lt;</span><a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Ensemble</a> *<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Reset</a>(model);</div>
-<div class="line"><span class="lineno">  211</span>        <span class="keyword">const</span> std::size_t n = model.NState();</div>
-<div class="line"><span class="lineno">  212</span> </div>
-<div class="line"><span class="lineno">  213</span>        Vector uu(model.NControl(), 0.);</div>
-<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">if</span> (u &amp;&amp; model.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == model.NControl()) uu = *u;</div>
-<div class="line"><span class="lineno">  215</span> </div>
-<div class="line"><span class="lineno">  216</span>        <span class="keyword">const</span> <span class="keyword">auto</span> *hooks = <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span>EnsembleModel *<span class="keyword">&gt;</span>(&amp;model);</div>
-<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">if</span> (hooks) hooks-&gt;Forecast(model, fMembers, uu, t);</div>
-<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">for</span> (Vector &amp;x : fMembers) x = model.f(x, uu, t);</div>
-<div class="line"><span class="lineno">  220</span> </div>
-<div class="line"><span class="lineno">  221</span>        <span class="comment">// The process noise, after every member has moved (the order of the draws</span></div>
-<div class="line"><span class="lineno">  222</span>        <span class="comment">// is the Python engine&#39;s: one (n, N) block).</span></div>
-<div class="line"><span class="lineno">  223</span>        Vector variances;</div>
-<div class="line"><span class="lineno">  224</span>        <span class="keywordflow">if</span> (hooks &amp;&amp; hooks-&gt;ProcessNoiseVariances(t, variances) &amp;&amp; model.L(t).Empty())</div>
-<div class="line"><span class="lineno">  225</span>        {</div>
-<div class="line"><span class="lineno">  226</span>            <span class="keywordflow">if</span> (variances.Size() != n) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: the process-noise variances are not n long.&quot;</span>);</div>
-<div class="line"><span class="lineno">  227</span>            <span class="keywordtype">bool</span> any = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  228</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) any = any || variances(i) != 0.;</div>
-<div class="line"><span class="lineno">  229</span>            <span class="keywordflow">if</span> (any)</div>
-<div class="line"><span class="lineno">  230</span>            {</div>
-<div class="line"><span class="lineno">  231</span>                Vector sigma(n);</div>
-<div class="line"><span class="lineno">  232</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) sigma(i) = std::sqrt(variances(i));</div>
-<div class="line"><span class="lineno">  233</span>                <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(n);</div>
-<div class="line"><span class="lineno">  234</span>                <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; fMembers.size(); ++s)</div>
-<div class="line"><span class="lineno">  235</span>                    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) fMembers[s](i) += sigma(i) * w[s](i);</div>
-<div class="line"><span class="lineno">  236</span>            }</div>
-<div class="line"><span class="lineno">  237</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  238</span>        }</div>
-<div class="line"><span class="lineno">  239</span> </div>
-<div class="line"><span class="lineno">  240</span>        Matrix Q = model.Q(t);</div>
-<div class="line"><span class="lineno">  241</span>        <span class="keyword">const</span> Matrix L = model.L(t);</div>
-<div class="line"><span class="lineno">  242</span>        <span class="keywordflow">if</span> (!L.Empty()) Q = Utils::Similarity(L, Q);</div>
-<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">if</span> (AnyNonZero(Q))</div>
-<div class="line"><span class="lineno">  244</span>        {</div>
-<div class="line"><span class="lineno">  245</span>            <span class="keyword">const</span> Matrix factor = Utils::CholeskyFactor(Q, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  246</span>            <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(factor.Cols());</div>
-<div class="line"><span class="lineno">  247</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; fMembers.size(); ++s) fMembers[s] += factor * w[s];</div>
-<div class="line"><span class="lineno">  248</span>        }</div>
-<div class="line"><span class="lineno">  249</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  250</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00199">199</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  200</span>    {</div>
+<div class="line"><span class="lineno">  201</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keyword">const_cast&lt;</span><a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#afd2cf95925c5b3ea93d53faa1782677d">Ensemble</a> *<span class="keyword">&gt;</span>(<span class="keyword">this</span>)-&gt;<a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a4de9e496676833e6cf3dd015a0704f74">Reset</a>(model);</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState();</div>
+<div class="line"><span class="lineno">  203</span> </div>
+<div class="line"><span class="lineno">  204</span>        Vector uu(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl(), 0.);</div>
+<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">if</span> (u &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl()) uu = *u;</div>
+<div class="line"><span class="lineno">  206</span> </div>
+<div class="line"><span class="lineno">  207</span>        <span class="keyword">const</span> <span class="keyword">auto</span> *hooks = <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span>EnsembleModel *<span class="keyword">&gt;</span>(&amp;<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>);</div>
+<div class="line"><span class="lineno">  208</span>        <span class="comment">// forecast: the ensemble word for the predict step. It is f of every member</span></div>
+<div class="line"><span class="lineno">  209</span>        <span class="comment">// (one call: Kalman::Model::f for many states), then the process noise.</span></div>
+<div class="line"><span class="lineno">  210</span>        <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.f(fMembers, uu, t);</div>
+<div class="line"><span class="lineno">  211</span> </div>
+<div class="line"><span class="lineno">  212</span>        <span class="comment">// The process noise, after every member has moved (the order of the draws</span></div>
+<div class="line"><span class="lineno">  213</span>        <span class="comment">// is the Python engine&#39;s: one (n, N) block).</span></div>
+<div class="line"><span class="lineno">  214</span>        Vector variances;</div>
+<div class="line"><span class="lineno">  215</span>        <span class="keywordflow">if</span> (hooks &amp;&amp; hooks-&gt;ProcessNoiseVariances(t, variances) &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.L(t).Empty())</div>
+<div class="line"><span class="lineno">  216</span>        {</div>
+<div class="line"><span class="lineno">  217</span>            <span class="keywordflow">if</span> (variances.Size() != <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: the process-noise variances are not n long.&quot;</span>);</div>
+<div class="line"><span class="lineno">  218</span>            <span class="keywordtype">bool</span> any = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) any = any || variances(i) != 0.;</div>
+<div class="line"><span class="lineno">  220</span>            <span class="keywordflow">if</span> (any)</div>
+<div class="line"><span class="lineno">  221</span>            {</div>
+<div class="line"><span class="lineno">  222</span>                Vector <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a>(n);</div>
+<div class="line"><span class="lineno">  223</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a>(i) = std::sqrt(variances(i));</div>
+<div class="line"><span class="lineno">  224</span>                <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(n);</div>
+<div class="line"><span class="lineno">  225</span>                <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; fMembers.size(); ++s)</div>
+<div class="line"><span class="lineno">  226</span>                    <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) fMembers[s](i) += <a class="code hl_variable" href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">sigma</a>(i) * w[s](i);</div>
+<div class="line"><span class="lineno">  227</span>            }</div>
+<div class="line"><span class="lineno">  228</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  229</span>        }</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span>        Matrix Q = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.Q(t);</div>
+<div class="line"><span class="lineno">  232</span>        <span class="keyword">const</span> Matrix L = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.L(t);</div>
+<div class="line"><span class="lineno">  233</span>        <span class="keywordflow">if</span> (!L.Empty()) Q = Utils::Similarity(L, Q);</div>
+<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">if</span> (AnyNonZero(Q))</div>
+<div class="line"><span class="lineno">  235</span>        {</div>
+<div class="line"><span class="lineno">  236</span>            <span class="keyword">const</span> Matrix factor = Utils::CholeskyFactor(Q, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  237</span>            <span class="keyword">const</span> std::vector&lt;Vector&gt; w = Normals(factor.Cols());</div>
+<div class="line"><span class="lineno">  238</span>            <span class="keywordflow">for</span> (std::size_t s = 0; s &lt; fMembers.size(); ++s) fMembers[s] += factor * w[s];</div>
+<div class="line"><span class="lineno">  239</span>        }</div>
+<div class="line"><span class="lineno">  240</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  241</span>    }</div>
+<div class="ttc" id="anamespaceinstrument_html_a2defcfb1809fbc48c528a4842b379e81"><div class="ttname"><a href="namespaceinstrument.html#a2defcfb1809fbc48c528a4842b379e81">instrument.sigma</a></div><div class="ttdeci">sigma</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00075">instrument.py:75</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -766,8 +780,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_engine.html#a501f7828ced04a0c514c820f8a79a8ef">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00163">163</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  163</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00162">162</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>{ <span class="keywordflow">return</span> <span class="keyword">false</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -794,8 +808,37 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00127">127</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  127</span>{ <span class="keywordflow">return</span> fInflation; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00126">126</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>{ <span class="keywordflow">return</span> fInflation; }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a0d9936b946b7eab1de86763f87fa320f" name="a0d9936b946b7eab1de86763f87fa320f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d9936b946b7eab1de86763f87fa320f">&#9670;&#160;</a></span>InitialEnsemble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; Kalman::Engines::Ensemble::InitialEnsemble </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>The members a run starts from when none were handed in. </p>
+<p>"Initial ensemble" is the ensemble filter's word for the model's initial state given as samples: this is Kalman::Model::InitialState(N, ...) with the engine's own random stream. </p>
+
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00146">146</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>    {</div>
+<div class="line"><span class="lineno">  148</span>        <span class="comment">// initial ensemble: the ensemble word for the model&#39;s initial state given</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment">// as samples (Kalman::Model::InitialState), drawn from this engine&#39;s stream.</span></div>
+<div class="line"><span class="lineno">  150</span>        std::normal_distribution&lt;double&gt; gauss(0., 1.);</div>
+<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.InitialState(fNMembers, [&amp;] { <span class="keywordflow">return</span> gauss(fRandom); });</div>
+<div class="line"><span class="lineno">  152</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -824,8 +867,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_engine.html#a6b72349f6755980e865cb47ee3a17ef7">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00121">121</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  121</span>{ <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">EngineKind::Ensemble</a>; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00120">120</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  120</span>{ <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">EngineKind::Ensemble</a>; }</div>
 <div class="ttc" id="anamespace_kalman_html_acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f"><div class="ttname"><a href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f">Kalman::EngineKind::Ensemble</a></div><div class="ttdeci">@ Ensemble</div><div class="ttdoc">perturbed-observation ensemble (EnKF)</div></div>
 </div><!-- fragment -->
 </div>
@@ -845,14 +888,14 @@ Static Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00163">163</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  164</span>    {</div>
-<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: no members; call Reset() first.&quot;</span>);</div>
-<div class="line"><span class="lineno">  166</span>        Vector mean(fMembers.front().Size(), 0.);</div>
-<div class="line"><span class="lineno">  167</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : fMembers) mean += x;</div>
-<div class="line"><span class="lineno">  168</span>        mean *= 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(fMembers.size());</div>
-<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> mean;</div>
-<div class="line"><span class="lineno">  170</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00154">154</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  155</span>    {</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">if</span> (fMembers.empty()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: no members; call Reset() first.&quot;</span>);</div>
+<div class="line"><span class="lineno">  157</span>        Vector mean(fMembers.front().Size(), 0.);</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : fMembers) mean += <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>;</div>
+<div class="line"><span class="lineno">  159</span>        mean *= 1. / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(fMembers.size());</div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">return</span> mean;</div>
+<div class="line"><span class="lineno">  161</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -922,11 +965,11 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_engine.html#a7d30a11f4ea09e0bb97efe69b438228b">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00393">393</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  395</span>    {</div>
-<div class="line"><span class="lineno">  396</span>        zpred = model.h(x, t);</div>
-<div class="line"><span class="lineno">  397</span>        H = model.JacobianH(x, t);</div>
-<div class="line"><span class="lineno">  398</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00379">379</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  381</span>    {</div>
+<div class="line"><span class="lineno">  382</span>        zpred = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.h(x, t);</div>
+<div class="line"><span class="lineno">  383</span>        H = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.JacobianH(x, t);</div>
+<div class="line"><span class="lineno">  384</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -953,8 +996,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00193">193</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  193</span>{ <span class="keywordflow">return</span> fMembers; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00213">213</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  213</span>{ <span class="keywordflow">return</span> fMembers; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -981,8 +1024,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00126">126</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  126</span>{ <span class="keywordflow">return</span> fNMembers; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00125">125</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>{ <span class="keywordflow">return</span> fNMembers; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1011,8 +1054,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Draws handed in and not yet used. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00159">159</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  159</span>{ <span class="keywordflow">return</span> fHasNormals ? fNormals.size() - fNormalsUsed : 0; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00158">158</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>{ <span class="keywordflow">return</span> fHasNormals ? fNormals.size() - fNormalsUsed : 0; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1086,19 +1129,64 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077" title="Propagate every member; returns the new mean.">Forecast()</a>: every member through <code>f</code> plus a <code>Q</code> draw; returns the moments. </p>
+<p><a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077" title="Forecast: advance every member one step; returns the new mean.">Forecast()</a>: every member through <code>f</code> plus a <code>Q</code> draw; returns the moments. </p>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_engine.html#a9350b42e587bef994a2f79d98571278b">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00400">400</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  403</span>    {</div>
-<div class="line"><span class="lineno">  404</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Forecast</a>(model, u, t);</div>
-<div class="line"><span class="lineno">  405</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Estimate</a>(xk, Pk);</div>
-<div class="line"><span class="lineno">  406</span>        F = <a class="code hl_function" href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Matrix::Identity</a>(model.NState());</div>
-<div class="line"><span class="lineno">  407</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a8d169a34a249f1965e50c7079d934f6b"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Kalman::Engines::Ensemble::Estimate</a></div><div class="ttdeci">void Estimate(Vector &amp;mean, Matrix &amp;cov) const</div><div class="ttdoc">Ensemble mean and sample covariance.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00172">Ensemble.cc:172</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a940348d3da4d80ab9e325d2ed21a8077"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Kalman::Engines::Ensemble::Forecast</a></div><div class="ttdeci">Vector Forecast(const Model &amp;model, const Vector *u, double t) const</div><div class="ttdoc">Propagate every member; returns the new mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00208">Ensemble.cc:208</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00386">386</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  389</span>    {</div>
+<div class="line"><span class="lineno">  390</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Forecast</a>(model, u, t);</div>
+<div class="line"><span class="lineno">  391</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Estimate</a>(xk, Pk);</div>
+<div class="line"><span class="lineno">  392</span>        F = <a class="code hl_function" href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Matrix::Identity</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState());</div>
+<div class="line"><span class="lineno">  393</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a8d169a34a249f1965e50c7079d934f6b"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Kalman::Engines::Ensemble::Estimate</a></div><div class="ttdeci">void Estimate(Vector &amp;mean, Matrix &amp;cov) const</div><div class="ttdoc">Ensemble mean and sample covariance.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00163">Ensemble.cc:163</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a940348d3da4d80ab9e325d2ed21a8077"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a940348d3da4d80ab9e325d2ed21a8077">Kalman::Engines::Ensemble::Forecast</a></div><div class="ttdeci">Vector Forecast(const Model &amp;model, const Vector *u, double t) const</div><div class="ttdoc">Forecast: advance every member one step; returns the new mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00199">Ensemble.cc:199</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_aa3b71cb2be4e62cc662717b9b822c408"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Kalman::Matrix::Identity</a></div><div class="ttdeci">static Matrix Identity(std::size_t n)</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00100">Matrix.cc:100</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7db09d38c0d537e7da7a64076bffb700" name="a7db09d38c0d537e7da7a64076bffb700"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7db09d38c0d537e7da7a64076bffb700">&#9670;&#160;</a></span>Project()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Engines::Ensemble::Project </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>t</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>Y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Project the members into measurement space: <code>Y[s] = h(member s, t)</code>. </p>
+<p>"Project" is the ensemble filter's word for it; it is the model's <code>h</code> given every member at once (<a class="el" href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216" title="The observation map. Default: H x.">Kalman::Model::h</a> for many states). </p>
+
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00243">243</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  244</span>    {</div>
+<div class="line"><span class="lineno">  245</span>        <span class="comment">// project: the members into measurement space. It is h of every member</span></div>
+<div class="line"><span class="lineno">  246</span>        <span class="comment">// (one call: Kalman::Model::h for many states).</span></div>
+<div class="line"><span class="lineno">  247</span>        <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.h(fMembers, t, Y);</div>
+<div class="line"><span class="lineno">  248</span>        <span class="keywordflow">if</span> (Y.size() != fMembers.size()) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: h must give one measurement per member.&quot;</span>);</div>
+<div class="line"><span class="lineno">  249</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1175,13 +1263,13 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_engine.html#aeceb917250c591d8011b374f623e0c3b">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00384">384</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  386</span>    {</div>
-<div class="line"><span class="lineno">  387</span>        Vector uu(model.NControl(), 0.);</div>
-<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">if</span> (u &amp;&amp; model.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == model.NControl()) uu = *u;</div>
-<div class="line"><span class="lineno">  389</span>        xk = model.f(x, uu, t);</div>
-<div class="line"><span class="lineno">  390</span>        F = <a class="code hl_function" href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Matrix::Identity</a>(model.NState());</div>
-<div class="line"><span class="lineno">  391</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00370">370</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  372</span>    {</div>
+<div class="line"><span class="lineno">  373</span>        Vector uu(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl(), 0.);</div>
+<div class="line"><span class="lineno">  374</span>        <span class="keywordflow">if</span> (u &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl()) uu = *u;</div>
+<div class="line"><span class="lineno">  375</span>        xk = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.f(x, uu, t);</div>
+<div class="line"><span class="lineno">  376</span>        F = <a class="code hl_function" href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Matrix::Identity</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState());</div>
+<div class="line"><span class="lineno">  377</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1213,29 +1301,26 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_engine.html#a888afacb7c43444782a61755de745269">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00139">139</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  140</span>    {</div>
-<div class="line"><span class="lineno">  141</span>        fModelRhoXY = Matrix();</div>
-<div class="line"><span class="lineno">  142</span>        fModelRhoYY = Matrix();</div>
-<div class="line"><span class="lineno">  143</span>        <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *hooks = <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span>EnsembleModel *<span class="keyword">&gt;</span>(&amp;model))</div>
-<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">if</span> (!hooks-&gt;Localization(fModelRhoXY, fModelRhoYY))</div>
-<div class="line"><span class="lineno">  145</span>                fModelRhoXY = fModelRhoYY = Matrix();</div>
-<div class="line"><span class="lineno">  146</span> </div>
-<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">if</span> (!fStart.empty())</div>
-<div class="line"><span class="lineno">  148</span>        {</div>
-<div class="line"><span class="lineno">  149</span>            <span class="keywordflow">if</span> (fStart.front().Size() != model.NState())</div>
-<div class="line"><span class="lineno">  150</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: the members handed in do not have the model&#39;s n.&quot;</span>);</div>
-<div class="line"><span class="lineno">  151</span>            fMembers = fStart;</div>
-<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  153</span>        }</div>
-<div class="line"><span class="lineno">  154</span> </div>
-<div class="line"><span class="lineno">  155</span>        <span class="keyword">const</span> Matrix factor = Utils::CholeskyFactor(model.P0(), <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">if</span> (factor.Empty())</div>
-<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: P0 has no Cholesky factor; cannot seed the members.&quot;</span>);</div>
-<div class="line"><span class="lineno">  158</span> </div>
-<div class="line"><span class="lineno">  159</span>        fMembers.assign(fNMembers, model.X0());</div>
-<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">for</span> (Vector &amp;x : fMembers) x += Draw(factor);</div>
-<div class="line"><span class="lineno">  161</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00126">126</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>    {</div>
+<div class="line"><span class="lineno">  128</span>        fModelRhoXY = Matrix();</div>
+<div class="line"><span class="lineno">  129</span>        fModelRhoYY = Matrix();</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">if</span> (<span class="keyword">const</span> <span class="keyword">auto</span> *hooks = <span class="keyword">dynamic_cast&lt;</span><span class="keyword">const </span>EnsembleModel *<span class="keyword">&gt;</span>(&amp;model))</div>
+<div class="line"><span class="lineno">  131</span>            <span class="comment">// localization: the ensemble word for the model&#39;s covariance mask.</span></div>
+<div class="line"><span class="lineno">  132</span>            <span class="keywordflow">if</span> (!hooks-&gt;CovarianceMask(fModelRhoXY, fModelRhoYY))</div>
+<div class="line"><span class="lineno">  133</span>                fModelRhoXY = fModelRhoYY = Matrix();</div>
+<div class="line"><span class="lineno">  134</span> </div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">if</span> (!fStart.empty())</div>
+<div class="line"><span class="lineno">  136</span>        {</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keywordflow">if</span> (fStart.front().Size() != <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NState())</div>
+<div class="line"><span class="lineno">  138</span>                <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: the members handed in do not have the model&#39;s n.&quot;</span>);</div>
+<div class="line"><span class="lineno">  139</span>            fMembers = fStart;</div>
+<div class="line"><span class="lineno">  140</span>            <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  141</span>        }</div>
+<div class="line"><span class="lineno">  142</span> </div>
+<div class="line"><span class="lineno">  143</span>        fMembers = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a0d9936b946b7eab1de86763f87fa320f">InitialEnsemble</a>(model);</div>
+<div class="line"><span class="lineno">  144</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_a0d9936b946b7eab1de86763f87fa320f"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#a0d9936b946b7eab1de86763f87fa320f">Kalman::Engines::Ensemble::InitialEnsemble</a></div><div class="ttdeci">std::vector&lt; Vector &gt; InitialEnsemble(const Model &amp;model) const</div><div class="ttdoc">The members a run starts from when none were handed in.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00146">Ensemble.cc:146</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1263,8 +1348,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00128">128</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  128</span>{ fInflation = a; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00127">127</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  127</span>{ fInflation = a; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1298,16 +1383,16 @@ Static Public Member Functions</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">rhoXY</td><td>(n, m) multiplies <code>P H^T</code> elementwise. </td></tr>
-    <tr><td class="paramname">rhoYY</td><td>(m, m) multiplies <code>H P H^T</code> elementwise. Pass empty matrices to switch localization off. Tapers set here win over a model's own (<a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a51433dbf1a74d424a9ea78c63142b88e" title="The tapers on P H^T (n x m) and H P H^T (m x m); false for none.">EnsembleModel::Localization()</a>). </td></tr>
+    <tr><td class="paramname">rhoYY</td><td>(m, m) multiplies <code>H P H^T</code> elementwise. Pass empty matrices to switch localization off. Tapers set here win over a model's own (<a class="el" href="class_kalman_1_1_engines_1_1_ensemble_model.html#a4849448dd75d6d48d6145a85693f6211">EnsembleModel::CovarianceMask()</a>). </td></tr>
   </table>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00074">74</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   75</span>    {</div>
-<div class="line"><span class="lineno">   76</span>        fRhoXY = rhoXY;</div>
-<div class="line"><span class="lineno">   77</span>        fRhoYY = rhoYY;</div>
-<div class="line"><span class="lineno">   78</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00061">61</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    {</div>
+<div class="line"><span class="lineno">   63</span>        fRhoXY = rhoXY;</div>
+<div class="line"><span class="lineno">   64</span>        fRhoYY = rhoYY;</div>
+<div class="line"><span class="lineno">   65</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1335,22 +1420,22 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00080">80</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>    {</div>
-<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span> (!members.empty())</div>
-<div class="line"><span class="lineno">   83</span>        {</div>
-<div class="line"><span class="lineno">   84</span>            <span class="keywordflow">if</span> (members.size() != fNMembers)</div>
-<div class="line"><span class="lineno">   85</span>            {</div>
-<div class="line"><span class="lineno">   86</span>                std::ostringstream os;</div>
-<div class="line"><span class="lineno">   87</span>                os &lt;&lt; <span class="stringliteral">&quot;Engines::Ensemble: &quot;</span> &lt;&lt; members.size() &lt;&lt; <span class="stringliteral">&quot; members handed in, the engine has &quot;</span> &lt;&lt; fNMembers &lt;&lt; <span class="charliteral">&#39;.&#39;</span>;</div>
-<div class="line"><span class="lineno">   88</span>                <span class="keywordflow">throw</span> std::invalid_argument(os.str());</div>
-<div class="line"><span class="lineno">   89</span>            }</div>
-<div class="line"><span class="lineno">   90</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : members)</div>
-<div class="line"><span class="lineno">   91</span>                if (x.Size() != members.front().Size())</div>
-<div class="line"><span class="lineno">   92</span>                    throw std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: the members handed in differ in size.&quot;</span>);</div>
-<div class="line"><span class="lineno">   93</span>        }</div>
-<div class="line"><span class="lineno">   94</span>        fStart = std::move(members);</div>
-<div class="line"><span class="lineno">   95</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00067">67</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    {</div>
+<div class="line"><span class="lineno">   69</span>        <span class="keywordflow">if</span> (!members.empty())</div>
+<div class="line"><span class="lineno">   70</span>        {</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">if</span> (members.size() != fNMembers)</div>
+<div class="line"><span class="lineno">   72</span>            {</div>
+<div class="line"><span class="lineno">   73</span>                std::ostringstream os;</div>
+<div class="line"><span class="lineno">   74</span>                os &lt;&lt; <span class="stringliteral">&quot;Engines::Ensemble: &quot;</span> &lt;&lt; members.size() &lt;&lt; <span class="stringliteral">&quot; members handed in, the engine has &quot;</span> &lt;&lt; fNMembers &lt;&lt; <span class="charliteral">&#39;.&#39;</span>;</div>
+<div class="line"><span class="lineno">   75</span>                <span class="keywordflow">throw</span> std::invalid_argument(os.str());</div>
+<div class="line"><span class="lineno">   76</span>            }</div>
+<div class="line"><span class="lineno">   77</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : members)</div>
+<div class="line"><span class="lineno">   78</span>                if (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>.Size() != members.front().Size())</div>
+<div class="line"><span class="lineno">   79</span>                    throw std::invalid_argument(<span class="stringliteral">&quot;Engines::Ensemble: the members handed in differ in size.&quot;</span>);</div>
+<div class="line"><span class="lineno">   80</span>        }</div>
+<div class="line"><span class="lineno">   81</span>        fStart = std::move(members);</div>
+<div class="line"><span class="lineno">   82</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1373,12 +1458,12 @@ Static Public Member Functions</h2></td></tr>
 <p>Standard normal draws to use in place of the engine's own stream. </p>
 <p>Read in numpy's layout: a draw of <code>rows</code> values for each of the N members takes the next <code>rows x N</code> numbers as a row-major <code>(rows, N)</code> block, member <code>s</code> reading column <code>s</code>, as <code>rng.standard_normal((rows, N))</code> does. The forecast draws <code>n</code> rows when <code>Q</code> is not zero, the analysis <code>p</code> rows (the channels present). The initial ensemble is not drawn from them (hand it in with <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html#a23e87bbca2dbd43abb44f6d3842635b0" title="The initial ensemble of every run from now on, instead of a draw from x0 / P0 (a climatology,...">SetMembers()</a>). Running out throws. </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00097">97</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   98</span>    {</div>
-<div class="line"><span class="lineno">   99</span>        fNormals = std::move(normals);</div>
-<div class="line"><span class="lineno">  100</span>        fNormalsUsed = 0;</div>
-<div class="line"><span class="lineno">  101</span>        fHasNormals = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  102</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00084">84</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   85</span>    {</div>
+<div class="line"><span class="lineno">   86</span>        fNormals = std::move(normals);</div>
+<div class="line"><span class="lineno">   87</span>        fNormalsUsed = 0;</div>
+<div class="line"><span class="lineno">   88</span>        fHasNormals = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   89</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1466,10 +1551,10 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_engine.html#ad8f8f7a4a638bec696e482f6e16c9163">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00418">418</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  421</span>    {</div>
-<div class="line"><span class="lineno">  422</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: an ensemble has no RTS smoother; use Forward() only.&quot;</span>);</div>
-<div class="line"><span class="lineno">  423</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00404">404</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  407</span>    {</div>
+<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Engines::Ensemble: an ensemble has no RTS smoother; use Forward() only.&quot;</span>);</div>
+<div class="line"><span class="lineno">  409</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1490,19 +1575,19 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Mean per-state ensemble standard deviation (compare against the RMSE). </p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00194">194</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  195</span>    {</div>
-<div class="line"><span class="lineno">  196</span>        <span class="keyword">const</span> Vector mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
-<div class="line"><span class="lineno">  197</span>        <span class="keyword">const</span> std::size_t n = mean.Size();</div>
-<div class="line"><span class="lineno">  198</span>        <span class="keywordtype">double</span> total = 0.;</div>
-<div class="line"><span class="lineno">  199</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
-<div class="line"><span class="lineno">  200</span>        {</div>
-<div class="line"><span class="lineno">  201</span>            <span class="keywordtype">double</span> v = 0.;</div>
-<div class="line"><span class="lineno">  202</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : fMembers) v += (x(i) - mean(i)) * (x(i) - mean(i));</div>
-<div class="line"><span class="lineno">  203</span>            total += std::sqrt(v / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(fMembers.size()));</div>
-<div class="line"><span class="lineno">  204</span>        }</div>
-<div class="line"><span class="lineno">  205</span>        <span class="keywordflow">return</span> total / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(n);</div>
-<div class="line"><span class="lineno">  206</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00185">185</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  186</span>    {</div>
+<div class="line"><span class="lineno">  187</span>        <span class="keyword">const</span> Vector mean = <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#af0ad80298c85abe40e4447f033faa451">Mean</a>();</div>
+<div class="line"><span class="lineno">  188</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = mean.Size();</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordtype">double</span> total = 0.;</div>
+<div class="line"><span class="lineno">  190</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i)</div>
+<div class="line"><span class="lineno">  191</span>        {</div>
+<div class="line"><span class="lineno">  192</span>            <span class="keywordtype">double</span> v = 0.;</div>
+<div class="line"><span class="lineno">  193</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> Vector &amp;x : fMembers) v += (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) - mean(i)) * (<a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) - mean(i));</div>
+<div class="line"><span class="lineno">  194</span>            total += std::sqrt(v / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(fMembers.size()));</div>
+<div class="line"><span class="lineno">  195</span>        }</div>
+<div class="line"><span class="lineno">  196</span>        <span class="keywordflow">return</span> total / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>);</div>
+<div class="line"><span class="lineno">  197</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1533,8 +1618,8 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00122">122</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  122</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Ensemble Engine&quot;</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8h_source.html#l00121">121</a> of file <a class="el" href="_ensemble_8h_source.html">Ensemble.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Ensemble Engine&quot;</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1606,13 +1691,13 @@ Static Public Member Functions</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_engine.html#a476a54a04b6596c0d517f69bcd18be64">Kalman::Engine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00409">409</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  412</span>    {</div>
-<div class="line"><span class="lineno">  413</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Analyze</a>(model, z, t);</div>
-<div class="line"><span class="lineno">  414</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Estimate</a>(xOut, POut);</div>
-<div class="line"><span class="lineno">  415</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z).size();</div>
-<div class="line"><span class="lineno">  416</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_ab0943c875d1e36b9e7e621c8189675f1"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Kalman::Engines::Ensemble::Analyze</a></div><div class="ttdeci">Vector Analyze(const Model &amp;model, const Vector &amp;z, double t) const</div><div class="ttdoc">Perturbed-observation analysis; NaN channels skipped; returns the mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00312">Ensemble.cc:312</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_ensemble_8cc_source.html#l00395">395</a> of file <a class="el" href="_ensemble_8cc_source.html">Ensemble.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  398</span>    {</div>
+<div class="line"><span class="lineno">  399</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Analyze</a>(model, z, t);</div>
+<div class="line"><span class="lineno">  400</span>        <a class="code hl_function" href="class_kalman_1_1_engines_1_1_ensemble.html#a8d169a34a249f1965e50c7079d934f6b">Estimate</a>(xOut, POut);</div>
+<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_kalman_1_1_utils.html#a01506e8a11d5354a15de55a324751333">Utils::ValidChannels</a>(z).size();</div>
+<div class="line"><span class="lineno">  402</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_engines_1_1_ensemble_html_ab0943c875d1e36b9e7e621c8189675f1"><div class="ttname"><a href="class_kalman_1_1_engines_1_1_ensemble.html#ab0943c875d1e36b9e7e621c8189675f1">Kalman::Engines::Ensemble::Analyze</a></div><div class="ttdeci">Vector Analyze(const Model &amp;model, const Vector &amp;z, double t) const</div><div class="ttdoc">Perturbed-observation analysis; NaN channels skipped; returns the mean.</div><div class="ttdef"><b>Definition</b> <a href="_ensemble_8cc_source.html#l00298">Ensemble.cc:298</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

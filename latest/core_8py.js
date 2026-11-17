@@ -35,6 +35,7 @@ var core_8py =
     [ "lqr_fit", "core_8py.html#a307b650874b4c91492728fd40c8ab214", null ],
     [ "lqr_set_gain", "core_8py.html#a57816e55fac807f5bab354b28ceef17f", null ],
     [ "matrix_exponential", "core_8py.html#ad387b89efdd3e8861078c1d6c1015183", null ],
+    [ "mpc_plan", "core_8py.html#a6cfe9a93dc0f16fbe07acf838033562e", null ],
     [ "mppi_set_draws", "core_8py.html#abc85783ec43404a3986527e4f7d82272", null ],
     [ "names", "core_8py.html#a24045744702d33ce7c0ca87dd3f5b990", null ],
     [ "particle_engine_on_numpy", "core_8py.html#a67df879f2fbe682f379ea8666fb9261f", null ],

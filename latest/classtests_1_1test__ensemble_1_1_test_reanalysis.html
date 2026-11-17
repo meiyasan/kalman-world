@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00391">391</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00412">412</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a27b4367475ea6b1c32b993fdf6444755" name="a27b4367475ea6b1c32b993fdf6444755"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a27b4367475ea6b1c32b993fdf6444755">&#9670;&#160;</a></span>test_regrid_shapes_and_constants()</h2>
@@ -177,15 +177,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00405">405</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  405</span>    <span class="keyword">def </span>test_regrid_shapes_and_constants(self):</div>
-<div class="line"><span class="lineno">  406</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> regrid</div>
-<div class="line"><span class="lineno">  407</span>        fields = np.ones((5, 24, 48))</div>
-<div class="line"><span class="lineno">  408</span>        out = regrid(fields, 16)</div>
-<div class="line"><span class="lineno">  409</span>        self.assertEqual(out.shape, (5, 16, 16))</div>
-<div class="line"><span class="lineno">  410</span>        np.testing.assert_allclose(out, 1.0)</div>
-<div class="line"><span class="lineno">  411</span>        self.assertEqual(regrid(fields[0], 16).shape, (16, 16))   <span class="comment"># single frame</span></div>
-<div class="line"><span class="lineno">  412</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00426">426</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  426</span>    <span class="keyword">def </span>test_regrid_shapes_and_constants(self):</div>
+<div class="line"><span class="lineno">  427</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> regrid</div>
+<div class="line"><span class="lineno">  428</span>        fields = np.ones((5, 24, 48))</div>
+<div class="line"><span class="lineno">  429</span>        out = regrid(fields, 16)</div>
+<div class="line"><span class="lineno">  430</span>        self.assertEqual(out.shape, (5, 16, 16))</div>
+<div class="line"><span class="lineno">  431</span>        np.testing.assert_allclose(out, 1.0)</div>
+<div class="line"><span class="lineno">  432</span>        self.assertEqual(regrid(fields[0], 16).shape, (16, 16))   <span class="comment"># single frame</span></div>
+<div class="line"><span class="lineno">  433</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1geo_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a></div><div class="ttdef"><b>Definition</b> <a href="geo_8py_source.html#l00001">geo.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -206,26 +206,26 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00413">413</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  413</span>    <span class="keyword">def </span>test_rescale_and_full_chain(self):</div>
-<div class="line"><span class="lineno">  414</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> rescale_to_model, reanalysis_truth</div>
-<div class="line"><span class="lineno">  415</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  416</span>        rng = np.random.default_rng(3)</div>
-<div class="line"><span class="lineno">  417</span>        fields = 1e-5 * rng.standard_normal((6, 24, 48)) + 3e-5   <span class="comment"># SI-ish vorticity</span></div>
-<div class="line"><span class="lineno">  418</span>        scaled, scale = rescale_to_model(fields, model)</div>
-<div class="line"><span class="lineno">  419</span>        self.assertAlmostEqual(scaled.std(), model.climatology().<a class="code hl_namespace" href="namespacestd.html">std</a>(), places=10)</div>
-<div class="line"><span class="lineno">  420</span>        traj = reanalysis_truth(fields, model, stride=2)</div>
-<div class="line"><span class="lineno">  421</span>        self.assertEqual(traj.shape, (3, model.n))</div>
-<div class="line"><span class="lineno">  422</span>        <span class="comment"># (u, v, lat, lon) source and replay integration</span></div>
-<div class="line"><span class="lineno">  423</span>        lat = np.linspace(-30, 30, 24); lon = np.linspace(0, 359, 48)</div>
-<div class="line"><span class="lineno">  424</span>        u = rng.standard_normal((6, 24, 48)); v = rng.standard_normal((6, 24, 48))</div>
-<div class="line"><span class="lineno">  425</span>        traj2 = reanalysis_truth((u, v, lat, lon), model)</div>
-<div class="line"><span class="lineno">  426</span>        osse = TwinExperiment(model, n_members=6, truth_trajectory=traj2)</div>
-<div class="line"><span class="lineno">  427</span>        self.assertEqual(osse.n_cycles, 6)</div>
-<div class="line"><span class="lineno">  428</span> </div>
-<div class="line"><span class="lineno">  429</span> </div>
-<div class="line"><span class="lineno">  430</span><span class="comment"># ── Earth representation (land/sea mask, global plot) ────────────────────────</span></div>
-<div class="line"><span class="lineno">  431</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00434">434</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  434</span>    <span class="keyword">def </span>test_rescale_and_full_chain(self):</div>
+<div class="line"><span class="lineno">  435</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> rescale_to_model, reanalysis_truth</div>
+<div class="line"><span class="lineno">  436</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  437</span>        rng = np.random.default_rng(3)</div>
+<div class="line"><span class="lineno">  438</span>        fields = 1e-5 * rng.standard_normal((6, 24, 48)) + 3e-5   <span class="comment"># SI-ish vorticity</span></div>
+<div class="line"><span class="lineno">  439</span>        scaled, scale = rescale_to_model(fields, model)</div>
+<div class="line"><span class="lineno">  440</span>        self.assertAlmostEqual(scaled.std(), model.climatology().<a class="code hl_namespace" href="namespacestd.html">std</a>(), places=10)</div>
+<div class="line"><span class="lineno">  441</span>        traj = reanalysis_truth(fields, model, stride=2)</div>
+<div class="line"><span class="lineno">  442</span>        self.assertEqual(traj.shape, (3, model.n))</div>
+<div class="line"><span class="lineno">  443</span>        <span class="comment"># (u, v, lat, lon) source and replay integration</span></div>
+<div class="line"><span class="lineno">  444</span>        lat = np.linspace(-30, 30, 24); lon = np.linspace(0, 359, 48)</div>
+<div class="line"><span class="lineno">  445</span>        u = rng.standard_normal((6, 24, 48)); v = rng.standard_normal((6, 24, 48))</div>
+<div class="line"><span class="lineno">  446</span>        traj2 = reanalysis_truth((u, v, lat, lon), model)</div>
+<div class="line"><span class="lineno">  447</span>        osse = TwinExperiment(model, n_members=6, truth_trajectory=traj2)</div>
+<div class="line"><span class="lineno">  448</span>        self.assertEqual(osse.n_cycles, 6)</div>
+<div class="line"><span class="lineno">  449</span> </div>
+<div class="line"><span class="lineno">  450</span> </div>
+<div class="line"><span class="lineno">  451</span><span class="comment"># ── Earth representation (land/sea mask, global plot) ────────────────────────</span></div>
+<div class="line"><span class="lineno">  452</span> </div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -246,19 +246,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">u = Ω a cosφ, v = 0  →  ζ = 2 Ω sinφ (classic identity).</pre> 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00393">393</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  393</span>    <span class="keyword">def </span>test_vorticity_solid_body_rotation(self):</div>
-<div class="line"><span class="lineno">  394</span>        <span class="stringliteral">&quot;&quot;&quot;u = Ω a cosφ, v = 0  →  ζ = 2 Ω sinφ (classic identity).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  395</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> vorticity_from_uv, EARTH_RADIUS</div>
-<div class="line"><span class="lineno">  396</span>        lat = np.linspace(-60, 60, 121)</div>
-<div class="line"><span class="lineno">  397</span>        lon = np.linspace(0, 359, 360)</div>
-<div class="line"><span class="lineno">  398</span>        omega = 7.29e-5</div>
-<div class="line"><span class="lineno">  399</span>        u = omega * EARTH_RADIUS * np.cos(np.deg2rad(lat))[:, <span class="keywordtype">None</span>] * np.ones((1, len(lon)))</div>
-<div class="line"><span class="lineno">  400</span>        v = np.zeros_like(u)</div>
-<div class="line"><span class="lineno">  401</span>        zeta = vorticity_from_uv(u, v, lat, lon)</div>
-<div class="line"><span class="lineno">  402</span>        expected = 2 * omega * np.sin(np.deg2rad(lat))[:, <span class="keywordtype">None</span>] * np.ones_like(u)</div>
-<div class="line"><span class="lineno">  403</span>        np.testing.assert_allclose(zeta[2:-2], expected[2:-2], rtol=1e-3, atol=1e-8)</div>
-<div class="line"><span class="lineno">  404</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00414">414</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  414</span>    <span class="keyword">def </span>test_vorticity_solid_body_rotation(self):</div>
+<div class="line"><span class="lineno">  415</span>        <span class="stringliteral">&quot;&quot;&quot;u = Ω a cosφ, v = 0  →  ζ = 2 Ω sinφ (classic identity).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  416</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> vorticity_from_uv, EARTH_RADIUS</div>
+<div class="line"><span class="lineno">  417</span>        lat = np.linspace(-60, 60, 121)</div>
+<div class="line"><span class="lineno">  418</span>        lon = np.linspace(0, 359, 360)</div>
+<div class="line"><span class="lineno">  419</span>        omega = 7.29e-5</div>
+<div class="line"><span class="lineno">  420</span>        u = omega * EARTH_RADIUS * np.cos(np.deg2rad(lat))[:, <span class="keywordtype">None</span>] * np.ones((1, len(lon)))</div>
+<div class="line"><span class="lineno">  421</span>        v = np.zeros_like(u)</div>
+<div class="line"><span class="lineno">  422</span>        zeta = vorticity_from_uv(u, v, lat, lon)</div>
+<div class="line"><span class="lineno">  423</span>        expected = 2 * omega * np.sin(np.deg2rad(lat))[:, <span class="keywordtype">None</span>] * np.ones_like(u)</div>
+<div class="line"><span class="lineno">  424</span>        np.testing.assert_allclose(zeta[2:-2], expected[2:-2], rtol=1e-3, atol=1e-8)</div>
+<div class="line"><span class="lineno">  425</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

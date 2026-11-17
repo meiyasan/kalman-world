@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -160,11 +160,12 @@ The model</h1>
 <h1><a class="anchor" id="how-it-is-built-6"></a>
 How it is built</h1>
 <ul>
+<li><b>Built from operations.</b> Several lines on one channel are <code>compose(..., readout=KalmanReadout.SUMMED)</code>: each line keeps its own state and their measurements add. A bank of windows is <code>compose(w1, w2, w3)</code>, stacked: <code>OscillatorBankModel</code> is the <code>Composite</code> class plus the step that sends the one real signal to every window. Being composites of matrices, both run on the linear filter, and a line's parameter is <code>"&lt;part&gt;.&lt;name&gt;"</code> for <code>joint</code>.</li>
 <li><b>Time stepping.</b> The motion of the envelope is linear, so its step is exact: the matrix exponential of the turn and the decay over one sample.</li>
 <li><b>A window is a mask.</b> <code>OscillatorModel</code> takes a list of candidate frequencies and keeps only those inside <code>fc ± dfc</code>. The signal is demodulated and its sample rate reduced before the filter sees it, and the measurement noise is rescaled to match.</li>
 <li><b>Lines that share a window</b> are estimated together by one filter, which is what separates two lines closer than the window is wide.</li>
 <li><b>A bank</b> sends the same signal to every window.</li>
-<li><b>It runs in C++.</b> A window and a bank are composites of constant matrices: block-diagonal <code>F</code> and <code>Q</code>, and an <code>H</code> that sums the lines of a window (<code>[I I ...]</code>) or stacks the windows. The composite says so (its <code>structure</code> is MATRICES), so <code>filter()</code> runs the linear <a class="el" href="namespace_kalman.html">Kalman</a> pass and the smoother on those matrices in C++ (<code>kf_forward_linear</code>, <code>kf_backward_rts</code>), and <code>sample()</code> runs its state chain there too. The demodulation, the decimation and the reconstruction (<code>preprocess</code>, <code>reconstruct</code>) are signal processing around the filter and stay in numpy and scipy.</li>
+<li><b>It runs in C++.</b> A window and a bank are composites of constant matrices: block-diagonal <code>F</code> and <code>Q</code>, and an <code>H</code> that sums the lines of a window (<code>[I I ...]</code>) or stacks the windows. The composite says so (its <code>structure</code> is MATRICES), so <code>filter()</code> runs the linear <a class="el" href="namespace_kalman.html">Kalman</a> pass and the smoother on those matrices in C++ (<code>kf_forward_linear</code>, <code>kf_backward_rts</code>), and <code>sample()</code> runs its state chain there too. The demodulation, the decimation and the reconstruction (<code>prepare_measurements</code>, <code>reconstruct</code>) are signal processing around the filter and stay in numpy and scipy.</li>
 </ul>
 <h1><a class="anchor" id="using-it-7"></a>
 Using it</h1>
@@ -182,7 +183,7 @@ Reconstruction: resampling artifacts and their fixes</h1>
 <p><b>Cause.</b> <code>resample_poly</code> implicitly <b>zero-pads</b> beyond the data, so its FIR runs into zeros at the boundaries. On <em>upsampling</em> this is asymmetric: the leading edge recovers (the FIR step-onset settles to the right value) but the trailing ~half-filter of output ramps linearly into the zero-pad, suppressing the tail. The <a class="el" href="namespace_kalman.html">Kalman</a> filter and smoother were <b>not</b> the cause — a bare <code>resample_poly</code> round-trip reproduced it.</p>
 <p><b>Fix.</b> <code>_resample</code> now <b>edge-replicates</b> before resampling: it pads both ends with the edge sample, resamples the padded signal, then trims the padded region back out, so the FIR always sees real data across the original span. Output length is unchanged. Result: tail tracks truth (relative RMS error ~0.4% vs a full tail collapse).</p>
 <blockquote class="doxtable">
-<p>&zwj;<b>Subtlety — the pad must be a whole number of <code>down</code>-blocks.</b> Trimming the pad back out by a <em>rounded</em> offset <code>round(pad·up/down)</code> leaves a fractional-sample group delay (~2 ms in the violin-mode setup). A delay <code>δt</code> rotates every off-carrier phasor by <code>2π·Δf·δt</code>, so an on-resonance (DC) envelope is unaffected but a detuned mode picks up a phase error that grows with <code>Δf</code> — silently capping the subtraction of detuned modes at ~30 dB. Padding by a multiple of <code>down</code> makes <code>pad·up/down</code> an exact integer (zero delay); detuned single-mode subtraction then reaches 50–60 dB, and the 3-peak FUSED demo goes from ~30 dB to ~40–54 dB. </p>
+<p>&zwj;<b>Subtlety — the pad must be a whole number of <code>down</code>-blocks.</b> Trimming the pad back out by a <em>rounded</em> offset <code>round(pad·up/down)</code> leaves a fractional-sample group delay (~2 ms in the violin-mode setup). A delay <code>δt</code> rotates every off-carrier phasor by <code>2π·Δf·δt</code>, so an on-resonance (DC) envelope is unaffected but a detuned mode picks up a phase error that grows with <code>Δf</code> — silently capping the subtraction of detuned modes at ~30 dB. Padding by a multiple of <code>down</code> makes <code>pad·up/down</code> an exact integer (zero delay); detuned single-mode subtraction then reaches 50–60 dB, and the 3-peak summed demo goes from ~30 dB to ~40–54 dB. </p>
 </blockquote>
 <h2><a class="anchor" id="autotoc_md2-bad-suppression-range--apparent-leakage-outside-the-window"></a>
 2. "Bad suppression range" — apparent leakage outside the window</h2>

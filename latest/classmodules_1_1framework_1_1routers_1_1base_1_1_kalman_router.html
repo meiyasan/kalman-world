@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -194,7 +194,7 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:aed43331c2bc52914f25f261c5a1faf99"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Abstract base for IKF model routers.
+<div class="textblock"><pre class="fragment">Abstract base for model routers.
 
 Subclass contract:
 
@@ -617,13 +617,13 @@ no library, or a configuration the C++ class does not take.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Train the router on labelled NIS histories.
 
-Called by ``InteractiveKalmanFilter.fit()``.
+Called by ``Router.fit()`` (the model made by ``route``).
 Default is a no-op (stateless routers need no training).
 
 Parameters
 ----------
 nis_arrays : list of ndarray (T_i, M)
-    NIS history per training scenario (Bayesian-IKF run).
+    NIS history per training scenario (from a run with the Bayesian decision).
 labels_arrays : list of int ndarray (T_i,)
     True regime index 0 … M−1 at every step.
 </pre> 
@@ -633,13 +633,13 @@ labels_arrays : list of int ndarray (T_i,)
 <div class="fragment"><div class="line"><span class="lineno">   95</span>            **kwargs) -&gt; <span class="stringliteral">&quot;KalmanRouter&quot;</span>:</div>
 <div class="line"><span class="lineno">   96</span>        <span class="stringliteral">&quot;&quot;&quot;Train the router on labelled NIS histories.</span></div>
 <div class="line"><span class="lineno">   97</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">   98</span><span class="stringliteral">        Called by ``InteractiveKalmanFilter.fit()``.</span></div>
+<div class="line"><span class="lineno">   98</span><span class="stringliteral">        Called by ``Router.fit()`` (the model made by ``route``).</span></div>
 <div class="line"><span class="lineno">   99</span><span class="stringliteral">        Default is a no-op (stateless routers need no training).</span></div>
 <div class="line"><span class="lineno">  100</span><span class="stringliteral"></span> </div>
 <div class="line"><span class="lineno">  101</span><span class="stringliteral">        Parameters</span></div>
 <div class="line"><span class="lineno">  102</span><span class="stringliteral">        ----------</span></div>
 <div class="line"><span class="lineno">  103</span><span class="stringliteral">        nis_arrays : list of ndarray (T_i, M)</span></div>
-<div class="line"><span class="lineno">  104</span><span class="stringliteral">            NIS history per training scenario (Bayesian-IKF run).</span></div>
+<div class="line"><span class="lineno">  104</span><span class="stringliteral">            NIS history per training scenario (from a run with the Bayesian decision).</span></div>
 <div class="line"><span class="lineno">  105</span><span class="stringliteral">        labels_arrays : list of int ndarray (T_i,)</span></div>
 <div class="line"><span class="lineno">  106</span><span class="stringliteral">            True regime index 0 … M−1 at every step.</span></div>
 <div class="line"><span class="lineno">  107</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>

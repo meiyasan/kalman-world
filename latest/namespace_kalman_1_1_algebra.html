@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -872,7 +872,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   87</span>                        A(p, k) = c * apk - s * aqk;</div>
 <div class="line"><span class="lineno">   88</span>                        A(q, k) = s * apk + c * aqk;</div>
 <div class="line"><span class="lineno">   89</span>                    }</div>
-<div class="line"><span class="lineno">   90</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; n; ++k)</div>
+<div class="line"><span class="lineno">   90</span>                    <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++k)</div>
 <div class="line"><span class="lineno">   91</span>                    {</div>
 <div class="line"><span class="lineno">   92</span>                        <span class="keyword">const</span> <span class="keywordtype">double</span> vkp = vectors(k, p), vkq = vectors(k, q);</div>
 <div class="line"><span class="lineno">   93</span>                        vectors(k, p) = c * vkp - s * vkq;</div>
@@ -882,10 +882,11 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">   97</span>        }</div>
 <div class="line"><span class="lineno">   98</span> </div>
 <div class="line"><span class="lineno">   99</span>        values.<a class="code hl_function" href="class_kalman_1_1_vector.html#a3f35ee4449f39a2a11c3d71bf8c27ca8">Resize</a>(n);</div>
-<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) values(i) = A(i, i);</div>
+<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) values(i) = A(i, i);</div>
 <div class="line"><span class="lineno">  101</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><span class="lineno">  102</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_a3f35ee4449f39a2a11c3d71bf8c27ca8"><div class="ttname"><a href="class_kalman_1_1_vector.html#a3f35ee4449f39a2a11c3d71bf8c27ca8">Kalman::Vector::Resize</a></div><div class="ttdeci">void Resize(std::size_t n, double fill=0.)</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00053">Matrix.cc:53</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -939,7 +940,7 @@ Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_symmetric_8cc_source.html#l00035">35</a> of file <a class="el" href="_symmetric_8cc_source.html">Symmetric.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   36</span>    {</div>
-<div class="line"><span class="lineno">   37</span>        <span class="keyword">const</span> std::size_t n = P.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>();</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keyword">const</span> std::size_t n = P.Rows();</div>
 <div class="line"><span class="lineno">   38</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i)</div>
 <div class="line"><span class="lineno">   39</span>            <span class="keywordflow">for</span> (std::size_t j = i + 1; j &lt; n; ++j)</div>
 <div class="line"><span class="lineno">   40</span>            {</div>

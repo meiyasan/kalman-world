@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,7 +165,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><pre class="fragment">The unscented filter on a Python-written model runs in C++ and gives the
 Python engine's result. A framework model's f takes w and its h takes v, so
 the noise is carried through the maps: sigma points over state and noise.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00173">173</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00172">172</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1e0207cc5964dec44a30dab73dba27cc" name="a1e0207cc5964dec44a30dab73dba27cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1e0207cc5964dec44a30dab73dba27cc">&#9670;&#160;</a></span>both()</h2>
@@ -205,16 +205,16 @@ the noise is carried through the maps: sigma points over state and noise.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00178">178</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  178</span>    <span class="keyword">def </span>both(self, make, z, **engine):</div>
-<div class="line"><span class="lineno">  179</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> UnscentedKalmanFilter</div>
-<div class="line"><span class="lineno">  180</span>        <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  181</span>            ref = UnscentedKalmanFilter(make(), **engine).forward(z)</div>
-<div class="line"><span class="lineno">  182</span>        flt = UnscentedKalmanFilter(make(), **engine)</div>
-<div class="line"><span class="lineno">  183</span>        self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
-<div class="line"><span class="lineno">  184</span>        got = flt.forward(z)</div>
-<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">return</span> (np.asarray(ref.xk), np.asarray(ref.Pk)), (np.asarray(got.xk), np.asarray(got.Pk))</div>
-<div class="line"><span class="lineno">  186</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00177">177</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  177</span>    <span class="keyword">def </span>both(self, make, z, **engine):</div>
+<div class="line"><span class="lineno">  178</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> UnscentedKalmanFilter</div>
+<div class="line"><span class="lineno">  179</span>        <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  180</span>            ref = UnscentedKalmanFilter(make(), **engine).forward(z)</div>
+<div class="line"><span class="lineno">  181</span>        flt = UnscentedKalmanFilter(make(), **engine)</div>
+<div class="line"><span class="lineno">  182</span>        self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  183</span>        got = flt.forward(z)</div>
+<div class="line"><span class="lineno">  184</span>        <span class="keywordflow">return</span> (np.asarray(ref.xk), np.asarray(ref.Pk)), (np.asarray(got.xk), np.asarray(got.Pk))</div>
+<div class="line"><span class="lineno">  185</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -263,10 +263,10 @@ the noise is carried through the maps: sigma points over state and noise.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00187">187</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  187</span>    <span class="keyword">def </span>close(self, a, b, rtol, what):</div>
-<div class="line"><span class="lineno">  188</span>        self.assertLess(np.nanmax(np.abs(a - b)) / max(1.0, np.nanmax(np.abs(a))), rtol, what)</div>
-<div class="line"><span class="lineno">  189</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00186">186</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  186</span>    <span class="keyword">def </span>close(self, a, b, rtol, what):</div>
+<div class="line"><span class="lineno">  187</span>        self.assertLess(np.nanmax(np.abs(a - b)) / max(1.0, np.nanmax(np.abs(a))), rtol, what)</div>
+<div class="line"><span class="lineno">  188</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -286,14 +286,14 @@ the noise is carried through the maps: sigma points over state and noise.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00190">190</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  190</span>    <span class="keyword">def </span>data(self):</div>
-<div class="line"><span class="lineno">  191</span>        rng = np.random.default_rng(5)</div>
-<div class="line"><span class="lineno">  192</span>        t = np.arange(300) / 50.0</div>
-<div class="line"><span class="lineno">  193</span>        z = (0.5 * np.cos(3.1 * t) + rng.normal(0, 0.1, 300)).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  194</span>        z[40:48] = np.nan</div>
-<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">return</span> z</div>
-<div class="line"><span class="lineno">  196</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00189">189</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>    <span class="keyword">def </span>data(self):</div>
+<div class="line"><span class="lineno">  190</span>        rng = np.random.default_rng(5)</div>
+<div class="line"><span class="lineno">  191</span>        t = np.arange(300) / 50.0</div>
+<div class="line"><span class="lineno">  192</span>        z = (0.5 * np.cos(3.1 * t) + rng.normal(0, 0.1, 300)).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  193</span>        z[40:48] = np.nan</div>
+<div class="line"><span class="lineno">  194</span>        <span class="keywordflow">return</span> z</div>
+<div class="line"><span class="lineno">  195</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -314,16 +314,16 @@ the noise is carried through the maps: sigma points over state and noise.</pre>
 </div><div class="memdoc">
 <pre class="fragment">alpha = 1e-3, the default, has weights of order 1e6, so the last digits
 of f are amplified: agreement is to 1e-6 here, not to 1e-9.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00202">202</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  202</span>    <span class="keyword">def </span>test_default_spread_on_application_models(self):</div>
-<div class="line"><span class="lineno">  203</span>        <span class="stringliteral">&quot;&quot;&quot;alpha = 1e-3, the default, has weights of order 1e6, so the last digits</span></div>
-<div class="line"><span class="lineno">  204</span><span class="stringliteral">        of f are amplified: agreement is to 1e-6 here, not to 1e-9.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  205</span>        _, fixes = synthetic_track(n_steps=200, seed=1)</div>
-<div class="line"><span class="lineno">  206</span>        (x0, P0), (x1, P1) = self.both(<span class="keyword">lambda</span>: StormModel(<span class="stringliteral">&quot;TC&quot;</span>, omega=-0.022), fixes)</div>
-<div class="line"><span class="lineno">  207</span>        self.close(x0, x1, 1e-6, <span class="stringliteral">&quot;storm state&quot;</span>)</div>
-<div class="line"><span class="lineno">  208</span>        self.close(P0, P1, 1e-6, <span class="stringliteral">&quot;storm covariance&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00201">201</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  201</span>    <span class="keyword">def </span>test_default_spread_on_application_models(self):</div>
+<div class="line"><span class="lineno">  202</span>        <span class="stringliteral">&quot;&quot;&quot;alpha = 1e-3, the default, has weights of order 1e6, so the last digits</span></div>
+<div class="line"><span class="lineno">  203</span><span class="stringliteral">        of f are amplified: agreement is to 1e-6 here, not to 1e-9.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  204</span>        _, fixes = synthetic_track(n_steps=200, seed=1)</div>
+<div class="line"><span class="lineno">  205</span>        (x0, P0), (x1, P1) = self.both(<span class="keyword">lambda</span>: StormModel(<span class="stringliteral">&quot;TC&quot;</span>, omega=-0.022), fixes)</div>
+<div class="line"><span class="lineno">  206</span>        self.close(x0, x1, 1e-6, <span class="stringliteral">&quot;storm state&quot;</span>)</div>
+<div class="line"><span class="lineno">  207</span>        self.close(P0, P1, 1e-6, <span class="stringliteral">&quot;storm covariance&quot;</span>)</div>
+<div class="line"><span class="lineno">  208</span> </div>
 <div class="line"><span class="lineno">  209</span> </div>
-<div class="line"><span class="lineno">  210</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -343,12 +343,12 @@ of f are amplified: agreement is to 1e-6 here, not to 1e-9.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00197">197</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  197</span>    <span class="keyword">def </span>test_noise_carried_through_the_maps(self):</div>
-<div class="line"><span class="lineno">  198</span>        (x0, P0), (x1, P1) = self.both(_NoisyPendulum, self.data(), alpha=0.5)</div>
-<div class="line"><span class="lineno">  199</span>        self.close(x0, x1, 1e-7, <span class="stringliteral">&quot;state&quot;</span>)</div>
-<div class="line"><span class="lineno">  200</span>        self.close(P0, P1, 1e-7, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
-<div class="line"><span class="lineno">  201</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00196">196</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  196</span>    <span class="keyword">def </span>test_noise_carried_through_the_maps(self):</div>
+<div class="line"><span class="lineno">  197</span>        (x0, P0), (x1, P1) = self.both(_NoisyPendulum, self.data(), alpha=0.5)</div>
+<div class="line"><span class="lineno">  198</span>        self.close(x0, x1, 1e-7, <span class="stringliteral">&quot;state&quot;</span>)</div>
+<div class="line"><span class="lineno">  199</span>        self.close(P0, P1, 1e-7, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
+<div class="line"><span class="lineno">  200</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

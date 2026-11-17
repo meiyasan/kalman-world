@@ -6,18 +6,32 @@ var namespacemodules_1_1framework =
     [ "controllers", "namespacemodules_1_1framework_1_1controllers.html", "namespacemodules_1_1framework_1_1controllers" ],
     [ "diagnostics", "namespacemodules_1_1framework_1_1diagnostics.html", "namespacemodules_1_1framework_1_1diagnostics" ],
     [ "engine", "namespacemodules_1_1framework_1_1engine.html", "namespacemodules_1_1framework_1_1engine" ],
+    [ "engine_models", "namespacemodules_1_1framework_1_1engine__models.html", "namespacemodules_1_1framework_1_1engine__models" ],
     [ "engines", "namespacemodules_1_1framework_1_1engines.html", "namespacemodules_1_1framework_1_1engines" ],
     [ "filter", "namespacemodules_1_1framework_1_1filter.html", "namespacemodules_1_1framework_1_1filter" ],
     [ "filters", "namespacemodules_1_1framework_1_1filters.html", "namespacemodules_1_1framework_1_1filters" ],
+    [ "instrument", "namespacemodules_1_1framework_1_1instrument.html", "namespacemodules_1_1framework_1_1instrument" ],
     [ "integrator", "namespacemodules_1_1framework_1_1integrator.html", "namespacemodules_1_1framework_1_1integrator" ],
     [ "integrators", "namespacemodules_1_1framework_1_1integrators.html", "namespacemodules_1_1framework_1_1integrators" ],
     [ "io", "namespacemodules_1_1framework_1_1io.html", "namespacemodules_1_1framework_1_1io" ],
     [ "model", "namespacemodules_1_1framework_1_1model.html", "namespacemodules_1_1framework_1_1model" ],
     [ "models", "namespacemodules_1_1framework_1_1models.html", "namespacemodules_1_1framework_1_1models" ],
     [ "native", "namespacemodules_1_1framework_1_1native.html", "namespacemodules_1_1framework_1_1native" ],
+    [ "operations", "namespacemodules_1_1framework_1_1operations.html", [
+      [ "add_instrument", "namespacemodules_1_1framework_1_1operations.html#aa223758ddbabd227804cc681ba815694", null ],
+      [ "add_sensor", "namespacemodules_1_1framework_1_1operations.html#a5118932e6f5f50f42d6aa8a5cac5e15b", null ],
+      [ "compose", "namespacemodules_1_1framework_1_1operations.html#a89ebac09da9dd9a3d124d3a922aadf49", null ],
+      [ "joint", "namespacemodules_1_1framework_1_1operations.html#ae5d25ca1165a83f8233c3bee54a1776f", null ],
+      [ "lag", "namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253", null ],
+      [ "route", "namespacemodules_1_1framework_1_1operations.html#a6191fe4ee927cd9645179bfdde237b88", null ]
+    ] ],
     [ "provider", "namespacemodules_1_1framework_1_1provider.html", "namespacemodules_1_1framework_1_1provider" ],
     [ "routers", "namespacemodules_1_1framework_1_1routers.html", "namespacemodules_1_1framework_1_1routers" ],
     [ "sampler", "namespacemodules_1_1framework_1_1sampler.html", "namespacemodules_1_1framework_1_1sampler" ],
+    [ "sensor", "namespacemodules_1_1framework_1_1sensor.html", "namespacemodules_1_1framework_1_1sensor" ],
+    [ "sensors", "namespacemodules_1_1framework_1_1sensors.html", "namespacemodules_1_1framework_1_1sensors" ],
     [ "solver", "namespacemodules_1_1framework_1_1solver.html", "namespacemodules_1_1framework_1_1solver" ],
-    [ "solvers", "namespacemodules_1_1framework_1_1solvers.html", "namespacemodules_1_1framework_1_1solvers" ]
+    [ "solvers", "namespacemodules_1_1framework_1_1solvers.html", "namespacemodules_1_1framework_1_1solvers" ],
+    [ "tuner", "namespacemodules_1_1framework_1_1tuner.html", "namespacemodules_1_1framework_1_1tuner" ],
+    [ "tuners", "namespacemodules_1_1framework_1_1tuners.html", "namespacemodules_1_1framework_1_1tuners" ]
 ];

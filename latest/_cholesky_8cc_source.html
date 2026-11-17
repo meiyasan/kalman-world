@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -200,7 +200,7 @@ $(document).ready(function(){initNavTree('_cholesky_8cc_source.html',''); initRe
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    <span class="keywordflow">for</span> (std::size_t k = ii + 1; k &lt; n; ++k) sum -= L(k, ii) * x(k);</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    x(ii) = sum / L(ii, ii);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; n; ++i) inv(i, c) = x(i);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; ++i) inv(i, c) = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            }</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordflow">return</span> inv;</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        }</div>
@@ -313,6 +313,8 @@ $(document).ready(function(){initNavTree('_cholesky_8cc_source.html',''); initRe
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_a5f2fb6f00c70ecf35abacff39e338c80"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#a5f2fb6f00c70ecf35abacff39e338c80">Kalman::Algebra::Solve</a></div><div class="ttdeci">Vector Solve(const Matrix &amp;S, const Vector &amp;b)</div><div class="ttdoc">Solve S x = b for symmetric positive-definite S (see Inverse()).</div><div class="ttdef"><b>Definition</b> <a href="_cholesky_8cc_source.html#l00114">Cholesky.cc:114</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_aced32b35f09cce32e1007fe054a22362"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#aced32b35f09cce32e1007fe054a22362">Kalman::Algebra::SymmetricEigen</a></div><div class="ttdeci">bool SymmetricEigen(const Matrix &amp;S, Vector &amp;values, Matrix &amp;vectors)</div><div class="ttdoc">Eigendecomposition of a symmetric matrix, by cyclic Jacobi rotations.</div><div class="ttdef"><b>Definition</b> <a href="_symmetric_8cc_source.html#l00047">Symmetric.cc:47</a></div></div>
 <div class="ttc" id="anamespace_kalman_1_1_algebra_html_afee8f395be6e1debf96446204eab1eac"><div class="ttname"><a href="namespace_kalman_1_1_algebra.html#afee8f395be6e1debf96446204eab1eac">Kalman::Algebra::Cholesky</a></div><div class="ttdeci">Matrix Cholesky(const Matrix &amp;S)</div><div class="ttdoc">Lower-triangular factor L of S = L L^T, or an empty matrix when S is not positive-definite.</div><div class="ttdef"><b>Definition</b> <a href="_cholesky_8cc_source.html#l00021">Cholesky.cc:21</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

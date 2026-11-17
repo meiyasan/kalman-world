@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -279,8 +279,8 @@ Protected Member Functions</h2></td></tr>
 Static Protected Member Functions</h2></td></tr>
 <tr class="memitem:a863e66a31f4ebc74ea2f1f874fd37955" id="r_a863e66a31f4ebc74ea2f1f874fd37955"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_gate_context.html">GateContext</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html#a863e66a31f4ebc74ea2f1f874fd37955">_context</a> (model, Pk, zpred, H, R)</td></tr>
 <tr class="separator:a863e66a31f4ebc74ea2f1f874fd37955"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2051e3450877d5908ab900b22c081272" id="r_a2051e3450877d5908ab900b22c081272"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html#a2051e3450877d5908ab900b22c081272">_twin</a> (model)</td></tr>
-<tr class="separator:a2051e3450877d5908ab900b22c081272"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cd83105531fd7b052e38ebbb449a0cc" id="r_a7cd83105531fd7b052e38ebbb449a0cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html#a7cd83105531fd7b052e38ebbb449a0cc">_counterpart</a> (model)</td></tr>
+<tr class="separator:a7cd83105531fd7b052e38ebbb449a0cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Static Protected Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
 <tr class="memitem:a5ad6ecb2cdc682449d7ffb3e70183db5 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine" id="r_a5ad6ecb2cdc682449d7ffb3e70183db5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a5ad6ecb2cdc682449d7ffb3e70183db5">_safe_L</a> (model, x, u, t)</td></tr>
 <tr class="separator:a5ad6ecb2cdc682449d7ffb3e70183db5 inherit pro_static_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -451,6 +451,39 @@ Two gate entry points, same math:
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a7cd83105531fd7b052e38ebbb449a0cc" name="a7cd83105531fd7b052e38ebbb449a0cc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7cd83105531fd7b052e38ebbb449a0cc">&#9670;&#160;</a></span>_counterpart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.combinatorial.CombinatorialKalmanEngine._counterpart </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The model's C++ counterpart when it has one for this configuration.</pre> 
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00352">352</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  352</span>    <span class="keyword">def </span>_counterpart(model):</div>
+<div class="line"><span class="lineno">  353</span>        <span class="stringliteral">&quot;&quot;&quot;The model&#39;s C++ counterpart when it has one for this configuration.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  354</span>        handle_of = getattr(model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  355</span>        <span class="keywordflow">return</span> handle_of() <span class="keywordflow">if</span> handle_of <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  356</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a2804c9f70d18e7f6304b80c31cf7cfb2" name="a2804c9f70d18e7f6304b80c31cf7cfb2"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2804c9f70d18e7f6304b80c31cf7cfb2">&#9670;&#160;</a></span>_find_native()</h2>
 
@@ -503,63 +536,63 @@ Two gate entry points, same math:
 </table>
 </div><div class="memdoc">
 <pre class="fragment">The best candidate of every seed, in seed order, found by the C++ engine.</pre> 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00351">351</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  351</span>    <span class="keyword">def </span>_find_native(self, model, hits, radii, seeds):</div>
-<div class="line"><span class="lineno">  352</span>        <span class="stringliteral">&quot;&quot;&quot;The best candidate of every seed, in seed order, found by the C++ engine.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  353</span>        <span class="keyword">from</span> ..models.native <span class="keyword">import</span> callback_handle</div>
-<div class="line"><span class="lineno">  354</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  355</span>        lib, ffi = core.lib, core.ffi</div>
-<div class="line"><span class="lineno">  356</span>        n, m = model.n, model.m</div>
-<div class="line"><span class="lineno">  357</span>        <span class="comment"># A model with a C++ twin is propagated there; any other through its own f and h.</span></div>
-<div class="line"><span class="lineno">  358</span>        handle, keep = self._twin(model), ([],)</div>
-<div class="line"><span class="lineno">  359</span>        <span class="keywordflow">if</span> handle <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  360</span>            handle, keep = callback_handle(model)</div>
-<div class="line"><span class="lineno">  361</span> </div>
-<div class="line"><span class="lineno">  362</span>        <span class="keyword">def </span>ints(values):</div>
-<div class="line"><span class="lineno">  363</span>            <span class="keywordflow">return</span> ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, [int(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> values])</div>
-<div class="line"><span class="lineno">  364</span> </div>
-<div class="line"><span class="lineno">  365</span>        flat = np.ascontiguousarray(np.concatenate([h.reshape(-1) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits]) <span class="keywordflow">if</span> hits <span class="keywordflow">else</span> np.zeros(0))</div>
-<div class="line"><span class="lineno">  366</span>        rr = np.ascontiguousarray(radii, dtype=np.float64)</div>
-<div class="line"><span class="lineno">  367</span>        sx = np.ascontiguousarray([np.asarray(s.x, float).reshape(-1) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds])</div>
-<div class="line"><span class="lineno">  368</span>        sP = np.ascontiguousarray([np.asarray(s.P, float).reshape(n, n) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds])</div>
-<div class="line"><span class="lineno">  369</span>        nan = float(<span class="stringliteral">&quot;nan&quot;</span>)</div>
-<div class="line"><span class="lineno">  370</span>        <span class="comment"># shared_hit_frac = 1 keeps every seed&#39;s best candidate: arbitration is</span></div>
-<div class="line"><span class="lineno">  371</span>        <span class="comment"># done here afterwards, so that `candidates` holds them all.</span></div>
-<div class="line"><span class="lineno">  372</span>        found = lib.kalman_ckf_find(</div>
-<div class="line"><span class="lineno">  373</span>            handle, len(hits), core.cdptr(rr), ints(len(h) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits), core.cdptr(flat),</div>
-<div class="line"><span class="lineno">  374</span>            len(seeds), ints(s.hit_ids[0][0] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds), ints(s.hit_ids[0][1] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds),</div>
-<div class="line"><span class="lineno">  375</span>            core.cdptr(sx), core.cdptr(sP),</div>
-<div class="line"><span class="lineno">  376</span>            nan <span class="keywordflow">if</span> self.chi2_cut <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.chi2_cut,</div>
-<div class="line"><span class="lineno">  377</span>            nan <span class="keywordflow">if</span> self.hole_penalty <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.hole_penalty,</div>
-<div class="line"><span class="lineno">  378</span>            self.max_candidates, self.max_holes, self.min_hits, 1.0)</div>
-<div class="line"><span class="lineno">  379</span>        <span class="keywordflow">if</span> found == ffi.NULL:</div>
-<div class="line"><span class="lineno">  380</span>            <span class="keywordflow">if</span> keep[-1]:</div>
-<div class="line"><span class="lineno">  381</span>                <span class="keywordflow">raise</span> keep[-1][0]                    <span class="comment"># an exception raised by the Python model</span></div>
-<div class="line"><span class="lineno">  382</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;track finding: {core.last_error()}&quot;</span>)</div>
-<div class="line"><span class="lineno">  383</span>        found = ffi.gc(found, lib.kalman_tracks_destroy)</div>
-<div class="line"><span class="lineno">  384</span> </div>
-<div class="line"><span class="lineno">  385</span>        by_seed = {}</div>
-<div class="line"><span class="lineno">  386</span>        chi2, score, holes = ffi.new(<span class="stringliteral">&quot;double *&quot;</span>), ffi.new(<span class="stringliteral">&quot;double *&quot;</span>), ffi.new(<span class="stringliteral">&quot;int *&quot;</span>)</div>
-<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(core.check(lib.kalman_tracks_count(found), <span class="stringliteral">&quot;tracks_count&quot;</span>)):</div>
-<div class="line"><span class="lineno">  388</span>            H = core.check(lib.kalman_track_hits(found, i), <span class="stringliteral">&quot;track_hits&quot;</span>)</div>
-<div class="line"><span class="lineno">  389</span>            x, P, Fa = np.empty(n), np.empty((n, n)), np.empty((n, n))</div>
-<div class="line"><span class="lineno">  390</span>            core.check(lib.kalman_track_summary(found, i, chi2, score, holes,</div>
-<div class="line"><span class="lineno">  391</span>                                                core.dptr(x), core.dptr(P), core.dptr(Fa)), <span class="stringliteral">&quot;track_summary&quot;</span>)</div>
-<div class="line"><span class="lineno">  392</span>            layers, idx = ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, H), ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, H)</div>
-<div class="line"><span class="lineno">  393</span>            rad = np.empty(H); xk = np.empty((H, n)); Pk = np.empty((H, n, n)); zk = np.empty((H, m))</div>
-<div class="line"><span class="lineno">  394</span>            px = np.empty((H, n)); pP = np.empty((H, n, n)); Fc = np.empty((H, n, n))</div>
-<div class="line"><span class="lineno">  395</span>            core.check(lib.kalman_track_copy(found, i, layers, idx, core.dptr(rad), core.dptr(xk), core.dptr(Pk),</div>
-<div class="line"><span class="lineno">  396</span>                                             core.dptr(zk), core.dptr(px), core.dptr(pP), core.dptr(Fc)), <span class="stringliteral">&quot;track_copy&quot;</span>)</div>
-<div class="line"><span class="lineno">  397</span>            track = TrackCandidate(</div>
-<div class="line"><span class="lineno">  398</span>                x=x.reshape(n, 1), P=P, chi2=float(chi2[0]), score=float(score[0]), holes=int(holes[0]),</div>
-<div class="line"><span class="lineno">  399</span>                hit_ids=[(int(layers[k]), int(idx[k])) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], radii=[float(r) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> rad],</div>
-<div class="line"><span class="lineno">  400</span>                xk=[xk[k].reshape(n, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], Pk=[Pk[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
-<div class="line"><span class="lineno">  401</span>                zk=[zk[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
-<div class="line"><span class="lineno">  402</span>                priors=[(px[k].reshape(n, 1), pP[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], Fc=[Fc[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
-<div class="line"><span class="lineno">  403</span>                Faccum=Fa)</div>
-<div class="line"><span class="lineno">  404</span>            by_seed[track.hit_ids[0]] = track</div>
-<div class="line"><span class="lineno">  405</span>        <span class="keywordflow">return</span> [by_seed[s.hit_ids[0]] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds <span class="keywordflow">if</span> s.hit_ids[0] <span class="keywordflow">in</span> by_seed]</div>
-<div class="line"><span class="lineno">  406</span> </div>
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00357">357</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  357</span>    <span class="keyword">def </span>_find_native(self, model, hits, radii, seeds):</div>
+<div class="line"><span class="lineno">  358</span>        <span class="stringliteral">&quot;&quot;&quot;The best candidate of every seed, in seed order, found by the C++ engine.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  359</span>        <span class="keyword">from</span> ..models.native <span class="keyword">import</span> callback_handle</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  361</span>        lib, ffi = core.lib, core.ffi</div>
+<div class="line"><span class="lineno">  362</span>        n, m = model.n, model.m</div>
+<div class="line"><span class="lineno">  363</span>        <span class="comment"># A model with a C++ counterpart is propagated there; any other through its own f and h.</span></div>
+<div class="line"><span class="lineno">  364</span>        handle, keep = self._counterpart(model), ([],)</div>
+<div class="line"><span class="lineno">  365</span>        <span class="keywordflow">if</span> handle <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  366</span>            handle, keep = callback_handle(model)</div>
+<div class="line"><span class="lineno">  367</span> </div>
+<div class="line"><span class="lineno">  368</span>        <span class="keyword">def </span>ints(values):</div>
+<div class="line"><span class="lineno">  369</span>            <span class="keywordflow">return</span> ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, [int(v) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> values])</div>
+<div class="line"><span class="lineno">  370</span> </div>
+<div class="line"><span class="lineno">  371</span>        flat = np.ascontiguousarray(np.concatenate([h.reshape(-1) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits]) <span class="keywordflow">if</span> hits <span class="keywordflow">else</span> np.zeros(0))</div>
+<div class="line"><span class="lineno">  372</span>        rr = np.ascontiguousarray(radii, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  373</span>        sx = np.ascontiguousarray([np.asarray(s.x, float).reshape(-1) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds])</div>
+<div class="line"><span class="lineno">  374</span>        sP = np.ascontiguousarray([np.asarray(s.P, float).reshape(n, n) <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds])</div>
+<div class="line"><span class="lineno">  375</span>        nan = float(<span class="stringliteral">&quot;nan&quot;</span>)</div>
+<div class="line"><span class="lineno">  376</span>        <span class="comment"># shared_hit_frac = 1 keeps every seed&#39;s best candidate: arbitration is</span></div>
+<div class="line"><span class="lineno">  377</span>        <span class="comment"># done here afterwards, so that `candidates` holds them all.</span></div>
+<div class="line"><span class="lineno">  378</span>        found = lib.kalman_ckf_find(</div>
+<div class="line"><span class="lineno">  379</span>            handle, len(hits), core.cdptr(rr), ints(len(h) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits), core.cdptr(flat),</div>
+<div class="line"><span class="lineno">  380</span>            len(seeds), ints(s.hit_ids[0][0] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds), ints(s.hit_ids[0][1] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds),</div>
+<div class="line"><span class="lineno">  381</span>            core.cdptr(sx), core.cdptr(sP),</div>
+<div class="line"><span class="lineno">  382</span>            nan <span class="keywordflow">if</span> self.chi2_cut <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.chi2_cut,</div>
+<div class="line"><span class="lineno">  383</span>            nan <span class="keywordflow">if</span> self.hole_penalty <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> self.hole_penalty,</div>
+<div class="line"><span class="lineno">  384</span>            self.max_candidates, self.max_holes, self.min_hits, 1.0)</div>
+<div class="line"><span class="lineno">  385</span>        <span class="keywordflow">if</span> found == ffi.NULL:</div>
+<div class="line"><span class="lineno">  386</span>            <span class="keywordflow">if</span> keep[-1]:</div>
+<div class="line"><span class="lineno">  387</span>                <span class="keywordflow">raise</span> keep[-1][0]                    <span class="comment"># an exception raised by the Python model</span></div>
+<div class="line"><span class="lineno">  388</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;track finding: {core.last_error()}&quot;</span>)</div>
+<div class="line"><span class="lineno">  389</span>        found = ffi.gc(found, lib.kalman_tracks_destroy)</div>
+<div class="line"><span class="lineno">  390</span> </div>
+<div class="line"><span class="lineno">  391</span>        by_seed = {}</div>
+<div class="line"><span class="lineno">  392</span>        chi2, score, holes = ffi.new(<span class="stringliteral">&quot;double *&quot;</span>), ffi.new(<span class="stringliteral">&quot;double *&quot;</span>), ffi.new(<span class="stringliteral">&quot;int *&quot;</span>)</div>
+<div class="line"><span class="lineno">  393</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(core.check(lib.kalman_tracks_count(found), <span class="stringliteral">&quot;tracks_count&quot;</span>)):</div>
+<div class="line"><span class="lineno">  394</span>            H = core.check(lib.kalman_track_hits(found, i), <span class="stringliteral">&quot;track_hits&quot;</span>)</div>
+<div class="line"><span class="lineno">  395</span>            x, P, Fa = np.empty(n), np.empty((n, n)), np.empty((n, n))</div>
+<div class="line"><span class="lineno">  396</span>            core.check(lib.kalman_track_summary(found, i, chi2, score, holes,</div>
+<div class="line"><span class="lineno">  397</span>                                                core.dptr(x), core.dptr(P), core.dptr(Fa)), <span class="stringliteral">&quot;track_summary&quot;</span>)</div>
+<div class="line"><span class="lineno">  398</span>            layers, idx = ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, H), ffi.new(<span class="stringliteral">&quot;int[]&quot;</span>, H)</div>
+<div class="line"><span class="lineno">  399</span>            rad = np.empty(H); xk = np.empty((H, n)); Pk = np.empty((H, n, n)); zk = np.empty((H, m))</div>
+<div class="line"><span class="lineno">  400</span>            px = np.empty((H, n)); pP = np.empty((H, n, n)); Fc = np.empty((H, n, n))</div>
+<div class="line"><span class="lineno">  401</span>            core.check(lib.kalman_track_copy(found, i, layers, idx, core.dptr(rad), core.dptr(xk), core.dptr(Pk),</div>
+<div class="line"><span class="lineno">  402</span>                                             core.dptr(zk), core.dptr(px), core.dptr(pP), core.dptr(Fc)), <span class="stringliteral">&quot;track_copy&quot;</span>)</div>
+<div class="line"><span class="lineno">  403</span>            track = TrackCandidate(</div>
+<div class="line"><span class="lineno">  404</span>                x=x.reshape(n, 1), P=P, chi2=float(chi2[0]), score=float(score[0]), holes=int(holes[0]),</div>
+<div class="line"><span class="lineno">  405</span>                hit_ids=[(int(layers[k]), int(idx[k])) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], radii=[float(r) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> rad],</div>
+<div class="line"><span class="lineno">  406</span>                xk=[xk[k].reshape(n, 1) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], Pk=[Pk[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
+<div class="line"><span class="lineno">  407</span>                zk=[zk[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
+<div class="line"><span class="lineno">  408</span>                priors=[(px[k].reshape(n, 1), pP[k]) <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)], Fc=[Fc[k] <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(H)],</div>
+<div class="line"><span class="lineno">  409</span>                Faccum=Fa)</div>
+<div class="line"><span class="lineno">  410</span>            by_seed[track.hit_ids[0]] = track</div>
+<div class="line"><span class="lineno">  411</span>        <span class="keywordflow">return</span> [by_seed[s.hit_ids[0]] <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds <span class="keywordflow">if</span> s.hit_ids[0] <span class="keywordflow">in</span> by_seed]</div>
+<div class="line"><span class="lineno">  412</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -603,48 +636,15 @@ Two gate entry points, same math:
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00336">336</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  336</span>    <span class="keyword">def </span>_native_search(self, model, seeds) -&gt; bool:</div>
-<div class="line"><span class="lineno">  337</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  338</span>        <span class="keywordflow">if</span> type(self) <span class="keywordflow">is</span> <span class="keywordflow">not</span> CombinatorialKalmanEngine <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  340</span>        <span class="comment"># Seeds built by seed(): one assigned hit each, nothing accumulated yet.</span></div>
-<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">if</span> any(len(s.hit_ids) != 1 <span class="keywordflow">or</span> s.holes <span class="keywordflow">or</span> s.chi2 <span class="keywordflow">or</span> s.score <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds):</div>
-<div class="line"><span class="lineno">  342</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><span class="lineno">  343</span>        <span class="keywordflow">return</span> bool(seeds) <span class="keywordflow">and</span> (self._twin(model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> native.callback_eligible(model))</div>
-<div class="line"><span class="lineno">  344</span> </div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="a2051e3450877d5908ab900b22c081272" name="a2051e3450877d5908ab900b22c081272"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2051e3450877d5908ab900b22c081272">&#9670;&#160;</a></span>_twin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">modules.framework.engines.combinatorial.CombinatorialKalmanEngine._twin </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>model</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<pre class="fragment">The model's C++ twin when it has one for this configuration.</pre> 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00346">346</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  346</span>    <span class="keyword">def </span>_twin(model):</div>
-<div class="line"><span class="lineno">  347</span>        <span class="stringliteral">&quot;&quot;&quot;The model&#39;s C++ twin when it has one for this configuration.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  348</span>        handle_of = getattr(model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">return</span> handle_of() <span class="keywordflow">if</span> handle_of <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00342">342</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>    <span class="keyword">def </span>_native_search(self, model, seeds) -&gt; bool:</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">if</span> type(self) <span class="keywordflow">is</span> <span class="keywordflow">not</span> CombinatorialKalmanEngine <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  345</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  346</span>        <span class="comment"># Seeds built by seed(): one assigned hit each, nothing accumulated yet.</span></div>
+<div class="line"><span class="lineno">  347</span>        <span class="keywordflow">if</span> any(len(s.hit_ids) != 1 <span class="keywordflow">or</span> s.holes <span class="keywordflow">or</span> s.chi2 <span class="keywordflow">or</span> s.score <span class="keywordflow">for</span> s <span class="keywordflow">in</span> seeds):</div>
+<div class="line"><span class="lineno">  348</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">return</span> bool(seeds) <span class="keywordflow">and</span> (self._counterpart(model) <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> native.callback_eligible(model))</div>
 <div class="line"><span class="lineno">  350</span> </div>
 </div><!-- fragment -->
 </div>
@@ -675,16 +675,16 @@ Two gate entry points, same math:
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Greedy hit competition: accept best tracks, reject those overlapping too much.</pre> 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00448">448</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  448</span>    <span class="keyword">def </span>arbitrate(self, tracks):</div>
-<div class="line"><span class="lineno">  449</span>        <span class="stringliteral">&quot;&quot;&quot;Greedy hit competition: accept best tracks, reject those overlapping too much.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  450</span>        accepted, used = [], set()</div>
-<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">for</span> c <span class="keywordflow">in</span> sorted(tracks, key=<span class="keyword">lambda</span> c: c.quality):</div>
-<div class="line"><span class="lineno">  452</span>            ids = set(c.hit_ids)</div>
-<div class="line"><span class="lineno">  453</span>            <span class="keywordflow">if</span> len(ids &amp; used) &lt;= self.shared_hit_frac * len(ids):</div>
-<div class="line"><span class="lineno">  454</span>                accepted.append(c)</div>
-<div class="line"><span class="lineno">  455</span>                used |= ids</div>
-<div class="line"><span class="lineno">  456</span>        <span class="keywordflow">return</span> accepted</div>
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00454">454</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  454</span>    <span class="keyword">def </span>arbitrate(self, tracks):</div>
+<div class="line"><span class="lineno">  455</span>        <span class="stringliteral">&quot;&quot;&quot;Greedy hit competition: accept best tracks, reject those overlapping too much.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  456</span>        accepted, used = [], set()</div>
+<div class="line"><span class="lineno">  457</span>        <span class="keywordflow">for</span> c <span class="keywordflow">in</span> sorted(tracks, key=<span class="keyword">lambda</span> c: c.quality):</div>
+<div class="line"><span class="lineno">  458</span>            ids = set(c.hit_ids)</div>
+<div class="line"><span class="lineno">  459</span>            <span class="keywordflow">if</span> len(ids &amp; used) &lt;= self.shared_hit_frac * len(ids):</div>
+<div class="line"><span class="lineno">  460</span>                accepted.append(c)</div>
+<div class="line"><span class="lineno">  461</span>                used |= ids</div>
+<div class="line"><span class="lineno">  462</span>        <span class="keywordflow">return</span> accepted</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -728,23 +728,23 @@ Two gate entry points, same math:
 <pre class="fragment">RTS-smooth every track from :meth:`forward` → new, smoothed candidates.</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a339facb5a6c7f14fca1b6a74ac8fbf98">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00410">410</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  410</span>    <span class="keyword">def </span>backward(self, model, tracks, **kwargs):</div>
-<div class="line"><span class="lineno">  411</span>        <span class="stringliteral">&quot;&quot;&quot;RTS-smooth every track from :meth:`forward` → new, smoothed candidates.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  412</span>        smoothed = []</div>
-<div class="line"><span class="lineno">  413</span>        <span class="keywordflow">for</span> c <span class="keywordflow">in</span> tracks:</div>
-<div class="line"><span class="lineno">  414</span>            N = c.n_hits</div>
-<div class="line"><span class="lineno">  415</span>            xs = [<span class="keywordtype">None</span>] * N; Ps = [<span class="keywordtype">None</span>] * N</div>
-<div class="line"><span class="lineno">  416</span>            xs[-1], Ps[-1] = c.xk[-1], c.Pk[-1]</div>
-<div class="line"><span class="lineno">  417</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N - 2, -1, -1):</div>
-<div class="line"><span class="lineno">  418</span>                xs[k], Ps[k] = self._smooth(</div>
-<div class="line"><span class="lineno">  419</span>                    model, (c.xk[k], c.Pk[k]), c.priors[k + 1], (xs[k + 1], Ps[k + 1]), c.Fc[k + 1]</div>
-<div class="line"><span class="lineno">  420</span>                )</div>
-<div class="line"><span class="lineno">  421</span>            out = c.branch()</div>
-<div class="line"><span class="lineno">  422</span>            out.xk, out.Pk = xs, Ps</div>
-<div class="line"><span class="lineno">  423</span>            smoothed.append(out)</div>
-<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">return</span> smoothed</div>
-<div class="line"><span class="lineno">  425</span> </div>
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00416">416</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  416</span>    <span class="keyword">def </span>backward(self, model, tracks, **kwargs):</div>
+<div class="line"><span class="lineno">  417</span>        <span class="stringliteral">&quot;&quot;&quot;RTS-smooth every track from :meth:`forward` → new, smoothed candidates.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  418</span>        smoothed = []</div>
+<div class="line"><span class="lineno">  419</span>        <span class="keywordflow">for</span> c <span class="keywordflow">in</span> tracks:</div>
+<div class="line"><span class="lineno">  420</span>            N = c.n_hits</div>
+<div class="line"><span class="lineno">  421</span>            xs = [<span class="keywordtype">None</span>] * N; Ps = [<span class="keywordtype">None</span>] * N</div>
+<div class="line"><span class="lineno">  422</span>            xs[-1], Ps[-1] = c.xk[-1], c.Pk[-1]</div>
+<div class="line"><span class="lineno">  423</span>            <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(N - 2, -1, -1):</div>
+<div class="line"><span class="lineno">  424</span>                xs[k], Ps[k] = self._smooth(</div>
+<div class="line"><span class="lineno">  425</span>                    model, (c.xk[k], c.Pk[k]), c.priors[k + 1], (xs[k + 1], Ps[k + 1]), c.Fc[k + 1]</div>
+<div class="line"><span class="lineno">  426</span>                )</div>
+<div class="line"><span class="lineno">  427</span>            out = c.branch()</div>
+<div class="line"><span class="lineno">  428</span>            out.xk, out.Pk = xs, Ps</div>
+<div class="line"><span class="lineno">  429</span>            smoothed.append(out)</div>
+<div class="line"><span class="lineno">  430</span>        <span class="keywordflow">return</span> smoothed</div>
+<div class="line"><span class="lineno">  431</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -827,76 +827,82 @@ list[TrackCandidate] — the accepted, arbitrated tracks.
 <div class="line"><span class="lineno">  258</span><span class="stringliteral">        -------</span></div>
 <div class="line"><span class="lineno">  259</span><span class="stringliteral">        list[TrackCandidate] — the accepted, arbitrated tracks.</span></div>
 <div class="line"><span class="lineno">  260</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  261</span>        radii = np.asarray(layer_radii <span class="keywordflow">if</span> layer_radii <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> model.radii, dtype=float)</div>
-<div class="line"><span class="lineno">  262</span>        hits = [np.asarray(h, dtype=float).reshape(-1, model.m) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits_by_layer]</div>
-<div class="line"><span class="lineno">  263</span>        L = len(hits)</div>
-<div class="line"><span class="lineno">  264</span>        I = np.eye(model.n)</div>
-<div class="line"><span class="lineno">  265</span> </div>
-<div class="line"><span class="lineno">  266</span>        cut = self.gate_threshold(model)</div>
-<div class="line"><span class="lineno">  267</span>        penalty = self.hole_cost(model)</div>
-<div class="line"><span class="lineno">  268</span>        seeds = self.seed(model, hits, radii) <span class="keywordflow">if</span> seeds <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> list(seeds)</div>
-<div class="line"><span class="lineno">  269</span> </div>
-<div class="line"><span class="lineno">  270</span>        <span class="keywordflow">if</span> self._native_search(model, seeds):</div>
-<div class="line"><span class="lineno">  271</span>            self.candidates = self._find_native(model, hits, radii, seeds)</div>
-<div class="line"><span class="lineno">  272</span>            <span class="keywordflow">return</span> self.arbitrate(self.candidates)</div>
-<div class="line"><span class="lineno">  273</span> </div>
-<div class="line"><span class="lineno">  274</span>        seed_tracks = []</div>
-<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">for</span> seed <span class="keywordflow">in</span> seeds:</div>
-<div class="line"><span class="lineno">  276</span>            cands = [seed]</div>
-<div class="line"><span class="lineno">  277</span>            <span class="comment"># Follow outward from the seed&#39;s own layer, whichever that is: seed() picks</span></div>
-<div class="line"><span class="lineno">  278</span>            <span class="comment"># the innermost *populated* layer (not necessarily layer 0), and callers may</span></div>
-<div class="line"><span class="lineno">  279</span>            <span class="comment"># pass seeds of their own. Starting at a fixed layer 1 would re-scan the</span></div>
-<div class="line"><span class="lineno">  280</span>            <span class="comment"># seeding layer, letting a track take a second hit at the same radius off a</span></div>
-<div class="line"><span class="lineno">  281</span>            <span class="comment"># zero-length propagation.</span></div>
-<div class="line"><span class="lineno">  282</span>            <span class="keywordflow">for</span> l <span class="keywordflow">in</span> range(seed.seed_layer + 1, L):</div>
-<div class="line"><span class="lineno">  283</span>                r = float(radii[l]); layer = hits[l]</div>
-<div class="line"><span class="lineno">  284</span>                <span class="comment"># NaN channels need the per-hit compression in gate(); without them the</span></div>
-<div class="line"><span class="lineno">  285</span>                <span class="comment"># whole layer shares one prepared gate (see GateContext).</span></div>
-<div class="line"><span class="lineno">  286</span>                masked = layer.size <span class="keywordflow">and</span> bool(np.isnan(layer).any())</div>
-<div class="line"><span class="lineno">  287</span>                grown = []</div>
-<div class="line"><span class="lineno">  288</span>                <span class="keywordflow">for</span> c <span class="keywordflow">in</span> cands:</div>
-<div class="line"><span class="lineno">  289</span>                    x, P, F = self._predict(model, c.x, c.P, t=r)</div>
-<div class="line"><span class="lineno">  290</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.all(np.isfinite(x)):</div>
-<div class="line"><span class="lineno">  291</span>                        <span class="keywordflow">continue</span>                                  <span class="comment"># track left the detector</span></div>
-<div class="line"><span class="lineno">  292</span>                    Faccum = F @ c.Faccum</div>
-<div class="line"><span class="lineno">  293</span>                    ctx = <span class="keywordtype">None</span> <span class="keywordflow">if</span> masked <span class="keywordflow">else</span> self.gate_context(model, x, P, t=r)</div>
-<div class="line"><span class="lineno">  294</span>                    <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(layer)):</div>
-<div class="line"><span class="lineno">  295</span>                        <span class="keywordflow">if</span> ctx <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  296</span>                            chi2, xk, Pk = self.gate(model, x, P, layer[j].reshape(model.m, 1), t=r)</div>
-<div class="line"><span class="lineno">  297</span>                        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  298</span>                            chi2, xk = ctx.score(x, layer[j]); Pk = ctx.P</div>
-<div class="line"><span class="lineno">  299</span>                        <span class="keywordflow">if</span> chi2 &lt; cut:</div>
-<div class="line"><span class="lineno">  300</span>                            nc = c.branch()</div>
-<div class="line"><span class="lineno">  301</span>                            nc.x, nc.P = xk, Pk</div>
-<div class="line"><span class="lineno">  302</span>                            nc.chi2 += chi2; nc.score += chi2</div>
-<div class="line"><span class="lineno">  303</span>                            nc.hit_ids.append((l, j))</div>
-<div class="line"><span class="lineno">  304</span>                            nc.radii.append(r)</div>
-<div class="line"><span class="lineno">  305</span>                            nc.xk.append(xk); nc.Pk.append(Pk)</div>
-<div class="line"><span class="lineno">  306</span>                            nc.zk.append(layer[j])</div>
-<div class="line"><span class="lineno">  307</span>                            nc.priors.append((x, P)); nc.Fc.append(Faccum)</div>
-<div class="line"><span class="lineno">  308</span>                            nc.Faccum = I</div>
-<div class="line"><span class="lineno">  309</span>                            grown.append(nc)</div>
-<div class="line"><span class="lineno">  310</span>                    <span class="comment"># no-hit (hole) branch: the track survives a missed layer</span></div>
-<div class="line"><span class="lineno">  311</span>                    <span class="keywordflow">if</span> c.holes &lt; self.max_holes:</div>
-<div class="line"><span class="lineno">  312</span>                        nc = c.branch()</div>
-<div class="line"><span class="lineno">  313</span>                        nc.x, nc.P = x, P</div>
-<div class="line"><span class="lineno">  314</span>                        nc.holes += 1; nc.score += penalty</div>
-<div class="line"><span class="lineno">  315</span>                        nc.Faccum = Faccum</div>
-<div class="line"><span class="lineno">  316</span>                        grown.append(nc)</div>
-<div class="line"><span class="lineno">  317</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> grown:</div>
-<div class="line"><span class="lineno">  318</span>                    <span class="keywordflow">break</span></div>
-<div class="line"><span class="lineno">  319</span>                grown.sort(key=<span class="keyword">lambda</span> c: c.score)</div>
-<div class="line"><span class="lineno">  320</span>                cands = grown[: self.max_candidates]</div>
-<div class="line"><span class="lineno">  321</span> </div>
-<div class="line"><span class="lineno">  322</span>            finished = [c <span class="keywordflow">for</span> c <span class="keywordflow">in</span> cands <span class="keywordflow">if</span> c.n_hits &gt;= self.min_hits]</div>
-<div class="line"><span class="lineno">  323</span>            <span class="keywordflow">if</span> finished:</div>
-<div class="line"><span class="lineno">  324</span>                seed_tracks.append(min(finished, key=<span class="keyword">lambda</span> c: c.quality))</div>
-<div class="line"><span class="lineno">  325</span> </div>
-<div class="line"><span class="lineno">  326</span>        <span class="comment"># Kept for inspection: the best candidate of every seed, before arbitration</span></div>
-<div class="line"><span class="lineno">  327</span>        <span class="comment"># decides which of them survive as tracks (CombinatorialKalmanFilter.candidates).</span></div>
-<div class="line"><span class="lineno">  328</span>        self.candidates = seed_tracks</div>
-<div class="line"><span class="lineno">  329</span>        <span class="keywordflow">return</span> self.arbitrate(seed_tracks)</div>
-<div class="line"><span class="lineno">  330</span> </div>
+<div class="line"><span class="lineno">  261</span>        <span class="comment"># What track finding asks beyond the model contract: the layers, and a seed</span></div>
+<div class="line"><span class="lineno">  262</span>        <span class="comment"># per hit (KalmanDetectorModel; Kalman::Tracking::Detector in C++).</span></div>
+<div class="line"><span class="lineno">  263</span>        <span class="keyword">from</span> ..engine_models <span class="keyword">import</span> KalmanDetectorModel</div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(model, KalmanDetectorModel):</div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">raise</span> TypeError(f<span class="stringliteral">&quot;{type(model).__name__} cannot be tracked: it is not a KalmanDetectorModel &quot;</span></div>
+<div class="line"><span class="lineno">  266</span>                            <span class="stringliteral">&quot;(layer radii and seed_state).&quot;</span>)</div>
+<div class="line"><span class="lineno">  267</span>        radii = np.asarray(layer_radii <span class="keywordflow">if</span> layer_radii <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> model.radii, dtype=float)</div>
+<div class="line"><span class="lineno">  268</span>        hits = [np.asarray(h, dtype=float).reshape(-1, model.m) <span class="keywordflow">for</span> h <span class="keywordflow">in</span> hits_by_layer]</div>
+<div class="line"><span class="lineno">  269</span>        L = len(hits)</div>
+<div class="line"><span class="lineno">  270</span>        I = np.eye(model.n)</div>
+<div class="line"><span class="lineno">  271</span> </div>
+<div class="line"><span class="lineno">  272</span>        cut = self.gate_threshold(model)</div>
+<div class="line"><span class="lineno">  273</span>        penalty = self.hole_cost(model)</div>
+<div class="line"><span class="lineno">  274</span>        seeds = self.seed(model, hits, radii) <span class="keywordflow">if</span> seeds <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> list(seeds)</div>
+<div class="line"><span class="lineno">  275</span> </div>
+<div class="line"><span class="lineno">  276</span>        <span class="keywordflow">if</span> self._native_search(model, seeds):</div>
+<div class="line"><span class="lineno">  277</span>            self.candidates = self._find_native(model, hits, radii, seeds)</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">return</span> self.arbitrate(self.candidates)</div>
+<div class="line"><span class="lineno">  279</span> </div>
+<div class="line"><span class="lineno">  280</span>        seed_tracks = []</div>
+<div class="line"><span class="lineno">  281</span>        <span class="keywordflow">for</span> seed <span class="keywordflow">in</span> seeds:</div>
+<div class="line"><span class="lineno">  282</span>            cands = [seed]</div>
+<div class="line"><span class="lineno">  283</span>            <span class="comment"># Follow outward from the seed&#39;s own layer, whichever that is: seed() picks</span></div>
+<div class="line"><span class="lineno">  284</span>            <span class="comment"># the innermost *populated* layer (not necessarily layer 0), and callers may</span></div>
+<div class="line"><span class="lineno">  285</span>            <span class="comment"># pass seeds of their own. Starting at a fixed layer 1 would re-scan the</span></div>
+<div class="line"><span class="lineno">  286</span>            <span class="comment"># seeding layer, letting a track take a second hit at the same radius off a</span></div>
+<div class="line"><span class="lineno">  287</span>            <span class="comment"># zero-length propagation.</span></div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordflow">for</span> l <span class="keywordflow">in</span> range(seed.seed_layer + 1, L):</div>
+<div class="line"><span class="lineno">  289</span>                r = float(radii[l]); layer = hits[l]</div>
+<div class="line"><span class="lineno">  290</span>                <span class="comment"># NaN channels need the per-hit compression in gate(); without them the</span></div>
+<div class="line"><span class="lineno">  291</span>                <span class="comment"># whole layer shares one prepared gate (see GateContext).</span></div>
+<div class="line"><span class="lineno">  292</span>                masked = layer.size <span class="keywordflow">and</span> bool(np.isnan(layer).any())</div>
+<div class="line"><span class="lineno">  293</span>                grown = []</div>
+<div class="line"><span class="lineno">  294</span>                <span class="keywordflow">for</span> c <span class="keywordflow">in</span> cands:</div>
+<div class="line"><span class="lineno">  295</span>                    x, P, F = self._predict(model, c.x, c.P, t=r)</div>
+<div class="line"><span class="lineno">  296</span>                    <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.all(np.isfinite(x)):</div>
+<div class="line"><span class="lineno">  297</span>                        <span class="keywordflow">continue</span>                                  <span class="comment"># track left the detector</span></div>
+<div class="line"><span class="lineno">  298</span>                    Faccum = F @ c.Faccum</div>
+<div class="line"><span class="lineno">  299</span>                    ctx = <span class="keywordtype">None</span> <span class="keywordflow">if</span> masked <span class="keywordflow">else</span> self.gate_context(model, x, P, t=r)</div>
+<div class="line"><span class="lineno">  300</span>                    <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(layer)):</div>
+<div class="line"><span class="lineno">  301</span>                        <span class="keywordflow">if</span> ctx <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  302</span>                            chi2, xk, Pk = self.gate(model, x, P, layer[j].reshape(model.m, 1), t=r)</div>
+<div class="line"><span class="lineno">  303</span>                        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  304</span>                            chi2, xk = ctx.score(x, layer[j]); Pk = ctx.P</div>
+<div class="line"><span class="lineno">  305</span>                        <span class="keywordflow">if</span> chi2 &lt; cut:</div>
+<div class="line"><span class="lineno">  306</span>                            nc = c.branch()</div>
+<div class="line"><span class="lineno">  307</span>                            nc.x, nc.P = xk, Pk</div>
+<div class="line"><span class="lineno">  308</span>                            nc.chi2 += chi2; nc.score += chi2</div>
+<div class="line"><span class="lineno">  309</span>                            nc.hit_ids.append((l, j))</div>
+<div class="line"><span class="lineno">  310</span>                            nc.radii.append(r)</div>
+<div class="line"><span class="lineno">  311</span>                            nc.xk.append(xk); nc.Pk.append(Pk)</div>
+<div class="line"><span class="lineno">  312</span>                            nc.zk.append(layer[j])</div>
+<div class="line"><span class="lineno">  313</span>                            nc.priors.append((x, P)); nc.Fc.append(Faccum)</div>
+<div class="line"><span class="lineno">  314</span>                            nc.Faccum = I</div>
+<div class="line"><span class="lineno">  315</span>                            grown.append(nc)</div>
+<div class="line"><span class="lineno">  316</span>                    <span class="comment"># no-hit (hole) branch: the track survives a missed layer</span></div>
+<div class="line"><span class="lineno">  317</span>                    <span class="keywordflow">if</span> c.holes &lt; self.max_holes:</div>
+<div class="line"><span class="lineno">  318</span>                        nc = c.branch()</div>
+<div class="line"><span class="lineno">  319</span>                        nc.x, nc.P = x, P</div>
+<div class="line"><span class="lineno">  320</span>                        nc.holes += 1; nc.score += penalty</div>
+<div class="line"><span class="lineno">  321</span>                        nc.Faccum = Faccum</div>
+<div class="line"><span class="lineno">  322</span>                        grown.append(nc)</div>
+<div class="line"><span class="lineno">  323</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> grown:</div>
+<div class="line"><span class="lineno">  324</span>                    <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  325</span>                grown.sort(key=<span class="keyword">lambda</span> c: c.score)</div>
+<div class="line"><span class="lineno">  326</span>                cands = grown[: self.max_candidates]</div>
+<div class="line"><span class="lineno">  327</span> </div>
+<div class="line"><span class="lineno">  328</span>            finished = [c <span class="keywordflow">for</span> c <span class="keywordflow">in</span> cands <span class="keywordflow">if</span> c.n_hits &gt;= self.min_hits]</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">if</span> finished:</div>
+<div class="line"><span class="lineno">  330</span>                seed_tracks.append(min(finished, key=<span class="keyword">lambda</span> c: c.quality))</div>
+<div class="line"><span class="lineno">  331</span> </div>
+<div class="line"><span class="lineno">  332</span>        <span class="comment"># Kept for inspection: the best candidate of every seed, before arbitration</span></div>
+<div class="line"><span class="lineno">  333</span>        <span class="comment"># decides which of them survive as tracks (CombinatorialKalmanFilter.candidates).</span></div>
+<div class="line"><span class="lineno">  334</span>        self.candidates = seed_tracks</div>
+<div class="line"><span class="lineno">  335</span>        <span class="keywordflow">return</span> self.arbitrate(seed_tracks)</div>
+<div class="line"><span class="lineno">  336</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1170,26 +1176,26 @@ Assumes every measurement channel is present; for hits with NaN channels use
       </table>
 </div><div class="memdoc">
 <pre class="fragment">One seed per hit on the innermost non-empty layer.</pre> 
-<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00429">429</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  429</span>    <span class="keyword">def </span>seed(self, model, hits, radii):</div>
-<div class="line"><span class="lineno">  430</span>        <span class="stringliteral">&quot;&quot;&quot;One seed per hit on the innermost non-empty layer.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  431</span>        seeds = []</div>
-<div class="line"><span class="lineno">  432</span>        I = np.eye(model.n)</div>
-<div class="line"><span class="lineno">  433</span>        <span class="keywordflow">for</span> l <span class="keywordflow">in</span> range(len(hits)):</div>
-<div class="line"><span class="lineno">  434</span>            <span class="keywordflow">if</span> len(hits[l]) == 0:</div>
-<div class="line"><span class="lineno">  435</span>                <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  436</span>            r = float(radii[l])</div>
-<div class="line"><span class="lineno">  437</span>            <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(hits[l])):</div>
-<div class="line"><span class="lineno">  438</span>                hit = hits[l][j]</div>
-<div class="line"><span class="lineno">  439</span>                x0, P0 = model.seed_state(hit)</div>
-<div class="line"><span class="lineno">  440</span>                seeds.append(TrackCandidate(</div>
-<div class="line"><span class="lineno">  441</span>                    x=x0, P=P0, hit_ids=[(l, j)], radii=[r],</div>
-<div class="line"><span class="lineno">  442</span>                    xk=[x0], Pk=[P0], zk=[np.asarray(hit, float).reshape(-1)],</div>
-<div class="line"><span class="lineno">  443</span>                    priors=[(x0, P0)], Fc=[I], Faccum=I,</div>
-<div class="line"><span class="lineno">  444</span>                ))</div>
-<div class="line"><span class="lineno">  445</span>            <span class="keywordflow">break</span>                                   <span class="comment"># seed only from the first populated layer</span></div>
-<div class="line"><span class="lineno">  446</span>        <span class="keywordflow">return</span> seeds</div>
-<div class="line"><span class="lineno">  447</span> </div>
+<p class="definition">Definition at line <a class="el" href="combinatorial_8py_source.html#l00435">435</a> of file <a class="el" href="combinatorial_8py_source.html">combinatorial.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  435</span>    <span class="keyword">def </span>seed(self, model, hits, radii):</div>
+<div class="line"><span class="lineno">  436</span>        <span class="stringliteral">&quot;&quot;&quot;One seed per hit on the innermost non-empty layer.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  437</span>        seeds = []</div>
+<div class="line"><span class="lineno">  438</span>        I = np.eye(model.n)</div>
+<div class="line"><span class="lineno">  439</span>        <span class="keywordflow">for</span> l <span class="keywordflow">in</span> range(len(hits)):</div>
+<div class="line"><span class="lineno">  440</span>            <span class="keywordflow">if</span> len(hits[l]) == 0:</div>
+<div class="line"><span class="lineno">  441</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  442</span>            r = float(radii[l])</div>
+<div class="line"><span class="lineno">  443</span>            <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(hits[l])):</div>
+<div class="line"><span class="lineno">  444</span>                hit = hits[l][j]</div>
+<div class="line"><span class="lineno">  445</span>                x0, P0 = model.seed_state(hit)</div>
+<div class="line"><span class="lineno">  446</span>                seeds.append(TrackCandidate(</div>
+<div class="line"><span class="lineno">  447</span>                    x=x0, P=P0, hit_ids=[(l, j)], radii=[r],</div>
+<div class="line"><span class="lineno">  448</span>                    xk=[x0], Pk=[P0], zk=[np.asarray(hit, float).reshape(-1)],</div>
+<div class="line"><span class="lineno">  449</span>                    priors=[(x0, P0)], Fc=[I], Faccum=I,</div>
+<div class="line"><span class="lineno">  450</span>                ))</div>
+<div class="line"><span class="lineno">  451</span>            <span class="keywordflow">break</span>                                   <span class="comment"># seed only from the first populated layer</span></div>
+<div class="line"><span class="lineno">  452</span>        <span class="keywordflow">return</span> seeds</div>
+<div class="line"><span class="lineno">  453</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -231,7 +231,7 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="test__native__core_8py_source.html#l00323">323</a> of file <a class="el" href="test__native__core_8py_source.html">test_native_core.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  323</span>    <span class="keyword">def </span>test_api_binding_selects_the_native_backend(self):</div>
-<div class="line"><span class="lineno">  324</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;p&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50,</div>
+<div class="line"><span class="lineno">  324</span>        spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;pendulum&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;p&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50,</div>
 <div class="line"><span class="lineno">  325</span>                <span class="stringliteral">&quot;bindings&quot;</span>: {<span class="stringliteral">&quot;engine&quot;</span>: <span class="stringliteral">&quot;extended&quot;</span>, <span class="stringliteral">&quot;backend&quot;</span>: <span class="stringliteral">&quot;native&quot;</span>}}</div>
 <div class="line"><span class="lineno">  326</span>        filt = api.make_filter(spec)</div>
 <div class="line"><span class="lineno">  327</span>        self.assertEqual(type(filt.engine).__name__, <span class="stringliteral">&quot;NativeEngine&quot;</span>)</div>

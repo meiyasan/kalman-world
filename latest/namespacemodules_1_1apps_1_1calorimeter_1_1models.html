@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,10 +161,10 @@ Classes</h2></td></tr>
 Functions</h2></td></tr>
 <tr class="memitem:a21eac0030e15703059832fd442653141" id="r_a21eac0030e15703059832fd442653141"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1calorimeter_1_1models.html#a21eac0030e15703059832fd442653141">_straight_line_transition</a> (A, dz)</td></tr>
 <tr class="separator:a21eac0030e15703059832fd442653141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2dc585b21aadbe54ee24c9f6f941e48d" id="r_a2dc585b21aadbe54ee24c9f6f941e48d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1calorimeter_1_1models.html#a2dc585b21aadbe54ee24c9f6f941e48d">ecal_model_from_hits</a> (hits, sensor_id=0, preset=&quot;lyso&quot;, **kw)</td></tr>
-<tr class="separator:a2dc585b21aadbe54ee24c9f6f941e48d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9666032b13a178cc9cf308e4176f246e" id="r_a9666032b13a178cc9cf308e4176f246e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1calorimeter_1_1models.html#a9666032b13a178cc9cf308e4176f246e">hcal_model_from_hits</a> (hits, sensor_id=0, preset=&quot;fe_scint&quot;, **kw)</td></tr>
-<tr class="separator:a9666032b13a178cc9cf308e4176f246e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7fa0de91151bec3ecbbb68b9dc5da7f7" id="r_a7fa0de91151bec3ecbbb68b9dc5da7f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1calorimeter_1_1models.html#a7fa0de91151bec3ecbbb68b9dc5da7f7">ecal_model_from_hits</a> (hits, sensor=0, preset=&quot;lyso&quot;, **kw)</td></tr>
+<tr class="separator:a7fa0de91151bec3ecbbb68b9dc5da7f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace159ed8679ced78c2a2a3e42557bfb8" id="r_ace159ed8679ced78c2a2a3e42557bfb8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1apps_1_1calorimeter_1_1models.html#ace159ed8679ced78c2a2a3e42557bfb8">hcal_model_from_hits</a> (hits, sensor=0, preset=&quot;fe_scint&quot;, **kw)</td></tr>
+<tr class="separator:ace159ed8679ced78c2a2a3e42557bfb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
@@ -238,8 +238,8 @@ step, so the exponential was being recomputed for a handful of distinct
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a2dc585b21aadbe54ee24c9f6f941e48d" name="a2dc585b21aadbe54ee24c9f6f941e48d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2dc585b21aadbe54ee24c9f6f941e48d">&#9670;&#160;</a></span>ecal_model_from_hits()</h2>
+<a id="a7fa0de91151bec3ecbbb68b9dc5da7f7" name="a7fa0de91151bec3ecbbb68b9dc5da7f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7fa0de91151bec3ecbbb68b9dc5da7f7">&#9670;&#160;</a></span>ecal_model_from_hits()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -254,7 +254,7 @@ step, so the exponential was being recomputed for a handful of distinct
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>sensor_id</em> = <code>0</code>, </td>
+          <td class="paramname"><em>sensor</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -277,17 +277,17 @@ step, so the exponential was being recomputed for a handful of distinct
 </div><div class="memdoc">
 <pre class="fragment">Build CalorimeterElectromagneticModel from hits + named ECAL preset.</pre> 
 <p class="definition">Definition at line <a class="el" href="models_8py_source.html#l00410">410</a> of file <a class="el" href="models_8py_source.html">models.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  410</span><span class="keyword">def </span>ecal_model_from_hits(hits, sensor_id=0, preset=&quot;lyso&quot;, **kw):</div>
+<div class="fragment"><div class="line"><span class="lineno">  410</span><span class="keyword">def </span>ecal_model_from_hits(hits, sensor=0, preset=&quot;lyso&quot;, **kw):</div>
 <div class="line"><span class="lineno">  411</span>    <span class="stringliteral">&quot;&quot;&quot;Build CalorimeterElectromagneticModel from hits + named ECAL preset.&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">  412</span>    p = dict(ECAL_PRESETS.get(preset, ECAL_PRESETS[<span class="stringliteral">&quot;lyso&quot;</span>])); p.update(kw)</div>
-<div class="line"><span class="lineno">  413</span>    <span class="keywordflow">return</span> CalorimeterElectromagneticModel.from_hits(sensor_id, hits, **p)</div>
+<div class="line"><span class="lineno">  413</span>    <span class="keywordflow">return</span> CalorimeterElectromagneticModel.from_hits(sensor, hits, **p)</div>
 <div class="line"><span class="lineno">  414</span> </div>
 <div class="line"><span class="lineno">  415</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a9666032b13a178cc9cf308e4176f246e" name="a9666032b13a178cc9cf308e4176f246e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a9666032b13a178cc9cf308e4176f246e">&#9670;&#160;</a></span>hcal_model_from_hits()</h2>
+<a id="ace159ed8679ced78c2a2a3e42557bfb8" name="ace159ed8679ced78c2a2a3e42557bfb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace159ed8679ced78c2a2a3e42557bfb8">&#9670;&#160;</a></span>hcal_model_from_hits()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -302,7 +302,7 @@ step, so the exponential was being recomputed for a handful of distinct
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>sensor_id</em> = <code>0</code>, </td>
+          <td class="paramname"><em>sensor</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -325,10 +325,10 @@ step, so the exponential was being recomputed for a handful of distinct
 </div><div class="memdoc">
 <pre class="fragment">Build CalorimeterHadronicModel from hits + named HCAL preset.</pre> 
 <p class="definition">Definition at line <a class="el" href="models_8py_source.html#l00416">416</a> of file <a class="el" href="models_8py_source.html">models.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  416</span><span class="keyword">def </span>hcal_model_from_hits(hits, sensor_id=0, preset=&quot;fe_scint&quot;, **kw):</div>
+<div class="fragment"><div class="line"><span class="lineno">  416</span><span class="keyword">def </span>hcal_model_from_hits(hits, sensor=0, preset=&quot;fe_scint&quot;, **kw):</div>
 <div class="line"><span class="lineno">  417</span>    <span class="stringliteral">&quot;&quot;&quot;Build CalorimeterHadronicModel from hits + named HCAL preset.&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">  418</span>    p = dict(HCAL_PRESETS.get(preset, HCAL_PRESETS[<span class="stringliteral">&quot;fe_scint&quot;</span>])); p.update(kw)</div>
-<div class="line"><span class="lineno">  419</span>    <span class="keywordflow">return</span> CalorimeterHadronicModel.from_hits(sensor_id, hits, **p)</div>
+<div class="line"><span class="lineno">  419</span>    <span class="keywordflow">return</span> CalorimeterHadronicModel.from_hits(sensor, hits, **p)</div>
 </div><!-- fragment -->
 </div>
 </div>

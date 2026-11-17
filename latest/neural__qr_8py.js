@@ -1,5 +1,5 @@
 var neural__qr_8py =
 [
-    [ "modules.framework.controllers.neural_qr.NeuralAdaptiveQRKalmanController", "classmodules_1_1framework_1_1controllers_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_controller.html", "classmodules_1_1framework_1_1controllers_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_controller" ],
-    [ "_window_feats", "neural__qr_8py.html#ae930e9137b9a8a90295760f5a8a291ce", null ]
+    [ "modules.framework.tuners.neural_qr.NeuralAdaptiveQRKalmanTuner", "classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner.html", "classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner" ],
+    [ "_window_feats", "neural__qr_8py.html#a4160281608cb4e0b9d5539a16baad6bf", null ]
 ];

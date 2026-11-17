@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -279,17 +279,17 @@ Protected Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00044">44</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   46</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a>(<a class="code hl_function" href="class_kalman_1_1_controllers_1_1_proportional.html#aa6054e8f29e7065acb128f9f035f8983">Kp</a>)</div>
-<div class="line"><span class="lineno">   47</span>    {</div>
-<div class="line"><span class="lineno">   48</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kp&quot;</span>);</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00037">37</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   39</span>        : <a class="code hl_function" href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Controller</a>(model, xRef, Qcost, Rcost), <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a>(<a class="code hl_function" href="class_kalman_1_1_controllers_1_1_proportional.html#aa6054e8f29e7065acb128f9f035f8983">Kp</a>)</div>
+<div class="line"><span class="lineno">   40</span>    {</div>
+<div class="line"><span class="lineno">   41</span>        CheckGain(<a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a>, <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>(), <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <span class="stringliteral">&quot;Kp&quot;</span>);</div>
+<div class="line"><span class="lineno">   42</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a2345ad58ed042054aa68aa09930658a7"><div class="ttname"><a href="class_kalman_1_1_controller.html#a2345ad58ed042054aa68aa09930658a7">Kalman::Controller::Controller</a></div><div class="ttdeci">Controller(Model *model, const Vector &amp;xRef=Vector(), const Matrix &amp;Qcost=Matrix(), const Matrix &amp;Rcost=Matrix())</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00018">Controller.cc:18</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a690b08a8bd00fe48eefaf86e0c6a687c"><div class="ttname"><a href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">Kalman::Controller::fModel</a></div><div class="ttdeci">Model * fModel</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00047">Controller.h:47</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_ae3adaa444a54de98bddb9e154e342138"><div class="ttname"><a href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">Kalman::Controller::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdoc">The command dimension, at least 1 so an uncontrolled plant still gets a vector.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8cc_source.html#l00034">Controller.cc:34</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_proportional_html_a634697ed287b14db4e80584e9286265a"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">Kalman::Controllers::Proportional::fKp</a></div><div class="ttdeci">Matrix fKp</div><div class="ttdef"><b>Definition</b> <a href="_proportional_8h_source.html#l00022">Proportional.h:22</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controllers_1_1_proportional_html_aa6054e8f29e7065acb128f9f035f8983"><div class="ttname"><a href="class_kalman_1_1_controllers_1_1_proportional.html#aa6054e8f29e7065acb128f9f035f8983">Kalman::Controllers::Proportional::Kp</a></div><div class="ttdeci">const Matrix &amp; Kp() const</div><div class="ttdef"><b>Definition</b> <a href="_proportional_8h_source.html#l00031">Proportional.h:31</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -404,14 +404,14 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e">Kalman::Controller</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00051">51</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>    {</div>
-<div class="line"><span class="lineno">   53</span>        Vector e = xHat;</div>
-<div class="line"><span class="lineno">   54</span>        e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
-<div class="line"><span class="lineno">   55</span>        Vector u = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a> * e;</div>
-<div class="line"><span class="lineno">   56</span>        u *= -1.;</div>
-<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">return</span> u;</div>
-<div class="line"><span class="lineno">   58</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_controllers_8cc_source.html#l00044">44</a> of file <a class="el" href="_controllers_8cc_source.html">Controllers.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   45</span>    {</div>
+<div class="line"><span class="lineno">   46</span>        Vector e = xHat;</div>
+<div class="line"><span class="lineno">   47</span>        e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
+<div class="line"><span class="lineno">   48</span>        Vector u = <a class="code hl_variable" href="class_kalman_1_1_controllers_1_1_proportional.html#a634697ed287b14db4e80584e9286265a">fKp</a> * e;</div>
+<div class="line"><span class="lineno">   49</span>        u *= -1.;</div>
+<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">return</span> u;</div>
+<div class="line"><span class="lineno">   51</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a42488f3e43226775fd7da46afebbec83"><div class="ttname"><a href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">Kalman::Controller::fXRef</a></div><div class="ttdeci">Vector fXRef</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00048">Controller.h:48</a></div></div>
 </div><!-- fragment -->
 </div>

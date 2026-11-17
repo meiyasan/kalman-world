@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><pre class="fragment">The particle filter on a Python-written model runs in C++. The two
 engines draw from different generators, so they are compared over many
 runs, not digit for digit.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00310">310</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00309">309</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a0be622ff71ac432ff35a3977293b0da1" name="a0be622ff71ac432ff35a3977293b0da1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a0be622ff71ac432ff35a3977293b0da1">&#9670;&#160;</a></span>test_a_seeded_run_repeats()</h2>
@@ -177,16 +177,16 @@ runs, not digit for digit.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00343">343</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  343</span>    <span class="keyword">def </span>test_a_seeded_run_repeats(self):</div>
-<div class="line"><span class="lineno">  344</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
-<div class="line"><span class="lineno">  345</span>        _, z = _pendulum_run(0)</div>
-<div class="line"><span class="lineno">  346</span>        np.random.seed(11); first = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk).copy()</div>
-<div class="line"><span class="lineno">  347</span>        np.random.seed(11); again = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk)</div>
-<div class="line"><span class="lineno">  348</span>        np.testing.assert_array_equal(first, again)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00342">342</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>    <span class="keyword">def </span>test_a_seeded_run_repeats(self):</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
+<div class="line"><span class="lineno">  344</span>        _, z = _pendulum_run(0)</div>
+<div class="line"><span class="lineno">  345</span>        np.random.seed(11); first = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk).copy()</div>
+<div class="line"><span class="lineno">  346</span>        np.random.seed(11); again = np.asarray(ParticleFilter(Pendulum(), n_particles=200).forward(z).xk)</div>
+<div class="line"><span class="lineno">  347</span>        np.testing.assert_array_equal(first, again)</div>
+<div class="line"><span class="lineno">  348</span> </div>
 <div class="line"><span class="lineno">  349</span> </div>
-<div class="line"><span class="lineno">  350</span> </div>
-<div class="line"><span class="lineno">  351</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman not built&quot;)</span></div>
+<div class="line"><span class="lineno">  350</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;libKalman not built&quot;)</span></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -207,35 +207,35 @@ runs, not digit for digit.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00315">315</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  315</span>    <span class="keyword">def </span>test_same_accuracy_and_spread_as_the_python_engine(self):</div>
-<div class="line"><span class="lineno">  316</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
-<div class="line"><span class="lineno">  317</span>        errors = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
-<div class="line"><span class="lineno">  318</span>        sigmas = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
-<div class="line"><span class="lineno">  319</span>        <span class="keywordflow">for</span> run <span class="keywordflow">in</span> range(24):</div>
-<div class="line"><span class="lineno">  320</span>            truth, z = _pendulum_run(run)</div>
-<div class="line"><span class="lineno">  321</span>            <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  322</span>                np.random.seed(50 + run)</div>
-<div class="line"><span class="lineno">  323</span>                <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  324</span>                    <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  325</span>                        record = ParticleFilter(Pendulum(), n_particles=400).forward(z)</div>
-<div class="line"><span class="lineno">  326</span>                <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  327</span>                    flt = ParticleFilter(Pendulum(), n_particles=400)</div>
-<div class="line"><span class="lineno">  328</span>                    self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
-<div class="line"><span class="lineno">  329</span>                    record = flt.forward(z)</div>
-<div class="line"><span class="lineno">  330</span>                x, P = np.asarray(record.xk), np.asarray(record.Pk)</div>
-<div class="line"><span class="lineno">  331</span>                errors[reference].append(np.sqrt(np.mean((x[40:, 0] - truth[40:, 0]) ** 2)))</div>
-<div class="line"><span class="lineno">  332</span>                sigmas[reference].append(np.sqrt(np.mean(P[40:, 0, 0])))</div>
-<div class="line"><span class="lineno">  333</span>        <span class="comment"># The error of one run varies by about 40% of its mean, so the two means</span></div>
-<div class="line"><span class="lineno">  334</span>        <span class="comment"># are compared against their own standard errors (4 of them), and the</span></div>
-<div class="line"><span class="lineno">  335</span>        <span class="comment"># reported sigma, which hardly varies, to 10%.</span></div>
-<div class="line"><span class="lineno">  336</span>        python, cxx = np.array(errors[<span class="keyword">True</span>]), np.array(errors[<span class="keyword">False</span>])</div>
-<div class="line"><span class="lineno">  337</span>        spread = np.sqrt((python.var() + cxx.var()) / len(python))</div>
-<div class="line"><span class="lineno">  338</span>        self.assertLess(abs(python.mean() - cxx.mean()), 4 * spread,</div>
-<div class="line"><span class="lineno">  339</span>                        f<span class="stringliteral">&quot;RMS error: Python {python.mean():.4f}, C++ {cxx.mean():.4f}&quot;</span>)</div>
-<div class="line"><span class="lineno">  340</span>        python, cxx = np.mean(sigmas[<span class="keyword">True</span>]), np.mean(sigmas[<span class="keyword">False</span>])</div>
-<div class="line"><span class="lineno">  341</span>        self.assertLess(abs(python - cxx) / python, 0.1, f<span class="stringliteral">&quot;reported sigma: Python {python:.4f}, C++ {cxx:.4f}&quot;</span>)</div>
-<div class="line"><span class="lineno">  342</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00314">314</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  314</span>    <span class="keyword">def </span>test_same_accuracy_and_spread_as_the_python_engine(self):</div>
+<div class="line"><span class="lineno">  315</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
+<div class="line"><span class="lineno">  316</span>        errors = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
+<div class="line"><span class="lineno">  317</span>        sigmas = {<span class="keyword">True</span>: [], <span class="keyword">False</span>: []}</div>
+<div class="line"><span class="lineno">  318</span>        <span class="keywordflow">for</span> run <span class="keywordflow">in</span> range(24):</div>
+<div class="line"><span class="lineno">  319</span>            truth, z = _pendulum_run(run)</div>
+<div class="line"><span class="lineno">  320</span>            <span class="keywordflow">for</span> reference <span class="keywordflow">in</span> (<span class="keyword">True</span>, <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  321</span>                np.random.seed(50 + run)</div>
+<div class="line"><span class="lineno">  322</span>                <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  323</span>                    <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  324</span>                        record = ParticleFilter(Pendulum(), n_particles=400).forward(z)</div>
+<div class="line"><span class="lineno">  325</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  326</span>                    flt = ParticleFilter(Pendulum(), n_particles=400)</div>
+<div class="line"><span class="lineno">  327</span>                    self.assertTrue(flt._callback_eligible(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  328</span>                    record = flt.forward(z)</div>
+<div class="line"><span class="lineno">  329</span>                x, P = np.asarray(record.xk), np.asarray(record.Pk)</div>
+<div class="line"><span class="lineno">  330</span>                errors[reference].append(np.sqrt(np.mean((x[40:, 0] - truth[40:, 0]) ** 2)))</div>
+<div class="line"><span class="lineno">  331</span>                sigmas[reference].append(np.sqrt(np.mean(P[40:, 0, 0])))</div>
+<div class="line"><span class="lineno">  332</span>        <span class="comment"># The error of one run varies by about 40% of its mean, so the two means</span></div>
+<div class="line"><span class="lineno">  333</span>        <span class="comment"># are compared against their own standard errors (4 of them), and the</span></div>
+<div class="line"><span class="lineno">  334</span>        <span class="comment"># reported sigma, which hardly varies, to 10%.</span></div>
+<div class="line"><span class="lineno">  335</span>        python, cxx = np.array(errors[<span class="keyword">True</span>]), np.array(errors[<span class="keyword">False</span>])</div>
+<div class="line"><span class="lineno">  336</span>        spread = np.sqrt((python.var() + cxx.var()) / len(python))</div>
+<div class="line"><span class="lineno">  337</span>        self.assertLess(abs(python.mean() - cxx.mean()), 4 * spread,</div>
+<div class="line"><span class="lineno">  338</span>                        f<span class="stringliteral">&quot;RMS error: Python {python.mean():.4f}, C++ {cxx.mean():.4f}&quot;</span>)</div>
+<div class="line"><span class="lineno">  339</span>        python, cxx = np.mean(sigmas[<span class="keyword">True</span>]), np.mean(sigmas[<span class="keyword">False</span>])</div>
+<div class="line"><span class="lineno">  340</span>        self.assertLess(abs(python - cxx) / python, 0.1, f<span class="stringliteral">&quot;reported sigma: Python {python:.4f}, C++ {cxx:.4f}&quot;</span>)</div>
+<div class="line"><span class="lineno">  341</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

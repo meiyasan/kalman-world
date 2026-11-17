@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -485,7 +485,7 @@ back and filters the same. A reference carries the constructor's arguments.</pre
 <div class="line"><span class="lineno">  378</span>        <span class="keywordflow">try</span>:</div>
 <div class="line"><span class="lineno">  379</span>            <span class="keyword">with</span> warnings.catch_warnings():</div>
 <div class="line"><span class="lineno">  380</span>                warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
-<div class="line"><span class="lineno">  381</span>                model = cls(<span class="stringliteral">&quot;s&quot;</span>) <span class="keywordflow">if</span> first <span class="keywordflow">in</span> ([<span class="stringliteral">&quot;sensor_id&quot;</span>], [<span class="stringliteral">&quot;name&quot;</span>]) <span class="keywordflow">else</span> cls()</div>
+<div class="line"><span class="lineno">  381</span>                model = cls(<span class="stringliteral">&quot;s&quot;</span>) <span class="keywordflow">if</span> first <span class="keywordflow">in</span> ([<span class="stringliteral">&quot;sensor&quot;</span>], [<span class="stringliteral">&quot;name&quot;</span>]) <span class="keywordflow">else</span> cls()</div>
 <div class="line"><span class="lineno">  382</span>                structure = model.structure</div>
 <div class="line"><span class="lineno">  383</span>        <span class="keywordflow">except</span> Exception:</div>
 <div class="line"><span class="lineno">  384</span>            <span class="keywordflow">continue</span>                    <span class="comment"># needs arguments: not this test&#39;s business</span></div>
@@ -692,7 +692,7 @@ back and filters the same. A reference carries the constructor's arguments.</pre
 <div class="line"><span class="lineno">  110</span>    <span class="keywordflow">if</span> out.returncode != 0:</div>
 <div class="line"><span class="lineno">  111</span>        pytest.skip(<span class="stringliteral">&quot;libKalmanApps is not beside libKalman&quot;</span>)</div>
 <div class="line"><span class="lineno">  112</span>    lines = out.stdout.strip().split(<span class="stringliteral">&quot;\n&quot;</span>)</div>
-<div class="line"><span class="lineno">  113</span>    <span class="keyword">assert</span> lines[0].startswith(<span class="stringliteral">&quot;MODEL&quot;</span>) <span class="keywordflow">and</span> len(lines) == 3</div>
+<div class="line"><span class="lineno">  113</span>    <span class="keyword">assert</span> lines[0].startswith(<span class="stringliteral">&quot;MODEL&quot;</span>) <span class="keywordflow">and</span> len(lines) == 4       <span class="comment"># ballistic, ballistic-linear, ballistic-order2</span></div>
 <div class="line"><span class="lineno">  114</span>    <span class="keyword">assert</span> _run(<span class="stringliteral">&quot;model&quot;</span>, <span class="stringliteral">&quot;no-such-model&quot;</span>).returncode == 1</div>
 <div class="line"><span class="lineno">  115</span>    <span class="keyword">assert</span> _run(<span class="stringliteral">&quot;--no-apps&quot;</span>, <span class="stringliteral">&quot;models&quot;</span>).returncode == 1</div>
 <div class="line"><span class="lineno">  116</span>    <span class="keyword">assert</span> _run(<span class="stringliteral">&quot;frobnicate&quot;</span>).returncode == 2</div>

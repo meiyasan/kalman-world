@@ -1,9 +1,6 @@
 var classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin =
 [
     [ "_get_tuple", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a2b852eb385861b7143e5e140d7002fef", null ],
-    [ "get_initial_state", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a6f7d4bea850589054403fc6ccff7c3be", null ],
-    [ "get_initial_state_covariance", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a77421c48c3422d96215fb1e5830ae2dd", null ],
-    [ "get_initial_state_vector", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a4ce19982af059aacff03918d5c2f20d0", null ],
     [ "get_latest_state", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#afa7371c7fc0ab73827cba127afa0bf03", null ],
     [ "get_latest_state_covariance", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a5e653edd64840e4ca6a38ef0ee99b63d", null ],
     [ "get_latest_state_vector", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a6f21e3a0903f67119dc6c150cca32a73", null ],
@@ -17,7 +14,7 @@ var classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin =
     [ "get_smooth_state", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#ac759d3b84ef0ce9fc7a9deb71691e0f5", null ],
     [ "get_smooth_state_covariance", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a02ea1476997b371c9876f2cd8f9f8f44", null ],
     [ "get_smooth_state_vector", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a46a1320c55d58e256d4498bfe7d104fb", null ],
-    [ "initial_state", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#ab14551094511d982030863df34164f75", null ],
+    [ "initial_state", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#af9ee6f101424b912175e08e066013e8f", null ],
     [ "measurement", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#acca8a36b5b2de100cbe233cb7b3a9b70", null ],
     [ "x", "classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_state_mixin.html#a8294cd7b821b3642788d63785a8a42c2", null ]
 ];

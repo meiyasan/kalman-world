@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -348,10 +348,11 @@ Public Member Functions</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   36</span>            {</div>
 <div class="line"><span class="lineno">   37</span>                <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_kalman.html#a6e0976e6238904d9b09cbd2d61ab9111">RungeKuttaStep</a>(<a class="code hl_function" href="class_kalman_1_1_integrators_1_1_r_k4.html#a07dbc8978ea96910ed4c2f4222213f39">GetTableau</a>(),</div>
 <div class="line"><span class="lineno">   38</span>                                      [&amp;](<span class="keyword">const</span> Vector &amp;xx, <span class="keywordtype">double</span> tt) { <span class="keywordflow">return</span> f(xx, u, tt); },</div>
-<div class="line"><span class="lineno">   39</span>                                      x, t, dt);</div>
+<div class="line"><span class="lineno">   39</span>                                      <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>, t, dt);</div>
 <div class="line"><span class="lineno">   40</span>            }</div>
 <div class="ttc" id="aclass_kalman_1_1_integrators_1_1_r_k4_html_a07dbc8978ea96910ed4c2f4222213f39"><div class="ttname"><a href="class_kalman_1_1_integrators_1_1_r_k4.html#a07dbc8978ea96910ed4c2f4222213f39">Kalman::Integrators::RK4::GetTableau</a></div><div class="ttdeci">Tableau GetTableau() const override</div><div class="ttdoc">The explicit tableau, or an empty one for adaptive / implicit schemes.</div><div class="ttdef"><b>Definition</b> <a href="_r_k4_8h_source.html#l00027">RK4.h:27</a></div></div>
 <div class="ttc" id="anamespace_kalman_html_a6e0976e6238904d9b09cbd2d61ab9111"><div class="ttname"><a href="namespace_kalman.html#a6e0976e6238904d9b09cbd2d61ab9111">Kalman::RungeKuttaStep</a></div><div class="ttdeci">State RungeKuttaStep(const Tableau &amp;tableau, const RHS &amp;rhs, const State &amp;x, double t, double dt)</div><div class="ttdoc">One explicit Runge–Kutta step of tableau on any additive state.</div><div class="ttdef"><b>Definition</b> <a href="_integrator_8h_source.html#l00065">Integrator.h:65</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

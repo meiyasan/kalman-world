@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -158,57 +158,35 @@ $(document).ready(function(){initNavTree('_kalman_8h.html',''); initResizable();
 <code>#include &quot;<a class="el" href="_factory_8h_source.html">Kalman/Factory.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="_controller_8h_source.html">Kalman/Controller.h</a>&quot;</code><br />
 <code>#include &quot;<a class="el" href="include_2_kalman_2_c_a_p_i_8h_source.html">Kalman/CAPI.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_metadata_8h_source.html">Kalman/Abstract/Metadata.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_euler_8h_source.html">Kalman/Integrators/Euler.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_r_k4_8h_source.html">Kalman/Integrators/RK4.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_dormand_prince_8h_source.html">Kalman/Integrators/DormandPrince.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_spectral_8h_source.html">Kalman/Solvers/Spectral.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_finite_difference_8h_source.html">Kalman/Solvers/FiniteDifference.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="include_2_kalman_2_solvers_2_vorticity_8h_source.html">Kalman/Solvers/Vorticity.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_proportional_8h_source.html">Kalman/Controllers/Proportional.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_p_i_d_8h_source.html">Kalman/Controllers/PID.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_l_q_r_8h_source.html">Kalman/Controllers/LQR.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_m_p_p_i_8h_source.html">Kalman/Controllers/MPPI.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_adaptive_8h_source.html">Kalman/Controllers/Adaptive.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_engines_2_linear_8h_source.html">Kalman/Engines/Linear.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_engines_2_extended_8h_source.html">Kalman/Engines/Extended.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_unscented_8h_source.html">Kalman/Engines/Unscented.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_particle_8h_source.html">Kalman/Engines/Particle.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_ensemble_8h_source.html">Kalman/Engines/Ensemble.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_tracking_8h_source.html">Kalman/Tracking.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_combinatorial_8h_source.html">Kalman/Engines/Combinatorial.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_models_2_linear_8h_source.html">Kalman/Models/Linear.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_models_2_extended_8h_source.html">Kalman/Models/Extended.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_callback_8h_source.html">Kalman/Models/Callback.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_tabulated_8h_source.html">Kalman/Models/Tabulated.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_k_f_8h_source.html">Kalman/Filters/KF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_e_k_f_8h_source.html">Kalman/Filters/EKF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_u_k_f_8h_source.html">Kalman/Filters/UKF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_p_f_8h_source.html">Kalman/Filters/PF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_en_k_f_8h_source.html">Kalman/Filters/EnKF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_c_k_f_8h_source.html">Kalman/Filters/CKF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_i_k_f_8h_source.html">Kalman/Filters/IKF.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_record_8h_source.html">Kalman/IO/Record.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_collection_8h_source.html">Kalman/IO/Collection.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_json_8h_source.html">Kalman/IO/Json.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_archive_8h_source.html">Kalman/IO/Archive.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_model_file_8h_source.html">Kalman/IO/ModelFile.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_base_8h_source.html">Kalman/Routers/Base.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_bayesian_8h_source.html">Kalman/Routers/Bayesian.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_threshold_8h_source.html">Kalman/Routers/Threshold.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_hybrid_8h_source.html">Kalman/Routers/Hybrid.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="include_2_kalman_2_routers_2_n_n_2_model_8h_source.html">Kalman/Routers/NN/Model.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_m_l_p_8h_source.html">Kalman/Routers/NN/MLP.h</a>&quot;</code><br />
-<code>#include &quot;<a class="el" href="_neural_8h_source.html">Kalman/Routers/Neural.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_abstract_8h_source.html">Kalman/Abstract.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_algebra_8h_source.html">Kalman/Algebra.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_differentiators_8h_source.html">Kalman/Differentiators.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_integrators_8h_source.html">Kalman/Integrators.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="include_2_kalman_2_solvers_8h_source.html">Kalman/Solvers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_controllers_8h_source.html">Kalman/Controllers.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_tuner_8h_source.html">Kalman/Tuner.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_tuners_8h_source.html">Kalman/Tuners.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="include_2_kalman_2_tracking_8h_source.html">Kalman/Tracking.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_engines_8h_source.html">Kalman/Engines.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_models_8h_source.html">Kalman/Models.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_sensor_8h_source.html">Kalman/Sensor.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_instrument_8h_source.html">Kalman/Instrument.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_sensor_factory_8h_source.html">Kalman/SensorFactory.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_sensors_8h_source.html">Kalman/Sensors.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_operations_8h_source.html">Kalman/Operations.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_observability_8h_source.html">Kalman/Observability.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_filters_8h_source.html">Kalman/Filters.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_i_o_8h_source.html">Kalman/IO.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_routers_8h_source.html">Kalman/Routers.h</a>&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Kalman.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_kalman_8h__incl.svg" width="6142" height="667"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_kalman_8h__incl.svg" width="6476" height="726"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_kalman_8h__dep__incl.svg" width="4827" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_kalman_8h__dep__incl.svg" width="6490" height="124"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_kalman_8h_source.html">Go to the source code of this file.</a></p>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,13 +161,13 @@ Protected Attributes</h2></td></tr>
 <tr class="separator:acec76dfc48a35cdfc74574c402aa5abd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Drives one ``AdaptiveQRKalmanController`` per leaf inside an ``OscillatorModel``.
+<div class="textblock"><pre class="fragment">Drives one ``AdaptiveQRKalmanTuner`` per leaf inside an ``OscillatorModel``.
 
-``OscillatorModel`` is a ``CompositeKalmanModel`` whose ``Q()`` is bound as
-a closure over its leaf submodels — mutating ``window._Q`` has no effect.
+``OscillatorModel`` is a composite: its ``Q()`` is its parts' in blocks,
+so mutating ``window._Q`` has no effect.
 This class targets each ``AnalyticOscillatorModel`` leaf directly so that the
-``model._Q`` mutations performed by ``AdaptiveQRKalmanController._update``
-actually propagate through ``CompositeKalmanModel.Q()``.
+``model._Q`` mutations performed by ``AdaptiveQRKalmanTuner._update``
+reach the composite ``Q()``.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="apps_2gravitational_2interferometer_2control_8py_source.html#l00071">71</a> of file <a class="el" href="apps_2gravitational_2interferometer_2control_8py_source.html">control.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -219,7 +219,7 @@ actually propagate through ``CompositeKalmanModel.Q()``.
 <div class="fragment"><div class="line"><span class="lineno">   82</span>                 q_min: float = 0.1, q_max: float = 10.0):</div>
 <div class="line"><span class="lineno">   83</span>        self._leaves = window.models  <span class="comment"># list[AnalyticOscillatorModel]</span></div>
 <div class="line"><span class="lineno">   84</span>        self._ctrls  = [</div>
-<div class="line"><span class="lineno">   85</span>            AdaptiveQRKalmanController(leaf, window=window_len,</div>
+<div class="line"><span class="lineno">   85</span>            AdaptiveQRKalmanTuner(leaf, window=window_len,</div>
 <div class="line"><span class="lineno">   86</span>                                       q_min=q_min, q_max=q_max)</div>
 <div class="line"><span class="lineno">   87</span>            <span class="keywordflow">for</span> leaf <span class="keywordflow">in</span> self._leaves</div>
 <div class="line"><span class="lineno">   88</span>        ]</div>
@@ -302,7 +302,7 @@ actually propagate through ``CompositeKalmanModel.Q()``.
 </div><div class="memdoc">
 <pre class="fragment">Scale each leaf's Q from the window-level innovation ``nu_win`` (shape (2,1)).
 
-All leaves in a FUSED window share the same 2-element [Re, Im] innovation
+All leaves in a summed window share the same 2-element [Re, Im] innovation
 channel, so each leaf receives the same ``nu_win``.  State/covariance are
 sliced to match each leaf's own ``n=2`` state block.
 </pre> 
@@ -310,7 +310,7 @@ sliced to match each leaf's own ``n=2`` state block.
 <div class="fragment"><div class="line"><span class="lineno">   90</span>    <span class="keyword">def </span>update(self, x_hat_win, P_win, t, nu_win):</div>
 <div class="line"><span class="lineno">   91</span>        <span class="stringliteral">&quot;&quot;&quot;Scale each leaf&#39;s Q from the window-level innovation ``nu_win`` (shape (2,1)).</span></div>
 <div class="line"><span class="lineno">   92</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">   93</span><span class="stringliteral">        All leaves in a FUSED window share the same 2-element [Re, Im] innovation</span></div>
+<div class="line"><span class="lineno">   93</span><span class="stringliteral">        All leaves in a summed window share the same 2-element [Re, Im] innovation</span></div>
 <div class="line"><span class="lineno">   94</span><span class="stringliteral">        channel, so each leaf receives the same ``nu_win``.  State/covariance are</span></div>
 <div class="line"><span class="lineno">   95</span><span class="stringliteral">        sliced to match each leaf&#39;s own ``n=2`` state block.</span></div>
 <div class="line"><span class="lineno">   96</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>

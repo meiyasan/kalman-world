@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -147,11 +147,26 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html">Callback</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model whose maps are functions supplied by the caller.  <a href="class_kalman_1_1_models_1_1_callback.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_composite.html">Composite</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Several models side by side, each with its own state.  <a href="class_kalman_1_1_models_1_1_composite.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_extended.html">Extended</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model that is nonlinear by declaration — override <a class="el" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede" title="One step of the dynamics.">f()</a> and/or <a class="el" href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216" title="The observation map. Default: H x.">h()</a>.  <a href="class_kalman_1_1_models_1_1_extended.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_fusion.html">Fusion</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model read by one more sensor: several sensors on the same state.  <a href="class_kalman_1_1_models_1_1_fusion.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_joint.html">Joint</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model whose state carries some of another model's parameters, so the filter estimates them along with the motion.  <a href="class_kalman_1_1_models_1_1_joint.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_lag.html">Lag</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model that carries its last <code>L</code> states along with the present one.  <a href="class_kalman_1_1_models_1_1_lag.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_linear.html">Linear</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A model that is linear by declaration — matrices only, no <a class="el" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede" title="One step of the dynamics.">f()</a>/h().  <a href="class_kalman_1_1_models_1_1_linear.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_router.html">Router</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Several models of one system, with a probability on each.  <a href="class_kalman_1_1_models_1_1_router.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_tabulated.html">Tabulated</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A linear model given by its matrices, constant or one per sample.  <a href="class_kalman_1_1_models_1_1_tabulated.html#details">More...</a><br /></td></tr>

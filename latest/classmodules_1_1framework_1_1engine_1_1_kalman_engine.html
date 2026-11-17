@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -148,7 +148,7 @@ $(document).ready(function(){initNavTree('classmodules_1_1framework_1_1engine_1_
 <div class="dynheader">
 Inheritance diagram for modules.framework.engine.KalmanEngine:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1engine_1_1_kalman_engine__inherit__graph.svg" width="1658" height="371"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1engine_1_1_kalman_engine__inherit__graph.svg" width="1662" height="435"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -374,7 +374,7 @@ Objects returned by such a ``forward`` must expose ``to_record(model, flavor)``.
 </table>
 </div><div class="memdoc">
 <pre class="fragment">Return (zk, H): the predicted measurement and the observation matrix.</pre> 
-<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html#a07ccef56f2533c0f485369932821025b">modules.framework.engines.extended.ExtendedKalmanEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html#a9c54558efb0ae875e2635076d29c4edd">modules.framework.engines.linear.LinearKalmanEngine</a>.</p>
+<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html#a07ccef56f2533c0f485369932821025b">modules.framework.engines.extended.ExtendedKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine.html#a116c8f7306904997724dc0bed0e09faa">modules.framework.engines.interacting.InteractingKalmanEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html#a9c54558efb0ae875e2635076d29c4edd">modules.framework.engines.linear.LinearKalmanEngine</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="engine_8py_source.html#l00087">87</a> of file <a class="el" href="engine_8py_source.html">engine.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   87</span>    <span class="keyword">def </span>_measure(self, model, x, t):</div>
@@ -557,7 +557,7 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1contracts_1_1_kalman_engine_a_b_c.html#a14507b86b28511f546641f2f8321994d">modules.framework.abstract.contracts.KalmanEngineABC</a>.</p>
 
-<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a5eccc9ad6ab3bbf7e110a13f734538db">modules.framework.engines.ensemble.EnsembleKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1native_1_1_native_engine.html#a1a146135e5dbaee52fa03719fca57c4c">modules.framework.engines.native.NativeEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1particle_1_1_particle_engine.html#a8c5d255422d0a65221a5710488d6bb23">modules.framework.engines.particle.ParticleEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a6010e817015065987abb457b413606d9">modules.framework.engines.unscented.UnscentedKalmanEngine</a>.</p>
+<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine.html#a29977f25c4b591e1c2e6fb0b7d180e8f">modules.framework.engines.interacting.InteractingKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a5eccc9ad6ab3bbf7e110a13f734538db">modules.framework.engines.ensemble.EnsembleKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1native_1_1_native_engine.html#a1a146135e5dbaee52fa03719fca57c4c">modules.framework.engines.native.NativeEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1particle_1_1_particle_engine.html#a8c5d255422d0a65221a5710488d6bb23">modules.framework.engines.particle.ParticleEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#a6010e817015065987abb457b413606d9">modules.framework.engines.unscented.UnscentedKalmanEngine</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="engine_8py_source.html#l00191">191</a> of file <a class="el" href="engine_8py_source.html">engine.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">  191</span>    <span class="keyword">def </span>_predict(self, model, x, P, u=None, t=None, **kw):</div>
@@ -645,7 +645,7 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 </table>
 </div><div class="memdoc">
 <pre class="fragment">Return (xk, F): the propagated mean and the transition matrix.</pre> 
-<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html#a07dce0e5907ed84be7b8e966d94a069b">modules.framework.engines.extended.ExtendedKalmanEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html#a83b8552d3eed4a4dde154809925edf2f">modules.framework.engines.linear.LinearKalmanEngine</a>.</p>
+<p>Reimplemented in <a class="el" href="classmodules_1_1framework_1_1engines_1_1extended_1_1_extended_kalman_engine.html#a07dce0e5907ed84be7b8e966d94a069b">modules.framework.engines.extended.ExtendedKalmanEngine</a>, <a class="el" href="classmodules_1_1framework_1_1engines_1_1interacting_1_1_interacting_kalman_engine.html#a5b1494dae7e7cbf9afc6ead7d21b6522">modules.framework.engines.interacting.InteractingKalmanEngine</a>, and <a class="el" href="classmodules_1_1framework_1_1engines_1_1linear_1_1_linear_kalman_engine.html#a83b8552d3eed4a4dde154809925edf2f">modules.framework.engines.linear.LinearKalmanEngine</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="engine_8py_source.html#l00083">83</a> of file <a class="el" href="engine_8py_source.html">engine.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   83</span>    <span class="keyword">def </span>_propagate(self, model, x, u, t):</div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -151,7 +151,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_controller.html','');
 <div class="dynheader">
 Inheritance diagram for Kalman::Controller:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_controller__inherit__graph.svg" width="640" height="344"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="class_kalman_1_1_controller__inherit__graph.svg" width="898" height="339"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -225,7 +225,7 @@ Protected Attributes</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Closed-loop control over a <a class="el" href="namespace_kalman.html">Kalman</a> filter — <code>u = ctrl(x_hat, P, t, nu)</code>. </p>
 <p>A controller is what a <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> calls once per step, in place of a recorded control sequence, to decide the command from the current belief: the posterior mean and covariance, the time, and the last innovation. It may also <b>adapt the model</b> as a side effect — a gain boost scales <code>R</code>, an adaptive scheme scales <code>Q</code> — through <a class="el" href="class_kalman_1_1_controller.html#a7608ef78ab09c9ff5abf389ea0201842" title="Adapt the model after the policy (scale R, scale Q, ...). Optional.">Update()</a>, which runs after <a class="el" href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e" title="The policy itself. Required.">Policy()</a>.</p>
-<p>Every call logs the quadratic cost <code>e^T Qcost e + u^T Rcost u</code> with <code>e = x_hat - x_ref</code>, charged against the command the actuator can actually deliver (<a class="el" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d" title="Actuator-limit hook: the command the plant can actually deliver.">Kalman::Model::ClipControl</a>), not the controller's raw ask: a fixed-gain controller with no notion of an actuator limit can ask for far more than the plant ever receives, and costing that fictitious effort would inflate it against a controller whose output already respects the limit.</p>
+<p>Every call logs the quadratic cost <code>e^T Qcost e + u^T Rcost u</code> with <code>e = x_hat - x_ref</code>, charged against the command the actuator can actually deliver (<a class="el" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711" title="Actuator-limit hook: the command the plant can actually deliver.">Kalman::Model::LimitControl</a>), not the controller's raw ask: a fixed-gain controller with no notion of an actuator limit can ask for far more than the plant ever receives, and costing that fictitious effort would inflate it against a controller whose output already respects the limit.</p>
 <p>Mirrors <code><a class="el" href="framework_2control_8py.html">modules/framework/control.py</a></code>; the concrete policies live in <code>Kalman/Controllers/</code>.</p>
 <hr  />
  
@@ -290,7 +290,7 @@ Protected Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   19</span>        : <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>(model)</div>
 <div class="line"><span class="lineno">   20</span>    {</div>
 <div class="line"><span class="lineno">   21</span>        <span class="keywordflow">if</span> (!<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Controller: a model is required.&quot;</span>);</div>
-<div class="line"><span class="lineno">   22</span>        <span class="keyword">const</span> std::size_t n = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), l = <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>();</div>
+<div class="line"><span class="lineno">   22</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), l = <a class="code hl_function" href="class_kalman_1_1_controller.html#ae3adaa444a54de98bddb9e154e342138">NControl</a>();</div>
 <div class="line"><span class="lineno">   23</span> </div>
 <div class="line"><span class="lineno">   24</span>        <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a> = xRef.<a class="code hl_function" href="class_kalman_1_1_vector.html#a5474796c2482376c1b213ac3491105a6">Empty</a>() ? Vector(n, 0.) : xRef;</div>
 <div class="line"><span class="lineno">   25</span>        <span class="keywordflow">if</span> (<a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() != n) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Controller: x_ref must have n entries.&quot;</span>);</div>
@@ -310,9 +310,10 @@ Protected Attributes</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_a571e5d05d267249cd6b396250ccb8ce2"><div class="ttname"><a href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Kalman::Matrix::Rows</a></div><div class="ttdeci">std::size_t Rows() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00097">Matrix.h:97</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_aa3b71cb2be4e62cc662717b9b822c408"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aa3b71cb2be4e62cc662717b9b822c408">Kalman::Matrix::Identity</a></div><div class="ttdeci">static Matrix Identity(std::size_t n)</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8cc_source.html#l00100">Matrix.cc:100</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_matrix_html_aac29b6bb3af29976d7626d5ca569ae1c"><div class="ttname"><a href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Kalman::Matrix::Cols</a></div><div class="ttdeci">std::size_t Cols() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00098">Matrix.h:98</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_a5474796c2482376c1b213ac3491105a6"><div class="ttname"><a href="class_kalman_1_1_vector.html#a5474796c2482376c1b213ac3491105a6">Kalman::Vector::Empty</a></div><div class="ttdeci">bool Empty() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00051">Matrix.h:51</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -401,7 +402,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   52</span>        <a class="code hl_function" href="class_kalman_1_1_controller.html#a7608ef78ab09c9ff5abf389ea0201842">Update</a>(xHat, P, t, nu);</div>
 <div class="line"><span class="lineno">   53</span> </div>
 <div class="line"><span class="lineno">   54</span>        <span class="comment">// Cost against what the actuator delivers, not the raw ask (see the header).</span></div>
-<div class="line"><span class="lineno">   55</span>        <span class="keyword">const</span> Vector applied = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d">ClipControl</a>(u);</div>
+<div class="line"><span class="lineno">   55</span>        <span class="keyword">const</span> Vector applied = <a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711">LimitControl</a>(u);</div>
 <div class="line"><span class="lineno">   56</span>        Vector e = xHat;</div>
 <div class="line"><span class="lineno">   57</span>        e -= <a class="code hl_variable" href="class_kalman_1_1_controller.html#a42488f3e43226775fd7da46afebbec83">fXRef</a>;</div>
 <div class="line"><span class="lineno">   58</span>        <span class="keywordtype">double</span> cost = 0.;</div>
@@ -418,7 +419,7 @@ Protected Attributes</h2></td></tr>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a3961c1672800f8a1a674aa9edb7c01df"><div class="ttname"><a href="class_kalman_1_1_controller.html#a3961c1672800f8a1a674aa9edb7c01df">Kalman::Controller::fControlLog</a></div><div class="ttdeci">std::vector&lt; std::pair&lt; double, Vector &gt; &gt; fControlLog</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00052">Controller.h:52</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_a7608ef78ab09c9ff5abf389ea0201842"><div class="ttname"><a href="class_kalman_1_1_controller.html#a7608ef78ab09c9ff5abf389ea0201842">Kalman::Controller::Update</a></div><div class="ttdeci">virtual void Update(const Vector &amp;, const Matrix &amp;, double, const Vector *)</div><div class="ttdoc">Adapt the model after the policy (scale R, scale Q, ...). Optional.</div><div class="ttdef"><b>Definition</b> <a href="_controller_8h_source.html#l00091">Controller.h:91</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_controller_html_ae5367de21f2ea79610dc7a813c26ad9e"><div class="ttname"><a href="class_kalman_1_1_controller.html#ae5367de21f2ea79610dc7a813c26ad9e">Kalman::Controller::Policy</a></div><div class="ttdeci">virtual Vector Policy(const Vector &amp;xHat, const Matrix &amp;P, double t, const Vector *nu)=0</div><div class="ttdoc">The policy itself. Required.</div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_aed136bf23ef636d21778c8ccde69714d"><div class="ttname"><a href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d">Kalman::Model::ClipControl</a></div><div class="ttdeci">virtual Vector ClipControl(const Vector &amp;u) const</div><div class="ttdoc">Actuator-limit hook: the command the plant can actually deliver.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00229">Model.h:229</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a535608273bff5e2bfbd4704709233711"><div class="ttname"><a href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711">Kalman::Model::LimitControl</a></div><div class="ttdeci">virtual Vector LimitControl(const Vector &amp;u) const</div><div class="ttdoc">Actuator-limit hook: the command the plant can actually deliver.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00231">Model.h:231</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -505,7 +506,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#a7ae80ece5119ecf07aa4b5d36c781cfe">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a343a50835a81481ec6c3cb78fe5ac932">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a186a654ab0373d4c57d9a905d325cb62">Kalman::Controllers::PID</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#add41bfbb398ce6b3cf59f773ebf8ab6a">Kalman::Controllers::Proportional</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#a7ae80ece5119ecf07aa4b5d36c781cfe">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html#aae4202db68fd0fecddc40be23b2de2da">Kalman::Controllers::MPC</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a343a50835a81481ec6c3cb78fe5ac932">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a186a654ab0373d4c57d9a905d325cb62">Kalman::Controllers::PID</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#add41bfbb398ce6b3cf59f773ebf8ab6a">Kalman::Controllers::Proportional</a>, and <a class="el" href="class_kalman_1_1_tuner.html#a77a56d8c394e58a1a0b2a036b6f71902">Kalman::Tuner</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_controller_8h_source.html#l00066">66</a> of file <a class="el" href="_controller_8h_source.html">Controller.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   67</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Closed-loop control policy over a filter&#39;s belief.&quot;</span>; }</div>
@@ -561,7 +562,7 @@ Protected Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   35</span>    {</div>
 <div class="line"><span class="lineno">   36</span>        <span class="keywordflow">return</span> std::max&lt;std::size_t&gt;(<a class="code hl_variable" href="class_kalman_1_1_controller.html#a690b08a8bd00fe48eefaf86e0c6a687c">fModel</a>-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>(), 1);</div>
 <div class="line"><span class="lineno">   37</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00149">Model.h:149</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -665,7 +666,7 @@ Protected Attributes</h2></td></tr>
 
 <p>The policy itself. Required. </p>
 
-<p>Implemented in <a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a11a9b88c979b4b773365ff2d0b330c42">Kalman::Controllers::Boost</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html#a3e0a3a149eaf97cb608059537902f9cd">Kalman::Controllers::AdaptiveQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a12cbaf5f7de226e52708a56548a9a96a">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#a2f880e2db18335c7f23b45627e8636f3">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a198078a1a0c8db80278549fe58616f13">Kalman::Controllers::PID</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#ad41f2d8257e5d2422cb57386b8ae1fe8">Kalman::Controllers::Proportional</a>.</p>
+<p>Implemented in <a class="el" href="class_kalman_1_1_tuner.html#ac39dd024fa44a1126c3344d8ed6159fa">Kalman::Tuner</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html#abe4e1fcf18cd52e8302917fc11ac0406">Kalman::Controllers::MPC</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a12cbaf5f7de226e52708a56548a9a96a">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#a2f880e2db18335c7f23b45627e8636f3">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a198078a1a0c8db80278549fe58616f13">Kalman::Controllers::PID</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#ad41f2d8257e5d2422cb57386b8ae1fe8">Kalman::Controllers::Proportional</a>.</p>
 
 </div>
 </div>
@@ -750,7 +751,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Clear the logs and any internal state; restore what <a class="el" href="class_kalman_1_1_controller.html#a7608ef78ab09c9ff5abf389ea0201842" title="Adapt the model after the policy (scale R, scale Q, ...). Optional.">Update()</a> changed. </p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#af48de98185ed176ab45a15546120e686">Kalman::Controllers::Boost</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html#ad4b9bf24e8ccac9803c3988bb8eec317">Kalman::Controllers::AdaptiveQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a273f5da9d9b1e8a790bc5a6c6bd2414d">Kalman::Controllers::MPPI</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a749815a4cec7b71de85eddd4fdc5a9ee">Kalman::Controllers::PID</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html#a30200c3de7930ce9902266de58d522d8">Kalman::Controllers::MPC</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a273f5da9d9b1e8a790bc5a6c6bd2414d">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a749815a4cec7b71de85eddd4fdc5a9ee">Kalman::Controllers::PID</a>, <a class="el" href="class_kalman_1_1_tuners_1_1_boost.html#adf42a8c461dd3fd0834b1d8fe07bef16">Kalman::Tuners::Boost</a>, and <a class="el" href="class_kalman_1_1_tuners_1_1_adaptive_q_r.html#a73c16fcb1e819bcab1f84b7d0cfda7ad">Kalman::Tuners::AdaptiveQR</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_controller_8cc_source.html#l00069">69</a> of file <a class="el" href="_controller_8cc_source.html">Controller.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   70</span>    {</div>
@@ -811,7 +812,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#ada6beccaa7cd331a956b117bf40b0beb">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4e3078cde73522ce96782fc2b977ab56">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a5acbd6998fff6b4fd014119e19d42543">Kalman::Controllers::PID</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#a1b395997989053b15a720b24dc1d9ce3">Kalman::Controllers::Proportional</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_l_q_r.html#ada6beccaa7cd331a956b117bf40b0beb">Kalman::Controllers::LQR</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_c.html#ad59d1ff78f9c5a4a2f0a45be1ebf5480">Kalman::Controllers::MPC</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_m_p_p_i.html#a4e3078cde73522ce96782fc2b977ab56">Kalman::Controllers::MPPI</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_p_i_d.html#a5acbd6998fff6b4fd014119e19d42543">Kalman::Controllers::PID</a>, <a class="el" href="class_kalman_1_1_controllers_1_1_proportional.html#a1b395997989053b15a720b24dc1d9ce3">Kalman::Controllers::Proportional</a>, and <a class="el" href="class_kalman_1_1_tuner.html#a3e696202418331554abaaba7bf5348d0">Kalman::Tuner</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_controller_8h_source.html#l00065">65</a> of file <a class="el" href="_controller_8h_source.html">Controller.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   65</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Kalman Controller&quot;</span>; }</div>
@@ -892,7 +893,7 @@ Protected Attributes</h2></td></tr>
 
 <p>Adapt the model after the policy (scale R, scale Q, ...). Optional. </p>
 
-<p>Reimplemented in <a class="el" href="class_kalman_1_1_controllers_1_1_boost.html#a43233269a12a0b265fac49e2bbf2380f">Kalman::Controllers::Boost</a>, and <a class="el" href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html#a00de6c804aa71c73e52ba7044dbc88fd">Kalman::Controllers::AdaptiveQR</a>.</p>
+<p>Reimplemented in <a class="el" href="class_kalman_1_1_tuners_1_1_boost.html#a33625b51381c337b1fdcbd1e25137de3">Kalman::Tuners::Boost</a>, and <a class="el" href="class_kalman_1_1_tuners_1_1_adaptive_q_r.html#abb51ff7824487e0fcebe1c9ebe312059">Kalman::Tuners::AdaptiveQR</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_controller_8h_source.html#l00091">91</a> of file <a class="el" href="_controller_8h_source.html">Controller.h</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   91</span>{}</div>

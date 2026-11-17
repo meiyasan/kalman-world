@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -411,7 +411,7 @@ against whichever generation is installed.</pre>
 <div class="line"><span class="lineno">  178</span> </div>
 <div class="line"><span class="lineno">  179</span>    <span class="preprocessor">@mcp.tool()</span></div>
 <div class="line"><span class="lineno">  180</span>    <span class="keyword">def </span>run_osse(spec: dict, n_cycles: int = 40, n_members: int = 16, token: str = <span class="stringliteral">&quot;&quot;</span>) -&gt; dict:</div>
-<div class="line"><span class="lineno">  181</span>        <span class="stringliteral">&quot;&quot;&quot;Twin-experiment OSSE for a flow spec (EnKF vs free run).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  181</span>        <span class="stringliteral">&quot;&quot;&quot;Counterpart-experiment OSSE for a flow spec (EnKF vs free run).&quot;&quot;&quot;</span></div>
 <div class="line"><span class="lineno">  182</span>        <span class="keywordflow">return</span> backend.run_osse(spec, n_cycles, n_members, tok(token))</div>
 <div class="line"><span class="lineno">  183</span> </div>
 <div class="line"><span class="lineno">  184</span>    <span class="preprocessor">@mcp.tool()</span></div>

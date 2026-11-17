@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -541,7 +541,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   46</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_solvers_1_1_finite_difference.html#a7bc7153996fa099381e94b068f8f09b4">fNy</a>; ++i)</div>
 <div class="line"><span class="lineno">   47</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_solvers_1_1_finite_difference.html#aec6be18327a2fab6f69173fbf0017df2">fNx</a>; ++j) p(i + 1, j + 1) = w(i, j);</div>
 <div class="line"><span class="lineno">   48</span> </div>
-<div class="line"><span class="lineno">   49</span>        <span class="keyword">auto</span> wrap = [](std::size_t i, std::size_t n) { <span class="keywordflow">return</span> (i + n) % n; };</div>
+<div class="line"><span class="lineno">   49</span>        <span class="keyword">auto</span> wrap = [](std::size_t i, std::size_t <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>) { <span class="keywordflow">return</span> (i + n) % <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; };</div>
 <div class="line"><span class="lineno">   50</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="class_kalman_1_1_solvers_1_1_finite_difference.html#a7bc7153996fa099381e94b068f8f09b4">fNy</a> + 2; ++i)</div>
 <div class="line"><span class="lineno">   51</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; <a class="code hl_variable" href="class_kalman_1_1_solvers_1_1_finite_difference.html#aec6be18327a2fab6f69173fbf0017df2">fNx</a> + 2; ++j)</div>
 <div class="line"><span class="lineno">   52</span>            {</div>
@@ -556,6 +556,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">   61</span>            }</div>
 <div class="line"><span class="lineno">   62</span>        <span class="keywordflow">return</span> p;</div>
 <div class="line"><span class="lineno">   63</span>    }</div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

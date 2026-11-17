@@ -4,6 +4,7 @@ var class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber =
     [ "Description", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#a0cacc9901a8ce22f9f54ada25f0a3728", null ],
     [ "f", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#a5b42336dac11ccd8b3e99c88762dfbcf", null ],
     [ "h", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#ac7e92aa79de5e50bec63e5aa2ac82e5c", null ],
+    [ "Instruments", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#a7f006a8749201167c30737eb53741c70", null ],
     [ "ParametersChanged", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#a4d9a485fa9d1ce37fe97d965b875d634", null ],
     [ "PropagateToRadius", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#a7bff2e59ddd88ee6304006a7a65cc8f0", null ],
     [ "Radii", "class_kalman_1_1_apps_1_1_tracking_1_1_drift_chamber.html#ab3a14fc2125d82c147f76b7a1e7baa35", null ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -592,13 +592,13 @@ this configuration has no C++ counterpart.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Train the router on labelled NIS histories.
 
-Called by ``InteractiveKalmanFilter.fit()``.
+Called by ``Router.fit()`` (the model made by ``route``).
 Default is a no-op (stateless routers need no training).
 
 Parameters
 ----------
 nis_arrays : list of ndarray (T_i, M)
-    NIS history per training scenario (Bayesian-IKF run).
+    NIS history per training scenario (from a run with the Bayesian decision).
 labels_arrays : list of int ndarray (T_i,)
     True regime index 0 … M−1 at every step.
 </pre> 

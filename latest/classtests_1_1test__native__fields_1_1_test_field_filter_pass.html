@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -160,8 +160,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a38c5aa6bf0ddb23779bf82834336a17a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a054d7d682f5c55e346a9f5774421e2e8" id="r_a054d7d682f5c55e346a9f5774421e2e8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#a054d7d682f5c55e346a9f5774421e2e8">test_barotropic_flow</a> (self)</td></tr>
 <tr class="separator:a054d7d682f5c55e346a9f5774421e2e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa73c88b12b411e70dcbd0d971ffb64a6" id="r_aa73c88b12b411e70dcbd0d971ffb64a6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#aa73c88b12b411e70dcbd0d971ffb64a6">test_the_twin_declares_what_python_does</a> (self)</td></tr>
-<tr class="separator:aa73c88b12b411e70dcbd0d971ffb64a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7bd376be647d3b4ee1acc477fd561f7" id="r_aa7bd376be647d3b4ee1acc477fd561f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtests_1_1test__native__fields_1_1_test_field_filter_pass.html#aa7bd376be647d3b4ee1acc477fd561f7">test_the_counterpart_declares_what_python_does</a> (self)</td></tr>
+<tr class="separator:aa7bd376be647d3b4ee1acc477fd561f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
@@ -285,21 +285,21 @@ Public Member Functions</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="test__native__fields_8py_source.html#l00097">97</a> of file <a class="el" href="test__native__fields_8py_source.html">test_native_fields.py</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   97</span>    <span class="keyword">def </span>test_tapers_given_to_the_engine(self):</div>
 <div class="line"><span class="lineno">   98</span>        model = mini()</div>
-<div class="line"><span class="lineno">   99</span>        rho_xy, rho_yy = model.localization()</div>
+<div class="line"><span class="lineno">   99</span>        rho_xy, rho_yy = model.covariance_mask()</div>
 <div class="line"><span class="lineno">  100</span>        loc = (0.5 * rho_xy, rho_yy)              <span class="comment"># not the model&#39;s: the engine&#39;s win</span></div>
 <div class="line"><span class="lineno">  101</span>        self.compare(mini, n_members=10, localization=loc, seed=4)</div>
 <div class="line"><span class="lineno">  102</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="aa73c88b12b411e70dcbd0d971ffb64a6" name="aa73c88b12b411e70dcbd0d971ffb64a6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa73c88b12b411e70dcbd0d971ffb64a6">&#9670;&#160;</a></span>test_the_twin_declares_what_python_does()</h2>
+<a id="aa7bd376be647d3b4ee1acc477fd561f7" name="aa7bd376be647d3b4ee1acc477fd561f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7bd376be647d3b4ee1acc477fd561f7">&#9670;&#160;</a></span>test_the_counterpart_declares_what_python_does()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tests.test_native_fields.TestFieldFilterPass.test_the_twin_declares_what_python_does </td>
+          <td class="memname">tests.test_native_fields.TestFieldFilterPass.test_the_counterpart_declares_what_python_does </td>
           <td>(</td>
           <td class="paramtype">&#160;</td>
           <td class="paramname"><em>self</em></td><td>)</td>
@@ -309,7 +309,7 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__native__fields_8py_source.html#l00114">114</a> of file <a class="el" href="test__native__fields_8py_source.html">test_native_fields.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>test_the_twin_declares_what_python_does(self):</div>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>test_the_counterpart_declares_what_python_does(self):</div>
 <div class="line"><span class="lineno">  115</span>        model = mini(<span class="stringliteral">&quot;gradient&quot;</span>)</div>
 <div class="line"><span class="lineno">  116</span>        handle = model.native_handle()</div>
 <div class="line"><span class="lineno">  117</span>        x = model.climatology()[:, 3].copy()</div>

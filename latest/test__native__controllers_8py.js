@@ -1,5 +1,7 @@
 var test__native__controllers_8py =
 [
+    [ "tests.test_native_controllers.TestTunerRole", "classtests_1_1test__native__controllers_1_1_test_tuner_role.html", "classtests_1_1test__native__controllers_1_1_test_tuner_role" ],
+    [ "tests.test_native_controllers.TestModelPredictiveControl", "classtests_1_1test__native__controllers_1_1_test_model_predictive_control.html", "classtests_1_1test__native__controllers_1_1_test_model_predictive_control" ],
     [ "tests.test_native_controllers.TestEveryControllerAgreesWithItsReference", "classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference.html", "classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference" ],
     [ "tests.test_native_controllers._Unstable", "classtests_1_1test__native__controllers_1_1___unstable.html", "classtests_1_1test__native__controllers_1_1___unstable" ],
     [ "tests.test_native_controllers.TestErrors", "classtests_1_1test__native__controllers_1_1_test_errors.html", "classtests_1_1test__native__controllers_1_1_test_errors" ],

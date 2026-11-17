@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,7 +157,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><pre class="fragment">The RTS gain at step k uses the transition from k to k + 1. The Python
 backward pass used the one from k - 1 to k, which is the same matrix only for
 a time-invariant linear model.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00553">553</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00552">552</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a32d2d6f92c4876688b00f9b4d6244f53" name="a32d2d6f92c4876688b00f9b4d6244f53"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a32d2d6f92c4876688b00f9b4d6244f53">&#9670;&#160;</a></span>test_python_backward_matches_the_cxx_one_on_a_nonlinear_model()</h2>
@@ -175,21 +175,21 @@ a time-invariant linear model.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00558">558</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  558</span>    <span class="keyword">def </span>test_python_backward_matches_the_cxx_one_on_a_nonlinear_model(self):</div>
-<div class="line"><span class="lineno">  559</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
-<div class="line"><span class="lineno">  560</span>        _, z = _pendulum_run(5, steps=120)</div>
-<div class="line"><span class="lineno">  561</span>        out = run_callback_filter(Pendulum(), z, smooth=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  562</span>        <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  563</span>            f = KalmanFilter(Pendulum())</div>
-<div class="line"><span class="lineno">  564</span>            f.forward(z, record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  565</span>            f.backward(record=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  566</span>        x_py = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.smooth]).reshape(len(z), -1)</div>
-<div class="line"><span class="lineno">  567</span>        np.testing.assert_allclose(x_py, out[<span class="stringliteral">&quot;x_smooth&quot;</span>], atol=1e-8)</div>
-<div class="line"><span class="lineno">  568</span>        <span class="comment"># and smoothing does better than filtering against the truth</span></div>
-<div class="line"><span class="lineno">  569</span>        truth, _ = _pendulum_run(5, steps=120)</div>
-<div class="line"><span class="lineno">  570</span>        x_post = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.posterior]).reshape(len(z), -1)</div>
-<div class="line"><span class="lineno">  571</span>        self.assertLess(np.abs(x_py - truth).mean(), np.abs(x_post - truth).mean())</div>
+<p class="definition">Definition at line <a class="el" href="test__native__callback_8py_source.html#l00557">557</a> of file <a class="el" href="test__native__callback_8py_source.html">test_native_callback.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  557</span>    <span class="keyword">def </span>test_python_backward_matches_the_cxx_one_on_a_nonlinear_model(self):</div>
+<div class="line"><span class="lineno">  558</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a> <span class="keyword">import</span> KalmanFilter</div>
+<div class="line"><span class="lineno">  559</span>        _, z = _pendulum_run(5, steps=120)</div>
+<div class="line"><span class="lineno">  560</span>        out = run_callback_filter(Pendulum(), z, smooth=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  561</span>        <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  562</span>            f = KalmanFilter(Pendulum())</div>
+<div class="line"><span class="lineno">  563</span>            f.forward(z, record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  564</span>            f.backward(record=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  565</span>        x_py = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.smooth]).reshape(len(z), -1)</div>
+<div class="line"><span class="lineno">  566</span>        np.testing.assert_allclose(x_py, out[<span class="stringliteral">&quot;x_smooth&quot;</span>], atol=1e-8)</div>
+<div class="line"><span class="lineno">  567</span>        <span class="comment"># and smoothing does better than filtering against the truth</span></div>
+<div class="line"><span class="lineno">  568</span>        truth, _ = _pendulum_run(5, steps=120)</div>
+<div class="line"><span class="lineno">  569</span>        x_post = np.array([x <span class="keywordflow">for</span> x, _ <span class="keywordflow">in</span> f.posterior]).reshape(len(z), -1)</div>
+<div class="line"><span class="lineno">  570</span>        self.assertLess(np.abs(x_py - truth).mean(), np.abs(x_post - truth).mean())</div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filter_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filter.html">modules.framework.filter</a></div><div class="ttdef"><b>Definition</b> <a href="filter_8py_source.html#l00001">filter.py:1</a></div></div>
 </div><!-- fragment -->
 </div>

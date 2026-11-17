@@ -1,6 +1,7 @@
 var namespace_kalman_1_1_apps =
 [
-    [ "Astro", "namespace_kalman_1_1_apps_1_1_astro.html", "namespace_kalman_1_1_apps_1_1_astro" ],
+    [ "Aerospace", "namespace_kalman_1_1_apps_1_1_aerospace.html", "namespace_kalman_1_1_apps_1_1_aerospace" ],
+    [ "Astrophysics", "namespace_kalman_1_1_apps_1_1_astrophysics.html", "namespace_kalman_1_1_apps_1_1_astrophysics" ],
     [ "Ballistics", "namespace_kalman_1_1_apps_1_1_ballistics.html", "namespace_kalman_1_1_apps_1_1_ballistics" ],
     [ "GPS", "namespace_kalman_1_1_apps_1_1_g_p_s.html", "namespace_kalman_1_1_apps_1_1_g_p_s" ],
     [ "Gravitational", "namespace_kalman_1_1_apps_1_1_gravitational.html", "namespace_kalman_1_1_apps_1_1_gravitational" ],

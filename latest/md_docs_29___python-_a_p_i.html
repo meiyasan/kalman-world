@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -200,7 +200,7 @@ The verbs</h1>
 <div class="fragment"><div class="line">{</div>
 <div class="line">  <span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span> | <span class="stringliteral">&quot;continuous&quot;</span> | <span class="stringliteral">&quot;&lt;CatalogClassName&gt;&quot;</span>,</div>
 <div class="line">  <span class="stringliteral">&quot;name&quot;</span>: <span class="stringliteral">&quot;my_model&quot;</span>,                  <span class="comment"># optional, used by register_model</span></div>
-<div class="line">  <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;api&quot;</span>,</div>
+<div class="line">  <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;api&quot;</span>,</div>
 <div class="line">  <span class="stringliteral">&quot;fs&quot;</span>: 100.0,</div>
 <div class="line"> </div>
 <div class="line">  <span class="stringliteral">&quot;dynamics&quot;</span>: {<span class="stringliteral">&quot;F&quot;</span>: …, <span class="stringliteral">&quot;H&quot;</span>: …, <span class="stringliteral">&quot;B&quot;</span>: …, <span class="stringliteral">&quot;L&quot;</span>: …, <span class="stringliteral">&quot;M&quot;</span>: …}    <span class="comment"># base=&quot;matrices&quot;</span></div>
@@ -219,7 +219,7 @@ The three bases</h2>
 <p>**<code>matrices</code>** — discrete matrices, the most direct form:</p>
 <div class="fragment"><div class="line">dt = 0.01</div>
 <div class="line">spec = {</div>
-<div class="line">    <span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;demo&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 100.0,</div>
+<div class="line">    <span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;demo&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 100.0,</div>
 <div class="line">    <span class="stringliteral">&quot;dynamics&quot;</span>: {<span class="stringliteral">&quot;F&quot;</span>: [[1, dt], [0, 1]], <span class="stringliteral">&quot;H&quot;</span>: [[1, 0]]},</div>
 <div class="line">    <span class="stringliteral">&quot;noise&quot;</span>:    {<span class="stringliteral">&quot;Q&quot;</span>: [[1e-6, 0], [0, 1e-4]], <span class="stringliteral">&quot;R&quot;</span>: [[0.05]]},</div>
 <div class="line">    <span class="stringliteral">&quot;initial&quot;</span>:  {<span class="stringliteral">&quot;x0&quot;</span>: [[0.0], [1.0]]},</div>
@@ -232,7 +232,7 @@ The three bases</h2>
 <div class="line">    <span class="stringliteral">&quot;noise&quot;</span>:    {<span class="stringliteral">&quot;R&quot;</span>: [[0.05]]},</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><b>A catalog class name</b> — parameterize a shipped model. <code>dynamics.params</code> is bound against the class signature:</p>
-<div class="fragment"><div class="line">spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;BallisticModel&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;shot&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50.0,</div>
+<div class="fragment"><div class="line">spec = {<span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;BallisticModel&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;shot&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 50.0,</div>
 <div class="line">        <span class="stringliteral">&quot;dynamics&quot;</span>: {<span class="stringliteral">&quot;params&quot;</span>: {<span class="stringliteral">&quot;c_drag&quot;</span>: 0.02}}}</div>
 </div><!-- fragment --><p><code>describe("BallisticModel")["params"]</code> tells you which parameters exist.</p>
 <h2><a class="anchor" id="bindings"></a>
@@ -249,7 +249,7 @@ Worked session</h1>
 <div class="line"> </div>
 <div class="line">dt = 0.01</div>
 <div class="line">spec = {</div>
-<div class="line">    <span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span>, <span class="stringliteral">&quot;sensor_id&quot;</span>: <span class="stringliteral">&quot;demo&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 100.0,</div>
+<div class="line">    <span class="stringliteral">&quot;base&quot;</span>: <span class="stringliteral">&quot;matrices&quot;</span>, <span class="stringliteral">&quot;sensor&quot;</span>: <span class="stringliteral">&quot;demo&quot;</span>, <span class="stringliteral">&quot;fs&quot;</span>: 100.0,</div>
 <div class="line">    <span class="stringliteral">&quot;dynamics&quot;</span>: {<span class="stringliteral">&quot;F&quot;</span>: [[1, dt], [0, 1]], <span class="stringliteral">&quot;H&quot;</span>: [[1, 0]]},</div>
 <div class="line">    <span class="stringliteral">&quot;noise&quot;</span>:    {<span class="stringliteral">&quot;Q&quot;</span>: [[1e-6, 0], [0, 1e-4]], <span class="stringliteral">&quot;R&quot;</span>: [[0.05]]},</div>
 <div class="line">    <span class="stringliteral">&quot;initial&quot;</span>:  {<span class="stringliteral">&quot;x0&quot;</span>: [[0.0], [1.0]]},</div>

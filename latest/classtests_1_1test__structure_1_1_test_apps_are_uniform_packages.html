@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Every domain is a package with variant submodules and a public surface.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00090">90</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00234">234</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="afff0b32140c7cbe595a8545d0d25bb3d" name="afff0b32140c7cbe595a8545d0d25bb3d"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afff0b32140c7cbe595a8545d0d25bb3d">&#9670;&#160;</a></span>test_every_domain_has_variants_and_all()</h2>
@@ -181,17 +181,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00099">99</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   99</span>    <span class="keyword">def </span>test_every_domain_has_variants_and_all(self):</div>
-<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
-<div class="line"><span class="lineno">  101</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
-<div class="line"><span class="lineno">  102</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;__all__&quot;</span>), f<span class="stringliteral">&quot;{name} package needs __all__&quot;</span>)</div>
-<div class="line"><span class="lineno">  103</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;VARIANTS&quot;</span>), f<span class="stringliteral">&quot;{name} package needs VARIANTS&quot;</span>)</div>
-<div class="line"><span class="lineno">  104</span>            self.assertGreater(len(mod.VARIANTS), 0, f<span class="stringliteral">&quot;{name}.VARIANTS is empty&quot;</span>)</div>
-<div class="line"><span class="lineno">  105</span>            <span class="keywordflow">for</span> key, cls <span class="keywordflow">in</span> mod.VARIANTS.items():</div>
-<div class="line"><span class="lineno">  106</span>                self.assertTrue(inspect.isclass(cls),</div>
-<div class="line"><span class="lineno">  107</span>                                f<span class="stringliteral">&quot;{name}.VARIANTS[{key!r}] must be a class&quot;</span>)</div>
-<div class="line"><span class="lineno">  108</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00243">243</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  243</span>    <span class="keyword">def </span>test_every_domain_has_variants_and_all(self):</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
+<div class="line"><span class="lineno">  245</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
+<div class="line"><span class="lineno">  246</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;__all__&quot;</span>), f<span class="stringliteral">&quot;{name} package needs __all__&quot;</span>)</div>
+<div class="line"><span class="lineno">  247</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;VARIANTS&quot;</span>), f<span class="stringliteral">&quot;{name} package needs VARIANTS&quot;</span>)</div>
+<div class="line"><span class="lineno">  248</span>            self.assertGreater(len(mod.VARIANTS), 0, f<span class="stringliteral">&quot;{name}.VARIANTS is empty&quot;</span>)</div>
+<div class="line"><span class="lineno">  249</span>            <span class="keywordflow">for</span> key, cls <span class="keywordflow">in</span> mod.VARIANTS.items():</div>
+<div class="line"><span class="lineno">  250</span>                self.assertTrue(inspect.isclass(cls),</div>
+<div class="line"><span class="lineno">  251</span>                                f<span class="stringliteral">&quot;{name}.VARIANTS[{key!r}] must be a class&quot;</span>)</div>
+<div class="line"><span class="lineno">  252</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -211,17 +211,17 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">A family package groups domains and exposes them via DOMAINS.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00128">128</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  128</span>    <span class="keyword">def </span>test_families_expose_their_domains(self):</div>
-<div class="line"><span class="lineno">  129</span>        <span class="stringliteral">&quot;&quot;&quot;A family package groups domains and exposes them via DOMAINS.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">for</span> fam <span class="keywordflow">in</span> FAMILIES:</div>
-<div class="line"><span class="lineno">  131</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{fam}&quot;</span>)</div>
-<div class="line"><span class="lineno">  132</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;DOMAINS&quot;</span>), f<span class="stringliteral">&quot;{fam} family needs DOMAINS&quot;</span>)</div>
-<div class="line"><span class="lineno">  133</span>            self.assertGreater(len(mod.DOMAINS), 1, f<span class="stringliteral">&quot;{fam} should group &gt;1 domain&quot;</span>)</div>
-<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">for</span> name, dom <span class="keywordflow">in</span> mod.DOMAINS.items():</div>
-<div class="line"><span class="lineno">  135</span>                self.assertTrue(hasattr(dom, <span class="stringliteral">&quot;VARIANTS&quot;</span>), f<span class="stringliteral">&quot;{fam}.{name} needs VARIANTS&quot;</span>)</div>
-<div class="line"><span class="lineno">  136</span> </div>
-<div class="line"><span class="lineno">  137</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00272">272</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  272</span>    <span class="keyword">def </span>test_families_expose_their_domains(self):</div>
+<div class="line"><span class="lineno">  273</span>        <span class="stringliteral">&quot;&quot;&quot;A family package groups domains and exposes them via DOMAINS.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  274</span>        <span class="keywordflow">for</span> fam <span class="keywordflow">in</span> FAMILIES:</div>
+<div class="line"><span class="lineno">  275</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{fam}&quot;</span>)</div>
+<div class="line"><span class="lineno">  276</span>            self.assertTrue(hasattr(mod, <span class="stringliteral">&quot;DOMAINS&quot;</span>), f<span class="stringliteral">&quot;{fam} family needs DOMAINS&quot;</span>)</div>
+<div class="line"><span class="lineno">  277</span>            self.assertGreater(len(mod.DOMAINS), 1, f<span class="stringliteral">&quot;{fam} should group &gt;1 domain&quot;</span>)</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">for</span> name, dom <span class="keywordflow">in</span> mod.DOMAINS.items():</div>
+<div class="line"><span class="lineno">  279</span>                self.assertTrue(hasattr(dom, <span class="stringliteral">&quot;VARIANTS&quot;</span>), f<span class="stringliteral">&quot;{fam}.{name} needs VARIANTS&quot;</span>)</div>
+<div class="line"><span class="lineno">  280</span> </div>
+<div class="line"><span class="lineno">  281</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -241,13 +241,13 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00093">93</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>test_no_unexpected_flat_modules(self):</div>
-<div class="line"><span class="lineno">   94</span>        flat = {m.name <span class="keywordflow">for</span> m <span class="keywordflow">in</span> pkgutil.iter_modules([APPS_DIR]) <span class="keywordflow">if</span> <span class="keywordflow">not</span> m.ispkg}</div>
-<div class="line"><span class="lineno">   95</span>        self.assertEqual(flat - SHIMS, set(),</div>
-<div class="line"><span class="lineno">   96</span>                         <span class="stringliteral">&quot;app domains must be packages (flat modules left: &quot;</span></div>
-<div class="line"><span class="lineno">   97</span>                         f<span class="stringliteral">&quot;{sorted(flat - SHIMS)})&quot;</span>)</div>
-<div class="line"><span class="lineno">   98</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00237">237</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  237</span>    <span class="keyword">def </span>test_no_unexpected_flat_modules(self):</div>
+<div class="line"><span class="lineno">  238</span>        flat = {m.name <span class="keywordflow">for</span> m <span class="keywordflow">in</span> pkgutil.iter_modules([APPS_DIR]) <span class="keywordflow">if</span> <span class="keywordflow">not</span> m.ispkg}</div>
+<div class="line"><span class="lineno">  239</span>        self.assertEqual(flat - SHIMS, set(),</div>
+<div class="line"><span class="lineno">  240</span>                         <span class="stringliteral">&quot;app domains must be packages (flat modules left: &quot;</span></div>
+<div class="line"><span class="lineno">  241</span>                         f<span class="stringliteral">&quot;{sorted(flat - SHIMS)})&quot;</span>)</div>
+<div class="line"><span class="lineno">  242</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -268,18 +268,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Every name a domain exports is reachable and identical via kalman.apps
 when re-exported there (the stable public surface).</pre> 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00117">117</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>    <span class="keyword">def </span>test_public_names_resolve_from_apps(self):</div>
-<div class="line"><span class="lineno">  118</span>        <span class="stringliteral">&quot;&quot;&quot;Every name a domain exports is reachable and identical via kalman.apps</span></div>
-<div class="line"><span class="lineno">  119</span><span class="stringliteral">        when re-exported there (the stable public surface).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
-<div class="line"><span class="lineno">  121</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
-<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">for</span> public <span class="keywordflow">in</span> mod.__all__:</div>
-<div class="line"><span class="lineno">  123</span>                self.assertTrue(hasattr(mod, public), f<span class="stringliteral">&quot;{name}.{public} missing&quot;</span>)</div>
-<div class="line"><span class="lineno">  124</span>                <span class="keywordflow">if</span> hasattr(apps, public):</div>
-<div class="line"><span class="lineno">  125</span>                    self.assertIs(getattr(apps, public), getattr(mod, public),</div>
-<div class="line"><span class="lineno">  126</span>                                  f<span class="stringliteral">&quot;kalman.apps.{public} differs from {name}.{public}&quot;</span>)</div>
-<div class="line"><span class="lineno">  127</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00261">261</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  261</span>    <span class="keyword">def </span>test_public_names_resolve_from_apps(self):</div>
+<div class="line"><span class="lineno">  262</span>        <span class="stringliteral">&quot;&quot;&quot;Every name a domain exports is reachable and identical via kalman.apps</span></div>
+<div class="line"><span class="lineno">  263</span><span class="stringliteral">        when re-exported there (the stable public surface).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
+<div class="line"><span class="lineno">  265</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
+<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">for</span> public <span class="keywordflow">in</span> mod.__all__:</div>
+<div class="line"><span class="lineno">  267</span>                self.assertTrue(hasattr(mod, public), f<span class="stringliteral">&quot;{name}.{public} missing&quot;</span>)</div>
+<div class="line"><span class="lineno">  268</span>                <span class="keywordflow">if</span> hasattr(apps, public):</div>
+<div class="line"><span class="lineno">  269</span>                    self.assertIs(getattr(apps, public), getattr(mod, public),</div>
+<div class="line"><span class="lineno">  270</span>                                  f<span class="stringliteral">&quot;kalman.apps.{public} differs from {name}.{public}&quot;</span>)</div>
+<div class="line"><span class="lineno">  271</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -299,15 +299,15 @@ when re-exported there (the stable public surface).</pre>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">VARIANTS entries are models (the estimable object of that domain).</pre> 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00109">109</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  109</span>    <span class="keyword">def </span>test_variants_are_kalman_models(self):</div>
-<div class="line"><span class="lineno">  110</span>        <span class="stringliteral">&quot;&quot;&quot;VARIANTS entries are models (the estimable object of that domain).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
-<div class="line"><span class="lineno">  112</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
-<div class="line"><span class="lineno">  113</span>            <span class="keywordflow">for</span> key, cls <span class="keywordflow">in</span> mod.VARIANTS.items():</div>
-<div class="line"><span class="lineno">  114</span>                self.assertTrue(issubclass(cls, KalmanModel),</div>
-<div class="line"><span class="lineno">  115</span>                                f<span class="stringliteral">&quot;{name}.VARIANTS[{key!r}] = {cls.__name__} is not a KalmanModel&quot;</span>)</div>
-<div class="line"><span class="lineno">  116</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00253">253</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  253</span>    <span class="keyword">def </span>test_variants_are_kalman_models(self):</div>
+<div class="line"><span class="lineno">  254</span>        <span class="stringliteral">&quot;&quot;&quot;VARIANTS entries are models (the estimable object of that domain).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">for</span> path, name <span class="keywordflow">in</span> _domain_packages():</div>
+<div class="line"><span class="lineno">  256</span>            mod = importlib.import_module(f<span class="stringliteral">&quot;modules.apps.{path}&quot;</span>)</div>
+<div class="line"><span class="lineno">  257</span>            <span class="keywordflow">for</span> key, cls <span class="keywordflow">in</span> mod.VARIANTS.items():</div>
+<div class="line"><span class="lineno">  258</span>                self.assertTrue(issubclass(cls, KalmanModel),</div>
+<div class="line"><span class="lineno">  259</span>                                f<span class="stringliteral">&quot;{name}.VARIANTS[{key!r}] = {cls.__name__} is not a KalmanModel&quot;</span>)</div>
+<div class="line"><span class="lineno">  260</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

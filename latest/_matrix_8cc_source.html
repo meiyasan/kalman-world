@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -387,7 +387,7 @@ $(document).ready(function(){initNavTree('_matrix_8cc_source.html',''); initResi
 <div class="foldopen" id="foldopen00216" data-start="{" data-end="}">
 <div class="line"><a id="l00216" name="l00216"></a><span class="lineno"><a class="line" href="namespace_kalman.html#a49d6edaba508578cd467d5415d8eb740">  216</a></span>    <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_function" href="namespace_kalman.html#a392dfa20879049bee7945941d14cd0eb">operator*</a>(<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;a, <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;x)</div>
 <div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    {</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        RequireSame(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>(), x.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>(), <span class="stringliteral">&quot;dimensions differ in matrix-vector product&quot;</span>);</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        RequireSame(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#aac29b6bb3af29976d7626d5ca569ae1c">Cols</a>(), x.Size(), <span class="stringliteral">&quot;dimensions differ in matrix-vector product&quot;</span>);</div>
 <div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> out(a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>(), 0.);</div>
 <div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; a.<a class="code hl_function" href="class_kalman_1_1_matrix.html#a571e5d05d267249cd6b396250ccb8ce2">Rows</a>(); ++i)</div>
 <div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        {</div>

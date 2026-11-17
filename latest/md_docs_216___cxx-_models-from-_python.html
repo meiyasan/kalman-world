@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,19 +165,19 @@ What runs where</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">The field solvers: <code>SpectralSolver.advance</code> (numpy backend) and <code>FiniteDifferenceSolver.advance</code>   </td><td class="markdownTableBodyNone">C++ (<code><a class="el" href="class_kalman_1_1_solvers_1_1_vorticity.html" title="The 2-D vorticity equation on the spectral solver.">Kalman::Solvers::Vorticity</a></code>, <code>::FiniteDifference</code>)   </td><td class="markdownTableBodyNone">a solver that states its physics (<code>NS2D</code>, <code>BetaPlaneNS2D</code>, diffusion); a subclass with other physics stays in Python    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">The ensemble filter of a field model (its own <code>forecast</code>, <code>observe</code>, <code>localization</code>, <code>initial_ensemble</code>)   </td><td class="markdownTableBodyNone"><code>KolmogorovFlowModel</code>, <code>BarotropicFlowModel</code>: the whole pass in C++ (<code>libKalmanApps</code>), the members forecast in parallel; the draws and the initial ensemble are numpy's. Another field model: its hooks in Python, the analysis arithmetic in the C++ kernel <code>enkf_analysis</code>   </td><td class="markdownTableBodyNone">when the library is found; a surrogate forecast or a libTorch solver keeps the Python hooks    </td></tr>
+<td class="markdownTableBodyNone">The ensemble filter of a field model (its <code>f</code> and <code>h</code> written for every member, its <code>covariance_mask</code>, its initial state as samples)   </td><td class="markdownTableBodyNone"><code>KolmogorovFlowModel</code>, <code>BarotropicFlowModel</code>: the whole pass in C++ (<code>libKalmanApps</code>), the members forecast in parallel; the draws and the initial ensemble are numpy's. Another field model: its hooks in Python, the analysis arithmetic in the C++ kernel <code>enkf_analysis</code>   </td><td class="markdownTableBodyNone">when the library is found; a surrogate forecast or a libTorch solver keeps the Python hooks    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">Sampling: <code>model.sample(...)</code>   </td><td class="markdownTableBodyNone">the C++ loop; the noise is still drawn by numpy, so a seeded run is unchanged   </td><td class="markdownTableBodyNone">extended engine    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">A closed loop: <code>forward(z, controller)</code> with a controller function   </td><td class="markdownTableBodyNone">the same C++ loop, which calls the controller at every step   </td><td class="markdownTableBodyNone">when the model takes a control    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">The controllers: P, PID, LQR, MPPI, Boost, AdaptiveQR   </td><td class="markdownTableBodyNone">C++ (<code><a class="el" href="namespace_kalman_1_1_controllers.html">Kalman::Controllers</a></code>); a Python model's <code>f</code>, <code>h</code>, noise and <code>clip_u</code> are called back   </td><td class="markdownTableBodyNone">real double-precision models; the neural controllers stay in Python    </td></tr>
+<td class="markdownTableBodyNone">The controllers P, PID, LQR, MPPI and the tuners Boost, AdaptiveQR   </td><td class="markdownTableBodyNone">C++ (<code><a class="el" href="namespace_kalman_1_1_controllers.html">Kalman::Controllers</a></code>, <code><a class="el" href="namespace_kalman_1_1_tuners.html">Kalman::Tuners</a></code>); a Python model's <code>f</code>, <code>h</code>, noise and <code>limit_control</code> are called back   </td><td class="markdownTableBodyNone">real double-precision models; the neural controllers stay in Python    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone">The routers: Bayesian, Threshold, Hybrid   </td><td class="markdownTableBodyNone">C++ (<code><a class="el" href="namespace_kalman_1_1_routers.html">Kalman::Routers</a></code>); a Hybrid's Python child is called back   </td><td class="markdownTableBodyNone">when the library is found    </td></tr>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">A nonlinear model written in C++   </td><td class="markdownTableBodyNone">C++, the whole pass in one call   </td><td class="markdownTableBodyNone">when its library is loaded    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">The four application models with a C++ twin   </td><td class="markdownTableBodyNone">C++, the whole pass in one call   </td><td class="markdownTableBodyNone">when <code>libKalmanApps</code> is found   </td></tr>
+<td class="markdownTableBodyNone">The four application models with a C++ counterpart   </td><td class="markdownTableBodyNone">C++, the whole pass in one call   </td><td class="markdownTableBodyNone">when <code>libKalmanApps</code> is found   </td></tr>
 </table>
 <p>One loop runs every case, in C++. What differs is where the physics is evaluated. A model written in Python is called back at every step, so its pass costs about what the Python loop did (measured: 1.0 to 1.5 times faster with the extended engine, 2.4 times with the unscented one in closed loop). A model written in C++ never comes back to Python, and that is where the large factors below come from.</p>
 <p><b>Noise and the <code>w</code>, <code>v</code> arguments.</b> <code>f(x, u, w, t)</code> and <code>h(x, v, t)</code> are the contract's signatures, so every model has <code>w</code> and <code>v</code> whether it uses them or not. The sigma-point and particle engines hand the noise to the map only when the model declares no coupling (<code>L</code>, <code>M</code>) and the map really responds to the argument (it is tried once, at the initial state). Otherwise the noise is added, <code>L Q Lᵀ</code> and <code>M R Mᵀ</code>, as the extended engine does. A model that takes <code>v</code> and ignores it therefore keeps its <code>R</code> in every engine.</p>
@@ -194,11 +194,11 @@ Controllers and routers</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>LQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Controllers::LQR</code>, <code>Algebra::SolveDARE</code>   </td><td class="markdownTableBodyNone"><code>model.F()</code>, <code>model.B()</code> once, at <code>fit()</code>   </td><td class="markdownTableBodyNone">gain 1e-13 (scipy is the reference)    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>MPPIKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Controllers::MPPI</code> (holds the warm start)   </td><td class="markdownTableBodyNone">the perturbations, drawn in Python from the seeded generator; <code>model.f</code> and <code>clip_u</code> are called back per rollout step   </td><td class="markdownTableBodyNone">1e-11    </td></tr>
+<td class="markdownTableBodyNone"><code>MPPIKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Controllers::MPPI</code> (holds the warm start)   </td><td class="markdownTableBodyNone">the perturbations, drawn in Python from the seeded generator; <code>model.f</code> and <code>limit_control</code> are called back per rollout step   </td><td class="markdownTableBodyNone">1e-11    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone"><code>BoostKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Controllers::Boost</code>   </td><td class="markdownTableBodyNone"><code>H</code> and the current <code>R</code>, called back; the factor comes back and is applied to <code>model._R</code> here   </td><td class="markdownTableBodyNone">the same boosts at the same steps    </td></tr>
+<td class="markdownTableBodyNone"><code>BoostKalmanTuner</code>   </td><td class="markdownTableBodyNone"><code>Tuners::Boost</code>   </td><td class="markdownTableBodyNone"><code>H</code> and the current <code>R</code>, called back; the factor comes back and is applied to <code>model._R</code> here   </td><td class="markdownTableBodyNone">the same boosts at the same steps    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone"><code>AdaptiveQRKalmanController</code>   </td><td class="markdownTableBodyNone"><code>Controllers::AdaptiveQR</code>   </td><td class="markdownTableBodyNone"><code>H</code> and <code>R</code>, called back; the factor is applied to <code>model._Q</code> here   </td><td class="markdownTableBodyNone">1e-13 per call, 2.5e-11 after 280 closed-loop steps    </td></tr>
+<td class="markdownTableBodyNone"><code>AdaptiveQRKalmanTuner</code>   </td><td class="markdownTableBodyNone"><code>Tuners::AdaptiveQR</code>   </td><td class="markdownTableBodyNone"><code>H</code> and <code>R</code>, called back; the factor is applied to <code>model._Q</code> here   </td><td class="markdownTableBodyNone">1e-13 per call, 2.5e-11 after 280 closed-loop steps    </td></tr>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>BayesianRouter</code>   </td><td class="markdownTableBodyNone"><code>Routers::Bayesian</code>   </td><td class="markdownTableBodyNone"><code>c</code> and the likelihoods (no NIS)   </td><td class="markdownTableBodyNone">exact    </td></tr>
 <tr class="markdownTableRowEven">
@@ -208,7 +208,7 @@ Controllers and routers</h1>
 </table>
 <p>Three things follow from where the line is drawn:</p>
 <ul>
-<li><b>The adapters retune the Python model.</b> Boost and AdaptiveQR decide in C++ but apply the factor to <code>model._R</code> / <code>model._Q</code> in Python, and their C++ side reads <code>R</code> and <code>Q</code> from the Python model at every call. So the filter running the model sees the retuning, on the C++ loop as on the Python one, as before.</li>
+<li><b>The tuners retune the Python model.</b> Boost and AdaptiveQR decide in C++ but apply the factor to <code>model._R</code> / <code>model._Q</code> in Python, and their C++ side reads <code>R</code> and <code>Q</code> from the Python model at every call. So the filter running the model sees the retuning, on the C++ loop as on the Python one, as before.</li>
 <li><b>A seeded MPPI makes the same decisions</b> on both paths: the draws come from the controller's numpy generator in the order the reference draws them.</li>
 <li><b>Changing a gain or a parameter rebuilds</b> the C++ object; for PID and MPPI that restarts the integral or the warm start. <code>reset()</code> resets both sides.</li>
 </ul>
@@ -250,9 +250,9 @@ Three ways to write a model</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone">One model for C++ programs, ROOT+ and Python   </td><td class="markdownTableBodyNone">a C++ class, registered by name   </td><td class="markdownTableBodyNone">the whole pass in C++    </td></tr>
 <tr class="markdownTableRowOdd">
-<td class="markdownTableBodyNone">An existing Python class to run faster, unchanged for its users   </td><td class="markdownTableBodyNone">a C++ twin behind the Python class   </td><td class="markdownTableBodyNone">the whole pass in C++   </td></tr>
+<td class="markdownTableBodyNone">An existing Python class to run faster, unchanged for its users   </td><td class="markdownTableBodyNone">a C++ counterpart behind the Python class   </td><td class="markdownTableBodyNone">the whole pass in C++   </td></tr>
 </table>
-<p>Measured on this repository's models (2000 steps, <code>tools/benchmark_twins.py</code>): the C++ pass is 9 to 11 times faster for the storm and tornado models, 19 times for the car, and 33 to 42 times for the ballistic model. The results agree with the Python ones to about one part in a hundred million.</p>
+<p>Measured on this repository's models (2000 steps, <code>tools/benchmark_counterparts.py</code>): the C++ pass is 9 to 11 times faster for the storm and tornado models, 19 times for the car, and 33 to 42 times for the ballistic model. The results agree with the Python ones to about one part in a hundred million.</p>
 <h1><a class="anchor" id="the-toy-one-model-two-languages"></a>
 The toy: one model, two languages</h1>
 <p>The same model is kept written twice, once in each language, as the worked example of both ways to write one:</p>
@@ -322,12 +322,12 @@ The model, in C++</h2>
 <div class="line"><a class="code hl_define" href="_factory_8h.html#aee81ac1ca420e4426c406cd4ad986ae6">KALMAN_REGISTER_MODEL</a>(CoolingCoffee, <span class="stringliteral">&quot;toy-coffee&quot;</span>);   <span class="comment">// this line makes it findable by name</span></div>
 <div class="ttc" id="a_factory_8h_html_aee81ac1ca420e4426c406cd4ad986ae6"><div class="ttname"><a href="_factory_8h.html#aee81ac1ca420e4426c406cd4ad986ae6">KALMAN_REGISTER_MODEL</a></div><div class="ttdeci">#define KALMAN_REGISTER_MODEL(Class, Name,...)</div><div class="ttdoc">Register Class under Name at static-initialisation time.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00178">Factory.h:178</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a31b4fd602e88d38b51ff86ae05e6ac1d"><div class="ttname"><a href="class_kalman_1_1_model.html#a31b4fd602e88d38b51ff86ae05e6ac1d">Kalman::Model::SetSampleRate</a></div><div class="ttdeci">void SetSampleRate(double fs)</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00072">Model.cc:72</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00152">Model.h:152</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a47d95a84d899bd78f290dca129919919"><div class="ttname"><a href="class_kalman_1_1_model.html#a47d95a84d899bd78f290dca129919919">Kalman::Model::DeclareParameter</a></div><div class="ttdeci">void DeclareParameter(const std::string &amp;name, double value)</div><div class="ttdoc">Declare a named parameter with its default (constructor only).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00408">Model.cc:408</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a5b8e4cd6dac1b10694b2f2cc0f0ec1ec"><div class="ttname"><a href="class_kalman_1_1_model.html#a5b8e4cd6dac1b10694b2f2cc0f0ec1ec">Kalman::Model::ParametersChanged</a></div><div class="ttdeci">virtual void ParametersChanged()</div><div class="ttdoc">Called after every SetParameter(): refresh whatever is derived from them.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00402">Model.h:402</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00154">Model.h:154</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a47d95a84d899bd78f290dca129919919"><div class="ttname"><a href="class_kalman_1_1_model.html#a47d95a84d899bd78f290dca129919919">Kalman::Model::DeclareParameter</a></div><div class="ttdeci">void DeclareParameter(const std::string &amp;name, double value)</div><div class="ttdoc">Declare a named parameter with its default (constructor only).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00475">Model.cc:475</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a5b8e4cd6dac1b10694b2f2cc0f0ec1ec"><div class="ttname"><a href="class_kalman_1_1_model.html#a5b8e4cd6dac1b10694b2f2cc0f0ec1ec">Kalman::Model::ParametersChanged</a></div><div class="ttdeci">virtual void ParametersChanged()</div><div class="ttdoc">Called after every SetParameter(): refresh whatever is derived from them.</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00518">Model.h:518</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ab52f40f2fa87eea03913a2768e899216"><div class="ttname"><a href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216">Kalman::Model::h</a></div><div class="ttdeci">virtual Vector h(const Vector &amp;x, double t=0.) const</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00128">Model.cc:128</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_ad01e8d3360561cbff4642b7e90cd22a7"><div class="ttname"><a href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Kalman::Model::Parameter</a></div><div class="ttdeci">double Parameter(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00478">Model.cc:478</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ad01e8d3360561cbff4642b7e90cd22a7"><div class="ttname"><a href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Kalman::Model::Parameter</a></div><div class="ttdeci">virtual double Parameter(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00545">Model.cc:545</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_models_1_1_extended_html"><div class="ttname"><a href="class_kalman_1_1_models_1_1_extended.html">Kalman::Models::Extended</a></div><div class="ttdoc">A model that is nonlinear by declaration — override f() and/or h().</div><div class="ttdef"><b>Definition</b> <a href="_models_2_extended_8h_source.html#l00045">Extended.h:46</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
 <div class="ttc" id="anamespace_kalman_html"><div class="ttname"><a href="namespace_kalman.html">Kalman</a></div><div class="ttdef"><b>Definition</b> <a href="_metadata_8h_source.html#l00026">Metadata.h:27</a></div></div>
@@ -370,14 +370,14 @@ The model, in Python</h2>
 <div class="fragment"><div class="line"><span class="keyword">class </span>CoolingCoffeeModel(ExtendedKalmanModel):</div>
 <div class="line">    DIFFERENTIATOR = KalmanDifferentiatorKind.CENTRAL      <span class="comment"># as the C++ class linearises</span></div>
 <div class="line"> </div>
-<div class="line">    <span class="keyword">def </span>__init__(self, sensor_id=&quot;thermometer&quot;, room=21.0, fs=1.0, **kwargs):</div>
+<div class="line">    <span class="keyword">def </span>__init__(self, sensor=&quot;thermometer&quot;, room=21.0, fs=1.0, **kwargs):</div>
 <div class="line">        self.room = float(room)</div>
 <div class="line">        self.n, self.m, self.l = 2, 1, 0</div>
 <div class="line">        kwargs.setdefault(<span class="stringliteral">&quot;Q&quot;</span>, np.diag([1e-4, 1e-12]))</div>
 <div class="line">        kwargs.setdefault(<span class="stringliteral">&quot;R&quot;</span>, np.array([[0.5 ** 2]]))</div>
 <div class="line">        kwargs.setdefault(<span class="stringliteral">&quot;x0&quot;</span>, np.array([[80.0], [1e-3]]))</div>
 <div class="line">        kwargs.setdefault(<span class="stringliteral">&quot;P0&quot;</span>, np.diag([25.0, 1e-6]))</div>
-<div class="line">        super().__init__(sensor_id, fs=fs, L=np.eye(2), **kwargs)</div>
+<div class="line">        super().__init__(sensor, fs=fs, L=np.eye(2), **kwargs)</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">def </span>f(self, x, u=None, w=None, t=None):</div>
 <div class="line">        T, k = np.asarray(x, dtype=float).reshape(-1)</div>
@@ -412,12 +412,12 @@ Named parameters</h1>
 <td class="markdownTableBodyNone">C   </td><td class="markdownTableBodyNone"><code>kalman_model_parameter(...)</code>   </td><td class="markdownTableBodyNone"><code>kalman_model_set_parameter(...)</code>   </td></tr>
 </table>
 <p>An unknown name is an error that lists the names the model does declare. Parameters are numbers. A model whose size depends on a setting (two or three states per axis, say) registers one name per size instead, as the ballistic model does with <code>ballistic</code> and <code>ballistic-order2</code>.</p>
-<h1><a class="anchor" id="giving-an-existing-python-model-a-c-twin"></a>
-Giving an existing Python model a C++ twin</h1>
-<p>When a Python class already has users, keep it and put the C++ class behind it. The four application models that do this are listed in <a class="el" href="md_docs_215___cxx-_library.html">the C++ library page</a>, with the rules a twin must follow. In short:</p>
-<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.models.native <span class="keyword">import</span> NativeTwin</div>
+<h1><a class="anchor" id="giving-an-existing-python-model-a-c-counterpart"></a>
+Giving an existing Python model a C++ counterpart</h1>
+<p>When a Python class already has users, keep it and put the C++ class behind it. The four application models that do this are listed in <a class="el" href="md_docs_215___cxx-_library.html">the C++ library page</a>, with the rules a counterpart must follow. In short:</p>
+<div class="fragment"><div class="line"><span class="keyword">from</span> kalman.framework.models.native <span class="keyword">import</span> NativeCounterpart</div>
 <div class="line"> </div>
-<div class="line"><span class="keyword">class </span>StormModel(NativeTwin, ExtendedKalmanModel):</div>
+<div class="line"><span class="keyword">class </span>StormModel(NativeCounterpart, ExtendedKalmanModel):</div>
 <div class="line"> </div>
 <div class="line">    <span class="keyword">def </span>native_name(self):                       <span class="comment"># which C++ model stands in for this one</span></div>
 <div class="line">        <span class="keywordflow">if</span> self.steering <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:            <span class="comment"># a Python callback has no C++ counterpart</span></div>
@@ -427,9 +427,9 @@ Giving an existing Python model a C++ twin</h1>
 <div class="line">    <span class="keyword">def </span>native_parameters(self):                 <span class="comment"># the settings to hand over, by name</span></div>
 <div class="line">        <span class="keywordflow">return</span> {<span class="stringliteral">&quot;omega&quot;</span>: self.omega, <span class="stringliteral">&quot;beta_drift&quot;</span>: self.beta_drift}</div>
 </div><!-- fragment --><p><code>model.filter(z)</code> then runs in C++ when it can and in Python when it cannot. The user of <code>StormModel</code> sees no difference except the time it takes.</p>
-<p>To compare the two paths, switch the twins off:</p>
+<p>To compare the two paths, switch the counterparts off:</p>
 <div class="fragment"><div class="line"><span class="keyword">import</span> kalman.framework.models.native <span class="keyword">as</span> native</div>
-<div class="line">native.USE_NATIVE_TWINS = <span class="keyword">False</span>        <span class="comment"># or KALMAN_NATIVE_TWINS=0 in the environment</span></div>
+<div class="line">native.USE_NATIVE_COUNTERPARTS = <span class="keyword">False</span>        <span class="comment"># or KALMAN_NATIVE_COUNTERPARTS=0 in the environment</span></div>
 </div><!-- fragment --><h1><a class="anchor" id="when-something-goes-wrong"></a>
 When something goes wrong</h1>
 <table class="markdownTable">
@@ -446,7 +446,7 @@ When something goes wrong</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>import torch</code> fails with a symbol error   </td><td class="markdownTableBodyNone"><code>DYLD_LIBRARY_PATH</code> points at another libtorch   </td><td class="markdownTableBodyNone"><code>unset DYLD_LIBRARY_PATH</code> for this environment    </td></tr>
 <tr class="markdownTableRowEven">
-<td class="markdownTableBodyNone">A twin is not used   </td><td class="markdownTableBodyNone">the configuration has no C++ counterpart   </td><td class="markdownTableBodyNone"><code>model.native_handle()</code> returns <code>None</code>; see the table in <a class="el" href="md_docs_215___cxx-_library.html">the C++ library page</a>   </td></tr>
+<td class="markdownTableBodyNone">A counterpart is not used   </td><td class="markdownTableBodyNone">the configuration has no C++ counterpart   </td><td class="markdownTableBodyNone"><code>model.native_handle()</code> returns <code>None</code>; see the table in <a class="el" href="md_docs_215___cxx-_library.html">the C++ library page</a>   </td></tr>
 </table>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->

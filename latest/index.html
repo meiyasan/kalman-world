@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,25 @@ What is inside</h1>
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>kalman</code> (program)   </td><td class="markdownTableBodyNone">lists the models an installation can run and exports them to <code>.kw</code> files   </td></tr>
 </table>
-<p><b>Filters.</b> Gaussian beliefs: linear (KF), extended (EKF), unscented (UKF), ensemble (EnKF), combinatorial track finding (CKF) and interacting multiple models (IKF). Non-Gaussian beliefs: the particle filter. The filtering runs in C++; a model written in Python is called back from the C++ loop.</p>
+<p><b>Filters.</b> Gaussian beliefs: linear (KF), extended (EKF), unscented (UKF), ensemble (EnKF), combinatorial track finding (CKF), and several models of a system that changes regime (<code>route</code>, the IMM of the literature). Non-Gaussian beliefs: the particle filter. The filtering runs in C++; a model written in Python is called back from the C++ loop.</p>
+<p><b>Sensors and operations.</b> A model lists its sensors, and a model can be made from other models. Each operation is a method, a function and a class, the same in Python and in C++, and the filter is always the ordinary one:</p>
+<table class="markdownTable">
+<tr class="markdownTableHead">
+<th class="markdownTableHeadNone">Operation   </th><th class="markdownTableHeadNone">What the new model is    </th></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>model.add_sensor(sensor)</code>   </td><td class="markdownTableBodyNone">the model read by one more sensor on the same state (sensor fusion)    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>model.add_instrument(compose(s1, s2))</code>   </td><td class="markdownTableBodyNone">the same for a set of sensors that share a rate and a calibration    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>model.joint({...})</code>   </td><td class="markdownTableBodyNone">the model with some parameters (an instrument's offset among them) estimated with its state    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>model.lag(L)</code>   </td><td class="markdownTableBodyNone">the model carrying its last states: sensors that report late, fixed-lag smoothing    </td></tr>
+<tr class="markdownTableRowOdd">
+<td class="markdownTableBodyNone"><code>compose(a, b)</code>   </td><td class="markdownTableBodyNone">models side by side, each with its own state    </td></tr>
+<tr class="markdownTableRowEven">
+<td class="markdownTableBodyNone"><code>route(models, Pi)</code>   </td><td class="markdownTableBodyNone">several models of one system that changes regime, with a probability on each   </td></tr>
+</table>
+<p><a href="examples/python/operations.py"><code>examples/python/operations.py</code></a> and <a href="examples/cxx/operations.cc"><code>examples/cxx/operations.cc</code></a> run each of them on a cart, and notebook 09 (sensor fusion) shows <code>add_sensor</code>, instruments, <code>joint</code> and <code>lag</code> on data; the vocabulary is in <a class="el" href="md_docs_219___contract.html">The contract</a>. See <a class="el" href="md_docs_24___models.html">Models</a>.</p>
 <p><b>Applications.</b> Fifteen worked systems, from ballistics, rockets and space navigation to particle tracking, gravitational waves, GPS, storms and turbulent flow. Each has a page and a notebook: see <a class="el" href="md_docs_217___applications.html">Applications</a>.</p>
 <h1><a class="anchor" id="quick-start"></a>
 Quick start</h1>
@@ -189,7 +207,7 @@ Quick start</h1>
 <div class="ttc" id="a_kalman_8h_html"><div class="ttname"><a href="_kalman_8h.html">Kalman.h</a></div><div class="ttdoc">Umbrella header for libKalman.</div></div>
 <div class="ttc" id="aclass_kalman_1_1_factory_html_a925fbe85b85fc013fb26bdea74b0d7ca"><div class="ttname"><a href="class_kalman_1_1_factory.html#a925fbe85b85fc013fb26bdea74b0d7ca">Kalman::Factory::Instance</a></div><div class="ttdeci">static Factory &amp; Instance()</div><div class="ttdoc">The process-wide registry.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8cc_source.html#l00020">Factory.cc:20</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_factory_html_ae2200e2b7cfd57282411754e74e6a298"><div class="ttname"><a href="class_kalman_1_1_factory.html#ae2200e2b7cfd57282411754e74e6a298">Kalman::Factory::Create</a></div><div class="ttdeci">std::unique_ptr&lt; Model &gt; Create(const std::string &amp;name) const</div><div class="ttdoc">Construct a fresh instance of name.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8cc_source.html#l00077">Factory.cc:77</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_filter_html"><div class="ttname"><a href="class_kalman_1_1_filter.html">Kalman::Filter</a></div><div class="ttdoc">The workflow — WHEN each step runs, and what is kept.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00054">Filter.h:55</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filter_html"><div class="ttname"><a href="class_kalman_1_1_filter.html">Kalman::Filter</a></div><div class="ttdoc">The workflow — WHEN each step runs, and what is kept.</div><div class="ttdef"><b>Definition</b> <a href="_filter_8h_source.html#l00055">Filter.h:56</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
 </div><!-- fragment --><p>From the shell:</p>
 <div class="fragment"><div class="line">kalman models                    # every compiled model: dynamics, dimensions, noise</div>

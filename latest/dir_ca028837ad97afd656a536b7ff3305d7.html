@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -153,16 +153,19 @@ Directories</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="files" name="files"></a>
 Files</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_base_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_base_8h.html">Base.h</a></td></tr>
-<tr class="memdesc:_base_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_router.html" title="Decides which model is right now — the IKF decision layer.">Kalman::Routers::Router</a> contract. <br /></td></tr>
+<tr class="memdesc:_base_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_router.html" title="Decides which model is right now — the decision layer of a model with several modes (Models::Router).">Kalman::Routers::Router</a> contract. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_bayesian_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_bayesian_8h.html">Bayesian.h</a></td></tr>
-<tr class="memdesc:_bayesian_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html" title="The classical IKF update: mu_j ∝ c_j · L_j.">Kalman::Routers::Bayesian</a> class. <br /></td></tr>
+<tr class="memdesc:_bayesian_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_bayesian.html" title="The classical interacting-multiple-model update: mu_j ∝ c_j · L_j.">Kalman::Routers::Bayesian</a> class. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_hybrid_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_hybrid_8h.html">Hybrid.h</a></td></tr>
 <tr class="memdesc:_hybrid_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_hybrid.html" title="Geometric blend (log-linear opinion pool) of two routers.">Kalman::Routers::Hybrid</a> class. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_neural_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_neural_8h.html">Neural.h</a></td></tr>
 <tr class="memdesc:_neural_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a> class. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_n_n_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_n_n_8h.html">NN.h</a></td></tr>
+<tr class="memdesc:_n_n_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">The policies a neural router can hold that need no runtime. <br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top"><a href="_threshold_8h_source.html"><span class="icondoc"></span></a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="_threshold_8h.html">Threshold.h</a></td></tr>
 <tr class="memdesc:_threshold_8h"><td class="mdescLeft">&#160;</td><td class="mdescRight">Header of the <a class="el" href="class_kalman_1_1_routers_1_1_threshold.html" title="Routes to whichever model&#39;s recent NIS sits closest to m.">Kalman::Routers::Threshold</a> class. <br /></td></tr>

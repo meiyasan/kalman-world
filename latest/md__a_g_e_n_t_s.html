@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -177,6 +177,17 @@ The seven roles</h2>
 <li><b>Public names are stable.</b> <code>from kalman.apps import X</code> must keep working after any reorganisation; <code>kalman.apps.X</code> must be the <em>same object</em> as the domain's <code>X</code>.</li>
 <li><b>Optional dependencies are lazily imported and guarded</b> (<code>torch</code>, <code>mcp</code>, <code>fastapi</code>, <code>bcrypt</code>, <code>pyjwt</code>, <code>httpx</code>, <code>cdsapi</code>, <code>xarray</code>, <code>h5py</code>). The core must import and the suite must pass without them. Entry points print an install hint and exit 0 rather than crashing.</li>
 <li><b>No <code>eval</code>/<code>exec</code> in <code>modules/api/</code>.</b> Spec authoring is data-only; code is only ever <em>emitted</em> for a human to review (<code>scaffold</code>), never executed.</li>
+<li><b>One vocabulary: the <a class="el" href="namespace_kalman.html">Kalman</a> contract</b> (<a class="el" href="md_docs_219___contract.html">docs/19</a>). Read that page before naming anything public.<ul>
+<li>The contract speaks control engineering: <code>f</code>, <code>h</code>, predict, update, prior, posterior, measurement, initial state.</li>
+<li><code>f</code> and <code>h</code> take one state or many; <code>step</code> and <code>sense</code> are their aliases. A model writes <code>f</code> and <code>h</code> only.</li>
+<li>A community's words live inside its filter (forecast, project, analysis, localization in the ensemble filter; hit, layer, seed, hole in track finding; mode, mixing in the interacting engine), implemented by the generic method and with a comment naming it.</li>
+<li>A model made from models is an operation: a method, a verb function and a noun class (<code>joint</code>/<code>Joint</code>, <code>add_sensor</code>/<code>Fusion</code>, <code>add_instrument</code>, <code>lag</code>/<code>Lag</code>, <code>compose</code>/<code>Composite</code>, <code>route</code>/<code>Router</code>), written in C++ (<code>Kalman/Models/</code>, <code><a class="el" href="_operations_8h.html" title="The model operations as functions: a model made from another.">Kalman/Operations.h</a></code>) and wrapped in Python. No operation gets a filter class of its own.</li>
+<li>A replaced name is removed, not aliased; <code><a class="el" href="test__terminology_8py.html">tests/test_terminology.py</a></code> keeps it from coming back.</li>
+<li>No speed is lost: a batched or threaded path stays so, measured before and after.</li>
+<li>Same names in C++ and Python. C++ is the implementation; Python wraps.</li>
+<li>A replaced public name is removed, not aliased. A new one is checked against the base class and every application model first (<code><a class="el" href="test__structure_8py.html">tests/test_structure.py</a>::TestReservedNames</code>).</li>
+</ul>
+</li>
 </ol>
 <hr  />
 <h1><a class="anchor" id="autotoc_md3-layout"></a>
@@ -185,23 +196,22 @@ The seven roles</h2>
 <div class="line">  framework/                    contracts + bases + registries (the core)</div>
 <div class="line">    model.py engine.py integrator.py solver.py provider.py filter.py control.py</div>
 <div class="line">    models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/</div>
-<div class="line">    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF/IKF)</div>
+<div class="line">    filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF)</div>
 <div class="line">  providers/                    generic data sources (synthetic/file/sensor/remote)</div>
 <div class="line">  api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth</div>
 <div class="line">  mcp/  rest/                   transports over the facade (optional deps)</div>
 <div class="line">  apps/                         domain applications</div>
-<div class="line">    astro/         rocket  space</div>
 <div class="line">    gravitational/ gravwave  interferometer</div>
 <div class="line">    resonators/    oscillators  powergrids  suspensions</div>
 <div class="line">    weather/       flow  storms  geo  surrogate  data/  providers/</div>
-<div class="line">    ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/</div>
+<div class="line">    aerospace/  astrophysics/  ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/</div>
 <div class="line">  runtime/  helpers.py</div>
 <div class="line">tests/                          mirrors concerns, not files (pytest)</div>
 <div class="line">  cxx/                          the libKalman suite (plain binaries, ctest)</div>
 <div class="line">include/Kalman/  src/           libKalman — the standalone C++ port (see §10)</div>
 <div class="line">examples/cxx/                   standalone C++ programs using libKalman</div>
 <div class="line">share/notebooks/                executed, output-bearing narrative docs</div>
-</div><!-- fragment --><p><b>Families</b> (<code>astro</code>, <code>gravitational</code>, <code>resonators</code>) group related domains and expose a <code>DOMAINS</code> map. Grouping is by shared foundation or application area — <em>not</em> by superficial similarity. Domains inside a family keep their own <code>VARIANTS</code>; cross-family imports are normal (e.g. <code>interferometer</code> uses <code>resonators.oscillators</code>).</p>
+</div><!-- fragment --><p><b>Families</b> (<code>gravitational</code>, <code>resonators</code>) group related domains and expose a <code>DOMAINS</code> map. Grouping is by shared foundation or application area — <em>not</em> by superficial similarity. Domains inside a family keep their own <code>VARIANTS</code>; cross-family imports are normal (e.g. <code>interferometer</code> uses <code>resonators.oscillators</code>).</p>
 <p><code>apps/</code> contains <b>packages only</b> — there are no flat domain modules and no shims. Import from the canonical path (<code>kalman.apps.weather.flow</code>, …) or from the stable <code>kalman.apps</code> surface.</p>
 <hr  />
 <h1><a class="anchor" id="autotoc_md4-how-to-add-things"></a>
@@ -236,7 +246,7 @@ The seven roles</h2>
 <div class="line">make tests                     # or: python -m pytest tests/ -q</div>
 <div class="line">python -m pytest tests/test_structure.py -q     # architecture invariants</div>
 <div class="line">make linter                    # ruff, correctness-focused</div>
-</div><!-- fragment --><p>Current baseline: <b>453 passed, 2 skipped</b> (skips are optional-dependency gates). The suite must stay green; a red suite is never "expected".</p>
+</div><!-- fragment --><p>Current baseline: <b>953 passed, 28 skipped</b> (skips are optional-dependency gates), and 28 of 28 in the C++ suite (<code>ctest</code>). The suite must stay green; a red suite is never "expected".</p>
 <p>Install the optional extras to exercise the transports for real rather than skipping them — <code>make setup</code>. The MCP server is covered by a <b>live stdio session</b> test that spawns <code>python -m kalman.mcp</code> and drives it as a client; it caught a real breakage when SDK 2.0 renamed <code>FastMCP</code> to <code>MCPServer</code>, which a mocked test would have missed.</p>
 <p>If you touch <code>apps/</code> layout, also verify the notebooks still import:</p>
 <div class="fragment"><div class="line">python - &lt;&lt;&#39;PY&#39;</div>
@@ -265,6 +275,9 @@ The seven roles</h2>
 <h1><a class="anchor" id="autotoc_md8-known-deferred-work"></a>
 8. Known deferred work</h1>
 <ul>
+<li><code>kalman.adapters</code> is empty: an adapter states a product's data sheet, and those numbers have to come from whoever uses the device.</li>
+<li>Track finding still asks a detector for <code>Radii()</code> and <code>SeedState()</code>; it does not read them off the sequential instrument <code>Model::Instruments()</code> returns.</li>
+<li>A camera's rotation is not a setting (nine numbers that are not independent); only its focal length and its position are.</li>
 <li><code><a class="el" href="surrogate_8py.html">apps/weather/surrogate.py</a></code> (the CNN forecast surrogate) should eventually become a learned <code>KalmanSolverKind.NEURAL</code> solver rather than a loose module.</li>
 <li><code>IMPLICIT_EULER</code> integrator and the finite-volume/finite-element solvers are reserved stubs that raise <code>NotImplementedError</code>.</li>
 <li>The ballistic, car, rocket and space models are <code>DYNAMICS = CONTINUOUS</code>. The storm, GPS and oscillator models still write a discrete <code>f()</code> and could follow.</li>
@@ -304,18 +317,19 @@ The seven roles</h2>
 <h1><a class="anchor" id="autotoc_md10-libkalman--the-c-port"></a>
 10. libKalman — the C++ port</h1>
 <p><code></code></p>
+<p><code><b>Header layout.</b> Every directory <code>Kalman/X/</code> has the header <code>Kalman/X.h</code> beside it, which includes all of it: <code>&lt;Kalman/X.h&gt;</code> for the whole, <code>&lt;Kalman/X/Name.h&gt;</code> for one. This holds at every level and in every library (<code>&lt;<a class="el" href="_apps_8h.html" title="Umbrella header for libKalmanApps.">Kalman/Apps.h</a>&gt;</code>, <code>&lt;<a class="el" href="_weather_8h.html" title="The application models of Kalman::Apps::Weather.">Kalman/Apps/Weather.h</a>&gt;</code>, <code>&lt;<a class="el" href="_sensors_8h.html" title="The generic sensors: a position reading, a Doppler reading, a camera.">Kalman/Sensors.h</a>&gt;</code>, <code>&lt;Kalman/Adapters.h&gt;</code>, <code>&lt;<a class="el" href="_learn_8h.html" title="Umbrella header for libKalmanLearn.">Kalman/Learn.h</a>&gt;</code>, <code>&lt;<a class="el" href="_net_8h.html" title="libKalmanNet in one include">Kalman/Net.h</a>&gt;</code>). A new header goes in its directory's umbrella in the same commit; a new directory brings its umbrella. Inside an application domain a header says which model it is, not the domain again: <code>&lt;<a class="el" href="_linear_model_8h.html" title="Header of the Kalman::Apps::Ballistics::LinearModel class.">Kalman/Apps/Ballistics/LinearModel.h</a>&gt;</code> and <code><a class="el" href="_extended_model_8h.html" title="Header of the Kalman::Apps::Ballistics::ExtendedModel class.">ExtendedModel.h</a></code>, never <code>Ballistics/Ballistic.h</code>. <code><a class="el" href="test__structure_8py.html">tests/test_structure.py</a>::TestCxxHeadersHaveOneLayout</code> enforces it.</code></p>
 <p><code><code>include/Kalman/</code> + <code>src/</code> build <code>libKalman</code>: the same Model / Engine / Filter contracts in C++, as a <b>standalone library with no required dependency</b>. See <a class="el" href="md_docs_215___cxx-_library.html">docs/15</a> for using it; this section is about changing it.</code></p>
 <p><code><b>The dependency direction is the rule everything else follows.</b> kalman-framework does not depend on ROOT — ROOT+ depends on <em>it</em>. A ROOT/ROOT+ component links libKalman, never the reverse. So: no <code>TObject</code>, no <code>ClassDef</code>, no LinkDef, no dictionary, no <code>TMatrixD</code>, no <code>TGraph</code>, no <code>TFile</code>. <code><a class="el" href="class_kalman_1_1_matrix.html" title="A dense row-major matrix of double.">Kalman::Matrix</a></code> and <code><a class="el" href="class_kalman_1_1_vector.html" title="A dense column vector of double.">Kalman::Vector</a></code> exist precisely so the core owes nothing to anyone.</code></p>
 <p><code><b>C++ is the implementation; Python is the interface.</b> The library does not link CPython and is not generated from anything. The Python classes forward to it: a model written in Python is run by the C++ filter loop, which calls back its <code>f</code> and <code>h</code> (<code><a class="el" href="class_kalman_1_1_models_1_1_callback.html" title="A model whose maps are functions supplied by the caller.">Kalman::Models::Callback</a></code>), and a controller function closes the loop the same way (<code>kalman_filter_run_closed_loop</code>). The Python implementations that remain are the reference the tests compare against (<code>native.python_reference()</code>), on their way out. Do not add a new feature to a Python core; add it in C++ and forward to it.</code></p>
 <p><code>**<code>include/</code> and <code>src/</code> mirror <code>modules/framework/</code>**, file for file and subdirectory for subdirectory — <code>Engines/</code>, <code>Models/</code>, <code>Filters/</code>, <code>IO/</code>, <code>Abstract/</code>. A new file on one side has an obvious home on the other. The mapping table is in docs/15; keep it accurate when you add to either side.</code></p>
 <p><code><b>No applications in the core.</b> libKalman ships no physics. A pendulum, a drift chamber, a suspension or a power grid subclasses <code>Models::Linear</code> / <code>Models::Extended</code> and lives at apps level, exactly as <code>modules/apps/</code> does for Python. The models in <code><a class="el" href="_fixtures_8h.html" title="Toy models used to exercise the engines.">tests/cxx/Fixtures.h</a></code> are test fixtures and must stay there.</code></p>
-<p><code><b>The applications are <code>libKalmanApps</code></b> (<code>apps/</code>), a second library that links the first. Each model in it is the twin of one Python class in <code>modules/apps/</code>, which mixes in <code>NativeTwin</code> and hands its filtering pass to the twin when the library is present. Rules for a twin:</code></p>
+<p><code><b>The applications are <code>libKalmanApps</code></b> (<code>apps/</code>), a second library that links the first. Each model in it is the counterpart of one Python class in <code>modules/apps/</code>, which mixes in <code>NativeCounterpart</code> and hands its filtering pass to the counterpart when the library is present. Rules for a counterpart:</code></p>
 <p><code></p><ul>
-<li>It must give the Python answer. <code><a class="el" href="test__native__twins_8py.html">tests/test_native_twins.py</a></code> compares the two on every ported configuration; add the new one there and to <code>tools/benchmark_twins.py</code>.</li>
+<li>It must give the Python answer. <code><a class="el" href="test__native__counterparts_8py.html">tests/test_native_counterparts.py</a></code> compares the two on every ported configuration; add the new one there and to <code>tools/benchmark_counterparts.py</code>.</li>
 <li>Nothing is defined twice. Scalars cross as named parameters; <code>Q</code>, <code>R</code>, the sample rate and the initial state are pushed from the Python instance. Do not recompute a covariance in C++ that Python already built.</li>
-<li><code>native_name()</code> returns <code>None</code> for every configuration that was not ported (a Python callable, a state-dependent <code>Q</code>, an integrator the C++ side lacks). Falling back is correct; guessing is not. A control input is ported when the twin's <code>f</code> takes <code>u</code>: an open-loop command sequence goes to the twin, a controller function keeps the Python model in the C++ loop.</li>
-<li>A helper the dynamics call (<code>guidance</code>, <code>clip_u</code>, <code>_deriv</code> ...) joins the class's <code>_TWIN_CONTRACT</code>, so a subclass that changes it is not the twin. A continuous model's integrator and sub-steps cross as the <code>integrator</code> and <code>substeps</code> parameters (<code>native.native_integrator_kind</code>).</li>
-<li>Derive from <code><a class="el" href="class_kalman_1_1_apps_1_1_model.html" title="Base of the application models in libKalmanApps.">Kalman::Apps::Model</a></code>, which differences <code>f</code>/<code>h</code> as <code>helpers.numerical_jacobian</code> does. Do not use the library's central scheme in a twin: the two sides would linearise differently.</li>
+<li><code>native_name()</code> returns <code>None</code> for every configuration that was not ported (a Python callable, a state-dependent <code>Q</code>, an integrator the C++ side lacks). Falling back is correct; guessing is not. A control input is ported when the counterpart's <code>f</code> takes <code>u</code>: an open-loop command sequence goes to the counterpart, a controller function keeps the Python model in the C++ loop.</li>
+<li>A helper the dynamics call (<code>guidance</code>, <code>limit_control</code>, <code>_deriv</code> ...) joins the class's <code>_COUNTERPART_CONTRACT</code>, so a subclass that changes it is not the counterpart. A continuous model's integrator and sub-steps cross as the <code>integrator</code> and <code>substeps</code> parameters (<code>native.native_integrator_kind</code>).</li>
+<li>Derive from <code><a class="el" href="class_kalman_1_1_apps_1_1_model.html" title="Base of the application models in libKalmanApps.">Kalman::Apps::Model</a></code>, which differences <code>f</code>/<code>h</code> as <code>helpers.numerical_jacobian</code> does. Do not use the library's central scheme in a counterpart: the two sides would linearise differently.</li>
 </ul>
 <p></code></p>
 <p><code><b>Adding a member to <code><a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Kalman::Model</a></code> changes its layout.</b> Everything compiled against the header must be rebuilt together: the library, <code>libKalmanApps</code>, the example plugin, the tests, and downstream users such as ROOT+. A stale plugin does not fail to load; it corrupts memory.</code></p>
@@ -333,7 +347,7 @@ The seven roles</h2>
 <li><b>The C++ tests are <code>tests/cxx/*.cc</code></b>, plain executables returning a failure count, run by <code>make ctests</code>. <code>make tests</code> stays the Python suite. They assert on filter <em>consistency</em> (NIS ~ m, NEES ~ n), not on golden numbers, so they catch a mis-scaled covariance rather than just a changed one.</li>
 <li><b>The routing layer crosses the language boundary as a trained policy, not a binding.</b> Training stays in Python (<code>routers/nn/</code> is Torch and stays Python-only); <code>export_onnx()</code> / <code>export_torchscript()</code> write one self-contained artifact with the feature standardisation and the softmax head baked in. Do not add a second file carrying the normalisation: shipped apart from its weights it still yields a valid-looking probability vector. Keep <code>export_onnx</code>'s <code>ir_version=9</code> default — Torch emits IR 10 and ONNX Runtime 1.16 rejects it outright. <code><a class="el" href="test__router__export_8py.html">tests/test_router_export.py</a></code> pins the equivalence, currently 2e-13 (ONNX) and 1.8e-13 (TorchScript).</li>
 <li><b>Keep the router/model split, and keep the runtimes out of the router.</b> <code><a class="el" href="class_kalman_1_1_routers_1_1_neural.html" title="Delegates the mode decision to a learned policy.">Kalman::Routers::Neural</a></code> owns features and normalisation and holds a <code>NN::Model</code>; the backends own the forward pass. ONNX Runtime is reached only from <code>learn/src/Routers/NN/Onnx.cc</code> and libTorch only from <code>Torch.cc</code> beside it and <code>learn/src/Solvers/Vorticity.cc</code> (the batched field solver behind Python's <code>SpectralSolver(backend="torch")</code>, through <code><a class="el" href="learn_2include_2_kalman_2_learn_2_c_a_p_i_8h.html" title="The C interface of libKalmanLearn.">Kalman/Learn/CAPI.h</a></code> and <code><a class="el" href="learn_8py.html">native/learn.py</a></code>), all behind a pImpl. <code>backend="torch"</code> means that C++ solver only: do not add a Python-<code>torch</code> implementation beside it. That is what makes them optional in fact and not just in name: <code>NN::MLP</code> needs nothing, so the routing layer works in a build with no optional dependency at all. Never <code>#include &lt;onnxruntime...&gt;</code> or <code>&lt;torch/...&gt;</code> in <code>Routers/Neural.*</code> or any public header.</li>
-<li><b>A wrong-looking IKF is usually a wrong-looking <em>test</em>.</b> Two modes that differ only in Q, under a measurement noise that swamps both, genuinely cannot be told apart — measured: innovation covariances 8% apart and both with mean NIS ~ 1.09, at which point ~0.5/0.5 is the <em>correct</em> answer, not a bug. Before suspecting the filter, check that the regimes are distinguishable in the data at all. </li>
+<li>**A wrong-looking routed model (<code>route</code>, the interacting engine) is usually a wrong-looking <em>test</em>.** Two modes that differ only in Q, under a measurement noise that swamps both, genuinely cannot be told apart — measured: innovation covariances 8% apart and both with mean NIS ~ 1.09, at which point ~0.5/0.5 is the <em>correct</em> answer, not a bug. Before suspecting the filter, check that the regimes are distinguishable in the data at all. </li>
 </ul>
 <p></code></p>
 </div></div><!-- contents -->

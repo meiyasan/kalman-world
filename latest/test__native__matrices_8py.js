@@ -4,7 +4,7 @@ var test__native__matrices_8py =
     [ "tests.test_native_matrices.TestTimeVaryingMatrices", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices.html", "classtests_1_1test__native__matrices_1_1_test_time_varying_matrices" ],
     [ "tests.test_native_matrices.TestCalorimeter", "classtests_1_1test__native__matrices_1_1_test_calorimeter.html", "classtests_1_1test__native__matrices_1_1_test_calorimeter" ],
     [ "tests.test_native_matrices.TestNativeModelPass", "classtests_1_1test__native__matrices_1_1_test_native_model_pass.html", "classtests_1_1test__native__matrices_1_1_test_native_model_pass" ],
-    [ "tests.test_native_matrices.TestTwinsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines.html", "classtests_1_1test__native__matrices_1_1_test_twins_on_the_sigma_point_engines" ],
+    [ "tests.test_native_matrices.TestCounterpartsOnTheSigmaPointEngines", "classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines.html", "classtests_1_1test__native__matrices_1_1_test_counterparts_on_the_sigma_point_engines" ],
     [ "tests.test_native_matrices.TestFilterFamilies", "classtests_1_1test__native__matrices_1_1_test_filter_families.html", "classtests_1_1test__native__matrices_1_1_test_filter_families" ],
     [ "tests.test_native_matrices.TestSmootherInCxx", "classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx.html", "classtests_1_1test__native__matrices_1_1_test_smoother_in_cxx" ],
     [ "tests.test_native_matrices.TestNoModelFallsBackToThePythonLoop", "classtests_1_1test__native__matrices_1_1_test_no_model_falls_back_to_the_python_loop.html", "classtests_1_1test__native__matrices_1_1_test_no_model_falls_back_to_the_python_loop" ],

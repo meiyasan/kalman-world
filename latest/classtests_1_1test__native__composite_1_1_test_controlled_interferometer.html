@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -155,9 +155,9 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The violin-bank controller retunes the windows' Q as the run goes; the pass
-still runs on the C++ model of the composite's matrices, with Q pushed at each
+still runs in Kalman::Filter on the C++ composite, with the parts pushed at each
 step, and the controller sees what it sees in the Python loop.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00332">332</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00306">306</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a3b49ba576c6728e13fffa958e4e0aebe" name="a3b49ba576c6728e13fffa958e4e0aebe"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a3b49ba576c6728e13fffa958e4e0aebe">&#9670;&#160;</a></span>test_violin_bank_controller()</h2>
@@ -175,32 +175,32 @@ step, and the controller sees what it sees in the Python loop.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00337">337</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>    <span class="keyword">def </span>test_violin_bank_controller(self):</div>
-<div class="line"><span class="lineno">  338</span>        peaks = [f <span class="keywordflow">for</span> band <span class="keywordflow">in</span> InterferometerK1.preloaded_peaks(<span class="stringliteral">&quot;O3GK&quot;</span>) <span class="keywordflow">for</span> f, _ <span class="keywordflow">in</span> band]</div>
-<div class="line"><span class="lineno">  339</span>        lines = peaks[::20]</div>
-<div class="line"><span class="lineno">  340</span>        z = strain(lines, [1.0] * len(lines), [1e5] * len(lines), 0.1, T=0.25).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  341</span> </div>
-<div class="line"><span class="lineno">  342</span>        <span class="keyword">def </span>run(reference):</div>
-<div class="line"><span class="lineno">  343</span>            model = InterferometerK1.from_peaks(<span class="stringliteral">&quot;O3GK&quot;</span>)</div>
-<div class="line"><span class="lineno">  344</span>            controller = model.make_controller()</div>
-<div class="line"><span class="lineno">  345</span>            <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  346</span>                <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  347</span>                    record = KalmanFilter(model).forward(z, uk=controller)</div>
-<div class="line"><span class="lineno">  348</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  349</span>                <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_matrices&quot;</span>, autospec=<span class="keyword">True</span>,</div>
-<div class="line"><span class="lineno">  350</span>                                       side_effect=KalmanFilter._forward_matrices) <span class="keyword">as</span> spy:</div>
-<div class="line"><span class="lineno">  351</span>                    record = KalmanFilter(model).forward(z, uk=controller)</div>
-<div class="line"><span class="lineno">  352</span>                self.assertEqual(spy.call_count, 1)</div>
-<div class="line"><span class="lineno">  353</span>            log = sum(len(c.scale_log) <span class="keywordflow">for</span> a <span class="keywordflow">in</span> controller._window_aqrs <span class="keywordflow">for</span> c <span class="keywordflow">in</span> a._ctrls)</div>
-<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">return</span> record, log</div>
-<div class="line"><span class="lineno">  355</span> </div>
-<div class="line"><span class="lineno">  356</span>        (py, log_py), (cx, log_cx) = run(<span class="keyword">True</span>), run(<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  357</span>        self.assertEqual(log_py, log_cx)</div>
-<div class="line"><span class="lineno">  358</span>        self.assertGreater(log_cx, 0)</div>
-<div class="line"><span class="lineno">  359</span>        <span class="comment"># As for the uncontrolled K1 bank above: a condition number of 8e9.</span></div>
-<div class="line"><span class="lineno">  360</span>        close(self, py.xk, cx.xk, 1e-5, <span class="stringliteral">&quot;state&quot;</span>)</div>
-<div class="line"><span class="lineno">  361</span>        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00311">311</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  311</span>    <span class="keyword">def </span>test_violin_bank_controller(self):</div>
+<div class="line"><span class="lineno">  312</span>        peaks = [f <span class="keywordflow">for</span> band <span class="keywordflow">in</span> InterferometerK1.preloaded_peaks(<span class="stringliteral">&quot;O3GK&quot;</span>) <span class="keywordflow">for</span> f, _ <span class="keywordflow">in</span> band]</div>
+<div class="line"><span class="lineno">  313</span>        lines = peaks[::20]</div>
+<div class="line"><span class="lineno">  314</span>        z = strain(lines, [1.0] * len(lines), [1e5] * len(lines), 0.1, T=0.25).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  315</span> </div>
+<div class="line"><span class="lineno">  316</span>        <span class="keyword">def </span>run(reference):</div>
+<div class="line"><span class="lineno">  317</span>            model = InterferometerK1.from_peaks(<span class="stringliteral">&quot;O3GK&quot;</span>)</div>
+<div class="line"><span class="lineno">  318</span>            controller = model.make_controller()</div>
+<div class="line"><span class="lineno">  319</span>            <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  320</span>                <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  321</span>                    record = KalmanFilter(model).forward(z, uk=controller)</div>
+<div class="line"><span class="lineno">  322</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  323</span>                <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_retuned_operation&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">  324</span>                                       side_effect=KalmanFilter._forward_retuned_operation) <span class="keyword">as</span> spy:</div>
+<div class="line"><span class="lineno">  325</span>                    record = KalmanFilter(model).forward(z, uk=controller)</div>
+<div class="line"><span class="lineno">  326</span>                self.assertEqual(spy.call_count, 1)</div>
+<div class="line"><span class="lineno">  327</span>            log = sum(len(c.scale_log) <span class="keywordflow">for</span> a <span class="keywordflow">in</span> controller._window_aqrs <span class="keywordflow">for</span> c <span class="keywordflow">in</span> a._ctrls)</div>
+<div class="line"><span class="lineno">  328</span>            <span class="keywordflow">return</span> record, log</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span>        (py, log_py), (cx, log_cx) = run(<span class="keyword">True</span>), run(<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  331</span>        self.assertEqual(log_py, log_cx)</div>
+<div class="line"><span class="lineno">  332</span>        self.assertGreater(log_cx, 0)</div>
+<div class="line"><span class="lineno">  333</span>        <span class="comment"># As for the uncontrolled K1 bank above: a condition number of 8e9.</span></div>
+<div class="line"><span class="lineno">  334</span>        close(self, py.xk, cx.xk, 1e-5, <span class="stringliteral">&quot;state&quot;</span>)</div>
+<div class="line"><span class="lineno">  335</span>        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>

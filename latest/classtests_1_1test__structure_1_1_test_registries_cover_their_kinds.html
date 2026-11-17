@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Each plug-in registry maps every member of its kind enum.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00067">67</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00211">211</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a01e1d36851dc8bd064cc65d3c9d01f7f" name="a01e1d36851dc8bd064cc65d3c9d01f7f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a01e1d36851dc8bd064cc65d3c9d01f7f">&#9670;&#160;</a></span>test_concretes_tag_their_kind()</h2>
@@ -181,15 +181,15 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00082">82</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   82</span>    <span class="keyword">def </span>test_concretes_tag_their_kind(self):</div>
-<div class="line"><span class="lineno">   83</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a> <span class="keyword">import</span> INTEGRATOR_BY_KIND</div>
-<div class="line"><span class="lineno">   84</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1solvers.html">modules.framework.solvers</a> <span class="keyword">import</span> SOLVER_BY_KIND</div>
-<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">for</span> registry <span class="keywordflow">in</span> (INTEGRATOR_BY_KIND, SOLVER_BY_KIND):</div>
-<div class="line"><span class="lineno">   86</span>            <span class="keywordflow">for</span> kind, cls <span class="keywordflow">in</span> registry.items():</div>
-<div class="line"><span class="lineno">   87</span>                self.assertEqual(cls.KIND, kind, f<span class="stringliteral">&quot;{cls.__name__}.KIND != {kind}&quot;</span>)</div>
-<div class="line"><span class="lineno">   88</span> </div>
-<div class="line"><span class="lineno">   89</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00226">226</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  226</span>    <span class="keyword">def </span>test_concretes_tag_their_kind(self):</div>
+<div class="line"><span class="lineno">  227</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a> <span class="keyword">import</span> INTEGRATOR_BY_KIND</div>
+<div class="line"><span class="lineno">  228</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1solvers.html">modules.framework.solvers</a> <span class="keyword">import</span> SOLVER_BY_KIND</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">for</span> registry <span class="keywordflow">in</span> (INTEGRATOR_BY_KIND, SOLVER_BY_KIND):</div>
+<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">for</span> kind, cls <span class="keywordflow">in</span> registry.items():</div>
+<div class="line"><span class="lineno">  231</span>                self.assertEqual(cls.KIND, kind, f<span class="stringliteral">&quot;{cls.__name__}.KIND != {kind}&quot;</span>)</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1integrators_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2integrators_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1solvers_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1solvers.html">modules.framework.solvers</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2solvers_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
@@ -211,19 +211,19 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00070">70</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   70</span>    <span class="keyword">def </span>test_registry_coverage(self):</div>
-<div class="line"><span class="lineno">   71</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines.html">modules.framework.engines</a> <span class="keyword">import</span> ENGINE_BY_KIND</div>
-<div class="line"><span class="lineno">   72</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a> <span class="keyword">import</span> INTEGRATOR_BY_KIND</div>
-<div class="line"><span class="lineno">   73</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1solvers.html">modules.framework.solvers</a> <span class="keyword">import</span> SOLVER_BY_KIND</div>
-<div class="line"><span class="lineno">   74</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1providers.html">modules.providers</a> <span class="keyword">import</span> PROVIDER_BY_KIND</div>
-<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">for</span> registry, kinds, label <span class="keywordflow">in</span> (</div>
-<div class="line"><span class="lineno">   76</span>                (ENGINE_BY_KIND, ALL_ENGINES, <span class="stringliteral">&quot;engine&quot;</span>),</div>
-<div class="line"><span class="lineno">   77</span>                (INTEGRATOR_BY_KIND, ALL_INTEGRATORS, <span class="stringliteral">&quot;integrator&quot;</span>),</div>
-<div class="line"><span class="lineno">   78</span>                (SOLVER_BY_KIND, ALL_SOLVERS, <span class="stringliteral">&quot;solver&quot;</span>),</div>
-<div class="line"><span class="lineno">   79</span>                (PROVIDER_BY_KIND, ALL_PROVIDERS, <span class="stringliteral">&quot;provider&quot;</span>)):</div>
-<div class="line"><span class="lineno">   80</span>            self.assertEqual(set(registry), set(kinds), f<span class="stringliteral">&quot;{label} registry misses kinds&quot;</span>)</div>
-<div class="line"><span class="lineno">   81</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00214">214</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  214</span>    <span class="keyword">def </span>test_registry_coverage(self):</div>
+<div class="line"><span class="lineno">  215</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1engines.html">modules.framework.engines</a> <span class="keyword">import</span> ENGINE_BY_KIND</div>
+<div class="line"><span class="lineno">  216</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1integrators.html">modules.framework.integrators</a> <span class="keyword">import</span> INTEGRATOR_BY_KIND</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1solvers.html">modules.framework.solvers</a> <span class="keyword">import</span> SOLVER_BY_KIND</div>
+<div class="line"><span class="lineno">  218</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1providers.html">modules.providers</a> <span class="keyword">import</span> PROVIDER_BY_KIND</div>
+<div class="line"><span class="lineno">  219</span>        <span class="keywordflow">for</span> registry, kinds, label <span class="keywordflow">in</span> (</div>
+<div class="line"><span class="lineno">  220</span>                (ENGINE_BY_KIND, ALL_ENGINES, <span class="stringliteral">&quot;engine&quot;</span>),</div>
+<div class="line"><span class="lineno">  221</span>                (INTEGRATOR_BY_KIND, ALL_INTEGRATORS, <span class="stringliteral">&quot;integrator&quot;</span>),</div>
+<div class="line"><span class="lineno">  222</span>                (SOLVER_BY_KIND, ALL_SOLVERS, <span class="stringliteral">&quot;solver&quot;</span>),</div>
+<div class="line"><span class="lineno">  223</span>                (PROVIDER_BY_KIND, ALL_PROVIDERS, <span class="stringliteral">&quot;provider&quot;</span>)):</div>
+<div class="line"><span class="lineno">  224</span>            self.assertEqual(set(registry), set(kinds), f<span class="stringliteral">&quot;{label} registry misses kinds&quot;</span>)</div>
+<div class="line"><span class="lineno">  225</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1engines_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1engines.html">modules.framework.engines</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2engines_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1providers_html"><div class="ttname"><a href="namespacemodules_1_1providers.html">modules.providers</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2providers_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
@@ -242,7 +242,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00087">87</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__structure_8py_source.html#l00231">231</a> of file <a class="el" href="test__structure_8py_source.html">test_structure.py</a>.</p>
 
 </div>
 </div>

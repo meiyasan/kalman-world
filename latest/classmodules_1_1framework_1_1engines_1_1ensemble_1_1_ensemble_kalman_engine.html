@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,6 +157,8 @@ Inheritance diagram for modules.framework.engines.ensemble.EnsembleKalmanEngine:
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aad66bd799e06775bf5a79b1c2129d121" id="r_aad66bd799e06775bf5a79b1c2129d121"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#aad66bd799e06775bf5a79b1c2129d121">__init__</a> (self, int <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a87a683eed9421ad1e70b36729c0c6587">n_members</a>=50, float <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#ae4e058f98cccdf4579d43dec1c97bf25">inflation</a>=1.0, localization=None, seed=None)</td></tr>
 <tr class="separator:aad66bd799e06775bf5a79b1c2129d121"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a53a26cf943c58e0f344812694f1e83e2" id="r_a53a26cf943c58e0f344812694f1e83e2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a53a26cf943c58e0f344812694f1e83e2">initial_ensemble</a> (self, model)</td></tr>
+<tr class="separator:a53a26cf943c58e0f344812694f1e83e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a39175d0d8e6517e3632e48d6cf59b94f" id="r_a39175d0d8e6517e3632e48d6cf59b94f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a39175d0d8e6517e3632e48d6cf59b94f">reset</a> (self, model)</td></tr>
 <tr class="separator:a39175d0d8e6517e3632e48d6cf59b94f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a122315fc2f8a1d199ff8e27cb8820ba6" id="r_a122315fc2f8a1d199ff8e27cb8820ba6"><td class="memItemLeft" align="right" valign="top">np.ndarray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a122315fc2f8a1d199ff8e27cb8820ba6">members</a> (self)</td></tr>
@@ -167,6 +169,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6fc21c4796dcaa0d3678b9772f45242e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a154ed71ceac2a3f604832e89ee20424b" id="r_a154ed71ceac2a3f604832e89ee20424b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a154ed71ceac2a3f604832e89ee20424b">forecast</a> (self, model, u=None, t=None)</td></tr>
 <tr class="separator:a154ed71ceac2a3f604832e89ee20424b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e8dd28e648a9715361e85155b4d5431" id="r_a7e8dd28e648a9715361e85155b4d5431"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a7e8dd28e648a9715361e85155b4d5431">project</a> (self, model, t=None, <a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a122315fc2f8a1d199ff8e27cb8820ba6">members</a>=None)</td></tr>
+<tr class="separator:a7e8dd28e648a9715361e85155b4d5431"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac6c86ae1934d87b2aa932dead98367c9" id="r_ac6c86ae1934d87b2aa932dead98367c9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#ac6c86ae1934d87b2aa932dead98367c9">analyze</a> (self, model, z, t=None)</td></tr>
 <tr class="separator:ac6c86ae1934d87b2aa932dead98367c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classmodules_1_1framework_1_1engine_1_1_kalman_engine')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html">modules.framework.engine.KalmanEngine</a></td></tr>
@@ -243,8 +247,8 @@ Protected Member Functions</h2></td></tr>
 <tr class="separator:a918165a147f78e057e6911c335ae61ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0479b1747428f2af4ecd0cd4a25473e5" id="r_a0479b1747428f2af4ecd0cd4a25473e5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a0479b1747428f2af4ecd0cd4a25473e5">_native_analysis</a> (self, X, Y, R, z, eps, idx)</td></tr>
 <tr class="separator:a0479b1747428f2af4ecd0cd4a25473e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac97545ee6c37370f23a3fa9864a2c85a" id="r_ac97545ee6c37370f23a3fa9864a2c85a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#ac97545ee6c37370f23a3fa9864a2c85a">_native_twin</a> (self, model, Q=None)</td></tr>
-<tr class="separator:ac97545ee6c37370f23a3fa9864a2c85a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3ac3b309dcc9729be236300c0e4b59f7" id="r_a3ac3b309dcc9729be236300c0e4b59f7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a3ac3b309dcc9729be236300c0e4b59f7">_native_counterpart</a> (self, model, Q=None)</td></tr>
+<tr class="separator:a3ac3b309dcc9729be236300c0e4b59f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a562efd75339f45fd453ff4aa0ccd9c37" id="r_a562efd75339f45fd453ff4aa0ccd9c37"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a562efd75339f45fd453ff4aa0ccd9c37">_native_engine</a> (self, model, handle, zk, analyse=True, Q=None)</td></tr>
 <tr class="separator:a562efd75339f45fd453ff4aa0ccd9c37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a66ffc3e4ed928c546bb4a56240c6c7a8" id="r_a66ffc3e4ed928c546bb4a56240c6c7a8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1engines_1_1ensemble_1_1_ensemble_kalman_engine.html#a66ffc3e4ed928c546bb4a56240c6c7a8">_finish_native</a> (self, engine, model)</td></tr>
@@ -298,9 +302,9 @@ optional covariance localization.
 
 Like :class:`ParticleEngine` this is a **stateful** engine: it holds the
 ensemble ``(n, N)`` for the duration of a forward pass and (re)seeds it via
-``reset(model)`` — from ``model.initial_ensemble(N, rng)`` when the model
-provides one (e.g. climatology snapshots), else from a Gaussian ``x0/P0``
-draw.  ``_predict``/``_update`` return the ensemble mean/covariance as
+``reset(model)`` — from ``model.initial_state(samples=N, rng)``: a Gaussian
+``x0/P0`` draw by default, or what the model gives (e.g. climatology
+snapshots).  ``_predict``/``_update`` return the ensemble mean/covariance as
 ``(x, P)`` so records and diagnostics are unchanged; the raw members stay
 available as ``.members`` for DA-style workflows that never want the dense
 ``(n, n)`` covariance (see :meth:`forecast` / :meth:`analyze`).
@@ -314,7 +318,8 @@ Analysis step (per cycle, forecast ensemble ``X``, anomalies ``X'``)::
 
 ``ρ_xy (n,p)`` / ``ρ_yy (p,p)`` are localization tapers (e.g.
 :func:`gaspari_cohn` of the state↔obs distances), taken from
-``model.localization()`` when available, else no localization.
+``model.covariance_mask()`` when the model is a ``KalmanEnsembleModel``, else no
+localization.
 
 **RNG discipline** — the perturbed-obs draws ``ε`` come from an
 engine-owned ``numpy`` Generator (``seed=``), *never* the global stream.
@@ -338,7 +343,7 @@ localization : (rho_xy, rho_yy) or None
 seed : int or numpy.random.Generator, optional
     Engine-local RNG stream (see RNG discipline above).
 </pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00027">27</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00029">29</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="aad66bd799e06775bf5a79b1c2129d121" name="aad66bd799e06775bf5a79b1c2129d121"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aad66bd799e06775bf5a79b1c2129d121">&#9670;&#160;</a></span>__init__()</h2>
@@ -384,14 +389,14 @@ seed : int or numpy.random.Generator, optional
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00080">80</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   81</span>                 localization=<span class="keywordtype">None</span>, seed=<span class="keywordtype">None</span>):</div>
-<div class="line"><span class="lineno">   82</span>        self.n_members = int(n_members)</div>
-<div class="line"><span class="lineno">   83</span>        self.inflation = float(inflation)</div>
-<div class="line"><span class="lineno">   84</span>        self._localization = localization</div>
-<div class="line"><span class="lineno">   85</span>        self.rng = seed <span class="keywordflow">if</span> isinstance(seed, np.random.Generator) <span class="keywordflow">else</span> np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">   86</span>        self._members = <span class="keywordtype">None</span>     <span class="comment"># (n, N) — state vectors as columns</span></div>
-<div class="line"><span class="lineno">   87</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00083">83</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>                 localization=<span class="keywordtype">None</span>, seed=<span class="keywordtype">None</span>):</div>
+<div class="line"><span class="lineno">   85</span>        self.n_members = int(n_members)</div>
+<div class="line"><span class="lineno">   86</span>        self.inflation = float(inflation)</div>
+<div class="line"><span class="lineno">   87</span>        self._localization = localization</div>
+<div class="line"><span class="lineno">   88</span>        self.rng = seed <span class="keywordflow">if</span> isinstance(seed, np.random.Generator) <span class="keywordflow">else</span> np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">   89</span>        self._members = <span class="keywordtype">None</span>     <span class="comment"># (n, N) — state vectors as columns</span></div>
+<div class="line"><span class="lineno">   90</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -456,17 +461,17 @@ seed : int or numpy.random.Generator, optional
 <pre class="fragment">The data-assimilation cycles (``Kalman::Filters::EnKF::Cycle``): the
 forecast and analysis means ``(T, n)`` and the spread after each cycle,
 with no covariance formed.</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00326">326</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  326</span>    <span class="keyword">def </span>_cycle_native(self, model, handle, zk, analyse=True, Q=None):</div>
-<div class="line"><span class="lineno">  327</span>        <span class="stringliteral">&quot;&quot;&quot;The data-assimilation cycles (``Kalman::Filters::EnKF::Cycle``): the</span></div>
-<div class="line"><span class="lineno">  328</span><span class="stringliteral">        forecast and analysis means ``(T, n)`` and the spread after each cycle,</span></div>
-<div class="line"><span class="lineno">  329</span><span class="stringliteral">        with no covariance formed.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  330</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  331</span>        engine = self._native_engine(model, handle, zk, analyse=analyse, Q=Q)</div>
-<div class="line"><span class="lineno">  332</span>        out = core.ensemble_cycle(handle, engine, model.n, model.m, zk, analyse=analyse)</div>
-<div class="line"><span class="lineno">  333</span>        self._finish_native(engine, model)</div>
-<div class="line"><span class="lineno">  334</span>        <span class="keywordflow">return</span> out</div>
-<div class="line"><span class="lineno">  335</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00331">331</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  331</span>    <span class="keyword">def </span>_cycle_native(self, model, handle, zk, analyse=True, Q=None):</div>
+<div class="line"><span class="lineno">  332</span>        <span class="stringliteral">&quot;&quot;&quot;The data-assimilation cycles (``Kalman::Filters::EnKF::Cycle``): the</span></div>
+<div class="line"><span class="lineno">  333</span><span class="stringliteral">        forecast and analysis means ``(T, n)`` and the spread after each cycle,</span></div>
+<div class="line"><span class="lineno">  334</span><span class="stringliteral">        with no covariance formed.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  335</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  336</span>        engine = self._native_engine(model, handle, zk, analyse=analyse, Q=Q)</div>
+<div class="line"><span class="lineno">  337</span>        out = core.ensemble_cycle(handle, engine, model.n, model.m, zk, analyse=analyse)</div>
+<div class="line"><span class="lineno">  338</span>        self._finish_native(engine, model)</div>
+<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  340</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -494,14 +499,14 @@ with no covariance formed.</pre>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00127">127</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  127</span>    <span class="keyword">def </span>_estimate(self):</div>
-<div class="line"><span class="lineno">  128</span>        x = self._members.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  129</span>        A = self._members - x</div>
-<div class="line"><span class="lineno">  130</span>        P = (A @ A.T) / max(self.n_members - 1, 1)</div>
-<div class="line"><span class="lineno">  131</span>        P = 0.5 * (P + P.T) + 1e-12 * np.eye(P.shape[0])</div>
-<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">return</span> x, P</div>
-<div class="line"><span class="lineno">  133</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00133">133</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  133</span>    <span class="keyword">def </span>_estimate(self):</div>
+<div class="line"><span class="lineno">  134</span>        x = self._members.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  135</span>        A = self._members - x</div>
+<div class="line"><span class="lineno">  136</span>        P = (A @ A.T) / max(self.n_members - 1, 1)</div>
+<div class="line"><span class="lineno">  137</span>        P = 0.5 * (P + P.T) + 1e-12 * np.eye(P.shape[0])</div>
+<div class="line"><span class="lineno">  138</span>        <span class="keywordflow">return</span> x, P</div>
+<div class="line"><span class="lineno">  139</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -545,16 +550,16 @@ with no covariance formed.</pre>
 </table>
 </div><div class="memdoc">
 <pre class="fragment">Take the members back from the C++ engine; every draw must have been used.</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00306">306</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  306</span>    <span class="keyword">def </span>_finish_native(self, engine, model):</div>
-<div class="line"><span class="lineno">  307</span>        <span class="stringliteral">&quot;&quot;&quot;Take the members back from the C++ engine; every draw must have been used.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  308</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  309</span>        self._members = core.ensemble_members(engine, model.n, self.n_members)</div>
-<div class="line"><span class="lineno">  310</span>        left = core.ensemble_normals_left(engine)</div>
-<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">if</span> left:</div>
-<div class="line"><span class="lineno">  312</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;EnsembleKalmanEngine: the C++ pass left {left} draws unused; &quot;</span></div>
-<div class="line"><span class="lineno">  313</span>                               <span class="stringliteral">&quot;the Python and C++ steps disagree on the draws they take.&quot;</span>)</div>
-<div class="line"><span class="lineno">  314</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00311">311</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  311</span>    <span class="keyword">def </span>_finish_native(self, engine, model):</div>
+<div class="line"><span class="lineno">  312</span>        <span class="stringliteral">&quot;&quot;&quot;Take the members back from the C++ engine; every draw must have been used.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  313</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  314</span>        self._members = core.ensemble_members(engine, model.n, self.n_members)</div>
+<div class="line"><span class="lineno">  315</span>        left = core.ensemble_normals_left(engine)</div>
+<div class="line"><span class="lineno">  316</span>        <span class="keywordflow">if</span> left:</div>
+<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">raise</span> RuntimeError(f<span class="stringliteral">&quot;EnsembleKalmanEngine: the C++ pass left {left} draws unused; &quot;</span></div>
+<div class="line"><span class="lineno">  318</span>                               <span class="stringliteral">&quot;the Python and C++ steps disagree on the draws they take.&quot;</span>)</div>
+<div class="line"><span class="lineno">  319</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -603,20 +608,20 @@ with no covariance formed.</pre>
   </tr>
 </table>
 </div><div class="memdoc">
-<pre class="fragment">The filter pass (``Kalman::Filter`` over the C++ engine and twin): the
+<pre class="fragment">The filter pass (``Kalman::Filter`` over the C++ engine and counterpart): the
 per-step arrays of :func:`~kalman.framework.native.core.run_filter`.</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00315">315</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  315</span>    <span class="keyword">def </span>_forward_native(self, model, handle, zk):</div>
-<div class="line"><span class="lineno">  316</span>        <span class="stringliteral">&quot;&quot;&quot;The filter pass (``Kalman::Filter`` over the C++ engine and twin): the</span></div>
-<div class="line"><span class="lineno">  317</span><span class="stringliteral">        per-step arrays of :func:`~kalman.framework.native.core.run_filter`.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  318</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  319</span>        zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(len(zk), model.m))</div>
-<div class="line"><span class="lineno">  320</span>        engine = self._native_engine(model, handle, zk)</div>
-<div class="line"><span class="lineno">  321</span>        core.check(core.lib.kalman_model_set_t0(handle, float(model.t0) <span class="keywordflow">if</span> model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0), <span class="stringliteral">&quot;set_t0&quot;</span>)</div>
-<div class="line"><span class="lineno">  322</span>        out = core.run_filter(handle, engine, model.n, model.m, 0, zk)</div>
-<div class="line"><span class="lineno">  323</span>        self._finish_native(engine, model)</div>
-<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">return</span> out</div>
-<div class="line"><span class="lineno">  325</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00320">320</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  320</span>    <span class="keyword">def </span>_forward_native(self, model, handle, zk):</div>
+<div class="line"><span class="lineno">  321</span>        <span class="stringliteral">&quot;&quot;&quot;The filter pass (``Kalman::Filter`` over the C++ engine and counterpart): the</span></div>
+<div class="line"><span class="lineno">  322</span><span class="stringliteral">        per-step arrays of :func:`~kalman.framework.native.core.run_filter`.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  323</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  324</span>        zk = np.ascontiguousarray(np.asarray(zk, dtype=np.float64).reshape(len(zk), model.m))</div>
+<div class="line"><span class="lineno">  325</span>        engine = self._native_engine(model, handle, zk)</div>
+<div class="line"><span class="lineno">  326</span>        core.check(core.lib.kalman_model_set_t0(handle, float(model.t0) <span class="keywordflow">if</span> model.t0 <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> 0.0), <span class="stringliteral">&quot;set_t0&quot;</span>)</div>
+<div class="line"><span class="lineno">  327</span>        out = core.run_filter(handle, engine, model.n, model.m, 0, zk)</div>
+<div class="line"><span class="lineno">  328</span>        self._finish_native(engine, model)</div>
+<div class="line"><span class="lineno">  329</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  330</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -685,27 +690,88 @@ per-step arrays of :func:`~kalman.framework.native.core.run_filter`.</pre>
 </div><div class="memdoc">
 <pre class="fragment">The analysis ``X + K (z + eps - Y)`` computed by the C++ kernel, or
 ``None`` when the Python arithmetic must run (reference path, no library).</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00227">227</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>_native_analysis(self, X, Y, R, z, eps, idx):</div>
-<div class="line"><span class="lineno">  228</span>        <span class="stringliteral">&quot;&quot;&quot;The analysis ``X + K (z + eps - Y)`` computed by the C++ kernel, or</span></div>
-<div class="line"><span class="lineno">  229</span><span class="stringliteral">        ``None`` when the Python arithmetic must run (reference path, no library).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  230</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  231</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  232</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  233</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  234</span>        c = <span class="keyword">lambda</span> a: np.ascontiguousarray(a, dtype=np.float64)</div>
-<div class="line"><span class="lineno">  235</span>        n, N = X.shape</div>
-<div class="line"><span class="lineno">  236</span>        p = len(idx)</div>
-<div class="line"><span class="lineno">  237</span>        Xc, Yc, Rc, zc, ec = c(X), c(Y), c(R), c(z), c(eps)</div>
-<div class="line"><span class="lineno">  238</span>        rxy = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._rho_xy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> c(np.asarray(self._rho_xy)[:, idx])</div>
-<div class="line"><span class="lineno">  239</span>        ryy = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._rho_yy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> c(np.asarray(self._rho_yy)[np.ix_(idx, idx)])</div>
-<div class="line"><span class="lineno">  240</span>        out = np.empty((n, N))</div>
-<div class="line"><span class="lineno">  241</span>        rc = core.lib.enkf_analysis(n, N, p, core.cdptr(Xc), core.cdptr(Yc), core.cdptr(Rc), core.cdptr(zc),</div>
-<div class="line"><span class="lineno">  242</span>                                    core.cdptr(ec), core.ffi.NULL <span class="keywordflow">if</span> rxy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> core.cdptr(rxy),</div>
-<div class="line"><span class="lineno">  243</span>                                    core.ffi.NULL <span class="keywordflow">if</span> ryy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> core.cdptr(ryy), core.dptr(out))</div>
-<div class="line"><span class="lineno">  244</span>        core.check(rc, <span class="stringliteral">&quot;enkf_analysis&quot;</span>)</div>
-<div class="line"><span class="lineno">  245</span>        <span class="keywordflow">return</span> out</div>
-<div class="line"><span class="lineno">  246</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00232">232</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  232</span>    <span class="keyword">def </span>_native_analysis(self, X, Y, R, z, eps, idx):</div>
+<div class="line"><span class="lineno">  233</span>        <span class="stringliteral">&quot;&quot;&quot;The analysis ``X + K (z + eps - Y)`` computed by the C++ kernel, or</span></div>
+<div class="line"><span class="lineno">  234</span><span class="stringliteral">        ``None`` when the Python arithmetic must run (reference path, no library).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  235</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  237</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  238</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  239</span>        c = <span class="keyword">lambda</span> a: np.ascontiguousarray(a, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  240</span>        n, N = X.shape</div>
+<div class="line"><span class="lineno">  241</span>        p = len(idx)</div>
+<div class="line"><span class="lineno">  242</span>        Xc, Yc, Rc, zc, ec = c(X), c(Y), c(R), c(z), c(eps)</div>
+<div class="line"><span class="lineno">  243</span>        rxy = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._rho_xy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> c(np.asarray(self._rho_xy)[:, idx])</div>
+<div class="line"><span class="lineno">  244</span>        ryy = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._rho_yy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> c(np.asarray(self._rho_yy)[np.ix_(idx, idx)])</div>
+<div class="line"><span class="lineno">  245</span>        out = np.empty((n, N))</div>
+<div class="line"><span class="lineno">  246</span>        rc = core.lib.enkf_analysis(n, N, p, core.cdptr(Xc), core.cdptr(Yc), core.cdptr(Rc), core.cdptr(zc),</div>
+<div class="line"><span class="lineno">  247</span>                                    core.cdptr(ec), core.ffi.NULL <span class="keywordflow">if</span> rxy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> core.cdptr(rxy),</div>
+<div class="line"><span class="lineno">  248</span>                                    core.ffi.NULL <span class="keywordflow">if</span> ryy <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> core.cdptr(ryy), core.dptr(out))</div>
+<div class="line"><span class="lineno">  249</span>        core.check(rc, <span class="stringliteral">&quot;enkf_analysis&quot;</span>)</div>
+<div class="line"><span class="lineno">  250</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  251</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a3ac3b309dcc9729be236300c0e4b59f7" name="a3ac3b309dcc9729be236300c0e4b59f7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3ac3b309dcc9729be236300c0e4b59f7">&#9670;&#160;</a></span>_native_counterpart()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.ensemble.EnsembleKalmanEngine._native_counterpart </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>Q</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<pre class="fragment">The configured C++ counterpart of ``model`` when the pass can run in C++, else
+``None``: another engine class, the reference path, a model with no counterpart
+for its configuration, or a ``Q`` that is not diagonal.</pre> 
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00261">261</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  261</span>    <span class="keyword">def </span>_native_counterpart(self, model, Q=None):</div>
+<div class="line"><span class="lineno">  262</span>        <span class="stringliteral">&quot;&quot;&quot;The configured C++ counterpart of ``model`` when the pass can run in C++, else</span></div>
+<div class="line"><span class="lineno">  263</span><span class="stringliteral">        ``None``: another engine class, the reference path, a model with no counterpart</span></div>
+<div class="line"><span class="lineno">  264</span><span class="stringliteral">        for its configuration, or a ``Q`` that is not diagonal.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  265</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
+<div class="line"><span class="lineno">  266</span>        <span class="keywordflow">if</span> type(self) <span class="keywordflow">is</span> <span class="keywordflow">not</span> EnsembleKalmanEngine <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
+<div class="line"><span class="lineno">  267</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  268</span>        handle_of = getattr(model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  269</span>        handle = handle_of() <span class="keywordflow">if</span> callable(handle_of) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  270</span>        <span class="keywordflow">if</span> handle <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  272</span>        <span class="keywordflow">if</span> self._process_variance(model, Q) <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  273</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  274</span>        <span class="keywordflow">return</span> handle</div>
+<div class="line"><span class="lineno">  275</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -768,94 +834,33 @@ per-step arrays of :func:`~kalman.framework.native.core.run_filter`.</pre>
 </div><div class="memdoc">
 <pre class="fragment">The C++ engine for one pass over ``zk``: this engine's members, the
 draws the Python steps would take, and the tapers given to this engine.
-Pushes the process noise of ``Q`` (the model's by default) to the twin.</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00281">281</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  281</span>    <span class="keyword">def </span>_native_engine(self, model, handle, zk, analyse=True, Q=None):</div>
-<div class="line"><span class="lineno">  282</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine for one pass over ``zk``: this engine&#39;s members, the</span></div>
-<div class="line"><span class="lineno">  283</span><span class="stringliteral">        draws the Python steps would take, and the tapers given to this engine.</span></div>
-<div class="line"><span class="lineno">  284</span><span class="stringliteral">        Pushes the process noise of ``Q`` (the model&#39;s by default) to the twin.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  285</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
-<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">if</span> self._members <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  287</span>            self.reset(model)</div>
-<div class="line"><span class="lineno">  288</span>        n, N = model.n, self.n_members</div>
-<div class="line"><span class="lineno">  289</span>        variance = self._process_variance(model, Q)</div>
-<div class="line"><span class="lineno">  290</span>        core.check(core.lib.kalman_model_set_array(handle, b<span class="stringliteral">&quot;process_variance&quot;</span>, variance.size, core.cdptr(variance)),</div>
-<div class="line"><span class="lineno">  291</span>                   <span class="stringliteral">&quot;set_array(&#39;process_variance&#39;)&quot;</span>)</div>
-<div class="line"><span class="lineno">  292</span>        <span class="comment"># The order of the Python steps: the forecast takes (n, N) when Q is not</span></div>
-<div class="line"><span class="lineno">  293</span>        <span class="comment"># zero, the analysis (p, N) for the p channels that arrived.</span></div>
-<div class="line"><span class="lineno">  294</span>        rows = []</div>
-<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">for</span> z <span class="keywordflow">in</span> np.asarray(zk, dtype=np.float64).reshape(len(zk), -1):</div>
-<div class="line"><span class="lineno">  296</span>            <span class="keywordflow">if</span> variance.any():</div>
-<div class="line"><span class="lineno">  297</span>                rows.append(n)</div>
-<div class="line"><span class="lineno">  298</span>            <span class="keywordflow">if</span> analyse:</div>
-<div class="line"><span class="lineno">  299</span>                p = int(np.count_nonzero(~np.isnan(z)))</div>
-<div class="line"><span class="lineno">  300</span>                <span class="keywordflow">if</span> p:</div>
-<div class="line"><span class="lineno">  301</span>                    rows.append(p)</div>
-<div class="line"><span class="lineno">  302</span>        normals = self.rng.standard_normal(sum(rows) * N)</div>
-<div class="line"><span class="lineno">  303</span>        loc = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._localization <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> tuple(self._localization)</div>
-<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">return</span> core.ensemble_engine(N, self.inflation, self._members, normals, loc)</div>
-<div class="line"><span class="lineno">  305</span> </div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="ac97545ee6c37370f23a3fa9864a2c85a" name="ac97545ee6c37370f23a3fa9864a2c85a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac97545ee6c37370f23a3fa9864a2c85a">&#9670;&#160;</a></span>_native_twin()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">modules.framework.engines.ensemble.EnsembleKalmanEngine._native_twin </td>
-          <td>(</td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>self</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>model</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">&#160;</td>
-          <td class="paramname"><em>Q</em> = <code>None</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<pre class="fragment">The configured C++ twin of ``model`` when the pass can run in C++, else
-``None``: another engine class, the reference path, a model with no twin
-for its configuration, or a ``Q`` that is not diagonal.</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00256">256</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  256</span>    <span class="keyword">def </span>_native_twin(self, model, Q=None):</div>
-<div class="line"><span class="lineno">  257</span>        <span class="stringliteral">&quot;&quot;&quot;The configured C++ twin of ``model`` when the pass can run in C++, else</span></div>
-<div class="line"><span class="lineno">  258</span><span class="stringliteral">        ``None``: another engine class, the reference path, a model with no twin</span></div>
-<div class="line"><span class="lineno">  259</span><span class="stringliteral">        for its configuration, or a ``Q`` that is not diagonal.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  260</span>        <span class="keyword">from</span> ..models <span class="keyword">import</span> native</div>
-<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">if</span> type(self) <span class="keywordflow">is</span> <span class="keywordflow">not</span> EnsembleKalmanEngine <span class="keywordflow">or</span> <span class="keywordflow">not</span> native.native_loop_enabled():</div>
-<div class="line"><span class="lineno">  262</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  263</span>        handle_of = getattr(model, <span class="stringliteral">&quot;native_handle&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  264</span>        handle = handle_of() <span class="keywordflow">if</span> callable(handle_of) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  265</span>        <span class="keywordflow">if</span> handle <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  267</span>        <span class="keywordflow">if</span> self._process_variance(model, Q) <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  268</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  269</span>        <span class="keywordflow">return</span> handle</div>
-<div class="line"><span class="lineno">  270</span> </div>
+Pushes the process noise of ``Q`` (the model's by default) to the counterpart.</pre> 
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00286">286</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  286</span>    <span class="keyword">def </span>_native_engine(self, model, handle, zk, analyse=True, Q=None):</div>
+<div class="line"><span class="lineno">  287</span>        <span class="stringliteral">&quot;&quot;&quot;The C++ engine for one pass over ``zk``: this engine&#39;s members, the</span></div>
+<div class="line"><span class="lineno">  288</span><span class="stringliteral">        draws the Python steps would take, and the tapers given to this engine.</span></div>
+<div class="line"><span class="lineno">  289</span><span class="stringliteral">        Pushes the process noise of ``Q`` (the model&#39;s by default) to the counterpart.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  290</span>        <span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><span class="lineno">  291</span>        <span class="keywordflow">if</span> self._members <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  292</span>            self.reset(model)</div>
+<div class="line"><span class="lineno">  293</span>        n, N = model.n, self.n_members</div>
+<div class="line"><span class="lineno">  294</span>        variance = self._process_variance(model, Q)</div>
+<div class="line"><span class="lineno">  295</span>        core.check(core.lib.kalman_model_set_array(handle, b<span class="stringliteral">&quot;process_variance&quot;</span>, variance.size, core.cdptr(variance)),</div>
+<div class="line"><span class="lineno">  296</span>                   <span class="stringliteral">&quot;set_array(&#39;process_variance&#39;)&quot;</span>)</div>
+<div class="line"><span class="lineno">  297</span>        <span class="comment"># The order of the Python steps: the forecast takes (n, N) when Q is not</span></div>
+<div class="line"><span class="lineno">  298</span>        <span class="comment"># zero, the analysis (p, N) for the p channels that arrived.</span></div>
+<div class="line"><span class="lineno">  299</span>        rows = []</div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">for</span> z <span class="keywordflow">in</span> np.asarray(zk, dtype=np.float64).reshape(len(zk), -1):</div>
+<div class="line"><span class="lineno">  301</span>            <span class="keywordflow">if</span> variance.any():</div>
+<div class="line"><span class="lineno">  302</span>                rows.append(n)</div>
+<div class="line"><span class="lineno">  303</span>            <span class="keywordflow">if</span> analyse:</div>
+<div class="line"><span class="lineno">  304</span>                p = int(np.count_nonzero(~np.isnan(z)))</div>
+<div class="line"><span class="lineno">  305</span>                <span class="keywordflow">if</span> p:</div>
+<div class="line"><span class="lineno">  306</span>                    rows.append(p)</div>
+<div class="line"><span class="lineno">  307</span>        normals = self.rng.standard_normal(sum(rows) * N)</div>
+<div class="line"><span class="lineno">  308</span>        loc = <span class="keywordtype">None</span> <span class="keywordflow">if</span> self._localization <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> tuple(self._localization)</div>
+<div class="line"><span class="lineno">  309</span>        <span class="keywordflow">return</span> core.ensemble_engine(N, self.inflation, self._members, normals, loc)</div>
+<div class="line"><span class="lineno">  310</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -938,14 +943,14 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a7c797464919fd52fbd5772f851ea8093">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00339">339</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  339</span>    <span class="keyword">def </span>_predict(self, model, x, P, u=None, t=None, **kw):</div>
-<div class="line"><span class="lineno">  340</span>        <span class="keywordflow">if</span> self._members <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  341</span>            self.reset(model)</div>
-<div class="line"><span class="lineno">  342</span>        self.forecast(model, u=u, t=t)</div>
-<div class="line"><span class="lineno">  343</span>        x, P = self._estimate()</div>
-<div class="line"><span class="lineno">  344</span>        <span class="keywordflow">return</span> x, P, np.eye(model.n)</div>
-<div class="line"><span class="lineno">  345</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00344">344</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  344</span>    <span class="keyword">def </span>_predict(self, model, x, P, u=None, t=None, **kw):</div>
+<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">if</span> self._members <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  346</span>            self.reset(model)</div>
+<div class="line"><span class="lineno">  347</span>        self.forecast(model, u=u, t=t)</div>
+<div class="line"><span class="lineno">  348</span>        x, P = self._estimate()</div>
+<div class="line"><span class="lineno">  349</span>        <span class="keywordflow">return</span> x, P, np.eye(model.n)</div>
+<div class="line"><span class="lineno">  350</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -984,16 +989,16 @@ and ``Q`` is the process-noise covariance.  Returns the predicted mean
 </div><div class="memdoc">
 <pre class="fragment">The diagonal of ``Q`` (its value at the start), or ``None`` when ``Q``
 has off-diagonal terms (the Python steps then run).</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00272">272</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  272</span>    <span class="keyword">def </span>_process_variance(model, Q=None):</div>
-<div class="line"><span class="lineno">  273</span>        <span class="stringliteral">&quot;&quot;&quot;The diagonal of ``Q`` (its value at the start), or ``None`` when ``Q``</span></div>
-<div class="line"><span class="lineno">  274</span><span class="stringliteral">        has off-diagonal terms (the Python steps then run).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  275</span>        Q = np.asarray(model.Q(t=<span class="keywordtype">None</span>) <span class="keywordflow">if</span> Q <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> Q, dtype=np.float64)</div>
-<div class="line"><span class="lineno">  276</span>        variance = np.diag(Q)</div>
-<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">if</span> np.count_nonzero(Q) != np.count_nonzero(variance):</div>
-<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  279</span>        <span class="keywordflow">return</span> np.ascontiguousarray(variance)</div>
-<div class="line"><span class="lineno">  280</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00277">277</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>    <span class="keyword">def </span>_process_variance(model, Q=None):</div>
+<div class="line"><span class="lineno">  278</span>        <span class="stringliteral">&quot;&quot;&quot;The diagonal of ``Q`` (its value at the start), or ``None`` when ``Q``</span></div>
+<div class="line"><span class="lineno">  279</span><span class="stringliteral">        has off-diagonal terms (the Python steps then run).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  280</span>        Q = np.asarray(model.Q(t=<span class="keywordtype">None</span>) <span class="keywordflow">if</span> Q <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> Q, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  281</span>        variance = np.diag(Q)</div>
+<div class="line"><span class="lineno">  282</span>        <span class="keywordflow">if</span> np.count_nonzero(Q) != np.count_nonzero(variance):</div>
+<div class="line"><span class="lineno">  283</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">return</span> np.ascontiguousarray(variance)</div>
+<div class="line"><span class="lineno">  285</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1051,9 +1056,9 @@ where ``F_k`` is the transition matrix stored during the forward pass at step ``
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#adae1de090b011a815fb9790b8bcbc96b">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00350">350</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  350</span>    <span class="keyword">def </span>_smooth(self, *args, **kwargs):</div>
-<div class="line"><span class="lineno">  351</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;EnKF has no RTS smoother; use forward() only.&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00355">355</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  355</span>    <span class="keyword">def </span>_smooth(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;EnKF has no RTS smoother; use forward() only.&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1136,11 +1141,11 @@ even under numerical round-off.
 </pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1engine_1_1_kalman_engine.html#a626868626195a67c30107b9ba868e2e3">modules.framework.engine.KalmanEngine</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00346">346</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  346</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
-<div class="line"><span class="lineno">  347</span>        self.analyze(model, z, t=t)</div>
-<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">return</span> self._estimate()</div>
-<div class="line"><span class="lineno">  349</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00351">351</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  351</span>    <span class="keyword">def </span>_update(self, model, x, P, z, t=None, **kw):</div>
+<div class="line"><span class="lineno">  352</span>        self.analyze(model, z, t=t)</div>
+<div class="line"><span class="lineno">  353</span>        <span class="keywordflow">return</span> self._estimate()</div>
+<div class="line"><span class="lineno">  354</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1187,63 +1192,55 @@ NaN channels in ``z`` are skipped (masked update, same convention as
 the other engines).  Inflation is applied to the forecast anomalies
 *before* the update.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00171">171</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  171</span>    <span class="keyword">def </span>analyze(self, model, z, t=None):</div>
-<div class="line"><span class="lineno">  172</span>        <span class="stringliteral">&quot;&quot;&quot;Perturbed-obs analysis update of the ensemble; returns the mean.</span></div>
-<div class="line"><span class="lineno">  173</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  174</span><span class="stringliteral">        NaN channels in ``z`` are skipped (masked update, same convention as</span></div>
-<div class="line"><span class="lineno">  175</span><span class="stringliteral">        the other engines).  Inflation is applied to the forecast anomalies</span></div>
-<div class="line"><span class="lineno">  176</span><span class="stringliteral">        *before* the update.</span></div>
-<div class="line"><span class="lineno">  177</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  178</span>        z = np.asarray(z, dtype=np.float64).reshape(-1)</div>
-<div class="line"><span class="lineno">  179</span>        keep = ~np.isnan(z)</div>
-<div class="line"><span class="lineno">  180</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
-<div class="line"><span class="lineno">  181</span>            <span class="keywordflow">return</span> self.mean</div>
-<div class="line"><span class="lineno">  182</span> </div>
-<div class="line"><span class="lineno">  183</span>        X = self._members</div>
-<div class="line"><span class="lineno">  184</span>        n, N = X.shape</div>
-<div class="line"><span class="lineno">  185</span>        idx = np.where(keep)[0]</div>
-<div class="line"><span class="lineno">  186</span> </div>
-<div class="line"><span class="lineno">  187</span>        <span class="keywordflow">if</span> self.inflation != 1.0:</div>
-<div class="line"><span class="lineno">  188</span>            m = X.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  189</span>            X = m + self.inflation * (X - m)</div>
-<div class="line"><span class="lineno">  190</span> </div>
-<div class="line"><span class="lineno">  191</span>        <span class="comment"># Obs-space ensemble h(X) — batched model hook if offered, else per member.</span></div>
-<div class="line"><span class="lineno">  192</span>        hbatch = getattr(model, <span class="stringliteral">&quot;observe&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">if</span> callable(hbatch):</div>
-<div class="line"><span class="lineno">  194</span>            Y = np.asarray(hbatch(X, t=t), dtype=np.float64)[idx, :]</div>
-<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  196</span>            Y = np.empty((len(idx), N))</div>
-<div class="line"><span class="lineno">  197</span>            <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(N):</div>
-<div class="line"><span class="lineno">  198</span>                Y[:, i] = np.asarray(</div>
-<div class="line"><span class="lineno">  199</span>                    model.h(X[:, i].reshape(-1, 1), t=t), dtype=np.float64).reshape(-1)[idx]</div>
-<div class="line"><span class="lineno">  200</span> </div>
-<div class="line"><span class="lineno">  201</span>        R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]</div>
-<div class="line"><span class="lineno">  202</span>        <span class="comment"># The draws come first and from numpy&#39;s generator in both paths, so a</span></div>
-<div class="line"><span class="lineno">  203</span>        <span class="comment"># seeded run is the same run whoever does the arithmetic.</span></div>
-<div class="line"><span class="lineno">  204</span>        eps = (np.linalg.cholesky(R) @ self.rng.standard_normal((len(idx), N))</div>
-<div class="line"><span class="lineno">  205</span>               <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.allclose(R, np.diag(np.diag(R)))</div>
-<div class="line"><span class="lineno">  206</span>               <span class="keywordflow">else</span> np.sqrt(np.diag(R))[:, <span class="keywordtype">None</span>] * self.rng.standard_normal((len(idx), N)))</div>
-<div class="line"><span class="lineno">  207</span> </div>
-<div class="line"><span class="lineno">  208</span>        analysed = self._native_analysis(X, Y, R, z[idx], eps, idx)</div>
-<div class="line"><span class="lineno">  209</span>        <span class="keywordflow">if</span> analysed <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                    <span class="comment"># the arithmetic ran in C++ (enkf_analysis)</span></div>
-<div class="line"><span class="lineno">  210</span>            self._members = analysed</div>
-<div class="line"><span class="lineno">  211</span>            <span class="keywordflow">return</span> self.mean</div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00184">184</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  184</span>    <span class="keyword">def </span>analyze(self, model, z, t=None):</div>
+<div class="line"><span class="lineno">  185</span>        <span class="stringliteral">&quot;&quot;&quot;Perturbed-obs analysis update of the ensemble; returns the mean.</span></div>
+<div class="line"><span class="lineno">  186</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  187</span><span class="stringliteral">        NaN channels in ``z`` are skipped (masked update, same convention as</span></div>
+<div class="line"><span class="lineno">  188</span><span class="stringliteral">        the other engines).  Inflation is applied to the forecast anomalies</span></div>
+<div class="line"><span class="lineno">  189</span><span class="stringliteral">        *before* the update.</span></div>
+<div class="line"><span class="lineno">  190</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  191</span>        z = np.asarray(z, dtype=np.float64).reshape(-1)</div>
+<div class="line"><span class="lineno">  192</span>        keep = ~np.isnan(z)</div>
+<div class="line"><span class="lineno">  193</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> keep.any():</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">return</span> self.mean</div>
+<div class="line"><span class="lineno">  195</span> </div>
+<div class="line"><span class="lineno">  196</span>        X = self._members</div>
+<div class="line"><span class="lineno">  197</span>        n, N = X.shape</div>
+<div class="line"><span class="lineno">  198</span>        idx = np.where(keep)[0]</div>
+<div class="line"><span class="lineno">  199</span> </div>
+<div class="line"><span class="lineno">  200</span>        <span class="keywordflow">if</span> self.inflation != 1.0:</div>
+<div class="line"><span class="lineno">  201</span>            m = X.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  202</span>            X = m + self.inflation * (X - m)</div>
+<div class="line"><span class="lineno">  203</span> </div>
+<div class="line"><span class="lineno">  204</span>        Y = self.project(model, t=t, members=X)[idx, :]</div>
+<div class="line"><span class="lineno">  205</span> </div>
+<div class="line"><span class="lineno">  206</span>        R = np.asarray(model.R(t=t), dtype=np.float64)[np.ix_(idx, idx)]</div>
+<div class="line"><span class="lineno">  207</span>        <span class="comment"># The draws come first and from numpy&#39;s generator in both paths, so a</span></div>
+<div class="line"><span class="lineno">  208</span>        <span class="comment"># seeded run is the same run whoever does the arithmetic.</span></div>
+<div class="line"><span class="lineno">  209</span>        eps = (np.linalg.cholesky(R) @ self.rng.standard_normal((len(idx), N))</div>
+<div class="line"><span class="lineno">  210</span>               <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.allclose(R, np.diag(np.diag(R)))</div>
+<div class="line"><span class="lineno">  211</span>               <span class="keywordflow">else</span> np.sqrt(np.diag(R))[:, <span class="keywordtype">None</span>] * self.rng.standard_normal((len(idx), N)))</div>
 <div class="line"><span class="lineno">  212</span> </div>
-<div class="line"><span class="lineno">  213</span>        Xp = X - X.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  214</span>        Yp = Y - Y.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  215</span> </div>
-<div class="line"><span class="lineno">  216</span>        PHt  = (Xp @ Yp.T) / (N - 1)</div>
-<div class="line"><span class="lineno">  217</span>        HPHt = (Yp @ Yp.T) / (N - 1)</div>
-<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">if</span> self._rho_xy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  219</span>            PHt  *= self._rho_xy[:, idx]</div>
-<div class="line"><span class="lineno">  220</span>        <span class="keywordflow">if</span> self._rho_yy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  221</span>            HPHt *= self._rho_yy[np.ix_(idx, idx)]</div>
-<div class="line"><span class="lineno">  222</span> </div>
-<div class="line"><span class="lineno">  223</span>        K = PHt @ np.linalg.pinv(HPHt + R)</div>
-<div class="line"><span class="lineno">  224</span>        self._members = X + K @ (z[idx][:, <span class="keywordtype">None</span>] + eps - Y)</div>
-<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">return</span> self.mean</div>
-<div class="line"><span class="lineno">  226</span> </div>
+<div class="line"><span class="lineno">  213</span>        analysed = self._native_analysis(X, Y, R, z[idx], eps, idx)</div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">if</span> analysed <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:                    <span class="comment"># the arithmetic ran in C++ (enkf_analysis)</span></div>
+<div class="line"><span class="lineno">  215</span>            self._members = analysed</div>
+<div class="line"><span class="lineno">  216</span>            <span class="keywordflow">return</span> self.mean</div>
+<div class="line"><span class="lineno">  217</span> </div>
+<div class="line"><span class="lineno">  218</span>        Xp = X - X.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  219</span>        Yp = Y - Y.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  220</span> </div>
+<div class="line"><span class="lineno">  221</span>        PHt  = (Xp @ Yp.T) / (N - 1)</div>
+<div class="line"><span class="lineno">  222</span>        HPHt = (Yp @ Yp.T) / (N - 1)</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">if</span> self._rho_xy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  224</span>            PHt  *= self._rho_xy[:, idx]</div>
+<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">if</span> self._rho_yy <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  226</span>            HPHt *= self._rho_yy[np.ix_(idx, idx)]</div>
+<div class="line"><span class="lineno">  227</span> </div>
+<div class="line"><span class="lineno">  228</span>        K = PHt @ np.linalg.pinv(HPHt + R)</div>
+<div class="line"><span class="lineno">  229</span>        self._members = X + K @ (z[idx][:, <span class="keywordtype">None</span>] + eps - Y)</div>
+<div class="line"><span class="lineno">  230</span>        <span class="keywordflow">return</span> self.mean</div>
+<div class="line"><span class="lineno">  231</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1286,45 +1283,90 @@ the other engines).  Inflation is applied to the forecast anomalies
 </div><div class="memdoc">
 <pre class="fragment">Propagate every member through the model dynamics (+ ``Q`` draws).
 
-Uses ``model.forecast(X, t=t)`` when the model offers a batched map
-(columns → columns; also the hook where an AI surrogate plugs in),
-else loops ``model.f`` per member.  Returns the ensemble mean.
+"Forecast" is the ensemble filter's word for the predict step: the model's
+``f`` on every member (in one call when the model declares its ``f``
+``BATCHED``, a batched solver or an AI surrogate; column by column
+otherwise), then a draw of ``Q`` for each.  Returns the ensemble mean.
 </pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00137">137</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  137</span>    <span class="keyword">def </span>forecast(self, model, u=None, t=None):</div>
-<div class="line"><span class="lineno">  138</span>        <span class="stringliteral">&quot;&quot;&quot;Propagate every member through the model dynamics (+ ``Q`` draws).</span></div>
-<div class="line"><span class="lineno">  139</span><span class="stringliteral"></span> </div>
-<div class="line"><span class="lineno">  140</span><span class="stringliteral">        Uses ``model.forecast(X, t=t)`` when the model offers a batched map</span></div>
-<div class="line"><span class="lineno">  141</span><span class="stringliteral">        (columns → columns; also the hook where an AI surrogate plugs in),</span></div>
-<div class="line"><span class="lineno">  142</span><span class="stringliteral">        else loops ``model.f`` per member.  Returns the ensemble mean.</span></div>
-<div class="line"><span class="lineno">  143</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  144</span>        X = self._members</div>
-<div class="line"><span class="lineno">  145</span>        n, N = X.shape</div>
-<div class="line"><span class="lineno">  146</span>        u = (np.asarray(u).reshape(-1, 1) <span class="keywordflow">if</span> (u <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> model.l &gt; 0) <span class="keywordflow">else</span> <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  147</span> </div>
-<div class="line"><span class="lineno">  148</span>        batch = getattr(model, <span class="stringliteral">&quot;forecast&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  149</span>        <span class="keywordflow">if</span> callable(batch):</div>
-<div class="line"><span class="lineno">  150</span>            X = np.asarray(batch(X, t=t), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  152</span>            out = np.empty_like(X)</div>
-<div class="line"><span class="lineno">  153</span>            <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(N):</div>
-<div class="line"><span class="lineno">  154</span>                out[:, i] = np.asarray(</div>
-<div class="line"><span class="lineno">  155</span>                    model.f(X[:, i].reshape(-1, 1), u=u, t=t), dtype=np.float64).reshape(-1)</div>
-<div class="line"><span class="lineno">  156</span>            X = out</div>
-<div class="line"><span class="lineno">  157</span> </div>
-<div class="line"><span class="lineno">  158</span>        Q = np.asarray(model.Q(t=t), dtype=np.float64)</div>
-<div class="line"><span class="lineno">  159</span>        <span class="comment"># A declared noise coupling applies here as in every engine: w ~ N(0, L Q L^T).</span></div>
-<div class="line"><span class="lineno">  160</span>        L = getattr(model, <span class="stringliteral">&quot;_L&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  161</span>        <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> callable(L) <span class="keywordflow">and</span> <span class="keywordflow">not</span> np.array_equal(L, np.eye(n)):</div>
-<div class="line"><span class="lineno">  162</span>            Q = np.asarray(L, dtype=np.float64) @ Q @ np.asarray(L, dtype=np.float64).T</div>
-<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">if</span> Q.any():</div>
-<div class="line"><span class="lineno">  164</span>            <span class="keywordflow">if</span> np.allclose(Q, np.diag(np.diag(Q))):</div>
-<div class="line"><span class="lineno">  165</span>                X = X + np.sqrt(np.diag(Q))[:, <span class="keywordtype">None</span>] * self.rng.standard_normal((n, N))</div>
-<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  167</span>                X = X + np.linalg.cholesky(Q) @ self.rng.standard_normal((n, N))</div>
-<div class="line"><span class="lineno">  168</span>        self._members = X</div>
-<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">return</span> self.mean</div>
-<div class="line"><span class="lineno">  170</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00143">143</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>forecast(self, model, u=None, t=None):</div>
+<div class="line"><span class="lineno">  144</span>        <span class="stringliteral">&quot;&quot;&quot;Propagate every member through the model dynamics (+ ``Q`` draws).</span></div>
+<div class="line"><span class="lineno">  145</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  146</span><span class="stringliteral">        &quot;Forecast&quot; is the ensemble filter&#39;s word for the predict step: the model&#39;s</span></div>
+<div class="line"><span class="lineno">  147</span><span class="stringliteral">        ``f`` on every member (in one call when the model declares its ``f``</span></div>
+<div class="line"><span class="lineno">  148</span><span class="stringliteral">        ``BATCHED``, a batched solver or an AI surrogate; column by column</span></div>
+<div class="line"><span class="lineno">  149</span><span class="stringliteral">        otherwise), then a draw of ``Q`` for each.  Returns the ensemble mean.</span></div>
+<div class="line"><span class="lineno">  150</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  151</span>        X = self._members</div>
+<div class="line"><span class="lineno">  152</span>        n, N = X.shape</div>
+<div class="line"><span class="lineno">  153</span>        u = (np.asarray(u).reshape(-1, 1) <span class="keywordflow">if</span> (u <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> model.l &gt; 0) <span class="keywordflow">else</span> <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  154</span> </div>
+<div class="line"><span class="lineno">  155</span>        <span class="comment"># forecast: the ensemble word for the predict step. It is the model&#39;s f on</span></div>
+<div class="line"><span class="lineno">  156</span>        <span class="comment"># every member (one call when the model&#39;s f is BATCHED, else column by</span></div>
+<div class="line"><span class="lineno">  157</span>        <span class="comment"># column), then the process noise below.</span></div>
+<div class="line"><span class="lineno">  158</span>        X = np.asarray(_over_columns(model, <span class="stringliteral">&quot;f&quot;</span>, X, n, u=u, t=t), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  159</span> </div>
+<div class="line"><span class="lineno">  160</span>        Q = np.asarray(model.Q(t=t), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  161</span>        <span class="comment"># A declared noise coupling applies here as in every engine: w ~ N(0, L Q L^T).</span></div>
+<div class="line"><span class="lineno">  162</span>        L = getattr(model, <span class="stringliteral">&quot;_L&quot;</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">if</span> L <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> callable(L) <span class="keywordflow">and</span> <span class="keywordflow">not</span> np.array_equal(L, np.eye(n)):</div>
+<div class="line"><span class="lineno">  164</span>            Q = np.asarray(L, dtype=np.float64) @ Q @ np.asarray(L, dtype=np.float64).T</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">if</span> Q.any():</div>
+<div class="line"><span class="lineno">  166</span>            <span class="keywordflow">if</span> np.allclose(Q, np.diag(np.diag(Q))):</div>
+<div class="line"><span class="lineno">  167</span>                X = X + np.sqrt(np.diag(Q))[:, <span class="keywordtype">None</span>] * self.rng.standard_normal((n, N))</div>
+<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  169</span>                X = X + np.linalg.cholesky(Q) @ self.rng.standard_normal((n, N))</div>
+<div class="line"><span class="lineno">  170</span>        self._members = X</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">return</span> self.mean</div>
+<div class="line"><span class="lineno">  172</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a53a26cf943c58e0f344812694f1e83e2" name="a53a26cf943c58e0f344812694f1e83e2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a53a26cf943c58e0f344812694f1e83e2">&#9670;&#160;</a></span>initial_ensemble()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.ensemble.EnsembleKalmanEngine.initial_ensemble </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The members a run starts from, ``(n, N)``.
+
+"Initial ensemble" is the ensemble filter's word for the model's initial
+state given as samples: this is ``model.initial_state(samples=N, rng=...)``
+with the engine's own random stream.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00094">94</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>    <span class="keyword">def </span>initial_ensemble(self, model):</div>
+<div class="line"><span class="lineno">   95</span>        <span class="stringliteral">&quot;&quot;&quot;The members a run starts from, ``(n, N)``.</span></div>
+<div class="line"><span class="lineno">   96</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   97</span><span class="stringliteral">        &quot;Initial ensemble&quot; is the ensemble filter&#39;s word for the model&#39;s initial</span></div>
+<div class="line"><span class="lineno">   98</span><span class="stringliteral">        state given as samples: this is ``model.initial_state(samples=N, rng=...)``</span></div>
+<div class="line"><span class="lineno">   99</span><span class="stringliteral">        with the engine&#39;s own random stream.</span></div>
+<div class="line"><span class="lineno">  100</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  101</span>        N = self.n_members</div>
+<div class="line"><span class="lineno">  102</span>        X = np.asarray(model.initial_state(samples=N, rng=self.rng), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">if</span> X.shape != (model.n, N):</div>
+<div class="line"><span class="lineno">  104</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;initial_state(samples={N}) must return ({model.n},{N}); got {X.shape}&quot;</span>)</div>
+<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> X</div>
+<div class="line"><span class="lineno">  106</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1344,10 +1386,10 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00120">120</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  120</span>    <span class="keyword">def </span>mean(self) -&gt; np.ndarray:</div>
-<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">return</span> self._members.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  122</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00126">126</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>    <span class="keyword">def </span>mean(self) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">return</span> self._members.mean(axis=1, keepdims=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  128</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1367,11 +1409,70 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Current ensemble, shape ``(n, N)`` (state vectors as columns).</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00115">115</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  115</span>    <span class="keyword">def </span>members(self) -&gt; np.ndarray:</div>
-<div class="line"><span class="lineno">  116</span>        <span class="stringliteral">&quot;&quot;&quot;Current ensemble, shape ``(n, N)`` (state vectors as columns).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  117</span>        <span class="keywordflow">return</span> self._members</div>
-<div class="line"><span class="lineno">  118</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00121">121</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>    <span class="keyword">def </span>members(self) -&gt; np.ndarray:</div>
+<div class="line"><span class="lineno">  122</span>        <span class="stringliteral">&quot;&quot;&quot;Current ensemble, shape ``(n, N)`` (state vectors as columns).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> self._members</div>
+<div class="line"><span class="lineno">  124</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a7e8dd28e648a9715361e85155b4d5431" name="a7e8dd28e648a9715361e85155b4d5431"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e8dd28e648a9715361e85155b4d5431">&#9670;&#160;</a></span>project()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.engines.ensemble.EnsembleKalmanEngine.project </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>model</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>t</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>members</em> = <code>None</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Project the members into measurement space: ``(m, N)``, one column per
+member.
+
+"Project" is the ensemble filter's word for it. It is the model's ``h`` on
+every member (in one call when the model declares its ``h`` ``BATCHED``,
+column by column otherwise): what each member says the sensors would read.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00173">173</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>    <span class="keyword">def </span>project(self, model, t=None, members=None):</div>
+<div class="line"><span class="lineno">  174</span>        <span class="stringliteral">&quot;&quot;&quot;Project the members into measurement space: ``(m, N)``, one column per</span></div>
+<div class="line"><span class="lineno">  175</span><span class="stringliteral">        member.</span></div>
+<div class="line"><span class="lineno">  176</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  177</span><span class="stringliteral">        &quot;Project&quot; is the ensemble filter&#39;s word for it. It is the model&#39;s ``h`` on</span></div>
+<div class="line"><span class="lineno">  178</span><span class="stringliteral">        every member (in one call when the model declares its ``h`` ``BATCHED``,</span></div>
+<div class="line"><span class="lineno">  179</span><span class="stringliteral">        column by column otherwise): what each member says the sensors would read.</span></div>
+<div class="line"><span class="lineno">  180</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  181</span>        X = self._members <span class="keywordflow">if</span> members <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> members</div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">return</span> np.asarray(_over_columns(model, <span class="stringliteral">&quot;h&quot;</span>, X, int(model.m), t=t), dtype=np.float64)</div>
+<div class="line"><span class="lineno">  183</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1403,30 +1504,20 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 <pre class="fragment">No-op for stateless engines; stateful engines (PF) override to (re)seed.</pre> 
 <p>Reimplemented from <a class="el" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html#aa6b677acc0a62cf82ed1e66d953bc743">modules.framework.abstract.mixins.KalmanEngineMixin</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00091">91</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   91</span>    <span class="keyword">def </span>reset(self, model):</div>
-<div class="line"><span class="lineno">   92</span>        N = self.n_members</div>
-<div class="line"><span class="lineno">   93</span>        init = getattr(model, <span class="stringliteral">&quot;initial_ensemble&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">if</span> callable(init):</div>
-<div class="line"><span class="lineno">   95</span>            X = np.asarray(init(N, rng=self.rng), dtype=np.float64)</div>
-<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">if</span> X.shape != (model.n, N):</div>
-<div class="line"><span class="lineno">   97</span>                <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;initial_ensemble must return ({model.n},{N}); got {X.shape}&quot;</span>)</div>
-<div class="line"><span class="lineno">   98</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">   99</span>            x0 = np.asarray(model.x0, dtype=np.float64).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  100</span>            P0 = np.asarray(model.P0, dtype=np.float64)</div>
-<div class="line"><span class="lineno">  101</span>            <span class="keywordflow">if</span> np.allclose(P0, np.diag(np.diag(P0))):</div>
-<div class="line"><span class="lineno">  102</span>                X = x0 + np.sqrt(np.diag(P0))[:, <span class="keywordtype">None</span>] * self.rng.standard_normal((model.n, N))</div>
-<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  104</span>                X = x0 + np.linalg.cholesky(P0) @ self.rng.standard_normal((model.n, N))</div>
-<div class="line"><span class="lineno">  105</span>        self._members = X</div>
-<div class="line"><span class="lineno">  106</span> </div>
-<div class="line"><span class="lineno">  107</span>        loc = self._localization</div>
-<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> loc <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><span class="lineno">  109</span>            hook = getattr(model, <span class="stringliteral">&quot;localization&quot;</span>, <span class="keywordtype">None</span>)</div>
-<div class="line"><span class="lineno">  110</span>            loc = hook() <span class="keywordflow">if</span> callable(hook) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
-<div class="line"><span class="lineno">  111</span>        self._rho_xy, self._rho_yy = (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>) <span class="keywordflow">if</span> loc <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> loc</div>
-<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> self</div>
-<div class="line"><span class="lineno">  113</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00107">107</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    <span class="keyword">def </span>reset(self, model):</div>
+<div class="line"><span class="lineno">  108</span>        X = self.initial_ensemble(model)</div>
+<div class="line"><span class="lineno">  109</span>        self._members = X</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>        loc = self._localization</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">if</span> loc <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  113</span>            <span class="comment"># localization: the ensemble word for the model&#39;s covariance mask</span></div>
+<div class="line"><span class="lineno">  114</span>            <span class="comment"># (KalmanEnsembleModel.covariance_mask). A view of a model stands for it.</span></div>
+<div class="line"><span class="lineno">  115</span>            owner = getattr(model, <span class="stringliteral">&quot;_model&quot;</span>, model)</div>
+<div class="line"><span class="lineno">  116</span>            loc = model.covariance_mask() <span class="keywordflow">if</span> isinstance(owner, KalmanEnsembleModel) <span class="keywordflow">else</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  117</span>        self._rho_xy, self._rho_yy = (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>) <span class="keywordflow">if</span> loc <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> loc</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">  119</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1446,11 +1537,11 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Mean per-state ensemble standard deviation (compare against RMSE).</pre> 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00123">123</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  123</span>    <span class="keyword">def </span>spread(self) -&gt; float:</div>
-<div class="line"><span class="lineno">  124</span>        <span class="stringliteral">&quot;&quot;&quot;Mean per-state ensemble standard deviation (compare against RMSE).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  125</span>        <span class="keywordflow">return</span> float(self._members.<a class="code hl_namespace" href="namespacestd.html">std</a>(axis=1).mean())</div>
-<div class="line"><span class="lineno">  126</span> </div>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00129">129</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  129</span>    <span class="keyword">def </span>spread(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  130</span>        <span class="stringliteral">&quot;&quot;&quot;Mean per-state ensemble standard deviation (compare against RMSE).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordflow">return</span> float(self._members.<a class="code hl_namespace" href="namespacestd.html">std</a>(axis=1).mean())</div>
+<div class="line"><span class="lineno">  132</span> </div>
 <div class="ttc" id="anamespacestd_html"><div class="ttname"><a href="namespacestd.html">std</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1476,7 +1567,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00084">84</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00087">87</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1500,7 +1591,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00086">86</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00089">89</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1524,7 +1615,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00111">111</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00117">117</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1548,7 +1639,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00111">111</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00117">117</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1572,7 +1663,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00076">76</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00079">79</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1588,7 +1679,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00083">83</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00086">86</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1612,7 +1703,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00078">78</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00081">81</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1628,7 +1719,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00082">82</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00085">85</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1652,7 +1743,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00075">75</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00078">78</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1668,7 +1759,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00085">85</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00088">88</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>
@@ -1692,7 +1783,7 @@ else loops ``model.f`` per member.  Returns the ensemble mean.
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00077">77</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="ensemble_8py_source.html#l00080">80</a> of file <a class="el" href="ensemble_8py_source.html">ensemble.py</a>.</p>
 
 </div>
 </div>

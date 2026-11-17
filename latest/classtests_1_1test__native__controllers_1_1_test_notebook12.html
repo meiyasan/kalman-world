@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,7 +165,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">The notebook's controller cells, shortened, on both paths.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00362">362</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00473">473</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a31f473119fd6473a19da15956c8d4211" name="a31f473119fd6473a19da15956c8d4211"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a31f473119fd6473a19da15956c8d4211">&#9670;&#160;</a></span>_filter()</h2>
@@ -219,20 +219,20 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00384">384</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  384</span>    <span class="keyword">def </span>_filter(self, make_ctrl, zk, controller_reference, everything_reference=False):</div>
-<div class="line"><span class="lineno">  385</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ExtendedKalmanFilter</div>
-<div class="line"><span class="lineno">  386</span>        model = lane(x0=(0.0, 0.0, 15.0))</div>
-<div class="line"><span class="lineno">  387</span>        ctrl = make_ctrl(model)</div>
-<div class="line"><span class="lineno">  388</span>        <span class="keywordflow">if</span> controller_reference:</div>
-<div class="line"><span class="lineno">  389</span>            reference(ctrl)</div>
-<div class="line"><span class="lineno">  390</span>        <span class="keywordflow">if</span> everything_reference:</div>
-<div class="line"><span class="lineno">  391</span>            <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  392</span>                rec = ExtendedKalmanFilter(model).forward(zk, uk=ctrl)</div>
-<div class="line"><span class="lineno">  393</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  394</span>            rec = ExtendedKalmanFilter(model).forward(zk, uk=ctrl)</div>
-<div class="line"><span class="lineno">  395</span>        <span class="keywordflow">return</span> np.asarray(rec.xk), [s <span class="keywordflow">for</span> _, s <span class="keywordflow">in</span> ctrl.scale_log]</div>
-<div class="line"><span class="lineno">  396</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00495">495</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  495</span>    <span class="keyword">def </span>_filter(self, make_ctrl, zk, controller_reference, everything_reference=False):</div>
+<div class="line"><span class="lineno">  496</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ExtendedKalmanFilter</div>
+<div class="line"><span class="lineno">  497</span>        model = lane(x0=(0.0, 0.0, 15.0))</div>
+<div class="line"><span class="lineno">  498</span>        ctrl = make_ctrl(model)</div>
+<div class="line"><span class="lineno">  499</span>        <span class="keywordflow">if</span> controller_reference:</div>
+<div class="line"><span class="lineno">  500</span>            reference(ctrl)</div>
+<div class="line"><span class="lineno">  501</span>        <span class="keywordflow">if</span> everything_reference:</div>
+<div class="line"><span class="lineno">  502</span>            <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  503</span>                rec = ExtendedKalmanFilter(model).forward(zk, uk=ctrl)</div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  505</span>            rec = ExtendedKalmanFilter(model).forward(zk, uk=ctrl)</div>
+<div class="line"><span class="lineno">  506</span>        <span class="keywordflow">return</span> np.asarray(rec.xk), [s <span class="keywordflow">for</span> _, s <span class="keywordflow">in</span> ctrl.scale_log]</div>
+<div class="line"><span class="lineno">  507</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -253,27 +253,27 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00413">413</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  413</span>    <span class="keyword">def </span>test_adaptive_qr_on_a_mistuned_lane(self):</div>
-<div class="line"><span class="lineno">  414</span>        rng = np.random.default_rng(11)</div>
-<div class="line"><span class="lineno">  415</span>        y, zk = 0.0, np.zeros((300, 1))</div>
-<div class="line"><span class="lineno">  416</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(300):</div>
-<div class="line"><span class="lineno">  417</span>            zk[k, 0] = y + rng.normal(0, LATERAL_NOISE_STD)</div>
-<div class="line"><span class="lineno">  418</span>            y += rng.normal(0, np.sqrt(30e-4))</div>
-<div class="line"><span class="lineno">  419</span>        make = <span class="keyword">lambda</span> m: AdaptiveQRKalmanController(m, window=20, q_min=0.5, q_max=10.0)</div>
-<div class="line"><span class="lineno">  420</span>        x_cxx, s_cxx = self._filter(make, zk, <span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  421</span>        x_ref, s_ref = self._filter(make, zk, <span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  422</span>        x_py, s_py = self._filter(make, zk, <span class="keyword">True</span>, everything_reference=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  423</span>        self.assertEqual(len(s_cxx), len(s_ref))</div>
-<div class="line"><span class="lineno">  424</span>        <span class="comment"># Rounding (a trace summed in another order) is fed back through Q into the</span></div>
-<div class="line"><span class="lineno">  425</span>        <span class="comment"># filter for 280 steps: measured 2.5e-11 on the factor, then.</span></div>
-<div class="line"><span class="lineno">  426</span>        np.testing.assert_allclose(s_cxx, s_ref, rtol=1e-9)</div>
-<div class="line"><span class="lineno">  427</span>        np.testing.assert_allclose(x_cxx, x_ref, rtol=0, atol=1e-9)</div>
-<div class="line"><span class="lineno">  428</span>        self.assertGreater(np.ptp(s_cxx), 0.5)                    <span class="comment"># Q really was retuned</span></div>
-<div class="line"><span class="lineno">  429</span>        np.testing.assert_allclose(s_cxx, s_py, rtol=1e-7)</div>
-<div class="line"><span class="lineno">  430</span>        np.testing.assert_allclose(x_cxx, x_py, rtol=0, atol=1e-8)</div>
-<div class="line"><span class="lineno">  431</span> </div>
-<div class="line"><span class="lineno">  432</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00524">524</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  524</span>    <span class="keyword">def </span>test_adaptive_qr_on_a_mistuned_lane(self):</div>
+<div class="line"><span class="lineno">  525</span>        rng = np.random.default_rng(11)</div>
+<div class="line"><span class="lineno">  526</span>        y, zk = 0.0, np.zeros((300, 1))</div>
+<div class="line"><span class="lineno">  527</span>        <span class="keywordflow">for</span> k <span class="keywordflow">in</span> range(300):</div>
+<div class="line"><span class="lineno">  528</span>            zk[k, 0] = y + rng.normal(0, LATERAL_NOISE_STD)</div>
+<div class="line"><span class="lineno">  529</span>            y += rng.normal(0, np.sqrt(30e-4))</div>
+<div class="line"><span class="lineno">  530</span>        make = <span class="keyword">lambda</span> m: AdaptiveQRKalmanTuner(m, window=20, q_min=0.5, q_max=10.0)</div>
+<div class="line"><span class="lineno">  531</span>        x_cxx, s_cxx = self._filter(make, zk, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  532</span>        x_ref, s_ref = self._filter(make, zk, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  533</span>        x_py, s_py = self._filter(make, zk, <span class="keyword">True</span>, everything_reference=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  534</span>        self.assertEqual(len(s_cxx), len(s_ref))</div>
+<div class="line"><span class="lineno">  535</span>        <span class="comment"># Rounding (a trace summed in another order) is fed back through Q into the</span></div>
+<div class="line"><span class="lineno">  536</span>        <span class="comment"># filter for 280 steps: measured 2.5e-11 on the factor, then.</span></div>
+<div class="line"><span class="lineno">  537</span>        np.testing.assert_allclose(s_cxx, s_ref, rtol=1e-9)</div>
+<div class="line"><span class="lineno">  538</span>        np.testing.assert_allclose(x_cxx, x_ref, rtol=0, atol=1e-9)</div>
+<div class="line"><span class="lineno">  539</span>        self.assertGreater(np.ptp(s_cxx), 0.5)                    <span class="comment"># Q really was retuned</span></div>
+<div class="line"><span class="lineno">  540</span>        np.testing.assert_allclose(s_cxx, s_py, rtol=1e-7)</div>
+<div class="line"><span class="lineno">  541</span>        np.testing.assert_allclose(x_cxx, x_py, rtol=0, atol=1e-8)</div>
+<div class="line"><span class="lineno">  542</span> </div>
+<div class="line"><span class="lineno">  543</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -293,23 +293,23 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00397">397</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  397</span>    <span class="keyword">def </span>test_boost_on_a_lane_change(self):</div>
-<div class="line"><span class="lineno">  398</span>        rng = np.random.default_rng(29)</div>
-<div class="line"><span class="lineno">  399</span>        t = np.arange(300) / 50</div>
-<div class="line"><span class="lineno">  400</span>        truth = np.where(t &lt; 2, 0.0, np.where(t &gt; 4, 3.5, 3.5 * (1 - np.cos(np.pi * (t - 2) / 2)) / 2))</div>
-<div class="line"><span class="lineno">  401</span>        zk = (truth + rng.normal(0, LATERAL_NOISE_STD, 300)).reshape(-1, 1)</div>
-<div class="line"><span class="lineno">  402</span>        make = <span class="keyword">lambda</span> m: BoostKalmanController(m, boost_factor=5.0, threshold=2.0, window=5)</div>
-<div class="line"><span class="lineno">  403</span>        x_cxx, s_cxx = self._filter(make, zk, <span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  404</span>        x_ref, s_ref = self._filter(make, zk, <span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  405</span>        x_py, s_py = self._filter(make, zk, <span class="keyword">True</span>, everything_reference=<span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  406</span>        self.assertEqual(s_cxx, s_ref)                           <span class="comment"># the same boosts at the same steps</span></div>
-<div class="line"><span class="lineno">  407</span>        self.assertIn(0.2, s_cxx)</div>
-<div class="line"><span class="lineno">  408</span>        np.testing.assert_allclose(x_cxx, x_ref, rtol=0, atol=1e-12)</div>
-<div class="line"><span class="lineno">  409</span>        <span class="comment"># Against the all-Python run (Python filter loop too): the loops differ in rounding only.</span></div>
-<div class="line"><span class="lineno">  410</span>        self.assertEqual(s_cxx, s_py)</div>
-<div class="line"><span class="lineno">  411</span>        np.testing.assert_allclose(x_cxx, x_py, rtol=0, atol=1e-8)</div>
-<div class="line"><span class="lineno">  412</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00508">508</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  508</span>    <span class="keyword">def </span>test_boost_on_a_lane_change(self):</div>
+<div class="line"><span class="lineno">  509</span>        rng = np.random.default_rng(29)</div>
+<div class="line"><span class="lineno">  510</span>        t = np.arange(300) / 50</div>
+<div class="line"><span class="lineno">  511</span>        truth = np.where(t &lt; 2, 0.0, np.where(t &gt; 4, 3.5, 3.5 * (1 - np.cos(np.pi * (t - 2) / 2)) / 2))</div>
+<div class="line"><span class="lineno">  512</span>        zk = (truth + rng.normal(0, LATERAL_NOISE_STD, 300)).reshape(-1, 1)</div>
+<div class="line"><span class="lineno">  513</span>        make = <span class="keyword">lambda</span> m: BoostKalmanTuner(m, boost_factor=5.0, threshold=2.0, window=5)</div>
+<div class="line"><span class="lineno">  514</span>        x_cxx, s_cxx = self._filter(make, zk, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  515</span>        x_ref, s_ref = self._filter(make, zk, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  516</span>        x_py, s_py = self._filter(make, zk, <span class="keyword">True</span>, everything_reference=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  517</span>        self.assertEqual(s_cxx, s_ref)                           <span class="comment"># the same boosts at the same steps</span></div>
+<div class="line"><span class="lineno">  518</span>        self.assertIn(0.2, s_cxx)</div>
+<div class="line"><span class="lineno">  519</span>        np.testing.assert_allclose(x_cxx, x_ref, rtol=0, atol=1e-12)</div>
+<div class="line"><span class="lineno">  520</span>        <span class="comment"># Against the all-Python run (Python filter loop too): the loops differ in rounding only.</span></div>
+<div class="line"><span class="lineno">  521</span>        self.assertEqual(s_cxx, s_py)</div>
+<div class="line"><span class="lineno">  522</span>        np.testing.assert_allclose(x_cxx, x_py, rtol=0, atol=1e-8)</div>
+<div class="line"><span class="lineno">  523</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -329,26 +329,26 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00365">365</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  365</span>    <span class="keyword">def </span>test_lqr_and_mppi_in_closed_loop(self):</div>
-<div class="line"><span class="lineno">  366</span>        cost = dict(Qcost=np.diag([1.0, 0.0, 0.0]), Rcost=np.array([[10.0]]), x_ref=lane().control_cost()[2])</div>
-<div class="line"><span class="lineno">  367</span>        mppi_kw = dict(n_rollouts=30, horizon=20, noise_sigma=0.05, lam=1.0, n_iters=2, seed=7)</div>
-<div class="line"><span class="lineno">  368</span>        <span class="keywordflow">for</span> make <span class="keywordflow">in</span> (<span class="keyword">lambda</span> m: LQRKalmanController(m, **cost).fit(),</div>
-<div class="line"><span class="lineno">  369</span>                     <span class="keyword">lambda</span> m: MPPIKalmanController(m, **mppi_kw, **cost)):</div>
-<div class="line"><span class="lineno">  370</span>            runs = []</div>
-<div class="line"><span class="lineno">  371</span>            <span class="keywordflow">for</span> ref <span class="keywordflow">in</span> (<span class="keyword">False</span>, <span class="keyword">True</span>):</div>
-<div class="line"><span class="lineno">  372</span>                c = make(lane(x0=(3.5, 0.0, 15.0)))</div>
-<div class="line"><span class="lineno">  373</span>                <span class="keywordflow">if</span> ref:</div>
-<div class="line"><span class="lineno">  374</span>                    c = reference(c)</div>
-<div class="line"><span class="lineno">  375</span>                    <span class="keywordflow">if</span> isinstance(c, LQRKalmanController):</div>
-<div class="line"><span class="lineno">  376</span>                        c._reference_fit()</div>
-<div class="line"><span class="lineno">  377</span>                xs = closed_loop_run(c, 25, seed=2)</div>
-<div class="line"><span class="lineno">  378</span>                runs.append((xs, sum(v <span class="keywordflow">for</span> _, v <span class="keywordflow">in</span> c.cost_log), np.array([u.ravel() <span class="keywordflow">for</span> _, u <span class="keywordflow">in</span> c.u_log])))</div>
-<div class="line"><span class="lineno">  379</span>            (x1, c1, u1), (x2, c2, u2) = runs</div>
-<div class="line"><span class="lineno">  380</span>            np.testing.assert_allclose(u1, u2, rtol=0, atol=1e-10)</div>
-<div class="line"><span class="lineno">  381</span>            np.testing.assert_allclose(x1, x2, rtol=0, atol=1e-10)</div>
-<div class="line"><span class="lineno">  382</span>            self.assertAlmostEqual(c1, c2, delta=1e-9 * abs(c2))</div>
-<div class="line"><span class="lineno">  383</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__controllers_8py_source.html#l00476">476</a> of file <a class="el" href="test__native__controllers_8py_source.html">test_native_controllers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  476</span>    <span class="keyword">def </span>test_lqr_and_mppi_in_closed_loop(self):</div>
+<div class="line"><span class="lineno">  477</span>        cost = dict(Qcost=np.diag([1.0, 0.0, 0.0]), Rcost=np.array([[10.0]]), x_ref=lane().control_cost()[2])</div>
+<div class="line"><span class="lineno">  478</span>        mppi_kw = dict(n_rollouts=30, horizon=20, noise_sigma=0.05, lam=1.0, n_iters=2, seed=7)</div>
+<div class="line"><span class="lineno">  479</span>        <span class="keywordflow">for</span> make <span class="keywordflow">in</span> (<span class="keyword">lambda</span> m: LQRKalmanController(m, **cost).fit(),</div>
+<div class="line"><span class="lineno">  480</span>                     <span class="keyword">lambda</span> m: MPPIKalmanController(m, **mppi_kw, **cost)):</div>
+<div class="line"><span class="lineno">  481</span>            runs = []</div>
+<div class="line"><span class="lineno">  482</span>            <span class="keywordflow">for</span> ref <span class="keywordflow">in</span> (<span class="keyword">False</span>, <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  483</span>                c = make(lane(x0=(3.5, 0.0, 15.0)))</div>
+<div class="line"><span class="lineno">  484</span>                <span class="keywordflow">if</span> ref:</div>
+<div class="line"><span class="lineno">  485</span>                    c = reference(c)</div>
+<div class="line"><span class="lineno">  486</span>                    <span class="keywordflow">if</span> isinstance(c, LQRKalmanController):</div>
+<div class="line"><span class="lineno">  487</span>                        c._reference_fit()</div>
+<div class="line"><span class="lineno">  488</span>                xs = closed_loop_run(c, 25, seed=2)</div>
+<div class="line"><span class="lineno">  489</span>                runs.append((xs, sum(v <span class="keywordflow">for</span> _, v <span class="keywordflow">in</span> c.cost_log), np.array([u.ravel() <span class="keywordflow">for</span> _, u <span class="keywordflow">in</span> c.u_log])))</div>
+<div class="line"><span class="lineno">  490</span>            (x1, c1, u1), (x2, c2, u2) = runs</div>
+<div class="line"><span class="lineno">  491</span>            np.testing.assert_allclose(u1, u2, rtol=0, atol=1e-10)</div>
+<div class="line"><span class="lineno">  492</span>            np.testing.assert_allclose(x1, x2, rtol=0, atol=1e-10)</div>
+<div class="line"><span class="lineno">  493</span>            self.assertAlmostEqual(c1, c2, delta=1e-9 * abs(c2))</div>
+<div class="line"><span class="lineno">  494</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -137,8 +137,7 @@ $(document).ready(function(){initNavTree('namespace_kalman_1_1_filters.html','')
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
-<a href="#typedef-members">Typedefs</a>  </div>
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle"><div class="title">Kalman::Filters Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -154,9 +153,6 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filters_1_1_en_k_f.html">EnKF</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ensemble <a class="el" href="namespace_kalman.html">Kalman</a> filter — <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> driven by <a class="el" href="class_kalman_1_1_engines_1_1_ensemble.html" title="Perturbed-observation ensemble Kalman filter (Evensen).">Engines::Ensemble</a>.  <a href="class_kalman_1_1_filters_1_1_en_k_f.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Interactive <a class="el" href="namespace_kalman.html">Kalman</a> <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Filter</a> — several models, one estimate.  <a href="class_kalman_1_1_filters_1_1_i_k_f.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filters_1_1_k_f.html">KF</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The standard <a class="el" href="namespace_kalman.html">Kalman</a> filter — a model driven by <a class="el" href="class_kalman_1_1_engines_1_1_linear.html" title="Standard linear Kalman step, using the model&#39;s matrices directly.">Kalman::Engines::Linear</a>.  <a href="class_kalman_1_1_filters_1_1_k_f.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -166,32 +162,7 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_filters_1_1_u_k_f.html">UKF</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The unscented <a class="el" href="namespace_kalman.html">Kalman</a> filter — <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> driven by <a class="el" href="class_kalman_1_1_engines_1_1_unscented.html" title="The sigma-point engine (UKF) — nonlinear moments without a Jacobian.">Engines::Unscented</a>.  <a href="class_kalman_1_1_filters_1_1_u_k_f.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr class="memitem:a35dee2c65b449937b07e5772e581dfb1" id="r_a35dee2c65b449937b07e5772e581dfb1"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_filters.html#a35dee2c65b449937b07e5772e581dfb1">IMM</a> = <a class="el" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a></td></tr>
-<tr class="memdesc:a35dee2c65b449937b07e5772e581dfb1"><td class="mdescLeft">&#160;</td><td class="mdescRight">The literature's name for the same filter: Interacting Multiple <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Model</a>.  <br /></td></tr>
-<tr class="separator:a35dee2c65b449937b07e5772e581dfb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Typedef Documentation</h2>
-<a id="a35dee2c65b449937b07e5772e581dfb1" name="a35dee2c65b449937b07e5772e581dfb1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a35dee2c65b449937b07e5772e581dfb1">&#9670;&#160;</a></span>IMM</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">using <a class="el" href="namespace_kalman_1_1_filters.html#a35dee2c65b449937b07e5772e581dfb1">Kalman::Filters::IMM</a> = typedef <a class="el" href="class_kalman_1_1_filters_1_1_i_k_f.html">IKF</a></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>The literature's name for the same filter: Interacting Multiple <a class="el" href="class_kalman_1_1_model.html" title="The system — WHAT is being estimated.">Model</a>. </p>
-
-<p class="definition">Definition at line <a class="el" href="_i_k_f_8h_source.html#l00141">141</a> of file <a class="el" href="_i_k_f_8h_source.html">IKF.h</a>.</p>
-
-</div>
-</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -161,7 +161,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00474">474</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00495">495</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a540926cf7c5f976ebc9ee06a42ba2207" name="a540926cf7c5f976ebc9ee06a42ba2207"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a540926cf7c5f976ebc9ee06a42ba2207">&#9670;&#160;</a></span>test_coarsen_block_mean()</h2>
@@ -179,15 +179,15 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00487">487</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  487</span>    <span class="keyword">def </span>test_coarsen_block_mean(self):</div>
-<div class="line"><span class="lineno">  488</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> coarsen</div>
-<div class="line"><span class="lineno">  489</span>        f = np.arange(2 * 8 * 8, dtype=float).reshape(2, 8, 8)</div>
-<div class="line"><span class="lineno">  490</span>        out = coarsen(f, 4)</div>
-<div class="line"><span class="lineno">  491</span>        self.assertEqual(out.shape, (2, 4, 4))</div>
-<div class="line"><span class="lineno">  492</span>        np.testing.assert_allclose(out[0, 0, 0], f[0, :2, :2].mean())</div>
-<div class="line"><span class="lineno">  493</span>        self.assertEqual(coarsen(np.ones((10, 10)), 4).shape, (4, 4))   <span class="comment"># non-divisible → regrid</span></div>
-<div class="line"><span class="lineno">  494</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00508">508</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  508</span>    <span class="keyword">def </span>test_coarsen_block_mean(self):</div>
+<div class="line"><span class="lineno">  509</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> coarsen</div>
+<div class="line"><span class="lineno">  510</span>        f = np.arange(2 * 8 * 8, dtype=float).reshape(2, 8, 8)</div>
+<div class="line"><span class="lineno">  511</span>        out = coarsen(f, 4)</div>
+<div class="line"><span class="lineno">  512</span>        self.assertEqual(out.shape, (2, 4, 4))</div>
+<div class="line"><span class="lineno">  513</span>        np.testing.assert_allclose(out[0, 0, 0], f[0, :2, :2].mean())</div>
+<div class="line"><span class="lineno">  514</span>        self.assertEqual(coarsen(np.ones((10, 10)), 4).shape, (4, 4))   <span class="comment"># non-divisible → regrid</span></div>
+<div class="line"><span class="lineno">  515</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1geo_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a></div><div class="ttdef"><b>Definition</b> <a href="geo_8py_source.html#l00001">geo.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -209,31 +209,31 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Kraichnan-style protocol in miniature: 32² nature run block-coarsened
 onto the 16² model grid, replayed as truth — EnKF must beat free run.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00517">517</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  517</span>    <span class="keyword">def </span>test_high_res_truth_replay(self):</div>
-<div class="line"><span class="lineno">  518</span>        <span class="stringliteral">&quot;&quot;&quot;Kraichnan-style protocol in miniature: 32² nature run block-coarsened</span></div>
-<div class="line"><span class="lineno">  519</span><span class="stringliteral">        onto the 16² model grid, replayed as truth — EnKF must beat free run.&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  520</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> turbulence_truth</div>
-<div class="line"><span class="lineno">  521</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
-<div class="line"><span class="lineno">  522</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  523</span>        hires = NS2D(n=32, nu=1 / 40., kf=4, chi=2.0, dt=0.01, seed=11)</div>
-<div class="line"><span class="lineno">  524</span>        w = hires.advance(hires.random_ic(), 400)</div>
-<div class="line"><span class="lineno">  525</span>        frames = []</div>
-<div class="line"><span class="lineno">  526</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(8):</div>
-<div class="line"><span class="lineno">  527</span>            w = hires.advance(w, 10)</div>
-<div class="line"><span class="lineno">  528</span>            frames.append(w.copy())</div>
-<div class="line"><span class="lineno">  529</span>        traj = turbulence_truth(np.asarray(frames), model)</div>
-<div class="line"><span class="lineno">  530</span>        self.assertEqual(traj.shape, (8, model.n))</div>
-<div class="line"><span class="lineno">  531</span>        osse = TwinExperiment(model, n_members=8, truth_trajectory=traj)</div>
-<div class="line"><span class="lineno">  532</span>        osse.add_method(<span class="stringliteral">&quot;enkf&quot;</span>, inflation=1.10)</div>
-<div class="line"><span class="lineno">  533</span>        osse.add_free_run()</div>
-<div class="line"><span class="lineno">  534</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  535</span>        self.assertLess(np.mean(hist[<span class="stringliteral">&quot;enkf&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]),</div>
-<div class="line"><span class="lineno">  536</span>                        np.mean(hist[<span class="stringliteral">&quot;free&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]))</div>
-<div class="line"><span class="lineno">  537</span> </div>
-<div class="line"><span class="lineno">  538</span> </div>
-<div class="line"><span class="lineno">  539</span><span class="comment"># ── CNN surrogate (rollout loss) ─────────────────────────────────────────────</span></div>
-<div class="line"><span class="lineno">  540</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00538">538</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  538</span>    <span class="keyword">def </span>test_high_res_truth_replay(self):</div>
+<div class="line"><span class="lineno">  539</span>        <span class="stringliteral">&quot;&quot;&quot;Kraichnan-style protocol in miniature: 32² nature run block-coarsened</span></div>
+<div class="line"><span class="lineno">  540</span><span class="stringliteral">        onto the 16² model grid, replayed as truth — EnKF must beat free run.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  541</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> turbulence_truth</div>
+<div class="line"><span class="lineno">  542</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a> <span class="keyword">import</span> NS2D</div>
+<div class="line"><span class="lineno">  543</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  544</span>        hires = NS2D(n=32, nu=1 / 40., kf=4, chi=2.0, dt=0.01, seed=11)</div>
+<div class="line"><span class="lineno">  545</span>        w = hires.advance(hires.random_ic(), 400)</div>
+<div class="line"><span class="lineno">  546</span>        frames = []</div>
+<div class="line"><span class="lineno">  547</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(8):</div>
+<div class="line"><span class="lineno">  548</span>            w = hires.advance(w, 10)</div>
+<div class="line"><span class="lineno">  549</span>            frames.append(w.copy())</div>
+<div class="line"><span class="lineno">  550</span>        traj = turbulence_truth(np.asarray(frames), model)</div>
+<div class="line"><span class="lineno">  551</span>        self.assertEqual(traj.shape, (8, model.n))</div>
+<div class="line"><span class="lineno">  552</span>        osse = TwinExperiment(model, n_members=8, truth_trajectory=traj)</div>
+<div class="line"><span class="lineno">  553</span>        osse.add_method(<span class="stringliteral">&quot;enkf&quot;</span>, inflation=1.10)</div>
+<div class="line"><span class="lineno">  554</span>        osse.add_free_run()</div>
+<div class="line"><span class="lineno">  555</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  556</span>        self.assertLess(np.mean(hist[<span class="stringliteral">&quot;enkf&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]),</div>
+<div class="line"><span class="lineno">  557</span>                        np.mean(hist[<span class="stringliteral">&quot;free&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>][-3:]))</div>
+<div class="line"><span class="lineno">  558</span> </div>
+<div class="line"><span class="lineno">  559</span> </div>
+<div class="line"><span class="lineno">  560</span><span class="comment"># ── CNN surrogate (rollout loss) ─────────────────────────────────────────────</span></div>
+<div class="line"><span class="lineno">  561</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1flow_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1flow.html">modules.apps.weather.flow</a></div><div class="ttdef"><b>Definition</b> <a href="flow_8py_source.html#l00001">flow.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -254,29 +254,29 @@ onto the 16² model grid, replayed as truth — EnKF must beat free run.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00495">495</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  495</span>    <span class="keyword">def </span>test_load_turbulence_layouts(self):</div>
-<div class="line"><span class="lineno">  496</span>        <span class="keyword">import</span> tempfile, os</div>
-<div class="line"><span class="lineno">  497</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> load_turbulence</div>
-<div class="line"><span class="lineno">  498</span>        rng = np.random.default_rng(0)</div>
-<div class="line"><span class="lineno">  499</span>        arr = rng.standard_normal((4, 3, 16, 16))            <span class="comment"># NSKT layout (T, C, H, W)</span></div>
-<div class="line"><span class="lineno">  500</span>        np.testing.assert_array_equal(load_turbulence(arr, variable=<span class="stringliteral">&quot;vorticity&quot;</span>), arr[:, 2])</div>
-<div class="line"><span class="lineno">  501</span>        u, v = load_turbulence(arr, variable=<span class="stringliteral">&quot;uv&quot;</span>)</div>
-<div class="line"><span class="lineno">  502</span>        np.testing.assert_array_equal(u, arr[:, 0])</div>
-<div class="line"><span class="lineno">  503</span>        np.testing.assert_array_equal(v, arr[:, 1])</div>
-<div class="line"><span class="lineno">  504</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
-<div class="line"><span class="lineno">  505</span>            npz = os.path.join(d, <span class="stringliteral">&quot;t.npz&quot;</span>)</div>
-<div class="line"><span class="lineno">  506</span>            np.savez(npz, vorticity=arr[:, 2])</div>
-<div class="line"><span class="lineno">  507</span>            np.testing.assert_array_equal(load_turbulence(npz), arr[:, 2])</div>
-<div class="line"><span class="lineno">  508</span>            <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  509</span>                <span class="keyword">import</span> h5py</div>
-<div class="line"><span class="lineno">  510</span>                h5 = os.path.join(d, <span class="stringliteral">&quot;t.h5&quot;</span>)</div>
-<div class="line"><span class="lineno">  511</span>                <span class="keyword">with</span> h5py.File(h5, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> f:</div>
-<div class="line"><span class="lineno">  512</span>                    f.create_dataset(<span class="stringliteral">&quot;fields&quot;</span>, data=arr)</div>
-<div class="line"><span class="lineno">  513</span>                np.testing.assert_array_equal(load_turbulence(h5, variable=<span class="stringliteral">&quot;vorticity&quot;</span>), arr[:, 2])</div>
-<div class="line"><span class="lineno">  514</span>            <span class="keywordflow">except</span> ImportError:</div>
-<div class="line"><span class="lineno">  515</span>                <span class="keywordflow">pass</span></div>
-<div class="line"><span class="lineno">  516</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00516">516</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  516</span>    <span class="keyword">def </span>test_load_turbulence_layouts(self):</div>
+<div class="line"><span class="lineno">  517</span>        <span class="keyword">import</span> tempfile, os</div>
+<div class="line"><span class="lineno">  518</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> load_turbulence</div>
+<div class="line"><span class="lineno">  519</span>        rng = np.random.default_rng(0)</div>
+<div class="line"><span class="lineno">  520</span>        arr = rng.standard_normal((4, 3, 16, 16))            <span class="comment"># NSKT layout (T, C, H, W)</span></div>
+<div class="line"><span class="lineno">  521</span>        np.testing.assert_array_equal(load_turbulence(arr, variable=<span class="stringliteral">&quot;vorticity&quot;</span>), arr[:, 2])</div>
+<div class="line"><span class="lineno">  522</span>        u, v = load_turbulence(arr, variable=<span class="stringliteral">&quot;uv&quot;</span>)</div>
+<div class="line"><span class="lineno">  523</span>        np.testing.assert_array_equal(u, arr[:, 0])</div>
+<div class="line"><span class="lineno">  524</span>        np.testing.assert_array_equal(v, arr[:, 1])</div>
+<div class="line"><span class="lineno">  525</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
+<div class="line"><span class="lineno">  526</span>            npz = os.path.join(d, <span class="stringliteral">&quot;t.npz&quot;</span>)</div>
+<div class="line"><span class="lineno">  527</span>            np.savez(npz, vorticity=arr[:, 2])</div>
+<div class="line"><span class="lineno">  528</span>            np.testing.assert_array_equal(load_turbulence(npz), arr[:, 2])</div>
+<div class="line"><span class="lineno">  529</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  530</span>                <span class="keyword">import</span> h5py</div>
+<div class="line"><span class="lineno">  531</span>                h5 = os.path.join(d, <span class="stringliteral">&quot;t.h5&quot;</span>)</div>
+<div class="line"><span class="lineno">  532</span>                <span class="keyword">with</span> h5py.File(h5, <span class="stringliteral">&quot;w&quot;</span>) <span class="keyword">as</span> f:</div>
+<div class="line"><span class="lineno">  533</span>                    f.create_dataset(<span class="stringliteral">&quot;fields&quot;</span>, data=arr)</div>
+<div class="line"><span class="lineno">  534</span>                np.testing.assert_array_equal(load_turbulence(h5, variable=<span class="stringliteral">&quot;vorticity&quot;</span>), arr[:, 2])</div>
+<div class="line"><span class="lineno">  535</span>            <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><span class="lineno">  536</span>                <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  537</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -296,18 +296,18 @@ onto the 16² model grid, replayed as truth — EnKF must beat free run.</pre>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">u = sin y → ζ = −cos y;  v = sin x → ζ = cos x (spectral, exact).</pre> 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00476">476</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  476</span>    <span class="keyword">def </span>test_vorticity_cartesian_analytic(self):</div>
-<div class="line"><span class="lineno">  477</span>        <span class="stringliteral">&quot;&quot;&quot;u = sin y → ζ = −cos y;  v = sin x → ζ = cos x (spectral, exact).&quot;&quot;&quot;</span></div>
-<div class="line"><span class="lineno">  478</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> vorticity_cartesian</div>
-<div class="line"><span class="lineno">  479</span>        n = 64</div>
-<div class="line"><span class="lineno">  480</span>        x = 2 * np.pi * np.arange(n) / n</div>
-<div class="line"><span class="lineno">  481</span>        X, Y = np.meshgrid(x, x)</div>
-<div class="line"><span class="lineno">  482</span>        np.testing.assert_allclose(</div>
-<div class="line"><span class="lineno">  483</span>            vorticity_cartesian(np.sin(Y), np.zeros((n, n))), -np.cos(Y), atol=1e-10)</div>
-<div class="line"><span class="lineno">  484</span>        np.testing.assert_allclose(</div>
-<div class="line"><span class="lineno">  485</span>            vorticity_cartesian(np.zeros((n, n)), np.sin(X)), np.cos(X), atol=1e-10)</div>
-<div class="line"><span class="lineno">  486</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00497">497</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  497</span>    <span class="keyword">def </span>test_vorticity_cartesian_analytic(self):</div>
+<div class="line"><span class="lineno">  498</span>        <span class="stringliteral">&quot;&quot;&quot;u = sin y → ζ = −cos y;  v = sin x → ζ = cos x (spectral, exact).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  499</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1geo.html">modules.apps.weather.geo</a> <span class="keyword">import</span> vorticity_cartesian</div>
+<div class="line"><span class="lineno">  500</span>        n = 64</div>
+<div class="line"><span class="lineno">  501</span>        x = 2 * np.pi * np.arange(n) / n</div>
+<div class="line"><span class="lineno">  502</span>        X, Y = np.meshgrid(x, x)</div>
+<div class="line"><span class="lineno">  503</span>        np.testing.assert_allclose(</div>
+<div class="line"><span class="lineno">  504</span>            vorticity_cartesian(np.sin(Y), np.zeros((n, n))), -np.cos(Y), atol=1e-10)</div>
+<div class="line"><span class="lineno">  505</span>        np.testing.assert_allclose(</div>
+<div class="line"><span class="lineno">  506</span>            vorticity_cartesian(np.zeros((n, n)), np.sin(X)), np.cos(X), atol=1e-10)</div>
+<div class="line"><span class="lineno">  507</span> </div>
 </div><!-- fragment -->
 </div>
 </div>

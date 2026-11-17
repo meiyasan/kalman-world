@@ -16,13 +16,18 @@ var _constants_8h =
       [ "Unscented", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678a898dd517feea1dd1ceb95812a6a1367e", null ],
       [ "Particle", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678a5e9328c486b44b9a58bca20f7f2064f4", null ],
       [ "Ensemble", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678abe5dd267794f8f209543995a5461710f", null ],
-      [ "Combinatorial", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0", null ]
+      [ "Combinatorial", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678aa58ab0c1d0ca6a34c8b02c75b78755e0", null ],
+      [ "Interacting", "_constants_8h.html#acbc7aea0a730692732f8c2f3009fc678af023446a52e84d38f186937dad1d8f76", null ]
     ] ],
     [ "IntegratorKind", "_constants_8h.html#a3503fe31b36f182744d901d39978fccf", [
       [ "Euler", "_constants_8h.html#a3503fe31b36f182744d901d39978fccfa0a7532036415f2491bf5f952220827b8", null ],
       [ "RK4", "_constants_8h.html#a3503fe31b36f182744d901d39978fccfaf81fe250c66aad887e2086f79364f2a8", null ],
       [ "DormandPrince", "_constants_8h.html#a3503fe31b36f182744d901d39978fccfa375dd039810dcecf3db6b2bca3c8d21f", null ],
       [ "ImplicitEuler", "_constants_8h.html#a3503fe31b36f182744d901d39978fccfa1b41e1bf0ba9f22aff9ae08cba5197c5", null ]
+    ] ],
+    [ "Readout", "_constants_8h.html#aad2643f8b394ec61c58806b17ce2402f", [
+      [ "Stacked", "_constants_8h.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef", null ],
+      [ "Summed", "_constants_8h.html#aad2643f8b394ec61c58806b17ce2402faa390d6961553f38ef76f3e69d0742697", null ]
     ] ],
     [ "SolverKind", "_constants_8h.html#a70a0f9ab37af6e14702d39fad35abc22", [
       [ "Spectral", "_constants_8h.html#a70a0f9ab37af6e14702d39fad35abc22ae37975b8856f3f6d3225897f27a442b4", null ],

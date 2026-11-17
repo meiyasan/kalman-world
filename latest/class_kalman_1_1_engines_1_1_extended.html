@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -393,9 +393,10 @@ Public Member Functions</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="_extended_8cc_source.html#l00029">29</a> of file <a class="el" href="_extended_8cc_source.html">Extended.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   31</span>    {</div>
-<div class="line"><span class="lineno">   32</span>        zpred = model.h(x, t);</div>
-<div class="line"><span class="lineno">   33</span>        H = model.JacobianH(x, t);</div>
+<div class="line"><span class="lineno">   32</span>        zpred = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.h(x, t);</div>
+<div class="line"><span class="lineno">   33</span>        H = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.JacobianH(x, t);</div>
 <div class="line"><span class="lineno">   34</span>    }</div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -477,12 +478,12 @@ Public Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   18</span>        <span class="comment">// The control vector is passed to both the map and the Jacobian, so an</span></div>
 <div class="line"><span class="lineno">   19</span>        <span class="comment">// uncontrolled model still gets a well-formed (empty) vector rather than a</span></div>
 <div class="line"><span class="lineno">   20</span>        <span class="comment">// dangling pointer.</span></div>
-<div class="line"><span class="lineno">   21</span>        Vector uu(model.NControl(), 0.);</div>
-<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">if</span> (u &amp;&amp; model.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == model.NControl()) uu = *u;</div>
+<div class="line"><span class="lineno">   21</span>        Vector uu(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl(), 0.);</div>
+<div class="line"><span class="lineno">   22</span>        <span class="keywordflow">if</span> (u &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl() &gt; 0 &amp;&amp; u-&gt;Size() == <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.NControl()) uu = *u;</div>
 <div class="line"><span class="lineno">   23</span> </div>
 <div class="line"><span class="lineno">   24</span>        <span class="comment">// Mean through the true map, covariance through its linearisation.</span></div>
-<div class="line"><span class="lineno">   25</span>        xk = model.f(x, uu, t);</div>
-<div class="line"><span class="lineno">   26</span>        F = model.Jacobian(x, uu, t);</div>
+<div class="line"><span class="lineno">   25</span>        xk = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.f(x, uu, t);</div>
+<div class="line"><span class="lineno">   26</span>        F = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.Jacobian(x, uu, t);</div>
 <div class="line"><span class="lineno">   27</span>    }</div>
 </div><!-- fragment -->
 </div>

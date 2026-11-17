@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -282,7 +282,7 @@ states that are dynamically fine and meteorologically unlike this week's weather
 <div class="line"><span class="lineno">  119</span> </div>
 <div class="line"><span class="lineno">  120</span>    <span class="comment"># And it must actually be used, not just stored beside a spin-up.</span></div>
 <div class="line"><span class="lineno">  121</span>    <span class="keyword">assert</span> model.climatology() <span class="keywordflow">is</span> clim</div>
-<div class="line"><span class="lineno">  122</span>    ensemble = model.initial_ensemble(4)</div>
+<div class="line"><span class="lineno">  122</span>    ensemble = model.initial_state(samples=4)</div>
 <div class="line"><span class="lineno">  123</span>    <span class="keyword">assert</span> ensemble.shape == (32 * 32, 4)</div>
 <div class="line"><span class="lineno">  124</span>    <span class="keywordflow">for</span> col <span class="keywordflow">in</span> range(4):</div>
 <div class="line"><span class="lineno">  125</span>        <span class="keyword">assert</span> np.any(np.all(np.isclose(clim, ensemble[:, [col]]), axis=0)), \</div>
@@ -481,7 +481,7 @@ far from its cause.
 <div class="fragment"><div class="line"><span class="lineno">  140</span><span class="keyword">def </span>test_the_model_advances_a_physical_field_without_blowing_up():</div>
 <div class="line"><span class="lineno">  141</span>    model = BarotropicFlowModel(<span class="stringliteral">&quot;test&quot;</span>, grid=32, dt=60.0, cycle=60)</div>
 <div class="line"><span class="lineno">  142</span>    model.climatology(n_snapshots=4, spinup=60, stride=5)</div>
-<div class="line"><span class="lineno">  143</span>    state = model.initial_ensemble(2)[:, 0]</div>
+<div class="line"><span class="lineno">  143</span>    state = model.initial_state(samples=2)[:, 0]</div>
 <div class="line"><span class="lineno">  144</span> </div>
 <div class="line"><span class="lineno">  145</span>    <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(5):</div>
 <div class="line"><span class="lineno">  146</span>        state = model.f(state)</div>

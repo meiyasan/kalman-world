@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -157,7 +157,7 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00541">541</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00562">562</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ae2351d4199b61a11a3f6692463b475ed" name="ae2351d4199b61a11a3f6692463b475ed"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2351d4199b61a11a3f6692463b475ed">&#9670;&#160;</a></span>test_reanchored_forecast_alternates()</h2>
@@ -175,25 +175,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00566">566</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  566</span>    <span class="keyword">def </span>test_reanchored_forecast_alternates(self):</div>
-<div class="line"><span class="lineno">  567</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  568</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1surrogate.html">modules.apps.weather.surrogate</a> <span class="keyword">import</span> ReanchoredForecast</div>
-<div class="line"><span class="lineno">  569</span>        <span class="keywordflow">except</span> ImportError:</div>
-<div class="line"><span class="lineno">  570</span>            self.skipTest(<span class="stringliteral">&quot;torch not installed&quot;</span>)</div>
-<div class="line"><span class="lineno">  571</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  572</span>        X = model.initial_ensemble(2, rng=0)</div>
-<div class="line"><span class="lineno">  573</span>        marker = <span class="keyword">lambda</span> Z: np.full_like(Z, 7.0)              <span class="comment"># obviously-not-solver map</span></div>
-<div class="line"><span class="lineno">  574</span>        hybrid = ReanchoredForecast(model, marker, every=3)</div>
-<div class="line"><span class="lineno">  575</span>        self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     <span class="comment"># cycle 1: surrogate</span></div>
-<div class="line"><span class="lineno">  576</span>        self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     <span class="comment"># cycle 2: surrogate</span></div>
-<div class="line"><span class="lineno">  577</span>        anchored = hybrid(X.copy())                          <span class="comment"># cycle 3: true solver</span></div>
-<div class="line"><span class="lineno">  578</span>        np.testing.assert_allclose(anchored, model.forecast(X), atol=1e-10)</div>
-<div class="line"><span class="lineno">  579</span>        self.assertTrue(np.all(hybrid.reset()(X.copy()) == 7.0))</div>
-<div class="line"><span class="lineno">  580</span> </div>
-<div class="line"><span class="lineno">  581</span> </div>
-<div class="line"><span class="lineno">  582</span><span class="comment"># ── ParticleFilter on the flow model (allowed engine, smoke) ─────────────────</span></div>
-<div class="line"><span class="lineno">  583</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00587">587</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  587</span>    <span class="keyword">def </span>test_reanchored_forecast_alternates(self):</div>
+<div class="line"><span class="lineno">  588</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  589</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather_1_1surrogate.html">modules.apps.weather.surrogate</a> <span class="keyword">import</span> ReanchoredForecast</div>
+<div class="line"><span class="lineno">  590</span>        <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><span class="lineno">  591</span>            self.skipTest(<span class="stringliteral">&quot;torch not installed&quot;</span>)</div>
+<div class="line"><span class="lineno">  592</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  593</span>        X = model.initial_state(samples=2, rng=0)</div>
+<div class="line"><span class="lineno">  594</span>        marker = <span class="keyword">lambda</span> Z: np.full_like(Z, 7.0)              <span class="comment"># obviously-not-solver map</span></div>
+<div class="line"><span class="lineno">  595</span>        hybrid = ReanchoredForecast(model, marker, every=3)</div>
+<div class="line"><span class="lineno">  596</span>        self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     <span class="comment"># cycle 1: surrogate</span></div>
+<div class="line"><span class="lineno">  597</span>        self.assertTrue(np.all(hybrid(X.copy()) == 7.0))     <span class="comment"># cycle 2: surrogate</span></div>
+<div class="line"><span class="lineno">  598</span>        anchored = hybrid(X.copy())                          <span class="comment"># cycle 3: true solver</span></div>
+<div class="line"><span class="lineno">  599</span>        np.testing.assert_allclose(anchored, model.f(X), atol=1e-10)</div>
+<div class="line"><span class="lineno">  600</span>        self.assertTrue(np.all(hybrid.reset()(X.copy()) == 7.0))</div>
+<div class="line"><span class="lineno">  601</span> </div>
+<div class="line"><span class="lineno">  602</span> </div>
+<div class="line"><span class="lineno">  603</span><span class="comment"># ── ParticleFilter on the flow model (allowed engine, smoke) ─────────────────</span></div>
+<div class="line"><span class="lineno">  604</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_1_1surrogate_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather_1_1surrogate.html">modules.apps.weather.surrogate</a></div><div class="ttdef"><b>Definition</b> <a href="surrogate_8py_source.html#l00001">surrogate.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -214,30 +214,30 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00543">543</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  543</span>    <span class="keyword">def </span>test_train_rollout_and_assimilate(self):</div>
-<div class="line"><span class="lineno">  544</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><span class="lineno">  545</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather.html">modules.apps.weather</a> <span class="keyword">import</span> surrogate <span class="keyword">as</span> fs</div>
-<div class="line"><span class="lineno">  546</span>        <span class="keywordflow">except</span> ImportError:</div>
-<div class="line"><span class="lineno">  547</span>            self.skipTest(<span class="stringliteral">&quot;torch not installed&quot;</span>)</div>
-<div class="line"><span class="lineno">  548</span>        model = _tiny_flow()</div>
-<div class="line"><span class="lineno">  549</span>        traj = fs.make_trajectory(model, n_cycles=30, burn=200)</div>
-<div class="line"><span class="lineno">  550</span>        self.assertEqual(traj.shape, (31, 16, 16))</div>
-<div class="line"><span class="lineno">  551</span>        net, (mu, sd), val = fs.train_surrogate(</div>
-<div class="line"><span class="lineno">  552</span>            traj, width=8, nblocks=1, epochs=5, rollout=2, batch=8, verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  553</span>        self.assertTrue(np.isfinite(val))</div>
-<div class="line"><span class="lineno">  554</span>        forecast = fs.as_forecaster(net, mu, sd)</div>
-<div class="line"><span class="lineno">  555</span>        X = model.initial_ensemble(3, rng=0)</div>
-<div class="line"><span class="lineno">  556</span>        self.assertEqual(forecast(X).shape, X.shape)</div>
-<div class="line"><span class="lineno">  557</span>        errs = fs.rollout_rmse(forecast, model, n_cycles=3)</div>
-<div class="line"><span class="lineno">  558</span>        self.assertEqual(len(errs), 3)</div>
-<div class="line"><span class="lineno">  559</span>        self.assertTrue(np.all(np.isfinite(errs)))</div>
-<div class="line"><span class="lineno">  560</span>        <span class="comment"># surrogate forecast wired into the OSSE harness</span></div>
-<div class="line"><span class="lineno">  561</span>        osse = TwinExperiment(model, n_cycles=2, n_members=6)</div>
-<div class="line"><span class="lineno">  562</span>        osse.add_method(<span class="stringliteral">&quot;surrogate&quot;</span>, inflation=1.15, forecast=forecast)</div>
-<div class="line"><span class="lineno">  563</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  564</span>        self.assertEqual(len(hist[<span class="stringliteral">&quot;surrogate&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>]), 2)</div>
-<div class="line"><span class="lineno">  565</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__ensemble_8py_source.html#l00564">564</a> of file <a class="el" href="test__ensemble_8py_source.html">test_ensemble.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  564</span>    <span class="keyword">def </span>test_train_rollout_and_assimilate(self):</div>
+<div class="line"><span class="lineno">  565</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  566</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1weather.html">modules.apps.weather</a> <span class="keyword">import</span> surrogate <span class="keyword">as</span> fs</div>
+<div class="line"><span class="lineno">  567</span>        <span class="keywordflow">except</span> ImportError:</div>
+<div class="line"><span class="lineno">  568</span>            self.skipTest(<span class="stringliteral">&quot;torch not installed&quot;</span>)</div>
+<div class="line"><span class="lineno">  569</span>        model = _tiny_flow()</div>
+<div class="line"><span class="lineno">  570</span>        traj = fs.make_trajectory(model, n_cycles=30, burn=200)</div>
+<div class="line"><span class="lineno">  571</span>        self.assertEqual(traj.shape, (31, 16, 16))</div>
+<div class="line"><span class="lineno">  572</span>        net, (mu, sd), val = fs.train_surrogate(</div>
+<div class="line"><span class="lineno">  573</span>            traj, width=8, nblocks=1, epochs=5, rollout=2, batch=8, verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  574</span>        self.assertTrue(np.isfinite(val))</div>
+<div class="line"><span class="lineno">  575</span>        forecast = fs.as_forecaster(net, mu, sd)</div>
+<div class="line"><span class="lineno">  576</span>        X = model.initial_state(samples=3, rng=0)</div>
+<div class="line"><span class="lineno">  577</span>        self.assertEqual(forecast(X).shape, X.shape)</div>
+<div class="line"><span class="lineno">  578</span>        errs = fs.rollout_rmse(forecast, model, n_cycles=3)</div>
+<div class="line"><span class="lineno">  579</span>        self.assertEqual(len(errs), 3)</div>
+<div class="line"><span class="lineno">  580</span>        self.assertTrue(np.all(np.isfinite(errs)))</div>
+<div class="line"><span class="lineno">  581</span>        <span class="comment"># surrogate forecast wired into the OSSE harness</span></div>
+<div class="line"><span class="lineno">  582</span>        osse = TwinExperiment(model, n_cycles=2, n_members=6)</div>
+<div class="line"><span class="lineno">  583</span>        osse.add_method(<span class="stringliteral">&quot;surrogate&quot;</span>, inflation=1.15, forecast=forecast)</div>
+<div class="line"><span class="lineno">  584</span>        hist = osse.run(verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  585</span>        self.assertEqual(len(hist[<span class="stringliteral">&quot;surrogate&quot;</span>][<span class="stringliteral">&quot;rmse_a&quot;</span>]), 2)</div>
+<div class="line"><span class="lineno">  586</span> </div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1weather_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1weather.html">modules.apps.weather</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2weather_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>

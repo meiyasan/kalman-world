@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -147,7 +147,7 @@ $(document).ready(function(){initNavTree('struct_kalman_1_1_tracking_1_1_candida
 <p>One track hypothesis under construction — a node of the search tree.  
  <a href="struct_kalman_1_1_tracking_1_1_candidate.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="_tracking_8h_source.html">Tracking.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -205,7 +205,7 @@ Public Attributes</h2></td></tr>
 <div class="textblock"><p>One track hypothesis under construction — a node of the search tree. </p>
 <p>Carries the current posterior, the accumulated chi-square and score, and, per assigned hit, everything the smoother later needs: the posterior, the prediction it corrected, the hit, the radius, and the transition product since the previous assigned hit (holes fold into it). </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00085">85</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00098">98</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a54e97fc180675fb278e5c6e9466f4eab" name="a54e97fc180675fb278e5c6e9466f4eab"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a54e97fc180675fb278e5c6e9466f4eab">&#9670;&#160;</a></span>NHits()</h2>
@@ -230,9 +230,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00103">103</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  103</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">zk</a>.size(); }</div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_affc662735818be9ed827eb2484bce7b5"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">Kalman::Tracking::Candidate::zk</a></div><div class="ttdeci">std::vector&lt; Hit &gt; zk</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00097">Tracking.h:97</a></div></div>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00116">116</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">zk</a>.size(); }</div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_affc662735818be9ed827eb2484bce7b5"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">Kalman::Tracking::Candidate::zk</a></div><div class="ttdeci">std::vector&lt; Hit &gt; zk</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00110">Tracking.h:110</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -261,12 +261,12 @@ Public Attributes</h2></td></tr>
 
 <p>Sort key for the best track: most hits first, then lowest chi2 per hit. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00109">109</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  110</span>        {</div>
-<div class="line"><span class="lineno">  111</span>            <span class="keywordflow">return</span> {-<span class="keyword">static_cast&lt;</span><span class="keywordtype">long</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>()), <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a907dc77949f106bcc4aa4fa4af25c99d">chi2</a> / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>() ? <a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>() : 1)};</div>
-<div class="line"><span class="lineno">  112</span>        }</div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a54e97fc180675fb278e5c6e9466f4eab"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">Kalman::Tracking::Candidate::NHits</a></div><div class="ttdeci">std::size_t NHits() const</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00103">Tracking.h:103</a></div></div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a907dc77949f106bcc4aa4fa4af25c99d"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a907dc77949f106bcc4aa4fa4af25c99d">Kalman::Tracking::Candidate::chi2</a></div><div class="ttdeci">double chi2</div><div class="ttdoc">accumulated measurement chi-square (ranking)</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00089">Tracking.h:89</a></div></div>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00122">122</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  123</span>        {</div>
+<div class="line"><span class="lineno">  124</span>            <span class="keywordflow">return</span> {-<span class="keyword">static_cast&lt;</span><span class="keywordtype">long</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>()), <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a907dc77949f106bcc4aa4fa4af25c99d">chi2</a> / <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>() ? <a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>() : 1)};</div>
+<div class="line"><span class="lineno">  125</span>        }</div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a54e97fc180675fb278e5c6e9466f4eab"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">Kalman::Tracking::Candidate::NHits</a></div><div class="ttdeci">std::size_t NHits() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00116">Tracking.h:116</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a907dc77949f106bcc4aa4fa4af25c99d"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a907dc77949f106bcc4aa4fa4af25c99d">Kalman::Tracking::Candidate::chi2</a></div><div class="ttdeci">double chi2</div><div class="ttdoc">accumulated measurement chi-square (ranking)</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00102">Tracking.h:102</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -295,9 +295,9 @@ Public Attributes</h2></td></tr>
 
 <p>The layer the search continues <em>after</em>: the last one this candidate visited, or -1. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00106">106</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  106</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">hitIds</a>.empty() ? -1L : <span class="keyword">static_cast&lt;</span><span class="keywordtype">long</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">hitIds</a>.back().layer); }</div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_aa3092f09e84b167826b0bac191e812aa"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">Kalman::Tracking::Candidate::hitIds</a></div><div class="ttdeci">std::vector&lt; HitId &gt; hitIds</div><div class="ttdoc">per assigned hit</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00093">Tracking.h:93</a></div></div>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00119">119</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  119</span>{ <span class="keywordflow">return</span> <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">hitIds</a>.empty() ? -1L : <span class="keyword">static_cast&lt;</span><span class="keywordtype">long</span><span class="keyword">&gt;</span>(<a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">hitIds</a>.back().layer); }</div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_aa3092f09e84b167826b0bac191e812aa"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#aa3092f09e84b167826b0bac191e812aa">Kalman::Tracking::Candidate::hitIds</a></div><div class="ttdeci">std::vector&lt; HitId &gt; hitIds</div><div class="ttdoc">per assigned hit</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00106">Tracking.h:106</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -329,17 +329,19 @@ Public Attributes</h2></td></tr>
 
 <p>This track as a record, indexed by layer radius rather than time. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8cc_source.html#l00016">16</a> of file <a class="el" href="_tracking_8cc_source.html">Tracking.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   17</span>    {</div>
-<div class="line"><span class="lineno">   18</span>        <a class="code hl_typedef" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> record(model.Name(), flavor);</div>
-<div class="line"><span class="lineno">   19</span>        record.Reserve(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>());</div>
-<div class="line"><span class="lineno">   20</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>(); ++k) record.Add(<a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a892f91ed921ca7bbb339c4d394675fba">radii</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a62e089d7ed66f758d837f576bee9c668">xk</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#abc1c9d2d2fe20dbef2454d3c12273b0a">Pk</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">zk</a>[k]);</div>
-<div class="line"><span class="lineno">   21</span>        <span class="keywordflow">return</span> record;</div>
-<div class="line"><span class="lineno">   22</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_tracking_8cc_source.html#l00033">33</a> of file <a class="el" href="_tracking_8cc_source.html">Tracking.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   34</span>    {</div>
+<div class="line"><span class="lineno">   35</span>        <a class="code hl_typedef" href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Record</a> <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.Name(), flavor);</div>
+<div class="line"><span class="lineno">   36</span>        <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>.Reserve(<a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>());</div>
+<div class="line"><span class="lineno">   37</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_function" href="struct_kalman_1_1_tracking_1_1_candidate.html#a54e97fc180675fb278e5c6e9466f4eab">NHits</a>(); ++k) <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>.Add(<a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a892f91ed921ca7bbb339c4d394675fba">radii</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#a62e089d7ed66f758d837f576bee9c668">xk</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#abc1c9d2d2fe20dbef2454d3c12273b0a">Pk</a>[k], <a class="code hl_variable" href="struct_kalman_1_1_tracking_1_1_candidate.html#affc662735818be9ed827eb2484bce7b5">zk</a>[k]);</div>
+<div class="line"><span class="lineno">   38</span>        <span class="keywordflow">return</span> <a class="code hl_variable" href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">record</a>;</div>
+<div class="line"><span class="lineno">   39</span>    }</div>
 <div class="ttc" id="anamespace_kalman_html_ad84d0d33756c59c0234cb2fead54eff2"><div class="ttname"><a href="namespace_kalman.html#ad84d0d33756c59c0234cb2fead54eff2">Kalman::Record</a></div><div class="ttdeci">IO::Record Record</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00095">Record.h:95</a></div></div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a62e089d7ed66f758d837f576bee9c668"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a62e089d7ed66f758d837f576bee9c668">Kalman::Tracking::Candidate::xk</a></div><div class="ttdeci">std::vector&lt; Vector &gt; xk</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00095">Tracking.h:95</a></div></div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a892f91ed921ca7bbb339c4d394675fba"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a892f91ed921ca7bbb339c4d394675fba">Kalman::Tracking::Candidate::radii</a></div><div class="ttdeci">std::vector&lt; double &gt; radii</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00094">Tracking.h:94</a></div></div>
-<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_abc1c9d2d2fe20dbef2454d3c12273b0a"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#abc1c9d2d2fe20dbef2454d3c12273b0a">Kalman::Tracking::Candidate::Pk</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; Pk</div><div class="ttdef"><b>Definition</b> <a href="_tracking_8h_source.html#l00096">Tracking.h:96</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a137e305263d1d3fcef81121b78130bd5"><div class="ttname"><a href="namespaceinstrument.html#a137e305263d1d3fcef81121b78130bd5">instrument.record</a></div><div class="ttdeci">record</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00074">instrument.py:74</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a62e089d7ed66f758d837f576bee9c668"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a62e089d7ed66f758d837f576bee9c668">Kalman::Tracking::Candidate::xk</a></div><div class="ttdeci">std::vector&lt; Vector &gt; xk</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00108">Tracking.h:108</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_a892f91ed921ca7bbb339c4d394675fba"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#a892f91ed921ca7bbb339c4d394675fba">Kalman::Tracking::Candidate::radii</a></div><div class="ttdeci">std::vector&lt; double &gt; radii</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00107">Tracking.h:107</a></div></div>
+<div class="ttc" id="astruct_kalman_1_1_tracking_1_1_candidate_html_abc1c9d2d2fe20dbef2454d3c12273b0a"><div class="ttname"><a href="struct_kalman_1_1_tracking_1_1_candidate.html#abc1c9d2d2fe20dbef2454d3c12273b0a">Kalman::Tracking::Candidate::Pk</a></div><div class="ttdeci">std::vector&lt; Matrix &gt; Pk</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_tracking_8h_source.html#l00109">Tracking.h:109</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -358,7 +360,7 @@ Public Attributes</h2></td></tr>
 
 <p>accumulated measurement chi-square (ranking) </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00089">89</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00102">102</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -376,7 +378,7 @@ Public Attributes</h2></td></tr>
 
 <p>transition product since the last assigned hit </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00101">101</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00114">114</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -394,7 +396,7 @@ Public Attributes</h2></td></tr>
 
 <p>transition from the previous posterior </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00100">100</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00113">113</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -412,7 +414,7 @@ Public Attributes</h2></td></tr>
 
 <p>per assigned hit </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00093">93</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00106">106</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -428,7 +430,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00091">91</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00104">104</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -446,7 +448,7 @@ Public Attributes</h2></td></tr>
 
 <p>current posterior covariance </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00088">88</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00101">101</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -462,7 +464,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00096">96</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00109">109</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -478,7 +480,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00099">99</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00112">112</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -494,7 +496,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00098">98</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00111">111</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -510,7 +512,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00094">94</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00107">107</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -528,7 +530,7 @@ Public Attributes</h2></td></tr>
 
 <p>chi2 plus hole penalties (pruning) </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00090">90</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00103">103</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -546,7 +548,7 @@ Public Attributes</h2></td></tr>
 
 <p>current posterior mean </p>
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00087">87</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00100">100</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -562,7 +564,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00095">95</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00108">108</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
@@ -578,12 +580,12 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tracking_8h_source.html#l00097">97</a> of file <a class="el" href="_tracking_8h_source.html">Tracking.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="include_2_kalman_2_tracking_8h_source.html#l00110">110</a> of file <a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following files:<ul>
-<li>include/Kalman/<a class="el" href="_tracking_8h_source.html">Tracking.h</a></li>
+<li>include/Kalman/<a class="el" href="include_2_kalman_2_tracking_8h_source.html">Tracking.h</a></li>
 <li>src/<a class="el" href="_tracking_8cc_source.html">Tracking.cc</a></li>
 </ul>
 </div><!-- contents -->

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -237,7 +237,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   21</span>        <span class="keywordflow">if</span> (!fModel) <span class="keywordflow">throw</span> std::runtime_error(<span class="stringliteral">&quot;Kalman::Sampler: a model is required.&quot;</span>);</div>
 <div class="line"><span class="lineno">   22</span>        fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">CheckShapes</a>();</div>
 <div class="line"><span class="lineno">   23</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a53fd4ea5d51ce2663698cb96b5e0e26d"><div class="ttname"><a href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model::CheckShapes</a></div><div class="ttdeci">virtual void CheckShapes() const</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00317">Model.cc:317</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a53fd4ea5d51ce2663698cb96b5e0e26d"><div class="ttname"><a href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">Kalman::Model::CheckShapes</a></div><div class="ttdeci">virtual void CheckShapes() const</div><div class="ttdoc">Validate every coefficient against (n, m, l).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00326">Model.cc:326</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -325,7 +325,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   91</span>            if (uniform(fRandom) &lt; probability)</div>
 <div class="line"><span class="lineno">   92</span>                z(channel) = std::numeric_limits&lt;double&gt;::quiet_NaN();</div>
 <div class="line"><span class="lineno">   93</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1f662db87f8123e8ebc65e2e0f663740"><div class="ttname"><a href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">Kalman::Model::NMeasure</a></div><div class="ttdeci">std::size_t NMeasure() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00146">Model.h:146</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1f662db87f8123e8ebc65e2e0f663740"><div class="ttname"><a href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">Kalman::Model::NMeasure</a></div><div class="ttdeci">std::size_t NMeasure() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00148">Model.h:148</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -375,7 +375,7 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   43</span>        fMeasure.reserve(nsteps);</div>
 <div class="line"><span class="lineno">   44</span>        fTime.reserve(nsteps);</div>
 <div class="line"><span class="lineno">   45</span> </div>
-<div class="line"><span class="lineno">   46</span>        Vector x = (x0.Size() == fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>()) ? x0 : fModel-&gt;<a class="code hl_variable" href="namespacetests_1_1test__engines.html#a55722b9297ed4166fbd13bfcf6ff6ee9">X0</a>();</div>
+<div class="line"><span class="lineno">   46</span>        Vector <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = (x0.Size() == fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>()) ? x0 : fModel-&gt;<a class="code hl_variable" href="namespacetests_1_1test__engines.html#a55722b9297ed4166fbd13bfcf6ff6ee9">X0</a>();</div>
 <div class="line"><span class="lineno">   47</span>        <span class="keyword">const</span> Vector u(fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>(), 0.);</div>
 <div class="line"><span class="lineno">   48</span> </div>
 <div class="line"><span class="lineno">   49</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> dt = fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">DeltaT</a>();</div>
@@ -397,9 +397,9 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   65</span>            <span class="keywordflow">if</span> (!haveR || t != factoredAt) { Rfac = Utils::CholeskyFactor(fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">R</a>(t)); haveR = <span class="keyword">true</span>; }</div>
 <div class="line"><span class="lineno">   66</span>            factoredAt = t;</div>
 <div class="line"><span class="lineno">   67</span> </div>
-<div class="line"><span class="lineno">   68</span>            x = fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">f</a>(x, u, t);</div>
+<div class="line"><span class="lineno">   68</span>            <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">f</a>(x, u, t);</div>
 <div class="line"><span class="lineno">   69</span>            <span class="keyword">const</span> Vector qw = <a class="code hl_function" href="class_kalman_1_1_sampler.html#a625ed92317a0b8a7c898dd5728bff6d2">Draw</a>(Qfac);</div>
-<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">if</span> (!qw.Empty()) x += qw;</div>
+<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">if</span> (!qw.Empty()) <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> += qw;</div>
 <div class="line"><span class="lineno">   71</span> </div>
 <div class="line"><span class="lineno">   72</span>            Vector z = fModel-&gt;<a class="code hl_function" href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216">h</a>(x, t);</div>
 <div class="line"><span class="lineno">   73</span>            <span class="keyword">const</span> Vector rw = <a class="code hl_function" href="class_kalman_1_1_sampler.html#a625ed92317a0b8a7c898dd5728bff6d2">Draw</a>(Rfac);</div>
@@ -412,16 +412,17 @@ Protected Member Functions</h2></td></tr>
 <div class="line"><span class="lineno">   80</span>            t += dt;</div>
 <div class="line"><span class="lineno">   81</span>        }</div>
 <div class="line"><span class="lineno">   82</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00152">Model.h:152</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a350262add011f7895cd760debe18a0c5"><div class="ttname"><a href="class_kalman_1_1_model.html#a350262add011f7895cd760debe18a0c5">Kalman::Model::DeltaT</a></div><div class="ttdeci">double DeltaT() const</div><div class="ttdoc">Step length implied by the sample rate (1 when fs is unset).</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00154">Model.h:154</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a450c77e55f7dd11cc53f7100027753c6"><div class="ttname"><a href="class_kalman_1_1_model.html#a450c77e55f7dd11cc53f7100027753c6">Kalman::Model::R</a></div><div class="ttdeci">virtual Matrix R(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00086">Model.cc:86</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a6aa7a82c784691ddbdd3a01c5fa9ae12"><div class="ttname"><a href="class_kalman_1_1_model.html#a6aa7a82c784691ddbdd3a01c5fa9ae12">Kalman::Model::L</a></div><div class="ttdeci">virtual Matrix L(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00084">Model.cc:84</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a7352a3b4fa42b2b7b91b69e5482b09dc"><div class="ttname"><a href="class_kalman_1_1_model.html#a7352a3b4fa42b2b7b91b69e5482b09dc">Kalman::Model::T0</a></div><div class="ttdeci">double T0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00165">Model.h:165</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00149">Model.h:149</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a7352a3b4fa42b2b7b91b69e5482b09dc"><div class="ttname"><a href="class_kalman_1_1_model.html#a7352a3b4fa42b2b7b91b69e5482b09dc">Kalman::Model::T0</a></div><div class="ttdeci">double T0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00167">Model.h:167</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ab52f40f2fa87eea03913a2768e899216"><div class="ttname"><a href="class_kalman_1_1_model.html#ab52f40f2fa87eea03913a2768e899216">Kalman::Model::h</a></div><div class="ttdeci">virtual Vector h(const Vector &amp;x, double t=0.) const</div><div class="ttdoc">The observation map. Default: H x.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00128">Model.cc:128</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ab6a9abc04fc8e4f6f334563b6ff7359d"><div class="ttname"><a href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Kalman::Model::Q</a></div><div class="ttdeci">virtual Matrix Q(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00085">Model.cc:85</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_sampler_html_a625ed92317a0b8a7c898dd5728bff6d2"><div class="ttname"><a href="class_kalman_1_1_sampler.html#a625ed92317a0b8a7c898dd5728bff6d2">Kalman::Sampler::Draw</a></div><div class="ttdeci">Vector Draw(const Matrix &amp;factor)</div><div class="ttdoc">A draw from N(0, C) given the Cholesky factor of C.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8cc_source.html#l00025">Sampler.cc:25</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
 <div class="ttc" id="anamespacetests_1_1test__engines_html_a55722b9297ed4166fbd13bfcf6ff6ee9"><div class="ttname"><a href="namespacetests_1_1test__engines.html#a55722b9297ed4166fbd13bfcf6ff6ee9">tests.test_engines.X0</a></div><div class="ttdeci">X0</div><div class="ttdef"><b>Definition</b> <a href="test__engines_8py_source.html#l00028">test_engines.py:28</a></div></div>
 </div><!-- fragment -->
 </div>

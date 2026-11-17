@@ -3,6 +3,7 @@ var namespacemodules_1_1framework_1_1engines =
     [ "combinatorial", "namespacemodules_1_1framework_1_1engines_1_1combinatorial.html", "namespacemodules_1_1framework_1_1engines_1_1combinatorial" ],
     [ "ensemble", "namespacemodules_1_1framework_1_1engines_1_1ensemble.html", "namespacemodules_1_1framework_1_1engines_1_1ensemble" ],
     [ "extended", "namespacemodules_1_1framework_1_1engines_1_1extended.html", "namespacemodules_1_1framework_1_1engines_1_1extended" ],
+    [ "interacting", "namespacemodules_1_1framework_1_1engines_1_1interacting.html", "namespacemodules_1_1framework_1_1engines_1_1interacting" ],
     [ "linear", "namespacemodules_1_1framework_1_1engines_1_1linear.html", "namespacemodules_1_1framework_1_1engines_1_1linear" ],
     [ "native", "namespacemodules_1_1framework_1_1engines_1_1native.html", "namespacemodules_1_1framework_1_1engines_1_1native" ],
     [ "particle", "namespacemodules_1_1framework_1_1engines_1_1particle.html", "namespacemodules_1_1framework_1_1engines_1_1particle" ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -139,6 +139,7 @@ $(document).ready(function(){initNavTree('class_kalman_1_1_models_1_1_callback.h
   <div class="summary">
 <a href="#pub-types">Public Types</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="class_kalman_1_1_models_1_1_callback-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">Kalman::Models::Callback Class Reference</div></div>
 </div><!--header-->
@@ -179,9 +180,16 @@ Public Types</h2></td></tr>
 <tr class="memitem:a66ab36eca975f6c6eb473f43e6939de3" id="r_a66ab36eca975f6c6eb473f43e6939de3"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a66ab36eca975f6c6eb473f43e6939de3">NoisyMeasureFn</a> = int(*)(void *user, const double *x, const double *v, double t, double *z)</td></tr>
 <tr class="memdesc:a66ab36eca975f6c6eb473f43e6939de3"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>z = h(x, v, t)</code>, the observation with its noise <code>v</code> (length m) inside.  <br /></td></tr>
 <tr class="separator:a66ab36eca975f6c6eb473f43e6939de3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7222f7d6032715089470cd6e9f081e68" id="r_a7222f7d6032715089470cd6e9f081e68"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a7222f7d6032715089470cd6e9f081e68">ClipFn</a> = int(*)(void *user, const double *u, double *u_out)</td></tr>
-<tr class="memdesc:a7222f7d6032715089470cd6e9f081e68"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>u_out = clip(u)</code>, both of length l: what the actuator delivers of a command.  <br /></td></tr>
-<tr class="separator:a7222f7d6032715089470cd6e9f081e68"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cd3ced234b815f886b3bce79c5d87e6" id="r_a8cd3ced234b815f886b3bce79c5d87e6"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a8cd3ced234b815f886b3bce79c5d87e6">LimitFn</a> = int(*)(void *user, const double *u, double *u_out)</td></tr>
+<tr class="memdesc:a8cd3ced234b815f886b3bce79c5d87e6"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>u_out = clip(u)</code>, both of length l: what the actuator delivers of a command.  <br /></td></tr>
+<tr class="separator:a8cd3ced234b815f886b3bce79c5d87e6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a783e9f571fac5508af7dee81e49ac46c" id="r_a783e9f571fac5508af7dee81e49ac46c"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a783e9f571fac5508af7dee81e49ac46c">ParameterFn</a> = int(*)(void *user, const char *name, double value)</td></tr>
+<tr class="memdesc:a783e9f571fac5508af7dee81e49ac46c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the caller's parameter <code>name</code> to <code>value</code> (see <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a0281050c49a62adc90f05890d9d78500" title="Declare parameters that live on the caller&#39;s side.">DeclareParameters()</a>).  <br /></td></tr>
+<tr class="separator:a783e9f571fac5508af7dee81e49ac46c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="inherit_header pub_types_class_kalman_1_1_model"><td colspan="2" onclick="javascript:toggleInherit('pub_types_class_kalman_1_1_model')"><img src="closed.png" alt="-"/>&#160;Public Types inherited from <a class="el" href="class_kalman_1_1_model.html">Kalman::Model</a></td></tr>
+<tr class="memitem:a9c31fc4b4f2ce42d4a0c36a55267073d inherit pub_types_class_kalman_1_1_model" id="r_a9c31fc4b4f2ce42d4a0c36a55267073d"><td class="memItemLeft" align="right" valign="top">using&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> = <a class="el" href="struct_kalman_1_1_component.html">Kalman::Component</a></td></tr>
+<tr class="memdesc:a9c31fc4b4f2ce42d4a0c36a55267073d inherit pub_types_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">One component of the state or of the measurement (<a class="el" href="struct_kalman_1_1_component.html" title="One component of a state or of a measurement: what it is and its unit.">Kalman::Component</a>).  <br /></td></tr>
+<tr class="separator:a9c31fc4b4f2ce42d4a0c36a55267073d inherit pub_types_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -216,12 +224,15 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a30653122675321216d2e14f691202075"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0585e62146d76a33411410d64e36c760" id="r_a0585e62146d76a33411410d64e36c760"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a0585e62146d76a33411410d64e36c760">SetNoiseInputs</a> (<a class="el" href="class_kalman_1_1_models_1_1_callback.html#a39c8e22a3150ca12acc9165888a721e5">NoisyStepFn</a> noisyStep, <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a66ab36eca975f6c6eb473f43e6939de3">NoisyMeasureFn</a> noisyMeasure)</td></tr>
 <tr class="separator:a0585e62146d76a33411410d64e36c760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0378a55e01871f1da3e4be53a9f1dd32" id="r_a0378a55e01871f1da3e4be53a9f1dd32"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a0378a55e01871f1da3e4be53a9f1dd32">SetClip</a> (<a class="el" href="class_kalman_1_1_models_1_1_callback.html#a7222f7d6032715089470cd6e9f081e68">ClipFn</a> clip)</td></tr>
-<tr class="memdesc:a0378a55e01871f1da3e4be53a9f1dd32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give the model its actuator limit (<a class="el" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d" title="Actuator-limit hook: the command the plant can actually deliver.">Model::ClipControl</a>); null keeps the identity.  <br /></td></tr>
-<tr class="separator:a0378a55e01871f1da3e4be53a9f1dd32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a94320d746a873473d908ef114854f142" id="r_a94320d746a873473d908ef114854f142"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a94320d746a873473d908ef114854f142">ClipControl</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u) const override</td></tr>
-<tr class="memdesc:a94320d746a873473d908ef114854f142"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actuator-limit hook: the command the plant can actually deliver.  <br /></td></tr>
-<tr class="separator:a94320d746a873473d908ef114854f142"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aac4435d3123a060966a9a238a802f4cb" id="r_aac4435d3123a060966a9a238a802f4cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#aac4435d3123a060966a9a238a802f4cb">SetLimit</a> (<a class="el" href="class_kalman_1_1_models_1_1_callback.html#a8cd3ced234b815f886b3bce79c5d87e6">LimitFn</a> clip)</td></tr>
+<tr class="memdesc:aac4435d3123a060966a9a238a802f4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Give the model its actuator limit (<a class="el" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711" title="Actuator-limit hook: the command the plant can actually deliver.">Model::LimitControl</a>); null keeps the identity.  <br /></td></tr>
+<tr class="separator:aac4435d3123a060966a9a238a802f4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0281050c49a62adc90f05890d9d78500" id="r_a0281050c49a62adc90f05890d9d78500"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a0281050c49a62adc90f05890d9d78500">DeclareParameters</a> (const std::vector&lt; std::pair&lt; std::string, double &gt; &gt; &amp;parameters, <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a783e9f571fac5508af7dee81e49ac46c">ParameterFn</a> set)</td></tr>
+<tr class="memdesc:a0281050c49a62adc90f05890d9d78500"><td class="mdescLeft">&#160;</td><td class="mdescRight">Declare parameters that live on the caller's side.  <br /></td></tr>
+<tr class="separator:a0281050c49a62adc90f05890d9d78500"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a351e81d717f9bb20fa516f080f37b532" id="r_a351e81d717f9bb20fa516f080f37b532"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a351e81d717f9bb20fa516f080f37b532">LimitControl</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u) const override</td></tr>
+<tr class="memdesc:a351e81d717f9bb20fa516f080f37b532"><td class="mdescLeft">&#160;</td><td class="mdescRight">Actuator-limit hook: the command the plant can actually deliver.  <br /></td></tr>
+<tr class="separator:a351e81d717f9bb20fa516f080f37b532"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adf733e253c43b55496b404edc0c75c7f" id="r_adf733e253c43b55496b404edc0c75c7f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#adf733e253c43b55496b404edc0c75c7f">HasProcessNoiseInput</a> () const override</td></tr>
 <tr class="memdesc:adf733e253c43b55496b404edc0c75c7f"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when f takes the process noise as an argument: see f(x, u, w, t).  <br /></td></tr>
 <tr class="separator:adf733e253c43b55496b404edc0c75c7f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -293,6 +304,24 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a4d8ff368e7f6ff239ed7cd90ef19b180 inherit pub_methods_class_kalman_1_1_model" id="r_a4d8ff368e7f6ff239ed7cd90ef19b180"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a4d8ff368e7f6ff239ed7cd90ef19b180">SetNoiseInputs</a> (bool process, bool measurement)</td></tr>
 <tr class="memdesc:a4d8ff368e7f6ff239ed7cd90ef19b180 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Have the sigma-point and particle engines draw over the noise as well as the state, with the default maps <code>f + w</code> and <code>h + v</code>.  <br /></td></tr>
 <tr class="separator:a4d8ff368e7f6ff239ed7cd90ef19b180 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd2bd4c9bbbba370b3c08f6c2a87ef7d inherit pub_methods_class_kalman_1_1_model" id="r_afd2bd4c9bbbba370b3c08f6c2a87ef7d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#afd2bd4c9bbbba370b3c08f6c2a87ef7d">f</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;states, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, double t) const</td></tr>
+<tr class="memdesc:afd2bd4c9bbbba370b3c08f6c2a87ef7d inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>f</code> of every state of <code>states</code>, in place: <code>states[s] = f(states[s], u, t)</code>.  <br /></td></tr>
+<tr class="separator:afd2bd4c9bbbba370b3c08f6c2a87ef7d inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a127abe139705ad9500abab0e054a1373 inherit pub_methods_class_kalman_1_1_model" id="r_a127abe139705ad9500abab0e054a1373"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a127abe139705ad9500abab0e054a1373">h</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;states, double t, std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;out) const</td></tr>
+<tr class="memdesc:a127abe139705ad9500abab0e054a1373 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>h</code> of every state: <code>out[s] = h(states[s], t)</code>.  <br /></td></tr>
+<tr class="separator:a127abe139705ad9500abab0e054a1373 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5e44ba4e838879efc6229c165d83f6f3 inherit pub_methods_class_kalman_1_1_model" id="r_a5e44ba4e838879efc6229c165d83f6f3"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5e44ba4e838879efc6229c165d83f6f3">Step</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, double t=0.) const</td></tr>
+<tr class="memdesc:a5e44ba4e838879efc6229c165d83f6f3 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>f(x, u, t)</code>: the state one step on.  <br /></td></tr>
+<tr class="separator:a5e44ba4e838879efc6229c165d83f6f3 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a287deab96d85d09e60098d9e368993 inherit pub_methods_class_kalman_1_1_model" id="r_a3a287deab96d85d09e60098d9e368993"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a3a287deab96d85d09e60098d9e368993">Step</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;states, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;u, double t=0.) const</td></tr>
+<tr class="memdesc:a3a287deab96d85d09e60098d9e368993 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>f</code> of every state, in place.  <br /></td></tr>
+<tr class="separator:a3a287deab96d85d09e60098d9e368993 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab342c78dc51e4a29661e3a3e9bd05ad1 inherit pub_methods_class_kalman_1_1_model" id="r_ab342c78dc51e4a29661e3a3e9bd05ad1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_kalman_1_1_vector.html">Vector</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ab342c78dc51e4a29661e3a3e9bd05ad1">Sense</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x, double t=0.) const</td></tr>
+<tr class="memdesc:ab342c78dc51e4a29661e3a3e9bd05ad1 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>h(x, t)</code>: what the sensors read at <code>x</code>.  <br /></td></tr>
+<tr class="separator:ab342c78dc51e4a29661e3a3e9bd05ad1 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30a8bc8016d36f3659aecc2de32143e7 inherit pub_methods_class_kalman_1_1_model" id="r_a30a8bc8016d36f3659aecc2de32143e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a30a8bc8016d36f3659aecc2de32143e7">Sense</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;states, double t, std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt; &amp;out) const</td></tr>
+<tr class="memdesc:a30a8bc8016d36f3659aecc2de32143e7 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>h</code> of every state.  <br /></td></tr>
+<tr class="separator:a30a8bc8016d36f3659aecc2de32143e7 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2d971c49db380cc3cdd82d830ac9fa8 inherit pub_methods_class_kalman_1_1_model" id="r_ad2d971c49db380cc3cdd82d830ac9fa8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ad2d971c49db380cc3cdd82d830ac9fa8">SetF</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="el" href="class_kalman_1_1_model.html#a8e8a6b0f3ce0e9fb44ae8f1e4f08f839">F</a>)</td></tr>
 <tr class="separator:ad2d971c49db380cc3cdd82d830ac9fa8 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7d76b780d94a6dcb101cb9faed0e2f86 inherit pub_methods_class_kalman_1_1_model" id="r_a7d76b780d94a6dcb101cb9faed0e2f86"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a7d76b780d94a6dcb101cb9faed0e2f86">SetH</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="el" href="class_kalman_1_1_model.html#aacbe9e5f27bbdff8ee2536853993a47e">H</a>)</td></tr>
@@ -313,6 +342,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4fe949c8582b82c25bb7728ddd2136ae inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03439ab774674a982f6c9c255923a9fc inherit pub_methods_class_kalman_1_1_model" id="r_a03439ab774674a982f6c9c255923a9fc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a03439ab774674a982f6c9c255923a9fc">SetInitialCovariance</a> (const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="el" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>)</td></tr>
 <tr class="separator:a03439ab774674a982f6c9c255923a9fc inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5a5aff6d9cd5ee0ad17eda64a5900b00 inherit pub_methods_class_kalman_1_1_model" id="r_a5a5aff6d9cd5ee0ad17eda64a5900b00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5a5aff6d9cd5ee0ad17eda64a5900b00">InitialState</a> (const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;x0, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;<a class="el" href="class_kalman_1_1_model.html#a9e7e28a8b10f0f522fc80a1daa880ac7">P0</a>)</td></tr>
+<tr class="memdesc:a5a5aff6d9cd5ee0ad17eda64a5900b00 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the initial state: its mean and its covariance (the Python <code>initial_state(x0, P0)</code>).  <br /></td></tr>
+<tr class="separator:a5a5aff6d9cd5ee0ad17eda64a5900b00 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6ac62d859b883bf64f06a1dee8991c22 inherit pub_methods_class_kalman_1_1_model" id="r_a6ac62d859b883bf64f06a1dee8991c22"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a6ac62d859b883bf64f06a1dee8991c22">InitialState</a> (std::size_t N, const std::function&lt; double()&gt; &amp;normal) const</td></tr>
+<tr class="memdesc:a6ac62d859b883bf64f06a1dee8991c22 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The initial state as <code>N</code> states drawn from it (the Python <code>initial_state(samples=N)</code>).  <br /></td></tr>
+<tr class="separator:a6ac62d859b883bf64f06a1dee8991c22 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adc6242677158cd762647c011124fa264 inherit pub_methods_class_kalman_1_1_model" id="r_adc6242677158cd762647c011124fa264"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#adc6242677158cd762647c011124fa264">DefaultEngine</a> () const</td></tr>
 <tr class="separator:adc6242677158cd762647c011124fa264 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac74fcea987377be712dca59892faab3e inherit pub_methods_class_kalman_1_1_model" id="r_ac74fcea987377be712dca59892faab3e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ac74fcea987377be712dca59892faab3e">SetDefaultEngine</a> (<a class="el" href="namespace_kalman.html#acbc7aea0a730692732f8c2f3009fc678">EngineKind</a> kind)</td></tr>
@@ -380,17 +415,20 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a53fd4ea5d51ce2663698cb96b5e0e26d inherit pub_methods_class_kalman_1_1_model" id="r_a53fd4ea5d51ce2663698cb96b5e0e26d"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a53fd4ea5d51ce2663698cb96b5e0e26d">CheckShapes</a> () const</td></tr>
 <tr class="memdesc:a53fd4ea5d51ce2663698cb96b5e0e26d inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Validate every coefficient against (n, m, l).  <br /></td></tr>
 <tr class="separator:a53fd4ea5d51ce2663698cb96b5e0e26d inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef6c98884ef11bc81149331bd765b071 inherit pub_methods_class_kalman_1_1_model" id="r_aef6c98884ef11bc81149331bd765b071"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aef6c98884ef11bc81149331bd765b071">CheckDelays</a> () const</td></tr>
+<tr class="memdesc:aef6c98884ef11bc81149331bd765b071 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Refuse a sensor that reports late on a model that carries no past state.  <br /></td></tr>
+<tr class="separator:aef6c98884ef11bc81149331bd765b071 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d5c563a06b0cf2bc8fda5a568538622 inherit pub_methods_class_kalman_1_1_model" id="r_a5d5c563a06b0cf2bc8fda5a568538622"><td class="memItemLeft" align="right" valign="top">virtual std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5d5c563a06b0cf2bc8fda5a568538622">Describe</a> () const</td></tr>
 <tr class="memdesc:a5d5c563a06b0cf2bc8fda5a568538622 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">One-line description, for logs.  <br /></td></tr>
 <tr class="separator:a5d5c563a06b0cf2bc8fda5a568538622 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2306bae3cb5375e5a64d00069690f0b inherit pub_methods_class_kalman_1_1_model" id="r_ae2306bae3cb5375e5a64d00069690f0b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ae2306bae3cb5375e5a64d00069690f0b">ParameterNames</a> () const</td></tr>
+<tr class="memitem:ae2306bae3cb5375e5a64d00069690f0b inherit pub_methods_class_kalman_1_1_model" id="r_ae2306bae3cb5375e5a64d00069690f0b"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ae2306bae3cb5375e5a64d00069690f0b">ParameterNames</a> () const</td></tr>
 <tr class="memdesc:ae2306bae3cb5375e5a64d00069690f0b inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The declared names, sorted.  <br /></td></tr>
 <tr class="separator:ae2306bae3cb5375e5a64d00069690f0b inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90d6eaeb7e0dace8afea5ec6eb7fc8ab inherit pub_methods_class_kalman_1_1_model" id="r_a90d6eaeb7e0dace8afea5ec6eb7fc8ab"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a90d6eaeb7e0dace8afea5ec6eb7fc8ab">HasParameter</a> (const std::string &amp;name) const</td></tr>
-<tr class="separator:a90d6eaeb7e0dace8afea5ec6eb7fc8ab inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad01e8d3360561cbff4642b7e90cd22a7 inherit pub_methods_class_kalman_1_1_model" id="r_ad01e8d3360561cbff4642b7e90cd22a7"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Parameter</a> (const std::string &amp;name) const</td></tr>
+<tr class="memitem:a7fdb091127c1a335a9afeffa97a61610 inherit pub_methods_class_kalman_1_1_model" id="r_a7fdb091127c1a335a9afeffa97a61610"><td class="memItemLeft" align="right" valign="top">virtual bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a7fdb091127c1a335a9afeffa97a61610">HasParameter</a> (const std::string &amp;name) const</td></tr>
+<tr class="separator:a7fdb091127c1a335a9afeffa97a61610 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad01e8d3360561cbff4642b7e90cd22a7 inherit pub_methods_class_kalman_1_1_model" id="r_ad01e8d3360561cbff4642b7e90cd22a7"><td class="memItemLeft" align="right" valign="top">virtual double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Parameter</a> (const std::string &amp;name) const</td></tr>
 <tr class="separator:ad01e8d3360561cbff4642b7e90cd22a7 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0e1cb17c6d1638914c2b76355ca0aecb inherit pub_methods_class_kalman_1_1_model" id="r_a0e1cb17c6d1638914c2b76355ca0aecb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter</a> (const std::string &amp;name, double value)</td></tr>
+<tr class="memitem:a0e1cb17c6d1638914c2b76355ca0aecb inherit pub_methods_class_kalman_1_1_model" id="r_a0e1cb17c6d1638914c2b76355ca0aecb"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter</a> (const std::string &amp;name, double value)</td></tr>
 <tr class="separator:a0e1cb17c6d1638914c2b76355ca0aecb inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a83dceefa4a7d8051dd5591a1c737c52a inherit pub_methods_class_kalman_1_1_model" id="r_a83dceefa4a7d8051dd5591a1c737c52a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a83dceefa4a7d8051dd5591a1c737c52a">ArrayNames</a> () const</td></tr>
 <tr class="memdesc:a83dceefa4a7d8051dd5591a1c737c52a inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The declared names, sorted.  <br /></td></tr>
@@ -401,12 +439,47 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a6779ac5f65db3a75b6036ac1a9e6920e inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6af324391574d9f95c065766781cb473 inherit pub_methods_class_kalman_1_1_model" id="r_a6af324391574d9f95c065766781cb473"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a6af324391574d9f95c065766781cb473">SetArray</a> (const std::string &amp;name, std::vector&lt; double &gt; values)</td></tr>
 <tr class="separator:a6af324391574d9f95c065766781cb473 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd7fb09a61cb98ff13530802e489f37a inherit pub_methods_class_kalman_1_1_model" id="r_acd7fb09a61cb98ff13530802e489f37a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#acd7fb09a61cb98ff13530802e489f37a">StateComponents</a> () const</td></tr>
+<tr class="memitem:acd7fb09a61cb98ff13530802e489f37a inherit pub_methods_class_kalman_1_1_model" id="r_acd7fb09a61cb98ff13530802e489f37a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#acd7fb09a61cb98ff13530802e489f37a">StateComponents</a> () const</td></tr>
 <tr class="memdesc:acd7fb09a61cb98ff13530802e489f37a inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The n components of the state, in the order of the state vector.  <br /></td></tr>
 <tr class="separator:acd7fb09a61cb98ff13530802e489f37a inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd2a80c22c7d9e072c21f28abb27f791 inherit pub_methods_class_kalman_1_1_model" id="r_acd2a80c22c7d9e072c21f28abb27f791"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#acd2a80c22c7d9e072c21f28abb27f791">MeasurementComponents</a> () const</td></tr>
+<tr class="memitem:acd2a80c22c7d9e072c21f28abb27f791 inherit pub_methods_class_kalman_1_1_model" id="r_acd2a80c22c7d9e072c21f28abb27f791"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#acd2a80c22c7d9e072c21f28abb27f791">MeasurementComponents</a> () const</td></tr>
 <tr class="memdesc:acd2a80c22c7d9e072c21f28abb27f791 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The m components of the measurement, in the order of z.  <br /></td></tr>
 <tr class="separator:acd2a80c22c7d9e072c21f28abb27f791 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a523282820e5bf5491bedd2b29ba50c8b inherit pub_methods_class_kalman_1_1_model" id="r_a523282820e5bf5491bedd2b29ba50c8b"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a523282820e5bf5491bedd2b29ba50c8b">States</a> () const</td></tr>
+<tr class="memdesc:a523282820e5bf5491bedd2b29ba50c8b inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same under the names the Python contract uses (<code>model.states</code>).  <br /></td></tr>
+<tr class="separator:a523282820e5bf5491bedd2b29ba50c8b inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0076f9ee9b11abd25d15fcf482b9752 inherit pub_methods_class_kalman_1_1_model" id="r_ae0076f9ee9b11abd25d15fcf482b9752"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ae0076f9ee9b11abd25d15fcf482b9752">Observables</a> () const</td></tr>
+<tr class="memdesc:ae0076f9ee9b11abd25d15fcf482b9752 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The observables: what the sensors measure, in the order of z (<code>model.observables</code>).  <br /></td></tr>
+<tr class="separator:ae0076f9ee9b11abd25d15fcf482b9752 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afc4eeb435ac6a1541064616e84b97cef inherit pub_methods_class_kalman_1_1_model" id="r_afc4eeb435ac6a1541064616e84b97cef"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#afc4eeb435ac6a1541064616e84b97cef">Sensors</a> () const</td></tr>
+<tr class="separator:afc4eeb435ac6a1541064616e84b97cef inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74d8fb2fe3f798744296d2c4ad1f2a01 inherit pub_methods_class_kalman_1_1_model" id="r_a74d8fb2fe3f798744296d2c4ad1f2a01"><td class="memItemLeft" align="right" valign="top">virtual std::vector&lt; <a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a74d8fb2fe3f798744296d2c4ad1f2a01">Instruments</a> () const</td></tr>
+<tr class="separator:a74d8fb2fe3f798744296d2c4ad1f2a01 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f6f379a83b750677780084c1077661d inherit pub_methods_class_kalman_1_1_model" id="r_a8f6f379a83b750677780084c1077661d"><td class="memItemLeft" align="right" valign="top">const std::string &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a8f6f379a83b750677780084c1077661d">BuiltInSensorName</a> () const</td></tr>
+<tr class="memdesc:a8f6f379a83b750677780084c1077661d inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The name of the built-in sensor: <a class="el" href="class_kalman_1_1_model.html#a67d81f63387e9ad424061507ac7eeeea" title="The instance name your application chose, distinct from Title().">Name()</a> unless <a class="el" href="class_kalman_1_1_model.html#ae2621dd78f2f563f8913e981cc1813e4">SetBuiltInSensorName()</a> gave one.  <br /></td></tr>
+<tr class="separator:a8f6f379a83b750677780084c1077661d inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae2621dd78f2f563f8913e981cc1813e4 inherit pub_methods_class_kalman_1_1_model" id="r_ae2621dd78f2f563f8913e981cc1813e4"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ae2621dd78f2f563f8913e981cc1813e4">SetBuiltInSensorName</a> (std::string name)</td></tr>
+<tr class="separator:ae2621dd78f2f563f8913e981cc1813e4 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab0be2af7135ef49a7f0f9fae19f18e32 inherit pub_methods_class_kalman_1_1_model" id="r_ab0be2af7135ef49a7f0f9fae19f18e32"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ab0be2af7135ef49a7f0f9fae19f18e32">AddSensor</a> (const <a class="el" href="struct_kalman_1_1_sensor.html">Sensor</a> &amp;sensor)</td></tr>
+<tr class="memdesc:ab0be2af7135ef49a7f0f9fae19f18e32 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">This model with one more sensor on the same state (<a class="el" href="class_kalman_1_1_models_1_1_fusion.html" title="A model read by one more sensor: several sensors on the same state.">Models::Fusion</a>).  <br /></td></tr>
+<tr class="separator:ab0be2af7135ef49a7f0f9fae19f18e32 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a263eec4d839caa81f7f4c53ab97a7539 inherit pub_methods_class_kalman_1_1_model" id="r_a263eec4d839caa81f7f4c53ab97a7539"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a263eec4d839caa81f7f4c53ab97a7539">AddInstrument</a> (const <a class="el" href="struct_kalman_1_1_instrument.html">Instrument</a> &amp;instrument)</td></tr>
+<tr class="separator:a263eec4d839caa81f7f4c53ab97a7539 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f83faab001b27ed401e3dfe4ab1f14e inherit pub_methods_class_kalman_1_1_model" id="r_a3f83faab001b27ed401e3dfe4ab1f14e"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a3f83faab001b27ed401e3dfe4ab1f14e">Joint</a> (const std::vector&lt; <a class="el" href="struct_kalman_1_1_estimated_parameter.html">EstimatedParameter</a> &gt; &amp;parameters)</td></tr>
+<tr class="memdesc:a3f83faab001b27ed401e3dfe4ab1f14e inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">This model with some of its parameters estimated along with its state (<a class="el" href="class_kalman_1_1_models_1_1_joint.html" title="A model whose state carries some of another model&#39;s parameters, so the filter estimates them along wi...">Models::Joint</a>).  <br /></td></tr>
+<tr class="separator:a3f83faab001b27ed401e3dfe4ab1f14e inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a43dd1349d0ba7d576cd0913f17c0b4f8 inherit pub_methods_class_kalman_1_1_model" id="r_a43dd1349d0ba7d576cd0913f17c0b4f8"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a43dd1349d0ba7d576cd0913f17c0b4f8">Compose</a> (<a class="el" href="class_kalman_1_1_model.html">Model</a> &amp;other, <a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402f">Readout</a> readout=<a class="el" href="namespace_kalman.html#aad2643f8b394ec61c58806b17ce2402fa29b733fdb4bddeda910b3b4a659c2fef">Readout::Stacked</a>)</td></tr>
+<tr class="separator:a43dd1349d0ba7d576cd0913f17c0b4f8 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5186e274570ee62e66c88507c46b1037 inherit pub_methods_class_kalman_1_1_model" id="r_a5186e274570ee62e66c88507c46b1037"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5186e274570ee62e66c88507c46b1037">Lag</a> (std::size_t depth)</td></tr>
+<tr class="separator:a5186e274570ee62e66c88507c46b1037 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4f03e80176ae6e8d1e1e1629eb397226 inherit pub_methods_class_kalman_1_1_model" id="r_a4f03e80176ae6e8d1e1e1629eb397226"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a4f03e80176ae6e8d1e1e1629eb397226">SetObservables</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt; components)</td></tr>
+<tr class="separator:a4f03e80176ae6e8d1e1e1629eb397226 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace66610e218a3560449c65d991fe6bcd inherit pub_methods_class_kalman_1_1_model" id="r_ace66610e218a3560449c65d991fe6bcd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ace66610e218a3560449c65d991fe6bcd">SetStates</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt; components)</td></tr>
+<tr class="memdesc:ace66610e218a3560449c65d991fe6bcd inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">The same for the state components.  <br /></td></tr>
+<tr class="separator:ace66610e218a3560449c65d991fe6bcd inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31b1bef0cbda844623343d5447c230d8 inherit pub_methods_class_kalman_1_1_model" id="r_a31b1bef0cbda844623343d5447c230d8"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a31b1bef0cbda844623343d5447c230d8">AdoptInitialState</a> ()</td></tr>
+<tr class="memdesc:a31b1bef0cbda844623343d5447c230d8 inherit pub_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Take the initial state again from the model this one is made from.  <br /></td></tr>
+<tr class="separator:a31b1bef0cbda844623343d5447c230d8 inherit pub_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_class_kalman_1_1_abstract_1_1_metadata')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html">Kalman::Abstract::Metadata</a></td></tr>
 <tr class="memitem:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata" id="r_a4d2072d8053f1800062433de843a0320"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a4d2072d8053f1800062433de843a0320">~Metadata</a> ()=default</td></tr>
 <tr class="separator:a4d2072d8053f1800062433de843a0320 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -414,14 +487,17 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="mdescLeft">&#160;</td><td class="mdescRight">Implementation version, bumped when behaviour changes.  <br /></td></tr>
 <tr class="separator:a794690cc8b1e23360b7ad7e8070caa36 inherit pub_methods_class_kalman_1_1_abstract_1_1_metadata"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
-Additional Inherited Members</h2></td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a09cd7d3868f45bc6e76aeaaf3001136e" id="r_a09cd7d3868f45bc6e76aeaaf3001136e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a09cd7d3868f45bc6e76aeaaf3001136e">ParametersChanged</a> () override</td></tr>
+<tr class="memdesc:a09cd7d3868f45bc6e76aeaaf3001136e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after every <a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter()</a>: refresh whatever is derived from them.  <br /></td></tr>
+<tr class="separator:a09cd7d3868f45bc6e76aeaaf3001136e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_methods_class_kalman_1_1_model"><td colspan="2" onclick="javascript:toggleInherit('pro_methods_class_kalman_1_1_model')"><img src="closed.png" alt="-"/>&#160;Protected Member Functions inherited from <a class="el" href="class_kalman_1_1_model.html">Kalman::Model</a></td></tr>
 <tr class="memitem:af34eda442f891973f5d8964304726e84 inherit pro_methods_class_kalman_1_1_model" id="r_af34eda442f891973f5d8964304726e84"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#af34eda442f891973f5d8964304726e84">Decode</a> ()</td></tr>
 <tr class="separator:af34eda442f891973f5d8964304726e84 inherit pro_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa4e1dec6da53716870d3b27306e6b6d8 inherit pro_methods_class_kalman_1_1_model" id="r_aa4e1dec6da53716870d3b27306e6b6d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">DeclareState</a> (std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt; components)</td></tr>
+<tr class="memitem:aa4e1dec6da53716870d3b27306e6b6d8 inherit pro_methods_class_kalman_1_1_model" id="r_aa4e1dec6da53716870d3b27306e6b6d8"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aa4e1dec6da53716870d3b27306e6b6d8">DeclareState</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt; components)</td></tr>
 <tr class="separator:aa4e1dec6da53716870d3b27306e6b6d8 inherit pro_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8433b39e0476c4c3f766d0adaa15ebcf inherit pro_methods_class_kalman_1_1_model" id="r_a8433b39e0476c4c3f766d0adaa15ebcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">DeclareMeasurement</a> (std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt; components)</td></tr>
+<tr class="memitem:a8433b39e0476c4c3f766d0adaa15ebcf inherit pro_methods_class_kalman_1_1_model" id="r_a8433b39e0476c4c3f766d0adaa15ebcf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a8433b39e0476c4c3f766d0adaa15ebcf">DeclareMeasurement</a> (std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt; components)</td></tr>
 <tr class="separator:a8433b39e0476c4c3f766d0adaa15ebcf inherit pro_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad80f1196a0e2f8a20f16fe6d17ab528a inherit pro_methods_class_kalman_1_1_model" id="r_ad80f1196a0e2f8a20f16fe6d17ab528a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ad80f1196a0e2f8a20f16fe6d17ab528a">Allocate</a> (std::size_t n, std::size_t <a class="el" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>, std::size_t l)</td></tr>
 <tr class="memdesc:ad80f1196a0e2f8a20f16fe6d17ab528a inherit pro_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Size every coefficient to (n, m, l) and seed sane defaults.  <br /></td></tr>
@@ -435,9 +511,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="memitem:a4aa42aa535e791ee96a0e9d72d8d22c2 inherit pro_methods_class_kalman_1_1_model" id="r_a4aa42aa535e791ee96a0e9d72d8d22c2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a4aa42aa535e791ee96a0e9d72d8d22c2">ResizeMeasurement</a> (std::size_t <a class="el" href="_f_f_t_8cc.html#a64c6389273788a3c6349b8f7db98de06">m</a>)</td></tr>
 <tr class="memdesc:a4aa42aa535e791ee96a0e9d72d8d22c2 inherit pro_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the measurement dimension, for a model whose number of channels follows from an array (one pseudorange per satellite). H and R are reset to their defaults for the new size and the names of the measurement components are forgotten: set them again.  <br /></td></tr>
 <tr class="separator:a4aa42aa535e791ee96a0e9d72d8d22c2 inherit pro_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5b8e4cd6dac1b10694b2f2cc0f0ec1ec inherit pro_methods_class_kalman_1_1_model" id="r_a5b8e4cd6dac1b10694b2f2cc0f0ec1ec"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5b8e4cd6dac1b10694b2f2cc0f0ec1ec">ParametersChanged</a> ()</td></tr>
-<tr class="memdesc:a5b8e4cd6dac1b10694b2f2cc0f0ec1ec inherit pro_methods_class_kalman_1_1_model"><td class="mdescLeft">&#160;</td><td class="mdescRight">Called after every <a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter()</a>: refresh whatever is derived from them.  <br /></td></tr>
-<tr class="separator:a5b8e4cd6dac1b10694b2f2cc0f0ec1ec inherit pro_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="inherited" name="inherited"></a>
+Additional Inherited Members</h2></td></tr>
+<tr class="inherit_header pub_static_methods_class_kalman_1_1_model"><td colspan="2" onclick="javascript:toggleInherit('pub_static_methods_class_kalman_1_1_model')"><img src="closed.png" alt="-"/>&#160;Static Public Member Functions inherited from <a class="el" href="class_kalman_1_1_model.html">Kalman::Model</a></td></tr>
+<tr class="memitem:ad65a9a81d4bb4c6599d8966a809ca93a inherit pub_static_methods_class_kalman_1_1_model" id="r_ad65a9a81d4bb4c6599d8966a809ca93a"><td class="memItemLeft" align="right" valign="top">static std::unique_ptr&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ad65a9a81d4bb4c6599d8966a809ca93a">Route</a> (const std::vector&lt; <a class="el" href="class_kalman_1_1_model.html">Model</a> * &gt; &amp;modes, const <a class="el" href="class_kalman_1_1_matrix.html">Matrix</a> &amp;Pi, const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;mu0=<a class="el" href="class_kalman_1_1_vector.html">Vector</a>())</td></tr>
+<tr class="separator:ad65a9a81d4bb4c6599d8966a809ca93a inherit pub_static_methods_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pro_attribs_class_kalman_1_1_model"><td colspan="2" onclick="javascript:toggleInherit('pro_attribs_class_kalman_1_1_model')"><img src="closed.png" alt="-"/>&#160;Protected Attributes inherited from <a class="el" href="class_kalman_1_1_model.html">Kalman::Model</a></td></tr>
 <tr class="memitem:aab5707b6f09bcb6b12db6ce3ff846f70 inherit pro_attribs_class_kalman_1_1_model" id="r_aab5707b6f09bcb6b12db6ce3ff846f70"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aab5707b6f09bcb6b12db6ce3ff846f70">fName</a> = &quot;model&quot;</td></tr>
 <tr class="separator:aab5707b6f09bcb6b12db6ce3ff846f70 inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -503,10 +582,12 @@ Additional Inherited Members</h2></td></tr>
 <tr class="separator:a503ed261702295ed2a0a2cec17692170 inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae96d2f12379c624dad9e7458a08e8dca inherit pro_attribs_class_kalman_1_1_model" id="r_ae96d2f12379c624dad9e7458a08e8dca"><td class="memItemLeft" align="right" valign="top">std::map&lt; std::string, std::vector&lt; double &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#ae96d2f12379c624dad9e7458a08e8dca">fArrays</a></td></tr>
 <tr class="separator:ae96d2f12379c624dad9e7458a08e8dca inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeec3e05b4c634d27e194f3b49bf168bd inherit pro_attribs_class_kalman_1_1_model" id="r_aeec3e05b4c634d27e194f3b49bf168bd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aeec3e05b4c634d27e194f3b49bf168bd">fStateComponents</a></td></tr>
+<tr class="memitem:aeec3e05b4c634d27e194f3b49bf168bd inherit pro_attribs_class_kalman_1_1_model" id="r_aeec3e05b4c634d27e194f3b49bf168bd"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#aeec3e05b4c634d27e194f3b49bf168bd">fStateComponents</a></td></tr>
 <tr class="separator:aeec3e05b4c634d27e194f3b49bf168bd inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a933c34af52f5103142998d74f5ac484f inherit pro_attribs_class_kalman_1_1_model" id="r_a933c34af52f5103142998d74f5ac484f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="struct_kalman_1_1_model_1_1_component.html">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a933c34af52f5103142998d74f5ac484f">fMeasurementComponents</a></td></tr>
+<tr class="memitem:a933c34af52f5103142998d74f5ac484f inherit pro_attribs_class_kalman_1_1_model" id="r_a933c34af52f5103142998d74f5ac484f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_kalman_1_1_model.html#a9c31fc4b4f2ce42d4a0c36a55267073d">Component</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a933c34af52f5103142998d74f5ac484f">fMeasurementComponents</a></td></tr>
 <tr class="separator:a933c34af52f5103142998d74f5ac484f inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5928b9fedafbd94160fe176e7bb81d6c inherit pro_attribs_class_kalman_1_1_model" id="r_a5928b9fedafbd94160fe176e7bb81d6c"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_model.html#a5928b9fedafbd94160fe176e7bb81d6c">fBuiltInSensor</a></td></tr>
+<tr class="separator:a5928b9fedafbd94160fe176e7bb81d6c inherit pro_attribs_class_kalman_1_1_model"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A model whose maps are functions supplied by the caller. </p>
@@ -516,23 +597,23 @@ Additional Inherited Members</h2></td></tr>
 <p>The cost is one call across the language boundary per evaluation. A model written in C++ pays none; see docs/15 for the measurements.</p>
 <hr  />
  
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00039">39</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00044">44</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 </div><h2 class="groupheader">Member Typedef Documentation</h2>
-<a id="a7222f7d6032715089470cd6e9f081e68" name="a7222f7d6032715089470cd6e9f081e68"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7222f7d6032715089470cd6e9f081e68">&#9670;&#160;</a></span>ClipFn</h2>
+<a id="a8cd3ced234b815f886b3bce79c5d87e6" name="a8cd3ced234b815f886b3bce79c5d87e6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cd3ced234b815f886b3bce79c5d87e6">&#9670;&#160;</a></span>LimitFn</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">using <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a7222f7d6032715089470cd6e9f081e68">Kalman::Models::Callback::ClipFn</a> =  int (*)(void *user, const double *u, double *u_out)</td>
+          <td class="memname">using <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a8cd3ced234b815f886b3bce79c5d87e6">Kalman::Models::Callback::LimitFn</a> =  int (*)(void *user, const double *u, double *u_out)</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p><code>u_out = clip(u)</code>, both of length l: what the actuator delivers of a command. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00060">60</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00065">65</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -550,7 +631,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>z = h(x, t)</code>. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00045">45</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00050">50</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -568,7 +649,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>J = dh/dx</code> at (x, t), row-major (m x n). </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00049">49</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00054">54</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -586,7 +667,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p>The measurement-noise covariance at t, row-major (m x m). </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00054">54</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00059">59</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -604,7 +685,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>z = h(x, v, t)</code>, the observation with its noise <code>v</code> (length m) inside. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00058">58</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00063">63</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -622,7 +703,25 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>x_next = f(x, u, w, t)</code>, the step with its process noise <code>w</code> (length n) inside. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00056">56</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00061">61</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+
+</div>
+</div>
+<a id="a783e9f571fac5508af7dee81e49ac46c" name="a783e9f571fac5508af7dee81e49ac46c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a783e9f571fac5508af7dee81e49ac46c">&#9670;&#160;</a></span>ParameterFn</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a783e9f571fac5508af7dee81e49ac46c">Kalman::Models::Callback::ParameterFn</a> =  int (*)(void *user, const char *name, double value)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set the caller's parameter <code>name</code> to <code>value</code> (see <a class="el" href="class_kalman_1_1_models_1_1_callback.html#a0281050c49a62adc90f05890d9d78500" title="Declare parameters that live on the caller&#39;s side.">DeclareParameters()</a>). </p>
+
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00067">67</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -639,7 +738,7 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>The process-noise covariance added over the step from (x, u, t), row-major (n x n), with any noise coupling already applied. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00052">52</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00057">57</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -657,7 +756,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>x_next = f(x, u, t)</code>; <code>u</code> is null when the model has no control. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00043">43</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00048">48</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -675,7 +774,7 @@ Additional Inherited Members</h2></td></tr>
 
 <p><code>J = df/dx</code> at (x, u, t), row-major (n x n). </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00047">47</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00052">52</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
 
 </div>
 </div>
@@ -761,44 +860,48 @@ Additional Inherited Members</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a94320d746a873473d908ef114854f142" name="a94320d746a873473d908ef114854f142"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a94320d746a873473d908ef114854f142">&#9670;&#160;</a></span>ClipControl()</h2>
+<a id="a0281050c49a62adc90f05890d9d78500" name="a0281050c49a62adc90f05890d9d78500"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0281050c49a62adc90f05890d9d78500">&#9670;&#160;</a></span>DeclareParameters()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_kalman_1_1_vector.html">Vector</a> Kalman::Models::Callback::ClipControl </td>
+          <td class="memname">void Kalman::Models::Callback::DeclareParameters </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
-          <td class="paramname"><em>u</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramtype">const std::vector&lt; std::pair&lt; std::string, double &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>parameters</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a783e9f571fac5508af7dee81e49ac46c">ParameterFn</a>&#160;</td>
+          <td class="paramname"><em>set</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 
-<p>Actuator-limit hook: the command the plant can actually deliver. </p>
-<p>Identity by default. A model with real limits (a steering clip, a thrust ceiling) overrides it so a controller's logged cost and an MPPI rollout see the same constraint <code><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a29caa14e172db577fac87d4ccb7ff966" title="One step of the dynamics.">f()</a></code> enforces internally. </p>
+<p>Declare parameters that live on the caller's side. </p>
+<p>Each is declared here with its current value (<a class="el" href="class_kalman_1_1_model.html#a47d95a84d899bd78f290dca129919919" title="Declare a named parameter with its default (constructor only).">Model::DeclareParameter</a>), and every <a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter()</a> that changes one hands the new value to <code>set</code>, so the caller's f and h read it. This is how <a class="el" href="class_kalman_1_1_models_1_1_joint.html" title="A model whose state carries some of another model&#39;s parameters, so the filter estimates them along wi...">Kalman::Models::Joint</a> estimates a parameter of a model written in another language. Declaring a name twice keeps the first value. </p>
 
-<p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d">Kalman::Model</a>.</p>
-
-<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00116">116</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  117</span>    {</div>
-<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">if</span> (!fClip || u.Empty()) <span class="keywordflow">return</span> u;</div>
-<div class="line"><span class="lineno">  119</span>        <span class="keyword">const</span> std::vector&lt;double&gt; uin = Flat(u);</div>
-<div class="line"><span class="lineno">  120</span>        std::vector&lt;double&gt; out(u.Size());</div>
-<div class="line"><span class="lineno">  121</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fClip(fUser, uin.data(), out.data()), <span class="stringliteral">&quot;clip&quot;</span>);</div>
-<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> ToVector(out);</div>
-<div class="line"><span class="lineno">  123</span>    }</div>
-<div class="ttc" id="anamespace_check_html"><div class="ttname"><a href="namespace_check.html">Check</a></div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00015">Check.h:16</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00125">125</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  126</span>    {</div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">if</span> (!set) <span class="keywordflow">throw</span> std::invalid_argument(<span class="stringliteral">&quot;Models::Callback: DeclareParameters needs a function that sets them.&quot;</span>);</div>
+<div class="line"><span class="lineno">  128</span>        fParameter = set;</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;[name, value] : parameters)</div>
+<div class="line"><span class="lineno">  130</span>        {</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">if</span> (<a class="code hl_function" href="class_kalman_1_1_model.html#a7fdb091127c1a335a9afeffa97a61610">HasParameter</a>(name)) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  132</span>            <a class="code hl_function" href="class_kalman_1_1_model.html#a47d95a84d899bd78f290dca129919919">DeclareParameter</a>(name, value);</div>
+<div class="line"><span class="lineno">  133</span>            fPushed[name] = value;                     <span class="comment">// the caller holds it already</span></div>
+<div class="line"><span class="lineno">  134</span>        }</div>
+<div class="line"><span class="lineno">  135</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a47d95a84d899bd78f290dca129919919"><div class="ttname"><a href="class_kalman_1_1_model.html#a47d95a84d899bd78f290dca129919919">Kalman::Model::DeclareParameter</a></div><div class="ttdeci">void DeclareParameter(const std::string &amp;name, double value)</div><div class="ttdoc">Declare a named parameter with its default (constructor only).</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00475">Model.cc:475</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a7fdb091127c1a335a9afeffa97a61610"><div class="ttname"><a href="class_kalman_1_1_model.html#a7fdb091127c1a335a9afeffa97a61610">Kalman::Model::HasParameter</a></div><div class="ttdeci">virtual bool HasParameter(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00401">Model.h:401</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -829,8 +932,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a1469b55fd89d419c13a61764e5cf0c3b">Kalman::Abstract::Metadata</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00085">85</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   86</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Model whose f/h are functions supplied by the caller (another language, typically).&quot;</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00095">95</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   96</span>            { <span class="keywordflow">return</span> <span class="stringliteral">&quot;Model whose f/h are functions supplied by the caller (another language, typically).&quot;</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -883,19 +986,21 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a56c78933c56deb6037863219068d6aa9">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00131">131</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  132</span>    {</div>
-<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">if</span> (!fNoisyStep) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Extended::f</a>(x, u, w, t);</div>
-<div class="line"><span class="lineno">  134</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), uin = Flat(u), win = Flat(w);</div>
-<div class="line"><span class="lineno">  135</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
-<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">if</span> (fProcessNoise) { fLastX = x; fLastU = u; }</div>
-<div class="line"><span class="lineno">  137</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fNoisyStep(fUser, xin.data(), uin.size() == <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uin.data() : nullptr,</div>
-<div class="line"><span class="lineno">  138</span>                         win.data(), t, out.data()), <span class="stringliteral">&quot;f with noise&quot;</span>);</div>
-<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">return</span> ToVector(out);</div>
-<div class="line"><span class="lineno">  140</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00145">Model.h:145</a></div></div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00155">155</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  156</span>    {</div>
+<div class="line"><span class="lineno">  157</span>        <span class="keywordflow">if</span> (!fNoisyStep) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Extended::f</a>(x, u, w, t);</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), uin = Flat(u), win = Flat(w);</div>
+<div class="line"><span class="lineno">  159</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">if</span> (fProcessNoise) { fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>; fLastU = u; }</div>
+<div class="line"><span class="lineno">  161</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fNoisyStep(fUser, xin.data(), uin.size() == <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uin.data() : nullptr,</div>
+<div class="line"><span class="lineno">  162</span>                         win.data(), t, out.data()), <span class="stringliteral">&quot;f with noise&quot;</span>);</div>
+<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">return</span> ToVector(out);</div>
+<div class="line"><span class="lineno">  164</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a6dc92aaff4c5772d81ff99e4f07f96e3"><div class="ttname"><a href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">Kalman::Model::NControl</a></div><div class="ttdeci">std::size_t NControl() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00149">Model.h:149</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a770dbdd333866b8733fa9cfcb95dcede"><div class="ttname"><a href="class_kalman_1_1_model.html#a770dbdd333866b8733fa9cfcb95dcede">Kalman::Model::f</a></div><div class="ttdeci">virtual Vector f(const Vector &amp;x, const Vector &amp;u, double t=0.) const</div><div class="ttdoc">One step of the dynamics.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00104">Model.cc:104</a></div></div>
+<div class="ttc" id="anamespace_check_html"><div class="ttname"><a href="namespace_check.html">Check</a></div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00015">Check.h:16</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -948,7 +1053,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   60</span>    {</div>
 <div class="line"><span class="lineno">   61</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), uin = Flat(u);</div>
 <div class="line"><span class="lineno">   62</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
-<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">if</span> (fProcessNoise) { fLastX = x; fLastU = u; }</div>
+<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">if</span> (fProcessNoise) { fLastX = <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>; fLastU = u; }</div>
 <div class="line"><span class="lineno">   64</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fStep(fUser, xin.data(), uin.size() == <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uin.data() : nullptr, t, out.data()), <span class="stringliteral">&quot;f&quot;</span>);</div>
 <div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> ToVector(out);</div>
 <div class="line"><span class="lineno">   66</span>    }</div>
@@ -1000,7 +1105,7 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">   72</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fMeasure(fUser, xin.data(), t, out.data()), <span class="stringliteral">&quot;h&quot;</span>);</div>
 <div class="line"><span class="lineno">   73</span>        <span class="keywordflow">return</span> ToVector(out);</div>
 <div class="line"><span class="lineno">   74</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a1f662db87f8123e8ebc65e2e0f663740"><div class="ttname"><a href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">Kalman::Model::NMeasure</a></div><div class="ttdeci">std::size_t NMeasure() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00146">Model.h:146</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a1f662db87f8123e8ebc65e2e0f663740"><div class="ttname"><a href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">Kalman::Model::NMeasure</a></div><div class="ttdeci">std::size_t NMeasure() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00148">Model.h:148</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1031,8 +1136,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a8072ab3c1050f5ce7c0391ff47f6e49f">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00120">120</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  120</span>{ <span class="keywordflow">return</span> fNoisyMeasure != <span class="keyword">nullptr</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00141">141</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  141</span>{ <span class="keywordflow">return</span> fNoisyMeasure != <span class="keyword">nullptr</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1063,8 +1168,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a6bdfc3ebdea496835000879d09bcacdc">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00118">118</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  118</span>{ <span class="keywordflow">return</span> fNoisyStep != <span class="keyword">nullptr</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00139">139</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  139</span>{ <span class="keywordflow">return</span> fNoisyStep != <span class="keyword">nullptr</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1163,14 +1268,14 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00151">151</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  152</span>    {</div>
-<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">if</span> (!fMeasureJacobian) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Extended::JacobianH</a>(x, t);</div>
-<div class="line"><span class="lineno">  154</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x);</div>
-<div class="line"><span class="lineno">  155</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>() * <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
-<div class="line"><span class="lineno">  156</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fMeasureJacobian(fUser, xin.data(), t, out.data()), <span class="stringliteral">&quot;Jacobian of h&quot;</span>);</div>
-<div class="line"><span class="lineno">  157</span>        <span class="keywordflow">return</span> ToMatrix(out, <a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>(), <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
-<div class="line"><span class="lineno">  158</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00175">175</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  176</span>    {</div>
+<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">if</span> (!fMeasureJacobian) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Extended::JacobianH</a>(x, t);</div>
+<div class="line"><span class="lineno">  178</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x);</div>
+<div class="line"><span class="lineno">  179</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>() * <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
+<div class="line"><span class="lineno">  180</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fMeasureJacobian(fUser, xin.data(), t, out.data()), <span class="stringliteral">&quot;Jacobian of h&quot;</span>);</div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> ToMatrix(out, <a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>(), <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
+<div class="line"><span class="lineno">  182</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a4b10c079475ed1d5ca555e80fd420d70"><div class="ttname"><a href="class_kalman_1_1_model.html#a4b10c079475ed1d5ca555e80fd420d70">Kalman::Model::JacobianH</a></div><div class="ttdeci">virtual Matrix JacobianH(const Vector &amp;x, double t=0.) const</div><div class="ttdoc">dh/dx — H(t) when analytic, central differences otherwise.</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00249">Model.cc:249</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1206,6 +1311,46 @@ Additional Inherited Members</h2></td></tr>
 <div class="line"><span class="lineno">  113</span>        <span class="keywordflow">return</span> fProcessNoise ? Matrix() : <a class="code hl_function" href="class_kalman_1_1_models_1_1_extended.html#acd8b6986e401bbbf53199d37ad7a1542">Extended</a>::<a class="code hl_function" href="class_kalman_1_1_models_1_1_callback.html#a30653122675321216d2e14f691202075">L</a>(t);</div>
 <div class="line"><span class="lineno">  114</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_models_1_1_callback_html_a30653122675321216d2e14f691202075"><div class="ttname"><a href="class_kalman_1_1_models_1_1_callback.html#a30653122675321216d2e14f691202075">Kalman::Models::Callback::L</a></div><div class="ttdeci">Matrix L(double t=0.) const override</div><div class="ttdef"><b>Definition</b> <a href="_callback_8cc_source.html#l00111">Callback.cc:111</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a351e81d717f9bb20fa516f080f37b532" name="a351e81d717f9bb20fa516f080f37b532"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a351e81d717f9bb20fa516f080f37b532">&#9670;&#160;</a></span>LimitControl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_kalman_1_1_vector.html">Vector</a> Kalman::Models::Callback::LimitControl </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_kalman_1_1_vector.html">Vector</a> &amp;&#160;</td>
+          <td class="paramname"><em>u</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Actuator-limit hook: the command the plant can actually deliver. </p>
+<p>Identity by default. A model with real limits (a steering clip, a thrust ceiling) overrides it so a controller's logged cost and an MPPI rollout see the same constraint <code><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a29caa14e172db577fac87d4ccb7ff966" title="One step of the dynamics.">f()</a></code> enforces internally. </p>
+
+<p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711">Kalman::Model</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00116">116</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>    {</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">if</span> (!fClip || u.Empty()) <span class="keywordflow">return</span> u;</div>
+<div class="line"><span class="lineno">  119</span>        <span class="keyword">const</span> std::vector&lt;double&gt; uin = Flat(u);</div>
+<div class="line"><span class="lineno">  120</span>        std::vector&lt;double&gt; out(u.Size());</div>
+<div class="line"><span class="lineno">  121</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fClip(fUser, uin.data(), out.data()), <span class="stringliteral">&quot;clip&quot;</span>);</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> ToVector(out);</div>
+<div class="line"><span class="lineno">  123</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1252,15 +1397,57 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#adee12d5611cb574ff3f650b14b78c18b">Kalman::Model</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00142">142</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  143</span>    {</div>
-<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">if</span> (!fNoisyMeasure) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#adee12d5611cb574ff3f650b14b78c18b">Extended::MeasureWithNoise</a>(x, v, t);</div>
-<div class="line"><span class="lineno">  145</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), vin = Flat(v);</div>
-<div class="line"><span class="lineno">  146</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>());</div>
-<div class="line"><span class="lineno">  147</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fNoisyMeasure(fUser, xin.data(), vin.data(), t, out.data()), <span class="stringliteral">&quot;h with noise&quot;</span>);</div>
-<div class="line"><span class="lineno">  148</span>        <span class="keywordflow">return</span> ToVector(out);</div>
-<div class="line"><span class="lineno">  149</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00166">166</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  167</span>    {</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">if</span> (!fNoisyMeasure) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#adee12d5611cb574ff3f650b14b78c18b">Extended::MeasureWithNoise</a>(x, v, t);</div>
+<div class="line"><span class="lineno">  169</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), vin = Flat(v);</div>
+<div class="line"><span class="lineno">  170</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1f662db87f8123e8ebc65e2e0f663740">NMeasure</a>());</div>
+<div class="line"><span class="lineno">  171</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fNoisyMeasure(fUser, xin.data(), vin.data(), t, out.data()), <span class="stringliteral">&quot;h with noise&quot;</span>);</div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">return</span> ToVector(out);</div>
+<div class="line"><span class="lineno">  173</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_adee12d5611cb574ff3f650b14b78c18b"><div class="ttname"><a href="class_kalman_1_1_model.html#adee12d5611cb574ff3f650b14b78c18b">Kalman::Model::MeasureWithNoise</a></div><div class="ttdeci">virtual Vector MeasureWithNoise(const Vector &amp;x, const Vector &amp;v, double t) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00097">Model.cc:97</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a09cd7d3868f45bc6e76aeaaf3001136e" name="a09cd7d3868f45bc6e76aeaaf3001136e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09cd7d3868f45bc6e76aeaaf3001136e">&#9670;&#160;</a></span>ParametersChanged()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Kalman::Models::Callback::ParametersChanged </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">override</span><span class="mlabel">protected</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Called after every <a class="el" href="class_kalman_1_1_model.html#a0e1cb17c6d1638914c2b76355ca0aecb">SetParameter()</a>: refresh whatever is derived from them. </p>
+
+<p>Reimplemented from <a class="el" href="class_kalman_1_1_model.html#a5b8e4cd6dac1b10694b2f2cc0f0ec1ec">Kalman::Model</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00137">137</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>    {</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> (!fParameter) <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">for</span> (<span class="keyword">auto</span> &amp;[name, pushed] : fPushed)</div>
+<div class="line"><span class="lineno">  141</span>        {</div>
+<div class="line"><span class="lineno">  142</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> value = <a class="code hl_function" href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Parameter</a>(name);</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordflow">if</span> (value == pushed) <span class="keywordflow">continue</span>;</div>
+<div class="line"><span class="lineno">  144</span>            <a class="code hl_namespace" href="namespace_check.html">Check</a>(fParameter(fUser, name.c_str(), value), <span class="stringliteral">&quot;set parameter&quot;</span>);</div>
+<div class="line"><span class="lineno">  145</span>            pushed = value;</div>
+<div class="line"><span class="lineno">  146</span>        }</div>
+<div class="line"><span class="lineno">  147</span>    }</div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_ad01e8d3360561cbff4642b7e90cd22a7"><div class="ttname"><a href="class_kalman_1_1_model.html#ad01e8d3360561cbff4642b7e90cd22a7">Kalman::Model::Parameter</a></div><div class="ttdeci">virtual double Parameter(const std::string &amp;name) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00545">Model.cc:545</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1293,14 +1480,14 @@ Additional Inherited Members</h2></td></tr>
 <p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00092">92</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
 <div class="fragment"><div class="line"><span class="lineno">   93</span>    {</div>
 <div class="line"><span class="lineno">   94</span>        <span class="keywordflow">if</span> (!fProcessNoise) <span class="keywordflow">return</span> <a class="code hl_function" href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Extended::Q</a>(t);</div>
-<div class="line"><span class="lineno">   95</span>        <span class="keyword">const</span> Vector x = fLastX.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() == <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>() ? fLastX : <a class="code hl_function" href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">X0</a>();</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keyword">const</span> Vector <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = fLastX.<a class="code hl_function" href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Size</a>() == <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>() ? fLastX : <a class="code hl_function" href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">X0</a>();</div>
 <div class="line"><span class="lineno">   96</span>        <span class="keyword">const</span> std::vector&lt;double&gt; xin = Flat(x), uin = Flat(fLastU);</div>
 <div class="line"><span class="lineno">   97</span>        std::vector&lt;double&gt; out(<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>() * <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
 <div class="line"><span class="lineno">   98</span>        <a class="code hl_namespace" href="namespace_check.html">Check</a>(fProcessNoise(fUser, xin.data(), uin.size() == <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &amp;&amp; <a class="code hl_function" href="class_kalman_1_1_model.html#a6dc92aaff4c5772d81ff99e4f07f96e3">NControl</a>() &gt; 0 ? uin.data() : nullptr, t, out.data()),</div>
 <div class="line"><span class="lineno">   99</span>              <span class="stringliteral">&quot;process noise&quot;</span>);</div>
 <div class="line"><span class="lineno">  100</span>        <span class="keywordflow">return</span> ToMatrix(out, <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>(), <a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
 <div class="line"><span class="lineno">  101</span>    }</div>
-<div class="ttc" id="aclass_kalman_1_1_model_html_a749aa3aba267917ce124ea0347e3afe6"><div class="ttname"><a href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">Kalman::Model::X0</a></div><div class="ttdeci">const Vector &amp; X0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00244">Model.h:244</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_model_html_a749aa3aba267917ce124ea0347e3afe6"><div class="ttname"><a href="class_kalman_1_1_model.html#a749aa3aba267917ce124ea0347e3afe6">Kalman::Model::X0</a></div><div class="ttdeci">const Vector &amp; X0() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00271">Model.h:271</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_ab6a9abc04fc8e4f6f334563b6ff7359d"><div class="ttname"><a href="class_kalman_1_1_model.html#ab6a9abc04fc8e4f6f334563b6ff7359d">Kalman::Model::Q</a></div><div class="ttdeci">virtual Matrix Q(double t=0.) const</div><div class="ttdef"><b>Definition</b> <a href="_model_8cc_source.html#l00085">Model.cc:85</a></div></div>
 <div class="ttc" id="aclass_kalman_1_1_vector_html_aaacb0bc54c976b6c03f43b1d861d7877"><div class="ttname"><a href="class_kalman_1_1_vector.html#aaacb0bc54c976b6c03f43b1d861d7877">Kalman::Vector::Size</a></div><div class="ttdeci">std::size_t Size() const</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00050">Matrix.h:50</a></div></div>
 </div><!-- fragment -->
@@ -1343,8 +1530,8 @@ Additional Inherited Members</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a0378a55e01871f1da3e4be53a9f1dd32" name="a0378a55e01871f1da3e4be53a9f1dd32"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0378a55e01871f1da3e4be53a9f1dd32">&#9670;&#160;</a></span>SetClip()</h2>
+<a id="aac4435d3123a060966a9a238a802f4cb" name="aac4435d3123a060966a9a238a802f4cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aac4435d3123a060966a9a238a802f4cb">&#9670;&#160;</a></span>SetLimit()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -1353,9 +1540,9 @@ Additional Inherited Members</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Kalman::Models::Callback::SetClip </td>
+          <td class="memname">void Kalman::Models::Callback::SetLimit </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a7222f7d6032715089470cd6e9f081e68">ClipFn</a>&#160;</td>
+          <td class="paramtype"><a class="el" href="class_kalman_1_1_models_1_1_callback.html#a8cd3ced234b815f886b3bce79c5d87e6">LimitFn</a>&#160;</td>
           <td class="paramname"><em>clip</em></td><td>)</td>
           <td></td>
         </tr>
@@ -1367,10 +1554,10 @@ Additional Inherited Members</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p>Give the model its actuator limit (<a class="el" href="class_kalman_1_1_model.html#aed136bf23ef636d21778c8ccde69714d" title="Actuator-limit hook: the command the plant can actually deliver.">Model::ClipControl</a>); null keeps the identity. </p>
+<p>Give the model its actuator limit (<a class="el" href="class_kalman_1_1_model.html#a535608273bff5e2bfbd4704709233711" title="Actuator-limit hook: the command the plant can actually deliver.">Model::LimitControl</a>); null keeps the identity. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00114">114</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>{ fClip = clip; }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00124">124</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  124</span>{ fClip = clip; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1438,11 +1625,11 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <p>Give the maps that take their noise as an argument (either may be null). The sigma-point engine then augments the state with it. </p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00125">125</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  126</span>    {</div>
-<div class="line"><span class="lineno">  127</span>        fNoisyStep = noisyStep;</div>
-<div class="line"><span class="lineno">  128</span>        fNoisyMeasure = noisyMeasure;</div>
-<div class="line"><span class="lineno">  129</span>    }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8cc_source.html#l00149">149</a> of file <a class="el" href="_callback_8cc_source.html">Callback.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  150</span>    {</div>
+<div class="line"><span class="lineno">  151</span>        fNoisyStep = noisyStep;</div>
+<div class="line"><span class="lineno">  152</span>        fNoisyMeasure = noisyMeasure;</div>
+<div class="line"><span class="lineno">  153</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1473,8 +1660,8 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Implements <a class="el" href="class_kalman_1_1_abstract_1_1_metadata.html#a8e71ab37553782e05b6a62bb6bb239bf">Kalman::Abstract::Metadata</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00084">84</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   84</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Callback Model&quot;</span>; }</div>
+<p class="definition">Definition at line <a class="el" href="_callback_8h_source.html#l00094">94</a> of file <a class="el" href="_callback_8h_source.html">Callback.h</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   94</span>{ <span class="keywordflow">return</span> <span class="stringliteral">&quot;Callback Model&quot;</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>

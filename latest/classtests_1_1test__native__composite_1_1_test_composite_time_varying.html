@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,7 @@ composite time-varying: its stacked H is stored as a function of time, the
 way a model built from a function of time stores it, so the filter's pass
 over tables (and the exporter) tabulate it. It must never take the
 constant-matrix pass, which would read H once.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00246">246</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00220">220</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a318335445f9e3322a5fa92eb6e396787" name="a318335445f9e3322a5fa92eb6e396787"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a318335445f9e3322a5fa92eb6e396787">&#9670;&#160;</a></span>make()</h2>
@@ -181,11 +181,11 @@ constant-matrix pass, which would read H once.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00253">253</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  253</span>    <span class="keyword">def </span>make(self):</div>
-<div class="line"><span class="lineno">  254</span>        <span class="keywordflow">return</span> CompositeKalmanModel(PhasorOscillatorModel(<span class="stringliteral">&quot;p&quot;</span>, [50.0, 100.0], fs=1000.0),</div>
-<div class="line"><span class="lineno">  255</span>                                    AnalyticOscillatorModel(<span class="stringliteral">&quot;a&quot;</span>, fs=1000.0, f0=10.0, Q=100))</div>
-<div class="line"><span class="lineno">  256</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00227">227</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>make(self):</div>
+<div class="line"><span class="lineno">  228</span>        <span class="keywordflow">return</span> Composite(PhasorOscillatorModel(<span class="stringliteral">&quot;p&quot;</span>, [50.0, 100.0], fs=1000.0),</div>
+<div class="line"><span class="lineno">  229</span>                                    AnalyticOscillatorModel(<span class="stringliteral">&quot;a&quot;</span>, fs=1000.0, f0=10.0, Q=100))</div>
+<div class="line"><span class="lineno">  230</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -205,16 +205,16 @@ constant-matrix pass, which would read H once.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00257">257</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  257</span>    <span class="keyword">def </span>test_declares_time_varying(self):</div>
-<div class="line"><span class="lineno">  258</span>        model = self.make()</div>
-<div class="line"><span class="lineno">  259</span>        self.assertIs(model.structure, S.TIME_VARYING)</div>
-<div class="line"><span class="lineno">  260</span>        self.assertIs(model.DEFAULT_ENGINE, KalmanEngineKind.LINEAR)</div>
-<div class="line"><span class="lineno">  261</span>        self.assertTrue(callable(model._H))</div>
-<div class="line"><span class="lineno">  262</span>        self.assertFalse(callable(model._F))</div>
-<div class="line"><span class="lineno">  263</span>        np.testing.assert_array_equal(model._H(t=0.013), model.H(t=0.013))</div>
-<div class="line"><span class="lineno">  264</span>        self.assertFalse(np.allclose(model.H(t=0.0), model.H(t=0.013)))</div>
-<div class="line"><span class="lineno">  265</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00231">231</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  231</span>    <span class="keyword">def </span>test_declares_time_varying(self):</div>
+<div class="line"><span class="lineno">  232</span>        model = self.make()</div>
+<div class="line"><span class="lineno">  233</span>        self.assertIs(model.structure, S.TIME_VARYING)</div>
+<div class="line"><span class="lineno">  234</span>        self.assertIs(model.DEFAULT_ENGINE, KalmanEngineKind.LINEAR)</div>
+<div class="line"><span class="lineno">  235</span>        self.assertTrue(callable(model._H))</div>
+<div class="line"><span class="lineno">  236</span>        self.assertFalse(callable(model._F))</div>
+<div class="line"><span class="lineno">  237</span>        np.testing.assert_array_equal(model._H(t=0.013), model.H(t=0.013))</div>
+<div class="line"><span class="lineno">  238</span>        self.assertFalse(np.allclose(model.H(t=0.0), model.H(t=0.013)))</div>
+<div class="line"><span class="lineno">  239</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -234,23 +234,23 @@ constant-matrix pass, which would read H once.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00266">266</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  266</span>    <span class="keyword">def </span>test_not_the_constant_pass(self):</div>
-<div class="line"><span class="lineno">  267</span>        rng = np.random.default_rng(6)</div>
-<div class="line"><span class="lineno">  268</span>        t = np.arange(400) / 1000.0</div>
-<div class="line"><span class="lineno">  269</span>        z = np.c_[np.cos(2 * np.pi * 50 * t), np.zeros_like(t), np.zeros_like(t)] + 0.1 * rng.standard_normal((400, 3))</div>
-<div class="line"><span class="lineno">  270</span>        <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_native&quot;</span>, autospec=<span class="keyword">True</span>,</div>
-<div class="line"><span class="lineno">  271</span>                               side_effect=KalmanFilter._forward_native) <span class="keyword">as</span> fused:</div>
-<div class="line"><span class="lineno">  272</span>            cx = self.make().filter(z)</div>
-<div class="line"><span class="lineno">  273</span>        self.assertEqual(fused.call_count, 0)</div>
-<div class="line"><span class="lineno">  274</span>        <span class="keyword">with</span> native.python_reference(), \</div>
-<div class="line"><span class="lineno">  275</span>                mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_native_forward_eligible&quot;</span>, return_value=<span class="keyword">False</span>):</div>
-<div class="line"><span class="lineno">  276</span>            py = self.make().filter(z)</div>
-<div class="line"><span class="lineno">  277</span>        close(self, py.xk, cx.xk, STATE_RTOL, <span class="stringliteral">&quot;state&quot;</span>)</div>
-<div class="line"><span class="lineno">  278</span>        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
-<div class="line"><span class="lineno">  279</span> </div>
-<div class="line"><span class="lineno">  280</span> </div>
-<div class="line"><span class="lineno">  281</span><span class="preprocessor">@needs_kernels</span></div>
+<p class="definition">Definition at line <a class="el" href="test__native__composite_8py_source.html#l00240">240</a> of file <a class="el" href="test__native__composite_8py_source.html">test_native_composite.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>    <span class="keyword">def </span>test_not_the_constant_pass(self):</div>
+<div class="line"><span class="lineno">  241</span>        rng = np.random.default_rng(6)</div>
+<div class="line"><span class="lineno">  242</span>        t = np.arange(400) / 1000.0</div>
+<div class="line"><span class="lineno">  243</span>        z = np.c_[np.cos(2 * np.pi * 50 * t), np.zeros_like(t), np.zeros_like(t)] + 0.1 * rng.standard_normal((400, 3))</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keyword">with</span> mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_forward_native&quot;</span>, autospec=<span class="keyword">True</span>,</div>
+<div class="line"><span class="lineno">  245</span>                               side_effect=KalmanFilter._forward_native) <span class="keyword">as</span> fused:</div>
+<div class="line"><span class="lineno">  246</span>            cx = self.make().filter(z)</div>
+<div class="line"><span class="lineno">  247</span>        self.assertEqual(fused.call_count, 0)</div>
+<div class="line"><span class="lineno">  248</span>        <span class="keyword">with</span> native.python_reference(), \</div>
+<div class="line"><span class="lineno">  249</span>                mock.patch.object(KalmanFilter, <span class="stringliteral">&quot;_native_forward_eligible&quot;</span>, return_value=<span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  250</span>            py = self.make().filter(z)</div>
+<div class="line"><span class="lineno">  251</span>        close(self, py.xk, cx.xk, STATE_RTOL, <span class="stringliteral">&quot;state&quot;</span>)</div>
+<div class="line"><span class="lineno">  252</span>        close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, <span class="stringliteral">&quot;covariance&quot;</span>)</div>
+<div class="line"><span class="lineno">  253</span> </div>
+<div class="line"><span class="lineno">  254</span> </div>
+<div class="line"><span class="lineno">  255</span><span class="preprocessor">@needs_kernels</span></div>
 </div><!-- fragment -->
 </div>
 </div>

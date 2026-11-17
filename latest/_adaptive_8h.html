@@ -6,12 +6,12 @@
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <!-- BEGIN opengraph metadata -->
-<meta property="og:title" content="include/Kalman/Controllers/Adaptive.h File Reference" />
+<meta property="og:title" content="include/Kalman/Tuners/Adaptive.h File Reference" />
 <meta property="og:image" content="logo.drawio.svg" />
-<meta property="og:description" content="Kalman World: include/Kalman/Controllers/Adaptive.h File Reference" />
+<meta property="og:description" content="Kalman World: include/Kalman/Tuners/Adaptive.h File Reference" />
 <meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
 <!-- END opengraph metadata -->
-<title>include/Kalman/Controllers/Adaptive.h File Reference</title>
+<title>include/Kalman/Tuners/Adaptive.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -145,36 +145,36 @@ $(document).ready(function(){initNavTree('_adaptive_8h.html',''); initResizable(
 
 <p>The two innovation-driven adapters: a gain boost on R, a Q scaling.  
 <a href="#details">More...</a></p>
-<div class="textblock"><code>#include &quot;<a class="el" href="_controller_8h_source.html">Kalman/Controller.h</a>&quot;</code><br />
+<div class="textblock"><code>#include &quot;<a class="el" href="_tuner_8h_source.html">Kalman/Tuner.h</a>&quot;</code><br />
 <code>#include &lt;utility&gt;</code><br />
 <code>#include &lt;vector&gt;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for Adaptive.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_adaptive_8h__incl.svg" width="1223" height="418"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_adaptive_8h__incl.svg" width="1450" height="564"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="_adaptive_8h__dep__incl.svg" width="4827" height="212"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="_adaptive_8h__dep__incl.svg" width="6490" height="286"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="_adaptive_8h_source.html">Go to the source code of this file.</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_boost.html">Kalman::Controllers::Boost</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows. Mirrors <code><a class="el" href="boost_8py.html">controllers/boost.py</a></code>.  <a href="class_kalman_1_1_controllers_1_1_boost.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_tuners_1_1_boost.html">Kalman::Tuners::Boost</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">When the filter is surprised (NIS &gt;&gt; m over a window), shrink R so the gain grows. Mirrors <code><a class="el" href="boost_8py.html">tuners/boost.py</a></code>.  <a href="class_kalman_1_1_tuners_1_1_boost.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html">Kalman::Controllers::AdaptiveQR</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the empirical innovation covariance with the model's S; scale Q by the ratio. Clipped to <code>[qMin, qMax]</code>. Mirrors <code><a class="el" href="adaptive__qr_8py.html">controllers/adaptive_qr.py</a></code>.  <a href="class_kalman_1_1_controllers_1_1_adaptive_q_r.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_kalman_1_1_tuners_1_1_adaptive_q_r.html">Kalman::Tuners::AdaptiveQR</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Compare the empirical innovation covariance with the model's S; scale Q by the ratio. Clipped to <code>[qMin, qMax]</code>. Mirrors <code><a class="el" href="adaptive__qr_8py.html">tuners/adaptive_qr.py</a></code>.  <a href="class_kalman_1_1_tuners_1_1_adaptive_q_r.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:namespace_kalman" id="r_namespace_kalman"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman.html">Kalman</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespace_kalman_1_1_controllers" id="r_namespace_kalman_1_1_controllers"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_controllers.html">Kalman::Controllers</a></td></tr>
+<tr class="memitem:namespace_kalman_1_1_tuners" id="r_namespace_kalman_1_1_tuners"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_kalman_1_1_tuners.html">Kalman::Tuners</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -182,7 +182,7 @@ Namespaces</h2></td></tr>
 <hr  />
 <dl class="section author"><dt>Author</dt><dd>Marco Meyer &lt;<a href="#" onclick="location.href='mai'+'lto:'+'mar'+'co'+'.me'+'ye'+'r@o'+'mu'+'.ac'+'.j'+'p'; return false;">marco<span class="obfuscator">.nosp@m.</span>.mey<span class="obfuscator">.nosp@m.</span>er@om<span class="obfuscator">.nosp@m.</span>u.ac<span class="obfuscator">.nosp@m.</span>.jp</a>&gt;</dd></dl>
 <hr  />
-<p>Neither commands anything — Policy() is zero. They live in the controller slot because that is the hook a <a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a> offers once per step with the innovation in hand, and adapting the model <em>is</em> a control decision about the filter. Both restore the nominal matrix on Reset(). They act through Model::SetR / SetQ, so a model whose R(t) or Q(t) override ignores the stored matrix is unaffected — the same caveat as the Python originals.</p>
+<p>The two tuners (<a class="el" href="class_kalman_1_1_tuner.html" title="Retunes the filter&#39;s own noise model as it runs; commands nothing.">Kalman::Tuner</a>): they retune the model and command nothing. Both restore the nominal matrix on Reset(). They act through Model::SetR / SetQ, so a model whose R(t) or Q(t) override ignores the stored matrix is unaffected, the same caveat as the Python originals.</p>
 <hr  />
  
 <p class="definition">Definition in file <a class="el" href="_adaptive_8h_source.html">Adaptive.h</a>.</p>
@@ -192,7 +192,7 @@ Namespaces</h2></td></tr>
 <!-- start footer part -->
     <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
         <ul>
-            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_3890d77023625ec95bb436089d1c34dc.html">Controllers</a></li><li class="navelem"><a class="el" href="_adaptive_8h.html">Adaptive.h</a></li>
+            <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_3fe9a22a30d55b8646dbe94bd625f96a.html">Kalman</a></li><li class="navelem"><a class="el" href="dir_757f36632d318e31b7b03464bea5e9b5.html">Tuners</a></li><li class="navelem"><a class="el" href="_adaptive_8h.html">Adaptive.h</a></li>
             <li class="footer">
             <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
             </li>

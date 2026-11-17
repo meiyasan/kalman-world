@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -182,7 +182,7 @@ $(document).ready(function(){initNavTree('scaffold_8py_source.html',''); initRes
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    noise = spec.get(<span class="stringliteral">&quot;noise&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    init = spec.get(<span class="stringliteral">&quot;initial&quot;</span>, {}) <span class="keywordflow">or</span> {}</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    fs = spec.get(<span class="stringliteral">&quot;fs&quot;</span>, 1.0)</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor_id&quot;</span>, <span class="stringliteral">&quot;S&quot;</span>)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    sensor = spec.get(<span class="stringliteral">&quot;sensor&quot;</span>, <span class="stringliteral">&quot;S&quot;</span>)</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    kwargs = []</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">if</span> base == <span class="stringliteral">&quot;matrices&quot;</span>:</div>
@@ -214,9 +214,9 @@ $(document).ready(function(){initNavTree('scaffold_8py_source.html',''); initRes
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral">    DESCRIPTION = &quot;Scaffolded from a KalmanSpec.&quot;</span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="stringliteral">    VERSION = &quot;0.1&quot;</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="stringliteral">    def __init__(self, sensor_id={sensor!r}, **kw):</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="stringliteral">    def __init__(self, sensor={sensor!r}, **kw):</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span><span class="stringliteral">        super().__init__(</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="stringliteral">            sensor_id,</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="stringliteral">            sensor,</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="stringliteral">            {args},</span></div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span><span class="stringliteral">            **kw,</span></div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="stringliteral">        )</span></div>

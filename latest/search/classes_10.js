@@ -17,10 +17,12 @@ var searchData=
   ['polarizationmodel_14',['PolarizationModel',['../classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_model.html',1,'modules::apps::gravitational::gravwave::polarization']]],
   ['polarizationobservable_15',['PolarizationObservable',['../classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_observable.html',1,'modules::apps::gravitational::gravwave::polarization']]],
   ['polarizationstate_16',['PolarizationState',['../classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_state.html',1,'modules::apps::gravitational::gravwave::polarization']]],
-  ['powergridobservable_17',['PowerGridObservable',['../classmodules_1_1apps_1_1resonators_1_1powergrids_1_1harmonics_1_1_power_grid_observable.html',1,'modules::apps::resonators::powergrids::harmonics']]],
-  ['powergridstatemodel_18',['PowerGridStateModel',['../classmodules_1_1apps_1_1resonators_1_1powergrids_1_1harmonics_1_1_power_grid_state_model.html',1,'modules::apps::resonators::powergrids::harmonics']]],
-  ['proportional_19',['Proportional',['../class_kalman_1_1_controllers_1_1_proportional.html',1,'Kalman::Controllers']]],
-  ['proportionalkalmancontroller_20',['ProportionalKalmanController',['../classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html',1,'modules::framework::controllers::proportional']]],
-  ['purepythonwarning_21',['PurePythonWarning',['../classmodules_1_1framework_1_1native_1_1core_1_1_pure_python_warning.html',1,'modules::framework::native::core']]],
-  ['python_5freference_22',['python_reference',['../classmodules_1_1framework_1_1models_1_1native_1_1python__reference.html',1,'modules::framework::models::native']]]
+  ['position_17',['Position',['../class_kalman_1_1_sensors_1_1_position.html',1,'Kalman::Sensors']]],
+  ['positionsensor_18',['PositionSensor',['../classmodules_1_1framework_1_1sensors_1_1position_1_1_position_sensor.html',1,'modules::framework::sensors::position']]],
+  ['powergridobservable_19',['PowerGridObservable',['../classmodules_1_1apps_1_1resonators_1_1powergrids_1_1harmonics_1_1_power_grid_observable.html',1,'modules::apps::resonators::powergrids::harmonics']]],
+  ['powergridstatemodel_20',['PowerGridStateModel',['../classmodules_1_1apps_1_1resonators_1_1powergrids_1_1harmonics_1_1_power_grid_state_model.html',1,'modules::apps::resonators::powergrids::harmonics']]],
+  ['proportional_21',['Proportional',['../class_kalman_1_1_controllers_1_1_proportional.html',1,'Kalman::Controllers']]],
+  ['proportionalkalmancontroller_22',['ProportionalKalmanController',['../classmodules_1_1framework_1_1controllers_1_1proportional_1_1_proportional_kalman_controller.html',1,'modules::framework::controllers::proportional']]],
+  ['purepythonwarning_23',['PurePythonWarning',['../classmodules_1_1framework_1_1native_1_1core_1_1_pure_python_warning.html',1,'modules::framework::native::core']]],
+  ['python_5freference_24',['python_reference',['../classmodules_1_1framework_1_1models_1_1native_1_1python__reference.html',1,'modules::framework::models::native']]]
 ];

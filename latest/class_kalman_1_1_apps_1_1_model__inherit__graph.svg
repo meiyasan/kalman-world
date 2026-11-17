@@ -20,10 +20,10 @@
 <!-- Node5 -->
 <g id="Node000005" class="node">
 <title>Node5</title>
-<g id="a_Node000005"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_interplanetary.html" target="_top" xlink:title="Heliocentric N&#45;body cruise — the twin of kalman.apps.astro.space.InterplanetaryModel.">
-<polygon fill="white" stroke="#666666" points="789,-702 673,-702 673,-672 789,-672 789,-702"/>
-<text text-anchor="start" x="681" y="-690" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
-<text text-anchor="middle" x="731" y="-679" font-family="Helvetica,sans-Serif" font-size="10.00">::Interplanetary</text>
+<g id="a_Node000005"><a xlink:href="class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_ascent.html" target="_top" xlink:title="Planar guided ascent, thrust as the control input &#45; the counterpart of kalman.apps....">
+<polygon fill="white" stroke="#666666" points="801.5,-702 660.5,-702 660.5,-672 801.5,-672 801.5,-702"/>
+<text text-anchor="start" x="668.5" y="-690" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Aerospace</text>
+<text text-anchor="middle" x="731" y="-679" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketAscent</text>
 </a>
 </g>
 </g>
@@ -31,7 +31,7 @@
 <g id="edge4_Node000001_Node000005" class="edge">
 <title>Node1&#45;&gt;Node5</title>
 <g id="a_edge4_Node000001_Node000005"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M559.03,-370.81C560.2,-425.36 571.08,-579.22 654,-663 659.35,-668.41 665.91,-672.6 672.92,-675.85"/>
+<path fill="none" stroke="#63b8ff" d="M559.03,-370.81C560.2,-425.36 571.08,-579.22 654,-663 657.41,-666.44 661.3,-669.39 665.49,-671.92"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="562.52,-370.7 558.9,-360.74 555.53,-370.79 562.52,-370.7"/>
 </a>
 </g>
@@ -39,10 +39,10 @@
 <!-- Node6 -->
 <g id="Node000006" class="node">
 <title>Node6</title>
-<g id="a_Node000006"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_rocket_ascent.html" target="_top" xlink:title="Planar guided ascent, thrust as the control input &#45; the twin of kalman.apps.astro....">
-<polygon fill="white" stroke="#666666" points="789,-654 673,-654 673,-624 789,-624 789,-654"/>
-<text text-anchor="start" x="681" y="-642" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
-<text text-anchor="middle" x="731" y="-631" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketAscent</text>
+<g id="a_Node000006"><a xlink:href="class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_descent.html" target="_top" xlink:title="Planar powered descent of a gimballed rigid booster &#45; the counterpart of kalman.apps....">
+<polygon fill="white" stroke="#666666" points="801.5,-654 660.5,-654 660.5,-624 801.5,-624 801.5,-654"/>
+<text text-anchor="start" x="668.5" y="-642" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Aerospace</text>
+<text text-anchor="middle" x="731" y="-631" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketDescent</text>
 </a>
 </g>
 </g>
@@ -50,7 +50,7 @@
 <g id="edge5_Node000001_Node000006" class="edge">
 <title>Node1&#45;&gt;Node6</title>
 <g id="a_edge5_Node000001_Node000006"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M560.29,-370.63C564.55,-419.21 582.31,-546.09 654,-615 659.39,-620.18 665.88,-624.24 672.78,-627.42"/>
+<path fill="none" stroke="#63b8ff" d="M560.29,-370.63C564.55,-419.21 582.31,-546.09 654,-615 657.59,-618.45 661.68,-621.41 666.04,-623.94"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="563.77,-370.23 559.51,-360.53 556.79,-370.77 563.77,-370.23"/>
 </a>
 </g>
@@ -58,10 +58,10 @@
 <!-- Node7 -->
 <g id="Node000007" class="node">
 <title>Node7</title>
-<g id="a_Node000007"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_rocket_descent.html" target="_top" xlink:title="Planar powered descent of a gimballed rigid booster &#45; the twin of kalman.apps.astro....">
-<polygon fill="white" stroke="#666666" points="789,-606 673,-606 673,-576 789,-576 789,-606"/>
-<text text-anchor="start" x="681" y="-594" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
-<text text-anchor="middle" x="731" y="-583" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketDescent</text>
+<g id="a_Node000007"><a xlink:href="class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_landing.html" target="_top" xlink:title="Vertical propulsive landing (a hoverslam) &#45; the counterpart of kalman.apps.aerospace....">
+<polygon fill="white" stroke="#666666" points="801.5,-606 660.5,-606 660.5,-576 801.5,-576 801.5,-606"/>
+<text text-anchor="start" x="668.5" y="-594" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Aerospace</text>
+<text text-anchor="middle" x="731" y="-583" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketLanding</text>
 </a>
 </g>
 </g>
@@ -69,7 +69,7 @@
 <g id="edge6_Node000001_Node000007" class="edge">
 <title>Node1&#45;&gt;Node7</title>
 <g id="a_edge6_Node000001_Node000007"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M562.09,-370.72C569.74,-412.96 593.53,-512.76 654,-567 659.46,-571.9 665.92,-575.79 672.72,-578.9"/>
+<path fill="none" stroke="#63b8ff" d="M562.09,-370.72C569.74,-412.96 593.53,-512.76 654,-567 657.81,-570.42 662.11,-573.35 666.67,-575.86"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="565.54,-370.12 560.41,-360.84 558.64,-371.29 565.54,-370.12"/>
 </a>
 </g>
@@ -77,10 +77,10 @@
 <!-- Node8 -->
 <g id="Node000008" class="node">
 <title>Node8</title>
-<g id="a_Node000008"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_rocket_landing.html" target="_top" xlink:title="Vertical propulsive landing (a hoverslam) &#45; the twin of kalman.apps.astro.rocket.RocketLandingModel.">
-<polygon fill="white" stroke="#666666" points="789,-558 673,-558 673,-528 789,-528 789,-558"/>
-<text text-anchor="start" x="681" y="-546" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
-<text text-anchor="middle" x="731" y="-535" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketLanding</text>
+<g id="a_Node000008"><a xlink:href="class_kalman_1_1_apps_1_1_aerospace_1_1_rocket_liftoff.html" target="_top" xlink:title="Vertical liftoff with a finite propellant load &#45; the counterpart of kalman.apps.aerospace....">
+<polygon fill="white" stroke="#666666" points="801.5,-558 660.5,-558 660.5,-528 801.5,-528 801.5,-558"/>
+<text text-anchor="start" x="668.5" y="-546" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Aerospace</text>
+<text text-anchor="middle" x="731" y="-535" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketLiftoff</text>
 </a>
 </g>
 </g>
@@ -88,7 +88,7 @@
 <g id="edge7_Node000001_Node000008" class="edge">
 <title>Node1&#45;&gt;Node8</title>
 <g id="a_edge7_Node000001_Node000008"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M564.75,-370.53C576.05,-405.49 604.44,-478.84 654,-519 659.59,-523.53 666.04,-527.21 672.78,-530.2"/>
+<path fill="none" stroke="#63b8ff" d="M564.75,-370.53C576.05,-405.49 604.44,-478.84 654,-519 658.19,-522.4 662.87,-525.32 667.79,-527.82"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="567.99,-369.14 561.68,-360.62 561.3,-371.21 567.99,-369.14"/>
 </a>
 </g>
@@ -96,10 +96,10 @@
 <!-- Node9 -->
 <g id="Node000009" class="node">
 <title>Node9</title>
-<g id="a_Node000009"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_rocket_liftoff.html" target="_top" xlink:title="Vertical liftoff with a finite propellant load &#45; the twin of kalman.apps.astro.rocket....">
-<polygon fill="white" stroke="#666666" points="789,-510 673,-510 673,-480 789,-480 789,-510"/>
-<text text-anchor="start" x="681" y="-498" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
-<text text-anchor="middle" x="731" y="-487" font-family="Helvetica,sans-Serif" font-size="10.00">::RocketLiftoff</text>
+<g id="a_Node000009"><a xlink:href="class_kalman_1_1_apps_1_1_astrophysics_1_1_interplanetary.html" target="_top" xlink:title="Heliocentric N&#45;body cruise — the counterpart of kalman.apps.astrophysics.InterplanetaryModel.">
+<polygon fill="white" stroke="#666666" points="807,-510 655,-510 655,-480 807,-480 807,-510"/>
+<text text-anchor="start" x="663" y="-498" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astrophysics</text>
+<text text-anchor="middle" x="731" y="-487" font-family="Helvetica,sans-Serif" font-size="10.00">::Interplanetary</text>
 </a>
 </g>
 </g>
@@ -107,7 +107,7 @@
 <g id="edge8_Node000001_Node000009" class="edge">
 <title>Node1&#45;&gt;Node9</title>
 <g id="a_edge8_Node000001_Node000009"><a xlink:title=" ">
-<path fill="none" stroke="#63b8ff" d="M568.96,-369.66C583.96,-396.03 614.81,-443.99 654,-471 659.7,-474.93 666.07,-478.23 672.63,-481.02"/>
+<path fill="none" stroke="#63b8ff" d="M568.96,-369.66C583.96,-396.03 614.81,-443.99 654,-471 659.01,-474.46 664.55,-477.43 670.28,-479.99"/>
 <polygon fill="#63b8ff" stroke="#63b8ff" points="571.9,-367.76 564,-360.7 565.78,-371.14 571.9,-367.76"/>
 </a>
 </g>
@@ -115,9 +115,9 @@
 <!-- Node10 -->
 <g id="Node000010" class="node">
 <title>Node10</title>
-<g id="a_Node000010"><a xlink:href="class_kalman_1_1_apps_1_1_astro_1_1_trans_lunar.html" target="_top" xlink:title="Restricted four&#45;body trans&#45;lunar coast (Earth + Moon + Sun) — the twin of kalman.apps....">
-<polygon fill="white" stroke="#666666" points="789,-462 673,-462 673,-432 789,-432 789,-462"/>
-<text text-anchor="start" x="681" y="-450" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astro</text>
+<g id="a_Node000010"><a xlink:href="class_kalman_1_1_apps_1_1_astrophysics_1_1_trans_lunar.html" target="_top" xlink:title="Restricted four&#45;body trans&#45;lunar coast (Earth + Moon + Sun) — the counterpart of kalman....">
+<polygon fill="white" stroke="#666666" points="807,-462 655,-462 655,-432 807,-432 807,-462"/>
+<text text-anchor="start" x="663" y="-450" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Astrophysics</text>
 <text text-anchor="middle" x="731" y="-439" font-family="Helvetica,sans-Serif" font-size="10.00">::TransLunar</text>
 </a>
 </g>
@@ -134,10 +134,10 @@
 <!-- Node11 -->
 <g id="Node000011" class="node">
 <title>Node11</title>
-<g id="a_Node000011"><a xlink:href="class_kalman_1_1_apps_1_1_ballistics_1_1_ballistic.html" target="_top" xlink:title="Nonlinear 3&#45;D ballistic model — the twin of kalman.apps.ballistics.BallisticModel.">
+<g id="a_Node000011"><a xlink:href="class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model.html" target="_top" xlink:title="Nonlinear 3&#45;D ballistic model — the counterpart of kalman.apps.ballistics.BallisticModel.">
 <polygon fill="white" stroke="#666666" points="798,-414 664,-414 664,-384 798,-384 798,-414"/>
 <text text-anchor="start" x="672" y="-402" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Ballistics</text>
-<text text-anchor="middle" x="731" y="-391" font-family="Helvetica,sans-Serif" font-size="10.00">::Ballistic</text>
+<text text-anchor="middle" x="731" y="-391" font-family="Helvetica,sans-Serif" font-size="10.00">::ExtendedModel</text>
 </a>
 </g>
 </g>
@@ -172,7 +172,7 @@
 <!-- Node13 -->
 <g id="Node000013" class="node">
 <title>Node13</title>
-<g id="a_Node000013"><a xlink:href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" target="_top" xlink:title="Online estimation of a gravitational&#45;wave polarization (Jones formalism, Amblard and Michel) – the tw...">
+<g id="a_Node000013"><a xlink:href="class_kalman_1_1_apps_1_1_gravitational_1_1_polarization.html" target="_top" xlink:title="Online estimation of a gravitational&#45;wave polarization (Jones formalism, Amblard and Michel) – the co...">
 <polygon fill="white" stroke="#666666" points="808,-318 654,-318 654,-288 808,-288 808,-318"/>
 <text text-anchor="start" x="662" y="-306" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Gravitational</text>
 <text text-anchor="middle" x="731" y="-295" font-family="Helvetica,sans-Serif" font-size="10.00">::Polarization</text>
@@ -210,7 +210,7 @@
 <!-- Node15 -->
 <g id="Node000015" class="node">
 <title>Node15</title>
-<g id="a_Node000015"><a xlink:href="class_kalman_1_1_apps_1_1_vehicles_1_1_car_lane.html" target="_top" xlink:title="Lateral lane keeping with steering control &#45; the twin of kalman.apps.vehicles.CarLaneModel.">
+<g id="a_Node000015"><a xlink:href="class_kalman_1_1_apps_1_1_vehicles_1_1_car_lane.html" target="_top" xlink:title="Lateral lane keeping with steering control &#45; the counterpart of kalman.apps.vehicles....">
 <polygon fill="white" stroke="#666666" points="796.5,-222 665.5,-222 665.5,-192 796.5,-192 796.5,-222"/>
 <text text-anchor="start" x="673.5" y="-210" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Vehicles</text>
 <text text-anchor="middle" x="731" y="-199" font-family="Helvetica,sans-Serif" font-size="10.00">::CarLane</text>
@@ -229,7 +229,7 @@
 <!-- Node16 -->
 <g id="Node000016" class="node">
 <title>Node16</title>
-<g id="a_Node000016"><a xlink:href="class_kalman_1_1_apps_1_1_vehicles_1_1_car_speed.html" target="_top" xlink:title="Straight&#45;line acceleration run of one car — the twin of kalman.apps.vehicles.CarSpeedModel.">
+<g id="a_Node000016"><a xlink:href="class_kalman_1_1_apps_1_1_vehicles_1_1_car_speed.html" target="_top" xlink:title="Straight&#45;line acceleration run of one car — the counterpart of kalman.apps.vehicles....">
 <polygon fill="white" stroke="#666666" points="796.5,-174 665.5,-174 665.5,-144 796.5,-144 796.5,-174"/>
 <text text-anchor="start" x="673.5" y="-162" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Vehicles</text>
 <text text-anchor="middle" x="731" y="-151" font-family="Helvetica,sans-Serif" font-size="10.00">::CarSpeed</text>
@@ -248,7 +248,7 @@
 <!-- Node17 -->
 <g id="Node000017" class="node">
 <title>Node17</title>
-<g id="a_Node000017"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" target="_top" xlink:title="A 2&#45;D vorticity field observed at sparse probes — the twin of kalman.apps.weather....">
+<g id="a_Node000017"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html" target="_top" xlink:title="A 2&#45;D vorticity field observed at sparse probes — the counterpart of kalman.apps.weather....">
 <polygon fill="white" stroke="#666666" points="796.5,-126 665.5,-126 665.5,-96 796.5,-96 796.5,-126"/>
 <text text-anchor="start" x="673.5" y="-114" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Weather</text>
 <text text-anchor="middle" x="731" y="-103" font-family="Helvetica,sans-Serif" font-size="10.00">::KolmogorovFlow</text>
@@ -267,7 +267,7 @@
 <!-- Node19 -->
 <g id="Node000019" class="node">
 <title>Node19</title>
-<g id="a_Node000019"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_storm.html" target="_top" xlink:title="Reduced tropical&#45;cyclone track and intensity model — the twin of kalman.apps.weather....">
+<g id="a_Node000019"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_storm.html" target="_top" xlink:title="Reduced tropical&#45;cyclone track and intensity model — the counterpart of kalman.apps....">
 <polygon fill="white" stroke="#666666" points="796.5,-78 665.5,-78 665.5,-48 796.5,-48 796.5,-78"/>
 <text text-anchor="start" x="673.5" y="-66" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Weather</text>
 <text text-anchor="middle" x="731" y="-55" font-family="Helvetica,sans-Serif" font-size="10.00">::Storm</text>
@@ -286,7 +286,7 @@
 <!-- Node20 -->
 <g id="Node000020" class="node">
 <title>Node20</title>
-<g id="a_Node000020"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_tornado.html" target="_top" xlink:title="Mean&#45;reverting tornado&#45;environment latent — the twin of kalman.apps.weather.TornadoEnvironmentModel.">
+<g id="a_Node000020"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_tornado.html" target="_top" xlink:title="Mean&#45;reverting tornado&#45;environment latent — the counterpart of kalman.apps.weather....">
 <polygon fill="white" stroke="#666666" points="796.5,-30 665.5,-30 665.5,0 796.5,0 796.5,-30"/>
 <text text-anchor="start" x="673.5" y="-18" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Weather</text>
 <text text-anchor="middle" x="731" y="-7" font-family="Helvetica,sans-Serif" font-size="10.00">::Tornado</text>
@@ -359,7 +359,7 @@
 <!-- Node18 -->
 <g id="Node000018" class="node">
 <title>Node18</title>
-<g id="a_Node000018"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_barotropic_flow.html" target="_top" xlink:title="Barotropic vorticity on a mid&#45;latitude beta&#45;plane — the twin of kalman.apps.weather....">
+<g id="a_Node000018"><a xlink:href="class_kalman_1_1_apps_1_1_weather_1_1_barotropic_flow.html" target="_top" xlink:title="Barotropic vorticity on a mid&#45;latitude beta&#45;plane — the counterpart of kalman.apps....">
 <polygon fill="white" stroke="#666666" points="975,-126 844,-126 844,-96 975,-96 975,-126"/>
 <text text-anchor="start" x="852" y="-114" font-family="Helvetica,sans-Serif" font-size="10.00">Kalman::Apps::Weather</text>
 <text text-anchor="middle" x="909.5" y="-103" font-family="Helvetica,sans-Serif" font-size="10.00">::BarotropicFlow</text>

@@ -1,6 +1,6 @@
 var namespacetests_1_1test__native__gps =
 [
-    [ "TestGPSTwin", "classtests_1_1test__native__gps_1_1_test_g_p_s_twin.html", "classtests_1_1test__native__gps_1_1_test_g_p_s_twin" ],
+    [ "TestGPSCounterpart", "classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html", "classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart" ],
     [ "TestNamedArrays", "classtests_1_1test__native__gps_1_1_test_named_arrays.html", "classtests_1_1test__native__gps_1_1_test_named_arrays" ],
     [ "apart", "namespacetests_1_1test__native__gps.html#a615a1288718ec8379347923a3bc5aad2", null ],
     [ "both", "namespacetests_1_1test__native__gps.html#a4a8c8950d8a1a6fcc2f562c675ed90c9", null ],

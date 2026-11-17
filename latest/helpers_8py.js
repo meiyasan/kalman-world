@@ -25,6 +25,7 @@ var helpers_8py =
     [ "notebook_cache", "helpers_8py.html#a380c86065075aac041dcf50ac4438b51", null ],
     [ "numerical_jacobian", "helpers_8py.html#a85714ae785717b726ddc9becf3f781e2", null ],
     [ "rainbow", "helpers_8py.html#adc6fa6af483653f196f026e5ad0a1e54", null ],
+    [ "report_steps", "helpers_8py.html#abf554e11d6aae00af837126404de0850", null ],
     [ "resample_poly_float", "helpers_8py.html#aaf55c901fa1655d003d7a9af581d3972", null ],
     [ "rotate", "helpers_8py.html#a7ff41d681ddf49f749ccd001b1508604", null ],
     [ "set_canvas_size", "helpers_8py.html#ab5489b2f1b405bcde3fce613cbef9d78", null ],

@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -215,11 +215,11 @@ Public Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  191</span>            <span class="keyword">with</span> native.python_reference():</div>
 <div class="line"><span class="lineno">  192</span>                <span class="keywordflow">return</span> go()</div>
 <div class="line"><span class="lineno">  193</span>        <span class="keywordflow">if</span> mode == <span class="stringliteral">&quot;loop&quot;</span>:                       <span class="comment"># the C++ solver and kernel, the Python loop</span></div>
-<div class="line"><span class="lineno">  194</span>            saved, native.USE_NATIVE_TWINS = native.USE_NATIVE_TWINS, <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  194</span>            saved, native.USE_NATIVE_COUNTERPARTS = native.USE_NATIVE_COUNTERPARTS, <span class="keyword">False</span></div>
 <div class="line"><span class="lineno">  195</span>            <span class="keywordflow">try</span>:</div>
 <div class="line"><span class="lineno">  196</span>                <span class="keywordflow">return</span> go()</div>
 <div class="line"><span class="lineno">  197</span>            <span class="keywordflow">finally</span>:</div>
-<div class="line"><span class="lineno">  198</span>                native.USE_NATIVE_TWINS = saved</div>
+<div class="line"><span class="lineno">  198</span>                native.USE_NATIVE_COUNTERPARTS = saved</div>
 <div class="line"><span class="lineno">  199</span>        <span class="keywordflow">return</span> go()</div>
 <div class="line"><span class="lineno">  200</span> </div>
 </div><!-- fragment -->

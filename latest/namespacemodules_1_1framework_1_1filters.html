@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -150,8 +150,6 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemodules_1_1framework_1_1filters_1_1enkf" id="r_namespacemodules_1_1framework_1_1filters_1_1enkf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1filters_1_1enkf.html">enkf</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacemodules_1_1framework_1_1filters_1_1ikf" id="r_namespacemodules_1_1framework_1_1filters_1_1ikf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1filters_1_1ikf.html">ikf</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemodules_1_1framework_1_1filters_1_1kf" id="r_namespacemodules_1_1framework_1_1filters_1_1kf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1filters_1_1kf.html">kf</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:namespacemodules_1_1framework_1_1filters_1_1pf" id="r_namespacemodules_1_1framework_1_1filters_1_1pf"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacemodules_1_1framework_1_1filters_1_1pf.html">pf</a></td></tr>
@@ -160,7 +158,7 @@ Namespaces</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">Public Kalman filter terminology (KF / EKF / UKF / PF / EnKF / CKF / IKF).
+<div class="textblock"><pre class="fragment">Public Kalman filter terminology (KF / EKF / UKF / PF / EnKF / CKF).
 
 Concretes for the **Filter** role, standing to ``framework/filter.py`` exactly as
 ``engines/`` stands to ``engine.py`` and ``models/`` to ``model.py``.
@@ -169,11 +167,9 @@ Each filter is a thin :class:`~kalman.framework.filter.KalmanFilter` leaf that w
 with the matching engine (selected by ``KIND``), exposing ``forward()`` / ``backward()``.
 Construct by wrapping a model, e.g. ``LinearKalmanFilter(OscillatorModel("s", fs=100))``.
 
-IKF routing classes live in ``kalman.framework.routers``::
-
-    from kalman.framework.filters import InteractiveKalmanFilter
-    from kalman.framework.routers import NeuralRouter, BayesianRouter
-    from kalman.framework.routers.nn import MLP
+A system that changes regime has no filter of its own: ``route(models, Pi)``
+makes the model, which the ordinary filter runs on the interacting engine. Its
+decision layers live in ``kalman.framework.routers``.
 </pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.8-->

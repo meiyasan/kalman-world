@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -165,7 +165,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">A trained router round-trips through save()/load(), and cached_fit() skips the fit.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00334">334</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00350">350</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a35b026ad2b803589c56e45b4f5c859e8" name="a35b026ad2b803589c56e45b4f5c859e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a35b026ad2b803589c56e45b4f5c859e8">&#9670;&#160;</a></span>_data()</h2>
@@ -201,13 +201,13 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00337">337</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>    <span class="keyword">def </span>_data(self, seed=0):</div>
-<div class="line"><span class="lineno">  338</span>        rng = np.random.default_rng(seed)</div>
-<div class="line"><span class="lineno">  339</span>        X = [rng.random((60, 2)) + i <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(3)]</div>
-<div class="line"><span class="lineno">  340</span>        y = [rng.integers(0, 2, 60) <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3)]</div>
-<div class="line"><span class="lineno">  341</span>        <span class="keywordflow">return</span> X, y</div>
-<div class="line"><span class="lineno">  342</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00353">353</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  353</span>    <span class="keyword">def </span>_data(self, seed=0):</div>
+<div class="line"><span class="lineno">  354</span>        rng = np.random.default_rng(seed)</div>
+<div class="line"><span class="lineno">  355</span>        X = [rng.random((60, 2)) + i <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(3)]</div>
+<div class="line"><span class="lineno">  356</span>        y = [rng.integers(0, 2, 60) <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(3)]</div>
+<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">return</span> X, y</div>
+<div class="line"><span class="lineno">  358</span> </div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -227,24 +227,24 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00363">363</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  363</span>    <span class="keyword">def </span>test_cached_fit_skips_the_second_fit(self):</div>
-<div class="line"><span class="lineno">  364</span>        <span class="keyword">import</span> tempfile, os</div>
-<div class="line"><span class="lineno">  365</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1helpers.html">modules.helpers</a> <span class="keyword">import</span> cached_fit</div>
-<div class="line"><span class="lineno">  366</span>        calls = []</div>
-<div class="line"><span class="lineno">  367</span>        store = {}</div>
-<div class="line"><span class="lineno">  368</span>        <span class="keyword">def </span>fit():</div>
-<div class="line"><span class="lineno">  369</span>            calls.append(<span class="stringliteral">&quot;fit&quot;</span>); store[<span class="stringliteral">&quot;w&quot;</span>] = 42; <span class="keywordflow">return</span> <span class="stringliteral">&quot;fitted&quot;</span></div>
-<div class="line"><span class="lineno">  370</span>        <span class="keyword">def </span>save(path): open(path, <span class="stringliteral">&quot;w&quot;</span>).write(str(store[<span class="stringliteral">&quot;w&quot;</span>]))</div>
-<div class="line"><span class="lineno">  371</span>        <span class="keyword">def </span>load(path): store[<span class="stringliteral">&quot;w&quot;</span>] = int(open(path).read()); <span class="keywordflow">return</span> <span class="stringliteral">&quot;loaded&quot;</span></div>
-<div class="line"><span class="lineno">  372</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
-<div class="line"><span class="lineno">  373</span>            path = os.path.join(d, <span class="stringliteral">&quot;w.txt&quot;</span>)</div>
-<div class="line"><span class="lineno">  374</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;fitted&quot;</span>)</div>
-<div class="line"><span class="lineno">  375</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;loaded&quot;</span>)</div>
-<div class="line"><span class="lineno">  376</span>            self.assertEqual(calls, [<span class="stringliteral">&quot;fit&quot;</span>])</div>
-<div class="line"><span class="lineno">  377</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, force=<span class="keyword">True</span>, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;fitted&quot;</span>)</div>
-<div class="line"><span class="lineno">  378</span>            self.assertEqual(calls, [<span class="stringliteral">&quot;fit&quot;</span>, <span class="stringliteral">&quot;fit&quot;</span>])</div>
-<div class="line"><span class="lineno">  379</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00379">379</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  379</span>    <span class="keyword">def </span>test_cached_fit_skips_the_second_fit(self):</div>
+<div class="line"><span class="lineno">  380</span>        <span class="keyword">import</span> tempfile, os</div>
+<div class="line"><span class="lineno">  381</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1helpers.html">modules.helpers</a> <span class="keyword">import</span> cached_fit</div>
+<div class="line"><span class="lineno">  382</span>        calls = []</div>
+<div class="line"><span class="lineno">  383</span>        store = {}</div>
+<div class="line"><span class="lineno">  384</span>        <span class="keyword">def </span>fit():</div>
+<div class="line"><span class="lineno">  385</span>            calls.append(<span class="stringliteral">&quot;fit&quot;</span>); store[<span class="stringliteral">&quot;w&quot;</span>] = 42; <span class="keywordflow">return</span> <span class="stringliteral">&quot;fitted&quot;</span></div>
+<div class="line"><span class="lineno">  386</span>        <span class="keyword">def </span>save(path): open(path, <span class="stringliteral">&quot;w&quot;</span>).write(str(store[<span class="stringliteral">&quot;w&quot;</span>]))</div>
+<div class="line"><span class="lineno">  387</span>        <span class="keyword">def </span>load(path): store[<span class="stringliteral">&quot;w&quot;</span>] = int(open(path).read()); <span class="keywordflow">return</span> <span class="stringliteral">&quot;loaded&quot;</span></div>
+<div class="line"><span class="lineno">  388</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
+<div class="line"><span class="lineno">  389</span>            path = os.path.join(d, <span class="stringliteral">&quot;w.txt&quot;</span>)</div>
+<div class="line"><span class="lineno">  390</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;fitted&quot;</span>)</div>
+<div class="line"><span class="lineno">  391</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;loaded&quot;</span>)</div>
+<div class="line"><span class="lineno">  392</span>            self.assertEqual(calls, [<span class="stringliteral">&quot;fit&quot;</span>])</div>
+<div class="line"><span class="lineno">  393</span>            self.assertEqual(cached_fit(path, fit, load=load, save=save, force=<span class="keyword">True</span>, verbose=<span class="keyword">False</span>), <span class="stringliteral">&quot;fitted&quot;</span>)</div>
+<div class="line"><span class="lineno">  394</span>            self.assertEqual(calls, [<span class="stringliteral">&quot;fit&quot;</span>, <span class="stringliteral">&quot;fit&quot;</span>])</div>
+<div class="line"><span class="lineno">  395</span> </div>
 <div class="ttc" id="anamespacemodules_1_1helpers_html"><div class="ttname"><a href="namespacemodules_1_1helpers.html">modules.helpers</a></div><div class="ttdef"><b>Definition</b> <a href="helpers_8py_source.html#l00001">helpers.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -265,22 +265,22 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00380">380</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  380</span>    <span class="keyword">def </span>test_cached_result_is_computed_once(self):</div>
-<div class="line"><span class="lineno">  381</span>        <span class="keyword">import</span> tempfile, os</div>
-<div class="line"><span class="lineno">  382</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1helpers.html">modules.helpers</a> <span class="keyword">import</span> cached</div>
-<div class="line"><span class="lineno">  383</span>        calls = []</div>
-<div class="line"><span class="lineno">  384</span>        <span class="keyword">def </span>compute():</div>
-<div class="line"><span class="lineno">  385</span>            calls.append(1); <span class="keywordflow">return</span> {<span class="stringliteral">&quot;a&quot;</span>: np.arange(3), <span class="stringliteral">&quot;b&quot;</span>: 2.5}</div>
-<div class="line"><span class="lineno">  386</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
-<div class="line"><span class="lineno">  387</span>            path = os.path.join(d, <span class="stringliteral">&quot;r.pkl&quot;</span>)</div>
-<div class="line"><span class="lineno">  388</span>            first = cached(path, compute, verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  389</span>            second = cached(path, compute, verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  390</span>            self.assertEqual(len(calls), 1)</div>
-<div class="line"><span class="lineno">  391</span>            np.testing.assert_array_equal(first[<span class="stringliteral">&quot;a&quot;</span>], second[<span class="stringliteral">&quot;a&quot;</span>])</div>
-<div class="line"><span class="lineno">  392</span>            self.assertEqual(second[<span class="stringliteral">&quot;b&quot;</span>], 2.5)</div>
-<div class="line"><span class="lineno">  393</span>            cached(path, compute, force=<span class="keyword">True</span>, verbose=<span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  394</span>            self.assertEqual(len(calls), 2)</div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00396">396</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  396</span>    <span class="keyword">def </span>test_cached_result_is_computed_once(self):</div>
+<div class="line"><span class="lineno">  397</span>        <span class="keyword">import</span> tempfile, os</div>
+<div class="line"><span class="lineno">  398</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1helpers.html">modules.helpers</a> <span class="keyword">import</span> cached</div>
+<div class="line"><span class="lineno">  399</span>        calls = []</div>
+<div class="line"><span class="lineno">  400</span>        <span class="keyword">def </span>compute():</div>
+<div class="line"><span class="lineno">  401</span>            calls.append(1); <span class="keywordflow">return</span> {<span class="stringliteral">&quot;a&quot;</span>: np.arange(3), <span class="stringliteral">&quot;b&quot;</span>: 2.5}</div>
+<div class="line"><span class="lineno">  402</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
+<div class="line"><span class="lineno">  403</span>            path = os.path.join(d, <span class="stringliteral">&quot;r.pkl&quot;</span>)</div>
+<div class="line"><span class="lineno">  404</span>            first = cached(path, compute, verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  405</span>            second = cached(path, compute, verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  406</span>            self.assertEqual(len(calls), 1)</div>
+<div class="line"><span class="lineno">  407</span>            np.testing.assert_array_equal(first[<span class="stringliteral">&quot;a&quot;</span>], second[<span class="stringliteral">&quot;a&quot;</span>])</div>
+<div class="line"><span class="lineno">  408</span>            self.assertEqual(second[<span class="stringliteral">&quot;b&quot;</span>], 2.5)</div>
+<div class="line"><span class="lineno">  409</span>            cached(path, compute, force=<span class="keyword">True</span>, verbose=<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  410</span>            self.assertEqual(len(calls), 2)</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -300,27 +300,27 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00343">343</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  343</span>    <span class="keyword">def </span>test_save_load_round_trip(self):</div>
-<div class="line"><span class="lineno">  344</span>        <span class="keyword">import</span> tempfile, os</div>
-<div class="line"><span class="lineno">  345</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers.html">modules.framework.routers</a> <span class="keyword">import</span> NeuralRouter</div>
-<div class="line"><span class="lineno">  346</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers_1_1nn.html">modules.framework.routers.nn</a> <span class="keyword">import</span> MLP</div>
-<div class="line"><span class="lineno">  347</span>        X, y = self._data()</div>
-<div class="line"><span class="lineno">  348</span>        r = NeuralRouter(model=MLP(hidden=8), window=4).fit(X, y, epochs=3, seed=0)</div>
-<div class="line"><span class="lineno">  349</span>        probe = np.arange(4 * 2, dtype=float).reshape(4, 2) * 0.1</div>
-<div class="line"><span class="lineno">  350</span>        before = r.route(probe, 0, np.array([0.5, 0.5]))</div>
-<div class="line"><span class="lineno">  351</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
-<div class="line"><span class="lineno">  352</span>            path = os.path.join(d, <span class="stringliteral">&quot;router.pt&quot;</span>)</div>
-<div class="line"><span class="lineno">  353</span>            r.save(path)</div>
-<div class="line"><span class="lineno">  354</span>            fresh = NeuralRouter(model=MLP(hidden=8), window=4)</div>
-<div class="line"><span class="lineno">  355</span>            <span class="keyword">with</span> self.assertRaises(RuntimeError):</div>
-<div class="line"><span class="lineno">  356</span>                NeuralRouter(model=MLP(hidden=8)).save(os.path.join(d, <span class="stringliteral">&quot;none.pt&quot;</span>))   <span class="comment"># untrained</span></div>
-<div class="line"><span class="lineno">  357</span>            fresh.load(path)</div>
-<div class="line"><span class="lineno">  358</span>            np.testing.assert_allclose(fresh.route(probe, 0, np.array([0.5, 0.5])), before, atol=1e-12)</div>
-<div class="line"><span class="lineno">  359</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers_1_1nn.html">modules.framework.routers.nn</a> <span class="keyword">import</span> CNN</div>
-<div class="line"><span class="lineno">  360</span>            <span class="keyword">with</span> self.assertRaises(ValueError):</div>
-<div class="line"><span class="lineno">  361</span>                NeuralRouter(model=CNN()).load(path)        <span class="comment"># a different architecture</span></div>
-<div class="line"><span class="lineno">  362</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__routers_8py_source.html#l00359">359</a> of file <a class="el" href="test__routers_8py_source.html">test_routers.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  359</span>    <span class="keyword">def </span>test_save_load_round_trip(self):</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keyword">import</span> tempfile, os</div>
+<div class="line"><span class="lineno">  361</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers.html">modules.framework.routers</a> <span class="keyword">import</span> NeuralRouter</div>
+<div class="line"><span class="lineno">  362</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers_1_1nn.html">modules.framework.routers.nn</a> <span class="keyword">import</span> MLP</div>
+<div class="line"><span class="lineno">  363</span>        X, y = self._data()</div>
+<div class="line"><span class="lineno">  364</span>        r = NeuralRouter(model=MLP(hidden=8), window=4).fit(X, y, epochs=3, seed=0)</div>
+<div class="line"><span class="lineno">  365</span>        probe = np.arange(4 * 2, dtype=float).reshape(4, 2) * 0.1</div>
+<div class="line"><span class="lineno">  366</span>        before = r.route(probe, 0, np.array([0.5, 0.5]))</div>
+<div class="line"><span class="lineno">  367</span>        <span class="keyword">with</span> tempfile.TemporaryDirectory() <span class="keyword">as</span> d:</div>
+<div class="line"><span class="lineno">  368</span>            path = os.path.join(d, <span class="stringliteral">&quot;router.pt&quot;</span>)</div>
+<div class="line"><span class="lineno">  369</span>            r.save(path)</div>
+<div class="line"><span class="lineno">  370</span>            fresh = NeuralRouter(model=MLP(hidden=8), window=4)</div>
+<div class="line"><span class="lineno">  371</span>            <span class="keyword">with</span> self.assertRaises(RuntimeError):</div>
+<div class="line"><span class="lineno">  372</span>                NeuralRouter(model=MLP(hidden=8)).save(os.path.join(d, <span class="stringliteral">&quot;none.pt&quot;</span>))   <span class="comment"># untrained</span></div>
+<div class="line"><span class="lineno">  373</span>            fresh.load(path)</div>
+<div class="line"><span class="lineno">  374</span>            np.testing.assert_allclose(fresh.route(probe, 0, np.array([0.5, 0.5])), before, atol=1e-12)</div>
+<div class="line"><span class="lineno">  375</span>            <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1routers_1_1nn.html">modules.framework.routers.nn</a> <span class="keyword">import</span> CNN</div>
+<div class="line"><span class="lineno">  376</span>            <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><span class="lineno">  377</span>                NeuralRouter(model=CNN()).load(path)        <span class="comment"># a different architecture</span></div>
+<div class="line"><span class="lineno">  378</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1routers_1_1nn_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1routers_1_1nn.html">modules.framework.routers.nn</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2routers_2nn_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1routers_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1routers.html">modules.framework.routers</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2routers_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->

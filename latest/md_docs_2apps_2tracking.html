@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -163,7 +163,10 @@ Using it</h1>
 <div class="line">chamber = DriftChamberModel(n_layers=8, Bz=1.5)</div>
 <div class="line">event = chamber.generate_event(n_tracks=3, n_background=4, seed=0)</div>
 <div class="line">tracks = CombinatorialKalmanFilter(chamber).forward(event.hits, layer_radii=event.radii)</div>
-</div><!-- fragment --><p>Notebook: <a href="../../share/notebooks/07_CombinatorialTracking.ipynb">07_CombinatorialTracking</a>. </p>
+<div class="line"> </div>
+<div class="line">chamber.instruments        <span class="comment"># [KalmanInstrument(&#39;CDC&#39;, [&#39;layer 0&#39;, ..., &#39;layer 7&#39;], sequential)]</span></div>
+</div><!-- fragment --><p>The chamber is an instrument whose sensors are its layers, read one after the other, each at its radius (<code>layer.station</code>).</p>
+<p>Notebook: <a href="../../share/notebooks/07_CombinatorialTracking.ipynb">07_CombinatorialTracking</a>. </p>
 </div></div><!-- contents -->
 </div><!-- PageDoc -->
 </div><!-- doc-content -->

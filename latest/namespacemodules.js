@@ -1,5 +1,6 @@
 var namespacemodules =
 [
+    [ "adapters", "namespacemodules_1_1adapters.html", null ],
     [ "api", "namespacemodules_1_1api.html", "namespacemodules_1_1api" ],
     [ "apps", "namespacemodules_1_1apps.html", "namespacemodules_1_1apps" ],
     [ "framework", "namespacemodules_1_1framework.html", "namespacemodules_1_1framework" ],
@@ -29,6 +30,7 @@ var namespacemodules =
       [ "notebook_cache", "namespacemodules_1_1helpers.html#a380c86065075aac041dcf50ac4438b51", null ],
       [ "numerical_jacobian", "namespacemodules_1_1helpers.html#a85714ae785717b726ddc9becf3f781e2", null ],
       [ "rainbow", "namespacemodules_1_1helpers.html#adc6fa6af483653f196f026e5ad0a1e54", null ],
+      [ "report_steps", "namespacemodules_1_1helpers.html#abf554e11d6aae00af837126404de0850", null ],
       [ "resample_poly_float", "namespacemodules_1_1helpers.html#aaf55c901fa1655d003d7a9af581d3972", null ],
       [ "rotate", "namespacemodules_1_1helpers.html#a7ff41d681ddf49f749ccd001b1508604", null ],
       [ "set_canvas_size", "namespacemodules_1_1helpers.html#ab5489b2f1b405bcde3fce613cbef9d78", null ],

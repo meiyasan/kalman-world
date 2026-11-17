@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g593920e</span>
+   &#160;<span id="projectnumber">1.0.0-42-g280b7afc</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -148,7 +148,7 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><pre class="fragment">NeuralRouter — IKF router backed by a pluggable neural model.
+<div class="textblock"><pre class="fragment">NeuralRouter — router backed by a pluggable neural model.
 
 The router owns feature extraction and normalisation.
 The model owns architecture, training, and inference.
@@ -160,9 +160,9 @@ Usage::
 
     router = NeuralRouter(model=MLP(hidden=32), window=5)
 
-    ikf = InteractiveKalmanFilter(models, Pi, router=router)
-    ikf.fit(training_zk_list, labels_list)      # trains the model
-    record = ikf.forward(test_zk)
+    modes = route(models, Pi, router=router)
+    modes.fit(training_zk_list, labels_list)      # trains the model
+    record = modes.filter(test_zk)
 
 Any callable ``model`` with signature ``model(features) → probs`` works,
 including PyTorch modules, sklearn classifiers, or custom numpy networks.
@@ -185,6 +185,22 @@ NIS is used rather than raw innovations or mode probabilities because:
 - Raw ν_j: different scales across models.
 - Mode probs μ: distribution shift (Bayesian μ at train ≠ neural μ at test).
 - NIS: dimensionless, scale-free, no distribution shift.
+
+The decision
+------------
+The network sees one window and knows nothing of the step before. Its answer
+is therefore taken as *evidence*, and combined with the probability carried
+over from the previous step through the transition matrix (``c``), as the
+Bayesian router does with its likelihoods::
+
+    mu_j  ∝  c_j * (p_j / f_j) ** (1 / window)
+
+``p`` is the network's answer and ``f`` how often each regime appeared in
+training, so ``p / f`` is what the window says beyond that frequency.
+Consecutive windows share all but one reading, so the same evidence comes
+back ``window`` times: the exponent counts it once. Without this the router
+would follow the network alone and flip on any window that looks like the
+other regime.
 
 Before ``fit()`` is called the router falls back to the Bayesian update.
 </pre> </div></div><!-- contents -->

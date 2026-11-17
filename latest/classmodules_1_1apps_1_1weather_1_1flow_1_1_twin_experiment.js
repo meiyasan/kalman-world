@@ -2,7 +2,7 @@ var classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment =
 [
     [ "_MethodView", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view.html", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment_1_1___method_view" ],
     [ "__init__", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a14509adcce2752a3dbae385b7d90ba0a", null ],
-    [ "_native_twin", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#af17b205f3778603a9cef29ffd6830daa", null ],
+    [ "_native_counterpart", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a9be6d557469b70be51bd3419beb7e73d", null ],
     [ "add_free_run", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a51e6012f2369376edf4bc9d9cf8d15a9", null ],
     [ "add_method", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a06f71b2e963693b784da375d6e7078d6", null ],
     [ "animate", "classmodules_1_1apps_1_1weather_1_1flow_1_1_twin_experiment.html#a96c8aee1b1db85977b0a70f8f6994536", null ],

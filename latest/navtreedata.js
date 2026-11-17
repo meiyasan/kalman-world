@@ -53,7 +53,7 @@ var NAVTREE =
       [ "Suspension", "md_docs_2apps_2suspension.html", [
         [ "The model", "md_docs_2apps_2suspension.html#the-model-9", null ],
         [ "How it is built", "md_docs_2apps_2suspension.html#how-it-is-built-10", null ],
-        [ "Using it", "md_docs_2apps_2suspension.html#using-it-12", null ]
+        [ "Using it", "md_docs_2apps_2suspension.html#using-it-11", null ]
       ] ],
       [ "Gravitational-wave polarization", "md_docs_2apps_2polarization.html", [
         [ "The model", "md_docs_2apps_2polarization.html#the-model-5", null ],
@@ -82,14 +82,16 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2space.html#using-it-10", null ]
       ] ],
       [ "Sensor fusion", "md_docs_2apps_2fusion.html", [
-        [ "The model", "md_docs_2apps_2fusion.html#the-model-3", null ],
+        [ "The model", "md_docs_2apps_2fusion.html#the-model-2", null ],
         [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-2", null ],
-        [ "Using it", "md_docs_2apps_2fusion.html#using-it-3", null ]
+        [ "Using it", "md_docs_2apps_2fusion.html#using-it-3", null ],
+        [ "The same model, from operations", "md_docs_2apps_2fusion.html#the-same-model-from-operations", null ],
+        [ "Generic sensors", "md_docs_2apps_2fusion.html#generic-sensors-1", null ]
       ] ],
       [ "Computer vision", "md_docs_2apps_2vision.html", [
         [ "The models", "md_docs_2apps_2vision.html#the-models-1", null ],
         [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-12", null ],
-        [ "Using it", "md_docs_2apps_2vision.html#using-it-14", null ]
+        [ "Using it", "md_docs_2apps_2vision.html#using-it-15", null ]
       ] ],
       [ "GPS and relativity", "md_docs_2apps_2gps.html", [
         [ "The model", "md_docs_2apps_2gps.html#the-model-4", null ],
@@ -100,10 +102,10 @@ var NAVTREE =
         [ "The speed test", "md_docs_2apps_2vehicles.html#the-speed-test", null ],
         [ "Lane keeping", "md_docs_2apps_2vehicles.html#lane-keeping", null ],
         [ "How they are built", "md_docs_2apps_2vehicles.html#how-they-are-built-1", null ],
-        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-15", null ]
+        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-14", null ]
       ] ],
       [ "Turbulent flow", "md_docs_2apps_2flow.html", [
-        [ "The model", "md_docs_2apps_2flow.html#the-model-2", null ],
+        [ "The model", "md_docs_2apps_2flow.html#the-model-3", null ],
         [ "Solver and integrator: two different jobs", "md_docs_2apps_2flow.html#solver-and-integrator-two-different-jobs", null ],
         [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-3", null ],
         [ "Using it", "md_docs_2apps_2flow.html#using-it-4", null ]
@@ -112,7 +114,7 @@ var NAVTREE =
         [ "The storm model", "md_docs_2apps_2storms.html#the-storm-model", null ],
         [ "The tornado model", "md_docs_2apps_2storms.html#the-tornado-model", null ],
         [ "How they are built", "md_docs_2apps_2storms.html#how-they-are-built", null ],
-        [ "Using it", "md_docs_2apps_2storms.html#using-it-11", null ]
+        [ "Using it", "md_docs_2apps_2storms.html#using-it-12", null ]
       ] ]
     ] ],
     [ "User guide", "guide.html", [
@@ -123,13 +125,14 @@ var NAVTREE =
         [ "4. Look at it, and check it", "md_docs_21___getting-_started.html#autotoc_md4-look-at-it-and-check-it", null ],
         [ "The same thing with a named model", "md_docs_21___getting-_started.html#the-same-thing-with-a-named-model", null ],
         [ "Using a domain model instead", "md_docs_21___getting-_started.html#using-a-domain-model-instead", null ],
+        [ "Growing a model with operations", "md_docs_21___getting-_started.html#growing-a-model-with-operations", null ],
         [ "Where to go next", "md_docs_21___getting-_started.html#where-to-go-next", null ]
       ] ],
       [ "Installation", "md_docs_22___installation.html", [
         [ "One command", "md_docs_22___installation.html#one-command", null ],
         [ "Manual install", "md_docs_22___installation.html#manual-install", [
           [ "Optional extras", "md_docs_22___installation.html#optional-extras", null ],
-          [ "Conda", "md_docs_22___installation.html#conda", null ]
+          [ "Conda (recommended with the C++ libraries)", "md_docs_22___installation.html#conda-recommended-with-the-c-libraries", null ]
         ] ],
         [ "Native acceleration (optional)", "md_docs_22___installation.html#native-acceleration-optional", null ],
         [ "Verify the install", "md_docs_22___installation.html#verify-the-install", null ],
@@ -141,6 +144,7 @@ var NAVTREE =
         [ "The seven roles", "md_docs_23___overview.html#the-seven-roles-1", [
           [ "Integrator vs Solver", "md_docs_23___overview.html#integrator-vs-solver", null ]
         ] ],
+        [ "Operations: a model made from models", "md_docs_23___overview.html#operations-a-model-made-from-models", null ],
         [ "Declared, not imported", "md_docs_23___overview.html#declared-not-imported", null ],
         [ "Notation", "md_docs_23___overview.html#notation", null ],
         [ "The pipeline", "md_docs_23___overview.html#the-pipeline", null ],
@@ -152,7 +156,16 @@ var NAVTREE =
         [ "Path 2 — continuous", "md_docs_24___models.html#path-2--continuous", null ],
         [ "Path 3 — functions", "md_docs_24___models.html#path-3--functions", null ],
         [ "What a model may also define", "md_docs_24___models.html#what-a-model-may-also-define", null ],
+        [ "Operations: a model made from models", "md_docs_24___models.html#operations-a-model-made-from-models-1", null ],
         [ "Composite models", "md_docs_24___models.html#composite-models", null ],
+        [ "A system that changes regime: <tt>route</tt>", "md_docs_24___models.html#a-system-that-changes-regime-route", null ],
+        [ "Joint models: estimating parameters with the state", "md_docs_24___models.html#joint-models-estimating-parameters-with-the-state", null ],
+        [ "Sensors", "md_docs_24___models.html#sensors", [
+          [ "Generic sensors", "md_docs_24___models.html#generic-sensors", null ],
+          [ "Adapters: one piece of hardware", "md_docs_24___models.html#adapters-one-piece-of-hardware", null ],
+          [ "Instruments", "md_docs_24___models.html#instruments", null ],
+          [ "A sensor that reports late, and the lagged model", "md_docs_24___models.html#a-sensor-that-reports-late-and-the-lagged-model", null ]
+        ] ],
         [ "The shipped catalog", "md_docs_24___models.html#the-shipped-catalog", null ],
         [ "Adding a model to the repository", "md_docs_24___models.html#adding-a-model-to-the-repository", null ],
         [ "Writing a model to a file", "md_docs_24___models.html#writing-a-model-to-a-file", null ]
@@ -167,7 +180,7 @@ var NAVTREE =
         [ "The specialists", "md_docs_25___filters-and-_diagnostics.html#the-specialists", [
           [ "EnKF — high-dimensional assimilation", "md_docs_25___filters-and-_diagnostics.html#enkf--high-dimensional-assimilation", null ],
           [ "CKF — track finding", "md_docs_25___filters-and-_diagnostics.html#ckf--track-finding", null ],
-          [ "IKF — regime switching", "md_docs_25___filters-and-_diagnostics.html#ikf--regime-switching", null ]
+          [ "Regime switching: <tt>route</tt>", "md_docs_25___filters-and-_diagnostics.html#regime-switching-route", null ]
         ] ],
         [ "Diagnostics — is the filter actually working?", "md_docs_25___filters-and-_diagnostics.html#diagnostics--is-the-filter-actually-working", [
           [ "Reading them", "md_docs_25___filters-and-_diagnostics.html#reading-them", null ],
@@ -182,7 +195,7 @@ var NAVTREE =
           [ "Verifying it took effect", "md_docs_26___integrators-and-_solvers.html#verifying-it-took-effect", null ]
         ] ],
         [ "Solvers", "md_docs_26___integrators-and-_solvers.html#solvers", [
-          [ "The contract", "md_docs_26___integrators-and-_solvers.html#the-contract-2", null ],
+          [ "The contract", "md_docs_26___integrators-and-_solvers.html#the-contract-1", null ],
           [ "Shipped", "md_docs_26___integrators-and-_solvers.html#shipped-1", null ],
           [ "The Butcher-tableau protocol", "md_docs_26___integrators-and-_solvers.html#the-butcher-tableau-protocol", null ],
           [ "GPU / Torch backend", "md_docs_26___integrators-and-_solvers.html#gpu--torch-backend", null ]
@@ -200,7 +213,7 @@ var NAVTREE =
         [ "Summary table", "md_docs_26___integrators-and-_solvers.html#summary-table", null ]
       ] ],
       [ "Providers", "md_docs_27___providers.html", [
-        [ "The contract", "md_docs_27___providers.html#the-contract-1", null ],
+        [ "The contract", "md_docs_27___providers.html#the-contract-2", null ],
         [ "Shipped providers", "md_docs_27___providers.html#shipped-providers", null ],
         [ "Resolving one", "md_docs_27___providers.html#resolving-one", null ],
         [ "By kind", "md_docs_27___providers.html#by-kind", [
@@ -221,10 +234,27 @@ var NAVTREE =
           [ "The contract", "md_docs_28___control-and-_routing.html#the-contract-3", null ],
           [ "Cost accounting", "md_docs_28___control-and-_routing.html#cost-accounting", null ],
           [ "Shipped controllers", "md_docs_28___control-and-_routing.html#shipped-controllers", null ],
+          [ "Model predictive control", "md_docs_28___control-and-_routing.html#model-predictive-control", null ],
+          [ "Tuners", "md_docs_28___control-and-_routing.html#tuners", null ],
           [ "Through the API", "md_docs_28___control-and-_routing.html#through-the-api-1", null ]
         ] ],
-        [ "Routers (IKF)", "md_docs_28___control-and-_routing.html#routers-ikf", null ],
+        [ "Routers", "md_docs_28___control-and-_routing.html#routers", null ],
         [ "Worked examples", "md_docs_28___control-and-_routing.html#worked-examples", null ]
+      ] ],
+      [ "The Kalman contract", "md_docs_219___contract.html", [
+        [ "The rules", "md_docs_219___contract.html#the-rules", null ],
+        [ "The model: what the system is", "md_docs_219___contract.html#the-model-what-the-system-is", null ],
+        [ "The engine and the filter: how it is estimated", "md_docs_219___contract.html#the-engine-and-the-filter-how-it-is-estimated", null ],
+        [ "Operations: a model made from another", "md_docs_219___contract.html#operations-a-model-made-from-another", null ],
+        [ "Control: acting on the system", "md_docs_219___contract.html#control-acting-on-the-system", null ],
+        [ "The three vocabularies", "md_docs_219___contract.html#the-three-vocabularies", [
+          [ "Concepts every filter has", "md_docs_219___contract.html#concepts-every-filter-has", null ],
+          [ "Concepts only one community has", "md_docs_219___contract.html#concepts-only-one-community-has", null ],
+          [ "The operations, and what other fields call them", "md_docs_219___contract.html#the-operations-and-what-other-fields-call-them", null ],
+          [ "Where each community's word lives in the code", "md_docs_219___contract.html#where-each-communitys-word-lives-in-the-code", null ]
+        ] ],
+        [ "Names being replaced", "md_docs_219___contract.html#names-being-replaced", null ],
+        [ "Names made clearer", "md_docs_219___contract.html#names-made-clearer", null ]
       ] ]
     ] ],
     [ "API access", "access.html", [
@@ -327,6 +357,7 @@ var NAVTREE =
           [ "Optional backends", "md_docs_215___cxx-_library.html#optional-backends", null ],
           [ "The field solver on libTorch", "md_docs_215___cxx-_library.html#the-field-solver-on-libtorch", null ]
         ] ],
+        [ "What to include", "md_docs_215___cxx-_library.html#what-to-include", null ],
         [ "Using it", "md_docs_215___cxx-_library.html#using-it", null ],
         [ "The decision layer", "md_docs_215___cxx-_library.html#the-decision-layer", [
           [ "Training in Python, deciding in C++", "md_docs_215___cxx-_library.html#training-in-python-deciding-in-c", null ]
@@ -345,7 +376,10 @@ var NAVTREE =
         ] ],
         [ "libKalmanApps: the application models in C++", "md_docs_215___cxx-_library.html#libkalmanapps-the-application-models-in-c", [
           [ "Field models on the ensemble engine", "md_docs_215___cxx-_library.html#field-models-on-the-ensemble-engine", null ],
-          [ "Composite models: matrices, no twin", "md_docs_215___cxx-_library.html#composite-models-matrices-no-twin", null ]
+          [ "Joint models: the counterpart, wrapped", "md_docs_215___cxx-_library.html#joint-models-the-counterpart-wrapped", null ],
+          [ "Observability", "md_docs_215___cxx-_library.html#observability", null ],
+          [ "Sensors, and a model read by one more", "md_docs_215___cxx-_library.html#sensors-and-a-model-read-by-one-more", null ],
+          [ "Composite models", "md_docs_215___cxx-_library.html#composite-models-1", null ]
         ] ],
         [ "Integrating with root-plus", "md_docs_215___cxx-_library.html#integrating-with-root-plus", [
           [ "The ROOT+ side", "md_docs_215___cxx-_library.html#the-root-side", null ],
@@ -368,7 +402,7 @@ var NAVTREE =
           [ "What you should see", "md_docs_216___cxx-_models-from-_python.html#what-you-should-see", null ]
         ] ],
         [ "Named parameters", "md_docs_216___cxx-_models-from-_python.html#named-parameters", null ],
-        [ "Giving an existing Python model a C++ twin", "md_docs_216___cxx-_models-from-_python.html#giving-an-existing-python-model-a-c-twin", null ],
+        [ "Giving an existing Python model a C++ counterpart", "md_docs_216___cxx-_models-from-_python.html#giving-an-existing-python-model-a-c-counterpart", null ],
         [ "When something goes wrong", "md_docs_216___cxx-_models-from-_python.html#when-something-goes-wrong", null ]
       ] ],
       [ "libKalman — the Kalman framework in C++", "libkalman.html", [
@@ -457,59 +491,68 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "00__utils_8cc.html",
-"_check_8h.html#af43979b78412560e0fa0f13e45416ffe",
-"_matrix_8h.html#a270a2eb25a730dd73b81c77717c3f0a6",
-"astro_8py.html#a4b80c61fbc1a86c1a5f40f8f26f50849",
-"class_kalman_1_1_apps_1_1_astro_1_1_rocket_landing.html#a19c3d8f5c0b9e37df806b23c7892e97c",
-"class_kalman_1_1_apps_1_1_weather_1_1_storm.html",
-"class_kalman_1_1_diagnostics.html#a437098ad4c31e6c4f3b5741d9219abd6",
-"class_kalman_1_1_engines_1_1_particle.html#affeb30f80ce68e52713f36f54eac301f",
-"class_kalman_1_1_filters_1_1_i_k_f.html#adcb942beb86e6661b420c9812bbb06db",
-"class_kalman_1_1_i_o_1_1_record.html#a9c1760b8fe7b7e54ae0eb78d0618f714",
-"class_kalman_1_1_model.html#a87de51a094e0cfd501252d02338d37d3",
-"class_kalman_1_1_net_1_1_auth.html#ac7edcba86d99fd5cb969f20891d04e47",
-"class_kalman_1_1_solvers_1_1_finite_difference.html#a4140235817f0fc805cf9821a705a251e",
-"classmodules_1_1apps_1_1astro_1_1rocket_1_1ascent_1_1_rocket_ascent_model.html#ab74fba702e9fd0603359d6af47c3e898",
-"classmodules_1_1apps_1_1astro_1_1rocket_1_1liftoff_1_1_rocket_liftoff_state.html",
-"classmodules_1_1apps_1_1ballistics_1_1linear_1_1_ballistic_linear_model.html",
-"classmodules_1_1apps_1_1calorimeter_1_1sampler_1_1_calorimeter_sampler.html#a3e751f2d5cca054cc9bd0acf6b84a927",
-"classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1detectors_1_1_interferometer_l1.html",
-"classmodules_1_1apps_1_1tracking_1_1driftchamber_1_1_drift_chamber_model.html#a9254feb5f1780f65d6096a340da5b7d4",
-"classmodules_1_1apps_1_1weather_1_1barotropic_1_1_beta_plane_n_s2_d.html#a1db07f64995e2ecd4c78584bcc999529",
-"classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a89a95efeb5bfe0915954b97fcb12d1cf",
-"classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_engine_mixin.html",
-"classmodules_1_1framework_1_1constants_1_1_kalman_provider_kind.html",
-"classmodules_1_1framework_1_1controllers_1_1pid_1_1_p_i_d_kalman_controller.html#a3da1974ed14880194f36753bff75bf72",
-"classmodules_1_1framework_1_1engines_1_1particle_1_1_particle_engine.html#a9a54b64b831fa487dcb788919bb9d55b",
-"classmodules_1_1framework_1_1integrators_1_1dormand__prince_1_1_dormand_prince_integrator.html#a3a963ab554513dbd723c39641549158b",
-"classmodules_1_1framework_1_1model_1_1_kalman_model.html#af2ffbff8da470eb715cdf72c46af22e7",
-"classmodules_1_1framework_1_1provider_1_1_kalman_provider.html#ab1250874bc661c7ff846a6d241dca2e6",
-"classmodules_1_1framework_1_1sampler_1_1_kalman_sampler.html#a6ccb66f0b4b1f1ab1ea0fc4fa718c89b",
-"classmodules_1_1mcp_1_1backend_1_1_remote_backend.html#a693f86d9ae68502d7db560ed695e2ed6",
-"classmodules_1_1runtime_1_1signals_1_1_wiener_filter.html#ae9c8a00f3c60906303f331a8bc0aebd1",
-"classtests_1_1test__engines_1_1_test_combinatorial_kalman_engine.html#a5279c4c8fe9be36b64241f30d0ada0ec",
-"classtests_1_1test__filtering_1_1_test_scalar_signal.html#af1d6880deb6ae16fa66a75c8c9d57976",
-"classtests_1_1test__integrators_1_1_test_finite_difference_solver.html",
-"classtests_1_1test__native_1_1_test_kf_predict.html#ace24ca2274a2ebffe406d962e006fcc8",
-"classtests_1_1test__native__controllers_1_1_test_every_controller_agrees_with_its_reference.html#a4c4d5042df8eaf7adc869a3cbba2b0f2",
-"classtests_1_1test__native__gps_1_1_test_named_arrays.html#ad8543f3a080504b1f4efea3d524d54f3",
-"classtests_1_1test__native__twins_1_1_test_smoother_uses_each_steps_transition.html#a4322ec0b863f897f445615be5ac00cce",
-"classtests_1_1test__providers_1_1_test_facade_fetch.html",
-"classtests_1_1test__rest_1_1_test_rest_main_hint.html",
-"classtests_1_1test__storms_1_1_test_typhoon_tracking.html#a74344fface77c94379b154c4375dcdaa",
-"dir_7b3faa4f0fd6a5e14c7f93bcae8bb232.html",
-"globals.html",
-"index.html#documentation",
-"md_docs_25___filters-and-_diagnostics.html#the-linear-fast-path",
-"modules_2apps_2vehicles_2____init_____8py.html#ac89cca4a838e9f7e05030a8abd4f8fe7",
-"namespacemembers_func_o.html",
-"namespacemodules_1_1apps_1_1astro_1_1space_1_1translunar.html#aeca32534f421a3c44851c1e96b38c126",
-"namespacemodules_1_1framework_1_1models_1_1native.html#a4c9a96c7904f7bc53f2a56bb15308dd1",
-"namespacemodules_1_1runtime_1_1astro.html#a2e3930646b0c26709f72da99e30a18d3",
-"namespacetests_1_1test__native__twins.html#a1fb276ffda6e51377677d87134e03fd7",
-"struct_fixture_1_1_tracking_event.html",
-"test__barotropic_8py.html#a2a81dc876308ca927f0dbd0207c34d1d",
-"test__registry_8py_source.html"
+"_c_a_p_i_8cc.html#aaff764fbf804f2595021a85b6ef72951",
+"_f_f_t_8h.html#ac026954c958287fcc3d9aae443f5c6d7",
+"_sensor_8cc.html",
+"bank_8py.html",
+"class_kalman_1_1_apps_1_1_ballistics_1_1_extended_model.html#af6941b4df31b3935d1a2289f6249440b",
+"class_kalman_1_1_controller.html#a3ababe8434b98164fff512789298e6b3",
+"class_kalman_1_1_differentiators_1_1_forward.html",
+"class_kalman_1_1_engines_1_1_particle.html#af2e696c4a48f0a54e171408dad928d07",
+"class_kalman_1_1_filters_1_1_u_k_f.html#aff0f919adee676ab1b9f4e3c2c2e05c5",
+"class_kalman_1_1_integrators_1_1_dormand_prince.html#a55ae77033de625a97060da52276094a3",
+"class_kalman_1_1_model.html#a83dceefa4a7d8051dd5591a1c737c52a",
+"class_kalman_1_1_models_1_1_composite.html#ab633a2f80d3463d5da419ae0830c8acc",
+"class_kalman_1_1_models_1_1_router.html#a024123143e313d92ce5cfce484d0fc38",
+"class_kalman_1_1_routers_1_1_n_n_1_1_model.html#a1f274fb5cd82d12881c657e7e1361f41",
+"class_kalman_1_1_solvers_1_1_spectral.html#a23cdad72dbed839ff7f1989a2d88557e",
+"classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model.html#a5d0887b799ec1e33d271c773fdad23fe",
+"classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html#ad6e908aadd5beccdc804baff96e0d209",
+"classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html#acaac4da74ce57d010640075c11731a9b",
+"classmodules_1_1apps_1_1calorimeter_1_1models_1_1_calorimeter_linear_model.html#acc8e4b2e60d2b1702d530570de956aeb",
+"classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller.html#a74d9303fe243d5af1e8d0818e5a264c3",
+"classmodules_1_1apps_1_1tracking_1_1driftchamber_1_1_drift_chamber_model.html#a5ec0c0a2e1c028338adf6fa80057f098",
+"classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04",
+"classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a7b8bbdb57aeceaa25862aff826b6edc1",
+"classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html",
+"classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a070f355824f8fa300f6cb58b036f9ad3",
+"classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html",
+"classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a31f106c25bea94bdeac6167e11172d3c",
+"classmodules_1_1framework_1_1io_1_1collection_1_1_kalman_record_collection.html#ae55137d3844e47e55f4217dad9d22569",
+"classmodules_1_1framework_1_1model_1_1_kalman_model.html#af2e2acfddb4e49e7c5c311098349f54c",
+"classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a1b09072b3b15e4e84c72bad58d7b7276",
+"classmodules_1_1framework_1_1routers_1_1nn_1_1lstm_1_1_l_s_t_m.html#a2853a7b780c39da64cb922409f96993f",
+"classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a502b9bdd3721e66c5adbc08eaa7688a0",
+"classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a2975c3a5f655f6871a6764d8a6ff0a26",
+"classmodules_1_1runtime_1_1logging_1_1_logger.html#abae1f4c57fce06eb547cf5aa607ec19b",
+"classtests_1_1test__api_1_1_test_introspection.html#a1853bc1b4c42ed4ce9fb7cbcb6645367",
+"classtests_1_1test__engines_1_1_test_linear_kalman_engine.html#aaf35249ea9ca144501591ad072c33102",
+"classtests_1_1test__filters_1_1_test_many_states_in_one_call.html",
+"classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a887965b855fa1f9e6f6389cfb53d3e28",
+"classtests_1_1test__joint_1_1_test_maps.html#aa8d3d142c6f46e76c1ed5e36cd2134ce",
+"classtests_1_1test__native__callback_1_1_test_python_model_on_the_cxx_engine.html#ad373ef55b3e08b6da8b77ab9733bbf3c",
+"classtests_1_1test__native__core_1_1_test_native_engine.html#ae86e63a60a54b2e487e31c4e9aa62a73",
+"classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a4dfce65fe58308d3c8d6f5a154638f57",
+"classtests_1_1test__net__server_1_1_test_tokens_from_python.html",
+"classtests_1_1test__registry_1_1_test_login_and_revocation.html#a511511886eaf64227cdd6b996522b560",
+"classtests_1_1test__routers_1_1___architecture_training_mixin.html#a50147c083792e77505e1f2dd99f7c277",
+"classtests_1_1test__storms_1_1_test_tornado_environment.html#aecde77a21b7d8fc44d66f3ca9b1e9ff8",
+"core_8py_source.html",
+"framework_2models_2linear_8py.html",
+"include_2_kalman_2_c_a_p_i_8h.html#a10881df5586891f699a598216493a757",
+"lane_8py.html",
+"md_docs_25___filters-and-_diagnostics.html#reading-them",
+"modules_2apps_2resonators_2suspensions_2____init_____8py.html#afdd65c5669d07dc77eddeff896dd09e0",
+"namespace_kalman_1_1_tracking.html#a48b870adcf5c9145ce65fd434ada7b4b",
+"namespacemodules_1_1apps_1_1aerospace_1_1ascent.html",
+"namespacemodules_1_1apps_1_1weather_1_1storms.html#a243211fc58deb394b51c0ee12f6e0933",
+"namespacemodules_1_1framework_1_1operations.html#ae5d25ca1165a83f8233c3bee54a1776f",
+"namespacetests_1_1test__contract__parity.html#acaeaa270ea3ecf2b0b4f5574e5eac72a",
+"namespacetests_1_1test__site__search.html#abe013c8752e94447aef9f568e860bd6f",
+"struct_kalman_1_1_factory_1_1_entry.html#a768532e8b6d3207a387397d6be2edbe7",
+"struct_kalman_1_1_tracking_1_1_candidate.html#abc4df21a6371a8d755394701b29ff7a9",
+"test__native__controllers_8py.html#a1e4f6c1760012e1e01fe468f9fd36835",
+"translunar_8py.html#a7e3008c31d4328b0f63809833e6f0162"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
