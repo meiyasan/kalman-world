@@ -101,17 +101,21 @@ int main()
     }
 
     // --- the second sensor helps: the velocity is no longer inferred from the angle alone ---
+    // A gyro sharper than the velocity error left by the angle alone (about 0.005 rad/s):
+    // the one above, at 0.2 rad/s, adds too little to show over the noise of a record.
     // Over several records: std::normal_distribution draws another stream with each
     // standard library (libstdc++, libc++), so one record is not the same everywhere.
     {
+        Matrix Rsharp(1, 1, 0.); Rsharp(0, 0) = 1e-6;                // 0.001 rad/s
+        Models::Fusion sharp(pendulum, Sensor("gyro", rate, Rsharp, nullptr, {{"rate", "rad/s"}}));
         const std::size_t N = 1500;
         double nis = 0., with = 0., without = 0.;
         const std::vector<std::uint64_t> seeds = {99, 1, 2, 3, 4, 5, 6, 7};
         for (const std::uint64_t seed : seeds)
         {
-            Sampler sampler(&gyro, seed);
+            Sampler sampler(&sharp, seed);
             sampler.Generate(N, x0);
-            Filters::EKF both(&gyro);
+            Filters::EKF both(&sharp);
             const Record rec = both.Forward(sampler.Measurements());
             nis += both.MeanNIS() / seeds.size();
 
@@ -128,7 +132,7 @@ int main()
         std::printf("  mean NIS with two channels %.3f; mean velocity RMSE: angle only %.4f, angle + rate %.4f\n",
                     nis, without, with);
         CHECK(nis > 1.7 && nis < 2.3, "EKF: mean NIS consistent with m = 2");
-        CHECK(with < without, "EKF: the rate channel lowers the velocity error");
+        CHECK(with < 0.7 * without, "EKF: the rate channel lowers the velocity error");
     }
 
     // --- a matrix on a model of matrices is still a model of matrices ---------------------------
