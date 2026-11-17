@@ -1,0 +1,349 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules/framework/models/joint.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules/framework/models/joint.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules/framework/models/joint.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-45-g1d5c01ec</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('joint_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">joint.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="joint_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacemodules_1_1framework_1_1models_1_1joint.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral">``joint``: a model whose state also carries some of another model&#39;s parameters.</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">The Python face of ``Kalman::Models::Joint`` (``include/Kalman/Models/Joint.h``),</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">which does the work: it appends the chosen parameters to the inner model&#39;s state,</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">as constants that may drift a little,</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">    x = [ s ; theta ]                 s: the inner state (n),  theta: p parameters</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="stringliteral">    s_{k+1}     = f_inner(s_k, u_k, t ; theta_k)</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="stringliteral">    theta_{k+1} = theta_k + w_theta,  w_theta ~ N(0, diag(drift**2))</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="stringliteral">    z_k         = h_inner(s_k, t ; theta_k)</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="stringliteral">sets the inner parameters before every evaluation and puts them back after, and</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="stringliteral">assembles the Jacobian by blocks (the inner model&#39;s own for the motion, the</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="stringliteral">parameter columns differenced). See the header for the details. Nothing is</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="stringliteral">computed here.</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span><span class="stringliteral">Three ways to the same model::</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="stringliteral">    model.joint({&quot;c_drag&quot;: (1e-3, 1e-6)})</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="stringliteral">    joint(model, {&quot;c_drag&quot;: (1e-3, 1e-6)})</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="stringliteral">    Joint(model, {&quot;c_drag&quot;: (1e-3, 1e-6)})</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="keyword">from</span> __future__ <span class="keyword">import</span> annotations</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">from</span> typing <span class="keyword">import</span> Mapping</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="keyword">from</span> ..constants <span class="keyword">import</span> KalmanState</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="keyword">from</span> ..model <span class="keyword">import</span> KalmanModel</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="keyword">from</span> ..native <span class="keyword">import</span> core</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">from</span> .operation <span class="keyword">import</span> OperationModel</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="foldopen" id="foldopen00037" data-start="" data-end="">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="namespacemodules_1_1framework_1_1models_1_1joint.html#ad550c6bb61274eb628f1027785e4c351">   37</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacemodules_1_1framework_1_1models_1_1joint.html#ad550c6bb61274eb628f1027785e4c351">_spec</a>(name, value):</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="stringliteral">&quot;&quot;&quot;``(sigma, drift, tau)`` from a tuple or a mapping. The values are checked in C++.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordflow">if</span> isinstance(value, Mapping):</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        unknown = set(value) - {<span class="stringliteral">&quot;sigma&quot;</span>, <span class="stringliteral">&quot;drift&quot;</span>, <span class="stringliteral">&quot;tau&quot;</span>}</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">if</span> unknown:</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;joint: {name!r} takes sigma=, drift= and tau=, not {sorted(unknown)}.&quot;</span>)</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordflow">if</span> <span class="stringliteral">&quot;sigma&quot;</span> <span class="keywordflow">not</span> <span class="keywordflow">in</span> value:</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;joint: {name!r} needs sigma=.&quot;</span>)</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">return</span> float(value[<span class="stringliteral">&quot;sigma&quot;</span>]), float(value.get(<span class="stringliteral">&quot;drift&quot;</span>, 0.0)), float(value.get(<span class="stringliteral">&quot;tau&quot;</span>, 0.0))</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        sigma, drift, *rest = value</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        (tau,) = rest <span class="keywordflow">or</span> (0.0,)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordflow">except</span> (TypeError, ValueError):</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;joint: {name!r} needs (sigma, drift), (sigma, drift, tau) or &quot;</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                         f<span class="stringliteral">&quot;{{&#39;sigma&#39;: ..., &#39;drift&#39;: ..., &#39;tau&#39;: ...}}, got {value!r}.&quot;</span>) <span class="keyword">from</span> <span class="keywordtype">None</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">return</span> float(sigma), float(drift), float(tau)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+</div>
+<div class="foldopen" id="foldopen00055" data-start="" data-end="">
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html">   55</a></span><span class="keyword">class </span><a class="code hl_class" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html">Joint</a>(<a class="code hl_class" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html">OperationModel</a>):</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    <span class="stringliteral">&quot;&quot;&quot;Estimate parameters of ``model`` along with its state.</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="stringliteral">    ``Joint(model, {&quot;c_drag&quot;: (1e-3, 1e-6)})`` appends the inner model&#39;s</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span><span class="stringliteral">    ``c_drag`` to its state, with an initial standard deviation of ``1e-3`` and a</span></div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span><span class="stringliteral">    random walk of ``1e-6`` per step, starting from the value the inner model</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span><span class="stringliteral">    holds. A parameter is one the model keeps as metadata (``model[&quot;c_drag&quot;]``)</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span><span class="stringliteral">    or one its C++ counterpart declares.</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral">    ``initial_state`` takes either the joint state (``n + p`` numbers) or one the</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral">    inner model takes; the latter is handed to the inner model, and the</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span><span class="stringliteral">    parameters start again from the values it holds.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="stringliteral">    &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ad22cfb05d81fe0ab24b8ac25eb3cf790">   69</a></span>    NAME = <span class="stringliteral">&quot;Joint Model&quot;</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a5c68be0bcb90ce923b46ee3b1ea13f1e">   70</a></span>    DESCRIPTION = <span class="stringliteral">&quot;A model whose state also carries some of its parameters, estimated with the motion.&quot;</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a4ba547bc86fc6e7c792ebb0ea6bbd859">   71</a></span>    VERSION = <span class="stringliteral">&quot;1.0&quot;</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="foldopen" id="foldopen00073" data-start="" data-end="">
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a9fbc72d3142d2b4fc135d20857025b8e">   73</a></span>    <span class="keyword">def </span>__init__(self, model: KalmanModel, parameters: Mapping, **kwargs):</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(model, KalmanModel):</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">raise</span> TypeError(f<span class="stringliteral">&quot;joint: the inner model must be a KalmanModel, got {type(model).__name__}.&quot;</span>)</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> parameters:</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;joint: name at least one parameter to estimate.&quot;</span>)</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        lib, ffi = core.require(), core.ffi</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        names = list(parameters)</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        specs = [<a class="code hl_function" href="namespacemodules_1_1framework_1_1models_1_1joint.html#ad550c6bb61274eb628f1027785e4c351">_spec</a>(name, parameters[name]) <span class="keywordflow">for</span> name <span class="keywordflow">in</span> names]</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac488a31f15b167663f0be22ead882829">   81</a></span>        self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac488a31f15b167663f0be22ead882829">inner</a>, self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a87f7c07f9724dbc675ccc263d2291840">names</a> = model, names</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a6121e7699c7b4fa740ee63dd9b55c041">   82</a></span>        self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a6121e7699c7b4fa740ee63dd9b55c041">estimated</a> = dict(zip(names, specs))</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a69ada23a5b08b2fdf415da8ca070f6af">   83</a></span>        self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a69ada23a5b08b2fdf415da8ca070f6af">n_inner</a> = int(model.n)</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ae4870863f2f6630987c69f5d026eb938">   85</a></span>        self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ae4870863f2f6630987c69f5d026eb938">_inner_cxx</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#af45bb27cc2145b39e398b82c78d01958">_inner_cxx</a> = inner = self.<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a755a3a6a45d1d2f81b46d03ee81b5d74">_inner</a>(model, names)        <span class="comment"># borrowed by the C++ model</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        encoded = [ffi.new(<span class="stringliteral">&quot;char[]&quot;</span>, name.encode()) <span class="keywordflow">for</span> name <span class="keywordflow">in</span> names]</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        sigma, drift, tau = (np.ascontiguousarray(column, dtype=np.float64) <span class="keywordflow">for</span> column <span class="keywordflow">in</span> zip(*specs))</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        handle = lib.kalman_model_create_joint(inner, len(names), ffi.new(<span class="stringliteral">&quot;const char *[]&quot;</span>, encoded),</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                                               core.cdptr(sigma), core.cdptr(drift), core.cdptr(tau))</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>        <span class="keywordflow">if</span> handle == ffi.NULL:</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="keywordflow">raise</span> self.<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a682787c5c9bea61d42069e49a86fa690">_failed</a>(<span class="stringliteral">&quot;joint&quot;</span>)</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        self.<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#aa0dcdc17753e4cfe3c38caa447999f8f">_adopt</a>(handle, [model], **kwargs)</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="preprocessor">@property</span></div>
+<div class="foldopen" id="foldopen00096" data-start="" data-end="">
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#acfbb9ab63caa618ca1b93760efd8246a">   96</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#acfbb9ab63caa618ca1b93760efd8246a">states</a>(self) -&gt; KalmanState:</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="stringliteral">&quot;&quot;&quot;The inner state components, then the parameters: as the C++ model names them.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="keywordflow">if</span> getattr(self, <span class="stringliteral">&quot;_states_enum&quot;</span>, <span class="keywordtype">None</span>) <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a5b33285c943f2191217226f936c34d02">   99</a></span>            self.<a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#af8b4e386ec45bf4888d600481bd86703">_states_enum</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a5b33285c943f2191217226f936c34d02">_states_enum</a> = self.<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#aef068d38595aae53925d498fabbb36f0">_label_enum</a>(<span class="keyword">True</span>, KalmanState, <span class="stringliteral">&quot;JointState&quot;</span>)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#af8b4e386ec45bf4888d600481bd86703">_states_enum</a><a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a5b33285c943f2191217226f936c34d02">_states_enum</a></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment"># ------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="comment"># Can the data tell the parameters apart? Asked once per initial state.</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="comment"># ------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="comment">#: Measurements considered by the check, and the share of a weak direction</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="comment">#: above which a parameter is reported.</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac656ee4e3cb4dde9b1b4ae885b710cfe">  107</a></span>    OBSERVABILITY_STEPS = 50</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#aa0087dbe70815c27bf6871532ba57241">  108</a></span>    OBSERVABILITY_SHARE = 0.05</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="foldopen" id="foldopen00110" data-start="" data-end="">
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ab8eff234c50652f897df7b97d851ceaf">  110</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ab8eff234c50652f897df7b97d851ceaf">native_handle</a>(self):</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        handle = super().<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ab8eff234c50652f897df7b97d851ceaf">native_handle</a>()</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        self.<a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a57198f3837f02d6b2d6df25a6cf73fb5">_warn_if_unobservable</a>()</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keywordflow">return</span> handle</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
+</div>
+<div class="foldopen" id="foldopen00115" data-start="" data-end="">
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a57198f3837f02d6b2d6df25a6cf73fb5">  115</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a57198f3837f02d6b2d6df25a6cf73fb5">_warn_if_unobservable</a>(self):</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="stringliteral">&quot;&quot;&quot;Warn when the measurements cannot determine an estimated parameter from</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="stringliteral">        this initial state: it would stay on its prior, or move only together with</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="stringliteral">        the components named. Checked when a pass starts, where the initial state</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="stringliteral">        is the real one (a system at rest can hide a parameter motion reveals).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keyword">import</span> warnings</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        key = np.asarray(self.<a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a767d6fa323e87c6641d3dbbc99099537">x0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin.html#a387f9e77ff9b8e24e4db5c25342b7f2f">x0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#ab111a355da6ac464fd794a2d8731adbd">x0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a09b3d530eeac5531dc57898957a9abbc">x0</a>, dtype=np.float64).tobytes() + np.asarray(self.<a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a6dbbf258cf7f4cfa65b5bf6e9a4246d4">P0</a><a class="code hl_variable" href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a30896a032eac7275b1a5067ef5130365">P0</a>, dtype=np.float64).tobytes()</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="keywordflow">if</span> self.__dict__.<a class="code hl_function" href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#abdb828fc3353d945e1fcdfbe033cfc1b">get</a>(<span class="stringliteral">&quot;_observability_checked&quot;</span>) == key:</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">return</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a429f8ba4e335032a935576069758a01d">  124</a></span>        self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a429f8ba4e335032a935576069758a01d">_observability_checked</a> = key</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            report = self.<a class="code hl_function" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a0d7a690e154e709df90f3a6ee0dac755">observability</a>(steps=self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac656ee4e3cb4dde9b1b4ae885b710cfe">OBSERVABILITY_STEPS</a>)</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="keywordflow">return</span>                                   <span class="comment"># a model the check cannot run on is not thereby wrong</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        weak = report[<span class="stringliteral">&quot;weakness&quot;</span>]</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        labels = list(weak)</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        <span class="keywordflow">for</span> name <span class="keywordflow">in</span> self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a87f7c07f9724dbc675ccc263d2291840">names</a>:</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            <span class="keywordflow">if</span> weak.get(name, 0.0) &gt; self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#aa0087dbe70815c27bf6871532ba57241">OBSERVABILITY_SHARE</a>:</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                others = [label <span class="keywordflow">for</span> label <span class="keywordflow">in</span> labels <span class="keywordflow">if</span> label != name <span class="keywordflow">and</span> weak[label] &gt; self.<a class="code hl_variable" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#aa0087dbe70815c27bf6871532ba57241">OBSERVABILITY_SHARE</a>]</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                together = f<span class="stringliteral">&quot; apart from {&#39;, &#39;.join(others)}&quot;</span> <span class="keywordflow">if</span> others <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                warnings.warn(f<span class="stringliteral">&quot;joint: the measurements do not determine {name!r}{together} from this initial state &quot;</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                              f<span class="stringliteral">&quot;(over {self.OBSERVABILITY_STEPS} steps); its estimate will rest on its prior. &quot;</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                              <span class="stringliteral">&quot;See model.observability().&quot;</span>, RuntimeWarning, stacklevel=3)</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
+</div>
+<div class="foldopen" id="foldopen00139" data-start="" data-end="">
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno"><a class="line" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a7348cc82fe0a47f3b164d803551a102c">  139</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a7348cc82fe0a47f3b164d803551a102c">__repr__</a>(self):</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="keywordflow">return</span> f<span class="stringliteral">&quot;Joint({type(self.inner).__name__}, {self.names}, n={self.n}, m={self.m}, l={self.l}, fs={self.fs})&quot;</span></div>
+</div>
+</div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a6dbbf258cf7f4cfa65b5bf6e9a4246d4"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a6dbbf258cf7f4cfa65b5bf6e9a4246d4">modules.framework.abstract.metadata.KalmanModelMetadata.P0</a></div><div class="ttdeci">P0</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00082">metadata.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_a767d6fa323e87c6641d3dbbc99099537"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a767d6fa323e87c6641d3dbbc99099537">modules.framework.abstract.metadata.KalmanModelMetadata.x0</a></div><div class="ttdeci">x0</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00081">metadata.py:81</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata_html_abdb828fc3353d945e1fcdfbe033cfc1b"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#abdb828fc3353d945e1fcdfbe033cfc1b">modules.framework.abstract.metadata.KalmanModelMetadata.get</a></div><div class="ttdeci">get(self, key, default=None)</div><div class="ttdef"><b>Definition</b> <a href="metadata_8py_source.html#l00137">metadata.py:137</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin_html_a30896a032eac7275b1a5067ef5130365"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#a30896a032eac7275b1a5067ef5130365">modules.framework.abstract.mixins.KalmanModelMixin.P0</a></div><div class="ttdeci">P0</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00338">mixins.py:338</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin_html_ab111a355da6ac464fd794a2d8731adbd"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_model_mixin.html#ab111a355da6ac464fd794a2d8731adbd">modules.framework.abstract.mixins.KalmanModelMixin.x0</a></div><div class="ttdeci">x0</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00322">mixins.py:322</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin_html_a387f9e77ff9b8e24e4db5c25342b7f2f"><div class="ttname"><a href="classmodules_1_1framework_1_1abstract_1_1mixins_1_1_kalman_shape_mixin.html#a387f9e77ff9b8e24e4db5c25342b7f2f">modules.framework.abstract.mixins.KalmanShapeMixin.x0</a></div><div class="ttdeci">x0</div><div class="ttdef"><b>Definition</b> <a href="mixins_8py_source.html#l00122">mixins.py:122</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a09b3d530eeac5531dc57898957a9abbc"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a09b3d530eeac5531dc57898957a9abbc">modules.framework.model.KalmanModel.x0</a></div><div class="ttdeci">x0</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00291">model.py:291</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_a0d7a690e154e709df90f3a6ee0dac755"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#a0d7a690e154e709df90f3a6ee0dac755">modules.framework.model.KalmanModel.observability</a></div><div class="ttdeci">observability(self, steps=50, tolerance=1e-9)</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00901">model.py:901</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html_af8b4e386ec45bf4888d600481bd86703"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html#af8b4e386ec45bf4888d600481bd86703">modules.framework.model.KalmanModel._states_enum</a></div><div class="ttdeci">_states_enum</div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00657">model.py:657</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html">modules.framework.models.joint.Joint</a></div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00055">joint.py:55</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a429f8ba4e335032a935576069758a01d"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a429f8ba4e335032a935576069758a01d">modules.framework.models.joint.Joint._observability_checked</a></div><div class="ttdeci">_observability_checked</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00124">joint.py:124</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a57198f3837f02d6b2d6df25a6cf73fb5"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a57198f3837f02d6b2d6df25a6cf73fb5">modules.framework.models.joint.Joint._warn_if_unobservable</a></div><div class="ttdeci">_warn_if_unobservable(self)</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00115">joint.py:115</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a5b33285c943f2191217226f936c34d02"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a5b33285c943f2191217226f936c34d02">modules.framework.models.joint.Joint._states_enum</a></div><div class="ttdeci">_states_enum</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00099">joint.py:99</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a6121e7699c7b4fa740ee63dd9b55c041"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a6121e7699c7b4fa740ee63dd9b55c041">modules.framework.models.joint.Joint.estimated</a></div><div class="ttdeci">estimated</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00082">joint.py:82</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a69ada23a5b08b2fdf415da8ca070f6af"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a69ada23a5b08b2fdf415da8ca070f6af">modules.framework.models.joint.Joint.n_inner</a></div><div class="ttdeci">n_inner</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00083">joint.py:83</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a7348cc82fe0a47f3b164d803551a102c"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a7348cc82fe0a47f3b164d803551a102c">modules.framework.models.joint.Joint.__repr__</a></div><div class="ttdeci">__repr__(self)</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00139">joint.py:139</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_a87f7c07f9724dbc675ccc263d2291840"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#a87f7c07f9724dbc675ccc263d2291840">modules.framework.models.joint.Joint.names</a></div><div class="ttdeci">names</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00081">joint.py:81</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_aa0087dbe70815c27bf6871532ba57241"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#aa0087dbe70815c27bf6871532ba57241">modules.framework.models.joint.Joint.OBSERVABILITY_SHARE</a></div><div class="ttdeci">float OBSERVABILITY_SHARE</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00108">joint.py:108</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_ab8eff234c50652f897df7b97d851ceaf"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ab8eff234c50652f897df7b97d851ceaf">modules.framework.models.joint.Joint.native_handle</a></div><div class="ttdeci">native_handle(self)</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00110">joint.py:110</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_ac488a31f15b167663f0be22ead882829"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac488a31f15b167663f0be22ead882829">modules.framework.models.joint.Joint.inner</a></div><div class="ttdeci">inner</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00081">joint.py:81</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_ac656ee4e3cb4dde9b1b4ae885b710cfe"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ac656ee4e3cb4dde9b1b4ae885b710cfe">modules.framework.models.joint.Joint.OBSERVABILITY_STEPS</a></div><div class="ttdeci">int OBSERVABILITY_STEPS</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00107">joint.py:107</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_acfbb9ab63caa618ca1b93760efd8246a"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#acfbb9ab63caa618ca1b93760efd8246a">modules.framework.models.joint.Joint.states</a></div><div class="ttdeci">KalmanState states(self)</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00096">joint.py:96</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1joint_1_1_joint_html_ae4870863f2f6630987c69f5d026eb938"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1joint_1_1_joint.html#ae4870863f2f6630987c69f5d026eb938">modules.framework.models.joint.Joint._inner_cxx</a></div><div class="ttdeci">_inner_cxx</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00085">joint.py:85</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html">modules.framework.models.operation.OperationModel</a></div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00022">operation.py:22</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html_a682787c5c9bea61d42069e49a86fa690"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a682787c5c9bea61d42069e49a86fa690">modules.framework.models.operation.OperationModel._failed</a></div><div class="ttdeci">_failed(self, what)</div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00033">operation.py:33</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html_a755a3a6a45d1d2f81b46d03ee81b5d74"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a755a3a6a45d1d2f81b46d03ee81b5d74">modules.framework.models.operation.OperationModel._inner</a></div><div class="ttdeci">_inner(self, model, parameters=())</div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00026">operation.py:26</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html_aa0dcdc17753e4cfe3c38caa447999f8f"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#aa0dcdc17753e4cfe3c38caa447999f8f">modules.framework.models.operation.OperationModel._adopt</a></div><div class="ttdeci">_adopt(self, handle, inners, **kwargs)</div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00043">operation.py:43</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html_aef068d38595aae53925d498fabbb36f0"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#aef068d38595aae53925d498fabbb36f0">modules.framework.models.operation.OperationModel._label_enum</a></div><div class="ttdeci">_label_enum(self, bool state, base, suffix)</div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00093">operation.py:93</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1models_1_1operation_1_1_operation_model_html_af45bb27cc2145b39e398b82c78d01958"><div class="ttname"><a href="classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#af45bb27cc2145b39e398b82c78d01958">modules.framework.models.operation.OperationModel._inner_cxx</a></div><div class="ttdeci">_inner_cxx</div><div class="ttdef"><b>Definition</b> <a href="operation_8py_source.html#l00087">operation.py:87</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1models_1_1joint_html_ad550c6bb61274eb628f1027785e4c351"><div class="ttname"><a href="namespacemodules_1_1framework_1_1models_1_1joint.html#ad550c6bb61274eb628f1027785e4c351">modules.framework.models.joint._spec</a></div><div class="ttdeci">_spec(name, value)</div><div class="ttdef"><b>Definition</b> <a href="joint_8py_source.html#l00037">joint.py:37</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_e05d7e2b1ecd646af5bb94391405f3b5.html">modules</a></li><li class="navelem"><a class="el" href="dir_5014b60475d11fcd4fa561d3fbbfd195.html">framework</a></li><li class="navelem"><a class="el" href="dir_c5dc293f27b3ae5d7156994c9d7f3431.html">models</a></li><li class="navelem"><a class="el" href="joint_8py.html">joint.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

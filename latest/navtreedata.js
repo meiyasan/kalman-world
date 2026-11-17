@@ -37,28 +37,28 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2ballistics.html#using-it-1", null ]
       ] ],
       [ "Oscillators", "md_docs_2apps_2oscillators.html", [
-        [ "The model", "md_docs_2apps_2oscillators.html#the-model-5", null ],
-        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-5", null ],
-        [ "Using it", "md_docs_2apps_2oscillators.html#using-it-6", null ],
+        [ "The model", "md_docs_2apps_2oscillators.html#the-model-7", null ],
+        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-7", null ],
+        [ "Using it", "md_docs_2apps_2oscillators.html#using-it-8", null ],
         [ "Reconstruction: resampling artifacts and their fixes", "md_docs_2apps_2oscillators.html#reconstruction-resampling-artifacts-and-their-fixes", [
           [ "1. Asymmetric tail decay in the reconstructed time series", "md_docs_2apps_2oscillators.html#autotoc_md1-asymmetric-tail-decay-in-the-reconstructed-time-series", null ],
           [ "2. \"Bad suppression range\" — apparent leakage outside the window", "md_docs_2apps_2oscillators.html#autotoc_md2-bad-suppression-range--apparent-leakage-outside-the-window", null ]
         ] ]
       ] ],
       [ "Power grid", "md_docs_2apps_2powergrid.html", [
-        [ "The model", "md_docs_2apps_2powergrid.html#the-model-7", null ],
-        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-7", null ],
-        [ "Using it", "md_docs_2apps_2powergrid.html#using-it-8", null ]
+        [ "The model", "md_docs_2apps_2powergrid.html#the-model-6", null ],
+        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-6", null ],
+        [ "Using it", "md_docs_2apps_2powergrid.html#using-it-7", null ]
       ] ],
       [ "Suspension", "md_docs_2apps_2suspension.html", [
         [ "The model", "md_docs_2apps_2suspension.html#the-model-9", null ],
         [ "How it is built", "md_docs_2apps_2suspension.html#how-it-is-built-10", null ],
-        [ "Using it", "md_docs_2apps_2suspension.html#using-it-11", null ]
+        [ "Using it", "md_docs_2apps_2suspension.html#using-it-12", null ]
       ] ],
       [ "Gravitational-wave polarization", "md_docs_2apps_2polarization.html", [
-        [ "The model", "md_docs_2apps_2polarization.html#the-model-6", null ],
-        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-6", null ],
-        [ "Using it", "md_docs_2apps_2polarization.html#using-it-7", null ]
+        [ "The model", "md_docs_2apps_2polarization.html#the-model-5", null ],
+        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-5", null ],
+        [ "Using it", "md_docs_2apps_2polarization.html#using-it-6", null ]
       ] ],
       [ "Calorimeter", "md_docs_2apps_2calorimeter.html", [
         [ "The model", "md_docs_2apps_2calorimeter.html#the-model-1", null ],
@@ -82,16 +82,16 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2space.html#using-it-10", null ]
       ] ],
       [ "Sensor fusion", "md_docs_2apps_2fusion.html", [
-        [ "The model", "md_docs_2apps_2fusion.html#the-model-2", null ],
-        [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-2", null ],
-        [ "Using it", "md_docs_2apps_2fusion.html#using-it-3", null ],
+        [ "The model", "md_docs_2apps_2fusion.html#the-model-3", null ],
+        [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-3", null ],
+        [ "Using it", "md_docs_2apps_2fusion.html#using-it-4", null ],
         [ "The same model, from operations", "md_docs_2apps_2fusion.html#the-same-model-from-operations", null ],
         [ "Generic sensors", "md_docs_2apps_2fusion.html#generic-sensors-1", null ]
       ] ],
       [ "Computer vision", "md_docs_2apps_2vision.html", [
         [ "The models", "md_docs_2apps_2vision.html#the-models-1", null ],
         [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-12", null ],
-        [ "Using it", "md_docs_2apps_2vision.html#using-it-14", null ]
+        [ "Using it", "md_docs_2apps_2vision.html#using-it-15", null ]
       ] ],
       [ "GPS and relativity", "md_docs_2apps_2gps.html", [
         [ "The model", "md_docs_2apps_2gps.html#the-model-4", null ],
@@ -102,19 +102,19 @@ var NAVTREE =
         [ "The speed test", "md_docs_2apps_2vehicles.html#the-speed-test", null ],
         [ "Lane keeping", "md_docs_2apps_2vehicles.html#lane-keeping", null ],
         [ "How they are built", "md_docs_2apps_2vehicles.html#how-they-are-built-1", null ],
-        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-15", null ]
+        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-14", null ]
       ] ],
       [ "Turbulent flow", "md_docs_2apps_2flow.html", [
-        [ "The model", "md_docs_2apps_2flow.html#the-model-3", null ],
+        [ "The model", "md_docs_2apps_2flow.html#the-model-2", null ],
         [ "Solver and integrator: two different jobs", "md_docs_2apps_2flow.html#solver-and-integrator-two-different-jobs", null ],
-        [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-3", null ],
-        [ "Using it", "md_docs_2apps_2flow.html#using-it-4", null ]
+        [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-2", null ],
+        [ "Using it", "md_docs_2apps_2flow.html#using-it-3", null ]
       ] ],
       [ "Storm tracking", "md_docs_2apps_2storms.html", [
         [ "The storm model", "md_docs_2apps_2storms.html#the-storm-model", null ],
         [ "The tornado model", "md_docs_2apps_2storms.html#the-tornado-model", null ],
         [ "How they are built", "md_docs_2apps_2storms.html#how-they-are-built", null ],
-        [ "Using it", "md_docs_2apps_2storms.html#using-it-12", null ]
+        [ "Using it", "md_docs_2apps_2storms.html#using-it-11", null ]
       ] ]
     ] ],
     [ "User guide", "guide.html", [

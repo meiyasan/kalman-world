@@ -21,7 +21,7 @@ var searchData=
   ['exponential_2ecc_18',['Exponential.cc',['../_exponential_8cc.html',1,'']]],
   ['exponential_2eh_19',['Exponential.h',['../_exponential_8h.html',1,'']]],
   ['extended_2ecc_20',['Extended.cc',['../_extended_8cc.html',1,'']]],
-  ['extended_2eh_21',['extended.h',['../_engines_2_extended_8h.html',1,'(Global Namespace)'],['../_models_2_extended_8h.html',1,'(Global Namespace)']]],
+  ['extended_2eh_21',['extended.h',['../_models_2_extended_8h.html',1,'(Global Namespace)'],['../_engines_2_extended_8h.html',1,'(Global Namespace)']]],
   ['extended_2epy_22',['extended.py',['../framework_2models_2extended_8py.html',1,'(Global Namespace)'],['../framework_2engines_2extended_8py.html',1,'(Global Namespace)'],['../apps_2ballistics_2extended_8py.html',1,'(Global Namespace)']]],
   ['extendedmodel_2eh_23',['ExtendedModel.h',['../_extended_model_8h.html',1,'']]]
 ];

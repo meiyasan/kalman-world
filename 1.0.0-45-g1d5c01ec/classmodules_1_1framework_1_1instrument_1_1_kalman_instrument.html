@@ -1,0 +1,698 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="modules.framework.instrument.KalmanInstrument Class Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: modules.framework.instrument.KalmanInstrument Class Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>modules.framework.instrument.KalmanInstrument Class Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-45-g1d5c01ec</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
+<a href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">modules.framework.instrument.KalmanInstrument Class Reference</div></div>
+</div><!--header-->
+<div class="contents">
+<div class="dynheader">
+Inheritance diagram for modules.framework.instrument.KalmanInstrument:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument__inherit__graph.svg" width="243" height="139"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a5ea36ed881c51b39de0f87c7585eb025" id="r_a5ea36ed881c51b39de0f87c7585eb025"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a5ea36ed881c51b39de0f87c7585eb025">__init__</a> (self, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#aa938b7a704f11937767499923aa7cbeb">name</a>, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#ad6f3a48b99ddee273565338be3f3e2ef">sensors</a>, *<a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a4adec10f2769fddac2a1e0bfcbe8be5a">rate</a>=None, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a09dd8d0aeec1f10548478df1ca95da22">gain</a>=None, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a9a41b838ad3a64af1d4785bbe7af81e9">offset</a>=None, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a9209a978c366cb57ceddf05578790fcb">provider</a>=None, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a08d74612735d18910ebb5d0642a0dc64">sequential</a>=False)</td></tr>
+<tr class="separator:a5ea36ed881c51b39de0f87c7585eb025"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2a75fc06309c469a70fc4ea61610a482" id="r_a2a75fc06309c469a70fc4ea61610a482"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a2a75fc06309c469a70fc4ea61610a482">calibrate</a> (self, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a09dd8d0aeec1f10548478df1ca95da22">gain</a>=1.0, <a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a9a41b838ad3a64af1d4785bbe7af81e9">offset</a>=0.0)</td></tr>
+<tr class="separator:a2a75fc06309c469a70fc4ea61610a482"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a40c3902ffd8345cd597cf17b2d98100a" id="r_a40c3902ffd8345cd597cf17b2d98100a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a40c3902ffd8345cd597cf17b2d98100a">channels</a> (self)</td></tr>
+<tr class="separator:a40c3902ffd8345cd597cf17b2d98100a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ccec77e4ba1f8f2de0673a19541a5fd" id="r_a5ccec77e4ba1f8f2de0673a19541a5fd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a5ccec77e4ba1f8f2de0673a19541a5fd">read</a> (self, **fetch)</td></tr>
+<tr class="separator:a5ccec77e4ba1f8f2de0673a19541a5fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c375c6cefd32318ae72ec872db19c91" id="r_a5c375c6cefd32318ae72ec872db19c91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a5c375c6cefd32318ae72ec872db19c91">__or__</a> (self, sensor)</td></tr>
+<tr class="separator:a5c375c6cefd32318ae72ec872db19c91"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a702062b3754add8d521fe5a6e66dd291" id="r_a702062b3754add8d521fe5a6e66dd291"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a702062b3754add8d521fe5a6e66dd291">__iter__</a> (self)</td></tr>
+<tr class="separator:a702062b3754add8d521fe5a6e66dd291"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa54bcbe123ff55cc97c96805121953d" id="r_afa54bcbe123ff55cc97c96805121953d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#afa54bcbe123ff55cc97c96805121953d">__len__</a> (self)</td></tr>
+<tr class="separator:afa54bcbe123ff55cc97c96805121953d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2fd5b2822eb113702f0e844055113d0c" id="r_a2fd5b2822eb113702f0e844055113d0c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a2fd5b2822eb113702f0e844055113d0c">__repr__</a> (self)</td></tr>
+<tr class="separator:a2fd5b2822eb113702f0e844055113d0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr class="memitem:aa938b7a704f11937767499923aa7cbeb" id="r_aa938b7a704f11937767499923aa7cbeb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#aa938b7a704f11937767499923aa7cbeb">name</a></td></tr>
+<tr class="separator:aa938b7a704f11937767499923aa7cbeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f3a48b99ddee273565338be3f3e2ef" id="r_ad6f3a48b99ddee273565338be3f3e2ef"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#ad6f3a48b99ddee273565338be3f3e2ef">sensors</a></td></tr>
+<tr class="separator:ad6f3a48b99ddee273565338be3f3e2ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4adec10f2769fddac2a1e0bfcbe8be5a" id="r_a4adec10f2769fddac2a1e0bfcbe8be5a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a4adec10f2769fddac2a1e0bfcbe8be5a">rate</a></td></tr>
+<tr class="separator:a4adec10f2769fddac2a1e0bfcbe8be5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9209a978c366cb57ceddf05578790fcb" id="r_a9209a978c366cb57ceddf05578790fcb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a9209a978c366cb57ceddf05578790fcb">provider</a></td></tr>
+<tr class="separator:a9209a978c366cb57ceddf05578790fcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a08d74612735d18910ebb5d0642a0dc64" id="r_a08d74612735d18910ebb5d0642a0dc64"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a08d74612735d18910ebb5d0642a0dc64">sequential</a></td></tr>
+<tr class="separator:a08d74612735d18910ebb5d0642a0dc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92717b38827ad76da8a11c5959396707" id="r_a92717b38827ad76da8a11c5959396707"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a92717b38827ad76da8a11c5959396707">calibrated</a></td></tr>
+<tr class="separator:a92717b38827ad76da8a11c5959396707"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a09dd8d0aeec1f10548478df1ca95da22" id="r_a09dd8d0aeec1f10548478df1ca95da22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a09dd8d0aeec1f10548478df1ca95da22">gain</a></td></tr>
+<tr class="separator:a09dd8d0aeec1f10548478df1ca95da22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9a41b838ad3a64af1d4785bbe7af81e9" id="r_a9a41b838ad3a64af1d4785bbe7af81e9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html#a9a41b838ad3a64af1d4785bbe7af81e9">offset</a></td></tr>
+<tr class="separator:a9a41b838ad3a64af1d4785bbe7af81e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><pre class="fragment">A set of sensors.
+
+Parameters
+----------
+name : what the instrument is called.
+sensors : its :class:`~.sensor.KalmanSensor` objects, in the order of their channels.
+rate : how often it reports, for its sensors that state no rate of their
+    own; ``None`` for every step of the model.
+gain, offset : give either and its readings go through
+    ``z = gain * g(x, t) + offset`` (see :meth:`calibrate`).
+provider : where its readings come from: a provider (``fetch()`` returning
+    ``{"zk": ...}``) or a function returning the array, ``(N, channels)`` at
+    the instrument's own rate. See :meth:`read`.
+sequential : ``True`` when its sensors are read one after the other, one per
+    step (a detector's layers), and not stacked into one measurement.
+</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00048">48</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="a5ea36ed881c51b39de0f87c7585eb025" name="a5ea36ed881c51b39de0f87c7585eb025"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ea36ed881c51b39de0f87c7585eb025">&#9670;&#160;</a></span>__init__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.__init__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sensors</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*&#160;</td>
+          <td class="paramname"><em>rate</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gain</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>provider</em> = <code>None</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sequential</em> = <code>False</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reimplemented in <a class="el" href="classtests_1_1test__instrument__data_1_1_bench_radar.html#aa396f23934aa13d2888e189f058ca57e">tests.test_instrument_data.BenchRadar</a>.</p>
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00066">66</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   66</span>    <span class="keyword">def </span>__init__(self, name, sensors, *, rate=None, gain=None, offset=None, provider=None, sequential=False):</div>
+<div class="line"><span class="lineno">   67</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(name, str) <span class="keywordflow">or</span> <span class="keywordflow">not</span> name:</div>
+<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;KalmanInstrument: an instrument needs a name.&quot;</span>)</div>
+<div class="line"><span class="lineno">   69</span>        sensors = list(sensors)</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> sensors:</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument: {name!r} has no sensor.&quot;</span>)</div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">for</span> sensor <span class="keywordflow">in</span> sensors:</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(sensor, KalmanSensor):</div>
+<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">raise</span> TypeError(f<span class="stringliteral">&quot;KalmanInstrument: {name!r} is made of KalmanSensor objects, &quot;</span></div>
+<div class="line"><span class="lineno">   75</span>                                f<span class="stringliteral">&quot;got {type(sensor).__name__}.&quot;</span>)</div>
+<div class="line"><span class="lineno">   76</span>        names = [sensor.name <span class="keywordflow">for</span> sensor <span class="keywordflow">in</span> sensors]</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">if</span> len(set(names)) != len(names):</div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument: {name!r} has two sensors of one name ({names}).&quot;</span>)</div>
+<div class="line"><span class="lineno">   79</span>        <span class="keywordflow">if</span> rate <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> float(rate) &gt; 0.0:</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument: the rate of {name!r} must be positive.&quot;</span>)</div>
+<div class="line"><span class="lineno">   81</span>        self.name = name</div>
+<div class="line"><span class="lineno">   82</span>        self.sensors = sensors</div>
+<div class="line"><span class="lineno">   83</span>        self.rate = <span class="keywordtype">None</span> <span class="keywordflow">if</span> rate <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> float(rate)</div>
+<div class="line"><span class="lineno">   84</span>        self.provider = provider</div>
+<div class="line"><span class="lineno">   85</span>        self.sequential = bool(sequential)</div>
+<div class="line"><span class="lineno">   86</span>        self.calibrated, self.gain, self.offset = <span class="keyword">False</span>, 1.0, 0.0</div>
+<div class="line"><span class="lineno">   87</span>        <span class="keywordflow">if</span> gain <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span> <span class="keywordflow">or</span> offset <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   88</span>            self.calibrate(1.0 <span class="keywordflow">if</span> gain <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> gain, 0.0 <span class="keywordflow">if</span> offset <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> offset)</div>
+<div class="line"><span class="lineno">   89</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a702062b3754add8d521fe5a6e66dd291" name="a702062b3754add8d521fe5a6e66dd291"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a702062b3754add8d521fe5a6e66dd291">&#9670;&#160;</a></span>__iter__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.__iter__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00143">143</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>__iter__(self):</div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> iter(self.sensors)</div>
+<div class="line"><span class="lineno">  145</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afa54bcbe123ff55cc97c96805121953d" name="afa54bcbe123ff55cc97c96805121953d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afa54bcbe123ff55cc97c96805121953d">&#9670;&#160;</a></span>__len__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.__len__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00146">146</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  146</span>    <span class="keyword">def </span>__len__(self):</div>
+<div class="line"><span class="lineno">  147</span>        <span class="keywordflow">return</span> len(self.sensors)</div>
+<div class="line"><span class="lineno">  148</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5c375c6cefd32318ae72ec872db19c91" name="a5c375c6cefd32318ae72ec872db19c91"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c375c6cefd32318ae72ec872db19c91">&#9670;&#160;</a></span>__or__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.__or__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>sensor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">One more sensor on the instrument (a new instrument).</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00133">133</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  133</span>    <span class="keyword">def </span>__or__(self, sensor):</div>
+<div class="line"><span class="lineno">  134</span>        <span class="stringliteral">&quot;&quot;&quot;One more sensor on the instrument (a new instrument).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(sensor, KalmanSensor):</div>
+<div class="line"><span class="lineno">  136</span>            <span class="keywordflow">return</span> NotImplemented</div>
+<div class="line"><span class="lineno">  137</span>        out = KalmanInstrument(self.name, [*self.sensors, sensor], rate=self.rate, provider=self.provider,</div>
+<div class="line"><span class="lineno">  138</span>                               sequential=self.sequential)</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> self.calibrated:</div>
+<div class="line"><span class="lineno">  140</span>            out.calibrate(self.gain, self.offset)</div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  142</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2fd5b2822eb113702f0e844055113d0c" name="a2fd5b2822eb113702f0e844055113d0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2fd5b2822eb113702f0e844055113d0c">&#9670;&#160;</a></span>__repr__()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.__repr__ </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00149">149</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  149</span>    <span class="keyword">def </span>__repr__(self):</div>
+<div class="line"><span class="lineno">  150</span>        extra = f<span class="stringliteral">&quot;, gain={self.gain:g}, offset={self.offset:g}&quot;</span> <span class="keywordflow">if</span> self.calibrated <span class="keywordflow">else</span> <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  151</span>        rate = <span class="stringliteral">&quot;&quot;</span> <span class="keywordflow">if</span> self.rate <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">else</span> f<span class="stringliteral">&quot;, rate={self.rate:g}&quot;</span></div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">if</span> self.sequential:</div>
+<div class="line"><span class="lineno">  153</span>            extra += <span class="stringliteral">&quot;, sequential&quot;</span></div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">return</span> f<span class="stringliteral">&quot;{type(self).__name__}({self.name!r}, {[sensor.name for sensor in self.sensors]}{rate}{extra})&quot;</span></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2a75fc06309c469a70fc4ea61610a482" name="a2a75fc06309c469a70fc4ea61610a482"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2a75fc06309c469a70fc4ea61610a482">&#9670;&#160;</a></span>calibrate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.calibrate </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>gain</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>offset</em> = <code>0.0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Give the instrument a calibration to carry, ``z = gain * g + offset``: the
+parameters ``"&lt;name&gt;.gain"`` and ``"&lt;name&gt;.offset"`` of the model that takes
+it. Returns the instrument.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00090">90</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   90</span>    <span class="keyword">def </span>calibrate(self, gain=1.0, offset=0.0):</div>
+<div class="line"><span class="lineno">   91</span>        <span class="stringliteral">&quot;&quot;&quot;Give the instrument a calibration to carry, ``z = gain * g + offset``: the</span></div>
+<div class="line"><span class="lineno">   92</span><span class="stringliteral">        parameters ``&quot;&lt;name&gt;.gain&quot;`` and ``&quot;&lt;name&gt;.offset&quot;`` of the model that takes</span></div>
+<div class="line"><span class="lineno">   93</span><span class="stringliteral">        it. Returns the instrument.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   94</span>        self.calibrated, self.gain, self.offset = <span class="keyword">True</span>, float(gain), float(offset)</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keywordflow">return</span> self</div>
+<div class="line"><span class="lineno">   96</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a40c3902ffd8345cd597cf17b2d98100a" name="a40c3902ffd8345cd597cf17b2d98100a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a40c3902ffd8345cd597cf17b2d98100a">&#9670;&#160;</a></span>channels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.channels </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">The number of channels of its measurement, or ``None`` while a sensor
+cannot tell: the sum over its sensors, or one sensor's when they are read
+one after the other.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00098">98</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   98</span>    <span class="keyword">def </span>channels(self):</div>
+<div class="line"><span class="lineno">   99</span>        <span class="stringliteral">&quot;&quot;&quot;The number of channels of its measurement, or ``None`` while a sensor</span></div>
+<div class="line"><span class="lineno">  100</span><span class="stringliteral">        cannot tell: the sum over its sensors, or one sensor&#39;s when they are read</span></div>
+<div class="line"><span class="lineno">  101</span><span class="stringliteral">        one after the other.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  102</span>        counts = [sensor.channels <span class="keywordflow">for</span> sensor <span class="keywordflow">in</span> self.sensors]</div>
+<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">if</span> any(k <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">for</span> k <span class="keywordflow">in</span> counts):</div>
+<div class="line"><span class="lineno">  104</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  105</span>        <span class="keywordflow">return</span> counts[0] <span class="keywordflow">if</span> self.sequential <span class="keywordflow">else</span> sum(counts)</div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a5ccec77e4ba1f8f2de0673a19541a5fd" name="a5ccec77e4ba1f8f2de0673a19541a5fd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ccec77e4ba1f8f2de0673a19541a5fd">&#9670;&#160;</a></span>read()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.read </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>self</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">**&#160;</td>
+          <td class="paramname"><em>fetch</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Its own readings, from its provider: ``{sensor name: (N, k) array}``, one
+entry per sensor, as :meth:`KalmanModel.measurements` takes them. ``fetch``
+goes to the provider.</pre> 
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00107">107</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    <span class="keyword">def </span>read(self, **fetch):</div>
+<div class="line"><span class="lineno">  108</span>        <span class="stringliteral">&quot;&quot;&quot;Its own readings, from its provider: ``{sensor name: (N, k) array}``, one</span></div>
+<div class="line"><span class="lineno">  109</span><span class="stringliteral">        entry per sensor, as :meth:`KalmanModel.measurements` takes them. ``fetch``</span></div>
+<div class="line"><span class="lineno">  110</span><span class="stringliteral">        goes to the provider.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  111</span>        <span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">if</span> self.provider <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  113</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument {self.name!r} has no provider: give provider= to read it.&quot;</span>)</div>
+<div class="line"><span class="lineno">  114</span>        <span class="keywordflow">if</span> self.sequential:</div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument {self.name!r} is a detector: its readings are hits per layer, &quot;</span></div>
+<div class="line"><span class="lineno">  116</span>                             <span class="stringliteral">&quot;handed to track finding, not rows of a measurement.&quot;</span>)</div>
+<div class="line"><span class="lineno">  117</span>        source = self.provider</div>
+<div class="line"><span class="lineno">  118</span>        data = source.fetch(**fetch) <span class="keywordflow">if</span> hasattr(source, <span class="stringliteral">&quot;fetch&quot;</span>) <span class="keywordflow">else</span> source(**fetch)</div>
+<div class="line"><span class="lineno">  119</span>        zk = np.asarray(data[<span class="stringliteral">&quot;zk&quot;</span>] <span class="keywordflow">if</span> isinstance(data, dict) <span class="keywordflow">else</span> data, dtype=np.float64)</div>
+<div class="line"><span class="lineno">  120</span>        widths = [sensor.channels <span class="keywordflow">for</span> sensor <span class="keywordflow">in</span> self.sensors]</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keywordflow">if</span> any(k <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">for</span> k <span class="keywordflow">in</span> widths):</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument {self.name!r}: a sensor does not say how many channels it has.&quot;</span>)</div>
+<div class="line"><span class="lineno">  123</span>        zk = zk.reshape(len(zk), -1) <span class="keywordflow">if</span> zk.size <span class="keywordflow">else</span> zk.reshape(0, sum(widths))</div>
+<div class="line"><span class="lineno">  124</span>        <span class="keywordflow">if</span> zk.shape[1] != sum(widths):</div>
+<div class="line"><span class="lineno">  125</span>            <span class="keywordflow">raise</span> ValueError(f<span class="stringliteral">&quot;KalmanInstrument {self.name!r}: its provider returned {zk.shape[1]} columns, its &quot;</span></div>
+<div class="line"><span class="lineno">  126</span>                             f<span class="stringliteral">&quot;sensors have {sum(widths)} channels ({dict(zip([s.name for s in self.sensors], widths))}).&quot;</span>)</div>
+<div class="line"><span class="lineno">  127</span>        out, first = {}, 0</div>
+<div class="line"><span class="lineno">  128</span>        <span class="keywordflow">for</span> sensor, k <span class="keywordflow">in</span> zip(self.sensors, widths):</div>
+<div class="line"><span class="lineno">  129</span>            out[sensor.name] = zk[:, first:first + k]</div>
+<div class="line"><span class="lineno">  130</span>            first += k</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordflow">return</span> out</div>
+<div class="line"><span class="lineno">  132</span> </div>
+</div><!-- fragment -->
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a92717b38827ad76da8a11c5959396707" name="a92717b38827ad76da8a11c5959396707"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92717b38827ad76da8a11c5959396707">&#9670;&#160;</a></span>calibrated</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.calibrated</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00086">86</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="a09dd8d0aeec1f10548478df1ca95da22" name="a09dd8d0aeec1f10548478df1ca95da22"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a09dd8d0aeec1f10548478df1ca95da22">&#9670;&#160;</a></span>gain</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.gain</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00086">86</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="aa938b7a704f11937767499923aa7cbeb" name="aa938b7a704f11937767499923aa7cbeb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa938b7a704f11937767499923aa7cbeb">&#9670;&#160;</a></span>name</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.name</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00081">81</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="a9a41b838ad3a64af1d4785bbe7af81e9" name="a9a41b838ad3a64af1d4785bbe7af81e9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a41b838ad3a64af1d4785bbe7af81e9">&#9670;&#160;</a></span>offset</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.offset</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00086">86</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="a9209a978c366cb57ceddf05578790fcb" name="a9209a978c366cb57ceddf05578790fcb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9209a978c366cb57ceddf05578790fcb">&#9670;&#160;</a></span>provider</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.provider</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00084">84</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="a4adec10f2769fddac2a1e0bfcbe8be5a" name="a4adec10f2769fddac2a1e0bfcbe8be5a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4adec10f2769fddac2a1e0bfcbe8be5a">&#9670;&#160;</a></span>rate</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.rate</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00083">83</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="ad6f3a48b99ddee273565338be3f3e2ef" name="ad6f3a48b99ddee273565338be3f3e2ef"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad6f3a48b99ddee273565338be3f3e2ef">&#9670;&#160;</a></span>sensors</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.sensors</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00082">82</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<a id="a08d74612735d18910ebb5d0642a0dc64" name="a08d74612735d18910ebb5d0642a0dc64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a08d74612735d18910ebb5d0642a0dc64">&#9670;&#160;</a></span>sequential</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">modules.framework.instrument.KalmanInstrument.sequential</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="modules_2framework_2instrument_8py_source.html#l00085">85</a> of file <a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a>.</p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>modules/framework/<a class="el" href="modules_2framework_2instrument_8py_source.html">instrument.py</a></li>
+</ul>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="namespacemodules.html">modules</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework.html">framework</a></li><li class="navelem"><a class="el" href="namespacemodules_1_1framework_1_1instrument.html">instrument</a></li><li class="navelem"><a class="el" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">KalmanInstrument</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>
