@@ -239,7 +239,7 @@ mods = {'mcp': 'MCP server', 'fastapi': 'REST API', 'jwt': 'scoped auth', 'torch
 ## Run the Python unit-test suite with a per-module coverage summary
 tests: motd
 	@FORCE_COLOR=1 $(PYTHON) -m pytest tests/ --tb=short --color=yes \
-		--cov=modules --cov-report=term
+		--cov=modules --cov-report=term --durations=15 -o faulthandler_timeout=600
 	@echo ""
 	@$(PYTHON) tests/bench_native.py
 

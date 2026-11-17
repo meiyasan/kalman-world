@@ -86,6 +86,9 @@ jobs:
       - name: C++ tests
         run: make ctests
       - name: Python tests
+        # A test that hangs prints every thread's stack after 10 minutes
+        # (faulthandler_timeout in make tests), and the step stops at 40: the log is kept.
+        timeout-minutes: 40
         run: make tests
 
   package:
