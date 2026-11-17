@@ -2,20 +2,20 @@
  * *********************************************
  *
  * \file RocketLiftoff.cc
- * \brief Implementation of the Kalman::Apps::Astro::RocketLiftoff class
+ * \brief Implementation of the Kalman::Apps::Aerospace::RocketLiftoff class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/RocketLiftoff.h"
+#include "Kalman/Apps/Aerospace/RocketLiftoff.h"
 
 #include <Kalman/Factory.h>
 
 #include <algorithm>
 #include <cmath>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     RocketLiftoff::RocketLiftoff() : Kalman::Apps::Model("rocket-liftoff", 3, 1)
     {
@@ -98,4 +98,4 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::RocketLiftoff, "rocket-liftoff");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Aerospace::RocketLiftoff, "rocket-liftoff");

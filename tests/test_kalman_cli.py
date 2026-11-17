@@ -110,7 +110,7 @@ def test_filter_table_and_errors():
     if out.returncode != 0:
         pytest.skip("libKalmanApps is not beside libKalman")
     lines = out.stdout.strip().split("\n")
-    assert lines[0].startswith("MODEL") and len(lines) == 3
+    assert lines[0].startswith("MODEL") and len(lines) == 4       # ballistic, ballistic-linear, ballistic-order2
     assert _run("model", "no-such-model").returncode == 1
     assert _run("--no-apps", "models").returncode == 1
     assert _run("frobnicate").returncode == 2

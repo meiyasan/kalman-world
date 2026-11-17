@@ -28,13 +28,13 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeCounterpart, native_integrator_kind
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeCounterpart, native_integrator_kind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
 from .descent import _rocket_shape, _add_rocket, _make_reticle, _set_reticle
-from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -89,7 +89,7 @@ class RocketAscentModel(NativeCounterpart, ExtendedKalmanModel):
         # every prediction.
         super().__init__("LAUNCH", Q=Q, R=R, L=np.eye(self.n), fs=self.fs, **kw)
 
-    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketAscent) -------
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Aerospace::RocketAscent) -------
     # The thrust program is the control input u (l = 2), handed to the counterpart
     # with the measurements; a controller function keeps the Python model.
     _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("acceleration",)
@@ -238,7 +238,7 @@ class RocketAscentModel(NativeCounterpart, ExtendedKalmanModel):
         thrust acceleration control programme."""
         import matplotlib.pyplot as plt
         from matplotlib.patches import Polygon
-        from ....helpers import animate
+        from ...helpers import animate
 
         truth = np.asarray(sample.xk) if sample is not None else np.asarray(record.xk)
         estx  = np.asarray(record.xk)

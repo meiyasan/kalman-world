@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file Interplanetary.cc
- * \brief Implementation of the Kalman::Apps::Astro::Interplanetary class
+ * \brief Implementation of the Kalman::Apps::Astrophysics::Interplanetary class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/Interplanetary.h"
-#include "Kalman/Apps/Astro/TransLunar.h"
+#include "Kalman/Apps/Astrophysics/Interplanetary.h"
+#include "Kalman/Apps/Astrophysics/TransLunar.h"
 
 #include <Kalman/Factory.h>
 
@@ -18,7 +18,7 @@
 #include <stdexcept>
 #include <string>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Astrophysics
 {
     Interplanetary::Interplanetary()
         : Kalman::Apps::Model("interplanetary", 6, 3)
@@ -75,7 +75,7 @@ namespace Kalman::Apps::Astro
     {
         const std::size_t B = Array("body_gm").size(), T = Array("body_positions").size();
         if ((B == 0 && T != 0) || (B != 0 && (T == 0 || T % (3 * B) != 0)))
-            throw std::runtime_error("Kalman::Apps::Astro::Interplanetary: body_positions holds " + std::to_string(T)
+            throw std::runtime_error("Kalman::Apps::Astrophysics::Interplanetary: body_positions holds " + std::to_string(T)
                                      + " values, which is not bodies x samples x 3 for the " + std::to_string(B)
                                      + " bodies of body_gm.");
         Kalman::Apps::Model::CheckShapes();
@@ -145,4 +145,4 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::Interplanetary, "interplanetary");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Astrophysics::Interplanetary, "interplanetary");

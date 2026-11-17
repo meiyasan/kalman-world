@@ -2,20 +2,20 @@
  * *********************************************
  *
  * \file RocketAscent.cc
- * \brief Implementation of the Kalman::Apps::Astro::RocketAscent class
+ * \brief Implementation of the Kalman::Apps::Aerospace::RocketAscent class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/RocketAscent.h"
+#include "Kalman/Apps/Aerospace/RocketAscent.h"
 
 #include <Kalman/Factory.h>
 
 #include <algorithm>
 #include <cmath>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     RocketAscent::RocketAscent() : Kalman::Apps::Model("rocket-ascent", 4, 2, 2)
     {
@@ -88,4 +88,4 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::RocketAscent, "rocket-ascent");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Aerospace::RocketAscent, "rocket-ascent");

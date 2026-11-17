@@ -1,5 +1,5 @@
 """
-kalman.apps.rocket — launch-vehicle domain.
+kalman.apps.aerospace — the launch-vehicle domain.
 
 Flight phases as variants: ascent, liftoff, landing, descent.
 """

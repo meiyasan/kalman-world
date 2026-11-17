@@ -1,13 +1,13 @@
 /**
  * *********************************************
  *
- * \file Ballistic.h
- * \brief Header of the Kalman::Apps::Ballistics::Ballistic class
+ * \file ExtendedModel.h
+ * \brief Header of the Kalman::Apps::Ballistics::ExtendedModel class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Ballistics::Ballistic
+ * \class Kalman::Apps::Ballistics::ExtendedModel
  * \brief Nonlinear 3-D ballistic model — the counterpart of
  * `kalman.apps.ballistics.BallisticModel`.
  *
@@ -30,14 +30,14 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_BALLISTICS_BALLISTIC_H
-#define KALMAN_APPS_BALLISTICS_BALLISTIC_H
+#ifndef KALMAN_APPS_BALLISTICS_EXTENDEDMODEL_H
+#define KALMAN_APPS_BALLISTICS_EXTENDEDMODEL_H
 
 #include "Kalman/Apps/Model.h"
 
 namespace Kalman::Apps::Ballistics
 {
-    class Ballistic : public Kalman::Apps::Model
+    class ExtendedModel : public Kalman::Apps::Model
     {
         private:
             std::size_t fOrder;
@@ -52,7 +52,7 @@ namespace Kalman::Apps::Ballistics
 
         public:
             /// \param order 3 = position, velocity, acceleration per axis; 2 = position, velocity.
-            explicit Ballistic(std::size_t order = 3);
+            explicit ExtendedModel(std::size_t order = 3);
 
             const char *Title() const override { return "Ballistic Extended Model"; }
             const char *Description() const override
@@ -71,4 +71,4 @@ namespace Kalman::Apps::Ballistics
     };
 }
 
-#endif // KALMAN_APPS_BALLISTICS_BALLISTIC_H
+#endif // KALMAN_APPS_BALLISTICS_EXTENDEDMODEL_H

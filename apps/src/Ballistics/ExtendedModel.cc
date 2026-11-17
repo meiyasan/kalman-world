@@ -1,14 +1,14 @@
 /**
  * *********************************************
  *
- * \file Ballistic.cc
- * \brief Implementation of the Kalman::Apps::Ballistics::Ballistic class
+ * \file ExtendedModel.cc
+ * \brief Implementation of the Kalman::Apps::Ballistics::ExtendedModel class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Ballistics/ExtendedModel.h"
 
 #include <Kalman/Factory.h>
 
@@ -18,11 +18,11 @@
 
 namespace Kalman::Apps::Ballistics
 {
-    Ballistic::Ballistic(std::size_t order)
+    ExtendedModel::ExtendedModel(std::size_t order)
         : Kalman::Apps::Model("ballistic", 3 * order, 3), fOrder(order)
     {
         if (order != 2 && order != 3)
-            throw std::invalid_argument("Kalman::Apps::Ballistics::Ballistic: order must be 2 or 3.");
+            throw std::invalid_argument("Kalman::Apps::Ballistics::ExtendedModel: order must be 2 or 3.");
 
         DeclareParameter("c_drag", 0.);
         DeclareParameter("m", 1.);
@@ -52,7 +52,7 @@ namespace Kalman::Apps::Ballistics
         SetR(R);
     }
 
-    void Ballistic::ParametersChanged()
+    void ExtendedModel::ParametersChanged()
     {
         fDragOverMass = Parameter("c_drag") / Parameter("m");
         fG = Parameter("g");
@@ -64,7 +64,7 @@ namespace Kalman::Apps::Ballistics
         if (kind != DefaultIntegrator()) SetIntegrator(kind);
     }
 
-    void Ballistic::Acceleration(const double *p, const double *v, double *a) const
+    void ExtendedModel::Acceleration(const double *p, const double *v, double *a) const
     {
         // Gravity: constant along z near the surface, G M / r^3 about the centre in orbit.
         double grav[3] = {0., 0., 0.};
@@ -84,7 +84,7 @@ namespace Kalman::Apps::Ballistics
             a[i] = grav[i] + (speed > 0. ? -fDragOverMass * speed * v[i] : 0.);
     }
 
-    Vector Ballistic::Derivative(const Vector &s, const Vector &, double) const
+    Vector ExtendedModel::Derivative(const Vector &s, const Vector &, double) const
     {
         // dp/dt = v, dv/dt = a(p, v), da/dt = 0.
         const std::size_t order = fOrder;
@@ -97,7 +97,7 @@ namespace Kalman::Apps::Ballistics
         return d;
     }
 
-    Vector Ballistic::f(const Vector &x, const Vector &u, double t) const
+    Vector ExtendedModel::f(const Vector &x, const Vector &u, double t) const
     {
         // The model is continuous: the framework integrates Derivative() over one
         // sample; the acceleration slot is then filled in where the step lands.
@@ -119,7 +119,7 @@ namespace Kalman::Apps::Ballistics
         return out;
     }
 
-    Vector Ballistic::h(const Vector &x, double) const
+    Vector ExtendedModel::h(const Vector &x, double) const
     {
         Vector z(3);
         for (std::size_t i = 0; i < 3; ++i) z(i) = x(fOrder * i);
@@ -127,5 +127,5 @@ namespace Kalman::Apps::Ballistics
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Ballistics::Ballistic, "ballistic");
-KALMAN_REGISTER_MODEL(Kalman::Apps::Ballistics::Ballistic, "ballistic-order2", std::size_t(2));
+KALMAN_REGISTER_MODEL(Kalman::Apps::Ballistics::ExtendedModel, "ballistic");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Ballistics::ExtendedModel, "ballistic-order2", std::size_t(2));

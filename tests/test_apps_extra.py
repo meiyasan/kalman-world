@@ -23,11 +23,11 @@ from modules.apps import (
     PhasorOscillatorModel, AnalyticOscillatorModel,
 )
 from modules.apps.ballistics import BallisticModel
-from modules.apps.astro.rocket import (
+from modules.apps.aerospace import (
     RocketAscentModel, RocketLiftoffModel, RocketLandingModel, RocketDescentModel,
     RocketLaunchModel, RocketTakeoffModel,            # legacy aliases
 )
-from modules.apps.astro.space import (
+from modules.apps.astrophysics import (
     TransLunarModel, InterplanetaryModel, lambert, hohmann_transfer,
 )
 from modules.runtime.astro import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state
@@ -264,7 +264,7 @@ class TestInterplanetary(unittest.TestCase):
 
     def test_chain_lambert_separates_gravity_from_burn(self):
         from astropy.time import Time
-        from modules.apps.astro.space import chain_lambert
+        from modules.apps.astrophysics import chain_lambert
         sequence = ["earth", "venus", "venus", "earth"]
         dates = [Time(t) for t in ("1997-10-15 08:43", "1998-04-26 13:52",
                                    "1999-06-24 20:30", "1999-08-18 03:28")]

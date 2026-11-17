@@ -3,13 +3,13 @@
  * \brief libKalmanApps: the application models, their parameters and their filters.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Apps/Astro/RocketAscent.h"
-#include "Kalman/Apps/Astro/RocketDescent.h"
-#include "Kalman/Apps/Astro/RocketLanding.h"
-#include "Kalman/Apps/Astro/RocketLiftoff.h"
-#include "Kalman/Apps/Astro/Interplanetary.h"
-#include "Kalman/Apps/Astro/TransLunar.h"
-#include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Aerospace/RocketAscent.h"
+#include "Kalman/Apps/Aerospace/RocketDescent.h"
+#include "Kalman/Apps/Aerospace/RocketLanding.h"
+#include "Kalman/Apps/Aerospace/RocketLiftoff.h"
+#include "Kalman/Apps/Astrophysics/Interplanetary.h"
+#include "Kalman/Apps/Astrophysics/TransLunar.h"
+#include "Kalman/Apps/Ballistics.h"
 #include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"
 #include "Kalman/Apps/Weather/Storm.h"
@@ -114,7 +114,7 @@ int main()
 
     // --- ballistic dynamics -------------------------------------------------------
     {
-        Apps::Ballistics::Ballistic ball;
+        Apps::Ballistics::ExtendedModel ball;
         ball.SetSampleRate(100.);
         Vector x(9);
         x(1) = 30.; x(4) = 10.; x(7) = 120.;                       // velocities, from the origin
@@ -140,13 +140,49 @@ int main()
         CHECK_CLOSE(r1, r0, 1e-3, "ballistic: one step of a circular orbit keeps the radius to a millimetre");
         CHECK_CLOSE(moved(2), -6.674e-11 * 5.972e24 / (r0 * r0), 1e-9, "ballistic: orbital gravity is G M / r^2 inward");
 
-        Apps::Ballistics::Ballistic two(2);
+        Apps::Ballistics::ExtendedModel two(2);
         CHECK(two.NState() == 6 && two.h(Vector(6), 0.).Size() == 3, "ballistic: order 2 has six states, three observed");
 
         bool threw = false;
-        try { Apps::Ballistics::Ballistic bad(4); }
+        try { Apps::Ballistics::ExtendedModel bad(4); }
         catch (const std::invalid_argument &) { threw = true; }
         CHECK(threw, "ballistic: an order other than 2 or 3 throws");
+    }
+
+    // --- the linear ballistic model: one axis at constant acceleration ---------------------
+    {
+        Apps::Ballistics::LinearModel axis(100., 10., 0.2);
+        const double dt = 0.01;
+        CHECK(axis.NState() == 3 && axis.NMeasure() == 1 && axis.DefaultEngine() == EngineKind::Linear,
+              "ballistic-linear: three states, the position measured, the linear engine");
+        const Matrix F = axis.F(0.), Q = axis.Q(0.);
+        CHECK(F(0, 1) == dt && F(0, 2) == dt * dt / 2. && F(1, 2) == dt && F(2, 2) == 1. && F(1, 0) == 0.,
+              "ballistic-linear: F is exp(A dt) of constant acceleration");
+        CHECK_CLOSE(Q(0, 0), 0.04 * dt * dt * dt / 3., 1e-20, "ballistic-linear: Q position, q^2 dt^3 / 3");
+        CHECK_CLOSE(Q(0, 1), 0.04 * dt * dt / 2., 1e-18, "ballistic-linear: Q position-velocity, q^2 dt^2 / 2");
+        CHECK_CLOSE(Q(1, 1), 0.04 * dt, 1e-16, "ballistic-linear: Q velocity, q^2 dt");
+        CHECK(Q(2, 2) == 0. && Q(0, 2) == 0., "ballistic-linear: the acceleration takes no noise");
+        CHECK(axis.R(0.)(0, 0) == 100. && axis.P0()(0, 0) == 100. && axis.P0()(1, 1) == 1.,
+              "ballistic-linear: R = sigma^2, P0 from the two uncertainties");
+        CHECK_CLOSE(axis.P0()(2, 2), 0.04, 1e-16, "ballistic-linear: the acceleration prior is q^2");
+
+        Vector x0(3);
+        x0(0) = 300.; x0(1) = 100.; x0(2) = -9.81;
+        axis.SetInitialState(x0);
+        const Vector next = axis.f(x0, Vector(), 0.);
+        CHECK_CLOSE(next(0), 300. + 100. * dt - 0.5 * 9.81 * dt * dt, 1e-12, "ballistic-linear: one step of free fall");
+        Sampler sampler(&axis, 20261117);
+        sampler.Generate(1600, x0);
+        Filters::KF kf(&axis);
+        const Record record = kf.Forward(sampler.Measurements());
+        CHECK(kf.MeanNIS() > 0.8 && kf.MeanNIS() < 1.2, "ballistic-linear KF: mean NIS consistent with m = 1");
+        CHECK(record.RMSE(0, sampler.Truth()) < 5., "ballistic-linear KF: the position is found to better than the 10 m sensor");
+        CHECK(Factory::Instance().Has("ballistic-linear"), "ballistic-linear: registered");
+
+        bool threw = false;
+        try { Apps::Ballistics::LinearModel bad(100., 0., 1.); }
+        catch (const std::invalid_argument &) { threw = true; }
+        CHECK(threw, "ballistic-linear: an uncertainty that is not positive throws");
     }
 
     // --- tornado environment: relaxation toward the regime mean ------------------------
@@ -235,7 +271,7 @@ int main()
 
     // --- liftoff: thrust over weight, then burnout -----------------------------------
     {
-        Apps::Astro::RocketLiftoff rocket;
+        Apps::Aerospace::RocketLiftoff rocket;
         Vector x = rocket.X0();
         CHECK_CLOSE(rocket.Derivative(x, Vector(), 0.)(1), 2500. * 8. / 1000. - 9.80665, 1e-12,
                     "liftoff: on the pad the acceleration is T / m - g");
@@ -246,7 +282,7 @@ int main()
 
     // --- landing: free fall above the profile, a burn below it, at rest on the pad --
     {
-        Apps::Astro::RocketLanding stage;
+        Apps::Aerospace::RocketLanding stage;
         Vector x(3);
         x(0) = 3000.; x(1) = -10.; x(2) = 1000.;
         CHECK_CLOSE(stage.Guidance(x), 0., 0., "landing: above the profile the engine is off");
@@ -260,8 +296,8 @@ int main()
 
     // --- descent: the guidance and the control input fly the same booster ------------
     {
-        Apps::Astro::RocketDescent guided;
-        Apps::Astro::RocketDescent driven(true);
+        Apps::Aerospace::RocketDescent guided;
+        Apps::Aerospace::RocketDescent driven(true);
         Vector x(7);
         x(0) = 120.; x(1) = 1500.; x(2) = -4.; x(3) = -50.; x(4) = 0.02; x(5) = 0.; x(6) = 1000.;
         double T, delta;
@@ -301,7 +337,7 @@ int main()
         CHECK(factory.Describe("translunar").n == 6 && factory.Describe("translunar").m == 3,
               "space: translunar is (n, m) = (6, 3)");
 
-        Apps::Astro::TransLunar moon;
+        Apps::Astrophysics::TransLunar moon;
         CHECK(moon.HasContinuousDynamics(), "translunar: continuous dynamics");
         const auto state = moon.StateComponents();
         CHECK(state[0].name == "x" && state[0].unit == "Mm" && state[3].name == "vx" && state[3].unit == "km/s",
@@ -330,7 +366,7 @@ int main()
         moon.Acceleration(&x(0), 0., withMoon);
         CHECK(withMoon[0] > a[0], "translunar: the Moon on the +x axis pulls the craft outward");
 
-        Apps::Astro::Interplanetary cruise;
+        Apps::Astrophysics::Interplanetary cruise;
         CHECK(cruise.HasContinuousDynamics() && cruise.StateComponents()[5].name == "vz",
               "interplanetary: continuous, components named");
         // One perturber, two rows of its table, then interpolated.

@@ -2,20 +2,20 @@
  * *********************************************
  *
  * \file TransLunar.cc
- * \brief Implementation of the Kalman::Apps::Astro::TransLunar class
+ * \brief Implementation of the Kalman::Apps::Astrophysics::TransLunar class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/TransLunar.h"
+#include "Kalman/Apps/Astrophysics/TransLunar.h"
 
 #include <Kalman/Factory.h>
 
 #include <algorithm>
 #include <cmath>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Astrophysics
 {
     namespace
     {
@@ -135,4 +135,4 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::TransLunar, "translunar");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Astrophysics::TransLunar, "translunar");

@@ -17,13 +17,14 @@
  * |---|---|---|
  * | Kalman::Apps::Weather::Storm | `storm`, `storm-track-only` | `StormModel` |
  * | Kalman::Apps::Weather::Tornado | `tornado-environment` | `TornadoEnvironmentModel` |
- * | Kalman::Apps::Ballistics::Ballistic | `ballistic`, `ballistic-order2` | `BallisticModel` |
+ * | Kalman::Apps::Ballistics::ExtendedModel | `ballistic`, `ballistic-order2` | `BallisticModel` |
+ * | Kalman::Apps::Ballistics::LinearModel | `ballistic-linear` | `BallisticLinearModel` |
  * | Kalman::Apps::Vehicles::CarSpeed | `car-speed` | `CarSpeedModel` |
  * | Kalman::Apps::Vehicles::CarLane | `car-lane` | `CarLaneModel` |
- * | Kalman::Apps::Astro::RocketLiftoff | `rocket-liftoff` | `RocketLiftoffModel` |
- * | Kalman::Apps::Astro::RocketAscent | `rocket-ascent` | `RocketAscentModel` |
- * | Kalman::Apps::Astro::RocketDescent | `rocket-descent`, `rocket-descent-control` | `RocketDescentModel` |
- * | Kalman::Apps::Astro::RocketLanding | `rocket-landing` | `RocketLandingModel` |
+ * | Kalman::Apps::Aerospace::RocketLiftoff | `rocket-liftoff` | `RocketLiftoffModel` |
+ * | Kalman::Apps::Aerospace::RocketAscent | `rocket-ascent` | `RocketAscentModel` |
+ * | Kalman::Apps::Aerospace::RocketDescent | `rocket-descent`, `rocket-descent-control` | `RocketDescentModel` |
+ * | Kalman::Apps::Aerospace::RocketLanding | `rocket-landing` | `RocketLandingModel` |
  * | Kalman::Apps::Gravitational::Polarization | `polarization` | `PolarizationModel` |
  * | Kalman::Apps::Weather::KolmogorovFlow | `kolmogorov-flow` | `KolmogorovFlowModel` (ensemble engine) |
  * | Kalman::Apps::Weather::BarotropicFlow | `barotropic-flow` | `BarotropicFlowModel` (ensemble engine) |
@@ -57,7 +58,8 @@
 #define KALMAN_APPS_H
 
 #include "Kalman/Apps/Model.h"
-#include "Kalman/Apps/Astro.h"
+#include "Kalman/Apps/Aerospace.h"
+#include "Kalman/Apps/Astrophysics.h"
 #include "Kalman/Apps/Ballistics.h"
 #include "Kalman/Apps/GPS.h"
 #include "Kalman/Apps/Gravitational.h"

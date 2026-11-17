@@ -176,17 +176,16 @@ modules/                        → the `kalman` package
   mcp/  rest/                   transports over the facade (optional deps)
   adapters/                     specific hardware: instruments of generic sensors (none shipped yet)
   apps/                         domain applications
-    astro/         rocket  space
     gravitational/ gravwave  interferometer
     resonators/    oscillators  powergrids  suspensions
     weather/       flow  storms  geo  surrogate  data/  providers/
-    ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
+    aerospace/  astrophysics/  ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
   runtime/  helpers.py
 tests/                          mirrors concerns, not files
 share/notebooks/                executed, output-bearing narrative docs
 ```
 
-**Families** (`astro`, `gravitational`, `resonators`) group domains that share a
+**Families** (`gravitational`, `resonators`) group domains that share a
 foundation or an application area. Each domain keeps its own `VARIANTS` dict of
 model classes; cross-family imports are normal (`interferometer` uses
 `resonators.oscillators`).

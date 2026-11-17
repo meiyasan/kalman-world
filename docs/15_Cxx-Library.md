@@ -371,7 +371,7 @@ which includes all of it. So there are always two ways in: the whole, or one.
 | `<Kalman/Sensors.h>` | `<Kalman/Sensors/Camera.h>` | the generic sensors | `kalman.framework.sensors` |
 | `<Kalman/Routers.h>`, `<Kalman/Controllers.h>`, `<Kalman/Tuners.h>` | `<Kalman/Routers/Bayesian.h>` ... | routing, control, tuning | `kalman.framework.routers` ... |
 | `<Kalman/Integrators.h>`, `<Kalman/Solvers.h>`, `<Kalman/Differentiators.h>`, `<Kalman/Algebra.h>`, `<Kalman/IO.h>` | `<Kalman/Integrators/RK4.h>` ... | numerics and records | |
-| `<Kalman/Apps.h>` | `<Kalman/Apps/Weather.h>`, then `<Kalman/Apps/Weather/Storm.h>` | the application models (libKalmanApps) | `kalman.apps`, `kalman.apps.weather` |
+| `<Kalman/Apps.h>` | `<Kalman/Apps/Ballistics.h>`, then `<Kalman/Apps/Ballistics/LinearModel.h>`, `ExtendedModel.h` | the application models (libKalmanApps): one header per domain, and in its directory one per model, named for the model and not for the domain again | `kalman.apps`, `kalman.apps.ballistics` |
 | `<Kalman/Adapters.h>` | `<Kalman/Adapters/<Device>.h>` | specific hardware; none shipped yet | `kalman.adapters` |
 | `<Kalman/Learn.h>` | `<Kalman/Learn/Solvers.h>` | learned components (libKalmanLearn) | |
 | `<Kalman/Net.h>` | `<Kalman/Net/RestServer.h>` | the JSON API and its servers (libKalmanNet) | `kalman.api`, `.rest`, `.mcp` |
@@ -910,12 +910,12 @@ the Python loop runs as before.
 | `GPSModel` | `Apps::GPS::Receiver` | `gps` | `prepare_measurements()` (the relativistic corrections applied to the pseudoranges before the filter); a `dtype` other than float64 |
 | `DriftChamberModel` | `Apps::Tracking::DriftChamber` | `drift-chamber` | `generate_event()` (it draws with numpy's generator) |
 | `CarLaneModel` | `Apps::Vehicles::CarLane` | `car-lane` | a steering computed by a controller function (closed loop), an integrator the C++ side lacks, a subclass's own `limit_control` |
-| `RocketLiftoffModel` | `Apps::Astro::RocketLiftoff` | `rocket-liftoff` | an integrator the C++ side lacks |
-| `RocketAscentModel` | `Apps::Astro::RocketAscent` | `rocket-ascent` | a thrust computed by a controller function, an integrator the C++ side lacks |
-| `RocketDescentModel` | `Apps::Astro::RocketDescent` | `rocket-descent`, `rocket-descent-control` (`control=True`) | a command computed by a controller function, an integrator the C++ side lacks |
-| `RocketLandingModel` | `Apps::Astro::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
-| `TransLunarModel` | `Apps::Astro::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
-| `InterplanetaryModel` | `Apps::Astro::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
+| `RocketLiftoffModel` | `Apps::Aerospace::RocketLiftoff` | `rocket-liftoff` | an integrator the C++ side lacks |
+| `RocketAscentModel` | `Apps::Aerospace::RocketAscent` | `rocket-ascent` | a thrust computed by a controller function, an integrator the C++ side lacks |
+| `RocketDescentModel` | `Apps::Aerospace::RocketDescent` | `rocket-descent`, `rocket-descent-control` (`control=True`) | a command computed by a controller function, an integrator the C++ side lacks |
+| `RocketLandingModel` | `Apps::Aerospace::RocketLanding` | `rocket-landing` | an integrator the C++ side lacks |
+| `TransLunarModel` | `Apps::Astrophysics::TransLunar` | `translunar` | an integrator other than the built-in Euler, RK4 or default Dormand-Prince |
+| `InterplanetaryModel` | `Apps::Astrophysics::Interplanetary` | `interplanetary` | a mid-course burn (`control=True`, a `TrajectoryControlManeuver`), another integrator, a perturber field not tabulated on `numpy.arange`'s grid |
 | `PolarizationModel` | `Apps::Gravitational::Polarization` | `polarization` | `prepare_measurements()` (a complex signal turned into four real columns); a transition built for another rate than `fs` (fs changed after construction) |
 | `KolmogorovFlowModel` (ensemble engine) | `Apps::Weather::KolmogorovFlow` | `kolmogorov-flow` | a `surrogate` forecast, a solver on libTorch (`backend="torch"`) or with other physics, a `Q` with off-diagonal terms, a changed `f`, `h` or `covariance_mask`, a callback in `TwinExperiment.run`; `sample()` |
 | `BarotropicFlowModel` (ensemble engine) | `Apps::Weather::BarotropicFlow` | `barotropic-flow` | as `KolmogorovFlowModel` |

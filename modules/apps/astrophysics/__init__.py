@@ -1,5 +1,5 @@
 """
-kalman.apps.space — astrodynamics domain.
+kalman.apps.astrophysics — spacecraft trajectories: to the Moon and between the planets.
 
 - translunar     — :class:`TransLunarModel` (Earth-Moon cruise);
 - transfers      — Lambert/Hohmann/porkchop/gravity-assist toolkit;

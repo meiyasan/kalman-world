@@ -33,7 +33,7 @@ from modules.apps.weather.storms import TornadoEnvironmentModel, synthetic_envir
 from modules.apps.ballistics import BallisticModel                # noqa: E402
 from modules.apps.vehicles import CarSpeedModel                   # noqa: E402
 from modules.apps.vehicles import CarLaneModel                    # noqa: E402
-from modules.apps.astro.rocket import (RocketLiftoffModel, RocketAscentModel,   # noqa: E402
+from modules.apps.aerospace import (RocketLiftoffModel, RocketAscentModel,   # noqa: E402
                                        RocketDescentModel, RocketLandingModel)
 from modules.runtime.astro import R_EARTH, KM                     # noqa: E402
 
@@ -153,8 +153,8 @@ def cases(steps):
     # The space models, on the scenarios of notebook 08: the free return (180 s
     # samples, 4 RK4 substeps) and the Earth-Mars cruise of the 2026 window
     # (12 h samples, Mercury, Venus, Jupiter and Saturn tabulated from the ephemeris).
-    from modules.apps.astro.space import TransLunarModel, InterplanetaryModel   # noqa: E402
-    from modules.apps.astro.space.transfers import lambert                      # noqa: E402
+    from modules.apps.astrophysics import TransLunarModel, InterplanetaryModel   # noqa: E402
+    from modules.apps.astrophysics.transfers import lambert                      # noqa: E402
     # R_EARTH and KM come from the module's import: importing them here again made
     # them locals of cases(), unbound in the ascent case above (a NameError).
     from modules.runtime.astro import D_MOON, GM_EARTH, DAY, body_state   # noqa: E402

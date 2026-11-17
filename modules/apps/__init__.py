@@ -9,10 +9,10 @@ from .resonators.oscillators import (OscillatorModel, AnalyticOscillatorModel, O
 from .resonators.suspensions import SuspensionModel
 from .resonators.powergrids  import PowerGridStateModel, PowerGridObservable, plot_phasor_diagram
 from .gravitational.gravwave     import PolarizationModel, PolarizationState, PolarizationObservable, jones_signal
-from .astro.rocket       import (RocketAscentModel, RocketLiftoffModel, RocketLandingModel,
+from .aerospace       import (RocketAscentModel, RocketLiftoffModel, RocketLandingModel,
                            RocketDescentModel, RocketDescentState, RocketDescentObservable,
                            RocketLaunchModel, RocketTakeoffModel)  # last two: legacy aliases
-from .astro.space       import (TransLunarModel, TransLunarState, TransLunarObservable,
+from .astrophysics       import (TransLunarModel, TransLunarState, TransLunarObservable,
                            InterplanetaryModel, InterplanetaryState, InterplanetaryObservable,
                            TrajectoryControlManeuver,
                            hohmann_transfer, hohmann_sequence, lambert,

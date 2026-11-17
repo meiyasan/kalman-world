@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file TransLunar.h
- * \brief Header of the Kalman::Apps::Astro::TransLunar class
+ * \brief Header of the Kalman::Apps::Astrophysics::TransLunar class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::TransLunar
+ * \class Kalman::Apps::Astrophysics::TransLunar
  * \brief Restricted four-body trans-lunar coast (Earth + Moon + Sun) — the counterpart of
- * `kalman.apps.astro.space.TransLunarModel`.
+ * `kalman.apps.astrophysics.TransLunarModel`.
  *
  * \details Geocentric state `[x, y, z, vx, vy, vz]`, position in Mm and velocity
  * in km/s (time in ks, so 1 Mm/ks = 1 km/s); the position is observed. The
@@ -38,12 +38,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_TRANSLUNAR_H
-#define KALMAN_APPS_ASTRO_TRANSLUNAR_H
+#ifndef KALMAN_APPS_ASTROPHYSICS_TRANSLUNAR_H
+#define KALMAN_APPS_ASTROPHYSICS_TRANSLUNAR_H
 
 #include "Kalman/Apps/Model.h"
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Astrophysics
 {
     class TransLunar : public Kalman::Apps::Model
     {
@@ -78,4 +78,4 @@ namespace Kalman::Apps::Astro
     void AddThirdBody(const double *r, const double *rb, double gm, double *a);
 }
 
-#endif // KALMAN_APPS_ASTRO_TRANSLUNAR_H
+#endif // KALMAN_APPS_ASTROPHYSICS_TRANSLUNAR_H

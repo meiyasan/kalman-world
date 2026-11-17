@@ -28,13 +28,13 @@ come from :mod:`kalman.runtime.astro`.
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
-from ....framework.control import KalmanController
-from ....framework.models.native import NativeCounterpart
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...framework.control import KalmanController
+from ...framework.models.native import NativeCounterpart
 from .translunar import _native_integrator, _SPACE_COUNTERPART_CONTRACT
 from .transfers import lambert          # the Lambert solver moved to transfers.py with the package split
-from ....runtime.astro import (
+from ...runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,
@@ -206,7 +206,7 @@ class InterplanetaryModel(NativeCounterpart, ExtendedKalmanModel):
         super().__init__("PROBE", Q=Q, R=R, fs=self.fs, **kw)
 
     # ------------------------------------------------------------------
-    # C++ counterpart (libKalmanApps: Kalman::Apps::Astro::Interplanetary). The
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Astrophysics::Interplanetary). The
     # perturbers' table is built from the ephemeris once, at construction, and
     # crosses as named scalars (body<i>_gm, body<i>_x<k>, ...); the counterpart
     # interpolates it as numpy.interp does. A mid-course burn (control=True, or a
@@ -352,7 +352,7 @@ class InterplanetaryModel(NativeCounterpart, ExtendedKalmanModel):
         """
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D
-        from ....helpers import animate
+        from ...helpers import animate
         truth = np.asarray(sample.xk) if sample is not None else np.asarray(record.xk)
         estx  = np.asarray(record.xk)
         meas  = (np.asarray(sample.zk) if sample is not None

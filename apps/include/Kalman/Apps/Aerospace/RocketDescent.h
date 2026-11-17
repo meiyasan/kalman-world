@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file RocketDescent.h
- * \brief Header of the Kalman::Apps::Astro::RocketDescent class
+ * \brief Header of the Kalman::Apps::Aerospace::RocketDescent class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::RocketDescent
+ * \class Kalman::Apps::Aerospace::RocketDescent
  * \brief Planar powered descent of a gimballed rigid booster - the counterpart of
- * `kalman.apps.astro.rocket.RocketDescentModel`.
+ * `kalman.apps.aerospace.RocketDescentModel`.
  *
  * \details State `[x, y, vx, vy, theta, omega, m]` (SI units, `y` the altitude of
  * the base, `theta` the tilt from vertical); `[x, y, theta]` is observed.
@@ -56,12 +56,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_ROCKETDESCENT_H
-#define KALMAN_APPS_ASTRO_ROCKETDESCENT_H
+#ifndef KALMAN_APPS_AEROSPACE_ROCKETDESCENT_H
+#define KALMAN_APPS_AEROSPACE_ROCKETDESCENT_H
 
 #include "Kalman/Apps/Model.h"
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     class RocketDescent : public Kalman::Apps::Model
     {
@@ -99,4 +99,4 @@ namespace Kalman::Apps::Astro
     };
 }
 
-#endif // KALMAN_APPS_ASTRO_ROCKETDESCENT_H
+#endif // KALMAN_APPS_AEROSPACE_ROCKETDESCENT_H

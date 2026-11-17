@@ -28,13 +28,13 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeCounterpart, native_integrator_kind
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeCounterpart, native_integrator_kind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
 from .descent import _rocket_shape, _add_rocket, _fuel_gauge, _set_gauge
-from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -148,7 +148,7 @@ class RocketLiftoffModel(NativeCounterpart, ExtendedKalmanModel):
         h, v, m = np.asarray(x, float).reshape(-1)[:3]
         return self._deriv(np.array([h, v, m]), 0.0)[1]
 
-    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketLiftoff) ------
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Aerospace::RocketLiftoff) ------
     # _deriv is the dynamics, so a subclass that changes it is another model.
     _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("_deriv",)
 
@@ -302,7 +302,7 @@ class RocketLiftoffModel(NativeCounterpart, ExtendedKalmanModel):
         propellant gauge + live readout (narrow right column)."""
         import matplotlib.pyplot as plt
         from matplotlib.patches import Polygon
-        from ....helpers import animate
+        from ...helpers import animate
 
         truth = np.asarray(sample.xk) if sample is not None else np.asarray(record.xk)
         estx  = np.asarray(record.xk)

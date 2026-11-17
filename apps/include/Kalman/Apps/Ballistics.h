@@ -17,6 +17,7 @@
 #ifndef KALMAN_APPS_BALLISTICS_H
 #define KALMAN_APPS_BALLISTICS_H
 
-#include "Kalman/Apps/Ballistics/Ballistic.h"
+#include "Kalman/Apps/Ballistics/LinearModel.h"
+#include "Kalman/Apps/Ballistics/ExtendedModel.h"
 
 #endif // KALMAN_APPS_BALLISTICS_H

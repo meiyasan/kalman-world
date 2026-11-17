@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file RocketAscent.h
- * \brief Header of the Kalman::Apps::Astro::RocketAscent class
+ * \brief Header of the Kalman::Apps::Aerospace::RocketAscent class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::RocketAscent
+ * \class Kalman::Apps::Aerospace::RocketAscent
  * \brief Planar guided ascent, thrust as the control input - the counterpart of
- * `kalman.apps.astro.rocket.RocketAscentModel`.
+ * `kalman.apps.aerospace.RocketAscentModel`.
  *
  * \details State `[x, y, vx, vy]` in Earth-centred axes, scaled units (Mm and
  * km/s, time in ks); control `u = [ax, ay]`, the thrust acceleration; the
@@ -34,12 +34,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_ROCKETASCENT_H
-#define KALMAN_APPS_ASTRO_ROCKETASCENT_H
+#ifndef KALMAN_APPS_AEROSPACE_ROCKETASCENT_H
+#define KALMAN_APPS_AEROSPACE_ROCKETASCENT_H
 
 #include "Kalman/Apps/Model.h"
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     class RocketAscent : public Kalman::Apps::Model
     {
@@ -63,4 +63,4 @@ namespace Kalman::Apps::Astro
     };
 }
 
-#endif // KALMAN_APPS_ASTRO_ROCKETASCENT_H
+#endif // KALMAN_APPS_AEROSPACE_ROCKETASCENT_H

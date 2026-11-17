@@ -30,7 +30,7 @@ SHIMS: set[str] = set()
 
 
 # Family packages group related domains; their members are the real domains.
-FAMILIES = {"astro", "gravitational", "resonators"}
+FAMILIES = {"gravitational", "resonators"}
 
 
 def _domain_packages():
@@ -317,3 +317,14 @@ class TestCxxHeadersHaveOneLayout(unittest.TestCase):
                 if os.path.dirname(header) == folder and header not in self.LEFT_OUT:
                     self.assertIn(header, included, f"{umbrella} must include {header}")
         self.assertNotIn("Kalman/Apps/Apps.h", where)
+
+    def test_a_model_is_not_named_after_its_domain(self):
+        """``<Kalman/Apps/Ballistics/ExtendedModel.h>``, not ``Ballistics/Ballistic.h``:
+        the directory already says the domain; the file says which model of it."""
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        base = os.path.join(repo, "apps", "include", "Kalman", "Apps")
+        for domain in sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d))):
+            for header in os.listdir(os.path.join(base, domain)):
+                stem = header[:-2].lower()
+                self.assertFalse(domain.lower().startswith(stem) or stem.startswith(domain.lower().rstrip("s")),
+                                 f"Kalman/Apps/{domain}/{header} repeats its domain")

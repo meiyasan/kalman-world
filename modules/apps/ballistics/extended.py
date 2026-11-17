@@ -105,7 +105,7 @@ class BallisticModel(NativeCounterpart, ExtendedKalmanModel):
         self._name_channels(["X", "Y", "Z"])       # the channels of its sensor
 
     # ----------------------------------------------------------------------
-    # C++ counterpart (libKalmanApps: Kalman::Apps::Ballistics::Ballistic). A
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Ballistics::ExtendedModel). A
     # speed-dependent Q, a thrust control, a user-supplied f/h, "auto" sub-steps
     # and an integrator other than the built-in Euler, RK4 or default
     # Dormand-Prince stay in Python.

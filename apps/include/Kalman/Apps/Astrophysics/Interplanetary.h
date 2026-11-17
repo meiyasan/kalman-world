@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file Interplanetary.h
- * \brief Header of the Kalman::Apps::Astro::Interplanetary class
+ * \brief Header of the Kalman::Apps::Astrophysics::Interplanetary class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::Interplanetary
+ * \class Kalman::Apps::Astrophysics::Interplanetary
  * \brief Heliocentric N-body cruise — the counterpart of
- * `kalman.apps.astro.space.InterplanetaryModel`.
+ * `kalman.apps.astrophysics.InterplanetaryModel`.
  *
  * \details Sun-centred state `[x, y, z, vx, vy, vz]`, position in Mm and
  * velocity in km/s (time in ks); the position is observed. The derivative is the
@@ -40,14 +40,14 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_INTERPLANETARY_H
-#define KALMAN_APPS_ASTRO_INTERPLANETARY_H
+#ifndef KALMAN_APPS_ASTROPHYSICS_INTERPLANETARY_H
+#define KALMAN_APPS_ASTROPHYSICS_INTERPLANETARY_H
 
 #include "Kalman/Apps/Model.h"
 
 #include <vector>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Astrophysics
 {
     class Interplanetary : public Kalman::Apps::Model
     {
@@ -92,4 +92,4 @@ namespace Kalman::Apps::Astro
     };
 }
 
-#endif // KALMAN_APPS_ASTRO_INTERPLANETARY_H
+#endif // KALMAN_APPS_ASTROPHYSICS_INTERPLANETARY_H

@@ -568,8 +568,8 @@ one, and `g` is called back from the C++ loop. Notebook 01, Step 6 adds a Dopple
 | Family / domain | Models |
 |---|---|
 | **framework** | `KalmanModel`, `LinearKalmanModel`, `ExtendedKalmanModel`, `UnscentedKalmanModel`, `Composite`, `Joint`, `Fusion`, `Lag` |
-| **astro.rocket** | `RocketAscentModel`, `RocketDescentModel`, `RocketLiftoffModel`, `RocketLandingModel` (+ `RocketLaunchModel`, `RocketTakeoffModel` legacy aliases) |
-| **astro.space** | `TransLunarModel`, `InterplanetaryModel` |
+| **aerospace** | `RocketAscentModel`, `RocketDescentModel`, `RocketLiftoffModel`, `RocketLandingModel` (+ `RocketLaunchModel`, `RocketTakeoffModel` legacy aliases) |
+| **astrophysics** | `TransLunarModel`, `InterplanetaryModel` |
 | **ballistics** | `BallisticModel`, `BallisticLinearModel` |
 | **gravitational.gravwave** | `PolarizationModel` |
 | **gravitational.interferometer** | `InterferometerModel`, `InterferometerK1/H1/L1/V1` |

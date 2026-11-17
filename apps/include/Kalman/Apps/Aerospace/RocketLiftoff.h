@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file RocketLiftoff.h
- * \brief Header of the Kalman::Apps::Astro::RocketLiftoff class
+ * \brief Header of the Kalman::Apps::Aerospace::RocketLiftoff class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::RocketLiftoff
+ * \class Kalman::Apps::Aerospace::RocketLiftoff
  * \brief Vertical liftoff with a finite propellant load - the counterpart of
- * `kalman.apps.astro.rocket.RocketLiftoffModel`.
+ * `kalman.apps.aerospace.RocketLiftoffModel`.
  *
  * \details State `[h, v, m]`, altitude, climb rate and mass (SI units); the
  * altitude is observed. The mass burns down, so at constant thrust the
@@ -40,12 +40,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_ROCKETLIFTOFF_H
-#define KALMAN_APPS_ASTRO_ROCKETLIFTOFF_H
+#ifndef KALMAN_APPS_AEROSPACE_ROCKETLIFTOFF_H
+#define KALMAN_APPS_AEROSPACE_ROCKETLIFTOFF_H
 
 #include "Kalman/Apps/Model.h"
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     class RocketLiftoff : public Kalman::Apps::Model
     {
@@ -72,4 +72,4 @@ namespace Kalman::Apps::Astro
     };
 }
 
-#endif // KALMAN_APPS_ASTRO_ROCKETLIFTOFF_H
+#endif // KALMAN_APPS_AEROSPACE_ROCKETLIFTOFF_H

@@ -28,10 +28,10 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeCounterpart, native_integrator_kind
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
-from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeCounterpart, native_integrator_kind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -236,7 +236,7 @@ class RocketDescentModel(NativeCounterpart, ExtendedKalmanModel):
             kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
-    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketDescent) ------
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Aerospace::RocketDescent) ------
     # Both configurations have one: the guidance flying the booster (l = 0,
     # "rocket-descent") and the throttle/gimbal program as the control input
     # (control=True, l = 2, "rocket-descent-control"). The atmosphere, the
@@ -477,7 +477,7 @@ class RocketDescentModel(NativeCounterpart, ExtendedKalmanModel):
         right column). Radar measurement positions are overlaid on the trajectory."""
         import matplotlib.pyplot as plt
         from matplotlib.patches import Polygon
-        from ....helpers import animate
+        from ...helpers import animate
 
         truth = np.asarray(sample.xk) if sample is not None else np.asarray(record.xk)
         estx  = np.asarray(record.xk)

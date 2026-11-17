@@ -28,10 +28,10 @@ Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where 
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.models.native import NativeCounterpart, native_integrator_kind
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
-from ....runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.models.native import NativeCounterpart, native_integrator_kind
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -122,7 +122,7 @@ class RocketLandingModel(NativeCounterpart, ExtendedKalmanModel):
             kw["x0"] = x0
         super().__init__(name, Q=Q, R=R, L=np.eye(self.n), fs=fs, **kw)
 
-    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Astro::RocketLanding) ------
+    # --- C++ counterpart (libKalmanApps: Kalman::Apps::Aerospace::RocketLanding) ------
     # The atmosphere, the guidance and _deriv are the dynamics: a subclass that
     # changes one of them is another model.
     _COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + ("_deriv", "_rho", "guidance")

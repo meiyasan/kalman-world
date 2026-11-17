@@ -2,20 +2,20 @@
  * *********************************************
  *
  * \file RocketLanding.cc
- * \brief Implementation of the Kalman::Apps::Astro::RocketLanding class
+ * \brief Implementation of the Kalman::Apps::Aerospace::RocketLanding class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/RocketLanding.h"
+#include "Kalman/Apps/Aerospace/RocketLanding.h"
 
 #include <Kalman/Factory.h>
 
 #include <algorithm>
 #include <cmath>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     RocketLanding::RocketLanding() : Kalman::Apps::Model("rocket-landing", 3, 1)
     {
@@ -122,4 +122,4 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::RocketLanding, "rocket-landing");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Aerospace::RocketLanding, "rocket-landing");

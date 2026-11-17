@@ -2,14 +2,14 @@
  * *********************************************
  *
  * \file RocketLanding.h
- * \brief Header of the Kalman::Apps::Astro::RocketLanding class
+ * \brief Header of the Kalman::Apps::Aerospace::RocketLanding class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  *
- * \class Kalman::Apps::Astro::RocketLanding
+ * \class Kalman::Apps::Aerospace::RocketLanding
  * \brief Vertical propulsive landing (a hoverslam) - the counterpart of
- * `kalman.apps.astro.rocket.RocketLandingModel`.
+ * `kalman.apps.aerospace.RocketLandingModel`.
  *
  * \details State `[h, v, m]`, altitude, vertical speed and mass (SI units); the
  * altitude is observed. The stage falls engine-off, then a closed-loop burn
@@ -44,12 +44,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_ASTRO_ROCKETLANDING_H
-#define KALMAN_APPS_ASTRO_ROCKETLANDING_H
+#ifndef KALMAN_APPS_AEROSPACE_ROCKETLANDING_H
+#define KALMAN_APPS_AEROSPACE_ROCKETLANDING_H
 
 #include "Kalman/Apps/Model.h"
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     class RocketLanding : public Kalman::Apps::Model
     {
@@ -82,4 +82,4 @@ namespace Kalman::Apps::Astro
     };
 }
 
-#endif // KALMAN_APPS_ASTRO_ROCKETLANDING_H
+#endif // KALMAN_APPS_AEROSPACE_ROCKETLANDING_H

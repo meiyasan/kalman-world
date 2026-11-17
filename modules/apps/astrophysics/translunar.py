@@ -28,12 +28,12 @@ come from :mod:`kalman.runtime.astro`.
 """
 import numpy as np
 
-from ....framework.models.extended import ExtendedKalmanModel
-from ....framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
-from ....framework.control import KalmanController
-from ....framework.models.native import NativeCounterpart
-from ....runtime import astro as _astro
-from ....runtime.astro import (
+from ...framework.models.extended import ExtendedKalmanModel
+from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
+from ...framework.control import KalmanController
+from ...framework.models.native import NativeCounterpart
+from ...runtime import astro as _astro
+from ...runtime.astro import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,
@@ -131,7 +131,7 @@ _SPACE_COUNTERPART_CONTRACT = NativeCounterpart._COUNTERPART_CONTRACT + (
 
 def _native_integrator(model):
     """The C++ IntegratorKind of ``model``'s integrator, or None when it has no counterpart."""
-    from ....framework.integrator import KalmanIntegrator, _BUILTIN_STEPS
+    from ...framework.integrator import KalmanIntegrator, _BUILTIN_STEPS
     integrator = model.default_integrator()
     name = getattr(integrator, "NATIVE", None)
     kind = _NATIVE_INTEGRATORS.get(name)
@@ -197,7 +197,7 @@ class TransLunarModel(NativeCounterpart, ExtendedKalmanModel):
         super().__init__("ROCKET", Q=Q, R=R, fs=self.fs, **kw)
 
     # ------------------------------------------------------------------
-    # C++ counterpart (libKalmanApps: Kalman::Apps::Astro::TransLunar). The Moon and the
+    # C++ counterpart (libKalmanApps: Kalman::Apps::Astrophysics::TransLunar). The Moon and the
     # Sun ride on circular orbits given by a formula, so every configuration has
     # one, ephemeris-seeded phases included; another integrator stays in Python.
     # ------------------------------------------------------------------
@@ -317,7 +317,7 @@ class TransLunarModel(NativeCounterpart, ExtendedKalmanModel):
         beside it — you watch the two diverge at the flyby, which *is* the catapult."""
         import matplotlib.pyplot as plt
         from matplotlib.lines import Line2D
-        from ....helpers import animate
+        from ...helpers import animate
         truth, estx, meas, K = self._trajectory_arrays(record, sample, nmax)
         kep    = None if kepler is None else np.asarray(getattr(kepler, "xk", kepler))
         # Auto-extend the Keplerian (Earth-only) path until it returns to periapsis, capped at

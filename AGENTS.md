@@ -99,11 +99,10 @@ modules/                        → the `kalman` package
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)
   apps/                         domain applications
-    astro/         rocket  space
     gravitational/ gravwave  interferometer
     resonators/    oscillators  powergrids  suspensions
     weather/       flow  storms  geo  surrogate  data/  providers/
-    ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
+    aerospace/  astrophysics/  ballistics/  calorimeter/  fusion/  gps/  tracking/  vehicles/  vision/
   runtime/  helpers.py
 tests/                          mirrors concerns, not files (pytest)
   cxx/                          the libKalman suite (plain binaries, ctest)
@@ -112,7 +111,7 @@ examples/cxx/                   standalone C++ programs using libKalman
 share/notebooks/                executed, output-bearing narrative docs
 ```
 
-**Families** (`astro`, `gravitational`, `resonators`) group related domains and
+**Families** (`gravitational`, `resonators`) group related domains and
 expose a `DOMAINS` map. Grouping is by shared foundation or application area —
 *not* by superficial similarity. Domains inside a family keep their own
 `VARIANTS`; cross-family imports are normal (e.g. `interferometer` uses
@@ -216,7 +215,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **950 passed, 28 skipped** (skips are optional-dependency
+Current baseline: **952 passed, 28 skipped** (skips are optional-dependency
 gates), and 28 of 28 in the C++ suite (`ctest`). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than
@@ -381,7 +380,9 @@ beside it, which includes all of it: `<Kalman/X.h>` for the whole,
 (`<Kalman/Apps.h>`, `<Kalman/Apps/Weather.h>`, `<Kalman/Sensors.h>`,
 `<Kalman/Adapters.h>`, `<Kalman/Learn.h>`, `<Kalman/Net.h>`). A new header goes
 in its directory's umbrella in the same commit; a new directory brings its
-umbrella. `tests/test_structure.py::TestCxxHeadersHaveOneLayout` enforces it.
+umbrella. Inside an application domain a header says which model it is, not
+the domain again: `<Kalman/Apps/Ballistics/LinearModel.h>` and
+`ExtendedModel.h`, never `Ballistics/Ballistic.h`. `tests/test_structure.py::TestCxxHeadersHaveOneLayout` enforces it.
 
 `include/Kalman/` + `src/` build `libKalman`: the same Model / Engine / Filter
 contracts in C++, as a **standalone library with no required dependency**. See

@@ -2,20 +2,20 @@
  * *********************************************
  *
  * \file RocketDescent.cc
- * \brief Implementation of the Kalman::Apps::Astro::RocketDescent class
+ * \brief Implementation of the Kalman::Apps::Aerospace::RocketDescent class
  * \author Marco Meyer \<marco.meyer@omu.ac.jp\>
  *
  * *********************************************
  */
 
-#include "Kalman/Apps/Astro/RocketDescent.h"
+#include "Kalman/Apps/Aerospace/RocketDescent.h"
 
 #include <Kalman/Factory.h>
 
 #include <algorithm>
 #include <cmath>
 
-namespace Kalman::Apps::Astro
+namespace Kalman::Apps::Aerospace
 {
     RocketDescent::RocketDescent(bool control)
         : Kalman::Apps::Model(control ? "rocket-descent-control" : "rocket-descent", 7, 3, control ? 2 : 0)
@@ -173,5 +173,5 @@ namespace Kalman::Apps::Astro
     }
 }
 
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::RocketDescent, "rocket-descent");
-KALMAN_REGISTER_MODEL(Kalman::Apps::Astro::RocketDescent, "rocket-descent-control", true);
+KALMAN_REGISTER_MODEL(Kalman::Apps::Aerospace::RocketDescent, "rocket-descent");
+KALMAN_REGISTER_MODEL(Kalman::Apps::Aerospace::RocketDescent, "rocket-descent-control", true);

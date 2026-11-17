@@ -24,7 +24,7 @@ from modules.apps.weather.storms import (StormModel, synthetic_track, analytic_s
 from modules.apps.ballistics import BallisticModel
 from modules.apps.vehicles import CarSpeedModel
 from modules.framework.constants import KalmanIntegratorKind
-from modules.apps.astro.space import TransLunarModel, InterplanetaryModel
+from modules.apps.astrophysics import TransLunarModel, InterplanetaryModel
 
 HAVE_APPS = bool(apps_library_names())
 needs_apps = unittest.skipUnless(HAVE_APPS, "libKalmanApps is not built")
@@ -314,7 +314,7 @@ class TestCarSpeedCounterpart(unittest.TestCase):
 
 # --- the lane-keeping car and the rocket family ----------------------------------
 from modules.apps.vehicles import CarLaneModel                          # noqa: E402
-from modules.apps.astro.rocket import (RocketLiftoffModel, RocketAscentModel,  # noqa: E402
+from modules.apps.aerospace import (RocketLiftoffModel, RocketAscentModel,  # noqa: E402
                                        RocketDescentModel, RocketLandingModel)
 from modules.runtime.astro import R_EARTH, KM                           # noqa: E402
 
@@ -539,7 +539,7 @@ class TestCounterpartContract(unittest.TestCase):
         self.assertIsNone(Plain().native_name())
 
 
-# --- the space models (kalman.apps.astro.space) ----------------------------------
+# --- the space models (kalman.apps.astrophysics) ----------------------------------
 def free_return(**kw):
     """The notebook's Apollo-style free return: a 400 km parking orbit, then TLI."""
     from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
@@ -555,7 +555,7 @@ def free_return(**kw):
 def mars_cruise(**kw):
     """The notebook's Earth-Mars cruise, seeded by a Lambert arc of the 2026 window."""
     from astropy.time import Time, TimeDelta
-    from modules.apps.astro.space.transfers import lambert
+    from modules.apps.astrophysics.transfers import lambert
     from modules.runtime.astro import body_state, DAY
     dep, tof = Time("2026-10-28"), 311.0
     r1, _ = body_state("earth", dep)
@@ -725,3 +725,19 @@ class TestPolarizationCounterpart(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+@unittest.skipUnless("ballistic-linear" in apps_library_names(), "libKalmanApps is not built")
+class TestBallisticLinearModel(unittest.TestCase):
+    """``Kalman::Apps::Ballistics::LinearModel`` holds the matrices of ``BallisticLinearModel``."""
+
+    def test_the_same_matrices(self):
+        from modules.apps import BallisticLinearModel
+        from modules.framework.models.native import NativeModel
+        python = BallisticLinearModel("Z", fs=128, measurement_uncertainty=0.5, process_uncertainty=0.5)
+        cxx = NativeModel("ballistic-linear")
+        self.assertEqual((cxx.n, cxx.m), (3, 1))
+        for name in ("F", "H", "Q", "R"):
+            np.testing.assert_allclose(np.asarray(getattr(cxx, name)()), np.asarray(getattr(python, name)()),
+                                       rtol=1e-12, atol=1e-18, err_msg=name)
+        np.testing.assert_allclose(np.asarray(cxx.P0), np.asarray(python.P0), rtol=1e-12)
