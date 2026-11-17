@@ -57,6 +57,6 @@ The operations also cover what a list of rows cannot:
   oldest. Read as if it were current, a 0.2 s delay on a target at 8 m/s is a
   1.6 m error.
 
-Step 6 of the notebook runs all three.
+Steps 6 to 8 of the notebook show them one at a time.
 
 Notebook: [09_SensorFusion](../../share/notebooks/09_SensorFusion.ipynb).
