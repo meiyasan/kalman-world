@@ -246,6 +246,34 @@ namespace Kalman::Models
         return z;
     }
 
+    std::vector<Sensor> Joint::Sensors() const
+    {
+        Sync();
+        std::vector<Sensor> out = fInner->Sensors();
+        std::size_t first = 0;
+        for (Sensor &sensor : out)
+        {
+            const std::size_t k = sensor.Channels(), row = first;
+            first += k;
+            sensor.G = Matrix();
+            sensor.calibrated = false;
+            sensor.g = [this, row, k](const Vector &x, double t) {
+                const Vector z = this->h(x, t);
+                Vector part(k);
+                for (std::size_t i = 0; i < k; ++i) part(i) = z(row + i);
+                return part;
+            };
+            sensor.jacobian = [this, row, k](const Vector &x, double t) {
+                const Matrix H = this->JacobianH(x, t);
+                Matrix part(k, fNState, 0.);
+                for (std::size_t i = 0; i < k; ++i)
+                    for (std::size_t j = 0; j < fNState; ++j) part(i, j) = H(row + i, j);
+                return part;
+            };
+        }
+        return out;
+    }
+
     Vector Joint::MeasureWithNoise(const Vector &x, const Vector &v, double t) const
     {
         Sync();

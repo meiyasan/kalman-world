@@ -151,6 +151,10 @@ namespace Kalman::Models
             // --- maps ----------------------------------------------------------
             Vector f(const Vector &x, const Vector &u, double t = 0.) const override;
             Vector h(const Vector &x, double t = 0.) const override;
+            /// The inner model's sensors, by name, instrument, rate and channels, each reading
+            /// its rows of this model's `h` (so with the parameters the state carries). A
+            /// calibration is then part of the reading, and the sensor reports none.
+            std::vector<Sensor> Sensors() const override;
             Matrix Jacobian(const Vector &x, const Vector &u, double t = 0.) const override;
             Matrix JacobianH(const Vector &x, double t = 0.) const override;
 

@@ -81,6 +81,15 @@ int main()
     CHECK(model.NState() == 3 && model.NMeasure() == 1, "joint: n = 2 + 1, m unchanged");
     CHECK(model.NInner() == 2, "joint: the parameters start after the inner state");
     CHECK(model.DefaultEngine() == EngineKind::Extended, "joint: asks for the extended engine");
+    {
+        const std::vector<Sensor> inner = model.Inner().Sensors(), outer = model.Sensors();
+        bool same = inner.size() == outer.size();
+        for (std::size_t i = 0; same && i < inner.size(); ++i)
+            same = inner[i].name == outer[i].name && inner[i].Channels() == outer[i].Channels() && inner[i].rate == outer[i].rate;
+        CHECK(same, "joint: the sensors are the inner model's, by name, channels and rate");
+        const Vector z = model.h(model.X0(), 0.);
+        CHECK(outer[0].Read(model.X0())(0) == z(0), "joint: each reads its rows of h");
+    }
     CHECK(model.StateComponents()[2].name == "damping", "joint: the parameter is a named component");
     CHECK(model.StateComponents()[0].name == "position", "joint: the inner components keep their names");
     CHECK(model.X0()(0) == 1. && model.X0()(2) == 0., "joint: x0 = inner x0, then the parameter's value");
