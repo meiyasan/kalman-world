@@ -7,6 +7,9 @@
 #include "Fixtures.h"
 
 #include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <vector>
 #include <memory>
 #include <stdexcept>
 
@@ -120,41 +123,51 @@ int main()
         Vector xx(16, 0.); xx(6) = 7.;
         CHECK(twice->NState() == 16 && twice->h(xx, 0.)(1) == 7., "they nest: the delay is applied once");
     }
+    // Over several records: std::normal_distribution draws another stream with each
+    // standard library (libstdc++, libc++), so one record is not the same everywhere.
     {
-        Sampler sampler(model.get(), 20261118);
         const std::size_t N = 2000;
-        sampler.Generate(N, model->X0());
-        Filters::KF kf(model.get());
-        const Record rec = kf.Forward(sampler.Measurements());
-
-        // The same readings, the delay ignored: the late sensor is believed to read the present.
-        Sensor mistaken = Late(0.);
-        const std::shared_ptr<Model> naive = AddSensor(Cart(fs), mistaken);
-        Filters::KF wrong(naive.get());
-        const Record bad = wrong.Forward(sampler.Measurements());
-
-        // Without the late sensor at all.
-        auto cart_alone = Cart(fs);
-        std::vector<Vector> first;
-        for (const Vector &z : sampler.Measurements()) { Vector one(1); one(0) = z(0); first.push_back(one); }
-        Filters::KF alone(cart_alone.get());
-        const Record base = alone.Forward(first);
-
-        double e_lag = 0., e_naive = 0., e_alone = 0.;
-        for (std::size_t k = 0; k < N; ++k)
+        const std::vector<std::uint64_t> seeds = {20261118, 1, 2, 3, 4, 5};
+        double e_lag = 0., e_naive = 0., e_alone = 0., nis = 0., nis_wrong = 0.;
+        for (const std::uint64_t seed : seeds)
         {
-            const double truth = sampler.Truth()[k](0);
-            e_lag += std::pow(rec.State(k)(0) - truth, 2);
-            e_naive += std::pow(bad.State(k)(0) - truth, 2);
-            e_alone += std::pow(base.State(k)(0) - truth, 2);
+            Sampler sampler(model.get(), seed);
+            sampler.Generate(N, model->X0());
+            Filters::KF kf(model.get());
+            const Record rec = kf.Forward(sampler.Measurements());
+
+            // The same readings, the delay ignored: the late sensor is believed to read the present.
+            const std::shared_ptr<Model> naive = AddSensor(Cart(fs), Late(0.));
+            Filters::KF wrong(naive.get());
+            const Record bad = wrong.Forward(sampler.Measurements());
+
+            // Without the late sensor at all.
+            auto cart_alone = Cart(fs);
+            std::vector<Vector> first;
+            for (const Vector &z : sampler.Measurements()) { Vector one(1); one(0) = z(0); first.push_back(one); }
+            Filters::KF alone(cart_alone.get());
+            const Record base = alone.Forward(first);
+
+            double l = 0., b = 0., a = 0.;
+            for (std::size_t k = 0; k < N; ++k)
+            {
+                const double truth = sampler.Truth()[k](0);
+                l += std::pow(rec.State(k)(0) - truth, 2);
+                b += std::pow(bad.State(k)(0) - truth, 2);
+                a += std::pow(base.State(k)(0) - truth, 2);
+            }
+            const double n = static_cast<double>(seeds.size());
+            e_lag += std::sqrt(l / N) / n; e_naive += std::sqrt(b / N) / n; e_alone += std::sqrt(a / N) / n;
+            nis += kf.MeanNIS() / n; nis_wrong += wrong.MeanNIS() / n;
+            std::printf("  seed %8llu: NIS %.3f, delay ignored %.3f\n", static_cast<unsigned long long>(seed),
+                        kf.MeanNIS(), wrong.MeanNIS());
         }
-        e_lag = std::sqrt(e_lag / N); e_naive = std::sqrt(e_naive / N); e_alone = std::sqrt(e_alone / N);
         std::printf("  position RMSE: lagged %.4f, delay ignored %.4f, late sensor left out %.4f; NIS %.3f (ignored: %.2f)\n",
-                    e_lag, e_naive, e_alone, kf.MeanNIS(), wrong.MeanNIS());
+                    e_lag, e_naive, e_alone, nis, nis_wrong);
         CHECK(e_lag < 0.8 * e_alone, "the late sensor still helps the present state");
         CHECK(e_lag < 0.8 * e_naive, "and ignoring its delay is worse");
-        CHECK(kf.MeanNIS() > 1.7 && kf.MeanNIS() < 2.3, "KF: mean NIS consistent with m = 2");
-        CHECK(wrong.MeanNIS() > 3., "the filter that ignores the delay is not consistent");
+        CHECK(nis > 1.8 && nis < 2.2, "KF: mean NIS consistent with m = 2");
+        CHECK(nis_wrong > 3., "the filter that ignores the delay is not consistent");
     }
 
     // --- under joint, and the method that borrows ----------------------------------------------------

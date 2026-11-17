@@ -7,6 +7,9 @@
 #include "Fixtures.h"
 
 #include <cmath>
+#include <cstdint>
+#include <cstdio>
+#include <vector>
 #include <memory>
 #include <stdexcept>
 
@@ -98,23 +101,33 @@ int main()
     }
 
     // --- the second sensor helps: the velocity is no longer inferred from the angle alone ---
+    // Over several records: std::normal_distribution draws another stream with each
+    // standard library (libstdc++, libc++), so one record is not the same everywhere.
     {
-        Sampler sampler(&gyro, 99);
         const std::size_t N = 1500;
-        sampler.Generate(N, x0);
+        double nis = 0., with = 0., without = 0.;
+        const std::vector<std::uint64_t> seeds = {99, 1, 2, 3, 4, 5, 6, 7};
+        for (const std::uint64_t seed : seeds)
+        {
+            Sampler sampler(&gyro, seed);
+            sampler.Generate(N, x0);
+            Filters::EKF both(&gyro);
+            const Record rec = both.Forward(sampler.Measurements());
+            nis += both.MeanNIS() / seeds.size();
 
-        Filters::EKF both(&gyro);
-        const Record rec = both.Forward(sampler.Measurements());
-        const double nis = both.MeanNIS();
-        std::printf("  mean NIS with two channels %.3f\n", nis);
-        CHECK(nis > 1.5 && nis < 2.6, "EKF: mean NIS consistent with m = 2");
-
-        std::vector<Vector> angles;
-        for (const Vector &z : sampler.Measurements()) { Vector a(1); a(0) = z(0); angles.push_back(a); }
-        Filters::EKF alone(pendulum.get());
-        const Record ref = alone.Forward(angles);
-        const double with = VelocityRMSE(rec, sampler.Truth(), 300), without = VelocityRMSE(ref, sampler.Truth(), 300);
-        std::printf("  velocity RMSE: angle only %.4f, angle + rate %.4f\n", without, with);
+            std::vector<Vector> angles;
+            for (const Vector &z : sampler.Measurements()) { Vector a(1); a(0) = z(0); angles.push_back(a); }
+            Filters::EKF alone(pendulum.get());
+            const Record ref = alone.Forward(angles);
+            const double w = VelocityRMSE(rec, sampler.Truth(), 300), wo = VelocityRMSE(ref, sampler.Truth(), 300);
+            std::printf("  seed %2llu: velocity RMSE angle only %.4f, angle + rate %.4f\n",
+                        static_cast<unsigned long long>(seed), wo, w);
+            with += w / seeds.size();
+            without += wo / seeds.size();
+        }
+        std::printf("  mean NIS with two channels %.3f; mean velocity RMSE: angle only %.4f, angle + rate %.4f\n",
+                    nis, without, with);
+        CHECK(nis > 1.7 && nis < 2.3, "EKF: mean NIS consistent with m = 2");
         CHECK(with < without, "EKF: the rate channel lowers the velocity error");
     }
 
