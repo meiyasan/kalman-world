@@ -1,0 +1,368 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/cxx/26_lag.cc File Reference" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/cxx/26_lag.cc File Reference" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/cxx/26_lag.cc File Reference</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-43-g8d4b3ad3</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('26__lag_8cc.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="summary">
+<a href="#func-members">Functions</a>  </div>
+  <div class="headertitle"><div class="title">26_lag.cc File Reference</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>Models::Lag: a model that carries its last states, for late sensors and fixed-lag smoothing.  
+<a href="#details">More...</a></p>
+<div class="textblock"><code>#include &quot;<a class="el" href="_kalman_8h_source.html">Kalman/Kalman.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_check_8h_source.html">Check.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="_fixtures_8h_source.html">Fixtures.h</a>&quot;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cstdint&gt;</code><br />
+<code>#include &lt;cstdio&gt;</code><br />
+<code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;memory&gt;</code><br />
+<code>#include &lt;stdexcept&gt;</code><br />
+</div><div class="textblock"><div class="dynheader">
+Include dependency graph for 26_lag.cc:</div>
+<div class="dyncontent">
+<div class="center"><iframe scrolling="no" frameborder="0" src="26__lag_8cc__incl.svg" width="5471" height="799"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+</div>
+</div>
+<p><a href="26__lag_8cc_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ae66f6b31b5ad750f1fe042a706a4e3d4" id="r_ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="26__lag_8cc.html#ae66f6b31b5ad750f1fe042a706a4e3d4">main</a> ()</td></tr>
+<tr class="separator:ae66f6b31b5ad750f1fe042a706a4e3d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Models::Lag: a model that carries its last states, for late sensors and fixed-lag smoothing. </p>
+
+<p class="definition">Definition in file <a class="el" href="26__lag_8cc_source.html">26_lag.cc</a>.</p>
+</div><h2 class="groupheader">Function Documentation</h2>
+<a id="ae66f6b31b5ad750f1fe042a706a4e3d4" name="ae66f6b31b5ad750f1fe042a706a4e3d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae66f6b31b5ad750f1fe042a706a4e3d4">&#9670;&#160;</a></span>main()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int main </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="26__lag_8cc_source.html#l00050">50</a> of file <a class="el" href="26__lag_8cc_source.html">26_lag.cc</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   51</span>{</div>
+<div class="line"><span class="lineno">   52</span>    <span class="keyword">const</span> <span class="keywordtype">double</span> fs = 10.;</div>
+<div class="line"><span class="lineno">   53</span> </div>
+<div class="line"><span class="lineno">   54</span>    <span class="comment">// --- construction ------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   55</span>    <span class="keyword">auto</span> <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a> = Cart(fs);</div>
+<div class="line"><span class="lineno">   56</span>    <a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>(cart, 3);</div>
+<div class="line"><span class="lineno">   57</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.NState() == 8 &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.NMeasure() == 1 &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Depth() == 3 &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.NInner() == 2, <span class="stringliteral">&quot;lag: n = 2 * (3 + 1), m unchanged&quot;</span>);</div>
+<div class="line"><span class="lineno">   58</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.DefaultEngine() == EngineKind::Linear &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Structure() == <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>-&gt;Structure(), <span class="stringliteral">&quot;lag: a model of matrices stays one&quot;</span>);</div>
+<div class="line"><span class="lineno">   59</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.StateComponents()[0].name == <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>-&gt;StateComponents()[0].name, <span class="stringliteral">&quot;lag: the present state keeps its names&quot;</span>);</div>
+<div class="line"><span class="lineno">   60</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.StateComponents()[2].name == <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>-&gt;StateComponents()[0].name + <span class="stringliteral">&quot;@-1&quot;</span></div>
+<div class="line"><span class="lineno">   61</span>          &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.StateComponents()[7].name == <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>-&gt;StateComponents()[1].name + <span class="stringliteral">&quot;@-3&quot;</span>, <span class="stringliteral">&quot;lag: the state j steps ago carries @-j&quot;</span>);</div>
+<div class="line"><span class="lineno">   62</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.X0()(1) == 1. &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.X0()(7) == 1., <span class="stringliteral">&quot;lag: x0 is the inner one in every block&quot;</span>);</div>
+<div class="line"><span class="lineno">   63</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.P0()(6, 6) == 1. &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.P0()(0, 2) == 0., <span class="stringliteral">&quot;lag: P0 on each block, none between&quot;</span>);</div>
+<div class="line"><span class="lineno">   64</span>    <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.CheckShapes();</div>
+<div class="line"><span class="lineno">   65</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<span class="keyword">true</span>, <span class="stringliteral">&quot;lag: CheckShapes passes&quot;</span>);</div>
+<div class="line"><span class="lineno">   66</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> bad(cart, 0); }), <span class="stringliteral">&quot;refused: depth = 0&quot;</span>);</div>
+<div class="line"><span class="lineno">   67</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> bad(<span class="keyword">nullptr</span>, 2); }), <span class="stringliteral">&quot;refused: a null model&quot;</span>);</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>    <span class="comment">// --- the maps --------------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   70</span>    {</div>
+<div class="line"><span class="lineno">   71</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(8);</div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 8; ++i) <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) = 1. + <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(i);</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> next = <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.f(x, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(), 0.);</div>
+<div class="line"><span class="lineno">   74</span>        <a class="code hl_define" href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a>(next(0), 1. + 2. / fs, 1e-15, <span class="stringliteral">&quot;f: the present state steps&quot;</span>);</div>
+<div class="line"><span class="lineno">   75</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(next(2) == 1. &amp;&amp; next(3) == 2. &amp;&amp; next(6) == 5. &amp;&amp; next(7) == 6., <span class="stringliteral">&quot;f: the others shift down&quot;</span>);</div>
+<div class="line"><span class="lineno">   76</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Block(x, 2)(0) == 5. &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Block(x, 2)(1) == 6., <span class="stringliteral">&quot;Block: the state two steps ago&quot;</span>);</div>
+<div class="line"><span class="lineno">   77</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Block(x, 4); }), <span class="stringliteral">&quot;Block: refused beyond the depth&quot;</span>);</div>
+<div class="line"><span class="lineno">   78</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> F = <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.F(0.), J = <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Jacobian(x, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(), 0.);</div>
+<div class="line"><span class="lineno">   79</span>        <span class="keywordtype">bool</span> same = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 8; ++i)</div>
+<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">for</span> (std::size_t j = 0; j &lt; 8; ++j) same = same &amp;&amp; F(i, j) == J(i, j);</div>
+<div class="line"><span class="lineno">   82</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(same &amp;&amp; F(0, 1) == 1. / fs &amp;&amp; F(2, 0) == 1. &amp;&amp; F(7, 5) == 1. &amp;&amp; F(2, 2) == 0., <span class="stringliteral">&quot;F: the inner one, and the shift&quot;</span>);</div>
+<div class="line"><span class="lineno">   83</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.h(x, 0.)(0) == 1. &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.H(0.)(0, 0) == 1. &amp;&amp; <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.H(0.)(0, 2) == 0., <span class="stringliteral">&quot;h: the present state, with no late sensor&quot;</span>);</div>
+<div class="line"><span class="lineno">   84</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> Q = <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.Q(0.);</div>
+<div class="line"><span class="lineno">   85</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Q(0, 0) == <a class="code hl_function" href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">cart</a>-&gt;Q(0.)(0, 0) &amp;&amp; Q(2, 2) == 0. &amp;&amp; Q(7, 7) == 0., <span class="stringliteral">&quot;Q: the past states take no noise&quot;</span>);</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
+<div class="line"><span class="lineno">   87</span> </div>
+<div class="line"><span class="lineno">   88</span>    <span class="comment">// --- fixed-lag smoothing ---------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">   89</span>    {</div>
+<div class="line"><span class="lineno">   90</span>        <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(&amp;lag, 20261117);</div>
+<div class="line"><span class="lineno">   91</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = 2000;</div>
+<div class="line"><span class="lineno">   92</span>        sampler.Generate(N, <a class="code hl_function" href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">lag</a>.X0());</div>
+<div class="line"><span class="lineno">   93</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(&amp;lag);</div>
+<div class="line"><span class="lineno">   94</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(sampler.Measurements());</div>
+<div class="line"><span class="lineno">   95</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> now = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(0, sampler.Truth()), then = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(6, sampler.Truth());</div>
+<div class="line"><span class="lineno">   96</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> v_now = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(1, sampler.Truth()), v_then = rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">RMSE</a>(7, sampler.Truth());</div>
+<div class="line"><span class="lineno">   97</span>        std::printf(<span class="stringliteral">&quot;  position RMSE: filtered %.4f, three steps later %.4f; velocity %.4f -&gt; %.4f\n&quot;</span>, now, then, v_now, v_then);</div>
+<div class="line"><span class="lineno">   98</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(then &lt; 0.9 * now, <span class="stringliteral">&quot;block 3 is the state three steps ago, improved by what came after&quot;</span>);</div>
+<div class="line"><span class="lineno">   99</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(v_then &lt; 0.9 * v_now, <span class="stringliteral">&quot;and so is its velocity&quot;</span>);</div>
+<div class="line"><span class="lineno">  100</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(kf.MeanNIS() &gt; 0.8 &amp;&amp; kf.MeanNIS() &lt; 1.2, <span class="stringliteral">&quot;KF: mean NIS consistent with m = 1&quot;</span>);</div>
+<div class="line"><span class="lineno">  101</span>    }</div>
+<div class="line"><span class="lineno">  102</span> </div>
+<div class="line"><span class="lineno">  103</span>    <span class="comment">// --- a sensor that reports late ------------------------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  104</span>    <span class="keyword">const</span> std::shared_ptr&lt;Model&gt; <a class="code hl_variable" href="namespaceoperations.html#a1306e6488fc3f2a5abd27a5642e961eb">both</a> = <a class="code hl_function" href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">AddSensor</a>(Cart(fs), Late(0.3));          <span class="comment">// 3 steps late</span></div>
+<div class="line"><span class="lineno">  105</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_variable" href="namespaceoperations.html#a1306e6488fc3f2a5abd27a5642e961eb">both</a>-&gt;CheckShapes(); }), <span class="stringliteral">&quot;refused: a late sensor on a model that carries no past state&quot;</span>);</div>
+<div class="line"><span class="lineno">  106</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_class" href="class_kalman_1_1_models_1_1_lag.html">Models::Lag</a> bad(both, 2); }), <span class="stringliteral">&quot;refused: late by more steps than the model carries&quot;</span>);</div>
+<div class="line"><span class="lineno">  107</span>    <span class="keyword">const</span> std::shared_ptr&lt;Models::Lag&gt; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a> = <a class="code hl_function" href="namespace_kalman.html#a2ac9f8d61464031dff4c5401a027bb25">Lag</a>(both, 3);</div>
+<div class="line"><span class="lineno">  108</span>    <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;CheckShapes();</div>
+<div class="line"><span class="lineno">  109</span>    <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Delay(0) == 0 &amp;&amp; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Delay(1) == 3, <span class="stringliteral">&quot;Delay: each row of z and the block it reads&quot;</span>);</div>
+<div class="line"><span class="lineno">  110</span>    {</div>
+<div class="line"><span class="lineno">  111</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(8);</div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 8; ++i) <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a>(i) = 1. + <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(i);</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> z = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;h(x, 0.);</div>
+<div class="line"><span class="lineno">  114</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(z(0) == 1. &amp;&amp; z(1) == 7., <span class="stringliteral">&quot;h: the late sensor reads the position three steps ago&quot;</span>);</div>
+<div class="line"><span class="lineno">  115</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_matrix.html">Matrix</a> H = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;H(0.), JH = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;JacobianH(x, 0.);</div>
+<div class="line"><span class="lineno">  116</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(H(0, 0) == 1. &amp;&amp; H(1, 6) == 1. &amp;&amp; H(1, 0) == 0. &amp;&amp; JH(1, 6) == 1. &amp;&amp; JH(1, 0) == 0.,</div>
+<div class="line"><span class="lineno">  117</span>              <span class="stringliteral">&quot;H: its row sits on that block&quot;</span>);</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keyword">const</span> <span class="keyword">auto</span> sensors = <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;Sensors();</div>
+<div class="line"><span class="lineno">  119</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(sensors.size() == 2 &amp;&amp; sensors[1].delay == 0. &amp;&amp; sensors[1].Read(x)(0) == 7.,</div>
+<div class="line"><span class="lineno">  120</span>              <span class="stringliteral">&quot;Sensors: each reads its own block of the lagged state&quot;</span>);</div>
+<div class="line"><span class="lineno">  121</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(Throws([&amp;] { <a class="code hl_function" href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">AddSensor</a>(model, Late(0.1))-&gt;CheckShapes(); }), <span class="stringliteral">&quot;refused: a late sensor added after the lag&quot;</span>);</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keyword">const</span> std::shared_ptr&lt;Models::Lag&gt; twice = <a class="code hl_function" href="namespace_kalman.html#a2ac9f8d61464031dff4c5401a027bb25">Lag</a>(model, 1);</div>
+<div class="line"><span class="lineno">  123</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> xx(16, 0.); xx(6) = 7.;</div>
+<div class="line"><span class="lineno">  124</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(twice-&gt;NState() == 16 &amp;&amp; twice-&gt;h(xx, 0.)(1) == 7., <span class="stringliteral">&quot;they nest: the delay is applied once&quot;</span>);</div>
+<div class="line"><span class="lineno">  125</span>    }</div>
+<div class="line"><span class="lineno">  126</span>    <span class="comment">// Over several records: std::normal_distribution draws another stream with each</span></div>
+<div class="line"><span class="lineno">  127</span>    <span class="comment">// standard library (libstdc++, libc++), so one record is not the same everywhere.</span></div>
+<div class="line"><span class="lineno">  128</span>    {</div>
+<div class="line"><span class="lineno">  129</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = 2000;</div>
+<div class="line"><span class="lineno">  130</span>        <span class="keyword">const</span> std::vector&lt;std::uint64_t&gt; seeds = {20261118, 1, 2, 3, 4, 5};</div>
+<div class="line"><span class="lineno">  131</span>        <span class="keywordtype">double</span> e_lag = 0., e_naive = 0., e_alone = 0., nis = 0., nis_wrong = 0.;</div>
+<div class="line"><span class="lineno">  132</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> std::uint64_t seed : seeds)</div>
+<div class="line"><span class="lineno">  133</span>        {</div>
+<div class="line"><span class="lineno">  134</span>            <a class="code hl_class" href="class_kalman_1_1_sampler.html">Sampler</a> sampler(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.get(), seed);</div>
+<div class="line"><span class="lineno">  135</span>            sampler.Generate(N, <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>-&gt;X0());</div>
+<div class="line"><span class="lineno">  136</span>            <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> kf(<a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a>.get());</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = kf.Forward(sampler.Measurements());</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>            <span class="comment">// The same readings, the delay ignored: the late sensor is believed to read the present.</span></div>
+<div class="line"><span class="lineno">  140</span>            <span class="keyword">const</span> std::shared_ptr&lt;Model&gt; naive = <a class="code hl_function" href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">AddSensor</a>(Cart(fs), Late(0.));</div>
+<div class="line"><span class="lineno">  141</span>            <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> wrong(naive.get());</div>
+<div class="line"><span class="lineno">  142</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> bad = wrong.Forward(sampler.Measurements());</div>
+<div class="line"><span class="lineno">  143</span> </div>
+<div class="line"><span class="lineno">  144</span>            <span class="comment">// Without the late sensor at all.</span></div>
+<div class="line"><span class="lineno">  145</span>            <span class="keyword">auto</span> cart_alone = Cart(fs);</div>
+<div class="line"><span class="lineno">  146</span>            std::vector&lt;Vector&gt; first;</div>
+<div class="line"><span class="lineno">  147</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> &amp;z : sampler.Measurements()) { <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> one(1); one(0) = z(0); first.push_back(one); }</div>
+<div class="line"><span class="lineno">  148</span>            <a class="code hl_class" href="class_kalman_1_1_filters_1_1_k_f.html">Filters::KF</a> <a class="code hl_variable" href="namespaceinstrument.html#af4c4ef2b3922e1dddde5d1efa4d445e6">alone</a>(cart_alone.get());</div>
+<div class="line"><span class="lineno">  149</span>            <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> base = <a class="code hl_variable" href="namespaceinstrument.html#af4c4ef2b3922e1dddde5d1efa4d445e6">alone</a>.Forward(first);</div>
+<div class="line"><span class="lineno">  150</span> </div>
+<div class="line"><span class="lineno">  151</span>            <span class="keywordtype">double</span> l = 0., b = 0., a = 0.;</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++k)</div>
+<div class="line"><span class="lineno">  153</span>            {</div>
+<div class="line"><span class="lineno">  154</span>                <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="namespaceinstrument.html#a6e4167f5abcd352b122e43a950a154c9">truth</a> = sampler.Truth()[k](0);</div>
+<div class="line"><span class="lineno">  155</span>                l += std::pow(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0) - truth, 2);</div>
+<div class="line"><span class="lineno">  156</span>                b += std::pow(bad.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0) - truth, 2);</div>
+<div class="line"><span class="lineno">  157</span>                a += std::pow(base.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(0) - truth, 2);</div>
+<div class="line"><span class="lineno">  158</span>            }</div>
+<div class="line"><span class="lineno">  159</span>            <span class="keyword">const</span> <span class="keywordtype">double</span> <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a> = <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(seeds.size());</div>
+<div class="line"><span class="lineno">  160</span>            e_lag += std::sqrt(l / N) / <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; e_naive += std::sqrt(b / N) / <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; e_alone += std::sqrt(a / N) / <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>;</div>
+<div class="line"><span class="lineno">  161</span>            nis += kf.MeanNIS() / <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>; nis_wrong += wrong.MeanNIS() / <a class="code hl_variable" href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">n</a>;</div>
+<div class="line"><span class="lineno">  162</span>            std::printf(<span class="stringliteral">&quot;  seed %8llu: NIS %.3f, delay ignored %.3f\n&quot;</span>, <span class="keyword">static_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> <span class="keywordtype">long</span><span class="keyword">&gt;</span>(seed),</div>
+<div class="line"><span class="lineno">  163</span>                        kf.MeanNIS(), wrong.MeanNIS());</div>
+<div class="line"><span class="lineno">  164</span>        }</div>
+<div class="line"><span class="lineno">  165</span>        std::printf(<span class="stringliteral">&quot;  position RMSE: lagged %.4f, delay ignored %.4f, late sensor left out %.4f; NIS %.3f (ignored: %.2f)\n&quot;</span>,</div>
+<div class="line"><span class="lineno">  166</span>                    e_lag, e_naive, e_alone, nis, nis_wrong);</div>
+<div class="line"><span class="lineno">  167</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(e_lag &lt; 0.8 * e_alone, <span class="stringliteral">&quot;the late sensor still helps the present state&quot;</span>);</div>
+<div class="line"><span class="lineno">  168</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(e_lag &lt; 0.8 * e_naive, <span class="stringliteral">&quot;and ignoring its delay is worse&quot;</span>);</div>
+<div class="line"><span class="lineno">  169</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nis &gt; 1.8 &amp;&amp; nis &lt; 2.2, <span class="stringliteral">&quot;KF: mean NIS consistent with m = 2&quot;</span>);</div>
+<div class="line"><span class="lineno">  170</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(nis_wrong &gt; 3., <span class="stringliteral">&quot;the filter that ignores the delay is not consistent&quot;</span>);</div>
+<div class="line"><span class="lineno">  171</span>    }</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>    <span class="comment">// --- under joint, and the method that borrows ----------------------------------------------------</span></div>
+<div class="line"><span class="lineno">  174</span>    {</div>
+<div class="line"><span class="lineno">  175</span>        <a class="code hl_class" href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a> onStack(1, fs);</div>
+<div class="line"><span class="lineno">  176</span>        <span class="keyword">const</span> std::unique_ptr&lt;Model&gt; lagged = onStack.Lag(2);</div>
+<div class="line"><span class="lineno">  177</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(lagged-&gt;NState() == 6, <span class="stringliteral">&quot;model.Lag(L): borrows a model on the stack&quot;</span>);</div>
+<div class="line"><span class="lineno">  178</span>        lagged-&gt;SetSampleRate(20.);</div>
+<div class="line"><span class="lineno">  179</span>        lagged-&gt;f(lagged-&gt;X0(), <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>(), 0.);</div>
+<div class="line"><span class="lineno">  180</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(onStack.SampleRate() == 20., <span class="stringliteral">&quot;sample rate: passed on to the inner model&quot;</span>);</div>
+<div class="line"><span class="lineno">  181</span>    }</div>
+<div class="line"><span class="lineno">  182</span> </div>
+<div class="line"><span class="lineno">  183</span>    <span class="keywordflow">return</span> <a class="code hl_function" href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a>(<span class="stringliteral">&quot;26_lag&quot;</span>);</div>
+<div class="line"><span class="lineno">  184</span>}</div>
+<div class="ttc" id="a_check_8h_html_a98ef4241b35c5906aeba89abe3cefd8f"><div class="ttname"><a href="_check_8h.html#a98ef4241b35c5906aeba89abe3cefd8f">CHECK_CLOSE</a></div><div class="ttdeci">#define CHECK_CLOSE(got, want, tol, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00049">Check.h:49</a></div></div>
+<div class="ttc" id="a_check_8h_html_af78f878a664d9956c852a668fc3419ab"><div class="ttname"><a href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a></div><div class="ttdeci">#define CHECK(cond, what)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00048">Check.h:48</a></div></div>
+<div class="ttc" id="aclass_fixture_1_1_constant_velocity_html"><div class="ttname"><a href="class_fixture_1_1_constant_velocity.html">Fixture::ConstantVelocity</a></div><div class="ttdoc">Constant velocity with white-noise acceleration — the canonical linear model.</div><div class="ttdef"><b>Definition</b> <a href="_fixtures_8h_source.html#l00043">Fixtures.h:44</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_filters_1_1_k_f_html"><div class="ttname"><a href="class_kalman_1_1_filters_1_1_k_f.html">Kalman::Filters::KF</a></div><div class="ttdoc">The standard Kalman filter — a model driven by Kalman::Engines::Linear.</div><div class="ttdef"><b>Definition</b> <a href="_k_f_8h_source.html#l00036">KF.h:37</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html">Kalman::IO::Record</a></div><div class="ttdoc">One filtered (or smoothed) pass: time, state, covariance, measurement.</div><div class="ttdef"><b>Definition</b> <a href="_record_8h_source.html#l00038">Record.h:39</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_a643aff8a0e981bc3e533029259db7dda"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">Kalman::IO::Record::State</a></div><div class="ttdeci">const Vector &amp; State(std::size_t k) const</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00068">Record.cc:68</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_i_o_1_1_record_html_aa5dbe9f7404420162e4f451917c5f788"><div class="ttname"><a href="class_kalman_1_1_i_o_1_1_record.html#aa5dbe9f7404420162e4f451917c5f788">Kalman::IO::Record::RMSE</a></div><div class="ttdeci">double RMSE(std::size_t i, const std::vector&lt; Vector &gt; &amp;truth) const</div><div class="ttdoc">Root-mean-square difference between component i and truth.</div><div class="ttdef"><b>Definition</b> <a href="_record_8cc_source.html#l00115">Record.cc:115</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_matrix_html"><div class="ttname"><a href="class_kalman_1_1_matrix.html">Kalman::Matrix</a></div><div class="ttdoc">A dense row-major matrix of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00081">Matrix.h:82</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_models_1_1_lag_html"><div class="ttname"><a href="class_kalman_1_1_models_1_1_lag.html">Kalman::Models::Lag</a></div><div class="ttdoc">A model that carries its last L states along with the present one.</div><div class="ttdef"><b>Definition</b> <a href="_lag_8h_source.html#l00056">Lag.h:57</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_sampler_html"><div class="ttname"><a href="class_kalman_1_1_sampler.html">Kalman::Sampler</a></div><div class="ttdoc">Draws truth and measurements from a model, for tests and demos.</div><div class="ttdef"><b>Definition</b> <a href="_sampler_8h_source.html#l00047">Sampler.h:48</a></div></div>
+<div class="ttc" id="aclass_kalman_1_1_vector_html"><div class="ttname"><a href="class_kalman_1_1_vector.html">Kalman::Vector</a></div><div class="ttdoc">A dense column vector of double.</div><div class="ttdef"><b>Definition</b> <a href="_matrix_8h_source.html#l00038">Matrix.h:39</a></div></div>
+<div class="ttc" id="anamespace_check_html_a9ed42acec2d36cf39daa24ede8a31f95"><div class="ttname"><a href="namespace_check.html#a9ed42acec2d36cf39daa24ede8a31f95">Check::Summary</a></div><div class="ttdeci">int Summary(const char *name)</div><div class="ttdef"><b>Definition</b> <a href="_check_8h_source.html#l00040">Check.h:40</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a1b6f81c0498ef1dfc3660673f49d19e7"><div class="ttname"><a href="namespace_kalman.html#a1b6f81c0498ef1dfc3660673f49d19e7">Kalman::AddSensor</a></div><div class="ttdeci">std::shared_ptr&lt; Models::Fusion &gt; AddSensor(std::shared_ptr&lt; Model &gt; model, Sensor sensor)</div><div class="ttdoc">model with one more sensor on the same state (Models::Fusion).</div><div class="ttdef"><b>Definition</b> <a href="src_2operations_8cc_source.html#l00023">Operations.cc:23</a></div></div>
+<div class="ttc" id="anamespace_kalman_html_a2ac9f8d61464031dff4c5401a027bb25"><div class="ttname"><a href="namespace_kalman.html#a2ac9f8d61464031dff4c5401a027bb25">Kalman::Lag</a></div><div class="ttdeci">std::shared_ptr&lt; Models::Lag &gt; Lag(std::shared_ptr&lt; Model &gt; model, std::size_t depth)</div><div class="ttdef"><b>Definition</b> <a href="src_2operations_8cc_source.html#l00050">Operations.cc:50</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a541fa5b4e9554b0a0dc0bdf66cd9d6b8"><div class="ttname"><a href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">instrument.x</a></div><div class="ttdeci">x</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_a6e4167f5abcd352b122e43a950a154c9"><div class="ttname"><a href="namespaceinstrument.html#a6e4167f5abcd352b122e43a950a154c9">instrument.truth</a></div><div class="ttdeci">truth</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00066">instrument.py:66</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
+<div class="ttc" id="anamespaceinstrument_html_af4c4ef2b3922e1dddde5d1efa4d445e6"><div class="ttname"><a href="namespaceinstrument.html#af4c4ef2b3922e1dddde5d1efa4d445e6">instrument.alone</a></div><div class="ttdeci">alone</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00052">instrument.py:52</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1operations_html_ae3028fe541ba291ecef04b8dbb6cd253"><div class="ttname"><a href="namespacemodules_1_1framework_1_1operations.html#ae3028fe541ba291ecef04b8dbb6cd253">modules.framework.operations.lag</a></div><div class="ttdeci">lag(model, depth)</div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2operations_8py_source.html#l00028">operations.py:28</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a1306e6488fc3f2a5abd27a5642e961eb"><div class="ttname"><a href="namespaceoperations.html#a1306e6488fc3f2a5abd27a5642e961eb">operations.both</a></div><div class="ttdeci">both</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00090">operations.py:90</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a6cd67da8c0c0cb29017a1c5d13f265e5"><div class="ttname"><a href="namespaceoperations.html#a6cd67da8c0c0cb29017a1c5d13f265e5">operations.n</a></div><div class="ttdeci">n</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00089">operations.py:89</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a87389aecf4a4a5628dcc4b9f379700fe"><div class="ttname"><a href="namespaceoperations.html#a87389aecf4a4a5628dcc4b9f379700fe">operations.cart</a></div><div class="ttdeci">cart(name=&quot;cart&quot;, q=1.0)</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00040">operations.py:40</a></div></div>
+<div class="ttc" id="anamespaceoperations_html_a8db6bc47bdd5d71f617d8c4ba59f4a1b"><div class="ttname"><a href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">operations.N</a></div><div class="ttdeci">int N</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00064">operations.py:64</a></div></div>
+</div><!-- fragment -->
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="dir_e2c7378c4e3f48589680fb7bfbe13423.html">cxx</a></li><li class="navelem"><a class="el" href="26__lag_8cc.html">26_lag.cc</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

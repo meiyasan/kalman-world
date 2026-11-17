@@ -91,7 +91,7 @@ var NAVTREE =
       [ "Computer vision", "md_docs_2apps_2vision.html", [
         [ "The models", "md_docs_2apps_2vision.html#the-models-1", null ],
         [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-12", null ],
-        [ "Using it", "md_docs_2apps_2vision.html#using-it-15", null ]
+        [ "Using it", "md_docs_2apps_2vision.html#using-it-14", null ]
       ] ],
       [ "GPS and relativity", "md_docs_2apps_2gps.html", [
         [ "The model", "md_docs_2apps_2gps.html#the-model-4", null ],
@@ -102,7 +102,7 @@ var NAVTREE =
         [ "The speed test", "md_docs_2apps_2vehicles.html#the-speed-test", null ],
         [ "Lane keeping", "md_docs_2apps_2vehicles.html#lane-keeping", null ],
         [ "How they are built", "md_docs_2apps_2vehicles.html#how-they-are-built-1", null ],
-        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-14", null ]
+        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-15", null ]
       ] ],
       [ "Turbulent flow", "md_docs_2apps_2flow.html", [
         [ "The model", "md_docs_2apps_2flow.html#the-model-3", null ],
