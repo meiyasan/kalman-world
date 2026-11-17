@@ -216,7 +216,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **922 passed, 28 skipped** (skips are optional-dependency
+Current baseline: **923 passed, 28 skipped** (skips are optional-dependency
 gates), and 27 of 27 in the C++ suite (`ctest`). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than

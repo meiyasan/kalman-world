@@ -36,6 +36,22 @@ NIS is used rather than raw innovations or mode probabilities because:
 - Mode probs μ: distribution shift (Bayesian μ at train ≠ neural μ at test).
 - NIS: dimensionless, scale-free, no distribution shift.
 
+The decision
+------------
+The network sees one window and knows nothing of the step before. Its answer
+is therefore taken as *evidence*, and combined with the probability carried
+over from the previous step through the transition matrix (``c``), as the
+Bayesian router does with its likelihoods::
+
+    mu_j  ∝  c_j * (p_j / f_j) ** (1 / window)
+
+``p`` is the network's answer and ``f`` how often each regime appeared in
+training, so ``p / f`` is what the window says beyond that frequency.
+Consecutive windows share all but one reading, so the same evidence comes
+back ``window`` times: the exponent counts it once. Without this the router
+would follow the network alone and flip on any window that looks like the
+other regime.
+
 Before ``fit()`` is called the router falls back to the Bayesian update.
 """
 from __future__ import annotations
@@ -62,6 +78,7 @@ class NeuralRouter(KalmanRouter):
         self.window  = int(window)
         self._x_mean: np.ndarray | None = None
         self._x_std:  np.ndarray | None = None
+        self._frequencies: np.ndarray | None = None    # of each regime in training; None: equal
 
     # ── feature extraction ────────────────────────────────────────────────────
 
@@ -84,8 +101,15 @@ class NeuralRouter(KalmanRouter):
             return self._normalise(c * likelihoods)   # Bayesian fallback
         feat   = self._window_feat(nis_arr)
         feat_n = (feat - self._x_mean) / self._x_std
-        probs  = np.asarray(self.model(feat_n), dtype=float)
-        return self._normalise(probs)
+        probs  = np.maximum(np.asarray(self.model(feat_n), dtype=float).ravel(), 1e-12)
+        return self._normalise(np.asarray(c, dtype=float).ravel() * self.evidence(probs))
+
+    def evidence(self, probs):
+        """What one answer of the network adds to the probability carried over:
+        ``(p / f) ** (1 / window)``, with ``f`` the regimes' training frequencies."""
+        if self._frequencies is not None and len(self._frequencies) == len(probs):
+            probs = probs / np.maximum(self._frequencies, 1e-6)
+        return probs ** (1.0 / self.window)
 
     # ── training ──────────────────────────────────────────────────────────────
 
@@ -115,6 +139,7 @@ class NeuralRouter(KalmanRouter):
         X = np.array(X_all, dtype=float)
         y = np.array(y_all,  dtype=int)
 
+        self._frequencies = np.bincount(y, minlength=M)[:M] / len(y)
         self._x_mean = X.mean(0)
         self._x_std  = X.std(0)
         self._x_std[self._x_std < 1e-8] = 1.0
@@ -140,7 +165,8 @@ class NeuralRouter(KalmanRouter):
         if not self._is_trained:
             raise RuntimeError("NeuralRouter.save: nothing to save -- call fit() first.")
         torch.save({"model": self.model, "x_mean": self._x_mean, "x_std": self._x_std,
-                    "window": self.window, "arch": type(self.model).__name__}, path)
+                    "window": self.window, "arch": type(self.model).__name__,
+                    "frequencies": self._frequencies}, path)
         return path
 
     def load(self, path):
@@ -156,6 +182,7 @@ class NeuralRouter(KalmanRouter):
         self.model = data["model"]
         self._x_mean, self._x_std = data["x_mean"], data["x_std"]
         self.window = int(data.get("window", self.window))
+        self._frequencies = data.get("frequencies")
         return self
 
     def export_onnx(self, path, *, opset: int = 17, ir_version: int | None = 9,
@@ -232,6 +259,7 @@ class NeuralRouter(KalmanRouter):
             "n_features": d_in,
             "normalisation_baked": bool(bake_normalisation),
             "feature_layout": "last `window` NIS rows, front-padded with 1.0, flattened row-major",
+            "frequencies": None if self._frequencies is None else [float(v) for v in self._frequencies],
         }
         if not bake_normalisation:
             meta["mean"] = [float(v) for v in self._x_mean]
@@ -334,6 +362,7 @@ class NeuralRouter(KalmanRouter):
             "n_features": d_in,
             "normalisation_baked": bool(bake_normalisation),
             "feature_layout": "last `window` NIS rows, front-padded with 1.0, flattened row-major",
+            "frequencies": None if self._frequencies is None else [float(v) for v in self._frequencies],
         }
         if not bake_normalisation:
             meta["mean"] = [float(v) for v in self._x_mean]

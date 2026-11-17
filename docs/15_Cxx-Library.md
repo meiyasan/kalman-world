@@ -471,8 +471,13 @@ router.export_torchscript("router.pt")        # for NN::Torch
 ```cpp
 Kalman::Routers::NN::Onnx policy("router.onnx");   // or NN::Torch, or NN::MLP
 Kalman::Routers::Neural   router(&policy, /* window */ 5);
+router.SetFrequencies(frequencies);                // of each regime in training: "frequencies" in router.onnx.json
 // then: modes.SetDecision(&router) on the Models::Router
 ```
+
+The policy's answer `p` is evidence from one window. The router combines it
+with the probability carried over from the step before, `c`, as
+`mu ∝ c · (p / f)^(1 / window)`, the same rule in both languages.
 
 Both exports produce the same probabilities as the Python router; measured
 agreement is `2e-13` for ONNX and `1.8e-13` for TorchScript. Neither runtime is

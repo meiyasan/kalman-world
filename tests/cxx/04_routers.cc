@@ -221,6 +221,18 @@ int main()
         CHECK_CLOSE(mu(0) + mu(1), 1., 1e-12, "Neural + NN::MLP: normalised");
         CHECK(mu(0) > mu(1), "Neural + NN::MLP: routes on the learned policy");
 
+        // The policy's answer p is evidence: mu ∝ c * (p / f)^(1 / window).
+        const Vector p = mlp(router.Features(nis));
+        const double e0 = std::pow(p(0), 1. / 5.), e1 = std::pow(p(1), 1. / 5.);
+        CHECK_CLOSE(mu(0), e0 / (e0 + e1), 1e-12, "Neural: equal c, the policy's answer to the power 1 / window");
+        Vector carried{0.1, 0.9};
+        const Vector held = router.Route(nis, carried, L);
+        CHECK_CLOSE(held(0), 0.1 * e0 / (0.1 * e0 + 0.9 * e1), 1e-12, "Neural: weighed by the probability carried over");
+        CHECK(held(0) < mu(0), "Neural: one window does not undo what came before");
+        router.SetFrequencies(Vector{0.8, 0.2});
+        const double f0 = std::pow(p(0) / 0.8, 1. / 5.), f1 = std::pow(p(1) / 0.2, 1. / 5.);
+        CHECK_CLOSE(router.Route(nis, c, L)(0), f0 / (f0 + f1), 1e-12, "Neural: divided by the training frequencies");
+
         // A window that disagrees with the policy is a shape error, not a guess.
         Neural wrong(&mlp, 7);
         threw = false;

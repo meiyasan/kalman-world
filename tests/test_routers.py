@@ -217,13 +217,29 @@ class TestNeuralRouter(unittest.TestCase):
         mu = r.route(_dummy_nis(), np.array([0.5, 0.5]), np.array([1.0, 1.0]))
         self.assertTrue(_is_prob_vector(mu, 2))
 
+    def test_the_answer_is_evidence_weighed_by_what_came_before(self):
+        """mu ∝ c * (p / f) ** (1 / window): the network alone does not decide."""
+        r = NeuralRouter(MLP(hidden=4), window=2)
+        nis_arrs, lbl_arrs = self._make_data()
+        nis_arrs.append(nis_arrs[0]); lbl_arrs.append(lbl_arrs[0])      # regime 0 twice as often
+        r.fit(nis_arrs, lbl_arrs, epochs=10)
+        np.testing.assert_allclose(r._frequencies, [2 / 3, 1 / 3])
+        nis = _dummy_nis()
+        p = np.asarray(r.model((r._window_feat(nis) - r._x_mean) / r._x_std), dtype=float).ravel()
+        for c in ([0.5, 0.5], [0.1, 0.9]):
+            expected = np.array(c) * (p / r._frequencies) ** 0.5
+            np.testing.assert_allclose(r.route(nis, np.array(c), np.ones(2)), expected / expected.sum(), rtol=1e-12)
+        even, held = r.route(nis, np.array([0.5, 0.5]), np.ones(2)), r.route(nis, np.array([0.1, 0.9]), np.ones(2))
+        self.assertLess(held[0], even[0], "the probability carried over counts")
+
     def test_any_callable_model_works(self):
         model = lambda x: np.array([0.9, 0.1])
         r = NeuralRouter(model=model, window=3)
         r._x_mean = np.zeros(6)
         r._x_std  = np.ones(6)
         mu = r.route(_dummy_nis(), np.array([0.5, 0.5]), np.array([1.0, 1.0]))
-        np.testing.assert_allclose(mu, [0.9, 0.1], atol=1e-10)
+        evidence = np.array([0.9, 0.1]) ** (1 / 3)              # one window of three: counted once
+        np.testing.assert_allclose(mu, evidence / evidence.sum(), atol=1e-10)
 
 
 # ── NN Architecture shared checks ─────────────────────────────────────────────

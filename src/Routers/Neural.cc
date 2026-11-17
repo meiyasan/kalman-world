@@ -15,6 +15,7 @@
 #include "Kalman/Routers/Neural.h"
 #include "Kalman/Routers/Bayesian.h"
 
+#include <algorithm>
 #include <cmath>
 #include <sstream>
 #include <stdexcept>
@@ -89,6 +90,16 @@ namespace Kalman::Routers
                << " probabilities for " << c.Size() << " models.";
             throw std::runtime_error(os.str());
         }
-        return Normalise(mu);
+        // The policy's answer is evidence from one window; the probability carried
+        // over from the step before is c. Windows overlap, hence the exponent.
+        Vector out(c.Size());
+        const bool weighted = fFrequencies.Size() == c.Size();
+        for (std::size_t j = 0; j < c.Size(); ++j)
+        {
+            double p = std::max(mu(j), 1e-12);
+            if (weighted) p /= std::max(fFrequencies(j), 1e-6);
+            out(j) = c(j) * std::pow(p, 1. / static_cast<double>(fWindow));
+        }
+        return Normalise(out);
     }
 }

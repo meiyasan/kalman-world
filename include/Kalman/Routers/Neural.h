@@ -43,6 +43,20 @@
  * by default, in which case there is nothing to set here and nothing to get out
  * of step.
  *
+ * \section neural_decision The decision
+ *
+ * The policy sees one window and knows nothing of the step before, so its
+ * answer `p` is taken as evidence and combined with the probability carried
+ * over through the transition matrix, `c`, as the Bayesian router does with its
+ * likelihoods:
+ *
+ *     mu_j  ∝  c_j * (p_j / f_j)^(1 / window)
+ *
+ * `f` is how often each regime appeared in training (SetFrequencies(); equal
+ * when not given, and written to the sidecar by `export_onnx()`). Consecutive
+ * windows share all but one reading, so the same evidence comes back `window`
+ * times; the exponent counts it once.
+ *
  * \note Until a model is attached, Route() falls back to the classical Bayesian
  * update rather than failing. Check IsReady() if you need to know which one you
  * are getting.
@@ -65,6 +79,7 @@ namespace Kalman::Routers
             std::size_t fWindow = 5;
             Vector fMean;                        // feature standardisation, from training
             Vector fScale;
+            Vector fFrequencies;                 // of each regime in training; empty: equal
 
         public:
             Neural() = default;
@@ -99,6 +114,11 @@ namespace Kalman::Routers
             void SetNormalisation(const Vector &mean, const Vector &scale);
             const Vector &Mean() const { return fMean; }
             const Vector &Scale() const { return fScale; }
+
+            /// How often each regime appeared in training; the policy's answer is
+            /// divided by it. Not given, the regimes count as equally frequent.
+            void SetFrequencies(const Vector &frequencies) { fFrequencies = frequencies; }
+            const Vector &Frequencies() const { return fFrequencies; }
 
             /// The flattened, standardised vector this router would feed the policy.
             Vector Features(const Matrix &nis) const;

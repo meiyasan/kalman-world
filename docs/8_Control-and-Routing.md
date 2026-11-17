@@ -174,8 +174,16 @@ modes.mode_probabilities                   # (T, M)
 |---|---|---|
 | `BayesianRouter` | model likelihoods (the textbook update) | no |
 | `ThresholdRouter` | NIS crossing a threshold | no |
-| `NeuralRouter` | a learned function of the NIS/likelihood features | yes |
+| `NeuralRouter` | a network's reading of the last NIS values, weighed by the probability carried over from the step before | yes |
 | `HybridRouter` | Bayesian prior blended with a learned correction | yes |
+
+A network sees one window of readings and nothing of the step before, so its
+answer `p` is taken as evidence, the way the Bayesian router takes its
+likelihoods: `mu ∝ c · (p / f)^(1 / window)`, with `c` the probability carried
+over through `Pi` and `f` how often each regime appeared in training. The
+exponent is there because consecutive windows share all but one reading. A
+router that followed the network alone would flip on any window that looks like
+the other regime.
 
 Learning routers are trained on labelled regime sequences:
 
