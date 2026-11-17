@@ -449,11 +449,17 @@ class KolmogorovFlowModel(NativeCounterpart, KalmanEnsembleModel, KalmanModel):
         """The initial state. As samples (``samples=N``) it is ``N`` random
         climatology snapshots, the columns of ``(d, N)``: an honest, large
         initial error, where a draw around ``x0`` with a ``d x d`` covariance
-        would be neither affordable nor a flow."""
+        would be neither affordable nor a flow.
+
+        The climatology holds a limited number of snapshots. Asked for more
+        samples than it has (a particle filter's cloud on a small grid), the
+        model draws them around ``x0`` with covariance ``P0``, as any model does."""
         if samples is None:
             return super().initial_state(x0, P0)
-        rng = rng if isinstance(rng, np.random.Generator) else np.random.default_rng(rng)
         S = self.climatology()
+        if int(samples) > S.shape[1]:
+            return super().initial_state(samples=samples, rng=rng)
+        rng = rng if isinstance(rng, np.random.Generator) else np.random.default_rng(rng)
         return S[:, rng.choice(S.shape[1], size=int(samples), replace=False)].copy()
 
     def equilibrium_state(self, decorrelate=400):

@@ -150,6 +150,23 @@ class TestKolmogorovFlowModel(unittest.TestCase):
     def setUp(self):
         self.model = _tiny_flow()
 
+    def test_initial_state_as_samples(self):
+        """Climatology snapshots while there are enough of them; beyond that a draw
+        around x0 with P0, so a particle filter's cloud can be larger than the climatology."""
+        m = self.model
+        clim = m.climatology()
+        few = m.initial_state(samples=16, rng=0)
+        self.assertEqual(few.shape, (m.n, 16))
+        self.assertTrue(all(any(np.array_equal(few[:, j], clim[:, k]) for k in range(clim.shape[1]))
+                            for j in range(16)), "each sample is a snapshot")
+        m.initial_state(clim.mean(axis=1).reshape(-1, 1), float(clim.var()) * np.eye(m.n))
+        many = m.initial_state(samples=500, rng=0)
+        self.assertEqual(many.shape, (m.n, 500))
+        spread = (many - clim.mean(axis=1).reshape(-1, 1)).std()
+        self.assertLess(abs(spread / np.sqrt(clim.var()) - 1.0), 0.05, "drawn around x0 with the variance of P0")
+        from modules.framework.filters import ParticleFilter
+        ParticleFilter(m, n_particles=500)                     # used to fail: more particles than snapshots
+
     def test_dimensions(self):
         m = self.model
         self.assertEqual(m.n, 16 * 16)
