@@ -22,7 +22,7 @@
  * \endcode
  *
  * with the Moon and the Sun on circular orbits, as the Python model has them
- * (`moon_position`, `sun_position` of `kalman.runtime.astro`). The framework
+ * (`moon_position`, `sun_position` of `kalman.apps.astrophysics.astrodynamics`). The framework
  * integrates it over one sample in `substeps` steps.
  *
  * | Parameter                | Meaning                                         |

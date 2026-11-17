@@ -316,7 +316,7 @@ class TestCarSpeedCounterpart(unittest.TestCase):
 from modules.apps.vehicles import CarLaneModel                          # noqa: E402
 from modules.apps.aerospace import (RocketLiftoffModel, RocketAscentModel,  # noqa: E402
                                        RocketDescentModel, RocketLandingModel)
-from modules.runtime.astro import R_EARTH, KM                           # noqa: E402
+from modules.apps.astrophysics.astrodynamics import R_EARTH, KM                           # noqa: E402
 
 
 def steering(n, fs=50.0):
@@ -542,7 +542,7 @@ class TestCounterpartContract(unittest.TestCase):
 # --- the space models (kalman.apps.astrophysics) ----------------------------------
 def free_return(**kw):
     """The notebook's Apollo-style free return: a 400 km parking orbit, then TLI."""
-    from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
+    from modules.apps.astrophysics.astrodynamics import R_EARTH, KM, D_MOON, GM_EARTH
     r0 = R_EARTH + 400 * KM
     v = np.sqrt(GM_EARTH * (2.0 / r0 - 1.0 / (0.5 * (r0 + D_MOON)))) + 0.034
     model = TransLunarModel(**{"moon_phase_deg": 133.0, "sun_phase_deg": 60.0, "dt_s": 180.0,
@@ -556,7 +556,7 @@ def mars_cruise(**kw):
     """The notebook's Earth-Mars cruise, seeded by a Lambert arc of the 2026 window."""
     from astropy.time import Time, TimeDelta
     from modules.apps.astrophysics.transfers import lambert
-    from modules.runtime.astro import body_state, DAY
+    from modules.apps.astrophysics.astrodynamics import body_state, DAY
     dep, tof = Time("2026-10-28"), 311.0
     r1, _ = body_state("earth", dep)
     r2, _ = body_state("mars", dep + TimeDelta(tof * 86400, format="sec"))
@@ -571,7 +571,7 @@ def mars_cruise(**kw):
 class TestTransLunarCounterpart(unittest.TestCase):
 
     def test_counterpart_matches_python_through_the_lunar_flyby(self):
-        from modules.runtime.astro import DAY
+        from modules.apps.astrophysics.astrodynamics import DAY
         np.random.seed(8)
         z = free_return().sample(4.5 * DAY, process_noise=False).zk      # out past the Moon
         for kw in ({}, {"bodies": ("earth", "moon"), "n_sub": 1}):
@@ -580,7 +580,7 @@ class TestTransLunarCounterpart(unittest.TestCase):
             close(self, py.Pk, cx.Pk, COVARIANCE_RTOL, f"covariance, {kw}")
 
     def test_ephemeris_phases_and_integrators_reach_the_counterpart(self):
-        from modules.runtime.astro import DAY
+        from modules.apps.astrophysics.astrodynamics import DAY
         # (Dormand-Prince is left out of these runs for its time, not its result:
         # the framework probes f at x = 0, where |r| = 0 makes it step to its limit.)
         for kw in ({"use_ephemeris": True, "epoch": "2026-11-06"},

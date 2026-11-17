@@ -24,7 +24,7 @@ All are :class:`ExtendedKalmanModel` subclasses whose ``f()`` advances the state
 
 The ascent model uses *scaled units* (``length = 1 Mm = 1000 km``, ``time = 1 ks = 1000 s``)
 to stay well-conditioned; the near-surface liftoff/landing models use plain **SI** (m, s, kg).
-Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where available).
+Physical constants come from :mod:`kalman.apps.astrophysics.astrodynamics` (astropy-sourced where available).
 """
 import numpy as np
 
@@ -34,7 +34,7 @@ from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamics
 # The drawing helpers live with the descent model since apps/rocket.py was
 # split into this package; the interactive plots here draw the same rocket.
 from .descent import _rocket_shape, _add_rocket, _fuel_gauge, _set_gauge
-from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ..astrophysics.astrodynamics import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 
@@ -45,7 +45,7 @@ from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
 # This model is in PLAIN SI UNITS (m, s, kg), unlike the scaled-unit ascent model
 # above: a takeoff lives near the surface (altitude ~0–100 km, speed ~0–2 km/s,
 # mass ~10³ kg), which SI already keeps well-conditioned. G0/RHO0/H_ATM come from
-# kalman.runtime.astro.
+# kalman.apps.astrophysics.astrodynamics.
 class RocketLiftoffState(KalmanState):
     ALTITUDE = "m"      # altitude of the rocket's base (on the pad at 0)
     VELOCITY = "m/s"

@@ -1,5 +1,6 @@
 """
-Astrodynamics runtime services for the Kalman framework.
+Astrodynamics: constants, gravity, ephemerides and propagation shared by the
+aerospace and astrophysics applications (``kalman.apps.astrophysics.astrodynamics``).
 
 **Physical constants** are sourced from :mod:`astropy.constants` / :mod:`astropy.units`
 wherever astropy ships them (Earth, Sun, Jupiter, the astronomical unit, *G*, standard
@@ -106,7 +107,7 @@ def rk4(s, t, dt, deriv):
     :class:`~kalman.framework.integrators.RK4Integrator`)."""
     global _RK4
     if _RK4 is None:
-        from ..framework.integrators import RK4Integrator
+        from ...framework.integrators import RK4Integrator
         _RK4 = RK4Integrator()
     return _RK4.step(lambda x, u, tt: deriv(x, tt), s, t=t, dt=dt)
 

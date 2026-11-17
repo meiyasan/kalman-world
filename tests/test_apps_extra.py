@@ -30,7 +30,7 @@ from modules.apps.aerospace import (
 from modules.apps.astrophysics import (
     TransLunarModel, InterplanetaryModel, lambert, hohmann_transfer,
 )
-from modules.runtime.astro import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state
+from modules.apps.astrophysics.astrodynamics import R_EARTH, KM, DAY, D_MOON, GM_EARTH, GM_SUN, body_state
 from modules.apps.vehicles import CarSpeedModel
 from modules.framework.filters import ExtendedKalmanFilter
 
@@ -286,7 +286,7 @@ class TestInterplanetary(unittest.TestCase):
     def test_two_body_cruise_ekf(self):
         # No ephemeris ⇒ fast pure-Sun cruise; the EKF tracks the heliocentric position.
         m = InterplanetaryModel("earth", "mars", epoch=None, dt_s=43200.0, track_Mm=0.02)
-        from modules.runtime.astro import D_SUN
+        from modules.apps.astrophysics.astrodynamics import D_SUN
         x0 = np.array([[D_SUN], [0], [0], [0], [np.sqrt(GM_SUN / D_SUN)], [0]])
         m.initial_state(x0)
         s = m.sample(80 * DAY, process_noise=False)

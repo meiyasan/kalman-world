@@ -1,6 +1,6 @@
 """Classic 4-stage Runge–Kutta integrator (4th order).
 
-The single home for the RK4 math that ``runtime.astro.rk4`` and the old
+The single home for the RK4 math that ``apps.astrophysics.astrodynamics.rk4`` and the old
 ``vehicles._rk4`` / ``tracking._rk4`` each duplicated.  The control ``u`` is held
 constant across the step (zero-order hold), which is the right assumption inside
 one filter cycle.

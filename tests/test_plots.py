@@ -18,7 +18,7 @@ from modules.apps import (
     PolarizationModel, jones_signal,
 )
 from modules.apps.astrophysics import TransLunarModel
-from modules.runtime.astro import R_EARTH, KM, D_MOON, GM_EARTH
+from modules.apps.astrophysics.astrodynamics import R_EARTH, KM, D_MOON, GM_EARTH
 from modules.framework.filters import ExtendedKalmanFilter
 
 

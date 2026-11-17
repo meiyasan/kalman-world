@@ -24,14 +24,14 @@ Two regimes, both tracked with an Extended Kalman Filter:
        solution, with impulsive mid-course Δv maneuvers as the control input.
 
 Positions are in scaled units (Mm), velocities in km/s; physical constants and the ephemeris
-come from :mod:`kalman.runtime.astro`.
+come from :mod:`kalman.apps.astrophysics.astrodynamics`.
 """
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.constants import KalmanState, KalmanObservable
 from ...framework.control import KalmanController
-from ...runtime.astro import (
+from .astrodynamics import (
     LU, TU, KM, DAY, GM_EARTH, GM_MOON, GM_SUN, R_EARTH, R_MOON, D_MOON, D_SUN,
     G0, gm, radius, rk4 as _rk4, body_state, planet_positions, ephemeris_samples,
     times_from_epoch, launch_site_state, moon_position, sun_position, _as_time,

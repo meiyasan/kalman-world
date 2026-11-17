@@ -24,14 +24,14 @@ All are :class:`ExtendedKalmanModel` subclasses whose ``f()`` advances the state
 
 The ascent model uses *scaled units* (``length = 1 Mm = 1000 km``, ``time = 1 ks = 1000 s``)
 to stay well-conditioned; the near-surface liftoff/landing models use plain **SI** (m, s, kg).
-Physical constants come from :mod:`kalman.runtime.astro` (astropy-sourced where available).
+Physical constants come from :mod:`kalman.apps.astrophysics.astrodynamics` (astropy-sourced where available).
 """
 import numpy as np
 
 from ...framework.models.extended import ExtendedKalmanModel
 from ...framework.models.native import NativeCounterpart, native_integrator_kind
 from ...framework.constants import KalmanState, KalmanObservable, KalmanDynamicsKind
-from ...runtime.astro import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
+from ..astrophysics.astrodynamics import (LU, TU, KM, GM_EARTH, R_EARTH, H_SCALE,
                              G0, RHO0, H_ATM, rk4 as _rk4)
 
 

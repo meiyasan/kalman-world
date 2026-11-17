@@ -35,7 +35,7 @@ from modules.apps.vehicles import CarSpeedModel                   # noqa: E402
 from modules.apps.vehicles import CarLaneModel                    # noqa: E402
 from modules.apps.aerospace import (RocketLiftoffModel, RocketAscentModel,   # noqa: E402
                                        RocketDescentModel, RocketLandingModel)
-from modules.runtime.astro import R_EARTH, KM                     # noqa: E402
+from modules.apps.astrophysics.astrodynamics import R_EARTH, KM                     # noqa: E402
 
 
 def timed(make, z, repeat, uk=None):
@@ -157,7 +157,7 @@ def cases(steps):
     from modules.apps.astrophysics.transfers import lambert                      # noqa: E402
     # R_EARTH and KM come from the module's import: importing them here again made
     # them locals of cases(), unbound in the ascent case above (a NameError).
-    from modules.runtime.astro import D_MOON, GM_EARTH, DAY, body_state   # noqa: E402
+    from modules.apps.astrophysics.astrodynamics import D_MOON, GM_EARTH, DAY, body_state   # noqa: E402
     from astropy.time import Time, TimeDelta                                    # noqa: E402
 
     rp = R_EARTH + 400 * KM

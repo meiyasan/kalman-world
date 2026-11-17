@@ -20,7 +20,7 @@ namespace Kalman::Apps::Astrophysics
     namespace
     {
         constexpr double kPi = 3.14159265358979323846;
-        // kalman.runtime.astro in scaled units (1 Mm, 1 ks): GM [m^3/s^2] * 1e6 / 1e18.
+        // kalman.apps.astrophysics.astrodynamics in scaled units (1 Mm, 1 ks): GM [m^3/s^2] * 1e6 / 1e18.
         constexpr double kGMScale = 1e-12;
     }
 
@@ -36,7 +36,7 @@ namespace Kalman::Apps::Astrophysics
     TransLunar::TransLunar()
         : Kalman::Apps::Model("translunar", 6, 3)
     {
-        // Defaults are those of kalman.runtime.astro (the Python model pushes its own).
+        // Defaults are those of kalman.apps.astrophysics.astrodynamics (the Python model pushes its own).
         DeclareParameter("gm_earth", 3.986004418e14 * kGMScale);
         DeclareParameter("gm_moon", 4.9028001184e12 * kGMScale);
         DeclareParameter("gm_sun", 1.32712440018e20 * kGMScale);

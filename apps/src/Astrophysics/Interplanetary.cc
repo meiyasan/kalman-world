@@ -23,7 +23,7 @@ namespace Kalman::Apps::Astrophysics
     Interplanetary::Interplanetary()
         : Kalman::Apps::Model("interplanetary", 6, 3)
     {
-        DeclareParameter("gm_sun", 1.32712440018e20 * 1e-12);   // kalman.runtime.astro, scaled
+        DeclareParameter("gm_sun", 1.32712440018e20 * 1e-12);   // kalman.apps.astrophysics.astrodynamics, scaled
         DeclareArray("body_gm", {});            // one per perturbing body
         DeclareArray("body_positions", {});     // bodies x samples x 3, row-major
         DeclareParameter("grid_step", 172.8);                    // 2 days [ks]
