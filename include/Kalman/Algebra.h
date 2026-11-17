@@ -22,12 +22,12 @@
  * *********************************************
  */
 
-#ifndef KALMAN_ALGEBRA_ALGEBRA_H
-#define KALMAN_ALGEBRA_ALGEBRA_H
+#ifndef KALMAN_ALGEBRA_H
+#define KALMAN_ALGEBRA_H
 
 #include "Kalman/Algebra/Cholesky.h"
 #include "Kalman/Algebra/Symmetric.h"
 #include "Kalman/Algebra/Exponential.h"
 #include "Kalman/Algebra/Riccati.h"
 
-#endif // KALMAN_ALGEBRA_ALGEBRA_H
+#endif // KALMAN_ALGEBRA_H

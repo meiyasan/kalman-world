@@ -3,7 +3,7 @@
  * \brief Kalman::Apps::Weather::KolmogorovFlow / BarotropicFlow: a field on the ensemble engine.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Apps/Apps.h"
+#include "Kalman/Apps.h"
 #include "Kalman/Filters/EnKF.h"
 #include "Check.h"
 

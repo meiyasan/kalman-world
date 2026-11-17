@@ -32,7 +32,7 @@
  *
  * \code{.cpp}
  * #include <Kalman/Kalman.h>
- * #include <Kalman/Apps/Apps.h>
+ * #include <Kalman/Apps.h>                       // or one domain: <Kalman/Apps/Weather.h>
  *
  * Kalman::Apps::Weather::Storm storm;
  * storm.SetParameter("omega", -0.022);            // a recurving storm
@@ -53,25 +53,16 @@
  * *********************************************
  */
 
-#ifndef KALMAN_APPS_APPS_H
-#define KALMAN_APPS_APPS_H
+#ifndef KALMAN_APPS_H
+#define KALMAN_APPS_H
 
 #include "Kalman/Apps/Model.h"
-#include "Kalman/Apps/Astro/RocketAscent.h"
-#include "Kalman/Apps/Astro/RocketDescent.h"
-#include "Kalman/Apps/Astro/RocketLanding.h"
-#include "Kalman/Apps/Astro/RocketLiftoff.h"
-#include "Kalman/Apps/Astro/Interplanetary.h"
-#include "Kalman/Apps/Astro/TransLunar.h"
-#include "Kalman/Apps/Ballistics/Ballistic.h"
-#include "Kalman/Apps/GPS/Receiver.h"
-#include "Kalman/Apps/Gravitational/Polarization.h"
-#include "Kalman/Apps/Tracking/DriftChamber.h"
-#include "Kalman/Apps/Vehicles/CarLane.h"
-#include "Kalman/Apps/Vehicles/CarSpeed.h"
-#include "Kalman/Apps/Weather/BarotropicFlow.h"
-#include "Kalman/Apps/Weather/KolmogorovFlow.h"
-#include "Kalman/Apps/Weather/Storm.h"
-#include "Kalman/Apps/Weather/Tornado.h"
+#include "Kalman/Apps/Astro.h"
+#include "Kalman/Apps/Ballistics.h"
+#include "Kalman/Apps/GPS.h"
+#include "Kalman/Apps/Gravitational.h"
+#include "Kalman/Apps/Tracking.h"
+#include "Kalman/Apps/Vehicles.h"
+#include "Kalman/Apps/Weather.h"
 
-#endif // KALMAN_APPS_APPS_H
+#endif // KALMAN_APPS_H

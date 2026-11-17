@@ -29,7 +29,7 @@
 #define KALMAN_UTILS_H
 
 #include "Kalman/Matrix.h"
-#include "Kalman/Algebra/Algebra.h"
+#include "Kalman/Algebra.h"
 #include "Kalman/Differentiator.h"
 
 #include <cstddef>

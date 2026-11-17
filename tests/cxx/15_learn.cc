@@ -3,7 +3,7 @@
  * \brief libKalmanLearn: the ONNX and TorchScript backends and the libTorch field solver, with or without their runtime.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Learn/Learn.h"
+#include "Kalman/Learn.h"
 #include "Check.h"
 
 #include <algorithm>

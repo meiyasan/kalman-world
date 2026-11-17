@@ -6,7 +6,7 @@
 #include "Kalman/Utils.h"
 #include "Kalman/Differentiators/Central.h"
 #include "Kalman/Differentiators/Forward.h"
-#include "Kalman/Algebra/Algebra.h"
+#include "Kalman/Algebra.h"
 #include "Check.h"
 
 #include <cmath>

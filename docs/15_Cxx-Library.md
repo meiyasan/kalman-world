@@ -358,6 +358,29 @@ Measured on this machine against the Python-Torch loop it replaced, 32 members:
 
 Bit-identical, and the same speed: the time is the FFTs'.
 
+## What to include
+
+Every directory of headers `Kalman/X/` has the header `Kalman/X.h` beside it,
+which includes all of it. So there are always two ways in: the whole, or one.
+
+| The whole | One of them | What it is | Python |
+|---|---|---|---|
+| `<Kalman/Kalman.h>` | | the library: everything below it in `include/` | `kalman.framework` |
+| `<Kalman/Models.h>` | `<Kalman/Models/Lag.h>` | the model classes | `kalman.framework.models` |
+| `<Kalman/Engines.h>`, `<Kalman/Filters.h>` | `<Kalman/Engines/Extended.h>`, `<Kalman/Filters/EKF.h>` | engines and filters | `kalman.framework.engines`, `.filters` |
+| `<Kalman/Sensors.h>` | `<Kalman/Sensors/Camera.h>` | the generic sensors | `kalman.framework.sensors` |
+| `<Kalman/Routers.h>`, `<Kalman/Controllers.h>`, `<Kalman/Tuners.h>` | `<Kalman/Routers/Bayesian.h>` ... | routing, control, tuning | `kalman.framework.routers` ... |
+| `<Kalman/Integrators.h>`, `<Kalman/Solvers.h>`, `<Kalman/Differentiators.h>`, `<Kalman/Algebra.h>`, `<Kalman/IO.h>` | `<Kalman/Integrators/RK4.h>` ... | numerics and records | |
+| `<Kalman/Apps.h>` | `<Kalman/Apps/Weather.h>`, then `<Kalman/Apps/Weather/Storm.h>` | the application models (libKalmanApps) | `kalman.apps`, `kalman.apps.weather` |
+| `<Kalman/Adapters.h>` | `<Kalman/Adapters/<Device>.h>` | specific hardware; none shipped yet | `kalman.adapters` |
+| `<Kalman/Learn.h>` | `<Kalman/Learn/Solvers.h>` | learned components (libKalmanLearn) | |
+| `<Kalman/Net.h>` | `<Kalman/Net/RestServer.h>` | the JSON API and its servers (libKalmanNet) | `kalman.api`, `.rest`, `.mcp` |
+
+A contract keeps its singular name beside the plural of its implementations:
+`<Kalman/Model.h>` is `Kalman::Model`, `<Kalman/Models.h>` the classes that
+fill it in. `tests/test_structure.py` checks that every directory has its
+header and that the header includes all of it.
+
 ## Using it
 
 ```cpp

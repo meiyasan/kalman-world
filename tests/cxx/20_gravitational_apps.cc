@@ -4,7 +4,7 @@
  * analytic Jacobian, and a filter that tracks a polarized carrier.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Apps/Apps.h"
+#include "Kalman/Apps.h"
 #include "Check.h"
 
 #include <algorithm>

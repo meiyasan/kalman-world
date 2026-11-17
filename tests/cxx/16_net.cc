@@ -5,7 +5,7 @@
  * against a token minted by PyJWT.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Net/Net.h"
+#include "Kalman/Net.h"
 #include "Check.h"
 #include "Fixtures.h"
 

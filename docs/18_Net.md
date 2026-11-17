@@ -76,7 +76,7 @@ find_package(Kalman REQUIRED COMPONENTS Net)
 target_link_libraries(my_server PRIVATE Kalman::Net)
 ```
 
-The public headers (`<Kalman/Net/Net.h>`) use the standard library only.
+The public headers (`<Kalman/Net.h>`) use the standard library only.
 
 ## Start it
 

@@ -30,7 +30,7 @@
  *
  * \code{.cpp}
  * #include <Kalman/Kalman.h>
- * #include <Kalman/Learn/Learn.h>
+ * #include <Kalman/Learn.h>
  *
  * Kalman::Routers::NN::Onnx policy("router.onnx");
  * Kalman::Routers::Neural   router(&policy, window, mean, scale);
@@ -55,14 +55,14 @@
  * *********************************************
  */
 
-#ifndef KALMAN_LEARN_LEARN_H
-#define KALMAN_LEARN_LEARN_H
+#ifndef KALMAN_LEARN_H
+#define KALMAN_LEARN_H
 
 #include "Kalman/Routers/NN/Model.h"
 #include "Kalman/Routers/NN/MLP.h"
 #include "Kalman/Routers/NN/Onnx.h"
 #include "Kalman/Routers/NN/Torch.h"
 #include "Kalman/Routers/Neural.h"
-#include "Kalman/Learn/Solvers/Vorticity.h"
+#include "Kalman/Learn/Solvers.h"
 
-#endif // KALMAN_LEARN_LEARN_H
+#endif // KALMAN_LEARN_H

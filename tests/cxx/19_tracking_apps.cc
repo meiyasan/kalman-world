@@ -3,7 +3,7 @@
  * \brief Kalman::Apps::Tracking::DriftChamber: registered, propagates, and is found tracks in.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Apps/Apps.h"
+#include "Kalman/Apps.h"
 #include "Check.h"
 
 #include <cmath>

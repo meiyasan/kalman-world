@@ -3,7 +3,7 @@
  * \brief Kalman::Apps::GPS::Receiver, and the named arrays it is configured with.
  */
 #include "Kalman/Kalman.h"
-#include "Kalman/Apps/Apps.h"
+#include "Kalman/Apps.h"
 #include "Check.h"
 
 #include <cmath>

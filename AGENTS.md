@@ -216,7 +216,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **949 passed, 28 skipped** (skips are optional-dependency
+Current baseline: **950 passed, 28 skipped** (skips are optional-dependency
 gates), and 28 of 28 in the C++ suite (`ctest`). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than
@@ -374,6 +374,14 @@ outside the two known docstring ones above.
 ---
 
 ## 10. libKalman — the C++ port
+
+**Header layout.** Every directory `Kalman/X/` has the header `Kalman/X.h`
+beside it, which includes all of it: `<Kalman/X.h>` for the whole,
+`<Kalman/X/Name.h>` for one. This holds at every level and in every library
+(`<Kalman/Apps.h>`, `<Kalman/Apps/Weather.h>`, `<Kalman/Sensors.h>`,
+`<Kalman/Adapters.h>`, `<Kalman/Learn.h>`, `<Kalman/Net.h>`). A new header goes
+in its directory's umbrella in the same commit; a new directory brings its
+umbrella. `tests/test_structure.py::TestCxxHeadersHaveOneLayout` enforces it.
 
 `include/Kalman/` + `src/` build `libKalman`: the same Model / Engine / Filter
 contracts in C++, as a **standalone library with no required dependency**. See

@@ -39,6 +39,6 @@
 #define KALMAN_BLAS_MIN_DIM @KALMAN_BLAS_MIN_DIM@
 
 // The AI runtimes (libTorch, ONNX Runtime) belong to libKalmanLearn: see
-// Kalman/Learn/Learn.h. libKalman never links them.
+// Kalman/Learn.h. libKalman never links them.
 
 #endif // KALMAN_CONFIG_H_IN

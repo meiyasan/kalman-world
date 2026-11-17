@@ -65,7 +65,7 @@
  *
  * libKalman links no AI runtime. Running a policy trained in the Python
  * framework and exported to ONNX or TorchScript is libKalmanLearn's job: see
- * \ref libkalmanlearn and `Kalman/Learn/Learn.h`. The application models are
+ * \ref libkalmanlearn and `Kalman/Learn.h`. The application models are
  * libKalmanApps, under `Kalman/Apps/`.
  *
  * *********************************************
@@ -96,62 +96,27 @@
 // through cling, another language) sees of the two headers above.
 #include "Kalman/CAPI.h"
 
-// Concretes — mirrors the matching subpackages
-#include "Kalman/Abstract/Metadata.h"
-#include "Kalman/Integrators/Euler.h"
-#include "Kalman/Integrators/RK4.h"
-#include "Kalman/Integrators/DormandPrince.h"
-#include "Kalman/Solvers/Spectral.h"
-#include "Kalman/Solvers/FiniteDifference.h"
-#include "Kalman/Solvers/Vorticity.h"
-#include "Kalman/Controllers/Proportional.h"
-#include "Kalman/Controllers/PID.h"
-#include "Kalman/Controllers/LQR.h"
-#include "Kalman/Controllers/MPC.h"
-#include "Kalman/Controllers/MPPI.h"
+// Concretes — mirrors the matching subpackages. Each directory Kalman/X/ has
+// its header Kalman/X.h, which includes all of it.
+#include "Kalman/Abstract.h"
+#include "Kalman/Algebra.h"
+#include "Kalman/Differentiators.h"
+#include "Kalman/Integrators.h"
+#include "Kalman/Solvers.h"
+#include "Kalman/Controllers.h"
 #include "Kalman/Tuner.h"
-#include "Kalman/Tuners/Adaptive.h"
-#include "Kalman/Engines/Linear.h"
-#include "Kalman/Engines/Extended.h"
-#include "Kalman/Engines/Unscented.h"
-#include "Kalman/Engines/Particle.h"
-#include "Kalman/Engines/Ensemble.h"
+#include "Kalman/Tuners.h"
 #include "Kalman/Tracking.h"
-#include "Kalman/Engines/Combinatorial.h"
-#include "Kalman/Models/Linear.h"
-#include "Kalman/Models/Extended.h"
-#include "Kalman/Models/Callback.h"
-#include "Kalman/Models/Tabulated.h"
-#include "Kalman/Models/Joint.h"
-#include "Kalman/Models/Fusion.h"
-#include "Kalman/Models/Lag.h"
-#include "Kalman/Models/Composite.h"
-#include "Kalman/Models/Router.h"
-#include "Kalman/Engines/Interacting.h"
+#include "Kalman/Engines.h"
+#include "Kalman/Models.h"
+#include "Kalman/Sensor.h"
 #include "Kalman/Instrument.h"
 #include "Kalman/SensorFactory.h"
-#include "Kalman/Sensors/Position.h"
-#include "Kalman/Sensors/Doppler.h"
-#include "Kalman/Sensors/Camera.h"
+#include "Kalman/Sensors.h"
 #include "Kalman/Operations.h"
 #include "Kalman/Observability.h"
-#include "Kalman/Filters/KF.h"
-#include "Kalman/Filters/EKF.h"
-#include "Kalman/Filters/UKF.h"
-#include "Kalman/Filters/PF.h"
-#include "Kalman/Filters/EnKF.h"
-#include "Kalman/Filters/CKF.h"
-#include "Kalman/IO/Record.h"
-#include "Kalman/IO/Collection.h"
-#include "Kalman/IO/Json.h"
-#include "Kalman/IO/Archive.h"
-#include "Kalman/IO/ModelFile.h"
-#include "Kalman/Routers/Base.h"
-#include "Kalman/Routers/Bayesian.h"
-#include "Kalman/Routers/Threshold.h"
-#include "Kalman/Routers/Hybrid.h"
-#include "Kalman/Routers/NN/Model.h"
-#include "Kalman/Routers/NN/MLP.h"
-#include "Kalman/Routers/Neural.h"
+#include "Kalman/Filters.h"
+#include "Kalman/IO.h"
+#include "Kalman/Routers.h"
 
 #endif // KALMAN_KALMAN_H

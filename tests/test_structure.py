@@ -281,3 +281,39 @@ class TestAppsAreUniformPackages(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestCxxHeadersHaveOneLayout(unittest.TestCase):
+    """Every directory ``Kalman/X/`` has the header ``Kalman/X.h`` beside it, which
+    includes all of it: ``<Kalman/X.h>`` for the whole, ``<Kalman/X/Name.h>`` for one."""
+
+    ROOTS = ("include", "apps/include", "learn/include", "net/include", "adapters/include")
+    #: Headers a directory's umbrella leaves out, and why.
+    LEFT_OUT = {
+        "Kalman/Routers/NN/Onnx.h": "needs ONNX Runtime: libKalmanLearn's, included by Kalman/Learn.h",
+        "Kalman/Routers/NN/Torch.h": "needs libTorch: libKalmanLearn's, included by Kalman/Learn.h",
+        "Kalman/Learn/CAPI.h": "the C surface, for non-C++ consumers",
+        "Kalman/Net/CAPI.h": "the C surface, for non-C++ consumers",
+    }
+
+    def test_every_directory_has_its_umbrella(self):
+        import re
+        repo = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        where = {}                                           # "Kalman/X/Name.h" -> file
+        for root in self.ROOTS:
+            base = os.path.join(repo, root)
+            for folder, _, files in os.walk(os.path.join(base, "Kalman")):
+                for name in files:
+                    if name.endswith(".h"):
+                        path = os.path.join(folder, name)
+                        where[os.path.relpath(path, base)] = path
+        folders = {os.path.dirname(header) for header in where} - {"Kalman"}
+        self.assertGreater(len(folders), 15)
+        for folder in sorted(folders):
+            umbrella = folder + ".h"
+            self.assertIn(umbrella, where, f"{folder}/ needs the header {umbrella} beside it")
+            included = set(re.findall(r'#include "([^"]+)"', open(where[umbrella]).read()))
+            for header in sorted(where):
+                if os.path.dirname(header) == folder and header not in self.LEFT_OUT:
+                    self.assertIn(header, included, f"{umbrella} must include {header}")
+        self.assertNotIn("Kalman/Apps/Apps.h", where)

@@ -22,8 +22,8 @@
  * *********************************************
  */
 
-#ifndef KALMAN_NET_NET_H
-#define KALMAN_NET_NET_H
+#ifndef KALMAN_NET_H
+#define KALMAN_NET_H
 
 #include "Kalman/Net/Error.h"
 #include "Kalman/Net/Auth.h"
@@ -31,4 +31,4 @@
 #include "Kalman/Net/RestServer.h"
 #include "Kalman/Net/McpServer.h"
 
-#endif // KALMAN_NET_NET_H
+#endif // KALMAN_NET_H

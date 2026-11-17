@@ -214,6 +214,11 @@ if(BUILD_LIBRARY)
         add_subdirectory("apps")
     endif()
 
+    # The adapters (specific hardware): headers only so far.
+    if(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/adapters/CMakeLists.txt)
+        add_subdirectory("adapters")
+    endif()
+
     # libKalmanLearn: the learned components, and the only place an AI runtime
     # is looked for.
     option(KALMAN_BUILD_LEARN "Build libKalmanLearn (ONNX and TorchScript policies)" ON)

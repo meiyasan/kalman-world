@@ -12,7 +12,7 @@
  * KALMAN_JWT_ISSUER / _AUDIENCE, KALMAN_STATE_DIR, KALMAN_PLUGIN_PATH,
  * KALMAN_MCP_TOKEN (stdio), KALMAN_ALLOW_ANONYMOUS, KALMAN_CORS_ORIGINS.
  */
-#include "Kalman/Net/Net.h"
+#include "Kalman/Net.h"
 
 #include <csignal>
 #include <cstdlib>
