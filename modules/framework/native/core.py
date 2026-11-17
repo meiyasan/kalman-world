@@ -100,6 +100,10 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
                                                const char *const *units, double rate);
+kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
+                                             const double *settings, int count, const char *const *labels,
+                                             const char *const *units, double rate);
+int kalman_sensor_kind_exists(const char *kind);
 int kalman_model_sensor_count(const kalman_model_t *model);
 const char *kalman_model_sensor_name(const kalman_model_t *model, int i);
 int kalman_model_sensor_channels(const kalman_model_t *model, int i);

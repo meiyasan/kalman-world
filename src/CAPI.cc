@@ -22,6 +22,7 @@
 #include "Kalman/Models/Joint.h"
 #include "Kalman/Observability.h"
 #include "Kalman/Models/Fusion.h"
+#include "Kalman/SensorFactory.h"
 #include "Kalman/Models/Lag.h"
 #include "Kalman/Models/Composite.h"
 #include "Kalman/Models/Router.h"
@@ -422,6 +423,32 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
+                                             const double *settings, int count, const char *const *labels,
+                                             const char *const *units, double rate)
+{
+    try
+    {
+        Ok();
+        const std::size_t n = Deref(inner).NState();
+        if (!kind) throw std::invalid_argument("null sensor kind");
+        if (count < 0 || (count > 0 && !settings)) throw std::invalid_argument("null settings");
+        Kalman::Sensor sensor = Kalman::SensorFactory::Instance().Create(
+            kind, name ? name : "", n, std::vector<double>(settings, settings + count));
+        if (labels) sensor.channels = Components(static_cast<int>(sensor.Channels()), labels, units);
+        sensor.rate = rate;
+        return Fuse(inner, std::move(sensor));
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
+}
+
+int kalman_sensor_kind_exists(const char *kind)
+{
+    try { return kind && Kalman::SensorFactory::Instance().Has(kind) ? 1 : 0; }
+    catch (...) { return 0; }
 }
 
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,

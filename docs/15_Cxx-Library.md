@@ -69,6 +69,8 @@ included, so a change on one side has an obvious home on the other:
 | `framework/models/compose.py` | `Kalman/Models/Composite.h` | `Models::Composite` |
 | `framework/sensor.py` | `Kalman/Sensor.h` | `Kalman::Sensor`, `Kalman::Component` |
 | `framework/instrument.py` | `Kalman/Instrument.h` | `Kalman::Instrument`, `Kalman::Compose` |
+| `apps/fusion/sensors.py` | `Kalman/Apps/Fusion/Sensors.h` (libKalmanApps) | `Apps::Fusion::PositionSensor`, `DopplerRadar`, `Camera` |
+| (asked by name through `kalman_model_add_sensor_kind`) | `Kalman/SensorFactory.h` | `Kalman::SensorFactory` |
 | `framework/models/fusion.py` | `Kalman/Models/Fusion.h` | `Models::Fusion` |
 | `framework/operations.py` | `Kalman/Operations.h` | `Kalman::AddSensor`, `Kalman::AddInstrument`, `Kalman::Joint`, `Kalman::Lag`, `Kalman::Compose`, `Kalman::Route` |
 | `framework/filters/kf.py` | `Kalman/Filters/KF.h` | `Filters::KF` |
@@ -471,13 +473,16 @@ router.export_torchscript("router.pt")        # for NN::Torch
 ```cpp
 Kalman::Routers::NN::Onnx policy("router.onnx");   // or NN::Torch, or NN::MLP
 Kalman::Routers::Neural   router(&policy, /* window */ 5);
-router.SetFrequencies(frequencies);                // of each regime in training: "frequencies" in router.onnx.json
 // then: modes.SetDecision(&router) on the Models::Router
 ```
 
 The policy's answer `p` is evidence from one window. The router combines it
 with the probability carried over from the step before, `c`, as
-`mu ∝ c · (p / f)^(1 / window)`, the same rule in both languages.
+`mu ∝ c · (p / f)^(1 / window)`, the same rule in both languages. `f` is how
+often each regime appeared in training; both exports divide by it inside the
+graph, next to the standardisation, so there is nothing to set on the C++
+side. `SetFrequencies` exists for a policy that returns plain probabilities,
+such as an `NN::MLP` filled by hand.
 
 Both exports produce the same probabilities as the Python router; measured
 agreement is `2e-13` for ONNX and `1.8e-13` for TorchScript. Neither runtime is
@@ -1192,6 +1197,17 @@ refuses a late sensor on a model that carries no past state. Through the C
 API: `kalman_model_create_lag`, `kalman_model_set_sensor_delay`,
 `kalman_model_sensor_delay`. Tested in `tests/cxx/26_lag.cc` and
 `tests/test_lag.py`.
+
+**Sensors written in C++.** A sensor given to Python as a function is called
+back at every step. A library that ships sensors in C++ registers each with
+`Kalman::SensorFactory` under a name, with a creator that takes the sensor's
+name, the size of the state and a list of numbers; `kalman_model_add_sensor_kind`
+then builds one from Python with no callback. libKalmanApps registers
+`position`, `doppler` and `camera` (`Kalman::Apps::Fusion::PositionSensor`,
+`DopplerRadar`, `Camera`, in `Kalman/Apps/Fusion/Sensors.h`, where the meaning
+of the numbers is tabulated). Tested in `tests/cxx/28_sensors_apps.cc` and
+`tests/test_app_sensors.py`, which checks that the C++ readings and Jacobians
+are the Python reference ones and that a pass calls nothing back.
 
 From Python: `KalmanSensor` (`framework/sensor.py`), `model.add_sensor(sensor)`
 and `model.sensors`. Python describes nothing itself. A Python model hands its

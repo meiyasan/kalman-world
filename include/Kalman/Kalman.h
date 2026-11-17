@@ -129,6 +129,7 @@
 #include "Kalman/Models/Router.h"
 #include "Kalman/Engines/Interacting.h"
 #include "Kalman/Instrument.h"
+#include "Kalman/SensorFactory.h"
 #include "Kalman/Operations.h"
 #include "Kalman/Observability.h"
 #include "Kalman/Filters/KF.h"

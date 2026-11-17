@@ -51,6 +51,8 @@ from its sample rate), `z` the measurement.
 | observable | a quantity that can be measured, with its unit | `model.observables` | `model.Observables()` | in place |
 | sensor | what acquires a measurement: what it reads, its noise, its observables, its rate | `KalmanSensor`, `model.sensors` | `Kalman::Sensor`, `model.Sensors()` | in place |
 | instrument | a set of sensors and what they share: a name, a rate, a calibration (`"<name>.gain"`, `"<name>.offset"`, two parameters of the model) | `KalmanInstrument`, `model.instruments` | `Kalman::Instrument`, `model.Instruments()` | in place |
+| generic sensors | a position reading, a Doppler radar, a camera, for any model that has the components they read: a geometry and a noise, nothing of any product | `PositionSensor`, `DopplerRadar`, `Camera` (`kalman.apps`) | `Kalman::Apps::Fusion::PositionSensor`, `DopplerRadar`, `Camera` | in place |
+| adapter | one piece of hardware: a generic sensor with what its data sheet and its mounting say (noise, rate, delay, position, calibration). The library ships none | a subclass of a generic sensor | the same | written by whoever uses the hardware |
 | measurement | the numbers that come out of the sensors | `zk` | `zk` | in place |
 | parameter | a named number of the model, which can be estimated | `model["c_drag"]` | `model.Parameter("c_drag")` | in place |
 | observability | whether the measurements can tell the state components apart, asked before any data | `model.observability(steps)` | `Kalman::Observability(model, steps)` | in place |

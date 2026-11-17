@@ -57,7 +57,12 @@ class Fusion(OperationModel):
         names, units = encode([name for name, _ in labels]), encode([unit for _, unit in labels])
         cnames = ffi.new("const char *[]", names) if labels else ffi.NULL
         cunits = ffi.new("const char *[]", units) if labels else ffi.NULL
-        if sensor.is_linear:
+        if self._offered(sensor):
+            kind, settings = sensor.native
+            settings = np.ascontiguousarray(settings, dtype=np.float64)
+            handle = lib.kalman_model_add_sensor_kind(inner, kind.encode(), sensor.name.encode(),
+                                                      core.cdptr(settings), settings.size, cnames, cunits, rate)
+        elif sensor.is_linear:
             handle = lib.kalman_model_add_sensor_matrix(inner, sensor.name.encode(), k, sensor.G.shape[1],
                                                         core.cdptr(sensor.G), core.cdptr(R), cnames, cunits, rate)
         else:
@@ -97,6 +102,15 @@ class Fusion(OperationModel):
                        "set_instrument")
 
         self._adopt(handle, [model], **kwargs)
+
+    @staticmethod
+    def _offered(sensor):
+        """Whether a loaded C++ library offers this sensor by name (``sensor.native``)."""
+        from . import native
+        if sensor.native is None or not native.USE_NATIVE_COUNTERPARTS:
+            return False
+        native.apps_library_names()                                # loads libKalmanApps on first use
+        return bool(core.lib.kalman_sensor_kind_exists(sensor.native[0].encode()))
 
     # ------------------------------------------------------------------
     # Labels: the C++ model's

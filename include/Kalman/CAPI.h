@@ -179,6 +179,16 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
                                                const char *const *units, double rate);
+/// The same for a sensor a loaded library offers by name (Kalman::SensorFactory; libKalmanApps
+/// registers "position", "doppler" and "camera", see Kalman/Apps/Fusion/Sensors.h): the sensor
+/// of kind `kind`, called `name`, built from `count` numbers whose meaning is the kind's. Its
+/// readings, its Jacobian and its noise are computed in C++. NULL on failure.
+kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
+                                             const double *settings, int count, const char *const *labels,
+                                             const char *const *units, double rate);
+/// 1 when a sensor of kind `kind` is registered, else 0.
+int kalman_sensor_kind_exists(const char *kind);
+
 /// The number of sensors of a model (Model::Sensors()): the built-in one, then those added. -1 on failure.
 int kalman_model_sensor_count(const kalman_model_t *model);
 /// The name of sensor `i`. Valid until the next call on this thread.

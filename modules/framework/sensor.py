@@ -48,6 +48,11 @@ class KalmanSensor:
         ``model.add_sensor(sensor).lag(L)`` with ``L >= delay * fs`` steps.
     """
 
+    #: ``(kind, settings)`` when a loaded C++ library offers this very sensor by name
+    #: (``Kalman::SensorFactory``; the sensors of ``kalman.apps`` set it): the model then
+    #: takes the C++ sensor, and ``g`` is not called back during a pass.
+    native = None
+
     def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None, rate=None, delay=None):
         if not isinstance(name, str) or not name:
             raise ValueError("KalmanSensor: a sensor needs a name.")
