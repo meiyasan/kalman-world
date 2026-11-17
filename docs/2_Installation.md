@@ -64,19 +64,27 @@ $ pip install -e .                     # installs `modules/` as the `kalman` pac
 Extras not installed are never fatal. `python -m kalman.mcp` without the SDK
 prints an install hint and exits 0 rather than crashing.
 
-Deeper optional dependencies are not packaged as extras and are installed on
-demand: `torch` (GPU solver backends, neural controllers/routers),
-`cdsapi`/`xarray`/`h5py` (ERA5 and turbulence providers), `motmetrics`
-(MOT tracking evaluation).
+`requirements.txt` installs everything the package, its tests and the notebooks
+use, including the deeper optional parts: `torch` (GPU solver backends, neural
+controllers and routers), `onnx`/`onnxscript`/`onnxruntime` (router export),
+`cdsapi`/`xarray`/`h5py` (ERA5 and turbulence providers), `gwpy` (notebook 05),
+`opencv`, `kagglehub` and `motmetrics` (notebook 10).
 
-### Conda
+### Conda (recommended with the C++ libraries)
 
 ```bash
 $ make env          # builds from environment.yml
-$ make conda
+$ conda activate kalman && pip install --no-deps -e .
 ```
 
-`environment.x86_64.yml` is the pinned x86 variant used by CI.
+`environment.yml` takes everything from conda-forge, Python 3.12: the Python
+packages and the libraries the C++ side links to (libtorch, ONNX Runtime,
+nlohmann_json, cpp-httplib, OpenSSL, SQLite), so that both share one compiler,
+one libstdc++, one BLAS and one libtorch. The only pip package is `motmetrics`,
+whose conda-forge build is too old. PyTorch, libtorch and ONNX Runtime are the
+CPU builds; for a GPU, the file says which four lines to change. In this
+environment all four C++ libraries build, libKalmanNet included.
+`environment.x86_64.yml` adds the hep-forge channel on x86_64.
 
 ---
 

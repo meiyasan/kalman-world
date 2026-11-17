@@ -1,16 +1,8 @@
-
+# Added to environment.yml on x86_64 by `make env` (conda-merge). Everything is
+# in environment.yml, from conda-forge; nothing more is needed here. The
+# hep-forge channel carries the HEP stack built against it (ROOT+).
 channels:
   - hep-forge
   - conda-forge
-  - defaults
 
-# RECOMMENDED: pin python version for faster dependency resolution
-dependencies:
-  - python=3.10
-  - pip
-  - pip:
-    - -r requirements.txt
-
-  # Add x86_64 specific dependencies
-  # ...
-  
+dependencies: []

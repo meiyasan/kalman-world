@@ -1,25 +1,90 @@
-
+# The environment of Kalman World: everything from conda-forge, so that the
+# Python packages and the C++ libraries (libKalman, libKalmanApps,
+# libKalmanLearn, libKalmanNet) share one compiler, one libstdc++, one BLAS and
+# one libtorch. pip is used for one package only, whose conda-forge build is
+# stale (motmetrics, below); `pip install -e .` adds the `kalman` package itself.
+#
+#     conda env create -n kalman -f environment.yml      (or: make env)
+#     conda activate kalman && pip install --no-deps -e .
+#
+# requirements.txt lists the same Python packages for an install without conda.
 channels:
   - conda-forge
-  - pytorch
-  - nvidia
-  - defaults
 
-# RECOMMENDED: pin python version for faster dependency resolution
 dependencies:
-  - python=3.10
-  - python-build
+  - python=3.12              # as CI; conda-forge no longer builds the stack for 3.10
   - pip
-  - pip:
-    - -r requirements.txt
-  - compilers
-  - cmake
-
   - setuptools
   - wheel
-  - flake8-black
-  - python-dotenv
+  - python-build
+
+  # --- building the C++ libraries -------------------------------------------
+  - compilers
+  - cmake
+  - make
+  - blas-devel
+  - zlib
   - gtest
-  
-  - wcwidth
+
+  # --- what the C++ libraries link to -----------------------------------------
+  # CPU builds by default: building libKalmanLearn against the CUDA builds needs
+  # the CUDA toolkit as well. For a GPU, replace *cpu* by *cuda* in the four lines
+  # (libtorch, onnxruntime-cpp, pytorch, onnxruntime) and add cuda-toolkit.
+  - libtorch=*=cpu*         # libKalmanLearn: TorchScript policies
+  - onnxruntime-cpp=*=*cpu  # libKalmanLearn: ONNX policies
+  - nlohmann_json           # libKalmanNet: the JSON API
+  - cpp-httplib             # libKalmanNet: the REST and MCP servers
+  - openssl                 # libKalmanNet: tokens
+  - sqlite                  # libKalmanNet: the registry
+  - zstd                    # cpp-httplib's compression
+
+  # --- the Python package -------------------------------------------------------
+  - numpy
+  - scipy
+  - matplotlib
+  - astropy
+  - cffi
+  - regex
   - pyyaml
+  - wcwidth
+  - colorspacious
+  - ssqueezepy
+  - pytorch=*=cpu*          # built on the libtorch above
+  - python-dotenv
+
+  # --- the API transports and their auth ------------------------------------------
+  - pyjwt>=2.0
+  - bcrypt>=4.0
+  - fastapi>=0.110
+  - uvicorn-standard>=0.29
+  - httpx>=0.27
+  - mcp>=1.0
+
+  # --- optional parts of the applications --------------------------------------------
+  - pandas
+  - xarray
+  - h5py
+  - sympy
+  - onnx                    # NeuralRouter.export_onnx
+  - onnxscript              # torch.onnx.export needs it since torch 2.9
+  - onnxruntime=*=*cpu
+  - cdsapi                  # weather reanalysis downloads
+
+  # --- the notebooks ---------------------------------------------------------------------
+  - ipykernel
+  - nbconvert
+  - nbclient
+  - gwpy                    # 05: gravitational-wave time series
+  - opencv                  # 10: detection and video (the contrib modules included)
+  - kagglehub               # 10: the video datasets
+
+  # --- tests and style ----------------------------------------------------------------------
+  - pytest>=8
+  - pytest-cov>=5
+  - coverage>=7
+  - ruff>=0.6
+  - flake8-black
+
+  # --- from PyPI: the conda-forge build is too old ---------------------------------------------
+  - pip:
+    - motmetrics>=1.4       # 10: the tracking benchmark (conda-forge has 1.2, which uses np.float)

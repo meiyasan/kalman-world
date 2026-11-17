@@ -139,7 +139,7 @@ class TestModelPredictiveControl(unittest.TestCase):
             u = np.asarray(controller(x, 1e-4 * np.eye(3), k / model.fs), dtype=float).reshape(-1, 1)
             applied = model.limit_control(u)
             asked.append(float(u[0, 0]))
-            cost += float((x - x_ref).T @ Qcost @ (x - x_ref) + applied.T @ Rcost @ applied)
+            cost += ((x - x_ref).T @ Qcost @ (x - x_ref) + applied.T @ Rcost @ applied).item()   # 1 x 1: numpy 2.5 refuses float() of it
             x = np.asarray(model.decode_step(x, u=u, t=k / model.fs), dtype=float).reshape(-1, 1)
         return np.array(asked), cost, x
 
