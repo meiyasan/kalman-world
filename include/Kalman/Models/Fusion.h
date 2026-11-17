@@ -84,7 +84,8 @@ namespace Kalman::Models
             std::vector<Sensor> Sensors() const override;
 
         private:
-            /// 1 for "<owner>.gain", 2 for "<owner>.offset", 0 for neither.
+            /// 1 for "<owner>.gain", 2 for "<owner>.offset", 3 for a setting of the sensor
+            /// ("<owner>.<setting>"), 0 for none of them.
             int Own(const std::string &name) const;
 
         public:

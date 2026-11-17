@@ -45,7 +45,7 @@ class Fusion(OperationModel):
             raise TypeError(f"add_sensor: a KalmanSensor is expected, got {type(sensor).__name__}.")
         lib, ffi = core.require(), core.ffi
         n = int(model.n)
-        self.inner, self.sensor = model, sensor
+        self.inner, self.sensor, self.instrument = model, sensor, instrument
         k, R, _ = sensor.resolved(n, model.x0, float(model.t0 or 0.0))
         labels = sensor.labels or []                               # none: C++ names them after the sensor
         # A sensor carried by an instrument takes its rate when it states none.
@@ -58,10 +58,8 @@ class Fusion(OperationModel):
         cnames = ffi.new("const char *[]", names) if labels else ffi.NULL
         cunits = ffi.new("const char *[]", units) if labels else ffi.NULL
         if self._offered(sensor):
-            kind, settings = sensor.native
-            settings = np.ascontiguousarray(settings, dtype=np.float64)
-            handle = lib.kalman_model_add_sensor_kind(inner, kind.encode(), sensor.name.encode(),
-                                                      core.cdptr(settings), settings.size, cnames, cunits, rate)
+            # A sensor written in C++: the model takes it, and nothing is called back.
+            handle = lib.kalman_model_add_sensor_object(inner, sensor.native, cnames, cunits, rate)
         elif sensor.is_linear:
             handle = lib.kalman_model_add_sensor_matrix(inner, sensor.name.encode(), k, sensor.G.shape[1],
                                                         core.cdptr(sensor.G), core.cdptr(R), cnames, cunits, rate)
@@ -105,12 +103,9 @@ class Fusion(OperationModel):
 
     @staticmethod
     def _offered(sensor):
-        """Whether a loaded C++ library offers this sensor by name (``sensor.native``)."""
+        """Whether the sensor is a C++ one the model can take as it is (``sensor.native``)."""
         from . import native
-        if sensor.native is None or not native.USE_NATIVE_COUNTERPARTS:
-            return False
-        native.apps_library_names()                                # loads libKalmanApps on first use
-        return bool(core.lib.kalman_sensor_kind_exists(sensor.native[0].encode()))
+        return sensor.native is not None and native.USE_NATIVE_COUNTERPARTS
 
     # ------------------------------------------------------------------
     # Labels: the C++ model's

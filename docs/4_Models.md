@@ -396,60 +396,89 @@ through the two sensors' Jacobians (`tests/test_add_sensor.py`, `TestCameras`:
 the depth of a point 40 m away is left with metres of doubt by one camera and
 found to 5 cm by two).
 
-### Generic sensors, and adapters
+### Generic sensors
 
-Three readings come ready-made and generic, for any model that has the components they
-read. Each takes the number of state components and the indices it reads:
+Three readings come ready-made in the framework, for any model that has the
+components they read. Each knows a geometry and a noise, and nothing of any
+product; it takes the number of state components and the indices it reads:
 
 ```python
-from kalman.apps import PositionSensor, DopplerRadar, Camera
+from kalman.framework import PositionSensor, DopplerSensor, CameraSensor
 
 # a shell with state (px, vx, ax, py, vy, ay, pz, vz, az)
 P, V = [0, 3, 6], [1, 4, 7]
-gps    = PositionSensor("gps", 9, P, sigma=10.0)                    # z = x[axes], or rotation @ x[axes]
-radar  = DopplerRadar("doppler", 9, P, V, sigma=1.0, at=[0, 0, 0])  # the velocity along the line of sight
-camera = Camera("camera", 9, P, focal=800.0, sigma=1.5,             # two pixel coordinates
-                at=[0, 0, -50], rotation=None)
+gps     = PositionSensor("gps", 9, P, sigma=10.0)                    # z = x[axes], or rotation @ x[axes]
+doppler = DopplerSensor("doppler", 9, P, V, sigma=1.0, at=[0, 0, 0]) # the velocity along the line of sight
+camera  = CameraSensor("camera", 9, P, focal=800.0, sigma=1.5,       # two pixel coordinates
+                       at=[0, 0, -50], rotation=None)
 
-seen = shell.add_sensor(gps).add_instrument(radar).add_instrument(camera)
+seen = shell.add_sensor(gps).add_sensor(doppler).add_sensor(camera)
 ```
 
-| | Reads | Channels |
-|---|---|---|
-| `PositionSensor(name, n, axes, sigma, rotation=None)` | the chosen components, in its own axes when rotated; a matrix, so a model of matrices stays one | one per axis |
-| `DopplerRadar(name, n, position, velocity, sigma, at=None)` | `v · (p − at) / |p − at|`, in 1, 2 or 3 dimensions | 1 |
-| `Camera(name, n, position, focal, sigma, at=None, rotation=None)` | `focal · q_x / q_z`, `focal · q_y / q_z` with `q = rotation · (p − at)` | 2 |
+| | Reads | Channels | Settings |
+|---|---|---|---|
+| `PositionSensor(name, n, axes, sigma, rotation=None)` | the chosen components, in its own axes when rotated; a matrix, so a model of matrices stays one | one per axis | none |
+| `DopplerSensor(name, n, position, velocity, sigma, at=None)` | `v · (p − at) / |p − at|`, in 1, 2 or 3 dimensions | 1 | `x`, `y`, `z`: where it is |
+| `CameraSensor(name, n, position, focal, sigma, at=None, rotation=None)` | `focal · q_x / q_z`, `focal · q_y / q_z` with `q = rotation · (p − at)` | 2 | `focal`, `x`, `y`, `z` |
 
-The radar and the camera are instruments of one sensor, so they can carry a
-calibration: `DopplerRadar(...).calibrate(1.0, 0.0)` gives the model
-`doppler.gain` and `doppler.offset`, which `joint` estimates. Each is one C++
-class, `Kalman::Apps::Fusion::PositionSensor`, `DopplerRadar` and `Camera`
-(`Kalman/Apps/Fusion/Sensors.h`), with its Jacobian written out: the Python
-class asks the C++ library for the sensor by name, and nothing is called back
-into Python during a pass.
-
-These three are **generic**: they know a geometry and a noise, and nothing of
-any product. A given piece of hardware is an **adapter**: a few lines that fix
-what its data sheet and its mounting say, on top of the generic sensor. The
-library ships none; an adapter belongs with whoever uses that hardware (an
-application, a plugin), next to the provider that decodes its data.
+A sensor's **settings** are the numbers its readings depend on. The model that
+takes the sensor has each as a parameter, `"<name>.<setting>"`, so `joint`
+estimates it with the state. A camera whose focal length is known to 100 px:
 
 ```python
-class BenchRadar(DopplerRadar):
-    """The radar of one test bench: its data sheet and its mounting, in one place."""
-
-    def __init__(self, n, position, velocity):
-        super().__init__("bench-radar", n, position, velocity,
-                         sigma=0.15,               # m/s, from the data sheet
-                         at=[12.0, -3.5, 1.8],     # where it is mounted [m]
-                         rate=20.0)                # Hz
-        self.calibrate(gain=1.0, offset=0.0)       # its offset can then be estimated
-
-tracked = model.add_instrument(BenchRadar(6, [0, 2, 4], [1, 3, 5]))
-tracked.joint({"bench-radar.offset": (1.0, 0.0)})
+model = target.add_sensor(CameraSensor("camera", 6, P, focal=700.0, sigma=1.5, at=[0, 0, -50]))
+model.parameters()                                   # camera.focal, camera.x, camera.y, camera.z
+record = model.joint({"camera.focal": (100.0, 0.0)}).filter(zk)
+record.xk[-1, 6]                                     # 800.2 +/- 0.3 px on data taken at 800 px
 ```
 
+Each is one C++ class, `Kalman::Sensors::Position`, `Doppler` and `Camera`
+(`include/Kalman/Sensors/`), with its Jacobian written out. The Python class
+holds the C++ sensor and computes nothing: `sensor.g(x)`, its Jacobian, its
+noise and its settings are asked of it, and a model takes it as it is, so
+nothing is called back into Python during a pass.
+
+### Adapters: one piece of hardware
+
+The generic sensors know no product. A given device is an **adapter**: an
+instrument made of generic sensors, with what its data sheet and its mounting
+say (noise, rate, delay, where it is, its calibration) and where its data
+comes from. Adapters live in `kalman.adapters`, beside `kalman.apps`: the
+applications are specific models, the adapters specific hardware, and the
+framework knows neither. None is shipped yet; one looks like this:
+
+```python
+from kalman.framework import KalmanInstrument, DopplerSensor, PositionSensor
+
+class BenchRadar(KalmanInstrument):
+    """The radar of one test bench: its data sheet and its mounting, in one place."""
+
+    def __init__(self, n, position, velocity, provider=None):
+        super().__init__("bench-radar", [
+            PositionSensor("fix", n, position, sigma=0.5),               # m, from the data sheet
+            DopplerSensor("doppler", n, position, velocity, sigma=0.15,  # m/s
+                          at=[12.0, -3.5, 1.8]),                         # where it is mounted [m]
+        ], rate=10.0, provider=provider)                                 # Hz; where its data comes from
+        self.calibrate(gain=1.0, offset=0.0)                             # then estimated with joint
+
+tracked = model.add_instrument(BenchRadar(6, [0, 2, 4], [1, 3, 5], provider=stream))
+zk = tracked.measurements()                # fetched from the radar, laid on the model's steps
+tracked.joint({"bench-radar.offset": (1.0, 0.0)}).filter(zk)
+```
+
+`provider=` is a provider ([Providers](7_Providers.md)) or any function that
+returns the instrument's own readings, one column per channel, at the
+instrument's rate. `instrument.read()` splits them by sensor, and
+`model.measurements()` with no argument fetches every instrument that has one;
+the sensors without a provider are missing (NaN), which the engines skip. In
+C++ an adapter is a class deriving from `Kalman::Instrument`.
+
 ### Instruments
+
+A detector is an instrument too, of another kind: its sensors are its layers,
+read one after the other (`sequential`), each at its `station`.
+`chamber.instruments` gives it for a model track finding runs on; it is not
+added to another model.
 
 An **instrument** is a set of sensors on one piece of hardware: a weather
 station, a receiver, a camera. Sensors are composed into one, and the model

@@ -31,6 +31,7 @@ from .tuners import BoostKalmanTuner, AdaptiveQRKalmanTuner, NeuralAdaptiveQRKal
 from .operations import joint, add_sensor, add_instrument, compose, lag, route
 from .sensor import KalmanSensor
 from .instrument import KalmanInstrument
+from .sensors import PositionSensor, DopplerSensor, CameraSensor
 from .engine_models import KalmanEnsembleModel, KalmanDetectorModel
 from .models import (
     LinearKalmanModel,
@@ -105,7 +106,7 @@ __all__ = [
     "LinearKalmanModel",
     "ExtendedKalmanModel",
     "UnscentedKalmanModel",
-    "Composite", "KalmanReadout", "Joint", "joint", "Lag", "lag", "Router", "route", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
+    "Composite", "KalmanReadout", "Joint", "joint", "Lag", "lag", "Router", "route", "Fusion", "add_sensor", "KalmanSensor", "add_instrument", "compose", "KalmanInstrument", "PositionSensor", "DopplerSensor", "CameraSensor", "KalmanEnsembleModel", "KalmanDetectorModel", "NativeModel",
     "LinearKalmanEngine",
     "ExtendedKalmanEngine",
     "UnscentedKalmanEngine",

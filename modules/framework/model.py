@@ -724,11 +724,29 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         if not isinstance(instrument, KalmanInstrument):
             raise TypeError(f"add_instrument takes a KalmanInstrument, got {type(instrument).__name__}; "
                             "compose(sensor, ...) makes one.")
+        if instrument.sequential:
+            raise ValueError(f"add_instrument: {instrument.name!r} is read one sensor after the other (a detector's "
+                             "layers); it is the instrument of its own model and cannot be added to another.")
         from .models.fusion import Fusion
         model = self
         for sensor in instrument.sensors:
             model = Fusion(model, sensor, instrument=instrument)
         return model
+
+    def _instruments_given(self):
+        """The instrument objects this model was made with, by name: they hold what
+        the C++ model does not, their provider."""
+        found, stack = {}, [self]
+        while stack:
+            model = stack.pop()
+            given = model.__dict__.get("instrument")
+            if given is not None:
+                found.setdefault(given.name, given)
+            for name in ("inner", "parts", "models"):
+                below = model.__dict__.get(name)
+                if below is not None:
+                    stack.extend(below if isinstance(below, (list, tuple)) else [below])
+        return found
 
     @property
     def instruments(self):
@@ -737,7 +755,18 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         under its own name."""
         from .instrument import KalmanInstrument
         from .native import core
+        from .engine_models import KalmanDetectorModel
         sensors = self.sensors
+        if isinstance(self, KalmanDetectorModel):
+            # A detector: one instrument, its layers read one after the other
+            # (Kalman::Tracking::Detector::Layers).
+            import copy
+            layers = []
+            for i, radius in enumerate(self.radii):
+                layer = copy.copy(sensors[0])
+                layer.name, layer.station = f"layer {i}", float(radius)
+                layers.append(layer)
+            return [KalmanInstrument(sensors[0].name, layers, sequential=True)]
         if self.__dict__.get("_sensors_given") is not None or not core.HAS_CXX_CORE:
             return [KalmanInstrument(sensor.name, [sensor]) for sensor in sensors]
         from .models import native
@@ -751,6 +780,10 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             if group[0].calibrated:
                 instrument.calibrate(group[0].gain, group[0].offset)
             out.append(instrument)
+        given = self._instruments_given()
+        for instrument in out:
+            if instrument.name in given:
+                instrument.provider, instrument.rate = given[instrument.name].provider, given[instrument.name].rate
         return out
 
     @property
@@ -795,9 +828,13 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
             first += k
         return mask
 
-    def measurements(self, readings):
+    def measurements(self, readings=None, **fetch):
         """The measurement array a filter takes, ``(N, m)``, from each sensor's own
         readings: ``model.measurements({"gps": z_gps, "wheel": z_wheel})``.
+
+        With no ``readings``, they are fetched from the instruments that say where
+        their data comes from (``KalmanInstrument(provider=...)``), ``fetch`` going
+        to each provider: ``model.measurements()``.
 
         Each array holds one row per report of that sensor, at the sensor's own
         ``rate`` (the model's when it has none). They are laid on the model's steps;
@@ -808,6 +845,14 @@ class KalmanModel(KalmanModelMetadata, KalmanModelMixin):
         from ..helpers import make_multirate_input
         fs = float(self.fs or 1.0)
         sensors = self.sensors
+        if readings is None:
+            readings = {}
+            for instrument in self.instruments:
+                if instrument.provider is not None:
+                    readings.update(instrument.read(**fetch))
+            if not readings:
+                raise ValueError("measurements(): give the readings, or make the model with an instrument that has "
+                                 "a provider (KalmanInstrument(..., provider=...)).")
         unknown = set(readings) - {sensor.name for sensor in sensors}
         if unknown:
             raise KeyError(f"{type(self).__name__} has no sensor {sorted(unknown)}; it has "

@@ -22,7 +22,8 @@
  * \endcode
  *
  * What the numbers mean is the sensor's business; it checks them and says what
- * is wrong. libKalmanApps registers its own (Kalman::Apps::Fusion).
+ * is wrong. The library registers its own generic sensors (Kalman::Sensors:
+ * `position`, `doppler`, `camera`); a plugin adds what it ships.
  *
  * *********************************************
  */

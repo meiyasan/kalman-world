@@ -23,7 +23,7 @@ from .astro.space       import (TransLunarModel, TransLunarState, TransLunarObse
                            lunar_porkchop, plot_solar_system, plot_porkchop)
 from .vehicles     import CarSpeedModel, CarSpeedState, CarSpeedObservable, CarLaneModel, CarLaneState, CarLaneObservable
 from .tracking      import DriftChamberModel, TrackingEvent, TrackState, TrackObservable
-from .fusion        import SensorFusionModel, SensorSpec, PositionSensor, DopplerRadar, Camera
+from .fusion        import SensorFusionModel, SensorSpec
 from .vision        import (DetectionModel, BoxTrackModel, SortTracker, KalmanTrack,
                             BoxTrackState, BoxTrackObservable, TrackedBox,
                             box_to_xysr, xysr_to_box, iou_batch, associate_detections,

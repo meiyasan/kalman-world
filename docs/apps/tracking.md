@@ -42,6 +42,11 @@ from kalman.framework.filters import CombinatorialKalmanFilter
 chamber = DriftChamberModel(n_layers=8, Bz=1.5)
 event = chamber.generate_event(n_tracks=3, n_background=4, seed=0)
 tracks = CombinatorialKalmanFilter(chamber).forward(event.hits, layer_radii=event.radii)
+
+chamber.instruments        # [KalmanInstrument('CDC', ['layer 0', ..., 'layer 7'], sequential)]
 ```
+
+The chamber is an instrument whose sensors are its layers, read one after the
+other, each at its radius (`layer.station`).
 
 Notebook: [07_CombinatorialTracking](../../share/notebooks/07_CombinatorialTracking.ipynb).

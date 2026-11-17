@@ -61,9 +61,7 @@ Steps 6 to 8 of the notebook show them one at a time.
 
 ## Generic sensors
 
-`PositionSensor`, `DopplerRadar` and `Camera` (`from kalman.apps import ...`)
-are sensors for any model, not only this one: each is told the indices of the
-state components it reads. They are written in C++ with their Jacobians and
-described in [Models](../4_Models.md#generic-sensors-and-adapters).
-
-Notebook: [09_SensorFusion](../../share/notebooks/09_SensorFusion.ipynb).
+`PositionSensor`, `DopplerSensor` and `CameraSensor` are part of the framework
+(`from kalman.framework import ...`), for any model: each is told the indices
+of the state components it reads. They are written in C++ with their Jacobians
+and described in [Models](../4_Models.md#generic-sensors).

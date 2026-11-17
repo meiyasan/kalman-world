@@ -216,7 +216,7 @@ python -m pytest tests/test_structure.py -q     # architecture invariants
 make linter                    # ruff, correctness-focused
 ```
 
-Current baseline: **935 passed, 28 skipped** (skips are optional-dependency
+Current baseline: **949 passed, 28 skipped** (skips are optional-dependency
 gates), and 28 of 28 in the C++ suite (`ctest`). The suite must stay green; a red suite is never "expected".
 
 Install the optional extras to exercise the transports for real rather than
@@ -270,15 +270,12 @@ keep stored outputs valid — over re-executing. Never re-execute casually.
 
 ## 8. Known deferred work
 
-- `Tracking::Detector` (the tracking app's layers) is not yet expressed as an
-  instrument. A detector's layers are read one after the other, the radius
-  standing for time, while an instrument's sensors are stacked into one
-  measurement; `Model::Sensors()` would have to say which, before
-  `model.instruments` can list a chamber's layers.
-- The settings of the generic sensors (a camera's focal length, where a
-  radar is) are fixed numbers, not parameters of the model, so `joint` cannot
-  estimate them; only an instrument's gain and offset are parameters.
-- An instrument is not linked to a data `Provider` (the `sensor` provider kind).
+- `kalman.adapters` is empty: an adapter states a product's data sheet, and
+  those numbers have to come from whoever uses the device.
+- Track finding still asks a detector for `Radii()` and `SeedState()`; it does
+  not read them off the sequential instrument `Model::Instruments()` returns.
+- A camera's rotation is not a setting (nine numbers that are not independent);
+  only its focal length and its position are.
 - `apps/weather/surrogate.py` (the CNN forecast surrogate) should eventually
   become a learned `KalmanSolverKind.NEURAL` solver rather than a loose module.
 - `IMPLICIT_EULER` integrator and the finite-volume/finite-element solvers are

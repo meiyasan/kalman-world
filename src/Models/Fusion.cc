@@ -91,11 +91,13 @@ namespace Kalman::Models
 
     int Fusion::Own(const std::string &name) const
     {
-        if (!fSensor.calibrated) return 0;
         const std::string &owner = fSensor.Owner();
-        if (name == owner + ".gain") return 1;
-        if (name == owner + ".offset") return 2;
-        return 0;
+        if (name.size() <= owner.size() + 1 || name.compare(0, owner.size(), owner) != 0 || name[owner.size()] != '.')
+            return 0;
+        const std::string what = name.substr(owner.size() + 1);
+        if (fSensor.calibrated && what == "gain") return 1;
+        if (fSensor.calibrated && what == "offset") return 2;
+        return fSensor.HasSetting(what) ? 3 : 0;
     }
 
     void Fusion::Calibrate(double gain, double offset)
@@ -115,6 +117,11 @@ namespace Kalman::Models
                 const std::string name = fSensor.Owner() + suffix;
                 if (std::find(names.begin(), names.end(), name) == names.end()) names.push_back(name);
             }
+        for (const std::string &setting : fSensor.SettingNames())
+        {
+            const std::string name = fSensor.Owner() + "." + setting;
+            if (std::find(names.begin(), names.end(), name) == names.end()) names.push_back(name);
+        }
         std::sort(names.begin(), names.end());
         return names;
     }
@@ -124,6 +131,7 @@ namespace Kalman::Models
     double Fusion::Parameter(const std::string &name) const
     {
         const int own = Own(name);
+        if (own == 3) return fSensor.Setting(name.substr(fSensor.Owner().size() + 1));
         return own == 1 ? fSensor.gain : own == 2 ? fSensor.offset : fInner->Parameter(name);
     }
 
@@ -132,7 +140,9 @@ namespace Kalman::Models
         const int own = Own(name);
         if (own == 1) fSensor.gain = value;
         if (own == 2) fSensor.offset = value;
-        // Sensors of one instrument share its calibration: the layers below take it too.
+        if (own == 3) fSensor.Set(name.substr(fSensor.Owner().size() + 1), value);
+        // Sensors of one instrument share its calibration and its settings of one name
+        // (where it is): the layers below take them too.
         if (own == 0 || fInner->HasParameter(name)) fInner->SetParameter(name, value);
     }
 

@@ -64,6 +64,8 @@ namespace Kalman::Apps::Tracking
 
             // --- Kalman::Tracking::Detector ------------------------------------
             std::vector<double> Radii() const override { return Array("radii"); }
+            /// The chamber as an instrument: its layers, read one after the other.
+            std::vector<Kalman::Instrument> Instruments() const override { return {Layers(Sensors().front())}; }
             /// A seed from one hit: at the hit, momentum `p_seed` pointing away from the origin.
             void SeedState(const Kalman::Tracking::Hit &hit, Vector &x0, Matrix &P0) const override;
 

@@ -46,6 +46,7 @@ namespace Kalman
 
     std::size_t Instrument::Channels() const
     {
+        if (sequential) return sensors.empty() ? 0 : sensors.front().Channels();
         std::size_t k = 0;
         for (const Sensor &s : sensors) k += s.Channels();
         return k;

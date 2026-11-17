@@ -55,6 +55,10 @@ namespace Kalman
         bool calibrated = false;        ///< whether its readings go through a gain and an offset
         double gain = 1.;
         double offset = 0.;
+        /// Whether its sensors are read one after the other, one per step, and not
+        /// stacked into one measurement: the layers of a detector, each at its
+        /// `station`. The measurement of a step is then one sensor's.
+        bool sequential = false;
 
         Instrument() = default;
         Instrument(std::string name, std::vector<Sensor> sensors, double rate = 0.);
@@ -67,7 +71,8 @@ namespace Kalman
         /// its rate when the sensor states none, and its calibration.
         std::vector<Sensor> Sensors() const;
 
-        /// The total number of channels.
+        /// The number of channels of its measurement: the sum over its sensors, or one
+        /// sensor's when they are read one after the other.
         std::size_t Channels() const;
 
         /// \throws std::invalid_argument for no name, no sensor, two sensors of one name,

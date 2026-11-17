@@ -66,7 +66,6 @@
 #include "Kalman/Apps/Ballistics/Ballistic.h"
 #include "Kalman/Apps/GPS/Receiver.h"
 #include "Kalman/Apps/Gravitational/Polarization.h"
-#include "Kalman/Apps/Fusion/Sensors.h"
 #include "Kalman/Apps/Tracking/DriftChamber.h"
 #include "Kalman/Apps/Vehicles/CarLane.h"
 #include "Kalman/Apps/Vehicles/CarSpeed.h"

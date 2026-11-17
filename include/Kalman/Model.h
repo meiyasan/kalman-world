@@ -447,8 +447,9 @@ namespace Kalman
              */
             virtual std::vector<Sensor> Sensors() const;
             /// The sensors grouped by the instrument that carries them, in order; a sensor
-            /// on its own is an instrument of one, under its own name.
-            std::vector<Instrument> Instruments() const;
+            /// on its own is an instrument of one, under its own name. A detector
+            /// (Tracking::Detector) gives one sequential instrument instead, its layers.
+            virtual std::vector<Instrument> Instruments() const;
             /// The name of the built-in sensor: Name() unless SetBuiltInSensorName() gave one.
             const std::string &BuiltInSensorName() const { return fBuiltInSensor.empty() ? fName : fBuiltInSensor; }
             void SetBuiltInSensorName(std::string name) { fBuiltInSensor = std::move(name); }

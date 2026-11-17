@@ -169,10 +169,12 @@ modules/                        → the `kalman` package
   framework/                    contracts + bases + registries (the core)
     model.py engine.py integrator.py solver.py provider.py filter.py control.py
     models/ engines/ filters/ integrators/ solvers/ routers/ controllers/ io/ abstract/ native/
+    sensors/                    generic sensors (position, Doppler, camera)
     filters/                    public filter names (KF/EKF/UKF/PF/EnKF/CKF)
   providers/                    generic data sources (synthetic/file/sensor/remote)
   api/                          JSON facade + KalmanSpec authoring + scoped-JWT auth
   mcp/  rest/                   transports over the facade (optional deps)
+  adapters/                     specific hardware: instruments of generic sensors (none shipped yet)
   apps/                         domain applications
     astro/         rocket  space
     gravitational/ gravwave  interferometer

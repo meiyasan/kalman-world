@@ -425,30 +425,138 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
 }
 
-kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
-                                             const double *settings, int count, const char *const *labels,
-                                             const char *const *units, double rate)
+struct kalman_sensor
+{
+    Kalman::Sensor sensor;
+    std::size_t n = 0;
+};
+
+static const Kalman::Sensor &Sens(const kalman_sensor_t *sensor)
+{
+    if (!sensor) throw std::invalid_argument("null sensor");
+    return sensor->sensor;
+}
+
+kalman_sensor_t *kalman_sensor_create(const char *kind, const char *name, int n, const double *numbers, int count)
 {
     try
     {
         Ok();
-        const std::size_t n = Deref(inner).NState();
         if (!kind) throw std::invalid_argument("null sensor kind");
-        if (count < 0 || (count > 0 && !settings)) throw std::invalid_argument("null settings");
-        Kalman::Sensor sensor = Kalman::SensorFactory::Instance().Create(
-            kind, name ? name : "", n, std::vector<double>(settings, settings + count));
-        if (labels) sensor.channels = Components(static_cast<int>(sensor.Channels()), labels, units);
-        sensor.rate = rate;
-        return Fuse(inner, std::move(sensor));
+        if (n <= 0) throw std::invalid_argument("a state has at least one component (n > 0)");
+        if (count < 0 || (count > 0 && !numbers)) throw std::invalid_argument("null numbers");
+        auto out = std::make_unique<kalman_sensor>();
+        out->n = static_cast<std::size_t>(n);
+        out->sensor = Kalman::SensorFactory::Instance().Create(kind, name ? name : "", out->n,
+                                                               std::vector<double>(numbers, numbers + count));
+        out->sensor.Check(out->n);
+        return out.release();
     }
     catch (const std::exception &e) { Fail(e.what()); return nullptr; }
     catch (...) { Fail("unknown C++ exception"); return nullptr; }
 }
 
+void kalman_sensor_free(kalman_sensor_t *sensor) { delete sensor; }
+
 int kalman_sensor_kind_exists(const char *kind)
 {
     try { return kind && Kalman::SensorFactory::Instance().Has(kind) ? 1 : 0; }
     catch (...) { return 0; }
+}
+
+int kalman_sensor_channels(const kalman_sensor_t *sensor)
+{
+    return Guard([&] { return static_cast<int>(Sens(sensor).Channels()); });
+}
+
+int kalman_sensor_read(const kalman_sensor_t *sensor, const double *x, double t, double *z)
+{
+    return Guard([&] {
+        if (!x || !z) throw std::invalid_argument("null x or z");
+        const Kalman::Vector out = Sens(sensor).Read(Vec(x, sensor->n, "x"), t);
+        std::copy(out.Data(), out.Data() + out.Size(), z);
+        return 0;
+    });
+}
+
+int kalman_sensor_jacobian(const kalman_sensor_t *sensor, const double *x, double t, double *J)
+{
+    return Guard([&] {
+        if (!x || !J) throw std::invalid_argument("null x or J");
+        const Kalman::Sensor &s = Sens(sensor);
+        Kalman::Matrix out;
+        if (s.IsLinear()) out = s.G;
+        else if (s.jacobian) out = s.jacobian(Vec(x, sensor->n, "x"), t);
+        else return 0;
+        if (s.calibrated) out *= s.gain;
+        std::copy(out.Data(), out.Data() + out.Rows() * out.Cols(), J);
+        return 1;
+    });
+}
+
+int kalman_sensor_R(const kalman_sensor_t *sensor, double *R)
+{
+    return Guard([&] {
+        if (!R) throw std::invalid_argument("null R");
+        const Kalman::Matrix &out = Sens(sensor).R;
+        std::copy(out.Data(), out.Data() + out.Rows() * out.Cols(), R);
+        return 0;
+    });
+}
+
+int kalman_sensor_G(const kalman_sensor_t *sensor, double *G)
+{
+    return Guard([&] {
+        const Kalman::Sensor &s = Sens(sensor);
+        if (!s.IsLinear()) return 0;
+        if (!G) throw std::invalid_argument("null G");
+        std::copy(s.G.Data(), s.G.Data() + s.G.Rows() * s.G.Cols(), G);
+        return 1;
+    });
+}
+
+int kalman_sensor_setting_count(const kalman_sensor_t *sensor)
+{
+    return Guard([&] { return static_cast<int>(Sens(sensor).SettingNames().size()); });
+}
+
+const char *kalman_sensor_setting_name(const kalman_sensor_t *sensor, int i)
+{
+    return GuardStr([&] { return Keep(Sens(sensor).SettingNames().at(static_cast<std::size_t>(i))); });
+}
+
+int kalman_sensor_get_setting(const kalman_sensor_t *sensor, const char *name, double *value)
+{
+    return Guard([&] {
+        if (!name || !value) throw std::invalid_argument("null name or value");
+        *value = Sens(sensor).Setting(name);
+        return 0;
+    });
+}
+
+int kalman_sensor_set_setting(kalman_sensor_t *sensor, const char *name, double value)
+{
+    return Guard([&] {
+        if (!sensor || !name) throw std::invalid_argument("null sensor or name");
+        sensor->sensor.Set(name, value);
+        return 0;
+    });
+}
+
+kalman_model_t *kalman_model_add_sensor_object(kalman_model_t *inner, const kalman_sensor_t *sensor,
+                                               const char *const *labels, const char *const *units, double rate)
+{
+    try
+    {
+        Ok();
+        Deref(inner);
+        Kalman::Sensor copy = Sens(sensor);
+        if (labels) copy.channels = Components(static_cast<int>(copy.Channels()), labels, units);
+        copy.rate = rate;
+        return Fuse(inner, std::move(copy));
+    }
+    catch (const std::exception &e) { Fail(e.what()); return nullptr; }
+    catch (...) { Fail("unknown C++ exception"); return nullptr; }
 }
 
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
@@ -588,6 +696,37 @@ const char *kalman_model_instrument_name(const kalman_model_t *model, int j)
     return name.c_str();
 }
 
+static Kalman::Instrument InstrumentAt(const kalman_model_t *model, int j)
+{
+    const auto instruments = Deref(model).Instruments();
+    if (j < 0 || static_cast<std::size_t>(j) >= instruments.size()) throw std::out_of_range("no such instrument");
+    return instruments[static_cast<std::size_t>(j)];
+}
+
+int kalman_model_instrument_sequential(const kalman_model_t *model, int j)
+{
+    return Guard([&] { return InstrumentAt(model, j).sequential ? 1 : 0; });
+}
+
+int kalman_model_instrument_sensor_count(const kalman_model_t *model, int j)
+{
+    return Guard([&] { return static_cast<int>(InstrumentAt(model, j).sensors.size()); });
+}
+
+const char *kalman_model_instrument_sensor_name(const kalman_model_t *model, int j, int k)
+{
+    return GuardStr([&] { return Keep(InstrumentAt(model, j).sensors.at(static_cast<std::size_t>(k)).name); });
+}
+
+int kalman_model_instrument_sensor_station(const kalman_model_t *model, int j, int k, double *station)
+{
+    return Guard([&] {
+        if (!station) throw std::invalid_argument("null station");
+        *station = InstrumentAt(model, j).sensors.at(static_cast<std::size_t>(k)).station;
+        return 0;
+    });
+}
+
 int kalman_model_sensor_instrument(const kalman_model_t *model, int i)
 {
     return Guard([&] {
@@ -595,7 +734,8 @@ int kalman_model_sensor_instrument(const kalman_model_t *model, int i)
         int first = 0, j = 0;
         for (const auto &instrument : Deref(model).Instruments())
         {
-            first += static_cast<int>(instrument.sensors.size());
+            // The layers of a detector are one sensor of the measurement, read in turn.
+            first += instrument.sequential ? 1 : static_cast<int>(instrument.sensors.size());
             if (i < first) return j;
             ++j;
         }

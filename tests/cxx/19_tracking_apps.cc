@@ -26,6 +26,22 @@ int main()
           "drift chamber: 4 states, 2 measured, combinatorial engine");
     CHECK(model->StateComponents()[2].name == "px" && model->StateComponents()[2].unit == "GeV/c",
           "drift chamber: components are named");
+    {
+        // The chamber is an instrument: its layers, read one after the other.
+        const std::vector<Instrument> instruments = model->Instruments();
+        CHECK(instruments.size() == 1 && instruments[0].sequential && instruments[0].sensors.size() == 8,
+              "drift chamber: one instrument, its 8 layers read in turn");
+        CHECK(instruments[0].name == model->Sensors().front().name && instruments[0].Channels() == 2,
+              "drift chamber: named after its sensor; a step reads one layer, 2 channels");
+        CHECK(instruments[0].sensors[0].name == "layer 0" && instruments[0].sensors[0].station == 20.
+              && instruments[0].sensors[7].name == "layer 7" && instruments[0].sensors[7].station == 104.,
+              "drift chamber: each layer sits at its radius");
+        CHECK(model->Sensors().size() == 1, "drift chamber: the measurement is still one sensor's");
+        bool refused = false;
+        try { model->AddInstrument(instruments[0]); }
+        catch (const std::invalid_argument &) { refused = true; }
+        CHECK(refused, "refused: a detector's layers added to a model as channels");
+    }
     CHECK(chamber->Radii().size() == 8 && chamber->Radii().front() == 20. && chamber->Radii().back() == 104.,
           "drift chamber: 8 layers from 20 to 104 cm");
 

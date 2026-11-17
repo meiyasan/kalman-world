@@ -32,6 +32,7 @@
 
 #include "Kalman/Constants.h"
 #include "Kalman/IO/Record.h"
+#include "Kalman/Instrument.h"
 #include "Kalman/Matrix.h"
 #include "Kalman/Model.h"
 
@@ -72,6 +73,18 @@ namespace Kalman::Tracking
 
             /// Initial `(x0, P0)` for a track that produced \p hit on an inner layer.
             virtual void SeedState(const Hit &hit, Vector &x0, Matrix &P0) const = 0;
+
+            /**
+             * \brief The detector as an instrument: one sensor per layer, read one after
+             *        the other (Instrument::sequential), innermost first.
+             *
+             * \param reading the sensor that reads one layer: the model's own (`Sensors().front()`).
+             *
+             * Each layer is \p reading under the name `layer <i>`, with its radius as
+             * `station`; the instrument takes the name of \p reading. A model that is a
+             * detector returns this from Model::Instruments().
+             */
+            Instrument Layers(const Sensor &reading) const;
     };
 
     /**

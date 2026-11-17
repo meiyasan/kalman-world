@@ -53,8 +53,21 @@ namespace Kalman
     std::unique_ptr<Model> Model::Lag(std::size_t depth)
     { return std::make_unique<Models::Lag>(Borrow(this), depth); }
 
+    namespace
+    {
+        /// A detector's layers are read in turn by track finding; they are not more channels.
+        void RefuseSequential(const Instrument &instrument)
+        {
+            if (instrument.sequential)
+                throw std::invalid_argument("AddInstrument: '" + instrument.name + "' is read one sensor after the "
+                                            "other (a detector's layers); it is the instrument of its own model "
+                                            "and cannot be added to another.");
+        }
+    }
+
     std::shared_ptr<Model> AddInstrument(std::shared_ptr<Model> model, const Instrument &instrument)
     {
+        RefuseSequential(instrument);
         instrument.Check(model ? model->NState() : 0);
         for (const Sensor &sensor : instrument.Sensors())
             model = std::make_shared<Models::Fusion>(std::move(model), sensor);
@@ -63,6 +76,7 @@ namespace Kalman
 
     std::unique_ptr<Model> Model::AddInstrument(const Instrument &instrument)
     {
+        RefuseSequential(instrument);
         instrument.Check(NState());
         const std::vector<Sensor> sensors = instrument.Sensors();
         std::shared_ptr<Model> model = Borrow(this);

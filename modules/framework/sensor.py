@@ -48,10 +48,18 @@ class KalmanSensor:
         ``model.add_sensor(sensor).lag(L)`` with ``L >= delay * fs`` steps.
     """
 
-    #: ``(kind, settings)`` when a loaded C++ library offers this very sensor by name
-    #: (``Kalman::SensorFactory``; the sensors of ``kalman.apps`` set it): the model then
-    #: takes the C++ sensor, and ``g`` is not called back during a pass.
+    #: The C++ sensor, for one written in C++ (``kalman.framework.sensors``): the
+    #: model then takes it as it is, and ``g`` is not called back during a pass.
     native = None
+
+    #: For a sensor of a sequential instrument (a detector's layer): where it sits
+    #: along the sequence, the value handed to ``f`` as its time.
+    station = None
+
+    #: The numbers its readings depend on, by name (a camera's focal length, where
+    #: a radar is). The model that takes the sensor has each as its parameter
+    #: ``"<name>.<setting>"``, which ``joint`` can estimate.
+    settings = None
 
     def __init__(self, name, g=None, *, G=None, R=None, labels=None, jacobian=None, rate=None, delay=None):
         if not isinstance(name, str) or not name:

@@ -100,10 +100,21 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
                                                const char *const *units, double rate);
-kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
-                                             const double *settings, int count, const char *const *labels,
-                                             const char *const *units, double rate);
+typedef struct kalman_sensor kalman_sensor_t;
+kalman_sensor_t *kalman_sensor_create(const char *kind, const char *name, int n, const double *numbers, int count);
+void kalman_sensor_free(kalman_sensor_t *sensor);
 int kalman_sensor_kind_exists(const char *kind);
+int kalman_sensor_channels(const kalman_sensor_t *sensor);
+int kalman_sensor_read(const kalman_sensor_t *sensor, const double *x, double t, double *z);
+int kalman_sensor_jacobian(const kalman_sensor_t *sensor, const double *x, double t, double *J);
+int kalman_sensor_R(const kalman_sensor_t *sensor, double *R);
+int kalman_sensor_G(const kalman_sensor_t *sensor, double *G);
+int kalman_sensor_setting_count(const kalman_sensor_t *sensor);
+const char *kalman_sensor_setting_name(const kalman_sensor_t *sensor, int i);
+int kalman_sensor_get_setting(const kalman_sensor_t *sensor, const char *name, double *value);
+int kalman_sensor_set_setting(kalman_sensor_t *sensor, const char *name, double value);
+kalman_model_t *kalman_model_add_sensor_object(kalman_model_t *inner, const kalman_sensor_t *sensor,
+                                               const char *const *labels, const char *const *units, double rate);
 int kalman_model_sensor_count(const kalman_model_t *model);
 const char *kalman_model_sensor_name(const kalman_model_t *model, int i);
 int kalman_model_sensor_channels(const kalman_model_t *model, int i);
@@ -119,6 +130,10 @@ int kalman_model_set_instrument(kalman_model_t *model, const char *instrument, i
                                 double offset);
 int kalman_model_instrument_count(const kalman_model_t *model);
 const char *kalman_model_instrument_name(const kalman_model_t *model, int j);
+int kalman_model_instrument_sequential(const kalman_model_t *model, int j);
+int kalman_model_instrument_sensor_count(const kalman_model_t *model, int j);
+const char *kalman_model_instrument_sensor_name(const kalman_model_t *model, int j, int k);
+int kalman_model_instrument_sensor_station(const kalman_model_t *model, int j, int k, double *station);
 int kalman_model_sensor_instrument(const kalman_model_t *model, int i);
 int kalman_model_sensor_calibration(const kalman_model_t *model, int i, double *gain, double *offset);
 kalman_model_t *kalman_model_create_lag(kalman_model_t *inner, int depth);

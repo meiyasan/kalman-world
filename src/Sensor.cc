@@ -45,6 +45,38 @@ namespace Kalman
         return z;
     }
 
+    std::vector<std::string> Sensor::SettingNames() const
+    {
+        std::vector<std::string> names;
+        if (settings)
+            for (const auto &entry : *settings) names.push_back(entry.first);
+        return names;
+    }
+
+    bool Sensor::HasSetting(const std::string &setting) const
+    {
+        if (settings)
+            for (const auto &entry : *settings)
+                if (entry.first == setting) return true;
+        return false;
+    }
+
+    double Sensor::Setting(const std::string &setting) const
+    {
+        if (settings)
+            for (const auto &entry : *settings)
+                if (entry.first == setting) return entry.second;
+        throw std::out_of_range("Kalman::Sensor: the sensor '" + name + "' has no setting '" + setting + "'.");
+    }
+
+    void Sensor::Set(const std::string &setting, double value)
+    {
+        if (settings)
+            for (auto &entry : *settings)
+                if (entry.first == setting) { entry.second = value; return; }
+        throw std::out_of_range("Kalman::Sensor: the sensor '" + name + "' has no setting '" + setting + "'.");
+    }
+
     void Sensor::Check(std::size_t n) const
     {
         if (name.empty()) throw std::invalid_argument("Kalman::Sensor: a sensor needs a name.");

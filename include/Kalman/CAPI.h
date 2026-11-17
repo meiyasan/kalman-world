@@ -179,15 +179,37 @@ kalman_model_t *kalman_model_add_sensor(kalman_model_t *inner, const char *name,
 kalman_model_t *kalman_model_add_sensor_matrix(kalman_model_t *inner, const char *name, int k, int columns,
                                                const double *G, const double *R, const char *const *labels,
                                                const char *const *units, double rate);
-/// The same for a sensor a loaded library offers by name (Kalman::SensorFactory; libKalmanApps
-/// registers "position", "doppler" and "camera", see Kalman/Apps/Fusion/Sensors.h): the sensor
-/// of kind `kind`, called `name`, built from `count` numbers whose meaning is the kind's. Its
-/// readings, its Jacobian and its noise are computed in C++. NULL on failure.
-kalman_model_t *kalman_model_add_sensor_kind(kalman_model_t *inner, const char *kind, const char *name,
-                                             const double *settings, int count, const char *const *labels,
-                                             const char *const *units, double rate);
+/// A sensor written in C++ and offered by name (Kalman::SensorFactory; the library registers its
+/// own generic ones, "position", "doppler" and "camera": Kalman/Sensors/). `kalman_sensor_create`
+/// builds the sensor of kind `kind`, called `name`, for a state of `n` components, from `count`
+/// numbers whose meaning is the kind's. Its readings, its Jacobian and its noise are computed in
+/// C++. NULL with kalman_last_error() on failure; release with kalman_sensor_free().
+typedef struct kalman_sensor kalman_sensor_t;
+kalman_sensor_t *kalman_sensor_create(const char *kind, const char *name, int n, const double *numbers, int count);
+void kalman_sensor_free(kalman_sensor_t *sensor);
 /// 1 when a sensor of kind `kind` is registered, else 0.
 int kalman_sensor_kind_exists(const char *kind);
+/// Its number of channels, k. -1 on failure.
+int kalman_sensor_channels(const kalman_sensor_t *sensor);
+/// Its readings `z` (k doubles) of the state `x` (n doubles) at time `t`. 0 or -1.
+int kalman_sensor_read(const kalman_sensor_t *sensor, const double *x, double t, double *z);
+/// `dz/dx` at (x, t), k x n row-major: 1 and `J` filled, 0 when the sensor has no formula for it, -1 on failure.
+int kalman_sensor_jacobian(const kalman_sensor_t *sensor, const double *x, double t, double *J);
+/// Its noise covariance, k x k row-major. 0 or -1.
+int kalman_sensor_R(const kalman_sensor_t *sensor, double *R);
+/// Its matrix `G` (k x n row-major) when its readings are `G x`: 1 and `G` filled, else 0. -1 on failure.
+int kalman_sensor_G(const kalman_sensor_t *sensor, double *G);
+/// Its settings (Kalman::Sensor::settings): how many, the name of setting `i` (valid until the
+/// next call on this thread), and reading or writing one by name. A model that took the sensor
+/// shares them: it has each as its parameter `<owner>.<name>`.
+int kalman_sensor_setting_count(const kalman_sensor_t *sensor);
+const char *kalman_sensor_setting_name(const kalman_sensor_t *sensor, int i);
+int kalman_sensor_get_setting(const kalman_sensor_t *sensor, const char *name, double *value);
+int kalman_sensor_set_setting(kalman_sensor_t *sensor, const char *name, double value);
+/// `inner` read by one more sensor, `sensor` (copied; the copy shares its settings). As
+/// kalman_model_add_sensor for `labels`, `units` and `rate`. NULL on failure.
+kalman_model_t *kalman_model_add_sensor_object(kalman_model_t *inner, const kalman_sensor_t *sensor,
+                                               const char *const *labels, const char *const *units, double rate);
 
 /// The number of sensors of a model (Model::Sensors()): the built-in one, then those added. -1 on failure.
 int kalman_model_sensor_count(const kalman_model_t *model);
@@ -227,6 +249,14 @@ int kalman_model_set_instrument(kalman_model_t *model, const char *instrument, i
 int kalman_model_instrument_count(const kalman_model_t *model);
 /// The name of instrument `j`. Valid until the next call on this thread.
 const char *kalman_model_instrument_name(const kalman_model_t *model, int j);
+/// 1 when the sensors of instrument `j` are read one after the other, one per step (a detector's
+/// layers, Kalman::Instrument::sequential), 0 when they are stacked into the measurement. -1 on failure.
+int kalman_model_instrument_sequential(const kalman_model_t *model, int j);
+/// The number of sensors of instrument `j`; the name of its sensor `k` (valid until the next call
+/// on this thread); and where that sensor sits along the sequence (Kalman::Sensor::station). -1 on failure.
+int kalman_model_instrument_sensor_count(const kalman_model_t *model, int j);
+const char *kalman_model_instrument_sensor_name(const kalman_model_t *model, int j, int k);
+int kalman_model_instrument_sensor_station(const kalman_model_t *model, int j, int k, double *station);
 /// The index of the instrument that carries sensor `i`. -1 on failure.
 int kalman_model_sensor_instrument(const kalman_model_t *model, int i);
 /// The calibration of sensor `i`: 1 with `gain` and `offset` filled when its reading goes
