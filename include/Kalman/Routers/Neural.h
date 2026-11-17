@@ -52,8 +52,10 @@
  *
  *     mu_j  ∝  c_j * (p_j / f_j)^(1 / window)
  *
- * `f` is how often each regime appeared in training (SetFrequencies(); equal
- * when not given, and written to the sidecar by `export_onnx()`). Consecutive
+ * `f` is how often each regime appeared in training. `export_onnx()` and
+ * `export_torchscript()` divide by it inside the graph, so an exported policy
+ * needs nothing set here; SetFrequencies() is for a policy that returns the
+ * plain probabilities, such as a hand-built NN::MLP. Consecutive
  * windows share all but one reading, so the same evidence comes back `window`
  * times; the exponent counts it once.
  *
@@ -116,7 +118,8 @@ namespace Kalman::Routers
             const Vector &Scale() const { return fScale; }
 
             /// How often each regime appeared in training; the policy's answer is
-            /// divided by it. Not given, the regimes count as equally frequent.
+            /// divided by it. Only for a policy that does not do so itself: the
+            /// exports of `NeuralRouter` do. Not given, nothing is divided.
             void SetFrequencies(const Vector &frequencies) { fFrequencies = frequencies; }
             const Vector &Frequencies() const { return fFrequencies; }
 

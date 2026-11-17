@@ -134,7 +134,9 @@ class TestNeuralRouterExport(unittest.TestCase):
                     block = np.vstack([np.ones((self.window - len(block), nis.shape[1])), block])
                 feat = block.ravel().astype(np.float32)[None, :]
 
-                got = session.run(None, {name: feat})[0].ravel()
+                # What Kalman::Routers::Neural does with the graph's answer.
+                got = c * session.run(None, {name: feat})[0].ravel() ** (1.0 / self.window)
+                got = got / got.sum()
                 worst = max(worst, float(np.max(np.abs(got - expected))))
 
             self.assertLess(worst, 1e-5, f"graph and router disagree by {worst:.2e}")
@@ -149,6 +151,58 @@ class TestNeuralRouterExport(unittest.TestCase):
             # must travel in the sidecar rather than being lost.
             self.assertEqual(len(meta["mean"]), 2 * self.window)
             self.assertEqual(len(meta["scale"]), 2 * self.window)
+
+
+try:
+    import torch  # noqa: F401
+    HAVE_TORCH = True
+except ImportError:
+    HAVE_TORCH = False
+
+
+@unittest.skipUnless(HAVE_TORCH, "needs torch")
+class TestTorchScriptExport(unittest.TestCase):
+    """The traced policy, read back with torch alone: what ``Routers::NN::Torch`` runs."""
+
+    @classmethod
+    def setUpClass(cls):
+        from modules.framework.routers import NeuralRouter
+        from modules.framework.routers.nn import MLP
+
+        cls.window = 5
+        cls.nis_arrays, cls.labels = _training_set()
+        cls.nis_arrays += cls.nis_arrays[:4]                        # regime 1 a third of the time
+        cls.labels += [np.zeros_like(labels) for labels in cls.labels[:4]]
+        cls.router = NeuralRouter(model=MLP(hidden=16), window=cls.window)
+        cls.router.fit(cls.nis_arrays, cls.labels, seed=0, epochs=60)
+
+    def test_the_graph_holds_the_frequencies(self):
+        """Its answer is the evidence: the consumer applies c and the exponent, nothing else."""
+        import tempfile
+        import torch
+
+        self.assertFalse(np.allclose(self.router._frequencies, 0.5), "the regimes are not equally frequent")
+        with tempfile.TemporaryDirectory() as tmp:
+            path = f"{tmp}/router.pt"
+            meta = self.router.export_torchscript(path)
+            self.assertTrue(meta["frequencies_baked"])
+            np.testing.assert_allclose(meta["frequencies"], self.router._frequencies)
+            policy = torch.jit.load(path)
+
+            worst = 0.0
+            for c in (np.array([0.5, 0.5]), np.array([0.15, 0.85])):
+                for nis in (self.nis_arrays[0][:1], self.nis_arrays[0][:3], self.nis_arrays[0][:60]):
+                    expected = self.router.route(nis, c, np.ones(2))
+                    block = nis[-self.window:]
+                    if len(block) < self.window:
+                        block = np.vstack([np.ones((self.window - len(block), nis.shape[1])), block])
+                    feat = torch.tensor(block.ravel()[None, :], dtype=torch.float32)
+                    with torch.no_grad():
+                        answer = policy(feat).numpy().ravel().astype(float)
+                    self.assertAlmostEqual(float(answer.sum()), 1.0, places=5)
+                    got = c * answer ** (1.0 / self.window)                 # Kalman::Routers::Neural::Route
+                    worst = max(worst, float(np.max(np.abs(got / got.sum() - expected))))
+            self.assertLess(worst, 1e-5, f"graph and router disagree by {worst:.2e}")
 
 
 if __name__ == "__main__":

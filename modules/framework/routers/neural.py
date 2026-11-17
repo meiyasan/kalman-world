@@ -195,7 +195,9 @@ class NeuralRouter(KalmanRouter):
 
         The exported graph is **self-contained by default**: the feature
         standardisation learned in :meth:`fit` and the softmax head are baked in as
-        constants, so the graph maps a raw NIS window straight to probabilities.
+constants, and so is the division by the regimes' training frequencies:
+        the graph maps a raw NIS window straight to the evidence the router weighs
+        (``mu ∝ c * graph ** (1 / window)``), and the consumer sets nothing.
         That is deliberate — a normalisation shipped separately from the weights it
         belongs to is a silent failure waiting to happen, because the wrong one
         still produces a valid-looking probability vector.
@@ -228,8 +230,8 @@ class NeuralRouter(KalmanRouter):
         import json
         import torch
 
-        net, mean, std, d_in = self._export_prologue("export_onnx")
-        policy = self._policy_module(net, mean, std, bake_normalisation)
+        net, mean, std, d_in, frequencies = self._export_prologue("export_onnx")
+        policy = self._policy_module(net, mean, std, bake_normalisation, frequencies)
         dummy = torch.zeros(1, d_in, dtype=torch.float32)
 
         with torch.no_grad():
@@ -259,6 +261,7 @@ class NeuralRouter(KalmanRouter):
             "n_features": d_in,
             "normalisation_baked": bool(bake_normalisation),
             "feature_layout": "last `window` NIS rows, front-padded with 1.0, flattened row-major",
+            "frequencies_baked": self._frequencies is not None,
             "frequencies": None if self._frequencies is None else [float(v) for v in self._frequencies],
         }
         if not bake_normalisation:
@@ -271,33 +274,42 @@ class NeuralRouter(KalmanRouter):
         return meta
 
     @staticmethod
-    def _policy_module(net, mean, std, bake):
-        """Standardise → network → softmax, as one traceable module.
+    def _policy_module(net, mean, std, bake, frequencies=None):
+        """Standardise → network → softmax → divided by the training frequencies,
+        as one traceable module.
 
         Shared by both export paths so ONNX and TorchScript cannot drift apart in
-        what they consider "the policy".
+        what they consider "the policy". With the frequencies inside, the graph's
+        answer is the evidence itself (``p / f``, normalised): the consumer has
+        nothing to set, as with the standardisation.
         """
         import copy
         import torch
         from torch import nn
 
         class _Policy(nn.Module):
-            def __init__(self, net, mean, std, bake):
+            def __init__(self, net, mean, std, bake, frequencies):
                 super().__init__()
                 self.net = net
                 self.bake = bake
+                self.weigh = frequencies is not None
                 self.register_buffer("mean", mean)
                 self.register_buffer("std", std)
+                self.register_buffer("frequencies", torch.ones(1) if frequencies is None else frequencies)
 
             def forward(self, x):
                 if self.bake:
                     x = (x - self.mean) / self.std
-                return torch.softmax(self.net(x), dim=-1)
+                p = torch.softmax(self.net(x), dim=-1)
+                if self.weigh:
+                    p = p / self.frequencies
+                    p = p / p.sum(dim=-1, keepdim=True)
+                return p
 
         # Deep-copy before moving to CPU: `.to()` is in-place for a Module, so
         # exporting would otherwise strand the caller's model on the wrong device
         # and every later route() call would fail.
-        return _Policy(copy.deepcopy(net).to("cpu").eval(), mean, std, bake).eval()
+        return _Policy(copy.deepcopy(net).to("cpu").eval(), mean, std, bake, frequencies).eval()
 
     def _export_prologue(self, what):
         """Checks and tensors both export paths need."""
@@ -314,10 +326,13 @@ class NeuralRouter(KalmanRouter):
                 f"NeuralRouter.{what}: {type(self.model).__name__} exposes no "
                 "torch module (`_net`), so it cannot be traced.")
 
+        frequencies = None
+        if self._frequencies is not None:
+            frequencies = torch.tensor(np.maximum(self._frequencies, 1e-6), dtype=torch.float32)
         return (net,
                 torch.tensor(self._x_mean, dtype=torch.float32),
                 torch.tensor(self._x_std, dtype=torch.float32),
-                int(len(self._x_mean)))
+                int(len(self._x_mean)), frequencies)
 
     def export_torchscript(self, path, *, bake_normalisation: bool = True):
         """Trace the trained policy to TorchScript, for ``Kalman::Routers::NN::Torch``.
@@ -346,8 +361,8 @@ class NeuralRouter(KalmanRouter):
         import json
         import torch
 
-        net, mean, std, d_in = self._export_prologue("export_torchscript")
-        policy = self._policy_module(net, mean, std, bake_normalisation)
+        net, mean, std, d_in, frequencies = self._export_prologue("export_torchscript")
+        policy = self._policy_module(net, mean, std, bake_normalisation, frequencies)
 
         dummy = torch.zeros(1, d_in, dtype=torch.float32)
         with torch.no_grad():
@@ -362,6 +377,7 @@ class NeuralRouter(KalmanRouter):
             "n_features": d_in,
             "normalisation_baked": bool(bake_normalisation),
             "feature_layout": "last `window` NIS rows, front-padded with 1.0, flattened row-major",
+            "frequencies_baked": self._frequencies is not None,
             "frequencies": None if self._frequencies is None else [float(v) for v in self._frequencies],
         }
         if not bake_normalisation:
