@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-3-g6bcb6041</span>
+   &#160;<span id="projectnumber">1.0.0</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -145,7 +145,7 @@ The model</h1>
 <div class="fragment"><div class="line">state        x = [position (3), clock offset, clock drift]</div>
 <div class="line">dynamics     the receiver stays put; the clock offset grows with the drift</div>
 <div class="line">measurement  z = for each satellite, its distance plus the clock offset     (a pseudorange)</div>
-</div><!-- fragment --><h1><a class="anchor" id="how-it-is-built-4"></a>
+</div><!-- fragment --><h1><a class="anchor" id="how-it-is-built-5"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> The motion is linear and its step is exact.</li>
@@ -154,7 +154,7 @@ How it is built</h1>
 <li><b>Relativity.</b> <code>apply_relativistic=True</code> removes the relativistic part from the pseudoranges before filtering. Switching it off shows the error: the filter then finds a clock drift of about 38 microseconds a day.</li>
 <li><b>What is idealised.</b> The receiver clock is perfect, the Earth does not rotate, and there is no atmosphere. Real satellite clocks are also detuned before launch to cancel the steady part of the effect; here they are not, so that the filter can find it.</li>
 </ul>
-<h1><a class="anchor" id="using-it-5"></a>
+<h1><a class="anchor" id="using-it-6"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> GPSModel</div>
 <div class="line"> </div>

@@ -140,13 +140,13 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2tracking.html',''); ini
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="particle-tracking"></a> A charged particle crosses a detector made of concentric layers, in a magnetic field that bends its path into a circle. Each layer records where particles crossed it, along with false hits. The task is to find which hits belong together and to fit a track through them.</p>
-<h1><a class="anchor" id="the-model-10"></a>
+<h1><a class="anchor" id="the-model-11"></a>
 The model</h1>
 <div class="fragment"><div class="line">state        x = [position x, position y, momentum x, momentum y]</div>
 <div class="line">dynamics     the momentum turns at the rate  0.3 q B / p      (field B in tesla, p in GeV/c)</div>
 <div class="line">measurement  z = [position x, position y] on a layer</div>
 </div><!-- fragment --><p>The defaults are those of a real drift chamber: a field of 1.5 T, eight layers from 20 to 104 cm, and hits measured to 130 µm.</p>
-<h1><a class="anchor" id="how-it-is-built-11"></a>
+<h1><a class="anchor" id="how-it-is-built-12"></a>
 How it is built</h1>
 <ul>
 <li><b>The filter steps over layers, not over time.</b> One step carries the state from one layer to the next. The model's "time" argument is the radius of the layer to reach.</li>
@@ -155,7 +155,7 @@ How it is built</h1>
 <li><b>Refit.</b> Each track found is smoothed from the outside in, which sharpens the momentum at the inner layers.</li>
 <li><b>C++.</b> The combinatorial engine exists in C++ too (<code>Engines::Combinatorial</code>).</li>
 </ul>
-<h1><a class="anchor" id="using-it-12"></a>
+<h1><a class="anchor" id="using-it-14"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> DriftChamberModel</div>
 <div class="line"><span class="keyword">from</span> kalman.framework.filters <span class="keyword">import</span> CombinatorialKalmanFilter</div>

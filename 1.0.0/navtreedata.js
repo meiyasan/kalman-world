@@ -37,8 +37,8 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2ballistics.html#using-it-1", null ]
       ] ],
       [ "Oscillators", "md_docs_2apps_2oscillators.html", [
-        [ "The model", "md_docs_2apps_2oscillators.html#the-model-6", null ],
-        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-6", null ],
+        [ "The model", "md_docs_2apps_2oscillators.html#the-model-7", null ],
+        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-7", null ],
         [ "Using it", "md_docs_2apps_2oscillators.html#using-it-8", null ],
         [ "Reconstruction: resampling artifacts and their fixes", "md_docs_2apps_2oscillators.html#reconstruction-resampling-artifacts-and-their-fixes", [
           [ "1. Asymmetric tail decay in the reconstructed time series", "md_docs_2apps_2oscillators.html#autotoc_md1-asymmetric-tail-decay-in-the-reconstructed-time-series", null ],
@@ -46,75 +46,75 @@ var NAVTREE =
         ] ]
       ] ],
       [ "Power grid", "md_docs_2apps_2powergrid.html", [
-        [ "The model", "md_docs_2apps_2powergrid.html#the-model-7", null ],
-        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-7", null ],
-        [ "Using it", "md_docs_2apps_2powergrid.html#using-it-7", null ]
+        [ "The model", "md_docs_2apps_2powergrid.html#the-model-8", null ],
+        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-8", null ],
+        [ "Using it", "md_docs_2apps_2powergrid.html#using-it-9", null ]
       ] ],
       [ "Suspension", "md_docs_2apps_2suspension.html", [
-        [ "The model", "md_docs_2apps_2suspension.html#the-model-9", null ],
-        [ "How it is built", "md_docs_2apps_2suspension.html#how-it-is-built-10", null ],
-        [ "Using it", "md_docs_2apps_2suspension.html#using-it-11", null ]
+        [ "The model", "md_docs_2apps_2suspension.html#the-model-10", null ],
+        [ "How it is built", "md_docs_2apps_2suspension.html#how-it-is-built-11", null ],
+        [ "Using it", "md_docs_2apps_2suspension.html#using-it-13", null ]
       ] ],
       [ "Gravitational-wave polarization", "md_docs_2apps_2polarization.html", [
-        [ "The model", "md_docs_2apps_2polarization.html#the-model-5", null ],
-        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-5", null ],
-        [ "Using it", "md_docs_2apps_2polarization.html#using-it-6", null ]
+        [ "The model", "md_docs_2apps_2polarization.html#the-model-6", null ],
+        [ "How it is built", "md_docs_2apps_2polarization.html#how-it-is-built-6", null ],
+        [ "Using it", "md_docs_2apps_2polarization.html#using-it-7", null ]
       ] ],
       [ "Calorimeter", "md_docs_2apps_2calorimeter.html", [
-        [ "The model", "md_docs_2apps_2calorimeter.html#the-model-1", null ],
-        [ "How it is built", "md_docs_2apps_2calorimeter.html#how-it-is-built-1", null ],
-        [ "Using it", "md_docs_2apps_2calorimeter.html#using-it-2", null ]
+        [ "The model", "md_docs_2apps_2calorimeter.html#the-model-2", null ],
+        [ "How it is built", "md_docs_2apps_2calorimeter.html#how-it-is-built-2", null ],
+        [ "Using it", "md_docs_2apps_2calorimeter.html#using-it-3", null ]
       ] ],
       [ "Rockets", "md_docs_2apps_2rocket.html", [
-        [ "The model", "md_docs_2apps_2rocket.html#the-model-8", null ],
-        [ "How it is built", "md_docs_2apps_2rocket.html#how-it-is-built-8", null ],
-        [ "Using it", "md_docs_2apps_2rocket.html#using-it-9", null ]
+        [ "The model", "md_docs_2apps_2rocket.html#the-model-9", null ],
+        [ "How it is built", "md_docs_2apps_2rocket.html#how-it-is-built-9", null ],
+        [ "Using it", "md_docs_2apps_2rocket.html#using-it-10", null ]
       ] ],
       [ "Particle tracking", "md_docs_2apps_2tracking.html", [
-        [ "The model", "md_docs_2apps_2tracking.html#the-model-10", null ],
-        [ "How it is built", "md_docs_2apps_2tracking.html#how-it-is-built-11", null ],
-        [ "Using it", "md_docs_2apps_2tracking.html#using-it-12", null ]
+        [ "The model", "md_docs_2apps_2tracking.html#the-model-11", null ],
+        [ "How it is built", "md_docs_2apps_2tracking.html#how-it-is-built-12", null ],
+        [ "Using it", "md_docs_2apps_2tracking.html#using-it-14", null ]
       ] ],
       [ "Space navigation", "md_docs_2apps_2space.html", [
         [ "The models", "md_docs_2apps_2space.html#the-models", null ],
         [ "Planning", "md_docs_2apps_2space.html#planning", null ],
-        [ "How it is built", "md_docs_2apps_2space.html#how-it-is-built-9", null ],
-        [ "Using it", "md_docs_2apps_2space.html#using-it-10", null ]
+        [ "How it is built", "md_docs_2apps_2space.html#how-it-is-built-10", null ],
+        [ "Using it", "md_docs_2apps_2space.html#using-it-11", null ]
       ] ],
       [ "Sensor fusion", "md_docs_2apps_2fusion.html", [
-        [ "The model", "md_docs_2apps_2fusion.html#the-model-2", null ],
-        [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-2", null ],
-        [ "Using it", "md_docs_2apps_2fusion.html#using-it-3", null ],
+        [ "The model", "md_docs_2apps_2fusion.html#the-model-3", null ],
+        [ "How it is built", "md_docs_2apps_2fusion.html#how-it-is-built-3", null ],
+        [ "Using it", "md_docs_2apps_2fusion.html#using-it-4", null ],
         [ "The same model, from operations", "md_docs_2apps_2fusion.html#the-same-model-from-operations", null ],
         [ "Generic sensors", "md_docs_2apps_2fusion.html#generic-sensors-1", null ]
       ] ],
       [ "Computer vision", "md_docs_2apps_2vision.html", [
         [ "The models", "md_docs_2apps_2vision.html#the-models-1", null ],
-        [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-12", null ],
-        [ "Using it", "md_docs_2apps_2vision.html#using-it-15", null ]
+        [ "How it is built", "md_docs_2apps_2vision.html#how-it-is-built-13", null ],
+        [ "Using it", "md_docs_2apps_2vision.html#using-it-16", null ]
       ] ],
       [ "GPS and relativity", "md_docs_2apps_2gps.html", [
-        [ "The model", "md_docs_2apps_2gps.html#the-model-4", null ],
-        [ "How it is built", "md_docs_2apps_2gps.html#how-it-is-built-4", null ],
-        [ "Using it", "md_docs_2apps_2gps.html#using-it-4", null ]
+        [ "The model", "md_docs_2apps_2gps.html#the-model-5", null ],
+        [ "How it is built", "md_docs_2apps_2gps.html#how-it-is-built-5", null ],
+        [ "Using it", "md_docs_2apps_2gps.html#using-it-6", null ]
       ] ],
       [ "Vehicles", "md_docs_2apps_2vehicles.html", [
         [ "The speed test", "md_docs_2apps_2vehicles.html#the-speed-test", null ],
         [ "Lane keeping", "md_docs_2apps_2vehicles.html#lane-keeping", null ],
         [ "How they are built", "md_docs_2apps_2vehicles.html#how-they-are-built-1", null ],
-        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-14", null ]
+        [ "Using it", "md_docs_2apps_2vehicles.html#using-it-15", null ]
       ] ],
       [ "Turbulent flow", "md_docs_2apps_2flow.html", [
-        [ "The model", "md_docs_2apps_2flow.html#the-model-3", null ],
+        [ "The model", "md_docs_2apps_2flow.html#the-model-4", null ],
         [ "Solver and integrator: two different jobs", "md_docs_2apps_2flow.html#solver-and-integrator-two-different-jobs", null ],
-        [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-3", null ],
+        [ "How it is built", "md_docs_2apps_2flow.html#how-it-is-built-4", null ],
         [ "Using it", "md_docs_2apps_2flow.html#using-it-5", null ]
       ] ],
       [ "Storm tracking", "md_docs_2apps_2storms.html", [
         [ "The storm model", "md_docs_2apps_2storms.html#the-storm-model", null ],
         [ "The tornado model", "md_docs_2apps_2storms.html#the-tornado-model", null ],
         [ "How they are built", "md_docs_2apps_2storms.html#how-they-are-built", null ],
-        [ "Using it", "md_docs_2apps_2storms.html#using-it-13", null ]
+        [ "Using it", "md_docs_2apps_2storms.html#using-it-12", null ]
       ] ]
     ] ],
     [ "User guide", "guide.html", [
@@ -441,6 +441,11 @@ var NAVTREE =
       ] ],
       [ "Contributing", "md__c_o_n_t_r_i_b_u_t_i_n_g.html", null ]
     ] ],
+    [ "CO2 in a room", "md_docs_2apps_2buildings.html", [
+      [ "The model", "md_docs_2apps_2buildings.html#the-model-1", null ],
+      [ "How it is built", "md_docs_2apps_2buildings.html#how-it-is-built-1", null ],
+      [ "Using it", "md_docs_2apps_2buildings.html#using-it-2", null ]
+    ] ],
     [ "Kalman World documentation", "md_docs_2_r_e_a_d_m_e.html", [
       [ "For users", "md_docs_2_r_e_a_d_m_e.html#for-users", null ],
       [ "For API access", "md_docs_2_r_e_a_d_m_e.html#for-api-access", null ],
@@ -509,50 +514,50 @@ var NAVTREEINDEX =
 "classmodules_1_1apps_1_1aerospace_1_1ascent_1_1_rocket_ascent_model.html#a5d0887b799ec1e33d271c773fdad23fe",
 "classmodules_1_1apps_1_1aerospace_1_1liftoff_1_1_rocket_liftoff_model.html#ad6e908aadd5beccdc804baff96e0d209",
 "classmodules_1_1apps_1_1ballistics_1_1extended_1_1_ballistic_model.html#acaac4da74ce57d010640075c11731a9b",
-"classmodules_1_1apps_1_1calorimeter_1_1models_1_1_calorimeter_linear_model.html#acc8e4b2e60d2b1702d530570de956aeb",
-"classmodules_1_1apps_1_1gravitational_1_1interferometer_1_1control_1_1_violin_bank_controller.html#a74d9303fe243d5af1e8d0818e5a264c3",
-"classmodules_1_1apps_1_1tracking_1_1driftchamber_1_1_drift_chamber_model.html#a5ec0c0a2e1c028338adf6fa80057f098",
-"classmodules_1_1apps_1_1weather_1_1barotropic_1_1_barotropic_flow_model.html#a49b639201fe7bf895dba1d3c58db1b04",
-"classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a7b8bbdb57aeceaa25862aff826b6edc1",
-"classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_provider_metadata.html",
-"classmodules_1_1framework_1_1control_1_1_kalman_controller.html#a070f355824f8fa300f6cb58b036f9ad3",
-"classmodules_1_1framework_1_1engines_1_1combinatorial_1_1_combinatorial_kalman_engine.html",
-"classmodules_1_1framework_1_1filter_1_1_bayes_filter.html#a31f106c25bea94bdeac6167e11172d3c",
-"classmodules_1_1framework_1_1io_1_1collection_1_1_kalman_record_collection.html#ae55137d3844e47e55f4217dad9d22569",
-"classmodules_1_1framework_1_1model_1_1_kalman_model.html#af2e2acfddb4e49e7c5c311098349f54c",
-"classmodules_1_1framework_1_1models_1_1operation_1_1_operation_model.html#a1b09072b3b15e4e84c72bad58d7b7276",
-"classmodules_1_1framework_1_1routers_1_1nn_1_1lstm_1_1_l_s_t_m.html#a2853a7b780c39da64cb922409f96993f",
-"classmodules_1_1framework_1_1solver_1_1_kalman_solver.html#a502b9bdd3721e66c5adbc08eaa7688a0",
-"classmodules_1_1mcp_1_1backend_1_1_local_backend.html#a2975c3a5f655f6871a6764d8a6ff0a26",
-"classmodules_1_1runtime_1_1logging_1_1_logger.html#abae1f4c57fce06eb547cf5aa607ec19b",
-"classtests_1_1test__api_1_1_test_introspection.html#a1853bc1b4c42ed4ce9fb7cbcb6645367",
-"classtests_1_1test__engines_1_1_test_linear_kalman_engine.html#aaf35249ea9ca144501591ad072c33102",
-"classtests_1_1test__filters_1_1_test_many_states_in_one_call.html",
-"classtests_1_1test__integrators_1_1_test_finite_difference_solver.html#a887965b855fa1f9e6f6389cfb53d3e28",
-"classtests_1_1test__joint_1_1_test_maps.html#aa8d3d142c6f46e76c1ed5e36cd2134ce",
-"classtests_1_1test__native__callback_1_1_test_python_model_on_the_cxx_engine.html#ad373ef55b3e08b6da8b77ab9733bbf3c",
-"classtests_1_1test__native__core_1_1_test_native_engine.html#ae86e63a60a54b2e487e31c4e9aa62a73",
-"classtests_1_1test__native__gps_1_1_test_g_p_s_counterpart.html#a4dfce65fe58308d3c8d6f5a154638f57",
-"classtests_1_1test__net__server_1_1_test_tokens_from_python.html",
-"classtests_1_1test__registry_1_1_test_login_and_revocation.html#a511511886eaf64227cdd6b996522b560",
-"classtests_1_1test__routers_1_1___architecture_training_mixin.html#a50147c083792e77505e1f2dd99f7c277",
-"classtests_1_1test__storms_1_1_test_tornado_environment.html#aecde77a21b7d8fc44d66f3ca9b1e9ff8",
-"core_8py_source.html",
-"framework_2models_2linear_8py.html",
-"include_2_kalman_2_c_a_p_i_8h.html#a10881df5586891f699a598216493a757",
-"lane_8py.html",
-"md_docs_25___filters-and-_diagnostics.html#reading-them",
-"modules_2apps_2resonators_2suspensions_2____init_____8py.html#afdd65c5669d07dc77eddeff896dd09e0",
-"namespace_kalman_1_1_tracking.html#a48b870adcf5c9145ce65fd434ada7b4b",
-"namespacemodules_1_1apps_1_1aerospace_1_1ascent.html",
-"namespacemodules_1_1apps_1_1weather_1_1storms.html#a243211fc58deb394b51c0ee12f6e0933",
-"namespacemodules_1_1framework_1_1operations.html#ae5d25ca1165a83f8233c3bee54a1776f",
-"namespacetests_1_1test__contract__parity.html#acaeaa270ea3ecf2b0b4f5574e5eac72a",
-"namespacetests_1_1test__site__search.html#abe013c8752e94447aef9f568e860bd6f",
-"struct_kalman_1_1_factory_1_1_entry.html#a768532e8b6d3207a387397d6be2edbe7",
-"struct_kalman_1_1_tracking_1_1_candidate.html#abc4df21a6371a8d755394701b29ff7a9",
-"test__native__controllers_8py.html#a1e4f6c1760012e1e01fe468f9fd36835",
-"translunar_8py.html#a7e3008c31d4328b0f63809833e6f0162"
+"classmodules_1_1apps_1_1calorimeter_1_1models_1_1_calorimeter_linear_model.html",
+"classmodules_1_1apps_1_1gravitational_1_1gravwave_1_1polarization_1_1_polarization_model.html#ae218afe4e9f8625e445954bca9570fe2",
+"classmodules_1_1apps_1_1resonators_1_1suspensions_1_1model_1_1_suspension_model.html#ad8fbc3059f2da2cf5c71a255df94a1d6",
+"classmodules_1_1apps_1_1vision_1_1detection_1_1_detection_model.html#a55cbd432dfa5cf5cb23c56756e38ab97",
+"classmodules_1_1apps_1_1weather_1_1storms_1_1_storm_model.html#a07bffad8822c4990367494eb7a81c25e",
+"classmodules_1_1framework_1_1abstract_1_1metadata_1_1_kalman_model_metadata.html#a452dbd22a827181409b60cf68c28c308",
+"classmodules_1_1framework_1_1constants_1_1_label_enum.html#a0fb3e31616f996d91f6ddd3219c8f3db",
+"classmodules_1_1framework_1_1diagnostics_1_1_kalman_diagnostics.html#ad64e168ee87f243edefe798a9c806475",
+"classmodules_1_1framework_1_1engines_1_1unscented_1_1_unscented_kalman_engine.html#aa20c407177c1c3a027a24fcdabdb5cc9",
+"classmodules_1_1framework_1_1io_1_1collection_1_1_kalman_record_collection.html#a004aebc203d3313c059588870eab643b",
+"classmodules_1_1framework_1_1model_1_1_kalman_model.html#ac3013f8d349727bb923e71906e581f83",
+"classmodules_1_1framework_1_1models_1_1native_1_1_native_model.html#abb7ce7d06b24da7a4c20905639a3760d",
+"classmodules_1_1framework_1_1routers_1_1nn_1_1cnn_1_1_c_n_n.html#a0f06ba0213735d257fae08a9b09293ec",
+"classmodules_1_1framework_1_1sensors_1_1base_1_1_native_sensor.html#ac7f219fafcd0c43f7ad526d7dc5c0e06",
+"classmodules_1_1framework_1_1tuners_1_1neural__qr_1_1_neural_adaptive_q_r_kalman_tuner.html#aaef107dd87abed024f463e9d65fe7f58",
+"classmodules_1_1runtime_1_1logging_1_1_logger.html#a7badfec1be055e944111fb6297058311",
+"classtests_1_1test__api_1_1_test_authoring.html#a5c70fadb6bf795ef600414b55b9396a0",
+"classtests_1_1test__engines_1_1_test_combinatorial_kalman_engine.html#aa677648b182b152c8a46b1d3e4a28738",
+"classtests_1_1test__filtering_1_1_test_scalar_signal.html#ab1604c8936518656f22284133a3548b8",
+"classtests_1_1test__integrators_1_1___decay.html",
+"classtests_1_1test__joint_1_1_test_ballistic_counterpart.html#a3954c5f2a5964fc1b228bdce34b95f49",
+"classtests_1_1test__native__callback_1_1_test_declared_coupling_means_added_noise.html#ac8667a3effaab43c1d10c7320551c3a2",
+"classtests_1_1test__native__core_1_1_test_factory.html#a3e23dba05828559680c24206b6ad4b61",
+"classtests_1_1test__native__decoding_1_1_test_sampler_in_cxx.html#a82f98bac22aa8677685c7ffd0f1d43e1",
+"classtests_1_1test__net__server_1_1_server.html",
+"classtests_1_1test__record_1_1_test_record_collection.html",
+"classtests_1_1test__route_1_1_test_routing_accuracy.html#a665129d55d2c3de9335b541c3c71e805",
+"classtests_1_1test__storms_1_1_test_brazil_tornado.html#aff15bdd591aabfc6bc1e7ca66f585558",
+"core_8py.html#a486c7980da716db05d0ba713b944ee74",
+"examples_2python_2operations_8py.html#a2d062a55f3cb48fa1605bd7c82e0bfe2",
+"helpers_8py.html#a380c86065075aac041dcf50ac4438b51",
+"include_2_kalman_2_c_a_p_i_8h.html#af3d4c66b932dd14afe52bb35fa88f91c",
+"md_docs_219___contract.html#the-engine-and-the-filter-how-it-is-estimated",
+"modules_2api_2____init_____8py.html#a9f1bc21bb8d98f348cbde92c602b5f28",
+"namespace_kalman.html#af321532c59dc0a858fafdbbba3f8fb10",
+"namespacemodules_1_1api_1_1auth.html#a95157e094f3812fa9dbde037c7d710e5",
+"namespacemodules_1_1apps_1_1resonators_1_1oscillators_1_1harmonic.html",
+"namespacemodules_1_1framework_1_1native_1_1core.html#a969729a4b6ae5dd7c12c89fc012563be",
+"namespaceoperations.html#a58b118186d2885ed8a1f00f09ab1feaa",
+"namespacetests_1_1test__native__matrices.html#a42526ca82a85ba56d6b19523f65a7d2b",
+"store_8py.html#ad181dea0b5696489bdb9c5633afb6972",
+"struct_kalman_1_1_sensor.html#ab89a0591bf4c34427e98cad603408aeb",
+"test__instrument_8py.html#a691dc972d52a5f81a37ed0b040e50af3",
+"test__terminology_8py.html#a28682ea26b4fb3310368596267e53d56"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -224,6 +224,9 @@ one, and its noise and parameters reach the C++ instance.</pre>
 <div class="line"><span class="lineno">  416</span> </div>
 <div class="line"><span class="lineno">  417</span>        <span class="keywordflow">if</span> <span class="stringliteral">&quot;ballistic&quot;</span> <span class="keywordflow">in</span> core.names():</div>
 <div class="line"><span class="lineno">  418</span>            self.assertEqual(NativeModel(<span class="stringliteral">&quot;ballistic&quot;</span>, c_drag=0.25).parameters()[<span class="stringliteral">&quot;c_drag&quot;</span>], 0.25)</div>
+<div class="line"><span class="lineno">  419</span> </div>
+<div class="line"><span class="lineno">  420</span> </div>
+<div class="line"><span class="lineno">  421</span><span class="preprocessor">@unittest.skipUnless(core.HAS_CXX_CORE, &quot;needs the C++ core&quot;)</span></div>
 <div class="ttc" id="anamespacemodules_1_1api_html"><div class="ttname"><a href="namespacemodules_1_1api.html">modules.api</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2api_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1models_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1models_1_1native.html">modules.framework.models.native</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2models_2native_8py_source.html#l00001">native.py:1</a></div></div>
 </div><!-- fragment -->

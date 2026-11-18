@@ -140,7 +140,7 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2oscillators.html',''); 
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="oscillators"></a> A signal that contains narrow lines: a resonance ringing in a detector, a tone in a recording. The filter follows the amplitude and phase of each line, so the line can be measured or removed.</p>
-<h1><a class="anchor" id="the-model-6"></a>
+<h1><a class="anchor" id="the-model-7"></a>
 The model</h1>
 <p>A line at frequency <code>f0</code> is slow to change in amplitude and phase. Multiplying the signal by a wave at a nearby carrier frequency <code>fc</code> moves the line down to near zero frequency, where it becomes a slowly turning arrow: its <b>envelope</b>.</p>
 <div class="fragment"><div class="line">state        x = [Re, Im] of the envelope</div>
@@ -157,7 +157,7 @@ The model</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>OscillatorBankModel</code>   </td><td class="markdownTableBodyNone">several windows of the same signal at once   </td></tr>
 </table>
-<h1><a class="anchor" id="how-it-is-built-6"></a>
+<h1><a class="anchor" id="how-it-is-built-7"></a>
 How it is built</h1>
 <ul>
 <li><b>Built from operations.</b> Several lines on one channel are <code>compose(..., readout=KalmanReadout.SUMMED)</code>: each line keeps its own state and their measurements add. A bank of windows is <code>compose(w1, w2, w3)</code>, stacked: <code>OscillatorBankModel</code> is the <code>Composite</code> class plus the step that sends the one real signal to every window. Being composites of matrices, both run on the linear filter, and a line's parameter is <code>"&lt;part&gt;.&lt;name&gt;"</code> for <code>joint</code>.</li>

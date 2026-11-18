@@ -264,7 +264,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  118</span> </div>
 <div class="line"><span class="lineno">  119</span>    <span class="comment">// --- a twin experiment: the analysis beats a free run -----------------------</span></div>
 <div class="line"><span class="lineno">  120</span>    {</div>
-<div class="line"><span class="lineno">  121</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = 16, T = 20;</div>
+<div class="line"><span class="lineno">  121</span>        <span class="keyword">const</span> std::size_t <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a> = 16, <a class="code hl_variable" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">T</a> = 20;</div>
 <div class="line"><span class="lineno">  122</span>        std::mt19937_64 random(7);</div>
 <div class="line"><span class="lineno">  123</span>        std::normal_distribution&lt;double&gt; gauss(0., 1.);</div>
 <div class="line"><span class="lineno">  124</span>        std::vector&lt;Vector&gt; members;</div>
@@ -278,7 +278,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  132</span>        }</div>
 <div class="line"><span class="lineno">  133</span>        std::vector&lt;Vector&gt; <a class="code hl_variable" href="namespaceinstrument.html#ae933d97ee5f48a023d7a8a02626c117c">zk</a>, truths;</div>
 <div class="line"><span class="lineno">  134</span>        <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a> <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = <a class="code hl_variable" href="namespaceinstrument.html#a6e4167f5abcd352b122e43a950a154c9">truth</a>;</div>
-<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; T; ++k)</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">T</a>; ++k)</div>
 <div class="line"><span class="lineno">  136</span>        {</div>
 <div class="line"><span class="lineno">  137</span>            <a class="code hl_variable" href="namespaceinstrument.html#a541fa5b4e9554b0a0dc0bdf66cd9d6b8">x</a> = flow.<a class="code hl_function" href="class_kalman_1_1_apps_1_1_weather_1_1_kolmogorov_flow.html#a46be89c4ba680aa29320f4f5b333beb9">f</a>(x, <a class="code hl_class" href="class_kalman_1_1_vector.html">Vector</a>());</div>
 <div class="line"><span class="lineno">  138</span>            truths.push_back(x);</div>
@@ -295,7 +295,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  149</span>        <span class="keyword">const</span> <span class="keyword">auto</span> a = assimilate.Cycle(zk);</div>
 <div class="line"><span class="lineno">  150</span>        <span class="keyword">const</span> <span class="keyword">auto</span> b = drift.Cycle(zk, <span class="keyword">false</span>);</div>
 <div class="line"><span class="lineno">  151</span>        <span class="keywordtype">double</span> ea = 0., eb = 0.;</div>
-<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">for</span> (std::size_t k = T - 5; k &lt; T; ++k) { ea += RMSE(a.analysis[k], truths[k]); eb += RMSE(b.analysis[k], truths[k]); }</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">for</span> (std::size_t k = T - 5; k &lt; <a class="code hl_variable" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">T</a>; ++k) { ea += RMSE(a.analysis[k], truths[k]); eb += RMSE(b.analysis[k], truths[k]); }</div>
 <div class="line"><span class="lineno">  153</span>        std::printf(<span class="stringliteral">&quot;    last 5 cycles: analysis RMSE %.3f, free run %.3f, spread %.3f\n&quot;</span>, ea / 5., eb / 5., a.spread.back());</div>
 <div class="line"><span class="lineno">  154</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(ea &lt; 0.5 * eb, <span class="stringliteral">&quot;cycle: the analysis error is under half the free run&#39;s&quot;</span>);</div>
 <div class="line"><span class="lineno">  155</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(a.spread.back() &gt; 0.02 &amp;&amp; a.spread.back() &lt; 3. * ea / 5., <span class="stringliteral">&quot;cycle: the spread is of the error&#39;s size&quot;</span>);</div>
@@ -306,7 +306,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  160</span>        e1.SetMembers(members);</div>
 <div class="line"><span class="lineno">  161</span>        e2.SetMembers(members);</div>
 <div class="line"><span class="lineno">  162</span>        std::vector&lt;double&gt; normals;</div>
-<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; T * 32 * <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++i) normals.push_back(gauss(random));</div>
+<div class="line"><span class="lineno">  163</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; <a class="code hl_variable" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">T</a> * 32 * <a class="code hl_variable" href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">N</a>; ++i) normals.push_back(gauss(random));</div>
 <div class="line"><span class="lineno">  164</span>        e1.SetNormals(normals);</div>
 <div class="line"><span class="lineno">  165</span>        e2.SetNormals(normals);</div>
 <div class="line"><span class="lineno">  166</span>        <a class="code hl_class" href="class_kalman_1_1_filters_1_1_en_k_f.html">Filters::EnKF</a> c1(&amp;flow, &amp;e1);</div>
@@ -314,7 +314,7 @@ Functions</h2></td></tr>
 <div class="line"><span class="lineno">  168</span>        <a class="code hl_class" href="class_kalman_1_1_filter.html">Filter</a> f2(&amp;flow, &amp;e2);</div>
 <div class="line"><span class="lineno">  169</span>        <span class="keyword">const</span> <a class="code hl_class" href="class_kalman_1_1_i_o_1_1_record.html">Record</a> rec = f2.Forward(zk);</div>
 <div class="line"><span class="lineno">  170</span>        <span class="keywordtype">double</span> d = 0.;</div>
-<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; T; ++k)</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">for</span> (std::size_t k = 0; k &lt; <a class="code hl_variable" href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">T</a>; ++k)</div>
 <div class="line"><span class="lineno">  172</span>            <span class="keywordflow">for</span> (std::size_t i = 0; i &lt; 256; ++i) d = std::max(d, std::abs(rec.<a class="code hl_function" href="class_kalman_1_1_i_o_1_1_record.html#a643aff8a0e981bc3e533029259db7dda">State</a>(k)(i) - cycles.analysis[k](i)));</div>
 <div class="line"><span class="lineno">  173</span>        <a class="code hl_define" href="_check_8h.html#af78f878a664d9956c852a668fc3419ab">CHECK</a>(d &lt; 1e-12, <span class="stringliteral">&quot;draws handed in: Cycle() and Forward() agree&quot;</span>);</div>
 <div class="line"><span class="lineno">  174</span>        <span class="comment">// Every analysis takes (p, N): 32 channels, 21 at the cycle where 11 were silent.</span></div>
@@ -385,6 +385,7 @@ Functions</h2></td></tr>
 <div class="ttc" id="anamespaceinstrument_html_a6e4167f5abcd352b122e43a950a154c9"><div class="ttname"><a href="namespaceinstrument.html#a6e4167f5abcd352b122e43a950a154c9">instrument.truth</a></div><div class="ttdeci">truth</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00066">instrument.py:66</a></div></div>
 <div class="ttc" id="anamespaceinstrument_html_ae933d97ee5f48a023d7a8a02626c117c"><div class="ttname"><a href="namespaceinstrument.html#ae933d97ee5f48a023d7a8a02626c117c">instrument.zk</a></div><div class="ttdeci">zk</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00069">instrument.py:69</a></div></div>
 <div class="ttc" id="anamespaceoperations_html_a8db6bc47bdd5d71f617d8c4ba59f4a1b"><div class="ttname"><a href="namespaceoperations.html#a8db6bc47bdd5d71f617d8c4ba59f4a1b">operations.N</a></div><div class="ttdeci">int N</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2operations_8py_source.html#l00064">operations.py:64</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__buildings_html_ad4c1889abf343d4d6e251b6aeb3f1400"><div class="ttname"><a href="namespacetests_1_1test__buildings.html#ad4c1889abf343d4d6e251b6aeb3f1400">tests.test_buildings.T</a></div><div class="ttdeci">int T</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00014">test_buildings.py:14</a></div></div>
 <div class="ttc" id="astruct_kalman_1_1_factory_1_1_entry_html"><div class="ttname"><a href="struct_kalman_1_1_factory_1_1_entry.html">Kalman::Factory::Entry</a></div><div class="ttdoc">What the catalogue shows for a name, harvested from a fresh instance.</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00072">Factory.h:73</a></div></div>
 <div class="ttc" id="astruct_kalman_1_1_factory_1_1_entry_html_a768532e8b6d3207a387397d6be2edbe7"><div class="ttname"><a href="struct_kalman_1_1_factory_1_1_entry.html#a768532e8b6d3207a387397d6be2edbe7">Kalman::Factory::Entry::fs</a></div><div class="ttdeci">double fs</div><div class="ttdoc">sample rate [Hz]</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00081">Factory.h:81</a></div></div>
 <div class="ttc" id="astruct_kalman_1_1_factory_1_1_entry_html_a78922834d7869117fff21226a8c73a53"><div class="ttname"><a href="struct_kalman_1_1_factory_1_1_entry.html#a78922834d7869117fff21226a8c73a53">Kalman::Factory::Entry::m</a></div><div class="ttdeci">std::size_t m</div><div class="ttdoc">measurement dimension</div><div class="ttdef"><b>Definition</b> <a href="_factory_8h_source.html#l00079">Factory.h:79</a></div></div>

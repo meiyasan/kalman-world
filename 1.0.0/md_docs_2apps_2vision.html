@@ -152,14 +152,14 @@ The models</h1>
 <tr class="markdownTableRowOdd">
 <td class="markdownTableBodyNone"><code>SortTracker</code>   </td><td class="markdownTableBodyNone">one <code>BoxTrackModel</code> per object   </td><td class="markdownTableBodyNone">many objects at once   </td></tr>
 </table>
-<h1><a class="anchor" id="how-it-is-built-12"></a>
+<h1><a class="anchor" id="how-it-is-built-13"></a>
 How it is built</h1>
 <ul>
 <li><b>Constant velocity.</b> Between frames the object is assumed to keep moving as it was. The step is linear and exact.</li>
 <li><b>Coasting.</b> A missed detection is passed as an empty measurement. The filter then predicts without correcting, and its uncertainty grows until the object is found again.</li>
 <li><b>Many objects.</b> <code>SortTracker</code> matches each new detection to the track whose predicted box overlaps it most, starts a track for a detection that matches none, and ends a track that has gone unmatched for <code>max_age</code> frames.</li>
 </ul>
-<h1><a class="anchor" id="using-it-15"></a>
+<h1><a class="anchor" id="using-it-16"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps.vision <span class="keyword">import</span> DetectionModel</div>
 <div class="line"> </div>

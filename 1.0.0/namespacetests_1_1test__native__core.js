@@ -8,6 +8,7 @@ var namespacetests_1_1test__native__core =
     [ "TestNativeEngine", "classtests_1_1test__native__core_1_1_test_native_engine.html", "classtests_1_1test__native__core_1_1_test_native_engine" ],
     [ "TestNativeModel", "classtests_1_1test__native__core_1_1_test_native_model.html", "classtests_1_1test__native__core_1_1_test_native_model" ],
     [ "TestPluginPolicy", "classtests_1_1test__native__core_1_1_test_plugin_policy.html", "classtests_1_1test__native__core_1_1_test_plugin_policy" ],
+    [ "TestPointersKeepTheirArrays", "classtests_1_1test__native__core_1_1_test_pointers_keep_their_arrays.html", "classtests_1_1test__native__core_1_1_test_pointers_keep_their_arrays" ],
     [ "TestPublicNativeModule", "classtests_1_1test__native__core_1_1_test_public_native_module.html", "classtests_1_1test__native__core_1_1_test_public_native_module" ],
     [ "_prototypes", "namespacetests_1_1test__native__core.html#af802e4e75cacaeac5c95d0019c9972c1", null ],
     [ "importlib_available", "namespacetests_1_1test__native__core.html#ade624541c932d35da2278aa002dd2497", null ],

@@ -127,6 +127,7 @@ var hierarchy =
           ] ],
           [ "modules.framework.models.linear.LinearKalmanModel", "classmodules_1_1framework_1_1models_1_1linear_1_1_linear_kalman_model.html", [
             [ "modules.apps.ballistics.linear.BallisticLinearModel", "classmodules_1_1apps_1_1ballistics_1_1linear_1_1_ballistic_linear_model.html", null ],
+            [ "modules.apps.buildings.co2.RoomCO2Model", "classmodules_1_1apps_1_1buildings_1_1co2_1_1_room_c_o2_model.html", null ],
             [ "modules.apps.calorimeter.models._CaloBase", "classmodules_1_1apps_1_1calorimeter_1_1models_1_1___calo_base.html", [
               [ "modules.apps.calorimeter.models.CalorimeterLinearModel", "classmodules_1_1apps_1_1calorimeter_1_1models_1_1_calorimeter_linear_model.html", null ],
               [ "modules.apps.calorimeter.models._CaloEnergyModel", "classmodules_1_1apps_1_1calorimeter_1_1models_1_1___calo_energy_model.html", [
@@ -411,6 +412,8 @@ var hierarchy =
       [ "tests.test_apps_extra.TestRocketDescent", "classtests_1_1test__apps__extra_1_1_test_rocket_descent.html", null ],
       [ "tests.test_apps_extra.TestRocketLanding", "classtests_1_1test__apps__extra_1_1_test_rocket_landing.html", null ],
       [ "tests.test_apps_extra.TestRocketLiftoff", "classtests_1_1test__apps__extra_1_1_test_rocket_liftoff.html", null ],
+      [ "tests.test_buildings.TestTheBalance", "classtests_1_1test__buildings_1_1_test_the_balance.html", null ],
+      [ "tests.test_buildings.TestWhatTheSensorsTell", "classtests_1_1test__buildings_1_1_test_what_the_sensors_tell.html", null ],
       [ "tests.test_compose.TestCompose", "classtests_1_1test__compose_1_1_test_compose.html", null ],
       [ "tests.test_contract_parity.TestJoint", "classtests_1_1test__contract__parity_1_1_test_joint.html", null ],
       [ "tests.test_contract_parity.TestSensors", "classtests_1_1test__contract__parity_1_1_test_sensors.html", null ],
@@ -528,6 +531,7 @@ var hierarchy =
       [ "tests.test_native_core.TestNativeEngine", "classtests_1_1test__native__core_1_1_test_native_engine.html", null ],
       [ "tests.test_native_core.TestNativeModel", "classtests_1_1test__native__core_1_1_test_native_model.html", null ],
       [ "tests.test_native_core.TestPluginPolicy", "classtests_1_1test__native__core_1_1_test_plugin_policy.html", null ],
+      [ "tests.test_native_core.TestPointersKeepTheirArrays", "classtests_1_1test__native__core_1_1_test_pointers_keep_their_arrays.html", null ],
       [ "tests.test_native_core.TestPublicNativeModule", "classtests_1_1test__native__core_1_1_test_public_native_module.html", null ],
       [ "tests.test_native_counterparts.TestBallisticCounterpart", "classtests_1_1test__native__counterparts_1_1_test_ballistic_counterpart.html", null ],
       [ "tests.test_native_counterparts.TestBallisticLinearModel", "classtests_1_1test__native__counterparts_1_1_test_ballistic_linear_model.html", null ],

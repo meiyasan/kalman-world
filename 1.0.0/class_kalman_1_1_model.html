@@ -688,15 +688,16 @@ Protected Attributes</h2></td></tr>
 <div class="fragment"><div class="line"><span class="lineno">   78</span>    {</div>
 <div class="line"><span class="lineno">   79</span>        RefuseSequential(<a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>);</div>
 <div class="line"><span class="lineno">   80</span>        <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.Check(<a class="code hl_function" href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">NState</a>());</div>
-<div class="line"><span class="lineno">   81</span>        <span class="keyword">const</span> std::vector&lt;Sensor&gt; sensors = <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.Sensors();</div>
+<div class="line"><span class="lineno">   81</span>        <span class="keyword">const</span> std::vector&lt;Sensor&gt; <a class="code hl_function" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a> = <a class="code hl_namespace" href="namespaceinstrument.html">instrument</a>.Sensors();</div>
 <div class="line"><span class="lineno">   82</span>        std::shared_ptr&lt;Model&gt; <a class="code hl_variable" href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">model</a> = Borrow(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i + 1 &lt; sensors.size(); ++i)</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">for</span> (std::size_t i = 0; i + 1 &lt; <a class="code hl_function" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a>.size(); ++i)</div>
 <div class="line"><span class="lineno">   84</span>            model = std::make_shared&lt;Models::Fusion&gt;(std::move(model), sensors[i]);</div>
-<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> std::make_unique&lt;Models::Fusion&gt;(std::move(model), sensors.back());</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> std::make_unique&lt;Models::Fusion&gt;(std::move(model), <a class="code hl_function" href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">sensors</a>.back());</div>
 <div class="line"><span class="lineno">   86</span>    }</div>
 <div class="ttc" id="aclass_kalman_1_1_model_html_a1742227dec4498eff82d273e1ff6fb58"><div class="ttname"><a href="class_kalman_1_1_model.html#a1742227dec4498eff82d273e1ff6fb58">Kalman::Model::NState</a></div><div class="ttdeci">std::size_t NState() const</div><div class="ttdef"><b>Definition</b> <a href="include_2_kalman_2_model_8h_source.html#l00147">Model.h:147</a></div></div>
 <div class="ttc" id="anamespaceinstrument_html"><div class="ttname"><a href="namespaceinstrument.html">instrument</a></div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00001">instrument.py:1</a></div></div>
 <div class="ttc" id="anamespaceinstrument_html_aeed3133a32676bb765055ed6e1c190f3"><div class="ttname"><a href="namespaceinstrument.html#aeed3133a32676bb765055ed6e1c190f3">instrument.model</a></div><div class="ttdeci">model</div><div class="ttdef"><b>Definition</b> <a href="examples_2python_2instrument_8py_source.html#l00061">instrument.py:61</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__buildings_html_a8fa8398c4e55a777181a40569ec57f2a"><div class="ttname"><a href="namespacetests_1_1test__buildings.html#a8fa8398c4e55a777181a40569ec57f2a">tests.test_buildings.sensors</a></div><div class="ttdeci">sensors(room)</div><div class="ttdef"><b>Definition</b> <a href="test__buildings_8py_source.html#l00019">test_buildings.py:19</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -896,7 +897,7 @@ Protected Attributes</h2></td></tr>
 <div class="line"><span class="lineno">  492</span>        <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span> &amp;a : <a class="code hl_variable" href="class_kalman_1_1_model.html#ae96d2f12379c624dad9e7458a08e8dca">fArrays</a>) <a class="code hl_function" href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">names</a>.push_back(a.first);</div>
 <div class="line"><span class="lineno">  493</span>        <span class="keywordflow">return</span> <a class="code hl_function" href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">names</a>;</div>
 <div class="line"><span class="lineno">  494</span>    }</div>
-<div class="ttc" id="anamespacemodules_1_1framework_1_1native_1_1core_html_a24045744702d33ce7c0ca87dd3f5b990"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">modules.framework.native.core.names</a></div><div class="ttdeci">list[str] names()</div><div class="ttdef"><b>Definition</b> <a href="core_8py_source.html#l00534">core.py:534</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_1_1core_html_a24045744702d33ce7c0ca87dd3f5b990"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native_1_1core.html#a24045744702d33ce7c0ca87dd3f5b990">modules.framework.native.core.names</a></div><div class="ttdeci">list[str] names()</div><div class="ttdef"><b>Definition</b> <a href="core_8py_source.html#l00537">core.py:537</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>

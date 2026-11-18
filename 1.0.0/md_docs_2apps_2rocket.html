@@ -152,14 +152,14 @@ $(document).ready(function(){initNavTree('md_docs_2apps_2rocket.html',''); initR
 <tr class="markdownTableRowEven">
 <td class="markdownTableBodyNone"><code>RocketLandingModel</code>   </td><td class="markdownTableBodyNone">the final vertical landing burn   </td><td class="markdownTableBodyNone">altitude, speed, mass   </td></tr>
 </table>
-<h1><a class="anchor" id="the-model-8"></a>
+<h1><a class="anchor" id="the-model-9"></a>
 The model</h1>
 <p>Mass is a state because the rocket burns it:</p>
 <div class="fragment"><div class="line">altitude&#39; = speed</div>
 <div class="line">speed&#39;    = thrust / mass - gravity - drag / mass</div>
 <div class="line">mass&#39;     = -burn rate                       (zero once the propellant is gone)</div>
 </div><!-- fragment --><p>Even at constant thrust the acceleration grows as the rocket gets lighter. The sensor measures position only. The filter recovers the speed and the remaining mass.</p>
-<h1><a class="anchor" id="how-it-is-built-8"></a>
+<h1><a class="anchor" id="how-it-is-built-9"></a>
 How it is built</h1>
 <ul>
 <li><b>Time stepping.</b> Each model writes its rate of change and takes one RK4 step per sample, the framework's fourth-order Runge-Kutta integrator.</li>
@@ -168,7 +168,7 @@ How it is built</h1>
 <li><b>Process noise.</b> Each model passes <code>L = I</code>, so the noise acts on every state. Without it the framework finds that the step does not respond to noise and applies none.</li>
 <li><b>C++.</b> All four have a counterpart in <code>libKalmanApps</code> (<code>rocket-liftoff</code>, <code>rocket-ascent</code>, <code>rocket-descent</code> and <code>rocket-descent-control</code>, <code>rocket-landing</code>): the derivative, the guidance and the closing step (mass kept at the dry mass, a landed stage held on the pad) in C++, so <code>model.filter(z)</code> and, with a thrust or throttle/gimbal program, <code>model.filter(z, uk)</code> run wholly in <code><a class="el" href="class_kalman_1_1_filter.html" title="The workflow — WHEN each step runs, and what is kept.">Kalman::Filter</a></code>. A custom integrator, or a subclass that changes the dynamics, keeps the Python physics.</li>
 </ul>
-<h1><a class="anchor" id="using-it-9"></a>
+<h1><a class="anchor" id="using-it-10"></a>
 Using it</h1>
 <div class="fragment"><div class="line"><span class="keyword">from</span> kalman.apps <span class="keyword">import</span> RocketLiftoffModel</div>
 <div class="line"> </div>

@@ -3,6 +3,7 @@ var dir_dce2694de84b78c286c90acb0c24216d =
     [ "aerospace", "dir_bfd1bf43f16bbf5c5634d68cf7c6c798.html", "dir_bfd1bf43f16bbf5c5634d68cf7c6c798" ],
     [ "astrophysics", "dir_5be6dc203a48b52223caf28a7e37541a.html", "dir_5be6dc203a48b52223caf28a7e37541a" ],
     [ "ballistics", "dir_98533a7892fe36ccccfcfd3944d118c1.html", "dir_98533a7892fe36ccccfcfd3944d118c1" ],
+    [ "buildings", "dir_8d53adec89c196c1df52492a7f6a2c46.html", "dir_8d53adec89c196c1df52492a7f6a2c46" ],
     [ "calorimeter", "dir_a8d50038ac91176f572b5d101c092d96.html", "dir_a8d50038ac91176f572b5d101c092d96" ],
     [ "fusion", "dir_adb01ec2d01a5bfbb6f4ce149362ef2d.html", "dir_adb01ec2d01a5bfbb6f4ce149362ef2d" ],
     [ "gps", "dir_f21b2a70744a6fa9165a28f8efd4951f.html", "dir_f21b2a70744a6fa9165a28f8efd4951f" ],
