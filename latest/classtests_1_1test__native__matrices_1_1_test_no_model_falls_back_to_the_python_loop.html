@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-45-g1d5c01ec</span>
+   &#160;<span id="projectnumber">1.0.0-48-g08d53a92</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -188,21 +188,27 @@ unnoticed.</pre>
 <div class="line"><span class="lineno">  313</span>                first = list(inspect.signature(cls.__init__).parameters)[1:2]</div>
 <div class="line"><span class="lineno">  314</span>                <span class="keywordflow">try</span>:</div>
 <div class="line"><span class="lineno">  315</span>                    model = cls(<span class="stringliteral">&quot;s&quot;</span>) <span class="keywordflow">if</span> first <span class="keywordflow">in</span> ([<span class="stringliteral">&quot;sensor&quot;</span>], [<span class="stringliteral">&quot;name&quot;</span>]) <span class="keywordflow">else</span> cls()</div>
-<div class="line"><span class="lineno">  316</span>                    z = np.asarray(model.sample(20 / (model.fs <span class="keywordflow">or</span> 1.0), seed=1).zk, float)</div>
-<div class="line"><span class="lineno">  317</span>                <span class="keywordflow">except</span> Exception:</div>
-<div class="line"><span class="lineno">  318</span>                    <span class="keywordflow">continue</span>                    <span class="comment"># needs arguments, or its default state cannot be sampled</span></div>
-<div class="line"><span class="lineno">  319</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.all(np.isfinite(z)):</div>
-<div class="line"><span class="lineno">  320</span>                    <span class="keywordflow">continue</span></div>
-<div class="line"><span class="lineno">  321</span>                <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
-<div class="line"><span class="lineno">  322</span>                    model.filter(z)</div>
-<div class="line"><span class="lineno">  323</span>                checked.append(name)</div>
-<div class="line"><span class="lineno">  324</span>                <span class="keywordflow">if</span> path.last <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> model.engine.OWNS_PASS:</div>
-<div class="line"><span class="lineno">  325</span>                    python_loop.append(name)</div>
-<div class="line"><span class="lineno">  326</span>        self.assertEqual(python_loop, [])</div>
-<div class="line"><span class="lineno">  327</span>        self.assertGreaterEqual(len(checked), 14, checked)</div>
-<div class="line"><span class="lineno">  328</span> </div>
-<div class="line"><span class="lineno">  329</span> </div>
-<div class="line"><span class="lineno">  330</span><span class="preprocessor">@unittest.skipUnless(&quot;car-speed&quot; in native.apps_library_names()</span>, <span class="stringliteral">&quot;libKalmanApps is not built&quot;</span>)</div>
+<div class="line"><span class="lineno">  316</span>                    <span class="comment"># A field (the flow models: 4096 components at their default grid) is</span></div>
+<div class="line"><span class="lineno">  317</span>                    <span class="comment"># left to tests/test_ensemble.py and test_native_fields.py: sampling one</span></div>
+<div class="line"><span class="lineno">  318</span>                    <span class="comment"># here keeps a 4096 x 4096 covariance per step, 16 GB for this test,</span></div>
+<div class="line"><span class="lineno">  319</span>                    <span class="comment"># more than a CI runner has.</span></div>
+<div class="line"><span class="lineno">  320</span>                    <span class="keywordflow">if</span> int(model.n) &gt; 1000:</div>
+<div class="line"><span class="lineno">  321</span>                        <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  322</span>                    z = np.asarray(model.sample(20 / (model.fs <span class="keywordflow">or</span> 1.0), seed=1).zk, float)</div>
+<div class="line"><span class="lineno">  323</span>                <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  324</span>                    <span class="keywordflow">continue</span>                    <span class="comment"># needs arguments, or its default state cannot be sampled</span></div>
+<div class="line"><span class="lineno">  325</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> np.all(np.isfinite(z)):</div>
+<div class="line"><span class="lineno">  326</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  327</span>                <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
+<div class="line"><span class="lineno">  328</span>                    model.filter(z)</div>
+<div class="line"><span class="lineno">  329</span>                checked.append(name)</div>
+<div class="line"><span class="lineno">  330</span>                <span class="keywordflow">if</span> path.last <span class="keywordflow">is</span> <span class="keywordtype">None</span> <span class="keywordflow">and</span> <span class="keywordflow">not</span> model.engine.OWNS_PASS:</div>
+<div class="line"><span class="lineno">  331</span>                    python_loop.append(name)</div>
+<div class="line"><span class="lineno">  332</span>        self.assertEqual(python_loop, [])</div>
+<div class="line"><span class="lineno">  333</span>        self.assertGreaterEqual(len(checked), 14, checked)</div>
+<div class="line"><span class="lineno">  334</span> </div>
+<div class="line"><span class="lineno">  335</span> </div>
+<div class="line"><span class="lineno">  336</span><span class="preprocessor">@unittest.skipUnless(&quot;car-speed&quot; in native.apps_library_names()</span>, <span class="stringliteral">&quot;libKalmanApps is not built&quot;</span>)</div>
 </div><!-- fragment -->
 </div>
 </div>

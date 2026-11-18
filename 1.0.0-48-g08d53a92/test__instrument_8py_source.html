@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.9.8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<!-- BEGIN opengraph metadata -->
+<meta property="og:title" content="tests/test_instrument.py Source File" />
+<meta property="og:image" content="logo.drawio.svg" />
+<meta property="og:description" content="Kalman World: tests/test_instrument.py Source File" />
+<meta property="og:url" content="https://github.com/meiyasan/kalman-world" />
+<!-- END opengraph metadata -->
+<title>tests/test_instrument.py Source File</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="darkmode-toggle.js"></script>
+<script type="text/javascript" src="fragment-copy-button.js"></script>
+<script type="text/javascript" src="paragraph-link.js"></script>
+<script type="text/javascript" src="interactive-toc.js"></script>
+<script type="text/javascript" src="tabs.js"></script>
+<script type="text/javascript" src="select-version.js"></script>
+<script type="text/javascript" src="detect-git-corner.js"></script>
+<script type="text/javascript" src="toggle-alternative-theme.js"></script>
+<script type="text/javascript" src="search.js"></script>
+<script type="text/javascript">
+    DoxygenAwesomeFragmentCopyButton.init()
+    DoxygenAwesomeDarkModeToggle.init()
+    DoxygenAwesomeParagraphLink.init()
+    DoxygenAwesomeInteractiveToc.init()
+    DoxygenAwesomeTabs.init()
+    SelectDoxygenVersion.init('../metadata.txt')
+    DetectGitCorner.init("https://github.com/meiyasan/kalman-world")
+</script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="main.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only.css" rel="stylesheet" type="text/css"/>
+<link href="sidebar-only-darkmode-toggle.css" rel="stylesheet" type="text/css"/>
+<link href="custom.css" rel="stylesheet" type="text/css"/>
+<link href="custom-alternative.css" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<a href="https://github.com/meiyasan/kalman-world" id="git-corner" class="git-corner" title="View source on Git" target="_blank" rel="noopener noreferrer">
+    <!-- <svg viewBox="0 0 250 250" width="40" height="40" style="position: absolute; top: 0; border: 0; right: 0; z-index: 99;" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path>
+    </svg> -->
+    <img id="git-corner-img" width="75" height="75" src="corner.gitlab.svg" alt="Git Corner"/>
+</a>
+<div id="nav-version">
+    <div id="MSearchVersion" class="MSearchVersionInactive">
+        <span id="MSearchVersionTitle" >&nbsp;Version </span>
+        <select name="MSearchVersionSelect" id="MSearchVersionSelect"></select>
+    </div>
+</div>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">Kalman World
+   &#160;<span id="projectnumber">1.0.0-48-g08d53a92</span>
+   </div>
+   <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generated by Doxygen 1.9.8 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Search');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function() { init_codefold(0); });
+/* @license-end */
+</script>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('test__instrument_8py_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Loading...</div>
+<div class="SRStatus" id="Searching">Searching...</div>
+<div class="SRStatus" id="NoMatches">No Matches</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">test_instrument.py</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="test__instrument_8py.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html">    1</a></span><span class="stringliteral">&quot;&quot;&quot;Instruments: a set of sensors with one name, one rate and one calibration.</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="stringliteral">``compose(s1, s2, name=...)`` (``s1 | s2``) makes a ``KalmanInstrument``, the</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="stringliteral">Python face of ``Kalman::Instrument``; ``model.add_instrument(instrument)`` gives</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="stringliteral">the model read by all its sensors. Pinned here: the ways to make one, what its</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="stringliteral">sensors share, the calibration parameters the model then declares, their</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="stringliteral">estimation with ``joint`` (calibrating while measuring), and what observability</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="stringliteral">says about it. The same scenario is in ``tests/cxx/25_instrument.cc``.</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">import</span> sys</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">import</span> unittest</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">import</span> warnings</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">import</span> numpy <span class="keyword">as</span> np</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>sys.path.insert(0, <span class="stringliteral">&quot;.&quot;</span>)</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework.html">modules.framework</a> <span class="keyword">import</span> (KalmanInstrument, KalmanModel, KalmanSensor, add_instrument,</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                               compose)</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a> <span class="keyword">import</span> KalmanStructureKind</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a> <span class="keyword">import</span> core</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html#a74a8756f2f9bc9d365925b4b7eb93c2f">   23</a></span>needs_core = unittest.skipUnless(core.HAS_CXX_CORE, <span class="stringliteral">&quot;libKalman is not built&quot;</span>)</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span> </div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="foldopen" id="foldopen00026" data-start="" data-end="">
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">   26</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>():</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="stringliteral">&quot;&quot;&quot;Temperature and CO2, both slowly wandering; the model&#39;s own sensor reads the CO2.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">KalmanModel</a>(<span class="stringliteral">&quot;room&quot;</span>, fs=1.0, F=np.eye(2), H=np.array([[0.0, 1.0]]), Q=np.diag([1e-4, 1e-2]),</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>                       R=np.array([[4.0]]), x0=np.array([[21.0], [450.0]]), P0=np.diag([4.0, 100.0]))</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+</div>
+<div class="foldopen" id="foldopen00032" data-start="" data-end="">
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">   32</a></span><span class="keyword">def </span><a class="code hl_function" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">reads</a>(name, component, variance, **kw):</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    G = np.zeros((1, 2))</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    G[0, component] = 1.0</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keywordflow">return</span> <a class="code hl_class" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">KalmanSensor</a>(name, G=G, R=variance, **kw)</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">   38</a></span>probe = <span class="keyword">lambda</span> **kw: <a class="code hl_function" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">reads</a>(<span class="stringliteral">&quot;probe&quot;</span>, 0, 0.04, **kw)</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">   39</a></span>humidity = <span class="keyword">lambda</span> **kw: <a class="code hl_function" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">reads</a>(<span class="stringliteral">&quot;humidity&quot;</span>, 1, 1.0, **kw)</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="foldopen" id="foldopen00042" data-start="" data-end="">
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_compose.html">   42</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__instrument_1_1_test_compose.html">TestCompose</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="foldopen" id="foldopen00044" data-start="" data-end="">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_compose.html#a01b615d109fd64065a185e7c33e6d8ef">   44</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_compose.html#a01b615d109fd64065a185e7c33e6d8ef">test_three_ways</a>(self):</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        a, b = <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>()</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keywordflow">for</span> station <span class="keywordflow">in</span> (compose(a, b), a | b, a.compose(b), compose([a, b])):</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            self.assertIsInstance(station, KalmanInstrument)</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            self.assertEqual(station.name, <span class="stringliteral">&quot;probe+humidity&quot;</span>)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            self.assertEqual([s.name <span class="keywordflow">for</span> s <span class="keywordflow">in</span> station], [<span class="stringliteral">&quot;probe&quot;</span>, <span class="stringliteral">&quot;humidity&quot;</span>])</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        station = compose(a, b, name=<span class="stringliteral">&quot;station&quot;</span>, rate=0.5)</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        self.assertEqual((station.name, station.rate, station.channels, len(station)), (<span class="stringliteral">&quot;station&quot;</span>, 0.5, 2, 2))</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        self.assertEqual(len((a | b) | <a class="code hl_function" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">reads</a>(<span class="stringliteral">&quot;third&quot;</span>, 0, 1.0)), 3)</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+</div>
+<div class="foldopen" id="foldopen00054" data-start="" data-end="">
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_compose.html#a67d506e0196a7608d3c186881129df76">   54</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_compose.html#a67d506e0196a7608d3c186881129df76">test_calibration</a>(self):</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        station = compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), name=<span class="stringliteral">&quot;station&quot;</span>)</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        self.assertFalse(station.calibrated)</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        self.assertIs(station.calibrate(offset=1.5), station)</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        self.assertEqual((station.calibrated, station.gain, station.offset), (<span class="keyword">True</span>, 1.0, 1.5))</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        self.assertTrue(<a class="code hl_class" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">KalmanInstrument</a>(<span class="stringliteral">&quot;s&quot;</span>, [<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>()], gain=2.0).calibrated)</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        self.assertTrue((station | <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>()).calibrated)</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+</div>
+<div class="foldopen" id="foldopen00062" data-start="" data-end="">
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_compose.html#acf7bf63684c66cbdbf92d915e221c34b">   62</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_compose.html#acf7bf63684c66cbdbf92d915e221c34b">test_refusals</a>(self):</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), name=<span class="stringliteral">&quot;twice&quot;</span>)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <a class="code hl_class" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">KalmanInstrument</a>(<span class="stringliteral">&quot;&quot;</span>, [<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>()])</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <a class="code hl_class" href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">KalmanInstrument</a>(<span class="stringliteral">&quot;empty&quot;</span>, [])</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keyword">with</span> self.assertRaises(ValueError):</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), name=<span class="stringliteral">&quot;s&quot;</span>, rate=-1.0)</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">with</span> self.assertRaises(TypeError):</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <span class="stringliteral">&quot;humidity&quot;</span>)</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keyword">with</span> self.assertRaises(TypeError):</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>())</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keyword">with</span> self.assertRaises(TypeError):</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_sensor(compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>()))</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span><span class="preprocessor">@needs_core</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00080" data-start="" data-end="">
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html">   80</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__instrument_1_1_test_add_instrument.html">TestAddInstrument</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="foldopen" id="foldopen00082" data-start="" data-end="">
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a06e3605f724162464411075603a000a6">   82</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a06e3605f724162464411075603a000a6">test_uncalibrated_is_still_matrices</a>(self):</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        model = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>(), name=<span class="stringliteral">&quot;station&quot;</span>))</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        self.assertEqual((model.n, model.m), (2, 3))</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        self.assertIs(model.structure, KalmanStructureKind.MATRICES)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        self.assertEqual([s.name <span class="keywordflow">for</span> s <span class="keywordflow">in</span> model.sensors], [<span class="stringliteral">&quot;room&quot;</span>, <span class="stringliteral">&quot;probe&quot;</span>, <span class="stringliteral">&quot;humidity&quot;</span>])</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        self.assertEqual([s.instrument <span class="keywordflow">for</span> s <span class="keywordflow">in</span> model.sensors], [<span class="keywordtype">None</span>, <span class="stringliteral">&quot;station&quot;</span>, <span class="stringliteral">&quot;station&quot;</span>])</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        groups = model.instruments</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        self.assertEqual([(g.name, [s.name <span class="keywordflow">for</span> s <span class="keywordflow">in</span> g]) <span class="keywordflow">for</span> g <span class="keywordflow">in</span> groups],</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                         [(<span class="stringliteral">&quot;room&quot;</span>, [<span class="stringliteral">&quot;room&quot;</span>]), (<span class="stringliteral">&quot;station&quot;</span>, [<span class="stringliteral">&quot;probe&quot;</span>, <span class="stringliteral">&quot;humidity&quot;</span>])])</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        self.assertNotIn(<span class="stringliteral">&quot;station.offset&quot;</span>, model.parameters())</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
+</div>
+<div class="foldopen" id="foldopen00093" data-start="" data-end="">
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#ad66dc65ca09df004340c46e8c2988fa3">   93</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#ad66dc65ca09df004340c46e8c2988fa3">test_function_and_method_are_the_same</a>(self):</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        station = compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>(), name=<span class="stringliteral">&quot;station&quot;</span>).calibrate(2.0, 1.5)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        a, b = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(station), add_instrument(<a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>(), station)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        x = np.array([[20.0], [400.0]])</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        np.testing.assert_array_equal(a.h(x), b.h(x))</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+</div>
+<div class="foldopen" id="foldopen00099" data-start="" data-end="">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a0f14a88d47ef1818ef853779f5a03d8b">   99</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a0f14a88d47ef1818ef853779f5a03d8b">test_calibration_is_two_parameters_of_the_model</a>(self):</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        model = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>(), name=<span class="stringliteral">&quot;station&quot;</span>).calibrate(2.0, 1.5))</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        self.assertEqual(model.parameters()[<span class="stringliteral">&quot;station.gain&quot;</span>], 2.0)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        self.assertEqual(model.parameters()[<span class="stringliteral">&quot;station.offset&quot;</span>], 1.5)</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        self.assertIs(model.structure, KalmanStructureKind.MAPS)             <span class="comment"># gain * G x + offset: no matrix H</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        x = np.array([[20.0], [400.0]])</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        np.testing.assert_array_equal(model.h(x).ravel(), [400.0, 41.5, 801.5])</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        np.testing.assert_array_equal(model.sense(np.hstack([x, x]))[:, 1], [400.0, 41.5, 801.5])</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        model.set_parameter(<span class="stringliteral">&quot;station.offset&quot;</span>, -1.0)                          <span class="comment"># one value for all its sensors</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        np.testing.assert_array_equal(model.h(x).ravel(), [400.0, 39.0, 799.0])</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        sensors = model.sensors</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        self.assertEqual([s.offset <span class="keywordflow">for</span> s <span class="keywordflow">in</span> sensors], [0.0, -1.0, -1.0])</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        self.assertEqual([s.calibrated <span class="keywordflow">for</span> s <span class="keywordflow">in</span> sensors], [<span class="keyword">False</span>, <span class="keyword">True</span>, <span class="keyword">True</span>])</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        self.assertEqual(float(sensors[1].measure(x)[0, 0]), 39.0)           <span class="comment"># read through the C++ sensor</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        station = model.instruments[1]</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        self.assertEqual((station.calibrated, station.gain, station.offset), (<span class="keyword">True</span>, 2.0, -1.0))</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+</div>
+<div class="foldopen" id="foldopen00116" data-start="" data-end="">
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a6496c42d4dc8de0e3cd2372ee7513cc8">  116</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a6496c42d4dc8de0e3cd2372ee7513cc8">test_rate_is_shared_unless_a_sensor_has_its_own</a>(self):</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        model = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(rate=1.0), <a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">humidity</a>(), name=<span class="stringliteral">&quot;station&quot;</span>, rate=0.25))</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        self.assertEqual([s.rate <span class="keywordflow">for</span> s <span class="keywordflow">in</span> model.sensors], [<span class="keywordtype">None</span>, 1.0, 0.25])</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        reports = model._reports(8)</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        self.assertEqual(reports[:, 2].sum(), 2)                             <span class="comment"># every fourth step</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        self.assertTrue(reports[:, :2].all())</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+</div>
+<div class="foldopen" id="foldopen00123" data-start="" data-end="">
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a735bbe77e0ad1a3bd2594ca5fbef0a57">  123</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a735bbe77e0ad1a3bd2594ca5fbef0a57">test_a_function_sensor</a>(self):</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        squared = <a class="code hl_class" href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">KalmanSensor</a>(<span class="stringliteral">&quot;squared&quot;</span>, <span class="keyword">lambda</span> x: [float(x[0, 0]) ** 2], R=1.0)</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        model = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(compose(squared, name=<span class="stringliteral">&quot;odd&quot;</span>).calibrate(0.5, 3.0))</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        x = np.array([[4.0], [400.0]])</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        self.assertEqual(float(model.h(x)[1, 0]), 0.5 * 16.0 + 3.0)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        self.assertAlmostEqual(float(model.H(x)[1, 0]), 0.5 * 2 * 4.0, places=4)          <span class="comment"># differenced, with the gain</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">@needs_core</span></div>
+</div>
+</div>
+<div class="foldopen" id="foldopen00132" data-start="" data-end="">
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html">  132</a></span><span class="keyword">class </span><a class="code hl_class" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html">TestCalibratingWhileMeasuring</a>(unittest.TestCase):</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a4cd8695fa2b0a5a53dee59bff138715f">  134</a></span>    OFFSET = 1.5</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="preprocessor">@staticmethod</span></div>
+<div class="foldopen" id="foldopen00137" data-start="" data-end="">
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">  137</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">thermo</a>(offset=0.0):</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">return</span> compose(<a class="code hl_variable" href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">probe</a>(), name=<span class="stringliteral">&quot;thermo&quot;</span>).calibrate(1.0, offset)</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+</div>
+<div class="foldopen" id="foldopen00140" data-start="" data-end="">
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a8f6ea0284ba1cc1e79865f4d434ca167">  140</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a8f6ea0284ba1cc1e79865f4d434ca167">test_one_thermometer_cannot_tell_its_offset_from_the_temperature</a>(self):</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        blind = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(self.<a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">thermo</a>()).joint({<span class="stringliteral">&quot;thermo.offset&quot;</span>: (2.0, 0.0)})</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            report = blind.observability(50)</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        self.assertEqual(report[<span class="stringliteral">&quot;rank&quot;</span>], 2)                                  <span class="comment"># one direction is not determined</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        temperature, co2, offset = report[<span class="stringliteral">&quot;weakness&quot;</span>].values()</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        self.assertGreater(min(temperature, offset), 0.1)                    <span class="comment"># it mixes these two,</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        self.assertLess(co2, 1e-6)                                           <span class="comment"># not the CO2</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        self.assertIn(<span class="stringliteral">&quot;thermo.offset&quot;</span>, report[<span class="stringliteral">&quot;weakness&quot;</span>])</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+</div>
+<div class="foldopen" id="foldopen00151" data-start="" data-end="">
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a2bccf09ec5b472ffd885957666a8339d">  151</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a2bccf09ec5b472ffd885957666a8339d">test_a_reference_thermometer_settles_it</a>(self):</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        reference = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">reads</a>(<span class="stringliteral">&quot;reference&quot;</span>, 0, 0.01)</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        checked = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(self.<a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">thermo</a>()).add_sensor(reference)</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        model = checked.joint({<span class="stringliteral">&quot;thermo.offset&quot;</span>: (2.0, 0.0)})</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        self.assertTrue(model.observability(50)[<span class="stringliteral">&quot;observable&quot;</span>])</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        self.assertEqual(list(model.states.__members__)[2], <span class="stringliteral">&quot;thermo.offset&quot;</span>)</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        truth = <a class="code hl_function" href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">room</a>().add_instrument(self.<a class="code hl_function" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">thermo</a>(self.<a class="code hl_variable" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a4cd8695fa2b0a5a53dee59bff138715f">OFFSET</a><a class="code hl_variable" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#ab34b7d606bcb6b5d7d320e60a206a1ac">OFFSET</a>)).add_sensor(reference)</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        rng = np.random.default_rng(20261117)</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        x, zs = truth.x0.copy(), []</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        Lq, Lr = np.linalg.cholesky(truth.Q()), np.linalg.cholesky(truth.R())</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(400):</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            x = truth.f(x) + Lq @ rng.standard_normal((2, 1))</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            zs.append((truth.h(x) + Lr @ rng.standard_normal((3, 1))).ravel())</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            rec = model.filter(np.array(zs), smooth=<span class="keyword">False</span>, reset=<span class="keyword">True</span>)</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        estimate, sigma = rec.xk[-1, 2], np.sqrt(rec.Pk[-1, 2, 2])</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno"><a class="line" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#ab34b7d606bcb6b5d7d320e60a206a1ac">  169</a></span>        self.assertLess(abs(estimate - self.<a class="code hl_variable" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a4cd8695fa2b0a5a53dee59bff138715f">OFFSET</a><a class="code hl_variable" href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#ab34b7d606bcb6b5d7d320e60a206a1ac">OFFSET</a>), 3 * sigma)</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        self.assertLess(sigma, 0.05)</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        self.assertEqual(checked.parameters()[<span class="stringliteral">&quot;thermo.offset&quot;</span>], 0.0)         <span class="comment"># the inner model is left as found</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span> </div>
+</div>
+</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="keywordflow">if</span> __name__ == <span class="stringliteral">&quot;__main__&quot;</span>:</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>    unittest.main()</div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1instrument_1_1_kalman_instrument_html"><div class="ttname"><a href="classmodules_1_1framework_1_1instrument_1_1_kalman_instrument.html">modules.framework.instrument.KalmanInstrument</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2instrument_8py_source.html#l00048">instrument.py:48</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1model_1_1_kalman_model_html"><div class="ttname"><a href="classmodules_1_1framework_1_1model_1_1_kalman_model.html">modules.framework.model.KalmanModel</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2model_8py_source.html#l00053">model.py:53</a></div></div>
+<div class="ttc" id="aclassmodules_1_1framework_1_1sensor_1_1_kalman_sensor_html"><div class="ttname"><a href="classmodules_1_1framework_1_1sensor_1_1_kalman_sensor.html">modules.framework.sensor.KalmanSensor</a></div><div class="ttdef"><b>Definition</b> <a href="framework_2sensor_8py_source.html#l00027">sensor.py:27</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html">tests.test_instrument.TestAddInstrument</a></div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00080">test_instrument.py:80</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html_a06e3605f724162464411075603a000a6"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a06e3605f724162464411075603a000a6">tests.test_instrument.TestAddInstrument.test_uncalibrated_is_still_matrices</a></div><div class="ttdeci">test_uncalibrated_is_still_matrices(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00082">test_instrument.py:82</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html_a0f14a88d47ef1818ef853779f5a03d8b"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a0f14a88d47ef1818ef853779f5a03d8b">tests.test_instrument.TestAddInstrument.test_calibration_is_two_parameters_of_the_model</a></div><div class="ttdeci">test_calibration_is_two_parameters_of_the_model(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00099">test_instrument.py:99</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html_a6496c42d4dc8de0e3cd2372ee7513cc8"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a6496c42d4dc8de0e3cd2372ee7513cc8">tests.test_instrument.TestAddInstrument.test_rate_is_shared_unless_a_sensor_has_its_own</a></div><div class="ttdeci">test_rate_is_shared_unless_a_sensor_has_its_own(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00116">test_instrument.py:116</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html_a735bbe77e0ad1a3bd2594ca5fbef0a57"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html#a735bbe77e0ad1a3bd2594ca5fbef0a57">tests.test_instrument.TestAddInstrument.test_a_function_sensor</a></div><div class="ttdeci">test_a_function_sensor(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00123">test_instrument.py:123</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_add_instrument_html_ad66dc65ca09df004340c46e8c2988fa3"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_add_instrument.html#ad66dc65ca09df004340c46e8c2988fa3">tests.test_instrument.TestAddInstrument.test_function_and_method_are_the_same</a></div><div class="ttdeci">test_function_and_method_are_the_same(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00093">test_instrument.py:93</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html">tests.test_instrument.TestCalibratingWhileMeasuring</a></div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00132">test_instrument.py:132</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html_a2bccf09ec5b472ffd885957666a8339d"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a2bccf09ec5b472ffd885957666a8339d">tests.test_instrument.TestCalibratingWhileMeasuring.test_a_reference_thermometer_settles_it</a></div><div class="ttdeci">test_a_reference_thermometer_settles_it(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00151">test_instrument.py:151</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html_a4cd8695fa2b0a5a53dee59bff138715f"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a4cd8695fa2b0a5a53dee59bff138715f">tests.test_instrument.TestCalibratingWhileMeasuring.OFFSET</a></div><div class="ttdeci">float OFFSET</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00134">test_instrument.py:134</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html_a8f6ea0284ba1cc1e79865f4d434ca167"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#a8f6ea0284ba1cc1e79865f4d434ca167">tests.test_instrument.TestCalibratingWhileMeasuring.test_one_thermometer_cannot_tell_its_offset_from_the_temperature</a></div><div class="ttdeci">test_one_thermometer_cannot_tell_its_offset_from_the_temperature(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00140">test_instrument.py:140</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html_ab34b7d606bcb6b5d7d320e60a206a1ac"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#ab34b7d606bcb6b5d7d320e60a206a1ac">tests.test_instrument.TestCalibratingWhileMeasuring.OFFSET</a></div><div class="ttdeci">OFFSET</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00169">test_instrument.py:169</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_calibrating_while_measuring_html_aba1a55bc679598b470395e64e237afc4"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_calibrating_while_measuring.html#aba1a55bc679598b470395e64e237afc4">tests.test_instrument.TestCalibratingWhileMeasuring.thermo</a></div><div class="ttdeci">thermo(offset=0.0)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00137">test_instrument.py:137</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_compose_html"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_compose.html">tests.test_instrument.TestCompose</a></div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00042">test_instrument.py:42</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_compose_html_a01b615d109fd64065a185e7c33e6d8ef"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_compose.html#a01b615d109fd64065a185e7c33e6d8ef">tests.test_instrument.TestCompose.test_three_ways</a></div><div class="ttdeci">test_three_ways(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00044">test_instrument.py:44</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_compose_html_a67d506e0196a7608d3c186881129df76"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_compose.html#a67d506e0196a7608d3c186881129df76">tests.test_instrument.TestCompose.test_calibration</a></div><div class="ttdeci">test_calibration(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00054">test_instrument.py:54</a></div></div>
+<div class="ttc" id="aclasstests_1_1test__instrument_1_1_test_compose_html_acf7bf63684c66cbdbf92d915e221c34b"><div class="ttname"><a href="classtests_1_1test__instrument_1_1_test_compose.html#acf7bf63684c66cbdbf92d915e221c34b">tests.test_instrument.TestCompose.test_refusals</a></div><div class="ttdeci">test_refusals(self)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00062">test_instrument.py:62</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1constants_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1constants.html">modules.framework.constants</a></div><div class="ttdef"><b>Definition</b> <a href="constants_8py_source.html#l00001">constants.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_1_1native_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1native.html">modules.framework.native</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2native_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacemodules_1_1framework_html"><div class="ttname"><a href="namespacemodules_1_1framework.html">modules.framework</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument_html_a691dc972d52a5f81a37ed0b040e50af3"><div class="ttname"><a href="namespacetests_1_1test__instrument.html#a691dc972d52a5f81a37ed0b040e50af3">tests.test_instrument.room</a></div><div class="ttdeci">room()</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00026">test_instrument.py:26</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument_html_a6e6fa7a7772e8d9aeef6da4c92eedc56"><div class="ttname"><a href="namespacetests_1_1test__instrument.html#a6e6fa7a7772e8d9aeef6da4c92eedc56">tests.test_instrument.humidity</a></div><div class="ttdeci">reads humidity</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00039">test_instrument.py:39</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument_html_a731bfcc5fd531fc2470a0b116315defa"><div class="ttname"><a href="namespacetests_1_1test__instrument.html#a731bfcc5fd531fc2470a0b116315defa">tests.test_instrument.probe</a></div><div class="ttdeci">reads probe</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00038">test_instrument.py:38</a></div></div>
+<div class="ttc" id="anamespacetests_1_1test__instrument_html_ad5095eb5ee0d866feb50e5de34e37f18"><div class="ttname"><a href="namespacetests_1_1test__instrument.html#ad5095eb5ee0d866feb50e5de34e37f18">tests.test_instrument.reads</a></div><div class="ttdeci">reads(name, component, variance, **kw)</div><div class="ttdef"><b>Definition</b> <a href="test__instrument_8py_source.html#l00032">test_instrument.py:32</a></div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.8-->
+<!-- start footer part -->
+    <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+        <ul>
+            <li class="navelem"><a class="el" href="dir_59425e443f801f1f2fd8bbe4959a3ccf.html">tests</a></li><li class="navelem"><a class="el" href="test__instrument_8py.html">test_instrument.py</a></li>
+            <li class="footer">
+            <!-- Generated by <a href="http://www.doxygen.org/index.html"><img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.9.8  -->
+            </li>
+        </ul>
+    </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </div>
+  </body>
+</html>

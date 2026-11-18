@@ -71,7 +71,7 @@
   <td id="projectlogo"><img alt="Logo" src="logo.drawio.svg"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Kalman World
-   &#160;<span id="projectnumber">1.0.0-45-g1d5c01ec</span>
+   &#160;<span id="projectnumber">1.0.0-48-g08d53a92</span>
    </div>
    <div id="projectbrief">State estimation, dynamical systems and predictive learning 🛰️📈</div>
   </td>
@@ -159,7 +159,7 @@ Public Member Functions</h2></td></tr>
 <div class="textblock"><pre class="fragment">The C++ particle engine starts from the cloud the Python engine drew and takes
 every later draw from numpy, in the Python engine's order: a seeded run is the
 Python run, and numpy's generator ends in the same state.</pre> 
-<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00331">331</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
+<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00337">337</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ab39c48f41ff1aead84e1a01d02b784f7" name="ab39c48f41ff1aead84e1a01d02b784f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab39c48f41ff1aead84e1a01d02b784f7">&#9670;&#160;</a></span>run_pf()</h2>
@@ -199,19 +199,19 @@ Python run, and numpy's generator ends in the same state.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00336">336</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  336</span>    <span class="keyword">def </span>run_pf(self, make, z, reference):</div>
-<div class="line"><span class="lineno">  337</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
-<div class="line"><span class="lineno">  338</span>        np.random.seed(7)</div>
-<div class="line"><span class="lineno">  339</span>        <span class="keywordflow">if</span> reference:</div>
-<div class="line"><span class="lineno">  340</span>            <span class="keyword">with</span> native.python_reference():</div>
-<div class="line"><span class="lineno">  341</span>                record = ParticleFilter(make(), n_particles=300).forward(z)</div>
-<div class="line"><span class="lineno">  342</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><span class="lineno">  343</span>            <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
-<div class="line"><span class="lineno">  344</span>                record = ParticleFilter(make(), n_particles=300).forward(z)</div>
-<div class="line"><span class="lineno">  345</span>            self.assertIn(path.last, (<span class="stringliteral">&quot;_forward_counterpart&quot;</span>, <span class="stringliteral">&quot;_forward_callback&quot;</span>))</div>
-<div class="line"><span class="lineno">  346</span>        <span class="keywordflow">return</span> np.asarray(record.xk, float), np.random.uniform()</div>
-<div class="line"><span class="lineno">  347</span> </div>
+<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00342">342</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  342</span>    <span class="keyword">def </span>run_pf(self, make, z, reference):</div>
+<div class="line"><span class="lineno">  343</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a> <span class="keyword">import</span> ParticleFilter</div>
+<div class="line"><span class="lineno">  344</span>        np.random.seed(7)</div>
+<div class="line"><span class="lineno">  345</span>        <span class="keywordflow">if</span> reference:</div>
+<div class="line"><span class="lineno">  346</span>            <span class="keyword">with</span> native.python_reference():</div>
+<div class="line"><span class="lineno">  347</span>                record = ParticleFilter(make(), n_particles=300).forward(z)</div>
+<div class="line"><span class="lineno">  348</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  349</span>            <span class="keyword">with</span> path_taken() <span class="keyword">as</span> path:</div>
+<div class="line"><span class="lineno">  350</span>                record = ParticleFilter(make(), n_particles=300).forward(z)</div>
+<div class="line"><span class="lineno">  351</span>            self.assertIn(path.last, (<span class="stringliteral">&quot;_forward_counterpart&quot;</span>, <span class="stringliteral">&quot;_forward_callback&quot;</span>))</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">return</span> np.asarray(record.xk, float), np.random.uniform()</div>
+<div class="line"><span class="lineno">  353</span> </div>
 <div class="ttc" id="anamespacemodules_1_1framework_1_1filters_html"><div class="ttname"><a href="namespacemodules_1_1framework_1_1filters.html">modules.framework.filters</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2framework_2filters_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -232,18 +232,18 @@ Python run, and numpy's generator ends in the same state.</pre>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00348">348</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  348</span>    <span class="keyword">def </span>test_counterpart_and_python_model(self):</div>
-<div class="line"><span class="lineno">  349</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a> <span class="keyword">import</span> CarSpeedModel</div>
-<div class="line"><span class="lineno">  350</span>        cases = [(<span class="keyword">lambda</span>: CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>), np.asarray(CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>).sample(5.0, seed=1).zk)),</div>
-<div class="line"><span class="lineno">  351</span>                 (<span class="keyword">lambda</span>: KalmanModel(<span class="stringliteral">&quot;s&quot;</span>, F=F0, Q=Q0, R=np.array([[0.04]]), **KW), Z[:60])]</div>
-<div class="line"><span class="lineno">  352</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
-<div class="line"><span class="lineno">  353</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
-<div class="line"><span class="lineno">  354</span>            <span class="keywordflow">for</span> make, z <span class="keywordflow">in</span> cases:</div>
-<div class="line"><span class="lineno">  355</span>                ref, after_ref = self.run_pf(make, z, <span class="keyword">True</span>)</div>
-<div class="line"><span class="lineno">  356</span>                got, after = self.run_pf(make, z, <span class="keyword">False</span>)</div>
-<div class="line"><span class="lineno">  357</span>                self.assertLess(np.nanmax(np.abs(got - ref)) / np.nanmax(np.abs(ref)), 1e-12)</div>
-<div class="line"><span class="lineno">  358</span>                self.assertEqual(after, after_ref, <span class="stringliteral">&quot;numpy&#39;s generator is left where the Python run leaves it&quot;</span>)</div>
+<p class="definition">Definition at line <a class="el" href="test__native__matrices_8py_source.html#l00354">354</a> of file <a class="el" href="test__native__matrices_8py_source.html">test_native_matrices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  354</span>    <span class="keyword">def </span>test_counterpart_and_python_model(self):</div>
+<div class="line"><span class="lineno">  355</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a> <span class="keyword">import</span> CarSpeedModel</div>
+<div class="line"><span class="lineno">  356</span>        cases = [(<span class="keyword">lambda</span>: CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>), np.asarray(CarSpeedModel(<span class="stringliteral">&quot;s&quot;</span>).sample(5.0, seed=1).zk)),</div>
+<div class="line"><span class="lineno">  357</span>                 (<span class="keyword">lambda</span>: KalmanModel(<span class="stringliteral">&quot;s&quot;</span>, F=F0, Q=Q0, R=np.array([[0.04]]), **KW), Z[:60])]</div>
+<div class="line"><span class="lineno">  358</span>        <span class="keyword">with</span> warnings.catch_warnings():</div>
+<div class="line"><span class="lineno">  359</span>            warnings.simplefilter(<span class="stringliteral">&quot;ignore&quot;</span>)</div>
+<div class="line"><span class="lineno">  360</span>            <span class="keywordflow">for</span> make, z <span class="keywordflow">in</span> cases:</div>
+<div class="line"><span class="lineno">  361</span>                ref, after_ref = self.run_pf(make, z, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  362</span>                got, after = self.run_pf(make, z, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  363</span>                self.assertLess(np.nanmax(np.abs(got - ref)) / np.nanmax(np.abs(ref)), 1e-12)</div>
+<div class="line"><span class="lineno">  364</span>                self.assertEqual(after, after_ref, <span class="stringliteral">&quot;numpy&#39;s generator is left where the Python run leaves it&quot;</span>)</div>
 <div class="ttc" id="anamespacemodules_1_1apps_1_1vehicles_html"><div class="ttname"><a href="namespacemodules_1_1apps_1_1vehicles.html">modules.apps.vehicles</a></div><div class="ttdef"><b>Definition</b> <a href="modules_2apps_2vehicles_2____init_____8py_source.html#l00001">__init__.py:1</a></div></div>
 </div><!-- fragment -->
 </div>

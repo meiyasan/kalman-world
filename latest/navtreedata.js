@@ -37,8 +37,8 @@ var NAVTREE =
         [ "Using it", "md_docs_2apps_2ballistics.html#using-it-1", null ]
       ] ],
       [ "Oscillators", "md_docs_2apps_2oscillators.html", [
-        [ "The model", "md_docs_2apps_2oscillators.html#the-model-7", null ],
-        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-7", null ],
+        [ "The model", "md_docs_2apps_2oscillators.html#the-model-6", null ],
+        [ "How it is built", "md_docs_2apps_2oscillators.html#how-it-is-built-6", null ],
         [ "Using it", "md_docs_2apps_2oscillators.html#using-it-8", null ],
         [ "Reconstruction: resampling artifacts and their fixes", "md_docs_2apps_2oscillators.html#reconstruction-resampling-artifacts-and-their-fixes", [
           [ "1. Asymmetric tail decay in the reconstructed time series", "md_docs_2apps_2oscillators.html#autotoc_md1-asymmetric-tail-decay-in-the-reconstructed-time-series", null ],
@@ -46,8 +46,8 @@ var NAVTREE =
         ] ]
       ] ],
       [ "Power grid", "md_docs_2apps_2powergrid.html", [
-        [ "The model", "md_docs_2apps_2powergrid.html#the-model-6", null ],
-        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-6", null ],
+        [ "The model", "md_docs_2apps_2powergrid.html#the-model-7", null ],
+        [ "How it is built", "md_docs_2apps_2powergrid.html#how-it-is-built-7", null ],
         [ "Using it", "md_docs_2apps_2powergrid.html#using-it-7", null ]
       ] ],
       [ "Suspension", "md_docs_2apps_2suspension.html", [
